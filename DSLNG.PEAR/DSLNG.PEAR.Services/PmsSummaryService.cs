@@ -139,15 +139,15 @@ namespace DSLNG.PEAR.Services
 
                             if (kpiData.ActualYtd.HasValue && kpiData.TargetYtd.HasValue)
                             {
-                                var indexYtd = (kpiData.ActualYtd.Value / kpiData.TargetYtd.Value);
+                                //var indexYtd = (kpiData.ActualYtd.Value / kpiData.TargetYtd.Value);
 
                                 switch (pmsConfigDetails.ScoringType)
                                 {
                                     case ScoringType.Positive:
-                                        kpiData.Score = pmsConfigDetails.Weight * indexYtd;
+                                        kpiData.Score = pmsConfigDetails.Weight * kpiData.IndexYtd;
                                         break;
                                     case ScoringType.Negative:
-                                        if (indexYtd.Equals(0))
+                                        if (kpiData.IndexYtd.Equals(0))
                                         {
                                             response.IsSuccess = false;
                                             response.Message =
@@ -156,7 +156,7 @@ namespace DSLNG.PEAR.Services
                                                     pmsConfigDetails.Kpi.Name);
                                             return response;
                                         }
-                                        kpiData.Score = pmsConfigDetails.Weight / indexYtd;
+                                        kpiData.Score = pmsConfigDetails.Weight / kpiData.IndexYtd;
                                         break;
                                     case ScoringType.Boolean:
                                         bool isMoreThanZero = false;
