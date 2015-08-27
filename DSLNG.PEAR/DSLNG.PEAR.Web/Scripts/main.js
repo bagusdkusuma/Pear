@@ -155,7 +155,7 @@ Number.prototype.format = function (n, x) {
         };
         var rangeDatePicker = function () {
             $('.datepicker').datetimepicker({
-                format: "MM/DD/YYYY hh:00 A"
+                format: "MM/DD/YYYY"
             });
             $('.datepicker').change(function (e) {
                 //console.log(this);
