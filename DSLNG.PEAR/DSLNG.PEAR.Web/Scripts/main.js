@@ -1149,29 +1149,10 @@ Number.prototype.format = function (n, x) {
                 crosshair: true
             },
             yAxis: {
-                //min: 0,
                 title: {
                     text: data.BarChart.ValueAxisTitle
-                },
-                stackLabels: {
-                    enabled: true,
-                    style: {
-                        fontWeight: 'bold',
-                        color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
-                    }
                 }
             },
-            //legend: {
-            //    align: 'right',
-            //    x: -30,
-            //    verticalAlign: 'top',
-            //    y: 25,
-            //    floating: true,
-            //    backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
-            //    borderColor: '#CCC',
-            //    borderWidth: 1,
-            //    shadow: false
-            //},
             tooltip: {
                 formatter: function () {
                     return '<b>' + this.x + '</b><br/>' +
@@ -1189,14 +1170,7 @@ Number.prototype.format = function (n, x) {
             },
             plotOptions: {
                 column: {
-                    stacking: 'normal',
-                    dataLabels: {
-                        enabled: true,
-                        color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
-                        style: {
-                            textShadow: '0 0 3px black'
-                        }
-                    }
+                    stacking: 'normal'
                 }
             },
             series: data.BarChart.Series
@@ -2438,7 +2412,7 @@ Number.prototype.format = function (n, x) {
                     }
                 },
                 title: {
-                    text: data.MultiaxisChart.Charts[i].ValueAxisTitle + ' (' + data.MultiaxisChart.Charts[i].Measurement + ')',
+                    text: data.MultiaxisChart.Charts[i].Measurement, //data.MultiaxisChart.Charts[i].ValueAxisTitle + ' (' + data.MultiaxisChart.Charts[i].Measurement + ')',
                     style: {
                         color: data.MultiaxisChart.Charts[i].ValueAxisColor
                     }
@@ -2533,9 +2507,11 @@ Number.prototype.format = function (n, x) {
                         var next = (parseInt(i) + 1);
                         var nextExist = typeof this.points[next] !== 'undefined';
                         var prevExist = typeof this.points[prev] !== 'undefined';
-                        if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
-                            (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
-                            tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + this.points[i].series.options.tooltip.valueSuffix + '<br>';
+                        if (typeof this.points[i].total !== 'undefined') {
+                            if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
+                                (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
+                                tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + this.points[i].series.options.tooltip.valueSuffix + '<br>';
+                            }
                         }
                     }
                     return tooltip;
