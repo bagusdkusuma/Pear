@@ -51,14 +51,14 @@
                 targetActualBand.Columns.Add("TargetActualYtd", "YTD");
             });
 
-            settings.Columns.AddBand(indexBand =>
+            /*settings.Columns.AddBand(indexBand =>
                 {
                     indexBand.Caption = "Index";
                     indexBand.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
                     indexBand.Columns.Add("IndexYearlyStr", "Yearly");
                     indexBand.Columns.Add("IndexMonthlyStr", "Monthly");
                     indexBand.Columns.Add("IndexYtdStr", "YTD");
-                });
+                });*/
 
             settings.Columns.Add(column =>
                 {
