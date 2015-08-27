@@ -1509,7 +1509,7 @@ Number.prototype.format = function (n, x) {
             tooltip: {
                 formatter: function () {
                     return '<b>' + this.x + '</b><br/>' +
-                        this.series.name + ': ' + this.y.format(2) + ' ' + data.LineChart.ValueAxisTitle;
+                        this.series.name + ': ' + this.y.format(2) + ' ' + data.AreaChart.ValueAxisTitle;
                 }
             },
             exporting: {
@@ -1521,6 +1521,23 @@ Number.prototype.format = function (n, x) {
                 enabled: false
             },
             plotOptions: {
+                area: {
+                    lineColor: '#666666',
+                    lineWidth: 1,
+                    marker: {
+                        lineWidth: 1,
+                        lineColor: '#666666',
+                        enabled: false,
+                        states: {
+                            hover: {
+                                radius: 4
+                            },
+                            select: {
+                                radius: 4
+                            }
+                        }
+                    }
+                }
             },
             series: data.AreaChart.Series
         });
@@ -1569,7 +1586,16 @@ Number.prototype.format = function (n, x) {
                     lineWidth: 1,
                     marker: {
                         lineWidth: 1,
-                        lineColor: '#666666'
+                        lineColor: '#666666',
+                        enabled: false,
+                        states: {
+                            hover: {
+                                radius: 4
+                            },
+                            select: {
+                                radius: 4
+                            }
+                        }
                     }
                 }
             },

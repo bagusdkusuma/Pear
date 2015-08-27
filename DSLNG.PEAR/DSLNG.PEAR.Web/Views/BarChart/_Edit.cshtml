@@ -11,7 +11,7 @@
     @for (var i = 0; i < Model.BarChart.Series.Count; i++)
     {
         var original = i == 0 ? "original" : "";
-        var dataSeriesPos = original == "" ? "data-series-pos=" +  i   : "";
+        var dataSeriesPos = original == "" ? "data-series-pos=" + i : "";
         <div class="series-template @original whitebox" @dataSeriesPos >
             <input type="hidden" name="BarChart.Series.Index" value="@i" />
             <h2>Series</h2>
@@ -43,15 +43,15 @@
                     </div>
                     <div class="col-sm-6">
                         @{
-                           if (i != 0)
-                            {
-                                Model.BarChart.ValueAxes.Where(x => x.Value == Model.BarChart.Series[i].ValueAxis).First().Selected = true;
-                            }
-                        <div class="form-group value-axis form-list">
-                            @Html.LabelFor(model => Model.BarChart.Series[i].ValueAxis)
-                            @Html.DropDownListFor(model => model.BarChart.Series[i].ValueAxis, Model.BarChart.ValueAxes, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.BarChart.Series[i].ValueAxis)
-                        </div>
+        if (i != 0)
+        {
+            Model.BarChart.ValueAxes.Where(x => x.Value == Model.BarChart.Series[i].ValueAxis).First().Selected = true;
+        }
+                            <div class="form-group value-axis form-list">
+                                @Html.LabelFor(model => Model.BarChart.Series[i].ValueAxis)
+                                @Html.DropDownListFor(model => model.BarChart.Series[i].ValueAxis, Model.BarChart.ValueAxes, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.BarChart.Series[i].ValueAxis)
+                            </div>
                         }
                     </div>
                 </div>
@@ -63,7 +63,7 @@
                 @for (var j = 0; j < Model.BarChart.Series[i].Stacks.Count; j++)
                 { 
                     <fieldset class="stack-template  @original form-inline">
-                         <input type="hidden" name="BarChart.Series[@i].Stacks.Index" value="@j" />
+                        <input type="hidden" name="BarChart.Series[@i].Stacks.Index" value="@j" />
                         <legend>Stack</legend>
                         <div class="row">
                             <div class="col-sm-6">
@@ -79,12 +79,14 @@
                                 </div>
                             </div>
                             <div class="col-sm-6">
-                                @Html.LabelFor(model => model.BarChart.Series[i].Stacks[j].Color)
-                                <div class="input-group colorpicker">
-                                    @Html.TextBoxFor(model => model.BarChart.Series[i].Stacks[j].Color, new { @class = "form-control" })
-                                    <span class="input-group-addon"><i style="background-color:@Model.BarChart.Series[i].Stacks[j].Color"></i></span>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.BarChart.Series[i].Stacks[j].Color)
+                                    <div class="input-group colorpicker">
+                                        @Html.TextBoxFor(model => model.BarChart.Series[i].Stacks[j].Color, new { @class = "form-control" })
+                                        <span class="input-group-addon"><i style="background-color:@Model.BarChart.Series[i].Stacks[j].Color"></i></span>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.BarChart.Series[i].Stacks[j].Color)
                                 </div>
-                                @Html.ValidationMessageFor(model => model.BarChart.Series[i].Stacks[j].Color)
                             </div>
                         </div>
                         <input type="button" value="Remove" class="remove" />

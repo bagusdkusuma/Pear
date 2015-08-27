@@ -64,12 +64,14 @@
                                 </div>
                             </div>
                             <div class="col-sm-6">
-                                @Html.LabelFor(model => model.AreaChart.Series[i].Stacks[j].Color)
-                                <div class="input-group colorpicker">
-                                    @Html.TextBoxFor(model => model.AreaChart.Series[i].Stacks[j].Color, new { @class = "form-control" })
-                                    <span class="input-group-addon"><i style="background-color:@Model.AreaChart.Series[i].Stacks[j].Color"></i></span>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.AreaChart.Series[i].Stacks[j].Color)
+                                    <div class="input-group colorpicker">
+                                        @Html.TextBoxFor(model => model.AreaChart.Series[i].Stacks[j].Color, new { @class = "form-control" })
+                                        <span class="input-group-addon"><i style="background-color:@Model.AreaChart.Series[i].Stacks[j].Color"></i></span>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.AreaChart.Series[i].Stacks[j].Color)
                                 </div>
-                                @Html.ValidationMessageFor(model => model.AreaChart.Series[i].Stacks[j].Color)
                             </div>
                         </div>
                         <input type="button" value="Remove" class="remove" />

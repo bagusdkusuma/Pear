@@ -110,17 +110,20 @@
                                 </div>
                             </div>
                             <div class="col-sm-6">
-                                @Html.LabelFor(model => model.Series[i].Stacks[j].Color)
-                                <div class="input-group colorpicker">
-                                    @Html.TextBoxFor(model => model.Series[i].Stacks[j].Color, new
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Series[i].Stacks[j].Color)
+                                    <div class="input-group colorpicker">
+                                        @Html.TextBoxFor(model => model.Series[i].Stacks[j].Color, new
                                {
                                    @class = "form-control",
+                                   style = "width:160px",
                                    @Name = "ComboChart.Charts[" + @ViewData["ChartIndex"] + "].AreaChart.Series[" + i + "].Stacks[" + j + "].Color",
                                    id = "ComboChart_Charts_" + @ViewData["ChartIndex"] + "__AreaChart_Series_" + i + "__Stacks_" + j + "__Color"
                                })
-                                    <span class="input-group-addon"><i style="background-color:@Model.Series[i].Stacks[j].Color"></i></span>
+                                        <span class="input-group-addon"><i style="background-color:@Model.Series[i].Stacks[j].Color"></i></span>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Series[i].Stacks[j].Color)
                                 </div>
-                                @Html.ValidationMessageFor(model => model.Series[i].Stacks[j].Color)
                             </div>
                         </div>
                         <input type="button" value="Remove" class="remove" />

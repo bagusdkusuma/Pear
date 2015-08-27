@@ -19,9 +19,12 @@
                 <div class="col-sm-6">
                     <div class="form-group form-list">
                         @Html.LabelFor(model => model.Series[i].Label)
-                        @Html.TextBoxFor(model => model.Series[i].Label, new { @class = "form-control",  
-                            @Name="ComboChart.Charts["+@ViewData["ChartIndex"]+"].BarChart.Series["+i+"].Label",
-                            id="ComboChart_Charts_"+@ViewData["ChartIndex"]+"__BarChart_Series_"+i+"__Label"})
+                        @Html.TextBoxFor(model => model.Series[i].Label, new
+                   {
+                       @class = "form-control",
+                       @Name = "ComboChart.Charts[" + @ViewData["ChartIndex"] + "].BarChart.Series[" + i + "].Label",
+                       id = "ComboChart_Charts_" + @ViewData["ChartIndex"] + "__BarChart_Series_" + i + "__Label"
+                   })
                         @Html.ValidationMessageFor(model => model.Series[i].Label)
                     </div>
                 </div>
@@ -30,9 +33,12 @@
                         <div class="form-group form-list">
                             @Html.LabelFor(model => model.Series[i].Color)
                             <div class="input-group colorpicker">
-                                @Html.TextBoxFor(model => model.Series[i].Color, new { @class = "form-control", 
-                                @Name="ComboChart.Charts["+@ViewData["ChartIndex"]+"].BarChart.Series["+i+"].Color",
-                                id="ComboChart_Charts_"+@ViewData["ChartIndex"]+"__BarChart_Series_"+i+"__Color"})
+                                @Html.TextBoxFor(model => model.Series[i].Color, new
+                           {
+                               @class = "form-control",
+                               @Name = "ComboChart.Charts[" + @ViewData["ChartIndex"] + "].BarChart.Series[" + i + "].Color",
+                               id = "ComboChart_Charts_" + @ViewData["ChartIndex"] + "__BarChart_Series_" + i + "__Color"
+                           })
                                 <span class="input-group-addon"><i style="background-color:@Model.Series[i].Color"></i></span>
                             </div>
                             @Html.ValidationMessageFor(model => model.Series[i].Color)
@@ -42,9 +48,13 @@
                         <div class="form-group form-list">
                             @Html.LabelFor(model => model.Series[i].KpiId)
                             @Html.DropDownListFor(model => model.Series[i].KpiId, new List<SelectListItem> { new SelectListItem { Value = Model.Series[i].KpiId.ToString(), Text = Model.Series[i].KpiName } },
-                            new { @class = "kpi-list form-control", style = "width:180px", 
-                                @Name="ComboChart.Charts["+@ViewData["ChartIndex"]+"].BarChart.Series["+i+"].KpiId",
-                                id="ComboChart_Charts_"+@ViewData["ChartIndex"]+"__BarChart_Series_"+i+"__KpiId"})
+                            new
+                            {
+                                @class = "kpi-list form-control",
+                                style = "width:180px",
+                                @Name = "ComboChart.Charts[" + @ViewData["ChartIndex"] + "].BarChart.Series[" + i + "].KpiId",
+                                id = "ComboChart_Charts_" + @ViewData["ChartIndex"] + "__BarChart_Series_" + i + "__KpiId"
+                            })
                             @Html.ValidationMessageFor(model => model.Series[i].KpiId)
                         </div>
                     </div>
@@ -57,9 +67,12 @@
                         }
                         <div class="form-group value-axis form-list">
                             @Html.LabelFor(model => Model.Series[i].ValueAxis)
-                            @Html.DropDownListFor(model => model.Series[i].ValueAxis, Model.ValueAxes, new { @class = "form-control", 
-                           @Name="ComboChart.Charts["+@ViewData["ChartIndex"]+"].BarChart.Series["+i+"].ValueAxis",
-                       id="ComboChart_Charts_"+@ViewData["ChartIndex"]+"__BarChart_Series_"+i+"__ValueAxis"})
+                            @Html.DropDownListFor(model => model.Series[i].ValueAxis, Model.ValueAxes, new
+                       {
+                           @class = "form-control",
+                           @Name = "ComboChart.Charts[" + @ViewData["ChartIndex"] + "].BarChart.Series[" + i + "].ValueAxis",
+                           id = "ComboChart_Charts_" + @ViewData["ChartIndex"] + "__BarChart_Series_" + i + "__ValueAxis"
+                       })
                             @Html.ValidationMessageFor(model => model.Series[i].ValueAxis)
                         </div>
                     </div>
@@ -78,29 +91,42 @@
                             <div class="col-sm-6">
                                 <div class="form-group form-list">
                                     @Html.LabelFor(model => model.Series[i].Stacks[j].Label)
-                                    @Html.TextBoxFor(model => model.Series[i].Stacks[j].Label, new { @class = "form-control", 
-                                         @Name="ComboChart.Charts["+@ViewData["ChartIndex"]+"].BarChart.Series["+i+"].Stacks["+j+"].Label",
-                                         id = "ComboChart_Charts_"+@ViewData["ChartIndex"]+"__BarChart_Series_"+i+"__Stacks_"+j+"__Label"})
+                                    @Html.TextBoxFor(model => model.Series[i].Stacks[j].Label, new
+                               {
+                                   @class = "form-control",
+                                   @Name = "ComboChart.Charts[" + @ViewData["ChartIndex"] + "].BarChart.Series[" + i + "].Stacks[" + j + "].Label",
+                                   id = "ComboChart_Charts_" + @ViewData["ChartIndex"] + "__BarChart_Series_" + i + "__Stacks_" + j + "__Label"
+                               })
                                     @Html.ValidationMessageFor(model => model.Series[i].Stacks[j].Label)
                                 </div>
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.Series[i].Stacks[j].KpiId)
-                                    @Html.DropDownListFor(model => model.Series[i].Stacks[j].KpiId, new List<SelectListItem> { new SelectListItem { Value = Model.Series[i].Stacks[j].KpiId.ToString(), Text = Model.Series[i].Stacks[j].KpiName } }, 
-                                    new { @class = "kpi-list  form-control", style = "width:180px", 
-                                        @Name="ComboChart.Charts["+@ViewData["ChartIndex"]+"].BarChart.Series["+i+"].Stacks["+j+"].KpiId",
-                                    id = "ComboChart_Charts_"+@ViewData["ChartIndex"]+"__BarChart_Series_"+i+"__Stacks_"+j+"__KpiId"})
+                                    @Html.DropDownListFor(model => model.Series[i].Stacks[j].KpiId, new List<SelectListItem> { new SelectListItem { Value = Model.Series[i].Stacks[j].KpiId.ToString(), Text = Model.Series[i].Stacks[j].KpiName } },
+                                    new
+                                    {
+                                        @class = "kpi-list  form-control",
+                                        style = "width:180px",
+                                        @Name = "ComboChart.Charts[" + @ViewData["ChartIndex"] + "].BarChart.Series[" + i + "].Stacks[" + j + "].KpiId",
+                                        id = "ComboChart_Charts_" + @ViewData["ChartIndex"] + "__BarChart_Series_" + i + "__Stacks_" + j + "__KpiId"
+                                    })
                                     @Html.ValidationMessageFor(model => model.Series[i].Stacks[j].KpiId)
                                 </div>
                             </div>
                             <div class="col-sm-6">
-                                @Html.LabelFor(model => model.Series[i].Stacks[j].Color)
-                                <div class="input-group colorpicker">
-                                    @Html.TextBoxFor(model => model.Series[i].Stacks[j].Color, new { @class = "form-control" , 
-                                   @Name="ComboChart.Charts["+@ViewData["ChartIndex"]+"].BarChart.Series["+i+"].Stacks["+j+"].Color",
-                               id = "ComboChart_Charts_"+@ViewData["ChartIndex"]+"__BarChart_Series_"+i+"__Stacks_"+j+"__Color"})
-                                    <span class="input-group-addon"><i style="background-color:@Model.Series[i].Stacks[j].Color"></i></span>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Series[i].Stacks[j].Color)
+                                    <div class="input-group colorpicker">
+                                        @Html.TextBoxFor(model => model.Series[i].Stacks[j].Color, new
+                                   {
+                                       @class = "form-control",
+                                       style = "width:160px",
+                                       @Name = "ComboChart.Charts[" + @ViewData["ChartIndex"] + "].BarChart.Series[" + i + "].Stacks[" + j + "].Color",
+                                       id = "ComboChart_Charts_" + @ViewData["ChartIndex"] + "__BarChart_Series_" + i + "__Stacks_" + j + "__Color"
+                                   })
+                                        <span class="input-group-addon"><i style="background-color:@Model.Series[i].Stacks[j].Color"></i></span>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Series[i].Stacks[j].Color)
                                 </div>
-                                @Html.ValidationMessageFor(model => model.Series[i].Stacks[j].Color)
                             </div>
                         </div>
                         <input type="button" value="Remove" class="remove" />
