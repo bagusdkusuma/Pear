@@ -1,7 +1,7 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Artifact.ArtifactDesignerViewModel
 
 <div class="form-group form-list">
-     @Html.LabelFor(model => model.MultiaxisChart.Charts[0].AreaChart.Series)
+    @Html.LabelFor(model => model.MultiaxisChart.Charts[0].AreaChart.Series)
     @Html.DropDownList("seriesType", Model.MultiaxisChart.Charts[0].AreaChart.SeriesTypes, new { id = "seriesType", @class = "form-control series-type" })
     <input type="button" value="Add Series" class="btn btn-lightblue" id="add-series" />
 </div>
@@ -66,12 +66,14 @@
                 </div>
             </div>
             <div class="col-sm-6">
-                @Html.LabelFor(model => model.MultiaxisChart.Charts[0].AreaChart.Series[0].Stacks[0].Color)
-                <div class="input-group colorpicker">
-                    @Html.TextBoxFor(model => model.MultiaxisChart.Charts[0].AreaChart.Series[0].Stacks[0].Color, new { @class = "form-control" })
-                    <span class="input-group-addon"><i></i></span>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.MultiaxisChart.Charts[0].AreaChart.Series[0].Stacks[0].Color)
+                    <div class="input-group colorpicker">
+                        @Html.TextBoxFor(model => model.MultiaxisChart.Charts[0].AreaChart.Series[0].Stacks[0].Color, new { @class = "form-control", style = "width:160px" })
+                        <span class="input-group-addon"><i></i></span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[0].AreaChart.Series[0].Stacks[0].Color)
                 </div>
-                @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[0].AreaChart.Series[0].Stacks[0].Color)
             </div>
         </div>
         <input type="button" value="Remove" class="remove" />

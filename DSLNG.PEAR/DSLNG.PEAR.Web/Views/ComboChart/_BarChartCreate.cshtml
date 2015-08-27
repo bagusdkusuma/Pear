@@ -8,77 +8,79 @@
 
 
 <div class="hidden-fields">
-        <div class="series-template original whitebox">
-            <h2>Series</h2>
-            <div class="row">
+    <div class="series-template original whitebox">
+        <h2>Series</h2>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.ComboChart.Charts[0].BarChart.Series[0].Label)
+                    @Html.TextBoxFor(model => model.ComboChart.Charts[0].BarChart.Series[0].Label, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ComboChart.Charts[0].BarChart.Series[0].Label)
+                </div>
+            </div>
+            <div class="series-details-holder">
                 <div class="col-sm-6">
                     <div class="form-group form-list">
-                        @Html.LabelFor(model => model.ComboChart.Charts[0].BarChart.Series[0].Label)
-                        @Html.TextBoxFor(model => model.ComboChart.Charts[0].BarChart.Series[0].Label, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.ComboChart.Charts[0].BarChart.Series[0].Label)
+                        @Html.LabelFor(model => model.ComboChart.Charts[0].BarChart.Series[0].Color)
+                        <div class="input-group colorpicker">
+                            @Html.TextBoxFor(model => model.ComboChart.Charts[0].BarChart.Series[0].Color, new { @class = "form-control" })
+                            <span class="input-group-addon"><i></i></span>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.ComboChart.Charts[0].BarChart.Series[0].Color)
                     </div>
                 </div>
-                <div class="series-details-holder">
-                    <div class="col-sm-6">
-                        <div class="form-group form-list">
-                            @Html.LabelFor(model => model.ComboChart.Charts[0].BarChart.Series[0].Color)
-                            <div class="input-group colorpicker">
-                                @Html.TextBoxFor(model => model.ComboChart.Charts[0].BarChart.Series[0].Color, new { @class = "form-control" })
-                                <span class="input-group-addon"><i></i></span>
-                            </div>
-                            @Html.ValidationMessageFor(model => model.ComboChart.Charts[0].BarChart.Series[0].Color)
-                        </div>
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.ComboChart.Charts[0].BarChart.Series[0].KpiId)
+                        @Html.DropDownListFor(model => model.ComboChart.Charts[0].BarChart.Series[0].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
+                        @Html.ValidationMessageFor(model => model.ComboChart.Charts[0].BarChart.Series[0].KpiId)
                     </div>
-                    <div class="col-sm-6">
-                        <div class="form-group form-list">
-                            @Html.LabelFor(model => model.ComboChart.Charts[0].BarChart.Series[0].KpiId)
-                            @Html.DropDownListFor(model => model.ComboChart.Charts[0].BarChart.Series[0].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
-                            @Html.ValidationMessageFor(model => model.ComboChart.Charts[0].BarChart.Series[0].KpiId)
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group value-axis form-list">
-                            @Html.LabelFor(model => Model.ComboChart.Charts[0].BarChart.Series[0].ValueAxis)
-                            @Html.DropDownListFor(model => model.ComboChart.Charts[0].BarChart.Series[0].ValueAxis, Model.ComboChart.Charts[0].BarChart.ValueAxes, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.ComboChart.Charts[0].BarChart.Series[0].ValueAxis)
-                        </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group value-axis form-list">
+                        @Html.LabelFor(model => Model.ComboChart.Charts[0].BarChart.Series[0].ValueAxis)
+                        @Html.DropDownListFor(model => model.ComboChart.Charts[0].BarChart.Series[0].ValueAxis, Model.ComboChart.Charts[0].BarChart.ValueAxes, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ComboChart.Charts[0].BarChart.Series[0].ValueAxis)
                     </div>
                 </div>
             </div>
-
-            <div class="stacks-holder">
-                <label>&nbsp;</label>
-                <input type="button" value="Add Stack" class="btn btn-lightblue add-stack" />
-            </div>
-
-
-            <input type="button" value="Remove" class="remove" />
         </div>
-        <fieldset class="stack-template original form-inline">
-            <legend>Stack</legend>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-group form-list">
-                        @Html.LabelFor(model => model.ComboChart.Charts[0].BarChart.Series[0].Stacks[0].Label)
-                        @Html.TextBoxFor(model => model.ComboChart.Charts[0].BarChart.Series[0].Stacks[0].Label, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.ComboChart.Charts[0].BarChart.Series[0].Stacks[0].Label)
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.ComboChart.Charts[0].BarChart.Series[0].Stacks[0].KpiId)
-                        @Html.DropDownListFor(model => model.ComboChart.Charts[0].BarChart.Series[0].Stacks[0].KpiId, new List<SelectListItem>(), new { @class = "kpi-list  form-control", style = "width:180px" })
-                        @Html.ValidationMessageFor(model => model.ComboChart.Charts[0].BarChart.Series[0].Stacks[0].KpiId)
-                    </div>
+
+        <div class="stacks-holder">
+            <label>&nbsp;</label>
+            <input type="button" value="Add Stack" class="btn btn-lightblue add-stack" />
+        </div>
+
+
+        <input type="button" value="Remove" class="remove" />
+    </div>
+    <fieldset class="stack-template original form-inline">
+        <legend>Stack</legend>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.ComboChart.Charts[0].BarChart.Series[0].Stacks[0].Label)
+                    @Html.TextBoxFor(model => model.ComboChart.Charts[0].BarChart.Series[0].Stacks[0].Label, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ComboChart.Charts[0].BarChart.Series[0].Stacks[0].Label)
                 </div>
-                <div class="col-sm-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ComboChart.Charts[0].BarChart.Series[0].Stacks[0].KpiId)
+                    @Html.DropDownListFor(model => model.ComboChart.Charts[0].BarChart.Series[0].Stacks[0].KpiId, new List<SelectListItem>(), new { @class = "kpi-list  form-control", style = "width:180px" })
+                    @Html.ValidationMessageFor(model => model.ComboChart.Charts[0].BarChart.Series[0].Stacks[0].KpiId)
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
                     @Html.LabelFor(model => model.ComboChart.Charts[0].BarChart.Series[0].Stacks[0].Color)
                     <div class="input-group colorpicker">
-                        @Html.TextBoxFor(model => model.ComboChart.Charts[0].BarChart.Series[0].Stacks[0].Color, new { @class = "form-control" })
+                        @Html.TextBoxFor(model => model.ComboChart.Charts[0].BarChart.Series[0].Stacks[0].Color, new { @class = "form-control", style = "width:160px" })
                         <span class="input-group-addon"><i></i></span>
                     </div>
                     @Html.ValidationMessageFor(model => model.ComboChart.Charts[0].BarChart.Series[0].Stacks[0].Color)
                 </div>
             </div>
-            <input type="button" value="Remove" class="remove" />
-        </fieldset>
+        </div>
+        <input type="button" value="Remove" class="remove" />
+    </fieldset>
 
 </div>

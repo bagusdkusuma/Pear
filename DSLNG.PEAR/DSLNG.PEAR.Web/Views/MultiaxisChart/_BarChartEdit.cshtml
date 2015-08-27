@@ -93,14 +93,16 @@
                                 </div>
                             </div>
                             <div class="col-sm-6">
+                                <div class="form-group">
                                 @Html.LabelFor(model => model.Series[i].Stacks[j].Color)
                                 <div class="input-group colorpicker">
-                                    @Html.TextBoxFor(model => model.Series[i].Stacks[j].Color, new { @class = "form-control" , 
+                                    @Html.TextBoxFor(model => model.Series[i].Stacks[j].Color, new { @class = "form-control" , style = "width:160px", 
                                    @Name="MultiaxisChart.Charts["+@ViewData["ChartIndex"]+"].BarChart.Series["+i+"].Stacks["+j+"].Color",
                                id = "MultiaxisChart_Charts_"+@ViewData["ChartIndex"]+"__BarChart_Series_"+i+"__Stacks_"+j+"__Color"})
                                     <span class="input-group-addon"><i style="background-color:@Model.Series[i].Stacks[j].Color"></i></span>
                                 </div>
                                 @Html.ValidationMessageFor(model => model.Series[i].Stacks[j].Color)
+                                    </div>
                             </div>
                         </div>
                         <input type="button" value="Remove" class="remove" />

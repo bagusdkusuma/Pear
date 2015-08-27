@@ -206,20 +206,20 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.MeasurementId, o => o.MapFrom(s => s.Measurement.Id));
             Mapper.CreateMap<ArtifactPlot, GetArtifactResponse.PlotResponse>();
             Mapper.CreateMap<ArtifactSerie, GetArtifactResponse.SeriesResponse>()
-                .ForMember(x => x.Stacks, o => o.MapFrom(s => s.Stacks.MapTo<GetArtifactResponse.StackResponse>()))
-                .ForMember(x => x.KpiId, o => o.MapFrom(s => s.Kpi.Id))
-                .ForMember(x => x.KpiName, o => o.MapFrom(s => s.Kpi.Name));
+                  .ForMember(x => x.Stacks, o => o.MapFrom(s => s.Stacks.MapTo<GetArtifactResponse.StackResponse>()))
+                  .ForMember(x => x.KpiId, o => o.MapFrom(s => s.Kpi.Id))
+                  .ForMember(x => x.KpiName, o => o.MapFrom(s => s.Kpi.Name + " (" + s.Kpi.Measurement.Name + ")"));
             Mapper.CreateMap<ArtifactStack, GetArtifactResponse.StackResponse>()
                 .ForMember(x => x.KpiId, o => o.MapFrom(s => s.Kpi.Id))
-                .ForMember(x => x.KpiName, o => o.MapFrom(s => s.Kpi.Name));
+                .ForMember(x => x.KpiName, o => o.MapFrom(s => s.Kpi.Name + " (" + s.Kpi.Measurement.Name + ")"));
             Mapper.CreateMap<ArtifactRow, GetArtifactResponse.RowResponse>()
                   .ForMember(x => x.KpiId, o => o.MapFrom(s => s.Kpi.Id))
-                  .ForMember(x => x.KpiName, o => o.MapFrom(s => s.Kpi.Name));
+                  .ForMember(x => x.KpiName, o => o.MapFrom(s => s.Kpi.Name + " (" + s.Kpi.Measurement.Name + ")"));
             Mapper.CreateMap<ArtifactTank, GetArtifactResponse.TankResponse>()
                .ForMember(x => x.VolumeInventoryId, o => o.MapFrom(s => s.VolumeInventory.Id))
-               .ForMember(x => x.VolumeInventory, o => o.MapFrom(s => s.VolumeInventory.Name))
+               .ForMember(x => x.VolumeInventory, o => o.MapFrom(s => s.VolumeInventory.Name + " (" + s.VolumeInventory.Measurement.Name + ")"))
                .ForMember(x => x.DaysToTankTopId, o => o.MapFrom(s => s.DaysToTankTop.Id))
-               .ForMember(x => x.DaysToTankTop, o => o.MapFrom(s => s.DaysToTankTop.Name));
+               .ForMember(x => x.DaysToTankTop, o => o.MapFrom(s => s.DaysToTankTop.Name + " (" + s.DaysToTankTop.Measurement.Name + ")"));
             Mapper.CreateMap<ArtifactChart, GetArtifactResponse.ChartResponse>()
                 .ForMember(x => x.MeasurementId, o => o.MapFrom(s => s.Measurement.Id));
             Mapper.CreateMap<CreateConversionRequest, Data.Entities.Conversion>();

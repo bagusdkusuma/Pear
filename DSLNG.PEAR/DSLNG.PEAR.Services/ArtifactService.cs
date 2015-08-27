@@ -250,7 +250,7 @@ namespace DSLNG.PEAR.Services
             }
             return response;
         }
-        
+
         public GetPieDataResponse GetPieData(GetPieDataRequest request)
         {
             var response = new GetPieDataResponse();
@@ -277,31 +277,32 @@ namespace DSLNG.PEAR.Services
                                 && x.Periode >= start && x.Periode <= end && x.Kpi.Id == kpi.Id)
                                 .GroupBy(x => x.Kpi.Id)
                                 .Select(x => x.Sum(y => (double?)y.Value ?? 0)).FirstOrDefault();
-                        } else if (request.ValueAxis == ValueAxis.KpiActual)
+                        }
+                        else if (request.ValueAxis == ValueAxis.KpiActual)
                         {
                             seriesResponse.y = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType
                                 && x.Periode >= start && x.Periode <= end && x.Kpi.Id == kpi.Id)
                                 .GroupBy(x => x.Kpi.Id)
                                 .Select(x => x.Sum(y => (double?)y.Value ?? 0)).FirstOrDefault();
                         }
-                    break;
+                        break;
 
                     case YtdFormula.Average:
-                    if (request.ValueAxis == ValueAxis.KpiTarget)
-                    {
-                        seriesResponse.y = DataContext.KpiTargets.Where(x => x.PeriodeType == request.PeriodeType
-                            && x.Periode >= start && x.Periode <= end && x.Kpi.Id == kpi.Id)
-                            .GroupBy(x => x.Kpi.Id)
-                            .Select(x => x.Average(y => (double?)y.Value ?? 0)).FirstOrDefault();
-                    }
-                    else if (request.ValueAxis == ValueAxis.KpiActual)
-                    {
-                        seriesResponse.y = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType
-                            && x.Periode >= start && x.Periode <= end && x.Kpi.Id == kpi.Id)
-                            .GroupBy(x => x.Kpi.Id)
-                            .Select(x => x.Average(y => (double?)y.Value ?? 0)).FirstOrDefault();
-                    }
-                    break;
+                        if (request.ValueAxis == ValueAxis.KpiTarget)
+                        {
+                            seriesResponse.y = DataContext.KpiTargets.Where(x => x.PeriodeType == request.PeriodeType
+                                && x.Periode >= start && x.Periode <= end && x.Kpi.Id == kpi.Id)
+                                .GroupBy(x => x.Kpi.Id)
+                                .Select(x => x.Average(y => (double?)y.Value ?? 0)).FirstOrDefault();
+                        }
+                        else if (request.ValueAxis == ValueAxis.KpiActual)
+                        {
+                            seriesResponse.y = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType
+                                && x.Periode >= start && x.Periode <= end && x.Kpi.Id == kpi.Id)
+                                .GroupBy(x => x.Kpi.Id)
+                                .Select(x => x.Average(y => (double?)y.Value ?? 0)).FirstOrDefault();
+                        }
+                        break;
                 }
                 #endregion
 
@@ -325,7 +326,7 @@ namespace DSLNG.PEAR.Services
                     }
                 }
 
-                if (request.ValueAxis == ValueAxis.KpiTarget && latestActual != null) 
+                if (request.ValueAxis == ValueAxis.KpiTarget && latestActual != null)
                 {
                     if ((request.PeriodeType == PeriodeType.Hourly && request.RangeFilter == RangeFilter.CurrentHour) ||
                         (request.PeriodeType == PeriodeType.Daily && request.RangeFilter == RangeFilter.CurrentDay) ||
@@ -666,9 +667,11 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-        public GetComboChartDataResponse GetComboChartData(GetComboChartDataRequest request) {
+        public GetComboChartDataResponse GetComboChartData(GetComboChartDataRequest request)
+        {
             var response = new GetComboChartDataResponse();
-            foreach (var chart in request.Charts) {
+            foreach (var chart in request.Charts)
+            {
                 var chartReq = request.MapTo<GetCartesianChartDataRequest>();
                 chart.MapPropertiesToInstance<GetCartesianChartDataRequest>(chartReq);
                 var cartesianChartRes = GetChartData(chartReq);
@@ -2064,8 +2067,9 @@ namespace DSLNG.PEAR.Services
                 artifact.Rows.Add(row);
             }
 
-            foreach (var chart in artifact.Charts.ToList()) {
-               
+            foreach (var chart in artifact.Charts.ToList())
+            {
+
                 foreach (var series in chart.Series.ToList())
                 {
                     foreach (var stack in series.Stacks.ToList())
@@ -2204,20 +2208,27 @@ namespace DSLNG.PEAR.Services
             return DataContext.Artifacts.Include(x => x.Measurement)
                 .Include(x => x.Series)
                 .Include(x => x.Series.Select(y => y.Kpi))
+                .Include(x => x.Series.Select(y => y.Kpi.Measurement))
                 .Include(x => x.Series.Select(y => y.Stacks))
                 .Include(x => x.Series.Select(y => y.Stacks.Select(z => z.Kpi)))
+                .Include(x => x.Series.Select(y => y.Stacks.Select(z => z.Kpi.Measurement)))
                 .Include(x => x.Plots)
                 .Include(x => x.Rows)
                 .Include(x => x.Rows.Select(y => y.Kpi))
+                .Include(x => x.Rows.Select(y => y.Kpi.Measurement))
                 .Include(x => x.Charts)
                 .Include(x => x.Charts.Select(y => y.Measurement))
                 .Include(x => x.Charts.Select(y => y.Series))
                 .Include(x => x.Charts.Select(y => y.Series.Select(z => z.Kpi)))
+                .Include(x => x.Charts.Select(y => y.Series.Select(z => z.Kpi.Measurement)))
                 .Include(x => x.Charts.Select(y => y.Series.Select(z => z.Stacks)))
                 .Include(x => x.Charts.Select(y => y.Series.Select(z => z.Stacks.Select(a => a.Kpi))))
+                 .Include(x => x.Charts.Select(y => y.Series.Select(z => z.Stacks.Select(a => a.Kpi.Measurement))))
                 .Include(x => x.Tank)
                 .Include(x => x.Tank.DaysToTankTop)
+                .Include(x => x.Tank.DaysToTankTop.Measurement)
                 .Include(x => x.Tank.VolumeInventory)
+                .Include(x => x.Tank.VolumeInventory.Measurement)
                 .FirstOrDefault(x => x.Id == request.Id).MapTo<GetArtifactResponse>();
         }
 
