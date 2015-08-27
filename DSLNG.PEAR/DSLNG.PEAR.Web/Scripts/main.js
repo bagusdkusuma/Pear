@@ -2507,9 +2507,11 @@ Number.prototype.format = function (n, x) {
                         var next = (parseInt(i) + 1);
                         var nextExist = typeof this.points[next] !== 'undefined';
                         var prevExist = typeof this.points[prev] !== 'undefined';
-                        if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
-                            (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
-                            tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + this.points[i].series.options.tooltip.valueSuffix + '<br>';
+                        if (typeof this.points[i].total !== 'undefined') {
+                            if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
+                                (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
+                                tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + this.points[i].series.options.tooltip.valueSuffix + '<br>';
+                            }
                         }
                     }
                     return tooltip;
