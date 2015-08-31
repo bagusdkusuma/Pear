@@ -12,7 +12,8 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
         public PeriodeType PeriodeType { get; set; }
         public RangeFilter RangeFilter { get; set; }
         public TankRequest Tank { get; set; }
-        public class TankRequest {
+        public class TankRequest
+        {
             public int VolumeInventoryId { get; set; }
             public string VolumeInventory { get; set; }
             public int DaysToTankTopId { get; set; }
@@ -20,6 +21,7 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
             public string DaysToTankTopTitle { get; set; }
             public double MinCapacity { get; set; }
             public double MaxCapacity { get; set; }
+            public string Color { get; set; }
         }
     }
 }

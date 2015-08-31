@@ -82,6 +82,7 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
             public string DaysToTankTopTitle { get; set; }
             public double MinCapacity { get; set; }
             public double MaxCapacity { get; set; }
+            public string Color { get; set; }
         }
         public class RowRequest
         {

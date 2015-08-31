@@ -46,7 +46,7 @@
         var tankFullHeight = tankHeight - (ellipseRY * 3);
         var roundMaxY = tankHeight - tankFullHeight;
 
-        var softBlue = '#3949AB';
+        var softBlue = options.Color !== undefined ? options.Color : '#3949AB';
         var darkBlue = '#283593';
         var greyBorder = '#BDBDBD';
         var red = '#e43834';

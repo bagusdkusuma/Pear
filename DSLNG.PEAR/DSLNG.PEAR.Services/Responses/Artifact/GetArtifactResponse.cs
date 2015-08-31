@@ -8,7 +8,8 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
 {
     public class GetArtifactResponse
     {
-        public GetArtifactResponse() {
+        public GetArtifactResponse()
+        {
             Series = new List<SeriesResponse>();
             PlotBands = new List<PlotResponse>();
             Charts = new List<ChartResponse>();
@@ -41,7 +42,8 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
         public bool Is3D { get; set; }
         public bool ShowLegend { get; set; }
 
-        public class SeriesResponse {
+        public class SeriesResponse
+        {
             public SeriesResponse()
             {
                 Stacks = new List<StackResponse>();
@@ -60,7 +62,8 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
             public string KpiName { get; set; }
             public string Label { get; set; }
         }
-        public class PlotResponse {
+        public class PlotResponse
+        {
             public double From { get; set; }
             public double To { get; set; }
             public string Color { get; set; }
@@ -77,7 +80,8 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
             public DateTime? End { get; set; }
         }
 
-        public class TankResponse {
+        public class TankResponse
+        {
             public int Id { get; set; }
             public int VolumeInventoryId { get; set; }
             public string VolumeInventory { get; set; }
@@ -86,6 +90,7 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
             public string DaysToTankTopTitle { get; set; }
             public double MinCapacity { get; set; }
             public double MaxCapacity { get; set; }
+            public string Color { get; set; }
         }
 
 

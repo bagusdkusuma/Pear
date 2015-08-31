@@ -13,5 +13,6 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
         public string DaysToTankTopUnit { get; set; }
         public double MinCapacity { get; set; }
         public double MaxCapacity { get; set; }
+        public string Color { get; set; }
     }
 }

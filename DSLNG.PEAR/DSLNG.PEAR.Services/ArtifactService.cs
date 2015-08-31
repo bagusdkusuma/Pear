@@ -1958,6 +1958,7 @@ namespace DSLNG.PEAR.Services
                 tank.DaysToTankTopTitle = request.Tank.DaysToTankTopTitle;
                 tank.MinCapacity = request.Tank.MinCapacity;
                 tank.MaxCapacity = request.Tank.MaxCapacity;
+                tank.Color = request.Tank.Color;
                 artifact.Tank = tank;
             }
             DataContext.Artifacts.Add(artifact);
@@ -2163,6 +2164,7 @@ namespace DSLNG.PEAR.Services
                 tank.DaysToTankTopTitle = request.Tank.DaysToTankTopTitle;
                 tank.MinCapacity = request.Tank.MinCapacity;
                 tank.MaxCapacity = request.Tank.MaxCapacity;
+                tank.Color = request.Tank.Color;
             }
 
             artifact.GraphicName = request.GraphicName;

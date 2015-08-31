@@ -2109,6 +2109,11 @@ Number.prototype.format = function (n, x) {
 
     //tank
     artifactDesigner._setupCallbacks.tank = function () {
+        Pear.Artifact.Designer._colorPicker($('#graphic-settings'));
+        /*$('#graphic-settings').find('.colorpicker').each(function (i, val) {
+            console.log(val);
+            Pear.Artifact.Designer._colorPicker($(val));
+        });*/
         $('.main-value-axis').css('display', 'none');
         $('.form-measurement').css('display', 'none');
         Pear.Artifact.Designer._kpiAutoComplete($('#graphic-settings'), false);
