@@ -16,5 +16,7 @@ namespace DSLNG.PEAR.Data.Entities
         public double MaxCapacity { get; set; }
         [DefaultValue("#3949AB")]
         public string Color { get; set; }
+        [DefaultValue(true)]
+        public bool ShowLine { get; set; }
     }
 }

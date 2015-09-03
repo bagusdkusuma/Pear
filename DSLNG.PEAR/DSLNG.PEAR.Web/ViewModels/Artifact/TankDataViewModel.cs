@@ -17,5 +17,6 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         public double MinCapacity { get; set; }
         public double MaxCapacity { get; set; }
         public string Color { get; set; }
+        public bool ShowLine { get; set; }
     }
 }

@@ -18,5 +18,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         [Display(Name = "Max Capacity")]
         public double MaxCapacity { get; set; }
         public string Color { get; set; }
+        [Display(Name = "Show Shipment Ready Line")]
+        public bool ShowLine { get; set; }
     }
 }

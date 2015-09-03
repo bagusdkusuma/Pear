@@ -92,6 +92,7 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
             public double MinCapacity { get; set; }
             public double MaxCapacity { get; set; }
             public string Color { get; set; }
+            public bool ShowLine { get; set; }
         }
 
         public class ChartRequest

@@ -33,3 +33,8 @@
     </div>
     @Html.ValidationMessageFor(model => model.Tank.Color)
 </div>
+<div class="form-group form-list">
+    @Html.LabelFor(model => model.Tank.ShowLine)
+    @Html.EditorFor(model => model.Tank.ShowLine)
+    @Html.ValidationMessageFor(model => model.Tank.ShowLine)
+</div>
