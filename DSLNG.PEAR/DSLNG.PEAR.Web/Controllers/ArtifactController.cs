@@ -689,6 +689,8 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             var artifactResp = _artifactServie.GetArtifact(new GetArtifactRequest { Id = id });
             var previewViewModel = new ArtifactPreviewViewModel();
+            previewViewModel.FractionScale = artifactResp.FractionScale;
+            previewViewModel.MaxFractionScale = artifactResp.MaxFractionScale;
             switch (artifactResp.GraphicType)
             {
                 case "line":
@@ -811,6 +813,8 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Preview(ArtifactDesignerViewModel viewModel)
         {
             var previewViewModel = new ArtifactPreviewViewModel();
+            previewViewModel.FractionScale = viewModel.FractionScale;
+            previewViewModel.MaxFractionScale = viewModel.MaxFractionScale;
             switch (viewModel.GraphicType)
             {
                 case "line":

@@ -31,7 +31,7 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
         public string Measurement { get; set; }
         public int MeasurementId { get; set; }
         public double FractionScale { get; set; }
-        public double MaxValue { get; set; }
+        public double MaxFractionScale { get; set; }
 
         public bool Actual { get; set; }
         public bool Target { get; set; }

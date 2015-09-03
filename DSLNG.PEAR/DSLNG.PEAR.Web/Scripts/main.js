@@ -1098,7 +1098,9 @@ Number.prototype.format = function (n, x) {
                 //min: 0,
                 title: {
                     text: data.BarChart.ValueAxisTitle
-                }
+                },
+                tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
+                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale
             },
             tooltip: {
                 formatter: function () {
@@ -1151,7 +1153,9 @@ Number.prototype.format = function (n, x) {
             yAxis: {
                 title: {
                     text: data.BarChart.ValueAxisTitle
-                }
+                },
+                tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
+                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale
             },
             tooltip: {
                 formatter: function () {
@@ -1196,7 +1200,9 @@ Number.prototype.format = function (n, x) {
                 //min: 0,
                 title: {
                     text: data.BarChart.ValueAxisTitle
-                }
+                },
+                tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
+                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale
             },
 
             tooltip: {
@@ -1363,7 +1369,9 @@ Number.prototype.format = function (n, x) {
                     value: 0,
                     width: 1,
                     color: '#808080'
-                }]
+                }],
+                tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
+                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale
             },
             exporting: {
                 url: '/Chart/Export',
@@ -1504,7 +1512,9 @@ Number.prototype.format = function (n, x) {
                     formatter: function () {
                         return this.value;
                     }
-                }
+                },
+                tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
+                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale
             },
             tooltip: {
                 formatter: function () {
@@ -1544,6 +1554,7 @@ Number.prototype.format = function (n, x) {
     };
     artifactDesigner._displayMultistacksAreaChart = function (data, container) {
         data.AreaChart.Series = data.AreaChart.Series.reverse();
+        console.log(data);
         container.highcharts({
             chart: {
                 type: 'area',
@@ -1566,7 +1577,9 @@ Number.prototype.format = function (n, x) {
             yAxis: {
                 title: {
                     text: data.AreaChart.ValueAxisTitle
-                }
+                },
+                tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
+                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale
             },
             //tooltip: {
             //    shared: true,

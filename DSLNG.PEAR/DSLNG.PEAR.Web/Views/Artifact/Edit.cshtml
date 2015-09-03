@@ -75,7 +75,17 @@
                                     @Html.ValidationMessageFor(model => model.EndInDisplay)
                                 </div>
                             </div>
+                             <div class="form-group form-list">
+                                @Html.LabelFor(model => model.FractionScale)
+                                @Html.TextBoxFor(model => model.FractionScale, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.FractionScale)
+                            </div>
 
+                            <div class="form-group form-list">
+                                @Html.LabelFor(model => model.MaxFractionScale)
+                                @Html.TextBoxFor(model => model.MaxFractionScale, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.MaxFractionScale)
+                            </div>
                             <div class="form-group form-list  main-value-axis">
                                 @Html.LabelFor(model => model.ValueAxis)
                                 @Html.DropDownListFor(model => model.ValueAxis, Model.ValueAxes, new { id = "bar-value-axis", @class = "form-control" })
