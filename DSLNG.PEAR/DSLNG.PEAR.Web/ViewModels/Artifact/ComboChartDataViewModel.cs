@@ -9,7 +9,8 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         public string[] Periodes { get; set; }
         public string Measurement { get; set; }
         public IList<ChartViewModel> Charts { get; set; }
-
+        public double? FractionScale { get; set; }
+        public double? MaxFractionScale { get; set; }
         public class ChartViewModel
         {
             public string GraphicType { get; set; }

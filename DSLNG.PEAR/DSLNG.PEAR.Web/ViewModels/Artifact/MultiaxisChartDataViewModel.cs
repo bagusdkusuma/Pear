@@ -8,7 +8,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         public string Subtitle { get; set; }
         public string[] Periodes { get; set; }
         public IList<ChartViewModel> Charts { get; set; }
-
+        
         public class ChartViewModel {
             public string ValueAxisTitle { get; set; }
             public string Measurement { get; set; }
@@ -17,7 +17,8 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
             public bool IsOpposite { get; set; }
             public string SeriesType { get; set; }
             public IList<SeriesViewModel> Series { get; set; }
-
+            public double? FractionScale { get; set; }
+            public double? MaxFractionScale { get; set; }
             public class SeriesViewModel
             {
                 public string name { get; set; }

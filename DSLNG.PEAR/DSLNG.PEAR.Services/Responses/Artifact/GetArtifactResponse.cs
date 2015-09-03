@@ -30,8 +30,8 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
         public RangeFilter RangeFilter { get; set; }
         public string Measurement { get; set; }
         public int MeasurementId { get; set; }
-        public double FractionScale { get; set; }
-        public double MaxFractionScale { get; set; }
+        public double? FractionScale { get; set; }
+        public double? MaxFractionScale { get; set; }
 
         public bool Actual { get; set; }
         public bool Target { get; set; }
@@ -98,6 +98,8 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
             public string ValueAxisTitle { get; set; }
             public string ValueAxisColor { get; set; }
             public bool IsOpposite { get; set; }
+            public double? FractionScale { get; set; }
+            public double? MaxFractionScale { get; set; }
         }
 
     }

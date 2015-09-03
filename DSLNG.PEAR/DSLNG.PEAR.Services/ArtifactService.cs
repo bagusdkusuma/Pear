@@ -657,6 +657,8 @@ namespace DSLNG.PEAR.Services
                 if (response.Periodes == null) response.Periodes = cartesianChartRes.Periodes;
                 var multiaxisChart = cartesianChartRes.MapTo<GetMultiaxisChartDataResponse.ChartResponse>();
                 multiaxisChart.GraphicType = chartReq.GraphicType;
+                multiaxisChart.FractionScale = chart.FractionScale;
+                multiaxisChart.MaxFractionScale = chart.MaxFractionScale;
                 multiaxisChart.Measurement = DataContext.Measurements.First(x => x.Id == chartReq.MeasurementId).Name;
                 multiaxisChart.ValueAxisTitle = chart.ValueAxisTitle;
                 multiaxisChart.ValueAxisColor = chart.ValueAxisColor;
