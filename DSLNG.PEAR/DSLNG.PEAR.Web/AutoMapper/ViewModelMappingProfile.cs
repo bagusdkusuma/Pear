@@ -514,10 +514,10 @@ namespace DSLNG.PEAR.Web.AutoMapper
         private void ConfigurePmsConfigDetails()
         {
             Mapper.CreateMap<CreatePmsConfigDetailsViewModel, CreatePmsConfigDetailsRequest>()
-                .ForMember(x => x.ScoreIndicators, o => o.MapFrom(s => s.ScoreIndicators.Where(x => x.Id > 0 && !string.IsNullOrEmpty(x.Color) && !string.IsNullOrEmpty(x.Expression))));
+                .ForMember(x => x.ScoreIndicators, o => o.MapFrom(s => s.ScoreIndicators.Where(x => !string.IsNullOrEmpty(x.Color) && !string.IsNullOrEmpty(x.Expression))));
             Mapper.CreateMap<GetPmsConfigDetailsResponse, UpdatePmsConfigDetailsViewModel>();
             Mapper.CreateMap<UpdatePmsConfigDetailsViewModel, UpdatePmsConfigDetailsRequest>()
-                .ForMember(x => x.ScoreIndicators, o => o.MapFrom(s => s.ScoreIndicators.Where(x => x.Id > 0 && !string.IsNullOrEmpty(x.Color) && !string.IsNullOrEmpty(x.Expression))));
+                .ForMember(x => x.ScoreIndicators, o => o.MapFrom(s => s.ScoreIndicators.Where(x => !string.IsNullOrEmpty(x.Color) && !string.IsNullOrEmpty(x.Expression))));
         }
 
         private void ConfigureKpiTarget()
