@@ -2864,6 +2864,7 @@ Number.prototype.format = function (n, x) {
             },
             plotOptions: {
                 pie: {
+                    slicedOffset: 30,
                     allowPointSelect: true,
                     cursor: 'pointer',
                     /*dataLabels: {
