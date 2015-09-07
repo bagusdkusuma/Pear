@@ -37,6 +37,7 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<User> Users { get; set; }
         IDbSet<KpiRelationModel> KpiRelationModels { get; set; }
         IDbSet<ArtifactTank> ArtifactTanks { get; set; }
+        IDbSet<Highlight> Highlights { get; set; }
         Database Database { get; }
         int SaveChanges();
         DbEntityEntry Entry(object entity);
