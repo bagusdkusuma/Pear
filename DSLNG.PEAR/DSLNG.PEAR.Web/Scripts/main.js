@@ -147,6 +147,11 @@ Number.prototype.format = function (n, x) {
                     $('#general-graphic-settings').css('display', 'block');
                     $('.form-measurement').css('display', 'block');
                     $('.main-value-axis').css('display', 'block');
+                    if (['speedometer', 'trafficlight', 'tabular', 'tank', 'pie', 'multiaxis'].indexOf(type) > -1) {
+                        $('.scale').css('display', 'none');
+                    } else {
+                        $('.scale').css('display', 'block');
+                    }
                     if (callback.hasOwnProperty(type)) {
                         callback[type]();
                     }
@@ -388,6 +393,11 @@ Number.prototype.format = function (n, x) {
         });
         rangeControl();
         rangeDatePicker();
+        if (['speedometer', 'trafficlight', 'tabular', 'tank', 'pie', 'multiaxis'].indexOf($('#graphic-type').val()) > -1) {
+            $('.scale').css('display', 'none');
+        } else {
+            $('.scale').css('display', 'block');
+        }
         switch ($('#graphic-type').val()) {
             case 'multiaxis':
                 var $hiddenFields = $('#hidden-fields');
@@ -1098,7 +1108,9 @@ Number.prototype.format = function (n, x) {
                 //min: 0,
                 title: {
                     text: data.BarChart.ValueAxisTitle
-                }
+                },
+                tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
+                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale
             },
             tooltip: {
                 formatter: function () {
@@ -1151,7 +1163,9 @@ Number.prototype.format = function (n, x) {
             yAxis: {
                 title: {
                     text: data.BarChart.ValueAxisTitle
-                }
+                },
+                tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
+                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale
             },
             tooltip: {
                 formatter: function () {
@@ -1196,7 +1210,9 @@ Number.prototype.format = function (n, x) {
                 //min: 0,
                 title: {
                     text: data.BarChart.ValueAxisTitle
-                }
+                },
+                tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
+                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale
             },
 
             tooltip: {
@@ -1363,7 +1379,9 @@ Number.prototype.format = function (n, x) {
                     value: 0,
                     width: 1,
                     color: '#808080'
-                }]
+                }],
+                tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
+                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale
             },
             exporting: {
                 url: '/Chart/Export',
@@ -1504,7 +1522,9 @@ Number.prototype.format = function (n, x) {
                     formatter: function () {
                         return this.value;
                     }
-                }
+                },
+                tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
+                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale
             },
             tooltip: {
                 formatter: function () {
@@ -1544,6 +1564,7 @@ Number.prototype.format = function (n, x) {
     };
     artifactDesigner._displayMultistacksAreaChart = function (data, container) {
         data.AreaChart.Series = data.AreaChart.Series.reverse();
+        console.log(data);
         container.highcharts({
             chart: {
                 type: 'area',
@@ -1566,7 +1587,9 @@ Number.prototype.format = function (n, x) {
             yAxis: {
                 title: {
                     text: data.AreaChart.ValueAxisTitle
-                }
+                },
+                tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
+                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale
             },
             //tooltip: {
             //    shared: true,
@@ -2397,7 +2420,7 @@ Number.prototype.format = function (n, x) {
                 }).appendTo(chartTemplate);
                 chartTemplate.removeClass('original');
                 chartTemplate.attr('data-chart-pos', chartCount);
-                var fields = ['ValueAxis', 'GraphicType', 'MeasurementId', 'ValueAxisTitle', 'ValueAxisColor', 'IsOpposite'];
+                var fields = ['ValueAxis', 'GraphicType', 'MeasurementId', 'ValueAxisTitle', 'ValueAxisColor', 'IsOpposite', 'FractionScale','MaxFractionScale'];
                 for (var i in fields) {
                     var field = fields[i];
                     chartTemplate.find('#MultiaxisChart_Charts_0__' + field).attr('name', 'MultiaxisChart.Charts[' + chartCount + '].' + field);
@@ -2443,7 +2466,9 @@ Number.prototype.format = function (n, x) {
                         color: data.MultiaxisChart.Charts[i].ValueAxisColor
                     }
                 },
-                opposite: data.MultiaxisChart.Charts[i].IsOpposite
+                opposite: data.MultiaxisChart.Charts[i].IsOpposite,
+                tickInterval: data.MultiaxisChart.Charts[i].FractionScale == 0 ? null : data.MultiaxisChart.Charts[i].FractionScale,
+                max: data.MultiaxisChart.Charts[i].MaxFractionScale == 0 ? null : data.MultiaxisChart.Charts[i].MaxFractionScale
             });
             if (chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType] == 'line') {
                 plotOptions[chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType]] = {
@@ -2501,7 +2526,8 @@ Number.prototype.format = function (n, x) {
         }
         container.highcharts({
             chart: {
-                zoomType: 'xy'
+                zoomType: 'xy',
+                alignTicks: false
             },
             title: {
                 text: data.MultiaxisChart.Title
@@ -2699,7 +2725,9 @@ Number.prototype.format = function (n, x) {
             yAxis: {
                 title: {
                     text: data.ComboChart.Measurement
-                }
+                },
+                tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
+                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale
             },
             exporting: {
                 url: '/Chart/Export',

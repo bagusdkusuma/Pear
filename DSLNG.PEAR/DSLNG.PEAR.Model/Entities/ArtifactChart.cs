@@ -22,6 +22,8 @@ namespace DSLNG.PEAR.Data.Entities
         public Measurement Measurement { get; set; }
         public string ValueAxisTitle { get; set; }
         public string ValueAxisColor { get; set; }
+        public double? FractionScale { get; set; }
+        public double? MaxFractionScale { get; set; }
         public bool IsOpposite { get; set; }
     }
 }

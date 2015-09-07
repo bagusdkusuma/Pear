@@ -21,6 +21,8 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
             public string ValueAxisTitle { get; set; }
             public string ValueAxisColor { get; set; }
             public bool IsOpposite { get; set; }
+            public double? FractionScale { get; set; }
+            public double? MaxFractionScale { get; set; }
             public class SeriesRequest
             {
                 public SeriesRequest()

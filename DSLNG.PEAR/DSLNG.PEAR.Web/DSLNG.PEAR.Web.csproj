@@ -625,6 +625,8 @@
     <Content Include="Views\MultiaxisChart\_AreaChartEdit.cshtml" />
     <Content Include="Views\Pie\_Create.cshtml" />
     <Content Include="Views\Pie\_Edit.cshtml" />
+    <Content Include="Views\Highlight\_IndexGridPartial.cshtml" />
+    <Content Include="Views\Highlight\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -683,6 +685,7 @@
     <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
+    <Compile Include="Controllers\HighlightController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KpiAchievementController.cs" />
     <Compile Include="Controllers\KpiTargetController.cs" />

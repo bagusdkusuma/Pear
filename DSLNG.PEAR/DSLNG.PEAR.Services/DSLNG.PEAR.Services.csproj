@@ -75,6 +75,8 @@
     <Compile Include="ConversionService.cs" />
     <Compile Include="DropdownService.cs" />
     <Compile Include="GroupService.cs" />
+    <Compile Include="HighlightService.cs" />
+    <Compile Include="Interfaces\IHighlightService.cs" />
     <Compile Include="Interfaces\IKpiAchievementService.cs" />
     <Compile Include="Interfaces\IDropdownService.cs" />
     <Compile Include="Interfaces\IKpiTargetService.cs" />
@@ -97,6 +99,7 @@
     <Compile Include="Requests\Config\GetConfigurationRequest.cs" />
     <Compile Include="Requests\Conversion\CreateConversionRequest.cs" />
     <Compile Include="Requests\Conversion\UpdateConversionRequest.cs" />
+    <Compile Include="Requests\Highlight\GetHighlightsRequest.cs" />
     <Compile Include="Requests\Group\CreateGroupRequest.cs" />
     <Compile Include="Requests\Group\UpdateGroupRequest.cs" />
     <Compile Include="Requests\KpiAchievement\GetKpiAchievementRequestByValue.cs" />
@@ -153,6 +156,7 @@
     <Compile Include="Responses\Group\CreateGroupResponse.cs" />
     <Compile Include="Responses\Group\DeleteGroupResponse.cs" />
     <Compile Include="Responses\Group\UpdateGroupResponse.cs" />
+    <Compile Include="Responses\Highlight\GetHighlightsResponse.cs" />
     <Compile Include="Responses\KpiAchievement\AllKpiAchievementsResponse.cs" />
     <Compile Include="Responses\KpiAchievement\GetAchievementsResponse.cs" />
     <Compile Include="Responses\KpiAchievement\GetKpiAchievementResponse.cs" />
@@ -356,6 +360,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

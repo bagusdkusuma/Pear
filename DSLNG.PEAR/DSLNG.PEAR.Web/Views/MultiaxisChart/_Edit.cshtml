@@ -61,6 +61,20 @@
                     </div>
                 </div>
                 <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.MultiaxisChart.Charts[i].FractionScale)
+                        @Html.TextBoxFor(model => model.MultiaxisChart.Charts[i].FractionScale, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].FractionScale)
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.MultiaxisChart.Charts[i].MaxFractionScale)
+                        @Html.TextBoxFor(model => model.MultiaxisChart.Charts[i].MaxFractionScale, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].MaxFractionScale)
+                    </div>
+                </div>
+                <div class="col-sm-6">
                     <div class="form-group form-list value-axis-color">
                         @Html.LabelFor(model => model.MultiaxisChart.Charts[i].ValueAxisColor)
                         <div class="input-group colorpicker">

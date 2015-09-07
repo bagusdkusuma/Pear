@@ -76,6 +76,19 @@
                                 </div>
                             </div>
 
+                            <div class="scale">
+                                <div class="form-group form-list">
+                                    @Html.LabelFor(model => model.FractionScale)
+                                    @Html.TextBoxFor(model => model.FractionScale, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.FractionScale)
+                                </div>
+
+                                <div class="form-group form-list">
+                                    @Html.LabelFor(model => model.MaxFractionScale)
+                                    @Html.TextBoxFor(model => model.MaxFractionScale, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.MaxFractionScale)
+                                </div>
+                            </div>
                             <div class="form-group form-list  main-value-axis">
                                 @Html.LabelFor(model => model.ValueAxis)
                                 @Html.DropDownListFor(model => model.ValueAxis, Model.ValueAxes, new { id = "bar-value-axis", @class = "form-control" })
@@ -120,23 +133,23 @@
                         @{
                             if (Model.PeriodeType == PeriodeType.Yearly.ToString())
                             {
-                                <span id="datetime-attr" data-datepickerformat="YYYY"></span>
+                            <span id="datetime-attr" data-datepickerformat="YYYY"></span>
                             }
                             else if (Model.PeriodeType == PeriodeType.Monthly.ToString())
                             {
-                                <span id="datetime-attr" data-datepickerformat="MM/YYYY"></span>
+                            <span id="datetime-attr" data-datepickerformat="MM/YYYY"></span>
                             }
                             else if (Model.PeriodeType == PeriodeType.Weekly.ToString())
                             {
-                                <span id="datetime-attr" data-datepickerformat="MM/DD/YYYY"></span>
+                            <span id="datetime-attr" data-datepickerformat="MM/DD/YYYY"></span>
                             }
                             else if (Model.PeriodeType == PeriodeType.Daily.ToString())
                             {
-                                <span id="datetime-attr" data-datepickerformat="MM/DD/YYYY"></span>
+                            <span id="datetime-attr" data-datepickerformat="MM/DD/YYYY"></span>
                             }
                             else if (Model.PeriodeType == PeriodeType.Hourly.ToString())
                             {
-                                <span id="datetime-attr" data-datepickerformat="MM/DD/YYYY hh:00 A"></span>
+                            <span id="datetime-attr" data-datepickerformat="MM/DD/YYYY hh:00 A"></span>
                             }
                         }
                     </div>
