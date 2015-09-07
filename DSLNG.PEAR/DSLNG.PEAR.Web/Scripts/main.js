@@ -160,7 +160,7 @@ Number.prototype.format = function (n, x) {
         };
         var rangeDatePicker = function () {
             $('.datepicker').datetimepicker({
-                format: "MM/DD/YYYY hh:00 A"
+                format: "MM/DD/YYYY"
             });
             $('.datepicker').change(function (e) {
                 //console.log(this);
@@ -212,12 +212,28 @@ Number.prototype.format = function (n, x) {
             });
             var original = $('#RangeFilter').clone(true);
             var rangeFilterSetup = function (periodeType) {
+                var graphicType = $('#graphic-type').val();
                 var toRemove = {};
-                toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD'];
-                toRemove.daily = ['CurrentHour', 'CurrentYear', 'DTD', 'YTD'];
-                toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD'];
-                toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD'];
-                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD'];
+                switch (graphicType) {
+                    case "tabular":
+                    case "tank":
+                    case "speedometer":
+                    case "traffic":
+                    case "pie":
+                        toRemove.hourly = [];
+                        toRemove.daily = ['CurrentHour', 'CurrentWeek', 'CurrentYear', 'DTD', 'MTD', 'YTD', 'CurrentMonth', 'YTD', 'Interval', 'SpecificMonth', 'SpecificYear'];
+                        toRemove.weekly = [];
+                        toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'CurrentYear', 'YTD', 'Interval', 'SpecificDay', 'SpecificYear'];
+                        toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'Interval', 'SpecificDay', 'SpecificMonth'];
+                        break;
+                    default:
+                        toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
+                        toRemove.daily = ['CurrentHour', 'CurrentYear', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
+                        toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
+                        toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
+                        toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
+                        break;
+                }
                 var originalClone = original.clone(true);
                 originalClone.find('option').each(function (i, val) {
                     if (toRemove[periodeType].indexOf(originalClone.find(val).val()) > -1) {
@@ -236,17 +252,27 @@ Number.prototype.format = function (n, x) {
             });
 
         };
-
+        var specificDate = function() {
+            $(".datepicker").on("dp.change", function(e) {
+                if ($('#RangeFilter').val().toLowerCase().indexOf('specific') > -1 && e.target.id === 'StartInDisplay') {
+                    $('#EndInDisplay').val($('#StartInDisplay').val());
+                }
+            });
+        };
         $('#graphic-type').change(function (e) {
             e.preventDefault();
             var $this = $(this);
             loadGraph($this.data('graph-url'), $this.val());
+            $('#PeriodeType').change();
         });
+        
+        
 
         var initialGraphicType = $('#graphic-type');
         loadGraph(initialGraphicType.data('graph-url'), initialGraphicType.val());
         rangeControl();
         rangeDatePicker();
+        specificDate();
     };
     artifactDesigner.EditSetup = function () {
         var callback = Pear.Artifact.Designer._setupCallbacks;
@@ -354,6 +380,7 @@ Number.prototype.format = function (n, x) {
             });
         };
         var rangeControl = function () {
+            var graphicType = $('#graphic-type').val();
             $('#RangeFilter').change(function (e) {
                 e.preventDefault();
                 var $this = $(this);
@@ -362,11 +389,26 @@ Number.prototype.format = function (n, x) {
             var original = $('#RangeFilter').clone(true);
             var rangeFilterSetup = function (periodeType) {
                 var toRemove = {};
-                toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD'];
-                toRemove.daily = ['CurrentHour', 'CurrentYear', 'DTD', 'YTD'];
-                toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD'];
-                toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD'];
-                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD'];
+                switch (graphicType) {
+                    case "tabular":
+                    case "tank":
+                    case "speedometer":
+                    case "traffic":
+                    case "pie":
+                        toRemove.hourly = [];
+                        toRemove.daily = ['CurrentHour', 'CurrentWeek', 'CurrentYear', 'DTD', 'MTD', 'YTD', 'CurrentMonth', 'YTD', 'Interval', 'SpecificMonth', 'SpecificYear'];
+                        toRemove.weekly = [];
+                        toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'CurrentYear', 'YTD', 'Interval', 'SpecificDay', 'SpecificYear'];
+                        toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'Interval', 'SpecificDay', 'SpecificMonth'];
+                        break;
+                    default:
+                        toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
+                        toRemove.daily = ['CurrentHour', 'CurrentYear', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
+                        toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
+                        toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
+                        toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
+                        break;
+                }
                 var originalClone = original.clone(true);
                 originalClone.find('option').each(function (i, val) {
                     if (toRemove[periodeType].indexOf(originalClone.find(val).val()) > -1) {
@@ -391,6 +433,14 @@ Number.prototype.format = function (n, x) {
             var $this = $(this);
             loadGraph($this.data('graph-url'), $this.val());
         });
+        var specificDate = function () {
+            $(".datepicker").on("dp.change", function (e) {
+                if ($('#RangeFilter').val().toLowerCase().indexOf('specific') > -1 && e.target.id === 'StartInDisplay') {
+                    $('#EndInDisplay').val($('#StartInDisplay').val());
+                }
+            });
+        };
+        specificDate();
         rangeControl();
         rangeDatePicker();
         if (['speedometer', 'trafficlight', 'tabular', 'tank', 'pie', 'multiaxis'].indexOf($('#graphic-type').val()) > -1) {
@@ -2082,6 +2132,11 @@ Number.prototype.format = function (n, x) {
 
     //tank
     artifactDesigner._setupCallbacks.tank = function () {
+        Pear.Artifact.Designer._colorPicker($('#graphic-settings'));
+        /*$('#graphic-settings').find('.colorpicker').each(function (i, val) {
+            console.log(val);
+            Pear.Artifact.Designer._colorPicker($(val));
+        });*/
         $('.main-value-axis').css('display', 'none');
         $('.form-measurement').css('display', 'none');
         Pear.Artifact.Designer._kpiAutoComplete($('#graphic-settings'), false);
@@ -2837,6 +2892,7 @@ Number.prototype.format = function (n, x) {
             },
             plotOptions: {
                 pie: {
+                    slicedOffset: 30,
                     allowPointSelect: true,
                     cursor: 'pointer',
                     /*dataLabels: {

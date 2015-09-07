@@ -662,10 +662,10 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             foreach (var name in Enum.GetNames(typeof(PeriodeType)))
             {
-                //if (!name.Equals("Hourly") && !name.Equals("Weekly"))
-                //{
+                if (!name.Equals("Hourly") && !name.Equals("Weekly"))
+                {
                     periodeTypes.Add(new SelectListItem { Text = name, Value = name });
-                //}   
+                }   
             }
         }
 
@@ -680,9 +680,9 @@ namespace DSLNG.PEAR.Web.Controllers
             rangeFilters.Add(new SelectListItem { Value = RangeFilter.MTD.ToString(), Text = "MONTH TO DATE" });
             rangeFilters.Add(new SelectListItem { Value = RangeFilter.YTD.ToString(), Text = "YEAR TO DATE" });
             rangeFilters.Add(new SelectListItem { Value = RangeFilter.Interval.ToString(), Text = "INTERVAL" });
-            /*rangeFilters.Add(new SelectListItem { Value = RangeFilter.SpecificDay.ToString(), Text = "SPECIFIC DAY" });
+            rangeFilters.Add(new SelectListItem { Value = RangeFilter.SpecificDay.ToString(), Text = "SPECIFIC DAY" });
             rangeFilters.Add(new SelectListItem { Value = RangeFilter.SpecificMonth.ToString(), Text = "SPECIFIC MONTH" });
-            rangeFilters.Add(new SelectListItem { Value = RangeFilter.SpecificYear.ToString(), Text = "SPECIFIC YEAR" });*/
+            rangeFilters.Add(new SelectListItem { Value = RangeFilter.SpecificYear.ToString(), Text = "SPECIFIC YEAR" });
         }
 
         public ActionResult View(int id)
