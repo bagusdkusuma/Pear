@@ -5,6 +5,9 @@ using DSLNG.PEAR.Services.Responses.Highlight;
 using System.Linq;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Persistence;
+using DSLNG.PEAR.Data.Entities;
+using System;
+using System.Collections.Generic;
 
 namespace DSLNG.PEAR.Services
 {
@@ -25,6 +28,63 @@ namespace DSLNG.PEAR.Services
                                     .ToList().MapTo<GetHighlightsResponse.HighlightResponse>()
                 };
             }
+        }
+        public SaveHighlightResponse SaveHighlight(SaveHighlightRequest request)
+        {
+            try
+            {
+                if (request.Id == 0)
+                {
+                    var highlight = request.MapTo<Highlight>();
+                    DataContext.Highlights.Add(highlight);
+                }
+                else
+                {
+                    var highlight = DataContext.Highlights.FirstOrDefault(x => x.Id == request.Id);
+                    if (highlight != null)
+                    {
+                        request.MapPropertiesToInstance<Highlight>(highlight);
+                    }
+                }
+                DataContext.SaveChanges();
+                return new SaveHighlightResponse
+                {
+                    IsSuccess = true,
+                    Message = "Highlight has been saved"
+                };
+            }
+            catch (InvalidOperationException e) {
+                return new SaveHighlightResponse
+                {
+                    IsSuccess = false,
+                    Message = e.Message
+                }; 
+            }
+      
+        }
+        public GetReportHighlightsResponse GetReportHighlights(GetReportHighlightsRequest request) {
+            var response = new GetReportHighlightsResponse();
+            var start = request.TimePeriodes.First();
+            var end = request.TimePeriodes[request.TimePeriodes.Count - 1];
+            var highlights = DataContext.Highlights.Where(x => x.Date >= start && x.Date <= end
+                 && x.Type == request.Type
+                 && x.PeriodeType == request.PeriodeType).ToList();
+            var reportHighlights = new List<GetReportHighlightsResponse.HighlightResponse>();
+            foreach (var time in request.TimePeriodes) {
+                var highlight = highlights.FirstOrDefault(x => x.Date == time);
+                if (highlight != null)
+                {
+                    reportHighlights.Add(new GetReportHighlightsResponse.HighlightResponse {
+                        Title = highlight.Title,
+                        Message = highlight.Message
+                    });
+                }
+                else {
+                    reportHighlights.Add(null);
+                }
+            }
+            response.Highlights = reportHighlights;
+            return response;
         }
     }
 }

@@ -1,13 +1,20 @@
 ﻿using DevExpress.Web.Mvc;
+using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Highlight;
+using DSLNG.PEAR.Web.ViewModels.Highlight;
+using System;
 using System.Web.Mvc;
+using PeriodeType = DSLNG.PEAR.Data.Enums.PeriodeType;
+using DSLNG.PEAR.Common.Extensions;
+
 namespace DSLNG.PEAR.Web.Controllers
 {
     public class HighlightController : BaseController
     {
         private IHighlightService _highlightService;
-        public HighlightController(IHighlightService highlightService) {
+        public HighlightController(IHighlightService highlightService)
+        {
             _highlightService = highlightService;
         }
         public ActionResult Index()
@@ -76,24 +83,29 @@ namespace DSLNG.PEAR.Web.Controllers
         // GET: /Highlight/Create
         public ActionResult Create()
         {
-            return View();
+            var viewModel = new HighlightViewModel();
+            foreach (var name in Enum.GetNames(typeof(PeriodeType)))
+            {
+                if (!name.Equals("Hourly") && !name.Equals("Weekly"))
+                {
+                    viewModel.PeriodeTypes.Add(new SelectListItem { Text = name, Value = name });
+                }
+            }
+            foreach (var name in Enum.GetNames(typeof(HighlightType)))
+            {
+                viewModel.Types.Add(new SelectListItem { Text = name, Value = name });
+            }
+            return View(viewModel);
         }
 
         //
         // POST: /Highlight/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(HighlightViewModel viewModel)
         {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            var req = viewModel.MapTo<SaveHighlightRequest>();
+            _highlightService.SaveHighlight(req);
+            return RedirectToAction("Index");
         }
 
         //

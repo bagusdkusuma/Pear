@@ -1,5 +1,6 @@
 ﻿
 
+using System;
 using System.Collections.Generic;
 
 namespace DSLNG.PEAR.Services.Responses.Artifact
@@ -9,10 +10,12 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
         public GetCartesianChartDataResponse()
         {
             Series = new List<SeriesResponse>();
+            TimePeriodes = new List<DateTime>();
         }
         public string Subtitle { get; set; }
         public string SeriesType { get; set; }
         public string[] Periodes { get; set; }
+        public IList<DateTime> TimePeriodes { get; set; }
         public IList<SeriesResponse> Series { get; set; }
         public class SeriesResponse
         {

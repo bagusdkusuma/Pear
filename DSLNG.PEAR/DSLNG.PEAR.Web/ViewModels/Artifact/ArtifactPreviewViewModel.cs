@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using PeriodeType = DSLNG.PEAR.Data.Enums.PeriodeType;
 
 namespace DSLNG.PEAR.Web.ViewModels.Artifact
 {
@@ -10,6 +11,9 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         public string GraphicType { get; set; }
         public double? FractionScale { get; set; }
         public double? MaxFractionScale { get; set; }
+        public string PeriodeType { get; set; }
+        public IList<DateTime> TimePeriodes { get; set; }
+        public IList<HighlightViewModel> Highlights { get; set; }
         public AreaChartDataViewModel AreaChart { get; set; }
         public BarChartDataViewModel BarChart { get; set; }
         public LineChartDataViewModel LineChart { get; set; }
@@ -20,5 +24,10 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         public MultiaxisChartDataViewModel MultiaxisChart { get; set; }
         public PieDataViewModel Pie { get; set; }
         public ComboChartDataViewModel ComboChart { get; set; }
+
+        public class HighlightViewModel{
+            public string Title {get;set;}
+            public string Message {get;set;}
+        }
     }
 }
