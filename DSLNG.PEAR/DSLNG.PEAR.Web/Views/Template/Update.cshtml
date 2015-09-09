@@ -75,9 +75,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    @Html.DropDownListFor(model => model.LayoutRows[i].LayoutColumns[j].ArtifactId, new List<SelectListItem> { new SelectListItem { Value = Model.LayoutRows[i].LayoutColumns[j].ArtifactId.ToString(), Text = Model.LayoutRows[i].LayoutColumns[j].ArtifactName } }, new { @class = "artifact-list form-control", style = "width:180px" })
+                                    @Html.DropDownListFor(model => model.LayoutRows[i].LayoutColumns[j].ArtifactId, new List<SelectListItem> { new SelectListItem { Value = Model.LayoutRows[i].LayoutColumns[j].ArtifactId.ToString(), Text = Model.LayoutRows[i].LayoutColumns[j].ArtifactName } }, new { @class = "artifact-list form-control", style = "width:170px" })
+                                    @Html.ActionLink("Edit", "Edit", "Artifact", new {id = Model.LayoutRows[i].LayoutColumns[j].ArtifactId}, new {style="color: #000000", target="_blank"})
                                     <input type="hidden" id="foo" name="LayoutRows[@i].LayoutColumns[@j].Id" value="@column.Id">
+                                    
                                 </div>
+
                                 <div class="form-group">
                                     <input type="button" value="Remove Column" class="remove-column" />
                                 </div>
@@ -134,9 +137,10 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <select name="LayoutRows[0].LayoutColumns[0].ArtifactId" class="form-control artifact-list" style="width: 200px">
+                            <select name="LayoutRows[0].LayoutColumns[0].ArtifactId" class="form-control artifact-list" style="width: 170px">
                                 <option>Select Artifact</option>
                             </select>
+                            @Html.ActionLink("Edit", "Edit", "Artifact", new {id = "_Id_"}, new {style="color: #000000;visibility:hidden", target="_blank"})
                         </div>
                         <div class="form-group">
                             <input type="button" value="Remove Column" class="remove-column" />

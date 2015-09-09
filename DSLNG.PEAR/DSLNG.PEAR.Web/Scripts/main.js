@@ -3187,8 +3187,16 @@ Number.prototype.format = function (n, x) {
             minimumInputLength: 1,
             templateResult: Pear.Artifact.Designer._formatKpi, // omitted for brevity, see the source of this page
             templateSelection: Pear.Artifact.Designer._formatKpiSelection // omitted for brevity, see the source of this page
+        }).on('select2:select', function (e) {
+            var link = $(this).parent().find('a')[0];
+            var id = e.params.data.id;
+            var cuttedLink = $(link).attr('href').substr(0, $(link).attr('href').lastIndexOf('/'));
+            $(link).attr('href', cuttedLink + '/' + id);
+            $(link).css('visibility', 'visible');
         });
     };
+    
+    
     templateEditor.LayoutSetup = function () {
         $('.column-width').change(function () {
             var colWidth = $(this).val();
