@@ -102,6 +102,8 @@
     <Compile Include="Requests\Highlight\GetHighlightsRequest.cs" />
     <Compile Include="Requests\Group\CreateGroupRequest.cs" />
     <Compile Include="Requests\Group\UpdateGroupRequest.cs" />
+    <Compile Include="Requests\Highlight\GetReportHighlightsRequest.cs" />
+    <Compile Include="Requests\Highlight\SaveHighlightRequest.cs" />
     <Compile Include="Requests\KpiAchievement\GetKpiAchievementRequestByValue.cs" />
     <Compile Include="Requests\KpiAchievement\GetKpiAchievementsConfigurationRequest.cs" />
     <Compile Include="Requests\KpiAchievement\GetKpiAchievementsRequest.cs" />
@@ -157,6 +159,8 @@
     <Compile Include="Responses\Group\DeleteGroupResponse.cs" />
     <Compile Include="Responses\Group\UpdateGroupResponse.cs" />
     <Compile Include="Responses\Highlight\GetHighlightsResponse.cs" />
+    <Compile Include="Responses\Highlight\GetReportHighlightsResponse.cs" />
+    <Compile Include="Responses\Highlight\SaveHighlightResponse.cs" />
     <Compile Include="Responses\KpiAchievement\AllKpiAchievementsResponse.cs" />
     <Compile Include="Responses\KpiAchievement\GetAchievementsResponse.cs" />
     <Compile Include="Responses\KpiAchievement\GetKpiAchievementResponse.cs" />

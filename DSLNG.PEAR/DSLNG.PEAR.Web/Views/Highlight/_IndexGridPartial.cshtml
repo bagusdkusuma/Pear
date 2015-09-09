@@ -25,7 +25,7 @@
         settings.Columns.Add("PeriodeType","Periode Type");
         settings.Columns.Add("Type", "Type");
         settings.Columns.Add("Title", "Title");
-        settings.Columns.Add("Date", "Date");
+        settings.Columns.Add("Date", "Date").PropertiesEdit.DisplayFormatString = "MM/dd/yyyy"; ;
         settings.SettingsPager.PageSizeItemSettings.Visible = true;
         settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
     }).BindToCustomData(Model).GetHtml()

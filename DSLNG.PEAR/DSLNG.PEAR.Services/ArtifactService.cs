@@ -655,6 +655,7 @@ namespace DSLNG.PEAR.Services
                 var cartesianChartRes = GetChartData(chartReq);
                 if (response.Subtitle == null) response.Subtitle = cartesianChartRes.Subtitle;
                 if (response.Periodes == null) response.Periodes = cartesianChartRes.Periodes;
+                if (response.TimePeriodes == null) response.TimePeriodes = cartesianChartRes.TimePeriodes;
                 var multiaxisChart = cartesianChartRes.MapTo<GetMultiaxisChartDataResponse.ChartResponse>();
                 multiaxisChart.GraphicType = chartReq.GraphicType;
                 multiaxisChart.FractionScale = chart.FractionScale;
@@ -679,6 +680,7 @@ namespace DSLNG.PEAR.Services
                 var cartesianChartRes = GetChartData(chartReq);
                 if (response.Subtitle == null) response.Subtitle = cartesianChartRes.Subtitle;
                 if (response.Periodes == null) response.Periodes = cartesianChartRes.Periodes;
+                if (response.TimePeriodes == null) response.TimePeriodes = cartesianChartRes.TimePeriodes;
                 var comboChart = cartesianChartRes.MapTo<GetComboChartDataResponse.ChartResponse>();
                 comboChart.GraphicType = chartReq.GraphicType;
                 comboChart.SeriesType = cartesianChartRes.SeriesType;
@@ -694,6 +696,7 @@ namespace DSLNG.PEAR.Services
             IList<DateTime> dateTimePeriodes = new List<DateTime>();
             string timeInformation;
             response.Periodes = this._getPeriodes(request.PeriodeType, request.RangeFilter, request.Start, request.End, out dateTimePeriodes, out timeInformation);
+            response.TimePeriodes = dateTimePeriodes;
             response.Subtitle = timeInformation;
             IList<GetCartesianChartDataResponse.SeriesResponse> seriesResponse = new List<GetCartesianChartDataResponse.SeriesResponse>();
             var seriesType = "single-stack";
