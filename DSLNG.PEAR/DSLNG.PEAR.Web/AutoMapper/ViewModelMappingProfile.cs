@@ -66,6 +66,9 @@ using Kpi = DSLNG.PEAR.Web.ViewModels.KpiTarget.Kpi;
 using DSLNG.PEAR.Services.Responses.Template;
 using DSLNG.PEAR.Services.Responses.Config;
 using DSLNG.PEAR.Web.ViewModels.Config;
+using DSLNG.PEAR.Web.ViewModels.Highlight;
+using DSLNG.PEAR.Services.Requests.Highlight;
+using DSLNG.PEAR.Services.Responses.Highlight;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -414,6 +417,9 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetTemplateResponse, TemplateViewModel>();
             Mapper.CreateMap<GetTemplateResponse.RowResponse, TemplateViewModel.RowViewModel>();
             Mapper.CreateMap<GetTemplateResponse.ColumnResponse, TemplateViewModel.ColumnViewModel>();
+
+            Mapper.CreateMap<HighlightViewModel, SaveHighlightRequest>();
+            Mapper.CreateMap<GetReportHighlightsResponse.HighlightResponse, ArtifactPreviewViewModel.HighlightViewModel>();
             base.Configure();
         }
 

@@ -627,6 +627,7 @@
     <Content Include="Views\Pie\_Edit.cshtml" />
     <Content Include="Views\Highlight\_IndexGridPartial.cshtml" />
     <Content Include="Views\Highlight\Index.cshtml" />
+    <Content Include="Views\Highlight\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -717,6 +718,7 @@
     <Compile Include="Extensions\Exporter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Artifact\AreaChartDataViewModel.cs" />
@@ -745,6 +747,7 @@
     <Compile Include="ViewModels\Conversion\IndexConversionViewModel.cs" />
     <Compile Include="ViewModels\Conversion\Measurement.cs" />
     <Compile Include="ViewModels\Conversion\UpdateConversionViewModel.cs" />
+    <Compile Include="ViewModels\Highlight\HighlightViewModel.cs" />
     <Compile Include="ViewModels\KpiAchievement\ConfigurationKpiAchievementsViewModel.cs" />
     <Compile Include="ViewModels\KpiAchievement\ConfigurationParamViewModel.cs" />
     <Compile Include="ViewModels\KpiAchievement\IndexKpiAchievementViewModel.cs" />
