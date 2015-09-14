@@ -72,6 +72,9 @@ using DSLNG.PEAR.Services.Responses.Highlight;
 using DSLNG.PEAR.Web.ViewModels.Vessel;
 using DSLNG.PEAR.Services.Requests.Vessel;
 using DSLNG.PEAR.Services.Responses.Vessel;
+using DSLNG.PEAR.Web.ViewModels.Buyer;
+using DSLNG.PEAR.Services.Requests.Buyer;
+using DSLNG.PEAR.Services.Responses.Buyer;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -426,6 +429,9 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<VesselViewModel, SaveVesselRequest>();
             Mapper.CreateMap<GetVesselResponse, VesselViewModel>();
+
+            Mapper.CreateMap<BuyerViewModel, SaveBuyerRequest>();
+            Mapper.CreateMap<GetBuyerResponse, BuyerViewModel>();
             base.Configure();
         }
 

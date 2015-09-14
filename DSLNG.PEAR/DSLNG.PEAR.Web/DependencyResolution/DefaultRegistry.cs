@@ -58,6 +58,7 @@ namespace DSLNG.PEAR.Web.DependencyResolution {
             For<IKpiAchievementService>().Use<KpiAchievementService>();
             For<IHighlightService>().Use<HighlightService>();
             For<IVesselService>().Use<VesselService>();
+            For<IBuyerService>().Use<BuyerService>();
         }
 
         #endregion
