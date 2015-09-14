@@ -6,12 +6,14 @@ using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.KpiAchievement;
 using DSLNG.PEAR.Services.Requests.Measurement;
 using DSLNG.PEAR.Services.Requests.PmsSummary;
+using DSLNG.PEAR.Services.Requests.Select;
 using DSLNG.PEAR.Services.Responses.KpiAchievement;
 using DSLNG.PEAR.Services.Responses.Level;
 using DSLNG.PEAR.Services.Responses.Measurement;
 using DSLNG.PEAR.Services.Responses.PmsSummary;
 using DSLNG.PEAR.Services.Responses.Kpi;
 using DSLNG.PEAR.Services.Requests.Kpi;
+using DSLNG.PEAR.Services.Responses.Select;
 using DSLNG.PEAR.Web.ViewModels.Common;
 using DSLNG.PEAR.Web.ViewModels.Common.PmsSummary;
 using DSLNG.PEAR.Web.ViewModels.Kpi;
@@ -27,6 +29,7 @@ using DSLNG.PEAR.Services.Responses.User;
 using DSLNG.PEAR.Web.ViewModels.PmsConfig;
 using DSLNG.PEAR.Web.ViewModels.PmsConfigDetails;
 using DSLNG.PEAR.Web.ViewModels.PmsSummary;
+using DSLNG.PEAR.Web.ViewModels.Select;
 using DSLNG.PEAR.Web.ViewModels.User;
 using DSLNG.PEAR.Web.ViewModels.RoleGroup;
 using DSLNG.PEAR.Services.Responses.RoleGroup;
@@ -81,6 +84,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             ConfigureKpiTarget();
             ConfigureKpiAchievement();
             ConfigureTrafficLight();
+            ConfigureSelect();
 
             Mapper.CreateMap<Dropdown, SelectListItem>();
             Mapper.CreateMap<SearchKpiViewModel, GetKpiToSeriesRequest>();
@@ -421,6 +425,17 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<HighlightViewModel, SaveHighlightRequest>();
             Mapper.CreateMap<GetReportHighlightsResponse.HighlightResponse, ArtifactPreviewViewModel.HighlightViewModel>();
             base.Configure();
+        }
+
+        private void ConfigureSelect()
+        {
+            Mapper.CreateMap<CreateSelectViewModel, CreateSelectRequest>();
+            Mapper.CreateMap<SelectOptionViewModel, CreateSelectRequest.SelectOption>();
+            Mapper.CreateMap<GetSelectResponse, UpdateSelectViewModel>();
+            Mapper.CreateMap<GetSelectResponse.SelectOptionResponse, SelectOptionViewModel>();
+            Mapper.CreateMap<UpdateSelectViewModel, UpdateSelectRequest>();
+            Mapper.CreateMap<SelectOptionViewModel, UpdateSelectRequest.SelectOption>();
+            //Mapper.CreateMap<GetSelectsResponse, Ind>()
         }
 
         private void ConfigureTrafficLight()

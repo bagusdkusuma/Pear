@@ -4,11 +4,13 @@ using DSLNG.PEAR.Data.Entities;
 using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Services.Requests.Measurement;
 using DSLNG.PEAR.Services.Requests.PmsSummary;
+using DSLNG.PEAR.Services.Requests.Select;
 using DSLNG.PEAR.Services.Responses.KpiAchievement;
 using DSLNG.PEAR.Services.Responses.Level;
 using DSLNG.PEAR.Services.Responses.Menu;
 using DSLNG.PEAR.Services.Requests.Menu;
 using DSLNG.PEAR.Services.Responses.PmsSummary;
+using DSLNG.PEAR.Services.Responses.Select;
 using DSLNG.PEAR.Services.Responses.User;
 using DSLNG.PEAR.Services.Requests.User;
 using DSLNG.PEAR.Common.Extensions;
@@ -55,6 +57,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             ConfigureKpiTarget();
             ConfigurePmsConfigDetails();
             ConfigureKpiAchievements();
+            ConfigureSelects();
 
             Mapper.CreateMap<User, GetUsersResponse.User>();
             //.ForMember(x => x.RoleName, o => o.MapFrom(m => m.Role.Name));
@@ -281,6 +284,19 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Highlight, GetHighlightsResponse.HighlightResponse>();
             Mapper.CreateMap<SaveHighlightRequest, Highlight>();
             base.Configure();
+        }
+
+        private void ConfigureSelects()
+        {
+            Mapper.CreateMap<Select, GetSelectsResponse.Select>()
+                  .ForMember(x => x.Options, y => y.MapFrom(z => string.Join(", ", z.Options.Select(opt => opt.Text))));
+            Mapper.CreateMap<CreateSelectRequest, Select>();
+            Mapper.CreateMap<CreateSelectRequest.SelectOption, SelectOption>();
+            Mapper.CreateMap<Select, GetSelectResponse>();
+            Mapper.CreateMap<SelectOption, GetSelectResponse.SelectOptionResponse>();
+            Mapper.CreateMap<UpdateSelectRequest, Select>();
+                //.ForMember(x => x.Options, x => x.Ignore());
+            Mapper.CreateMap<UpdateSelectRequest.SelectOption, SelectOption>();
         }
 
         private void ConfigurePmsSummary()
