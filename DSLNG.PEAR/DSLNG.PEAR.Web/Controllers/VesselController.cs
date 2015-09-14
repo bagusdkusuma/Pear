@@ -1,15 +1,22 @@
 ﻿using DevExpress.Web.Mvc;
 using DSLNG.PEAR.Services.Interfaces;
+using DSLNG.PEAR.Services.Requests.Measurement;
 using DSLNG.PEAR.Services.Requests.Vessel;
+using DSLNG.PEAR.Web.ViewModels.Vessel;
 using System.Web.Mvc;
+using System.Linq;
+using DSLNG.PEAR.Common.Extensions;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
     public class VesselController : BaseController
     {
         private IVesselService _vesselService;
-        public VesselController(IVesselService vesselService) {
+        private IMeasurementService _measurementService;
+
+        public VesselController(IVesselService vesselService, IMeasurementService measurementService) {
             _vesselService = vesselService;
+            _measurementService = measurementService;
         }
         public ActionResult Index()
         {
@@ -77,24 +84,20 @@ namespace DSLNG.PEAR.Web.Controllers
         // GET: /Vessel/Create
         public ActionResult Create()
         {
-            return View();
+            var viewModel = new VesselViewModel();
+            viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest()).Measurements
+                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+            return View(viewModel);
         }
 
         //
         // POST: /Vessel/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(VesselViewModel viewModel)
         {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            var req = viewModel.MapTo<SaveVesselRequest>();
+            _vesselService.SaveVessel(req);
+            return RedirectToAction("Index");
         }
 
         //

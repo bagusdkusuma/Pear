@@ -69,6 +69,8 @@ using DSLNG.PEAR.Web.ViewModels.Config;
 using DSLNG.PEAR.Web.ViewModels.Highlight;
 using DSLNG.PEAR.Services.Requests.Highlight;
 using DSLNG.PEAR.Services.Responses.Highlight;
+using DSLNG.PEAR.Web.ViewModels.Vessel;
+using DSLNG.PEAR.Services.Requests.Vessel;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -420,6 +422,8 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<HighlightViewModel, SaveHighlightRequest>();
             Mapper.CreateMap<GetReportHighlightsResponse.HighlightResponse, ArtifactPreviewViewModel.HighlightViewModel>();
+
+            Mapper.CreateMap<VesselViewModel, SaveVesselRequest>();
             base.Configure();
         }
 

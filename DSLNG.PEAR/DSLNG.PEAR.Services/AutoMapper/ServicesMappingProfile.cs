@@ -43,6 +43,7 @@ using DSLNG.PEAR.Services.Responses.Config;
 using DSLNG.PEAR.Services.Responses.Highlight;
 using DSLNG.PEAR.Services.Requests.Highlight;
 using DSLNG.PEAR.Services.Responses.Vessel;
+using DSLNG.PEAR.Services.Requests.Vessel;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -282,6 +283,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Highlight, GetHighlightsResponse.HighlightResponse>();
             Mapper.CreateMap<SaveHighlightRequest, Highlight>();
 
+            Mapper.CreateMap<SaveVesselRequest, Vessel>();
             Mapper.CreateMap<Vessel, GetVesselsResponse.VesselResponse>()
                 .ForMember(x => x.Measurement, o => o.MapFrom(s => s.Measurement.Name))
                 .ForMember(x => x.MeasurementId, o => o.MapFrom(s => s.Measurement.Id));

@@ -5,6 +5,8 @@ using System.Linq;
 using DSLNG.PEAR.Common.Extensions;
 using System.Data.Entity;
 using DSLNG.PEAR.Data.Persistence;
+using DSLNG.PEAR.Data.Entities;
+using System;
 
 namespace DSLNG.PEAR.Services
 {
@@ -37,7 +39,42 @@ namespace DSLNG.PEAR.Services
 
         public SaveVesselResponse SaveVessel(SaveVesselRequest request)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                if (request.Id == 0)
+                {
+                    var vessel = request.MapTo<Vessel>();
+                    var measurement = new Measurement { Id = request.MeasurementId };
+                    DataContext.Measurements.Attach(measurement);
+                    vessel.Measurement = measurement;
+                    DataContext.Vessels.Add(vessel);
+                }
+                else
+                {
+                    var vessel = DataContext.Vessels.FirstOrDefault(x => x.Id == request.Id);
+                    if (vessel != null)
+                    {
+                        request.MapPropertiesToInstance<Vessel>(vessel);
+                        var measurement = new Measurement { Id = request.MeasurementId };
+                        DataContext.Measurements.Attach(measurement);
+                        vessel.Measurement = measurement;
+                    }
+                }
+                DataContext.SaveChanges();
+                return new SaveVesselResponse
+                {
+                    IsSuccess = true,
+                    Message = "Highlight has been saved"
+                };
+            }
+            catch (InvalidOperationException e)
+            {
+                return new SaveVesselResponse
+                {
+                    IsSuccess = false,
+                    Message = e.Message
+                };
+            }
         }
     }
 }

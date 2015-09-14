@@ -2,7 +2,7 @@
 
 namespace DSLNG.PEAR.Services.Responses.Vessel
 {
-    public class SaveVesselResponse
+    public class SaveVesselResponse : BaseResponse
     {
     }
 }
