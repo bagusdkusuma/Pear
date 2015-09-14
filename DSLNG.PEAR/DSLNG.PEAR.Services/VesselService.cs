@@ -30,12 +30,15 @@ namespace DSLNG.PEAR.Services
             }
             else
             {
+                var query = DataContext.Vessels
+                    .Include(x => x.Measurement);
+                if (!string.IsNullOrEmpty(request.Term)) {
+                    query = query.Where(x => x.Name.Contains(request.Term));
+                }
+                query = query.OrderByDescending(x => x.Id).Skip(request.Skip).Take(request.Take);
                 return new GetVesselsResponse
                 {
-                    Vessels = DataContext.Vessels
-                    .Include(x => x.Measurement)
-                    .OrderByDescending(x => x.Id).Skip(request.Skip).Take(request.Take)
-                                    .ToList().MapTo<GetVesselsResponse.VesselResponse>()
+                    Vessels = query.ToList().MapTo<GetVesselsResponse.VesselResponse>()
                 };
             }
         }

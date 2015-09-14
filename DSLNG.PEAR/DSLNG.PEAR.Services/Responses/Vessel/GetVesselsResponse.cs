@@ -9,7 +9,7 @@ namespace DSLNG.PEAR.Services.Responses.Vessel
         public int Count { get; set; }
         public class VesselResponse
         {
-            public int Id { get; set; }
+            public int id { get; set; }
             public string Name { get; set; }
             public double Capacity { get; set; }
             public string Type { get; set; }

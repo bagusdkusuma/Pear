@@ -1,30 +1,55 @@
-﻿@model DSLNG.PEAR.Web.ViewModels.Buyer.BuyerViewModel
+﻿@model DSLNG.PEAR.Web.ViewModels.VesselSchedule.VesselScheduleViewModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Edit";
 }
 
-<div class="highlight-save">
+<div class="vessel-schedule-save">
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     <div class="col-md-12">
         <div class="title">Buyer</div>
-        <div class="description_year">Edit</div>
+        <div class="description_year">New</div>
         <div>@Html.ValidationSummary(true)</div>
-        @Html.HiddenFor(x => x.Id);
+        @Html.HiddenFor(x => x.Id)
     </div>
     <div class="col-md-12">
         <div class="form-inline whitebox">
              <div class="form-group form-list">
-                @Html.LabelFor(model => model.Name)
-                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Name)
+                @Html.LabelFor(model => model.VesselId)
+                @Html.DropDownListFor(model => model.VesselId, new List<SelectListItem> { new SelectListItem{Value = Model.VesselId.ToString(), Text = Model.VesselName} }, new { @class = "form-control", data_url = Url.Action("VesselList"), style = "width:200px" })
+                @Html.ValidationMessageFor(model => model.VesselId)
             </div>
             <div class="form-group form-list">
-                @Html.LabelFor(model => model.Address)
-                @Html.TextAreaFor(model => model.Address, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Address)
+                @Html.LabelFor(model => model.ETA)
+                @Html.TextBoxFor(model => model.ETA, new { @class = "form-control datepicker" })
+                @Html.ValidationMessageFor(model => model.ETA)
+            </div>
+            <div class="form-group form-list">
+                @Html.LabelFor(model => model.ETD)
+                @Html.TextBoxFor(model => model.ETD, new { @class = "form-control datepicker" })
+                @Html.ValidationMessageFor(model => model.ETD)
+            </div>
+            <div class="form-group form-list">
+                @Html.LabelFor(model => model.BuyerId)
+                @Html.DropDownListFor(model => model.BuyerId, new List<SelectListItem> { new SelectListItem{Value = Model.BuyerId.ToString(), Text = Model.BuyerName} }, new { @class = "form-control", data_url=Url.Action("BuyerList"), style="width:200px" })
+                @Html.ValidationMessageFor(model => model.BuyerId)
+            </div>
+              <div class="form-group form-list">
+                @Html.LabelFor(model => model.Location)
+                @Html.TextBoxFor(model => model.Location, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Location)
+            </div>
+             <div class="form-group form-list">
+                @Html.LabelFor(model => model.SalesType)
+                @Html.DropDownListFor(model => model.SalesType, Model.SalesTypes, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SalesType)
+            </div>
+             <div class="form-group form-list">
+                @Html.LabelFor(model => model.Type)
+                @Html.DropDownListFor(model => model.Type, Model.Types, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Type)
             </div>
         </div>
     </div>

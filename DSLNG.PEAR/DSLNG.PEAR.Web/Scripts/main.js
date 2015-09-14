@@ -155,6 +155,7 @@ Number.prototype.format = function (n, x) {
     Pear.Template.Editor = {};
     Pear.Loading = {};
     Pear.Highlight = {};
+    Pear.VesselSchedule = {};
 
     Pear.Loading.Show = function (container) {
         var loadingImage = $('#dataLayout').attr('data-content-url') + '/img/ajax-loader2.gif';
@@ -225,7 +226,7 @@ Number.prototype.format = function (n, x) {
         var results = pattern.exec(value);
         var dt = new Date(parseFloat(results[1]));
         switch (periodeType) {
-            case 'Daily' :
+            case 'Daily':
                 return dt.format('dd mmm yyyy');
             case 'Monthly':
                 return dt.format('mmm yyyy');
@@ -392,8 +393,8 @@ Number.prototype.format = function (n, x) {
             });
 
         };
-        var specificDate = function() {
-            $(".datepicker").on("dp.change", function(e) {
+        var specificDate = function () {
+            $(".datepicker").on("dp.change", function (e) {
                 if ($('#RangeFilter').val().toLowerCase().indexOf('specific') > -1 && e.target.id === 'StartInDisplay') {
                     $('#EndInDisplay').val($('#StartInDisplay').val());
                 }
@@ -405,8 +406,8 @@ Number.prototype.format = function (n, x) {
             loadGraph($this.data('graph-url'), $this.val());
             $('#PeriodeType').change();
         });
-        
-        
+
+
 
         var initialGraphicType = $('#graphic-type');
         loadGraph(initialGraphicType.data('graph-url'), initialGraphicType.val());
@@ -1623,7 +1624,7 @@ Number.prototype.format = function (n, x) {
                             }
                         }
                         if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
-                            tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title  + '</b><br>';
+                            tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
                             tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
                         }
                     }
@@ -2702,7 +2703,7 @@ Number.prototype.format = function (n, x) {
                 }).appendTo(chartTemplate);
                 chartTemplate.removeClass('original');
                 chartTemplate.attr('data-chart-pos', chartCount);
-                var fields = ['ValueAxis', 'GraphicType', 'MeasurementId', 'ValueAxisTitle', 'ValueAxisColor', 'IsOpposite', 'FractionScale','MaxFractionScale'];
+                var fields = ['ValueAxis', 'GraphicType', 'MeasurementId', 'ValueAxisTitle', 'ValueAxisColor', 'IsOpposite', 'FractionScale', 'MaxFractionScale'];
                 for (var i in fields) {
                     var field = fields[i];
                     chartTemplate.find('#MultiaxisChart_Charts_0__' + field).attr('name', 'MultiaxisChart.Charts[' + chartCount + '].' + field);
@@ -2767,7 +2768,7 @@ Number.prototype.format = function (n, x) {
                     }
                 };
             } else if (chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType] == 'area' && data.MultiaxisChart.Charts[i].SeriesType == 'multi-stack') {
-                
+
                 plotOptions[chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType]] = {
                     stacking: 'normal',
                     lineColor: '#666666',
@@ -3195,8 +3196,8 @@ Number.prototype.format = function (n, x) {
             $(link).css('visibility', 'visible');
         });
     };
-    
-    
+
+
     templateEditor.LayoutSetup = function () {
         $('.column-width').change(function () {
             var colWidth = $(this).val();
@@ -3505,6 +3506,38 @@ Number.prototype.format = function (n, x) {
         });
     };
 
+    Pear.VesselSchedule._autocomplete = function (fieldId) {
+        var url = $(fieldId).data('url');
+        $(fieldId).select2({
+            ajax: {
+                url: url,
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        term: params.term, // search term
+                    };
+                },
+                processResults: function (data, page) {
+                    return data;
+                },
+                cache: true
+            },
+            escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+            minimumInputLength: 1,
+            templateResult: Pear.Artifact.Designer._formatKpi, // omitted for brevity, see the source of this page
+            templateSelection: Pear.Artifact.Designer._formatKpiSelection // omitted for brevity, see the source of this page
+        });
+    };
+
+    Pear.VesselSchedule.FormSetup = function () {
+        Pear.VesselSchedule._autocomplete('#VesselId');
+        Pear.VesselSchedule._autocomplete('#BuyerId');
+        $('.datepicker').datetimepicker({
+            format: "MM/DD/YYYY"
+        });
+    }
+
     $(document).ready(function () {
         if ($('.artifact-designer').length) {
             Pear.Artifact.Designer.GraphicSettingSetup();
@@ -3527,6 +3560,9 @@ Number.prototype.format = function (n, x) {
         }
         if ($('.highlight-save').length) {
             Pear.Highlight.EditSetup();
+        }
+        if ($('.vessel-schedule-save').length) {
+            Pear.VesselSchedule.FormSetup();
         }
     });
     window.Pear = Pear;

@@ -10,7 +10,7 @@ using System;
 
 namespace DSLNG.PEAR.Services
 {
-    public class BuyerService : BaseService,IBuyerService
+    public class BuyerService : BaseService, IBuyerService
     {
         public BuyerService(IDataContext dataContext) : base(dataContext) { }
 
@@ -27,11 +27,14 @@ namespace DSLNG.PEAR.Services
             }
             else
             {
+                var query = DataContext.Buyers.AsQueryable();
+                if(!String.IsNullOrEmpty(request.Term)){
+                    query = query.Where(x => x.Name.Contains(request.Term));
+                }
+                query = query.OrderByDescending(x => x.Id).Skip(request.Skip).Take(request.Take);
                 return new GetBuyersResponse
                 {
-                    Buyers = DataContext.Buyers
-                    .OrderByDescending(x => x.Id).Skip(request.Skip).Take(request.Take)
-                                    .ToList().MapTo<GetBuyersResponse.BuyerResponse>()
+                    Buyers =query.ToList().MapTo<GetBuyersResponse.BuyerResponse>()
                 };
             }
         }

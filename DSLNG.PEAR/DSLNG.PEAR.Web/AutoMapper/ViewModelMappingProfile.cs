@@ -75,6 +75,9 @@ using DSLNG.PEAR.Services.Responses.Vessel;
 using DSLNG.PEAR.Web.ViewModels.Buyer;
 using DSLNG.PEAR.Services.Requests.Buyer;
 using DSLNG.PEAR.Services.Responses.Buyer;
+using DSLNG.PEAR.Web.ViewModels.VesselSchedule;
+using DSLNG.PEAR.Services.Requests.VesselSchedule;
+using DSLNG.PEAR.Services.Responses.VesselSchedule;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -432,6 +435,9 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<BuyerViewModel, SaveBuyerRequest>();
             Mapper.CreateMap<GetBuyerResponse, BuyerViewModel>();
+
+            Mapper.CreateMap<VesselScheduleViewModel, SaveVesselScheduleRequest>();
+            Mapper.CreateMap<GetVesselScheduleResponse, VesselScheduleViewModel>();
             base.Configure();
         }
 

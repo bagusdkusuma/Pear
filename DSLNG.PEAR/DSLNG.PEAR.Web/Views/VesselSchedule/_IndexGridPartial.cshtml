@@ -23,8 +23,8 @@
             });
         settings.Columns.Add("Id").Visible = false;
         settings.Columns.Add("Vessel");
-        settings.Columns.Add("ETA");
-        settings.Columns.Add("ETD");
+        settings.Columns.Add("ETA").PropertiesEdit.DisplayFormatString = "MM/dd/yyyy";
+        settings.Columns.Add("ETD").PropertiesEdit.DisplayFormatString = "MM/dd/yyyy";
         settings.Columns.Add("Buyer");
         settings.Columns.Add("Location");
         settings.Columns.Add("SalesType");

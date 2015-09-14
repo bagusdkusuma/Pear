@@ -1,19 +1,30 @@
 ﻿using DevExpress.Web.Mvc;
 using DSLNG.PEAR.Services.Interfaces;
+using DSLNG.PEAR.Services.Requests.Buyer;
+using DSLNG.PEAR.Services.Requests.Vessel;
 using DSLNG.PEAR.Services.Requests.VesselSchedule;
+using DSLNG.PEAR.Web.ViewModels;
+using DSLNG.PEAR.Web.ViewModels.VesselSchedule;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DSLNG.PEAR.Common.Extensions;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
     public class VesselScheduleController : Controller
     {
         private readonly IVesselScheduleService _vesselScheduleService;
-        public VesselScheduleController(IVesselScheduleService vesselScheduleService) {
+        private readonly IVesselService _vesselService;
+        private readonly IBuyerService _buyerService;
+        public VesselScheduleController(IVesselScheduleService vesselScheduleService,
+            IVesselService vesselService,
+            IBuyerService buyerService) {
             _vesselScheduleService = vesselScheduleService;
+            _vesselService = vesselService;
+            _buyerService = buyerService;
         }
         public ActionResult Index()
         {
@@ -73,59 +84,52 @@ namespace DSLNG.PEAR.Web.Controllers
             }).VesselSchedules;
         }
 
-        //
-        // GET: /VesselSchedule/Details/5
-        public ActionResult Details(int id)
+        public ActionResult VesselList(string term)
         {
-            return View();
+            var vessels = _vesselService.GetVessels(new GetVesselsRequest { Skip=0,Take=20, Term=term }).Vessels;
+            return Json(new { results = vessels }, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult BuyerList(string term) {
+            var buyers = _buyerService.GetBuyers(new GetBuyersRequest { Skip = 0, Take = 20, Term = term }).Buyers;
+            return Json(new { results = buyers }, JsonRequestBehavior.AllowGet);
+        }
+
 
         //
         // GET: /VesselSchedule/Create
         public ActionResult Create()
         {
-            return View();
+            var viewModel = new VesselScheduleViewModel();
+            return View(viewModel);
         }
 
         //
         // POST: /VesselSchedule/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(VesselScheduleViewModel viewModel)
         {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            var req = viewModel.MapTo<SaveVesselScheduleRequest>();
+            _vesselScheduleService.SaveVesselSchedule(req);
+            return RedirectToAction("Index");
         }
 
         //
         // GET: /VesselSchedule/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var vesselSchedule = _vesselScheduleService.GetVesselSchedule(new GetVesselScheduleRequest { Id = id });
+            return View(vesselSchedule.MapTo<VesselScheduleViewModel>());
         }
 
         //
         // POST: /VesselSchedule/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(VesselScheduleViewModel viewModel)
         {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            var req = viewModel.MapTo<SaveVesselScheduleRequest>();
+            _vesselScheduleService.SaveVesselSchedule(req);
+            return RedirectToAction("Index");
         }
 
         //
