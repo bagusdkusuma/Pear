@@ -82,6 +82,7 @@
     <Compile Include="Interfaces\IKpiAchievementService.cs" />
     <Compile Include="Interfaces\IDropdownService.cs" />
     <Compile Include="Interfaces\IKpiTargetService.cs" />
+    <Compile Include="Interfaces\INLSService.cs" />
     <Compile Include="Interfaces\IPeriodeService.cs" />
     <Compile Include="Interfaces\ITemplateService.cs" />
     <Compile Include="Interfaces\IVesselScheduleService.cs" />
@@ -134,6 +135,9 @@
     <Compile Include="Requests\Menu\Menu.cs" />
     <Compile Include="Requests\Method\CreateMethodRequest.cs" />
     <Compile Include="Requests\Method\UpdateMethodRequest.cs" />
+    <Compile Include="Requests\NLS\GetNLSListRequest.cs" />
+    <Compile Include="Requests\NLS\GetNLSRequest.cs" />
+    <Compile Include="Requests\NLS\SaveNLSRequest.cs" />
     <Compile Include="Requests\Periode\PeriodeRequest.cs" />
     <Compile Include="Requests\PmsSummary\CreatePmsConfigDetailsRequest.cs" />
     <Compile Include="Requests\PmsSummary\CreatePmsConfigRequest.cs" />
@@ -237,6 +241,9 @@
     <Compile Include="Requests\Pillar\CreatePillarRequest.cs" />
     <Compile Include="Requests\Pillar\UpdatePillarRequest.cs" />
     <Compile Include="Requests\PmsSummary\GetPmsSummaryConfigurationRequest.cs" />
+    <Compile Include="Responses\NLS\GetNLSListResponse.cs" />
+    <Compile Include="Responses\NLS\GetNLSResponse.cs" />
+    <Compile Include="Responses\NLS\SaveNLSResponse.cs" />
     <Compile Include="Responses\PmsSummary\CreatePmsConfigDetailsResponse.cs" />
     <Compile Include="Responses\PmsSummary\CreatePmsConfigResponse.cs" />
     <Compile Include="Responses\PmsSummary\CreatePmsSummaryResponse.cs" />
@@ -388,7 +395,9 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="NLSService.cs" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

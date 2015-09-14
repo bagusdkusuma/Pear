@@ -640,6 +640,10 @@
     <Content Include="Views\VesselSchedule\Create.cshtml" />
     <Content Include="Views\VesselSchedule\Edit.cshtml" />
     <Content Include="Views\VesselSchedule\Index.cshtml" />
+    <Content Include="Views\NLS\_IndexGridPartial.cshtml" />
+    <Content Include="Views\NLS\Create.cshtml" />
+    <Content Include="Views\NLS\Edit.cshtml" />
+    <Content Include="Views\NLS\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -846,7 +850,6 @@
     <Folder Include="ViewModels\CorporatePortofolio\" />
     <Folder Include="Views\Chart\" />
     <Folder Include="Views\CorporatePortofolio\" />
-    <Folder Include="Views\NLS\" />
     <Folder Include="Views\Test\" />
     <Folder Include="Views\UnAuthorize\" />
   </ItemGroup>
