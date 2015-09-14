@@ -287,6 +287,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Vessel, GetVesselsResponse.VesselResponse>()
                 .ForMember(x => x.Measurement, o => o.MapFrom(s => s.Measurement.Name))
                 .ForMember(x => x.MeasurementId, o => o.MapFrom(s => s.Measurement.Id));
+            Mapper.CreateMap<Vessel, GetVesselResponse>()
+                .ForMember(x => x.Measurement, o => o.MapFrom(s => s.Measurement.Name))
+                .ForMember(x => x.MeasurementId, o => o.MapFrom(s => s.Measurement.Id));
             base.Configure();
         }
 

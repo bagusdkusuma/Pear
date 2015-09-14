@@ -631,6 +631,7 @@
     <Content Include="Views\Vessel\_IndexGridPartial.cshtml" />
     <Content Include="Views\Vessel\Index.cshtml" />
     <Content Include="Views\Vessel\Create.cshtml" />
+    <Content Include="Views\Vessel\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

@@ -104,24 +104,21 @@ namespace DSLNG.PEAR.Web.Controllers
         // GET: /Vessel/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var vessel = _vesselService.GetVessel(new GetVesselRequest { Id = id });
+            var viewModel = vessel.MapTo<VesselViewModel>();
+            viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest()).Measurements
+                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+            return View(viewModel);
         }
 
         //
         // POST: /Vessel/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(VesselViewModel viewModel)
         {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            var req = viewModel.MapTo<SaveVesselRequest>();
+            _vesselService.SaveVessel(req);
+            return RedirectToAction("Index");
         }
 
         //

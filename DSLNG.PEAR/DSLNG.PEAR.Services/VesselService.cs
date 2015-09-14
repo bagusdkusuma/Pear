@@ -16,7 +16,10 @@ namespace DSLNG.PEAR.Services
 
         public GetVesselResponse GetVessel(GetVesselRequest request)
         {
-            throw new System.NotImplementedException();
+            return DataContext.Vessels
+                .Include(x => x.Measurement)
+                .FirstOrDefault(x => x.Id == request.Id)
+                .MapTo<GetVesselResponse>();
         }
 
         public GetVesselsResponse GetVessels(GetVesselsRequest request)

@@ -13,6 +13,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Vessel
         public string Type { get; set; }
         [Display(Name="Measurement")]
         public int MeasurementId { get; set; }
+        public string Measurement { get; set; }
         public IList<SelectListItem> Measurements { get; set; }
     }
 }
