@@ -42,6 +42,7 @@ using PeriodeType = DSLNG.PEAR.Data.Enums.PeriodeType;
 using DSLNG.PEAR.Services.Responses.Config;
 using DSLNG.PEAR.Services.Responses.Highlight;
 using DSLNG.PEAR.Services.Requests.Highlight;
+using DSLNG.PEAR.Services.Responses.Vessel;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -280,6 +281,10 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Economic, GetConfigurationResponse.Economic>();
             Mapper.CreateMap<Highlight, GetHighlightsResponse.HighlightResponse>();
             Mapper.CreateMap<SaveHighlightRequest, Highlight>();
+
+            Mapper.CreateMap<Vessel, GetVesselsResponse.VesselResponse>()
+                .ForMember(x => x.Measurement, o => o.MapFrom(s => s.Measurement.Name))
+                .ForMember(x => x.MeasurementId, o => o.MapFrom(s => s.Measurement.Id));
             base.Configure();
         }
 

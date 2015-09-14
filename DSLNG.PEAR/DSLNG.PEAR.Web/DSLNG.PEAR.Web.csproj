@@ -628,6 +628,8 @@
     <Content Include="Views\Highlight\_IndexGridPartial.cshtml" />
     <Content Include="Views\Highlight\Index.cshtml" />
     <Content Include="Views\Highlight\Create.cshtml" />
+    <Content Include="Views\Vessel\_IndexGridPartial.cshtml" />
+    <Content Include="Views\Vessel\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -680,6 +682,7 @@
     <Compile Include="Controllers\Api\ApiUserController.cs" />
     <Compile Include="Controllers\ArtifactController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BuyerController.cs" />
     <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\ConversionController.cs" />
     <Compile Include="Controllers\CorporatePortofolioController.cs" />
@@ -695,6 +698,7 @@
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\KpiController.cs" />
     <Compile Include="Controllers\MethodController.cs" />
+    <Compile Include="Controllers\NLSController.cs" />
     <Compile Include="Controllers\PeriodeController.cs" />
     <Compile Include="Controllers\PillarController.cs" />
     <Compile Include="Controllers\PmsConfigController.cs" />
@@ -706,6 +710,8 @@
     <Compile Include="Controllers\TypeController.cs" />
     <Compile Include="Controllers\UnAuthorizedController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\VesselController.cs" />
+    <Compile Include="Controllers\VesselScheduleController.cs" />
     <Compile Include="DependencyResolution\ControllerConvention.cs" />
     <Compile Include="DependencyResolution\DefaultRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
@@ -825,10 +831,13 @@
     <Folder Include="Content\TemplateFiles\" />
     <Folder Include="Content\UploadedFiles\" />
     <Folder Include="ViewModels\CorporatePortofolio\" />
+    <Folder Include="Views\Buyer\" />
     <Folder Include="Views\Chart\" />
     <Folder Include="Views\CorporatePortofolio\" />
+    <Folder Include="Views\NLS\" />
     <Folder Include="Views\Test\" />
     <Folder Include="Views\UnAuthorize\" />
+    <Folder Include="Views\VesselSchedule\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DSLNG.PEAR.Common\DSLNG.PEAR.Common.csproj">

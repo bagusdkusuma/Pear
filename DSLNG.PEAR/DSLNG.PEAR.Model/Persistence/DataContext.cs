@@ -43,6 +43,10 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<KpiRelationModel> KpiRelationModels { get; set; }
         public IDbSet<ArtifactTank> ArtifactTanks { get; set; }
         public IDbSet<Highlight> Highlights { get; set; }
+        public IDbSet<Vessel> Vessels { get; set; }
+        public IDbSet<VesselSchedule> VesselSchedules { get; set; }
+        public IDbSet<NextLoadingSchedule> NextLoadingSchedules { get; set; }
+        public IDbSet<Buyer> Buyers { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Kpi>()

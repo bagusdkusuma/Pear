@@ -82,6 +82,7 @@
     <Compile Include="Interfaces\IKpiTargetService.cs" />
     <Compile Include="Interfaces\IPeriodeService.cs" />
     <Compile Include="Interfaces\ITemplateService.cs" />
+    <Compile Include="Interfaces\IVesselService.cs" />
     <Compile Include="KpiAchievementService.cs" />
     <Compile Include="KpiTargetService.cs" />
     <Compile Include="PeriodeService.cs" />
@@ -139,6 +140,9 @@
     <Compile Include="Requests\Template\GetTemplatesRequest.cs" />
     <Compile Include="Requests\Template\UpdateTemplateRequest.cs" />
     <Compile Include="Requests\User\LoginUserRequest.cs" />
+    <Compile Include="Requests\Vessel\GetVesselRequest.cs" />
+    <Compile Include="Requests\Vessel\GetVesselsRequest.cs" />
+    <Compile Include="Requests\Vessel\SaveVesselRequest.cs" />
     <Compile Include="Responses\Artifact\CreateArtifactResponse.cs" />
     <Compile Include="Responses\Artifact\GetArtifactResponse.cs" />
     <Compile Include="Responses\Artifact\GetArtifactsResponse.cs" />
@@ -342,6 +346,9 @@
     <Compile Include="Responses\User\UpdateUserResponse.cs" />
     <Compile Include="Responses\User\UserResponse.cs" />
     <Compile Include="Responses\Pillar\GetPillarResponse.cs" />
+    <Compile Include="Responses\Vessel\GetVesselResponse.cs" />
+    <Compile Include="Responses\Vessel\GetVesselsResponse.cs" />
+    <Compile Include="Responses\Vessel\SaveVesselResponse.cs" />
     <Compile Include="RoleGroupService.cs" />
     <Compile Include="TemplateService.cs" />
     <Compile Include="TypeService.cs" />
@@ -350,6 +357,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\User\GetUserRequest.cs" />
     <Compile Include="Responses\User\GetUserResponse.cs" />
+    <Compile Include="VesselService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DSLNG.PEAR.Common\DSLNG.PEAR.Common.csproj">

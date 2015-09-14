@@ -38,6 +38,10 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<KpiRelationModel> KpiRelationModels { get; set; }
         IDbSet<ArtifactTank> ArtifactTanks { get; set; }
         IDbSet<Highlight> Highlights { get; set; }
+        IDbSet<Vessel> Vessels { get; set; }
+        IDbSet<VesselSchedule> VesselSchedules { get; set; }
+        IDbSet<NextLoadingSchedule> NextLoadingSchedules { get; set; }
+        IDbSet<Buyer> Buyers { get; set; }
         Database Database { get; }
         int SaveChanges();
         DbEntityEntry Entry(object entity);
