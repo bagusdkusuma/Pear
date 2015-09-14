@@ -46,6 +46,8 @@ using DSLNG.PEAR.Services.Responses.Vessel;
 using DSLNG.PEAR.Services.Requests.Vessel;
 using DSLNG.PEAR.Services.Requests.Buyer;
 using DSLNG.PEAR.Services.Responses.Buyer;
+using DSLNG.PEAR.Services.Requests.VesselSchedule;
+using DSLNG.PEAR.Services.Responses.VesselSchedule;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -296,6 +298,13 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<SaveBuyerRequest, Buyer>();
             Mapper.CreateMap<Buyer, GetBuyersResponse.BuyerResponse>();
             Mapper.CreateMap<Buyer, GetBuyerResponse>();
+
+            Mapper.CreateMap<SaveVesselScheduleRequest, VesselSchedule>();
+            Mapper.CreateMap<VesselSchedule, GetVesselSchedulesResponse.VesselScheduleResponse>()
+                .ForMember(x => x.Vessel, o => o.MapFrom(s => s.Vessel.Name))
+                .ForMember(x => x.Buyer, o => o.MapFrom(s => s.Buyer.Name));
+            Mapper.CreateMap<VesselSchedule, GetVesselScheduleResponse>();
+
             base.Configure();
         }
 

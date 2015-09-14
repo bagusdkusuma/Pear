@@ -1,4 +1,7 @@
-﻿using System;
+﻿using DevExpress.Web.Mvc;
+using DSLNG.PEAR.Services.Interfaces;
+using DSLNG.PEAR.Services.Requests.VesselSchedule;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,11 +11,66 @@ namespace DSLNG.PEAR.Web.Controllers
 {
     public class VesselScheduleController : Controller
     {
-        //
-        // GET: /VesselSchedule/
+        private readonly IVesselScheduleService _vesselScheduleService;
+        public VesselScheduleController(IVesselScheduleService vesselScheduleService) {
+            _vesselScheduleService = vesselScheduleService;
+        }
         public ActionResult Index()
         {
             return View();
+        }
+        public ActionResult IndexPartial()
+        {
+            var viewModel = GridViewExtension.GetViewModel("gridVesselScheduleIndex");
+            if (viewModel == null)
+                viewModel = CreateGridViewModel();
+            return BindingCore(viewModel);
+        }
+
+        PartialViewResult BindingCore(GridViewModel gridViewModel)
+        {
+            gridViewModel.ProcessCustomBinding(
+                GetDataRowCount,
+                GetData
+            );
+            return PartialView("_IndexGridPartial", gridViewModel);
+        }
+
+        static GridViewModel CreateGridViewModel()
+        {
+            var viewModel = new GridViewModel();
+            viewModel.KeyFieldName = "Id";
+            viewModel.Columns.Add("Vessel");
+            viewModel.Columns.Add("ETA");
+            viewModel.Columns.Add("ETD");
+            viewModel.Columns.Add("Buyer");
+            viewModel.Columns.Add("Location");
+            viewModel.Columns.Add("SalesType");
+            viewModel.Columns.Add("Type");
+            viewModel.Pager.PageSize = 10;
+            return viewModel;
+        }
+
+        public ActionResult PagingAction(GridViewPagerState pager)
+        {
+            var viewModel = GridViewExtension.GetViewModel("gridVesselScheduleIndex");
+            viewModel.ApplyPagingState(pager);
+            return BindingCore(viewModel);
+        }
+
+        public void GetDataRowCount(GridViewCustomBindingGetDataRowCountArgs e)
+        {
+
+            e.DataRowCount = _vesselScheduleService.GetVesselSchedules(new GetVesselSchedulesRequest { OnlyCount = true }).Count;
+        }
+
+        public void GetData(GridViewCustomBindingGetDataArgs e)
+        {
+            e.Data = _vesselScheduleService.GetVesselSchedules(new GetVesselSchedulesRequest
+            {
+                Skip = e.StartDataRowIndex,
+                Take = e.DataRowCount
+            }).VesselSchedules;
         }
 
         //
