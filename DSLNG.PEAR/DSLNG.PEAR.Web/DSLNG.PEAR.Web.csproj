@@ -778,6 +778,7 @@
     <Compile Include="ViewModels\KpiTarget\ConfigurationParamViewModel.cs" />
     <Compile Include="ViewModels\KpiTarget\IndexKpiTargetViewModel.cs" />
     <Compile Include="ViewModels\KpiTarget\UpdateKpiTargetViewModel.cs" />
+    <Compile Include="ViewModels\NLS\NLSViewModel.cs" />
     <Compile Include="ViewModels\PmsConfigDetails\CreatePmsConfigDetailsViewModel.cs" />
     <Compile Include="ViewModels\PmsConfig\UpdatePmsConfigViewModel.cs" />
     <Compile Include="ViewModels\PmsConfig\CreatePmsConfigViewModel.cs" />

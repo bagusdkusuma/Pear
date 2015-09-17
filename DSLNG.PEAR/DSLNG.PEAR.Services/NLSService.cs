@@ -32,7 +32,7 @@ namespace DSLNG.PEAR.Services
                 return new GetNLSListResponse { Count = DataContext.NextLoadingSchedules.Count() };
             }
             else {
-                var query = DataContext.NextLoadingSchedules.AsQueryable();
+                var query = DataContext.NextLoadingSchedules.Include(x => x.VesselSchedule).Include(x => x.VesselSchedule.Vessel);
                 if (!string.IsNullOrEmpty(request.Term)) {
                     query = query.Where(x => x.VesselSchedule.Vessel.Name.Contains(request.Term));
                 }

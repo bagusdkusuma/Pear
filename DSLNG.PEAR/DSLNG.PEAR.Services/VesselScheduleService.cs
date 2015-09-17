@@ -30,13 +30,15 @@ namespace DSLNG.PEAR.Services
             }
             else
             {
+                var query = DataContext.VesselSchedules.Include(x => x.Buyer)
+                    .Include(x => x.Vessel);
+                if (!string.IsNullOrEmpty(request.Term)) {
+                    query = query.Where(x => x.Vessel.Name.Contains(request.Term));
+                }
+                query = query.OrderByDescending(x => x.Id).Skip(request.Skip).Take(request.Take);
                 return new GetVesselSchedulesResponse
                 {
-                    VesselSchedules = DataContext.VesselSchedules
-                    .Include(x => x.Buyer)
-                    .Include(x => x.Vessel)
-                    .OrderByDescending(x => x.Id).Skip(request.Skip).Take(request.Take)
-                                    .ToList().MapTo<GetVesselSchedulesResponse.VesselScheduleResponse>()
+                    VesselSchedules = query.ToList().MapTo<GetVesselSchedulesResponse.VesselScheduleResponse>()
                 };
             }
         }

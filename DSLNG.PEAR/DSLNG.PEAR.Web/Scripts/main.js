@@ -156,6 +156,7 @@ Number.prototype.format = function (n, x) {
     Pear.Loading = {};
     Pear.Highlight = {};
     Pear.VesselSchedule = {};
+    Pear.NLS = {};
 
     Pear.Loading.Show = function (container) {
         var loadingImage = $('#dataLayout').attr('data-content-url') + '/img/ajax-loader2.gif';
@@ -3538,6 +3539,10 @@ Number.prototype.format = function (n, x) {
         });
     }
 
+    Pear.NLS.FormSetup = function(){
+        Pear.VesselSchedule._autocomplete('#VesselScheduleId');
+    }
+
     $(document).ready(function () {
         if ($('.artifact-designer').length) {
             Pear.Artifact.Designer.GraphicSettingSetup();
@@ -3563,6 +3568,9 @@ Number.prototype.format = function (n, x) {
         }
         if ($('.vessel-schedule-save').length) {
             Pear.VesselSchedule.FormSetup();
+        }
+        if($('.nls-save').length){
+            Pear.NLS.FormSetup();
         }
     });
     window.Pear = Pear;

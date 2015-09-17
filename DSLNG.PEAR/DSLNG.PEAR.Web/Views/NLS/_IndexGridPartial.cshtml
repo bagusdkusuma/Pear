@@ -26,6 +26,7 @@
         settings.Columns.Add("ETA").PropertiesEdit.DisplayFormatString = "MM/dd/yyyy";
         settings.Columns.Add("ETD").PropertiesEdit.DisplayFormatString = "MM/dd/yyyy";
         settings.Columns.Add("Remark");
+        settings.Columns.Add("CreatedAt", "Created At");
         settings.SettingsPager.PageSizeItemSettings.Visible = true;
         settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
     }).BindToCustomData(Model).GetHtml()

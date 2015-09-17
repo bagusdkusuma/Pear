@@ -281,7 +281,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<GetArtifactResponse.ChartResponse, GetComboChartDataRequest.ChartRequest>();
             Mapper.CreateMap<GetArtifactResponse.SeriesResponse, GetComboChartDataRequest.ChartRequest.SeriesRequest>();
             Mapper.CreateMap<GetArtifactResponse.StackResponse, GetComboChartDataRequest.ChartRequest.StackRequest>();
-            
+
             Mapper.CreateMap<Kpi, GetConfigurationResponse.Kpi>();
             Mapper.CreateMap<KpiAchievement, GetConfigurationResponse.KpiAchievement>();
             Mapper.CreateMap<KpiTarget, GetConfigurationResponse.KpiTarget>();
@@ -304,7 +304,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<SaveVesselScheduleRequest, VesselSchedule>();
             Mapper.CreateMap<VesselSchedule, GetVesselSchedulesResponse.VesselScheduleResponse>()
                 .ForMember(x => x.Vessel, o => o.MapFrom(s => s.Vessel.Name))
-                .ForMember(x => x.Buyer, o => o.MapFrom(s => s.Buyer.Name));
+                .ForMember(x => x.Buyer, o => o.MapFrom(s => s.Buyer.Name))
+                .ForMember(x => x.Name, o => o.MapFrom(s => s.Vessel.Name));
             Mapper.CreateMap<VesselSchedule, GetVesselScheduleResponse>()
                 .ForMember(x => x.VesselId, o => o.MapFrom(s => s.Vessel.Id))
                 .ForMember(x => x.BuyerId, o => o.MapFrom(s => s.Buyer.Id))
@@ -317,7 +318,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.ETA, o => o.MapFrom(s => s.VesselSchedule.ETA))
                 .ForMember(x => x.ETD, o => o.MapFrom(s => s.VesselSchedule.ETD));
             Mapper.CreateMap<NextLoadingSchedule, GetNLSResponse>()
-                .ForMember(x => x.VesselScheduleId, o => o.MapFrom(s => s.VesselSchedule.Id));
+                .ForMember(x => x.VesselScheduleId, o => o.MapFrom(s => s.VesselSchedule.Id))
+                 .ForMember(x => x.VesselName, o => o.MapFrom(s => s.VesselSchedule.Vessel.Name));
 
             base.Configure();
         }

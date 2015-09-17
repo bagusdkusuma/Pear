@@ -14,6 +14,7 @@ namespace DSLNG.PEAR.Services.Responses.NLS
             public DateTime ETA { get; set; }
             public DateTime ETD { get; set; }
             public string Remark { get; set; }
+            public DateTime CreatedAt { get; set; }
         }
     }
 }

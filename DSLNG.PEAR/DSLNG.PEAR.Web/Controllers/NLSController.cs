@@ -1,19 +1,24 @@
 ﻿using DevExpress.Web.Mvc;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.NLS;
+using DSLNG.PEAR.Services.Requests.VesselSchedule;
+using DSLNG.PEAR.Web.ViewModels.NLS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DSLNG.PEAR.Common.Extensions;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
     public class NLSController : Controller
     {
         private readonly INLSService _nlsService;
-        public NLSController(INLSService nlsService) {
+        private readonly IVesselScheduleService _vesselScheduleService;
+        public NLSController(INLSService nlsService, IVesselScheduleService vesselScheduleService) {
             _nlsService = nlsService;
+            _vesselScheduleService = vesselScheduleService;
         }
 
         public ActionResult Index()
@@ -45,6 +50,7 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.Columns.Add("ETA");
             viewModel.Columns.Add("ETD");
             viewModel.Columns.Add("Remark");
+            viewModel.Columns.Add("CreatedAt");
             viewModel.Pager.PageSize = 10;
             return viewModel;
         }
@@ -71,6 +77,11 @@ namespace DSLNG.PEAR.Web.Controllers
             }).NLSList;
         }
 
+        public ActionResult VesselScheduleList(string term) {
+            var vesselSchedules = _vesselScheduleService.GetVesselSchedules(new GetVesselSchedulesRequest { Skip = 0, Take = 20, Term = term }).VesselSchedules;
+            return Json(new { results = vesselSchedules }, JsonRequestBehavior.AllowGet);
+        }
+
         //
         // GET: /NLS/Details/5
         public ActionResult Details(int id)
@@ -88,42 +99,30 @@ namespace DSLNG.PEAR.Web.Controllers
         //
         // POST: /NLS/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(NLSViewModel viewModel)
         {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            var req = viewModel.MapTo<SaveNLSRequest>();
+            _nlsService.SaveNLS(req);
+            return RedirectToAction("Index");
         }
 
         //
         // GET: /NLS/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var nls = _nlsService.GetNLS(new GetNLSRequest { Id = id });
+            var viewModel = nls.MapTo<NLSViewModel>();
+            return View(viewModel);
         }
 
         //
         // POST: /NLS/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(NLSViewModel viewModel)
         {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            var req = viewModel.MapTo<SaveNLSRequest>();
+            _nlsService.SaveNLS(req);
+            return RedirectToAction("Index");
         }
 
         //
