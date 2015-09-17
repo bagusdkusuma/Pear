@@ -271,8 +271,17 @@ img {
 .series-template.singlestack,
 .series-template.multistacks,
 #range-holder.interval,
+#range-holder.specificday,
+#range-holder.specificmonth,
+#range-holder.specificyear,
 .baraccumulative .previous-color {
     display: block !important;
+}
+
+#range-holder.specificday > .form-group:nth-child(2),
+#range-holder.specificmonth > .form-group:nth-child(2),
+#range-holder.specificyear > .form-group:nth-child(2) {
+    display: none;
 }
 
 .title_page {

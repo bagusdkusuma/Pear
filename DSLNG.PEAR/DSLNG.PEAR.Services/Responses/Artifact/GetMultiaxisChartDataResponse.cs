@@ -1,5 +1,6 @@
 ﻿
 
+using System;
 using System.Collections.Generic;
 namespace DSLNG.PEAR.Services.Responses.Artifact
 {
@@ -11,6 +12,7 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
         public string Title { get; set; }
         public string Subtitle { get; set; }
         public string[] Periodes { get; set; }
+        public IList<DateTime> TimePeriodes { get; set; }
         public IList<ChartResponse> Charts { get; set; }
         public class ChartResponse
         {
@@ -23,6 +25,8 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
             public string Measurement { get; set; }
             public string GraphicType { get; set; }
             public string SeriesType { get; set; }
+            public double? FractionScale { get; set; }
+            public double? MaxFractionScale { get; set; }
             public IList<SeriesViewModel> Series { get; set; }
 
             public class SeriesViewModel

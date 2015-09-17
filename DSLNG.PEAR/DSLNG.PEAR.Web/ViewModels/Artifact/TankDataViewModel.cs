@@ -16,5 +16,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         public string DaysToTankTopUnit { get; set; }
         public double MinCapacity { get; set; }
         public double MaxCapacity { get; set; }
+        public string Color { get; set; }
+        public bool ShowLine { get; set; }
     }
 }

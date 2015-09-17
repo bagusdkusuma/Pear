@@ -25,3 +25,16 @@
     @Html.DropDownListFor(model => model.Tank.VolumeInventoryId, new List<SelectListItem>() { new SelectListItem { Value = Model.Tank.VolumeInventoryId.ToString(), Text = Model.Tank.VolumeInventory.ToString() } }, new { @class = "kpi-list  form-control", style = "width:180px" })
     @Html.ValidationMessageFor(model => model.Tank.VolumeInventoryId)
 </div>
+<div class="form-group form-list">
+    @Html.LabelFor(model => model.Tank.Color)
+    <div class="input-group colorpicker">
+        @Html.TextBoxFor(model => model.Tank.Color, new { @class = "form-control" })
+        <span class="input-group-addon" style="background-color: @Model.Tank.Color"><i></i></span>
+    </div>
+    @Html.ValidationMessageFor(model => model.Tank.Color)
+</div>
+<div class="form-group form-list">
+    @Html.LabelFor(model => model.Tank.ShowLine)
+    @Html.EditorFor(model => model.Tank.ShowLine)
+    @Html.ValidationMessageFor(model => model.Tank.ShowLine)
+</div>

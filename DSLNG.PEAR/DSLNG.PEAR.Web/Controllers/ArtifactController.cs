@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using DevExpress.Web.Mvc;
 using DSLNG.PEAR.Services.Requests.Kpi;
 using PeriodeType = DSLNG.PEAR.Data.Enums.PeriodeType;
+using DSLNG.PEAR.Services.Requests.Highlight;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -21,14 +22,17 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IMeasurementService _measurementService;
         private readonly IKpiService _kpiService;
         private readonly IArtifactService _artifactServie;
+        private readonly IHighlightService _highlightService;
 
         public ArtifactController(IMeasurementService measurementService,
             IKpiService kpiService,
-            IArtifactService artifactServcie)
+            IArtifactService artifactServcie,
+            IHighlightService highlightService)
         {
             _measurementService = measurementService;
             _kpiService = kpiService;
             _artifactServie = artifactServcie;
+            _highlightService = highlightService;
         }
 
         public ActionResult Index()
@@ -662,10 +666,10 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             foreach (var name in Enum.GetNames(typeof(PeriodeType)))
             {
-                //if (!name.Equals("Hourly") && !name.Equals("Weekly"))
-                //{
+                if (!name.Equals("Hourly") && !name.Equals("Weekly"))
+                {
                     periodeTypes.Add(new SelectListItem { Text = name, Value = name });
-                //}   
+                }   
             }
         }
 
@@ -680,21 +684,31 @@ namespace DSLNG.PEAR.Web.Controllers
             rangeFilters.Add(new SelectListItem { Value = RangeFilter.MTD.ToString(), Text = "MONTH TO DATE" });
             rangeFilters.Add(new SelectListItem { Value = RangeFilter.YTD.ToString(), Text = "YEAR TO DATE" });
             rangeFilters.Add(new SelectListItem { Value = RangeFilter.Interval.ToString(), Text = "INTERVAL" });
-            /*rangeFilters.Add(new SelectListItem { Value = RangeFilter.SpecificDay.ToString(), Text = "SPECIFIC DAY" });
+            rangeFilters.Add(new SelectListItem { Value = RangeFilter.SpecificDay.ToString(), Text = "SPECIFIC DAY" });
             rangeFilters.Add(new SelectListItem { Value = RangeFilter.SpecificMonth.ToString(), Text = "SPECIFIC MONTH" });
-            rangeFilters.Add(new SelectListItem { Value = RangeFilter.SpecificYear.ToString(), Text = "SPECIFIC YEAR" });*/
+            rangeFilters.Add(new SelectListItem { Value = RangeFilter.SpecificYear.ToString(), Text = "SPECIFIC YEAR" });
         }
 
         public ActionResult View(int id)
         {
             var artifactResp = _artifactServie.GetArtifact(new GetArtifactRequest { Id = id });
             var previewViewModel = new ArtifactPreviewViewModel();
+            previewViewModel.FractionScale = artifactResp.FractionScale;
+            previewViewModel.MaxFractionScale = artifactResp.MaxFractionScale;
             switch (artifactResp.GraphicType)
             {
                 case "line":
                     {
                         var chartData = _artifactServie.GetChartData(artifactResp.MapTo<GetCartesianChartDataRequest>());
+                        var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest { 
+                            TimePeriodes = chartData.TimePeriodes,
+                            Type = HighlightType.Overall,
+                            PeriodeType = artifactResp.PeriodeType
+                        });
+                        previewViewModel.PeriodeType = artifactResp.PeriodeType.ToString();
+                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
                         previewViewModel.GraphicType = artifactResp.GraphicType;
+                        previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
                         previewViewModel.LineChart = new LineChartDataViewModel();
                         previewViewModel.LineChart.Title = artifactResp.HeaderTitle;
                         previewViewModel.LineChart.Subtitle = chartData.Subtitle;
@@ -706,6 +720,15 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "area":
                     {
                         var chartData = _artifactServie.GetChartData(artifactResp.MapTo<GetCartesianChartDataRequest>());
+                        var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
+                        {
+                            TimePeriodes = chartData.TimePeriodes,
+                            Type = HighlightType.Overall,
+                            PeriodeType = artifactResp.PeriodeType
+                        });
+                        previewViewModel.PeriodeType = artifactResp.PeriodeType.ToString();
+                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
+                        previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
                         previewViewModel.GraphicType = artifactResp.GraphicType;
                         previewViewModel.AreaChart = new AreaChartDataViewModel();
                         previewViewModel.AreaChart.Title = artifactResp.HeaderTitle;
@@ -718,6 +741,15 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "multiaxis":
                     {
                         var chartData = _artifactServie.GetMultiaxisChartData(artifactResp.MapTo<GetMultiaxisChartDataRequest>());
+                        var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
+                        {
+                            TimePeriodes = chartData.TimePeriodes,
+                            Type = HighlightType.Overall,
+                            PeriodeType = artifactResp.PeriodeType
+                        });
+                        previewViewModel.PeriodeType = artifactResp.PeriodeType.ToString();
+                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
+                        previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
                         previewViewModel.GraphicType = artifactResp.GraphicType;
                         previewViewModel.MultiaxisChart = chartData.MapTo<MultiaxisChartDataViewModel>();
                         previewViewModel.MultiaxisChart.Title = artifactResp.HeaderTitle;
@@ -726,6 +758,15 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "combo":
                     {
                         var chartData = _artifactServie.GetComboChartData(artifactResp.MapTo<GetComboChartDataRequest>());
+                        var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
+                        {
+                            TimePeriodes = chartData.TimePeriodes,
+                            Type = HighlightType.Overall,
+                            PeriodeType = artifactResp.PeriodeType
+                        });
+                        previewViewModel.PeriodeType = artifactResp.PeriodeType.ToString();
+                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
+                        previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
                         previewViewModel.GraphicType = artifactResp.GraphicType;
                         previewViewModel.ComboChart = chartData.MapTo<ComboChartDataViewModel>();
                         previewViewModel.ComboChart.Title = artifactResp.HeaderTitle;
@@ -793,6 +834,15 @@ namespace DSLNG.PEAR.Web.Controllers
                 default:
                     {
                         var chartData = _artifactServie.GetChartData(artifactResp.MapTo<GetCartesianChartDataRequest>());
+                        var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
+                        {
+                            TimePeriodes = chartData.TimePeriodes,
+                            Type = HighlightType.Overall,
+                            PeriodeType = artifactResp.PeriodeType
+                        });
+                        previewViewModel.PeriodeType = artifactResp.PeriodeType.ToString();
+                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
+                        previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
                         previewViewModel.GraphicType = artifactResp.GraphicType;
                         previewViewModel.BarChart = new BarChartDataViewModel();
                         previewViewModel.BarChart.Title = artifactResp.HeaderTitle;
@@ -811,6 +861,8 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Preview(ArtifactDesignerViewModel viewModel)
         {
             var previewViewModel = new ArtifactPreviewViewModel();
+            previewViewModel.FractionScale = viewModel.FractionScale;
+            previewViewModel.MaxFractionScale = viewModel.MaxFractionScale;
             switch (viewModel.GraphicType)
             {
                 case "line":
@@ -818,6 +870,15 @@ namespace DSLNG.PEAR.Web.Controllers
                         var cartesianRequest = viewModel.MapTo<GetCartesianChartDataRequest>();
                         viewModel.LineChart.MapPropertiesToInstance<GetCartesianChartDataRequest>(cartesianRequest);
                         var chartData = _artifactServie.GetChartData(cartesianRequest);
+                        var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
+                        {
+                            TimePeriodes = chartData.TimePeriodes,
+                            Type = HighlightType.Overall,
+                            PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType)
+                        });
+                        previewViewModel.PeriodeType = viewModel.PeriodeType;
+                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
+                        previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
                         previewViewModel.GraphicType = viewModel.GraphicType;
                         previewViewModel.LineChart = new LineChartDataViewModel();
                         previewViewModel.LineChart.Title = viewModel.HeaderTitle;
@@ -832,6 +893,15 @@ namespace DSLNG.PEAR.Web.Controllers
                         var cartesianRequest = viewModel.MapTo<GetCartesianChartDataRequest>();
                         viewModel.AreaChart.MapPropertiesToInstance<GetCartesianChartDataRequest>(cartesianRequest);
                         var chartData = _artifactServie.GetChartData(cartesianRequest);
+                        var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
+                        {
+                            TimePeriodes = chartData.TimePeriodes,
+                            Type = HighlightType.Overall,
+                            PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType)
+                        });
+                        previewViewModel.PeriodeType = viewModel.PeriodeType;
+                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
+                        previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
                         previewViewModel.GraphicType = viewModel.GraphicType;
                         previewViewModel.AreaChart = new AreaChartDataViewModel();
                         previewViewModel.AreaChart.Title = viewModel.HeaderTitle;
@@ -902,6 +972,15 @@ namespace DSLNG.PEAR.Web.Controllers
                         var request = viewModel.MapTo<GetMultiaxisChartDataRequest>();
                         viewModel.MultiaxisChart.MapPropertiesToInstance<GetMultiaxisChartDataRequest>(request);
                         var chartData = _artifactServie.GetMultiaxisChartData(request);
+                        var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
+                        {
+                            TimePeriodes = chartData.TimePeriodes,
+                            Type = HighlightType.Overall,
+                            PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType)
+                        });
+                        previewViewModel.PeriodeType = viewModel.PeriodeType;
+                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
+                        previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
                         previewViewModel.GraphicType = viewModel.GraphicType;
                         previewViewModel.MultiaxisChart = new MultiaxisChartDataViewModel();
                         chartData.MapPropertiesToInstance<MultiaxisChartDataViewModel>(previewViewModel.MultiaxisChart);
@@ -914,6 +993,15 @@ namespace DSLNG.PEAR.Web.Controllers
                         var request = viewModel.MapTo<GetComboChartDataRequest>();
                         viewModel.ComboChart.MapPropertiesToInstance<GetComboChartDataRequest>(request);
                         var chartData = _artifactServie.GetComboChartData(request);
+                        var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
+                        {
+                            TimePeriodes = chartData.TimePeriodes,
+                            Type = HighlightType.Overall,
+                            PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType)
+                        });
+                        previewViewModel.PeriodeType = viewModel.PeriodeType;
+                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
+                        previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
                         previewViewModel.GraphicType = viewModel.GraphicType;
                         previewViewModel.ComboChart = new ComboChartDataViewModel();
                         chartData.MapPropertiesToInstance<ComboChartDataViewModel>(previewViewModel.ComboChart);
@@ -938,6 +1026,15 @@ namespace DSLNG.PEAR.Web.Controllers
                         var cartesianRequest = viewModel.MapTo<GetCartesianChartDataRequest>();
                         viewModel.BarChart.MapPropertiesToInstance<GetCartesianChartDataRequest>(cartesianRequest);
                         var chartData = _artifactServie.GetChartData(cartesianRequest);
+                        var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
+                        {
+                            TimePeriodes = chartData.TimePeriodes,
+                            Type = HighlightType.Overall,
+                            PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType)
+                        });
+                        previewViewModel.PeriodeType = viewModel.PeriodeType;
+                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
+                        previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
                         previewViewModel.GraphicType = viewModel.GraphicType;
                         previewViewModel.BarChart = new BarChartDataViewModel();
                         previewViewModel.BarChart.Title = viewModel.HeaderTitle;

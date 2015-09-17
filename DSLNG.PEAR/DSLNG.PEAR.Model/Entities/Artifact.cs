@@ -37,8 +37,8 @@ namespace DSLNG.PEAR.Data.Entities
         public ValueAxis ValueAxis { get; set; }
         public RangeFilter RangeFilter { get; set; }
         public Measurement Measurement { get; set; }
-        public double FractionScale { get; set; }
-        public double MaxFractionScale { get; set; }
+        public double? FractionScale { get; set; }
+        public double? MaxFractionScale { get; set; }
         public double MinValue { get; set; }
         public double MaxValue { get; set; }
        

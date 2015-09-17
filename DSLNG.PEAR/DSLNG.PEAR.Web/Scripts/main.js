@@ -1,4 +1,130 @@
 ﻿// Common
+/*
+ * Date Format 1.2.3
+ * (c) 2007-2009 Steven Levithan <stevenlevithan.com>
+ * MIT license
+ *
+ * Includes enhancements by Scott Trenda <scott.trenda.net>
+ * and Kris Kowal <cixar.com/~kris.kowal/>
+ *
+ * Accepts a date, a mask, or a date and a mask.
+ * Returns a formatted version of the given date.
+ * The date defaults to the current date/time.
+ * The mask defaults to dateFormat.masks.default.
+ */
+
+var dateFormat = function () {
+    var token = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g,
+        timezone = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g,
+        timezoneClip = /[^-+\dA-Z]/g,
+        pad = function (val, len) {
+            val = String(val);
+            len = len || 2;
+            while (val.length < len) val = "0" + val;
+            return val;
+        };
+
+    // Regexes and supporting functions are cached through closure
+    return function (date, mask, utc) {
+        var dF = dateFormat;
+
+        // You can't provide utc if you skip other args (use the "UTC:" mask prefix)
+        if (arguments.length == 1 && Object.prototype.toString.call(date) == "[object String]" && !/\d/.test(date)) {
+            mask = date;
+            date = undefined;
+        }
+
+        // Passing date through Date applies Date.parse, if necessary
+        date = date ? new Date(date) : new Date;
+        if (isNaN(date)) throw SyntaxError("invalid date");
+
+        mask = String(dF.masks[mask] || mask || dF.masks["default"]);
+
+        // Allow setting the utc argument via the mask
+        if (mask.slice(0, 4) == "UTC:") {
+            mask = mask.slice(4);
+            utc = true;
+        }
+
+        var _ = utc ? "getUTC" : "get",
+            d = date[_ + "Date"](),
+            D = date[_ + "Day"](),
+            m = date[_ + "Month"](),
+            y = date[_ + "FullYear"](),
+            H = date[_ + "Hours"](),
+            M = date[_ + "Minutes"](),
+            s = date[_ + "Seconds"](),
+            L = date[_ + "Milliseconds"](),
+            o = utc ? 0 : date.getTimezoneOffset(),
+            flags = {
+                d: d,
+                dd: pad(d),
+                ddd: dF.i18n.dayNames[D],
+                dddd: dF.i18n.dayNames[D + 7],
+                m: m + 1,
+                mm: pad(m + 1),
+                mmm: dF.i18n.monthNames[m],
+                mmmm: dF.i18n.monthNames[m + 12],
+                yy: String(y).slice(2),
+                yyyy: y,
+                h: H % 12 || 12,
+                hh: pad(H % 12 || 12),
+                H: H,
+                HH: pad(H),
+                M: M,
+                MM: pad(M),
+                s: s,
+                ss: pad(s),
+                l: pad(L, 3),
+                L: pad(L > 99 ? Math.round(L / 10) : L),
+                t: H < 12 ? "a" : "p",
+                tt: H < 12 ? "am" : "pm",
+                T: H < 12 ? "A" : "P",
+                TT: H < 12 ? "AM" : "PM",
+                Z: utc ? "UTC" : (String(date).match(timezone) || [""]).pop().replace(timezoneClip, ""),
+                o: (o > 0 ? "-" : "+") + pad(Math.floor(Math.abs(o) / 60) * 100 + Math.abs(o) % 60, 4),
+                S: ["th", "st", "nd", "rd"][d % 10 > 3 ? 0 : (d % 100 - d % 10 != 10) * d % 10]
+            };
+
+        return mask.replace(token, function ($0) {
+            return $0 in flags ? flags[$0] : $0.slice(1, $0.length - 1);
+        });
+    };
+}();
+
+// Some common format strings
+dateFormat.masks = {
+    "default": "ddd mmm dd yyyy HH:MM:ss",
+    shortDate: "m/d/yy",
+    mediumDate: "mmm d, yyyy",
+    longDate: "mmmm d, yyyy",
+    fullDate: "dddd, mmmm d, yyyy",
+    shortTime: "h:MM TT",
+    mediumTime: "h:MM:ss TT",
+    longTime: "h:MM:ss TT Z",
+    isoDate: "yyyy-mm-dd",
+    isoTime: "HH:MM:ss",
+    isoDateTime: "yyyy-mm-dd'T'HH:MM:ss",
+    isoUtcDateTime: "UTC:yyyy-mm-dd'T'HH:MM:ss'Z'"
+};
+
+// Internationalization strings
+dateFormat.i18n = {
+    dayNames: [
+        "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat",
+        "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
+    ],
+    monthNames: [
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+        "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
+    ]
+};
+
+// For convenience...
+Date.prototype.format = function (mask, utc) {
+    return dateFormat(this, mask, utc);
+};
+
 String.prototype.startsWith = function (str) {
     return this.substr(0, str.length) === str;
 };
@@ -28,6 +154,7 @@ Number.prototype.format = function (n, x) {
     Pear.Template = {};
     Pear.Template.Editor = {};
     Pear.Loading = {};
+    Pear.Highlight = {};
 
     Pear.Loading.Show = function (container) {
         var loadingImage = $('#dataLayout').attr('data-content-url') + '/img/ajax-loader2.gif';
@@ -93,6 +220,19 @@ Number.prototype.format = function (n, x) {
             $(this).colpickSetColor(this.value.replace('#', ''));
         });
     };
+    artifactDesigner._toJavascriptDate = function (value, periodeType) {
+        var pattern = /Date\(([^)]+)\)/;
+        var results = pattern.exec(value);
+        var dt = new Date(parseFloat(results[1]));
+        switch (periodeType) {
+            case 'Daily' :
+                return dt.format('dd mmm yyyy');
+            case 'Monthly':
+                return dt.format('mmm yyyy');
+            default:
+                return dt.format('yyyy');
+        }
+    };
 
     artifactDesigner.ListSetup = function () {
         $(document).on('click', '.artifact-view', function (e) {
@@ -147,6 +287,11 @@ Number.prototype.format = function (n, x) {
                     $('#general-graphic-settings').css('display', 'block');
                     $('.form-measurement').css('display', 'block');
                     $('.main-value-axis').css('display', 'block');
+                    if (['speedometer', 'trafficlight', 'tabular', 'tank', 'pie', 'multiaxis'].indexOf(type) > -1) {
+                        $('.scale').css('display', 'none');
+                    } else {
+                        $('.scale').css('display', 'block');
+                    }
                     if (callback.hasOwnProperty(type)) {
                         callback[type]();
                     }
@@ -155,7 +300,7 @@ Number.prototype.format = function (n, x) {
         };
         var rangeDatePicker = function () {
             $('.datepicker').datetimepicker({
-                format: "MM/DD/YYYY hh:00 A"
+                format: "MM/DD/YYYY"
             });
             $('.datepicker').change(function (e) {
                 //console.log(this);
@@ -207,12 +352,28 @@ Number.prototype.format = function (n, x) {
             });
             var original = $('#RangeFilter').clone(true);
             var rangeFilterSetup = function (periodeType) {
+                var graphicType = $('#graphic-type').val();
                 var toRemove = {};
-                toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD'];
-                toRemove.daily = ['CurrentHour', 'CurrentYear', 'DTD', 'YTD'];
-                toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD'];
-                toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD'];
-                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD'];
+                switch (graphicType) {
+                    case "tabular":
+                    case "tank":
+                    case "speedometer":
+                    case "traffic":
+                    case "pie":
+                        toRemove.hourly = [];
+                        toRemove.daily = ['CurrentHour', 'CurrentWeek', 'CurrentYear', 'DTD', 'MTD', 'YTD', 'CurrentMonth', 'YTD', 'Interval', 'SpecificMonth', 'SpecificYear'];
+                        toRemove.weekly = [];
+                        toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'CurrentYear', 'YTD', 'Interval', 'SpecificDay', 'SpecificYear'];
+                        toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'Interval', 'SpecificDay', 'SpecificMonth'];
+                        break;
+                    default:
+                        toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
+                        toRemove.daily = ['CurrentHour', 'CurrentYear', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
+                        toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
+                        toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
+                        toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
+                        break;
+                }
                 var originalClone = original.clone(true);
                 originalClone.find('option').each(function (i, val) {
                     if (toRemove[periodeType].indexOf(originalClone.find(val).val()) > -1) {
@@ -231,17 +392,27 @@ Number.prototype.format = function (n, x) {
             });
 
         };
-
+        var specificDate = function() {
+            $(".datepicker").on("dp.change", function(e) {
+                if ($('#RangeFilter').val().toLowerCase().indexOf('specific') > -1 && e.target.id === 'StartInDisplay') {
+                    $('#EndInDisplay').val($('#StartInDisplay').val());
+                }
+            });
+        };
         $('#graphic-type').change(function (e) {
             e.preventDefault();
             var $this = $(this);
             loadGraph($this.data('graph-url'), $this.val());
+            $('#PeriodeType').change();
         });
+        
+        
 
         var initialGraphicType = $('#graphic-type');
         loadGraph(initialGraphicType.data('graph-url'), initialGraphicType.val());
         rangeControl();
         rangeDatePicker();
+        specificDate();
     };
     artifactDesigner.EditSetup = function () {
         var callback = Pear.Artifact.Designer._setupCallbacks;
@@ -349,6 +520,7 @@ Number.prototype.format = function (n, x) {
             });
         };
         var rangeControl = function () {
+            var graphicType = $('#graphic-type').val();
             $('#RangeFilter').change(function (e) {
                 e.preventDefault();
                 var $this = $(this);
@@ -357,11 +529,26 @@ Number.prototype.format = function (n, x) {
             var original = $('#RangeFilter').clone(true);
             var rangeFilterSetup = function (periodeType) {
                 var toRemove = {};
-                toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD'];
-                toRemove.daily = ['CurrentHour', 'CurrentYear', 'DTD', 'YTD'];
-                toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD'];
-                toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD'];
-                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD'];
+                switch (graphicType) {
+                    case "tabular":
+                    case "tank":
+                    case "speedometer":
+                    case "traffic":
+                    case "pie":
+                        toRemove.hourly = [];
+                        toRemove.daily = ['CurrentHour', 'CurrentWeek', 'CurrentYear', 'DTD', 'MTD', 'YTD', 'CurrentMonth', 'YTD', 'Interval', 'SpecificMonth', 'SpecificYear'];
+                        toRemove.weekly = [];
+                        toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'CurrentYear', 'YTD', 'Interval', 'SpecificDay', 'SpecificYear'];
+                        toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'Interval', 'SpecificDay', 'SpecificMonth'];
+                        break;
+                    default:
+                        toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
+                        toRemove.daily = ['CurrentHour', 'CurrentYear', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
+                        toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
+                        toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
+                        toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
+                        break;
+                }
                 var originalClone = original.clone(true);
                 originalClone.find('option').each(function (i, val) {
                     if (toRemove[periodeType].indexOf(originalClone.find(val).val()) > -1) {
@@ -386,8 +573,21 @@ Number.prototype.format = function (n, x) {
             var $this = $(this);
             loadGraph($this.data('graph-url'), $this.val());
         });
+        var specificDate = function () {
+            $(".datepicker").on("dp.change", function (e) {
+                if ($('#RangeFilter').val().toLowerCase().indexOf('specific') > -1 && e.target.id === 'StartInDisplay') {
+                    $('#EndInDisplay').val($('#StartInDisplay').val());
+                }
+            });
+        };
+        specificDate();
         rangeControl();
         rangeDatePicker();
+        if (['speedometer', 'trafficlight', 'tabular', 'tank', 'pie', 'multiaxis'].indexOf($('#graphic-type').val()) > -1) {
+            $('.scale').css('display', 'none');
+        } else {
+            $('.scale').css('display', 'block');
+        }
         switch ($('#graphic-type').val()) {
             case 'multiaxis':
                 var $hiddenFields = $('#hidden-fields');
@@ -1098,14 +1298,34 @@ Number.prototype.format = function (n, x) {
                 //min: 0,
                 title: {
                     text: data.BarChart.ValueAxisTitle
-                }
+                },
+                tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
+                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale
             },
             tooltip: {
                 formatter: function () {
-                    return '<b>' + this.x + '</b><br/>' +
-                        this.series.name + ': ' + this.y.format(2) + ' ' + data.BarChart.ValueAxisTitle;// + '<br/>' +
-                    //'Total: ' + this.point.stackTotal.format(2) + ' ' + data.BarChart.ValueAxisTitle;
-                }
+                    var tooltip = '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
+                    for (var i in this.points) {
+                        tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>';
+
+                        var prev = (parseInt(i) - 1);
+                        var next = (parseInt(i) + 1);
+                        var nextExist = typeof this.points[next] !== 'undefined';
+                        var prevExist = typeof this.points[prev] !== 'undefined';
+                        if (typeof this.points[i].total !== 'undefined') {
+                            if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
+                                (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
+                                tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br>';
+                            }
+                        }
+                        if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
+                            tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
+                            tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                        }
+                    }
+                    return tooltip;
+                },
+                shared: true
             },
             exporting: {
                 url: '/Chart/Export',
@@ -1151,15 +1371,42 @@ Number.prototype.format = function (n, x) {
             yAxis: {
                 title: {
                     text: data.BarChart.ValueAxisTitle
-                }
+                },
+                tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
+                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale
             },
             tooltip: {
                 formatter: function () {
-                    return '<b>' + this.x + '</b><br/>' +
-                        this.series.name + ': ' + this.y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>' +
-                        'Total: ' + this.point.stackTotal.format(2) + ' ' + data.BarChart.ValueAxisTitle;
-                }
+                    var tooltip = '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
+                    for (var i in this.points) {
+                        tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>';
+
+                        var prev = (parseInt(i) - 1);
+                        var next = (parseInt(i) + 1);
+                        var nextExist = typeof this.points[next] !== 'undefined';
+                        var prevExist = typeof this.points[prev] !== 'undefined';
+                        if (typeof this.points[i].total !== 'undefined') {
+                            if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
+                                (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
+                                tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br>';
+                            }
+                        }
+                        if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
+                            tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
+                            tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                        }
+                    }
+                    return tooltip;
+                },
+                shared: true
             },
+            //tooltip: {
+            //    formatter: function () {
+            //        return '<b>' + this.x + '</b><br/>' +
+            //            this.series.name + ': ' + this.y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>' +
+            //            'Total: ' + this.point.stackTotal.format(2) + ' ' + data.BarChart.ValueAxisTitle;
+            //    }
+            //},
             exporting: {
                 url: '/Chart/Export',
                 filename: 'MyChart',
@@ -1196,16 +1443,42 @@ Number.prototype.format = function (n, x) {
                 //min: 0,
                 title: {
                     text: data.BarChart.ValueAxisTitle
-                }
+                },
+                tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
+                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale
             },
-
             tooltip: {
                 formatter: function () {
-                    return '<b>' + this.x + '</b><br/>' +
-                        this.series.name + ': ' + this.y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>' +
-                        'Total: ' + this.point.stackTotal.format(2) + ' ' + data.BarChart.ValueAxisTitle;
-                }
+                    var tooltip = '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
+                    for (var i in this.points) {
+                        tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>';
+
+                        var prev = (parseInt(i) - 1);
+                        var next = (parseInt(i) + 1);
+                        var nextExist = typeof this.points[next] !== 'undefined';
+                        var prevExist = typeof this.points[prev] !== 'undefined';
+                        if (typeof this.points[i].total !== 'undefined') {
+                            if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
+                                (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
+                                tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br>';
+                            }
+                        }
+                        if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
+                            tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
+                            tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                        }
+                    }
+                    return tooltip;
+                },
+                shared: true
             },
+            //tooltip: {
+            //    formatter: function () {
+            //        return '<b>' + this.x + '</b><br/>' +
+            //            this.series.name + ': ' + this.y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>' +
+            //            'Total: ' + this.point.stackTotal.format(2) + ' ' + data.BarChart.ValueAxisTitle;
+            //    }
+            //},
             exporting: {
                 url: '/Chart/Export',
                 filename: 'MyChart',
@@ -1310,48 +1583,6 @@ Number.prototype.format = function (n, x) {
                     }
                 }
             },
-            //events: {
-
-            //    // listen to the selection event on the master chart to update the
-            //    // extremes of the detail chart
-            //    selection: function (event) {
-            //        var extremesObject = event.xAxis[0],
-            //            min = extremesObject.min,
-            //            max = extremesObject.max,
-            //            detailData = [],
-            //            detailScatter = [],
-            //            xAxis = this.xAxis[0];
-
-            //        // reverse engineer the last part of the data
-            //        jQuery.each(data, function (i, interval) {
-            //            if (i > min && i < max) {
-            //                detailData.push([i, interval[0], interval[1]]);
-            //                detailScatter.push({
-            //                    marker: {
-            //                        radius: 10 / (max - min)
-            //                    },
-            //                    x: i,
-            //                    y: scatter[i]
-            //                });
-            //            }
-            //        });
-
-            //        // move the plot bands to reflect the new detail span
-            //        xAxis.removePlotBand('selection');
-            //        xAxis.addPlotBand({
-            //            id: 'selection',
-            //            from: min,
-            //            to: max,
-            //            color: 'rgba(0, 0, 0, 0.2)'
-            //        });
-
-            //        detailChart.series[0].setData(detailData);
-            //        detailChart.series[1].setData(detailScatter);
-
-            //        return false;
-            //    }
-            //},
-            //},
             xAxis: {
                 categories: data.LineChart.Periodes
             },
@@ -1363,7 +1594,9 @@ Number.prototype.format = function (n, x) {
                     value: 0,
                     width: 1,
                     color: '#808080'
-                }]
+                }],
+                tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
+                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale
             },
             exporting: {
                 url: '/Chart/Export',
@@ -1375,17 +1608,29 @@ Number.prototype.format = function (n, x) {
             },
             tooltip: {
                 formatter: function () {
-                    return '<b>' + this.x + '</b><br/>' +
-                        this.series.name + ': ' + this.y.format(2) + ' ' + data.LineChart.ValueAxisTitle;
-                }
-                //valueSuffix: data.LineChart.ValueAxisTitle
+                    var tooltip = '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
+                    for (var i in this.points) {
+                        tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.LineChart.ValueAxisTitle + '<br/>';
+
+                        var prev = (parseInt(i) - 1);
+                        var next = (parseInt(i) + 1);
+                        var nextExist = typeof this.points[next] !== 'undefined';
+                        var prevExist = typeof this.points[prev] !== 'undefined';
+                        if (typeof this.points[i].total !== 'undefined') {
+                            if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
+                                (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
+                                tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.LineChart.ValueAxisTitle + '<br>';
+                            }
+                        }
+                        if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
+                            tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title  + '</b><br>';
+                            tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                        }
+                    }
+                    return tooltip;
+                },
+                shared: true
             },
-            //legend: {
-            //    layout: 'vertical',
-            //    align: 'right',
-            //    verticalAlign: 'middle',
-            //    borderWidth: 0
-            //},
             series: data.LineChart.Series
         });
     };
@@ -1504,14 +1749,41 @@ Number.prototype.format = function (n, x) {
                     formatter: function () {
                         return this.value;
                     }
-                }
+                },
+                tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
+                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale
             },
             tooltip: {
                 formatter: function () {
-                    return '<b>' + this.x + '</b><br/>' +
-                        this.series.name + ': ' + this.y.format(2) + ' ' + data.AreaChart.ValueAxisTitle;
-                }
+                    var tooltip = '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
+                    for (var i in this.points) {
+                        tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.AreaChart.ValueAxisTitle + '<br/>';
+
+                        var prev = (parseInt(i) - 1);
+                        var next = (parseInt(i) + 1);
+                        var nextExist = typeof this.points[next] !== 'undefined';
+                        var prevExist = typeof this.points[prev] !== 'undefined';
+                        if (typeof this.points[i].total !== 'undefined') {
+                            if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
+                                (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
+                                tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.AreaChart.ValueAxisTitle + '<br>';
+                            }
+                        }
+                        if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
+                            tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
+                            tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                        }
+                    }
+                    return tooltip;
+                },
+                shared: true
             },
+            //tooltip: {
+            //    formatter: function () {
+            //        return '<b>' + this.x + '</b><br/>' +
+            //            this.series.name + ': ' + this.y.format(2) + ' ' + data.AreaChart.ValueAxisTitle;
+            //    }
+            //},
             exporting: {
                 url: '/Chart/Export',
                 filename: 'MyChart',
@@ -1544,6 +1816,7 @@ Number.prototype.format = function (n, x) {
     };
     artifactDesigner._displayMultistacksAreaChart = function (data, container) {
         data.AreaChart.Series = data.AreaChart.Series.reverse();
+        console.log(data);
         container.highcharts({
             chart: {
                 type: 'area',
@@ -1566,18 +1839,45 @@ Number.prototype.format = function (n, x) {
             yAxis: {
                 title: {
                     text: data.AreaChart.ValueAxisTitle
-                }
+                },
+                tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
+                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale
             },
             //tooltip: {
             //    shared: true,
             //    valueSuffix: ' ' + data.AreaChart.ValueAxisTitle
             //},
+            //tooltip: {
+            //    formatter: function () {
+            //        return '<b>' + this.x + '</b><br/>' +
+            //            this.series.name + ': ' + this.y.format(2) + ' ' + data.AreaChart.ValueAxisTitle + '<br/>' +
+            //            'Total: ' + this.point.stackTotal.format(2) + ' ' + data.AreaChart.ValueAxisTitle;
+            //    }
+            //},
             tooltip: {
                 formatter: function () {
-                    return '<b>' + this.x + '</b><br/>' +
-                        this.series.name + ': ' + this.y.format(2) + ' ' + data.AreaChart.ValueAxisTitle + '<br/>' +
-                        'Total: ' + this.point.stackTotal.format(2) + ' ' + data.AreaChart.ValueAxisTitle;
-                }
+                    var tooltip = '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
+                    for (var i in this.points) {
+                        tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.AreaChart.ValueAxisTitle + '<br/>';
+
+                        var prev = (parseInt(i) - 1);
+                        var next = (parseInt(i) + 1);
+                        var nextExist = typeof this.points[next] !== 'undefined';
+                        var prevExist = typeof this.points[prev] !== 'undefined';
+                        if (typeof this.points[i].total !== 'undefined') {
+                            if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
+                                (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
+                                tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.AreaChart.ValueAxisTitle + '<br>';
+                            }
+                        }
+                        if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
+                            tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
+                            tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                        }
+                    }
+                    return tooltip;
+                },
+                shared: true
             },
             plotOptions: {
                 area: {
@@ -2059,6 +2359,11 @@ Number.prototype.format = function (n, x) {
 
     //tank
     artifactDesigner._setupCallbacks.tank = function () {
+        Pear.Artifact.Designer._colorPicker($('#graphic-settings'));
+        /*$('#graphic-settings').find('.colorpicker').each(function (i, val) {
+            console.log(val);
+            Pear.Artifact.Designer._colorPicker($(val));
+        });*/
         $('.main-value-axis').css('display', 'none');
         $('.form-measurement').css('display', 'none');
         Pear.Artifact.Designer._kpiAutoComplete($('#graphic-settings'), false);
@@ -2397,7 +2702,7 @@ Number.prototype.format = function (n, x) {
                 }).appendTo(chartTemplate);
                 chartTemplate.removeClass('original');
                 chartTemplate.attr('data-chart-pos', chartCount);
-                var fields = ['ValueAxis', 'GraphicType', 'MeasurementId', 'ValueAxisTitle', 'ValueAxisColor', 'IsOpposite'];
+                var fields = ['ValueAxis', 'GraphicType', 'MeasurementId', 'ValueAxisTitle', 'ValueAxisColor', 'IsOpposite', 'FractionScale','MaxFractionScale'];
                 for (var i in fields) {
                     var field = fields[i];
                     chartTemplate.find('#MultiaxisChart_Charts_0__' + field).attr('name', 'MultiaxisChart.Charts[' + chartCount + '].' + field);
@@ -2443,7 +2748,9 @@ Number.prototype.format = function (n, x) {
                         color: data.MultiaxisChart.Charts[i].ValueAxisColor
                     }
                 },
-                opposite: data.MultiaxisChart.Charts[i].IsOpposite
+                opposite: data.MultiaxisChart.Charts[i].IsOpposite,
+                tickInterval: data.MultiaxisChart.Charts[i].FractionScale == 0 ? null : data.MultiaxisChart.Charts[i].FractionScale,
+                max: data.MultiaxisChart.Charts[i].MaxFractionScale == 0 ? null : data.MultiaxisChart.Charts[i].MaxFractionScale
             });
             if (chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType] == 'line') {
                 plotOptions[chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType]] = {
@@ -2501,7 +2808,8 @@ Number.prototype.format = function (n, x) {
         }
         container.highcharts({
             chart: {
-                zoomType: 'xy'
+                zoomType: 'xy',
+                alignTicks: false
             },
             title: {
                 text: data.MultiaxisChart.Title
@@ -2525,7 +2833,7 @@ Number.prototype.format = function (n, x) {
             yAxis: yAxes,
             tooltip: {
                 formatter: function () {
-                    var tooltip = '<b>' + this.x + '</b><br/>';
+                    var tooltip = '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
                     for (var i in this.points) {
                         tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + this.points[i].series.options.tooltip.valueSuffix + '<br/>';
 
@@ -2538,6 +2846,10 @@ Number.prototype.format = function (n, x) {
                                 (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
                                 tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + this.points[i].series.options.tooltip.valueSuffix + '<br>';
                             }
+                        }
+                        if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
+                            tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
+                            tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
                         }
                     }
                     return tooltip;
@@ -2699,7 +3011,9 @@ Number.prototype.format = function (n, x) {
             yAxis: {
                 title: {
                     text: data.ComboChart.Measurement
-                }
+                },
+                tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
+                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale
             },
             exporting: {
                 url: '/Chart/Export',
@@ -2711,7 +3025,7 @@ Number.prototype.format = function (n, x) {
             },
             tooltip: {
                 formatter: function () {
-                    var tooltip = '<b>' + this.x + '</b><br/>';
+                    var tooltip = '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
                     for (var i in this.points) {
                         tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + this.points[i].series.options.tooltip.valueSuffix + '<br/>';
 
@@ -2722,6 +3036,10 @@ Number.prototype.format = function (n, x) {
                         if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
                             (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
                             tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + this.points[i].series.options.tooltip.valueSuffix + '<br>';
+                        }
+                        if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
+                            tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
+                            tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
                         }
                     }
                     return tooltip;
@@ -2809,6 +3127,7 @@ Number.prototype.format = function (n, x) {
             },
             plotOptions: {
                 pie: {
+                    slicedOffset: 30,
                     allowPointSelect: true,
                     cursor: 'pointer',
                     /*dataLabels: {
@@ -2868,8 +3187,16 @@ Number.prototype.format = function (n, x) {
             minimumInputLength: 1,
             templateResult: Pear.Artifact.Designer._formatKpi, // omitted for brevity, see the source of this page
             templateSelection: Pear.Artifact.Designer._formatKpiSelection // omitted for brevity, see the source of this page
+        }).on('select2:select', function (e) {
+            var link = $(this).parent().find('a')[0];
+            var id = e.params.data.id;
+            var cuttedLink = $(link).attr('href').substr(0, $(link).attr('href').lastIndexOf('/'));
+            $(link).attr('href', cuttedLink + '/' + id);
+            $(link).css('visibility', 'visible');
         });
     };
+    
+    
     templateEditor.LayoutSetup = function () {
         $('.column-width').change(function () {
             var colWidth = $(this).val();
@@ -3135,6 +3462,49 @@ Number.prototype.format = function (n, x) {
         templateEditor._artifactSelectField($('.template-edit'));
     };
 
+    Pear.Highlight.EditSetup = function () {
+        $('.datepicker').datetimepicker({
+            format: "MM/DD/YYYY"
+        });
+        $('#PeriodeType').change(function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var clearValue = $('.datepicker').each(function (i, val) {
+                $(val).val('');
+                $(val).data("DateTimePicker").destroy();
+            });
+            switch ($this.val().toLowerCase().trim()) {
+                case 'hourly':
+                    $('.datepicker').datetimepicker({
+                        format: "MM/DD/YYYY hh:00 A"
+                    });
+                    break;
+                case 'daily':
+                    $('.datepicker').datetimepicker({
+                        format: "MM/DD/YYYY"
+                    });
+                    break;
+                case 'weekly':
+                    $('.datepicker').datetimepicker({
+                        format: "MM/DD/YYYY",
+                        daysOfWeekDisabled: [0, 2, 3, 4, 5, 6]
+                    });
+                    break;
+                case 'monthly':
+                    $('.datepicker').datetimepicker({
+                        format: "MM/YYYY"
+                    });
+                    break;
+                case 'yearly':
+                    $('.datepicker').datetimepicker({
+                        format: "YYYY"
+                    });
+                    break;
+                default:
+            }
+        });
+    };
+
     $(document).ready(function () {
         if ($('.artifact-designer').length) {
             Pear.Artifact.Designer.GraphicSettingSetup();
@@ -3154,6 +3524,9 @@ Number.prototype.format = function (n, x) {
         }
         if ($('.template-edit').length) {
             Pear.Template.Editor.EditSetup();
+        }
+        if ($('.highlight-save').length) {
+            Pear.Highlight.EditSetup();
         }
     });
     window.Pear = Pear;

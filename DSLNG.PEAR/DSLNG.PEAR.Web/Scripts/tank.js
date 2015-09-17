@@ -20,11 +20,7 @@
         var daysToTankTop = options.DaysToTankTop;
         var daysToTankTopUnit = options.DaysToTankTopUnit;
         var daysToTankTopTitle = options.DaysToTankTopTitle;
-
-        // var MinCapacity = 7000;
-        // var MaxCapacity = 180000;
-        // var VolumeInventory = 43976.98;
-
+        
 
         // variable Tank Chart
 
@@ -46,7 +42,7 @@
         var tankFullHeight = tankHeight - (ellipseRY * 3);
         var roundMaxY = tankHeight - tankFullHeight;
 
-        var softBlue = '#3949AB';
+        var softBlue = options.Color !== undefined ? options.Color : '#3949AB';
         var darkBlue = '#283593';
         var greyBorder = '#BDBDBD';
         var red = '#e43834';
@@ -54,7 +50,7 @@
         var green = '#429f46';
         var red = "#FF0000";
 
-        var lineMaxColor = greyBorder;
+        var lineMaxColor = red;
         var lineMinColor = green;
 
         // function Tank Chart
@@ -122,14 +118,7 @@
             strokeWidth: 2,
             strokeDasharray: 2
         });
-
-        var roundMin = s.ellipse(ellipseX, lineMinY, ellipseRX, ellipseRY).attr({
-            fill: 'transparent',
-            stroke: green,
-            strokeWidth: 2,
-            strokeDasharray: 2
-        });
-
+        
         // Meteran
 
         var rightLineX = marginSide + tankWidth + 16;
@@ -159,17 +148,37 @@
 
         //////////
 
-        var lineMin = s.line(leftLineX - 4, lineMinY, leftLineX + 4, lineMinY).attr({
-            stroke: lineMinColor,
-            strokeWidth: 3,
-            strokeLinecap: "round",
-            strokeLinejoin: "round"
-        });
-        var tMin = s.text(leftLineX - 14, lineMinY + 4, [minCapacity.format(2), " ", volumeInventoryUnit, " (Min)"]).attr({
-            font: "14px Open Sans, sans-serif",
-            fill: "#444",
-            textAnchor: "end",
-        });
+        
+        if (options.ShowLine) {
+            var lineMin = s.line(leftLineX - 4, lineMinY, leftLineX + 4, lineMinY).attr({
+                stroke: lineMinColor,
+                strokeWidth: 3,
+                strokeLinecap: "round",
+                strokeLinejoin: "round"
+            });
+            
+            //var tMin = s.text(leftLineX - 14, lineMinY + 4, [minCapacity.format(2), " ", volumeInventoryUnit, " (Shipment Ready)"]).attr({
+            var tMin = s.text(leftLineX - 14, lineMinY + 4, ["Shipment Ready"]).attr({
+                font: "14px Open Sans, sans-serif",
+                fill: "#444",
+                textAnchor: "end",
+            });
+            
+            var lineMin2 = s.line(rightLineX - 4, lineMinY, rightLineX + 4, lineMinY).attr({
+                stroke: lineMinColor,
+                strokeWidth: 3,
+                strokeLinecap: "round",
+                strokeLinejoin: "round"
+            });
+            
+            s.ellipse(ellipseX, lineMinY, ellipseRX, ellipseRY).attr({
+                fill: 'transparent',
+                stroke: green,
+                strokeWidth: 2,
+                strokeDasharray: 2
+            });
+        }
+        
 
         //////////
 
@@ -199,12 +208,7 @@
             strokeLinecap: "round",
             strokeLinejoin: "round"
         });
-        var lineMin2 = s.line(rightLineX - 4, lineMinY, rightLineX + 4, lineMinY).attr({
-            stroke: lineMinColor,
-            strokeWidth: 3,
-            strokeLinecap: "round",
-            strokeLinejoin: "round"
-        });
+        
         var lineZero = s.line(rightLineX - 4, roundBottomY, rightLineX + 4, roundBottomY).attr({
             stroke: red,
             strokeWidth: 3,
@@ -213,7 +217,7 @@
         });
 
         var lineFill = s.line(rightLineX - 4, roundFillY, rightLineX + 4, roundFillY).attr({
-            stroke: darkBlue,
+            stroke: red,
             strokeWidth: 3,
             strokeLinecap: "round",
             strokeLinejoin: "round"
