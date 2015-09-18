@@ -42,6 +42,8 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<VesselSchedule> VesselSchedules { get; set; }
         IDbSet<NextLoadingSchedule> NextLoadingSchedules { get; set; }
         IDbSet<Buyer> Buyers { get; set; }
+        IDbSet<CalculatorConstant> CalculatorConstants { get; set; }
+        IDbSet<ConstantUsage> ConstantUsages { get; set; }
         Database Database { get; }
         int SaveChanges();
         DbEntityEntry Entry(object entity);

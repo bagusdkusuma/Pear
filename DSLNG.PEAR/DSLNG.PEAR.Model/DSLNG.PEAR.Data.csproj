@@ -75,6 +75,8 @@
     <Compile Include="Entities\ArtifactTank.cs" />
     <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="Entities\Buyer.cs" />
+    <Compile Include="Entities\CalculatorConstant.cs" />
+    <Compile Include="Entities\ConstantUsage.cs" />
     <Compile Include="Entities\Conversion.cs" />
     <Compile Include="Entities\DashboardTemplate.cs" />
     <Compile Include="Entities\Economic.cs" />
