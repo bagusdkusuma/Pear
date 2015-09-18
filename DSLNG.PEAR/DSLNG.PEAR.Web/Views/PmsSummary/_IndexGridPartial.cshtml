@@ -45,13 +45,13 @@
             settings.Columns.AddBand(targetActualBand =>
             {
                 targetActualBand.Caption = "Actual / Target";
-                targetActualBand.HeaderStyle.HorizontalAlign = HorizontalAlign.Left;
+                targetActualBand.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
                 /*targetActualBand.Columns.Add("TargetActualYearly", "Yearly");
                 targetActualBand.Columns.Add("TargetActualMonthly", "Monthly");*/
                 GridViewColumn col = new MVCxGridViewColumn("TargetActualYearly");
-                col.HeaderStyle.HorizontalAlign = HorizontalAlign.Left;
+                col.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
                 col.Caption = "Yearly";
-                col.CellStyle.HorizontalAlign = HorizontalAlign.Left;
+                col.CellStyle.HorizontalAlign = HorizontalAlign.Right;
                 
                 targetActualBand.Columns.Add(col);
                 
