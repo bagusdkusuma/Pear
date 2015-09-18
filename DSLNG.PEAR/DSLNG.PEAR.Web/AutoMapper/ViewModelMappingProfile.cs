@@ -69,6 +69,18 @@ using DSLNG.PEAR.Web.ViewModels.Config;
 using DSLNG.PEAR.Web.ViewModels.Highlight;
 using DSLNG.PEAR.Services.Requests.Highlight;
 using DSLNG.PEAR.Services.Responses.Highlight;
+using DSLNG.PEAR.Web.ViewModels.Vessel;
+using DSLNG.PEAR.Services.Requests.Vessel;
+using DSLNG.PEAR.Services.Responses.Vessel;
+using DSLNG.PEAR.Web.ViewModels.Buyer;
+using DSLNG.PEAR.Services.Requests.Buyer;
+using DSLNG.PEAR.Services.Responses.Buyer;
+using DSLNG.PEAR.Web.ViewModels.VesselSchedule;
+using DSLNG.PEAR.Services.Requests.VesselSchedule;
+using DSLNG.PEAR.Services.Responses.VesselSchedule;
+using DSLNG.PEAR.Web.ViewModels.NLS;
+using DSLNG.PEAR.Services.Requests.NLS;
+using DSLNG.PEAR.Services.Responses.NLS;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -420,6 +432,18 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<HighlightViewModel, SaveHighlightRequest>();
             Mapper.CreateMap<GetReportHighlightsResponse.HighlightResponse, ArtifactPreviewViewModel.HighlightViewModel>();
+
+            Mapper.CreateMap<VesselViewModel, SaveVesselRequest>();
+            Mapper.CreateMap<GetVesselResponse, VesselViewModel>();
+
+            Mapper.CreateMap<BuyerViewModel, SaveBuyerRequest>();
+            Mapper.CreateMap<GetBuyerResponse, BuyerViewModel>();
+
+            Mapper.CreateMap<VesselScheduleViewModel, SaveVesselScheduleRequest>();
+            Mapper.CreateMap<GetVesselScheduleResponse, VesselScheduleViewModel>();
+
+            Mapper.CreateMap<NLSViewModel, SaveNLSRequest>();
+            Mapper.CreateMap<GetNLSResponse, NLSViewModel>();
             base.Configure();
         }
 

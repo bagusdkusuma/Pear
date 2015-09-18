@@ -1,0 +1,44 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Buyer.BuyerViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="highlight-save">
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="col-md-12">
+        <div class="title">Buyer</div>
+        <div class="description_year">Edit</div>
+        <div>@Html.ValidationSummary(true)</div>
+        @Html.HiddenFor(x => x.Id);
+    </div>
+    <div class="col-md-12">
+        <div class="form-inline whitebox">
+             <div class="form-group form-list">
+                @Html.LabelFor(model => model.Name)
+                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+            <div class="form-group form-list">
+                @Html.LabelFor(model => model.Address)
+                @Html.TextAreaFor(model => model.Address,5,100, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Address)
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 artifact-designer-btns">
+        <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
+        <a onclick="location.reload();" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>
+        <a href="/Highlight" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+    </div>
+}
+    </div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
