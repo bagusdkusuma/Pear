@@ -85,7 +85,9 @@
             {
                 column.FieldName = "ScoreStr";
                 column.Caption = "Score";
+                column.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
                 column.PropertiesEdit.DisplayFormatString = FormatNumber.DecimalFormat;
+                column.CellStyle.HorizontalAlign = HorizontalAlign.Right;
             });
 
             decimal totalScore = 0;
