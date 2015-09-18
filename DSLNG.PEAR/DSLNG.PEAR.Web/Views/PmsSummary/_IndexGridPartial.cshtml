@@ -22,7 +22,7 @@
             settings.Columns.Add("KpiNameWithColor", "Performance Indicator").PropertiesEdit.EncodeHtml = false;
         
             //settings.Columns.Add("Unit");
-            settings.Columns.Add("Weight").CellStyle.HorizontalAlign = HorizontalAlign.Center;
+            /*settings.Columns.Add("Weight").CellStyle.HorizontalAlign = HorizontalAlign.Center;*/
             settings.Columns.Add("ScoreIndicators").Visible = false;
             settings.Columns.Add("PillarWeight").Visible = false;
             var kpiOrderColumn = new MVCxGridViewColumn("KpiOrder");
@@ -46,10 +46,24 @@
             {
                 targetActualBand.Caption = "Actual / Target";
                 targetActualBand.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
-                targetActualBand.Columns.Add("TargetActualYearly", "Yearly");
-                targetActualBand.Columns.Add("TargetActualMonthly", "Monthly");
-                targetActualBand.Columns.Add("TargetActualYtd", "YTD");
+                /*targetActualBand.Columns.Add("TargetActualYearly", "Yearly");
+                targetActualBand.Columns.Add("TargetActualMonthly", "Monthly");*/
+                GridViewColumn col = new MVCxGridViewColumn("TargetActualYearly");
+                col.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
+                col.Caption = "Yearly";
+                col.CellStyle.HorizontalAlign = HorizontalAlign.Right;
+                
+                targetActualBand.Columns.Add(col);
+                
             });
+
+            /*settings.Columns.Add(column =>
+            {
+                column.FieldName = "TargetActualYtd";
+                column.Caption = "YTD (Actual / Target)";
+                column.PropertiesEdit.DisplayFormatString = FormatNumber.DecimalFormat;
+                column.Visible = true;
+            });*/
 
             /*settings.Columns.AddBand(indexBand =>
                 {
@@ -71,7 +85,9 @@
             {
                 column.FieldName = "ScoreStr";
                 column.Caption = "Score";
+                column.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
                 column.PropertiesEdit.DisplayFormatString = FormatNumber.DecimalFormat;
+                column.CellStyle.HorizontalAlign = HorizontalAlign.Right;
             });
 
             decimal totalScore = 0;
@@ -131,6 +147,7 @@
             percentageScore.FieldName = "Score";
             percentageScore.DisplayFormat = FormatNumber.DecimalFormat;
             percentageScore.SummaryType = SummaryItemType.Custom;
+            //percentageScore.ShowInColumn = "Score";
             settings.GroupSummary.Add(percentageScore);
 
             ASPxSummaryItem totalScoreLabel = new ASPxSummaryItem();
