@@ -87,6 +87,9 @@ using DSLNG.PEAR.Services.Responses.NLS;
 using DSLNG.PEAR.Web.ViewModels.CalculatorConstant;
 using DSLNG.PEAR.Services.Requests.CalculatorConstant;
 using DSLNG.PEAR.Services.Responses.CalculatorConstant;
+using DSLNG.PEAR.Web.ViewModels.ConstantUsage;
+using DSLNG.PEAR.Services.Requests.ConstantUsage;
+using DSLNG.PEAR.Services.Responses.ConstantUsage;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -454,6 +457,11 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<CalculatorConstantViewModel, SaveCalculatorConstantRequest>();
             Mapper.CreateMap<GetCalculatorConstantResponse, CalculatorConstantViewModel>();
+
+            Mapper.CreateMap<ConstantUsageViewModel, SaveConstantUsageRequest>()
+                .ForMember(x => x.CalculatorConstantIds, o => o.MapFrom(s => s.Constants.Select(x => x.Id)));
+            Mapper.CreateMap<GetConstantUsageResponse, ConstantUsageViewModel>();
+            Mapper.CreateMap<GetConstantUsageResponse.CalculatorConstantResponse, ConstantUsageViewModel.CalculatorConstantViewModel>();
             base.Configure();
         }
 

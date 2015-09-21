@@ -1254,3 +1254,7 @@ td .btn_small_lightblue a:hover {
 	background-color: #fff;
 	padding: 28px;
 }
+
+.constant-template.original {
+    display:none;
+}

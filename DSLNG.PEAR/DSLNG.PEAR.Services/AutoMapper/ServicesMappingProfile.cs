@@ -54,6 +54,8 @@ using DSLNG.PEAR.Services.Requests.NLS;
 using DSLNG.PEAR.Services.Responses.NLS;
 using DSLNG.PEAR.Services.Requests.CalculatorConstant;
 using DSLNG.PEAR.Services.Responses.CalculatorConstant;
+using DSLNG.PEAR.Services.Requests.ConstantUsage;
+using DSLNG.PEAR.Services.Responses.ConstantUsage;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -329,6 +331,12 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<SaveCalculatorConstantRequest, CalculatorConstant>();
             Mapper.CreateMap<CalculatorConstant, GetCalculatorConstantsResponse.CalculatorConstantResponse>();
             Mapper.CreateMap<CalculatorConstant, GetCalculatorConstantResponse>();
+
+            Mapper.CreateMap<SaveConstantUsageRequest, ConstantUsage>();
+            Mapper.CreateMap<ConstantUsage, GetConstantUsagesResponse.ConstantUsageResponse>()
+                .ForMember(x => x.Constants, o => o.MapFrom(s => s.Constants.Select(x => x.Name)));
+            Mapper.CreateMap<ConstantUsage, GetConstantUsageResponse>();
+            Mapper.CreateMap<CalculatorConstant, GetConstantUsageResponse.CalculatorConstantResponse>();
 
             base.Configure();
         }

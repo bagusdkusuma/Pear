@@ -74,12 +74,14 @@
     <Compile Include="Common\PmsSummary\ScoreIndicator.cs" />
     <Compile Include="Constants\PmsSummaryConstant.cs" />
     <Compile Include="Constants\Type.cs" />
+    <Compile Include="ConstantUsageService.cs" />
     <Compile Include="ConversionService.cs" />
     <Compile Include="DropdownService.cs" />
     <Compile Include="GroupService.cs" />
     <Compile Include="HighlightService.cs" />
     <Compile Include="Interfaces\IBuyerService.cs" />
     <Compile Include="Interfaces\ICalculatorConstantService.cs" />
+    <Compile Include="Interfaces\IConstantUsageService.cs" />
     <Compile Include="Interfaces\IHighlightService.cs" />
     <Compile Include="Interfaces\IKpiAchievementService.cs" />
     <Compile Include="Interfaces\IDropdownService.cs" />
@@ -111,6 +113,9 @@
     <Compile Include="Requests\CalculatorConstant\GetCalculatorConstantsRequest.cs" />
     <Compile Include="Requests\CalculatorConstant\SaveCalculatorConstantRequest.cs" />
     <Compile Include="Requests\Config\GetConfigurationRequest.cs" />
+    <Compile Include="Requests\ConstantUsage\GetConstantUsageRequest.cs" />
+    <Compile Include="Requests\ConstantUsage\GetConstantUsagesRequest.cs" />
+    <Compile Include="Requests\ConstantUsage\SaveConstantUsageRequest.cs" />
     <Compile Include="Requests\Conversion\CreateConversionRequest.cs" />
     <Compile Include="Requests\Conversion\UpdateConversionRequest.cs" />
     <Compile Include="Requests\Highlight\GetHighlightsRequest.cs" />
@@ -184,6 +189,9 @@
     <Compile Include="Responses\CalculatorConstant\GetCalculatorConstantsResponse.cs" />
     <Compile Include="Responses\CalculatorConstant\SaveCalculatorConstantResponse.cs" />
     <Compile Include="Responses\Config\GetConfigurationResponse.cs" />
+    <Compile Include="Responses\ConstantUsage\GetConstantUsageResponse.cs" />
+    <Compile Include="Responses\ConstantUsage\GetConstantUsagesResponse.cs" />
+    <Compile Include="Responses\ConstantUsage\SaveConstantUsageResponse.cs" />
     <Compile Include="Responses\Conversion\CreateConversionResponse.cs" />
     <Compile Include="Responses\Conversion\DeleteConversionResponse.cs" />
     <Compile Include="Responses\Conversion\Measurement.cs" />
