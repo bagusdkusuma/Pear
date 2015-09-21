@@ -640,6 +640,11 @@
     <Content Include="Views\Highlight\_IndexGridPartial.cshtml" />
     <Content Include="Views\Highlight\Index.cshtml" />
     <Content Include="Views\Highlight\Create.cshtml" />
+    <Content Include="Views\Select\_IndexGridPartial.cshtml" />
+    <Content Include="Views\Select\Index.cshtml" />
+    <Content Include="Views\Select\Create.cshtml" />
+    <Content Include="Views\Select\_OptionForm.cshtml" />
+    <Content Include="Views\Select\Update.cshtml" />
     <Content Include="Views\Vessel\_IndexGridPartial.cshtml" />
     <Content Include="Views\Vessel\Index.cshtml" />
     <Content Include="Views\Vessel\Create.cshtml" />
@@ -729,6 +734,7 @@
     <Compile Include="Controllers\PmsConfigDetailsController.cs" />
     <Compile Include="Controllers\PmsSummaryController.cs" />
     <Compile Include="Controllers\RoleGroupController.cs" />
+    <Compile Include="Controllers\SelectController.cs" />
     <Compile Include="Controllers\TemplateController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\TypeController.cs" />
@@ -843,6 +849,10 @@
     <Compile Include="ViewModels\RoleGroup\IndexRoleGroupViewModel.cs" />
     <Compile Include="ViewModels\RoleGroup\RoleGroupViewModel.cs" />
     <Compile Include="ViewModels\RoleGroup\UpdateRoleGroupViewModel.cs" />
+    <Compile Include="ViewModels\Select\SelectOptionViewModel.cs" />
+    <Compile Include="ViewModels\Select\UpdateSelectViewModel.cs" />
+    <Compile Include="ViewModels\Select\CreateSelectViewModel.cs" />
+    <Compile Include="ViewModels\Select\IndexSelectViewModel.cs" />
     <Compile Include="ViewModels\Template\TemplateViewModel.cs" />
     <Compile Include="ViewModels\Type\CreateTypeViewModel.cs" />
     <Compile Include="ViewModels\Type\IndexTypeViewModel.cs" />

@@ -88,6 +88,7 @@
     <Compile Include="Interfaces\IKpiTargetService.cs" />
     <Compile Include="Interfaces\INLSService.cs" />
     <Compile Include="Interfaces\IPeriodeService.cs" />
+    <Compile Include="Interfaces\ISelectService.cs" />
     <Compile Include="Interfaces\ITemplateService.cs" />
     <Compile Include="Interfaces\IVesselScheduleService.cs" />
     <Compile Include="Interfaces\IVesselService.cs" />
@@ -155,6 +156,10 @@
     <Compile Include="Requests\PmsSummary\GetScoreIndicatorRequest.cs" />
     <Compile Include="Requests\PmsSummary\UpdatePmsConfigDetailsRequest.cs" />
     <Compile Include="Requests\PmsSummary\UpdatePmsConfigRequest.cs" />
+    <Compile Include="Requests\Select\GetSelectRequest.cs" />
+    <Compile Include="Requests\Select\GetSelectsRequest.cs" />
+    <Compile Include="Requests\Select\UpdateSelectRequest.cs" />
+    <Compile Include="Requests\Select\CreateSelectRequest.cs" />
     <Compile Include="Requests\Template\CreateTemplateRequest.cs" />
     <Compile Include="Requests\Template\GetTemplateRequest.cs" />
     <Compile Include="Requests\Template\GetTemplatesRequest.cs" />
@@ -355,6 +360,11 @@
     <Compile Include="Responses\RoleGroup\DeleteRoleGroupResponse.cs" />
     <Compile Include="Responses\RoleGroup\Level.cs" />
     <Compile Include="Responses\RoleGroup\UpdateRoleGroupResponse.cs" />
+    <Compile Include="Responses\Select\CreateSelectResponse.cs" />
+    <Compile Include="Responses\Select\DeleteSelectResponse.cs" />
+    <Compile Include="Responses\Select\GetSelectResponse.cs" />
+    <Compile Include="Responses\Select\GetSelectsResponse.cs" />
+    <Compile Include="Responses\Select\UpdateSelectResponse.cs" />
     <Compile Include="Responses\Template\CreateTemplateResponse.cs" />
     <Compile Include="Responses\Template\GetTemplateResponse.cs" />
     <Compile Include="Responses\Template\GetTemplatesResponse.cs" />
@@ -388,6 +398,7 @@
     <Compile Include="Responses\Vessel\GetVesselsResponse.cs" />
     <Compile Include="Responses\Vessel\SaveVesselResponse.cs" />
     <Compile Include="RoleGroupService.cs" />
+    <Compile Include="SelectService.cs" />
     <Compile Include="TemplateService.cs" />
     <Compile Include="TypeService.cs" />
     <Compile Include="UserService.cs" />

@@ -1,0 +1,32 @@
+@Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "gridSelectIndex";
+        settings.CallbackRouteValues = new { Controller = "Select", Action = "IndexPartial" };
+        settings.CustomBindingRouteValuesCollection.Add(
+            GridViewOperationType.Paging,
+            new { Controller = "Select", Action = "PagingAction" }
+        );
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditForm;
+        settings.SettingsBehavior.ConfirmDelete = true;
+        settings.Width = Unit.Percentage(60);
+        settings.KeyFieldName = "Id";
+        
+        settings.Columns.Add(column =>
+            {
+                column.Caption = "Action";
+                column.SetDataItemTemplateContent(c =>
+                                                  ViewContext.Writer.Write(
+                                                      Html.ActionLink("Edit", "Update", new { Id = DataBinder.Eval(c.DataItem, "Id") }) + " | " +
+                                                      "<a href='javascript:;' onclick='confirmDelete(" + DataBinder.Eval(c.DataItem, "Id") + ")'>Delete</a>"
+                                                      )
+
+
+                    );
+            });
+        settings.Columns.Add("Id").Visible = false;
+        settings.Columns.Add("Name");
+        settings.Columns.Add("Options");
+        settings.Columns.Add("IsActive", MVCxGridViewColumnType.CheckBox);
+        settings.SettingsPager.PageSizeItemSettings.Visible = true;
+        settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+    }).BindToCustomData(Model).GetHtml()
