@@ -1,0 +1,27 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Select.IndexSelectViewModel
+@{
+    ViewBag.Title = "Select List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>List</h2>
+@Html.Partial("_MessageResponse")
+@Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+@Html.Action("IndexPartial")
+
+@section Scripts{
+    <script type="text/javascript">
+        var confirmDelete = function(id) {
+            if (confirm('Are you sure want to delete this item?')) {
+                var url = '@Url.Action("Delete", "Select")';
+                $('<form action="' + url + '" method="POST">' +
+                    '<input type="hidden" name="id" value="' + id + '">' +
+                    '</form>').submit();
+            }
+        };
+    </script>
+    }
+
+
+
+

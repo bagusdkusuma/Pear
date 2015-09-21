@@ -57,6 +57,7 @@ namespace DSLNG.PEAR.Web.DependencyResolution {
             For<ITemplateService>().Use<TemplateService>();
             For<IKpiAchievementService>().Use<KpiAchievementService>();
             For<IHighlightService>().Use<HighlightService>();
+            For<ISelectService>().Use<SelectService>();
             For<IVesselService>().Use<VesselService>();
             For<IBuyerService>().Use<BuyerService>();
             For<IVesselScheduleService>().Use<VesselScheduleService>();
