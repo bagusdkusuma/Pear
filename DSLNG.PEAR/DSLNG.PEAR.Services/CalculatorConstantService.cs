@@ -6,6 +6,8 @@ using DSLNG.PEAR.Common.Extensions;
 using System.Data.Entity;
 using System.Linq;
 using DSLNG.PEAR.Data.Persistence;
+using DSLNG.PEAR.Data.Entities;
+using System;
 
 namespace DSLNG.PEAR.Services
 {
@@ -45,7 +47,32 @@ namespace DSLNG.PEAR.Services
 
         public SaveCalculatorConstantResponse SaveCalculatorConstant(SaveCalculatorConstantRequest request)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                if (request.Id == 0)
+                {
+                    var calculatorConstant = request.MapTo<CalculatorConstant>();
+                    DataContext.CalculatorConstants.Add(calculatorConstant);
+                }
+                else
+                {
+                    var calculatorConstant = DataContext.CalculatorConstants.First(x => x.Id == request.Id);
+                    request.MapPropertiesToInstance<CalculatorConstant>(calculatorConstant);
+                }
+                DataContext.SaveChanges();
+                return new SaveCalculatorConstantResponse
+                {
+                    IsSuccess = true,
+                    Message = "Calculator Constant Has been saved"
+                };
+            }
+            catch (InvalidOperationException ex) {
+                return new SaveCalculatorConstantResponse
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
     }
 }
