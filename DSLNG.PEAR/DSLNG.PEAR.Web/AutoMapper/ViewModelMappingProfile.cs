@@ -81,6 +81,9 @@ using DSLNG.PEAR.Services.Responses.VesselSchedule;
 using DSLNG.PEAR.Web.ViewModels.NLS;
 using DSLNG.PEAR.Services.Requests.NLS;
 using DSLNG.PEAR.Services.Responses.NLS;
+using DSLNG.PEAR.Web.ViewModels.CalculatorConstant;
+using DSLNG.PEAR.Services.Requests.CalculatorConstant;
+using DSLNG.PEAR.Services.Responses.CalculatorConstant;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -444,6 +447,9 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<NLSViewModel, SaveNLSRequest>();
             Mapper.CreateMap<GetNLSResponse, NLSViewModel>();
+
+            Mapper.CreateMap<CalculatorConstantViewModel, SaveCalculatorConstantRequest>();
+            Mapper.CreateMap<GetCalculatorConstantResponse, CalculatorConstantViewModel>();
             base.Configure();
         }
 

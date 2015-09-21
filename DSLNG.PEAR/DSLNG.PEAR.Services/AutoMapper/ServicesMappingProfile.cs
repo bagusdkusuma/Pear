@@ -50,6 +50,8 @@ using DSLNG.PEAR.Services.Requests.VesselSchedule;
 using DSLNG.PEAR.Services.Responses.VesselSchedule;
 using DSLNG.PEAR.Services.Requests.NLS;
 using DSLNG.PEAR.Services.Responses.NLS;
+using DSLNG.PEAR.Services.Requests.CalculatorConstant;
+using DSLNG.PEAR.Services.Responses.CalculatorConstant;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -320,6 +322,10 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<NextLoadingSchedule, GetNLSResponse>()
                 .ForMember(x => x.VesselScheduleId, o => o.MapFrom(s => s.VesselSchedule.Id))
                  .ForMember(x => x.VesselName, o => o.MapFrom(s => s.VesselSchedule.Vessel.Name));
+
+            Mapper.CreateMap<SaveCalculatorConstantRequest, CalculatorConstant>();
+            Mapper.CreateMap<CalculatorConstant, GetCalculatorConstantsResponse.CalculatorConstantResponse>();
+            Mapper.CreateMap<CalculatorConstant, GetCalculatorConstantResponse>();
 
             base.Configure();
         }
