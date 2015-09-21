@@ -74,6 +74,9 @@
     <Compile Include="Entities\ArtifactStack.cs" />
     <Compile Include="Entities\ArtifactTank.cs" />
     <Compile Include="Entities\BaseEntity.cs" />
+    <Compile Include="Entities\Buyer.cs" />
+    <Compile Include="Entities\CalculatorConstant.cs" />
+    <Compile Include="Entities\ConstantUsage.cs" />
     <Compile Include="Entities\Conversion.cs" />
     <Compile Include="Entities\DashboardTemplate.cs" />
     <Compile Include="Entities\Select.cs" />
@@ -102,7 +105,11 @@
     <Compile Include="Entities\Measurement.cs" />
     <Compile Include="Entities\Menu.cs" />
     <Compile Include="Entities\Method.cs" />
+    <Compile Include="Entities\NextLoadingSchedule.cs" />
+    <Compile Include="Entities\NLSHistory.cs" />
     <Compile Include="Entities\Periode.cs" />
+    <Compile Include="Entities\Vessel.cs" />
+    <Compile Include="Entities\VesselSchedule.cs" />
     <Compile Include="Enums\ConfigType.cs" />
     <Compile Include="Enums\Formula.cs" />
     <Compile Include="Enums\PeriodeStart.cs" />

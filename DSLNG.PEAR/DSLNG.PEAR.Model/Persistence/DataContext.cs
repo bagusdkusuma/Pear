@@ -45,6 +45,13 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<Highlight> Highlights { get; set; }
         public IDbSet<Select> Selects { get; set; }
         public IDbSet<SelectOption> SelectOptions { get; set; } 
+        public IDbSet<Vessel> Vessels { get; set; }
+        public IDbSet<VesselSchedule> VesselSchedules { get; set; }
+        public IDbSet<NextLoadingSchedule> NextLoadingSchedules { get; set; }
+        public IDbSet<Buyer> Buyers { get; set; }
+        public IDbSet<CalculatorConstant> CalculatorConstants { get; set; }
+        public IDbSet<ConstantUsage> ConstantUsages { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Kpi>()

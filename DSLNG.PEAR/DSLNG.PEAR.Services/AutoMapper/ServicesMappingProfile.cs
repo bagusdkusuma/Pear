@@ -44,6 +44,14 @@ using PeriodeType = DSLNG.PEAR.Data.Enums.PeriodeType;
 using DSLNG.PEAR.Services.Responses.Config;
 using DSLNG.PEAR.Services.Responses.Highlight;
 using DSLNG.PEAR.Services.Requests.Highlight;
+using DSLNG.PEAR.Services.Responses.Vessel;
+using DSLNG.PEAR.Services.Requests.Vessel;
+using DSLNG.PEAR.Services.Requests.Buyer;
+using DSLNG.PEAR.Services.Responses.Buyer;
+using DSLNG.PEAR.Services.Requests.VesselSchedule;
+using DSLNG.PEAR.Services.Responses.VesselSchedule;
+using DSLNG.PEAR.Services.Requests.NLS;
+using DSLNG.PEAR.Services.Responses.NLS;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -276,13 +284,46 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<GetArtifactResponse.ChartResponse, GetComboChartDataRequest.ChartRequest>();
             Mapper.CreateMap<GetArtifactResponse.SeriesResponse, GetComboChartDataRequest.ChartRequest.SeriesRequest>();
             Mapper.CreateMap<GetArtifactResponse.StackResponse, GetComboChartDataRequest.ChartRequest.StackRequest>();
-            
+
             Mapper.CreateMap<Kpi, GetConfigurationResponse.Kpi>();
             Mapper.CreateMap<KpiAchievement, GetConfigurationResponse.KpiAchievement>();
             Mapper.CreateMap<KpiTarget, GetConfigurationResponse.KpiTarget>();
             Mapper.CreateMap<Economic, GetConfigurationResponse.Economic>();
             Mapper.CreateMap<Highlight, GetHighlightsResponse.HighlightResponse>();
             Mapper.CreateMap<SaveHighlightRequest, Highlight>();
+
+            Mapper.CreateMap<SaveVesselRequest, Vessel>();
+            Mapper.CreateMap<Vessel, GetVesselsResponse.VesselResponse>()
+                .ForMember(x => x.Measurement, o => o.MapFrom(s => s.Measurement.Name))
+                .ForMember(x => x.MeasurementId, o => o.MapFrom(s => s.Measurement.Id));
+            Mapper.CreateMap<Vessel, GetVesselResponse>()
+                .ForMember(x => x.Measurement, o => o.MapFrom(s => s.Measurement.Name))
+                .ForMember(x => x.MeasurementId, o => o.MapFrom(s => s.Measurement.Id));
+
+            Mapper.CreateMap<SaveBuyerRequest, Buyer>();
+            Mapper.CreateMap<Buyer, GetBuyersResponse.BuyerResponse>();
+            Mapper.CreateMap<Buyer, GetBuyerResponse>();
+
+            Mapper.CreateMap<SaveVesselScheduleRequest, VesselSchedule>();
+            Mapper.CreateMap<VesselSchedule, GetVesselSchedulesResponse.VesselScheduleResponse>()
+                .ForMember(x => x.Vessel, o => o.MapFrom(s => s.Vessel.Name))
+                .ForMember(x => x.Buyer, o => o.MapFrom(s => s.Buyer.Name))
+                .ForMember(x => x.Name, o => o.MapFrom(s => s.Vessel.Name));
+            Mapper.CreateMap<VesselSchedule, GetVesselScheduleResponse>()
+                .ForMember(x => x.VesselId, o => o.MapFrom(s => s.Vessel.Id))
+                .ForMember(x => x.BuyerId, o => o.MapFrom(s => s.Buyer.Id))
+                .ForMember(x => x.VesselName, o => o.MapFrom(s => s.Vessel.Name))
+                .ForMember(x => x.BuyerName, o => o.MapFrom(s => s.Buyer.Name));
+
+            Mapper.CreateMap<SaveNLSRequest, NextLoadingSchedule>();
+            Mapper.CreateMap<NextLoadingSchedule, GetNLSListResponse.NLSResponse>()
+                .ForMember(x => x.Vessel, o => o.MapFrom(s => s.VesselSchedule.Vessel.Name))
+                .ForMember(x => x.ETA, o => o.MapFrom(s => s.VesselSchedule.ETA))
+                .ForMember(x => x.ETD, o => o.MapFrom(s => s.VesselSchedule.ETD));
+            Mapper.CreateMap<NextLoadingSchedule, GetNLSResponse>()
+                .ForMember(x => x.VesselScheduleId, o => o.MapFrom(s => s.VesselSchedule.Id))
+                 .ForMember(x => x.VesselName, o => o.MapFrom(s => s.VesselSchedule.Vessel.Name));
+
             base.Configure();
         }
 

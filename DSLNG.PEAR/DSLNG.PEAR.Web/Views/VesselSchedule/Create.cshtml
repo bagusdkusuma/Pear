@@ -1,0 +1,68 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.VesselSchedule.VesselScheduleViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="vessel-schedule-save">
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="col-md-12">
+        <div class="title">Buyer</div>
+        <div class="description_year">New</div>
+        <div>@Html.ValidationSummary(true)</div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-inline whitebox">
+             <div class="form-group form-list">
+                @Html.LabelFor(model => model.VesselId)
+                @Html.DropDownListFor(model => model.VesselId, new List<SelectListItem>(), new { @class = "form-control", data_url=Url.Action("VesselList"), style="width:200px" })
+                @Html.ValidationMessageFor(model => model.VesselId)
+            </div>
+            <div class="form-group form-list">
+                @Html.LabelFor(model => model.ETA)
+                @Html.TextBoxFor(model => model.ETA, new { @class = "form-control datepicker" })
+                @Html.ValidationMessageFor(model => model.ETA)
+            </div>
+            <div class="form-group form-list">
+                @Html.LabelFor(model => model.ETD)
+                @Html.TextBoxFor(model => model.ETD, new { @class = "form-control datepicker" })
+                @Html.ValidationMessageFor(model => model.ETD)
+            </div>
+            <div class="form-group form-list">
+                @Html.LabelFor(model => model.BuyerId)
+                @Html.DropDownListFor(model => model.BuyerId, new List<SelectListItem>(), new { @class = "form-control", data_url=Url.Action("BuyerList"), style="width:200px" })
+                @Html.ValidationMessageFor(model => model.BuyerId)
+            </div>
+              <div class="form-group form-list">
+                @Html.LabelFor(model => model.Location)
+                @Html.TextBoxFor(model => model.Location, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Location)
+            </div>
+             <div class="form-group form-list">
+                @Html.LabelFor(model => model.SalesType)
+                @Html.DropDownListFor(model => model.SalesType, Model.SalesTypes, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SalesType)
+            </div>
+             <div class="form-group form-list">
+                @Html.LabelFor(model => model.Type)
+                @Html.DropDownListFor(model => model.Type, Model.Types, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Type)
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 artifact-designer-btns">
+        <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
+        <a onclick="location.reload();" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>
+        <a href="/Highlight" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+    </div>
+}
+    </div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
