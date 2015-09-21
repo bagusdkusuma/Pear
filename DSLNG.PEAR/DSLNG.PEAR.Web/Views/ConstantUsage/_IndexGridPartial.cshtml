@@ -1,0 +1,30 @@
+﻿@Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "gridConstantUsageIndex";
+        settings.CallbackRouteValues = new { Controller = "ConstantUsage", Action = "IndexPartial" };
+        settings.CustomBindingRouteValuesCollection.Add(
+            GridViewOperationType.Paging,
+            new { Controller = "ConstantUsage", Action = "PagingAction" }
+        );
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditForm;
+        settings.SettingsBehavior.ConfirmDelete = true;
+        settings.Width = Unit.Percentage(60);
+        settings.KeyFieldName = "Id";
+        
+        settings.Columns.Add(column =>
+            {
+                column.Caption = "Action";
+                column.SetDataItemTemplateContent(c =>
+                                                  ViewContext.Writer.Write(
+                                                      Html.ActionLink("Delete", "Delete", new { Id = DataBinder.Eval(c.DataItem, "Id") }, new { @class="artifact-view" }) + "|" +
+                                                       Html.ActionLink("Edit", "Edit", new { Id = DataBinder.Eval(c.DataItem, "Id") })
+                                                      )
+                    );
+            });
+        settings.Columns.Add("Id").Visible = false;
+        settings.Columns.Add("Role","Role");
+        settings.Columns.Add("Group", "Group");
+        settings.Columns.Add("ConstantNames", "Constants");
+        settings.SettingsPager.PageSizeItemSettings.Visible = true;
+        settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+    }).BindToCustomData(Model).GetHtml()

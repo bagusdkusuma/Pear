@@ -22,7 +22,7 @@ namespace DSLNG.PEAR.Services
                 var query = DataContext.CalculatorConstants.AsQueryable();
                 if (!string.IsNullOrEmpty(request.Term))
                 {
-                    query = query.Where(x => x.Name.Contains(request.Term));
+                    query = query.Where(x => x.Name.ToLower().Contains(request.Term.ToLower()));
                 }
                 return new GetCalculatorConstantsResponse { Count = query.Count() };
             }
@@ -30,7 +30,7 @@ namespace DSLNG.PEAR.Services
                 var query = DataContext.CalculatorConstants.AsQueryable();
                 if (!string.IsNullOrEmpty(request.Term))
                 {
-                    query = query.Where(x => x.Name.Contains(request.Term));
+                    query = query.Where(x => x.Name.ToLower().Contains(request.Term.ToLower()));
                 }
                 return new GetCalculatorConstantsResponse
                 {
