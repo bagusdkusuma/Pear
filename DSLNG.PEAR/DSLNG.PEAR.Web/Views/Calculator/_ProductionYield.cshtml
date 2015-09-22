@@ -22,23 +22,9 @@
         </ul>
     </div>
     <div class="col-md-6 text-left">
-        <h5>Constants</h5>
+        <h3>Constants</h3>
 
-        <fieldset>
-            <legend>LNG</legend>
-            <form class="form-horizontal">
-                @foreach (var constant in Model.LNGConstants)
-                { 
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">@constant.DisplayName</label>
-                        <div class="col-sm-6">
-                            @Html.TextBoxFor(m => constant.Value, new { @class = constant.Name })
-                        </div>
-                        <div class="col-sm-2">@constant.Measurement</div>
-                    </div>
-                }
-            </form>
-        </fieldset>
+
 
     </div>
 </div>
@@ -46,7 +32,7 @@
 <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="lng">
         <div class="row">
-            <div class="col-md-7">
+            <div class="col-md-6">
                 <form class="form-horizontal">
                     <div class="form-group">
                         <label for="resultTonnes" class="control-label col-xs-2">Result</label>
@@ -78,7 +64,23 @@
                     </div>
                 </form>
             </div>
-            <div class="col-md-5"></div>
+            <div class="col-md-6 text-left">
+                <fieldset>
+                    <legend>LNG</legend>
+                    <form class="form-horizontal">
+                        @foreach (var constant in Model.LNGConstants)
+                        { 
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">@constant.DisplayName</label>
+                                <div class="col-sm-6">
+                                    @Html.TextBoxFor(m => constant.Value, new { @class = constant.Name })
+                                </div>
+                                <div class="col-sm-3">@constant.Measurement</div>
+                            </div>
+                        }
+                    </form>
+                </fieldset>
+            </div>
         </div>
     </div>
     <div role="tabpanel" class="tab-pane" id="cds">

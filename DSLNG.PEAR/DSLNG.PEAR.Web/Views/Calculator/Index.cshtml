@@ -1,7 +1,7 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Calculator.CalculatorIndexViewModel
 @section Scripts {
 }
-<div class="col-md-3">
+<div class="col-md-2">
     <!-- required for floating -->
     <!-- Nav tabs -->
     <ul class="nav nav-tabs tabs-left">
@@ -12,13 +12,15 @@
     </ul>
 </div>
 
-<div class="col-md-9">
+<div class="col-md-10">
     <!-- Tab panes -->
     <div class="tab-content">
         <div class="tab-pane active" id="productionYield">
             @Html.Partial("_ProductionYield",Model.ProductionYield)
         </div>
-        <div class="tab-pane" id="pricing">Pricing Tab.</div>
+        <div class="tab-pane" id="pricing">
+            @Html.Partial("_Pricing", Model.Pricing)
+        </div>
         <div class="tab-pane" id="plantAvailibility">Plant Avail</div>
         <div class="tab-pane" id="standardConversion">Standard Conversion</div>
         <!-- Tab panes -->

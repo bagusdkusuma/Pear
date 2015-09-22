@@ -1,0 +1,119 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Calculator.PricingViewModel
+@{
+    ViewBag.Title = "_Pricing";
+}
+<div class="row calculator">
+    <div class="col-md-6">
+        <h3>Pricing</h3>
+    </div>
+    <div class="col-md-6">
+        <h3>Constanta</h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">JCC Price</label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(model => model.JccPrice)
+                </div>
+                <div class="col-sm-4">
+                    @Html.DropDownListFor(model => model.Unit, Model.Units)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Result</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="jcc-price" placeholder="">
+                </div>
+                <div class="col-sm-4">
+                    <label class="control-label">LNG SPA FOB</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-6 col-md-offset-2">
+                    <input type="text" class="form-control" id="jcc-price" placeholder="">
+                </div>
+                <div class="col-sm-4">
+                    <label class="control-label">LNG SPA DES</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-6 col-md-offset-2">
+                    <input type="text" class="form-control" id="jcc-price" placeholder="">
+                </div>
+                <div class="col-sm-4">
+                    <label class="control-label">Senoro Feed Gas</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-6 col-md-offset-2">
+                    <input type="text" class="form-control" id="jcc-price" placeholder="">
+                </div>
+                <div class="col-sm-4">
+                    <label class="control-label">Matindok Feed Gas</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-6 col-md-offset-2">
+                    <input type="text" class="form-control" id="jcc-price" placeholder="">
+                </div>
+                <div class="col-sm-4">
+                    <label class="control-label">Average Feed Gas</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-6 col-md-offset-2">
+                    <input type="text" class="form-control" id="jcc-price" placeholder="">
+                </div>
+                <div class="col-sm-4">
+                    <label class="control-label">CDS Price</label>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <fieldset>
+            <legend>Feed Gas</legend>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-5 control-label">Senoro GSA Price</label>
+                    <div class="col-sm-6">
+                        @Html.TextBoxFor(model => model.FeedGas.SenoroGsaPrice)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-5 control-label">Matindok GSA Price</label>
+                    <div class="col-sm-6">
+                        @Html.TextBoxFor(model => model.FeedGas.SenoroGsaPrice)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-5 control-label">JCC Floor</label>
+                    <div class="col-sm-6">
+                        @Html.TextBoxFor(model => model.FeedGas.SenoroGsaPrice)
+                    </div>
+                </div>
+            </form>
+        </fieldset>
+        <fieldset>
+            <legend>CDS Price</legend>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-5 control-label">Senoro GSA Price</label>
+                    <div class="col-sm-6">
+                        @Html.TextBoxFor(model => model.CdsPrice.PriceVariable)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-5 control-label">Matindok GSA Price</label>
+                    <div class="col-sm-6">
+                        @Html.TextBoxFor(model => model.CdsPrice.PriceConstanta)
+                    </div>
+                </div>
+            </form>
+        </fieldset>
+    </div>
+</div>
+

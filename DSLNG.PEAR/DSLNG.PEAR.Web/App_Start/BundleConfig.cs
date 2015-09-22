@@ -27,6 +27,7 @@ namespace DSLNG.PEAR.Web.App_Start
                         "~/Scripts/snap.svg.js",
                         "~/Scripts/trafficlight.js",
                         "~/Scripts/tank.js",
+                        "~/Scripts/calculator.pricing.js",
                         "~/Scripts/main.js"));
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/bootstrap/css/bootstrap.css",
                 "~/Content/font-awesome/css/font-awesome.css",

@@ -13,11 +13,13 @@ namespace DSLNG.PEAR.Web.ViewModels.Calculator
         public CalculatorIndexViewModel()
         {
             ProductionYield = new ProductionYieldCalculatorViewModel();
+            Pricing = new PricingViewModel();
         }
         public IList<ConstantUsageViewModel> ConstantUsages { set {
             ProductionYield.ConstantUsages = value;
         } }
 
         public ProductionYieldCalculatorViewModel ProductionYield { get; set; }
+        public PricingViewModel Pricing { get; set; }
     }
 }
