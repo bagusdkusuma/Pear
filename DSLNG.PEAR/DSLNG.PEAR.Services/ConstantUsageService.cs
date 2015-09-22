@@ -22,6 +22,13 @@ namespace DSLNG.PEAR.Services
             {
                 query = query.Where(x => x.Role.ToLower().Contains(request.Term.ToLower()) || x.Group.ToLower().Contains(request.Term.ToLower()));
             }
+            query.OrderByDescending(x => x.Id);
+            if (request.Skip != 0) {
+                query = query.Skip(request.Skip);
+            }
+            if (request.Take != 0) {
+                query = query.Take(request.Take);
+            }
             if (request.OnlyCount)
             {
                 return new GetConstantUsagesResponse { Count = query.Count() };
@@ -30,7 +37,7 @@ namespace DSLNG.PEAR.Services
             {
                 return new GetConstantUsagesResponse
                 {
-                    ConstantUsages = query.OrderByDescending(x => x.Id).Skip(request.Skip).Take(request.Take).ToList().MapTo<GetConstantUsagesResponse.ConstantUsageResponse>()
+                    ConstantUsages = query.ToList().MapTo<GetConstantUsagesResponse.ConstantUsageResponse>()
                 };
             }
         }

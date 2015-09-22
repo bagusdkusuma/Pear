@@ -32,9 +32,16 @@ namespace DSLNG.PEAR.Services
                 {
                     query = query.Where(x => x.Name.ToLower().Contains(request.Term.ToLower()));
                 }
+                query = query.OrderByDescending(x => x.Id);
+                if (request.Skip != 0) {
+                    query = query.Skip(request.Skip);
+                }
+                if (request.Take != 0) {
+                    query = query.Take(request.Take);
+                }
                 return new GetCalculatorConstantsResponse
                 {
-                    CalculatorConstants = query.OrderByDescending(x => x.Id).Skip(request.Skip).Take(request.Take)
+                    CalculatorConstants = query.ToList()
                         .MapTo<GetCalculatorConstantsResponse.CalculatorConstantResponse>()
                 };
             }

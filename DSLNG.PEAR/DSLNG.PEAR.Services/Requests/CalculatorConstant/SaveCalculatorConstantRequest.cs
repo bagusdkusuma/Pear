@@ -5,6 +5,8 @@ namespace DSLNG.PEAR.Services.Requests.CalculatorConstant
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string DisplayName { get; set; }
         public double Value { get; set; }
+        public string Measurement { get; set; }
     }
 }

@@ -20,10 +20,20 @@
                 @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Name)
             </div>
+             <div class="form-group form-list">
+                @Html.LabelFor(model => model.DisplayName)
+                @Html.TextBoxFor(model => model.DisplayName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DisplayName)
+            </div>
             <div class="form-group form-list">
                 @Html.LabelFor(model => model.Value)
                 @Html.TextBoxFor(model => model.Value, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Value)
+            </div>
+             <div class="form-group form-list">
+                @Html.LabelFor(model => model.Measurement)
+                @Html.TextBoxFor(model => model.Measurement, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Measurement)
             </div>
         </div>
     </div>
