@@ -1,7 +1,12 @@
 ﻿
 
+using DSLNG.PEAR.Web.ViewModels.CalculatorConstant;
+using DSLNG.PEAR.Web.ViewModels.ConstantUsage;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using System.Linq;
+using DSLNG.PEAR.Common.Extensions;
+
 namespace DSLNG.PEAR.Web.ViewModels.Calculator
 {
     public class ProductionYieldCalculatorViewModel
@@ -16,6 +21,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Calculator
             };
         }
         public double MainInput { get; set; }
+        public string Unit { get; set; }
         public IList<SelectListItem> Units { get; set; }
         public LNGViewModel LNG { get; set; }
         public CDSViewModel CDS { get; set; }
@@ -36,6 +42,29 @@ namespace DSLNG.PEAR.Web.ViewModels.Calculator
         public class MHCEViewModel
         {
             public double M3PerHr { get; set; }
+        }
+        public IList<ConstantUsageViewModel> ConstantUsages { get; set; }
+        public IList<CalculatorConstantViewModel> LNGConstants {
+            get {
+                return ConstantUsages.First(x => x.Role == "production-yield" && x.Group == "lng")
+                    .Constants.MapTo<CalculatorConstantViewModel>();
+            }
+        }
+        public IList<CalculatorConstantViewModel> CDSConstants
+        {
+            get
+            {
+                return ConstantUsages.First(x => x.Role == "production-yield" && x.Group == "cds")
+                    .Constants.MapTo<CalculatorConstantViewModel>();
+            }
+        }
+        public IList<CalculatorConstantViewModel> MHCEConstants
+        {
+            get
+            {
+                return ConstantUsages.First(x => x.Role == "production-yield" && x.Group == "mhce")
+                    .Constants.MapTo<CalculatorConstantViewModel>();
+            }
         }
     }
 }

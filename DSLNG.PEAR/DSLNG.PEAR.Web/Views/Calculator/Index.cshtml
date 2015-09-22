@@ -16,76 +16,7 @@
     <!-- Tab panes -->
     <div class="tab-content">
         <div class="tab-pane active" id="productionYield">
-            <div class="row" style="margin-bottom: 40px;">
-                <div class="col-md-4">
-                    Input
-                    <input type="text" name="" />
-                </div>
-                <div class="col-md-2">
-                    @Html.DropDownListFor(model => model.Unit, Model.Units, "Select")
-                </div>
-                <div class="col-md-6">
-                    <span class="result">xxxx</span>
-                    <span class="unit">tonnes</span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-7">
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="#lng" aria-controls="profile" role="tab" data-toggle="tab">LNG</a></li>
-                        <li role="presentation"><a href="#cds" aria-controls="messages" role="tab" data-toggle="tab">CDS</a></li>
-                        <li role="presentation"><a href="#mcheCapacity" aria-controls="settings" role="tab" data-toggle="tab">MCHE Capacity</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-5">
-                    constanta
-                </div>
-            </div>
-            
-            <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="lng">
-                <div class="row">
-                    <div class="col-md-7">
-                        <form class="form-horizontal">
-                            <div class="form-group">
-                                <label for="resultTonnes" class="control-label col-xs-2">Result</label>
-                                <div class="col-md-7">
-                                    <input type="text" class="form-control" id="resultTonnes" placeholder="">
-                                </div>
-                                <label for="resultTonnes" class="control-label col-xs-2">tonnes</label>
-                            </div>
-                            <div class="form-group">
-                                <label for="resultTonnes" class="control-label col-xs-2"></label>
-                                <div class="col-md-7">
-                                    <input type="text" class="form-control" id="resultTonnes" placeholder="">
-                                </div>
-                                <label for="resultTonnes" class="control-label col-xs-2">mmbtu</label>
-                            </div>
-                            <div class="form-group">
-                                <label for="resultTonnes" class="control-label col-xs-2"></label>
-                                <div class="col-md-7">
-                                    <input type="text" class="form-control" id="resultTonnes" placeholder="">
-                                </div>
-                                <label for="resultTonnes" class="control-label col-xs-2">m3</label>
-                            </div>
-                            <div class="form-group">
-                                <label for="resultTonnes" class="control-label col-xs-2"></label>
-                                <div class="col-md-7">
-                                    <input type="text" class="form-control" id="resultTonnes" placeholder="">
-                                </div>
-                                <label for="resultTonnes" class="control-label col-xs-2">mtpa</label>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="col-md-5"></div>
-                </div>
-
-            </div>
-            <div role="tabpanel" class="tab-pane" id="cds">cds</div>
-            <div role="tabpanel" class="tab-pane" id="mcheCapacity">mche capacity</div>
-        </div>
-
+            @Html.Partial("_ProductionYield",Model.ProductionYield)
         </div>
         <div class="tab-pane" id="pricing">Pricing Tab.</div>
         <div class="tab-pane" id="plantAvailibility">Plant Avail</div>

@@ -12,8 +12,16 @@ namespace DSLNG.PEAR.Services.Responses.ConstantUsage
             public int Id { get; set; }
             public string Role { get; set; }
             public string Group { get; set; }
-            public IList<string> Constants { get; set; }
-            public string ConstantNames { get { return string.Join(", ", Constants); } }
+            public IList<string> StringConstants { get; set; }
+            public IList<ConstantResponse> Constants { get; set; }
+            public string ConstantNames { get { return string.Join(", ", StringConstants); } }
+        }
+        public class ConstantResponse {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public string DisplayName { get; set; }
+            public string Measurement { get; set; }
+            public double Value { get; set; }
         }
     }
 }
