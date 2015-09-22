@@ -158,6 +158,7 @@ Number.prototype.format = function (n, x) {
     Pear.VesselSchedule = {};
     Pear.NLS = {};
     Pear.ConstantUsage = {};
+    Pear.Calculator = {};
 
     Pear.Loading.Show = function (container) {
         var loadingImage = $('#dataLayout').attr('data-content-url') + '/img/ajax-loader2.gif';
@@ -3568,14 +3569,14 @@ Number.prototype.format = function (n, x) {
         });
     };
 
-    Pear.ConstantUsage.FormSetup = function () {
+    Pear.ConstantUsage.FormSetup = function() {
         var length = $('.constants-holder').find('.constant-template').length + 1;
         if (length > 1) {
-            $('.constants-holder .constant-template .constant').each(function (i, val) {
+            $('.constants-holder .constant-template .constant').each(function(i, val) {
                 Pear.ConstantUsage._autocomplete($(val));
             });
         }
-        $('.add-constant').click(function (e) {
+        $('.add-constant').click(function(e) {
             e.preventDefault();
             var constantTemplate = $('.constant-template.original').clone(true);
             constantTemplate.removeClass('original');
@@ -3585,16 +3586,20 @@ Number.prototype.format = function (n, x) {
                 name: 'Constants.Index',
                 value: length
             }).prependTo(constantTemplate);
-            Pear.ConstantUsage._autocomplete(constantTemplate.find('.constant').attr('name','Constants[' + length + '].Id'));
+            Pear.ConstantUsage._autocomplete(constantTemplate.find('.constant').attr('name', 'Constants[' + length + '].Id'));
             var holder = $('.constants-holder');
             holder.append(constantTemplate);
             length++;
         });
-        $('.constant-template .remove').click(function (e) {
+        $('.constant-template .remove').click(function(e) {
             e.preventDefault();
             $(this).closest('.constant-template').remove();
         });
-    }
+    };
+
+    Pear.Calculator.Pricing = function () {
+        $('<div/>').pricing();
+    };
 
     $(document).ready(function () {
         if ($('.artifact-designer').length) {
@@ -3627,6 +3632,10 @@ Number.prototype.format = function (n, x) {
         }
         if ($('.constant-usage-save').length) {
             Pear.ConstantUsage.FormSetup();
+        }
+        
+        if ($('.calculator').length) {
+            Pear.Calculator.Pricing();
         }
     });
     window.Pear = Pear;
