@@ -40,7 +40,9 @@ namespace DSLNG.PEAR.Web.Controllers
             var viewModel = new GridViewModel();
             viewModel.KeyFieldName = "Id";
             viewModel.Columns.Add("Name");
+            viewModel.Columns.Add("DisplayName");
             viewModel.Columns.Add("Value");
+            viewModel.Columns.Add("Measurement");
             viewModel.Pager.PageSize = 10;
             return viewModel;
         }

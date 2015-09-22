@@ -1,6 +1,6 @@
 ﻿(function($) {
     $.fn.pricing = function (options) {
-        alert('pricing');
+        //alert('pricing');
     };
 }(jQuery));
     

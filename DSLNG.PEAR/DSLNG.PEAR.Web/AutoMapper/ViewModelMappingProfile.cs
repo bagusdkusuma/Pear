@@ -90,6 +90,7 @@ using DSLNG.PEAR.Services.Responses.CalculatorConstant;
 using DSLNG.PEAR.Web.ViewModels.ConstantUsage;
 using DSLNG.PEAR.Services.Requests.ConstantUsage;
 using DSLNG.PEAR.Services.Responses.ConstantUsage;
+using DSLNG.PEAR.Web.ViewModels.Calculator;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -187,7 +188,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetArtifactResponse.ChartResponse, LineChartViewModel>();
             Mapper.CreateMap<GetArtifactResponse.ChartResponse, BarChartViewModel>();
             Mapper.CreateMap<GetArtifactResponse.ChartResponse, AreaChartViewModel>();
-            Mapper.CreateMap<GetArtifactResponse,  ComboChartViewModel>()
+            Mapper.CreateMap<GetArtifactResponse, ComboChartViewModel>()
              .ForMember(x => x.Charts, o => o.Ignore());
             Mapper.CreateMap<GetArtifactResponse.ChartResponse, ComboChartViewModel.ChartViewModel>();
 
@@ -222,7 +223,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetCartesianChartDataResponse.SeriesResponse, BarChartDataViewModel.SeriesViewModel>();
             Mapper.CreateMap<BarChartViewModel, CreateArtifactRequest>()
               .ForMember(x => x.Series, o => o.MapFrom(s => s.Series.MapTo<CreateArtifactRequest.SeriesRequest>()));
-            
+
             Mapper.CreateMap<BarChartViewModel.SeriesViewModel, CreateArtifactRequest.SeriesRequest>()
                .ForMember(x => x.Stacks, o => o.MapFrom(s => s.Stacks.MapTo<CreateArtifactRequest.StackRequest>()));
             Mapper.CreateMap<BarChartViewModel.StackViewModel, CreateArtifactRequest.StackRequest>();
@@ -316,7 +317,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<MultiaxisChartViewModel, UpdateArtifactRequest>();
             Mapper.CreateMap<MultiaxisChartViewModel.ChartViewModel, UpdateArtifactRequest.ChartRequest>()
                 .ForMember(x => x.Series, o => o.ResolveUsing<MultiaxisSeriesUpdateResolver>());
-            
+
             //combo mapping
             Mapper.CreateMap<ComboChartViewModel, GetComboChartDataRequest>();
             Mapper.CreateMap<ComboChartViewModel.ChartViewModel, GetComboChartDataRequest.ChartRequest>()
@@ -356,16 +357,16 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetArtifactResponse.SeriesResponse, PieViewModel.SeriesViewModel>();
             Mapper.CreateMap<PieViewModel, UpdateArtifactRequest>();
             Mapper.CreateMap<PieViewModel.SeriesViewModel, UpdateArtifactRequest.SeriesRequest>();
-                
-                
-            
+
+
+
             Mapper.CreateMap<LineChartViewModel.SeriesViewModel, GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>();
             Mapper.CreateMap<AreaChartViewModel.SeriesViewModel, GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>();
             Mapper.CreateMap<BarChartViewModel.SeriesViewModel, GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>();
             Mapper.CreateMap<BarChartViewModel.StackViewModel, GetMultiaxisChartDataRequest.ChartRequest.StackRequest>();
             Mapper.CreateMap<AreaChartViewModel.StackViewModel, GetMultiaxisChartDataRequest.ChartRequest.StackRequest>();
 
-           
+
 
             //Mapper.CreateMap<BarChartViewModel.SeriesViewModel, GetSeriesRequest.Series>()
             //    .ForMember(x => x.Stacks, o => o.MapFrom(s => s.Stacks.MapTo<GetSeriesRequest.Stack>()));
@@ -462,6 +463,9 @@ namespace DSLNG.PEAR.Web.AutoMapper
                 .ForMember(x => x.CalculatorConstantIds, o => o.MapFrom(s => s.Constants.Select(x => x.Id)));
             Mapper.CreateMap<GetConstantUsageResponse, ConstantUsageViewModel>();
             Mapper.CreateMap<GetConstantUsageResponse.CalculatorConstantResponse, ConstantUsageViewModel.CalculatorConstantViewModel>();
+            Mapper.CreateMap<GetConstantUsagesResponse.ConstantUsageResponse, ConstantUsageViewModel>();
+            Mapper.CreateMap<GetConstantUsagesResponse.ConstantResponse, ConstantUsageViewModel.CalculatorConstantViewModel>();
+            Mapper.CreateMap<ConstantUsageViewModel.CalculatorConstantViewModel, CalculatorConstantViewModel>();
             base.Configure();
         }
 
@@ -664,7 +668,8 @@ namespace DSLNG.PEAR.Web.AutoMapper
     {
         protected override IList<GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest> ResolveCore(MultiaxisChartViewModel.ChartViewModel source)
         {
-            switch (source.GraphicType) { 
+            switch (source.GraphicType)
+            {
                 case "line":
                     return source.LineChart.Series.MapTo<GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>();
                 case "area":

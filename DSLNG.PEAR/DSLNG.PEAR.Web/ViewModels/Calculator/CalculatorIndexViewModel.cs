@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DSLNG.PEAR.Web.ViewModels.CalculatorConstant;
+using DSLNG.PEAR.Web.ViewModels.ConstantUsage;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,13 +12,13 @@ namespace DSLNG.PEAR.Web.ViewModels.Calculator
     {
         public CalculatorIndexViewModel()
         {
-            Units = new List<SelectListItem>();
             ProductionYield = new ProductionYieldCalculatorViewModel();
             Pricing = new PricingViewModel();
         }
-        public int Number { get; set; }
-        public string Unit { get; set; }
-        public IList<SelectListItem> Units { get; set; }
+        public IList<ConstantUsageViewModel> ConstantUsages { set {
+            ProductionYield.ConstantUsages = value;
+        } }
+
         public ProductionYieldCalculatorViewModel ProductionYield { get; set; }
         public PricingViewModel Pricing { get; set; }
     }

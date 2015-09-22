@@ -334,7 +334,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
             Mapper.CreateMap<SaveConstantUsageRequest, ConstantUsage>();
             Mapper.CreateMap<ConstantUsage, GetConstantUsagesResponse.ConstantUsageResponse>()
-                .ForMember(x => x.Constants, o => o.MapFrom(s => s.Constants.Select(x => x.Name)));
+                .ForMember(x => x.StringConstants, o => o.MapFrom(s => s.Constants.Select(x => x.Name)));
+            Mapper.CreateMap<CalculatorConstant, GetConstantUsagesResponse.ConstantResponse>();
             Mapper.CreateMap<ConstantUsage, GetConstantUsageResponse>();
             Mapper.CreateMap<CalculatorConstant, GetConstantUsageResponse.CalculatorConstantResponse>();
 
