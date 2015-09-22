@@ -785,6 +785,7 @@
     <Compile Include="ViewModels\Buyer\BuyerViewModel.cs" />
     <Compile Include="ViewModels\CalculatorConstant\CalculatorConstantViewModel.cs" />
     <Compile Include="ViewModels\Calculator\CalculatorIndexViewModel.cs" />
+    <Compile Include="ViewModels\Calculator\ProductionYieldCalculatorViewModel.cs" />
     <Compile Include="ViewModels\Config\ConfigurationViewModel.cs" />
     <Compile Include="ViewModels\ConstantUsage\ConstantUsageViewModel.cs" />
     <Compile Include="ViewModels\Conversion\CreateConversionViewModel.cs" />
