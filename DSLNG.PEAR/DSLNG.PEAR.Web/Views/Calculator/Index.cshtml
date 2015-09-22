@@ -15,7 +15,7 @@
 <div class="col-md-9">
     <!-- Tab panes -->
     <div class="tab-content">
-        <div class="tab-pane active" id="productionYield">
+        <div class="tab-pane" id="productionYield">
             <div class="row" style="margin-bottom: 40px;">
                 <div class="col-md-4">
                     Input
@@ -44,7 +44,7 @@
             </div>
             
             <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="lng">
+            <div role="tabpanel" class="tab-pane" id="lng">
                 <div class="row">
                     <div class="col-md-7">
                         <form class="form-horizontal">
@@ -87,7 +87,9 @@
         </div>
 
         </div>
-        <div class="tab-pane" id="pricing">Pricing Tab.</div>
+        <div class="tab-pane active" id="pricing">
+            @Html.Partial("_Pricing")
+        </div>
         <div class="tab-pane" id="plantAvailibility">Plant Avail</div>
         <div class="tab-pane" id="standardConversion">Standard Conversion</div>
         <!-- Tab panes -->
