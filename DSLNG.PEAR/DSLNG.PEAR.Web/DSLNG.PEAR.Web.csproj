@@ -256,6 +256,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrap.vertical-tabs.css" />
     <Content Include="Content\bootstrap\css\bootstrap-theme.css" />
     <Content Include="Content\bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap\css\bootstrap.css" />
@@ -611,6 +612,7 @@
     <Content Include="Views\CalculatorConstant\Create.cshtml" />
     <Content Include="Views\CalculatorConstant\Edit.cshtml" />
     <Content Include="Views\CalculatorConstant\Index.cshtml" />
+    <Content Include="Views\Calculator\Index.cshtml" />
     <None Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\SpeedometerChart\_Edit.cshtml" />
     <Content Include="Views\Tabular\_Create.cshtml" />
@@ -707,6 +709,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BuyerController.cs" />
     <Compile Include="Controllers\CalculatorConstantController.cs" />
+    <Compile Include="Controllers\CalculatorController.cs" />
     <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\ConversionController.cs" />
     <Compile Include="Controllers\CorporatePortofolioController.cs" />
@@ -775,6 +778,7 @@
     <Compile Include="ViewModels\Artifact\TrafficLightChartViewModel.cs" />
     <Compile Include="ViewModels\Buyer\BuyerViewModel.cs" />
     <Compile Include="ViewModels\CalculatorConstant\CalculatorConstantViewModel.cs" />
+    <Compile Include="ViewModels\Calculator\CalculatorIndexViewModel.cs" />
     <Compile Include="ViewModels\Config\ConfigurationViewModel.cs" />
     <Compile Include="ViewModels\Conversion\CreateConversionViewModel.cs" />
     <Compile Include="ViewModels\Conversion\IndexConversionViewModel.cs" />
