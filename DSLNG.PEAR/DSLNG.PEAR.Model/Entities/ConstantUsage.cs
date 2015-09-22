@@ -7,6 +7,9 @@ namespace DSLNG.PEAR.Data.Entities
 {
     public class ConstantUsage
     {
+        public ConstantUsage() {
+            Constants = new List<CalculatorConstant>();
+        }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

@@ -1,0 +1,69 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.ConstantUsage.ConstantUsageViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="constant-usage-save">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="col-md-12">
+            <div class="title">Constant Usage</div>
+            <div class="description_year">Edit</div>
+            <div>@Html.ValidationSummary(true)</div>
+            @Html.HiddenFor(x => x.Id)
+        </div>
+        <div class="col-md-12">
+            <div class="form-inline whitebox">
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.Role)
+                    @Html.TextBoxFor(model => model.Role, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Role)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.Group)
+                    @Html.TextBoxFor(model => model.Group, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Group)
+                </div>
+                <div class="form-group form-list">
+                    <label>&nbsp;</label>
+                    <input type="button" class="add-constant" value="Add Constant" />
+                </div>
+                <div class="constants-holder">
+                    @for (var i = 0; i < Model.Constants.Count; i++)
+                    {
+                        if (i != 0)
+                        { 
+                        <div class="form-group form-list constant-template">
+                            <input type="hidden" name="Constants.Index" value="@i" />
+                            <label>&nbsp;</label>
+                            @Html.DropDownListFor(model => model.Constants[i].Id, new List<SelectListItem> { new SelectListItem{Value=Model.Constants[i].Id.ToString(), Text = Model.Constants[i].Name} }, new { @class = "constant", data_url = Url.Action("CalculatorConstants"), style = "width:200px" })
+                            @Html.ValidationMessageFor(model => model.Constants[i].Id)
+                            <button class="remove">Remove</button>
+                        </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 artifact-designer-btns">
+            <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
+            <a onclick="location.reload();" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>
+            <a href="/Highlight" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+        </div>
+    }
+    <div class="form-group form-list constant-template original">
+        <label>&nbsp;</label>
+        @Html.DropDownListFor(model => model.Constants[0].Id, new List<SelectListItem>(), new { @class = "constant", data_url = Url.Action("CalculatorConstants"), style = "width:200px" })
+        @Html.ValidationMessageFor(model => model.Constants[0].Id)
+        <button class="remove">Remove</button>
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

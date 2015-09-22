@@ -157,6 +157,7 @@ Number.prototype.format = function (n, x) {
     Pear.Highlight = {};
     Pear.VesselSchedule = {};
     Pear.NLS = {};
+    Pear.ConstantUsage = {};
 
     Pear.Loading.Show = function (container) {
         var loadingImage = $('#dataLayout').attr('data-content-url') + '/img/ajax-loader2.gif';
@@ -3543,6 +3544,58 @@ Number.prototype.format = function (n, x) {
         Pear.VesselSchedule._autocomplete('#VesselScheduleId');
     }
 
+    Pear.ConstantUsage._autocomplete = function ($field) {
+        var url = $field.data('url');
+        $field.select2({
+            ajax: {
+                url: url,
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        term: params.term, // search term
+                    };
+                },
+                processResults: function (data, page) {
+                    return data;
+                },
+                cache: true
+            },
+            escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+            minimumInputLength: 1,
+            templateResult: Pear.Artifact.Designer._formatKpi, // omitted for brevity, see the source of this page
+            templateSelection: Pear.Artifact.Designer._formatKpiSelection // omitted for brevity, see the source of this page
+        });
+    };
+
+    Pear.ConstantUsage.FormSetup = function () {
+        var length = $('.constants-holder').find('.constant-template').length + 1;
+        if (length > 1) {
+            $('.constants-holder .constant-template .constant').each(function (i, val) {
+                Pear.ConstantUsage._autocomplete($(val));
+            });
+        }
+        $('.add-constant').click(function (e) {
+            e.preventDefault();
+            var constantTemplate = $('.constant-template.original').clone(true);
+            constantTemplate.removeClass('original');
+            $('<input>').attr({
+                type: 'hidden',
+                id: 'foo',
+                name: 'Constants.Index',
+                value: length
+            }).prependTo(constantTemplate);
+            Pear.ConstantUsage._autocomplete(constantTemplate.find('.constant').attr('name','Constants[' + length + '].Id'));
+            var holder = $('.constants-holder');
+            holder.append(constantTemplate);
+            length++;
+        });
+        $('.constant-template .remove').click(function (e) {
+            e.preventDefault();
+            $(this).closest('.constant-template').remove();
+        });
+    }
+
     $(document).ready(function () {
         if ($('.artifact-designer').length) {
             Pear.Artifact.Designer.GraphicSettingSetup();
@@ -3571,6 +3624,9 @@ Number.prototype.format = function (n, x) {
         }
         if($('.nls-save').length){
             Pear.NLS.FormSetup();
+        }
+        if ($('.constant-usage-save').length) {
+            Pear.ConstantUsage.FormSetup();
         }
     });
     window.Pear = Pear;
