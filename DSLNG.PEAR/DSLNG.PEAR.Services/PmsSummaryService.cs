@@ -145,6 +145,19 @@ namespace DSLNG.PEAR.Services
                                 {
                                     case ScoringType.Positive:
                                         kpiData.Score = pmsConfigDetails.Weight * kpiData.IndexYtd;
+                                        var maxScore = pmsConfigDetails.Weight*1.05;
+                                        if (kpiData.Score > maxScore)
+                                            kpiData.Score = maxScore;
+                                        /*if (kpiData.ActualYtd.Value > kpiData.TargetYtd.Value)
+                                        {
+                                            //kpiData.Score = pmsConfigDetails.Weight*1.05;
+                                            kpiData.Score = pmsConfigDetails.Weight * kpiData.IndexYtd;
+                                        }
+                                        else
+                                        {
+                                            kpiData.Score = pmsConfigDetails.Weight * kpiData.IndexYtd;
+                                        }*/
+                                        
                                         break;
                                     case ScoringType.Negative:
                                         if (kpiData.IndexYtd.Equals(0))
