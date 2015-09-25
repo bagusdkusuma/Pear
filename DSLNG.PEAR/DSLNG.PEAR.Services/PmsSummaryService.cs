@@ -154,12 +154,12 @@ namespace DSLNG.PEAR.Services
 
                                     case ScoringType.Negative:
                                         {
-                                            if (kpiData.IndexYtd.Equals(0))
+                                            if (kpiData.IndexYearly.Equals(0))
                                             {
                                                 response.IsSuccess = false;
                                                 response.Message =
                                                     string.Format(
-                                                        @"KPI {0} memiliki nilai index YTD 0 dengan Nilai Scoring Type negative yang mengakibatkan terjadinya nilai infinity",
+                                                        @"KPI {0} memiliki nilai index Yearly 0 dengan Nilai Scoring Type negative yang mengakibatkan terjadinya nilai infinity",
                                                         pmsConfigDetails.Kpi.Name);
                                                 return response;
                                             }
