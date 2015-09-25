@@ -57,13 +57,13 @@
                 
             });
 
-            /*settings.Columns.Add(column =>
+            settings.Columns.Add(column =>
             {
                 column.FieldName = "TargetActualYtd";
                 column.Caption = "YTD (Actual / Target)";
                 column.PropertiesEdit.DisplayFormatString = FormatNumber.DecimalFormat;
-                column.Visible = true;
-            });*/
+                column.Visible = false;
+            });
 
             /*settings.Columns.AddBand(indexBand =>
                 {
@@ -84,7 +84,7 @@
             settings.Columns.Add(column =>
             {
                 column.FieldName = "ScoreStr";
-                column.Caption = "Score";
+                column.Caption = "Score / Weight";
                 column.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
                 column.PropertiesEdit.DisplayFormatString = FormatNumber.DecimalFormat;
                 column.CellStyle.HorizontalAlign = HorizontalAlign.Right;
@@ -119,7 +119,7 @@
                         }
                         if (tagIndex == "1")
                         {
-                            e.TotalValue = percent;
+                            e.TotalValue = percent.ToString(FormatNumber.DecimalFormat) + " / " + Convert.ToDecimal(e.GetValue("PillarWeight")) ;
                             totalPercent += percent;
                         }
                         else
@@ -142,7 +142,7 @@
             settings.GroupSummary.Add(kpiScore);
 
             ASPxSummaryItem percentageScore = new ASPxSummaryItem();
-            percentageScore.ShowInGroupFooterColumn = "Score";
+            percentageScore.ShowInGroupFooterColumn = "Score / Weight";
             percentageScore.Tag = "Score_1";
             percentageScore.FieldName = "Score";
             percentageScore.DisplayFormat = FormatNumber.DecimalFormat;

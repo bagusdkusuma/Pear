@@ -81,7 +81,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
         {
             get
             {
-                return string.Format(@"{0}", Score.HasValue ? Score.Value.ToString(FormatNumber.DecimalFormat) : "-");
+                return string.Format(@"{0} / {1}", Score.HasValue ? Score.Value.ToString(FormatNumber.DecimalFormat) : "-", Weight);
             }
         }
 
