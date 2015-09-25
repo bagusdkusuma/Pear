@@ -17,6 +17,7 @@ namespace DSLNG.PEAR.Services
 {
     public class PmsSummaryService : BaseService, IPmsSummaryService
     {
+        private const double _maxNegativeScore = 0.9523;
         public PmsSummaryService(IDataContext dataContext)
             : base(dataContext)
         {
@@ -163,11 +164,10 @@ namespace DSLNG.PEAR.Services
                                                         pmsConfigDetails.Kpi.Name);
                                                 return response;
                                             }
-
-                                            kpiData.Score = pmsConfigDetails.Weight / kpiData.IndexYearly;
-                                            var maxScore = pmsConfigDetails.Weight * 1.05;
-                                            if (kpiData.Score >= maxScore)
-                                                kpiData.Score = maxScore;
+                                            
+                                            kpiData.Score = (kpiData.IndexYearly <= _maxNegativeScore)
+                                                                ? pmsConfigDetails.Weight*1.05
+                                                                : pmsConfigDetails.Weight/kpiData.IndexYearly;
                                             break;
                                         }
 
@@ -198,7 +198,7 @@ namespace DSLNG.PEAR.Services
 
                             #endregion
 
-                            kpiData.KpiColor = GetScoreColor(kpiData.ActualYtd, pmsConfigDetails.ScoreIndicators);
+                            kpiData.KpiColor = GetScoreColor(kpiData.ActualYearly, pmsConfigDetails.ScoreIndicators);
 
                             response.KpiDatas.Add(kpiData);
                         }
