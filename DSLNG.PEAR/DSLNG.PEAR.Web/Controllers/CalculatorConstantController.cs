@@ -81,7 +81,7 @@ namespace DSLNG.PEAR.Web.Controllers
         }
 
         public ActionResult Edit(int id) {
-            var viewModel = _calculatorConstantService.GetCalculatorConstant(new GetCalculatorConstantRequest { Id = 1 })
+            var viewModel = _calculatorConstantService.GetCalculatorConstant(new GetCalculatorConstantRequest { Id = id })
                 .MapTo<CalculatorConstantViewModel>();
             return View(viewModel);
         }

@@ -44,6 +44,20 @@ namespace DSLNG.PEAR.Web.ViewModels.Calculator
             public double M3PerHr { get; set; }
         }
         public IList<ConstantUsageViewModel> ConstantUsages { get; set; }
+
+        public IList<CalculatorConstantViewModel> Constants {
+            get {
+                return ConstantUsages.First(x => x.Role == "production-yield" && x.Group == "all")
+                    .Constants.MapTo<CalculatorConstantViewModel>();
+            }
+        }
+
+        public IList<CalculatorConstantViewModel> GeneralConstans {
+            get {
+                return ConstantUsages.First(x => x.Role == "production-yield" && x.Group == "general")
+                    .Constants.MapTo<CalculatorConstantViewModel>();
+            }
+        }
         public IList<CalculatorConstantViewModel> LNGConstants {
             get {
                 return ConstantUsages.First(x => x.Role == "production-yield" && x.Group == "lng")

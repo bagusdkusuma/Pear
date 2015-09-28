@@ -28,7 +28,8 @@ namespace DSLNG.PEAR.Web.App_Start
                         "~/Scripts/trafficlight.js",
                         "~/Scripts/tank.js",
                         "~/Scripts/calculator.pricing.js",
-                        "~/Scripts/main.js"));
+                        "~/Scripts/main.js",
+                        "~/Scripts/production-yield-calculator.js"));
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/bootstrap/css/bootstrap.css",
                 "~/Content/font-awesome/css/font-awesome.css",
                 //"~/Content/datepicker/css/datepicker.css",

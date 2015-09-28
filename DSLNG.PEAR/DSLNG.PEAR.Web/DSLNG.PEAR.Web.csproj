@@ -356,6 +356,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\bs_leftnavi.js" />
     <Content Include="Scripts\calculator.pricing.js" />
+    <Content Include="Scripts\production-yield-calculator.js" />
     <Content Include="Scripts\tank.js" />
     <Content Include="Scripts\exporting.js" />
     <Content Include="Scripts\globalize.cultures.js" />

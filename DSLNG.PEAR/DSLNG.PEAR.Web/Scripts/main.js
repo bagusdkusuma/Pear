@@ -3636,6 +3636,7 @@ Number.prototype.format = function (n, x) {
         
         if ($('.calculator').length) {
             Pear.Calculator.Pricing();
+            Pear.ProductionYieldCalculator.Init();
         }
     });
     window.Pear = Pear;
