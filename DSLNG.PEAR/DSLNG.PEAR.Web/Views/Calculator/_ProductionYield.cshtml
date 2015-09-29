@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="col-md-5 text-left">
-        <span class="result">xxxx</span>
+        <span class="tonnes-result">xxxx</span>
         <span class="unit">tonnes</span>
     </div>
 </div>
@@ -23,9 +23,6 @@
     </div>
     <div class="col-md-6 text-left">
         <h3>Constants</h3>
-
-
-
     </div>
 </div>
 
@@ -65,6 +62,33 @@
                 </form>
             </div>
             <div class="col-md-6 text-left">
+                <form class="form-horizontal production-yield-all constants">
+                    @foreach (var constant in Model.Constants)
+                    { 
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">@constant.DisplayName</label>
+                            <div class="col-sm-6">
+                                @Html.TextBoxFor(m => constant.Value, new { @class = constant.Name })
+                            </div>
+                            <div class="col-sm-3">@constant.Measurement</div>
+                        </div>
+                    }
+                </form>
+                @*<fieldset class="production-yield-general">
+                    <legend>General</legend>
+                    <form class="form-horizontal">
+                        @foreach (var constant in Model.GeneralConstans)
+                        { 
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">@constant.DisplayName</label>
+                                <div class="col-sm-6">
+                                    @Html.TextBoxFor(m => constant.Value, new { @class = constant.Name })
+                                </div>
+                                <div class="col-sm-3">@constant.Measurement</div>
+                            </div>
+                        }
+                    </form>
+                </fieldset>
                 <fieldset>
                     <legend>LNG</legend>
                     <form class="form-horizontal">
@@ -79,7 +103,7 @@
                             </div>
                         }
                     </form>
-                </fieldset>
+                </fieldset>*@
             </div>
         </div>
     </div>
