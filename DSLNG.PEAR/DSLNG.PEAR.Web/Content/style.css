@@ -1258,3 +1258,18 @@ td .btn_small_lightblue a:hover {
 .constant-template.original {
     display:none;
 }
+ul.input-units,
+ul.output-units {
+    background:#fff;
+    border:1px solid #aaa;
+    min-height:100px;
+    padding:0;
+}
+    ul.input-units li,
+    ul.output-units li {
+        list-style:none;
+        cursor:pointer;
+    }
+ul li.unit.active {
+    background-color:#9bd4f4;
+}

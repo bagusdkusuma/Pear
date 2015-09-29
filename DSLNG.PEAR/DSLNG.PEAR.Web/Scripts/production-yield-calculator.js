@@ -2,7 +2,6 @@
     var pear = window.Pear;
     pear.ProductionYieldCalculator = {};
     pear.ProductionYieldCalculator.Init = function () {
-        console.log('calculator - init');
         var tonnes_mmscf = parseFloat($('.production-yield-all .tonnes-mmscf').val());
         var mmscf_tonnes = 1 / tonnes_mmscf;
         var kg_mmbtu = parseFloat($('.production-yield-all .kg-mmbtu').val());
