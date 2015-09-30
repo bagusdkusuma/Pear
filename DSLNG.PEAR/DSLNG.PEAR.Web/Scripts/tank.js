@@ -45,10 +45,11 @@
         var softBlue = options.Color !== undefined ? options.Color : '#3949AB';
         var darkBlue = '#283593';
         var greyBorder = '#BDBDBD';
-        var red = '#e43834';
+        //var red = '#e43834';
         var yellow = '#fcd734';
         var green = '#429f46';
         var red = "#FF0000";
+        var background = 'transparent';
 
         var lineMaxColor = red;
         var lineMinColor = green;
@@ -77,14 +78,16 @@
         // Shape
 
         var tank = s.rect(marginSide, marginTop, tankWidth, tankHeight).attr({
-            fill: '#fff',
+            fill: background,
             stroke: greyBorder,
-            strokeWidth: 2
+            strokeWidth: 2,
+            strokeDasharray: '161 156',
+            strokeDashoffset: '174',
         });
 
 
         var roundTop = s.ellipse(ellipseX, marginTop, ellipseRX, ellipseRY).attr({
-            fill: '#fff',
+            fill: background,
             stroke: greyBorder,
             strokeWidth: 2
         });
@@ -142,7 +145,7 @@
         });
         var tMax = s.text(leftLineX - 14, marginTop + roundMaxY + 4, [maxCapacity.format(2), " ", volumeInventoryUnit, " (Max)"]).attr({
             font: "14px Open Sans, sans-serif",
-            fill: "#444",
+            fill: "#fff",
             textAnchor: "end",
         });
 
@@ -160,7 +163,7 @@
             //var tMin = s.text(leftLineX - 14, lineMinY + 4, [minCapacity.format(2), " ", volumeInventoryUnit, " (Shipment Ready)"]).attr({
             var tMin = s.text(leftLineX - 14, lineMinY + 4, ["Shipment Ready"]).attr({
                 font: "14px Open Sans, sans-serif",
-                fill: "#444",
+                fill: "#fff",
                 textAnchor: "end",
             });
             
@@ -190,7 +193,7 @@
         });
         var tZero = s.text(leftLineX, roundBottomY + 20, ["0", " ", volumeInventoryUnit]).attr({
             font: "14px Open Sans, sans-serif",
-            fill: "#444",
+            fill: "#fff",
             textAnchor: "middle",
         });
 
@@ -224,33 +227,33 @@
         });
         var tFill = s.text(rightLineX + 14, roundFillY + 4, [volumeInventory.format(2), " ", volumeInventoryUnit, " (", percentFill, "%)"]).attr({
             font: "14px Open Sans, sans-serif",
-            fill: "#444"
+            fill: "#fff"
         });
 
         //////////
 
         var tDay = s.text(rightLineX, marginTop, [daysToTankTop, " ", daysToTankTopUnit]).attr({
             font: "16px Open Sans, sans-serif",
-            fill: darkBlue,
+            fill: '#fff',
             fontWeight: "bold",
             fontStyle: "italic"
         });
         var tDayKeterangan = s.text(rightLineX, marginTop + 20, daysToTankTopTitle).attr({
             font: "14px Open Sans, sans-serif",
-            fill: "#444",
+            fill: "#fff",
             fontStyle: "italic"
         });
 
         var tTitle = s.text(svgWidth / 2, 18, title).attr({
             font: "16px Open Sans, sans-serif",
-            fill: "#444",
+            fill: "#fff",
             fontWeight: "bold",
             textAnchor: "middle",
         });
 
         var tSubtitle = s.text(svgWidth / 2, 44, subtitle).attr({
             font: "14px Open Sans, sans-serif",
-            fill: "#666",
+            fill: "#fff",
             textAnchor: "middle",
         });
         
