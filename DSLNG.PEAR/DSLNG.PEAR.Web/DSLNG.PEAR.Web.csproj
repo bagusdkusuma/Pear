@@ -286,9 +286,10 @@
     <Content Include="Content\img\graphic6.PNG" />
     <Content Include="Content\img\graphic7.PNG" />
     <Content Include="Content\img\icons.png" />
-    <Content Include="Content\img\logopear.png" />
+    <Content Include="Content\img\logopear_old.png" />
     <Content Include="Content\img\logo_blue.png" />
     <Content Include="Content\img\logo_login.png" />
+    <Content Include="Content\img\logopear.png" />
     <Content Include="Content\img\pointer.png" />
     <Content Include="Content\img\remark_sign.png" />
     <Content Include="Content\img\throbber.gif" />
