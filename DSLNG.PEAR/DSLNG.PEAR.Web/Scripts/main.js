@@ -2484,7 +2484,7 @@ Number.prototype.format = function (n, x) {
         $('.form-measurement').css('display', 'none');
     };
     artifactDesigner._previewCallbacks.tabular = function (data, container) {
-        console.log('writing table');
+        //console.log('writing table');
         var wrapper = $('<div>');
         wrapper.addClass('tabular-wrapper');
         wrapper.append($('<h3>').html(data.Tabular.Title));
@@ -2495,6 +2495,9 @@ Number.prototype.format = function (n, x) {
         tableScrollContainer.css('width', '100%');
         tableScrollContainer.css('height', '270px');
         tableScrollContainer.css('overflow-y', 'auto');
+
+        var panel = $('<div>');
+        panel.addClass('panel panel-default tabular-panel');
 
         var $table = $('<table>');
         $table.addClass('tabular');
@@ -2537,7 +2540,8 @@ Number.prototype.format = function (n, x) {
         //container.css('min-height', '350px');
 
         //change from pak Marwan
-        tableScrollContainer.append($table);
+        tableScrollContainer.append(panel);
+        panel.append($table);
         wrapper.append(tableScrollContainer);
 
         //wrapper.append($table);

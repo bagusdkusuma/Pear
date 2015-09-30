@@ -27,7 +27,7 @@ namespace DSLNG.PEAR.Services.Responses.Kpi
         public FormatInput FormatInput { get; set; }
         public PeriodeType Periode { get; set; }
         public string Remark { get; set; }
-
+        public string Icon { get; set; }
         public bool IsActive { get; set; }
         public ICollection<KpiRelationModel> RelationModels { get; set; }
     }

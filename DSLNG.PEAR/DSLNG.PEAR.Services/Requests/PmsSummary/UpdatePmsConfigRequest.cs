@@ -14,6 +14,6 @@ namespace DSLNG.PEAR.Services.Requests.PmsSummary
         public string ScoringType { get; set; }
         public IEnumerable<ScoreIndicator> ScoreIndicators { get; set; }
         public int PmsSummaryId { get; set; }
-
+        public string Color { get; set; }
     }
 }

@@ -117,11 +117,32 @@ img
 /****-----start-body----****/
 body
 {
-    background: url("img/bg.jpg") no-repeat center fixed;
-    background-color: #ebeced;
-    background-position: bottom;
+    background: url("img/malay.png") repeat-x;
+    background-color: #00a9e7;
     position: relative;
     font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+.login-wrapper
+{
+    background: url("img/login-back.png") center no-repeat;
+    background-size: 1250px 700px;
+    min-height: 650px;
+    position: relative;
+}
+
+.login-header
+{
+    background: url("img/login-logo-new.png") center no-repeat;
+    min-height: 122px;
+    background-size: 400px 100px;
+}
+
+.login-body
+{
+    background: url("img/login-circle.png") center no-repeat;
+    min-height: 122px;
+    background-size: 400px 100px;
 }
 
 .login-form
@@ -129,6 +150,26 @@ body
     width: 32%;
     margin: 14% auto 5% auto;
     position: relative;
+}
+
+.login-form-new
+{
+    width: 400px;
+    height: 220px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: 18px;
+    margin-left: -200px;
+}
+
+.submit-login
+{
+    margin-top: 0px;
+    background-color: #109cfe;
+    color: #ffffff;
+    padding: 4px 20px;
+    
 }
 
 .head
@@ -184,11 +225,10 @@ form
     background: url("img/icons.png") no-repeat -17px 11px;
 }
 
-input[type="text"], input[type="password"]
+/*input[type="text"], input[type="password"]
 {
     font-family: "Helvetica Neue", Arial, sans-serif;
-    width: 60%;
-    padding: 0.7em 2em 0.7em 1.7em;
+    padding: 0.7em 2em 0.6em 1.7em;
     color: #858282;
     font-size: 14px;
     outline: none;
@@ -197,7 +237,7 @@ input[type="text"], input[type="password"]
     font-weight: 100;
     margin-left: 11px;
     padding-left: 5px;
-}
+}*/
 
 form li:hover
 {
@@ -208,7 +248,7 @@ form li:hover
     -moz-box-shadow: 0 0 0.5em #06a3df;
 }
 
-input[type="submit"]
+/*input[type="submit"]
 {
     float: right;
     font-size: 14px;
@@ -230,12 +270,50 @@ input[type="submit"]
     -o- border-radius: 0.3em;
     -moz-border-radius: 0.3em;
     background: #06416e;
+}*/
+
+.glyphicon-user, .glyphicon-lock
+{
+    left: 0;
 }
 
-    input[type="submit"]:hover
+.has-feedback label ~ .form-control-feedback
+{
+    top: 18px;
+}
+
+.form-group.has-feedback
+{
+    margin-bottom: 9px;
+}
+
+.login-wrapper form {
+    margin-top: 16px;
+}
+
+.login-form-new input[type="text"],
+.login-form-new input[type="password"]
+{
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -o- border-radius: 20px;
+    -moz-border-radius: 20px;
+}
+
+input#Email, input#Password
+{
+    padding-left: 40px;
+}
+
+.has-success .form-control-feedback
+{
+    color: #e1e1e1;
+}
+
+/*input[type="submit"]:hover
     {
         background: #06a3df;
-    }
+    }*/
 /***************************/
 .p-container
 {
@@ -351,7 +429,7 @@ input[type="submit"]
         }
 
         .p-container .checkbox input:checked + i,
-        .p-container . input:checked + i
+        .p-container .input:checked + i
         {
             border-color: #2da5da;
         }
@@ -427,7 +505,7 @@ input[type="submit"]
             margin-top: 10px;
         }
 
-    input[type="text"], input[type="password"]
+    /* input[type="text"], input[type="password"]
     {
         font-size: 15px;
         padding: 0.5em 1em 0.5em 1em;
@@ -440,7 +518,7 @@ input[type="submit"]
         padding: 10px 10px;
         width: 40%;
         margin-left: 28%;
-    }
+    }*/
 
     .head
     {
@@ -486,6 +564,8 @@ input[type="submit"]
         left: 43px;
     }
 }
-input:-webkit-autofill {
+
+input:-webkit-autofill
+{
     -webkit-box-shadow: 0 0 0 1000px white inset;
 }

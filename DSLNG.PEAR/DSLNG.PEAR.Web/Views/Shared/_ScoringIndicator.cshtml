@@ -80,6 +80,8 @@
                         if (!bySetColor) $(el).val('#' + hex);
                     }
                 }).keyup(function () {
+                    console.log($(this));
+                    console.log(this);
                     $(this).colpickSetColor(this.value.replace('#', ''));
                 });
             });

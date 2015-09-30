@@ -286,9 +286,13 @@
     <Content Include="Content\img\graphic6.PNG" />
     <Content Include="Content\img\graphic7.PNG" />
     <Content Include="Content\img\icons.png" />
-    <Content Include="Content\img\logopear_old.png" />
+    <Content Include="Content\img\login-background-image.png" />
+    <Content Include="Content\img\login-circle.png" />
+    <Content Include="Content\img\login-logo-new.png" />
+    <Content Include="Content\img\logopear.png" />
     <Content Include="Content\img\logo_blue.png" />
     <Content Include="Content\img\logo_login.png" />
+	<Content Include="Content\img\malay.png" />
     <Content Include="Content\img\logopear.png" />
     <Content Include="Content\img\pointer.png" />
     <Content Include="Content\img\remark_sign.png" />
@@ -487,7 +491,7 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\_GridViewPartial.cshtml" />
     <Content Include="Views\PmsSummary\Index.cshtml" />
-    <Content Include="Views\PmsSummary\_IndexGridPartial.cshtml" />
+    <Content Include="Views\PmsSummary\_IndexGridPartial.Old.cshtml" />
     <Content Include="Views\Level\Index.cshtml">
       <SubType>Code</SubType>
     </Content>
@@ -629,6 +633,7 @@
     <Content Include="Views\Highlight\_IndexGridPartial.cshtml" />
     <Content Include="Views\Highlight\Index.cshtml" />
     <Content Include="Views\Highlight\Create.cshtml" />
+    <Content Include="Views\PmsSummary\_IndexGridPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -721,6 +726,7 @@
       <DependentUpon>Global.asax</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Helpers\NumberHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Artifact\AreaChartDataViewModel.cs" />
     <Compile Include="ViewModels\Artifact\AreaChartViewModel.cs" />

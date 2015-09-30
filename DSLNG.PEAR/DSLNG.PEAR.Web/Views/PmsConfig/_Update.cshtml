@@ -11,7 +11,8 @@
     <form class="form-group" action="@Url.Action("Update")" method="POST">
         @Html.HiddenFor(x => x.Id)
         <div class="form-group form-list">
-            <label>Pillar : </label> @Model.PillarName
+            <label>Pillar : </label>
+            @Model.PillarName
         </div>
 
         <div class="form-group form-list">
@@ -25,10 +26,20 @@
             @Html.TextBoxFor(x => x.Weight, new { @class = "form-control" })
             @Html.ValidationMessageFor(x => x.Weight)
         </div>
+        <div class="form-group form-list">
+            <label>Color</label>
+            <div class="input-group pillar-colpick colorpicker">
+                @Html.TextBoxFor(x => x.Color, new { @class = "form-control" })
+                <span class="input-group-addon"><i style="background-color: @Model.Color"></i></span>
+            </div>
+            @Html.ValidationMessageFor(x => x.Color)
+        </div>
+        
+        
         @Html.Partial("_ScoringIndicator", Model.ScoreIndicators)
 
         <div class="centering margin">
-            <hr style="margin-bottom:60px;">
+            <hr style="margin-bottom: 60px;">
             <a href="#" onclick="$(this).closest('form').submit()" class="btn-darkblue btn-large"><span class="fa fa-floppy-o"></span>Save</a>
             @*<a href="#" class="btn-darkblue btn-large"><span class="fa fa-repeat"></span>Clear</a>*@
             <a href="javascript:;" data-dismiss="modal" aria-label="Close" class="btn-darkblue btn-large"><span class="fa fa-times"></span>Cancel</a>
@@ -42,6 +53,16 @@
         $("form").removeData("validator");
         $("form").removeData("unobtrusiveValidation");
         $.validator.unobtrusive.parse("form");
+        
+        $('.pillar-colpick > input').colpick({
+            submit: 0,
+            onChange: function (hsb, hex, rgb, el, bySetColor) {
+                $('.pillar-colpick > input').closest('.colorpicker').find('i').css('background-color', '#' + hex);
+                if (!bySetColor) $(el).val('#' + hex);
+            }
+        }).keyup(function () {
+            $(this).colpickSetColor(this.value.replace('#', ''));
+        });
 
         @*$('.ddl-pillar').change(function () {
             var pillarId = $(this).val();

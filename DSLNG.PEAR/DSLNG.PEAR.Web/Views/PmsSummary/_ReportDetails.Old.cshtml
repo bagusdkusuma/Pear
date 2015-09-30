@@ -1,19 +1,14 @@
 ﻿@using DSLNG.PEAR.Common.Contants
 @model DSLNG.PEAR.Web.ViewModels.PmsSummary.PmsReportDetailsViewModel
-<style>
-    .roundlight
-    {
-        margin-top: 10px;
-    }
-</style>
+
 @if (Model.KpiId > 0)
 {
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
-        <div class="row modal-header-detail">
-            <div class="roundlight pull-left" style="background-color: green"></div>
+        <div class="row">
+            <div class="trafficlight green"></div>
             <div class="title">@Model.KpiName</div>
             <div class="description_year">@Model.Title</div>
             <div class="description_month">@Model.Month @Model.Year</div>
