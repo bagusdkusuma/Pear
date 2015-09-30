@@ -26,14 +26,6 @@
             @Html.TextBoxFor(x => x.Weight, new { @class = "form-control" })
             @Html.ValidationMessageFor(x => x.Weight)
         </div>
-        <div class="form-group form-list">
-            <label>Color</label>
-            <div class="input-group pillar-colpick colorpicker">
-                @Html.TextBoxFor(x => x.Color, new { @class = "form-control" })
-                <span class="input-group-addon"><i style="background-color: @Model.Color"></i></span>
-            </div>
-            @Html.ValidationMessageFor(x => x.Color)
-        </div>
         
         
         @Html.Partial("_ScoringIndicator", Model.ScoreIndicators)
@@ -54,15 +46,7 @@
         $("form").removeData("unobtrusiveValidation");
         $.validator.unobtrusive.parse("form");
         
-        $('.pillar-colpick > input').colpick({
-            submit: 0,
-            onChange: function (hsb, hex, rgb, el, bySetColor) {
-                $('.pillar-colpick > input').closest('.colorpicker').find('i').css('background-color', '#' + hex);
-                if (!bySetColor) $(el).val('#' + hex);
-            }
-        }).keyup(function () {
-            $(this).colpickSetColor(this.value.replace('#', ''));
-        });
+        
 
         @*$('.ddl-pillar').change(function () {
             var pillarId = $(this).val();

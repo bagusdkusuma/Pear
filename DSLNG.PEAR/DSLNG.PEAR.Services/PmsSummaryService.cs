@@ -63,7 +63,7 @@ namespace DSLNG.PEAR.Services
                             kpiData.ScoreIndicators = ParseScoreIndicator(pmsConfigDetails.ScoreIndicators);
                             kpiData.KpiIcon = pmsConfigDetails.Kpi.Icon;
                             kpiData.PillarIcon = pmsConfig.Pillar.Icon;
-                            kpiData.PmsConfigColor = pmsConfig.Color;
+                            kpiData.PmsConfigColor = pmsConfig.Pillar.Color;
                             #region KPI Achievement
 
                             var kpiAchievementYearly =

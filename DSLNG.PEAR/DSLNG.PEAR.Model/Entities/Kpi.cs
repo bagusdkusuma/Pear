@@ -44,6 +44,7 @@ namespace DSLNG.PEAR.Data.Entities
         public ICollection<KpiTarget> KpiTargets { get; set; }
         public ICollection<KpiAchievement> KpiAchievements { get; set; }
         public string Icon { get; set; }
+        public string Color { get; set; }
         public bool IsActive { get; set; }
     }
 }
