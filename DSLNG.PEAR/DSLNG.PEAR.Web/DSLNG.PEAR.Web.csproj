@@ -292,7 +292,8 @@
     <Content Include="Content\img\logopear.png" />
     <Content Include="Content\img\logo_blue.png" />
     <Content Include="Content\img\logo_login.png" />
-    <Content Include="Content\img\malay.png" />
+	<Content Include="Content\img\malay.png" />
+    <Content Include="Content\img\logopear.png" />
     <Content Include="Content\img\pointer.png" />
     <Content Include="Content\img\remark_sign.png" />
     <Content Include="Content\img\throbber.gif" />

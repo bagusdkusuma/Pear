@@ -1,6 +1,10 @@
 body, html {
     height: 100%;
-    background: #f0f3f4;
+    background-image:url(/Content/img/bg_5.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position:center center;
+    color:#fff
 }
 fieldset legend {
     float:left;
@@ -58,15 +62,16 @@ aside.right-content {
 }
 
 aside.left-content {
-    width: 230px;
+    width: 231px;
     margin-left: -250px;
-    border-left: 60px solid #004071;
+    border-left: 60px solid #f7ebdd;
     min-height: 100%;
     float: left;
-    background: #fff;
+    background: transparent;
     position: relative;
     padding-bottom: 500em;
     margin-bottom: -500em;
+    border-right:1px solid #78a0ba;
 }
 
 .left-content .left-content-toggle {
@@ -92,6 +97,7 @@ aside.left-content > * {
         display: block;
         width: 60px;
         text-align: center;
+        text-transform:uppercase;
     }
 
     .main-nav .sub-nav {
@@ -101,6 +107,7 @@ aside.left-content > * {
         width: 170px;
         padding: 10px;
         display: none;
+        text-transform:initial;
     }
 
     .main-nav li {
@@ -109,10 +116,11 @@ aside.left-content > * {
 
         .main-nav li a {
             text-decoration: none;
+            
         }
 
 .sub-nav > li > a {
-    color: #35404d;
+    color: #fff;
     font-size: 12px;
     font-weight: bold;
     position: relative;
@@ -129,6 +137,7 @@ aside.left-content > * {
     padding-left: 10px;
     display: none;
     overflow: hidden;
+    
 }
 
 .sub-nav li.active ul {
@@ -138,9 +147,10 @@ aside.left-content > * {
 .sub-nav ul li.active {
     font-weight: bold;
     font-style: italic;
-    //text-decoration: underline;
-    background: #9bd4f4;
 }
+    .sub-nav ul li.active a {
+        color:#ff0000;
+    }
 
 .sub-nav > li {
     text-align: left;
@@ -158,15 +168,26 @@ aside.left-content > * {
 
     .sub-nav ul li a {
         font-size: 12px;
-        color: #35404d;
+        color: #fff;
     }
+        .sub-nav ul li a:hover {
+            color:#ff0000;
+         }
+
+.main-nav > li {
+    display:table;
+    height:73px;
+}
 
 .main-nav > li > a {
     background: none;
-    color: #9bd4f4;
+    color: #3f454f;
     font-size: 11px;
-    display: block;
-    padding: 10px 5px;
+    display: table-cell;
+    padding: 0 5px;
+    height:100%;
+    vertical-align:middle;
+    cursor:pointer;
 }
 
     .main-nav > li > a > i {
@@ -178,8 +199,8 @@ aside.left-content > * {
     .main-nav > li.active,
     .main-nav:hover > li.active:hover > a,
     .main-nav:hover > li.active:hover {
-        color: #004071;
-        background: #5bafeb;
+        color: #ff0000;
+        background: #f8f8f8;
         width: 60px;
         background-image: url("img/active.png");
         background-position: right;
@@ -192,12 +213,12 @@ aside.left-content > * {
 }
 
     .main-nav:hover > li.active > a {
-        color: #9bd4f4;
+        /*color: #9bd4f4;*/
     }
 
     .main-nav > li.active > a,
     .main-nav:hover > li.active:hover > a {
-        color: #fff;
+        color: #ff0000;
     }
 
 .main-nav > li.active .sub-nav {
@@ -219,6 +240,8 @@ aside.left-content > * {
         width: 60px;
         background: #3f454f;
         padding-top: 15px;
+        padding-left: 5px;
+padding-right: 5px;
     }
 
     .logo > div.donggi img {
@@ -640,9 +663,9 @@ a:hover.btn-lightblue {
 }
 
 .whitebox {
-    background-color: #f8f8f8 !important;
+    background-color: transparent !important;
     margin: 0 0 0;
-    padding: 20px;
+    padding: 0;
     border-radius:5px;
 }
 
@@ -1119,8 +1142,8 @@ td .btn_small_lightblue a:hover {
     }
 
 .main-nav > li > a:hover, .main-nav > li.active, .main-nav:hover > li.active:hover > a, .main-nav:hover > li.active:hover {
-    color: #004071;
-    background: #00aeef !important;
+    color: #ff0000;
+    background: #f8f8f8 !important;
     width: 60px;
     background-image: url("img/active.png");
     background-position: right;
