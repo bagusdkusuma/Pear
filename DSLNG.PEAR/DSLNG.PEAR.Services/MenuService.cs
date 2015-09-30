@@ -45,7 +45,7 @@ namespace DSLNG.PEAR.Services
                     IsActive = true,
                     Url = "/Account/Logoff",
                     Parent = null,
-                    Icon = "fa-sign-out"
+                    Icon = "logout.png"
                 };
                 menus.Add(logout);
 
