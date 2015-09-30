@@ -1870,13 +1870,20 @@ Number.prototype.format = function (n, x) {
         container.highcharts({
             chart: {
                 type: 'area',
-                zoomType: 'xy'
+                zoomType: 'xy',
+                backgroundColor : 'transparent'
             },
             title: {
-                text: data.AreaChart.Title
+                text: data.AreaChart.Title,
+                style: {
+                    color : '#fff'
+                }
             },
             subtitle: {
                 text: data.AreaChart.Subtitle,
+                style: {
+                    color: '#fff'
+                }
                 //x: -20
             },
             xAxis: {
@@ -1884,6 +1891,9 @@ Number.prototype.format = function (n, x) {
                 labels: {
                     formatter: function () {
                         return this.value; // clean, unformatted number for year
+                    },
+                    style: {
+                        color: '#fff'
                     }
                 },
                 categories: data.AreaChart.Periodes
@@ -1895,10 +1905,41 @@ Number.prototype.format = function (n, x) {
                 labels: {
                     formatter: function () {
                         return this.value;
+                    },
+                    style: {
+                        color: '#fff'
                     }
                 },
                 tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
                 max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale
+            },
+            legend: {
+                itemStyle: {
+                    "color": '#fff'
+                },
+                itemHoverStyle: {
+                    color: '#FF0000'
+                }
+            },
+            navigation: {
+                buttonOptions: {
+                    symbolStroke: '#fff',
+                    symbolFill: '#fff',
+                    theme: {
+                        'stroke-width': 0,
+                        stroke: 'silver',
+                        fill: 'transparent',
+                        r: 0,
+                        states: {
+                            hover: {
+                                fill: 'transparent'
+                            },
+                            select: {
+                                fill: 'transparent'
+                            }
+                        }
+                    }
+                }
             },
             tooltip: {
                 formatter: function () {
@@ -1967,28 +2008,46 @@ Number.prototype.format = function (n, x) {
         container.highcharts({
             chart: {
                 type: 'area',
-                zoomType: 'xy'
+                zoomType: 'xy',
+                backgroundColor : 'transparent'
             },
             title: {
-                text: data.AreaChart.Title
+                text: data.AreaChart.Title,
+                style: {
+                    color : '#fff'
+                }
             },
             subtitle: {
-                text: data.AreaChart.Subtitle
+                text: data.AreaChart.Subtitle,
+                style: {
+                    color: '#fff'
+                }
             },
             xAxis: {
                 labels: {
                     formatter: function () {
                         return this.value; // clean, unformatted number for year
+                    },
+                    style: {
+                        color: '#fff'
                     }
                 },
                 categories: data.AreaChart.Periodes
             },
             yAxis: {
                 title: {
-                    text: data.AreaChart.ValueAxisTitle
+                    text: data.AreaChart.ValueAxisTitle,
+                    style: {
+                        color: '#fff'
+                    }
                 },
                 tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
-                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale
+                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale,
+                labels: {
+                    style: {
+                        color : '#fff'
+                    }
+                }
             },
             //tooltip: {
             //    shared: true,
@@ -2001,6 +2060,34 @@ Number.prototype.format = function (n, x) {
             //            'Total: ' + this.point.stackTotal.format(2) + ' ' + data.AreaChart.ValueAxisTitle;
             //    }
             //},
+            legend: {
+                itemStyle: {
+                    "color": '#fff'
+                },
+                itemHoverStyle: {
+                    color: '#FF0000'
+                }
+            },
+            navigation: {
+                buttonOptions: {
+                    symbolStroke: '#fff',
+                    symbolFill: '#fff',
+                    theme: {
+                        'stroke-width': 0,
+                        stroke: 'silver',
+                        fill: 'transparent',
+                        r: 0,
+                        states: {
+                            hover: {
+                                fill: 'transparent'
+                            },
+                            select: {
+                                fill: 'transparent'
+                            }
+                        }
+                    }
+                }
+            },
             tooltip: {
                 formatter: function () {
                     var tooltip = '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
@@ -2029,11 +2116,11 @@ Number.prototype.format = function (n, x) {
             plotOptions: {
                 area: {
                     stacking: 'normal',
-                    lineColor: '#666666',
+                    lineColor: '#fff',
                     lineWidth: 1,
                     marker: {
                         lineWidth: 1,
-                        lineColor: '#666666',
+                        lineColor: '#fff',
                         enabled: false,
                         states: {
                             hover: {
@@ -2397,7 +2484,7 @@ Number.prototype.format = function (n, x) {
         $('.form-measurement').css('display', 'none');
     };
     artifactDesigner._previewCallbacks.tabular = function (data, container) {
-        console.log('writing table');
+        //console.log('writing table');
         var wrapper = $('<div>');
         wrapper.addClass('tabular-wrapper');
         wrapper.append($('<h3>').html(data.Tabular.Title));
@@ -2408,6 +2495,9 @@ Number.prototype.format = function (n, x) {
         tableScrollContainer.css('width', '100%');
         tableScrollContainer.css('height', '270px');
         tableScrollContainer.css('overflow-y', 'auto');
+
+        var panel = $('<div>');
+        panel.addClass('panel panel-default tabular-panel');
 
         var $table = $('<table>');
         $table.addClass('tabular');
@@ -2450,7 +2540,8 @@ Number.prototype.format = function (n, x) {
         //container.css('min-height', '350px');
 
         //change from pak Marwan
-        tableScrollContainer.append($table);
+        tableScrollContainer.append(panel);
+        panel.append($table);
         wrapper.append(tableScrollContainer);
 
         //wrapper.append($table);
@@ -3343,6 +3434,7 @@ Number.prototype.format = function (n, x) {
                     alpha: 60,
                     beta: 0
                 },
+                backgroundColor : 'transparent'
                 //margin: [0, 0, 0, 0],
                 //spacingTop: 0,
                 //spacingBottom: 0,
@@ -3351,11 +3443,15 @@ Number.prototype.format = function (n, x) {
             },
             title: {
                 text: data.Pie.Title,
-                x: -20 //center
+                style: {
+                    color : '#fff'
+                }
             },
             subtitle: {
                 text: data.Pie.Subtitle,
-                x: -20
+                style: {
+                    color: '#fff'
+                }
             },
             exporting: {
                 url: '/Chart/Export',
@@ -3379,9 +3475,13 @@ Number.prototype.format = function (n, x) {
                     dataLabels: {
                         enabled: true,
                         distance: 2,
-                        color: '#333333',
+                        color: '#fff',
                         formatter: function () {
                             return '<b>' + this.point.name + '</b>: <br/> ' + this.percentage.toFixed(2) + ' %';
+                        },
+                        shadow: false,
+                        style: {
+                            textShadow: false
                         }
                     },
                     showInLegend: data.Pie.ShowLegend,
@@ -3389,6 +3489,34 @@ Number.prototype.format = function (n, x) {
                     size: '75%',
                     shadow: false,
                     depth: 45,
+                }
+            },
+            legend: {
+                itemStyle: {
+                    "color": '#fff'
+                },
+                itemHoverStyle: {
+                    color: '#FF0000'
+                }
+            },
+            navigation: {
+                buttonOptions: {
+                    symbolStroke: '#fff',
+                    symbolFill: '#fff',
+                    theme: {
+                        'stroke-width': 0,
+                        stroke: 'silver',
+                        fill: 'transparent',
+                        r: 0,
+                        states: {
+                            hover: {
+                                fill: 'transparent'
+                            },
+                            select: {
+                                fill: 'transparent'
+                            }
+                        }
+                    }
                 }
             },
             tooltip: {
