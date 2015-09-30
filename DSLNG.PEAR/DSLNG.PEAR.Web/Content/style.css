@@ -1563,7 +1563,8 @@ td .btn_small_lightblue a:hover
 
     .table-transparent tbody tr.kpi-row:hover
     {
-        background-color: #f8f8f8;
+        background-color: #ffffff;
+        color: #004374;
         cursor: pointer;
     }
 
@@ -1587,4 +1588,22 @@ td .btn_small_lightblue a:hover
 .modal-dialog .nav > li > a:focus {
     background-color: #ffffff;
     color: #004374;
+}
+
+.table-pms-summary thead tr:first-child td:first-child,
+.table-pms-summary tbody tr td:first-child{
+    border-right: 1px solid #ffffff;
+}
+
+.table-pms-summary tbody tr:last-child {
+    border-top: 1px solid #ffffff;
+}
+
+.table-pms-summary .roundlight {
+    margin-left: 10px;
+}
+
+.table-pms-summary .pillar-score-text {
+    display: inline-block;
+    margin-left: 17px;
 }
