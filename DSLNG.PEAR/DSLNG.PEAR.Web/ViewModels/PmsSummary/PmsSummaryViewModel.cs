@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
+using System.Web.Routing;
 using DSLNG.PEAR.Common.Contants;
 
 namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
@@ -102,16 +104,25 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
 
         public string KpiNameWithColor
         {
-            get { return string.Format(@"<span class='trafficlight' style='background-color:{0}'></span>{1}", KpiColor, KpiName); }
+            get
+            {
+                UrlHelper u = new UrlHelper(HttpContext.Current.Request.RequestContext);
+                string url = u.Action("ScoreIndicator", "PmsSummary", new {id = this.Id});
+                return string.Format(@"<span class='trafficlight popover-kpi' data-poload={2} style='background-color:{0}'></span>{1}", KpiColor, KpiName, url);
+            }
         }
 
         public string PillarNameWithColor
         {
-            get { return string.Format(@"<span class='trafficlight' style='background-color:{0}'></span>{1}", PillarColor, string.Format(@"{0} ({1})", Pillar, PillarWeight.ToString("0"))); }
+            get { return string.Format(@"<span class='trafficlight popover-pillar' style='background-color:{0}'></span>{1}", PillarColor, string.Format(@"{0} ({1})", Pillar, PillarWeight.ToString("0"))); }
         }
 
         public string TotalScoreColor { get; set; }
 
         public string ScoreIndicators { get; set; }
+
+        public string KpiIcon { get; set; }
+        public string PillarIcon { get; set; }
+        public string PmsConfigColor { get; set; }
     }
 }

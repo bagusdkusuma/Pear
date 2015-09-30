@@ -26,5 +26,6 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsConfig
         public IEnumerable<SelectListItem> ScoringTypes { get; set; }
         public IList<ScoreIndicatorViewModel> ScoreIndicators { get; set; }
         public int PmsSummaryId { get; set; }
+        public string Color { get; set; }
     }
 }

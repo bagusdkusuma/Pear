@@ -363,5 +363,10 @@ namespace DSLNG.PEAR.Web.Controllers
             TempData["Message"] = response.Message;
             return RedirectToAction("Configuration");
         }
+
+        public ActionResult ScoreIndicator(int id)
+        {
+            return Content("yoo = " + id);
+        }
     }
 }

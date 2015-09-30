@@ -36,6 +36,8 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
             public double? ActualYtd { get; set; }
             public ScoringType ScoringType { get; set; }
             public YtdFormula YtdFormula { get; set; }
+            public string KpiIcon { get; set; }
+            public string PillarIcon { get; set; }
 
             public double? IndexYearly
             {
@@ -121,6 +123,8 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
             public string PillarColor { get; set; }
 
             public double PillarWeight { get; set; }
+
+            public string PmsConfigColor { get; set; }
 
             public int KpiOrder { get; set; }
 

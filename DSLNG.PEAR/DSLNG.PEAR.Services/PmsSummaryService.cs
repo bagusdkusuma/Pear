@@ -44,9 +44,9 @@ namespace DSLNG.PEAR.Services
                 if (pmsSummary != null)
                 {
                     response.Title = pmsSummary.Title;
-                    foreach (var pmsConfig in pmsSummary.PmsConfigs)
+                    foreach (var pmsConfig in pmsSummary.PmsConfigs.OrderBy(x => x.Pillar.Order))
                     {
-                        foreach (var pmsConfigDetails in pmsConfig.PmsConfigDetailsList)
+                        foreach (var pmsConfigDetails in pmsConfig.PmsConfigDetailsList.OrderBy(x => x.Kpi.Order))
                         {
                             var kpiData = new GetPmsSummaryReportResponse.KpiData();
                             kpiData.Id = pmsConfigDetails.Id;
@@ -61,7 +61,9 @@ namespace DSLNG.PEAR.Services
                             kpiData.ScoringType = pmsConfigDetails.ScoringType;
                             kpiData.YtdFormula = pmsConfigDetails.Kpi.YtdFormula;
                             kpiData.ScoreIndicators = ParseScoreIndicator(pmsConfigDetails.ScoreIndicators);
-
+                            kpiData.KpiIcon = pmsConfigDetails.Kpi.Icon;
+                            kpiData.PillarIcon = pmsConfig.Pillar.Icon;
+                            kpiData.PmsConfigColor = pmsConfig.Color;
                             #region KPI Achievement
 
                             var kpiAchievementYearly =

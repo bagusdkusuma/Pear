@@ -14,6 +14,10 @@
     tr.dxgvFooter_DSLNG td:last-child {
         text-align: right;
     }
+
+    .popover-content {
+        color: red;
+    }
 </style>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -30,6 +34,16 @@
         });
         $('.dxgvDataRow_DSLNG td[title]').attr('data-html', true);
         $('.dxgvDataRow_DSLNG td[title]').tooltip();
+        
+        $('*[data-poload]').mouseenter(function () {
+            var e = $(this);
+            e.off('hover');
+            $.get(e.data('poload'), function (d) {
+                e.popover({ content: d }).popover('show');
+            });
+        }).mouseleave(function () {
+            $(this).popover('hide');
+        });
     });
     
     function OnCellClick(visibleIndex, fieldName) {

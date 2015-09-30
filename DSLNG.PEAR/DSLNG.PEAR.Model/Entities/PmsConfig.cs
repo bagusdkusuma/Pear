@@ -23,5 +23,6 @@ namespace DSLNG.PEAR.Data.Entities
         public bool IsActive { get; set; }
         public ICollection<PmsConfigDetails> PmsConfigDetailsList { get; set; }
         public PmsSummary PmsSummary { get; set; }
+        public string Color { get; set; }
     }
 }

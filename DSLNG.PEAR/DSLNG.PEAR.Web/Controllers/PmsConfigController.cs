@@ -52,7 +52,7 @@ namespace DSLNG.PEAR.Web.Controllers
             if (response.IsSuccess)
             {
                 var viewModel = response.MapTo<UpdatePmsConfigViewModel>();
-                if (response.ScoreIndicators.Count() == 0)
+                if (!response.ScoreIndicators.Any())
                 {
                     viewModel.ScoreIndicators.Add(new ViewModels.Common.PmsSummary.ScoreIndicatorViewModel
                     {
