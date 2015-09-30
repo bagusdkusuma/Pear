@@ -1,15 +1,6 @@
 ﻿@using DSLNG.PEAR.Common.Contants
 @model DSLNG.PEAR.Web.ViewModels.PmsSummary.PmsReportDetailsViewModel
-<style>
-    .roundlight
-    {
-        margin-top: 10px;
-    }
 
-    .model-content {
-        background: none;
-    }
-</style>
 @if (Model.KpiId > 0)
 {
     <div class="modal-header">
@@ -17,7 +8,7 @@
             <span aria-hidden="true">&times;</span>
         </button>
         <div class="row modal-header-detail">
-            <div class="roundlight pull-left" style="background-color: green"></div>
+            <div class="roundlight pull-left" style="background-color: green; margin-top: 10px"></div>
             <div class="title">@Model.KpiName</div>
             <div class="description_year">@Model.Title</div>
             <div class="description_month">@Model.Month @Model.Year</div>

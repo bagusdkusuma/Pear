@@ -553,7 +553,7 @@ img {
 
 .description_year {
     font-size: 16px;
-    color: #3f454f;
+    color: #ffffff;
     font-weight: bold;
     margin-top: 1px;
     margin-top: 6px;
@@ -784,6 +784,7 @@ hr {
 
 .labletop {
     width: auto !important;
+    color: #ffffff;
 }
 
 .blue-box {

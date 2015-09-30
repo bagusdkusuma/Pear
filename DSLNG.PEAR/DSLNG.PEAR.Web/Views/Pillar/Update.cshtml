@@ -4,6 +4,20 @@
     ViewBag.Title = "Edit Pillar";
 }
 
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.pillar-colpick > input').colpick({
+            submit: 0,
+            onChange: function (hsb, hex, rgb, el, bySetColor) {
+                $('.pillar-colpick > input').closest('.colorpicker').find('i').css('background-color', '#' + hex);
+                if (!bySetColor) $(el).val('#' + hex);
+            }
+        }).keyup(function () {
+            $(this).colpickSetColor(this.value.replace('#', ''));
+        });
+    });
+</script>
+
 <h2>@ViewBag.Title</h2>
 @Html.Partial("_MessageResponse")
 <div class="row">
@@ -25,10 +39,13 @@
                 @Html.TextBoxFor(model => model.Order, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Order)
             </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Color, new { @class = "control-label" })
-                @Html.TextBoxFor(model => model.Color, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Color)
+           <div class="form-group form-list">
+                <label>Color</label>
+                <div class="input-group pillar-colpick colorpicker">
+                    @Html.TextBoxFor(x => x.Color, new { @class = "form-control" })
+                    <span class="input-group-addon"><i style="background-color: @Model.Color"></i></span>
+                </div>
+                @Html.ValidationMessageFor(x => x.Color)
             </div>
             <div class="form-group">
                 @Html.HiddenFor(model => model.Icon)
@@ -37,7 +54,7 @@
                 @Html.ValidationMessageFor(model => model.IconFile)
                 @if (!string.IsNullOrEmpty(Model.Icon))
                 {
-                    <span>Existed icon name : <a href="@Url.Content(PathConstant.KpiPath)/@Model.Icon" target="blank" style="color: #000000">@Model.Icon</a></span>
+                    <span>Existed icon name : <a href="@Url.Content(PathConstant.PillarPath)/@Model.Icon" target="blank" style="color: #000000">@Model.Icon</a></span>
                 }
             </div>
             <div class="form-group">
