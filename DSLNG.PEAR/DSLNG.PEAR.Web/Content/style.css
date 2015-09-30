@@ -184,7 +184,7 @@ aside.left-content > * {
     color: #3f454f;
     font-size: 11px;
     display: table-cell;
-    padding: 0 5px;
+    padding: 0 4px;
     height:100%;
     vertical-align:middle;
     cursor:pointer;
@@ -534,7 +534,7 @@ img {
 .title {
     font-size: 18px;
     font-weight: bold;
-    color: #004071;
+    color: #fff;
 }
 
 .trafficlight, .title, .description_year {
@@ -1098,7 +1098,7 @@ table.tabular {
 .title {
     font-size: 22px;
     font-weight: bold;
-    color: #004071;
+    color: #fff;
     margin-bottom: 7px;
 }
 
