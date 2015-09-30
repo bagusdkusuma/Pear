@@ -81,8 +81,10 @@
             fill: background,
             stroke: greyBorder,
             strokeWidth: 2,
-            strokeDasharray: '161 156',
-            strokeDashoffset: '174',
+            //strokeDasharray: '161 156',
+            //strokeDashoffset: '174',
+            strokeDasharray: (tankHeight * 2 + tankWidth) + ',' + tankWidth,
+            strokeDashoffset: (tankHeight * 2 + tankWidth),
         });
 
 
