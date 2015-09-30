@@ -1282,25 +1282,74 @@ Number.prototype.format = function (n, x) {
         container.highcharts({
             chart: {
                 type: 'column',
-                zoomType: 'xy'
+                zoomType: 'xy',
+                backgroundColor : 'transparent'
             },
             title: {
-                text: data.BarChart.Title
+                text: data.BarChart.Title,
+                style: {
+                    color : '#fff'
+                }
             },
             subtitle: {
                 text: data.BarChart.Subtitle,
+                style: {
+                    color: '#fff'
+                }
             },
             xAxis: {
                 categories: data.BarChart.Periodes,
-                crosshair: true
+                crosshair: true,
+                labels: {
+                    style: {
+                        color: '#fff'
+                    }
+                },
+                gridLineColor: '#fff',
             },
             yAxis: {
                 //min: 0,
                 title: {
-                    text: data.BarChart.ValueAxisTitle
+                    text: data.BarChart.ValueAxisTitle,
+                    style: {
+                        color: '#fff'
+                    }
                 },
                 tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
-                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale
+                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale,
+                labels: {
+                    style: {
+                        color: '#fff'
+                    }
+                }
+            },
+            legend: {
+                itemStyle: {
+                    "color": '#fff'
+                },
+                itemHoverStyle: {
+                    color: '#FF0000'
+                }
+            },
+            navigation: {
+                buttonOptions: {
+                    symbolStroke: '#fff',
+                    symbolFill: '#fff',
+                    theme: {
+                        'stroke-width': 0,
+                        stroke: 'silver',
+                        fill: 'transparent',
+                        r: 0,
+                        states: {
+                            hover: {
+                                fill: 'transparent'
+                            },
+                            select: {
+                                fill: 'transparent'
+                            }
+                        }
+                    }
+                }
             },
             tooltip: {
                 formatter: function () {
@@ -1896,11 +1945,15 @@ Number.prototype.format = function (n, x) {
                         color: '#fff'
                     }
                 },
+                gridLineColor : '#fff',
                 categories: data.AreaChart.Periodes
             },
             yAxis: {
                 title: {
-                    text: data.AreaChart.ValueAxisTitle
+                    text: data.AreaChart.ValueAxisTitle,
+                    style: {
+                        color: '#fff'
+                    }
                 },
                 labels: {
                     formatter: function () {
@@ -2032,7 +2085,8 @@ Number.prototype.format = function (n, x) {
                         color: '#fff'
                     }
                 },
-                categories: data.AreaChart.Periodes
+                categories: data.AreaChart.Periodes,
+                gridLineColor : '#fff'
             },
             yAxis: {
                 title: {
@@ -2276,14 +2330,21 @@ Number.prototype.format = function (n, x) {
                 plotBackgroundColor: null,
                 plotBackgroundImage: null,
                 plotBorderWidth: 0,
-                plotShadow: false
+                plotShadow: false,
+                backgroundColor : 'transparent'
             },
 
             title: {
-                text: data.SpeedometerChart.Title
+                text: data.SpeedometerChart.Title,
+                style: {
+                    color : '#fff'
+                }
             },
             subtitle: {
                 text: data.SpeedometerChart.Subtitle,
+                style: {
+                    color: '#fff'
+                }
             },
             pane: {
                 startAngle: -150,
@@ -2347,11 +2408,41 @@ Number.prototype.format = function (n, x) {
                     rotation: 'auto'
                 },
                 title: {
-                    text: data.SpeedometerChart.ValueAxisTitle
+                    text: data.SpeedometerChart.ValueAxisTitle,
+                    style: {
+                        color: '#fff'
+                    }
                 },
                 plotBands: data.SpeedometerChart.PlotBands
             },
-
+            legend: {
+                itemStyle: {
+                    "color": '#fff'
+                },
+                itemHoverStyle: {
+                    color: '#FF0000'
+                }
+            },
+            navigation: {
+                buttonOptions: {
+                    symbolStroke: '#fff',
+                    symbolFill: '#fff',
+                    theme: {
+                        'stroke-width': 0,
+                        stroke: 'silver',
+                        fill: 'transparent',
+                        r: 0,
+                        states: {
+                            hover: {
+                                fill: 'transparent'
+                            },
+                            select: {
+                                fill: 'transparent'
+                            }
+                        }
+                    }
+                }
+            },
             series: [{
                 name: data.SpeedometerChart.Series.name,
                 data: data.SpeedometerChart.Series.data,
