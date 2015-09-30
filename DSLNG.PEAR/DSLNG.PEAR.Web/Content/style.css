@@ -443,13 +443,13 @@ img
 .modal-body .nav-tabs > li > a
 {
     text-align: center;
-    color: #3f454f;
+    color: #0076ae;
 }
 
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus
 {
-    background-color: #9bd4f4;
-    color: white;
+    background-color: #ffffff;
+    color: #004374;
     border: none;
     text-align: center;
 }
@@ -1070,10 +1070,15 @@ table.text-center th
 }
 
 
-.modal-body .nav-tabs > li > a
+.modal-body .nav-tabs > li.active > a
 {
     text-align: center;
-    color: #3f454f;
+    color: #004374;
+}
+
+.modal-body .nav-tabs > li > a {
+    text-align: center;
+    color: #ffffff;
 }
 
 .centering
@@ -1498,7 +1503,7 @@ td .btn_small_lightblue a:hover
 
 .panel.panel-default
 {
-    border-radius: 20px;
+    border-radius: 12px;
     background: none;
 }
 
@@ -1537,7 +1542,11 @@ td .btn_small_lightblue a:hover
 
 .table-transparent
 {
-    color: #000;
+    color: #ffffff;
+}
+
+.table-transparent thead {
+    border-bottom: 1px solid #ffffff;
 }
 
     .table-transparent thead tr
@@ -1554,7 +1563,7 @@ td .btn_small_lightblue a:hover
 
     .table-transparent tbody tr.kpi-row:hover
     {
-        background-color: red;
+        background-color: #f8f8f8;
         cursor: pointer;
     }
 
@@ -1567,10 +1576,15 @@ td .btn_small_lightblue a:hover
     {
         border-top: 0;
         border-bottom: 0;
-        border-left: 1px solid blue;
     }
 
 .modal-header-detail > div
 {
     color: #ffffff;
+}
+
+.modal-dialog .nav > li > a:hover, 
+.modal-dialog .nav > li > a:focus {
+    background-color: #ffffff;
+    color: #004374;
 }
