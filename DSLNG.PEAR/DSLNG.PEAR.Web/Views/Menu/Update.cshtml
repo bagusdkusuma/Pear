@@ -50,14 +50,14 @@
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.Icon, new { @class = "control-label" })
-                        @Html.HiddenFor(model => model.Icon)
-                        <div class="well well-sm">
+                        @Html.TextBoxFor(model => model.Icon, new { @class = "form-control" })
+                        @*<div class="well well-sm">
                             @for (int i = 0; i < Model.IconList.Length; i++)
                             {
                                 var class_success = Model.Icon == Model.IconList[i] ? "btn-success":"";
                                 <button type="button" class="btn btn-default btn-sm btn-icon @class_success"><i class="fa @Model.IconList[i]" icon-name="@Model.IconList[i]"></i></button>
                             }
-                        </div>
+                        </div>*@
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.Url, new { @class = "control-label" })

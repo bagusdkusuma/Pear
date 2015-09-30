@@ -177,7 +177,9 @@
                 $(this).find('i').toggle();
                 var $leftContent = $('.left-content');
                 if (!$leftContent.hasClass('pear-hidden')) {
-
+                    $(this).animate({
+                        left: 65
+                    })
                     $('.main-content').animate({
                             marginLeft: -230
                         }, function () {
@@ -191,6 +193,9 @@
                             //$('#container').highcharts().reflow();
                         })
                 } else {
+                    $(this).animate({
+                        left: 296
+                    })
                     $('.main-content').animate({
                             marginLeft: 0
                         }, function () {

@@ -78,9 +78,9 @@ aside.left-content {
 }
 
 .left-content .left-content-toggle {
-    position: absolute;
-    top: 300px;
-    right: -10px;
+    position: fixed;
+    top: 48%;
+    left: 296px;
     cursor: pointer;
     z-index: 99;
 }
@@ -196,7 +196,12 @@ aside.left-content > * {
 
         .main-nav > li > a > i {
             display: block;
+            margin:0;
             margin-bottom: 5px;
+        }
+        .main-nav > li > a > img {
+            display:inline-block;
+            height:30px;
         }
 
         .main-nav > li > a:hover,
