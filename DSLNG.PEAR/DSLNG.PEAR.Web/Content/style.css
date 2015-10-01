@@ -1,12 +1,30 @@
 body, html {
     height: 100%;
+}
+
+body {
     background-image: url(/Content/img/bg_5.jpg);
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center center;
-    background-size:cover;
-    /*color: #fff;*/
+    background-size: cover;
 }
+
+    body.plan {
+        background-image: url(/Content/img/plan-bg.jpg);
+    }
+
+    body.assess {
+        background-image: url(/Content/img/assess-bg.jpg);
+    }
+
+    body.execute {
+        background-image: url(/Content/img/execute-bg.jpg);
+    }
+
+    body.report {
+        background-image: url(/Content/img/report-bg.jpg);
+    }
 
 fieldset legend {
     float: left;
@@ -83,7 +101,7 @@ aside.left-content {
     left: 296px;
     cursor: pointer;
     z-index: 99;
-    color : #fff;
+    color: #fff;
 }
 
 aside.left-content > * {
@@ -197,12 +215,13 @@ aside.left-content > * {
 
         .main-nav > li > a > i {
             display: block;
-            margin:0;
+            margin: 0;
             margin-bottom: 5px;
         }
+
         .main-nav > li > a > img {
-            display:inline-block;
-            height:30px;
+            display: inline-block;
+            height: 30px;
         }
 
         .main-nav > li > a:hover,
@@ -394,8 +413,7 @@ img {
     color: #0076ae;
 }
 
-.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus
-{
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
     background-color: #ffffff;
     color: #004374;
     border: none;
@@ -927,8 +945,7 @@ table.text-center th {
 }
 
 
-.modal-body .nav-tabs > li.active > a
-{
+.modal-body .nav-tabs > li.active > a {
     text-align: center;
     color: #004374;
 }
@@ -1087,11 +1104,13 @@ table.text-center th {
     font-weight: bold;
     font-size: 20px;
 }
+
 .tabular-panel {
-    overflow:hidden;
-    border-bottom-left-radius:0 !important;
-    border-bottom-right-radius:0 !important;
+    overflow: hidden;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
 }
+
 table.tabular {
     width: 100%;
 }
@@ -1102,8 +1121,9 @@ table.tabular {
         padding: 5px;
         border-top: none !important;
     }
+
     table.tabular td {
-        color:#fff;
+        color: #fff;
     }
 
 .tabular-wrapper {
@@ -1312,8 +1332,8 @@ td .btn_small_lightblue a:hover {
         background: none;
         text-align: center;
     }
-.panel.panel-default
-{
+
+.panel.panel-default {
     border-radius: 12px;
     background: none;
 }
@@ -1346,27 +1366,25 @@ td .btn_small_lightblue a:hover {
     vertical-align: middle;
 }
 
-.table-transparent
-{
+.table-transparent {
     color: #ffffff;
 }
 
-.table-transparent thead {
-    border-bottom: 1px solid #ffffff;
-}
-
-    .table-transparent thead tr {
-        font-size: 15px;
-        font-weight: bold;
+    .table-transparent thead {
+        border-bottom: 1px solid #ffffff;
     }
+
+        .table-transparent thead tr {
+            font-size: 15px;
+            font-weight: bold;
+        }
 
 
     .table-transparent tbody tr td {
         border: 0px;
     }
 
-    .table-transparent tbody tr.kpi-row:hover
-    {
+    .table-transparent tbody tr.kpi-row:hover {
         background-color: #ffffff;
         color: #004374;
         cursor: pointer;
@@ -1384,26 +1402,30 @@ td .btn_small_lightblue a:hover {
 .modal-header-detail > div {
     color: #ffffff;
 }
+
 .modal-content {
-    background:url(/Content/img/dialog-bg.png);
-    background-color:#00a8e6;
-    background-repeat:repeat-x;
-    border-top:none;
-}
-.close {
-    color:#fff;
-    opacity:1;
-}
-.close:hover {
-    color:#ff0000;
-    opacity:1;
+    background: url(/Content/img/dialog-bg.png);
+    background-color: #00a8e6;
+    background-repeat: repeat-x;
+    border-top: none;
 }
 
-.modal-dialog .nav > li > a:hover, 
+.close {
+    color: #fff;
+    opacity: 1;
+}
+
+    .close:hover {
+        color: #ff0000;
+        opacity: 1;
+    }
+
+.modal-dialog .nav > li > a:hover,
 .modal-dialog .nav > li > a:focus {
     background-color: #ffffff;
     color: #004374;
 }
+
 
 .table-pms-summary > thead > tr:first-child td:first-child,
 .table-pms-summary > tbody > tr td:first-child{
@@ -1424,7 +1446,7 @@ td .btn_small_lightblue a:hover {
 }
 
 .modal-title {
-    color:#fff;
+    color: #fff;
 }
 
 .right-content h3,
