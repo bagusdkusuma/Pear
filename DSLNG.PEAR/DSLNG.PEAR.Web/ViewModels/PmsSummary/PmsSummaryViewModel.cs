@@ -11,7 +11,9 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
 {
     public class PmsSummaryViewModel
     {
-        public int Id { get; set; }
+        public int PmsConfigId { get; set; }
+        public int PmsConfigDetailId { get; set; }
+        public int PmsSummaryId { get; set; }
         public string Pillar { get; set; }
         public string Kpi { get; set; }
         public string Unit { get; set; }
@@ -107,7 +109,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
             get
             {
                 UrlHelper u = new UrlHelper(HttpContext.Current.Request.RequestContext);
-                string url = u.Action("ScoreIndicator", "PmsSummary", new {id = this.Id});
+                string url = u.Action("ScoreIndicator", "PmsSummary", new {id = this.PmsConfigDetailId});
                 return string.Format(@"<span class='trafficlight popover-kpi' data-poload={2} style='background-color:{0}'></span>{1}", KpiColor, KpiName, url);
             }
         }

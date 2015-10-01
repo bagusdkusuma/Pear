@@ -20,7 +20,10 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
 
         public class KpiData
         {
-            public int Id { get; set; }
+            //public int Id { get; set; }
+            public int PmsConfigId { get; set; }
+            public int PmsConfigDetailId { get; set; }
+            public int PmsSummaryId { get; set; }
             public int PillarId { get; set; }
             public string Pillar { get; set; }
             public string Kpi { get; set; }

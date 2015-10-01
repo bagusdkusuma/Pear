@@ -1405,12 +1405,12 @@ td .btn_small_lightblue a:hover {
     color: #004374;
 }
 
-.table-pms-summary thead tr:first-child td:first-child,
-.table-pms-summary tbody tr td:first-child{
+.table-pms-summary > thead > tr:first-child td:first-child,
+.table-pms-summary > tbody > tr td:first-child{
     border-right: 1px solid #ffffff;
 }
 
-.table-pms-summary tbody tr:last-child {
+.table-pms-summary > tbody > tr:last-child {
     border-top: 1px solid #ffffff;
 }
 
@@ -1426,3 +1426,20 @@ td .btn_small_lightblue a:hover {
 .modal-title {
     color:#fff;
 }
+
+.right-content h3,
+.right-content h5,
+.right-content h6 {
+    color: #ffffff;
+}
+
+.tablekpitarget, 
+.tablekpitarget thead th {
+    color: #ffffff;
+}
+
+label {
+    color: #ffffff;
+}
+
+

@@ -49,7 +49,9 @@ namespace DSLNG.PEAR.Services
                         foreach (var pmsConfigDetails in pmsConfig.PmsConfigDetailsList.OrderBy(x => x.Kpi.Order))
                         {
                             var kpiData = new GetPmsSummaryReportResponse.KpiData();
-                            kpiData.Id = pmsConfigDetails.Id;
+                            kpiData.PmsSummaryId = pmsSummary.Id;
+                            kpiData.PmsConfigId = pmsConfig.Id;
+                            kpiData.PmsConfigDetailId = pmsConfigDetails.Id;
                             kpiData.Pillar = pmsConfig.Pillar.Name;
                             kpiData.PillarId = pmsConfig.Pillar.Id;
                             kpiData.Kpi = pmsConfigDetails.Kpi.Name;
@@ -166,10 +168,10 @@ namespace DSLNG.PEAR.Services
                                                         pmsConfigDetails.Kpi.Name);
                                                 return response;
                                             }
-                                            
+
                                             kpiData.Score = (kpiData.IndexYearly <= _maxNegativeScore)
-                                                                ? pmsConfigDetails.Weight*1.05
-                                                                : pmsConfigDetails.Weight/kpiData.IndexYearly;
+                                                                ? pmsConfigDetails.Weight * 1.05
+                                                                : pmsConfigDetails.Weight / kpiData.IndexYearly;
                                             break;
                                         }
 
@@ -501,10 +503,18 @@ namespace DSLNG.PEAR.Services
                 if (request.PmsConfigDetailId > 0)
                 {
                     var pmsConfigDetails = DataContext.PmsConfigDetails
-                                                      .Include(x => x.ScoreIndicators)
-                                                      .Single(x => x.Id == request.PmsConfigDetailId);
+                        .Include(x => x.ScoreIndicators)
+                        .Single(x => x.Id == request.PmsConfigDetailId);
                     response.ScoreIndicators =
                         pmsConfigDetails.ScoreIndicators.MapTo<Common.PmsSummary.ScoreIndicator>();
+                }
+                else if (request.PmsConfigId > 0)
+                {
+                    var pmsConfig = DataContext.PmsConfigs
+                        .Include(x => x.ScoreIndicators)
+                        .Single(x => x.Id == request.PmsConfigId);
+                    response.ScoreIndicators =
+                        pmsConfig.ScoreIndicators.MapTo<Common.PmsSummary.ScoreIndicator>();
                 }
                 else
                 {

@@ -289,72 +289,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
             return base.ErrorPage(response.Message);
         }
-
         
-        private IEnumerable<PmsSummaryViewModel> AddFakePmsSummaryData()
-        {
-            IList<PmsSummaryViewModel> list = new List<PmsSummaryViewModel>();
-            var pmsSummary1 = new PmsSummaryViewModel
-            {
-                Id = 1,
-                Unit = "Case",
-                ActualMonthly = 10,
-                ActualYearly = 20,
-                ActualYtd = 30,
-                Pillar = "Safety",
-                Kpi = "Fatality/Strap Disability",
-                Weight = 20,
-                Score = 35.17,
-                TargetMonthly = 10,
-                TargetYearly = 29,
-                TargetYtd = 20,
-            };
-            pmsSummary1.Pillar = "<span class='trafficlight grey'></span>Safety (" +
-                              pmsSummary1.Weight.ToString() + ")";
-
-            var pmsSummary2 = new PmsSummaryViewModel
-            {
-                Id = 2,
-                Unit = "Case",
-                Weight = 100,
-                ActualMonthly = 210,
-                ActualYearly = 320,
-                ActualYtd = 340,
-                Pillar = "Safety",
-                //OspWeight = 20.00,
-                Kpi = "RIF",
-                Score = 202.20,
-                TargetMonthly = 101,
-                TargetYearly = 22,
-                TargetYtd = 21
-            };
-            pmsSummary2.Pillar = "<span class='trafficlight grey'></span>Safety (" +
-                              pmsSummary2.Weight.ToString() + ")";
-
-            var pmsSummary3 = new PmsSummaryViewModel
-            {
-                Id = 3,
-                Unit = "Case",
-                Weight = 100,
-                ActualMonthly = 210,
-                ActualYearly = 320,
-                ActualYtd = 340,
-                Kpi = "RIF",
-                Score = 202.31,
-                TargetMonthly = 101,
-                TargetYearly = 22,
-                TargetYtd = 21
-            };
-            pmsSummary3.Pillar = "<span class='trafficlight grey'></span>Productivity and Efficiency (" +
-                              pmsSummary3.Weight.ToString() + ")";
-
-            list.Add(pmsSummary1);
-            list.Add(pmsSummary2);
-            list.Add(pmsSummary3);
-            return list;
-
-        }
-
         [HttpPost]
         public ActionResult Delete(int id)
         {
@@ -366,7 +301,14 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult ScoreIndicator(int id)
         {
-            return Content("yoo = " + id);
+            var response = _pmsSummaryService.GetScoreIndicators(new GetScoreIndicatorRequest { PmsSummaryId = id });
+            if (response.IsSuccess)
+            {
+                var viewModel = response.MapTo<ScoreIndicatorDetailsViewModel>();
+                return Json(new { isSuccess = true, data = viewModel.ScoreIndicators }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { isSuccess = false }, JsonRequestBehavior.AllowGet);
         }
     }
 }
