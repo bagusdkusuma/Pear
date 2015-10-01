@@ -277,9 +277,12 @@
     <Content Include="Content\img\ajax-loader.gif" />
     <Content Include="Content\img\ajax-loader1.gif" />
     <Content Include="Content\img\ajax-loader2.gif" />
+    <Content Include="Content\img\assess-bg.jpg" />
     <Content Include="Content\img\assess.png" />
     <Content Include="Content\img\bg.jpg" />
+    <Content Include="Content\img\bg_5.jpg" />
     <Content Include="Content\img\dashboard.png" />
+    <Content Include="Content\img\execute-bg.jpg" />
     <Content Include="Content\img\execute.png" />
     <Content Include="Content\img\graphic1.jpg" />
     <Content Include="Content\img\graphic2.png" />
@@ -298,9 +301,11 @@
     <Content Include="Content\img\logo_login.png" />
     <Content Include="Content\img\malay.png" />
     <Content Include="Content\img\logopear.png" />
+    <Content Include="Content\img\plan-bg.jpg" />
     <Content Include="Content\img\plan.png" />
     <Content Include="Content\img\pointer.png" />
     <Content Include="Content\img\remark_sign.png" />
+    <Content Include="Content\img\report-bg.jpg" />
     <Content Include="Content\img\report.png" />
     <Content Include="Content\img\setting.png" />
     <Content Include="Content\img\throbber.gif" />

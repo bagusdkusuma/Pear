@@ -427,5 +427,28 @@ namespace DSLNG.PEAR.Services
                 };
             }
         }
+
+
+        public GetRootMenuResponse GetRootMenu(GetRootMenuRequest request)
+        {
+            var menu = DataContext.Menus.Include(x => x.Parent)
+                .Include(x => x.Parent.Parent)
+                .Include(x => x.Parent.Parent.Parent)
+                .Include(x => x.Parent.Parent.Parent.Parent).FirstOrDefault(x => x.Url == request.AbsolutePath);
+            var IsNotRoot = true;
+            var i = 0;
+            while (menu != null && IsNotRoot && i < 10) {
+                if (menu.IsRoot)
+                {
+                    IsNotRoot = false;
+                    return new GetRootMenuResponse { RootName = menu.Name };
+                }
+                else {
+                    menu = menu.Parent;
+                }
+                i++;
+            }
+            return new GetRootMenuResponse();
+        }
     }
 }
