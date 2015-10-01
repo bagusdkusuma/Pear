@@ -3922,9 +3922,35 @@ Number.prototype.format = function (n, x) {
     };
 
     Pear.Highlight.EditSetup = function () {
-        $('.datepicker').datetimepicker({
-            format: "MM/DD/YYYY"
-        });
+        switch ($('#PeriodeType').val().toLowerCase().trim()) {
+            case 'hourly':
+                $('.datepicker').datetimepicker({
+                    format: "MM/DD/YYYY hh:00 A"
+                });
+                break;
+            case 'daily':
+                $('.datepicker').datetimepicker({
+                    format: "MM/DD/YYYY"
+                });
+                break;
+            case 'weekly':
+                $('.datepicker').datetimepicker({
+                    format: "MM/DD/YYYY",
+                    daysOfWeekDisabled: [0, 2, 3, 4, 5, 6]
+                });
+                break;
+            case 'monthly':
+                $('.datepicker').datetimepicker({
+                    format: "MM/YYYY"
+                });
+                break;
+            case 'yearly':
+                $('.datepicker').datetimepicker({
+                    format: "YYYY"
+                });
+                break;
+            default:
+        }
         $('#PeriodeType').change(function (e) {
             e.preventDefault();
             var $this = $(this);

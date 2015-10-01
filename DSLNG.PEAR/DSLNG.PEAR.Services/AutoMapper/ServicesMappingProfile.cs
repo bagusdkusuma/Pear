@@ -280,6 +280,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Economic, GetConfigurationResponse.Economic>();
             Mapper.CreateMap<Highlight, GetHighlightsResponse.HighlightResponse>();
             Mapper.CreateMap<SaveHighlightRequest, Highlight>();
+            Mapper.CreateMap<Highlight, GetHighlightResponse>();
             base.Configure();
         }
 

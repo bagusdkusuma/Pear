@@ -86,5 +86,35 @@ namespace DSLNG.PEAR.Services
             response.Highlights = reportHighlights;
             return response;
         }
+
+
+        public GetHighlightResponse GetHighlight(GetHighlightRequest request)
+        {
+            return DataContext.Highlights.FirstOrDefault(x => x.Id == request.Id).MapTo<GetHighlightResponse>();
+        }
+
+
+        public DeleteResponse DeleteHighlight(DeleteRequest request)
+        {
+            try
+            {
+                var highlight = new Highlight { Id = request.Id };
+                DataContext.Highlights.Attach(highlight);
+                DataContext.Highlights.Remove(highlight);
+                DataContext.SaveChanges();
+                return new DeleteResponse
+                {
+                    IsSuccess = true,
+                    Message = "The highlight has been deleted successfully"
+                };
+            }
+            catch (InvalidOperationException) {
+                return new DeleteResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured while trying to delete this highlight"
+                };
+            }
+        }
     }
 }
