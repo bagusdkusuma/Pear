@@ -2,8 +2,10 @@
 @{
     ViewBag.Title = "Pms Summary Configuration";
 }
-
 @Html.Partial("_MessageResponse")
+<style>a, a:hover, a:visited, a:active, a:focus {
+     color: #72afd2!important
+ }</style>
 
 <div class="title_page" style="border:none!important;">
     <div class="row">
@@ -16,7 +18,7 @@
         @Html.ActionLink("Add Pillar", "Create", "PmsConfig", new { id = Model.PmsSummaryId }, new { @class = "btn-lightblue", data_toggle = "modal", data_target = "#modalDialog" })
     </div>
     <div class="row-full">
-        <div class="text-grey text-med">
+        <div class="text-med" style="color: #ffffff">
             <div class="heading">
                 Total Score For All Pillar
             </div>: <span id="totalScoreAllPillar">@Model.TotalScoreAllPillar</span>

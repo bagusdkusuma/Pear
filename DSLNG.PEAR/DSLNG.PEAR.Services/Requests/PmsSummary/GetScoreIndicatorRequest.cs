@@ -8,7 +8,8 @@ namespace DSLNG.PEAR.Services.Requests.PmsSummary
 {
     public class GetScoreIndicatorRequest
     {
-        public int PmsConfigDetailId { get; set; }
         public int PmsSummaryId { get; set; }
+        public int PmsConfigId { get; set; }
+        public int PmsConfigDetailId { get; set; }
     }
 }

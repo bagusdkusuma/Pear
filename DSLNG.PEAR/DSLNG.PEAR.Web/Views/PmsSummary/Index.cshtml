@@ -3,49 +3,64 @@
     ViewBag.Title = "Index";
 }
 <style>
-    .dxgvDataRow_DSLNG td.dxgv {
+    .dxgvDataRow_DSLNG td.dxgv
+    {
         padding-left: 18px;
     }
 
-    tr.dxgvGroupFooter_DSLNG td:last-child {
+    tr.dxgvGroupFooter_DSLNG td:last-child
+    {
         text-align: right;
     }
 
-    tr.dxgvFooter_DSLNG td:last-child {
+    tr.dxgvFooter_DSLNG td:last-child
+    {
         text-align: right;
     }
 
-    .popover-content {
+    .popover-content
+    {
+        background: #00a8e6;
         color: red;
     }
 </style>
 <script type="text/javascript">
     $(document).ready(function () {
         $('.modal-dialog:last').removeClass('modal-sm').addClass('modal-lg');
-        $('#modalDialog').on('hidden.bs.modal', function(e) {
+        $('#modalDialog').on('hidden.bs.modal', function (e) {
             $(this).removeData('bs.modal');
         });
-        
+
         $('#month, #year').change(function () {
             var year = $('#year').val();
             var month = $('#month').val();
-            var url = '@Html.Raw( Url.Action("Index", "PmsSummary", new {year = "_year_", month = "_month_"}) )'.replace('_year_', year).replace('_month_', month);
+            var url = '@Html.Raw(Url.Action("Index", "PmsSummary", new { year = "_year_", month = "_month_" }))'.replace('_year_', year).replace('_month_', month);
             window.location = url;
         });
         $('.dxgvDataRow_DSLNG td[title]').attr('data-html', true);
         $('.dxgvDataRow_DSLNG td[title]').tooltip();
-        
+
         $('*[data-poload]').mouseenter(function () {
             var e = $(this);
             e.off('hover');
             $.get(e.data('poload'), function (d) {
-                e.popover({ content: d }).popover('show');
+                var cnt = "";
+                for (var i = 0; i < d.data.length; i++) {
+                    cnt += "<tr>" +
+                        "<td>" + d.data[i].Expression + "</td>" +
+                        "<td><span style='background-color: "+ d.data[i].Color + "; width: 20px; margin-right: 6px;'>&nbsp;</span>" + d.data[i].Color + "</td>" +
+                        "</tr>";
+                }
+                var clone = $('.score-indicator-template').clone(true);
+                clone.css('display', 'block');
+                clone.find('.table-content').append(cnt);
+                e.popover({ content: clone.html(), html: true }).popover('show');
             });
         }).mouseleave(function () {
             $(this).popover('hide');
         });
     });
-    
+
     function OnCellClick(visibleIndex, fieldName) {
         var id = fieldName;
         var month = $('#month').val();
@@ -54,24 +69,38 @@
             remote: '@Url.Action("ReportDetails", "PmsSummary")' + '/' + id + '?month=' + month + '&year=' + year
         });
     }
+    
 </script>
+<div class="score-indicator-template panel panel-default tabular-panel" style="display: none">
+    <table class="table table-transparent table-bordered table-responsive" style="background: #00a8e6">
+        <thead>
+            <tr>
+                <th rowspan="2">Expression</th>
+                <th rowspan="2">Color</th>
+            </tr>
+        </thead>
+        <tbody class="table-content">
+            
+        </tbody>
+    </table>
+</div>
 <section>
     <div class="title_page">
         <div class="row">
-            <div class="roundlight pull-left" style="background-color:red;margin-top: 10px;"></div>
+            <div class="roundlight pull-left" style="background-color: red; margin-top: 10px;"></div>
             <div class="title">Corporate Performance</div>
             <div class="description_year">@Model.Title</div>
         </div>
         <div class="row">
             <form class="form-inline">
-                <div class="form-group" style="margin-top:5px;margin-left:25px;padding-right:30px; border-right:solid 1px #3f454f;">
+                <div class="form-group" style="margin-top: 5px; margin-left: 25px; padding-right: 30px; border-right: solid 1px #3f454f;">
                     <label class="labletop">Year :</label>
-                    @Html.DropDownListFor(x => x.Year, Model.YearList, new {@class="form-control", id="year"})
+                    @Html.DropDownListFor(x => x.Year, Model.YearList, new { @class = "form-control", id = "year" })
                 </div>
-                <div class="form-group" style="margin-top:5px;">
+                <div class="form-group" style="margin-top: 5px;">
                     <label class="labletop">Month :</label>
-                    @Html.DropDownListFor(x => x.Month, Model.MonthList, new {@class="form-control", id="month"})
-                    
+                    @Html.DropDownListFor(x => x.Month, Model.MonthList, new { @class = "form-control", id = "month" })
+
                 </div>
             </form>
         </div>
