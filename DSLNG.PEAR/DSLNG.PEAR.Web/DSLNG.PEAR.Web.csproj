@@ -282,6 +282,7 @@
     <Content Include="Content\img\bg.jpg" />
     <Content Include="Content\img\bg_5.jpg" />
     <Content Include="Content\img\dashboard.png" />
+    <Content Include="Content\img\dialog-bg.png" />
     <Content Include="Content\img\execute-bg.jpg" />
     <Content Include="Content\img\execute.png" />
     <Content Include="Content\img\graphic1.jpg" />
@@ -292,6 +293,7 @@
     <Content Include="Content\img\graphic6.PNG" />
     <Content Include="Content\img\graphic7.PNG" />
     <Content Include="Content\img\icons.png" />
+    <Content Include="Content\img\login-back.png" />
     <Content Include="Content\img\login-background-image.png" />
     <Content Include="Content\img\login-circle.png" />
     <Content Include="Content\img\login-logo-new.png" />
