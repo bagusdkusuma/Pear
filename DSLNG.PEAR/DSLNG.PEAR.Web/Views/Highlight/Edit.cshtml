@@ -1,0 +1,59 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Highlight.HighlightViewModel
+
+@{
+    ViewBag.Title = "Edut";
+}
+
+<div class="highlight-save">
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="col-md-12">
+        <div class="title">Highlight</div>
+        <div class="description_year">New</div>
+        <div>@Html.ValidationSummary(true)</div>
+        @Html.HiddenFor(x => x.Id)
+    </div>
+    <div class="col-md-12">
+        <div class="form-inline whitebox">
+            <div class="form-group form-list">
+                @Html.LabelFor(model => model.PeriodeType)
+                @Html.DropDownListFor(model => model.PeriodeType, Model.PeriodeTypes, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PeriodeType)
+            </div>
+            <div class="form-group form-list">
+                @Html.LabelFor(model => model.Type)
+                @Html.DropDownListFor(model => model.Type, Model.Types, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Type)
+            </div>
+            <div class="form-group form-list">
+                @Html.LabelFor(model => model.DateInDisplay)
+                @Html.TextBoxFor(model => model.DateInDisplay, new { @class = "form-control datepicker" })
+                @Html.ValidationMessageFor(model => model.DateInDisplay)
+            </div>
+            <div class="form-group form-list">
+                @Html.LabelFor(model => model.Title)
+                @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Title)
+            </div>
+            <div class="form-group form-list">
+                @Html.LabelFor(model => model.Message)
+                @Html.TextAreaFor(model => model.Message,5,100, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Message)
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 artifact-designer-btns">
+        <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
+        <a onclick="location.reload();" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>
+        <a href="/Highlight" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+    </div>
+}
+    </div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

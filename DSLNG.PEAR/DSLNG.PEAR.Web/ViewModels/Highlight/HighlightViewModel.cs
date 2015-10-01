@@ -21,11 +21,15 @@ namespace DSLNG.PEAR.Web.ViewModels.Highlight
         [Required]
         public string PeriodeType { get; set; }
         public IList<SelectListItem> PeriodeTypes { get; set; }
+        public DateTime? _date;
         public DateTime? Date
         {
             set
             {
-                if (!value.HasValue)
+                if (string.IsNullOrEmpty(this.PeriodeType)) {
+                    this._date = value;
+                }
+                else if (!value.HasValue)
                 {
                     this.DateInDisplay = "";
                 }
@@ -48,6 +52,10 @@ namespace DSLNG.PEAR.Web.ViewModels.Highlight
             }
             get
             {
+                if (this._date.HasValue)
+                {
+                    return this._date;
+                }
                 if (string.IsNullOrEmpty(this.DateInDisplay))
                 {
                     return null;

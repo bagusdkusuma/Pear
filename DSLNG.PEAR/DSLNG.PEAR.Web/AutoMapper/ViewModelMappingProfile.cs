@@ -420,6 +420,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<HighlightViewModel, SaveHighlightRequest>();
             Mapper.CreateMap<GetReportHighlightsResponse.HighlightResponse, ArtifactPreviewViewModel.HighlightViewModel>();
+            Mapper.CreateMap<GetHighlightResponse, HighlightViewModel>();
             base.Configure();
         }
 
