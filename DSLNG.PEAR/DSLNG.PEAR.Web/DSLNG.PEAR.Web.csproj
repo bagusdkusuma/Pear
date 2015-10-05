@@ -350,12 +350,15 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\AjaxLogin.js" />
+    <Content Include="Scripts\bignumber.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\bs_leftnavi.js" />
     <Content Include="Scripts\calculator.pricing.js" />
+    <Content Include="Scripts\production-yield-calculator.js" />
+    <Content Include="Scripts\standard-calculator.js" />
     <Content Include="Scripts\tank.js" />
     <Content Include="Scripts\exporting.js" />
     <Content Include="Scripts\globalize.cultures.js" />
@@ -620,6 +623,7 @@
     <Content Include="Views\ConstantUsage\Index.cshtml" />
     <Content Include="Views\Calculator\_Pricing.cshtml" />
     <Content Include="Views\Calculator\_ProductionYield.cshtml" />
+    <Content Include="Views\Calculator\_Standard.cshtml" />
     <None Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\SpeedometerChart\_Edit.cshtml" />
     <Content Include="Views\Tabular\_Create.cshtml" />
@@ -789,6 +793,7 @@
     <Compile Include="ViewModels\Calculator\CalculatorIndexViewModel.cs" />
     <Compile Include="ViewModels\Calculator\PricingViewModel.cs" />
     <Compile Include="ViewModels\Calculator\ProductionYieldCalculatorViewModel.cs" />
+    <Compile Include="ViewModels\Calculator\StandardCalculatorViewModel.cs" />
     <Compile Include="ViewModels\Config\ConfigurationViewModel.cs" />
     <Compile Include="ViewModels\ConstantUsage\ConstantUsageViewModel.cs" />
     <Compile Include="ViewModels\Conversion\CreateConversionViewModel.cs" />
