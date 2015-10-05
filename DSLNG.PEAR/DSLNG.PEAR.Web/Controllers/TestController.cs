@@ -9,7 +9,7 @@ using DSLNG.PEAR.Data.Persistence;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
-    public class TestController : Controller
+    public class TestController : BaseController
     {
         private readonly IDataContext _dataContext;
 

@@ -1,197 +1,118 @@
 ﻿@using DSLNG.PEAR.Common.Contants
-@using DevExpress.Data
-@using DevExpress.XtraGrid
+@using DSLNG.PEAR.Web.Helpers
 @model DSLNG.PEAR.Web.ViewModels.PmsSummary.PmsSummaryIndexViewModel
 
-@Html.DevExpress().GridView(settings =>
-    {
-            settings.Name = "gridPmsSummaryIndex";
-            settings.KeyFieldName = "Id";
-            settings.CallbackRouteValues = new { Controller = "PmsSummary", Action = "IndexGridPartial", year = Model.Year, month = Model.Month };
-            settings.SettingsBehavior.AllowFixedGroups = true;
-            settings.Settings.ShowFooter = true;
-            settings.Width = Unit.Percentage(100);
-            settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
-            settings.Settings.GroupFormat = "{1} {2}";    
-            var pillarColumn = new MVCxGridViewColumn("PillarNameWithColor", " ");
-            pillarColumn.PropertiesEdit.EncodeHtml = false;
-            pillarColumn.GroupIndex = 0;
-            pillarColumn.Settings.SortMode = ColumnSortMode.Custom;
-            pillarColumn.SortOrder = ColumnSortOrder.Ascending;
-            settings.Columns.Add(pillarColumn);
-            settings.Columns.Add("KpiNameWithColor", "Performance Indicator").PropertiesEdit.EncodeHtml = false;
-        
-            //settings.Columns.Add("Unit");
-            /*settings.Columns.Add("Weight").CellStyle.HorizontalAlign = HorizontalAlign.Center;*/
-            settings.Columns.Add("ScoreIndicators").Visible = false;
-            settings.Columns.Add("PillarWeight").Visible = false;
-            var kpiOrderColumn = new MVCxGridViewColumn("KpiOrder");
-            kpiOrderColumn.SortAscending();
-            kpiOrderColumn.Visible = false;
-            settings.Columns.Add(kpiOrderColumn);
-            settings.Columns.Add("PillarOrder").Visible = false;
-            settings.HtmlDataCellPrepared = (sender, e) =>
-                {
-                    e.Cell.Attributes.Add("onclick", string.Format(
-                        "OnCellClick('{0}', '{1}');", e.VisibleIndex, e.GetValue("Id")));
-                    /*if (e.DataColumn.FieldName == "KpiNameWithColor")
-                    {
-                        if (e.CellValue != null)
-                            e.Cell.ToolTip = e.GetValue("ScoreIndicators").ToString();
-                    }*/
-                        
-                };
-
-            settings.Columns.AddBand(targetActualBand =>
-            {
-                targetActualBand.Caption = "Actual / Target";
-                targetActualBand.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
-                /*targetActualBand.Columns.Add("TargetActualYearly", "Yearly");
-                targetActualBand.Columns.Add("TargetActualMonthly", "Monthly");*/
-                GridViewColumn col = new MVCxGridViewColumn("TargetActualYearly");
-                col.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
-                col.Caption = "Yearly";
-                col.CellStyle.HorizontalAlign = HorizontalAlign.Right;
+<div class="panel panel-default">
+    <table class="table table-transparent table-pms-summary table-bordered" cellspacing="0">
+        <thead>
+            <tr>
+                <td rowspan="2">&nbsp;</td>
+                <td rowspan="2">Performance Indicator</td>
+                <td style="border-bottom: 1px solid #cccccc">Actual / Target</td>
+                <td rowspan="2">Score / Weight</td>
+            </tr>
+            <tr>
+                <td>Yearly</td>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                List<string> existedPillars = new List<string>();
+                int pillarLength = 0;
+                int counterKpi = 0;
+                decimal pillarScore = 0;
+                int count = 1;
+                double totalPillarWeight = 0;
+                decimal totalPillarScore = 0;
                 
-                targetActualBand.Columns.Add(col);
-                
-            });
-
-            /*settings.Columns.Add(column =>
-            {
-                column.FieldName = "TargetActualYtd";
-                column.Caption = "YTD (Actual / Target)";
-                column.PropertiesEdit.DisplayFormatString = FormatNumber.DecimalFormat;
-                column.Visible = true;
-            });*/
-
-            /*settings.Columns.AddBand(indexBand =>
+                foreach (var item in Model.PmsSummaries)
                 {
-                    indexBand.Caption = "Index";
-                    indexBand.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
-                    indexBand.Columns.Add("IndexYearlyStr", "Yearly");
-                    indexBand.Columns.Add("IndexMonthlyStr", "Monthly");
-                    indexBand.Columns.Add("IndexYtdStr", "YTD");
-                });*/
-
-            settings.Columns.Add(column =>
-                {
-                    column.FieldName = "Score";
-                    column.PropertiesEdit.DisplayFormatString = FormatNumber.DecimalFormat;
-                    column.Visible = false;
-                });
-
-            settings.Columns.Add(column =>
-            {
-                column.FieldName = "ScoreStr";
-                column.Caption = "Score";
-                column.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
-                column.PropertiesEdit.DisplayFormatString = FormatNumber.DecimalFormat;
-                column.CellStyle.HorizontalAlign = HorizontalAlign.Right;
-            });
-
-            decimal totalScore = 0;
-            decimal totalPercent = 0;
-            settings.CustomSummaryCalculate = (sender, e) =>
-                {
-                    decimal percent = 0;
-                    string summaryTag = (e.Item as ASPxSummaryItem).Tag;
-                    string fieldName = summaryTag.Remove(summaryTag.Length - 2);
-                    if (fieldName != "Score") return;
-                    if (e.SummaryProcess == CustomSummaryProcess.Start)
+                    var scoreIndicatorPmsConfigUrl = Url.Action("ScoreIndicator", "PmsConfig", new { id = item.PmsConfigId });
+                    var scoreIndicatorPmsConfigDetailsUrl = Url.Action("ScoreIndicator", "PmsConfigDetails", new { id = item.PmsConfigDetailId });
+                    var scoreIndicatorPmsSummaryUrl = Url.Action("ScoreIndicator", "PmsSummary", new { id = item.PmsSummaryId });
+                    if (!existedPillars.Exists(x => x == item.Pillar))
                     {
-                        totalScore = 0;
-                    }
-
-                    if (e.SummaryProcess == CustomSummaryProcess.Calculate)
-                    {
-                        totalScore += Convert.ToDecimal(e.GetValue(fieldName));
-                    }
-
-                    string tagIndex = summaryTag.Substring(summaryTag.Length - 1);
-                    
-                    if (e.SummaryProcess == CustomSummaryProcess.Finalize)
-                    {
+                        totalPillarWeight += item.PillarWeight;
+                        counterKpi = 1;
+                        pillarScore = 0;
+                        pillarLength = Model.PmsSummaries.Count(x => x.Pillar == item.Pillar);
+                        existedPillars.Add(item.Pillar);
+                        if (!string.IsNullOrEmpty(item.PillarIcon))
+                        {
+                <tr class="tr-pillar" style="background-color: @item.PmsConfigColor">
+                    <td>&nbsp;</td>
+                    <td colspan="3" class="text-left">
+                        <div class="roundlight popover-pillar" data-toggle="popover" style="background-color: @item.PillarColor" data-poload="@scoreIndicatorPmsConfigUrl"></div>@item.Pillar (@item.PillarWeight)
+                                    <img src="@Url.Content(PathConstant.PillarPath)/@item.PillarIcon" />
+                    </td>
+                </tr>
                         
-                        if (totalScore > 0)
-                        {
-                            percent = (totalScore/100) * Convert.ToDecimal(e.GetValue("PillarWeight"));
-                        }
-                        if (tagIndex == "1")
-                        {
-                            e.TotalValue = percent;
-                            totalPercent += percent;
                         }
                         else
                         {
-                            e.TotalValue = totalPercent;
-                            totalScore = 0;
-                            totalPercent = 0;
+                <tr class="tr-pillar" style="background-color: @item.PmsConfigColor">
+                    <td>&nbsp;</td>
+                    <td colspan="3" class="text-left">
+                        <div class="roundlight popover-pillar" data-toggle="popover" style="background-color: @item.PillarColor" data-poload="@scoreIndicatorPmsConfigUrl"></div>@item.Pillar (@item.PillarWeight)
+                    </td>
+                </tr>
                         }
-                          
+
                     }
-                };
+                    pillarScore += Convert.ToDecimal(item.Score);
+                <tr class="kpi-row" onclick="OnCellClick('5', @item.PmsConfigDetailId);">
+                    <td>&nbsp;</td>
+                    @if (!string.IsNullOrEmpty(item.KpiIcon))
+                    {
+                        <td class="text-left">
+                            <div class="roundlight popover-pillar" data-toggle="popover" style="background-color: @item.KpiColor" data-poload="@scoreIndicatorPmsConfigDetailsUrl"></div>@item.KpiName
+                            <img src="@Url.Content(PathConstant.KpiPath)/@item.KpiIcon" />
+                        </td>
+                    }
+                    else
+                    {
+                        
+                        <td class="text-left">
+                            <div class="roundlight popover-pillar" data-toggle="popover" style="background-color: @item.KpiColor" data-poload="@scoreIndicatorPmsConfigDetailsUrl"></div>@item.KpiName
+                        </td>
+                    }
 
-            settings.Settings.ShowGroupFooter = GridViewGroupFooterMode.VisibleAlways;
-
-            ASPxSummaryItem kpiScore = new ASPxSummaryItem();
-            kpiScore.ShowInGroupFooterColumn = "KpiNameWithColor";
-            kpiScore.SummaryType = SummaryItemType.Sum;
-            kpiScore.FieldName = "Score";
-            kpiScore.DisplayFormat = "Score KPI in this pillar (" + FormatNumber.DecimalFormat+ ")";
-            settings.GroupSummary.Add(kpiScore);
-
-            ASPxSummaryItem percentageScore = new ASPxSummaryItem();
-            percentageScore.ShowInGroupFooterColumn = "Score";
-            percentageScore.Tag = "Score_1";
-            percentageScore.FieldName = "Score";
-            percentageScore.DisplayFormat = FormatNumber.DecimalFormat;
-            percentageScore.SummaryType = SummaryItemType.Custom;
-            //percentageScore.ShowInColumn = "Score";
-            settings.GroupSummary.Add(percentageScore);
-
-            ASPxSummaryItem totalScoreLabel = new ASPxSummaryItem();
-            totalScoreLabel.FieldName = "KpiNameWithColor";
-            totalScoreLabel.ShowInGroupFooterColumn = "KpiNameWithColor";
-            totalScoreLabel.DisplayFormat = string.Format(@"<span class='{0}' style='background-color:{1}'></span> Total Score", "trafficlight", Model.PmsSummaries.FirstOrDefault() != null ? Model.PmsSummaries.FirstOrDefault().TotalScoreColor : "grey");
-            totalScoreLabel.SummaryType = SummaryItemType.Count;
+                    <td class="text-right">@NumberHelper.DoubleToDecimalFormat(item.ActualYearly) / @NumberHelper.DoubleToDecimalFormat(item.TargetYearly)</td>
+                    <td class="text-right">@NumberHelper.DoubleToDecimalFormat(item.Score) / @item.Weight</td>
+                </tr>
             
+                    if (counterKpi < pillarLength)
+                    {
+                        counterKpi++;
+                    }
+                    else if (counterKpi == pillarLength)
+                    {
+                        decimal pScore = pillarScore / 100 * Convert.ToDecimal(item.PillarWeight);
+                        totalPillarScore += pScore;
+                <tr class="pillar-score" style="font-weight: bold">
+                    <td>&nbsp;</td>
+                    <td colspan="2" class="text-left">
+                        <span class="pillar-score-text">Score KPI In This Pillar (@pillarScore.ToString(FormatNumber.DecimalFormat))</span>
+                    </td>
 
-            ASPxSummaryItem totalScoreValue = new ASPxSummaryItem();
-            totalScoreValue.Tag = "Score_2";
-            totalScoreValue.FieldName = "ScoreStr";
-            totalScoreValue.ShowInGroupFooterColumn = "ScoreStr";
-            totalScoreValue.DisplayFormat = "0.00";
-            totalScoreValue.SummaryType = SummaryItemType.Custom;
+                    <td class="text-right">@( (pScore).ToString(FormatNumber.DecimalFormat)) / @item.PillarWeight</td>
+                </tr>
+                    }
+                    if (count == Model.PmsSummaries.Count())
+                    {
+                <tr style="font-weight: bold">
+                    <td>&nbsp;</td>
+                    <td colspan="2" class="text-left">
+                        <div class="roundlight" style="background-color:@item.TotalScoreColor" data-poload="@scoreIndicatorPmsSummaryUrl"></div>
+                        Total Score
+                    </td>
+                    <td class="text-right">@totalPillarScore.ToString(FormatNumber.DecimalFormat) / @totalPillarWeight</td>
+                </tr>
+                    }
+                    count++;
 
-            //totalScoreValue.FieldName = settings.GroupSummary["Total"];
-            settings.TotalSummary.Add(totalScoreValue);
-            settings.TotalSummary.Add(totalScoreLabel);
-
-            /*settings.SettingsPager.Position = PagerPosition.Bottom;
-            settings.SettingsPager.FirstPageButton.Visible = true;
-            settings.SettingsPager.LastPageButton.Visible = true;
-            settings.SettingsPager.PageSizeItemSettings.Visible = true;*/
-            /*settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "1", "2", "5" };*/
-            settings.CustomColumnGroup = (sender, e) =>
-                {
-                    if (e.Column.FieldName != "PillarNameWithColor") return;
-
-                    var sortOrder1 = int.Parse(e.GetRow1Value("PillarOrder").ToString());
-                    var sortOrder2 = int.Parse(e.GetRow2Value("PillarOrder").ToString());
-
-                    e.Result = sortOrder1.CompareTo(sortOrder2);
-                    e.Handled = true;
-                };
-
-            settings.CustomColumnSort = settings.CustomColumnGroup;
-            settings.PreRender = (s, e) =>
-                {
-                    MVCxGridView gridView = s as MVCxGridView;
-                    if (gridView != null)
-                        gridView.ExpandAll();
-                };
-        }).Bind(Model.PmsSummaries).GetHtml()
-
-
-
+                }
+            }
+        </tbody>
+    </table>
+</div>

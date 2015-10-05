@@ -278,7 +278,14 @@
     <Content Include="Content\img\ajax-loader.gif" />
     <Content Include="Content\img\ajax-loader1.gif" />
     <Content Include="Content\img\ajax-loader2.gif" />
+    <Content Include="Content\img\assess-bg.jpg" />
+    <Content Include="Content\img\assess.png" />
     <Content Include="Content\img\bg.jpg" />
+    <Content Include="Content\img\bg_5.jpg" />
+    <Content Include="Content\img\dashboard.png" />
+    <Content Include="Content\img\dialog-bg.png" />
+    <Content Include="Content\img\execute-bg.jpg" />
+    <Content Include="Content\img\execute.png" />
     <Content Include="Content\img\graphic1.jpg" />
     <Content Include="Content\img\graphic2.png" />
     <Content Include="Content\img\graphic3.PNG" />
@@ -287,11 +294,23 @@
     <Content Include="Content\img\graphic6.PNG" />
     <Content Include="Content\img\graphic7.PNG" />
     <Content Include="Content\img\icons.png" />
+    <Content Include="Content\img\login-back.png" />
+    <Content Include="Content\img\login-background-image.png" />
+    <Content Include="Content\img\login-circle.png" />
+    <Content Include="Content\img\login-logo-new.png" />
     <Content Include="Content\img\logopear.png" />
+    <Content Include="Content\img\logout.png" />
     <Content Include="Content\img\logo_blue.png" />
     <Content Include="Content\img\logo_login.png" />
+    <Content Include="Content\img\malay.png" />
+    <Content Include="Content\img\logopear.png" />
+    <Content Include="Content\img\plan-bg.jpg" />
+    <Content Include="Content\img\plan.png" />
     <Content Include="Content\img\pointer.png" />
     <Content Include="Content\img\remark_sign.png" />
+    <Content Include="Content\img\report-bg.jpg" />
+    <Content Include="Content\img\report.png" />
+    <Content Include="Content\img\setting.png" />
     <Content Include="Content\img\throbber.gif" />
     <Content Include="Content\img\tick.png" />
     <Content Include="Content\jquery-ui.css" />
@@ -491,7 +510,7 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\_GridViewPartial.cshtml" />
     <Content Include="Views\PmsSummary\Index.cshtml" />
-    <Content Include="Views\PmsSummary\_IndexGridPartial.cshtml" />
+    <Content Include="Views\PmsSummary\_IndexGridPartial.Old.cshtml" />
     <Content Include="Views\Level\Index.cshtml">
       <SubType>Code</SubType>
     </Content>
@@ -666,6 +685,8 @@
     <Content Include="Views\NLS\Create.cshtml" />
     <Content Include="Views\NLS\Edit.cshtml" />
     <Content Include="Views\NLS\Index.cshtml" />
+    <Content Include="Views\PmsSummary\_IndexGridPartial.cshtml" />
+    <Content Include="Views\Highlight\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -766,6 +787,7 @@
       <DependentUpon>Global.asax</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Helpers\NumberHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Artifact\AreaChartDataViewModel.cs" />
     <Compile Include="ViewModels\Artifact\AreaChartViewModel.cs" />

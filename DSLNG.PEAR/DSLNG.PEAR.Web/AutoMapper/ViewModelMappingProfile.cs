@@ -443,7 +443,6 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<HighlightViewModel, SaveHighlightRequest>();
             Mapper.CreateMap<GetReportHighlightsResponse.HighlightResponse, ArtifactPreviewViewModel.HighlightViewModel>();
-
             Mapper.CreateMap<VesselViewModel, SaveVesselRequest>();
             Mapper.CreateMap<GetVesselResponse, VesselViewModel>();
 
@@ -466,6 +465,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetConstantUsagesResponse.ConstantUsageResponse, ConstantUsageViewModel>();
             Mapper.CreateMap<GetConstantUsagesResponse.ConstantResponse, ConstantUsageViewModel.CalculatorConstantViewModel>();
             Mapper.CreateMap<ConstantUsageViewModel.CalculatorConstantViewModel, CalculatorConstantViewModel>();
+            Mapper.CreateMap<GetHighlightResponse, HighlightViewModel>();
             base.Configure();
         }
 

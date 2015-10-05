@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
-    public class ChartController : Controller
+    public class ChartController : BaseController
     {
         [HttpPost, ValidateInput(false)]
         public ActionResult Export(string filename, string type, string svg, int width = 0)

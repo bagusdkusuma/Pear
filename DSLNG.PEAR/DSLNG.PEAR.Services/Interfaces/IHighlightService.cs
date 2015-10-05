@@ -7,7 +7,9 @@ namespace DSLNG.PEAR.Services.Interfaces
     public interface IHighlightService
     {
         GetHighlightsResponse GetHighlights(GetHighlightsRequest request);
+        GetHighlightResponse GetHighlight(GetHighlightRequest request);
         SaveHighlightResponse SaveHighlight(SaveHighlightRequest request);
         GetReportHighlightsResponse GetReportHighlights(GetReportHighlightsRequest request);
+        DeleteResponse DeleteHighlight(DeleteRequest request);
     }
 }

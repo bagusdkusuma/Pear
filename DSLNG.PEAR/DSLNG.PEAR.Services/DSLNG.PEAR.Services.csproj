@@ -59,6 +59,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -118,6 +120,8 @@
     <Compile Include="Requests\ConstantUsage\SaveConstantUsageRequest.cs" />
     <Compile Include="Requests\Conversion\CreateConversionRequest.cs" />
     <Compile Include="Requests\Conversion\UpdateConversionRequest.cs" />
+    <Compile Include="Requests\Highlight\DeleteRequest.cs" />
+    <Compile Include="Requests\Highlight\GetHighlightRequest.cs" />
     <Compile Include="Requests\Highlight\GetHighlightsRequest.cs" />
     <Compile Include="Requests\Group\CreateGroupRequest.cs" />
     <Compile Include="Requests\Group\UpdateGroupRequest.cs" />
@@ -141,6 +145,7 @@
     <Compile Include="Requests\KpiTarget\UpdateKpiTargetRequest.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\Periode.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\PeriodeType.cs" />
+    <Compile Include="Requests\Menu\GetRootMenuRequest.cs" />
     <Compile Include="Requests\Menu\GetSiteMenuActiveRequest.cs" />
     <Compile Include="Requests\Menu\GetSiteMenusRequest.cs" />
     <Compile Include="Requests\Menu\Menu.cs" />
@@ -199,6 +204,8 @@
     <Compile Include="Responses\Group\CreateGroupResponse.cs" />
     <Compile Include="Responses\Group\DeleteGroupResponse.cs" />
     <Compile Include="Responses\Group\UpdateGroupResponse.cs" />
+    <Compile Include="Responses\Highlight\DeleteResponse.cs" />
+    <Compile Include="Responses\Highlight\GetHighlightResponse.cs" />
     <Compile Include="Responses\Highlight\GetHighlightsResponse.cs" />
     <Compile Include="Responses\Highlight\GetReportHighlightsResponse.cs" />
     <Compile Include="Responses\Highlight\SaveHighlightResponse.cs" />
@@ -220,6 +227,7 @@
     <Compile Include="Responses\KpiTarget\UpdateKpiTargetItemResponse.cs" />
     <Compile Include="Responses\KpiTarget\UpdateKpiTargetResponse.cs" />
     <Compile Include="Responses\Kpi\KpiResponse\KpiRelationModel.cs" />
+    <Compile Include="Responses\Menu\GetRootMenuResponse.cs" />
     <Compile Include="Responses\Menu\GetSiteMenuActiveResponse.cs" />
     <Compile Include="Responses\Menu\GetSiteMenusResponse.cs" />
     <Compile Include="Responses\Menu\Menu.cs" />
