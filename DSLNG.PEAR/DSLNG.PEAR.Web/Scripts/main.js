@@ -3598,7 +3598,12 @@ Number.prototype.format = function (n, x) {
     };
 
     Pear.Calculator.Pricing = function () {
-        $('<div/>').pricing();
+        var options = {
+            elem: $('#senoroFeedGas')
+        };
+        $.pricing.senoroFeedGas(options);
+        //console.log($.pricing);
+        //$.pricing.senoroFeedGas($('#senoroFeedGas'));
     };
 
     $(document).ready(function () {

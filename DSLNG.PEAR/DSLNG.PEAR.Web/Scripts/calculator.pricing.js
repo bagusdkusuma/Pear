@@ -1,6 +1,11 @@
-﻿(function($) {
-    $.fn.pricing = function (options) {
-        //alert('pricing');
+﻿(function (window, $, undefined) {
+    var pear = window.Pear;
+    pear.Pricing = {};
+    pear.Pricing.Init = function () {
+        console.log('calculator-init');
+        $('#MainInput').change(function (e) {
+            e.preventDefault();
+        });
     };
-}(jQuery));
+}(window, jQuery));
     
