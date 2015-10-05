@@ -94,6 +94,18 @@ namespace DSLNG.PEAR.Web.Controllers
             return base.ErrorPage(response.Message);
         }
 
+        public JsonResult ScoreIndicator(int id)
+        {
+            var response = _pmsSummaryService.GetScoreIndicators(new GetScoreIndicatorRequest { PmsConfigDetailId = id });
+            if (response.IsSuccess)
+            {
+                var viewModel = response.MapTo<ScoreIndicatorDetailsViewModel>();
+                return Json(new {isSuccess = true, data = viewModel.ScoreIndicators}, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { isSuccess = false }, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public ActionResult Delete(int id, int pmsSummaryId)
         {

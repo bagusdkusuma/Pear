@@ -12,7 +12,7 @@
         <script type="text/javascript">
             var confirmDelete = function (id) {
                 if (confirm('Are you sure want to delete this item?')) {
-                    var url = '@Url.Action("Delete", "Measurement")';
+                    var url = '@Url.Action("Delete", "Highlight")';
                 $('<form action="' + url + '" method="POST">' +
                     '<input type="hidden" name="id" value="' + id + '">' +
                     '</form>').submit();

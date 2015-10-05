@@ -12,7 +12,7 @@ using System.Web.Security;
 namespace DSLNG.PEAR.Web.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private readonly IUserService _userService;
 

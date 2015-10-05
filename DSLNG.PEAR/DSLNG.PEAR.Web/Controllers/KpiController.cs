@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
+using DSLNG.PEAR.Common.Contants;
 using DSLNG.PEAR.Services;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Responses.Kpi;
@@ -20,7 +22,7 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IRoleGroupService _roleGroupService;
         private readonly IPillarService _pillarService;
         private readonly IDropdownService _dropdownService;
-
+        
         public KpiController(IKpiService service,
             ILevelService levelService,
             IRoleGroupService roleGroupService,
@@ -158,7 +160,6 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.KpiList = _dropdownService.GetKpis().MapTo<SelectListItem>();
             viewModel.YtdFormulaList = _dropdownService.GetYtdFormulas().MapTo<SelectListItem>();
             viewModel.PeriodeList = _dropdownService.GetPeriodeTypes().MapTo<SelectListItem>();
-
             if (!string.IsNullOrEmpty(viewModel.Code))
             {
                 var numbers = String.Join("", viewModel.Code.Where(char.IsDigit));
@@ -184,16 +185,56 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 viewModel.RelationModels.Add(new ViewModels.Kpi.KpiRelationModel { KpiId = 0, Method = "" });
             }
+
+            viewModel.Icon = response.Icon;
+
             return View(viewModel);
         }
 
         [HttpPost]
         public ActionResult Update(UpdateKpiViewModel viewModel)
         {
-            viewModel.YtdFormula = (DSLNG.PEAR.Web.ViewModels.Kpi.YtdFormula)Enum.Parse(typeof(DSLNG.PEAR.Data.Enums.YtdFormula), viewModel.YtdFormulaValue);
-            viewModel.Periode = (DSLNG.PEAR.Web.ViewModels.Kpi.PeriodeType)Enum.Parse(typeof(DSLNG.PEAR.Data.Enums.PeriodeType), viewModel.PeriodeValue);
+            viewModel.YtdFormula = (ViewModels.Kpi.YtdFormula)Enum.Parse(typeof(Data.Enums.YtdFormula), viewModel.YtdFormulaValue);
+            viewModel.Periode = (ViewModels.Kpi.PeriodeType)Enum.Parse(typeof(Data.Enums.PeriodeType), viewModel.PeriodeValue);
             viewModel.Code = string.Format("{0}{1}{2}{3}", viewModel.CodeFromPillar, viewModel.CodeFromLevel, viewModel.Code, viewModel.CodeFromRoleGroup);
+
             var request = viewModel.MapTo<UpdateKpiRequest>();
+
+            var validImageTypes = new string[]
+                {
+                    "image/gif",
+                    "image/jpeg",
+                    "image/pjpeg",
+                    "image/png"
+                };
+
+            if (viewModel.IconFile != null)
+            {
+                if (!validImageTypes.Contains(viewModel.IconFile.ContentType))
+                {
+                    ModelState.AddModelError("IconFile", "Please choose either a GIF, JPG or PNG image.");
+                }
+                else
+                {
+                    var name = Guid.NewGuid() + "_" + viewModel.IconFile.FileName;
+
+                    if (!Directory.Exists(Server.MapPath(PathConstant.KpiPath)))
+                    {
+                        Directory.CreateDirectory(Server.MapPath(PathConstant.KpiPath));
+                    }
+
+                    var imagePath = Path.Combine(Server.MapPath(PathConstant.KpiPath), name);
+                    //var imageUrl = Path.Combine(UploadDir, name);
+                    viewModel.IconFile.SaveAs(imagePath);
+                    request.Icon = name;
+                }
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View("Update", viewModel);
+            }
+
             var response = _kpiService.Update(request);
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
