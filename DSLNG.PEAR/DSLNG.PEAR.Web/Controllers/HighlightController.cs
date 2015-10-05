@@ -7,15 +7,20 @@ using System;
 using System.Web.Mvc;
 using PeriodeType = DSLNG.PEAR.Data.Enums.PeriodeType;
 using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Services.Requests.Select;
+using System.Linq;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
     public class HighlightController : BaseController
     {
         private IHighlightService _highlightService;
-        public HighlightController(IHighlightService highlightService)
+        private ISelectService _selectService;
+        public HighlightController(IHighlightService highlightService,
+            ISelectService selectService)
         {
             _highlightService = highlightService;
+            _selectService = selectService;
         }
         public ActionResult Index()
         {
@@ -91,10 +96,8 @@ namespace DSLNG.PEAR.Web.Controllers
                     viewModel.PeriodeTypes.Add(new SelectListItem { Text = name, Value = name });
                 }
             }
-            foreach (var name in Enum.GetNames(typeof(HighlightType)))
-            {
-                viewModel.Types.Add(new SelectListItem { Text = name, Value = name });
-            }
+            viewModel.Types = _selectService.GetSelect(new GetSelectRequest { Name = "highlight-types" }).Options
+                .Select(x => new SelectListItem { Text = x.Text, Value = x.Value }).ToList();
             return View(viewModel);
         }
 
@@ -120,10 +123,8 @@ namespace DSLNG.PEAR.Web.Controllers
                     viewModel.PeriodeTypes.Add(new SelectListItem { Text = name, Value = name });
                 }
             }
-            foreach (var name in Enum.GetNames(typeof(HighlightType)))
-            {
-                viewModel.Types.Add(new SelectListItem { Text = name, Value = name });
-            }
+            viewModel.Types = _selectService.GetSelect(new GetSelectRequest { Name = "highlight-types" }).Options
+                .Select(x => new SelectListItem { Text = x.Text, Value = x.Value }).ToList();
             return View(viewModel);
         }
 

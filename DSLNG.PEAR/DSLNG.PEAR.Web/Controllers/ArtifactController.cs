@@ -702,7 +702,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         var chartData = _artifactServie.GetChartData(artifactResp.MapTo<GetCartesianChartDataRequest>());
                         var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest { 
                             TimePeriodes = chartData.TimePeriodes,
-                            Type = HighlightType.Overall,
+                            Type = "Overall",
                             PeriodeType = artifactResp.PeriodeType
                         });
                         previewViewModel.PeriodeType = artifactResp.PeriodeType.ToString();
@@ -723,7 +723,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
                         {
                             TimePeriodes = chartData.TimePeriodes,
-                            Type = HighlightType.Overall,
+                            Type = "Overall",
                             PeriodeType = artifactResp.PeriodeType
                         });
                         previewViewModel.PeriodeType = artifactResp.PeriodeType.ToString();
@@ -744,7 +744,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
                         {
                             TimePeriodes = chartData.TimePeriodes,
-                            Type = HighlightType.Overall,
+                            Type = "Overall",
                             PeriodeType = artifactResp.PeriodeType
                         });
                         previewViewModel.PeriodeType = artifactResp.PeriodeType.ToString();
@@ -761,7 +761,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
                         {
                             TimePeriodes = chartData.TimePeriodes,
-                            Type = HighlightType.Overall,
+                            Type = "Overall",
                             PeriodeType = artifactResp.PeriodeType
                         });
                         previewViewModel.PeriodeType = artifactResp.PeriodeType.ToString();
@@ -837,7 +837,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
                         {
                             TimePeriodes = chartData.TimePeriodes,
-                            Type = HighlightType.Overall,
+                            Type = "Overall",
                             PeriodeType = artifactResp.PeriodeType
                         });
                         previewViewModel.PeriodeType = artifactResp.PeriodeType.ToString();
@@ -873,7 +873,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
                         {
                             TimePeriodes = chartData.TimePeriodes,
-                            Type = HighlightType.Overall,
+                            Type = "Overall",
                             PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType)
                         });
                         previewViewModel.PeriodeType = viewModel.PeriodeType;
@@ -896,7 +896,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
                         {
                             TimePeriodes = chartData.TimePeriodes,
-                            Type = HighlightType.Overall,
+                            Type = "Overall",
                             PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType)
                         });
                         previewViewModel.PeriodeType = viewModel.PeriodeType;
@@ -975,7 +975,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
                         {
                             TimePeriodes = chartData.TimePeriodes,
-                            Type = HighlightType.Overall,
+                            Type = "Overall",
                             PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType)
                         });
                         previewViewModel.PeriodeType = viewModel.PeriodeType;
@@ -996,7 +996,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
                         {
                             TimePeriodes = chartData.TimePeriodes,
-                            Type = HighlightType.Overall,
+                            Type = "Overall",
                             PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType)
                         });
                         previewViewModel.PeriodeType = viewModel.PeriodeType;
@@ -1029,7 +1029,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
                         {
                             TimePeriodes = chartData.TimePeriodes,
-                            Type = HighlightType.Overall,
+                            Type = "Overall",
                             PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType)
                         });
                         previewViewModel.PeriodeType = viewModel.PeriodeType;

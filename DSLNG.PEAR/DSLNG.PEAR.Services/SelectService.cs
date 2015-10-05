@@ -127,9 +127,14 @@ namespace DSLNG.PEAR.Services
             var response = new GetSelectResponse();
             try
             {
-                var select = DataContext.Selects
-                    .Include(x => x.Options)
-                    .Single(x => x.Id == request.Id);
+                var query = DataContext.Selects.Include(x => x.Options);
+                if (request.Id != 0) {
+                    query = query.Where(x => x.Id == request.Id);
+                }
+                else if (!string.IsNullOrEmpty(request.Name)) {
+                    query = query.Where(x => x.Name == request.Name);
+                }
+                var select = query.FirstOrDefault();
                 response = select.MapTo<GetSelectResponse>();
                 response.IsSuccess = true;
                 response.Message = "Success get select with id=" + request.Id;

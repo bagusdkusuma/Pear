@@ -9,5 +9,6 @@ namespace DSLNG.PEAR.Services.Requests.Select
     public class GetSelectRequest
     {
         public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

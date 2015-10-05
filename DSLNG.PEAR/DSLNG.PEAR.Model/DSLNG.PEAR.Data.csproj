@@ -113,7 +113,6 @@
     <Compile Include="Enums\ConfigType.cs" />
     <Compile Include="Enums\Formula.cs" />
     <Compile Include="Enums\PeriodeStart.cs" />
-    <Compile Include="Enums\HighlightType.cs" />
     <Compile Include="Enums\MonthPeriode.cs" />
     <Compile Include="Entities\PmsSummaryScoringIndicator.cs" />
     <Compile Include="Enums\PeriodeType.cs" />

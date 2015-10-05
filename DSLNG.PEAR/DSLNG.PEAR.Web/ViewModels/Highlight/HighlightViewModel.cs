@@ -14,7 +14,6 @@ namespace DSLNG.PEAR.Web.ViewModels.Highlight
         {
             PeriodeTypes = new List<SelectListItem>();
             Types = new List<SelectListItem>();
-            Date = DateTime.Now;
         }
         public int Id { get; set; }
         [Display(Name = "Periode Type")]
