@@ -3601,7 +3601,7 @@ Number.prototype.format = function (n, x) {
         var options = {
             elem: $('#senoroFeedGas')
         };
-        $.pricing.senoroFeedGas(options);
+        //$.pricing.senoroFeedGas(options);
         //console.log($.pricing);
         //$.pricing.senoroFeedGas($('#senoroFeedGas'));
     };
@@ -3640,7 +3640,7 @@ Number.prototype.format = function (n, x) {
         }
         
         if ($('.calculator').length) {
-            Pear.Calculator.Pricing();
+            Pear.PricingCalculator.Init();
             Pear.ProductionYieldCalculator.Init();
             Pear.StandardCalculator.Init();
         }

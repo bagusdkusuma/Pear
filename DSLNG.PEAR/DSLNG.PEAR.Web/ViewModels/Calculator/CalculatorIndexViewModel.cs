@@ -16,10 +16,15 @@ namespace DSLNG.PEAR.Web.ViewModels.Calculator
             Pricing = new PricingViewModel();
             Standard = new StandardCalculatorViewModel();
         }
-        public IList<ConstantUsageViewModel> ConstantUsages { set {
-            ProductionYield.ConstantUsages = value;
-            Standard.ConstantUsages = value;
-        } }
+        public IList<ConstantUsageViewModel> ConstantUsages
+        {
+            set
+            {
+                ProductionYield.ConstantUsages = value;
+                Standard.ConstantUsages = value;
+                Pricing.ConstantUsages = value;
+            }
+        }
 
         public ProductionYieldCalculatorViewModel ProductionYield { get; set; }
         public PricingViewModel Pricing { get; set; }
