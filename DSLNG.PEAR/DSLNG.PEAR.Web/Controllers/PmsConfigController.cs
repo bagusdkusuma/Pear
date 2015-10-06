@@ -4,10 +4,12 @@ using System.Linq;
 using System.Threading;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.PmsSummary;
 using DSLNG.PEAR.Web.ViewModels.PmsConfig;
+using DSLNG.PEAR.Web.ViewModels.PmsConfigDetails;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -52,7 +54,7 @@ namespace DSLNG.PEAR.Web.Controllers
             if (response.IsSuccess)
             {
                 var viewModel = response.MapTo<UpdatePmsConfigViewModel>();
-                if (response.ScoreIndicators.Count() == 0)
+                if (!response.ScoreIndicators.Any())
                 {
                     viewModel.ScoreIndicators.Add(new ViewModels.Common.PmsSummary.ScoreIndicatorViewModel
                     {
@@ -85,6 +87,18 @@ namespace DSLNG.PEAR.Web.Controllers
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
             return RedirectToAction("Details", "PmsSummary", new { id = pmsSummaryId });
+        }
+
+        public JsonResult ScoreIndicator(int id)
+        {
+            var response = _pmsSummaryService.GetScoreIndicators(new GetScoreIndicatorRequest { PmsConfigId = id });
+            if (response.IsSuccess)
+            {
+                var viewModel = response.MapTo<ScoreIndicatorDetailsViewModel>();
+                return Json(new { isSuccess = true, data = viewModel.ScoreIndicators }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { isSuccess = false }, JsonRequestBehavior.AllowGet);
         }
 	}
 }

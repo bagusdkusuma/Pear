@@ -28,6 +28,7 @@
             @Html.TextBoxFor(x => x.Weight, new { @class = "form-control" })
             @Html.ValidationMessageFor(x => x.Weight)
         </div>
+        
         @Html.Partial("_ScoringIndicator", Model.ScoreIndicators)
 
         <div class="centering margin">
@@ -44,6 +45,8 @@
             $("form").removeData("validator");
             $("form").removeData("unobtrusiveValidation");
             $.validator.unobtrusive.parse("form");
+            
+           
 
             @*$('.ddl-pillar').change(function () {
             var pillarId = $(this).val();

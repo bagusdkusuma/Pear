@@ -2,8 +2,10 @@
 @{
     ViewBag.Title = "Pms Summary Configuration";
 }
-
 @Html.Partial("_MessageResponse")
+<style>a, a:hover, a:visited, a:active, a:focus {
+     color: #72afd2!important
+ }</style>
 
 <div class="title_page" style="border:none!important;">
     <div class="row">
@@ -16,7 +18,7 @@
         @Html.ActionLink("Add Pillar", "Create", "PmsConfig", new { id = Model.PmsSummaryId }, new { @class = "btn-lightblue", data_toggle = "modal", data_target = "#modalDialog" })
     </div>
     <div class="row-full">
-        <div class="text-grey text-med">
+        <div class="text-med" style="color: #ffffff">
             <div class="heading">
                 Total Score For All Pillar
             </div>: <span id="totalScoreAllPillar">@Model.TotalScoreAllPillar</span>
@@ -27,7 +29,7 @@
     for (int i = 0; i < Model.PmsConfigs.Count; i++)
     {
         int i1 = i;
-        <div class="whitebox-full" style="width:100%;">
+        <div style="width:100%;">
             <h3 style="text-transform:capitalize">@Model.PmsConfigs[i1].PillarName.ToLower()</h3>
             <a href="@Url.Action("Create", "PmsConfigDetails", new { id = Model.PmsConfigs[i1].Id })" class="text-button pull-right" data-toggle="modal" data-target="#modalDialog">
                 <span class="fa fa-plus-circle"></span>Add PMS Config Detail
@@ -36,7 +38,7 @@
                 <span class="fa fa-pencil-square-o"></span>Edit Pilar
             </a>
             <a href='javascript:;' onclick='confirmDelete(@Model.PmsConfigs[i1].Id, @Model.PmsSummaryId, "PmsConfig")' class="text-button pull-right"><span class="fa fa-trash-o"></span>Delete</a>
-            <table class="table table-striped table-bordered table-responsive table-hover">
+            <table class="table table-transparent table-bordered table-responsive table-hover">
                 <thead>
                     <tr>
                         <th rowspan="2">KPI Name</th>

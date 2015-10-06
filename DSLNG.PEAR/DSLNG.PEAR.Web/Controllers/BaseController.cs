@@ -80,5 +80,18 @@ namespace DSLNG.PEAR.Web.Controllers
             }
             base.OnException(filterContext);
         }
+        protected override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            base.OnActionExecuted(filterContext);
+            filterContext.Controller.ViewBag.BodyClass = "";
+            var absolutePath = filterContext.RequestContext.HttpContext.Request.Url.AbsolutePath;
+            if (!filterContext.RequestContext.HttpContext.Request.IsAjaxRequest()) {
+                var _menuService = ObjectFactory.Container.GetInstance<IMenuService>();
+                var rootMenu = _menuService.GetRootMenu(new GetRootMenuRequest { AbsolutePath = absolutePath });
+                if (!string.IsNullOrEmpty(rootMenu.RootName)) {
+                    filterContext.Controller.ViewBag.BodyClass = rootMenu.RootName.ToLower();
+                }
+            }
+        }
     }
 }

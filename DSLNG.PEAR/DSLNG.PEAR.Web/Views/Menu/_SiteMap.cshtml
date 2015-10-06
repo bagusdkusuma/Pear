@@ -32,8 +32,13 @@
         var mainclass = menu.Id == Model.RootMenuIdActive ? "active" : Model.SelectedMenu.ParentId==menu.Id ? "active" : Model.SelectedMenu.Id==menu.Id ? "active" :"";
     <li class="@mainclass" menuid="@menu.Id" selectedmenuid="@Model.SelectedMenu.Id" selectedmenuparentid="@Model.SelectedMenu.ParentId">
         <a href="@menu.Url" class="">
-            @if (menu.Icon != null){
+            
+            @if (menu.Icon != null && menu.Icon.StartsWith("fa")){
                 <i class="fa @menu.Icon"></i><span>@menu.Name</span>
+            }
+            else if(menu.Icon != null){
+                <img src="~/Content/img/@menu.Icon" />
+                <span>@menu.Name</span>
             }
             else
             {

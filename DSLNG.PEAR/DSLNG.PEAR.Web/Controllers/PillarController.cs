@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
+using DSLNG.PEAR.Common.Contants;
 using DSLNG.PEAR.Services;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Responses.Pillar;
@@ -116,6 +118,40 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Update(UpdatePillarViewModel viewModel)
         {
             var request = viewModel.MapTo<UpdatePillarRequest>();
+            var validImageTypes = new string[]
+                {
+                    "image/gif",
+                    "image/jpeg",
+                    "image/pjpeg",
+                    "image/png"
+                };
+
+            if (viewModel.IconFile != null)
+            {
+                if (!validImageTypes.Contains(viewModel.IconFile.ContentType))
+                {
+                    ModelState.AddModelError("IconFile", "Please choose either a GIF, JPG or PNG image.");
+                }
+                else
+                {
+                    var name = Guid.NewGuid() + "_" + viewModel.IconFile.FileName;
+
+                    if (!Directory.Exists(Server.MapPath(PathConstant.PillarPath)))
+                    {
+                        Directory.CreateDirectory(Server.MapPath(PathConstant.PillarPath));
+                    }
+
+                    var imagePath = Path.Combine(Server.MapPath(PathConstant.PillarPath), name);
+                    //var imageUrl = Path.Combine(UploadDir, name);
+                    viewModel.IconFile.SaveAs(imagePath);
+                    request.Icon = name;
+                }
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View("Update", viewModel);
+            }
             var response = _pillarService.Update(request);
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;

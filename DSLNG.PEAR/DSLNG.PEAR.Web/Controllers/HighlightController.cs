@@ -112,48 +112,36 @@ namespace DSLNG.PEAR.Web.Controllers
         // GET: /Highlight/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var viewModel = _highlightService.GetHighlight(new GetHighlightRequest { Id = id }).MapTo<HighlightViewModel>();
+            foreach (var name in Enum.GetNames(typeof(PeriodeType)))
+            {
+                if (!name.Equals("Hourly") && !name.Equals("Weekly"))
+                {
+                    viewModel.PeriodeTypes.Add(new SelectListItem { Text = name, Value = name });
+                }
+            }
+            foreach (var name in Enum.GetNames(typeof(HighlightType)))
+            {
+                viewModel.Types.Add(new SelectListItem { Text = name, Value = name });
+            }
+            return View(viewModel);
         }
 
         //
         // POST: /Highlight/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(HighlightViewModel viewModel)
         {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            var req = viewModel.MapTo<SaveHighlightRequest>();
+            _highlightService.SaveHighlight(req);
+            return RedirectToAction("Index");
         }
 
-        //
-        // GET: /Highlight/Delete/5
+        [HttpPost]
         public ActionResult Delete(int id)
         {
-            return View();
-        }
-
-        //
-        // POST: /Highlight/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            _highlightService.DeleteHighlight(new DeleteRequest { Id = id });
+            return RedirectToAction("Index");
         }
     }
 }

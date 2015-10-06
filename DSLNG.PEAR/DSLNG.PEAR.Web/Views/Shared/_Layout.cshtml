@@ -35,7 +35,7 @@
 )
 </head>
 
-<body>
+<body class="@ViewBag.BodyClass">
     <div class="main-content">
         <aside class="left-content">
             <div class="logo">
@@ -177,7 +177,9 @@
                 $(this).find('i').toggle();
                 var $leftContent = $('.left-content');
                 if (!$leftContent.hasClass('pear-hidden')) {
-
+                    $(this).animate({
+                        left: 65
+                    })
                     $('.main-content').animate({
                             marginLeft: -230
                         }, function () {
@@ -191,6 +193,9 @@
                             //$('#container').highcharts().reflow();
                         })
                 } else {
+                    $(this).animate({
+                        left: 296
+                    })
                     $('.main-content').animate({
                             marginLeft: 0
                         }, function () {
@@ -202,6 +207,16 @@
                             });
                         })
                 }
+            });
+            
+            $('body').on('click', function (e) {
+                $('[data-toggle="popover"]').each(function () {
+                    //the 'is' for buttons that trigger popups
+                    //the 'has' for icons within a button that triggers a popup
+                    if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                        $(this).popover('hide');
+                    }
+                });
             });
         })
     </script>

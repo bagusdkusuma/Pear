@@ -339,6 +339,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<ConstantUsage, GetConstantUsageResponse>();
             Mapper.CreateMap<CalculatorConstant, GetConstantUsageResponse.CalculatorConstantResponse>();
 
+            Mapper.CreateMap<Highlight, GetHighlightResponse>();
             base.Configure();
         }
 
