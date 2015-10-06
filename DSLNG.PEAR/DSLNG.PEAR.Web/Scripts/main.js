@@ -4081,16 +4081,7 @@ Number.prototype.format = function (n, x) {
             $(this).closest('.constant-template').remove();
         });
     };
-
-    Pear.Calculator.Pricing = function () {
-        var options = {
-            elem: $('#senoroFeedGas')
-        };
-        //$.pricing.senoroFeedGas(options);
-        //console.log($.pricing);
-        //$.pricing.senoroFeedGas($('#senoroFeedGas'));
-    };
-
+    
     $(document).ready(function () {
         if ($('.artifact-designer').length) {
             Pear.Artifact.Designer.GraphicSettingSetup();
@@ -4128,6 +4119,7 @@ Number.prototype.format = function (n, x) {
             Pear.PricingCalculator.Init();
             Pear.ProductionYieldCalculator.Init();
             Pear.StandardCalculator.Init();
+            Pear.PlantAvailabilityCalculator.Init();
         }
     });
     window.Pear = Pear;

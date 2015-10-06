@@ -1,4 +1,4 @@
-﻿@model DSLNG.PEAR.Web.ViewModels.Calculator.PricingViewModel
+﻿@model DSLNG.PEAR.Web.ViewModels.Calculator.PricingCalculatorViewModel
 @{
     ViewBag.Title = "_Pricing";
 }
@@ -134,46 +134,5 @@
                 }
             </form>
         </fieldset>
-        @*<fieldset>
-            <legend>Feed Gas</legend>
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <label class="col-sm-5 control-label">Senoro GSA Price</label>
-                    <div class="col-sm-6">
-                        @Html.TextBoxFor(model => model.FeedGas.SenoroGsaPrice)
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-5 control-label">Matindok GSA Price</label>
-                    <div class="col-sm-6">
-                        @Html.TextBoxFor(model => model.FeedGas.SenoroGsaPrice)
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-5 control-label">JCC Floor</label>
-                    <div class="col-sm-6">
-                        @Html.TextBoxFor(model => model.FeedGas.SenoroGsaPrice)
-                    </div>
-                </div>
-            </form>
-        </fieldset>
-        <fieldset>
-            <legend>CDS Price</legend>
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <label class="col-sm-5 control-label">Senoro GSA Price</label>
-                    <div class="col-sm-6">
-                        @Html.TextBoxFor(model => model.CdsPrice.PriceVariable)
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-5 control-label">Matindok GSA Price</label>
-                    <div class="col-sm-6">
-                        @Html.TextBoxFor(model => model.CdsPrice.PriceConstanta)
-                    </div>
-                </div>
-            </form>
-        </fieldset>
-        *@
     </div>
 </div>

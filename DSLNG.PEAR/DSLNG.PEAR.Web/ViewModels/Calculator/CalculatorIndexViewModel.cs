@@ -13,8 +13,9 @@ namespace DSLNG.PEAR.Web.ViewModels.Calculator
         public CalculatorIndexViewModel()
         {
             ProductionYield = new ProductionYieldCalculatorViewModel();
-            Pricing = new PricingViewModel();
+            Pricing = new PricingCalculatorViewModel();
             Standard = new StandardCalculatorViewModel();
+            PlantAvailability = new PlantAvailabilityCalculatorViewModel();
         }
         public IList<ConstantUsageViewModel> ConstantUsages
         {
@@ -27,7 +28,8 @@ namespace DSLNG.PEAR.Web.ViewModels.Calculator
         }
 
         public ProductionYieldCalculatorViewModel ProductionYield { get; set; }
-        public PricingViewModel Pricing { get; set; }
+        public PricingCalculatorViewModel Pricing { get; set; }
         public StandardCalculatorViewModel Standard { get; set; }
+        public PlantAvailabilityCalculatorViewModel PlantAvailability { get; set; }
     }
 }
