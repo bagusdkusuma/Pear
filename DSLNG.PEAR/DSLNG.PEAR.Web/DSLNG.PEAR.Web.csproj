@@ -687,6 +687,12 @@
     <Content Include="Views\NLS\Index.cshtml" />
     <Content Include="Views\PmsSummary\_IndexGridPartial.cshtml" />
     <Content Include="Views\Highlight\Edit.cshtml" />
+    <Content Include="Views\Highlight\DailyExecutionReport.cshtml" />
+    <Content Include="Views\Weather\_IndexGridPartial.cshtml" />
+    <Content Include="Views\Weather\Create.cshtml" />
+    <Content Include="Views\Weather\DailyExecutionReport.cshtml" />
+    <Content Include="Views\Weather\Edit.cshtml" />
+    <Content Include="Views\Weather\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -773,6 +779,7 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VesselController.cs" />
     <Compile Include="Controllers\VesselScheduleController.cs" />
+    <Compile Include="Controllers\WeatherController.cs" />
     <Compile Include="DependencyResolution\ControllerConvention.cs" />
     <Compile Include="DependencyResolution\DefaultRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
@@ -901,6 +908,7 @@
     <Compile Include="ViewModels\User\UserViewModel.cs" />
     <Compile Include="ViewModels\VesselSchedule\VesselScheduleViewModel.cs" />
     <Compile Include="ViewModels\Vessel\VesselViewModel.cs" />
+    <Compile Include="ViewModels\Weather\WeatherViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

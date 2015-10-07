@@ -1,31 +1,27 @@
-﻿using DevExpress.Web.Mvc;
-using DSLNG.PEAR.Data.Enums;
+﻿
+using DevExpress.Web.Mvc;
 using DSLNG.PEAR.Services.Interfaces;
-using DSLNG.PEAR.Services.Requests.Highlight;
-using DSLNG.PEAR.Web.ViewModels.Highlight;
-using System;
-using System.Web.Mvc;
-using PeriodeType = DSLNG.PEAR.Data.Enums.PeriodeType;
-using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Requests.Select;
+using DSLNG.PEAR.Services.Requests.Weather;
+using DSLNG.PEAR.Web.ViewModels.Weather;
+using System.Web.Mvc;
 using System.Linq;
-using DSLNG.PEAR.Services.Requests.NLS;
+using System;
+using DSLNG.PEAR.Data.Enums;
+using DSLNG.PEAR.Common.Extensions;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
-    public class HighlightController : BaseController
+    public class WeatherController : BaseController
     {
-        private IHighlightService _highlightService;
+        private IWeatherService _weatherService;
         private ISelectService _selectService;
-        private INLSService _nlsService;
-        public HighlightController(IHighlightService highlightService,
-            ISelectService selectService,
-            INLSService nlsService)
-        {
-            _highlightService = highlightService;
+
+        public WeatherController(IWeatherService weatherService,ISelectService selectService) {
+            _weatherService = weatherService;
             _selectService = selectService;
-            _nlsService = nlsService;
         }
+
         public ActionResult Index()
         {
             return View();
@@ -52,9 +48,10 @@ namespace DSLNG.PEAR.Web.Controllers
             var viewModel = new GridViewModel();
             viewModel.KeyFieldName = "Id";
             viewModel.Columns.Add("PeriodeType");
-            viewModel.Columns.Add("Type");
-            viewModel.Columns.Add("Title");
             viewModel.Columns.Add("Date");
+            viewModel.Columns.Add("Value");
+            viewModel.Columns.Add("Temperature");
+           
             viewModel.Pager.PageSize = 10;
             return viewModel;
         }
@@ -69,30 +66,20 @@ namespace DSLNG.PEAR.Web.Controllers
         public void GetDataRowCount(GridViewCustomBindingGetDataRowCountArgs e)
         {
 
-            e.DataRowCount = _highlightService.GetHighlights(new GetHighlightsRequest { OnlyCount = true }).Count;
+            e.DataRowCount = _weatherService.GetWeathers(new GetWeathersRequest { OnlyCount = true }).Count;
         }
 
         public void GetData(GridViewCustomBindingGetDataArgs e)
         {
-            e.Data = _highlightService.GetHighlights(new GetHighlightsRequest
+            e.Data = _weatherService.GetWeathers(new GetWeathersRequest
             {
                 Skip = e.StartDataRowIndex,
                 Take = e.DataRowCount
-            }).Highlights;
+            }).Weathers;
         }
 
-        //
-        // GET: /Highlight/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        //
-        // GET: /Highlight/Create
-        public ActionResult Create()
-        {
-            var viewModel = new HighlightViewModel();
+        public ActionResult Create() {
+            var viewModel = new WeatherViewModel();
             foreach (var name in Enum.GetNames(typeof(PeriodeType)))
             {
                 if (!name.Equals("Hourly") && !name.Equals("Weekly"))
@@ -100,26 +87,20 @@ namespace DSLNG.PEAR.Web.Controllers
                     viewModel.PeriodeTypes.Add(new SelectListItem { Text = name, Value = name });
                 }
             }
-            viewModel.Types = _selectService.GetSelect(new GetSelectRequest { Name = "highlight-types" }).Options
+            viewModel.Values = _selectService.GetSelect(new GetSelectRequest { Name = "weather-values" }).Options
                 .Select(x => new SelectListItem { Text = x.Text, Value = x.Value }).ToList();
             return View(viewModel);
         }
 
-        //
-        // POST: /Highlight/Create
         [HttpPost]
-        public ActionResult Create(HighlightViewModel viewModel)
-        {
-            var req = viewModel.MapTo<SaveHighlightRequest>();
-            _highlightService.SaveHighlight(req);
+        public ActionResult Create(WeatherViewModel viewModel) {
+            var request = viewModel.MapTo<SaveWeatherRequest>();
+            _weatherService.SaveWeather(request);
             return RedirectToAction("Index");
         }
 
-        //
-        // GET: /Highlight/Edit/5
-        public ActionResult Edit(int id)
-        {
-            var viewModel = _highlightService.GetHighlight(new GetHighlightRequest { Id = id }).MapTo<HighlightViewModel>();
+        public ActionResult Edit(int id) {
+            var viewModel = _weatherService.GetWeather(new GetWeatherRequest { Id = id }).MapTo<WeatherViewModel>();
             foreach (var name in Enum.GetNames(typeof(PeriodeType)))
             {
                 if (!name.Equals("Hourly") && !name.Equals("Weekly"))
@@ -127,31 +108,25 @@ namespace DSLNG.PEAR.Web.Controllers
                     viewModel.PeriodeTypes.Add(new SelectListItem { Text = name, Value = name });
                 }
             }
-            viewModel.Types = _selectService.GetSelect(new GetSelectRequest { Name = "highlight-types" }).Options
+            viewModel.Values = _selectService.GetSelect(new GetSelectRequest { Name = "weather-values" }).Options
                 .Select(x => new SelectListItem { Text = x.Text, Value = x.Value }).ToList();
             return View(viewModel);
         }
 
-        //
-        // POST: /Highlight/Edit/5
         [HttpPost]
-        public ActionResult Edit(HighlightViewModel viewModel)
+        public ActionResult Edit(WeatherViewModel viewModel)
         {
-            var req = viewModel.MapTo<SaveHighlightRequest>();
-            _highlightService.SaveHighlight(req);
+            var request = viewModel.MapTo<SaveWeatherRequest>();
+            _weatherService.SaveWeather(request);
             return RedirectToAction("Index");
         }
 
         [HttpPost]
-        public ActionResult Delete(int id)
-        {
-            _highlightService.DeleteHighlight(new DeleteRequest { Id = id });
+        public ActionResult Delete(int id) {
+            _weatherService.Delete(new DeleteWeatherRequest { Id = id });
             return RedirectToAction("Index");
         }
 
-        public ActionResult DailyExecutionReport() {
-            var nlsList = _nlsService.GetNLSList(new GetNLSListRequest { TheActiveOnes = true });
-            return View();
-        }
+
     }
 }

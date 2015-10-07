@@ -1,0 +1,53 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Weather.WeatherViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="highlight-save">
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="col-md-12">
+        <div class="title">Weather</div>
+        <div class="description_year">New</div>
+        <div>@Html.ValidationSummary(true)</div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-inline whitebox">
+            <div class="form-group form-list">
+                @Html.LabelFor(model => model.PeriodeType)
+                @Html.DropDownListFor(model => model.PeriodeType, Model.PeriodeTypes, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PeriodeType)
+            </div>
+            <div class="form-group form-list">
+                @Html.LabelFor(model => model.DateInDisplay)
+                @Html.TextBoxFor(model => model.DateInDisplay, new { @class = "form-control datepicker" })
+                @Html.ValidationMessageFor(model => model.DateInDisplay)
+            </div>
+              <div class="form-group form-list">
+                @Html.LabelFor(model => model.Value)
+                @Html.DropDownListFor(model => model.Value, Model.Values, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Value)
+            </div>
+            <div class="form-group form-list">
+                @Html.LabelFor(model => model.Temperature)
+                @Html.TextBoxFor(model => model.Temperature, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Temperature)
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 artifact-designer-btns">
+        <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
+        <a onclick="location.reload();" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>
+        <a href="/Highlight" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+    </div>
+}
+    </div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,41 @@
+﻿@Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "gridHighlightIndex";
+        settings.CallbackRouteValues = new { Controller = "Highlight", Action = "IndexPartial" };
+        settings.CustomBindingRouteValuesCollection.Add(
+            GridViewOperationType.Paging,
+            new { Controller = "Highlight", Action = "PagingAction" }
+        );
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditForm;
+        settings.SettingsBehavior.ConfirmDelete = true;
+        settings.Width = Unit.Percentage(60);
+        settings.KeyFieldName = "Id";
+        
+      
+        settings.Columns.Add("Id").Visible = false;
+        settings.Columns.Add("PeriodeType","Periode Type");
+        settings.Columns.Add("Date", "Date").PropertiesEdit.DisplayFormatString = "MM/dd/yyyy";
+        settings.Columns.Add("Value", "Value");
+        settings.Columns.Add("Temperature", "Temperature");
+      
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "Edit";
+            column.SetDataItemTemplateContent(c =>
+                                              ViewContext.Writer.Write(
+                                                   Html.ActionLink("Edit", "Edit", new { Id = DataBinder.Eval(c.DataItem, "Id") })
+                                                  )
+                );
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "Delete";
+            column.SetDataItemTemplateContent(c =>
+                                              ViewContext.Writer.Write(
+                                                   "<a href='javascript:;' onclick='confirmDelete(" + DataBinder.Eval(c.DataItem, "Id") + ")'>Delete</a>"
+                                                  )
+                );
+        });
+        settings.SettingsPager.PageSizeItemSettings.Visible = true;
+        settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+    }).BindToCustomData(Model).GetHtml()

@@ -13,10 +13,10 @@ namespace DSLNG.PEAR.Web.ViewModels.VesselSchedule
                 new SelectListItem{Value = "FOB", Text="FOB"},
                 new SelectListItem{Value = "DES", Text= "DES"}
             };
-            SalesTypes = new List<SelectListItem>{
-                new SelectListItem{Value = "SPA", Text="SPA"},
-                new SelectListItem{Value = "Spot Market", Text= "Spot Market"}
-            };
+            //SalesTypes = new List<SelectListItem>{
+            //    new SelectListItem{Value = "SPA", Text="SPA"},
+            //    new SelectListItem{Value = "Spot Market", Text= "Spot Market"}
+            //};
         }
         public int Id { get; set; }
         public int VesselId { get; set; }

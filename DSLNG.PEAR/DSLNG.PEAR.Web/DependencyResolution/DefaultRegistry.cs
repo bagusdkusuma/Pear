@@ -64,6 +64,7 @@ namespace DSLNG.PEAR.Web.DependencyResolution {
             For<INLSService>().Use<NLSService>();
             For<ICalculatorConstantService>().Use<CalculatorConstantService>();
             For<IConstantUsageService>().Use<ConstantUsageService>();
+            For<IWeatherService>().Use<WeatherService>();
         }
 
         #endregion

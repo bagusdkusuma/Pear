@@ -94,6 +94,7 @@
     <Compile Include="Interfaces\ITemplateService.cs" />
     <Compile Include="Interfaces\IVesselScheduleService.cs" />
     <Compile Include="Interfaces\IVesselService.cs" />
+    <Compile Include="Interfaces\IWeatherService.cs" />
     <Compile Include="KpiAchievementService.cs" />
     <Compile Include="KpiTargetService.cs" />
     <Compile Include="PeriodeService.cs" />
@@ -176,6 +177,10 @@
     <Compile Include="Requests\Vessel\GetVesselRequest.cs" />
     <Compile Include="Requests\Vessel\GetVesselsRequest.cs" />
     <Compile Include="Requests\Vessel\SaveVesselRequest.cs" />
+    <Compile Include="Requests\Weather\DeleteWeatherRequest.cs" />
+    <Compile Include="Requests\Weather\GetWeatherRequest.cs" />
+    <Compile Include="Requests\Weather\GetWeathersRequest.cs" />
+    <Compile Include="Requests\Weather\SaveWeatherRequest.cs" />
     <Compile Include="Responses\Artifact\CreateArtifactResponse.cs" />
     <Compile Include="Responses\Artifact\GetArtifactResponse.cs" />
     <Compile Include="Responses\Artifact\GetArtifactsResponse.cs" />
@@ -405,6 +410,10 @@
     <Compile Include="Responses\Vessel\GetVesselResponse.cs" />
     <Compile Include="Responses\Vessel\GetVesselsResponse.cs" />
     <Compile Include="Responses\Vessel\SaveVesselResponse.cs" />
+    <Compile Include="Responses\Weather\DeleteWeatherResponse.cs" />
+    <Compile Include="Responses\Weather\GetWeatherResponse.cs" />
+    <Compile Include="Responses\Weather\GetWeathersResponse.cs" />
+    <Compile Include="Responses\Weather\SaveWeatherResponse.cs" />
     <Compile Include="RoleGroupService.cs" />
     <Compile Include="SelectService.cs" />
     <Compile Include="TemplateService.cs" />
@@ -416,6 +425,7 @@
     <Compile Include="Responses\User\GetUserResponse.cs" />
     <Compile Include="VesselScheduleService.cs" />
     <Compile Include="VesselService.cs" />
+    <Compile Include="WeatherService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DSLNG.PEAR.Common\DSLNG.PEAR.Common.csproj">
