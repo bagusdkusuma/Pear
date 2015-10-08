@@ -28,11 +28,46 @@ namespace DSLNG.PEAR.Services
             {
                 return new GetVesselSchedulesResponse { Count = DataContext.VesselSchedules.Count() };
             }
+            else if (request.allActiveList) {
+                var query = DataContext.VesselSchedules
+                    .Include(x => x.Buyer)
+                    .Include(x => x.Vessel)
+                    .Select(x => new { 
+                        NextLoadingSchedules = x.NextLoadingSchedules.OrderByDescending(y => y.CreatedAt).Take(1).ToList(),
+                        Buyer = x.Buyer,
+                        Vessel = x.Vessel,
+                        ETA = x.ETA,
+                        ETD = x.ETD,
+                        Location = x.Location,
+                        SalesType = x.SalesType,
+                        Type = x.Type,
+                        IsActive = x.IsActive
+                    });
+                return new GetVesselSchedulesResponse
+                {
+                    VesselSchedules = query.Where(x => x.IsActive == true).Select(
+                        x => new GetVesselSchedulesResponse.VesselScheduleResponse
+                        {
+                            Remark = x.NextLoadingSchedules.Count == 1? x.NextLoadingSchedules.FirstOrDefault().Remark : null,
+                            RemarkDate = x.NextLoadingSchedules.Count == 1 ? x.NextLoadingSchedules.FirstOrDefault().CreatedAt : (DateTime?)null,
+                            Buyer = x.Buyer.Name,
+                            Vessel = x.Vessel.Name,
+                            ETA = x.ETA,
+                            ETD = x.ETD,
+                            Location = x.Location,
+                            SalesType = x.SalesType,
+                            Type = x.Type,
+                            IsActive = x.IsActive
+                        }
+                    ).ToList()
+                };
+            }
             else
             {
                 var query = DataContext.VesselSchedules.Include(x => x.Buyer)
                     .Include(x => x.Vessel);
-                if (!string.IsNullOrEmpty(request.Term)) {
+                if (!string.IsNullOrEmpty(request.Term))
+                {
                     query = query.Where(x => x.Vessel.Name.Contains(request.Term));
                 }
                 query = query.OrderByDescending(x => x.Id).Skip(request.Skip).Take(request.Take);

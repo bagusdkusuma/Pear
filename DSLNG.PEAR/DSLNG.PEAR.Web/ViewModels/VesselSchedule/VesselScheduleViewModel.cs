@@ -17,6 +17,7 @@ namespace DSLNG.PEAR.Web.ViewModels.VesselSchedule
             //    new SelectListItem{Value = "SPA", Text="SPA"},
             //    new SelectListItem{Value = "Spot Market", Text= "Spot Market"}
             //};
+            IsActive = true;
         }
         public int Id { get; set; }
         public int VesselId { get; set; }

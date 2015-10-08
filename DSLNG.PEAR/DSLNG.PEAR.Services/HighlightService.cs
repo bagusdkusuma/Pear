@@ -20,6 +20,13 @@ namespace DSLNG.PEAR.Services
             {
                 return new GetHighlightsResponse { Count = DataContext.Highlights.Count() };
             }
+            else if (request.Except.Length > 0 && request.Date.HasValue) {
+                return new GetHighlightsResponse
+                {
+                    Highlights = DataContext.Highlights.Where(x => x.Date == request.Date.Value && !request.Except.Contains(x.Type))
+                    .ToList().MapTo<GetHighlightsResponse.HighlightResponse>()
+                };
+            }
             else
             {
                 return new GetHighlightsResponse

@@ -10,6 +10,8 @@ using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Requests.Select;
 using System.Linq;
 using DSLNG.PEAR.Services.Requests.NLS;
+using DSLNG.PEAR.Services.Requests.VesselSchedule;
+using DSLNG.PEAR.Services.Requests.Weather;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -18,13 +20,20 @@ namespace DSLNG.PEAR.Web.Controllers
         private IHighlightService _highlightService;
         private ISelectService _selectService;
         private INLSService _nlsService;
+        private IVesselScheduleService _vesselScheduleService;
+        private IWeatherService _waetherService;
+
         public HighlightController(IHighlightService highlightService,
             ISelectService selectService,
-            INLSService nlsService)
+            INLSService nlsService,
+            IVesselScheduleService vesselScheduleService,
+            IWeatherService weatherService)
         {
             _highlightService = highlightService;
             _selectService = selectService;
             _nlsService = nlsService;
+            _vesselScheduleService = vesselScheduleService;
+            _waetherService = weatherService;
         }
         public ActionResult Index()
         {
@@ -150,8 +159,13 @@ namespace DSLNG.PEAR.Web.Controllers
         }
 
         public ActionResult DailyExecutionReport() {
-            var nlsList = _nlsService.GetNLSList(new GetNLSListRequest { TheActiveOnes = true });
-            return View();
+            //var nlsList = _nlsService.GetNLSList(new GetNLSListRequest { TheActiveOnes = true });
+            var vesselSchedules = _vesselScheduleService.GetVesselSchedules(new GetVesselSchedulesRequest{allActiveList=true});
+            var viewModel = new DailyExecutionReportViewModel();
+            viewModel.NLSList = vesselSchedules.VesselSchedules.MapTo<DailyExecutionReportViewModel.NLSViewModel>();
+            viewModel.Weather = _waetherService.GetWeather(new GetWeatherRequest { Date = DateTime.Now.Date }).MapTo<DailyExecutionReportViewModel.WeatherViewModel>();
+            viewModel.Highlights = _highlightService.GetHighlights(new GetHighlightsRequest { Except = new string[1] { "alert-condition" },Date = DateTime.Now.Date }).Highlights.MapTo<DailyExecutionReportViewModel.HighlightViewModel>();
+            return View(viewModel);
         }
     }
 }

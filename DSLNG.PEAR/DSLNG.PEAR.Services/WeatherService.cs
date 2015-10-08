@@ -18,6 +18,9 @@ namespace DSLNG.PEAR.Services
 
         public GetWeatherResponse GetWeather(GetWeatherRequest request)
         {
+            if (request.Date.HasValue) {
+                return DataContext.Weathers.FirstOrDefault(x => x.Date == request.Date.Value).MapTo<GetWeatherResponse>();
+            }
             return DataContext.Weathers.FirstOrDefault(x => x.Id == request.Id).MapTo<GetWeatherResponse>();
         }
 

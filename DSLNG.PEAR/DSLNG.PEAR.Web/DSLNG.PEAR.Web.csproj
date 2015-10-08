@@ -829,6 +829,7 @@
     <Compile Include="ViewModels\Conversion\IndexConversionViewModel.cs" />
     <Compile Include="ViewModels\Conversion\Measurement.cs" />
     <Compile Include="ViewModels\Conversion\UpdateConversionViewModel.cs" />
+    <Compile Include="ViewModels\Highlight\DailyExecutionReportViewModel.cs" />
     <Compile Include="ViewModels\Highlight\HighlightViewModel.cs" />
     <Compile Include="ViewModels\KpiAchievement\ConfigurationKpiAchievementsViewModel.cs" />
     <Compile Include="ViewModels\KpiAchievement\ConfigurationParamViewModel.cs" />

@@ -5,6 +5,9 @@ namespace DSLNG.PEAR.Services.Requests.VesselSchedule
 {
     public class SaveVesselScheduleRequest
     {
+        public SaveVesselScheduleRequest() {
+            IsActive = true;
+        }
         public int Id { get; set; }
         public int VesselId { get; set; }
         public DateTime ETA { get; set; }

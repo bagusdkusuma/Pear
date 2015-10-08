@@ -1,6 +1,8 @@
 ﻿
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -10,6 +12,7 @@ namespace DSLNG.PEAR.Data.Entities
     {
         public VesselSchedule() {
             IsActive = true;
+            NextLoadingSchedules = new List<NextLoadingSchedule>();
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -22,5 +25,6 @@ namespace DSLNG.PEAR.Data.Entities
         public string Location { get; set; }
         public string SalesType { get; set; }
         public string Type { get; set; }
+        public ICollection<NextLoadingSchedule> NextLoadingSchedules { get; set; }
     }
 }

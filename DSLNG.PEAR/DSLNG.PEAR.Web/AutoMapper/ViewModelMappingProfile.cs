@@ -472,6 +472,9 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<WeatherViewModel, SaveWeatherRequest>();
             Mapper.CreateMap<GetWeatherResponse, WeatherViewModel>();
+            Mapper.CreateMap<GetVesselSchedulesResponse.VesselScheduleResponse, DailyExecutionReportViewModel.NLSViewModel>();
+            Mapper.CreateMap<GetWeatherResponse, DailyExecutionReportViewModel.WeatherViewModel>();
+            Mapper.CreateMap<GetHighlightsResponse.HighlightResponse, DailyExecutionReportViewModel.HighlightViewModel>();
             base.Configure();
         }
 
