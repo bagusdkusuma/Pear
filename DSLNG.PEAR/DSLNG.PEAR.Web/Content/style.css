@@ -26,6 +26,12 @@ body {
         background-image: url(/Content/img/report-bg.jpg);
     }
 
+    body.setting
+    {
+        background-color: #000000;
+        background-image: none;
+    }
+
 fieldset legend {
     float: left;
 }
@@ -1481,3 +1487,26 @@ ul li.unit.active {
 label {
     color: #ffffff;
 }
+
+h2, h4 {
+    color: #ffffff;
+}
+
+.calculator-tabs {
+    float: right;
+    border-bottom: none;
+}
+
+.calculator-tabs li {
+    margin: 0 10px;
+}
+
+.calculator-tabs li.active a {
+    color: #0000cd;
+}
+
+    .calculator-tabs li a
+    {
+        background: #1e90ff;
+        color: #ffffff;
+    }

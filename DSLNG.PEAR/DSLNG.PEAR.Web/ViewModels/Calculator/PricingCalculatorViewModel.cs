@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -18,7 +19,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Calculator
                     new SelectListItem {Text = "USD/bbl", Value = "usd/bbl"}
                 };
         }
-
+        [Display(Name = "JCC Price")]
         public double JccPrice { get; set; }
         public string Unit { get; set; }
         public IList<SelectListItem> Units { get; set; }
