@@ -125,7 +125,7 @@
                             <input type="hidden" name="KpiId" class="kpiId" value="@kpi.Id" />
                             <input type="hidden" name="HeaderPopover" class="header-popover" value="" />
                             <input type="hidden" name="PeriodeType" class="periodeType" value="@DSLNG.PEAR.Data.Enums.PeriodeType.Daily" />
-                            <input type="text" class="form-control-small value kpi-popover @remarkSign" id="@idValue" value="@kpiAchievement.Value" readonly="readonly">
+                            <input type="text" data-toggle="popover" class="form-control-small value kpi-popover @remarkSign" id="@idValue" value="@kpiAchievement.Value" readonly="readonly">
                             <input type="hidden" class="form-control-small id" value="@kpiAchievement.Id">
                             <input type="hidden" class="form-control-small remark" value="@kpiAchievement.Remark">
                             <input type="hidden" class="form-control-small periode" value="@kpiAchievement.Periode">

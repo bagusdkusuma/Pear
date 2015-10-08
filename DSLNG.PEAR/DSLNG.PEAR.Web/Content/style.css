@@ -1464,4 +1464,12 @@ label {
     color: #ffffff;
 }
 
+.popover-content label {
+    color: #000000;
+}
+
+input[type="text"] {
+    color: #000000;
+}
+
 

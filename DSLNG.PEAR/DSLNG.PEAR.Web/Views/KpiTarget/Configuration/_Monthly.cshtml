@@ -46,7 +46,7 @@
                                 <input type="hidden" name="KpiId" class="kpiId" value="@kpi.Id" />
                                 <input type="hidden" name="HeaderPopover" class="header-popover" value="" />
                                 <input type="hidden" name="PeriodeType" class="periodeType" value="@DSLNG.PEAR.Data.Enums.PeriodeType.Monthly" />
-                                <input type="text" class="form-control-small value kpi-popover @remarkSign" id="@idValue" value="@kpiTarget.Value" readonly="readonly">
+                                <input type="text" data-toggle="popover" class="form-control-small value kpi-popover @remarkSign" id="@idValue" value="@kpiTarget.Value" readonly="readonly">
                                 <input type="hidden" class="form-control-small id" value="@kpiTarget.Id">
                                 <input type="hidden" class="form-control-small remark" value="@kpiTarget.Remark">
                                 <input type="hidden" class="form-control-small periode" value="@kpiTarget.Periode">
