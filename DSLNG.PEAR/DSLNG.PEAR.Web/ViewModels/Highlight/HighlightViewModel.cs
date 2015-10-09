@@ -14,6 +14,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Highlight
         {
             PeriodeTypes = new List<SelectListItem>();
             Types = new List<SelectListItem>();
+            AlertConditions = new List<SelectListItem>();
         }
         public int Id { get; set; }
         [Display(Name = "Periode Type")]
@@ -80,6 +81,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Highlight
         [Required]
         public string Type { get; set; }
         public IList<SelectListItem> Types { get; set; }
+        public IList<SelectListItem> AlertConditions { get; set; }
         [Required]
         public string Title { get; set; }
         [Required]

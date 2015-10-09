@@ -20,9 +20,12 @@ namespace DSLNG.PEAR.Services.Responses.VesselSchedule
             public string Location { get; set; }
             public string SalesType { get; set; }
             public string Type { get; set; }
+            public string VesselType { get; set; }
             public string Cargo { get; set; }
             public string Remark { get; set; }
             public DateTime? RemarkDate { get; set; }
+            public string Measurement { get; set; }
+            public double Capacity { get; set; }
         }
     }
 }

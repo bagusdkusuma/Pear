@@ -97,7 +97,17 @@ namespace DSLNG.PEAR.Services
 
         public GetHighlightResponse GetHighlight(GetHighlightRequest request)
         {
-            return DataContext.Highlights.FirstOrDefault(x => x.Id == request.Id).MapTo<GetHighlightResponse>();
+            if (request.Id != 0)
+            {
+                return DataContext.Highlights.FirstOrDefault(x => x.Id == request.Id).MapTo<GetHighlightResponse>();
+            }
+            else {
+                var highlight = DataContext.Highlights.FirstOrDefault(x => x.Date == request.Date && x.Type == request.Type);
+                if (highlight != null) {
+                    return highlight.MapTo<GetHighlightResponse>();
+                }
+                return new GetHighlightResponse();
+            }
         }
 
 

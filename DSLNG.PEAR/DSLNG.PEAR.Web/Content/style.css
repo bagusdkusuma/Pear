@@ -1522,6 +1522,9 @@ h4 .weather-value {
     font-weight: normal;
     margin-left: 15px;
 }
+    h4 .weather-value.alert {
+        color:#0ACA03;
+    }
 table.der.highlights tr:first-child td {
     border-top: none!important;
 }

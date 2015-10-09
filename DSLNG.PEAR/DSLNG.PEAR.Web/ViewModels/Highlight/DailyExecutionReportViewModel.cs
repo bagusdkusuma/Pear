@@ -18,20 +18,23 @@ namespace DSLNG.PEAR.Web.ViewModels.Highlight
         public WeatherViewModel Weather {get;set;}
         public class NLSViewModel {
             public string Type { get; set; }
+            public string VesselType { get; set; }
             public string Vessel { get; set; }
             public double Capacity { get; set; }
             public DateTime ETA { get; set; }
             public DateTime ETD { get; set; }
             public string Cargo { get; set; }
             public string Remark { get; set; }
+            public string Buyer { get; set; }
             public DateTime RemarkDate { get; set; }
+            public string Measurement { get; set; }
         }
         public class WeatherViewModel {
             public string Value { get; set; }
             public string Temperature { get; set; }
         }
         public class AlertViewModel {
-            public string Condition { get; set; }
+            public string Message { get; set; }
         }
         public class HighlightViewModel {
             public string Title { get; set; }

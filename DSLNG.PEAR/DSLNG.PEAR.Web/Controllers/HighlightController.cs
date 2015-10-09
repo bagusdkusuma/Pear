@@ -111,6 +111,8 @@ namespace DSLNG.PEAR.Web.Controllers
             }
             viewModel.Types = _selectService.GetSelect(new GetSelectRequest { Name = "highlight-types" }).Options
                 .Select(x => new SelectListItem { Text = x.Text, Value = x.Value }).ToList();
+            viewModel.AlertConditions = _selectService.GetSelect(new GetSelectRequest { Name = "alert-conditions" }).Options
+                .Select(x => new SelectListItem { Text = x.Text, Value = x.Value }).ToList();
             return View(viewModel);
         }
 
@@ -138,6 +140,8 @@ namespace DSLNG.PEAR.Web.Controllers
             }
             viewModel.Types = _selectService.GetSelect(new GetSelectRequest { Name = "highlight-types" }).Options
                 .Select(x => new SelectListItem { Text = x.Text, Value = x.Value }).ToList();
+            viewModel.AlertConditions = _selectService.GetSelect(new GetSelectRequest { Name = "alert-conditions" }).Options
+               .Select(x => new SelectListItem { Text = x.Text, Value = x.Value }).ToList();
             return View(viewModel);
         }
 
@@ -164,7 +168,8 @@ namespace DSLNG.PEAR.Web.Controllers
             var viewModel = new DailyExecutionReportViewModel();
             viewModel.NLSList = vesselSchedules.VesselSchedules.MapTo<DailyExecutionReportViewModel.NLSViewModel>();
             viewModel.Weather = _waetherService.GetWeather(new GetWeatherRequest { Date = DateTime.Now.Date }).MapTo<DailyExecutionReportViewModel.WeatherViewModel>();
-            viewModel.Highlights = _highlightService.GetHighlights(new GetHighlightsRequest { Except = new string[1] { "alert-condition" },Date = DateTime.Now.Date }).Highlights.MapTo<DailyExecutionReportViewModel.HighlightViewModel>();
+            viewModel.Highlights = _highlightService.GetHighlights(new GetHighlightsRequest { Except = new string[1] { "alert" },Date = DateTime.Now.Date }).Highlights.MapTo<DailyExecutionReportViewModel.HighlightViewModel>();
+            viewModel.Alert = _highlightService.GetHighlight(new GetHighlightRequest { Type = "alert", Date = DateTime.Now.Date }).MapTo<DailyExecutionReportViewModel.AlertViewModel>();
             return View(viewModel);
         }
     }

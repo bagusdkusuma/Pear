@@ -36,11 +36,18 @@
                 @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Title)
             </div>
-            <div class="form-group form-list">
-                @Html.LabelFor(model => model.Message)
-                @Html.TextAreaFor(model => model.Message,5,100, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Message)
-            </div>
+             <div class="message-holder">
+                    <div class="form-group form-list message-text-area">
+                        @Html.LabelFor(model => model.Message)
+                        @Html.TextAreaFor(model => model.Message, 5, 100, new { @class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.Message)
+                    </div>
+                    <div class="form-group form-list alert-condition-options">
+                         @Html.LabelFor(model => model.Message)
+                        @Html.DropDownListFor(model => model.Message, Model.AlertConditions ,new { @class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.Message)
+                    </div>
+                </div>
         </div>
     </div>
     <div class="col-md-12 artifact-designer-btns">

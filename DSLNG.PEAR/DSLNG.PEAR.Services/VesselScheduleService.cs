@@ -33,6 +33,7 @@ namespace DSLNG.PEAR.Services
                 var query = DataContext.VesselSchedules
                     .Include(x => x.Buyer)
                     .Include(x => x.Vessel)
+                    .Include(x => x.Vessel.Measurement)
                     .Select(x => new { 
                         NextLoadingSchedules = x.NextLoadingSchedules.OrderByDescending(y => y.CreatedAt).Take(1).ToList(),
                         Buyer = x.Buyer,
@@ -42,7 +43,11 @@ namespace DSLNG.PEAR.Services
                         Location = x.Location,
                         SalesType = x.SalesType,
                         Type = x.Type,
-                        IsActive = x.IsActive
+                        VesselType = x.Vessel.Type,
+                        IsActive = x.IsActive,
+                        Cargo = x.Cargo,
+                        Measurement = x.Vessel.Measurement.Name,
+                        Capacity = x.Vessel.Capacity
                     });
                 return new GetVesselSchedulesResponse
                 {
@@ -58,7 +63,11 @@ namespace DSLNG.PEAR.Services
                             Location = x.Location,
                             SalesType = x.SalesType,
                             Type = x.Type,
-                            IsActive = x.IsActive
+                            IsActive = x.IsActive,
+                            Cargo = x.Cargo,
+                            VesselType = x.VesselType,
+                            Measurement = x.Measurement,
+                            Capacity = x.Capacity
                         }
                     ).ToList()
                 };
