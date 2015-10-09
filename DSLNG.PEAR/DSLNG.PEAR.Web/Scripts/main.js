@@ -4097,11 +4097,7 @@ Number.prototype.format = function (n, x) {
             $(this).closest('.constant-template').remove();
         });
     };
-
-    Pear.Calculator.Pricing = function () {
-        $('<div/>').pricing();
-    };
-
+    
     $(document).ready(function () {
         if ($('.artifact-designer').length) {
             Pear.Artifact.Designer.GraphicSettingSetup();
@@ -4136,9 +4132,11 @@ Number.prototype.format = function (n, x) {
         }
         
         if ($('.calculator').length) {
-            Pear.Calculator.Pricing();
+            Pear.PricingCalculator.Init();
             Pear.ProductionYieldCalculator.Init();
             Pear.StandardCalculator.Init();
+            Pear.PlantAvailabilityCalculator.Init();
+            Pear.CalculatorConstant.Init();
         }
     });
     window.Pear = Pear;

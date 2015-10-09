@@ -1,5 +1,6 @@
 ﻿
 
+using System.ComponentModel.DataAnnotations;
 using DSLNG.PEAR.Web.ViewModels.CalculatorConstant;
 using DSLNG.PEAR.Web.ViewModels.ConstantUsage;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Calculator
                 new SelectListItem{Text = "mmbtu", Value = "mmbtu"}
             };
         }
+        [Display(Name = "Main Input")]
         public double MainInput { get; set; }
         public string Unit { get; set; }
         public IList<SelectListItem> Units { get; set; }

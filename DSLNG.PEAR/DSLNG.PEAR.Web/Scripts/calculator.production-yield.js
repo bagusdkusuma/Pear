@@ -2,37 +2,36 @@
     var pear = window.Pear;
     pear.ProductionYieldCalculator = {};
     pear.ProductionYieldCalculator.Init = function () {
-        var tonnes_mmscf = parseFloat($('.production-yield-all .tonnes-mmscf').val());
-        var mmscf_tonnes = 1 / tonnes_mmscf;
-        var kg_mmbtu = parseFloat($('.production-yield-all .kg-mmbtu').val());
-        var mmbtu_kg = 1 / kg_mmbtu;
-        var lng_yield = parseFloat($('.production-yield-all .lng-yield').val()) / 100;
-        var cds_yield = parseFloat($('.production-yield-all .cds-yield').val()) / 100;
-        var nm3_kg = parseFloat($('.production-yield-all .nm3-kg').val());
-        var nm3_m3 = parseFloat($('.production-yield-all .nm3-m3').val());
-        var pav = parseFloat($('.production-yield-all .pav').val());
-        var bbl_m3 = parseFloat($('.production-yield-all .bbl-m3').val());
-
         var toTonnes = function (unit, input) {
+            var tonnes_mmscf = parseFloat($('.production-yield-all .tonnes-mmscf').val());
+            var kg_mmbtu = parseFloat($('.production-yield-all .kg-mmbtu').val());
             var $resultHolder = $('.tonnes-result');
+            var result;
             switch (unit) {
                 case 'mmscf':
-                    var result = input * tonnes_mmscf;
+                    result = input * tonnes_mmscf;
                     break;
                 case 'kg':
-                    var result = input / 1000;
+                    result = input / 1000;
                     break;
                 case 'mmbtu':
-                    var result = input * kg_mmbtu / 1000;
+                    result = input * kg_mmbtu / 1000;
                     break;
                 default :
-                    var result = input;
+                    result = input;
                     break;
             }
             $resultHolder.html(result.format(4));
             return result;
         };
         var toLNG = function (tonnes) {
+            var kg_mmbtu = parseFloat($('.production-yield-all .kg-mmbtu').val());
+            var mmbtu_kg = 1 / kg_mmbtu;
+            var lng_yield = parseFloat($('.production-yield-all .lng-yield').val()) / 100;
+            var nm3_m3 = parseFloat($('.production-yield-all .nm3-m3').val());
+            var pav = parseFloat($('.production-yield-all .pav').val());
+            var nm3_kg = parseFloat($('.production-yield-all .nm3-kg').val());
+            
             var lngTonnes = tonnes * lng_yield;
             var lngMmbtu = lngTonnes * 1000 * mmbtu_kg;
             var lngM3 = lngTonnes * 1000 * nm3_kg / nm3_m3;
@@ -44,6 +43,13 @@
         };
 
         var toCDS = function (tonnes) {
+            var kg_mmbtu = parseFloat($('.production-yield-all .kg-mmbtu').val());
+            var mmbtu_kg = 1 / kg_mmbtu;
+            var nm3_m3 = parseFloat($('.production-yield-all .nm3-m3').val());
+            var bbl_m3 = parseFloat($('.production-yield-all .bbl-m3').val());
+            var nm3_kg = parseFloat($('.production-yield-all .nm3-kg').val());
+            var cds_yield = parseFloat($('.production-yield-all .cds-yield').val()) / 100;
+            
             var cdsTonnes = tonnes * cds_yield;
             var cdsMmbtu = cdsTonnes * 1000 * mmbtu_kg;
             var cdsM3 = cdsTonnes * 1000 * nm3_kg / nm3_m3;
@@ -71,5 +77,16 @@
             toLNG(tonnes);
             toCDS(tonnes);
         });
+        
+        $('.pricing-constanta-wrapper input[type="text"]').change(function () {
+            var input = parseFloat($('#MainInput').val());
+            if (input != 0) {
+                var unit = $('#Unit').val();
+                var tonnes = toTonnes(unit, input);
+                toLNG(tonnes);
+                toCDS(tonnes);
+            }
+        });
+
     };
 }(window, jQuery));

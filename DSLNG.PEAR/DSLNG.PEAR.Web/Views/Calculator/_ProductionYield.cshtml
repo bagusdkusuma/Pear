@@ -1,163 +1,125 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Calculator.ProductionYieldCalculatorViewModel
-<div class="row" style="margin-bottom: 0px; text-align: left;">
-    <div class="col-md-7 form-inline">
+<div class="row">
+    <div class="col-md-12">
+        <h3>Production Yield</h3>
+    </div>
+</div>
+<div class="row" style="margin-bottom: 0px; text-align: left;color: #ffffff">
+    <div class="col-md-12 form-inline">
         <div class="form-group form-list">
             @Html.LabelFor(model => model.MainInput, new { style = "width:auto" })
             @Html.TextBoxFor(model => model.MainInput, new { @class = "form-control" })
             @Html.DropDownListFor(model => model.Unit, Model.Units, new { @class = "main-input-unit form-control" })
+            <span class="tonnes-result" style="margin-left: 30px">xxxx</span>
+            <span class="unit">tonnes</span>
         </div>
-    </div>
-    <div class="col-md-5 text-left">
-        <span class="tonnes-result">xxxx</span>
-        <span class="unit">tonnes</span>
     </div>
 </div>
 <div class="row">
-    <div class="col-md-6">
-        <!-- Nav tabs -->
-        <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#lng" aria-controls="profile" role="tab" data-toggle="tab">LNG</a></li>
-            <li role="presentation"><a href="#cds" aria-controls="messages" role="tab" data-toggle="tab">CDS</a></li>
-            <li role="presentation"><a href="#mcheCapacity" aria-controls="settings" role="tab" data-toggle="tab">MCHE Capacity</a></li>
-        </ul>
-    </div>
-    <div class="col-md-6 text-left">
-        <h3>Constants</h3>
-    </div>
-</div>
-
-<div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="lng">
-        <div class="row">
-            <div class="col-md-6">
-                <form class="form-horizontal">
-                    <div class="form-group">
-                        <label for="resultTonnes" class="control-label col-xs-2">Result</label>
-                        <div class="col-md-7">
-                            @Html.TextBoxFor(model => model.LNG.Tonnes, new { @class = "form-control" })
-                        </div>
-                        <label for="resultTonnes" class="control-label col-xs-2">tonnes</label>
+    <div class="col-md-4">
+        <div class="col-md-12">
+            <h4>LNG</h4>
+        </div>
+        <div class="col-md-12">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="resultTonnes" class="control-label col-xs-2">Result</label>
+                    <div class="col-md-7">
+                        @Html.TextBoxFor(model => model.LNG.Tonnes, new { @class = "form-control" })
                     </div>
-                    <div class="form-group">
-                        <label for="resultTonnes" class="control-label col-xs-2"></label>
-                        <div class="col-md-7">
-                            @Html.TextBoxFor(model => model.LNG.Mmbtu, new { @class = "form-control" })
-                        </div>
-                        <label for="resultTonnes" class="control-label col-xs-2">mmbtu</label>
+                    <label for="resultTonnes" class="control-label col-xs-2">tonnes</label>
+                </div>
+                <div class="form-group">
+                    <label for="resultTonnes" class="control-label col-xs-2"></label>
+                    <div class="col-md-7">
+                        @Html.TextBoxFor(model => model.LNG.Mmbtu, new { @class = "form-control" })
                     </div>
-                    <div class="form-group">
-                        <label for="resultTonnes" class="control-label col-xs-2"></label>
-                        <div class="col-md-7">
-                            @Html.TextBoxFor(model => model.LNG.M3, new { @class = "form-control" })
-                        </div>
-                        <label for="resultTonnes" class="control-label col-xs-2">m3</label>
+                    <label for="resultTonnes" class="control-label col-xs-2">mmbtu</label>
+                </div>
+                <div class="form-group">
+                    <label for="resultTonnes" class="control-label col-xs-2"></label>
+                    <div class="col-md-7">
+                        @Html.TextBoxFor(model => model.LNG.M3, new { @class = "form-control" })
                     </div>
-                    <div class="form-group">
-                        <label for="resultTonnes" class="control-label col-xs-2"></label>
-                        <div class="col-md-7">
-                            @Html.TextBoxFor(model => model.LNG.Mtpa, new { @class = "form-control" })
-                        </div>
-                        <label for="resultTonnes" class="control-label col-xs-2">mtpa</label>
+                    <label for="resultTonnes" class="control-label col-xs-2">m3</label>
+                </div>
+                <div class="form-group">
+                    <label for="resultTonnes" class="control-label col-xs-2"></label>
+                    <div class="col-md-7">
+                        @Html.TextBoxFor(model => model.LNG.Mtpa, new { @class = "form-control" })
                     </div>
-                </form>
-            </div>
-            <div class="col-md-6 text-left">
-                <form class="form-horizontal production-yield-all constants">
-                    @foreach (var constant in Model.Constants)
-                    { 
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">@constant.DisplayName</label>
-                            <div class="col-sm-6">
-                                @Html.TextBoxFor(m => constant.Value, new { @class = constant.Name })
-                            </div>
-                            <div class="col-sm-3">@constant.Measurement</div>
-                        </div>
-                    }
-                </form>
-                @*<fieldset class="production-yield-general">
-                    <legend>General</legend>
-                    <form class="form-horizontal">
-                        @foreach (var constant in Model.GeneralConstans)
-                        { 
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">@constant.DisplayName</label>
-                                <div class="col-sm-6">
-                                    @Html.TextBoxFor(m => constant.Value, new { @class = constant.Name })
-                                </div>
-                                <div class="col-sm-3">@constant.Measurement</div>
-                            </div>
-                        }
-                    </form>
-                </fieldset>
-                <fieldset>
-                    <legend>LNG</legend>
-                    <form class="form-horizontal">
-                        @foreach (var constant in Model.LNGConstants)
-                        { 
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">@constant.DisplayName</label>
-                                <div class="col-sm-6">
-                                    @Html.TextBoxFor(m => constant.Value, new { @class = constant.Name })
-                                </div>
-                                <div class="col-sm-3">@constant.Measurement</div>
-                            </div>
-                        }
-                    </form>
-                </fieldset>*@
-            </div>
+                    <label for="resultTonnes" class="control-label col-xs-2">mtpa</label>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-12">
+            <h4>CDS</h4>
+        </div>
+        <div class="col-md-12">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="resultTonnes" class="control-label col-xs-2">Result</label>
+                    <div class="col-md-7">
+                        @Html.TextBoxFor(model => model.CDS.Tonnes, new { @class = "form-control" })
+                    </div>
+                    <label for="resultTonnes" class="control-label col-xs-2">tonnes</label>
+                </div>
+                <div class="form-group">
+                    <label for="resultTonnes" class="control-label col-xs-2"></label>
+                    <div class="col-md-7">
+                        @Html.TextBoxFor(model => model.CDS.Mmbtu, new { @class = "form-control" })
+                    </div>
+                    <label for="resultTonnes" class="control-label col-xs-2">mmbtu</label>
+                </div>
+                <div class="form-group">
+                    <label for="resultTonnes" class="control-label col-xs-2"></label>
+                    <div class="col-md-7">
+                        @Html.TextBoxFor(model => model.CDS.M3, new { @class = "form-control" })
+                    </div>
+                    <label for="resultTonnes" class="control-label col-xs-2">m3</label>
+                </div>
+                <div class="form-group">
+                    <label for="resultTonnes" class="control-label col-xs-2"></label>
+                    <div class="col-md-7">
+                        @Html.TextBoxFor(model => model.CDS.Bbl, new { @class = "form-control" })
+                    </div>
+                    <label for="resultTonnes" class="control-label col-xs-2">bbl</label>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-12">
+            <h4>MCHE Capacity</h4>
+        </div>
+        <div class="col-md-12">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="resultTonnes" class="control-label col-xs-2">Result</label>
+                    <div class="col-md-7">
+                        @Html.TextBoxFor(model => model.MHCE.M3PerHr, new { @class = "form-control" })
+                    </div>
+                    <label for="resultTonnes" class="control-label col-xs-2">m3/hr</label>
+                </div>
+            </form>
         </div>
     </div>
-    <div role="tabpanel" class="tab-pane" id="cds">
-        <div class="row">
-            <div class="col-md-7">
-                <form class="form-horizontal">
-                    <div class="form-group">
-                        <label for="resultTonnes" class="control-label col-xs-2">Result</label>
-                        <div class="col-md-7">
-                            @Html.TextBoxFor(model => model.CDS.Tonnes, new { @class = "form-control" })
-                        </div>
-                        <label for="resultTonnes" class="control-label col-xs-2">tonnes</label>
-                    </div>
-                    <div class="form-group">
-                        <label for="resultTonnes" class="control-label col-xs-2"></label>
-                        <div class="col-md-7">
-                            @Html.TextBoxFor(model => model.CDS.Mmbtu, new { @class = "form-control" })
-                        </div>
-                        <label for="resultTonnes" class="control-label col-xs-2">mmbtu</label>
-                    </div>
-                    <div class="form-group">
-                        <label for="resultTonnes" class="control-label col-xs-2"></label>
-                        <div class="col-md-7">
-                            @Html.TextBoxFor(model => model.CDS.M3, new { @class = "form-control" })
-                        </div>
-                        <label for="resultTonnes" class="control-label col-xs-2">m3</label>
-                    </div>
-                    <div class="form-group">
-                        <label for="resultTonnes" class="control-label col-xs-2"></label>
-                        <div class="col-md-7">
-                            @Html.TextBoxFor(model => model.CDS.Bbl, new { @class = "form-control" })
-                        </div>
-                        <label for="resultTonnes" class="control-label col-xs-2">bbl</label>
-                    </div>
-                </form>
-            </div>
-            <div class="col-md-5"></div>
+    <div class="col-md-8">
+        <div class="col-md-12">
+            <h4 style="margin-left: 55px;">Constant</h4>
         </div>
-    </div>
-    <div role="tabpanel" class="tab-pane" id="mcheCapacity">
-        <div class="row">
-            <div class="col-md-7">
-                <form class="form-horizontal">
+        <div class="col-md-12 text-left pricing-constanta-wrapper">
+            <form class="form-horizontal production-yield-all constants">
+                @foreach (var constant in Model.Constants)
+                { 
                     <div class="form-group">
-                        <label for="resultTonnes" class="control-label col-xs-2">Result</label>
-                        <div class="col-md-7">
-                            @Html.TextBoxFor(model => model.MHCE.M3PerHr, new { @class = "form-control" })
+                        <label class="col-sm-3 control-label">@constant.DisplayName</label>
+                        <div class="col-sm-3">
+                            @Html.HiddenFor(m => constant.Id)
+                            @Html.TextBoxFor(m => constant.Value, new { @class = constant.Name + " calculator-constant" })
                         </div>
-                        <label for="resultTonnes" class="control-label col-xs-2">m3/hr</label>
-                    </div>
-                </form>
-            </div>
-            <div class="col-md-5"></div>
+                        <div class="col-sm-3"><label>@constant.Measurement</label></div>
+                    </div>    
+                }
+            </form>
         </div>
     </div>
 </div>
