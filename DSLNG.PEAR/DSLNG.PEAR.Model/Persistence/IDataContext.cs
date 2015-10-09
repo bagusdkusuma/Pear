@@ -46,6 +46,7 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<Buyer> Buyers { get; set; }
         IDbSet<CalculatorConstant> CalculatorConstants { get; set; }
         IDbSet<ConstantUsage> ConstantUsages { get; set; }
+        IDbSet<Weather> Weathers { get; set; }
         Database Database { get; }
         int SaveChanges();
         DbEntityEntry Entry(object entity);

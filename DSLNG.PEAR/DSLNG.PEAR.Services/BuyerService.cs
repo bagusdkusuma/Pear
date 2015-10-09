@@ -7,6 +7,7 @@ using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Entities;
 using System;
+using System.Data.Entity.Infrastructure;
 
 namespace DSLNG.PEAR.Services
 {
@@ -71,6 +72,46 @@ namespace DSLNG.PEAR.Services
                     Message = e.Message
                 };
             }
+        }
+
+
+        public DeleteBuyerResponse Delete(DeleteBuyerRequest request)
+        {
+            try
+            {
+                var buyer = new Buyer { Id = request.Id };
+                DataContext.Buyers.Attach(buyer);
+                DataContext.Buyers.Remove(buyer);
+                DataContext.SaveChanges();
+                return new DeleteBuyerResponse
+                {
+                    IsSuccess = true,
+                    Message = "You have been deleted this itme successfully"
+                };
+            }
+            catch (DbUpdateException e)
+            {
+                if (e.InnerException.InnerException.Message.Contains("dbo.VesselSchedule")) {
+                    return new DeleteBuyerResponse
+                    {
+                        IsSuccess = false,
+                        Message = "This item is being used by Vessel Schedule"
+                    };
+                }
+                return new DeleteBuyerResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured while tyring to save this item"
+                };
+            }
+            catch (InvalidOperationException) {
+                return new DeleteBuyerResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured while tyring to save this item"
+                };
+            }
+            
         }
     }
 }

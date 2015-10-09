@@ -91,6 +91,9 @@ using DSLNG.PEAR.Web.ViewModels.ConstantUsage;
 using DSLNG.PEAR.Services.Requests.ConstantUsage;
 using DSLNG.PEAR.Services.Responses.ConstantUsage;
 using DSLNG.PEAR.Web.ViewModels.Calculator;
+using DSLNG.PEAR.Web.ViewModels.Weather;
+using DSLNG.PEAR.Services.Requests.Weather;
+using DSLNG.PEAR.Services.Responses.Weather;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -466,6 +469,13 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetConstantUsagesResponse.ConstantResponse, ConstantUsageViewModel.CalculatorConstantViewModel>();
             Mapper.CreateMap<ConstantUsageViewModel.CalculatorConstantViewModel, CalculatorConstantViewModel>();
             Mapper.CreateMap<GetHighlightResponse, HighlightViewModel>();
+
+            Mapper.CreateMap<WeatherViewModel, SaveWeatherRequest>();
+            Mapper.CreateMap<GetWeatherResponse, WeatherViewModel>();
+            Mapper.CreateMap<GetVesselSchedulesResponse.VesselScheduleResponse, DailyExecutionReportViewModel.NLSViewModel>();
+            Mapper.CreateMap<GetWeatherResponse, DailyExecutionReportViewModel.WeatherViewModel>();
+            Mapper.CreateMap<GetHighlightsResponse.HighlightResponse, DailyExecutionReportViewModel.HighlightViewModel>();
+            Mapper.CreateMap<GetHighlightResponse, DailyExecutionReportViewModel.AlertViewModel>();
             base.Configure();
         }
 

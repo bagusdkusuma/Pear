@@ -10,5 +10,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetBuyerResponse GetBuyer(GetBuyerRequest request);
         GetBuyersResponse GetBuyers(GetBuyersRequest request);
         SaveBuyerResponse SaveBuyer(SaveBuyerRequest request);
+        DeleteBuyerResponse Delete(DeleteBuyerRequest request);
     }
 }

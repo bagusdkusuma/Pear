@@ -8,6 +8,7 @@ using System.Data.Entity;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Entities;
 using System;
+using System.Data.Entity.Infrastructure;
 
 namespace DSLNG.PEAR.Services
 {
@@ -28,11 +29,55 @@ namespace DSLNG.PEAR.Services
             {
                 return new GetVesselSchedulesResponse { Count = DataContext.VesselSchedules.Count() };
             }
+            else if (request.allActiveList) {
+                var query = DataContext.VesselSchedules
+                    .Include(x => x.Buyer)
+                    .Include(x => x.Vessel)
+                    .Include(x => x.Vessel.Measurement)
+                    .Select(x => new { 
+                        NextLoadingSchedules = x.NextLoadingSchedules.OrderByDescending(y => y.CreatedAt).Take(1).ToList(),
+                        Buyer = x.Buyer,
+                        Vessel = x.Vessel,
+                        ETA = x.ETA,
+                        ETD = x.ETD,
+                        Location = x.Location,
+                        SalesType = x.SalesType,
+                        Type = x.Type,
+                        VesselType = x.Vessel.Type,
+                        IsActive = x.IsActive,
+                        Cargo = x.Cargo,
+                        Measurement = x.Vessel.Measurement.Name,
+                        Capacity = x.Vessel.Capacity
+                    });
+                return new GetVesselSchedulesResponse
+                {
+                    VesselSchedules = query.Where(x => x.IsActive == true).Select(
+                        x => new GetVesselSchedulesResponse.VesselScheduleResponse
+                        {
+                            Remark = x.NextLoadingSchedules.Count == 1? x.NextLoadingSchedules.FirstOrDefault().Remark : null,
+                            RemarkDate = x.NextLoadingSchedules.Count == 1 ? x.NextLoadingSchedules.FirstOrDefault().CreatedAt : (DateTime?)null,
+                            Buyer = x.Buyer.Name,
+                            Vessel = x.Vessel.Name,
+                            ETA = x.ETA,
+                            ETD = x.ETD,
+                            Location = x.Location,
+                            SalesType = x.SalesType,
+                            Type = x.Type,
+                            IsActive = x.IsActive,
+                            Cargo = x.Cargo,
+                            VesselType = x.VesselType,
+                            Measurement = x.Measurement,
+                            Capacity = x.Capacity
+                        }
+                    ).ToList()
+                };
+            }
             else
             {
                 var query = DataContext.VesselSchedules.Include(x => x.Buyer)
                     .Include(x => x.Vessel);
-                if (!string.IsNullOrEmpty(request.Term)) {
+                if (!string.IsNullOrEmpty(request.Term))
+                {
                     query = query.Where(x => x.Vessel.Name.Contains(request.Term));
                 }
                 query = query.OrderByDescending(x => x.Id).Skip(request.Skip).Take(request.Take);
@@ -85,6 +130,46 @@ namespace DSLNG.PEAR.Services
                 {
                     IsSuccess = false,
                     Message = e.Message
+                };
+            }
+        }
+
+
+        public DeleteVesselScheduleResponse Delete(DeleteVesselScheduleRequest request)
+        {
+            try
+            {
+                var vesselSchedule = new VesselSchedule { Id = request.Id };
+                DataContext.VesselSchedules.Attach(vesselSchedule);
+                DataContext.VesselSchedules.Remove(vesselSchedule);
+                DataContext.SaveChanges();
+                return new DeleteVesselScheduleResponse
+                {
+                    IsSuccess = true,
+                    Message = "You have been successfully delete this item"
+                };
+            }
+            catch (DbUpdateException e) {
+                if (e.InnerException.InnerException.Message.Contains("dbo.NextLoadingSchedules"))
+                {
+                    return new DeleteVesselScheduleResponse
+                    {
+                        IsSuccess = false,
+                        Message = "The vessel schedule is being used by next loading schedule"
+                    };
+                }
+                return new DeleteVesselScheduleResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured while trying to delete this item"
+                };
+            }
+            catch (InvalidOperationException e)
+            {
+                return new DeleteVesselScheduleResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured while trying to delete this item"
                 };
             }
         }

@@ -51,6 +51,7 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<Buyer> Buyers { get; set; }
         public IDbSet<CalculatorConstant> CalculatorConstants { get; set; }
         public IDbSet<ConstantUsage> ConstantUsages { get; set; }
+        public IDbSet<Weather> Weathers { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

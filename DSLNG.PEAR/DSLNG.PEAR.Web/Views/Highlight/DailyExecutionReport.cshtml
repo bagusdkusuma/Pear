@@ -1,0 +1,85 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Highlight.DailyExecutionReportViewModel
+<div class="daily-execution-report ">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="title " style="margin-bottom: 50px">Daily Execution Report</div>
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 40px">
+        <div class="col-md-4">
+            <h4>Weather: <span class="weather-value">@Model.Weather.Value</span></h4>
+        </div>
+        <div class="col-md-4">
+            <h4>Outside Temperature: <span class="weather-value">@Model.Weather.Temperature</span></h4>
+        </div>
+        <div class="col-md-4">
+            <h4>Alert Condition: <span class="weather-value alert">@Model.Alert.Message</span></h4>
+        </div>
+    </div>
+
+    <div class="row" style="margin-bottom: 40px">
+        <div class="col-md-12">
+            <div class="panel panel-default der-panel">
+                <table class="der table-bordered">
+                    <tr>
+                        <th>Next Loading Schedule</th>
+                        <th>Vessel (Capacity)</th>
+                        <th>ETA</th>
+                        <th>ETD</th>
+                        <th>Cargo#</th>
+                        <th>Customer / Other Remarks</th>
+                    </tr>
+                    @foreach (var nls in Model.NLSList)
+                    { 
+                        <tr>
+                            <td>@nls.VesselType</td>
+                            <td>@nls.Vessel (@nls.Capacity @nls.Measurement)</td>
+                            <td>@nls.ETA.ToString("dd-MM-yyyy")</td>
+                            <td>@nls.ETD.ToString("dd-MM-yyyy")</td>
+                            <td>@nls.Cargo</td>
+                            <td>@nls.Buyer / @nls.RemarkDate.ToString("dd-MM-yyyy");@nls.Remark</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+
+    @if (Model.Highlights.Count > 0)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default der-panel">
+                    <table class="der highlights table-bordered">
+                        @for (var i = 0; i < Model.Highlights.Count; i += 2)
+                        {
+                            var colspan = "";
+                            if (Model.Highlights.Count <= i + 1 && i != 0)
+                            {
+                                colspan = "colspan=2";
+                            }
+                            <tr>
+                                <td @colspan>
+                                    @if (Model.Highlights.Count > i)
+                                    { 
+                                        <h4 style="float: none; margin-top: 10px">@Model.Highlights[i].Title</h4>
+                                        <p>@Model.Highlights[i].Message</p>
+                                    }
+                                </td>
+
+                                @if (Model.Highlights.Count > i + 1)
+                                {
+                                    <td>
+                                        <h4 style="float: none; margin-top: 10px">@Model.Highlights[i + 1].Title</h4>
+                                        <p>@Model.Highlights[i + 1].Message</p>
+                                    </td>
+                                }
+
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</div>

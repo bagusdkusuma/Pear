@@ -3992,6 +3992,22 @@ Number.prototype.format = function (n, x) {
                 default:
             }
         });
+        var $messageHolder = $('.message-holder');
+        var $messageHolderClone = $messageHolder.clone(true);
+        $messageHolder.html('');
+        $('#Type').change(function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            $('#Title').val($this.val());
+            if ($this.val().toLowerCase() === 'alert') {
+                $messageHolder.html($messageHolderClone.find('.alert-condition-options').html());
+            } else {
+                if (!$messageHolder.find('.message-text-area').length) {
+                    $messageHolder.html($messageHolderClone.find('.message-text-area').html());
+                }
+            }
+        });
+        $('#Type').change();
     };
 
     Pear.VesselSchedule._autocomplete = function (fieldId) {

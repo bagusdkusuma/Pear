@@ -31,9 +31,15 @@ namespace DSLNG.PEAR.Services
             {
                 return new GetNLSListResponse { Count = DataContext.NextLoadingSchedules.Count() };
             }
-            else {
+            //else if (request.TheActiveOnes) {
+            //    var query = DataContext.NextLoadingSchedules.Include(x => x.VesselSchedule).Include(x => x.VesselSchedule.Vessel);
+            //    query.Distinct().First
+            //}
+            else
+            {
                 var query = DataContext.NextLoadingSchedules.Include(x => x.VesselSchedule).Include(x => x.VesselSchedule.Vessel);
-                if (!string.IsNullOrEmpty(request.Term)) {
+                if (!string.IsNullOrEmpty(request.Term))
+                {
                     query = query.Where(x => x.VesselSchedule.Vessel.Name.Contains(request.Term));
                 }
                 query = query.OrderByDescending(x => x.Id).Skip(request.Skip).Take(request.Take);
@@ -80,6 +86,30 @@ namespace DSLNG.PEAR.Services
                 {
                     IsSuccess = false,
                     Message = e.Message
+                };
+            }
+        }
+
+
+        public DeleteNLSResponse Delete(DeleteNLSRequest request)
+        {
+            try
+            {
+                var nextLoadingSchedule = new NextLoadingSchedule { Id = request.Id };
+                DataContext.NextLoadingSchedules.Attach(nextLoadingSchedule);
+                DataContext.NextLoadingSchedules.Remove(nextLoadingSchedule);
+                DataContext.SaveChanges();
+                return new DeleteNLSResponse
+                {
+                    IsSuccess = true,
+                    Message = "You have been deleted this item successfully"
+                };
+            }
+            catch (InvalidOperationException exception) {
+                return new DeleteNLSResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured while trying to delete this item"
                 };
             }
         }

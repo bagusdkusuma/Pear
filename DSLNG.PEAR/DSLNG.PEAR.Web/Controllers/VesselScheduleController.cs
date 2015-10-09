@@ -11,6 +11,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Services.Requests.Select;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -19,12 +20,16 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IVesselScheduleService _vesselScheduleService;
         private readonly IVesselService _vesselService;
         private readonly IBuyerService _buyerService;
+        private readonly ISelectService _selectService;
         public VesselScheduleController(IVesselScheduleService vesselScheduleService,
             IVesselService vesselService,
-            IBuyerService buyerService) {
+            IBuyerService buyerService,
+            ISelectService selectService)
+        {
             _vesselScheduleService = vesselScheduleService;
             _vesselService = vesselService;
             _buyerService = buyerService;
+            _selectService = selectService;
         }
         public ActionResult Index()
         {
@@ -86,11 +91,12 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult VesselList(string term)
         {
-            var vessels = _vesselService.GetVessels(new GetVesselsRequest { Skip=0,Take=20, Term=term }).Vessels;
+            var vessels = _vesselService.GetVessels(new GetVesselsRequest { Skip = 0, Take = 20, Term = term }).Vessels;
             return Json(new { results = vessels }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult BuyerList(string term) {
+        public ActionResult BuyerList(string term)
+        {
             var buyers = _buyerService.GetBuyers(new GetBuyersRequest { Skip = 0, Take = 20, Term = term }).Buyers;
             return Json(new { results = buyers }, JsonRequestBehavior.AllowGet);
         }
@@ -101,6 +107,8 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create()
         {
             var viewModel = new VesselScheduleViewModel();
+            viewModel.SalesTypes = _selectService.GetSelect(new GetSelectRequest { Name = "vessel-schedule-sales-types" }).Options
+                .Select(x => new SelectListItem { Text = x.Text, Value = x.Value }).ToList();
             return View(viewModel);
         }
 
@@ -119,7 +127,10 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Edit(int id)
         {
             var vesselSchedule = _vesselScheduleService.GetVesselSchedule(new GetVesselScheduleRequest { Id = id });
-            return View(vesselSchedule.MapTo<VesselScheduleViewModel>());
+            var viewModel = vesselSchedule.MapTo<VesselScheduleViewModel>();
+            viewModel.SalesTypes = _selectService.GetSelect(new GetSelectRequest { Name = "vessel-schedule-sales-types" }).Options
+                .Select(x => new SelectListItem { Text = x.Text, Value = x.Value }).ToList();
+            return View(viewModel);
         }
 
         //
@@ -131,29 +142,15 @@ namespace DSLNG.PEAR.Web.Controllers
             _vesselScheduleService.SaveVesselSchedule(req);
             return RedirectToAction("Index");
         }
-
-        //
-        // GET: /VesselSchedule/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
         //
         // POST: /VesselSchedule/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            var response = _vesselScheduleService.Delete(new DeleteVesselScheduleRequest { Id = id });
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            return RedirectToAction("Index");
         }
     }
 }

@@ -15,6 +15,7 @@ namespace DSLNG.PEAR.Services.Responses.VesselSchedule
         public string BuyerName { get; set; }
         public string Location { get; set; }
         public string SalesType { get; set; }
+        public string Cargo { get; set; }
         public string Type { get; set; }
     }
 }

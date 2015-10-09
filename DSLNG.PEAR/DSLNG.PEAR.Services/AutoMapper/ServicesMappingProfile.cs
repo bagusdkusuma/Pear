@@ -56,6 +56,8 @@ using DSLNG.PEAR.Services.Requests.CalculatorConstant;
 using DSLNG.PEAR.Services.Responses.CalculatorConstant;
 using DSLNG.PEAR.Services.Requests.ConstantUsage;
 using DSLNG.PEAR.Services.Responses.ConstantUsage;
+using DSLNG.PEAR.Services.Responses.Weather;
+using DSLNG.PEAR.Services.Requests.Weather;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -340,6 +342,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<CalculatorConstant, GetConstantUsageResponse.CalculatorConstantResponse>();
 
             Mapper.CreateMap<Highlight, GetHighlightResponse>();
+            Mapper.CreateMap<Weather, GetWeathersResponse.WeatherResponse>();
+            Mapper.CreateMap<SaveWeatherRequest, Weather>();
+            Mapper.CreateMap<Weather, GetWeatherResponse>();
             base.Configure();
         }
 

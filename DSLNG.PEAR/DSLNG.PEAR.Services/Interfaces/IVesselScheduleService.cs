@@ -8,5 +8,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetVesselScheduleResponse GetVesselSchedule(GetVesselScheduleRequest request);
         GetVesselSchedulesResponse GetVesselSchedules(GetVesselSchedulesRequest request);
         SaveVesselScheduleResponse SaveVesselSchedule(SaveVesselScheduleRequest request);
+        DeleteVesselScheduleResponse Delete(DeleteVesselScheduleRequest request);
     }
 }
