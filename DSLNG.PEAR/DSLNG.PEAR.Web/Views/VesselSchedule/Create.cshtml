@@ -9,7 +9,7 @@
 {
     @Html.AntiForgeryToken()
     <div class="col-md-12">
-        <div class="title">Buyer</div>
+        <div class="title">Vessel Schedule</div>
         <div class="description_year">New</div>
         <div>@Html.ValidationSummary(true)</div>
     </div>
@@ -49,6 +49,11 @@
                 @Html.LabelFor(model => model.Type)
                 @Html.DropDownListFor(model => model.Type, Model.Types, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Type)
+            </div>
+             <div class="form-group form-list">
+                @Html.LabelFor(model => model.Cargo)
+              @Html.TextBoxFor(model => model.Cargo, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Cargo)
             </div>
         </div>
     </div>

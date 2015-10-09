@@ -9,5 +9,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetNLSResponse GetNLS(GetNLSRequest request);
         GetNLSListResponse GetNLSList(GetNLSListRequest request);
         SaveNLSResponse SaveNLS(SaveNLSRequest request);
+        DeleteNLSResponse Delete(DeleteNLSRequest request);
     }
 }

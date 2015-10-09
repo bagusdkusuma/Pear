@@ -24,7 +24,8 @@ namespace DSLNG.PEAR.Web.Controllers
         public VesselScheduleController(IVesselScheduleService vesselScheduleService,
             IVesselService vesselService,
             IBuyerService buyerService,
-            ISelectService selectService) {
+            ISelectService selectService)
+        {
             _vesselScheduleService = vesselScheduleService;
             _vesselService = vesselService;
             _buyerService = buyerService;
@@ -90,11 +91,12 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult VesselList(string term)
         {
-            var vessels = _vesselService.GetVessels(new GetVesselsRequest { Skip=0,Take=20, Term=term }).Vessels;
+            var vessels = _vesselService.GetVessels(new GetVesselsRequest { Skip = 0, Take = 20, Term = term }).Vessels;
             return Json(new { results = vessels }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult BuyerList(string term) {
+        public ActionResult BuyerList(string term)
+        {
             var buyers = _buyerService.GetBuyers(new GetBuyersRequest { Skip = 0, Take = 20, Term = term }).Buyers;
             return Json(new { results = buyers }, JsonRequestBehavior.AllowGet);
         }
@@ -140,29 +142,15 @@ namespace DSLNG.PEAR.Web.Controllers
             _vesselScheduleService.SaveVesselSchedule(req);
             return RedirectToAction("Index");
         }
-
-        //
-        // GET: /VesselSchedule/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
         //
         // POST: /VesselSchedule/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            var response = _vesselScheduleService.Delete(new DeleteVesselScheduleRequest { Id = id });
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            return RedirectToAction("Index");
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Data.Entity;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Entities;
 using System;
+using System.Data.Entity.Infrastructure;
 
 namespace DSLNG.PEAR.Services
 {
@@ -120,6 +121,46 @@ namespace DSLNG.PEAR.Services
                 {
                     IsSuccess = false,
                     Message = e.Message
+                };
+            }
+        }
+
+
+        public DeleteVesselScheduleResponse Delete(DeleteVesselScheduleRequest request)
+        {
+            try
+            {
+                var vesselSchedule = new VesselSchedule { Id = request.Id };
+                DataContext.VesselSchedules.Attach(vesselSchedule);
+                DataContext.VesselSchedules.Remove(vesselSchedule);
+                DataContext.SaveChanges();
+                return new DeleteVesselScheduleResponse
+                {
+                    IsSuccess = true,
+                    Message = "You have been successfully delete this item"
+                };
+            }
+            catch (DbUpdateException e) {
+                if (e.InnerException.InnerException.Message.Contains("dbo.NextLoadingSchedules"))
+                {
+                    return new DeleteVesselScheduleResponse
+                    {
+                        IsSuccess = false,
+                        Message = "The vessel schedule is being used by next loading schedule"
+                    };
+                }
+                return new DeleteVesselScheduleResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured while trying to delete this item"
+                };
+            }
+            catch (InvalidOperationException e)
+            {
+                return new DeleteVesselScheduleResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured while trying to delete this item"
                 };
             }
         }

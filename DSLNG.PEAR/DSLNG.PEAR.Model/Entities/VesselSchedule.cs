@@ -25,6 +25,7 @@ namespace DSLNG.PEAR.Data.Entities
         public string Location { get; set; }
         public string SalesType { get; set; }
         public string Type { get; set; }
+        public string Cargo { get; set; }
         public ICollection<NextLoadingSchedule> NextLoadingSchedules { get; set; }
     }
 }

@@ -109,6 +109,7 @@
     <Compile Include="Requests\Artifact\GetTankDataRequest.cs" />
     <Compile Include="Requests\Artifact\GetTrafficLightChartDataRequest.cs" />
     <Compile Include="Requests\Artifact\UpdateArtifactRequest.cs" />
+    <Compile Include="Requests\Buyer\DeleteBuyerRequest.cs" />
     <Compile Include="Requests\Buyer\GetBuyerRequest.cs" />
     <Compile Include="Requests\Buyer\GetBuyersRequest.cs" />
     <Compile Include="Requests\Buyer\SaveBuyerRequest.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="Requests\Menu\Menu.cs" />
     <Compile Include="Requests\Method\CreateMethodRequest.cs" />
     <Compile Include="Requests\Method\UpdateMethodRequest.cs" />
+    <Compile Include="Requests\NLS\DeleteNLSRequest.cs" />
     <Compile Include="Requests\NLS\GetNLSListRequest.cs" />
     <Compile Include="Requests\NLS\GetNLSRequest.cs" />
     <Compile Include="Requests\NLS\SaveNLSRequest.cs" />
@@ -171,9 +173,11 @@
     <Compile Include="Requests\Template\GetTemplatesRequest.cs" />
     <Compile Include="Requests\Template\UpdateTemplateRequest.cs" />
     <Compile Include="Requests\User\LoginUserRequest.cs" />
+    <Compile Include="Requests\VesselSchedule\DeleteVesselScheduleRequest.cs" />
     <Compile Include="Requests\VesselSchedule\GetVesselScheduleRequest.cs" />
     <Compile Include="Requests\VesselSchedule\GetVesselSchedulesRequest.cs" />
     <Compile Include="Requests\VesselSchedule\SaveVesselScheduleRequest.cs" />
+    <Compile Include="Requests\Vessel\DeleteVesselRequest.cs" />
     <Compile Include="Requests\Vessel\GetVesselRequest.cs" />
     <Compile Include="Requests\Vessel\GetVesselsRequest.cs" />
     <Compile Include="Requests\Vessel\SaveVesselRequest.cs" />
@@ -192,6 +196,7 @@
     <Compile Include="Responses\Artifact\GetTankDataResponse.cs" />
     <Compile Include="Responses\Artifact\GetTrafficLightChartDataResponse.cs" />
     <Compile Include="Responses\Artifact\UpdateArtifactResponse.cs" />
+    <Compile Include="Responses\Buyer\DeleteBuyerResponse.cs" />
     <Compile Include="Responses\Buyer\GetBuyerResponse.cs" />
     <Compile Include="Responses\Buyer\GetBuyersResponse.cs" />
     <Compile Include="Responses\Buyer\SaveBuyerResponse.cs" />
@@ -275,6 +280,7 @@
     <Compile Include="Requests\Pillar\CreatePillarRequest.cs" />
     <Compile Include="Requests\Pillar\UpdatePillarRequest.cs" />
     <Compile Include="Requests\PmsSummary\GetPmsSummaryConfigurationRequest.cs" />
+    <Compile Include="Responses\NLS\DeleteNLSResponse.cs" />
     <Compile Include="Responses\NLS\GetNLSListResponse.cs" />
     <Compile Include="Responses\NLS\GetNLSResponse.cs" />
     <Compile Include="Responses\NLS\SaveNLSResponse.cs" />
@@ -404,9 +410,11 @@
     <Compile Include="Responses\User\UpdateUserResponse.cs" />
     <Compile Include="Responses\User\UserResponse.cs" />
     <Compile Include="Responses\Pillar\GetPillarResponse.cs" />
+    <Compile Include="Responses\VesselSchedule\DeleteVesselScheduleResponse.cs" />
     <Compile Include="Responses\VesselSchedule\GetVesselScheduleResponse.cs" />
     <Compile Include="Responses\VesselSchedule\GetVesselSchedulesResponse.cs" />
     <Compile Include="Responses\VesselSchedule\SaveVesselScheduleResponse.cs" />
+    <Compile Include="Responses\Vessel\DeleteVesselResponse.cs" />
     <Compile Include="Responses\Vessel\GetVesselResponse.cs" />
     <Compile Include="Responses\Vessel\GetVesselsResponse.cs" />
     <Compile Include="Responses\Vessel\SaveVesselResponse.cs" />

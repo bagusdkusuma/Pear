@@ -8,6 +8,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetVesselResponse GetVessel(GetVesselRequest request);
         GetVesselsResponse GetVessels(GetVesselsRequest request);
         SaveVesselResponse SaveVessel(SaveVesselRequest request);
-
+        DeleteVesselResponse Delete(DeleteVesselRequest request);
     }
 }

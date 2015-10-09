@@ -17,5 +17,6 @@ namespace DSLNG.PEAR.Services.Requests.VesselSchedule
         public string Location { get; set; }
         public string SalesType { get; set; }
         public string Type { get; set; }
+        public string Cargo { get; set; }
     }
 }

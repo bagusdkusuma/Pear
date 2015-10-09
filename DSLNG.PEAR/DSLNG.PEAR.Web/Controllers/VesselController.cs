@@ -120,29 +120,15 @@ namespace DSLNG.PEAR.Web.Controllers
             _vesselService.SaveVessel(req);
             return RedirectToAction("Index");
         }
-
-        //
-        // GET: /Vessel/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
         //
         // POST: /Vessel/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
-
+            var response = _vesselService.Delete(new DeleteVesselRequest { Id = id });
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
                 return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
         }
     }
 }

@@ -89,5 +89,29 @@ namespace DSLNG.PEAR.Services
                 };
             }
         }
+
+
+        public DeleteNLSResponse Delete(DeleteNLSRequest request)
+        {
+            try
+            {
+                var nextLoadingSchedule = new NextLoadingSchedule { Id = request.Id };
+                DataContext.NextLoadingSchedules.Attach(nextLoadingSchedule);
+                DataContext.NextLoadingSchedules.Remove(nextLoadingSchedule);
+                DataContext.SaveChanges();
+                return new DeleteNLSResponse
+                {
+                    IsSuccess = true,
+                    Message = "You have been deleted this item successfully"
+                };
+            }
+            catch (InvalidOperationException exception) {
+                return new DeleteNLSResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured while trying to delete this item"
+                };
+            }
+        }
     }
 }
