@@ -109,7 +109,8 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">@constant.DisplayName</label>
                         <div class="col-sm-3">
-                            @Html.TextBoxFor(m => constant.Value, new { @class = constant.Name })
+                            @Html.HiddenFor(m => constant.Id)
+                            @Html.TextBoxFor(m => constant.Value, new { @class = constant.Name + " calculator-constant" })
                         </div>
                         <div class="col-sm-3">
                             <label>@constant.Measurement</label>
@@ -127,7 +128,8 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">@constant.DisplayName</label>
                         <div class="col-sm-3">
-                            @Html.TextBoxFor(m => constant.Value, new { @class = constant.Name })
+                            @Html.HiddenFor(m => constant.Id)
+                            @Html.TextBoxFor(m => constant.Value, new { @class = constant.Name + " calculator-constant" })
                         </div>
                         <div class="col-sm-3">
                             <label>@constant.Measurement</label>
@@ -137,7 +139,7 @@
             </form>
             <hr style="margin-left: 55px;"/>
             <div class="col-md-12">
-                <span class="pricing-category">Cds Price Constant</span>
+                <span class="pricing-category">CDS Price Constant</span>
             </div>
             <form class="form-horizontal production-yield-all constants">
                 @foreach (var constant in Model.CdsPriceConstants)
@@ -145,7 +147,8 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">@constant.DisplayName</label>
                         <div class="col-sm-3">
-                            @Html.TextBoxFor(m => constant.Value, new { @class = constant.Name })
+                            @Html.HiddenFor(m => constant.Id)
+                            @Html.TextBoxFor(m => constant.Value, new { @class = constant.Name + " calculator-constant" })
                         </div>
                         <div class="col-sm-3">
                             <label>@constant.Measurement</label>
@@ -163,7 +166,8 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">@constant.DisplayName</label>
                         <div class="col-sm-3">
-                            @Html.TextBoxFor(m => constant.Value, new { @class = constant.Name })
+                            @Html.HiddenFor(m => constant.Id)
+                            @Html.TextBoxFor(m => constant.Value, new { @class = constant.Name + " calculator-constant" })
                         </div>
                         <div class="col-sm-3">
                             <label>@constant.Measurement</label>

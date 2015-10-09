@@ -34,33 +34,4 @@
         </div>
     </div>
 </div>
-@*<div class="col-md-2">
-    <!-- required for floating -->
-    <!-- Nav tabs -->
-    <ul class="nav nav-tabs tabs-left">
-        <li class="active"><a href="#productionYield" data-toggle="tab">Production Yield</a></li>
-        <li><a href="#pricing" data-toggle="tab" class="vertical-tab">Pricing</a></li>
-        <li><a href="#plantAvailibility" data-toggle="tab">Plant Availibility</a></li>
-        <li><a href="#standardConversion" data-toggle="tab">Standard Conversion</a></li>
-    </ul>
-</div>
-
-<div class="col-md-10">
-    <!-- Tab panes -->
-    <div class="tab-content">
-        <div class="tab-pane active" id="productionYield">
-            @Html.Partial("_ProductionYield",Model.ProductionYield)
-        </div>
-        <div class="tab-pane" id="pricing">
-            @Html.Partial("_Pricing", Model.Pricing)
-        </div>
-        <div class="tab-pane" id="plantAvailibility">
-            @Html.Partial("_PlantAvailability", Model.PlantAvailability)
-        </div>
-        <div class="tab-pane" id="standardConversion">
-            @Html.Partial("_Standard",Model.Standard)
-        </div>
-        <!-- Tab panes -->
-        
-    </div>
-</div>*@
+<span id="calculator-data" data-changeConstantUrl ="@Url.Action("Edit", "CalculatorConstant")"></span>

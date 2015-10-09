@@ -29,6 +29,7 @@ namespace DSLNG.PEAR.Web.App_Start
                         "~/Scripts/tank.js",
                         "~/Scripts/bignumber.js",
                         "~/Scripts/main.js",
+                        "~/Scripts/calculator.constant.js",
                         "~/Scripts/calculator.plant-availability.js",
                         "~/Scripts/calculator.pricing.js",
                         "~/Scripts/calculator.production-yield.js",

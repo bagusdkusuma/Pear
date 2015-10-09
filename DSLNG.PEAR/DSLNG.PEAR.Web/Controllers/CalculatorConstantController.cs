@@ -11,7 +11,8 @@ namespace DSLNG.PEAR.Web.Controllers
     public class CalculatorConstantController : BaseController
     {
         ICalculatorConstantService _calculatorConstantService;
-        public CalculatorConstantController(ICalculatorConstantService calculatorConstantService) {
+        public CalculatorConstantController(ICalculatorConstantService calculatorConstantService)
+        {
             _calculatorConstantService = calculatorConstantService;
         }
         public ActionResult Index()
@@ -69,28 +70,46 @@ namespace DSLNG.PEAR.Web.Controllers
             }).CalculatorConstants;
         }
 
-        public ActionResult Create() {
+        public ActionResult Create()
+        {
             return View();
         }
 
         [HttpPost]
-        public ActionResult Create(CalculatorConstantViewModel viewModel) {
+        public ActionResult Create(CalculatorConstantViewModel viewModel)
+        {
             var req = viewModel.MapTo<SaveCalculatorConstantRequest>();
             _calculatorConstantService.SaveCalculatorConstant(req);
             return RedirectToAction("Index");
         }
 
-        public ActionResult Edit(int id) {
+        public ActionResult Edit(int id)
+        {
             var viewModel = _calculatorConstantService.GetCalculatorConstant(new GetCalculatorConstantRequest { Id = id })
                 .MapTo<CalculatorConstantViewModel>();
             return View(viewModel);
         }
 
         [HttpPost]
-        public ActionResult Edit(CalculatorConstantViewModel viewModel) {
-            var req = viewModel.MapTo<SaveCalculatorConstantRequest>();
-            _calculatorConstantService.SaveCalculatorConstant(req);
-            return RedirectToAction("Index");
+        public ActionResult Edit(CalculatorConstantViewModel viewModel)
+        {
+            if (Request.IsAjaxRequest())
+            {
+                var req = new SaveCalculatorConstantRequest();
+                req.Id = viewModel.Id;
+                req.Value = viewModel.Value;
+                req.IsAjaxRequest = true;
+                var response = _calculatorConstantService.SaveCalculatorConstant(req);
+                return Json(response);
+
+            }
+            else
+            {
+                var req = viewModel.MapTo<SaveCalculatorConstantRequest>();
+                _calculatorConstantService.SaveCalculatorConstant(req);
+                return RedirectToAction("Index");    
+            }
+            
         }
     }
 }

@@ -106,14 +106,15 @@
         <div class="col-md-12">
             <h4 style="margin-left: 55px;">Constant</h4>
         </div>
-        <div class="col-md-12 text-left">
+        <div class="col-md-12 text-left pricing-constanta-wrapper">
             <form class="form-horizontal production-yield-all constants">
                 @foreach (var constant in Model.Constants)
                 { 
                     <div class="form-group">
                         <label class="col-sm-3 control-label">@constant.DisplayName</label>
                         <div class="col-sm-3">
-                            @Html.TextBoxFor(m => constant.Value, new { @class = constant.Name })
+                            @Html.HiddenFor(m => constant.Id)
+                            @Html.TextBoxFor(m => constant.Value, new { @class = constant.Name + " calculator-constant" })
                         </div>
                         <div class="col-sm-3"><label>@constant.Measurement</label></div>
                     </div>    

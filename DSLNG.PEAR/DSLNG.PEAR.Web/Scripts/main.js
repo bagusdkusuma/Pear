@@ -4120,6 +4120,7 @@ Number.prototype.format = function (n, x) {
             Pear.ProductionYieldCalculator.Init();
             Pear.StandardCalculator.Init();
             Pear.PlantAvailabilityCalculator.Init();
+            Pear.CalculatorConstant.Init();
         }
     });
     window.Pear = Pear;
