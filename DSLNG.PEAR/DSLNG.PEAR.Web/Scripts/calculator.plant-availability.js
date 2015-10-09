@@ -2,12 +2,7 @@
     var pear = window.Pear;
     pear.PlantAvailabilityCalculator = {};
     pear.PlantAvailabilityCalculator.Init = function () {
-        $('#Year').keyup(function (e) {
-            e.preventDefault();
-            calculate();
-        });
-
-        $('#PlantAvailable').keyup(function (e) {
+        $('#Year, #PlantAvailable').keyup(function (e) {
             e.preventDefault();
             calculate();
         });

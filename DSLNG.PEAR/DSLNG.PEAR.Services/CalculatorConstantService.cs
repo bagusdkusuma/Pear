@@ -56,16 +56,25 @@ namespace DSLNG.PEAR.Services
         {
             try
             {
-                if (request.Id == 0)
+                if (request.IsAjaxRequest)
                 {
-                    var calculatorConstant = request.MapTo<CalculatorConstant>();
-                    DataContext.CalculatorConstants.Add(calculatorConstant);
+                    var calculatorConstant = DataContext.CalculatorConstants.First(x => x.Id == request.Id);
+                    calculatorConstant.Value = request.Value;
                 }
                 else
                 {
-                    var calculatorConstant = DataContext.CalculatorConstants.First(x => x.Id == request.Id);
-                    request.MapPropertiesToInstance<CalculatorConstant>(calculatorConstant);
+                    if (request.Id == 0)
+                    {
+                        var calculatorConstant = request.MapTo<CalculatorConstant>();
+                        DataContext.CalculatorConstants.Add(calculatorConstant);
+                    }
+                    else
+                    {
+                        var calculatorConstant = DataContext.CalculatorConstants.First(x => x.Id == request.Id);
+                        request.MapPropertiesToInstance<CalculatorConstant>(calculatorConstant);
+                    }    
                 }
+                
                 DataContext.SaveChanges();
                 return new SaveCalculatorConstantResponse
                 {
