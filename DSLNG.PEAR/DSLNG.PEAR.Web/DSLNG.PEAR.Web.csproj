@@ -322,6 +322,7 @@
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery-ui.min.css" />
     <Content Include="Content\login.css" />
+    <Content Include="Content\perfect-scrollbar.min.css" />
     <Content Include="Content\select2\dist\css\select2.css" />
     <Content Include="Content\select2\dist\css\select2.min.css" />
     <Content Include="Content\select2\dist\js\i18n\az.js" />
@@ -380,6 +381,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\bs_leftnavi.js" />
+    <Content Include="Scripts\perfect-scrollbar.jquery.min.js" />
     <Content Include="Scripts\tank.js" />
     <Content Include="Scripts\exporting.js" />
     <Content Include="Scripts\globalize.cultures.js" />
@@ -555,7 +557,6 @@
     <Content Include="Views\Group\Update.cshtml" />
     <Content Include="Views\Artifact\_IndexGridPartial.cshtml" />
     <Content Include="Views\Artifact\Index.cshtml" />
-    <Content Include="Views\PmsConfigDetails\_ScoreIndicatorDetails.cshtml" />
     <Content Include="Views\PmsConfigDetails\_Update.cshtml" />
     <Content Include="Views\KpiTarget\Create.cshtml" />
     <Content Include="Views\Conversion\_GridViewPartial.cshtml" />
@@ -602,7 +603,7 @@
     <Content Include="Views\Template\_IndexGridPartial.cshtml" />
     <Content Include="Views\Template\Index.cshtml" />
     <Content Include="Views\Template\View.cshtml" />
-    <Content Include="Views\PmsSummary\_ScoreIndicatorDetails.cshtml" />
+    <Content Include="Views\Shared\_ScoreIndicatorDetails.cshtml" />
     <Content Include="Views\AreaChart\_Create.cshtml" />
     <Content Include="Views\MultiaxisChart\_Create.cshtml" />
     <Content Include="Views\MultiaxisChart\_BarChartCreate.cshtml" />

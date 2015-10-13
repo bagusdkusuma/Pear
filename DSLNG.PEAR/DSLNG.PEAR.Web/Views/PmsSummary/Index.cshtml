@@ -40,7 +40,7 @@
         $('.dxgvDataRow_DSLNG td[title]').attr('data-html', true);
         $('.dxgvDataRow_DSLNG td[title]').tooltip();
 
-        $('*[data-poload]').mouseenter(function () {
+        /*$('*[data-poload]').mouseenter(function () {
             var e = $(this);
             e.off('hover');
             $.get(e.data('poload'), function (d) {
@@ -58,7 +58,7 @@
             });
         }).mouseleave(function () {
             $(this).popover('hide');
-        });
+        });*/
     });
 
     function OnCellClick(visibleIndex, fieldName) {
@@ -85,7 +85,7 @@
     </table>
 </div>
 <section>
-    <div class="title_page">
+    <div class="title_page" style="border: none">
         <div class="row">
             <div class="roundlight pull-left" style="background-color: red; margin-top: 10px;"></div>
             <div class="title">Corporate Performance</div>

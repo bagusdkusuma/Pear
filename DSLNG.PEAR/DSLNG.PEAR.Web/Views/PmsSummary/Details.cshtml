@@ -36,18 +36,16 @@
                 <a href='javascript:;' onclick='confirmDelete(@Model.PmsConfigs[i1].Id, @Model.PmsSummaryId, "PmsConfig")' class="text-button pull-right"><span class="fa fa-trash-o"></span>Delete</a>
             </div>
             
-            <table class="table table-transparent table-bordered table-responsive table-hover">
-                <thead>
-                    <tr>
-                        <th rowspan="2">KPI Name</th>
-                        <th rowspan="2">Measurement</th>
-                        <th rowspan="2">Weight</th>
-                        <th rowspan="2">Scoring Type</th>
-                        <th rowspan="2">Scoring Indicator</th>
-                        <th rowspan="2">Action</th>
-                    </tr>
-                </thead>
+            <table class="table table-transparent table-responsive table-hover" border="1">
                 <tbody>
+                    <tr>
+                        <th>KPI Name</th>
+                        <th>Measurement</th>
+                        <th>Weight</th>
+                        <th>Scoring Type</th>
+                        <th>Scoring Indicator</th>
+                        <th>Action</th>
+                    </tr>
 
                     @foreach (var pmsConfigDetails in Model.PmsConfigs[i1].PmsConfigDetailsList)
                     {

@@ -2583,6 +2583,7 @@ Number.prototype.format = function (n, x) {
         //container for scrolling table
         var tableScrollContainer = $('<div>');
         tableScrollContainer.addClass('table-scrolling-container');
+        tableScrollContainer.addClass('perfect-scrollbar');
         tableScrollContainer.css('width', '100%');
         tableScrollContainer.css('height', '270px');
         tableScrollContainer.css('overflow-y', 'auto');
@@ -2637,6 +2638,7 @@ Number.prototype.format = function (n, x) {
 
         //wrapper.append($table);
         container.html(wrapper);
+        $('.perfect-scrollbar').perfectScrollbar();
     };
 
     //trafficlight

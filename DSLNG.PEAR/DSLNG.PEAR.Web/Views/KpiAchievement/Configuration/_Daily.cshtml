@@ -94,7 +94,7 @@
     }
     @*<div id="proceed">Process</div>*@
     <table class="table table-hover table-transparent table-bordered">
-        <thead>
+        <tbody>
             <tr>
                 <th style="width: 40%;">KPI Name</th>
                 @*<th style="width: 10%;">Measurement</th>*@
@@ -103,8 +103,6 @@
                     <th style="width: 25px;">@i</th>
                 }
             </tr>
-        </thead>
-        <tbody>
             @{ var a = 0;}
 
             @foreach (var kpi in Model.Kpis)
@@ -133,7 +131,7 @@
                         b++;
                     }
                 </tr>
-                    a++;
+                a++;
             }
 
         </tbody>

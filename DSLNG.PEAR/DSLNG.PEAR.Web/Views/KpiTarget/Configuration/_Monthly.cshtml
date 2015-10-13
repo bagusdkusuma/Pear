@@ -8,7 +8,7 @@
             @Html.DropDownListFor(x => x.Year, Model.Years, new { @class = "form-control ddl-year" })
         </div>
         <table class="table table-hover table-transparent table-bordered">
-            <thead>
+            <tbody>
                 <tr>
                     <th style="width: 30%;">KPI Name</th>
                     <th>Measurement</th>
@@ -25,8 +25,6 @@
                     <th style="width: 50px;">Nov</th>
                     <th style="width: 50px;">Dec</th>
                 </tr>
-            </thead>
-            <tbody>
                 @{ var a = 0;}
                 @foreach (var kpi in Model.Kpis)
                 {

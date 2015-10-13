@@ -15,7 +15,7 @@
     </form>
 
     <table class="table table-hover table-transparent table-bordered">
-        <thead>
+        <tbody>
             <tr>
                 <th style="width: 30%;">KPI Name</th>
                 <th style="width: 10%;">Measurement</th>
@@ -24,8 +24,6 @@
                     <th style="width: 25px;">@i</th>    
                 }
             </tr>
-        </thead>
-        <tbody>
             @{ var a = 0;}
 
             @foreach (var kpi in Model.Kpis)

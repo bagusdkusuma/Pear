@@ -11,13 +11,11 @@
 </div>
 <div class="modal-body">
     <table class="table table-transparent table-bordered table-responsive ">
-        <thead>
-            <tr>
-                <th rowspan="2">Expression</th>
-                <th rowspan="2">Color</th>
-            </tr>
-        </thead>
         <tbody>
+            <tr>
+                <th>Expression</th>
+                <th>Color</th>
+            </tr>
             @foreach (var item in Model.ScoreIndicators)
             {
                 <tr data-toggle="modal">
