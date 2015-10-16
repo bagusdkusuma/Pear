@@ -4,6 +4,17 @@
     ViewBag.Title = "Edit KPI";
     int i = 0;
 }
+@section Scripts {
+    <script type="text/javascript">
+        $('.pillar-icon').click(function () {
+            var that = $(this);
+            $('.pillar-icon').removeClass('pillar-icon-selected');
+            that.addClass('pillar-icon-selected');
+            $('#Icon').val(that.attr('data-icon').split('\\')[that.attr('data-icon').split('\\').length - 1]);
+        });
+    </script>
+}
+
 
 <h2>@ViewBag.Title</h2>
 @Html.Partial("_MessageResponse")
@@ -21,9 +32,9 @@
                 @Html.DropDownListFor(model => model.LevelId, Model.LevelList, "Select Level", new { @class = "form-control", @onChange = "levelOnChange(this)" })
                 @Html.ValidationMessageFor(model => model.LevelId)
             </div>
-            <div class="form-group pillar" style="display:none">
+            <div class="form-group pillar" style="display: none">
                 @Html.LabelFor(model => model.PillarId, new { @class = "control-label" })
-                @Html.DropDownListFor(model => model.PillarId, Model.PillarList, "Select Pillar", new { @class =  "form-control", @onChange = "pillarOnChange(this)" })
+                @Html.DropDownListFor(model => model.PillarId, Model.PillarList, "Select Pillar", new { @class = "form-control", @onChange = "pillarOnChange(this)" })
                 @Html.ValidationMessageFor(model => model.PillarId)
             </div>
             <div class="form-group">
@@ -128,12 +139,19 @@
             </div>
             <div class="form-group">
                 @Html.HiddenFor(model => model.Icon)
-                @Html.LabelFor(model => model.IconFile, new { @class = "control-label" })
-                @Html.TextBoxFor(m => m.IconFile, new {type="file"})
-                @Html.ValidationMessageFor(model => model.IconFile)
-                @if (!string.IsNullOrEmpty(Model.Icon))
+                @foreach (var item in Model.Icons)
                 {
-                    <span>Existed icon name : <a href="@Url.Content(PathConstant.KpiPath)/@Model.Icon" target="blank" style="color: #000000">@Model.Icon</a></span>
+                    var icon = item.Split('\\')[item.Split('\\').Length - 1];
+                    var selected = "";
+                    if (icon == Model.Icon)
+                    {
+                        selected = "pillar-icon-selected";
+                    }
+                    <div class="pillar-icon @selected" data-icon="@item">
+                        <img style="margin:0 auto;display: block" src="@Url.Content(PathConstant.KpiPath)/@icon"/>
+                        <span style="font-size: 11px; color: #ffffff">@icon</span>
+                    </div>
+                    
                 }
             </div>
             <div class="form-group">

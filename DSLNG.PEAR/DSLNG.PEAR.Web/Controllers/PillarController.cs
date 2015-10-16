@@ -111,6 +111,8 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             var response = _pillarService.GetPillar(new GetPillarRequest { Id = id });
             var viewModel = response.MapTo<UpdatePillarViewModel>();
+            viewModel.Icons = Directory.EnumerateFiles(Server.MapPath(PathConstant.PillarPath)).ToList();
+
             return View(viewModel);
         }
 

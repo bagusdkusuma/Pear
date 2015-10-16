@@ -5,7 +5,7 @@
 }
 
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('.pillar-colpick > input').colpick({
             submit: 0,
             onChange: function (hsb, hex, rgb, el, bySetColor) {
@@ -15,6 +15,8 @@
         }).keyup(function () {
             $(this).colpickSetColor(this.value.replace('#', ''));
         });
+
+        
     });
 </script>
 
@@ -39,7 +41,7 @@
                 @Html.TextBoxFor(model => model.Order, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Order)
             </div>
-           <div class="form-group form-list">
+            <div class="form-group form-list">
                 <label>Color</label>
                 <div class="input-group pillar-colpick colorpicker">
                     @Html.TextBoxFor(x => x.Color, new { @class = "form-control" })
@@ -49,12 +51,19 @@
             </div>
             <div class="form-group">
                 @Html.HiddenFor(model => model.Icon)
-                @Html.LabelFor(model => model.IconFile, new { @class = "control-label" })
-                @Html.TextBoxFor(m => m.IconFile, new {type="file"})
-                @Html.ValidationMessageFor(model => model.IconFile)
-                @if (!string.IsNullOrEmpty(Model.Icon))
+                @foreach (var item in Model.Icons)
                 {
-                    <span>Existed icon name : <a href="@Url.Content(PathConstant.PillarPath)/@Model.Icon" target="blank" style="color: #000000">@Model.Icon</a></span>
+                    var icon = item.Split('\\')[item.Split('\\').Length - 1];
+                    var selected = "";
+                    if (icon == Model.Icon)
+                    {
+                        selected = "pillar-icon-selected";
+                    }
+                    <div class="pillar-icon @selected" data-icon="@item">
+                        <img style="margin:0 auto;display: block" src="@Url.Content(PathConstant.PillarPath)/@icon"/>
+                        <span style="font-size: 11px; color: #ffffff">@icon</span>
+                    </div>
+                    
                 }
             </div>
             <div class="form-group">

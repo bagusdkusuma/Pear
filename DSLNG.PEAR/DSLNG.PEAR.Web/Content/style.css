@@ -1730,3 +1730,31 @@ input[type="text"]
 {
     position: relative;
 }
+
+.pillar-icon
+{
+    border: 1px solid #d3d3d3;
+    display: inline-block;
+    width: 85px;
+    position: relative;
+    height: 70px;
+    float: left;
+    text-align: center;
+    padding: 10px;
+    margin: 10px;
+    overflow: hidden;
+}
+
+
+
+    .pillar-icon-selected, .pillar-icon:hover
+    {
+        background: #cccccc;
+        cursor: pointer;
+        border: 1px solid #ffffff;
+    }
+
+        .pillar-icon:hover span
+        {
+            color: #000000;
+        }
