@@ -49,7 +49,7 @@
                 </div>
                 @Html.ValidationMessageFor(x => x.Color)
             </div>
-            <div class="form-group">
+            <div class="form-group" style="display: inline-block">
                 @Html.HiddenFor(model => model.Icon)
                 @foreach (var item in Model.Icons)
                 {
