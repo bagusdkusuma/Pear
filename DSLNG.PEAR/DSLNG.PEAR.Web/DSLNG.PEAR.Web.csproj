@@ -293,9 +293,10 @@
     <Content Include="Content\img\graphic6.PNG" />
     <Content Include="Content\img\graphic7.PNG" />
     <Content Include="Content\img\icons.png" />
-    <Content Include="Content\img\kpi\c314d317-64b8-4496-a66e-3ddbe0922e12_fatality.png" />
-    <Content Include="Content\img\kpi\d1e9871a-411d-4117-8793-2fd2d4ffba29_trainingattend.png" />
-    <Content Include="Content\img\kpi\ff801f6e-5b39-4431-abd4-4a111fe6dbd9_dafwc.png" />
+    <Content Include="Content\img\kpi\dafwc.png" />
+    <Content Include="Content\img\kpi\default.png" />
+    <Content Include="Content\img\kpi\fatality.png" />
+    <Content Include="Content\img\kpi\trainingattend.png" />
     <Content Include="Content\img\login-back.png" />
     <Content Include="Content\img\login-background-image.png" />
     <Content Include="Content\img\login-circle.png" />
@@ -307,6 +308,7 @@
     <Content Include="Content\img\malay.png" />
     <Content Include="Content\img\logopear.png" />
     <Content Include="Content\img\pillar\business plan.png" />
+    <Content Include="Content\img\pillar\default.png" />
     <Content Include="Content\img\pillar\plan resources.png" />
     <Content Include="Content\img\pillar\safety.png" />
     <Content Include="Content\img\pillar\weighing.png" />
