@@ -306,10 +306,6 @@
     <Content Include="Content\img\logo_login.png" />
     <Content Include="Content\img\malay.png" />
     <Content Include="Content\img\logopear.png" />
-    <Content Include="Content\img\pillar\9ae1e0a1-ec8c-40d2-83f4-70a5f7c573ac_safety.png" />
-    <Content Include="Content\img\pillar\mn_businessplan.png" />
-    <Content Include="Content\img\pillar\mn_planresources.png" />
-    <Content Include="Content\img\pillar\mn_weighing.png" />
     <Content Include="Content\img\plan-bg.jpg" />
     <Content Include="Content\img\plan.png" />
     <Content Include="Content\img\pointer.png" />
@@ -852,6 +848,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\img\pillar\" />
     <Folder Include="Content\TemplateFiles\" />
     <Folder Include="Content\UploadedFiles\" />
     <Folder Include="ViewModels\CorporatePortofolio\" />
