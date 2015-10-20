@@ -427,7 +427,7 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 if (e.UploadedFile.IsValid)
                 {
-                    var path = System.Web.HttpContext.Current.Request.MapPath(TemplateDirectory);
+                    var path = System.Web.HttpContext.Current.Request.MapPath(UploadDirectory);
                     if (!Directory.Exists(path))
                     {
                         Directory.CreateDirectory(path);
