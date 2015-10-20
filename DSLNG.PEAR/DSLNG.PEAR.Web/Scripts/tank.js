@@ -1,6 +1,6 @@
 ﻿(function ($) {
     $.fn.tank = function (options) {
-        console.log(options);
+        //console.log(options);
         var id = "tank_" + options.Id + Date.now();
         
         this.html('<svg class="svg" id="' + id + '" style="margin:auto;display:block"></svg>');
