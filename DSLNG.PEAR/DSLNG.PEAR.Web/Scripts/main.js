@@ -2057,7 +2057,7 @@ Number.prototype.format = function (n, x) {
     };
     artifactDesigner._displayMultistacksAreaChart = function (data, container) {
         data.AreaChart.Series = data.AreaChart.Series.reverse();
-        console.log(data);
+        //console.log(data);
         container.highcharts({
             chart: {
                 type: 'area',
@@ -2814,7 +2814,7 @@ Number.prototype.format = function (n, x) {
                 e.preventDefault();
                 var $this = $(this);
                 var stackTemplate = context.find('.stack-template.original').clone(true);
-                console.log(stackTemplate.closest('.chart-template'));
+                //console.log(stackTemplate.closest('.chart-template'));
 
                 Pear.Artifact.Designer._colorPicker(stackTemplate);
                 stackTemplate.removeClass('original');
@@ -2952,7 +2952,7 @@ Number.prototype.format = function (n, x) {
                 e.preventDefault();
                 var $this = $(this);
                 var stackTemplate = context.find('.stack-template.original').clone(true);
-                console.log(stackTemplate.closest('.chart-template'));
+                //console.log(stackTemplate.closest('.chart-template'));
 
                 Pear.Artifact.Designer._colorPicker(stackTemplate);
                 stackTemplate.removeClass('original');
@@ -3063,7 +3063,7 @@ Number.prototype.format = function (n, x) {
         var plotOptions = {};
         var series = [];
         for (var i in data.MultiaxisChart.Charts) {
-            console.log(data.MultiaxisChart.Charts[i].SeriesType);
+            //console.log(data.MultiaxisChart.Charts[i].SeriesType);
             yAxes.push({
                 labels: {
                     //format: '{value} ' + data.MultiaxisChart.Charts[i].Measurement,
