@@ -159,8 +159,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
         static GridViewModel CreateGridViewModel()
         {
-            var viewModel = new GridViewModel();
-            viewModel.KeyFieldName = "Id";
+            var viewModel = new GridViewModel() { KeyFieldName = "Id" };
             viewModel.Columns.Add("KpiName");
             viewModel.Columns.Add("PeriodeType");
             viewModel.Columns.Add("Value");

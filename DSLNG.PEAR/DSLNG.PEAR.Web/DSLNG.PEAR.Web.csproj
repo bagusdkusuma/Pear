@@ -855,7 +855,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\TemplateFiles\" />
-    <Folder Include="Content\UploadedFiles\" />
+    <Folder Include="Content\UploadedFiles\KpiAchievement\" />
+    <Folder Include="Content\UploadedFiles\KpiTarget\" />
     <Folder Include="ViewModels\CorporatePortofolio\" />
     <Folder Include="Views\Chart\" />
     <Folder Include="Views\CorporatePortofolio\" />

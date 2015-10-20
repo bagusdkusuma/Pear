@@ -140,6 +140,7 @@ namespace DSLNG.PEAR.Web.Controllers
             HeaderRow.Worksheet.Cells[HeaderRow.Index, KpiIdColumn.Index].Value = "KPI ID";
             HeaderRow.Worksheet.Cells[HeaderRow.Index, KpiNameColumn.Index].Value = "KPI Name";
             int i = 1; //i for row
+            #region inserting from models
             foreach (var kpi in viewModel.Kpis)
             {
                 worksheet.Cells[i, KpiIdColumn.Index].Value = kpi.Id;
@@ -185,25 +186,25 @@ namespace DSLNG.PEAR.Web.Controllers
                     worksheet.Columns[j].AutoFitColumns();
                     j++;
                 }
-                //Column TotalValueColumn = worksheet.Columns[j];
-                //if (i == HeaderRow.Index + 1)
-                //{
-                //    worksheet.Cells[HeaderRow.Index, TotalValueColumn.Index].Value = "Average";
-                //    worksheet.Cells[HeaderRow.Index, TotalValueColumn.Index + 1].Value = "SUM";
-                //    Range r1 = worksheet.Range.FromLTRB(KpiNameColumn.Index + 1, i, j - 1, i);
-                //    worksheet.Cells[i, j].Formula = string.Format("=AVERAGE({0})", r1.GetReferenceA1());
-                //    worksheet.Cells[i, j + 1].Formula = string.Format("=SUM({0})", r1.GetReferenceA1());
-                //}
-                //else
-                //{
-                //    // add formula
-                //    Range r2 = worksheet.Range.FromLTRB(KpiNameColumn.Index + 1, i, j - 1, i);
-                //    worksheet.Cells[i, j].Formula = string.Format("=AVERAGE({0})", r2.GetReferenceA1());
-                //    worksheet.Cells[i, j + 1].Formula = string.Format("=SUM({0})", r2.GetReferenceA1());
-                //}
+                Column TotalValueColumn = worksheet.Columns[j];
+                if (i == HeaderRow.Index + 1)
+                {
+                    worksheet.Cells[HeaderRow.Index, TotalValueColumn.Index].Value = "Average";
+                    worksheet.Cells[HeaderRow.Index, TotalValueColumn.Index + 1].Value = "SUM";
+                    Range r1 = worksheet.Range.FromLTRB(KpiNameColumn.Index + 1, i, j - 1, i);
+                    worksheet.Cells[i, j].Formula = string.Format("=AVERAGE({0})", r1.GetReferenceA1());
+                    worksheet.Cells[i, j + 1].Formula = string.Format("=SUM({0})", r1.GetReferenceA1());
+                }
+                else
+                {
+                    // add formula
+                    Range r2 = worksheet.Range.FromLTRB(KpiNameColumn.Index + 1, i, j - 1, i);
+                    worksheet.Cells[i, j].Formula = string.Format("=AVERAGE({0})", r2.GetReferenceA1());
+                    worksheet.Cells[i, j + 1].Formula = string.Format("=SUM({0})", r2.GetReferenceA1());
+                }
                 i++;
             }
-
+            #endregion
             KpiNameColumn.AutoFitColumns();
             worksheet.FreezePanes(HeaderRow.Index, KpiNameColumn.Index);
 
