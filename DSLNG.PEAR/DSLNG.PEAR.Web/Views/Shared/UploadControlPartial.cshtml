@@ -1,7 +1,7 @@
 ﻿@Html.DevExpress().UploadControl(settings =>
 {
     settings.Name = "uc";
-    settings.CallbackRouteValues = new { Controller = "KpiAchievement", Action = "UploadControlCallbackAction" };
+    settings.CallbackRouteValues = new { Controller = "File", Action = "UploadControlCallbackAction" };
     settings.ClientSideEvents.FileUploadComplete = "OnFileUploadComplete";
     settings.ClientSideEvents.TextChanged = "OnUploadTextChanged";
     settings.ShowProgressPanel = true;

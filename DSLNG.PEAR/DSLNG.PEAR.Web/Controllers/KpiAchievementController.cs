@@ -329,12 +329,12 @@ namespace DSLNG.PEAR.Web.Controllers
                     break;
             }
             string fileName = new StringBuilder(workSheetName).Append(".xls").ToString();
-            var path = System.Web.HttpContext.Current.Request.MapPath(TemplateDirectory);
+            var path = System.Web.HttpContext.Current.Request.MapPath(TemplateDirectory+"/KpiAchievement/");
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
             }
-            string resultFilePath = System.Web.HttpContext.Current.Request.MapPath(TemplateDirectory + fileName);
+            string resultFilePath = System.Web.HttpContext.Current.Request.MapPath(string.Format("{0}/KpiAchievement/{1}", TemplateDirectory, fileName));
             Workbook workbook = new Workbook();
             Worksheet worksheet = workbook.Worksheets[0];
 
@@ -394,10 +394,15 @@ namespace DSLNG.PEAR.Web.Controllers
             KpiNameColumn.AutoFitColumns();
             worksheet.FreezePanes(HeaderRow.Index, KpiNameColumn.Index);
 
+            using (FileStream stream = new FileStream(resultFilePath, FileMode.Create, FileAccess.ReadWrite))
+            {
+                workbook.SaveDocument(stream, DocumentFormat.Xlsx);
+                stream.Close();
+            }
 
-            workbook.SaveDocument(resultFilePath, DocumentFormat.OpenXml);
+            //workbook.SaveDocument(resultFilePath, DocumentFormat.OpenXml);
             //todo create file from viewModel
-            return string.Format("{0}{1}", TemplateDirectory, fileName);
+            return string.Format("{0}KpiAchievement/{1}", TemplateDirectory, fileName);
         }
 
 

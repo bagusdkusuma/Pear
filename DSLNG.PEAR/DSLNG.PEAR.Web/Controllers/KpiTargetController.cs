@@ -11,6 +11,10 @@ using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Requests.KpiTarget;
 using DevExpress.Web.Mvc;
 using DSLNG.PEAR.Web.Extensions;
+using System.Text;
+using System.IO;
+using DevExpress.Spreadsheet;
+using System.Drawing;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -94,6 +98,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 viewModel.Years = _dropdownService.GetYears().MapTo<SelectListItem>();
                 viewModel.Months = _dropdownService.GetMonths().MapTo<SelectListItem>();
                 viewModel.PeriodeType = pType.ToString();
+                viewModel.FileName = this._ExportToExcel(viewModel);
                 return View(viewModel);
             }
 
@@ -101,6 +106,113 @@ namespace DSLNG.PEAR.Web.Controllers
 
         }
 
+        public FileResult DownloadTemplate(string filename)
+        {
+            var file = Server.MapPath(filename);
+            //string[] filePaths = Directory.GetFiles(file);
+            if (!System.IO.File.Exists(file))
+            {
+                return null;
+            }
+            string namafile = Path.GetFileName(file);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(file);
+            var response = new FileContentResult(fileBytes, "application/octet-stream");
+            response.FileDownloadName = namafile;
+            return response;
+        }
+        private string _ExportToExcel(ConfigurationKpiTargetsViewModel viewModel)
+        {
+            string dateFormat = "dd-mmm-yy";
+            string workSheetName = new StringBuilder(viewModel.PeriodeType).ToString();
+            switch (viewModel.PeriodeType)
+            {
+                case "Yearly":
+                    dateFormat = "yyyy";
+                    break;
+                case "Monthly":
+                    dateFormat = "mmm-yy";
+                    workSheetName = string.Format("{0}_{1}", workSheetName, viewModel.Year);
+                    break;
+                default:
+                    dateFormat = "dd-mmm-yy";
+                    workSheetName = string.Format("{0}_{1}-{2}", workSheetName, viewModel.Year, viewModel.Month.ToString().PadLeft(2, '0'));
+                    break;
+            }
+            string fileName = new StringBuilder(workSheetName).Append(".xls").ToString();
+            var path = System.Web.HttpContext.Current.Request.MapPath(TemplateDirectory + "/KpiTarget/");
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            string resultFilePath = System.Web.HttpContext.Current.Request.MapPath(string.Format("{0}/KpiTarget/{1}", TemplateDirectory, fileName));
+            Workbook workbook = new Workbook();
+            Worksheet worksheet = workbook.Worksheets[0];
+
+            worksheet.Name = workSheetName;
+            workbook.Worksheets.ActiveWorksheet = worksheet;
+
+            RowCollection rows = workbook.Worksheets[0].Rows;
+            ColumnCollection columns = workbook.Worksheets[0].Columns;
+
+            Row HeaderRow = rows[0];
+            HeaderRow.FillColor = Color.DarkGray;
+            HeaderRow.Alignment.Horizontal = SpreadsheetHorizontalAlignment.Center;
+            HeaderRow.Alignment.Vertical = SpreadsheetVerticalAlignment.Center;
+            Column KpiIdColumn = columns[0];
+            Column KpiNameColumn = columns[1];
+            KpiIdColumn.Visible = false;
+
+            HeaderRow.Worksheet.Cells[HeaderRow.Index, KpiIdColumn.Index].Value = "KPI ID";
+            HeaderRow.Worksheet.Cells[HeaderRow.Index, KpiNameColumn.Index].Value = "KPI Name";
+            int i = 1; //i for row
+            foreach (var kpi in viewModel.Kpis)
+            {
+                worksheet.Cells[i, KpiIdColumn.Index].Value = kpi.Id;
+                worksheet.Cells[i, KpiNameColumn.Index].Value = string.Format("{0} ({1})", kpi.Name, kpi.Measurement);
+                int j = 2; // for column
+
+                foreach (var target in kpi.KpiTargets)
+                {
+                    worksheet.Cells[HeaderRow.Index, j].Value = target.Periode;
+                    worksheet.Cells[HeaderRow.Index, j].NumberFormat = dateFormat;
+                    worksheet.Cells[HeaderRow.Index, j].AutoFitColumns();
+
+                    worksheet.Cells[i, j].Value = target.Value;
+                    worksheet.Cells[i, j].NumberFormat = "#,0.#0";
+                    worksheet.Columns[j].AutoFitColumns();
+                    j++;
+                }
+                Column TotalValueColumn = worksheet.Columns[j];
+                if (i == HeaderRow.Index + 1)
+                {
+                    worksheet.Cells[HeaderRow.Index, TotalValueColumn.Index].Value = "Average";
+                    worksheet.Cells[HeaderRow.Index, TotalValueColumn.Index + 1].Value = "SUM";
+                    Range r1 = worksheet.Range.FromLTRB(KpiNameColumn.Index + 1, i, j - 1, i);
+                    worksheet.Cells[i, j].Formula = string.Format("=AVERAGE({0})", r1.GetReferenceA1());
+                    worksheet.Cells[i, j + 1].Formula = string.Format("=SUM({0})", r1.GetReferenceA1());
+                }
+                else
+                {
+                    // add formula
+                    Range r2 = worksheet.Range.FromLTRB(KpiNameColumn.Index + 1, i, j - 1, i);
+                    worksheet.Cells[i, j].Formula = string.Format("=AVERAGE({0})", r2.GetReferenceA1());
+                    worksheet.Cells[i, j + 1].Formula = string.Format("=SUM({0})", r2.GetReferenceA1());
+                }
+                i++;
+            }
+
+            KpiNameColumn.AutoFitColumns();
+            worksheet.FreezePanes(HeaderRow.Index, KpiNameColumn.Index);
+            using (FileStream stream = new FileStream(resultFilePath, FileMode.Create, FileAccess.ReadWrite))
+            {
+                workbook.SaveDocument(stream, DocumentFormat.Xlsx);
+                stream.Close();
+            }
+
+            //workbook.SaveDocument(resultFilePath, DocumentFormat.OpenXml);
+            //todo create file from viewModel
+            return string.Format("{0}KpiTarget/{1}", TemplateDirectory,fileName);
+        }
         public ActionResult ConfigurationPartial(ConfigurationParamViewModel paramViewModel)
         {
             int roleGroupId = paramViewModel.Id;
@@ -122,6 +234,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 viewModel.Years = _dropdownService.GetYears().MapTo<SelectListItem>();
                 viewModel.Months = _dropdownService.GetMonths().MapTo<SelectListItem>();
                 viewModel.PeriodeType = pType.ToString();
+                viewModel.FileName = this._ExportToExcel(viewModel);
                 return PartialView("Configuration/_" + pType.ToString(), viewModel);
             }
 
@@ -260,7 +373,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         }
                     }
                 }
-                
+
                 var response = _kpiTargetService.Creates(request);
                 TempData["IsSuccess"] = response.IsSuccess;
                 TempData["Message"] = response.Message;
@@ -273,7 +386,7 @@ namespace DSLNG.PEAR.Web.Controllers
             return View(viewModel);
         }
 
-        
+
         [HttpPost]
         public JsonResult KpiTargetItem(KpiTargetItem kpiTarget)
         {
@@ -295,7 +408,7 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             string[] extension = { ".xls", ".xlsx", ".csv", };
 
-            ExcelUploadHelper.setPath(TemplateDirectory+"Target/", UploadDirectory+"Target/");
+            ExcelUploadHelper.setPath(TemplateDirectory + "Target/", UploadDirectory + "Target/");
             ExcelUploadHelper.setValidationSettings(extension, 20971520);
 
             UploadControlExtension.GetUploadedFiles("uc", ExcelUploadHelper.ValidationSettings, ExcelUploadHelper.FileUploadComplete);
