@@ -72,11 +72,11 @@ namespace DSLNG.PEAR.Services
             var kpis = new List<KpiTarget>();
             if (request.Take != 0)
             {
-                kpis = DataContext.KpiTargets.Include(x => x.Kpi).OrderBy(x => x.Id).Skip(request.Skip).Take(request.Take).ToList();
+                kpis = DataContext.KpiTargets.Include(x => x.Kpi).OrderBy(x => x.Kpi.Order).Skip(request.Skip).Take(request.Take).ToList();
             }
             else
             {
-                kpis = DataContext.KpiTargets.Include(x => x.Kpi).ToList();
+                kpis = DataContext.KpiTargets.Include(x => x.Kpi).OrderBy(x => x.Kpi.Order).ToList();
             }
             var response = new GetKpiTargetsResponse();
             response.KpiTargets = kpis.MapTo<GetKpiTargetsResponse.KpiTarget>();
@@ -99,6 +99,7 @@ namespace DSLNG.PEAR.Services
                         .Include(x => x.PmsConfig.PmsSummary)
                         .Include(x => x.PmsConfig.Pillar)
                         .Where(x => x.PmsConfig.PmsSummary.Id == request.PmsSummaryId)
+                        .OrderBy(x => x.Kpi.Order)
                         .ToList()
                         .GroupBy(x => x.PmsConfig.Pillar)
                         .ToDictionary(x => x.Key);
@@ -299,14 +300,15 @@ namespace DSLNG.PEAR.Services
                 var kpis = DataContext.Kpis
                                       .Include(x => x.RoleGroup)
                                       .Include(x => x.Measurement).ToList();
-                if(request.RoleGroupId>0){
+                if (request.RoleGroupId > 0)
+                {
                     kpis = kpis.Where(x => x.RoleGroup.Id == request.RoleGroupId).ToList();
                     var roleGroup = DataContext.RoleGroups.Single(x => x.Id == request.RoleGroupId);
                     response.RoleGroupName = roleGroup.Name;
                     response.RoleGroupId = roleGroup.Id;
                     response.IsSuccess = true;
                 }
-                                      
+
 
                 switch (periodeType)
                 {
@@ -398,7 +400,7 @@ namespace DSLNG.PEAR.Services
                         break;
                 }
 
-                
+
             }
             catch (InvalidOperationException invalidOperationException)
             {
@@ -488,7 +490,7 @@ namespace DSLNG.PEAR.Services
             try
             {
                 var kpiTarget = request.MapTo<KpiTarget>();
-                
+
                 if (request.Id != 0)
                 {
                     var attachedEntity = DataContext.KpiTargets.Find(request.Id);
@@ -569,7 +571,7 @@ namespace DSLNG.PEAR.Services
                 {
                     response.Message = "File Successfully Parsed, but no data changed!";
                 }
-                
+
 
             }
             catch (InvalidOperationException invalidOperationException)
