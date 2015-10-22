@@ -15,5 +15,6 @@ namespace DSLNG.PEAR.Services.Requests.User
         public string Email { get; set; }
         public int RoleId { get; set; }
         public bool IsActive { get; set; }
+        public string ChangeModel { get; set; }
     }
 }
