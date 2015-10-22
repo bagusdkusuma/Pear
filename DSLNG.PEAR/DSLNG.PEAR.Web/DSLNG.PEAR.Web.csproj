@@ -706,6 +706,7 @@
     <Content Include="Views\Weather\DailyExecutionReport.cshtml" />
     <Content Include="Views\Weather\Edit.cshtml" />
     <Content Include="Views\Weather\Index.cshtml" />
+    <Content Include="Views\Shared\_ModalScoreIndicator.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

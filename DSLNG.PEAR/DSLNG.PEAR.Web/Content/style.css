@@ -1603,3 +1603,7 @@ input[type="text"] {
         .pillar-icon:hover span {
             color: #000000;
         }
+
+        #modalDialogScoreIndicator .modal-sm {
+            width: 400px !important;
+        }
