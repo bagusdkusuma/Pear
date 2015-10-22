@@ -122,7 +122,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetUsersResponse.User, UserViewModel>()
                 .ForMember(x => x.RoleName, y => y.MapFrom(z => z.Role.Name));
             Mapper.CreateMap<UserLoginViewModel, LoginUserRequest>();
-
+            Mapper.CreateMap<ChangePasswordViewModel, ChangePasswordRequest>();
             Mapper.CreateMap<GetRoleGroupsResponse.RoleGroup, RoleGroupViewModel>();
             Mapper.CreateMap<CreateRoleGroupViewModel, CreateRoleGroupRequest>();
             Mapper.CreateMap<GetRoleGroupResponse, UpdateRoleGroupViewModel>()
