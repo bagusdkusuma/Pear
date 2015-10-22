@@ -4046,6 +4046,9 @@ Number.prototype.format = function (n, x) {
 
     Pear.NLS.FormSetup = function(){
         Pear.VesselSchedule._autocomplete('#VesselScheduleId');
+        $('.datepicker').datetimepicker({
+            format: "MM/DD/YYYY"
+        });
     }
 
     Pear.ConstantUsage._autocomplete = function ($field) {

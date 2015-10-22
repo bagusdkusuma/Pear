@@ -24,20 +24,22 @@
                     <tr>
                         <th>Next Loading Schedule</th>
                         <th>Vessel (Capacity)</th>
+                        <th>Customer</th>
                         <th>ETA</th>
                         <th>ETD</th>
                         <th>Cargo#</th>
-                        <th>Customer / Other Remarks</th>
+                        <th>Remarks</th>
                     </tr>
                     @foreach (var nls in Model.NLSList)
                     { 
                         <tr>
                             <td>@nls.VesselType</td>
                             <td>@nls.Vessel (@nls.Capacity @nls.Measurement)</td>
+                            <td>@nls.Buyer</td>
                             <td>@nls.ETA.ToString("dd-MM-yyyy")</td>
                             <td>@nls.ETD.ToString("dd-MM-yyyy")</td>
                             <td>@nls.Cargo</td>
-                            <td>@nls.Buyer / @nls.RemarkDate.ToString("dd-MM-yyyy");@nls.Remark</td>
+                            <td>@nls.RemarkDate.ToString("dd-MM-yyyy");@nls.Remark</td>
                         </tr>
                     }
                 </table>
