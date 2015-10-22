@@ -27,5 +27,7 @@ namespace DSLNG.PEAR.Web.ViewModels.User
         public bool IsActive { get; set; }
         public int RoleId { get; set; }
         public List<SelectListItem> RoleGroupList { get; set; }
+        [Display(Name="Default Landing Page")]
+        public string ChangeModel { get; set; }
     }
 }

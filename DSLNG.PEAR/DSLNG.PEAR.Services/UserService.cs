@@ -82,12 +82,16 @@ namespace DSLNG.PEAR.Services
             var response = new UpdateUserResponse();
             try
             {
-                var user = request.MapTo<User>();
+                //var user = request.MapTo<User>();
+                var user = DataContext.Users.Include(u => u.Role).First(x => x.Id == request.Id).MapTo<User>();
                 user.Role = DataContext.RoleGroups.First(x => x.Id == request.RoleId);
+                user.Username = request.Username;
+                user.IsActive = request.IsActive;
+                user.ChangeModel = request.ChangeModel;
                 if (request.ChangePassword && request.Password != null)
                 {
-                    user.Password = crypto.Compute(request.Password);
-                    user.PasswordSalt = crypto.Salt;
+                    user.PasswordSalt = crypto.Salt != null ? crypto.Salt : crypto.GenerateSalt(crypto.HashIterations, crypto.SaltSize);
+                    user.Password = crypto.Compute(request.Password, user.PasswordSalt);
                 }
                 DataContext.Users.Attach(user);
                 DataContext.Entry(user).State = EntityState.Modified;
