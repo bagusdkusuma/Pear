@@ -15,20 +15,8 @@
 <div class="score-indicator-wrapper">
     @foreach (var item in Model)
     {
-        //item.Expression.Split('x')[1];
         <div class="row hidden-scoring-indicator" style="margin-bottom: 10px;">
             <div class="col-sm-12 form-inline">
-                @*<select class="mathType form-control">
-                        <option value="1">Single</option>
-                        <option value="2">Between</option>
-                    </select>
-                    <span class="single-x">X</span>
-                    <select class="operatorType form-control">
-                        <option value="<"><</option>
-                        <option value="<="><=</option>
-                        <option value="<=">>=</option>
-                    </select>
-                    <input type="text" value="" class="form-control" style="width: 55px;"/>*@
                 <input type="hidden" name="ScoreIndicators.Index" value="@i" />
                 <input class="form-control si-id" type="hidden" name="ScoreIndicators[@i].Id" value="@item.Id" style="width:50px;" />
                 <input class="form-control si-expression" name="ScoreIndicators[@i].Expression" placeholder="Expression, e.g : x > 20" type="text" value="@item.Expression" style="width:200px;">
@@ -46,16 +34,6 @@
     }
 </div>
 <span id="counter" data-score-indicator="@i"></span>
-
-@*<div class="row " style="margin-bottom: 10px; display: none">
-    <div class="col-sm-12 form-inline">
-        <input type="hidden" name="ScoreIndicators.Index" value="0" />
-        <input class="form-control si-expression" name="Expression" placeholder="Expression, e.g : x > 20" type="text" value="">
-        <input class="form-control si-color" name="Color" placeholder="Color" type="text" value="">
-        <button type="button" class="btn btn-default form-control remove-score-indicator" style="display: inline-block;"><i class="glyphicon glyphicon-minus"></i></button>
-    </div>
-</div>*@
-
 
 <script type="text/javascript">
     $(document).ready(function () {

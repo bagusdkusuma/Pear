@@ -4,11 +4,13 @@ using DSLNG.PEAR.Data.Entities;
 using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Services.Requests.Measurement;
 using DSLNG.PEAR.Services.Requests.PmsSummary;
+using DSLNG.PEAR.Services.Requests.Select;
 using DSLNG.PEAR.Services.Responses.KpiAchievement;
 using DSLNG.PEAR.Services.Responses.Level;
 using DSLNG.PEAR.Services.Responses.Menu;
 using DSLNG.PEAR.Services.Requests.Menu;
 using DSLNG.PEAR.Services.Responses.PmsSummary;
+using DSLNG.PEAR.Services.Responses.Select;
 using DSLNG.PEAR.Services.Responses.User;
 using DSLNG.PEAR.Services.Requests.User;
 using DSLNG.PEAR.Common.Extensions;
@@ -42,6 +44,20 @@ using PeriodeType = DSLNG.PEAR.Data.Enums.PeriodeType;
 using DSLNG.PEAR.Services.Responses.Config;
 using DSLNG.PEAR.Services.Responses.Highlight;
 using DSLNG.PEAR.Services.Requests.Highlight;
+using DSLNG.PEAR.Services.Responses.Vessel;
+using DSLNG.PEAR.Services.Requests.Vessel;
+using DSLNG.PEAR.Services.Requests.Buyer;
+using DSLNG.PEAR.Services.Responses.Buyer;
+using DSLNG.PEAR.Services.Requests.VesselSchedule;
+using DSLNG.PEAR.Services.Responses.VesselSchedule;
+using DSLNG.PEAR.Services.Requests.NLS;
+using DSLNG.PEAR.Services.Responses.NLS;
+using DSLNG.PEAR.Services.Requests.CalculatorConstant;
+using DSLNG.PEAR.Services.Responses.CalculatorConstant;
+using DSLNG.PEAR.Services.Requests.ConstantUsage;
+using DSLNG.PEAR.Services.Responses.ConstantUsage;
+using DSLNG.PEAR.Services.Responses.Weather;
+using DSLNG.PEAR.Services.Requests.Weather;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -55,6 +71,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             ConfigureKpiTarget();
             ConfigurePmsConfigDetails();
             ConfigureKpiAchievements();
+            ConfigureSelects();
 
             Mapper.CreateMap<User, GetUsersResponse.User>();
             //.ForMember(x => x.RoleName, o => o.MapFrom(m => m.Role.Name));
@@ -273,15 +290,75 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<GetArtifactResponse.ChartResponse, GetComboChartDataRequest.ChartRequest>();
             Mapper.CreateMap<GetArtifactResponse.SeriesResponse, GetComboChartDataRequest.ChartRequest.SeriesRequest>();
             Mapper.CreateMap<GetArtifactResponse.StackResponse, GetComboChartDataRequest.ChartRequest.StackRequest>();
-            
+
             Mapper.CreateMap<Kpi, GetConfigurationResponse.Kpi>();
             Mapper.CreateMap<KpiAchievement, GetConfigurationResponse.KpiAchievement>();
             Mapper.CreateMap<KpiTarget, GetConfigurationResponse.KpiTarget>();
             Mapper.CreateMap<Economic, GetConfigurationResponse.Economic>();
             Mapper.CreateMap<Highlight, GetHighlightsResponse.HighlightResponse>();
             Mapper.CreateMap<SaveHighlightRequest, Highlight>();
+
+            Mapper.CreateMap<SaveVesselRequest, Vessel>();
+            Mapper.CreateMap<Vessel, GetVesselsResponse.VesselResponse>()
+                .ForMember(x => x.Measurement, o => o.MapFrom(s => s.Measurement.Name))
+                .ForMember(x => x.MeasurementId, o => o.MapFrom(s => s.Measurement.Id));
+            Mapper.CreateMap<Vessel, GetVesselResponse>()
+                .ForMember(x => x.Measurement, o => o.MapFrom(s => s.Measurement.Name))
+                .ForMember(x => x.MeasurementId, o => o.MapFrom(s => s.Measurement.Id));
+
+            Mapper.CreateMap<SaveBuyerRequest, Buyer>();
+            Mapper.CreateMap<Buyer, GetBuyersResponse.BuyerResponse>();
+            Mapper.CreateMap<Buyer, GetBuyerResponse>();
+
+            Mapper.CreateMap<SaveVesselScheduleRequest, VesselSchedule>();
+            Mapper.CreateMap<VesselSchedule, GetVesselSchedulesResponse.VesselScheduleResponse>()
+                .ForMember(x => x.Vessel, o => o.MapFrom(s => s.Vessel.Name))
+                .ForMember(x => x.Buyer, o => o.MapFrom(s => s.Buyer.Name))
+                .ForMember(x => x.Name, o => o.MapFrom(s => s.Vessel.Name));
+            Mapper.CreateMap<VesselSchedule, GetVesselScheduleResponse>()
+                .ForMember(x => x.VesselId, o => o.MapFrom(s => s.Vessel.Id))
+                .ForMember(x => x.BuyerId, o => o.MapFrom(s => s.Buyer.Id))
+                .ForMember(x => x.VesselName, o => o.MapFrom(s => s.Vessel.Name))
+                .ForMember(x => x.BuyerName, o => o.MapFrom(s => s.Buyer.Name));
+
+            Mapper.CreateMap<SaveNLSRequest, NextLoadingSchedule>();
+            Mapper.CreateMap<NextLoadingSchedule, GetNLSListResponse.NLSResponse>()
+                .ForMember(x => x.Vessel, o => o.MapFrom(s => s.VesselSchedule.Vessel.Name))
+                .ForMember(x => x.ETA, o => o.MapFrom(s => s.VesselSchedule.ETA))
+                .ForMember(x => x.ETD, o => o.MapFrom(s => s.VesselSchedule.ETD));
+            Mapper.CreateMap<NextLoadingSchedule, GetNLSResponse>()
+                .ForMember(x => x.VesselScheduleId, o => o.MapFrom(s => s.VesselSchedule.Id))
+                 .ForMember(x => x.VesselName, o => o.MapFrom(s => s.VesselSchedule.Vessel.Name));
+
+            Mapper.CreateMap<SaveCalculatorConstantRequest, CalculatorConstant>();
+            Mapper.CreateMap<CalculatorConstant, GetCalculatorConstantsResponse.CalculatorConstantResponse>();
+            Mapper.CreateMap<CalculatorConstant, GetCalculatorConstantResponse>();
+
+            Mapper.CreateMap<SaveConstantUsageRequest, ConstantUsage>();
+            Mapper.CreateMap<ConstantUsage, GetConstantUsagesResponse.ConstantUsageResponse>()
+                .ForMember(x => x.StringConstants, o => o.MapFrom(s => s.Constants.Select(x => x.Name)));
+            Mapper.CreateMap<CalculatorConstant, GetConstantUsagesResponse.ConstantResponse>();
+            Mapper.CreateMap<ConstantUsage, GetConstantUsageResponse>();
+            Mapper.CreateMap<CalculatorConstant, GetConstantUsageResponse.CalculatorConstantResponse>();
+
             Mapper.CreateMap<Highlight, GetHighlightResponse>();
+            Mapper.CreateMap<Weather, GetWeathersResponse.WeatherResponse>();
+            Mapper.CreateMap<SaveWeatherRequest, Weather>();
+            Mapper.CreateMap<Weather, GetWeatherResponse>();
             base.Configure();
+        }
+
+        private void ConfigureSelects()
+        {
+            Mapper.CreateMap<Select, GetSelectsResponse.Select>()
+                  .ForMember(x => x.Options, y => y.MapFrom(z => string.Join(", ", z.Options.Select(opt => opt.Text))));
+            Mapper.CreateMap<CreateSelectRequest, Select>();
+            Mapper.CreateMap<CreateSelectRequest.SelectOption, SelectOption>();
+            Mapper.CreateMap<Select, GetSelectResponse>();
+            Mapper.CreateMap<SelectOption, GetSelectResponse.SelectOptionResponse>();
+            Mapper.CreateMap<UpdateSelectRequest, Select>();
+                //.ForMember(x => x.Options, x => x.Ignore());
+            Mapper.CreateMap<UpdateSelectRequest.SelectOption, SelectOption>();
         }
 
         private void ConfigurePmsSummary()

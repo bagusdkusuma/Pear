@@ -1,9 +1,10 @@
 ﻿
 
+
 namespace DSLNG.PEAR.Data.Enums
 {
-    public enum HighlightType
+    public enum Formula
     {
-        Overall
+        ProjectCashFlow
     }
 }
