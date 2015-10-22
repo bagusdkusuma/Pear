@@ -177,5 +177,52 @@ namespace DSLNG.PEAR.Services
                 };
             }
         }
+
+        public UpdateUserResponse ChangePassword(ChangePasswordRequest request) {
+            var response = new UpdateUserResponse { IsSuccess = false, Message = "Unknown Error"};
+            
+            if (request.New_Password == null)
+            {
+                response.Message = "New Password Could not be null!";
+                return response;
+            }
+            var user = DataContext.Users.First(x => x.Id == request.Id).MapTo<User>();
+            if (user != null) {
+                
+                if (user.Password != crypto.Compute(request.Old_Password, user.PasswordSalt)) {
+                    response.Message = "Current Password isn't correct!";
+                    return response;
+                }
+
+                user.PasswordSalt = crypto.Salt != null ? crypto.Salt : crypto.GenerateSalt(crypto.HashIterations, crypto.SaltSize);
+                user.Password = crypto.Compute(request.New_Password, user.PasswordSalt);
+
+                DataContext.Users.Attach(user);
+                DataContext.Entry(user).State = EntityState.Modified;
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = "Password Successfully Changed!";
+            }
+            
+            return response;
+        }
+
+
+        public UpdateUserResponse CheckPassword(CheckPasswordRequest request)
+        {
+            var response = new UpdateUserResponse();
+            var user = DataContext.Users.First(x => x.Username == request.Name);
+            if (user != null && request.Password != null && user.Password == crypto.Compute(request.Password, user.PasswordSalt))
+            {
+                //Include(x => x.Role).
+                response.IsSuccess = true;
+            }
+            else
+            {
+                response.IsSuccess = false;
+                response.Message = string.Format("Your current password isn't correct");
+            }
+            return response;
+        }
     }
 }

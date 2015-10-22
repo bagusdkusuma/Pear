@@ -12,4 +12,9 @@ namespace DSLNG.PEAR.Services.Requests.User
     public class GetUserByNameRequest {
         public string Name { get; set; }
     }
+
+    public class CheckPasswordRequest {
+        public string Name { get; set; }
+        public string Password { get; set; }
+    }
 }
