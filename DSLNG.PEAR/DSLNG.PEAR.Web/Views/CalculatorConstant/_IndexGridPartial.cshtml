@@ -1,0 +1,31 @@
+﻿@Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "gridCalConstantIndex";
+        settings.CallbackRouteValues = new { Controller = "CalculatorConstant", Action = "IndexPartial" };
+        settings.CustomBindingRouteValuesCollection.Add(
+            GridViewOperationType.Paging,
+            new { Controller = "CalculatorConstant", Action = "PagingAction" }
+        );
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditForm;
+        settings.SettingsBehavior.ConfirmDelete = true;
+        settings.Width = Unit.Percentage(60);
+        settings.KeyFieldName = "Id";
+        
+        settings.Columns.Add(column =>
+            {
+                column.Caption = "Action";
+                column.SetDataItemTemplateContent(c =>
+                                                  ViewContext.Writer.Write(
+                                                      Html.ActionLink("Delete", "Delete", new { Id = DataBinder.Eval(c.DataItem, "Id") }, new { @class="artifact-view" }) + "|" +
+                                                       Html.ActionLink("Edit", "Edit", new { Id = DataBinder.Eval(c.DataItem, "Id") })
+                                                      )
+                    );
+            });
+        settings.Columns.Add("Id").Visible = false;
+        settings.Columns.Add("Name","Name");
+        settings.Columns.Add("DisplayName", "Display Name");
+        settings.Columns.Add("Value", "Value");
+        settings.Columns.Add("Measurement", "Measurement");
+        settings.SettingsPager.PageSizeItemSettings.Visible = true;
+        settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+    }).BindToCustomData(Model).GetHtml()

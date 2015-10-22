@@ -1,0 +1,53 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.CalculatorConstant.CalculatorConstantViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="calculator-constant-save">
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="col-md-12">
+        <div class="title">Constant</div>
+        <div class="description_year">New</div>
+        <div>@Html.ValidationSummary(true)</div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-inline whitebox">
+             <div class="form-group form-list">
+                @Html.LabelFor(model => model.Name)
+                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+             <div class="form-group form-list">
+                @Html.LabelFor(model => model.DisplayName)
+                @Html.TextBoxFor(model => model.DisplayName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DisplayName)
+            </div>
+            <div class="form-group form-list">
+                @Html.LabelFor(model => model.Value)
+                @Html.TextBoxFor(model => model.Value, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Value)
+            </div>
+             <div class="form-group form-list">
+                @Html.LabelFor(model => model.Measurement)
+                @Html.TextBoxFor(model => model.Measurement, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Measurement)
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 artifact-designer-btns">
+        <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
+        <a onclick="location.reload();" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>
+        <a href="/Highlight" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+    </div>
+}
+    </div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

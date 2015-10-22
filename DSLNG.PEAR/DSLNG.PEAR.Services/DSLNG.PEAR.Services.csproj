@@ -71,19 +71,30 @@
     <Compile Include="ArtifactService.cs" />
     <Compile Include="AutoMapper\ServicesMappingProfile.cs" />
     <Compile Include="BaseService.cs" />
+    <Compile Include="BuyerService.cs" />
+    <Compile Include="CalculatorConstantService.cs" />
     <Compile Include="Common\PmsSummary\ScoreIndicator.cs" />
     <Compile Include="Constants\PmsSummaryConstant.cs" />
     <Compile Include="Constants\Type.cs" />
+    <Compile Include="ConstantUsageService.cs" />
     <Compile Include="ConversionService.cs" />
     <Compile Include="DropdownService.cs" />
     <Compile Include="GroupService.cs" />
     <Compile Include="HighlightService.cs" />
+    <Compile Include="Interfaces\IBuyerService.cs" />
+    <Compile Include="Interfaces\ICalculatorConstantService.cs" />
+    <Compile Include="Interfaces\IConstantUsageService.cs" />
     <Compile Include="Interfaces\IHighlightService.cs" />
     <Compile Include="Interfaces\IKpiAchievementService.cs" />
     <Compile Include="Interfaces\IDropdownService.cs" />
     <Compile Include="Interfaces\IKpiTargetService.cs" />
+    <Compile Include="Interfaces\INLSService.cs" />
     <Compile Include="Interfaces\IPeriodeService.cs" />
+    <Compile Include="Interfaces\ISelectService.cs" />
     <Compile Include="Interfaces\ITemplateService.cs" />
+    <Compile Include="Interfaces\IVesselScheduleService.cs" />
+    <Compile Include="Interfaces\IVesselService.cs" />
+    <Compile Include="Interfaces\IWeatherService.cs" />
     <Compile Include="KpiAchievementService.cs" />
     <Compile Include="KpiTargetService.cs" />
     <Compile Include="PeriodeService.cs" />
@@ -98,7 +109,17 @@
     <Compile Include="Requests\Artifact\GetTankDataRequest.cs" />
     <Compile Include="Requests\Artifact\GetTrafficLightChartDataRequest.cs" />
     <Compile Include="Requests\Artifact\UpdateArtifactRequest.cs" />
+    <Compile Include="Requests\Buyer\DeleteBuyerRequest.cs" />
+    <Compile Include="Requests\Buyer\GetBuyerRequest.cs" />
+    <Compile Include="Requests\Buyer\GetBuyersRequest.cs" />
+    <Compile Include="Requests\Buyer\SaveBuyerRequest.cs" />
+    <Compile Include="Requests\CalculatorConstant\GetCalculatorConstantRequest.cs" />
+    <Compile Include="Requests\CalculatorConstant\GetCalculatorConstantsRequest.cs" />
+    <Compile Include="Requests\CalculatorConstant\SaveCalculatorConstantRequest.cs" />
     <Compile Include="Requests\Config\GetConfigurationRequest.cs" />
+    <Compile Include="Requests\ConstantUsage\GetConstantUsageRequest.cs" />
+    <Compile Include="Requests\ConstantUsage\GetConstantUsagesRequest.cs" />
+    <Compile Include="Requests\ConstantUsage\SaveConstantUsageRequest.cs" />
     <Compile Include="Requests\Conversion\CreateConversionRequest.cs" />
     <Compile Include="Requests\Conversion\UpdateConversionRequest.cs" />
     <Compile Include="Requests\Highlight\DeleteRequest.cs" />
@@ -132,6 +153,10 @@
     <Compile Include="Requests\Menu\Menu.cs" />
     <Compile Include="Requests\Method\CreateMethodRequest.cs" />
     <Compile Include="Requests\Method\UpdateMethodRequest.cs" />
+    <Compile Include="Requests\NLS\DeleteNLSRequest.cs" />
+    <Compile Include="Requests\NLS\GetNLSListRequest.cs" />
+    <Compile Include="Requests\NLS\GetNLSRequest.cs" />
+    <Compile Include="Requests\NLS\SaveNLSRequest.cs" />
     <Compile Include="Requests\Periode\PeriodeRequest.cs" />
     <Compile Include="Requests\PmsSummary\CreatePmsConfigDetailsRequest.cs" />
     <Compile Include="Requests\PmsSummary\CreatePmsConfigRequest.cs" />
@@ -139,12 +164,28 @@
     <Compile Include="Requests\PmsSummary\GetScoreIndicatorRequest.cs" />
     <Compile Include="Requests\PmsSummary\UpdatePmsConfigDetailsRequest.cs" />
     <Compile Include="Requests\PmsSummary\UpdatePmsConfigRequest.cs" />
+    <Compile Include="Requests\Select\GetSelectRequest.cs" />
+    <Compile Include="Requests\Select\GetSelectsRequest.cs" />
+    <Compile Include="Requests\Select\UpdateSelectRequest.cs" />
+    <Compile Include="Requests\Select\CreateSelectRequest.cs" />
     <Compile Include="Requests\Template\CreateTemplateRequest.cs" />
     <Compile Include="Requests\Template\GetTemplateRequest.cs" />
     <Compile Include="Requests\Template\GetTemplatesRequest.cs" />
     <Compile Include="Requests\Template\UpdateTemplateRequest.cs" />
     <Compile Include="Requests\User\ChangePasswordRequest.cs" />
     <Compile Include="Requests\User\LoginUserRequest.cs" />
+    <Compile Include="Requests\VesselSchedule\DeleteVesselScheduleRequest.cs" />
+    <Compile Include="Requests\VesselSchedule\GetVesselScheduleRequest.cs" />
+    <Compile Include="Requests\VesselSchedule\GetVesselSchedulesRequest.cs" />
+    <Compile Include="Requests\VesselSchedule\SaveVesselScheduleRequest.cs" />
+    <Compile Include="Requests\Vessel\DeleteVesselRequest.cs" />
+    <Compile Include="Requests\Vessel\GetVesselRequest.cs" />
+    <Compile Include="Requests\Vessel\GetVesselsRequest.cs" />
+    <Compile Include="Requests\Vessel\SaveVesselRequest.cs" />
+    <Compile Include="Requests\Weather\DeleteWeatherRequest.cs" />
+    <Compile Include="Requests\Weather\GetWeatherRequest.cs" />
+    <Compile Include="Requests\Weather\GetWeathersRequest.cs" />
+    <Compile Include="Requests\Weather\SaveWeatherRequest.cs" />
     <Compile Include="Responses\Artifact\CreateArtifactResponse.cs" />
     <Compile Include="Responses\Artifact\GetArtifactResponse.cs" />
     <Compile Include="Responses\Artifact\GetArtifactsResponse.cs" />
@@ -156,7 +197,17 @@
     <Compile Include="Responses\Artifact\GetTankDataResponse.cs" />
     <Compile Include="Responses\Artifact\GetTrafficLightChartDataResponse.cs" />
     <Compile Include="Responses\Artifact\UpdateArtifactResponse.cs" />
+    <Compile Include="Responses\Buyer\DeleteBuyerResponse.cs" />
+    <Compile Include="Responses\Buyer\GetBuyerResponse.cs" />
+    <Compile Include="Responses\Buyer\GetBuyersResponse.cs" />
+    <Compile Include="Responses\Buyer\SaveBuyerResponse.cs" />
+    <Compile Include="Responses\CalculatorConstant\GetCalculatorConstantResponse.cs" />
+    <Compile Include="Responses\CalculatorConstant\GetCalculatorConstantsResponse.cs" />
+    <Compile Include="Responses\CalculatorConstant\SaveCalculatorConstantResponse.cs" />
     <Compile Include="Responses\Config\GetConfigurationResponse.cs" />
+    <Compile Include="Responses\ConstantUsage\GetConstantUsageResponse.cs" />
+    <Compile Include="Responses\ConstantUsage\GetConstantUsagesResponse.cs" />
+    <Compile Include="Responses\ConstantUsage\SaveConstantUsageResponse.cs" />
     <Compile Include="Responses\Conversion\CreateConversionResponse.cs" />
     <Compile Include="Responses\Conversion\DeleteConversionResponse.cs" />
     <Compile Include="Responses\Conversion\Measurement.cs" />
@@ -230,6 +281,10 @@
     <Compile Include="Requests\Pillar\CreatePillarRequest.cs" />
     <Compile Include="Requests\Pillar\UpdatePillarRequest.cs" />
     <Compile Include="Requests\PmsSummary\GetPmsSummaryConfigurationRequest.cs" />
+    <Compile Include="Responses\NLS\DeleteNLSResponse.cs" />
+    <Compile Include="Responses\NLS\GetNLSListResponse.cs" />
+    <Compile Include="Responses\NLS\GetNLSResponse.cs" />
+    <Compile Include="Responses\NLS\SaveNLSResponse.cs" />
     <Compile Include="Responses\PmsSummary\CreatePmsConfigDetailsResponse.cs" />
     <Compile Include="Responses\PmsSummary\CreatePmsConfigResponse.cs" />
     <Compile Include="Responses\PmsSummary\CreatePmsSummaryResponse.cs" />
@@ -325,6 +380,11 @@
     <Compile Include="Responses\RoleGroup\DeleteRoleGroupResponse.cs" />
     <Compile Include="Responses\RoleGroup\Level.cs" />
     <Compile Include="Responses\RoleGroup\UpdateRoleGroupResponse.cs" />
+    <Compile Include="Responses\Select\CreateSelectResponse.cs" />
+    <Compile Include="Responses\Select\DeleteSelectResponse.cs" />
+    <Compile Include="Responses\Select\GetSelectResponse.cs" />
+    <Compile Include="Responses\Select\GetSelectsResponse.cs" />
+    <Compile Include="Responses\Select\UpdateSelectResponse.cs" />
     <Compile Include="Responses\Template\CreateTemplateResponse.cs" />
     <Compile Include="Responses\Template\GetTemplateResponse.cs" />
     <Compile Include="Responses\Template\GetTemplatesResponse.cs" />
@@ -351,7 +411,20 @@
     <Compile Include="Responses\User\UpdateUserResponse.cs" />
     <Compile Include="Responses\User\UserResponse.cs" />
     <Compile Include="Responses\Pillar\GetPillarResponse.cs" />
+    <Compile Include="Responses\VesselSchedule\DeleteVesselScheduleResponse.cs" />
+    <Compile Include="Responses\VesselSchedule\GetVesselScheduleResponse.cs" />
+    <Compile Include="Responses\VesselSchedule\GetVesselSchedulesResponse.cs" />
+    <Compile Include="Responses\VesselSchedule\SaveVesselScheduleResponse.cs" />
+    <Compile Include="Responses\Vessel\DeleteVesselResponse.cs" />
+    <Compile Include="Responses\Vessel\GetVesselResponse.cs" />
+    <Compile Include="Responses\Vessel\GetVesselsResponse.cs" />
+    <Compile Include="Responses\Vessel\SaveVesselResponse.cs" />
+    <Compile Include="Responses\Weather\DeleteWeatherResponse.cs" />
+    <Compile Include="Responses\Weather\GetWeatherResponse.cs" />
+    <Compile Include="Responses\Weather\GetWeathersResponse.cs" />
+    <Compile Include="Responses\Weather\SaveWeatherResponse.cs" />
     <Compile Include="RoleGroupService.cs" />
+    <Compile Include="SelectService.cs" />
     <Compile Include="TemplateService.cs" />
     <Compile Include="TypeService.cs" />
     <Compile Include="UserService.cs" />
@@ -359,6 +432,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\User\GetUserRequest.cs" />
     <Compile Include="Responses\User\GetUserResponse.cs" />
+    <Compile Include="VesselScheduleService.cs" />
+    <Compile Include="VesselService.cs" />
+    <Compile Include="WeatherService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DSLNG.PEAR.Common\DSLNG.PEAR.Common.csproj">
@@ -373,7 +449,9 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="NLSService.cs" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

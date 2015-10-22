@@ -1,0 +1,22 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Calculator.StandardCalculatorViewModel
+<div class="row">
+    <div class="col-md-4">
+        @Html.LabelFor(model => model.Input)
+        @Html.TextBoxFor(model => model.Input)
+        @Html.DropDownListFor(model => model.InputUnitGroup, Model.UnitGroups)
+        <ul class="input-units">
+
+        </ul>
+    </div>
+    <div class="col-md-4">
+        @Html.LabelFor(model => model.Output)
+        @Html.TextBoxFor(model => model.Output)
+        @Html.DropDownListFor(model => model.OutputUnitGroup, Model.UnitGroups)
+        <ul class="output-units">
+
+        </ul>
+    </div>
+    <div class="col-md-4">
+
+    </div>
+</div>
