@@ -6,12 +6,14 @@ using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.KpiAchievement;
 using DSLNG.PEAR.Services.Requests.Measurement;
 using DSLNG.PEAR.Services.Requests.PmsSummary;
+using DSLNG.PEAR.Services.Requests.Select;
 using DSLNG.PEAR.Services.Responses.KpiAchievement;
 using DSLNG.PEAR.Services.Responses.Level;
 using DSLNG.PEAR.Services.Responses.Measurement;
 using DSLNG.PEAR.Services.Responses.PmsSummary;
 using DSLNG.PEAR.Services.Responses.Kpi;
 using DSLNG.PEAR.Services.Requests.Kpi;
+using DSLNG.PEAR.Services.Responses.Select;
 using DSLNG.PEAR.Web.ViewModels.Common;
 using DSLNG.PEAR.Web.ViewModels.Common.PmsSummary;
 using DSLNG.PEAR.Web.ViewModels.Kpi;
@@ -27,6 +29,7 @@ using DSLNG.PEAR.Services.Responses.User;
 using DSLNG.PEAR.Web.ViewModels.PmsConfig;
 using DSLNG.PEAR.Web.ViewModels.PmsConfigDetails;
 using DSLNG.PEAR.Web.ViewModels.PmsSummary;
+using DSLNG.PEAR.Web.ViewModels.Select;
 using DSLNG.PEAR.Web.ViewModels.User;
 using DSLNG.PEAR.Web.ViewModels.RoleGroup;
 using DSLNG.PEAR.Services.Responses.RoleGroup;
@@ -69,6 +72,28 @@ using DSLNG.PEAR.Web.ViewModels.Config;
 using DSLNG.PEAR.Web.ViewModels.Highlight;
 using DSLNG.PEAR.Services.Requests.Highlight;
 using DSLNG.PEAR.Services.Responses.Highlight;
+using DSLNG.PEAR.Web.ViewModels.Vessel;
+using DSLNG.PEAR.Services.Requests.Vessel;
+using DSLNG.PEAR.Services.Responses.Vessel;
+using DSLNG.PEAR.Web.ViewModels.Buyer;
+using DSLNG.PEAR.Services.Requests.Buyer;
+using DSLNG.PEAR.Services.Responses.Buyer;
+using DSLNG.PEAR.Web.ViewModels.VesselSchedule;
+using DSLNG.PEAR.Services.Requests.VesselSchedule;
+using DSLNG.PEAR.Services.Responses.VesselSchedule;
+using DSLNG.PEAR.Web.ViewModels.NLS;
+using DSLNG.PEAR.Services.Requests.NLS;
+using DSLNG.PEAR.Services.Responses.NLS;
+using DSLNG.PEAR.Web.ViewModels.CalculatorConstant;
+using DSLNG.PEAR.Services.Requests.CalculatorConstant;
+using DSLNG.PEAR.Services.Responses.CalculatorConstant;
+using DSLNG.PEAR.Web.ViewModels.ConstantUsage;
+using DSLNG.PEAR.Services.Requests.ConstantUsage;
+using DSLNG.PEAR.Services.Responses.ConstantUsage;
+using DSLNG.PEAR.Web.ViewModels.Calculator;
+using DSLNG.PEAR.Web.ViewModels.Weather;
+using DSLNG.PEAR.Services.Requests.Weather;
+using DSLNG.PEAR.Services.Responses.Weather;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -81,6 +106,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             ConfigureKpiTarget();
             ConfigureKpiAchievement();
             ConfigureTrafficLight();
+            ConfigureSelect();
 
             Mapper.CreateMap<Dropdown, SelectListItem>();
             Mapper.CreateMap<SearchKpiViewModel, GetKpiToSeriesRequest>();
@@ -165,7 +191,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetArtifactResponse.ChartResponse, LineChartViewModel>();
             Mapper.CreateMap<GetArtifactResponse.ChartResponse, BarChartViewModel>();
             Mapper.CreateMap<GetArtifactResponse.ChartResponse, AreaChartViewModel>();
-            Mapper.CreateMap<GetArtifactResponse,  ComboChartViewModel>()
+            Mapper.CreateMap<GetArtifactResponse, ComboChartViewModel>()
              .ForMember(x => x.Charts, o => o.Ignore());
             Mapper.CreateMap<GetArtifactResponse.ChartResponse, ComboChartViewModel.ChartViewModel>();
 
@@ -200,7 +226,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetCartesianChartDataResponse.SeriesResponse, BarChartDataViewModel.SeriesViewModel>();
             Mapper.CreateMap<BarChartViewModel, CreateArtifactRequest>()
               .ForMember(x => x.Series, o => o.MapFrom(s => s.Series.MapTo<CreateArtifactRequest.SeriesRequest>()));
-            
+
             Mapper.CreateMap<BarChartViewModel.SeriesViewModel, CreateArtifactRequest.SeriesRequest>()
                .ForMember(x => x.Stacks, o => o.MapFrom(s => s.Stacks.MapTo<CreateArtifactRequest.StackRequest>()));
             Mapper.CreateMap<BarChartViewModel.StackViewModel, CreateArtifactRequest.StackRequest>();
@@ -294,7 +320,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<MultiaxisChartViewModel, UpdateArtifactRequest>();
             Mapper.CreateMap<MultiaxisChartViewModel.ChartViewModel, UpdateArtifactRequest.ChartRequest>()
                 .ForMember(x => x.Series, o => o.ResolveUsing<MultiaxisSeriesUpdateResolver>());
-            
+
             //combo mapping
             Mapper.CreateMap<ComboChartViewModel, GetComboChartDataRequest>();
             Mapper.CreateMap<ComboChartViewModel.ChartViewModel, GetComboChartDataRequest.ChartRequest>()
@@ -334,16 +360,16 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetArtifactResponse.SeriesResponse, PieViewModel.SeriesViewModel>();
             Mapper.CreateMap<PieViewModel, UpdateArtifactRequest>();
             Mapper.CreateMap<PieViewModel.SeriesViewModel, UpdateArtifactRequest.SeriesRequest>();
-                
-                
-            
+
+
+
             Mapper.CreateMap<LineChartViewModel.SeriesViewModel, GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>();
             Mapper.CreateMap<AreaChartViewModel.SeriesViewModel, GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>();
             Mapper.CreateMap<BarChartViewModel.SeriesViewModel, GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>();
             Mapper.CreateMap<BarChartViewModel.StackViewModel, GetMultiaxisChartDataRequest.ChartRequest.StackRequest>();
             Mapper.CreateMap<AreaChartViewModel.StackViewModel, GetMultiaxisChartDataRequest.ChartRequest.StackRequest>();
 
-           
+
 
             //Mapper.CreateMap<BarChartViewModel.SeriesViewModel, GetSeriesRequest.Series>()
             //    .ForMember(x => x.Stacks, o => o.MapFrom(s => s.Stacks.MapTo<GetSeriesRequest.Stack>()));
@@ -420,8 +446,48 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<HighlightViewModel, SaveHighlightRequest>();
             Mapper.CreateMap<GetReportHighlightsResponse.HighlightResponse, ArtifactPreviewViewModel.HighlightViewModel>();
+            Mapper.CreateMap<VesselViewModel, SaveVesselRequest>();
+            Mapper.CreateMap<GetVesselResponse, VesselViewModel>();
+
+            Mapper.CreateMap<BuyerViewModel, SaveBuyerRequest>();
+            Mapper.CreateMap<GetBuyerResponse, BuyerViewModel>();
+
+            Mapper.CreateMap<VesselScheduleViewModel, SaveVesselScheduleRequest>();
+            Mapper.CreateMap<GetVesselScheduleResponse, VesselScheduleViewModel>();
+
+            Mapper.CreateMap<NLSViewModel, SaveNLSRequest>();
+            Mapper.CreateMap<GetNLSResponse, NLSViewModel>();
+
+            Mapper.CreateMap<CalculatorConstantViewModel, SaveCalculatorConstantRequest>();
+            Mapper.CreateMap<GetCalculatorConstantResponse, CalculatorConstantViewModel>();
+
+            Mapper.CreateMap<ConstantUsageViewModel, SaveConstantUsageRequest>()
+                .ForMember(x => x.CalculatorConstantIds, o => o.MapFrom(s => s.Constants.Select(x => x.Id)));
+            Mapper.CreateMap<GetConstantUsageResponse, ConstantUsageViewModel>();
+            Mapper.CreateMap<GetConstantUsageResponse.CalculatorConstantResponse, ConstantUsageViewModel.CalculatorConstantViewModel>();
+            Mapper.CreateMap<GetConstantUsagesResponse.ConstantUsageResponse, ConstantUsageViewModel>();
+            Mapper.CreateMap<GetConstantUsagesResponse.ConstantResponse, ConstantUsageViewModel.CalculatorConstantViewModel>();
+            Mapper.CreateMap<ConstantUsageViewModel.CalculatorConstantViewModel, CalculatorConstantViewModel>();
             Mapper.CreateMap<GetHighlightResponse, HighlightViewModel>();
+
+            Mapper.CreateMap<WeatherViewModel, SaveWeatherRequest>();
+            Mapper.CreateMap<GetWeatherResponse, WeatherViewModel>();
+            Mapper.CreateMap<GetVesselSchedulesResponse.VesselScheduleResponse, DailyExecutionReportViewModel.NLSViewModel>();
+            Mapper.CreateMap<GetWeatherResponse, DailyExecutionReportViewModel.WeatherViewModel>();
+            Mapper.CreateMap<GetHighlightsResponse.HighlightResponse, DailyExecutionReportViewModel.HighlightViewModel>();
+            Mapper.CreateMap<GetHighlightResponse, DailyExecutionReportViewModel.AlertViewModel>();
             base.Configure();
+        }
+
+        private void ConfigureSelect()
+        {
+            Mapper.CreateMap<CreateSelectViewModel, CreateSelectRequest>();
+            Mapper.CreateMap<SelectOptionViewModel, CreateSelectRequest.SelectOption>();
+            Mapper.CreateMap<GetSelectResponse, UpdateSelectViewModel>();
+            Mapper.CreateMap<GetSelectResponse.SelectOptionResponse, SelectOptionViewModel>();
+            Mapper.CreateMap<UpdateSelectViewModel, UpdateSelectRequest>();
+            Mapper.CreateMap<SelectOptionViewModel, UpdateSelectRequest.SelectOption>();
+            //Mapper.CreateMap<GetSelectsResponse, Ind>()
         }
 
         private void ConfigureTrafficLight()
@@ -612,7 +678,8 @@ namespace DSLNG.PEAR.Web.AutoMapper
     {
         protected override IList<GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest> ResolveCore(MultiaxisChartViewModel.ChartViewModel source)
         {
-            switch (source.GraphicType) { 
+            switch (source.GraphicType)
+            {
                 case "line":
                     return source.LineChart.Series.MapTo<GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>();
                 case "area":

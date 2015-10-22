@@ -1,0 +1,43 @@
+﻿@Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "gridVesselScheduleIndex";
+        settings.CallbackRouteValues = new { Controller = "VesselSchedule", Action = "IndexPartial" };
+        settings.CustomBindingRouteValuesCollection.Add(
+            GridViewOperationType.Paging,
+            new { Controller = "VesselSchedule", Action = "PagingAction" }
+        );
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditForm;
+        settings.SettingsBehavior.ConfirmDelete = true;
+        settings.Width = Unit.Percentage(60);
+        settings.KeyFieldName = "Id";
+        
+        settings.Columns.Add("Id").Visible = false;
+        settings.Columns.Add("Vessel");
+        settings.Columns.Add("ETA").PropertiesEdit.DisplayFormatString = "MM/dd/yyyy";
+        settings.Columns.Add("ETD").PropertiesEdit.DisplayFormatString = "MM/dd/yyyy";
+        settings.Columns.Add("Buyer");
+        settings.Columns.Add("Location");
+        settings.Columns.Add("SalesType");
+        settings.Columns.Add("Type");
+        settings.Columns.Add("Cargo");
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "Edit";
+            column.SetDataItemTemplateContent(c =>
+                                              ViewContext.Writer.Write(
+                                                   Html.ActionLink("Edit", "Edit", new { Id = DataBinder.Eval(c.DataItem, "Id") })
+                                                  )
+                );
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "Delete";
+            column.SetDataItemTemplateContent(c =>
+                                              ViewContext.Writer.Write(
+                                                   "<a href='javascript:;' onclick='confirmDelete(" + DataBinder.Eval(c.DataItem, "Id") + ")'>Delete</a>"
+                                                  )
+                );
+        });
+        settings.SettingsPager.PageSizeItemSettings.Visible = true;
+        settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+    }).BindToCustomData(Model).GetHtml()

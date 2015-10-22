@@ -26,6 +26,11 @@ body {
         background-image: url(/Content/img/report-bg.jpg);
     }
 
+    body.setting {
+        background-color: #000000;
+        background-image: none;
+    }
+
 fieldset legend {
     float: left;
 }
@@ -1105,6 +1110,33 @@ table.text-center th {
     font-size: 20px;
 }
 
+.der-panel {
+    overflow: hidden;
+    border-radius: 5px !important;
+}
+
+table.der {
+    width: 100%;
+}
+
+    table.der th {
+        background: #fff;
+        color: #000;
+        padding: 5px;
+        border-top: none !important;
+    }
+
+    table.der td,
+    table.der th {
+        color: #fff;
+        padding: 10px 20px;
+    }
+
+    table.der th {
+        background-color: #2E6D64;
+    }
+
+
 .tabular-panel {
     overflow: hidden;
     border-bottom-left-radius: 0 !important;
@@ -1328,10 +1360,32 @@ td .btn_small_lightblue a:hover {
     border: #ccc 1px solid;
 }
 
-    .table-transparent > thead {
-        background: none;
-        text-align: center;
+.constant-template.original {
+    display: none;
+}
+
+ul.input-units,
+ul.output-units {
+    background: #fff;
+    border: 1px solid #aaa;
+    min-height: 100px;
+    padding: 0;
+}
+
+    ul.input-units li,
+    ul.output-units li {
+        list-style: none;
+        cursor: pointer;
     }
+
+ul li.unit.active {
+    background-color: #9bd4f4;
+}
+
+.table-transparent > thead {
+    background: none;
+    text-align: center;
+}
 
 .panel.panel-default {
     border-radius: 12px;
@@ -1428,7 +1482,7 @@ td .btn_small_lightblue a:hover {
 
 
 .table-pms-summary > thead > tr:first-child td:first-child,
-.table-pms-summary > tbody > tr td:first-child{
+.table-pms-summary > tbody > tr td:first-child {
     border-right: 1px solid #ffffff;
 }
 
@@ -1455,7 +1509,7 @@ td .btn_small_lightblue a:hover {
     color: #ffffff;
 }
 
-.tablekpitarget, 
+.tablekpitarget,
 .tablekpitarget thead th {
     color: #ffffff;
 }
@@ -1464,4 +1518,42 @@ label {
     color: #ffffff;
 }
 
+.daily-execution-report {
+    color: #fff;
+}
 
+h4 .weather-value {
+    font-size: 14px;
+    font-weight: normal;
+    margin-left: 15px;
+}
+
+    h4 .weather-value.alert {
+        color: #0ACA03;
+    }
+
+table.der.highlights tr:first-child td {
+    border-top: none!important;
+}
+
+h2, h4 {
+    color: #ffffff;
+}
+
+.calculator-tabs {
+    float: right;
+    border-bottom: none;
+}
+
+    .calculator-tabs li {
+        margin: 0 10px;
+    }
+
+        .calculator-tabs li.active a {
+            color: #0000cd;
+        }
+
+        .calculator-tabs li a {
+            background: #1e90ff;
+            color: #ffffff;
+        }

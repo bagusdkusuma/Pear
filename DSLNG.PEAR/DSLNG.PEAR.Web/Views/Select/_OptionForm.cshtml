@@ -1,0 +1,60 @@
+﻿@model IList<DSLNG.PEAR.Web.ViewModels.Select.SelectOptionViewModel>
+@{
+    int i = 0;
+}
+
+<div class="form-group form-list form-inline">
+    <label>Options</label>
+    <button type="button" class="btn btn-default form-inline add-option"><i class="glyphicon glyphicon-plus"></i></button>
+</div>
+
+<div class="option-wrapper">
+    @foreach (var item in Model)
+    {
+        <div class="row hidden-option" style="margin-bottom: 10px;">
+            <div class="col-sm-12 form-inline">
+                <input type="hidden" name="Options.Index" value="@i" />
+                <input class="form-control opt-id" type="hidden" name="Options[@i].Id" value="@item.Id" style="width:50px;" />
+                <input class="form-control opt-text" name="Options[@i].Text" type="text" value="@item.Text" style="width:200px;">
+                <input class="form-control opt-value" name="Options[@i].Value" type="text" value="@item.Value" style="width:200px;">
+                <button type="button" class="btn btn-default form-control remove-option" style="display: inline-block;"><i class="glyphicon glyphicon-minus"></i></button>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        i++;
+    }
+</div>
+<span id="counter" data-option="@i"></span>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var i = $('#counter').attr('data-option');
+        i = parseInt(i) === NaN ? 0 : parseInt(i);
+        $('.add-option').click(function () {
+            var clone = $('.hidden-option:last').clone(true);
+            clone.find('input[name="Options.Index"]').val(i);
+            clone.find('.opt-id').attr('name', 'Options[' + i + '].Id').attr('value', 0);
+            clone.find('.opt-text').attr('name', 'Options[' + i + '].Text').val('');
+            clone.find('.opt-value').attr('name', 'Options[' + i + '].Value').val('');
+            clone.appendTo('.option-wrapper').show();
+            
+            if (i > 0) {
+                $('.remove-option').show();
+            }
+            i++;
+        });
+        
+        if (i <= 1) {
+            $('.remove-option').hide();
+        }
+        $('.remove-option').click(function () {
+            i--;
+            $(this).parent().parent().remove();
+            if (i == 1) {
+                $('.remove-option').hide();
+            }
+        });
+    })
+</script>
+
+
