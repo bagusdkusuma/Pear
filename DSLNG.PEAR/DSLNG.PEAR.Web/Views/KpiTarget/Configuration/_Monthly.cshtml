@@ -1,65 +1,157 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.KpiTarget.ConfigurationKpiTargetsViewModel
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#div-proceed').hide();
+        $('#btn-proceed').click(function () {
+            //window.location = '@Url.Action("ProcessFile", "File")' + '?filename=' + encodeURIComponent(link);
+            var formData = {
+                'filename': encodeURIComponent(link),
+                'configType': 'KpiTarget'
+            };
 
-<div role="tabpanel" class="tab-pane active" id="monthly">
+            $.ajax({
+                url: '@Url.Action("ProcessFile", "File")',
+                type: 'POST',
+                data: formData,
+                beforeSend: function () {
+                    $('.ajax-loader2').show();
+                    $('.notification').empty();
+                    $('.notification').hide();
+                }
+            }).done(function (result) {
+                $('.ajax-loader2').hide();
+                var alertType = result.isSuccess === true ? 'alert-success' : 'alert-danger';
+                if (result.isSuccess === true || result.message === null) {
+                    $('.notification').html('<div class="alert ' + alertType + '" role="alert">File Successfully Parsed : ' + link + ' </div>').fadeIn().delay(10000).fadeOut();
+                    $(".nav-tabs .active").find('a').click();
+                } else {
+                    $('.notification').html('<div class="alert ' + alertType + '" role="alert">' + result.Message + '</div>').fadeIn().delay(10000).fadeOut();
+                }
 
-    <div style="overflow: auto">
+                $('.notification').show();
+            });
+        });
+    });
+    var link = null;
+    function OnClick(s, e) {
+        uc.Upload();
+    }
+    function OnUploadTextChanged(s, e) {
+        uc.Upload();
+    }
+    function OnFileUploadComplete(s, e) {
+        if (e.callbackData !== "") {
+            link = e.callbackData;
+            var callback = 'FileUploadComplete: ' + e.callbackData;
+            $('.notification').empty();
+            var message = '<div class="alert alert-success" role="alert">' + callback + '</div>';
+            $('.notification').append(message).fadeIn().delay(10000).fadeOut();
+            //alert('FileUploadComplete: ' + e.callbackData);
+            $('#div-proceed').show();
+            //proceed(e.callbackData);
+        }
+        else {
+            $('.notification').empty();
+            var callback = 'The selected file was not uploaded.'
+            var message = '<div class="alert alert-danger" role="alert">' + callback + '</div>';
+            $('.notification').append(message).fadeIn().delay(10000).fadeOut();
+        }
+    }
+    function proceed(s) {
+        alert(s);
+        //$('#proceed').html('<a href="' + s + '">Process</a>');
+        //$('#proceed').show();
+
+
+    }
+
+</script>
+<div class="notification"></div>
+<div style="overflow:auto">
+    <form class="form-inline" style="float: left">
+        <div class="form-group" style="padding-right: 30px; border-right: solid 1px #3f454f;">
+            <label class="labletop">Year :</label>
+            @Html.DropDownListFor(x => x.Year, Model.Years, new { @class = "form-control ddl-year" })
+        </div>
+        <div class="form-group">
+            @Html.ActionLink("Download Template", "DownloadTemplate", new { filename = @Model.FileName }, new { @class = "btn btn-primary" })
+        </div>
+        <div class="form-group" id="div-proceed">
+            <input id="btn-proceed" class="btn btn-primary" value="Proceed" />
+        </div>
+    </form>
+    @using (Html.BeginForm("Upload", "File", new { configType = "KpiTarget" }, FormMethod.Post, new { @class = "form-inline" }))
+    {
+
+        @Html.DevExpress().UploadControl(settings =>
+        {
+            settings.Name = "uc";
+            settings.CallbackRouteValues = new { configType = "KpiTarget", Controller = "File", Action = "UploadControlCallbackAction" };
+            settings.ClientSideEvents.FileUploadComplete = "OnFileUploadComplete";
+            settings.ClientSideEvents.TextChanged = "function(s,e){uc.Upload();}";
+            settings.ShowProgressPanel = true;
+            settings.ValidationSettings.Assign(DSLNG.PEAR.Web.Extensions.ExcelUploadHelper.ValidationSettings);
+        }).GetHtml()
+    }
+    <table class="table table-hover table-transparent table-bordered">
+        <tbody>
+            <tr>
+                <th style="width: 30%;">KPI Name</th>
+                <th>Measurement</th>
+                <th style="width: 50px;">Jan</th>
+                <th style="width: 50px;">Feb</th>
+                <th style="width: 50px;">Mar</th>
+                <th style="width: 50px;">Apr</th>
+                <th style="width: 50px;">May</th>
+                <th style="width: 50px;">Jun</th>
+                <th style="width: 50px;">Jul</th>
+                <th style="width: 50px;">Aug</th>
+                <th style="width: 50px;">Sep</th>
+                <th style="width: 50px;">Oct</th>
+                <th style="width: 50px;">Nov</th>
+                <th style="width: 50px;">Dec</th>
+            </tr>
+            @{ var a = 0;}
+            @foreach (var kpi in Model.Kpis)
+            {
+                <tr>
+                    <td>@kpi.Name</td>
+                    <td>@kpi.Measurement</td>
+                    @{ var b = 0;}
+                    @foreach (var kpiTarget in kpi.KpiTargets)
+                    {
+                        var remarkSign = "";
+                        if (!string.IsNullOrEmpty(kpiTarget.Remark))
+                        {
+                            remarkSign = "remark_sign";
+                        }
+                        var idValue = "Kpis_" + a + "__KpiTargets_" + b + "__Value";
+                        <th>
+                            <input type="hidden" name="KpiId" class="kpiId" value="@kpi.Id" />
+                            <input type="hidden" name="HeaderPopover" class="header-popover" value="" />
+                            <input type="hidden" name="PeriodeType" class="periodeType" value="@DSLNG.PEAR.Data.Enums.PeriodeType.Monthly" />
+                            <input type="text" data-toggle="popover" class="form-control-small value kpi-popover @remarkSign" id="@idValue" value="@kpiTarget.Value" readonly="readonly">
+                            <input type="hidden" class="form-control-small id" value="@kpiTarget.Id">
+                            <input type="hidden" class="form-control-small remark" value="@kpiTarget.Remark">
+                            <input type="hidden" class="form-control-small periode" value="@kpiTarget.Periode">
+                        </th>
+                        b++;
+                    }
+
+                </tr>
+                    a++;
+            }
+        </tbody>
+    </table>
+
+    @*<div style="overflow: auto">
         <div class="form-inline form-group" style="float: left">
             <label class="labletop">Year :</label>
             @Html.DropDownListFor(x => x.Year, Model.Years, new { @class = "form-control ddl-year" })
         </div>
-        <table class="table table-hover table-transparent table-bordered">
-            <thead>
-                <tr>
-                    <th style="width: 30%;">KPI Name</th>
-                    <th>Measurement</th>
-                    <th style="width: 50px;">Jan</th>
-                    <th style="width: 50px;">Feb</th>
-                    <th style="width: 50px;">Mar</th>
-                    <th style="width: 50px;">Apr</th>
-                    <th style="width: 50px;">May</th>
-                    <th style="width: 50px;">Jun</th>
-                    <th style="width: 50px;">Jul</th>
-                    <th style="width: 50px;">Aug</th>
-                    <th style="width: 50px;">Sep</th>
-                    <th style="width: 50px;">Oct</th>
-                    <th style="width: 50px;">Nov</th>
-                    <th style="width: 50px;">Dec</th>
-                </tr>
-            </thead>
-            <tbody>
-                @{ var a = 0;}
-                @foreach (var kpi in Model.Kpis)
-                {
-                    <tr>
-                        <td>@kpi.Name</td>
-                        <td>@kpi.Measurement</td>
-                        @{ var b = 0;}
-                        @foreach (var kpiTarget in kpi.KpiTargets)
-                        {
-                            var remarkSign = "";
-                            if (!string.IsNullOrEmpty(kpiTarget.Remark))
-                            {
-                                remarkSign = "remark_sign";
-                            }
-                            var idValue = "Kpis_" + a + "__KpiTargets_" + b + "__Value";
-                            <th>
-                                <input type="hidden" name="KpiId" class="kpiId" value="@kpi.Id" />
-                                <input type="hidden" name="HeaderPopover" class="header-popover" value="" />
-                                <input type="hidden" name="PeriodeType" class="periodeType" value="@DSLNG.PEAR.Data.Enums.PeriodeType.Monthly" />
-                                <input type="text" class="form-control-small value kpi-popover @remarkSign" id="@idValue" value="@kpiTarget.Value" readonly="readonly">
-                                <input type="hidden" class="form-control-small id" value="@kpiTarget.Id">
-                                <input type="hidden" class="form-control-small remark" value="@kpiTarget.Remark">
-                                <input type="hidden" class="form-control-small periode" value="@kpiTarget.Periode">
-                            </th>
-                            b++;
-                        }
 
-                    </tr>
-                    a++;
-                }
-            </tbody>
-        </table>
-    </div>
+        
+    </div>*@
 
 
 </div>

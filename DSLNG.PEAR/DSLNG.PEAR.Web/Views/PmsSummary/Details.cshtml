@@ -3,53 +3,49 @@
     ViewBag.Title = "Pms Summary Configuration";
 }
 @Html.Partial("_MessageResponse")
-<style>a, a:hover, a:visited, a:active, a:focus {
-     color: #72afd2!important
- }</style>
 
-<div class="title_page" style="border:none!important;">
-    <div class="row">
-        <div class="title">@ViewBag.Title</div>
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="pull-left">@ViewBag.Title</h3>
     </div>
 </div>
-<div class="col-md-12">
-    <div class="row-full">
-        <h3>Pilar & Key Performance Indicator</h3>
+<div class="row">
+    <div class="col-md-12">
+        <h4 style="display: inline">Pilar & Key Performance Indicator</h4>
         @Html.ActionLink("Add Pillar", "Create", "PmsConfig", new { id = Model.PmsSummaryId }, new { @class = "btn-lightblue", data_toggle = "modal", data_target = "#modalDialog" })
     </div>
-    <div class="row-full">
-        <div class="text-med" style="color: #ffffff">
-            <div class="heading">
-                Total Score For All Pillar
-            </div>: <span id="totalScoreAllPillar">@Model.TotalScoreAllPillar</span>
-        </div>
+    <div class="col-md-12">
+        <h6>Total Score For All Pillar : <span id="totalScoreAllPillar">@Model.TotalScoreAllPillar</span></h6>
     </div>
 </div>
-@{
-    for (int i = 0; i < Model.PmsConfigs.Count; i++)
-    {
-        int i1 = i;
-        <div style="width:100%;">
-            <h3 style="text-transform:capitalize">@Model.PmsConfigs[i1].PillarName.ToLower()</h3>
-            <a href="@Url.Action("Create", "PmsConfigDetails", new { id = Model.PmsConfigs[i1].Id })" class="text-button pull-right" data-toggle="modal" data-target="#modalDialog">
-                <span class="fa fa-plus-circle"></span>Add PMS Config Detail
-            </a>
-            <a href="@Url.Action("Update", "PmsConfig", new { id = Model.PmsConfigs[i].Id })" data-toggle="modal" data-target="#modalDialog" class="text-button pull-right">
-                <span class="fa fa-pencil-square-o"></span>Edit Pilar
-            </a>
-            <a href='javascript:;' onclick='confirmDelete(@Model.PmsConfigs[i1].Id, @Model.PmsSummaryId, "PmsConfig")' class="text-button pull-right"><span class="fa fa-trash-o"></span>Delete</a>
-            <table class="table table-transparent table-bordered table-responsive table-hover">
-                <thead>
-                    <tr>
-                        <th rowspan="2">KPI Name</th>
-                        <th rowspan="2">Measurement</th>
-                        <th rowspan="2">Weight</th>
-                        <th rowspan="2">Scoring Type</th>
-                        <th rowspan="2">Scoring Indicator</th>
-                        <th rowspan="2">Action</th>
-                    </tr>
-                </thead>
+<div class="row pms-summary-detail-config">
+    <div class="col-md-12">
+        @{
+            for (int i = 0; i < Model.PmsConfigs.Count; i++)
+            {
+                int i1 = i;
+            
+            <h3 style="text-transform: capitalize">@Model.PmsConfigs[i1].PillarName.ToLower()</h3>
+            <div style="padding-bottom: 28px">
+                <a href="@Url.Action("Create", "PmsConfigDetails", new { id = Model.PmsConfigs[i1].Id })" class="text-button pull-right" data-toggle="modal" data-target="#modalDialog">
+                    <span class="fa fa-plus-circle"></span>Add PMS Config Detail
+                </a>
+                <a href="@Url.Action("Update", "PmsConfig", new { id = Model.PmsConfigs[i].Id })" data-toggle="modal" data-target="#modalDialog" class="text-button pull-right">
+                    <span class="fa fa-pencil-square-o"></span>Edit Pilar
+                </a>
+                <a href='javascript:;' onclick='confirmDelete(@Model.PmsConfigs[i1].Id, @Model.PmsSummaryId, "PmsConfig")' class="text-button pull-right"><span class="fa fa-trash-o"></span>Delete</a>
+            </div>
+            
+            <table class="table table-transparent table-responsive table-hover" border="1">
                 <tbody>
+                    <tr>
+                        <th>KPI Name</th>
+                        <th>Measurement</th>
+                        <th>Weight</th>
+                        <th>Scoring Type</th>
+                        <th>Scoring Indicator</th>
+                        <th>Action</th>
+                    </tr>
 
                     @foreach (var pmsConfigDetails in Model.PmsConfigs[i1].PmsConfigDetailsList)
                     {
@@ -67,47 +63,49 @@
                     }
                 </tbody>
             </table>
-        </div>
-    }
-}
+            
+            }
+        }
+    </div>
+</div>
 
 @Html.Partial("_Modal")
 
 @section Scripts{
     <script type="text/javascript">
-    var confirmDelete = function (id, pmsSummaryId, controller) {
-        if (confirm('Are you sure want to delete this item?')) {
-            var url = '@Url.Action("Delete", "PmsConfigDetails")';
-            if (controller == 'PmsConfig') {
-                url = '@Url.Action("Delete", "PmsConfig")';
-            }
+        var confirmDelete = function (id, pmsSummaryId, controller) {
+            if (confirm('Are you sure want to delete this item?')) {
+                var url = '@Url.Action("Delete", "PmsConfigDetails")';
+                if (controller == 'PmsConfig') {
+                    url = '@Url.Action("Delete", "PmsConfig")';
+                }
 
 
-            var form = document.createElement("form");
-            form.setAttribute("method", 'POST');
-            form.setAttribute("action", url);
+                var form = document.createElement("form");
+                form.setAttribute("method", 'POST');
+                form.setAttribute("action", url);
 
-            var fId = document.createElement("input");
-            fId.setAttribute('type', 'hidden');
-            fId.setAttribute('name', 'id');
-            fId.setAttribute('value', id);
-            form.appendChild(fId);
+                var fId = document.createElement("input");
+                fId.setAttribute('type', 'hidden');
+                fId.setAttribute('name', 'id');
+                fId.setAttribute('value', id);
+                form.appendChild(fId);
 
-            var fPmsSummaryId = document.createElement("input");
-            fPmsSummaryId.setAttribute('type', 'hidden');
-            fPmsSummaryId.setAttribute('name', 'pmsSummaryId');
-            fPmsSummaryId.setAttribute('value', pmsSummaryId);
-            form.appendChild(fPmsSummaryId);
+                var fPmsSummaryId = document.createElement("input");
+                fPmsSummaryId.setAttribute('type', 'hidden');
+                fPmsSummaryId.setAttribute('name', 'pmsSummaryId');
+                fPmsSummaryId.setAttribute('value', pmsSummaryId);
+                form.appendChild(fPmsSummaryId);
 
-            document.body.appendChild(form);
-            form.submit();
-                
+                document.body.appendChild(form);
+                form.submit();
+
                 //$('<form action="' + url + '" method="POST">' +
                 //    '<input type="hidden" name="id" value="' + id + '">' +
                 //    '<input type="hidden" name="pmsSummaryId" value="' + pmsSummaryId + '">' +
                 //    '</form>').submit();
-        }
-    };
+            }
+        };
 
     </script>
 }

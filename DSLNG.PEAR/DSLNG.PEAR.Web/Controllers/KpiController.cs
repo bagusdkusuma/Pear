@@ -187,6 +187,7 @@ namespace DSLNG.PEAR.Web.Controllers
             }
 
             viewModel.Icon = response.Icon;
+            viewModel.Icons = Directory.EnumerateFiles(Server.MapPath(PathConstant.KpiPath)).ToList();
 
             return View(viewModel);
         }

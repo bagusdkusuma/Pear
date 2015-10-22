@@ -63,7 +63,7 @@ h5 {
 }
 
 h4, h3 {
-    float: left;
+    /*float: left;*/
     margin-top: 0px;
     margin-right: 20px;
 }
@@ -1357,7 +1357,7 @@ td .btn_small_lightblue a:hover {
 
 .table-transparent {
     width: 100%;
-    border: #ccc 1px solid;
+    border: 1px solid #ffffff;
 }
 
 .constant-template.original {
@@ -1424,14 +1424,14 @@ ul li.unit.active {
     color: #ffffff;
 }
 
-    .table-transparent thead {
+    .table-transparent > tbody > tr:nth-child(1) {
         border-bottom: 1px solid #ffffff;
     }
 
-        .table-transparent thead tr {
-            font-size: 15px;
-            font-weight: bold;
-        }
+    .table-transparent thead tr {
+        font-size: 15px;
+        font-weight: bold;
+    }
 
 
     .table-transparent tbody tr td {
@@ -1504,6 +1504,7 @@ ul li.unit.active {
 }
 
 .right-content h3,
+.right-content h4,
 .right-content h5,
 .right-content h6 {
     color: #ffffff;
@@ -1556,4 +1557,49 @@ h2, h4 {
         .calculator-tabs li a {
             background: #1e90ff;
             color: #ffffff;
+        }
+
+.popover-content label {
+    color: #000000;
+}
+
+input[type="text"] {
+    color: #000000;
+}
+
+.pms-summary-detail-config a,
+.pms-summary-detail-config a:hover,
+.pms-summary-detail-config a:visited,
+.pms-summary-detail-config a:active,
+.pms-summary-detail-config a:focus {
+    color: #72afd2!important;
+}
+
+.perfect-scrollbar {
+    position: relative;
+}
+
+.pillar-icon {
+    border: 1px solid #d3d3d3;
+    display: inline-block;
+    width: 85px;
+    position: relative;
+    height: 70px;
+    float: left;
+    text-align: center;
+    padding: 10px;
+    margin: 10px;
+    overflow: hidden;
+}
+
+
+
+    .pillar-icon-selected, .pillar-icon:hover {
+        background: #cccccc;
+        cursor: pointer;
+        border: 1px solid #ffffff;
+    }
+
+        .pillar-icon:hover span {
+            color: #000000;
         }

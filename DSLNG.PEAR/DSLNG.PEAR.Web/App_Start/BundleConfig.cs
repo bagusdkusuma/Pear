@@ -25,6 +25,7 @@ namespace DSLNG.PEAR.Web.App_Start
                         "~/Scripts/exporting.js",
                         "~/Content/colpick/js/colpick.js",
                         "~/Scripts/snap.svg.js",
+                        "~/Scripts/perfect-scrollbar.jquery.min.js",
                         "~/Scripts/trafficlight.js",
                         "~/Scripts/tank.js",
                         "~/Scripts/bignumber.js",
@@ -40,6 +41,7 @@ namespace DSLNG.PEAR.Web.App_Start
                   "~/Content/bootstrap-datetimepicker.css",
                   "~/Content/select2/dist/css/select2.css",
                   "~/Content/colpick/css/colpick.css",
+                   "~/Content/perfect-scrollbar.min.css",
                   "~/Content/bootstrap.vertical-tabs.css",
                   "~/Content/style.css",
                   "~/Content/style-regawa.css"));

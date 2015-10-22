@@ -8,6 +8,10 @@ namespace DSLNG.PEAR.Web.ViewModels.Pillar
 {
     public class UpdatePillarViewModel
     {
+        public UpdatePillarViewModel()
+        {
+            Icons = new List<string>();
+        }
         [Required]
         public int Id { get; set; }
         [Required]
@@ -22,5 +26,6 @@ namespace DSLNG.PEAR.Web.ViewModels.Pillar
         [DataType(DataType.Upload)]
         public HttpPostedFileBase IconFile { get; set; }
         public string Icon { get; set; }
+        public IList<string> Icons { get; set; } 
     }
 }

@@ -294,6 +294,10 @@
     <Content Include="Content\img\graphic6.PNG" />
     <Content Include="Content\img\graphic7.PNG" />
     <Content Include="Content\img\icons.png" />
+    <Content Include="Content\img\kpi\dafwc.png" />
+    <Content Include="Content\img\kpi\default.png" />
+    <Content Include="Content\img\kpi\fatality.png" />
+    <Content Include="Content\img\kpi\trainingattend.png" />
     <Content Include="Content\img\login-back.png" />
     <Content Include="Content\img\login-background-image.png" />
     <Content Include="Content\img\login-circle.png" />
@@ -304,6 +308,11 @@
     <Content Include="Content\img\logo_login.png" />
     <Content Include="Content\img\malay.png" />
     <Content Include="Content\img\logopear.png" />
+    <Content Include="Content\img\pillar\business plan.png" />
+    <Content Include="Content\img\pillar\default.png" />
+    <Content Include="Content\img\pillar\plan resources.png" />
+    <Content Include="Content\img\pillar\safety.png" />
+    <Content Include="Content\img\pillar\weighing.png" />
     <Content Include="Content\img\plan-bg.jpg" />
     <Content Include="Content\img\plan.png" />
     <Content Include="Content\img\pointer.png" />
@@ -316,6 +325,7 @@
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery-ui.min.css" />
     <Content Include="Content\login.css" />
+    <Content Include="Content\perfect-scrollbar.min.css" />
     <Content Include="Content\select2\dist\css\select2.css" />
     <Content Include="Content\select2\dist\css\select2.min.css" />
     <Content Include="Content\select2\dist\js\i18n\az.js" />
@@ -380,6 +390,7 @@
     <Content Include="Scripts\calculator.production-yield.js" />
     <Content Include="Scripts\calculator.standard.js" />
     <Content Include="Scripts\calculator.plant-availability.js" />
+    <Content Include="Scripts\perfect-scrollbar.jquery.min.js" />
     <Content Include="Scripts\tank.js" />
     <Content Include="Scripts\exporting.js" />
     <Content Include="Scripts\globalize.cultures.js" />
@@ -555,7 +566,6 @@
     <Content Include="Views\Group\Update.cshtml" />
     <Content Include="Views\Artifact\_IndexGridPartial.cshtml" />
     <Content Include="Views\Artifact\Index.cshtml" />
-    <Content Include="Views\PmsConfigDetails\_ScoreIndicatorDetails.cshtml" />
     <Content Include="Views\PmsConfigDetails\_Update.cshtml" />
     <Content Include="Views\KpiTarget\Create.cshtml" />
     <Content Include="Views\Conversion\_GridViewPartial.cshtml" />
@@ -602,7 +612,7 @@
     <Content Include="Views\Template\_IndexGridPartial.cshtml" />
     <Content Include="Views\Template\Index.cshtml" />
     <Content Include="Views\Template\View.cshtml" />
-    <Content Include="Views\PmsSummary\_ScoreIndicatorDetails.cshtml" />
+    <Content Include="Views\Shared\_ScoreIndicatorDetails.cshtml" />
     <Content Include="Views\AreaChart\_Create.cshtml" />
     <Content Include="Views\MultiaxisChart\_Create.cshtml" />
     <Content Include="Views\MultiaxisChart\_BarChartCreate.cshtml" />
@@ -917,8 +927,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\TemplateFiles\" />
-    <Folder Include="Content\UploadedFiles\" />
+    <Folder Include="Content\TemplateFiles\KpiAchievement\" />
+    <Folder Include="Content\TemplateFiles\KpiTarget\" />
+    <Folder Include="Content\UploadedFiles\KpiAchievement\" />
+    <Folder Include="Content\UploadedFiles\KpiTarget\" />
     <Folder Include="ViewModels\CorporatePortofolio\" />
     <Folder Include="Views\Chart\" />
     <Folder Include="Views\CorporatePortofolio\" />

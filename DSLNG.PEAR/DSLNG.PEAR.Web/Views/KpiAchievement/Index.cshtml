@@ -86,6 +86,15 @@
 
     </script>
 }
+<style>
+    .nav-tabs > li > a {
+        color: #ffffff;
+    }
+
+    .nav-tabs > li:active > a {
+        color: #000000;
+    }
+</style>
 <section>
     <div class="row">
         <div class="title_page" style="border: none!important;">
@@ -114,7 +123,7 @@
     </div>
     <div class="col-md-12">
         <table class="table table-hover table-transparent table-bordered">
-            <thead>
+            <tbody>
                 <tr>
                     <th>No</th>
                     <th>KPI Name</th>
@@ -122,8 +131,6 @@
                     <th>Type</th>
                     <th style="width: 13%;">Action</th>
                 </tr>
-            </thead>
-            <tbody>
                 @{ int number = 0;}
                 @foreach (var roleGroup in Model.RoleGroups)
                 {

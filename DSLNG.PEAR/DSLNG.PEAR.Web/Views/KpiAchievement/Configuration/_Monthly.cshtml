@@ -96,7 +96,7 @@
 
         }
         <table class="table table-hover table-transparent table-bordered">
-            <thead>
+            <tbody>
                 <tr>
                     <th style="width: 30%;">KPI Name</th>
                     <th>Measurement</th>
@@ -113,8 +113,6 @@
                     <th style="width: 50px;">Nov</th>
                     <th style="width: 50px;">Dec</th>
                 </tr>
-            </thead>
-            <tbody>
                 @{ var a = 0;}
                 @foreach (var kpi in Model.Kpis)
                 {
@@ -134,7 +132,7 @@
                                 <input type="hidden" name="KpiId" class="kpiId" value="@kpi.Id" />
                                 <input type="hidden" name="HeaderPopover" class="header-popover" value="" />
                                 <input type="hidden" name="PeriodeType" class="periodeType" value="@DSLNG.PEAR.Data.Enums.PeriodeType.Monthly" />
-                                <input type="text" class="form-control-small value kpi-popover @remarkSign" id="@idValue" value="@kpiAchievement.Value" readonly="readonly">
+                                <input type="text" data-toggle="popover" class="form-control-small value kpi-popover @remarkSign" id="@idValue" value="@kpiAchievement.Value" readonly="readonly">
                                 <input type="hidden" class="form-control-small id" value="@kpiAchievement.Id">
                                 <input type="hidden" class="form-control-small remark" value="@kpiAchievement.Remark">
                                 <input type="hidden" class="form-control-small periode" value="@kpiAchievement.Periode">
@@ -143,7 +141,7 @@
                         }
 
                     </tr>
-                        a++;
+                    a++;
                 }
             </tbody>
         </table>

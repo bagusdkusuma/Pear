@@ -142,28 +142,12 @@ namespace DSLNG.PEAR.Services
                         {
                             if (kpiAchievement.Id == 0)
                             {
-                                var kpiAchievementNew = new KpiAchievement();
-                                kpiAchievementNew.Value = kpiAchievement.Value;
-                                kpiAchievementNew.Kpi = DataContext.Kpis.Single(x => x.Id == kpi.Id);
-                                kpiAchievementNew.PeriodeType = periodeType;
-                                kpiAchievementNew.Periode = kpiAchievement.Periode;
-                                kpiAchievementNew.IsActive = true;
-                                kpiAchievementNew.Remark = kpiAchievement.Remark;
-                                kpiAchievementNew.CreatedDate = DateTime.Now;
-                                kpiAchievementNew.UpdatedDate = DateTime.Now;
+                                var kpiAchievementNew = new KpiAchievement() { Value = kpiAchievement.Value, Kpi = DataContext.Kpis.Single(x => x.Id == kpi.Id), PeriodeType = periodeType, Periode = kpiAchievement.Periode, IsActive = true, Remark = kpiAchievement.Remark, CreatedDate = DateTime.Now, UpdatedDate = DateTime.Now };
                                 DataContext.KpiAchievements.Add(kpiAchievementNew);
                             }
                             else
                             {
-                                var kpiAchievementNew = new KpiAchievement();
-                                kpiAchievementNew.Id = kpiAchievement.Id;
-                                kpiAchievementNew.Value = kpiAchievement.Value;
-                                kpiAchievementNew.Kpi = DataContext.Kpis.Single(x => x.Id == kpi.Id);
-                                kpiAchievementNew.PeriodeType = periodeType;
-                                kpiAchievementNew.Periode = kpiAchievement.Periode;
-                                kpiAchievementNew.IsActive = true;
-                                kpiAchievementNew.Remark = kpiAchievement.Remark;
-                                kpiAchievementNew.UpdatedDate = DateTime.Now;
+                                var kpiAchievementNew = new KpiAchievement() { Id = kpiAchievement.Id, Value = kpiAchievement.Value, Kpi = DataContext.Kpis.Single(x => x.Id == kpi.Id), PeriodeType = periodeType, Periode = kpiAchievement.Periode, IsActive = true, Remark = kpiAchievement.Remark, UpdatedDate = DateTime.Now };
                                 DataContext.KpiAchievements.Attach(kpiAchievementNew);
                                 DataContext.Entry(kpiAchievementNew).State = EntityState.Modified;
                             }
@@ -259,6 +243,7 @@ namespace DSLNG.PEAR.Services
                     case PeriodeType.Yearly:
                         var kpiAchievementsYearly = DataContext.KpiAchievements
                                         .Include(x => x.Kpi)
+                                        .OrderBy(x => x.Kpi.Order)
                                         .Where(x => x.PeriodeType == periodeType).ToList();
                         foreach (var kpi in kpis)
                         {
@@ -433,7 +418,7 @@ namespace DSLNG.PEAR.Services
             var response = new GetAchievementsResponse();
             try
             {
-                var kpiAchievement = DataContext.KpiAchievements.Include(x => x.Kpi).Where(x => x.PeriodeType == periodeType && x.Periode.Year == request.Year && x.Periode.Month == request.Month).ToList();
+                var kpiAchievement = DataContext.KpiAchievements.Include(x => x.Kpi).OrderBy(x => x.Kpi.Order).Where(x => x.PeriodeType == periodeType && x.Periode.Year == request.Year && x.Periode.Month == request.Month).ToList();
                 if (kpiAchievement.Count > 0)
                 {
                     foreach (var item in kpiAchievement)
@@ -508,7 +493,7 @@ namespace DSLNG.PEAR.Services
                 {
                     response.Message = "File Successfully Parsed, but no data changed!";
                 }
-                
+
 
             }
             catch (InvalidOperationException invalidOperationException)

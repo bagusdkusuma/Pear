@@ -7,9 +7,7 @@
 
 <div class="title_page" style="border: none!important;">
     <div class="row">
-
         <div class="title">PMS Summary Configuration</div>
-
     </div>
     <div class="row">
         <a href="@Url.Action("Create")" class="text-button" data-toggle="modal" data-target="#modalDialog">
@@ -19,52 +17,50 @@
     </div>
 </div>
 
-    <table class="table table-transparent table-bordered table-responsive table-hover">
-        <thead>
-            <tr>
-                <th rowspan="2">No</th>
-                <th rowspan="2">Year</th>
-                <th rowspan="2">Title</th>
-                <th rowspan="2">Pillar & KPI</th>
-                <th rowspan="2">Value Target</th>
-                <th rowspan="2">Value Achievement</th>
-                <th rowspan="2">Scoring Indicator</th>
-                <th rowspan="2">Is Active</th>
-                <th rowspan="2">Action</th>
+<table class="table table-transparent table-bordered table-responsive table-hover">
+    <tbody>
+        <tr>
+            <th>No</th>
+            <th>Year</th>
+            <th>Title</th>
+            <th>Pillar & KPI</th>
+            <th>Value Target</th>
+            <th>Value Achievement</th>
+            <th>Scoring Indicator</th>
+            <th>Is Active</th>
+            <th>Action</th>
+        </tr>
+        @{
+            int i = 0;
+        }
+        @foreach (var item in Model.CorporatePortofolios)
+        {
+            i++;
+            <tr data-toggle="modal">
+                <td>@i</td>
+                <td>@item.Year</td>
+                <td>@item.Title</td>
+                <td class="text-button">
+                    <a href="@Url.Action("Details", "PmsSummary", new { id = item.Id }, null)"><span class="fa fa-table"></span>Details</a>
+                </td>
+                <td class="text-button">
+                    <a href="@Url.Action("Update", "KpiTarget", new { id = item.Id }, null)"><span class="fa fa-table"></span>Details</a>
+                </td>
+                <td class="text-button">
+                    <a href="@Url.Action("Update", "KpiAchievement", new { id = item.Id }, null)"><span class="fa fa-table"></span>Details</a>
+                </td>
+                <td class="text-button">
+                    <a href="@Url.Action("ScoreIndicatorDetails", "PmsSummary", new { id = item.Id }, null)" data-toggle="modal" data-target="#modalDialog"><span class="fa fa-table"></span>Details</a>
+                </td>
+                <td>@item.IsActive</td>
+                <td class="text-button">
+                    <a href="@Url.Action("Update", "PmsSummary", new { id = item.Id }, null)" data-toggle="modal" data-target="#modalDialog"><span class="fa fa-pencil-square-o"></span>Edit</a>
+                    <a href='javascript:;' onclick='confirmDelete(@item.Id)'><span class="fa fa-trash-o"></span>Delete</a>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @{
-                int i = 0;
-            }
-            @foreach (var item in Model.CorporatePortofolios)
-            {
-                i++;
-                <tr data-toggle="modal">
-                    <td>@i</td>
-                    <td>@item.Year</td>
-                    <td>@item.Title</td>
-                    <td class="text-button">
-                        <a href="@Url.Action("Details", "PmsSummary", new { id = item.Id }, null)"><span class="fa fa-table"></span>Details</a>
-                    </td>
-                    <td class="text-button">
-                        <a href="@Url.Action("Update", "KpiTarget", new { id = item.Id }, null)"><span class="fa fa-table"></span>Details</a>
-                    </td>
-                    <td class="text-button">
-                        <a href="@Url.Action("Update", "KpiAchievement", new { id = item.Id }, null)"><span class="fa fa-table"></span>Details</a>
-                    </td>
-                    <td class="text-button">
-                        <a href="@Url.Action("ScoreIndicatorDetails", "PmsSummary", new { id = item.Id }, null)" data-toggle="modal" data-target="#modalDialog"><span class="fa fa-table"></span>Details</a>
-                    </td>
-                    <td>@item.IsActive</td>
-                    <td class="text-button">
-                        <a href="@Url.Action("Update", "PmsSummary", new { id = item.Id }, null)" data-toggle="modal" data-target="#modalDialog"><span class="fa fa-pencil-square-o"></span>Edit</a>
-                        <a href='javascript:;' onclick='confirmDelete(@item.Id)'><span class="fa fa-trash-o"></span>Delete</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>
 
 @Html.Partial("_Modal")
 

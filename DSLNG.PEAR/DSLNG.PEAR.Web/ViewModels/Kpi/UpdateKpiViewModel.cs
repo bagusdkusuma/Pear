@@ -15,6 +15,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Kpi
                 {
                     new KpiRelationModel()
                 };
+            Icons = new List<string>();
         }
         public string CodeFromLevel { get; set; }
         public string CodeFromPillar { get; set; }
@@ -103,6 +104,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Kpi
         [DataType(DataType.Upload)]
         public HttpPostedFileBase IconFile { get; set; }
         public string Icon { get; set; }
+        public IList<string> Icons { get; set; } 
 
         [Display(Name = "Active")]
         public bool IsActive { get; set; }
