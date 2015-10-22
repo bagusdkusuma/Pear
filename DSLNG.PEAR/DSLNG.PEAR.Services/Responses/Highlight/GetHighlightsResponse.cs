@@ -16,6 +16,7 @@ namespace DSLNG.PEAR.Services.Responses.Highlight
             public PeriodeType PeriodeType { get; set; }
             public string Type { get; set; }
             public DateTime Date { get; set; }
+            public bool IsActive { get; set; }
         }
     }
 }

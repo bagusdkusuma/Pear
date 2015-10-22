@@ -64,6 +64,7 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.Columns.Add("Type");
             viewModel.Columns.Add("Title");
             viewModel.Columns.Add("Date");
+            viewModel.Columns.Add("IsActive");
             viewModel.Pager.PageSize = 10;
             return viewModel;
         }
@@ -168,7 +169,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var viewModel = new DailyExecutionReportViewModel();
             viewModel.NLSList = vesselSchedules.VesselSchedules.MapTo<DailyExecutionReportViewModel.NLSViewModel>();
             viewModel.Weather = _waetherService.GetWeather(new GetWeatherRequest { Date = DateTime.Now.Date }).MapTo<DailyExecutionReportViewModel.WeatherViewModel>();
-            viewModel.Highlights = _highlightService.GetHighlights(new GetHighlightsRequest { Except = new string[1] { "alert" },Date = DateTime.Now.Date }).Highlights.MapTo<DailyExecutionReportViewModel.HighlightViewModel>();
+            viewModel.Highlights = _highlightService.GetHighlights(new GetHighlightsRequest { Except = new string[1] { "alert" },Date = DateTime.Now.Date, IsActive=true }).Highlights.MapTo<DailyExecutionReportViewModel.HighlightViewModel>();
             viewModel.Alert = _highlightService.GetHighlight(new GetHighlightRequest { Type = "alert", Date = DateTime.Now.Date }).MapTo<DailyExecutionReportViewModel.AlertViewModel>();
             return View(viewModel);
         }

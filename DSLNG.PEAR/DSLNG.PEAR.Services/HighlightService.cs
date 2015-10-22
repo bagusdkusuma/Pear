@@ -23,7 +23,7 @@ namespace DSLNG.PEAR.Services
             else if (request.Except.Length > 0 && request.Date.HasValue) {
                 return new GetHighlightsResponse
                 {
-                    Highlights = DataContext.Highlights.Where(x => x.Date == request.Date.Value && !request.Except.Contains(x.Type))
+                    Highlights = DataContext.Highlights.Where(x => x.Date == request.Date.Value && !request.Except.Contains(x.Type) && x.IsActive == request.IsActive)
                     .ToList().MapTo<GetHighlightsResponse.HighlightResponse>()
                 };
             }
