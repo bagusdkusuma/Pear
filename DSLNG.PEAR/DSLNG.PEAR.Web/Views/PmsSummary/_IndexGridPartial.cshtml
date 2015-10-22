@@ -102,7 +102,7 @@ border-left: 1px solid #ffffff">Yearly</td>
                         <tr style="font-weight: bold">
                             <td>&nbsp;</td>
                             <td colspan="2" class="text-left">
-                                <div class="roundlight" style="background-color:@item.TotalScoreColor" data-poload="@scoreIndicatorPmsSummaryUrl"></div>
+                                <div id="totalScore" class="roundlight" data-total-score-color="@item.TotalScoreColor" style="background-color:@item.TotalScoreColor" data-poload="@scoreIndicatorPmsSummaryUrl"></div>
                                 Total Score
                             </td>
                             <td class="text-right">@totalPillarScore.ToString(FormatNumber.DecimalFormat) / @totalPillarWeight</td>

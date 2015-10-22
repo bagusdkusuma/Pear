@@ -367,6 +367,12 @@ namespace DSLNG.PEAR.Services
             try
             {
                 var pmsSummary = request.MapTo<PmsSummary>();
+                var isExisted = DataContext.PmsSummaries.FirstOrDefault(x => x.IsActive);
+                if (request.IsActive && isExisted != null)
+                {
+                    response.Message = string.Format(@"There is one Pms Summary has actived already, You have to unactivate first.");
+                    return response;
+                }
                 DataContext.PmsSummaries.Add(pmsSummary);
                 DataContext.SaveChanges();
                 response.Message = "Configuration has been added successfully";
@@ -425,6 +431,13 @@ namespace DSLNG.PEAR.Services
             var response = new UpdatePmsSummaryResponse();
             try
             {
+                var isExisted = DataContext.PmsSummaries.FirstOrDefault(x => x.IsActive);
+                if (request.IsActive && isExisted != null && isExisted.Id != request.Id)
+                {
+                    response.Message = string.Format(@"There is one Pms Summary has actived already, You have to unactivate first.");
+                    return response;
+                }
+
                 var updatedPmsSummary = request.MapTo<PmsSummary>();
                 var existedPmsSummary = DataContext.PmsSummaries
                     .Where(x => x.Id == request.Id)
@@ -927,10 +940,22 @@ namespace DSLNG.PEAR.Services
             {
                 var pmsConfig = DataContext.PmsConfigs
                     .Include(x => x.ScoreIndicators)
+                    .Include(x => x.PmsConfigDetailsList)
+                    .Include(x => x.PmsConfigDetailsList.Select(y => y.ScoreIndicators))
                     .Single(x => x.Id == id);
                 foreach (var scoreIndicator in pmsConfig.ScoreIndicators.ToList())
                 {
                     DataContext.ScoreIndicators.Remove(scoreIndicator);
+                }
+
+                foreach (var details in pmsConfig.PmsConfigDetailsList.ToList())
+                {
+                    foreach (var scoreIndicator in details.ScoreIndicators.ToList())
+                    {
+                        DataContext.ScoreIndicators.Remove(scoreIndicator);
+                    }
+
+                    DataContext.PmsConfigDetails.Remove(details);
                 }
 
                 DataContext.PmsConfigs.Remove(pmsConfig);
@@ -952,9 +977,40 @@ namespace DSLNG.PEAR.Services
             var response = new DeletePmsResponse();
             try
             {
-                var pmsSummary = new PmsSummary { Id = id };
-                DataContext.PmsSummaries.Attach(pmsSummary);
-                DataContext.Entry(pmsSummary).State = EntityState.Deleted;
+                var pmsSummary = DataContext.PmsSummaries
+                    .Include(x => x.ScoreIndicators)
+                    .Include(x => x.PmsConfigs)
+                    .Include(x => x.PmsConfigs.Select(y => y.ScoreIndicators))
+                    .Include(x => x.PmsConfigs.Select(y => y.PmsConfigDetailsList))
+                    .Include(x => x.PmsConfigs.Select(y => y.PmsConfigDetailsList.Select(z => z.ScoreIndicators)))
+                    .Single(x => x.Id == id);
+                foreach (var scoreIndicator in pmsSummary.ScoreIndicators.ToList())
+                {
+                    DataContext.ScoreIndicators.Remove(scoreIndicator);
+                }
+
+                foreach (var pmsConfig in pmsSummary.PmsConfigs.ToList())
+                {
+                    foreach (var pmsConfigDetailse in pmsConfig.PmsConfigDetailsList.ToList())
+                    {
+                        foreach (var score in pmsConfigDetailse.ScoreIndicators.ToList())
+                        {
+                            DataContext.ScoreIndicators.Remove(score);
+                        }
+
+                        DataContext.PmsConfigDetails.Remove(pmsConfigDetailse);
+                    }
+
+                    foreach (var score in pmsConfig.ScoreIndicators.ToList())
+                    {
+                        DataContext.ScoreIndicators.Remove(score);
+                    }
+
+
+                    DataContext.PmsConfigs.Remove(pmsConfig);
+                }
+
+                DataContext.PmsSummaries.Remove(pmsSummary);
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
                 response.Message = "Pms Summary item has been deleted successfully";
