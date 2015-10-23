@@ -1,4 +1,6 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Highlight.DailyExecutionReportViewModel
+@using DSLNG.PEAR.Web.Helpers
+
 <div class="daily-execution-report ">
     <div class="row">
         <div class="col-md-12">
@@ -64,16 +66,16 @@
                                 <td @colspan>
                                     @if (Model.Highlights.Count > i)
                                     { 
-                                        <h4 style="float: none; margin-top: 10px">@Model.Highlights[i].Title</h4>
-                                        <p>@Model.Highlights[i].Message</p>
+                                        <h4 class="highlight-title" style="float: none; margin-top: 10px">@Model.Highlights[i].Title</h4>
+                                        <p>@Html.LimitString(@Model.Highlights[i].Message,140)</p>
                                     }
                                 </td>
 
                                 @if (Model.Highlights.Count > i + 1)
                                 {
                                     <td>
-                                        <h4 style="float: none; margin-top: 10px">@Model.Highlights[i + 1].Title</h4>
-                                        <p>@Model.Highlights[i + 1].Message</p>
+                                        <h4 class="highlight-title" style="float: none; margin-top: 10px">@Model.Highlights[i + 1].Title</h4>
+                                        <p>@Html.LimitString(@Model.Highlights[i + 1].Message,140)</p>
                                     </td>
                                 }
 
@@ -85,3 +87,4 @@
         </div>
     }
 </div>
+@Html.Partial("_Modal")

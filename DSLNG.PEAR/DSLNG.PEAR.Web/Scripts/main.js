@@ -4143,6 +4143,21 @@ Number.prototype.format = function (n, x) {
             Pear.PlantAvailabilityCalculator.Init();
             Pear.CalculatorConstant.Init();
         }
+        $('.see-more').click(function () {
+            var modalHeader = $('<div/>');
+            modalHeader.addClass('modal-header');
+            modalHeader.html('<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>');
+            modalHeader.append($('<div/>').addClass('row').addClass('modal-header-detail').html('<div class="title">' + $(this).closest('td').find('.highlight-title').html() + '</div>'));
+            var modalBody = $('<div/>');
+            modalBody.addClass('modal-body');
+            modalBody.html($(this).next('.full-string').clone());
+            modalBody.find('.full-string').show();
+            var more = $('#modalDialog .modal-content');
+            more.html('');
+            more.append(modalHeader);
+            more.append(modalBody);
+            $('#modalDialog .modal-content').removeClass('ajax-loading');
+        });
     });
     window.Pear = Pear;
 }(window, jQuery, undefined));
