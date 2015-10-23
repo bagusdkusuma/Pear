@@ -34,6 +34,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -56,6 +57,7 @@
       <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="DevExpress.Docs.v14.2, Version=14.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DotNetOpenAuth.AspNet, Version=4.1.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNetOpenAuth.AspNet.4.1.4.12333\lib\net45-full\DotNetOpenAuth.AspNet.dll</HintPath>
       <Private>True</Private>
@@ -80,7 +82,8 @@
       <HintPath>..\packages\DotNetOpenAuth.OpenId.RelyingParty.4.1.4.12333\lib\net45-full\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="DSLNGTheme">
+    <Reference Include="DSLNGTheme, Version=14.2.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\DSLNGTheme.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -95,6 +98,10 @@
       <HintPath>..\packages\EntityFramework.SqlServerCompact.6.1.3\lib\net45\EntityFramework.SqlServerCompact.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="itextsharp, Version=5.5.6.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.6\lib\itextsharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
@@ -107,6 +114,9 @@
     <Reference Include="Microsoft.Web.WebPages.OAuth, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.OAuth.3.0.0\lib\net45\Microsoft.Web.WebPages.OAuth.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="NCalc">
+      <HintPath>..\packages\ncalc.1.3.8\lib\NCalc.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -123,6 +133,10 @@
     <Reference Include="StructureMap.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\structuremap.web.3.1.0.133\lib\net40\StructureMap.Web.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Svg, Version=0.5.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Third Party\Svg.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -236,6 +250,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Content\bootstrap-datetimepicker.css" />
+    <Content Include="Content\bootstrap-datetimepicker.min.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrap.vertical-tabs.css" />
     <Content Include="Content\bootstrap\css\bootstrap-theme.css" />
     <Content Include="Content\bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap\css\bootstrap.css" />
@@ -245,14 +266,26 @@
     <Content Include="Content\bootstrap\js\bootstrap.min.js" />
     <Content Include="Content\bootstrap\js\npm.js" />
     <Content Include="Content\bs_leftnavi.css" />
+    <Content Include="Content\colpick\css\colpick.css" />
+    <Content Include="Content\colpick\js\colpick.js" />
     <Content Include="Content\datepicker\css\datepicker.css" />
     <Content Include="Content\datepicker\js\bootstrap-datepicker.js" />
     <Content Include="Content\font-awesome\css\font-awesome.css" />
     <Content Include="Content\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\font-awesome\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\img\active.png" />
     <Content Include="Content\img\ajax-loader.gif" />
     <Content Include="Content\img\ajax-loader1.gif" />
+    <Content Include="Content\img\ajax-loader2.gif" />
+    <Content Include="Content\img\assess-bg.jpg" />
+    <Content Include="Content\img\assess.png" />
     <Content Include="Content\img\bg.jpg" />
+    <Content Include="Content\img\bg_5.jpg" />
+    <Content Include="Content\img\dashboard.png" />
+    <Content Include="Content\img\dialog-bg.png" />
+    <Content Include="Content\img\execute-bg.jpg" />
+    <Content Include="Content\img\execute.png" />
     <Content Include="Content\img\graphic1.jpg" />
     <Content Include="Content\img\graphic2.png" />
     <Content Include="Content\img\graphic3.PNG" />
@@ -261,14 +294,38 @@
     <Content Include="Content\img\graphic6.PNG" />
     <Content Include="Content\img\graphic7.PNG" />
     <Content Include="Content\img\icons.png" />
+    <Content Include="Content\img\kpi\dafwc.png" />
+    <Content Include="Content\img\kpi\default.png" />
+    <Content Include="Content\img\kpi\fatality.png" />
+    <Content Include="Content\img\kpi\trainingattend.png" />
+    <Content Include="Content\img\login-back.png" />
+    <Content Include="Content\img\login-background-image.png" />
+    <Content Include="Content\img\login-circle.png" />
+    <Content Include="Content\img\login-logo-new.png" />
     <Content Include="Content\img\logopear.png" />
+    <Content Include="Content\img\logout.png" />
     <Content Include="Content\img\logo_blue.png" />
     <Content Include="Content\img\logo_login.png" />
+    <Content Include="Content\img\malay.png" />
+    <Content Include="Content\img\logopear.png" />
+    <Content Include="Content\img\pillar\business plan.png" />
+    <Content Include="Content\img\pillar\default.png" />
+    <Content Include="Content\img\pillar\plan resources.png" />
+    <Content Include="Content\img\pillar\safety.png" />
+    <Content Include="Content\img\pillar\weighing.png" />
+    <Content Include="Content\img\plan-bg.jpg" />
+    <Content Include="Content\img\plan.png" />
     <Content Include="Content\img\pointer.png" />
+    <Content Include="Content\img\remark_sign.png" />
+    <Content Include="Content\img\report-bg.jpg" />
+    <Content Include="Content\img\report.png" />
+    <Content Include="Content\img\setting.png" />
     <Content Include="Content\img\throbber.gif" />
     <Content Include="Content\img\tick.png" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery-ui.min.css" />
+    <Content Include="Content\login.css" />
+    <Content Include="Content\perfect-scrollbar.min.css" />
     <Content Include="Content\select2\dist\css\select2.css" />
     <Content Include="Content\select2\dist\css\select2.min.css" />
     <Content Include="Content\select2\dist\js\i18n\az.js" />
@@ -316,17 +373,52 @@
     <Content Include="Content\select2\dist\js\select2.full.min.js" />
     <Content Include="Content\select2\dist\js\select2.js" />
     <Content Include="Content\select2\dist\js\select2.min.js" />
+    <Content Include="Content\style-regawa.css" />
     <Content Include="Content\style.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\AjaxLogin.js" />
+    <Content Include="Scripts\bignumber.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\bs_leftnavi.js" />
+    <Content Include="Scripts\calculator.constant.js" />
+    <Content Include="Scripts\calculator.pricing.js" />
+    <Content Include="Scripts\calculator.production-yield.js" />
+    <Content Include="Scripts\calculator.standard.js" />
+    <Content Include="Scripts\calculator.plant-availability.js" />
+    <Content Include="Scripts\perfect-scrollbar.jquery.min.js" />
+    <Content Include="Scripts\tank.js" />
+    <Content Include="Scripts\exporting.js" />
     <Content Include="Scripts\globalize.cultures.js" />
     <Content Include="Scripts\globalize.js" />
+    <Content Include="Scripts\highcharts-3d.src.js" />
+    <Content Include="Scripts\highcharts-more.js" />
+    <Content Include="Scripts\highcharts.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\colpick\colpick.jquery.json" />
+    <Content Include="Content\colpick\LICENSE" />
+    <Content Include="Content\colpick\README.md" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Content\font-awesome\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\font-awesome\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\font-awesome\fonts\glyphicons-halflings-regular.woff" />
+    <None Include="Scripts\jquery-1.9.0.intellisense.js" />
+    <Content Include="Scripts\jquery-1.9.0.js" />
+    <Content Include="Scripts\jquery-1.9.0.min.js" />
     <Content Include="Scripts\jquery-ui-1.10.3.js" />
     <Content Include="Scripts\jquery-ui-1.10.3.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
@@ -397,9 +489,20 @@
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <Content Include="Content\datepicker\less\datepicker.less" />
     <None Include="Properties\PublishProfiles\donggi.pubxml" />
+    <Content Include="Scripts\jquery-1.9.0.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\npm.js" />
+    <Content Include="Scripts\snap.svg.js" />
+    <Content Include="Scripts\trafficlight.js" />
+    <Content Include="Third Party\Svg.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Boolean.cshtml" />
@@ -420,7 +523,7 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\_GridViewPartial.cshtml" />
     <Content Include="Views\PmsSummary\Index.cshtml" />
-    <Content Include="Views\PmsSummary\_IndexGridPartial.cshtml" />
+    <Content Include="Views\PmsSummary\_IndexGridPartial.Old.cshtml" />
     <Content Include="Views\Level\Index.cshtml">
       <SubType>Code</SubType>
     </Content>
@@ -435,15 +538,179 @@
     <Content Include="Views\BarChart\_Create.cshtml" />
     <Content Include="Views\Artifact\Preview.cshtml" />
     <Content Include="Views\BarChart\_Display.cshtml" />
-    <Content Include="Views\PmsSummary\_Details.cshtml" />
+    <Content Include="Views\PmsSummary\_ReportDetails.cshtml" />
     <Content Include="Views\Level\Update.cshtml" />
     <Content Include="Views\Level\Create.cshtml" />
-<<<<<<< HEAD
-    <Content Include="Views\RoleGroup\Index.cshtml" />
     <Content Include="Views\RoleGroup\_GridViewPartial.cshtml" />
+    <Content Include="Views\Type\_GridViewPartial.cshtml" />
+    <Content Include="Views\Type\Index.cshtml" />
+    <Content Include="Views\RoleGroup\Index.cshtml" />
+    <Content Include="Views\User\Create.cshtml" />
+    <Content Include="Views\User\Update.cshtml" />
+    <Content Include="Views\Type\Create.cshtml" />
+    <Content Include="Views\Type\Update.cshtml" />
+    <Content Include="Views\RoleGroup\Create.cshtml" />
+    <Content Include="Views\RoleGroup\Update.cshtml" />
+    <Content Include="Views\Menu\_GridViewPartial.cshtml" />
+    <Content Include="Views\Kpi\Index.cshtml" />
+    <Content Include="Views\Kpi\_GridViewPartial.cshtml" />
+    <Content Include="Views\Kpi\Create.cshtml" />
+    <Content Include="Views\Kpi\Update.cshtml" />
+    <Content Include="Views\PmsSummary\Configuration.cshtml" />
+    <Content Include="Views\PmsSummary\Details.cshtml" />
+    <Content Include="Views\LineChart\_Create.cshtml" />
+    <Content Include="Views\Level\_GridViewPartial.cshtml" />
+    <Content Include="Views\Group\_GridViewPartial.cshtml" />
+    <Content Include="Views\Group\Create.cshtml" />
+    <Content Include="Views\Group\Index.cshtml" />
+    <Content Include="Views\Group\Update.cshtml" />
+    <Content Include="Views\Artifact\_IndexGridPartial.cshtml" />
+    <Content Include="Views\Artifact\Index.cshtml" />
+    <Content Include="Views\PmsConfigDetails\_Update.cshtml" />
+    <Content Include="Views\KpiTarget\Create.cshtml" />
+    <Content Include="Views\Conversion\_GridViewPartial.cshtml" />
+    <Content Include="Views\Conversion\Create.cshtml" />
+    <Content Include="Views\Conversion\Index.cshtml" />
+    <Content Include="Views\Conversion\Update.cshtml" />
+    <Content Include="Views\KpiTarget\Index.cshtml" />
+    <Content Include="Views\KpiTarget\_GridViewPartial.cshtml" />
+    <Content Include="Views\PmsConfig\_Create.cshtml" />
+    <Content Include="Views\PmsConfigDetails\_Create.cshtml" />
+    <Content Include="Views\PmsSummary\_Create.cshtml" />
+    <Content Include="Views\Shared\_ScoringIndicator.cshtml" />
+    <Content Include="Views\KpiTarget\Update.cshtml" />
+    <Content Include="Views\KpiTarget\_Yearly.cshtml" />
+    <Content Include="Views\KpiTarget\_Monthly.cshtml" />
+    <Content Include="Views\KpiAchievement\_Monthly.cshtml" />
+    <Content Include="Views\KpiAchievement\_Yearly.cshtml" />
+    <Content Include="Views\KpiAchievement\Update.cshtml" />
+    <Content Include="Views\Menu\Create.cshtml" />
+    <Content Include="Views\Menu\Update.cshtml" />
+    <Content Include="Views\Pillar\_GridViewPartial.cshtml" />
+    <Content Include="Views\Pillar\Index.cshtml" />
+    <Content Include="Views\Pillar\Create.cshtml" />
+    <Content Include="Views\Pillar\Update.cshtml" />
+    <Content Include="Views\SpeedometerChart\_Create.cshtml" />
+    <Content Include="Views\Method\_GridViewPartial.cshtml" />
+    <Content Include="Views\Method\Create.cshtml" />
+    <Content Include="Views\Method\Index.cshtml" />
+    <Content Include="Views\Method\Update.cshtml" />
+    <Content Include="Views\Periode\_GridViewPartial.cshtml" />
+    <Content Include="Views\Periode\Create.cshtml" />
+    <Content Include="Views\Periode\Index.cshtml" />
+    <Content Include="Views\Periode\Update.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\PillarSelectList.cshtml" />
+    <Content Include="Views\Shared\_Modal.cshtml" />
+    <Content Include="Views\PmsSummary\_Update.cshtml" />
+    <Content Include="Views\PmsConfig\_Update.cshtml" />
+    <Content Include="Views\SpiderwebChart\_Create.cshtml" />
+    <Content Include="Views\Menu\_SiteMap.cshtml" />
+    <Content Include="Views\Shared\_LoginLayout.cshtml" />
+    <Content Include="Views\User\Login.cshtml" />
+    <Content Include="Views\Template\Create.cshtml" />
+    <Content Include="Views\PmsSummary\_Graph.cshtml" />
+    <Content Include="Views\Template\_IndexGridPartial.cshtml" />
+    <Content Include="Views\Template\Index.cshtml" />
+    <Content Include="Views\Template\View.cshtml" />
+    <Content Include="Views\Shared\_ScoreIndicatorDetails.cshtml" />
+    <Content Include="Views\AreaChart\_Create.cshtml" />
+    <Content Include="Views\MultiaxisChart\_Create.cshtml" />
+    <Content Include="Views\MultiaxisChart\_BarChartCreate.cshtml" />
+    <Content Include="Views\Artifact\Edit.cshtml" />
+    <Content Include="Views\BarChart\_Edit.cshtml" />
+    <Content Include="Views\LineChart\_Edit.cshtml" />
+    <Content Include="Views\KpiAchievement\Index.cshtml" />
+    <Content Include="Views\KpiAchievement\Configuration.cshtml" />
+    <Content Include="Views\KpiAchievement\Configuration\_Yearly.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\UnAuthorized\Error.cshtml" />
+    <Content Include="Views\KpiAchievement\Configuration\_Monthly.cshtml" />
+    <Content Include="Views\KpiAchievement\Configuration\_Daily.cshtml" />
+    <Content Include="Views\KpiTarget\Configuration\_Daily.cshtml" />
+    <Content Include="Views\KpiTarget\Configuration\_Monthly.cshtml" />
+    <Content Include="Views\KpiTarget\Configuration\_Yearly.cshtml" />
+    <Content Include="Views\KpiTarget\Configuration.cshtml" />
+    <Content Include="Views\AreaChart\_Edit.cshtml" />
+    <Content Include="Views\ComboChart\_AreaChartCreate.cshtml" />
+    <Content Include="Views\ComboChart\_AreaChartEdit.cshtml" />
+    <Content Include="Views\ComboChart\_BarChartCreate.cshtml" />
+    <Content Include="Views\ComboChart\_BarChartEdit.cshtml" />
+    <Content Include="Views\ComboChart\_Create.cshtml" />
+    <Content Include="Views\ComboChart\_Edit.cshtml" />
+    <Content Include="Views\ComboChart\_LineChartCreate.cshtml" />
+    <Content Include="Views\ComboChart\_LineChartEdit.cshtml" />
+<<<<<<< HEAD
+    <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Account\Validate.cshtml" />
 =======
-    <Content Include="Views\Master\Index.cshtml" />
->>>>>>> 70a9d91e68f4bedcc8242cccf21ba09efec82d4b
+    <Content Include="Views\Buyer\_IndexGridPartial.cshtml" />
+    <Content Include="Views\Buyer\Create.cshtml" />
+    <Content Include="Views\Buyer\Edit.cshtml" />
+    <Content Include="Views\Buyer\Index.cshtml" />
+    <Content Include="Views\CalculatorConstant\_IndexGridPartial.cshtml" />
+    <Content Include="Views\CalculatorConstant\Create.cshtml" />
+    <Content Include="Views\CalculatorConstant\Edit.cshtml" />
+    <Content Include="Views\CalculatorConstant\Index.cshtml" />
+    <Content Include="Views\Calculator\Index.cshtml" />
+    <Content Include="Views\ConstantUsage\_IndexGridPartial.cshtml" />
+    <Content Include="Views\ConstantUsage\Create.cshtml" />
+    <Content Include="Views\ConstantUsage\Edit.cshtml" />
+    <Content Include="Views\ConstantUsage\Index.cshtml" />
+    <Content Include="Views\Calculator\_Pricing.cshtml" />
+    <Content Include="Views\Calculator\_ProductionYield.cshtml" />
+    <Content Include="Views\Calculator\_Standard.cshtml" />
+    <Content Include="Views\Calculator\_PlantAvailability.cshtml" />
+>>>>>>> 9bba5e5d300769b441cfc112c4b811bdd74e4898
+    <None Include="Views\Error\PageNotFound.cshtml" />
+    <Content Include="Views\SpeedometerChart\_Edit.cshtml" />
+    <Content Include="Views\Tabular\_Create.cshtml" />
+    <Content Include="Views\TrafficLightChart\_Edit.cshtml" />
+    <Content Include="Views\TrafficLightChart\_Create.cshtml" />
+    <Content Include="Views\Tank\_Create.cshtml" />
+    <Content Include="Views\Template\Update.cshtml" />
+    <Content Include="Views\Template\Preview.cshtml" />
+    <Content Include="Views\Tank\_Edit.cshtml" />
+    <Content Include="Views\Tabular\_Edit.cshtml" />
+    <Content Include="Views\MultiaxisChart\_LineChartCreate.cshtml" />
+    <Content Include="Views\MultiaxisChart\_AreaChartCreate.cshtml" />
+    <Content Include="Views\KpiAchievement\UploadControlPartial.cshtml" />
+    <Content Include="Views\Shared\UploadControlPartial.cshtml" />
+    <Content Include="Views\Shared\_Download.cshtml" />
+    <Content Include="Views\Shared\_Upload.cshtml" />
+    <Content Include="Views\MultiaxisChart\_Edit.cshtml" />
+    <Content Include="Views\MultiaxisChart\_BarChartEdit.cshtml" />
+    <Content Include="Views\MultiaxisChart\_LineChartEdit.cshtml" />
+    <Content Include="Views\MultiaxisChart\_AreaChartEdit.cshtml" />
+    <Content Include="Views\Pie\_Create.cshtml" />
+    <Content Include="Views\Pie\_Edit.cshtml" />
+    <Content Include="Views\Highlight\_IndexGridPartial.cshtml" />
+    <Content Include="Views\Highlight\Index.cshtml" />
+    <Content Include="Views\Highlight\Create.cshtml" />
+    <Content Include="Views\Select\_IndexGridPartial.cshtml" />
+    <Content Include="Views\Select\Index.cshtml" />
+    <Content Include="Views\Select\Create.cshtml" />
+    <Content Include="Views\Select\_OptionForm.cshtml" />
+    <Content Include="Views\Select\Update.cshtml" />
+    <Content Include="Views\Vessel\_IndexGridPartial.cshtml" />
+    <Content Include="Views\Vessel\Index.cshtml" />
+    <Content Include="Views\Vessel\Create.cshtml" />
+    <Content Include="Views\Vessel\Edit.cshtml" />
+    <Content Include="Views\VesselSchedule\_IndexGridPartial.cshtml" />
+    <Content Include="Views\VesselSchedule\Create.cshtml" />
+    <Content Include="Views\VesselSchedule\Edit.cshtml" />
+    <Content Include="Views\VesselSchedule\Index.cshtml" />
+    <Content Include="Views\NLS\_IndexGridPartial.cshtml" />
+    <Content Include="Views\NLS\Create.cshtml" />
+    <Content Include="Views\NLS\Edit.cshtml" />
+    <Content Include="Views\NLS\Index.cshtml" />
+    <Content Include="Views\PmsSummary\_IndexGridPartial.cshtml" />
+    <Content Include="Views\Highlight\Edit.cshtml" />
+    <Content Include="Views\Highlight\DailyExecutionReport.cshtml" />
+    <Content Include="Views\Weather\_IndexGridPartial.cshtml" />
+    <Content Include="Views\Weather\Create.cshtml" />
+    <Content Include="Views\Weather\DailyExecutionReport.cshtml" />
+    <Content Include="Views\Weather\Edit.cshtml" />
+    <Content Include="Views\Weather\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -489,20 +756,48 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Attributes\AjaxOnlyAttribute.cs" />
+    <Compile Include="Attributes\PearMenuAttribute.cs" />
     <Compile Include="AutoMapper\AutoMapperConfiguration.cs" />
     <Compile Include="AutoMapper\ViewModelMappingProfile.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\ApiUserController.cs" />
     <Compile Include="Controllers\ArtifactController.cs" />
-    <Compile Include="Controllers\BarChartController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BuyerController.cs" />
+    <Compile Include="Controllers\CalculatorConstantController.cs" />
+    <Compile Include="Controllers\CalculatorController.cs" />
+    <Compile Include="Controllers\ChartController.cs" />
+    <Compile Include="Controllers\ConstantUsageController.cs" />
+    <Compile Include="Controllers\ConversionController.cs" />
+    <Compile Include="Controllers\CorporatePortofolioController.cs" />
+    <Compile Include="Controllers\FileController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\GroupController.cs" />
+    <Compile Include="Controllers\HighlightController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\KpiAchievementController.cs" />
+    <Compile Include="Controllers\KpiTargetController.cs" />
     <Compile Include="Controllers\LevelController.cs" />
-    <Compile Include="Controllers\MasterController.cs" />
     <Compile Include="Controllers\MeasurementController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\KpiController.cs" />
+    <Compile Include="Controllers\MethodController.cs" />
+    <Compile Include="Controllers\NLSController.cs" />
+    <Compile Include="Controllers\PeriodeController.cs" />
+    <Compile Include="Controllers\PillarController.cs" />
+    <Compile Include="Controllers\PmsConfigController.cs" />
+    <Compile Include="Controllers\PmsConfigDetailsController.cs" />
     <Compile Include="Controllers\PmsSummaryController.cs" />
     <Compile Include="Controllers\RoleGroupController.cs" />
+    <Compile Include="Controllers\SelectController.cs" />
+    <Compile Include="Controllers\TemplateController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\TypeController.cs" />
+    <Compile Include="Controllers\UnAuthorizedController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\VesselController.cs" />
+    <Compile Include="Controllers\VesselScheduleController.cs" />
+    <Compile Include="Controllers\WeatherController.cs" />
     <Compile Include="DependencyResolution\ControllerConvention.cs" />
     <Compile Include="DependencyResolution\DefaultRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
@@ -511,33 +806,142 @@
     <Compile Include="DependencyResolution\StructureMapDependencyScope.cs" />
     <Compile Include="DependencyResolution\StructureMapScopeModule.cs" />
     <Compile Include="DevExpressDataProvider\ArtifactDesignerDataProvider.cs" />
+    <Compile Include="Extensions\ExcelUploadHelper.cs" />
+    <Compile Include="Extensions\Exporter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Helpers\NumberHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\Artifact\AreaChartDataViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\AreaChartViewModel.cs" />
     <Compile Include="ViewModels\Artifact\ArtifactDesignerViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\ArtifactPreviewViewModel.cs" />
     <Compile Include="ViewModels\Artifact\BarChartDataViewModel.cs" />
     <Compile Include="ViewModels\Artifact\BarChartViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\ChartViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\ComboChartDataViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\ComboChartViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\MultiaxisChartDataViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\MultiaxisChartViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\PieDataViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\PieViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\SearchKpiViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\SpiderwebChartViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\TabularDataViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\TabularViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\TankDataViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\TankViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\TrafficLightChartDataViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\TrafficLightChartViewModel.cs" />
+    <Compile Include="ViewModels\Buyer\BuyerViewModel.cs" />
+    <Compile Include="ViewModels\CalculatorConstant\CalculatorConstantViewModel.cs" />
+    <Compile Include="ViewModels\Calculator\CalculatorIndexViewModel.cs" />
+    <Compile Include="ViewModels\Calculator\PlantAvailabilityCalculatorViewModel.cs" />
+    <Compile Include="ViewModels\Calculator\PricingCalculatorViewModel.cs" />
+    <Compile Include="ViewModels\Calculator\ProductionYieldCalculatorViewModel.cs" />
+    <Compile Include="ViewModels\Calculator\StandardCalculatorViewModel.cs" />
+    <Compile Include="ViewModels\Config\ConfigurationViewModel.cs" />
+    <Compile Include="ViewModels\ConstantUsage\ConstantUsageViewModel.cs" />
+    <Compile Include="ViewModels\Conversion\CreateConversionViewModel.cs" />
+    <Compile Include="ViewModels\Conversion\IndexConversionViewModel.cs" />
+    <Compile Include="ViewModels\Conversion\Measurement.cs" />
+    <Compile Include="ViewModels\Conversion\UpdateConversionViewModel.cs" />
+    <Compile Include="ViewModels\Highlight\DailyExecutionReportViewModel.cs" />
+    <Compile Include="ViewModels\Highlight\HighlightViewModel.cs" />
+    <Compile Include="ViewModels\KpiAchievement\ConfigurationKpiAchievementsViewModel.cs" />
+    <Compile Include="ViewModels\KpiAchievement\ConfigurationParamViewModel.cs" />
+    <Compile Include="ViewModels\KpiAchievement\IndexKpiAchievementViewModel.cs" />
+    <Compile Include="ViewModels\KpiAchievement\KpiAchievementsViewModel.cs" />
+    <Compile Include="ViewModels\KpiAchievement\UpdateKpiAchievementsViewModel.cs" />
+    <Compile Include="ViewModels\KpiTarget\ConfigurationKpiTargetsViewModel.cs" />
+    <Compile Include="ViewModels\KpiTarget\ConfigurationParamViewModel.cs" />
+    <Compile Include="ViewModels\KpiTarget\IndexKpiTargetViewModel.cs" />
+    <Compile Include="ViewModels\KpiTarget\UpdateKpiTargetViewModel.cs" />
+    <Compile Include="ViewModels\NLS\NLSViewModel.cs" />
+    <Compile Include="ViewModels\PmsConfigDetails\CreatePmsConfigDetailsViewModel.cs" />
+    <Compile Include="ViewModels\PmsConfig\UpdatePmsConfigViewModel.cs" />
+    <Compile Include="ViewModels\PmsConfig\CreatePmsConfigViewModel.cs" />
+    <Compile Include="ViewModels\PmsSummary\ChartViewModel.cs" />
+    <Compile Include="ViewModels\PmsSummary\CreatePmsSummaryViewModel.cs" />
+    <Compile Include="ViewModels\PmsSummary\PmsSummaryConfigurationViewModel.cs" />
+    <Compile Include="ViewModels\PmsSummary\PmsSummaryDetailsViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\LineChartDataViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\LineChartViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\SpeedometerChartDataViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\SpeedometerChartViewModel.cs" />
+    <Compile Include="ViewModels\Group\CreateGroupViewModel.cs" />
+    <Compile Include="ViewModels\Group\IndexGroupViewModel.cs" />
+    <Compile Include="ViewModels\Group\UpdateGroupViewModel.cs" />
+    <Compile Include="ViewModels\KpiTarget\CreateKpiTargetViewModel.cs" />
+    <Compile Include="ViewModels\KpiTarget\KpiTargetViewModel.cs" />
+    <Compile Include="ViewModels\Kpi\CreateKpiViewModel.cs" />
     <Compile Include="ViewModels\Kpi\KpiToSeriesViewModel.cs" />
-    <Compile Include="ViewModels\Level\LevelsViewModel.cs" />
+    <Compile Include="ViewModels\Kpi\KpiViewModel.cs" />
+    <Compile Include="ViewModels\Kpi\UpdateKpiViewModel.cs" />
+    <Compile Include="ViewModels\Level\CreateLevelViewModel.cs" />
     <Compile Include="ViewModels\Level\LevelViewModel.cs" />
+    <Compile Include="ViewModels\Level\UpdateLevelViewModel.cs" />
     <Compile Include="ViewModels\Measurement\CreateMeasurementViewModel.cs" />
     <Compile Include="ViewModels\Measurement\IndexMeasurementViewModel.cs" />
     <Compile Include="ViewModels\Measurement\MeasurementViewModel.cs" />
     <Compile Include="ViewModels\Measurement\UpdateMeasurementViewModel.cs" />
+    <Compile Include="ViewModels\Menu\CreateMenuViewModel.cs" />
+    <Compile Include="ViewModels\Menu\IndexMenuViewModel.cs" />
     <Compile Include="ViewModels\Menu\MenusViewModel.cs" />
     <Compile Include="ViewModels\Menu\MenuViewModel.cs" />
-    <Compile Include="ViewModels\Menu\RoleGroup.cs" />
+    <Compile Include="ViewModels\Menu\UpdateMenuViewModel.cs" />
+    <Compile Include="ViewModels\Method\CreateMethodViewModel.cs" />
+    <Compile Include="ViewModels\Method\IndexMethodViewModel.cs" />
+    <Compile Include="ViewModels\Method\UpdateMethodViewModel.cs" />
+    <Compile Include="ViewModels\Periode\CreatePeriodeViewModel.cs" />
+    <Compile Include="ViewModels\Periode\IndexPeriodeViewModel.cs" />
+    <Compile Include="ViewModels\Periode\UpdatePeriodeViewModel.cs" />
+    <Compile Include="ViewModels\Pillar\CreatePillarViewModel.cs" />
     <Compile Include="ViewModels\Pillar\PillarViewModel.cs" />
+    <Compile Include="ViewModels\Common\PmsSummary\ScoreIndicatorViewModel.cs" />
+    <Compile Include="ViewModels\PmsConfigDetails\UpdatePmsConfigDetailsViewModel.cs" />
+    <Compile Include="ViewModels\PmsConfigDetails\ScoreIndicatorDetailsViewModel.cs" />
+    <Compile Include="ViewModels\PmsSummary\PmsReportDetailsViewModel.cs" />
+    <Compile Include="ViewModels\Pillar\UpdatePillarViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\PmsSummaryIndexViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\PmsSummaryViewModel.cs" />
+    <Compile Include="ViewModels\PmsSummary\UpdatePmsSummaryViewModel.cs" />
+    <Compile Include="ViewModels\RoleGroup\CreateRoleGroupViewModel.cs" />
     <Compile Include="ViewModels\RoleGroup\IndexRoleGroupViewModel.cs" />
     <Compile Include="ViewModels\RoleGroup\RoleGroupViewModel.cs" />
+    <Compile Include="ViewModels\RoleGroup\UpdateRoleGroupViewModel.cs" />
+    <Compile Include="ViewModels\Select\SelectOptionViewModel.cs" />
+    <Compile Include="ViewModels\Select\UpdateSelectViewModel.cs" />
+    <Compile Include="ViewModels\Select\CreateSelectViewModel.cs" />
+    <Compile Include="ViewModels\Select\IndexSelectViewModel.cs" />
+    <Compile Include="ViewModels\Template\TemplateViewModel.cs" />
+    <Compile Include="ViewModels\Type\CreateTypeViewModel.cs" />
+    <Compile Include="ViewModels\Type\IndexTypeViewModel.cs" />
+    <Compile Include="ViewModels\Type\TypeViewModel.cs" />
+    <Compile Include="ViewModels\Type\UpdateTypeViewModel.cs" />
+    <Compile Include="ViewModels\User\ChangePasswordViewModel.cs" />
+    <Compile Include="ViewModels\User\CreateUserViewModel.cs" />
+    <Compile Include="ViewModels\User\UpdateUserViewModel.cs" />
     <Compile Include="ViewModels\User\UserIndexViewModel.cs" />
+    <Compile Include="ViewModels\User\UserLoginViewModel.cs" />
     <Compile Include="ViewModels\User\UserViewModel.cs" />
+    <Compile Include="ViewModels\VesselSchedule\VesselScheduleViewModel.cs" />
+    <Compile Include="ViewModels\Vessel\VesselViewModel.cs" />
+    <Compile Include="ViewModels\Weather\WeatherViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\TemplateFiles\KpiAchievement\" />
+    <Folder Include="Content\TemplateFiles\KpiTarget\" />
+    <Folder Include="Content\UploadedFiles\KpiAchievement\" />
+    <Folder Include="Content\UploadedFiles\KpiTarget\" />
+    <Folder Include="ViewModels\CorporatePortofolio\" />
+    <Folder Include="Views\Chart\" />
+    <Folder Include="Views\CorporatePortofolio\" />
+    <Folder Include="Views\Test\" />
+    <Folder Include="Views\UnAuthorize\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DSLNG.PEAR.Common\DSLNG.PEAR.Common.csproj">
@@ -575,9 +979,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>2043</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:65293/</IISUrl>
+          <IISUrl>http://localhost:10500/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
