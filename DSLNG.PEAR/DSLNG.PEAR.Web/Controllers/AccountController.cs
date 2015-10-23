@@ -72,7 +72,7 @@ namespace DSLNG.PEAR.Web.Controllers
                  */
                 //this._createRole(user.RoleName);
                 //this._userAddToRole(user.Username, user.RoleName);
-                var profileData = new UserProfileSessionData { UserId = user.Id, Email = user.Email, Name = user.Username, RoleId = user.RoleId, RoleName = user.RoleName, RedirectUrl = user.ChangeModel };
+                var profileData = new UserProfileSessionData { UserId = user.Id, Email = user.Email, Name = user.Username, RoleId = user.RoleId, RoleName = user.RoleName, RedirectUrl = user.ChangeModel, IsSuperAdmin = user.IsSuperAdmin };
                 this.Session["LoginUser"] = profileData;
                 FormsAuthentication.SetAuthCookie(user.Username, false);
                 return user.IsSuccess;
@@ -151,6 +151,11 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Validate(string Message)
         {
             ViewBag.Message = Message;
+            return View();
+        }
+
+        public ActionResult ResetPassword() {
+            
             return View();
         }
     }

@@ -15,6 +15,7 @@ namespace DSLNG.PEAR.Services.Requests.KpiAchievement
         public double? Value { get; set; }
         public string Remark { get; set; }
         public PeriodeType PeriodeType { get; set; }
+        public int UserId { get; set; }
     }
 
     public class BatchUpdateKpiAchievementRequest {

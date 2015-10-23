@@ -410,6 +410,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public JsonResult KpiAchievementItem(UpdateKpiAchievementsViewModel.KpiAchievementItem kpiAchievement)
         {
             var request = kpiAchievement.MapTo<UpdateKpiAchievementItemRequest>();
+            request.UserId = this.UserProfile().UserId;
             var response = _kpiAchievementService.UpdateKpiAchievementItem(request);
             return Json(new { Id = response.Id, Message = response.Message, isSuccess = response.IsSuccess });
         }

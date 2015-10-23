@@ -53,6 +53,7 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<ConstantUsage> ConstantUsages { get; set; }
         public IDbSet<Weather> Weathers { get; set; }
 
+        public IDbSet<ResetPassword> ResetPasswords { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Kpi>()

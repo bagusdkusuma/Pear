@@ -352,20 +352,25 @@ namespace DSLNG.PEAR.Services
             try
             {
                 var kpiAchievement = request.MapTo<KpiAchievement>();
-
+                var user = DataContext.Users.First(x => x.Id == request.UserId);
                 if (request.Id != 0)
                 {
                     var attachedEntity = DataContext.KpiAchievements.Find(request.Id);
+
                     if (attachedEntity != null && DataContext.Entry(attachedEntity).State != EntityState.Detached)
                     {
                         DataContext.Entry(attachedEntity).State = EntityState.Detached;
                     }
+                    
+                    
                     DataContext.KpiAchievements.Attach(kpiAchievement);
+                    kpiAchievement.UpdatedBy = user;
                     DataContext.Entry(kpiAchievement).State = EntityState.Modified;
                     DataContext.SaveChanges();
                 }
                 else
                 {
+                    kpiAchievement.CreatedBy = user;
                     kpiAchievement.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == request.KpiId);
                     DataContext.KpiAchievements.Add(kpiAchievement);
                     DataContext.SaveChanges();

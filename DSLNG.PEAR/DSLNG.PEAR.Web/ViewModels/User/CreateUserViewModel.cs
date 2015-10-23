@@ -26,6 +26,7 @@ namespace DSLNG.PEAR.Web.ViewModels.User
         public string ChangeModel { get; set; }
         public bool IsActive { get; set; }
         public int RoleId { get; set; }
+        public bool IsSuperAdmin { get; set; }
         public List<SelectListItem> RoleGroupList { get; set; }
     }
 }
