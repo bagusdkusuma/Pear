@@ -96,6 +96,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Data.Entities.Menu, GetMenusResponse.Menu>();
             Mapper.CreateMap<CreateMenuRequest, Data.Entities.Menu>();
             Mapper.CreateMap<Data.Entities.Menu, GetMenuResponse>();
+            Mapper.CreateMap<Data.Entities.Menu, DSLNG.PEAR.Services.Responses.Menu.Menu>();
 
             Mapper.CreateMap<UpdateMenuRequest, Data.Entities.Menu>();
             Mapper.CreateMap<Data.Entities.Level, Responses.Menu.Level>();

@@ -14,7 +14,7 @@ using System.Web.Security;
 namespace DSLNG.PEAR.Web.Controllers
 {
     //[Authorize]
-    public class AccountController : BaseController
+    public class AccountController : Controller
     {
         private readonly IUserService _userService;
 
@@ -22,7 +22,7 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             _userService = userService;
         }
-        
+
 
         [AllowAnonymous]
         [HttpGet]
@@ -41,7 +41,13 @@ namespace DSLNG.PEAR.Web.Controllers
                 if (IsValid(user.Email, user.Password))
                 {
                     //FormsAuthentication.SetAuthCookie(user.Username, false);
-                    
+                    var sessionData = (UserProfileSessionData)this.Session["LoginUser"];
+                    var RedirectUrl = sessionData.RedirectUrl;
+                    if (RedirectUrl != null)
+                    {
+                        return Redirect(RedirectUrl);
+                    }
+
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -66,7 +72,8 @@ namespace DSLNG.PEAR.Web.Controllers
                  */
                 //this._createRole(user.RoleName);
                 //this._userAddToRole(user.Username, user.RoleName);
-                
+                var profileData = new UserProfileSessionData { UserId = user.Id, Email = user.Email, Name = user.Username, RoleId = user.RoleId, RoleName = user.RoleName, RedirectUrl = user.ChangeModel };
+                this.Session["LoginUser"] = profileData;
                 FormsAuthentication.SetAuthCookie(user.Username, false);
                 return user.IsSuccess;
             }
@@ -118,9 +125,10 @@ namespace DSLNG.PEAR.Web.Controllers
 
                 //ViewBag.Message = response.Message;
                 @TempData["Message"] = response.Message;
-                return RedirectToAction("Validate", new { Message = response.Message});
+                return RedirectToAction("Validate", new { Message = response.Message });
             }
-            else {
+            else
+            {
                 ModelState.AddModelError("", "Incorrect Login Credential");
             }
             return View(model);
@@ -134,12 +142,14 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 return Json(true, JsonRequestBehavior.AllowGet);
             }
-            else {
+            else
+            {
                 return Json(false, JsonRequestBehavior.AllowGet);
             }
         }
 
-        public ActionResult Validate(string Message) {
+        public ActionResult Validate(string Message)
+        {
             ViewBag.Message = Message;
             return View();
         }
