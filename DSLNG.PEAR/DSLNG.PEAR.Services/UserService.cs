@@ -8,6 +8,7 @@ using DSLNG.PEAR.Common.Extensions;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity;
 using SimpleCrypto;
+using System;
 //using Microsoft.AspNet.Identity;
 
 
@@ -221,6 +222,42 @@ namespace DSLNG.PEAR.Services
             {
                 response.IsSuccess = false;
                 response.Message = string.Format("Your current password isn't correct");
+            }
+            return response;
+        }
+
+
+        public ResetPasswordResponse ResetPassword(ResetPasswordRequest request)
+        {
+            var response = new ResetPasswordResponse();
+            response = this.GenerateToken(request);
+            return response;
+        }
+
+        private ResetPasswordResponse GenerateToken(ResetPasswordRequest request)
+        {
+            var response = new ResetPasswordResponse();
+            var Salt = crypto.Salt != null ? crypto.Salt : crypto.GenerateSalt(crypto.HashIterations, crypto.SaltSize);
+
+            DateTime expire = new DateTime().AddDays(3);
+
+            ///Try to save token to database
+            try
+            {
+                response.Token = crypto.Compute(request.Email, Salt);
+                var entity = new ResetPassword { Email = request.Email, Token = response.Token, Salt = Salt, ExpireDate = expire };
+                DataContext.ResetPasswords.Add(entity);
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = "Password Token Successfully Created";
+            }
+            catch (System.InvalidOperationException x)
+            {
+                return new ResetPasswordResponse
+                {
+                    IsSuccess = false,
+                    Message = x.Message
+                };
             }
             return response;
         }

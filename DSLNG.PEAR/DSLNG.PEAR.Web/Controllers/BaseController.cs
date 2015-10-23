@@ -18,11 +18,16 @@ namespace DSLNG.PEAR.Web.Controllers
     {
         public const string UploadDirectory = "~/Content/UploadedFiles/";
         public const string TemplateDirectory = "~/Content/TemplateFiles/";
+        private UserProfileSessionData _userinfo;
         public ContentResult ErrorPage(string message)
         {
             return Content(message);
         }
-
+        
+        public UserProfileSessionData UserProfile()
+        {
+            return (UserProfileSessionData)this.Session["LoginUser"];
+        }
         //protected override void OnAuthorization(AuthorizationContext filterContext)
         //{
         //    bool Authorized = false;
@@ -84,22 +89,28 @@ namespace DSLNG.PEAR.Web.Controllers
             }
             else
             {
-                var sessionData = (UserProfileSessionData)this.Session["LoginUser"];
-                var currentUrl = filterContext.HttpContext.Request.Url.AbsolutePath;
-                if (currentUrl.Length > 1)
+                if (!filterContext.RequestContext.HttpContext.Request.IsAjaxRequest())
                 {
-                    if (currentUrl != "/UnAuthorized/Error")
+                    var sessionData = (UserProfileSessionData)this.Session["LoginUser"];
+                    if (!sessionData.IsSuperAdmin)
                     {
-                        var menuService = ObjectFactory.Container.GetInstance<IMenuService>();
-                        var menu = menuService.GetMenuByUrl(new GetMenuRequestByUrl { Url = currentUrl, RoleId = sessionData.RoleId });
-                        if (menu == null || menu.IsSuccess == false)
+                        var currentUrl = filterContext.HttpContext.Request.Url.AbsolutePath;
+                        if (currentUrl.Length > 1)
                         {
-                            filterContext.Result = new RedirectToRouteResult(
-                                    new RouteValueDictionary 
+                            if (currentUrl != "/UnAuthorized/Error")
+                            {
+                                var menuService = ObjectFactory.Container.GetInstance<IMenuService>();
+                                var menu = menuService.GetMenuByUrl(new GetMenuRequestByUrl { Url = currentUrl, RoleId = sessionData.RoleId });
+                                if (menu == null || menu.IsSuccess == false)
+                                {
+                                    filterContext.Result = new RedirectToRouteResult(
+                                            new RouteValueDictionary 
                                 { 
                                     { "controller", "UnAuthorized" }, 
                                     { "action", "Error" } 
                                 });
+                                }
+                            }
                         }
                     }
                 }
