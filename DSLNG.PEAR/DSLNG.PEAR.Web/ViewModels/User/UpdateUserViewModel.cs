@@ -20,6 +20,7 @@ namespace DSLNG.PEAR.Web.ViewModels.User
         [Index(IsUnique = true)]
         public string Username { get; set; }
         public string Password { get; set; }
+        [Display(Name="Change Password")]
         public bool ChangePassword { get; set; }
         [MaxLength(100)]
         [Index(IsUnique = true)]
@@ -29,5 +30,7 @@ namespace DSLNG.PEAR.Web.ViewModels.User
         public List<SelectListItem> RoleGroupList { get; set; }
         [Display(Name="Default Landing Page")]
         public string ChangeModel { get; set; }
+        [Display(Name="User Is Superadmin")]
+        public bool IsSuperAdmin { get; set; }
     }
 }

@@ -28,6 +28,7 @@
         settings.Columns.Add("Email");
         settings.Columns.Add("RoleName");
         settings.Columns.Add("IsActive", MVCxGridViewColumnType.CheckBox);
+        settings.Columns.Add("IsSuperAdmin", MVCxGridViewColumnType.CheckBox);
         settings.SettingsPager.PageSizeItemSettings.Visible = true;
         settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
     }).BindToCustomData(Model).GetHtml()

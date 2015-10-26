@@ -2,11 +2,13 @@
 using DSLNG.PEAR.Services.Requests.Menu;
 using DSLNG.PEAR.Services.Requests.User;
 using DSLNG.PEAR.Web.DependencyResolution;
+using DSLNG.PEAR.Web.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using WebMatrix.WebData;
 
 namespace DSLNG.PEAR.Web.Controllers
@@ -16,11 +18,16 @@ namespace DSLNG.PEAR.Web.Controllers
     {
         public const string UploadDirectory = "~/Content/UploadedFiles/";
         public const string TemplateDirectory = "~/Content/TemplateFiles/";
+        private UserProfileSessionData _userinfo;
         public ContentResult ErrorPage(string message)
         {
             return Content(message);
         }
-
+        
+        public UserProfileSessionData UserProfile()
+        {
+            return (UserProfileSessionData)this.Session["LoginUser"];
+        }
         //protected override void OnAuthorization(AuthorizationContext filterContext)
         //{
         //    bool Authorized = false;
@@ -69,7 +76,47 @@ namespace DSLNG.PEAR.Web.Controllers
 
         //    base.OnAuthorization(filterContext);
         //}
-
+        protected override void OnAuthorization(AuthorizationContext filterContext)
+        {
+            if (Session["LoginUser"] == null)
+            {
+                filterContext.Result = new RedirectToRouteResult(
+                new RouteValueDictionary 
+                { 
+                    { "controller", "Account" }, 
+                    { "action", "Login" } 
+                });
+            }
+            else
+            {
+                if (!filterContext.RequestContext.HttpContext.Request.IsAjaxRequest())
+                {
+                    var sessionData = (UserProfileSessionData)this.Session["LoginUser"];
+                    if (!sessionData.IsSuperAdmin)
+                    {
+                        var currentUrl = filterContext.HttpContext.Request.Url.AbsolutePath;
+                        if (currentUrl.Length > 1)
+                        {
+                            if (currentUrl != "/UnAuthorized/Error")
+                            {
+                                var menuService = ObjectFactory.Container.GetInstance<IMenuService>();
+                                var menu = menuService.GetMenuByUrl(new GetMenuRequestByUrl { Url = currentUrl, RoleId = sessionData.RoleId });
+                                if (menu == null || menu.IsSuccess == false)
+                                {
+                                    filterContext.Result = new RedirectToRouteResult(
+                                            new RouteValueDictionary 
+                                { 
+                                    { "controller", "UnAuthorized" }, 
+                                    { "action", "Error" } 
+                                });
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            base.OnAuthorization(filterContext);
+        }
         protected override void OnException(ExceptionContext filterContext)
         {
             if (filterContext.Exception.GetType() == typeof(UnauthorizedAccessException))
@@ -82,13 +129,27 @@ namespace DSLNG.PEAR.Web.Controllers
         }
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
         {
+            HttpSessionStateBase session = filterContext.HttpContext.Session;
+            if (session.IsNewSession || Session["LoginUser"] == null)
+            {
+                //filterContext.Result = Json("Session Timeout", "text/html", JsonRequestBehavior.AllowGet);
+                filterContext.Result = new RedirectToRouteResult(
+                new RouteValueDictionary 
+                { 
+                    { "controller", "Account" }, 
+                    { "action", "Login" } 
+                });
+            }
+
             base.OnActionExecuted(filterContext);
             filterContext.Controller.ViewBag.BodyClass = "";
             var absolutePath = filterContext.RequestContext.HttpContext.Request.Url.AbsolutePath;
-            if (!filterContext.RequestContext.HttpContext.Request.IsAjaxRequest()) {
+            if (!filterContext.RequestContext.HttpContext.Request.IsAjaxRequest())
+            {
                 var _menuService = ObjectFactory.Container.GetInstance<IMenuService>();
                 var rootMenu = _menuService.GetRootMenu(new GetRootMenuRequest { AbsolutePath = absolutePath });
-                if (!string.IsNullOrEmpty(rootMenu.RootName)) {
+                if (!string.IsNullOrEmpty(rootMenu.RootName))
+                {
                     filterContext.Controller.ViewBag.BodyClass = rootMenu.RootName.ToLower();
                 }
             }

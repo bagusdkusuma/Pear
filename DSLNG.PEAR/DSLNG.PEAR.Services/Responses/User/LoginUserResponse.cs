@@ -15,7 +15,8 @@ namespace DSLNG.PEAR.Services.Responses.User
         public RoleGroup Role { get; set; }
         public int RoleId { get; set; }
         public string RoleName { get; set; }
-
+        public string ChangeModel { get; set; }
+        public bool IsSuperAdmin { get; set; }
         public class RoleGroup
         {
             public int Id { get; set; }

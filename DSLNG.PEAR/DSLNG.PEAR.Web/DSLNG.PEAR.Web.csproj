@@ -917,7 +917,10 @@
     <Compile Include="ViewModels\Type\IndexTypeViewModel.cs" />
     <Compile Include="ViewModels\Type\TypeViewModel.cs" />
     <Compile Include="ViewModels\Type\UpdateTypeViewModel.cs" />
+    <Compile Include="ViewModels\UserProfileSessionData.cs" />
+    <Compile Include="ViewModels\User\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\User\CreateUserViewModel.cs" />
+    <Compile Include="ViewModels\User\ResetPasswordViewModel.cs" />
     <Compile Include="ViewModels\User\UpdateUserViewModel.cs" />
     <Compile Include="ViewModels\User\UserIndexViewModel.cs" />
     <Compile Include="ViewModels\User\UserLoginViewModel.cs" />
