@@ -24,17 +24,19 @@ namespace DSLNG.PEAR.Web.Controllers
     {
         private readonly IKpiAchievementService _kpiAchievementService;
         private readonly IDropdownService _dropdownService;
-
-        public KpiAchievementController(IKpiAchievementService kpiAchievementService, IDropdownService dropdownService)
+        private readonly IKpiService _kpiService;
+        public KpiAchievementController(IKpiAchievementService kpiAchievementService, IDropdownService dropdownService, IKpiService kpiService)
         {
             _kpiAchievementService = kpiAchievementService;
             _dropdownService = dropdownService;
+            _kpiService = kpiService;
         }
 
         public ActionResult Index()
         {
             var response = new AllKpiAchievementsResponse();
             bool isAdmin = this.UserProfile().IsSuperAdmin;
+            ViewBag.IsSuperAdmin = isAdmin;
             if (this.UserProfile().IsSuperAdmin)
             {
                 response = _kpiAchievementService.GetAllKpiAchievements();
@@ -176,17 +178,22 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             public bool isSuccess { get; set; }
             public string Message { get; set; }
+            public int Success { get; set; }
+            public int Skipped { get; set; }
+            public int Rejected { get; set; }
 
         }
 
         public JsonResult ProceedFile(string filename)
         {
             var response = this._ReadExcelFile(UploadDirectory + filename);
-            return Json(new { isSuccess = response.isSuccess, Message = response.Message });
+            return Json(new { isSuccess = response.isSuccess, Message = response.Message, Succeed = response.Success, skipped = response.Skipped, rejected = response.Rejected });
         }
         private ReadExcelFileModel _ReadExcelFile(string filename)
         {
-
+            int inserted = 0;
+            int skipped = 0;
+            int rejected = 0;
             var listPrev = new List<UpdateKpiAchievementsViewModel.KpiAchievementItem>();
             var response = new ReadExcelFileModel();
             var file = Server.MapPath(filename);
@@ -266,7 +273,17 @@ namespace DSLNG.PEAR.Web.Controllers
                                         nilai = null;
                                     }
 
-                                    if (nilai != null)
+                                    bool isValidKpi = false;
+                                    if (!this.UserProfile().IsSuperAdmin)
+                                    {
+                                        skipped++;
+                                        isValidKpi = _kpiService.IsValidKpi(new Services.Requests.Kpi.GetKpiByRole { RoleId = this.UserProfile().RoleId });
+                                    }
+                                    else {
+                                        isValidKpi = true;
+                                    }
+
+                                    if (nilai != null && isValidKpi)
                                     {
                                         prepareDataContainer.Value = nilai;
                                         prepareDataContainer.KpiId = Kpi_Id;
@@ -278,7 +295,14 @@ namespace DSLNG.PEAR.Web.Controllers
                                             prepareDataContainer.Id = oldKpiAchievement.Id;
                                         }
                                         var request = prepareDataContainer.MapTo<UpdateKpiAchievementItemRequest>();
-                                        _kpiAchievementService.UpdateKpiAchievementItem(request);
+                                        var insert =  _kpiAchievementService.UpdateKpiAchievementItem(request);
+                                        if (insert.IsSuccess)
+                                        {
+                                            inserted++;
+                                        }
+                                        else {
+                                            rejected++;
+                                        }
                                     }
                                     //listPrev.Add(prepareDataContainer);
                                 }
@@ -306,6 +330,9 @@ namespace DSLNG.PEAR.Web.Controllers
                         //}
 
                         response.isSuccess = true;
+                        response.Message = "Success :" + inserted +"\r\n";
+                        response.Message += "Skipped :" + skipped +"\r\n";
+                        response.Message += "Rejected :" + rejected +"\r\n";
                     }
                     else
                     {

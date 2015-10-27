@@ -18,7 +18,7 @@ namespace DSLNG.PEAR.Web.Controllers
     {
         public const string UploadDirectory = "~/Content/UploadedFiles/";
         public const string TemplateDirectory = "~/Content/TemplateFiles/";
-        private UserProfileSessionData _userinfo;
+        //private UserProfileSessionData _userinfo;
         public ContentResult ErrorPage(string message)
         {
             return Content(message);

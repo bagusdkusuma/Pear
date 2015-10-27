@@ -12,6 +12,7 @@ using DSLNG.PEAR.Data.Entities;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity;
 using KpiRelationModel = DSLNG.PEAR.Data.Entities.KpiRelationModel;
+using DSLNG.PEAR.Services.Responses;
 
 namespace DSLNG.PEAR.Services
 {
@@ -313,6 +314,20 @@ namespace DSLNG.PEAR.Services
             }
 
             return response;
+        }
+
+
+
+
+        public bool IsValidKpi(GetKpiByRole request)
+        {
+            try {
+                DataContext.Kpis.First(x => x.RoleGroup.Id == request.RoleId);
+                return true;
+            }
+            catch (System.InvalidOperationException) {
+                return false;
+            }
         }
     }
 }
