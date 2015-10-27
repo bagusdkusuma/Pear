@@ -410,7 +410,6 @@
     <Compile Include="Requests\Pillar\GetPillarRequest.cs" />
     <Compile Include="Responses\BaseResponse.cs" />
     <Compile Include="Responses\Level\GetLevelResponse.cs" />
-    <Compile Include="Responses\User\GetUserTokenResponse.cs" />
     <Compile Include="Responses\User\LoginUserResponse.cs" />
     <Compile Include="Responses\User\ResetPasswordResponse.cs" />
     <Compile Include="Responses\User\UpdateUserResponse.cs" />
