@@ -149,6 +149,10 @@ namespace DSLNG.PEAR.Web.AutoMapper
                 .ForMember(x => x.RoleName, y => y.MapFrom(z => z.Role.Name));
             Mapper.CreateMap<UserLoginViewModel, LoginUserRequest>();
             Mapper.CreateMap<ChangePasswordViewModel, ChangePasswordRequest>();
+            Mapper.CreateMap<ResetPasswordResponseViewModel, ResetPasswordResponse>();
+            Mapper.CreateMap<ResetPasswordViewModel, ResetPasswordRequest>();
+            Mapper.CreateMap<ResetPasswordResponse, ResetPasswordResponseViewModel>();
+
             Mapper.CreateMap<GetRoleGroupsResponse.RoleGroup, RoleGroupViewModel>();
             Mapper.CreateMap<CreateRoleGroupViewModel, CreateRoleGroupRequest>();
             Mapper.CreateMap<GetRoleGroupResponse, UpdateRoleGroupViewModel>()

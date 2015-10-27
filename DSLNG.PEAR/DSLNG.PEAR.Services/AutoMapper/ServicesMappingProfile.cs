@@ -73,7 +73,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             ConfigureKpiAchievements();
             ConfigureSelects();
 
-            Mapper.CreateMap<User, GetUsersResponse.User>();
+            Mapper.CreateMap<Data.Entities.User, GetUsersResponse.User>();
+            Mapper.CreateMap<GetUsersResponse.User, Data.Entities.User>();
             //.ForMember(x => x.RoleName, o => o.MapFrom(m => m.Role.Name));
             Mapper.CreateMap<CreateUserRequest, User>();
             Mapper.CreateMap<UpdateUserRequest, User>();
@@ -83,6 +84,10 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Data.Entities.User, GetUserResponse>();
             Mapper.CreateMap<Data.Entities.User, LoginUserResponse>();
             Mapper.CreateMap<Data.Entities.RoleGroup, LoginUserResponse.RoleGroup>();
+            Mapper.CreateMap<Data.Entities.ResetPassword, ResetPasswordResponse>();
+            Mapper.CreateMap<ResetPasswordResponse, ResetPassword>();
+            //Mapper.CreateMap<ResetPasswordResponse.User, Data.Entities.User>();
+            Mapper.CreateMap<GetUserResponse, ResetPasswordResponse.User>();
             //Mapper.CreateMap<
 
             /*Level*/

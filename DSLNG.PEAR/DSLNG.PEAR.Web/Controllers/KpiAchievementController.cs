@@ -16,6 +16,7 @@ using DevExpress.Spreadsheet;
 using System.Drawing;
 using System.IO;
 using System.Data;
+using DSLNG.PEAR.Services.Responses.KpiAchievement;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -32,7 +33,16 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Index()
         {
-            var response = _kpiAchievementService.GetAllKpiAchievements();
+            var response = new AllKpiAchievementsResponse();
+            bool isAdmin = this.UserProfile().IsSuperAdmin;
+            if (this.UserProfile().IsSuperAdmin)
+            {
+                response = _kpiAchievementService.GetAllKpiAchievements();
+            }
+            else {
+                response = _kpiAchievementService.GetKpiAchievementsByRole(new GetKpiAchievementsConfigurationRequest { RoleGroupId = this.UserProfile().RoleId });
+            }
+            
             if (response.IsSuccess)
             {
                 var viewModel = response.MapTo<IndexKpiAchievementViewModel>();

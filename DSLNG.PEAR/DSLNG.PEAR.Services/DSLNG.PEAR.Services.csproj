@@ -175,6 +175,8 @@
     <Compile Include="Requests\User\ChangePasswordRequest.cs" />
     <Compile Include="Requests\User\LoginUserRequest.cs" />
     <Compile Include="Requests\User\ResetPasswordRequest.cs" />
+    <Compile Include="Requests\User\ResetPasswordTokenRequest.cs" />
+    <Compile Include="Requests\User\SetPasswordRequest.cs" />
     <Compile Include="Requests\VesselSchedule\DeleteVesselScheduleRequest.cs" />
     <Compile Include="Requests\VesselSchedule\GetVesselScheduleRequest.cs" />
     <Compile Include="Requests\VesselSchedule\GetVesselSchedulesRequest.cs" />
@@ -408,6 +410,7 @@
     <Compile Include="Requests\Pillar\GetPillarRequest.cs" />
     <Compile Include="Responses\BaseResponse.cs" />
     <Compile Include="Responses\Level\GetLevelResponse.cs" />
+    <Compile Include="Responses\User\GetUserTokenResponse.cs" />
     <Compile Include="Responses\User\LoginUserResponse.cs" />
     <Compile Include="Responses\User\ResetPasswordResponse.cs" />
     <Compile Include="Responses\User\UpdateUserResponse.cs" />
