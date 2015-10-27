@@ -145,6 +145,8 @@
     <Compile Include="Requests\KpiTarget\SaveKpiTargetRequest.cs" />
     <Compile Include="Requests\KpiTarget\UpdateKpiTargetItemRequest.cs" />
     <Compile Include="Requests\KpiTarget\UpdateKpiTargetRequest.cs" />
+    <Compile Include="Requests\Kpi\GetKpiByRole.cs" />
+    <Compile Include="Requests\Kpi\GetKpisRequest.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\Periode.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\PeriodeType.cs" />
     <Compile Include="Requests\Menu\GetRootMenuRequest.cs" />

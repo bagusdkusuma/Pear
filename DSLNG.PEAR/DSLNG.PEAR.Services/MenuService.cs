@@ -377,7 +377,7 @@ namespace DSLNG.PEAR.Services
                 //    //authorized += url[1];
                 //}
                 //var menu = DataContext.Menus.Include(x => x.RoleGroups).First(x => x.RoleGroups.Select(y => y.Id).Contains(request.RoleId) && x.Url.Contains(authorized));
-                var menu = DataContext.Menus.Include(x => x.RoleGroups).First(x => x.RoleGroups.Select(y=>y.Id).Contains(request.RoleId) && x.Url == request.Url);
+                var menu = DataContext.Menus.Include(x => x.RoleGroups).First(x => x.RoleGroups.Select(y=>y.Id).Contains(request.RoleId) && x.Url.Contains(request.Url));
 
                 var response = menu.MapTo<GetMenuResponse>();
                 response.IsSuccess = true;
