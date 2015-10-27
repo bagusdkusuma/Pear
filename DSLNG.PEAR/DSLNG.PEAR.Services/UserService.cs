@@ -237,15 +237,18 @@ namespace DSLNG.PEAR.Services
         private ResetPasswordResponse GenerateToken(ResetPasswordRequest request)
         {
             var response = new ResetPasswordResponse();
-            var Salt = crypto.Salt != null ? crypto.Salt : crypto.GenerateSalt(crypto.HashIterations, crypto.SaltSize);
 
-            DateTime expire = new DateTime().AddDays(3);
 
             ///Try to save token to database
             try
             {
-                response.Token = crypto.Compute(request.Email, Salt);
-                var entity = new ResetPassword { Email = request.Email, Token = response.Token, Salt = Salt, ExpireDate = expire };
+                response.Salt = crypto.Salt != null ? crypto.Salt : crypto.GenerateSalt(crypto.HashIterations, crypto.SaltSize);
+
+                response.Email = request.Email;
+                response.ExpireDate = DateTime.Now.AddDays(3);
+                response.Token = crypto.Compute(request.Email, response.Salt);
+                //var entity = new ResetPassword { Email = response.Email, Token = response.Token, Salt = response.Salt, ExpireDate = response.ExpireDate };
+                var entity =  response.MapTo<ResetPassword>();
                 DataContext.ResetPasswords.Add(entity);
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
@@ -260,6 +263,68 @@ namespace DSLNG.PEAR.Services
                 };
             }
             return response;
+        }
+
+
+        public ResetPasswordResponse GetUserByToken(ResetPasswordTokenRequest request)
+        {
+            var response = new ResetPasswordResponse();
+            response = this.GetResetPasswordDetail(new ResetPasswordTokenRequest { Token = request.Token });
+            return response;
+        }
+
+        private ResetPasswordResponse GetResetPasswordDetail(ResetPasswordTokenRequest resetPasswordTokenRequest)
+        {
+            var response = new ResetPasswordResponse();
+            try {
+                response = DataContext.ResetPasswords.First(x => x.Token == resetPasswordTokenRequest.Token).MapTo<ResetPasswordResponse>();
+
+                if (response.ExpireDate < DateTime.Now)
+                {
+                    response.IsSuccess = false;
+                    response.Message = "Token Already Expired!";
+                    return response;
+                }
+                if (response.Status)
+                {
+                    response.IsSuccess = false;
+                    response.Message = "Token Already Used!";
+                    return response;
+                }
+
+                response.Profile = GetUserByEmail(new GetUserRequest { Email = response.Email }).MapTo<ResetPasswordResponse.User>();
+                response.IsSuccess = true;
+            }
+            catch (System.InvalidOperationException x) {
+                return new ResetPasswordResponse
+                {
+                    IsSuccess = false,
+                    Message = x.Message
+                };
+            }
+            return response;
+        }
+
+
+
+
+        public GetUserResponse GetUserByEmail(GetUserRequest request)
+        {
+            try
+            {
+                var user = DataContext.Users.Include(u => u.Role).First(x => x.Email == request.Email);
+                var response = user.MapTo<GetUserResponse>(); //Mapper.Map<GetUserResponse>(user);
+                response.IsSuccess = true;
+                return response;
+            }
+            catch (System.InvalidOperationException x)
+            {
+                return new GetUserResponse
+                {
+                    IsSuccess = false,
+                    Message = x.Message
+                };
+            }
         }
     }
 }

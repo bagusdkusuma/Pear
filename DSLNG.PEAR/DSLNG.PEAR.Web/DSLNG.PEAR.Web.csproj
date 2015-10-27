@@ -656,6 +656,11 @@
     <Content Include="Views\Calculator\_ProductionYield.cshtml" />
     <Content Include="Views\Calculator\_Standard.cshtml" />
     <Content Include="Views\Calculator\_PlantAvailability.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Account\Validate.cshtml" />
+    <Content Include="Views\Account\SendResetPasswordRequest.cshtml" />
+    <Content Include="Views\Account\Reset.cshtml" />
     <None Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\SpeedometerChart\_Edit.cshtml" />
     <Content Include="Views\Tabular\_Create.cshtml" />
@@ -919,7 +924,10 @@
     <Compile Include="ViewModels\UserProfileSessionData.cs" />
     <Compile Include="ViewModels\User\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\User\CreateUserViewModel.cs" />
+    <Compile Include="ViewModels\User\ResetPasswordChangeModel.cs" />
+    <Compile Include="ViewModels\User\ResetPasswordResponseViewModel.cs" />
     <Compile Include="ViewModels\User\ResetPasswordViewModel.cs" />
+    <Compile Include="ViewModels\User\ResetToken.cs" />
     <Compile Include="ViewModels\User\UpdateUserViewModel.cs" />
     <Compile Include="ViewModels\User\UserIndexViewModel.cs" />
     <Compile Include="ViewModels\User\UserLoginViewModel.cs" />

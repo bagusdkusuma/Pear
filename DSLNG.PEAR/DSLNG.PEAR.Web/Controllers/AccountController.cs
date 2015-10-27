@@ -10,6 +10,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using DSLNG.PEAR.Common.Extensions;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -154,9 +155,88 @@ namespace DSLNG.PEAR.Web.Controllers
             return View();
         }
 
-        public ActionResult ResetPassword() {
+        [AllowAnonymous]
+        [HttpGet]
+        public ActionResult ResetPassword()
+        {
+            var viewModel = new ResetPasswordViewModel();
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult ResetPassword(ResetPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (EmailIsValid(model))
+                {
+                    this.ResetPasswordFactory(model);
+                    return RedirectToAction("SendResetPasswordRequest", model);
+                }
+                else
+                {
+                    ViewBag.Message = "Email Address Not Found";
+                }
+            }
+            else {
+                ModelState.AddModelError("", "Invalid Email Address");
+            }
             
-            return View();
+            return View(model);
+        }
+
+        private bool EmailIsValid(ResetPasswordViewModel model)
+        {
+            var response = new GetUserResponse();
+            response = _userService.GetUserByEmail(new GetUserRequest { Email = model.Email });
+            return response.IsSuccess;
+        }
+
+
+        public ActionResult SendResetPasswordRequest(ResetPasswordViewModel model)
+        {
+            return View(model);
+        }
+        private void ResetPasswordFactory(ResetPasswordViewModel model)
+        {
+            var response = new ResetPasswordResponseViewModel();
+            response = _userService.ResetPassword(new ResetPasswordRequest { Email = model.Email }).MapTo<ResetPasswordResponseViewModel>();
+
+
+        }
+
+        public ActionResult ValidateEmail(GetUserRequest request)
+        {
+            var response = new GetUserResponse();
+            response = _userService.GetUserByEmail(new GetUserRequest { Email = request.Email });
+            if (response.IsSuccess)
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public ActionResult Reset(ResetToken request)
+        {
+            //Todo encode token upon link generation
+            var model = new ResetPasswordChangeModel();
+            var response = _userService.GetUserByToken(new ResetPasswordTokenRequest { Token = request.Token });
+            if (response.IsSuccess)
+            {
+                model.UserId = response.Profile.Id;
+                model.Token = response.Token;
+            }
+            else {
+                ViewBag.Message = "Invalid Token";
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Reset(ResetPasswordChangeModel model) {
+            return View(model);
         }
     }
 }
