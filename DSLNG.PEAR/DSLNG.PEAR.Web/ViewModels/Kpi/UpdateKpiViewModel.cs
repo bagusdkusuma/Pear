@@ -15,6 +15,10 @@ namespace DSLNG.PEAR.Web.ViewModels.Kpi
                 {
                     new KpiRelationModel()
                 };
+            Upload = new UploadViewModel
+                {
+                    KpiId = Id
+                };
             Icons = new List<string>();
         }
         public string CodeFromLevel { get; set; }
@@ -101,10 +105,11 @@ namespace DSLNG.PEAR.Web.ViewModels.Kpi
         public IEnumerable<SelectListItem> KpiList { get; set; }
         public DateTime? Value { get; set; }
 
-        [DataType(DataType.Upload)]
-        public HttpPostedFileBase IconFile { get; set; }
+        
         public string Icon { get; set; }
-        public IList<string> Icons { get; set; } 
+        public IList<string> Icons { get; set; }
+
+        public UploadViewModel Upload { get; set; }
 
         [Display(Name = "Active")]
         public bool IsActive { get; set; }

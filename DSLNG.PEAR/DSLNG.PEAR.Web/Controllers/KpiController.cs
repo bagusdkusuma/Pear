@@ -200,37 +200,7 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.Code = string.Format("{0}{1}{2}{3}", viewModel.CodeFromPillar, viewModel.CodeFromLevel, viewModel.Code, viewModel.CodeFromRoleGroup);
 
             var request = viewModel.MapTo<UpdateKpiRequest>();
-
-            var validImageTypes = new string[]
-                {
-                    "image/gif",
-                    "image/jpeg",
-                    "image/pjpeg",
-                    "image/png"
-                };
-
-            if (viewModel.IconFile != null)
-            {
-                if (!validImageTypes.Contains(viewModel.IconFile.ContentType))
-                {
-                    ModelState.AddModelError("IconFile", "Please choose either a GIF, JPG or PNG image.");
-                }
-                else
-                {
-                    var name = Guid.NewGuid() + "_" + viewModel.IconFile.FileName;
-
-                    if (!Directory.Exists(Server.MapPath(PathConstant.KpiPath)))
-                    {
-                        Directory.CreateDirectory(Server.MapPath(PathConstant.KpiPath));
-                    }
-
-                    var imagePath = Path.Combine(Server.MapPath(PathConstant.KpiPath), name);
-                    //var imageUrl = Path.Combine(UploadDir, name);
-                    viewModel.IconFile.SaveAs(imagePath);
-                    request.Icon = name;
-                }
-            }
-
+            
             if (!ModelState.IsValid)
             {
                 return View("Update", viewModel);
@@ -260,6 +230,55 @@ namespace DSLNG.PEAR.Web.Controllers
                 viewModel.RelationModels.Add(new ViewModels.Kpi.KpiRelationModel { KpiId = 0, Method = "" });
             }
             return View("Update", viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Upload(HttpPostedFileBase iconFile, string returnUrl)
+        {
+
+            var validImageTypes = new string[]
+                {
+                    "image/gif",
+                    "image/jpeg",
+                    "image/pjpeg",
+                    "image/png"
+                };
+
+            if (iconFile != null)
+            {
+                if (!validImageTypes.Contains(iconFile.ContentType))
+                {
+                    TempData["IsSuccess"] = false;
+                    TempData["Message"] = string.Format(@"Please choose either a GIF, JPG or PNG image");
+                }
+                else
+                {
+                    using (System.Drawing.Image image = System.Drawing.Image.FromStream(iconFile.InputStream, true, true))
+                    {
+                        if (image.Width <= ImageConstant.Width && image.Height <= ImageConstant.Height)
+                        {
+                            if (!Directory.Exists(Server.MapPath(PathConstant.KpiPath)))
+                            {
+                                Directory.CreateDirectory(Server.MapPath(PathConstant.KpiPath));
+                            }
+                            var imagePath = Path.Combine(Server.MapPath(PathConstant.KpiPath), iconFile.FileName);
+                            iconFile.SaveAs(imagePath);
+                            TempData["IsSuccess"] = true;
+                            TempData["Message"] = "Icon has been uploaded successfully";
+                        }
+                        else
+                        {
+                            TempData["IsSuccess"] = false;
+                            TempData["Message"] =
+                                string.Format(@"The dimensions of image should not be more than {0}x{1} px",
+                                              ImageConstant.Width, ImageConstant.Height);
+                        }
+                    }
+                }
+            }
+
+            return Redirect(returnUrl);
+
         }
 
         [HttpPost]
