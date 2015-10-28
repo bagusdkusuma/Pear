@@ -94,6 +94,15 @@ using DSLNG.PEAR.Web.ViewModels.Calculator;
 using DSLNG.PEAR.Web.ViewModels.Weather;
 using DSLNG.PEAR.Services.Requests.Weather;
 using DSLNG.PEAR.Services.Responses.Weather;
+using DSLNG.PEAR.Web.ViewModels.AssumptionCategory;
+using DSLNG.PEAR.Services.Requests.AssumptionCategory;
+using DSLNG.PEAR.Services.Responses.AssumptionCategory;
+using DSLNG.PEAR.Web.ViewModels.OutputCategory;
+using DSLNG.PEAR.Services.Requests.OutputCategory;
+using DSLNG.PEAR.Services.Responses.OutputCategory;
+using DSLNG.PEAR.Web.ViewModels.OperationGroup;
+using DSLNG.PEAR.Services.Requests.OperationGroup;
+using DSLNG.PEAR.Services.Responses.OperationGroup;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -476,6 +485,16 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetWeatherResponse, DailyExecutionReportViewModel.WeatherViewModel>();
             Mapper.CreateMap<GetHighlightsResponse.HighlightResponse, DailyExecutionReportViewModel.HighlightViewModel>();
             Mapper.CreateMap<GetHighlightResponse, DailyExecutionReportViewModel.AlertViewModel>();
+
+            Mapper.CreateMap<AssumptionCategoryViewModel, SaveAssumptionCategoryRequest>();
+            Mapper.CreateMap<GetAssumptionCategoryResponse, AssumptionCategoryViewModel>();
+
+            Mapper.CreateMap<OutputCategoryViewModel, SaveOutputCategoryRequest>();
+            Mapper.CreateMap<GetOutputCategoryResponse, OutputCategoryViewModel>();
+
+            Mapper.CreateMap<OperationGroupViewModel, SaveOperationGroupRequest>();
+            Mapper.CreateMap<GetOperationGroupResponse, OperationGroupViewModel>();
+
             base.Configure();
         }
 
