@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace DSLNG.PEAR.Services.Responses.User
+namespace DSLNG.PEAR.Web.ViewModels.User
 {
-    public class ResetPasswordResponse : BaseResponse
+    public class ResetPasswordResponseViewModel
     {
         public int Id { get; set; }
         public string Email { get; set; }
@@ -16,7 +15,8 @@ namespace DSLNG.PEAR.Services.Responses.User
         public bool Status { get; set; }
 
         public User Profile { get; set; }
-        public class User {
+        public class User
+        {
             public int Id { get; set; }
             public string Username { get; set; }
             public string Email { get; set; }

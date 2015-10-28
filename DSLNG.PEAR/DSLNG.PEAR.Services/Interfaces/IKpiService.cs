@@ -1,4 +1,5 @@
 ﻿using DSLNG.PEAR.Services.Requests.Kpi;
+using DSLNG.PEAR.Services.Responses;
 using DSLNG.PEAR.Services.Responses.Kpi;
 
 
@@ -14,5 +15,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         CreateKpiResponse Create(CreateKpiRequest request);
         UpdateKpiResponse Update(UpdateKpiRequest request);
         DeleteKpiResponse Delete(int id);
+
+        bool IsValidKpi(GetKpiByRole request);
     }
 }

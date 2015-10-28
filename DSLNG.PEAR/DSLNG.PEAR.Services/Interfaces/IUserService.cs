@@ -15,5 +15,8 @@ namespace DSLNG.PEAR.Services.Interfaces
         UpdateUserResponse ChangePassword(ChangePasswordRequest request);
         UpdateUserResponse CheckPassword(CheckPasswordRequest request);
         ResetPasswordResponse ResetPassword(ResetPasswordRequest request);
+
+        ResetPasswordResponse GetUserByToken(ResetPasswordTokenRequest request);
+        GetUserResponse GetUserByEmail(GetUserRequest request);
     }
 }

@@ -511,5 +511,50 @@ namespace DSLNG.PEAR.Services
             }
             return response;
         }
+
+
+        public AllKpiAchievementsResponse GetKpiAchievementsByRole(GetKpiAchievementsConfigurationRequest request)
+        {
+            var response = new AllKpiAchievementsResponse();
+            try
+            {
+                var kpiAchievements = DataContext.Kpis
+                    .Include(x => x.Measurement)
+                    .Include(x => x.Type)
+                    .Include(x => x.RoleGroup)
+                    .Where(x=>x.RoleGroup.Id == request.RoleGroupId)
+                    .AsEnumerable()
+                    .OrderBy(x => x.Order)
+                    .GroupBy(x => x.RoleGroup).ToDictionary(x => x.Key);
+
+                foreach (var item in kpiAchievements)
+                {
+                    var kpis = new List<AllKpiAchievementsResponse.Kpi>();
+                    foreach (var val in item.Value)
+                    {
+                        kpis.Add(val.MapTo<AllKpiAchievementsResponse.Kpi>());
+                    }
+
+                    response.RoleGroups.Add(new AllKpiAchievementsResponse.RoleGroup
+                    {
+                        Id = item.Key.Id,
+                        Name = item.Key.Name,
+                        Kpis = kpis
+                    });
+                }
+
+                response.IsSuccess = true;
+            }
+            catch (ArgumentNullException argumentNullException)
+            {
+                response.Message = argumentNullException.Message;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                response.Message = invalidOperationException.Message;
+            }
+
+            return response;
+        }
     }
 }

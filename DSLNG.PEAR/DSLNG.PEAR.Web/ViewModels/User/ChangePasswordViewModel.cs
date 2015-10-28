@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 namespace DSLNG.PEAR.Web.ViewModels.User
@@ -14,8 +10,10 @@ namespace DSLNG.PEAR.Web.ViewModels.User
         [Required]
         [Display(Name = "New Password")]
         public string New_Password { get; set; }
+        
         [Required]
         [Display(Name = "Confirm Password")]
+        [System.ComponentModel.DataAnnotations.Compare("New_Password")]
         public string Confirm_Password { get; set; }
         [Remote("CheckPassword", "Account", ErrorMessage = "Wrong currentpassword")]
         [Required]
