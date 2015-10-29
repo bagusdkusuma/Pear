@@ -9,7 +9,7 @@
                         <label>Upload Foto</label>
                     </div>
                     <div class="col-md-8">
-                        <input type="text" name="returnUrl" id="returnUrl" value="@Model.ReturnUrl">
+                        <input type="hidden" name="returnUrl" id="returnUrl" value="@Model.ReturnUrl">
                         @Html.TextBoxFor(m => m.IconFile, new { type = "file", style = "color:#fff" })
                     </div>
                 </div>
