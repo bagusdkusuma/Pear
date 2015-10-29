@@ -1,4 +1,5 @@
-﻿@model DSLNG.PEAR.Web.ViewModels.Pillar.CreatePillarViewModel
+﻿@using DSLNG.PEAR.Common.Contants
+@model DSLNG.PEAR.Web.ViewModels.Pillar.CreatePillarViewModel
 @{
     ViewBag.Title = "Create New Pillar";
 }
@@ -13,6 +14,13 @@
             }
         }).keyup(function () {
             $(this).colpickSetColor(this.value.replace('#', ''));
+        });
+        
+        $('.pillar-icon').click(function () {
+            var that = $(this);
+            $('.pillar-icon').removeClass('pillar-icon-selected');
+            that.addClass('pillar-icon-selected');
+            $('#Icon').val(that.attr('data-icon').split('\\')[that.attr('data-icon').split('\\').length - 1]);
         });
     });
 </script>
@@ -44,10 +52,28 @@
                 </div>
                 @Html.ValidationMessageFor(x => x.Color)
             </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Icon, new { @class = "control-label" })
-                @Html.EditorFor(model => model.Icon, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Icon)
+            <div class="form-group" style="margin-left: 10px;">
+                <a class="btn btn-flat btn-lightblue" data-toggle="modal" data-target="#modalDialog">Upload New Icon</a>
+            </div>
+            <div class="form-group" style="display: inline-block">
+                @Html.HiddenFor(model => model.Icon)
+                @foreach (var item in Model.Icons)
+                {
+                    var icon = item.Split('\\')[item.Split('\\').Length - 1];
+                    var selected = "";
+                    if (icon == Model.Icon)
+                    {
+                        selected = "pillar-icon-selected";
+                    }
+                    <div class="icon-wrapper">
+                        <div class="pillar-icon @selected" data-icon="@item">
+                            <img style="margin:0 auto;display: block" src="@Url.Content(PathConstant.PillarPath)/@icon"/>
+                            <span style="font-size: 11px; color: #ffffff">@icon</span>
+                        </div>
+                        <a href="@Url.Action("DeleteIcon", "Pillar", new {name = icon, redirectAction = "Create"})" onclick="return confirm('Are you sure you want to delete this icon?')" class="delete-icon">Delete</a>
+                    </div>
+                    
+                }
             </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.Remark, new { @class = "control-label" })
@@ -65,3 +91,4 @@
         </form>
     </div>
 </div>
+@Html.Partial("~/Views/Kpi/_Upload.cshtml", Model.Upload)

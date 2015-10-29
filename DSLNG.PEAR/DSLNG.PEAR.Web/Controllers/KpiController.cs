@@ -22,7 +22,7 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IRoleGroupService _roleGroupService;
         private readonly IPillarService _pillarService;
         private readonly IDropdownService _dropdownService;
-        
+
         public KpiController(IKpiService service,
             ILevelService levelService,
             IRoleGroupService roleGroupService,
@@ -120,6 +120,7 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             var viewModel = new CreateKpiViewModel();
             viewModel = CreateViewModel(viewModel);
+            viewModel.Icons = Directory.EnumerateFiles(Server.MapPath(PathConstant.KpiPath)).ToList();
             return View(viewModel);
         }
 
@@ -180,7 +181,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 //viewModel.Code = response.Code.Substring(code, takeCode);
                 viewModel.Code = numbers;
             }
-            
+
             if (viewModel.RelationModels.Count == 0)
             {
                 viewModel.RelationModels.Add(new ViewModels.Kpi.KpiRelationModel { KpiId = 0, Method = "" });
@@ -200,7 +201,7 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.Code = string.Format("{0}{1}{2}{3}", viewModel.CodeFromPillar, viewModel.CodeFromLevel, viewModel.Code, viewModel.CodeFromRoleGroup);
 
             var request = viewModel.MapTo<UpdateKpiRequest>();
-            
+
             if (!ModelState.IsValid)
             {
                 return View("Update", viewModel);
@@ -306,6 +307,17 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             var roleGroup = _roleGroupService.GetRoleGroup(new Services.Requests.RoleGroup.GetRoleGroupRequest { Id = id }).Code;
             return roleGroup;
+        }
+
+        public ActionResult DeleteIcon(string name, string redirectAction)
+        {
+            string fullPath = Request.MapPath(PathConstant.KpiPath + "/" + name);
+            if (System.IO.File.Exists(fullPath))
+            {
+                System.IO.File.Delete(fullPath);
+            }
+
+            return RedirectToAction(redirectAction);
         }
     }
 }

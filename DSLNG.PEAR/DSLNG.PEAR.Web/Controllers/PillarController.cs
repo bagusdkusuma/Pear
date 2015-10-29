@@ -89,6 +89,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create()
         {
             var viewModel = new CreatePillarViewModel();
+            viewModel.Icons = Directory.EnumerateFiles(Server.MapPath(PathConstant.PillarPath)).ToList();
             return View(viewModel);
         }
 
@@ -214,6 +215,17 @@ namespace DSLNG.PEAR.Web.Controllers
 
             return Redirect(returnUrl);
 
+        }
+
+        public ActionResult DeleteIcon(string name, string redirectAction)
+        {
+            string fullPath = Request.MapPath(PathConstant.PillarPath + "/" + name);
+            if (System.IO.File.Exists(fullPath))
+            {
+                System.IO.File.Delete(fullPath);
+            }
+
+            return RedirectToAction(redirectAction);
         }
     }
 }

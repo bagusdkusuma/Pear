@@ -15,10 +15,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Kpi
                 {
                     new KpiRelationModel()
                 };
-            Upload = new UploadViewModel
-                {
-                    KpiId = Id
-                };
+            Upload = new UploadViewModel();
             Icons = new List<string>();
         }
         public string CodeFromLevel { get; set; }
@@ -108,7 +105,6 @@ namespace DSLNG.PEAR.Web.ViewModels.Kpi
         
         public string Icon { get; set; }
         public IList<string> Icons { get; set; }
-
         public UploadViewModel Upload { get; set; }
 
         [Display(Name = "Active")]
