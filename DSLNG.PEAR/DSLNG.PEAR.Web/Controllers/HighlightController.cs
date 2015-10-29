@@ -127,8 +127,14 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create(HighlightViewModel viewModel)
         {
             var req = viewModel.MapTo<SaveHighlightRequest>();
-            _highlightService.SaveHighlight(req);
-            return RedirectToAction("Index");
+            var resp = _highlightService.SaveHighlight(req);
+            TempData["IsSuccess"] = resp.IsSuccess;
+            TempData["Message"] = resp.Message;
+            if (resp.IsSuccess)
+            {
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Create");
         }
 
         //

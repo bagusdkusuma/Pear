@@ -12,8 +12,10 @@
             <div class="title">Highlight</div>
             <div class="description_year">New</div>
             <div>@Html.ValidationSummary(true)</div>
+            
         </div>
         <div class="col-md-12">
+            @Html.Partial("_MessageResponse")
             <div class="form-inline whitebox">
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.PeriodeType)
@@ -60,7 +62,7 @@
             <a href="/Highlight" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
         </div>
     }
-</div>
+</>
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
