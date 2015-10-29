@@ -35,6 +35,7 @@ namespace DSLNG.PEAR.Services
                     .Include(x => x.Vessel)
                     .Include(x => x.Vessel.Measurement)
                     .Select(x => new { 
+                        id = x.Id,
                         NextLoadingSchedules = x.NextLoadingSchedules.OrderByDescending(y => y.CreatedAt).Take(1).ToList(),
                         Buyer = x.Buyer,
                         Vessel = x.Vessel,
@@ -54,6 +55,7 @@ namespace DSLNG.PEAR.Services
                     VesselSchedules = query.Where(x => x.IsActive == true).Select(
                         x => new GetVesselSchedulesResponse.VesselScheduleResponse
                         {
+                            id = x.id,
                             Remark = x.NextLoadingSchedules.Count == 1? x.NextLoadingSchedules.FirstOrDefault().Remark : null,
                             RemarkDate = x.NextLoadingSchedules.Count == 1 ? x.NextLoadingSchedules.FirstOrDefault().CreatedAt : (DateTime?)null,
                             Buyer = x.Buyer.Name,

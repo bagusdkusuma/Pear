@@ -15,5 +15,7 @@ namespace DSLNG.PEAR.Data.Entities
         public int Id { get; set; }
         public string Value { get; set; }
         public string Text { get; set; }
+        public Select Select { get; set; }
+        public int Order { get; set; }
     }
 }

@@ -138,5 +138,10 @@ namespace DSLNG.PEAR.Web.Controllers
                 return View();
             }
         }
+
+        public ActionResult InVesselSchedule(int id) {
+            var nlsList = _nlsService.GetNLSList(new GetNLSListRequest { VesselScheduleId = id });
+            return PartialView("_RemarkList", nlsList.NLSList.MapTo<NLSViewModel>());
+        }
     }
 }

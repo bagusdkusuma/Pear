@@ -1318,10 +1318,8 @@ table.der
         color: #fff;
         padding: 10px 20px;
     }
-
-    table.der th
-    {
-        background-color: #2E6D64;
+    table.der th {
+        background-color: transparent;
     }
 
 

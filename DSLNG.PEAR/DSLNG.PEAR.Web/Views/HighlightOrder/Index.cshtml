@@ -1,0 +1,43 @@
+﻿@model IEnumerable<DSLNG.PEAR.Web.ViewModels.HighlightOrder.HighlightOrderViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="highlight-orders">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="title " style="margin-bottom: 50px">Highlight Order</div>
+        </div>
+    </div>
+
+    <div class="panel panel-default der-panel">
+        <table class="der table-bordered">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Text)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Order)
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Text)
+                    </td>
+                    <td>
+                        @using (Html.BeginForm("Save", "HighlightOrder"))
+                        {
+                            @Html.HiddenFor(modelItem => item.Id, new { name = "Id" })
+                            @Html.TextBoxFor(modelItem => item.Order, new { @class = "highlight-order", name = "Order" })
+                        }
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

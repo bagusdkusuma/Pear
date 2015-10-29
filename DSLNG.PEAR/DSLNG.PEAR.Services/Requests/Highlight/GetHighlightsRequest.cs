@@ -14,5 +14,6 @@ namespace DSLNG.PEAR.Services.Requests.Highlight
         public bool OnlyCount { get; set; }
         public string[] Except { get; set; }
         public DateTime? Date { get; set; }
+        public bool IsActive { get; set; }
     }
 }

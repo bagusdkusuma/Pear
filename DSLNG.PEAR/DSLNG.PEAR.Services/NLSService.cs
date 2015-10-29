@@ -31,10 +31,14 @@ namespace DSLNG.PEAR.Services
             {
                 return new GetNLSListResponse { Count = DataContext.NextLoadingSchedules.Count() };
             }
-            //else if (request.TheActiveOnes) {
-            //    var query = DataContext.NextLoadingSchedules.Include(x => x.VesselSchedule).Include(x => x.VesselSchedule.Vessel);
-            //    query.Distinct().First
-            //}
+            else if (request.VesselScheduleId != 0) {
+                var query = DataContext.NextLoadingSchedules.Include(x => x.VesselSchedule).Include(x => x.VesselSchedule.Vessel);
+                query = query.Where(x => x.VesselSchedule.Id == request.VesselScheduleId);
+                return new GetNLSListResponse
+                {
+                    NLSList = query.ToList().MapTo<GetNLSListResponse.NLSResponse>()
+                }; 
+            }
             else
             {
                 var query = DataContext.NextLoadingSchedules.Include(x => x.VesselSchedule).Include(x => x.VesselSchedule.Vessel);

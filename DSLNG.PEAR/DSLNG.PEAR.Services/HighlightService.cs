@@ -23,7 +23,7 @@ namespace DSLNG.PEAR.Services
             else if (request.Except.Length > 0 && request.Date.HasValue) {
                 return new GetHighlightsResponse
                 {
-                    Highlights = DataContext.Highlights.Where(x => x.Date == request.Date.Value && !request.Except.Contains(x.Type))
+                    Highlights = DataContext.Highlights.Where(x => x.Date == request.Date.Value && !request.Except.Contains(x.Type) && x.IsActive == request.IsActive)
                     .ToList().MapTo<GetHighlightsResponse.HighlightResponse>()
                 };
             }
@@ -40,6 +40,14 @@ namespace DSLNG.PEAR.Services
         {
             try
             {
+                var todayHighlight = DataContext.Highlights.FirstOrDefault(x => x.Date == request.Date && x.Type == request.Type);
+                if (todayHighlight != null) {
+                    return new SaveHighlightResponse
+                    {
+                        IsSuccess = false,
+                        Message = "You can only save one type of highlight in the same periode of time"
+                    };
+                }
                 if (request.Id == 0)
                 {
                     var highlight = request.MapTo<Highlight>();

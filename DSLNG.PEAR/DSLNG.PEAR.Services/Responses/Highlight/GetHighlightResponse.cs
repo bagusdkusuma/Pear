@@ -12,5 +12,6 @@ namespace DSLNG.PEAR.Services.Responses.Highlight
         public string Type { get; set; }
         public string Title { get; set; }
         public string Message { get; set; }
+        public bool IsActive { get; set; }
     }
 }

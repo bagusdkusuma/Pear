@@ -9,5 +9,6 @@ namespace DSLNG.PEAR.Services.Requests.NLS
         public string Term { get; set; }
         public bool OnlyCount { get; set; }
         public bool TheActiveOnes { get; set; }
+        public int VesselScheduleId { get; set; }
     }
 }

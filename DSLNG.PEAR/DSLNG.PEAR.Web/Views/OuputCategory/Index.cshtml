@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Output Category";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="outputCategory-list">
+    <h2>Output Category</h2>
+    @Html.Partial("_MessageResponse")
+    @Html.ActionLink("Create New", "Create")
+    @Html.Action("IndexPartial")
+
+    @section Scripts{
+        <script type="text/javascript">
+            var confirmDelete = function (id) {
+                if (confirm('Are you sure want to delete this item?')) {
+                    var url = '@Url.Action("Delete", "OutputCategory")';
+                $('<form action="' + url + '" method="POST">' +
+                    '<input type="hidden" name="id" value="' + id + '">' +
+                    '</form>').submit();
+            }
+        };
+        </script>
+    }
+
+</div>
