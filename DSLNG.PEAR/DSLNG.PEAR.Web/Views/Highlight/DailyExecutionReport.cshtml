@@ -41,7 +41,7 @@
                             <td>@nls.ETA.ToString("dd-MM-yyyy")</td>
                             <td>@nls.ETD.ToString("dd-MM-yyyy")</td>
                             <td>@nls.Cargo</td>
-                            <td>@nls.RemarkDate.ToString("dd-MM-yyyy");@nls.Remark</td>
+                            <td>@nls.RemarkDate.ToString("dd-MM-yyyy");@nls.Remark | @Html.ActionLink("See All", "InVesselSchedule", "NLS", new{id=nls.Id}, new { @class="nls-see-all", data_toggle="modal", data_target="#modalDialog" })</td>
                         </tr>
                     }
                 </table>

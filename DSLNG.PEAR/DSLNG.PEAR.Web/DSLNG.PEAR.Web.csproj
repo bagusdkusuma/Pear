@@ -719,6 +719,7 @@
     <Content Include="Views\OperationGroup\Edit.cshtml" />
     <Content Include="Views\OperationGroup\Index.cshtml" />
     <Content Include="Views\OperationGroup\_IndexGridPartial.cshtml" />
+    <Content Include="Views\NLS\_RemarkList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

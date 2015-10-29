@@ -576,7 +576,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<ScoreIndicatorViewModel, ScoreIndicator>();
             Mapper.CreateMap<ScoreIndicator, ScoreIndicatorViewModel>();
             Mapper.CreateMap<GetHighlightOrdersResponse.HighlightOrderResponse, HighlightOrderViewModel>();
-
+            Mapper.CreateMap<GetNLSListResponse.NLSResponse, NLSViewModel>();
         }
 
         private void ConfigurePmsSummary()

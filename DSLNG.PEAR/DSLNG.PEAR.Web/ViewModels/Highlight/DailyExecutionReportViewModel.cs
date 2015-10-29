@@ -17,6 +17,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Highlight
         public AlertViewModel Alert {get;set;}
         public WeatherViewModel Weather {get;set;}
         public class NLSViewModel {
+            public int Id { get; set; }
             public string Type { get; set; }
             public string VesselType { get; set; }
             public string Vessel { get; set; }
