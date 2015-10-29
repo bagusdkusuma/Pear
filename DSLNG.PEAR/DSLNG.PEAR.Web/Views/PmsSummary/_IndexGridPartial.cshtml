@@ -6,10 +6,10 @@
     <table class="table table-transparent table-pms-summary table-bordered" cellspacing="0">
         <tbody>
             <tr>
-                <td rowspan="2">&nbsp;</td>
-                <td rowspan="2">Performance Indicator</td>
+                <td rowspan="2" style="border-bottom: 1px solid #ffffff;">&nbsp;</td>
+                <td rowspan="2" style="border-bottom: 1px solid #ffffff;">Performance Indicator</td>
                 <td style="border-right:1px solid #ffffff; border-left:1px solid #ffffff">Actual / Target</td>
-                <td rowspan="2">Score / Weight</td>
+                <td rowspan="2" style="border-bottom: 1px solid #ffffff;">Score / Weight</td>
             </tr>
             <tr>
                 <td style="border-bottom: 1px solid #ffffff;border-right: 1px solid #ffffff;
@@ -42,7 +42,7 @@ border-left: 1px solid #ffffff">Yearly</td>
                                 <td>&nbsp;</td>
                                 <td colspan="3" class="text-left">
                                     <div class="roundlight popover-pillar" data-toggle="popover" style="background-color: @item.PillarColor" data-poload="@scoreIndicatorPmsConfigUrl"></div>@item.Pillar (@item.PillarWeight)
-                                    <img src="@Url.Content(PathConstant.PillarPath)/@item.PillarIcon" />
+                                    <img src="@Url.Content(PathConstant.PillarPath)/@item.PillarIcon" onerror="this.onerror = null; this.src = '@Url.Content(PathConstant.PillarPath)/default.png'" />
                                 </td>
                             </tr>
                         
@@ -65,7 +65,7 @@ border-left: 1px solid #ffffff">Yearly</td>
                         {
                             <td class="text-left">
                                 <div class="roundlight popover-pillar" data-toggle="popover" style="background-color: @item.KpiColor" data-poload="@scoreIndicatorPmsConfigDetailsUrl"></div>@item.KpiName
-                                <img src="@Url.Content(PathConstant.KpiPath)/@item.KpiIcon" />
+                                <img src="@Url.Content(PathConstant.KpiPath)/@item.KpiIcon" onerror="this.onerror = null; this.src = '@Url.Content(PathConstant.KpiPath)/default.png'" />
                             </td>
                         }
                         else
@@ -102,7 +102,7 @@ border-left: 1px solid #ffffff">Yearly</td>
                         <tr style="font-weight: bold">
                             <td>&nbsp;</td>
                             <td colspan="2" class="text-left">
-                                <div class="roundlight" style="background-color:@item.TotalScoreColor" data-poload="@scoreIndicatorPmsSummaryUrl"></div>
+                                <div id="totalScore" class="roundlight" data-total-score-color="@item.TotalScoreColor" style="background-color:@item.TotalScoreColor" data-poload="@scoreIndicatorPmsSummaryUrl"></div>
                                 Total Score
                             </td>
                             <td class="text-right">@totalPillarScore.ToString(FormatNumber.DecimalFormat) / @totalPillarWeight</td>

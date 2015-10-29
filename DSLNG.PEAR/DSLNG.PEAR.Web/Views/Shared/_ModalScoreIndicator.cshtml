@@ -1,0 +1,23 @@
+﻿<!-- Modal -->
+<div class="modal fade bs-example-modal-lg" id="modalDialogScoreIndicator" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content modal-loading">
+            <img src="@Url.Content("~/Content/img/ajax-loader2.gif")" class="ajax-loading-dialog" style="position: absolute"></img>
+        </div>
+    <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var modalLoadingHtml = $('.modal-loading').html();
+        $('#modalDialogScoreIndicator').on('hidden.bs.modal', function (e) {
+            $(this).removeData('bs.modal');
+            $('#modalDialogScoreIndicator').find('.modal-content').html(modalLoadingHtml);
+        });
+    });
+</script>
+

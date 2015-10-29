@@ -159,6 +159,8 @@
     <Compile Include="Requests\KpiTarget\SaveKpiTargetRequest.cs" />
     <Compile Include="Requests\KpiTarget\UpdateKpiTargetItemRequest.cs" />
     <Compile Include="Requests\KpiTarget\UpdateKpiTargetRequest.cs" />
+    <Compile Include="Requests\Kpi\GetKpiByRole.cs" />
+    <Compile Include="Requests\Kpi\GetKpisRequest.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\Periode.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\PeriodeType.cs" />
     <Compile Include="Requests\Menu\GetRootMenuRequest.cs" />
@@ -194,7 +196,11 @@
     <Compile Include="Requests\Template\GetTemplateRequest.cs" />
     <Compile Include="Requests\Template\GetTemplatesRequest.cs" />
     <Compile Include="Requests\Template\UpdateTemplateRequest.cs" />
+    <Compile Include="Requests\User\ChangePasswordRequest.cs" />
     <Compile Include="Requests\User\LoginUserRequest.cs" />
+    <Compile Include="Requests\User\ResetPasswordRequest.cs" />
+    <Compile Include="Requests\User\ResetPasswordTokenRequest.cs" />
+    <Compile Include="Requests\User\SetPasswordRequest.cs" />
     <Compile Include="Requests\VesselSchedule\DeleteVesselScheduleRequest.cs" />
     <Compile Include="Requests\VesselSchedule\GetVesselScheduleRequest.cs" />
     <Compile Include="Requests\VesselSchedule\GetVesselSchedulesRequest.cs" />
@@ -443,6 +449,7 @@
     <Compile Include="Responses\BaseResponse.cs" />
     <Compile Include="Responses\Level\GetLevelResponse.cs" />
     <Compile Include="Responses\User\LoginUserResponse.cs" />
+    <Compile Include="Responses\User\ResetPasswordResponse.cs" />
     <Compile Include="Responses\User\UpdateUserResponse.cs" />
     <Compile Include="Responses\User\UserResponse.cs" />
     <Compile Include="Responses\Pillar\GetPillarResponse.cs" />

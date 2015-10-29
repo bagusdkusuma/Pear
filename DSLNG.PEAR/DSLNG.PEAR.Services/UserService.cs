@@ -8,6 +8,7 @@ using DSLNG.PEAR.Common.Extensions;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity;
 using SimpleCrypto;
+using System;
 //using Microsoft.AspNet.Identity;
 
 
@@ -82,12 +83,16 @@ namespace DSLNG.PEAR.Services
             var response = new UpdateUserResponse();
             try
             {
-                var user = request.MapTo<User>();
+                //var user = request.MapTo<User>();
+                var user = DataContext.Users.Include(u => u.Role).First(x => x.Id == request.Id).MapTo<User>();
                 user.Role = DataContext.RoleGroups.First(x => x.Id == request.RoleId);
+                user.Username = request.Username;
+                user.IsActive = request.IsActive;
+                user.ChangeModel = request.ChangeModel;
                 if (request.ChangePassword && request.Password != null)
                 {
-                    user.Password = crypto.Compute(request.Password);
-                    user.PasswordSalt = crypto.Salt;
+                    user.PasswordSalt = crypto.Salt != null ? crypto.Salt : crypto.GenerateSalt(crypto.HashIterations, crypto.SaltSize);
+                    user.Password = crypto.Compute(request.Password, user.PasswordSalt);
                 }
                 DataContext.Users.Attach(user);
                 DataContext.Entry(user).State = EntityState.Modified;
@@ -161,6 +166,154 @@ namespace DSLNG.PEAR.Services
                 var user = DataContext.Users.Include(u => u.Role).First(x => x.Username == request.Name);
                 var response = user.MapTo<GetUserResponse>(); //Mapper.Map<GetUserResponse>(user);
                 //response.RoleName = DataContext.RoleGroups.FirstOrDefault(x => x.Id == user.RoleId).Name.ToString();
+                response.IsSuccess = true;
+                return response;
+            }
+            catch (System.InvalidOperationException x)
+            {
+                return new GetUserResponse
+                {
+                    IsSuccess = false,
+                    Message = x.Message
+                };
+            }
+        }
+
+        public UpdateUserResponse ChangePassword(ChangePasswordRequest request) {
+            var response = new UpdateUserResponse { IsSuccess = false, Message = "Unknown Error"};
+            
+            if (request.New_Password == null)
+            {
+                response.Message = "New Password Could not be null!";
+                return response;
+            }
+            var user = DataContext.Users.First(x => x.Id == request.Id).MapTo<User>();
+            if (user != null) {
+                
+                if (user.Password != crypto.Compute(request.Old_Password, user.PasswordSalt)) {
+                    response.Message = "Current Password isn't correct!";
+                    return response;
+                }
+
+                user.PasswordSalt = crypto.Salt != null ? crypto.Salt : crypto.GenerateSalt(crypto.HashIterations, crypto.SaltSize);
+                user.Password = crypto.Compute(request.New_Password, user.PasswordSalt);
+
+                DataContext.Users.Attach(user);
+                DataContext.Entry(user).State = EntityState.Modified;
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = "Password Successfully Changed!";
+            }
+            
+            return response;
+        }
+
+
+        public UpdateUserResponse CheckPassword(CheckPasswordRequest request)
+        {
+            var response = new UpdateUserResponse();
+            var user = DataContext.Users.First(x => x.Username == request.Name);
+            if (user != null && request.Password != null && user.Password == crypto.Compute(request.Password, user.PasswordSalt))
+            {
+                //Include(x => x.Role).
+                response.IsSuccess = true;
+            }
+            else
+            {
+                response.IsSuccess = false;
+                response.Message = string.Format("Your current password isn't correct");
+            }
+            return response;
+        }
+
+
+        public ResetPasswordResponse ResetPassword(ResetPasswordRequest request)
+        {
+            var response = new ResetPasswordResponse();
+            response = this.GenerateToken(request);
+            return response;
+        }
+
+        private ResetPasswordResponse GenerateToken(ResetPasswordRequest request)
+        {
+            var response = new ResetPasswordResponse();
+
+
+            ///Try to save token to database
+            try
+            {
+                response.Salt = crypto.Salt != null ? crypto.Salt : crypto.GenerateSalt(crypto.HashIterations, crypto.SaltSize);
+
+                response.Email = request.Email;
+                response.ExpireDate = DateTime.Now.AddDays(3);
+                response.Token = crypto.Compute(request.Email, response.Salt);
+                //var entity = new ResetPassword { Email = response.Email, Token = response.Token, Salt = response.Salt, ExpireDate = response.ExpireDate };
+                var entity =  response.MapTo<ResetPassword>();
+                DataContext.ResetPasswords.Add(entity);
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = "Password Token Successfully Created";
+            }
+            catch (System.InvalidOperationException x)
+            {
+                return new ResetPasswordResponse
+                {
+                    IsSuccess = false,
+                    Message = x.Message
+                };
+            }
+            return response;
+        }
+
+
+        public ResetPasswordResponse GetUserByToken(ResetPasswordTokenRequest request)
+        {
+            var response = new ResetPasswordResponse();
+            response = this.GetResetPasswordDetail(new ResetPasswordTokenRequest { Token = request.Token });
+            return response;
+        }
+
+        private ResetPasswordResponse GetResetPasswordDetail(ResetPasswordTokenRequest resetPasswordTokenRequest)
+        {
+            var response = new ResetPasswordResponse();
+            try {
+                response = DataContext.ResetPasswords.First(x => x.Token == resetPasswordTokenRequest.Token).MapTo<ResetPasswordResponse>();
+
+                if (response.ExpireDate < DateTime.Now)
+                {
+                    response.IsSuccess = false;
+                    response.Message = "Token Already Expired!";
+                    return response;
+                }
+                if (response.Status)
+                {
+                    response.IsSuccess = false;
+                    response.Message = "Token Already Used!";
+                    return response;
+                }
+
+                response.Profile = GetUserByEmail(new GetUserRequest { Email = response.Email }).MapTo<ResetPasswordResponse.User>();
+                response.IsSuccess = true;
+            }
+            catch (System.InvalidOperationException x) {
+                return new ResetPasswordResponse
+                {
+                    IsSuccess = false,
+                    Message = x.Message
+                };
+            }
+            return response;
+        }
+
+
+
+
+        public GetUserResponse GetUserByEmail(GetUserRequest request)
+        {
+            try
+            {
+                var user = DataContext.Users.Include(u => u.Role).First(x => x.Email == request.Email);
+                var response = user.MapTo<GetUserResponse>(); //Mapper.Map<GetUserResponse>(user);
                 response.IsSuccess = true;
                 return response;
             }

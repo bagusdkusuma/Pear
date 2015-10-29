@@ -40,6 +40,9 @@
         $('.dxgvDataRow_DSLNG td[title]').attr('data-html', true);
         $('.dxgvDataRow_DSLNG td[title]').tooltip();
 
+        var totalScoreColor = $('#totalScore').attr('data-total-score-color');
+        $('#pmsSummaryColor').css('background-color', totalScoreColor);
+
         /*$('*[data-poload]').mouseenter(function () {
             var e = $(this);
             e.off('hover');
@@ -87,7 +90,7 @@
 <section>
     <div class="title_page" style="border: none">
         <div class="row">
-            <div class="roundlight pull-left" style="background-color: red; margin-top: 10px;"></div>
+            <div id="pmsSummaryColor" class="roundlight pull-left" style="margin-top: 10px;"></div>
             <div class="title">Corporate Performance</div>
             <div class="description_year">@Model.Title</div>
         </div>

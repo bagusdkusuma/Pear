@@ -57,6 +57,7 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<KeyOutputCategory> KeyOutputCategories { get; set; }
         public IDbSet<KeyOperationGroup> KeyOperationGroups { get; set; }
 
+        public IDbSet<ResetPassword> ResetPasswords { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Kpi>()

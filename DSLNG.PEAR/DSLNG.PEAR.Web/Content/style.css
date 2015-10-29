@@ -1,8 +1,10 @@
-body, html {
+body, html
+{
     height: 100%;
 }
 
-body {
+body
+{
     background-image: url(/Content/img/bg_5.jpg);
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -10,32 +12,39 @@ body {
     background-size: cover;
 }
 
-    body.plan {
+    body.plan
+    {
         background-image: url(/Content/img/plan-bg.jpg);
     }
 
-    body.assess {
+    body.assess
+    {
         background-image: url(/Content/img/assess-bg.jpg);
     }
 
-    body.execute {
+    body.execute
+    {
         background-image: url(/Content/img/execute-bg.jpg);
     }
 
-    body.report {
+    body.report
+    {
         background-image: url(/Content/img/report-bg.jpg);
     }
 
-    body.setting {
+    body.setting
+    {
         background-color: #000000;
         background-image: none;
     }
 
-fieldset legend {
+fieldset legend
+{
     float: left;
 }
 
-.main-content {
+.main-content
+{
     padding-left: 250px;
     min-height: 100%;
     overflow: hidden;
@@ -53,33 +62,39 @@ h6, ajax- .h1,
 .h3,
 .h4,
 .h5,
-.h6 {
+.h6
+{
     /*font-family: 'Source Sans Pro', sans-serif;*/
     font-family: sans-serif;
 }
 
-h5 {
+h5
+{
     font-size: 28px;
 }
 
-h4, h3 {
+h4, h3
+{
     /*float: left;*/
     margin-top: 0px;
     margin-right: 20px;
 }
 
-h6 {
+h6
+{
     color: #3f454f;
     font-size: 16px;
     line-height: 30px;
     float: left;
 }
 
-.main-content > aside {
+.main-content > aside
+{
     /*float:left;*/
 }
 
-aside.right-content {
+aside.right-content
+{
     padding: 20px 20px 20px 0;
     padding-bottom: 500em;
     margin-bottom: -500em;
@@ -87,7 +102,8 @@ aside.right-content {
     width: 100%;
 }
 
-aside.left-content {
+aside.left-content
+{
     width: 231px;
     margin-left: -250px;
     border-left: 60px solid #f7ebdd;
@@ -100,7 +116,8 @@ aside.left-content {
     border-right: 1px solid #78a0ba;
 }
 
-.left-content .left-content-toggle {
+.left-content .left-content-toggle
+{
     position: fixed;
     top: 48%;
     left: 296px;
@@ -109,17 +126,20 @@ aside.left-content {
     color: #fff;
 }
 
-aside.left-content > * {
+aside.left-content > *
+{
     margin-left: -60px;
 }
 
-.main-nav {
+.main-nav
+{
     padding: 0;
     width: 60px;
     position: relative;
 }
 
-    .main-nav > li {
+    .main-nav > li
+    {
         list-style: none;
         display: block;
         width: 60px;
@@ -127,7 +147,8 @@ aside.left-content > * {
         text-transform: uppercase;
     }
 
-    .main-nav .sub-nav {
+    .main-nav .sub-nav
+    {
         position: absolute;
         left: 60px;
         top: 0;
@@ -137,77 +158,92 @@ aside.left-content > * {
         text-transform: initial;
     }
 
-    .main-nav li {
+    .main-nav li
+    {
         list-style: none;
     }
 
-        .main-nav li a {
+        .main-nav li a
+        {
             text-decoration: none;
         }
 
-.sub-nav > li > a {
+.sub-nav > li > a
+{
     color: #fff;
     font-size: 12px;
     font-weight: bold;
     position: relative;
 }
 
-    .sub-nav > li > a span {
+    .sub-nav > li > a span
+    {
         position: absolute;
         top: 2px;
         right: -23px;
     }
 
-.sub-nav ul {
+.sub-nav ul
+{
     padding: 0;
     padding-left: 10px;
     display: none;
     overflow: hidden;
 }
 
-.sub-nav li.active ul {
+.sub-nav li.active ul
+{
     display: block;
 }
 
-.sub-nav ul li.active {
+.sub-nav ul li.active
+{
     font-weight: bold;
     font-style: italic;
 }
 
-    .sub-nav ul li.active a {
+    .sub-nav ul li.active a
+    {
         color: #ff0000;
     }
 
-.sub-nav > li {
+.sub-nav > li
+{
     text-align: left;
     padding-bottom: 10px;
     cursor: pointer;
 }
 
-.sub-nav ul li {
+.sub-nav ul li
+{
     margin: 10px 0;
 }
 
-    .sub-nav ul li:last-child {
+    .sub-nav ul li:last-child
+    {
         margin-bottom: 0;
     }
 
-    .sub-nav ul li a {
+    .sub-nav ul li a
+    {
         font-size: 12px;
         color: #fff;
     }
 
-        .sub-nav ul li a:hover {
+        .sub-nav ul li a:hover
+        {
             color: #ff0000;
         }
 
 
-.main-nav > li {
+.main-nav > li
+{
     display: table;
     height: 73px;
 }
 
-    .main-nav > li > a {
+    .main-nav > li > a
+    {
         background: none;
         color: #3f454f;
         font-size: 11px;
@@ -218,13 +254,15 @@ aside.left-content > * {
         cursor: pointer;
     }
 
-        .main-nav > li > a > i {
+        .main-nav > li > a > i
+        {
             display: block;
             margin: 0;
             margin-bottom: 5px;
         }
 
-        .main-nav > li > a > img {
+        .main-nav > li > a > img
+        {
             display: inline-block;
             height: 30px;
         }
@@ -232,7 +270,8 @@ aside.left-content > * {
         .main-nav > li > a:hover,
         .main-nav > li.active,
         .main-nav:hover > li.active:hover > a,
-        .main-nav:hover > li.active:hover {
+        .main-nav:hover > li.active:hover
+        {
             color: #ff0000;
             background: #f8f8f8;
             width: 60px;
@@ -242,35 +281,42 @@ aside.left-content > * {
             text-decoration: none;
         }
 
-.main-nav:hover > li.active {
+.main-nav:hover > li.active
+{
     background: none;
 }
 
-    .main-nav:hover > li.active > a {
+    .main-nav:hover > li.active > a
+    {
         /*color: #9bd4f4;*/
     }
 
     .main-nav > li.active > a,
-    .main-nav:hover > li.active:hover > a {
+    .main-nav:hover > li.active:hover > a
+    {
         color: #ff0000;
     }
 
-.main-nav > li.active .sub-nav {
+.main-nav > li.active .sub-nav
+{
     display: block;
 }
 
-.main-nav > li > span {
+.main-nav > li > span
+{
     display: block;
 }
 
-.logo > div {
+.logo > div
+{
     height: 70px;
     text-align: center;
     vertical-align: middle;
     display: inline-block;
 }
 
-    .logo > div.pear {
+    .logo > div.pear
+    {
         width: 60px;
         background: #3f454f;
         padding-top: 15px;
@@ -278,11 +324,13 @@ aside.left-content > * {
         padding-right: 5px;
     }
 
-    .logo > div.donggi img {
+    .logo > div.donggi img
+    {
         height: 100%;
     }
 
-img {
+img
+{
     max-width: 100% !important;
 }
 
@@ -294,7 +342,8 @@ img {
 .stacks-holder,
 #range-holder,
 #hidden-fields-holder,
-.previous-color {
+.previous-color
+{
     display: none !important;
 }
 
@@ -302,17 +351,20 @@ img {
 
 .series-template,
 .stack-template,
-.plot-band-template {
+.plot-band-template
+{
     position: relative;
 }
 
-.stack-template {
+.stack-template
+{
     margin: 25px 0 0 204px;
 }
 
     .series-template .remove,
     .stack-template .remove,
-    .plot-band-template .remove {
+    .plot-band-template .remove
+    {
         position: absolute;
         top: 0;
         right: 0;
@@ -331,17 +383,20 @@ img {
 #range-holder.specificday,
 #range-holder.specificmonth,
 #range-holder.specificyear,
-.baraccumulative .previous-color {
+.baraccumulative .previous-color
+{
     display: block !important;
 }
 
     #range-holder.specificday > .form-group:nth-child(2),
     #range-holder.specificmonth > .form-group:nth-child(2),
-    #range-holder.specificyear > .form-group:nth-child(2) {
+    #range-holder.specificyear > .form-group:nth-child(2)
+    {
         display: none;
     }
 
-.title_page {
+.title_page
+{
     border-right: 1px solid grey;
     float: left;
     margin-bottom: 15px;
@@ -351,7 +406,8 @@ img {
     width: 51%;
 }
 
-.description {
+.description
+{
     float: right;
     margin-left: 15px;
     margin-right: 20px;
@@ -359,37 +415,44 @@ img {
     width: 40%;
 }
 
-.tablekpitarget {
+.tablekpitarget
+{
     text-align: center;
 }
 
-    .tablekpitarget .form-control {
+    .tablekpitarget .form-control
+    {
         width: 90%;
     }
 
-    .tablekpitarget .form-control-small {
+    .tablekpitarget .form-control-small
+    {
         width: 50px;
         margin-left: 4px;
         background-color: #FAFAFA;
         border: 1px solid #ccc;
     }
 
-    .tablekpitarget thead {
+    .tablekpitarget thead
+    {
         background: none;
         color: #3f454f;
         font-weight: bold;
     }
 
-        .tablekpitarget thead th {
+        .tablekpitarget thead th
+        {
             color: #3f454f;
             font-weight: bold;
         }
 
-.trafficlight, .title, .description_year {
+.trafficlight, .title, .description_year
+{
     float: left;
 }
 
-.trafficlight {
+.trafficlight
+{
     width: 10px;
     height: 20px;
     margin-top: 1px;
@@ -399,125 +462,149 @@ img {
 }
 
 #gridPmsSummaryIndex_DXMainTable .dxgvDataRow_DSLNG:hover, .dxgvTable_DSLNG .dxgvDataRow_DSLNG:hover,
-.dxgvTable_DSLNG .dxgvDataRow_DSLNG:hover a {
+.dxgvTable_DSLNG .dxgvDataRow_DSLNG:hover a
+{
     background-color: #5bafeb;
     color: white;
 }
 
-.modal-content {
+.modal-content
+{
     padding: 20px;
 }
 
-.modal-header {
+.modal-header
+{
     border-bottom: none;
 }
 
 
-.modal-body .nav-tabs > li > a {
+.modal-body .nav-tabs > li > a
+{
     text-align: center;
     color: #0076ae;
 }
 
-.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus
+{
     background-color: #ffffff;
     color: #004374;
     border: none;
     text-align: center;
 }
 
-.tab-content {
+.tab-content
+{
     margin-top: 30px;
     text-align: center;
 }
 
 
-.dropdown-toggle.icon_more {
+.dropdown-toggle.icon_more
+{
     background-color: #9bd4f4;
     color: white;
     border: none;
 }
 
-.btn-more {
+.btn-more
+{
     float: left;
 }
 
 /* NAV TABS */
-.nav-tabs-custom {
+.nav-tabs-custom
+{
     margin-bottom: 20px;
     background: #fff;
     /*box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);*/
 }
 
-    .nav-tabs-custom > .nav-tabs {
+    .nav-tabs-custom > .nav-tabs
+    {
         margin: 0;
         border-bottom-color: #f4f4f4;
     }
 
-        .nav-tabs-custom > .nav-tabs > li {
+        .nav-tabs-custom > .nav-tabs > li
+        {
             border-top: 3px solid transparent;
             margin-bottom: -2px;
             margin-right: 5px;
         }
 
-            .nav-tabs-custom > .nav-tabs > li > a {
+            .nav-tabs-custom > .nav-tabs > li > a
+            {
                 -webkit-border-radius: 0 !important;
                 -moz-border-radius: 0 !important;
                 border-radius: 0 !important;
             }
 
                 .nav-tabs-custom > .nav-tabs > li > a,
-                .nav-tabs-custom > .nav-tabs > li > a:hover {
+                .nav-tabs-custom > .nav-tabs > li > a:hover
+                {
                     background: transparent;
                     margin: 0;
                 }
 
             .nav-tabs-custom > .nav-tabs > li:not(.active) > a:hover,
             .nav-tabs-custom > .nav-tabs > li:not(.active) > a:focus,
-            .nav-tabs-custom > .nav-tabs > li:not(.active) > a:active {
+            .nav-tabs-custom > .nav-tabs > li:not(.active) > a:active
+            {
                 border-color: transparent;
             }
 
-            .nav-tabs-custom > .nav-tabs > li.active {
+            .nav-tabs-custom > .nav-tabs > li.active
+            {
                 border-top-color: #3c8dbc;
             }
 
                 .nav-tabs-custom > .nav-tabs > li.active > a,
-                .nav-tabs-custom > .nav-tabs > li.active:hover > a {
+                .nav-tabs-custom > .nav-tabs > li.active:hover > a
+                {
                     background-color: #fff;
                 }
 
-                .nav-tabs-custom > .nav-tabs > li.active > a {
+                .nav-tabs-custom > .nav-tabs > li.active > a
+                {
                     border-top: 0;
                     border-left-color: #f4f4f4;
                     border-right-color: #f4f4f4;
                 }
 
-            .nav-tabs-custom > .nav-tabs > li:first-of-type {
+            .nav-tabs-custom > .nav-tabs > li:first-of-type
+            {
                 margin-left: 0px;
             }
 
-                .nav-tabs-custom > .nav-tabs > li:first-of-type.active > a {
+                .nav-tabs-custom > .nav-tabs > li:first-of-type.active > a
+                {
                     border-left-width: 0;
                 }
 
-        .nav-tabs-custom > .nav-tabs.pull-right {
+        .nav-tabs-custom > .nav-tabs.pull-right
+        {
             float: none !important;
         }
 
-            .nav-tabs-custom > .nav-tabs.pull-right > li {
+            .nav-tabs-custom > .nav-tabs.pull-right > li
+            {
                 float: right;
             }
 
-                .nav-tabs-custom > .nav-tabs.pull-right > li:first-of-type {
+                .nav-tabs-custom > .nav-tabs.pull-right > li:first-of-type
+                {
                     margin-right: 0px;
                 }
 
-                    .nav-tabs-custom > .nav-tabs.pull-right > li:first-of-type.active > a {
+                    .nav-tabs-custom > .nav-tabs.pull-right > li:first-of-type.active > a
+                    {
                         border-left-width: 1px;
                         border-right-width: 0px;
                     }
 
-        .nav-tabs-custom > .nav-tabs > li.header {
+        .nav-tabs-custom > .nav-tabs > li.header
+        {
             font-weight: 400;
             line-height: 35px;
             padding: 0 10px;
@@ -528,54 +615,66 @@ img {
 
             .nav-tabs-custom > .nav-tabs > li.header > .fa,
             .nav-tabs-custom > .nav-tabs > li.header > .glyphicon,
-            .nav-tabs-custom > .nav-tabs > li.header > .ion {
+            .nav-tabs-custom > .nav-tabs > li.header > .ion
+            {
                 margin-right: 10px;
             }
 
-    .nav-tabs-custom > .tab-content {
+    .nav-tabs-custom > .tab-content
+    {
         background: #fff;
         padding: 10px;
     }
 /* Nav tabs bottom */
-.tabs-bottom.nav-3 li a {
+.tabs-bottom.nav-3 li a
+{
     width: 3333.33333333% !important;
 }
 
-.tabs-bottom li a {
+.tabs-bottom li a
+{
     border: 0;
 }
 
-.trafficlight.green {
+.trafficlight.green
+{
     background-color: green;
 }
 
-.trafficlight.yellow {
+.trafficlight.yellow
+{
     background-color: yellow;
 }
 
-.trafficlight.red {
+.trafficlight.red
+{
     background-color: red;
 }
 
-.trafficlight.grey {
+.trafficlight.grey
+{
     background-color: grey;
 }
 
-.trafficlight, .title, .description_year {
+.trafficlight, .title, .description_year
+{
     float: left;
 }
 
-.title {
+.title
+{
     font-size: 18px;
     font-weight: bold;
     color: #fff;
 }
 
-.trafficlight, .title, .description_year {
+.trafficlight, .title, .description_year
+{
     float: left;
 }
 
-.description_year {
+.description_year
+{
     font-size: 16px;
     color: #ffffff;
     font-weight: bold;
@@ -584,11 +683,13 @@ img {
     margin-left: 10px;
 }
 
-.trafficlight, .title, .description_year {
+.trafficlight, .title, .description_year
+{
     float: left;
 }
 
-.description_month {
+.description_month
+{
     font-size: 14px;
     color: #3f454f;
     font-weight: normal;
@@ -599,21 +700,25 @@ img {
 }
 
 
-thead {
+thead
+{
     background-color: #004071;
     color: white;
 }
 
-th {
+th
+{
     text-align: center;
     font-weight: normal;
 }
 
-.colorpicker .input-group-addon {
+.colorpicker .input-group-addon
+{
     padding: 3px 4px;
 }
 
-    .colorpicker .input-group-addon i {
+    .colorpicker .input-group-addon i
+    {
         display: inline-block;
         width: 15px;
         height: 15px;
@@ -621,24 +726,28 @@ th {
         cursor: pointer;
     }
 
-.btn-darkblue {
+.btn-darkblue
+{
     background-color: #004071;
     color: white;
     padding: 4px;
 }
 
 
-a:hover.btn-darkblue {
+a:hover.btn-darkblue
+{
     background-color: #9bd4f4;
     color: white;
 }
 
-a:hover.btn-lightblue {
+a:hover.btn-lightblue
+{
     background-color: #9bd4f4;
     color: white;
 }
 
-.btn-large {
+.btn-large
+{
     width: 30%;
     padding: 15px !important;
     margin-top: 20px;
@@ -651,14 +760,16 @@ a:hover.btn-lightblue {
 */
 
 
-.btn {
+.btn
+{
     font-weight: 500;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border: 1px solid transparent;
 }
 
-    .btn.btn-default {
+    .btn.btn-default
+    {
         background-color: #fafafa;
         color: #666;
         border-color: #ddd;
@@ -672,7 +783,8 @@ a:hover.btn-lightblue {
 
         .btn.btn-default:hover,
         .btn.btn-default:active,
-        .btn.btn-default.hover {
+        .btn.btn-default.hover
+        {
             background-color: #f4f4f4 !important;
             -webkit-transition: all .3s ease;
             -moz-transition: all .3s ease;
@@ -681,7 +793,8 @@ a:hover.btn-lightblue {
             transition: all .3s ease;
         }
 
-        .btn.btn-default.btn-flat {
+        .btn.btn-default.btn-flat
+        {
             border-bottom-color: #d9dadc;
             -webkit-transition: all .3s ease;
             -moz-transition: all .3s ease;
@@ -690,20 +803,23 @@ a:hover.btn-lightblue {
             transition: all .3s ease;
         }
 
-.btn-lightblue {
+.btn-lightblue
+{
     background-color: #9bd4f4;
     color: white;
     padding: 4px;
 }
 
-.whitebox {
+.whitebox
+{
     background-color: transparent !important;
     margin: 0 0 0;
     padding: 0;
     border-radius: 5px;
 }
 
-.whitebox-full {
+.whitebox-full
+{
     float: left;
     background-color: #f8f8f8;
     padding: 20px;
@@ -711,31 +827,36 @@ a:hover.btn-lightblue {
     margin: 15px 20px 20px 0;
 }
 
-.form-list {
+.form-list
+{
     width: 100%;
     padding-bottom: 20px;
 }
 
-label {
-    color: #3f454f;
+label
+{
+    color: #ffffff;
     font-weight: normal;
     padding-right: 10px;
     width: 180px;
 }
 
-.form-control {
+.form-control
+{
     background-color: #FAFAFA;
     border-radius: 0px;
     padding: 0px 5px;
     height: 24px;
 }
 
-h2 {
+h2
+{
     margin-top: 0;
     margin-bottom: 20px;
 }
 
-.artifact-designer-btns {
+.artifact-designer-btns
+{
     padding-top: 40px;
     padding-bottom: 40px;
     text-align: center;
@@ -743,17 +864,20 @@ h2 {
     margin-top: 40px;
 }
 
-    .artifact-designer-btns .btn {
+    .artifact-designer-btns .btn
+    {
         margin: 0 10px;
     }
 
-.btn-primary {
+.btn-primary
+{
     background-color: #004071;
     border-radius: 0;
     border: none;
 }
 
-.btn-lightblue {
+.btn-lightblue
+{
     background-color: #9bd4f4;
     color: white;
     padding: 4px;
@@ -761,57 +885,68 @@ h2 {
     border: 0;
 }
 
-    .btn-lightblue:hover {
+    .btn-lightblue:hover
+    {
         background-color: #9bd4f4;
         color: white;
     }
 
-.layout-column {
+.layout-column
+{
     border: 1px dotted #ccc;
     float: left;
     padding: 30px 15px 0;
     text-align: center;
 }
 
-.template-view .layout-column {
+.template-view .layout-column
+{
     border: none;
 }
 
-.column-properties {
+.column-properties
+{
     width: 200px;
     display: inline-block;
 }
 
-.text-grey {
+.text-grey
+{
     color: #777;
     float: left;
     line-height: 30px;
     margin-right: 20px;
 }
 
-.text-med {
+.text-med
+{
     font-size: 16px;
 }
 
-.text-med {
+.text-med
+{
     font-size: 16px;
 }
 
-.heading {
+.heading
+{
     width: 180px;
     float: left;
 }
 
-hr {
+hr
+{
     border-top: 1px solid #ccc;
 }
 
-.labletop {
+.labletop
+{
     width: auto !important;
     color: #ffffff;
 }
 
-.blue-box {
+.blue-box
+{
     margin: 20px;
     width: 30%;
     float: left;
@@ -820,23 +955,27 @@ hr {
     padding: 14px;
 }
 
-.closeblue {
+.closeblue
+{
     opacity: 1;
     color: #004071;
     text-shadow: 0 1px 0 black;
 }
 
-.padding-top {
+.padding-top
+{
     padding-top: 9%;
 }
 
-.row-full {
+.row-full
+{
     margin: 0;
     padding: 0;
     display: table;
 }
 
-a.text-button {
+a.text-button
+{
     color: #717173;
     text-decoration: underline;
     float: left;
@@ -844,11 +983,13 @@ a.text-button {
     font-weight: bold;
 }
 
-a:hover.text-button {
+a:hover.text-button
+{
     color: #004071;
 }
 
-td.text-button a {
+td.text-button a
+{
     font-family: "Helvetica Neue", Arial, sans-serif;
     color: #72afd2;
     text-decoration: underline;
@@ -857,121 +998,145 @@ td.text-button a {
     font-weight: bold;
 }
 
-    td.text-button a:hover {
+    td.text-button a:hover
+    {
         color: #004071;
     }
 
-.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th
+{
     background-color: #9bd4f4;
     color: white;
 }
 
-    .table-hover tbody tr:hover td input, .table-hover tbody tr:hover th input {
+    .table-hover tbody tr:hover td input, .table-hover tbody tr:hover th input
+    {
         color: black;
     }
 
-a {
+a
+{
     color: white;
 }
 
     a:hover,
     a:active,
-    a:focus {
+    a:focus
+    {
         outline: none;
         text-decoration: none;
         color: #72afd2;
     }
 
-    a .fa {
+    a .fa
+    {
         margin-right: 5px;
     }
 
-.table-striped > tbody > tr > td, .table-striped > tbody > tr > th {
+.table-striped > tbody > tr > td, .table-striped > tbody > tr > th
+{
     color: #777;
 }
 /* Change the color of the striped tables */
 .table-striped > tbody > tr:nth-child(odd) > td,
-.table-striped > tbody > tr:nth-child(odd) > th {
+.table-striped > tbody > tr:nth-child(odd) > th
+{
     background-color: #f3f4f5;
 }
 
 .table.no-border,
 .table.no-border td,
-.table.no-border th {
+.table.no-border th
+{
     border: 0;
 }
 
 /* .text-center in tables */
 table.text-center,
 table.text-center td,
-table.text-center th {
+table.text-center th
+{
     text-align: center;
 }
 
-.table.align th {
+.table.align th
+{
     text-align: left;
 }
 
-.table.align td {
+.table.align td
+{
     text-align: right;
 }
 
 .text-bold,
 .text-bold.table td,
-.text-bold.table th {
+.text-bold.table th
+{
     font-weight: 700;
 }
 
-.border-radius-none {
+.border-radius-none
+{
     -webkit-border-radius: 0 !important;
     -moz-border-radius: 0 !important;
     border-radius: 0 !important;
 }
 
-.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th
+{
     background-color: #9bd4f4;
     color: white;
 }
 
-.modal-lg {
+.modal-lg
+{
     width: 80vw;
 }
 
-.modal-sm {
+.modal-sm
+{
     width: 40vw;
 }
 
-.modal-content {
+.modal-content
+{
     padding: 20px;
 }
 
-.modal-header {
+.modal-header
+{
     border-bottom: none;
 }
 
 
-.modal-body .nav-tabs > li.active > a {
+.modal-body .nav-tabs > li.active > a
+{
     text-align: center;
     color: #004374;
 }
 
-.modal-body .nav-tabs > li > a {
+.modal-body .nav-tabs > li > a
+{
     text-align: center;
     color: #ffffff;
 }
 
-.centering {
+.centering
+{
     width: 100%;
     margin: auto;
     text-align: center;
 }
 
-.margin {
+.margin
+{
     margin-top: 20px;
     margin-bottom: 50px;
 }
 
-.ajax-loader2 {
+.ajax-loader2
+{
     background-size: 25px 25px;
     background-repeat: no-repeat;
     width: 25px;
@@ -979,12 +1144,14 @@ table.text-center th {
     border: none;
 }
 
-.modal-loading {
+.modal-loading
+{
     position: relative;
     min-height: 165px;
 }
 
-.ajax-loading-dialog {
+.ajax-loading-dialog
+{
     //position: absolute;
     margin: auto;
     top: 0px;
@@ -994,11 +1161,13 @@ table.text-center th {
     background-position: center center;
 }
 
-.popover-title {
+.popover-title
+{
     width: 100%;
 }
 
-.remark_sign {
+.remark_sign
+{
     z-index: 9;
     background-image: url("img/remark_sign.png");
     background-repeat: no-repeat;
@@ -1007,42 +1176,49 @@ table.text-center th {
 }
 
 
-.form-control-small {
+.form-control-small
+{
     width: 37px;
     margin-left: 4px;
     background-color: #FAFAFA;
     border: 1px solid #ccc;
 }
 
-.nav-tabs > li > a {
+.nav-tabs > li > a
+{
     text-align: center;
     color: #3f454f;
 }
 
-.form-inline .form-group {
+.form-inline .form-group
+{
     margin-right: 10px;
     margin-bottom: 20px;
 }
 
-.notification {
+.notification
+{
     position: fixed;
     top: 20px;
     right: 20px;
     display: none;
 }
 
-.form-control-small2 {
+.form-control-small2
+{
     width: 25px;
     margin-left: 4px;
     background-color: #FAFAFA;
     border: 1px solid #ccc;
 }
 
-.popover-content button {
+.popover-content button
+{
     margin-top: 18px;
 }
 
-.grey_text {
+.grey_text
+{
     font-size: 21px;
 }
 
@@ -1051,7 +1227,8 @@ table.text-center th {
     background-color: #f3f4f5;
 }*/
 
-.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td
+{
     vertical-align: middle;
     padding: 5px;
     text-align: center;
@@ -1067,11 +1244,13 @@ table.text-center th {
     background-color: #f3f4f5;
 }*/
 
-#gridPmsSummaryIndex_DXHeadersRow0, #gridPmsSummaryIndex_DXHeadersRow1 {
+#gridPmsSummaryIndex_DXHeadersRow0, #gridPmsSummaryIndex_DXHeadersRow1
+{
     font-size: 14px;
 }
 
-.trafficlight-wrapper {
+.trafficlight-wrapper
+{
     /*height: 400px;*/
     width: 200px;
     padding-top: 20px;
@@ -1079,7 +1258,8 @@ table.text-center th {
 }
 
 
-.trafficlight-item {
+.trafficlight-item
+{
     border-top: 1px solid #000;
     padding: 20px 0;
     position: relative;
@@ -1087,11 +1267,13 @@ table.text-center th {
     border-right: 1px solid #000;
 }
 
-    .trafficlight-item:last-child {
+    .trafficlight-item:last-child
+    {
         border-bottom: 1px solid #000;
     }
 
-.trafficlight-circle {
+.trafficlight-circle
+{
     width: 100px;
     height: 100px;
     background: blue;
@@ -1102,7 +1284,8 @@ table.text-center th {
     opacity: 0.2;
 }
 
-.trafficlight-label {
+.trafficlight-label
+{
     position: absolute;
     right: -65px;
     top: 25%;
@@ -1110,16 +1293,19 @@ table.text-center th {
     font-size: 20px;
 }
 
-.der-panel {
+.der-panel
+{
     overflow: hidden;
     border-radius: 5px !important;
 }
 
-table.der {
+table.der
+{
     width: 100%;
 }
 
-    table.der th {
+    table.der th
+    {
         background: #fff;
         color: #000;
         padding: 5px;
@@ -1127,42 +1313,48 @@ table.der {
     }
 
     table.der td,
-    table.der th {
+    table.der th
+    {
         color: #fff;
         padding: 10px 20px;
     }
-
     table.der th {
         background-color: transparent;
     }
 
 
-.tabular-panel {
+.tabular-panel
+{
     overflow: hidden;
     border-bottom-left-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
 }
 
-table.tabular {
+table.tabular
+{
     width: 100%;
 }
 
-    table.tabular th {
+    table.tabular th
+    {
         background: #fff;
         color: #000;
         padding: 5px;
         border-top: none !important;
     }
 
-    table.tabular td {
+    table.tabular td
+    {
         color: #fff;
     }
 
-.tabular-wrapper {
+.tabular-wrapper
+{
     text-align: center;
 }
 
-    .tabular-wrapper h3 {
+    .tabular-wrapper h3
+    {
         color: #fff;
         font-size: 18px;
         fill: #333333;
@@ -1173,14 +1365,16 @@ table.tabular {
 
 /*Tambahan dari inez*/
 
-.title {
+.title
+{
     font-size: 22px;
     font-weight: bold;
     color: #fff;
     margin-bottom: 7px;
 }
 
-.btn_small_darkblue {
+.btn_small_darkblue
+{
     background-color: #004071;
     color: white;
     width: 85px;
@@ -1188,25 +1382,30 @@ table.tabular {
     padding: 5px;
 }
 
-a:hover.btn_small_darkblue {
+a:hover.btn_small_darkblue
+{
     color: white !important;
     background-color: #00aeef;
 }
 
-.btn_small_darkblue .fa {
+.btn_small_darkblue .fa
+{
     border-right: 1px solid white;
     padding-right: 5px;
 }
 
-.btn_small_lightblue:hover {
+.btn_small_lightblue:hover
+{
     background-color: #0382af;
 }
 
-td .btn_small_lightblue a:hover {
+td .btn_small_lightblue a:hover
+{
     color: white !important;
 }
 
-.btn_small_lightblue {
+.btn_small_lightblue
+{
     background-color: #00aeef;
     color: white;
     width: 85px;
@@ -1214,12 +1413,14 @@ td .btn_small_lightblue a:hover {
     padding: 2px;
 }
 
-    .btn_small_lightblue .fa {
+    .btn_small_lightblue .fa
+    {
         border-right: 1px solid white;
         padding-right: 5px;
     }
 
-.main-nav > li > a:hover, .main-nav > li.active, .main-nav:hover > li.active:hover > a, .main-nav:hover > li.active:hover {
+.main-nav > li > a:hover, .main-nav > li.active, .main-nav:hover > li.active:hover > a, .main-nav:hover > li.active:hover
+{
     color: #ff0000;
     background: #f8f8f8 !important;
     width: 60px;
@@ -1229,17 +1430,20 @@ td .btn_small_lightblue a:hover {
     text-decoration: none;
 }
 
-.tank-chart {
+.tank-chart
+{
     border: 1px solid #ccc;
     position: relative;
 }
 
-.tank-volume {
+.tank-volume
+{
     position: absolute;
     bottom: 0;
 }
 
-.tank-to-top {
+.tank-to-top
+{
     position: absolute;
     border: 1px solid #ccc;
     left: -1px;
@@ -1248,18 +1452,21 @@ td .btn_small_lightblue a:hover {
     padding-top: 18px;
 }
 
-    .tank-to-top p {
+    .tank-to-top p
+    {
         margin-bottom: 0;
     }
 
-.tank-volume-meter {
+.tank-volume-meter
+{
     position: absolute;
     border-right: 1px solid #ccc;
     right: -20px;
     width: 10px;
 }
 
-.tank-zero-meter {
+.tank-zero-meter
+{
     position: absolute;
     bottom: -7px;
     display: block;
@@ -1269,7 +1476,8 @@ td .btn_small_lightblue a:hover {
     line-height: 1;
 }
 
-.tank-max-capacity {
+.tank-max-capacity
+{
     position: absolute;
     top: -8px;
     display: block;
@@ -1280,7 +1488,8 @@ td .btn_small_lightblue a:hover {
 }
 
 .tank-min-capacity,
-.tank-current-volume {
+.tank-current-volume
+{
     position: absolute;
     display: block;
     width: 300px;
@@ -1289,7 +1498,8 @@ td .btn_small_lightblue a:hover {
     line-height: 1;
 }
 
-.tank-wrapper h3 {
+.tank-wrapper h3
+{
     color: #333333;
     font-size: 18px;
     fill: #333333;
@@ -1298,7 +1508,8 @@ td .btn_small_lightblue a:hover {
     width: 100%;
 }
 
-.tank-wrapper h4 {
+.tank-wrapper h4
+{
     color: #333333;
     font-size: 15px;
     fill: #333333;
@@ -1307,33 +1518,39 @@ td .btn_small_lightblue a:hover {
     width: 100%;
 }
 
-.tank-wrapper {
+.tank-wrapper
+{
     width: 100%;
     text-align: center;
 }
 
-.tank-chart {
+.tank-chart
+{
     text-align: left;
     display: inline-block;
 }
 
-.colpick_full {
+.colpick_full
+{
     z-index: 2;
 }
 
-.tabular-actual, .tabular-target {
+.tabular-actual, .tabular-target
+{
     text-align: right;
     padding-right: 8px;
 }
 
-.tabular-kpi-name {
+.tabular-kpi-name
+{
     text-align: left;
     padding-left: 8px;
     padding-top: 6px;
     padding-bottom: 6px;
 }
 
-.center {
+.center
+{
     width: 690px;
     margin: 10px auto;
 }
@@ -1346,7 +1563,8 @@ td .btn_small_lightblue a:hover {
     border-radius: 4px;
 }*/
 
-.container-tank {
+.container-tank
+{
     width: 550px;
     margin: 100px auto;
     border: 1px solid #d4d4d4;
@@ -1355,17 +1573,20 @@ td .btn_small_lightblue a:hover {
     padding: 28px;
 }
 
-.table-transparent {
+.table-transparent
+{
     width: 100%;
     border: 1px solid #ffffff;
 }
 
-.constant-template.original {
+.constant-template.original
+{
     display: none;
 }
 
 ul.input-units,
-ul.output-units {
+ul.output-units
+{
     background: #fff;
     border: 1px solid #aaa;
     min-height: 100px;
@@ -1373,30 +1594,36 @@ ul.output-units {
 }
 
     ul.input-units li,
-    ul.output-units li {
+    ul.output-units li
+    {
         list-style: none;
         cursor: pointer;
     }
 
-ul li.unit.active {
+ul li.unit.active
+{
     background-color: #9bd4f4;
 }
 
-.table-transparent > thead {
+.table-transparent > thead
+{
     background: none;
     text-align: center;
 }
 
-.panel.panel-default {
+.panel.panel-default
+{
     border-radius: 12px;
     background: none;
 }
 
-.tr-pillar {
+.tr-pillar
+{
     text-align: left;
 }
 
-.roundlight {
+.roundlight
+{
     width: 12px;
     height: 12px;
     -webkit-border-radius: 12px;
@@ -1405,165 +1632,199 @@ ul li.unit.active {
     margin-right: 5px;
 }
 
-.table-transparent .text-left {
+.table-transparent .text-left
+{
     text-align: left;
     vertical-align: middle;
 }
 
-.table-transparent .text-center {
+.table-transparent .text-center
+{
     text-align: center;
     vertical-align: middle;
 }
 
-.table-transparent .text-right {
+.table-transparent .text-right
+{
     text-align: right;
     vertical-align: middle;
 }
 
-.table-transparent {
+.table-transparent
+{
     color: #ffffff;
 }
 
-    .table-transparent > tbody > tr:nth-child(1) {
+    .table-transparent > tbody > tr:nth-child(1)
+    {
         border-bottom: 1px solid #ffffff;
     }
 
-    .table-transparent thead tr {
+    .table-transparent thead tr
+    {
         font-size: 15px;
         font-weight: bold;
     }
 
 
-    .table-transparent tbody tr td {
+    .table-transparent tbody tr td
+    {
         border: 0px;
     }
 
-    .table-transparent tbody tr.kpi-row:hover {
+    .table-transparent tbody tr.kpi-row:hover
+    {
         background-color: #ffffff;
         color: #004374;
         cursor: pointer;
     }
 
-    .table-transparent .pillar-score td:nth-child(2) {
+    .table-transparent .pillar-score td:nth-child(2)
+    {
         padding: 15px 0;
     }
 
-    .table-transparent.table-bordered > thead > tr > td {
+    .table-transparent.table-bordered > thead > tr > td
+    {
         border-top: 0;
         border-bottom: 0;
     }
 
-.modal-header-detail > div {
+.modal-header-detail > div
+{
     color: #ffffff;
 }
 
-.modal-content {
+.modal-content
+{
     background: url(/Content/img/dialog-bg.png);
     background-color: #00a8e6;
     background-repeat: repeat-x;
     border-top: none;
 }
 
-.close {
+.close
+{
     color: #fff;
     opacity: 1;
 }
 
-    .close:hover {
+    .close:hover
+    {
         color: #ff0000;
         opacity: 1;
     }
 
 .modal-dialog .nav > li > a:hover,
-.modal-dialog .nav > li > a:focus {
+.modal-dialog .nav > li > a:focus
+{
     background-color: #ffffff;
     color: #004374;
 }
 
 
 .table-pms-summary > thead > tr:first-child td:first-child,
-.table-pms-summary > tbody > tr td:first-child {
+.table-pms-summary > tbody > tr td:first-child
+{
     border-right: 1px solid #ffffff;
 }
 
-.table-pms-summary > tbody > tr:last-child {
+.table-pms-summary > tbody > tr:last-child
+{
     border-top: 1px solid #ffffff;
 }
 
-.table-pms-summary .roundlight {
+.table-pms-summary .roundlight
+{
     margin-left: 10px;
 }
 
-.table-pms-summary .pillar-score-text {
+.table-pms-summary .pillar-score-text
+{
     display: inline-block;
     margin-left: 17px;
 }
 
-.modal-title {
+.modal-title
+{
     color: #fff;
 }
 
 .right-content h3,
 .right-content h4,
 .right-content h5,
-.right-content h6 {
+.right-content h6
+{
     color: #ffffff;
 }
 
 .tablekpitarget,
-.tablekpitarget thead th {
+.tablekpitarget thead th
+{
     color: #ffffff;
 }
 
-label {
+label
+{
     color: #ffffff;
 }
 
-.daily-execution-report {
+.daily-execution-report
+{
     color: #fff;
 }
 
-h4 .weather-value {
+h4 .weather-value
+{
     font-size: 14px;
     font-weight: normal;
     margin-left: 15px;
 }
 
-    h4 .weather-value.alert {
+    h4 .weather-value.alert
+    {
         color: #0ACA03;
     }
 
-table.der.highlights tr:first-child td {
+table.der.highlights tr:first-child td
+{
     border-top: none!important;
 }
 
-h2, h4 {
+h2, h4
+{
     color: #ffffff;
 }
 
-.calculator-tabs {
+.calculator-tabs
+{
     float: right;
     border-bottom: none;
 }
 
-    .calculator-tabs li {
+    .calculator-tabs li
+    {
         margin: 0 10px;
     }
 
-        .calculator-tabs li.active a {
+        .calculator-tabs li.active a
+        {
             color: #0000cd;
         }
 
-        .calculator-tabs li a {
+        .calculator-tabs li a
+        {
             background: #1e90ff;
             color: #ffffff;
         }
 
-.popover-content label {
+.popover-content label
+{
     color: #000000;
 }
 
-input[type="text"] {
+input[type="text"]
+{
     color: #000000;
 }
 
@@ -1571,15 +1832,18 @@ input[type="text"] {
 .pms-summary-detail-config a:hover,
 .pms-summary-detail-config a:visited,
 .pms-summary-detail-config a:active,
-.pms-summary-detail-config a:focus {
+.pms-summary-detail-config a:focus
+{
     color: #72afd2!important;
 }
 
-.perfect-scrollbar {
+.perfect-scrollbar
+{
     position: relative;
 }
 
-.pillar-icon {
+.pillar-icon
+{
     border: 1px solid #d3d3d3;
     display: inline-block;
     width: 85px;
@@ -1594,12 +1858,32 @@ input[type="text"] {
 
 
 
-    .pillar-icon-selected, .pillar-icon:hover {
+    .pillar-icon-selected, .pillar-icon:hover
+    {
         background: #cccccc;
         cursor: pointer;
         border: 1px solid #ffffff;
     }
 
-        .pillar-icon:hover span {
+        .pillar-icon:hover span
+        {
             color: #000000;
         }
+
+#modalDialogScoreIndicator .modal-sm
+{
+    width: 400px !important;
+}
+
+.delete-icon
+{
+    display: block;
+}
+
+.icon-wrapper
+{
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+    text-align: center;
+}

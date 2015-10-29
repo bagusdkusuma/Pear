@@ -79,6 +79,7 @@
     <Compile Include="Entities\ConstantUsage.cs" />
     <Compile Include="Entities\Conversion.cs" />
     <Compile Include="Entities\DashboardTemplate.cs" />
+    <Compile Include="Entities\ResetPassword.cs" />
     <Compile Include="Entities\Select.cs" />
     <Compile Include="Entities\SelectOption.cs" />
     <Compile Include="Entities\Economic.cs" />

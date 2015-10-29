@@ -50,7 +50,7 @@
                     <a href="@Url.Action("Update", "KpiAchievement", new { id = item.Id }, null)"><span class="fa fa-table"></span>Details</a>
                 </td>
                 <td class="text-button">
-                    <a href="@Url.Action("ScoreIndicatorDetails", "PmsSummary", new { id = item.Id }, null)" data-toggle="modal" data-target="#modalDialog"><span class="fa fa-table"></span>Details</a>
+                    <a href="@Url.Action("ScoreIndicatorDetails", "PmsSummary", new { id = item.Id }, null)" data-toggle="modal" data-target="#modalDialogScoreIndicator"><span class="fa fa-table"></span>Details</a>
                 </td>
                 <td>@item.IsActive</td>
                 <td class="text-button">
@@ -63,6 +63,7 @@
 </table>
 
 @Html.Partial("_Modal")
+@Html.Partial("_ModalScoreIndicator")
 
 @section Scripts{
     <script type="text/javascript">

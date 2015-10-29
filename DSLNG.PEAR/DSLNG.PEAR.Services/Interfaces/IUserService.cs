@@ -12,5 +12,11 @@ namespace DSLNG.PEAR.Services.Interfaces
         DeleteUserResponse Delete(int id);
         LoginUserResponse Login(LoginUserRequest request);
         GetUserResponse GetUserByName(GetUserByNameRequest request);
+        UpdateUserResponse ChangePassword(ChangePasswordRequest request);
+        UpdateUserResponse CheckPassword(CheckPasswordRequest request);
+        ResetPasswordResponse ResetPassword(ResetPasswordRequest request);
+
+        ResetPasswordResponse GetUserByToken(ResetPasswordTokenRequest request);
+        GetUserResponse GetUserByEmail(GetUserRequest request);
     }
 }

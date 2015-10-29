@@ -352,20 +352,25 @@ namespace DSLNG.PEAR.Services
             try
             {
                 var kpiAchievement = request.MapTo<KpiAchievement>();
-
+                var user = DataContext.Users.First(x => x.Id == request.UserId);
                 if (request.Id != 0)
                 {
                     var attachedEntity = DataContext.KpiAchievements.Find(request.Id);
+
                     if (attachedEntity != null && DataContext.Entry(attachedEntity).State != EntityState.Detached)
                     {
                         DataContext.Entry(attachedEntity).State = EntityState.Detached;
                     }
+                    
+                    
                     DataContext.KpiAchievements.Attach(kpiAchievement);
+                    kpiAchievement.UpdatedBy = user;
                     DataContext.Entry(kpiAchievement).State = EntityState.Modified;
                     DataContext.SaveChanges();
                 }
                 else
                 {
+                    kpiAchievement.CreatedBy = user;
                     kpiAchievement.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == request.KpiId);
                     DataContext.KpiAchievements.Add(kpiAchievement);
                     DataContext.SaveChanges();
@@ -504,6 +509,51 @@ namespace DSLNG.PEAR.Services
             {
                 response.Message = argumentNullException.Message;
             }
+            return response;
+        }
+
+
+        public AllKpiAchievementsResponse GetKpiAchievementsByRole(GetKpiAchievementsConfigurationRequest request)
+        {
+            var response = new AllKpiAchievementsResponse();
+            try
+            {
+                var kpiAchievements = DataContext.Kpis
+                    .Include(x => x.Measurement)
+                    .Include(x => x.Type)
+                    .Include(x => x.RoleGroup)
+                    .Where(x=>x.RoleGroup.Id == request.RoleGroupId)
+                    .AsEnumerable()
+                    .OrderBy(x => x.Order)
+                    .GroupBy(x => x.RoleGroup).ToDictionary(x => x.Key);
+
+                foreach (var item in kpiAchievements)
+                {
+                    var kpis = new List<AllKpiAchievementsResponse.Kpi>();
+                    foreach (var val in item.Value)
+                    {
+                        kpis.Add(val.MapTo<AllKpiAchievementsResponse.Kpi>());
+                    }
+
+                    response.RoleGroups.Add(new AllKpiAchievementsResponse.RoleGroup
+                    {
+                        Id = item.Key.Id,
+                        Name = item.Key.Name,
+                        Kpis = kpis
+                    });
+                }
+
+                response.IsSuccess = true;
+            }
+            catch (ArgumentNullException argumentNullException)
+            {
+                response.Message = argumentNullException.Message;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                response.Message = invalidOperationException.Message;
+            }
+
             return response;
         }
     }

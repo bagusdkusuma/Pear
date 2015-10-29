@@ -1,7 +1,18 @@
-﻿@model DSLNG.PEAR.Web.ViewModels.Kpi.CreateKpiViewModel
+﻿@using DSLNG.PEAR.Common.Contants
+@model DSLNG.PEAR.Web.ViewModels.Kpi.CreateKpiViewModel
 @{
     ViewBag.Title = "Create New KPI";
     int i = 0;
+}
+@section Scripts {
+    <script type="text/javascript">
+        $('.pillar-icon').click(function () {
+            var that = $(this);
+            $('.pillar-icon').removeClass('pillar-icon-selected');
+            that.addClass('pillar-icon-selected');
+            $('#Icon').val(that.attr('data-icon').split('\\')[that.attr('data-icon').split('\\').length - 1]);
+        });
+    </script>
 }
 
 <h2>@ViewBag.Title</h2>
@@ -19,7 +30,7 @@
                 @Html.DropDownListFor(model => model.LevelId, Model.LevelList, "Select Level", new { @class = "form-control", @onChange = "levelOnChange(this)" })
                 @Html.ValidationMessageFor(model => model.LevelId)
             </div>
-            <div class="form-group pillar" style="display:none">
+            <div class="form-group pillar" style="display: none">
                 @Html.LabelFor(model => model.PillarId, new { @class = "control-label" })
                 @Html.DropDownListFor(model => model.PillarId, Model.PillarList, "Select Pillar", new { @class = "form-control", @onChange = "pillarOnChange(this)" })
                 @Html.ValidationMessageFor(model => model.PillarId)
@@ -65,6 +76,29 @@
                 @Html.EditorFor(model => model.IsEconomic, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IsEconomic)
             </div>
+            <div class="form-group" style="margin-left: 10px;">
+                <a class="btn btn-flat btn-lightblue" data-toggle="modal" data-target="#modalDialog">Upload New Icon</a>
+            </div>
+            <div class="form-group" style="display: inline-block">
+                @Html.HiddenFor(model => model.Icon)
+                @foreach (var item in Model.Icons)
+                {
+                    var icon = item.Split('\\')[item.Split('\\').Length - 1];
+                    var selected = "";
+                    if (icon == Model.Icon)
+                    {
+                        selected = "pillar-icon-selected";
+                    }
+                    <div class="icon-wrapper">
+                        <div class="pillar-icon @selected" data-icon="@item">
+                            <img style="margin:0 auto;display: block" src="@Url.Content(PathConstant.KpiPath)/@icon"/>
+                            <span style="font-size: 11px; color: #ffffff">@icon</span>
+                        </div>
+                        <a href="@Url.Action("DeleteIcon", "Kpi", new {name = icon, redirectAction = "Create"})" onclick="return confirm('Are you sure you want to delete this icon?')" class="delete-icon">Delete</a>
+                    </div>
+                    
+                }
+            </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.MeasurementId, new { @class = "control-label" })
                 @Html.DropDownListFor(model => model.MeasurementId, Model.MeasurementList, "Select Measurement", new { @class = "form-control" })
@@ -80,32 +114,32 @@
                 <button type="button" class="btn btn-default form-inline add-relation-model"><i class="glyphicon glyphicon-plus"></i></button>
             </div>
             <div class="relation-model-wrapper">
-                @foreach(var rm in Model.RelationModels)
+                @foreach (var rm in Model.RelationModels)
                 {
                     <div class="form-group relation-model-list">
                         <input type="hidden" name="RelationModels.Index" value="@i" />
-                            <div class="col-lg-5">
-                                <select name="RelationModels[@i].KpiId" class="form-control rm-kpi">
-                                    <option value="0">Select KPI</option>
-                                    @foreach (var item in Model.KpiList)
-                                    {
-                                        <option value="@item.Value">@item.Text</option>
-                                    }
-                                </select>
-                            </div>
-                            <div class="col-lg-5">
-                                <select name="RelationModels[@i].Method" class="form-control rm-method">
-                                    <option value="0">-</option>
-                                    <option value="Quantitative">Quantitative</option>
-                                    <option value="Qualitative">Qualitative</option>
-                                </select>
-                            </div>
-                            <div class="col-lg-2">
-                                <button type="button" class="btn btn-default form-control remove-relation-model" style="display: inline-block;"><i class="glyphicon glyphicon-minus"></i></button>
+                        <div class="col-lg-5">
+                            <select name="RelationModels[@i].KpiId" class="form-control rm-kpi">
+                                <option value="0">Select KPI</option>
+                                @foreach (var item in Model.KpiList)
+                                {
+                                    <option value="@item.Value">@item.Text</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-lg-5">
+                            <select name="RelationModels[@i].Method" class="form-control rm-method">
+                                <option value="0">-</option>
+                                <option value="Quantitative">Quantitative</option>
+                                <option value="Qualitative">Qualitative</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-2">
+                            <button type="button" class="btn btn-default form-control remove-relation-model" style="display: inline-block;"><i class="glyphicon glyphicon-minus"></i></button>
 
-                            </div>
+                        </div>
                     </div>
-                    i++;
+                                i++;
                 }
             </div>
             <span id="counter" data-relation-model="@i"></span>
@@ -135,8 +169,9 @@
         </form>
     </div>
 </div>
-<script>
+@Html.Partial("_Upload", Model.Upload)
 
+<script>
     $(document).ready(function () {
         var i = $('#counter').attr('data-relation-model');
         i = parseInt(i) === NaN ? 0 : parseInt(i);
