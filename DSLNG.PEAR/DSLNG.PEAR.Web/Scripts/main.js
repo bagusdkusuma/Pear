@@ -4158,6 +4158,11 @@ Number.prototype.format = function (n, x) {
             more.append(modalBody);
             $('#modalDialog .modal-content').removeClass('ajax-loading');
         });
+        $('.highlight-order').keyup(function () {
+            var form = $(this).closest('form');
+            $.post(form.attr('action'), form.serialize().replace(/item\./g, ''), function (data) {
+            });
+        });
     });
     window.Pear = Pear;
 }(window, jQuery, undefined));

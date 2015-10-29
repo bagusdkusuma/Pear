@@ -58,6 +58,7 @@ using DSLNG.PEAR.Services.Requests.ConstantUsage;
 using DSLNG.PEAR.Services.Responses.ConstantUsage;
 using DSLNG.PEAR.Services.Responses.Weather;
 using DSLNG.PEAR.Services.Requests.Weather;
+using DSLNG.PEAR.Services.Responses.HighlightOrder;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -345,6 +346,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Weather, GetWeathersResponse.WeatherResponse>();
             Mapper.CreateMap<SaveWeatherRequest, Weather>();
             Mapper.CreateMap<Weather, GetWeatherResponse>();
+            Mapper.CreateMap<SelectOption, GetHighlightOrdersResponse.HighlightOrderResponse>();
             base.Configure();
         }
 

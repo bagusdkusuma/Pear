@@ -39,6 +39,8 @@ namespace DSLNG.PEAR.Web.ViewModels.Highlight
         public class HighlightViewModel {
             public string Title { get; set; }
             public string Message { get; set; }
+            public int Order { get; set; }
+            public string Type { get; set; }
         }
     }
 }

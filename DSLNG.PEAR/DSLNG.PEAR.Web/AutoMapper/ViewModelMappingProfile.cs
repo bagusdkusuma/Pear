@@ -94,6 +94,9 @@ using DSLNG.PEAR.Web.ViewModels.Calculator;
 using DSLNG.PEAR.Web.ViewModels.Weather;
 using DSLNG.PEAR.Services.Requests.Weather;
 using DSLNG.PEAR.Services.Responses.Weather;
+using DSLNG.PEAR.Services.Responses.HighlightOrder;
+using DSLNG.PEAR.Web.ViewModels.HighlightOrder;
+using DSLNG.PEAR.Services.Requests.HighlightOrder;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -476,6 +479,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetWeatherResponse, DailyExecutionReportViewModel.WeatherViewModel>();
             Mapper.CreateMap<GetHighlightsResponse.HighlightResponse, DailyExecutionReportViewModel.HighlightViewModel>();
             Mapper.CreateMap<GetHighlightResponse, DailyExecutionReportViewModel.AlertViewModel>();
+            Mapper.CreateMap<HighlightOrderViewModel, SaveHighlightOrderRequest>();
             base.Configure();
         }
 
@@ -554,7 +558,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<ScoreIndicatorViewModel, ScoreIndicator>();
             Mapper.CreateMap<ScoreIndicator, ScoreIndicatorViewModel>();
-
+            Mapper.CreateMap<GetHighlightOrdersResponse.HighlightOrderResponse, HighlightOrderViewModel>();
 
         }
 

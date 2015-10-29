@@ -706,6 +706,7 @@
     <Content Include="Views\Weather\DailyExecutionReport.cshtml" />
     <Content Include="Views\Weather\Edit.cshtml" />
     <Content Include="Views\Weather\Index.cshtml" />
+    <Content Include="Views\HighlightOrder\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -769,6 +770,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HighlightController.cs" />
+    <Compile Include="Controllers\HighlightOrderController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KpiAchievementController.cs" />
     <Compile Include="Controllers\KpiTargetController.cs" />
@@ -844,6 +846,7 @@
     <Compile Include="ViewModels\Conversion\IndexConversionViewModel.cs" />
     <Compile Include="ViewModels\Conversion\Measurement.cs" />
     <Compile Include="ViewModels\Conversion\UpdateConversionViewModel.cs" />
+    <Compile Include="ViewModels\HighlightOrder\HighlightOrderViewModel.cs" />
     <Compile Include="ViewModels\Highlight\DailyExecutionReportViewModel.cs" />
     <Compile Include="ViewModels\Highlight\HighlightViewModel.cs" />
     <Compile Include="ViewModels\KpiAchievement\ConfigurationKpiAchievementsViewModel.cs" />
