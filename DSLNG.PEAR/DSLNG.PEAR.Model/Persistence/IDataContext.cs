@@ -2,6 +2,7 @@
 using System.Data.Entity.Infrastructure;
 using DSLNG.PEAR.Data.Entities;
 using Type = DSLNG.PEAR.Data.Entities.Type;
+using DSLNG.PEAR.Data.Entities.EconomicModel;
 
 namespace DSLNG.PEAR.Data.Persistence
 {
@@ -47,6 +48,9 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<CalculatorConstant> CalculatorConstants { get; set; }
         IDbSet<ConstantUsage> ConstantUsages { get; set; }
         IDbSet<Weather> Weathers { get; set; }
+        IDbSet<KeyAssumptionCategory> KeyAssumptionCategories { get; set; }
+        IDbSet<KeyOutputCategory> KeyOutputCategories { get; set; }
+        IDbSet<KeyOperationGroup> KeyOperationGroups { get; set; }
         Database Database { get; }
         int SaveChanges();
         DbEntityEntry Entry(object entity);

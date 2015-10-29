@@ -66,6 +66,9 @@ namespace DSLNG.PEAR.Web.DependencyResolution {
             For<IConstantUsageService>().Use<ConstantUsageService>();
             For<IWeatherService>().Use<WeatherService>();
             For<IHighlightOrderService>().Use<HighlightOrderService>();
+            For<IAssumptionCategoryService>().Use<AssumptionCategoryService>();
+            For<IOutputCategoryService>().Use<OutputCategoryService>();
+            For<IOperationGroupService>().Use<OperationGroupService>();
         }
 
         #endregion

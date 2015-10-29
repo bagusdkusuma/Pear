@@ -656,6 +656,10 @@
     <Content Include="Views\Calculator\_ProductionYield.cshtml" />
     <Content Include="Views\Calculator\_Standard.cshtml" />
     <Content Include="Views\Calculator\_PlantAvailability.cshtml" />
+    <Content Include="Views\AssumptionCategory\Create.cshtml" />
+    <Content Include="Views\AssumptionCategory\Edit.cshtml" />
+    <Content Include="Views\AssumptionCategory\Index.cshtml" />
+    <Content Include="Views\AssumptionCategory\_IndexGridPartial.cshtml" />
     <None Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\SpeedometerChart\_Edit.cshtml" />
     <Content Include="Views\Tabular\_Create.cshtml" />
@@ -707,6 +711,14 @@
     <Content Include="Views\Weather\Edit.cshtml" />
     <Content Include="Views\Weather\Index.cshtml" />
     <Content Include="Views\HighlightOrder\Index.cshtml" />
+    <Content Include="Views\OuputCategory\Create.cshtml" />
+    <Content Include="Views\OuputCategory\Edit.cshtml" />
+    <Content Include="Views\OuputCategory\Index.cshtml" />
+    <Content Include="Views\OuputCategory\_IndexGridPartial.cshtml" />
+    <Content Include="Views\OperationGroup\Create.cshtml" />
+    <Content Include="Views\OperationGroup\Edit.cshtml" />
+    <Content Include="Views\OperationGroup\Index.cshtml" />
+    <Content Include="Views\OperationGroup\_IndexGridPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -758,6 +770,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\ApiUserController.cs" />
     <Compile Include="Controllers\ArtifactController.cs" />
+    <Compile Include="Controllers\AssumptionCategoryController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BuyerController.cs" />
     <Compile Include="Controllers\CalculatorConstantController.cs" />
@@ -780,6 +793,8 @@
     <Compile Include="Controllers\KpiController.cs" />
     <Compile Include="Controllers\MethodController.cs" />
     <Compile Include="Controllers\NLSController.cs" />
+    <Compile Include="Controllers\OperationGroupController.cs" />
+    <Compile Include="Controllers\OutputCategoryController.cs" />
     <Compile Include="Controllers\PeriodeController.cs" />
     <Compile Include="Controllers\PillarController.cs" />
     <Compile Include="Controllers\PmsConfigController.cs" />
@@ -833,6 +848,7 @@
     <Compile Include="ViewModels\Artifact\TankViewModel.cs" />
     <Compile Include="ViewModels\Artifact\TrafficLightChartDataViewModel.cs" />
     <Compile Include="ViewModels\Artifact\TrafficLightChartViewModel.cs" />
+    <Compile Include="ViewModels\AssumptionCategory\AssumptionCategoryViewModel.cs" />
     <Compile Include="ViewModels\Buyer\BuyerViewModel.cs" />
     <Compile Include="ViewModels\CalculatorConstant\CalculatorConstantViewModel.cs" />
     <Compile Include="ViewModels\Calculator\CalculatorIndexViewModel.cs" />
@@ -859,6 +875,8 @@
     <Compile Include="ViewModels\KpiTarget\IndexKpiTargetViewModel.cs" />
     <Compile Include="ViewModels\KpiTarget\UpdateKpiTargetViewModel.cs" />
     <Compile Include="ViewModels\NLS\NLSViewModel.cs" />
+    <Compile Include="ViewModels\OperationGroup\OperationGroupViewModel.cs" />
+    <Compile Include="ViewModels\OutputCategory\OutputCategoryViewModel.cs" />
     <Compile Include="ViewModels\PmsConfigDetails\CreatePmsConfigDetailsViewModel.cs" />
     <Compile Include="ViewModels\PmsConfig\UpdatePmsConfigViewModel.cs" />
     <Compile Include="ViewModels\PmsConfig\CreatePmsConfigViewModel.cs" />

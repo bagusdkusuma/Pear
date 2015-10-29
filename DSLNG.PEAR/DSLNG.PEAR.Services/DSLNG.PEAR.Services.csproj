@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArtifactService.cs" />
+    <Compile Include="AssumptionCategoryService.cs" />
     <Compile Include="AutoMapper\ServicesMappingProfile.cs" />
     <Compile Include="BaseService.cs" />
     <Compile Include="BuyerService.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="GroupService.cs" />
     <Compile Include="HighlightOrderService.cs" />
     <Compile Include="HighlightService.cs" />
+    <Compile Include="Interfaces\IAssumptionCategoryService.cs" />
     <Compile Include="Interfaces\IBuyerService.cs" />
     <Compile Include="Interfaces\ICalculatorConstantService.cs" />
     <Compile Include="Interfaces\IConstantUsageService.cs" />
@@ -91,6 +93,8 @@
     <Compile Include="Interfaces\IDropdownService.cs" />
     <Compile Include="Interfaces\IKpiTargetService.cs" />
     <Compile Include="Interfaces\INLSService.cs" />
+    <Compile Include="Interfaces\IOperationGroupService.cs" />
+    <Compile Include="Interfaces\IOutputCategoryService.cs" />
     <Compile Include="Interfaces\IPeriodeService.cs" />
     <Compile Include="Interfaces\ISelectService.cs" />
     <Compile Include="Interfaces\ITemplateService.cs" />
@@ -99,6 +103,8 @@
     <Compile Include="Interfaces\IWeatherService.cs" />
     <Compile Include="KpiAchievementService.cs" />
     <Compile Include="KpiTargetService.cs" />
+    <Compile Include="OperationGroupService.cs" />
+    <Compile Include="OutputCategoryService.cs" />
     <Compile Include="PeriodeService.cs" />
     <Compile Include="Requests\Artifact\CreateArtifactRequest.cs" />
     <Compile Include="Requests\Artifact\GetArtifactRequest.cs" />
@@ -111,6 +117,10 @@
     <Compile Include="Requests\Artifact\GetTankDataRequest.cs" />
     <Compile Include="Requests\Artifact\GetTrafficLightChartDataRequest.cs" />
     <Compile Include="Requests\Artifact\UpdateArtifactRequest.cs" />
+    <Compile Include="Requests\AssumptionCategory\DeleteAssumptionCategoryRequest.cs" />
+    <Compile Include="Requests\AssumptionCategory\GetAssumptionCategoriesRequest.cs" />
+    <Compile Include="Requests\AssumptionCategory\GetAssumptionCategoryRequest.cs" />
+    <Compile Include="Requests\AssumptionCategory\SaveAssumptionCategoryRequest.cs" />
     <Compile Include="Requests\Buyer\DeleteBuyerRequest.cs" />
     <Compile Include="Requests\Buyer\GetBuyerRequest.cs" />
     <Compile Include="Requests\Buyer\GetBuyersRequest.cs" />
@@ -161,6 +171,14 @@
     <Compile Include="Requests\NLS\GetNLSListRequest.cs" />
     <Compile Include="Requests\NLS\GetNLSRequest.cs" />
     <Compile Include="Requests\NLS\SaveNLSRequest.cs" />
+    <Compile Include="Requests\OperationGroup\DeleteOperationGroupRequest.cs" />
+    <Compile Include="Requests\OperationGroup\GetOperationGroupRequest.cs" />
+    <Compile Include="Requests\OperationGroup\GetOperationGroupsRequest.cs" />
+    <Compile Include="Requests\OperationGroup\SaveOperationGroupRequest.cs" />
+    <Compile Include="Requests\OutputCategory\DeleteOutputCategoryRequest.cs" />
+    <Compile Include="Requests\OutputCategory\GetOutputCategoriesRequest.cs" />
+    <Compile Include="Requests\OutputCategory\GetOutputCategoryRequest.cs" />
+    <Compile Include="Requests\OutputCategory\SaveOutputCategoryRequest.cs" />
     <Compile Include="Requests\Periode\PeriodeRequest.cs" />
     <Compile Include="Requests\PmsSummary\CreatePmsConfigDetailsRequest.cs" />
     <Compile Include="Requests\PmsSummary\CreatePmsConfigRequest.cs" />
@@ -200,6 +218,10 @@
     <Compile Include="Responses\Artifact\GetTankDataResponse.cs" />
     <Compile Include="Responses\Artifact\GetTrafficLightChartDataResponse.cs" />
     <Compile Include="Responses\Artifact\UpdateArtifactResponse.cs" />
+    <Compile Include="Responses\AssumptionCategory\DeleteAssumptionCategoryResponse.cs" />
+    <Compile Include="Responses\AssumptionCategory\GetAssumptionCategoriesResponse.cs" />
+    <Compile Include="Responses\AssumptionCategory\GetAssumptionCategoryResponse.cs" />
+    <Compile Include="Responses\AssumptionCategory\SaveAssumptionCategoryResponse.cs" />
     <Compile Include="Responses\Buyer\DeleteBuyerResponse.cs" />
     <Compile Include="Responses\Buyer\GetBuyerResponse.cs" />
     <Compile Include="Responses\Buyer\GetBuyersResponse.cs" />
@@ -290,6 +312,14 @@
     <Compile Include="Responses\NLS\GetNLSListResponse.cs" />
     <Compile Include="Responses\NLS\GetNLSResponse.cs" />
     <Compile Include="Responses\NLS\SaveNLSResponse.cs" />
+    <Compile Include="Responses\OperationGroup\DeleteOperationGroupResponse.cs" />
+    <Compile Include="Responses\OperationGroup\GetOperationGroupResponse.cs" />
+    <Compile Include="Responses\OperationGroup\GetOperationGroupsResponse.cs" />
+    <Compile Include="Responses\OperationGroup\SaveOperationGroupResponse.cs" />
+    <Compile Include="Responses\OutputCategory\DeleteOutputCategoryResponse.cs" />
+    <Compile Include="Responses\OutputCategory\GetOutputCategoriesResponse.cs" />
+    <Compile Include="Responses\OutputCategory\GetOutputCategoryResponse.cs" />
+    <Compile Include="Responses\OutputCategory\SaveOutputCategoryRespone.cs" />
     <Compile Include="Responses\PmsSummary\CreatePmsConfigDetailsResponse.cs" />
     <Compile Include="Responses\PmsSummary\CreatePmsConfigResponse.cs" />
     <Compile Include="Responses\PmsSummary\CreatePmsSummaryResponse.cs" />

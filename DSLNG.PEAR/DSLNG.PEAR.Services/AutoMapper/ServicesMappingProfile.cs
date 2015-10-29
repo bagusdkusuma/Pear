@@ -59,6 +59,13 @@ using DSLNG.PEAR.Services.Responses.ConstantUsage;
 using DSLNG.PEAR.Services.Responses.Weather;
 using DSLNG.PEAR.Services.Requests.Weather;
 using DSLNG.PEAR.Services.Responses.HighlightOrder;
+using DSLNG.PEAR.Data.Entities.EconomicModel;
+using DSLNG.PEAR.Services.Responses.AssumptionCategory;
+using DSLNG.PEAR.Services.Requests.AssumptionCategory;
+using DSLNG.PEAR.Services.Responses.OutputCategory;
+using DSLNG.PEAR.Services.Requests.OutputCategory;
+using DSLNG.PEAR.Services.Responses.OperationGroup;
+using DSLNG.PEAR.Services.Requests.OperationGroup;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -347,6 +354,18 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<SaveWeatherRequest, Weather>();
             Mapper.CreateMap<Weather, GetWeatherResponse>();
             Mapper.CreateMap<SelectOption, GetHighlightOrdersResponse.HighlightOrderResponse>();
+            Mapper.CreateMap<KeyAssumptionCategory, GetAssumptionCategoriesResponse.AssumptionCategory>();
+            Mapper.CreateMap<SaveAssumptionCategoryRequest, KeyAssumptionCategory>();
+            Mapper.CreateMap<KeyAssumptionCategory, GetAssumptionCategoryResponse>();
+
+            Mapper.CreateMap<KeyOutputCategory, GetOutputCategoriesResponse.OutputCategory>();
+            Mapper.CreateMap<SaveOutputCategoryRequest, KeyOutputCategory>();
+            Mapper.CreateMap<KeyOutputCategory, GetOutputCategoryResponse>();
+
+
+            Mapper.CreateMap<KeyOperationGroup, GetOperationGroupsResponse.OperationGroup>();
+            Mapper.CreateMap<SaveOperationGroupRequest, KeyOperationGroup>();
+            Mapper.CreateMap<KeyOperationGroup, GetOperationGroupResponse>();
             base.Configure();
         }
 

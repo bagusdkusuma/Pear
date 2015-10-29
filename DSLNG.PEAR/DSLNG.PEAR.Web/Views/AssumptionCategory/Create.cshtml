@@ -1,0 +1,48 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.AssumptionCategory.AssumptionCategoryViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="AssumptionCategory-save">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="col-md-12">
+            <div class="title">Assumption Category</div>
+            <div class="description_year">New</div>
+            <div>@Html.ValidationSummary(true)</div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-inline whitebox">
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.Name)
+                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.Desc)
+                    @Html.TextAreaFor(model => model.Desc, 5, 100, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Desc)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IsActive, new { @class = "control-label" })
+                    @Html.EditorFor(model => model.IsActive, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IsActive)
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 artifact-designer-btns">
+            <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
+            <a onclick="location.reload();" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>
+            <a href="/Highlight" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+        </div>
+    }
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
