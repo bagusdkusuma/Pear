@@ -503,6 +503,7 @@
     <Content Include="Third Party\Svg.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Compile Include="ViewModels\Kpi\UploadViewModel.cs" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Boolean.cshtml" />
@@ -711,6 +712,8 @@
     <Content Include="Views\Weather\DailyExecutionReport.cshtml" />
     <Content Include="Views\Weather\Edit.cshtml" />
     <Content Include="Views\Weather\Index.cshtml" />
+    <Content Include="Views\Shared\_ModalScoreIndicator.cshtml" />
+    <Content Include="Views\Kpi\_Upload.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
