@@ -94,6 +94,9 @@ using DSLNG.PEAR.Web.ViewModels.Calculator;
 using DSLNG.PEAR.Web.ViewModels.Weather;
 using DSLNG.PEAR.Services.Requests.Weather;
 using DSLNG.PEAR.Services.Responses.Weather;
+using DSLNG.PEAR.Services.Responses.HighlightOrder;
+using DSLNG.PEAR.Web.ViewModels.HighlightOrder;
+using DSLNG.PEAR.Services.Requests.HighlightOrder;
 using DSLNG.PEAR.Web.ViewModels.AssumptionCategory;
 using DSLNG.PEAR.Services.Requests.AssumptionCategory;
 using DSLNG.PEAR.Services.Responses.AssumptionCategory;
@@ -160,6 +163,10 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetUsersResponse.User, UserViewModel>()
                 .ForMember(x => x.RoleName, y => y.MapFrom(z => z.Role.Name));
             Mapper.CreateMap<UserLoginViewModel, LoginUserRequest>();
+            Mapper.CreateMap<ChangePasswordViewModel, ChangePasswordRequest>();
+            Mapper.CreateMap<ResetPasswordResponseViewModel, ResetPasswordResponse>();
+            Mapper.CreateMap<ResetPasswordViewModel, ResetPasswordRequest>();
+            Mapper.CreateMap<ResetPasswordResponse, ResetPasswordResponseViewModel>();
 
             Mapper.CreateMap<GetRoleGroupsResponse.RoleGroup, RoleGroupViewModel>();
             Mapper.CreateMap<CreateRoleGroupViewModel, CreateRoleGroupRequest>();
@@ -488,7 +495,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetWeatherResponse, DailyExecutionReportViewModel.WeatherViewModel>();
             Mapper.CreateMap<GetHighlightsResponse.HighlightResponse, DailyExecutionReportViewModel.HighlightViewModel>();
             Mapper.CreateMap<GetHighlightResponse, DailyExecutionReportViewModel.AlertViewModel>();
-
+            Mapper.CreateMap<HighlightOrderViewModel, SaveHighlightOrderRequest>();
             Mapper.CreateMap<AssumptionCategoryViewModel, SaveAssumptionCategoryRequest>();
             Mapper.CreateMap<GetAssumptionCategoryResponse, AssumptionCategoryViewModel>();
 
@@ -578,24 +585,22 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<ScoreIndicatorViewModel, ScoreIndicator>();
             Mapper.CreateMap<ScoreIndicator, ScoreIndicatorViewModel>();
-
-
+            Mapper.CreateMap<GetHighlightOrdersResponse.HighlightOrderResponse, HighlightOrderViewModel>();
+            Mapper.CreateMap<GetNLSListResponse.NLSResponse, NLSViewModel>();
         }
 
         private void ConfigurePmsSummary()
         {
             Mapper.CreateMap<CreatePmsSummaryViewModel, CreatePmsSummaryRequest>()
-                .ForMember(x => x.ScoreIndicators, o => o.MapFrom(s => s.ScoreIndicators.Where(x => x.Id > 0 && !string.IsNullOrEmpty(x.Color) && !string.IsNullOrEmpty(x.Expression))));
+                .ForMember(x => x.ScoreIndicators, o => o.MapFrom(s => s.ScoreIndicators.Where(x => !string.IsNullOrEmpty(x.Color) && !string.IsNullOrEmpty(x.Expression))));
             Mapper.CreateMap<GetPmsSummaryResponse, UpdatePmsSummaryViewModel>();
             Mapper.CreateMap<UpdatePmsSummaryViewModel, UpdatePmsSummaryRequest>()
-                .ForMember(x => x.ScoreIndicators, o => o.MapFrom(s => s.ScoreIndicators.Where(x => x.Id > 0 && !string.IsNullOrEmpty(x.Color) && !string.IsNullOrEmpty(x.Expression))));
+                .ForMember(x => x.ScoreIndicators, o => o.MapFrom(s => s.ScoreIndicators.Where(x => !string.IsNullOrEmpty(x.Color) && !string.IsNullOrEmpty(x.Expression))));
 
             Mapper.CreateMap<GetPmsSummaryReportResponse.KpiData, PmsSummaryViewModel>();
             Mapper.CreateMap<GetPmsDetailsResponse, PmsReportDetailsViewModel>();
             Mapper.CreateMap<GetPmsDetailsResponse.KpiAchievment, PmsReportDetailsViewModel.KpiAchievment>();
             Mapper.CreateMap<GetPmsDetailsResponse.KpiRelation, PmsReportDetailsViewModel.KpiRelation>();
-            Mapper.CreateMap<CreatePmsConfigViewModel, CreatePmsConfigRequest>()
-                .ForMember(x => x.ScoreIndicators, o => o.MapFrom(s => s.ScoreIndicators.Where(x => x.Id > 0 && !string.IsNullOrEmpty(x.Color) && !string.IsNullOrEmpty(x.Expression))));
             Mapper.CreateMap<GetPmsDetailsResponse.Group, PmsReportDetailsViewModel.Group>();
             ConfigurePmsConfig();
             ConfigurePmsConfigDetails();
@@ -603,9 +608,11 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
         private void ConfigurePmsConfig()
         {
+            Mapper.CreateMap<CreatePmsConfigViewModel, CreatePmsConfigRequest>()
+                .ForMember(x => x.ScoreIndicators, o => o.MapFrom(s => s.ScoreIndicators.Where(x => !string.IsNullOrEmpty(x.Color) && !string.IsNullOrEmpty(x.Expression))));
             Mapper.CreateMap<GetPmsConfigResponse, UpdatePmsConfigViewModel>();
             Mapper.CreateMap<UpdatePmsConfigViewModel, UpdatePmsConfigRequest>()
-                .ForMember(x => x.ScoreIndicators, o => o.MapFrom(s => s.ScoreIndicators.Where(x => x.Id > 0 && !string.IsNullOrEmpty(x.Color) && !string.IsNullOrEmpty(x.Expression))));
+                .ForMember(x => x.ScoreIndicators, o => o.MapFrom(s => s.ScoreIndicators.Where(x => !string.IsNullOrEmpty(x.Color) && !string.IsNullOrEmpty(x.Expression))));
         }
 
         private void ConfigurePmsConfigDetails()

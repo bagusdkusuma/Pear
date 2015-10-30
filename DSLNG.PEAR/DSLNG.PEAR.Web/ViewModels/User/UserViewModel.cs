@@ -13,6 +13,7 @@ namespace DSLNG.PEAR.Web.ViewModels.User
         public bool IsActive { get; set; }
         public int RoleId { get; set; }
         public string RoleName { get; set; }
+        public bool IsSuperAdmin { get; set; }
     }
 
 

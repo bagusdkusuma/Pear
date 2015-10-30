@@ -58,6 +58,7 @@ using DSLNG.PEAR.Services.Requests.ConstantUsage;
 using DSLNG.PEAR.Services.Responses.ConstantUsage;
 using DSLNG.PEAR.Services.Responses.Weather;
 using DSLNG.PEAR.Services.Requests.Weather;
+using DSLNG.PEAR.Services.Responses.HighlightOrder;
 using DSLNG.PEAR.Data.Entities.EconomicModel;
 using DSLNG.PEAR.Services.Responses.AssumptionCategory;
 using DSLNG.PEAR.Services.Requests.AssumptionCategory;
@@ -82,7 +83,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             ConfigureKpiAchievements();
             ConfigureSelects();
 
-            Mapper.CreateMap<User, GetUsersResponse.User>();
+            Mapper.CreateMap<Data.Entities.User, GetUsersResponse.User>();
+            Mapper.CreateMap<GetUsersResponse.User, Data.Entities.User>();
             //.ForMember(x => x.RoleName, o => o.MapFrom(m => m.Role.Name));
             Mapper.CreateMap<CreateUserRequest, User>();
             Mapper.CreateMap<UpdateUserRequest, User>();
@@ -92,6 +94,10 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Data.Entities.User, GetUserResponse>();
             Mapper.CreateMap<Data.Entities.User, LoginUserResponse>();
             Mapper.CreateMap<Data.Entities.RoleGroup, LoginUserResponse.RoleGroup>();
+            Mapper.CreateMap<Data.Entities.ResetPassword, ResetPasswordResponse>();
+            Mapper.CreateMap<ResetPasswordResponse, ResetPassword>();
+            //Mapper.CreateMap<ResetPasswordResponse.User, Data.Entities.User>();
+            Mapper.CreateMap<GetUserResponse, ResetPasswordResponse.User>();
             //Mapper.CreateMap<
 
             /*Level*/
@@ -105,6 +111,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Data.Entities.Menu, GetMenusResponse.Menu>();
             Mapper.CreateMap<CreateMenuRequest, Data.Entities.Menu>();
             Mapper.CreateMap<Data.Entities.Menu, GetMenuResponse>();
+            Mapper.CreateMap<Data.Entities.Menu, DSLNG.PEAR.Services.Responses.Menu.Menu>();
 
             Mapper.CreateMap<UpdateMenuRequest, Data.Entities.Menu>();
             Mapper.CreateMap<Data.Entities.Level, Responses.Menu.Level>();
@@ -354,7 +361,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Weather, GetWeathersResponse.WeatherResponse>();
             Mapper.CreateMap<SaveWeatherRequest, Weather>();
             Mapper.CreateMap<Weather, GetWeatherResponse>();
-
+            Mapper.CreateMap<SelectOption, GetHighlightOrdersResponse.HighlightOrderResponse>();
             Mapper.CreateMap<KeyAssumptionCategory, GetAssumptionCategoriesResponse.AssumptionCategory>();
             Mapper.CreateMap<SaveAssumptionCategoryRequest, KeyAssumptionCategory>();
             Mapper.CreateMap<KeyAssumptionCategory, GetAssumptionCategoryResponse>();

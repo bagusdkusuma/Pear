@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_LoginLayout.cshtml";
 }
 
-<div class="login-wrapper">
+<div class="login-wrapper" style="margin-top: 9px;">
     @Html.ValidationSummary(true, "Login Failed, Please check your credentials", new { @class = "alert alert-danger", style="text-align:center" })
     <div class="login-form-new">
         <form action="@Url.Action("Login")" method="POST" autocomplete="off" id="formLogin" onsubmit="return validateForm();">

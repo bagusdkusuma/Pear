@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Contants\DateFormat.cs" />
     <Compile Include="Contants\FormatNumber.cs" />
+    <Compile Include="Contants\ImageConstant.cs" />
     <Compile Include="Contants\PathConstant.cs" />
     <Compile Include="Extensions\AutoMapperExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
