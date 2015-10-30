@@ -68,6 +68,7 @@ namespace DSLNG.PEAR.Web.DependencyResolution {
             For<IAssumptionCategoryService>().Use<AssumptionCategoryService>();
             For<IOutputCategoryService>().Use<OutputCategoryService>();
             For<IOperationGroupService>().Use<OperationGroupService>();
+            For<IAssumptionConfigService>().Use<AssumptionConfigService>();
         }
 
         #endregion

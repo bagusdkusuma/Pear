@@ -65,6 +65,8 @@ using DSLNG.PEAR.Services.Responses.OutputCategory;
 using DSLNG.PEAR.Services.Requests.OutputCategory;
 using DSLNG.PEAR.Services.Responses.OperationGroup;
 using DSLNG.PEAR.Services.Requests.OperationGroup;
+using DSLNG.PEAR.Services.Responses.AssumptionConfig;
+using DSLNG.PEAR.Services.Requests.AssumptionConfig;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -365,6 +367,17 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<KeyOperationGroup, GetOperationGroupsResponse.OperationGroup>();
             Mapper.CreateMap<SaveOperationGroupRequest, KeyOperationGroup>();
             Mapper.CreateMap<KeyOperationGroup, GetOperationGroupResponse>();
+
+            Mapper.CreateMap<KeyAssumptionConfig, GetAssumptionConfigsResponse.AssumptionConfig>()
+                .ForMember(x => x.Category, o => o.MapFrom(s => s.Category.Name))
+                .ForMember(x => x.Measurement, o => o.MapFrom(s => s.Measurement.Name));
+            Mapper.CreateMap<KeyAssumptionCategory, GetAssumptionConfigCategoryResponse.AssumptionConfigCategoryResponse>();
+            Mapper.CreateMap<KeyAssumptionConfig, GetAssumptionConfigResponse>()
+                .ForMember(x => x.IdCategory, o => o.MapFrom(s => s.Category.Id))
+                .ForMember(x => x.IdMeasurement, o => o.MapFrom(s => s.Measurement.Id));
+            Mapper.CreateMap<SaveAssumptionConfigRequest, KeyAssumptionConfig>()
+                .ForMember(x => x.Category, o => o.Ignore())
+                .ForMember(x => x.Measurement, o => o.Ignore());
 
             base.Configure();
         }

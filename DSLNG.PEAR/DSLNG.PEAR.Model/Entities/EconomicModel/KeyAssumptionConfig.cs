@@ -14,7 +14,7 @@ namespace DSLNG.PEAR.Data.Entities.EconomicModel
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public KeyAssumptionStage Stage { get; set; }
+        //public KeyAssumptionStage Stage { get; set; }
         public KeyAssumptionCategory Category { get; set; }
         public string Name { get; set; }
         public Measurement Measurement { get; set; }

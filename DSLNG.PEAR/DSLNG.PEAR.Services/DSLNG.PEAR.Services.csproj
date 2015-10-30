@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="ArtifactService.cs" />
     <Compile Include="AssumptionCategoryService.cs" />
+    <Compile Include="AssumptionConfigService.cs" />
     <Compile Include="AutoMapper\ServicesMappingProfile.cs" />
     <Compile Include="BaseService.cs" />
     <Compile Include="BuyerService.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="GroupService.cs" />
     <Compile Include="HighlightService.cs" />
     <Compile Include="Interfaces\IAssumptionCategoryService.cs" />
+    <Compile Include="Interfaces\IAssumptionConfigService.cs" />
     <Compile Include="Interfaces\IBuyerService.cs" />
     <Compile Include="Interfaces\ICalculatorConstantService.cs" />
     <Compile Include="Interfaces\IConstantUsageService.cs" />
@@ -119,6 +121,11 @@
     <Compile Include="Requests\AssumptionCategory\GetAssumptionCategoriesRequest.cs" />
     <Compile Include="Requests\AssumptionCategory\GetAssumptionCategoryRequest.cs" />
     <Compile Include="Requests\AssumptionCategory\SaveAssumptionCategoryRequest.cs" />
+    <Compile Include="Requests\AssumptionConfig\DeleteAssumptionConfigRequest.cs" />
+    <Compile Include="Requests\AssumptionConfig\GetAssumptionConfigCategoriesRequest.cs" />
+    <Compile Include="Requests\AssumptionConfig\GetAssumptionConfigRequest.cs" />
+    <Compile Include="Requests\AssumptionConfig\GetAssumptionConfigsRequest.cs" />
+    <Compile Include="Requests\AssumptionConfig\SaveAssumptionConfigRequest.cs" />
     <Compile Include="Requests\Buyer\DeleteBuyerRequest.cs" />
     <Compile Include="Requests\Buyer\GetBuyerRequest.cs" />
     <Compile Include="Requests\Buyer\GetBuyersRequest.cs" />
@@ -218,6 +225,11 @@
     <Compile Include="Responses\AssumptionCategory\GetAssumptionCategoriesResponse.cs" />
     <Compile Include="Responses\AssumptionCategory\GetAssumptionCategoryResponse.cs" />
     <Compile Include="Responses\AssumptionCategory\SaveAssumptionCategoryResponse.cs" />
+    <Compile Include="Responses\AssumptionConfig\DeleteAssumptionConfigResponse.cs" />
+    <Compile Include="Responses\AssumptionConfig\GetAssumptionConfigCategoryResponse.cs" />
+    <Compile Include="Responses\AssumptionConfig\GetAssumptionConfigResponse.cs" />
+    <Compile Include="Responses\AssumptionConfig\GetAssumptionConfigsResponse.cs" />
+    <Compile Include="Responses\AssumptionConfig\SaveAssumptionConfigResponse.cs" />
     <Compile Include="Responses\Buyer\DeleteBuyerResponse.cs" />
     <Compile Include="Responses\Buyer\GetBuyerResponse.cs" />
     <Compile Include="Responses\Buyer\GetBuyersResponse.cs" />
@@ -481,6 +493,7 @@
   <ItemGroup>
     <Compile Include="NLSService.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

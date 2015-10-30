@@ -56,6 +56,7 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<KeyAssumptionCategory> KeyAssumptionCategories { get; set; }
         public IDbSet<KeyOutputCategory> KeyOutputCategories { get; set; }
         public IDbSet<KeyOperationGroup> KeyOperationGroups { get; set; }
+        public IDbSet<KeyAssumptionConfig> KeyAssumptionConfigs { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

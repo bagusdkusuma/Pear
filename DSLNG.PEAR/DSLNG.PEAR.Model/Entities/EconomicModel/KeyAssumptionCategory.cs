@@ -9,7 +9,7 @@ namespace DSLNG.PEAR.Data.Entities.EconomicModel
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Name { get; set; }
-        public KeyAssumptionStage KeyAssumptionStage { get; set; }
+        //public KeyAssumptionStage KeyAssumptionStage { get; set; }
         public string Desc { get; set; }
         public bool IsActive { get; set; }
     }

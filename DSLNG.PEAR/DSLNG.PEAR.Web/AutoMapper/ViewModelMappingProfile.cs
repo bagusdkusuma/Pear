@@ -103,6 +103,9 @@ using DSLNG.PEAR.Services.Responses.OutputCategory;
 using DSLNG.PEAR.Web.ViewModels.OperationGroup;
 using DSLNG.PEAR.Services.Requests.OperationGroup;
 using DSLNG.PEAR.Services.Responses.OperationGroup;
+using DSLNG.PEAR.Web.ViewModels.AssumptionConfig;
+using DSLNG.PEAR.Services.Requests.AssumptionConfig;
+using DSLNG.PEAR.Services.Responses.AssumptionConfig;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -495,6 +498,8 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<OperationGroupViewModel, SaveOperationGroupRequest>();
             Mapper.CreateMap<GetOperationGroupResponse, OperationGroupViewModel>();
 
+            Mapper.CreateMap<AssumptionConfigViewModel, SaveAssumptionConfigRequest>();
+            Mapper.CreateMap<GetAssumptionConfigResponse, AssumptionConfigViewModel>();
             base.Configure();
         }
 
