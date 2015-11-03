@@ -109,6 +109,12 @@ using DSLNG.PEAR.Services.Responses.OperationGroup;
 using DSLNG.PEAR.Web.ViewModels.AssumptionConfig;
 using DSLNG.PEAR.Services.Requests.AssumptionConfig;
 using DSLNG.PEAR.Services.Responses.AssumptionConfig;
+using DSLNG.PEAR.Services.Requests.Scenario;
+using DSLNG.PEAR.Web.ViewModels.Scenario;
+using DSLNG.PEAR.Services.Responses.Scenario;
+using DSLNG.PEAR.Web.ViewModels.AssumptionData;
+using DSLNG.PEAR.Services.Requests.AssumptionData;
+using DSLNG.PEAR.Services.Responses.AssumptionData;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -507,6 +513,12 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<AssumptionConfigViewModel, SaveAssumptionConfigRequest>();
             Mapper.CreateMap<GetAssumptionConfigResponse, AssumptionConfigViewModel>();
+
+            Mapper.CreateMap<ScenarioViewModel, SaveScenarioRequest>();
+            Mapper.CreateMap<GetScenarioResponse, ScenarioViewModel>();
+
+            Mapper.CreateMap<AssumptionDataViewModel, SaveAssumptionDataRequest>();
+            Mapper.CreateMap<GetAssumptionDataResponse, AssumptionDataViewModel>();
             base.Configure();
         }
 

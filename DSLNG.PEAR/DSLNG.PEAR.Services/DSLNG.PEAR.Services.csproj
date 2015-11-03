@@ -71,6 +71,7 @@
     <Compile Include="ArtifactService.cs" />
     <Compile Include="AssumptionCategoryService.cs" />
     <Compile Include="AssumptionConfigService.cs" />
+    <Compile Include="AssumptionDataService.cs" />
     <Compile Include="AutoMapper\ServicesMappingProfile.cs" />
     <Compile Include="BaseService.cs" />
     <Compile Include="BuyerService.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="HighlightService.cs" />
     <Compile Include="Interfaces\IAssumptionCategoryService.cs" />
     <Compile Include="Interfaces\IAssumptionConfigService.cs" />
+    <Compile Include="Interfaces\IAssumptionDataService.cs" />
     <Compile Include="Interfaces\IBuyerService.cs" />
     <Compile Include="Interfaces\ICalculatorConstantService.cs" />
     <Compile Include="Interfaces\IConstantUsageService.cs" />
@@ -98,6 +100,7 @@
     <Compile Include="Interfaces\IOperationGroupService.cs" />
     <Compile Include="Interfaces\IOutputCategoryService.cs" />
     <Compile Include="Interfaces\IPeriodeService.cs" />
+    <Compile Include="Interfaces\IScenarioService.cs" />
     <Compile Include="Interfaces\ISelectService.cs" />
     <Compile Include="Interfaces\ITemplateService.cs" />
     <Compile Include="Interfaces\IVesselScheduleService.cs" />
@@ -128,6 +131,10 @@
     <Compile Include="Requests\AssumptionConfig\GetAssumptionConfigRequest.cs" />
     <Compile Include="Requests\AssumptionConfig\GetAssumptionConfigsRequest.cs" />
     <Compile Include="Requests\AssumptionConfig\SaveAssumptionConfigRequest.cs" />
+    <Compile Include="Requests\AssumptionData\DeleteAssumptionDataRequest.cs" />
+    <Compile Include="Requests\AssumptionData\GetAssumptionDataRequest.cs" />
+    <Compile Include="Requests\AssumptionData\GetAssumptionDatasRequest.cs" />
+    <Compile Include="Requests\AssumptionData\SaveAssumptionDataRequest.cs" />
     <Compile Include="Requests\Buyer\DeleteBuyerRequest.cs" />
     <Compile Include="Requests\Buyer\GetBuyerRequest.cs" />
     <Compile Include="Requests\Buyer\GetBuyersRequest.cs" />
@@ -195,6 +202,10 @@
     <Compile Include="Requests\PmsSummary\GetScoreIndicatorRequest.cs" />
     <Compile Include="Requests\PmsSummary\UpdatePmsConfigDetailsRequest.cs" />
     <Compile Include="Requests\PmsSummary\UpdatePmsConfigRequest.cs" />
+    <Compile Include="Requests\Scenario\DeleteScenarioRequest.cs" />
+    <Compile Include="Requests\Scenario\GetScenarioRequest.cs" />
+    <Compile Include="Requests\Scenario\GetScenariosRequest.cs" />
+    <Compile Include="Requests\Scenario\SaveScenarioRequest.cs" />
     <Compile Include="Requests\Select\GetSelectRequest.cs" />
     <Compile Include="Requests\Select\GetSelectsRequest.cs" />
     <Compile Include="Requests\Select\UpdateSelectRequest.cs" />
@@ -240,6 +251,11 @@
     <Compile Include="Responses\AssumptionConfig\GetAssumptionConfigResponse.cs" />
     <Compile Include="Responses\AssumptionConfig\GetAssumptionConfigsResponse.cs" />
     <Compile Include="Responses\AssumptionConfig\SaveAssumptionConfigResponse.cs" />
+    <Compile Include="Responses\AssumptionData\DeleteAssumptionDataResponse.cs" />
+    <Compile Include="Responses\AssumptionData\GetAssumptionDataConfigResponse.cs" />
+    <Compile Include="Responses\AssumptionData\GetAssumptionDataResponse.cs" />
+    <Compile Include="Responses\AssumptionData\GetAssumptionDatasResponse.cs" />
+    <Compile Include="Responses\AssumptionData\SaveAssumptionDataResponse.cs" />
     <Compile Include="Responses\Buyer\DeleteBuyerResponse.cs" />
     <Compile Include="Responses\Buyer\GetBuyerResponse.cs" />
     <Compile Include="Responses\Buyer\GetBuyersResponse.cs" />
@@ -433,6 +449,10 @@
     <Compile Include="Responses\RoleGroup\DeleteRoleGroupResponse.cs" />
     <Compile Include="Responses\RoleGroup\Level.cs" />
     <Compile Include="Responses\RoleGroup\UpdateRoleGroupResponse.cs" />
+    <Compile Include="Responses\Scenario\DeleteScenarioResponse.cs" />
+    <Compile Include="Responses\Scenario\GetScenarioResponse.cs" />
+    <Compile Include="Responses\Scenario\GetScenariosResponse.cs" />
+    <Compile Include="Responses\Scenario\SaveScenarioResponse.cs" />
     <Compile Include="Responses\Select\CreateSelectResponse.cs" />
     <Compile Include="Responses\Select\DeleteSelectResponse.cs" />
     <Compile Include="Responses\Select\GetSelectResponse.cs" />
@@ -478,6 +498,7 @@
     <Compile Include="Responses\Weather\GetWeathersResponse.cs" />
     <Compile Include="Responses\Weather\SaveWeatherResponse.cs" />
     <Compile Include="RoleGroupService.cs" />
+    <Compile Include="ScenarioService.cs" />
     <Compile Include="SelectService.cs" />
     <Compile Include="TemplateService.cs" />
     <Compile Include="TypeService.cs" />

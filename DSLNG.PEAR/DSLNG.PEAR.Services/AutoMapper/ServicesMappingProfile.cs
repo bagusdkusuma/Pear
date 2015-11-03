@@ -68,6 +68,10 @@ using DSLNG.PEAR.Services.Responses.OperationGroup;
 using DSLNG.PEAR.Services.Requests.OperationGroup;
 using DSLNG.PEAR.Services.Responses.AssumptionConfig;
 using DSLNG.PEAR.Services.Requests.AssumptionConfig;
+using DSLNG.PEAR.Services.Responses.Scenario;
+using DSLNG.PEAR.Services.Requests.Scenario;
+using DSLNG.PEAR.Services.Responses.AssumptionData;
+using DSLNG.PEAR.Services.Requests.AssumptionData;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -386,6 +390,23 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.Category, o => o.Ignore())
                 .ForMember(x => x.Measurement, o => o.Ignore());
 
+            Mapper.CreateMap<Scenario, GetScenariosResponse.Scenario>();
+            Mapper.CreateMap<SaveScenarioRequest, Scenario>();
+            Mapper.CreateMap<Scenario, GetScenarioResponse>();
+
+
+            Mapper.CreateMap<KeyAssumptionData, GetAssumptionDatasResponse.AssumptionData>()
+                .ForMember(x => x.Scenario, o => o.MapFrom(s => s.Scenario.Name))
+                .ForMember(x => x.Config, o => o.MapFrom(s => s.KeyAssumptionConfig.Name));
+            Mapper.CreateMap<KeyAssumptionConfig, GetAssumptionDataConfigResponse.AssumptionDataConfig>();
+            Mapper.CreateMap<Scenario, GetAssumptionDataConfigResponse.Scenario>();
+            Mapper.CreateMap<SaveAssumptionDataRequest, KeyAssumptionData>()
+                .ForMember(x => x.Scenario, o => o.Ignore())
+                .ForMember(x => x.KeyAssumptionConfig, o => o.Ignore());
+            Mapper.CreateMap<KeyAssumptionData, GetAssumptionDataResponse>()
+                .ForMember(x => x.IdScenario, o => o.MapFrom(s => s.Scenario.Id))
+                .ForMember(x => x.IdConfig, o =>  o.MapFrom(s => s.KeyAssumptionConfig.Id));
+            
             base.Configure();
         }
 

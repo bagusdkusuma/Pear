@@ -53,6 +53,8 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<KeyOperationGroup> KeyOperationGroups { get; set; }
         IDbSet<KeyAssumptionConfig> KeyAssumptionConfigs { get; set; }
         IDbSet<ResetPassword> ResetPasswords { get; set; }
+        IDbSet<Scenario> Scenarios { get; set; }
+        IDbSet<KeyAssumptionData> KeyAssumptionDatas { get; set; }
         Database Database { get; }
         int SaveChanges();
         DbEntityEntry Entry(object entity);

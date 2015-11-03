@@ -503,6 +503,9 @@
     <Content Include="Third Party\Svg.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Compile Include="Controllers\AssumptionDataController.cs" />
+    <Compile Include="Controllers\ScenarioController.cs" />
+    <Compile Include="ViewModels\AssumptionData\AssumptionDataViewModel.cs" />
     <Compile Include="ViewModels\Kpi\UploadViewModel.cs" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
@@ -670,6 +673,10 @@
     <Content Include="Views\Account\Validate.cshtml" />
     <Content Include="Views\Account\SendResetPasswordRequest.cshtml" />
     <Content Include="Views\Account\Reset.cshtml" />
+    <Content Include="Views\AssumptionData\Create.cshtml" />
+    <Content Include="Views\AssumptionData\Edit.cshtml" />
+    <Content Include="Views\AssumptionData\Index.cshtml" />
+    <Content Include="Views\AssumptionData\_IndexGridPartial.cshtml" />
     <None Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\SpeedometerChart\_Edit.cshtml" />
     <Content Include="Views\Tabular\_Create.cshtml" />
@@ -736,6 +743,10 @@
     <Content Include="Views\NLS\_RemarkList.cshtml" />
     <Content Include="Views\Shared\_ModalScoreIndicator.cshtml" />
     <Content Include="Views\Kpi\_Upload.cshtml" />
+    <Content Include="Views\Scenario\Create.cshtml" />
+    <Content Include="Views\Scenario\Edit.cshtml" />
+    <Content Include="Views\Scenario\Index.cshtml" />
+    <Content Include="Views\Scenario\_IndexGridPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -948,6 +959,7 @@
     <Compile Include="ViewModels\RoleGroup\IndexRoleGroupViewModel.cs" />
     <Compile Include="ViewModels\RoleGroup\RoleGroupViewModel.cs" />
     <Compile Include="ViewModels\RoleGroup\UpdateRoleGroupViewModel.cs" />
+    <Compile Include="ViewModels\Scenario\ScenarioViewModel.cs" />
     <Compile Include="ViewModels\Select\SelectOptionViewModel.cs" />
     <Compile Include="ViewModels\Select\UpdateSelectViewModel.cs" />
     <Compile Include="ViewModels\Select\CreateSelectViewModel.cs" />
