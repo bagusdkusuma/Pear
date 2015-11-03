@@ -333,8 +333,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<SaveVesselScheduleRequest, VesselSchedule>();
             Mapper.CreateMap<VesselSchedule, GetVesselSchedulesResponse.VesselScheduleResponse>()
                 .ForMember(x => x.Vessel, o => o.MapFrom(s => s.Vessel.Name))
-                .ForMember(x => x.Buyer, o => o.MapFrom(s => s.Buyer.Name))
-                .ForMember(x => x.Name, o => o.MapFrom(s => s.Vessel.Name));
+                .ForMember(x => x.Buyer, o => o.MapFrom(s => s.Buyer.Name));
             Mapper.CreateMap<VesselSchedule, GetVesselScheduleResponse>()
                 .ForMember(x => x.VesselId, o => o.MapFrom(s => s.Vessel.Id))
                 .ForMember(x => x.BuyerId, o => o.MapFrom(s => s.Buyer.Id))
