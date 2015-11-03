@@ -504,6 +504,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Compile Include="Controllers\AssumptionDataController.cs" />
+    <Compile Include="Controllers\OperationalDataController.cs" />
+    <Compile Include="Controllers\OperationController.cs" />
     <Compile Include="Controllers\ScenarioController.cs" />
     <Compile Include="ViewModels\AssumptionData\AssumptionDataViewModel.cs" />
     <Compile Include="ViewModels\Kpi\UploadViewModel.cs" />
@@ -747,6 +749,14 @@
     <Content Include="Views\Scenario\Edit.cshtml" />
     <Content Include="Views\Scenario\Index.cshtml" />
     <Content Include="Views\Scenario\_IndexGridPartial.cshtml" />
+    <Content Include="Views\Operation\Create.cshtml" />
+    <Content Include="Views\Operation\Edit.cshtml" />
+    <Content Include="Views\Operation\Index.cshtml" />
+    <Content Include="Views\Operation\_IndexGridPartial.cshtml" />
+    <Content Include="Views\OperationalData\Create.cshtml" />
+    <Content Include="Views\OperationalData\Edit.cshtml" />
+    <Content Include="Views\OperationalData\Index.cshtml" />
+    <Content Include="Views\OperationalData\_IndexGridPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -905,7 +915,9 @@
     <Compile Include="ViewModels\KpiTarget\IndexKpiTargetViewModel.cs" />
     <Compile Include="ViewModels\KpiTarget\UpdateKpiTargetViewModel.cs" />
     <Compile Include="ViewModels\NLS\NLSViewModel.cs" />
+    <Compile Include="ViewModels\OperationalData\OperationalDataViewModel.cs" />
     <Compile Include="ViewModels\OperationGroup\OperationGroupViewModel.cs" />
+    <Compile Include="ViewModels\Operation\OperationViewModel.cs" />
     <Compile Include="ViewModels\OutputCategory\OutputCategoryViewModel.cs" />
     <Compile Include="ViewModels\PmsConfigDetails\CreatePmsConfigDetailsViewModel.cs" />
     <Compile Include="ViewModels\PmsConfig\UpdatePmsConfigViewModel.cs" />

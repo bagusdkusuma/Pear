@@ -72,6 +72,10 @@ using DSLNG.PEAR.Services.Responses.Scenario;
 using DSLNG.PEAR.Services.Requests.Scenario;
 using DSLNG.PEAR.Services.Responses.AssumptionData;
 using DSLNG.PEAR.Services.Requests.AssumptionData;
+using DSLNG.PEAR.Services.Responses.Operation;
+using DSLNG.PEAR.Services.Requests.Operation;
+using DSLNG.PEAR.Services.Responses.OperationalData;
+using DSLNG.PEAR.Services.Requests.OperationalData;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -406,7 +410,27 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<KeyAssumptionData, GetAssumptionDataResponse>()
                 .ForMember(x => x.IdScenario, o => o.MapFrom(s => s.Scenario.Id))
                 .ForMember(x => x.IdConfig, o =>  o.MapFrom(s => s.KeyAssumptionConfig.Id));
-            
+
+            Mapper.CreateMap<KeyOperation, GetOperationsResponse.Operation>()
+                .ForMember(x => x.KeyOperationGroup, o => o.MapFrom(s => s.KeyOperationGroup.Name));
+            Mapper.CreateMap<KeyOperationGroup, OperationGroupsResponse.OperationGroup>();
+            Mapper.CreateMap<SaveOperationRequest, KeyOperation>()
+                .ForMember(x => x.KeyOperationGroup, o => o.Ignore());
+            Mapper.CreateMap<KeyOperation, GetOperationResponse>()
+                .ForMember(x => x.IdKeyOperationGroup, o => o.MapFrom(s => s.KeyOperationGroup.Id));
+
+            Mapper.CreateMap<OperationDataConfiguration, GetOperationalDatasResponse.OperationalData>()
+                .ForMember(x => x.KeyOperation, o => o.MapFrom(s => s.KeyOperation.Name))
+                .ForMember(x => x.KPI, o => o.MapFrom(s => s.Kpi.Name));
+            Mapper.CreateMap<KeyOperation, GetOperationalSelectListResponse.Operation>();
+            Mapper.CreateMap<Kpi, GetOperationalSelectListResponse.KPI>();
+            Mapper.CreateMap<SaveOperationalDataRequest, OperationDataConfiguration>()
+                .ForMember(x => x.KeyOperation, o => o.Ignore())
+                .ForMember(x => x.Kpi, o => o.Ignore());
+            Mapper.CreateMap<OperationDataConfiguration, GetOperationalDataResponse>()
+                .ForMember(x => x.IdKeyOperation, o => o.MapFrom(s => s.KeyOperation.Id))
+                .ForMember(x => x.IdKPI, o => o.MapFrom(s => s.Kpi.Id));
+
             base.Configure();
         }
 

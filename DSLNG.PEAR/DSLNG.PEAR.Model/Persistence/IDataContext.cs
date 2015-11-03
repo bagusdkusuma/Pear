@@ -55,6 +55,9 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<ResetPassword> ResetPasswords { get; set; }
         IDbSet<Scenario> Scenarios { get; set; }
         IDbSet<KeyAssumptionData> KeyAssumptionDatas { get; set; }
+        IDbSet<KeyOperation> KeyOperations { get; set; }
+        IDbSet<OperationDataConfiguration> KeyOperasionalDatas { get; set; }
+
         Database Database { get; }
         int SaveChanges();
         DbEntityEntry Entry(object entity);
