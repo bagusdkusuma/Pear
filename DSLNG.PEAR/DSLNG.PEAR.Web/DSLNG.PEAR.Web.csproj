@@ -503,6 +503,8 @@
     <Content Include="Third Party\Svg.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Compile Include="Grid\GridModelBinder.cs" />
+    <Compile Include="Grid\GridParams.cs" />
     <Compile Include="ViewModels\Kpi\UploadViewModel.cs" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />

@@ -1581,6 +1581,11 @@ td .btn_small_lightblue a:hover
     border: 1px solid #ffffff;
 }
 
+.table-transparent .odd,
+.table-transparent .even {
+    background: transparent;
+}
+
 .constant-template.original
 {
     display: none;
@@ -1889,3 +1894,23 @@ input[type="text"]
     display: inline-block;
     text-align: center;
 }
+
+.dataTables_filter  label {
+    width: 100% !important;
+}
+
+.add-button-wrapper {
+    margin-bottom: 20px;
+}
+
+/*.dataTables_wrapper input,
+.dataTables_wrapper select {
+    color: #000000;
+}
+
+.dataTables_info,
+.dataTables_paginate,
+.paginate_button  {
+    color: #ffffff !important;
+}*/
+

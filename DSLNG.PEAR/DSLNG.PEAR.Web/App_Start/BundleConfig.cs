@@ -34,7 +34,8 @@ namespace DSLNG.PEAR.Web.App_Start
                         "~/Scripts/calculator.plant-availability.js",
                         "~/Scripts/calculator.pricing.js",
                         "~/Scripts/calculator.production-yield.js",
-                        "~/Scripts/calculator.standard.js"));
+                        "~/Scripts/calculator.standard.js",
+                        "~/Scripts/jquery.dataTables.min.js"));
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/bootstrap/css/bootstrap.css",
                 "~/Content/font-awesome/css/font-awesome.css",
                 //"~/Content/datepicker/css/datepicker.css",
@@ -44,7 +45,8 @@ namespace DSLNG.PEAR.Web.App_Start
                    "~/Content/perfect-scrollbar.min.css",
                   "~/Content/bootstrap.vertical-tabs.css",
                   "~/Content/style.css",
-                  "~/Content/style-regawa.css"));
+                  "~/Content/style-regawa.css",
+                  "~/Content/jquery.dataTables.min.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/js_login").Include(
                          "~/Scripts/moment.js",

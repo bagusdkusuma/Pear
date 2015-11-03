@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+using System.Data.SqlClient;
 using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Template;
@@ -60,7 +62,15 @@ namespace DSLNG.PEAR.Services
         public GetTemplatesResponse GetTemplates(GetTemplatesRequest request)
         {
 
-            if (request.OnlyCount)
+            int totalRecords;
+            var templates = SortData(request.Search, request.SortingDictionary, out totalRecords).Skip(request.Skip).Take(request.Take).ToList();
+
+            var response = new GetTemplatesResponse();
+            response.Artifacts = templates.MapTo<GetTemplatesResponse.TemplateResponse>();
+            response.TotalRecords = totalRecords;
+
+            return response;
+            /*if (request.OnlyCount)
             {
                 return new GetTemplatesResponse { Count = DataContext.DashboardTemplates.Count() };
             }
@@ -71,7 +81,7 @@ namespace DSLNG.PEAR.Services
                     Artifacts = DataContext.DashboardTemplates.OrderBy(x => x.Id).Skip(request.Skip).Take(request.Take)
                                     .ToList().MapTo<GetTemplatesResponse.TemplateResponse>()
                 };
-            }
+            }*/
         }
 
         public GetTemplateResponse GetTemplate(GetTemplateRequest request)
@@ -137,6 +147,29 @@ namespace DSLNG.PEAR.Services
             DataContext.SaveChanges();
             
             return new UpdateTemplateResponse();
+        }
+
+        private IEnumerable<DashboardTemplate> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int totalRecords)
+        {
+            var data = DataContext.DashboardTemplates.AsQueryable();
+            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            {
+                data = data.Where(x => x.Name.Contains(search));
+            }
+
+            foreach (var sortOrder in sortingDictionary)
+            {
+                switch (sortOrder.Key)
+                {
+                    case "Name":
+                        data = sortOrder.Value == SortOrder.Ascending
+                                   ? data.OrderBy(x => x.Name)
+                                   : data.OrderByDescending(x => x.Name);
+                        break;
+                }
+            }
+            totalRecords = data.Count();
+            return data;
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Artifact;
+using DSLNG.PEAR.Services.Requests.Pillar;
 using DSLNG.PEAR.Services.Requests.Template;
+using DSLNG.PEAR.Web.Grid;
 using DSLNG.PEAR.Web.ViewModels.Template;
 using DSLNG.PEAR.Common.Extensions;
 using System.Web.Mvc;
@@ -100,6 +102,27 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 return View();
             }
+        }
+
+        public ActionResult Grid(GridParams gridParams)
+        {
+            var templates = _templateService.GetTemplates(new GetTemplatesRequest
+            {
+                Skip = gridParams.DisplayStart,
+                Take = gridParams.DisplayLength,
+                SortingDictionary = gridParams.SortingDictionary,
+                Search = gridParams.Search
+            });
+
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalRecords = templates.Artifacts.Count,
+                iTotalDisplayRecords = templates.TotalRecords,
+                aaData = templates.Artifacts
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
+
         }
 
         #region Dev Express Grid

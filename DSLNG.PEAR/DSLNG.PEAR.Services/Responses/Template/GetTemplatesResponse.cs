@@ -7,6 +7,7 @@ namespace DSLNG.PEAR.Services.Responses.Template
     {
         public IList<TemplateResponse> Artifacts { get; set; }
         public int Count { get; set; }
+        public int TotalRecords { get; set; }
         public class TemplateResponse
         {
             public int Id { get; set; }

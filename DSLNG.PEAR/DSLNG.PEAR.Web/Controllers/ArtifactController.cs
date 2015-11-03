@@ -3,6 +3,7 @@ using System.Threading;
 using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Measurement;
+using DSLNG.PEAR.Web.Grid;
 using DSLNG.PEAR.Web.ViewModels.Artifact;
 using System;
 using System.Linq;
@@ -1209,6 +1210,27 @@ namespace DSLNG.PEAR.Web.Controllers
                     break;
             }
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Grid(GridParams gridParams)
+        {
+            var templates = _artifactServie.GetArtifacts(new GetArtifactsRequest
+            {
+                Skip = gridParams.DisplayStart,
+                Take = gridParams.DisplayLength,
+                SortingDictionary = gridParams.SortingDictionary,
+                Search = gridParams.Search
+            });
+
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalRecords = templates.Artifacts.Count,
+                iTotalDisplayRecords = templates.TotalRecords,
+                aaData = templates.Artifacts
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
+
         }
 
         private string ParseDateToString(PeriodeType periodeType, DateTime? date)

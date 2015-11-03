@@ -1,4 +1,5 @@
-﻿using DSLNG.PEAR.Data.Persistence;
+﻿using System.Data.SqlClient;
+using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Kpi;
 using DSLNG.PEAR.Services.Responses.Kpi;
@@ -103,9 +104,11 @@ namespace DSLNG.PEAR.Services
         }
         public GetKpisResponse GetKpis(GetKpisRequest request)
         {
-            IQueryable<Kpi> kpis;
+            int totalRecords;
+            var data = SortData(request.Search, request.SortingDictionary, out totalRecords).Skip(request.Skip).Take(request.Take);
+            
             //var kpis = new Queryable<Kpi>();
-            if (request.Take != 0)
+            /*if (request.Take != 0)
             {
                 kpis = DataContext.Kpis.Include(x => x.Pillar).OrderBy(x => x.Id).Skip(request.Skip).Take(request.Take);
             }
@@ -117,10 +120,11 @@ namespace DSLNG.PEAR.Services
             if (request.PillarId > 0)
             {
                 kpis = kpis.Include(x => x.Pillar).Where(x => x.Pillar.Id == request.PillarId);
-            }
+            }*/
 
             var response = new GetKpisResponse();
-            response.Kpis = kpis.ToList().MapTo<GetKpisResponse.Kpi>();
+            response.TotalRecords = totalRecords;
+            response.Kpis = data.ToList().MapTo<GetKpisResponse.Kpi>();
 
             return response;
         }
@@ -316,9 +320,6 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-
-
-
         public bool IsValidKpi(GetKpiByRole request)
         {
             try {
@@ -328,6 +329,55 @@ namespace DSLNG.PEAR.Services
             catch (System.InvalidOperationException) {
                 return false;
             }
+        }
+
+        private IEnumerable<Kpi> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int totalRecords)
+        {
+            var data = DataContext.Kpis.Include(x => x.Pillar).AsQueryable();
+            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            {
+                data = data.Where(x => x.Code.Contains(search) || x.Pillar.Name.Contains(search) ||
+                                       x.Name.Contains(search));
+            }
+
+            foreach (var sortOrder in sortingDictionary)
+            {
+                switch (sortOrder.Key)
+                {
+                    case "Code" :
+                        data = sortOrder.Value == SortOrder.Ascending
+                                   ? data.OrderBy(x => x.Code)
+                                   : data.OrderByDescending(x => x.Code);
+                        break;
+                    case "Name" :
+                        data = sortOrder.Value == SortOrder.Ascending
+                                   ? data.OrderBy(x => x.Name)
+                                   : data.OrderByDescending(x => x.Name);
+                        break;
+                    case "PillarName":
+                        data = sortOrder.Value == SortOrder.Ascending
+                                   ? data.OrderBy(x => x.Pillar.Name)
+                                   : data.OrderByDescending(x => x.Pillar.Name);
+                        break;
+                    case "IsActive":
+                        data = sortOrder.Value == SortOrder.Ascending
+                                   ? data.OrderBy(x => x.IsActive)
+                                   : data.OrderByDescending(x => x.IsActive);
+                        break;
+                    case "IsEconomic":
+                        data = sortOrder.Value == SortOrder.Ascending
+                                   ? data.OrderBy(x => x.IsEconomic)
+                                   : data.OrderByDescending(x => x.IsEconomic);
+                        break;
+                    default:
+                        data = sortOrder.Value == SortOrder.Ascending
+                                   ? data.OrderBy(x => x.Order)
+                                   : data.OrderByDescending(x => x.Order);
+                        break;
+                }
+            }
+            totalRecords = data.Count();
+            return data;
         }
     }
 }
