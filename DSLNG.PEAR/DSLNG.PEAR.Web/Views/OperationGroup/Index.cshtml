@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Operation Group";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="OperationGroup-list">
+    <h2>Operation Group</h2>
+    @Html.Partial("_MessageResponse")
+    @Html.ActionLink("Create New", "Create")
+    @Html.Action("IndexPartial")
+
+    @section Scripts{
+        <script type="text/javascript">
+            var confirmDelete = function (id) {
+                if (confirm('Are you sure want to delete this item?')) {
+                    var url = '@Url.Action("Delete", "OperationGroup")';
+                $('<form action="' + url + '" method="POST">' +
+                    '<input type="hidden" name="id" value="' + id + '">' +
+                    '</form>').submit();
+            }
+        };
+        </script>
+    }
+
+</div>

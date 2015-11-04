@@ -21,19 +21,20 @@ namespace DSLNG.PEAR.Web.ViewModels.VesselSchedule
             IsActive = true;
         }
         public int Id { get; set; }
-        [Display(Name="Vessel")]
+        [Display(Name = "Vessel")]
         public int VesselId { get; set; }
         public string VesselName { get; set; }
         public IList<SelectListItem> Types { get; set; }
         public DateTime? ETA { get; set; }
         public DateTime? ETD { get; set; }
         public bool IsActive { get; set; }
-        [Display(Name="Buyer")]
+        [Display(Name = "Buyer")]
         public int BuyerId { get; set; }
         public string BuyerName { get; set; }
         public IList<SelectListItem> SalesTypes { get; set; }
+        [DataType(DataType.MultilineText)]
         public string Location { get; set; }
-        [Display(Name="Sales Type")]
+        [Display(Name = "Sales Type")]
         public string SalesType { get; set; }
         public string Type { get; set; }
         public string Cargo { get; set; }

@@ -21,6 +21,11 @@
                     @Html.DropDownListFor(model => model.VesselScheduleId, new List<SelectListItem> { new SelectListItem{ Value=Model.VesselScheduleId.ToString(), Text=Model.VesselName} }, new { @class = "form-control", data_url = Url.Action("VesselScheduleList"), style = "width:200px" })
                     @Html.ValidationMessageFor(model => model.VesselScheduleId)
                 </div>
+                  <div class="form-group form-list">
+                    @Html.LabelFor(model => model.CreatedAtDisplay)
+                    @Html.TextBoxFor(model => model.CreatedAtDisplay, new { @class = "form-control datepicker" })
+                    @Html.ValidationMessageFor(model => model.CreatedAtDisplay)
+                </div>
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.Remark)
                     @Html.TextAreaFor(model => model.Remark,5,100, new { @class = "form-control" })

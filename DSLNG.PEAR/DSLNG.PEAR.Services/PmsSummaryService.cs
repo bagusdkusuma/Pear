@@ -12,6 +12,7 @@ using DSLNG.PEAR.Services.Responses.PmsSummary;
 using System.Data.Entity;
 using NCalc;
 using PeriodeType = DSLNG.PEAR.Data.Enums.PeriodeType;
+using System.Globalization;
 
 namespace DSLNG.PEAR.Services
 {
@@ -875,7 +876,7 @@ namespace DSLNG.PEAR.Services
             {
                 foreach (var scoreIndicator in scoreIndicators)
                 {
-                    Expression e = new Expression(scoreIndicator.Expression.Replace("x", score.ToString()));
+                    Expression e = new Expression(scoreIndicator.Expression.Replace("x", score.Value.ToString("f2", CultureInfo.InvariantCulture)));
                     bool isPassed = (bool)e.Evaluate();
                     if (isPassed)
                     {

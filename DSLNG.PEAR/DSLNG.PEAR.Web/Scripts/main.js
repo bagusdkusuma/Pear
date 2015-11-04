@@ -1287,12 +1287,12 @@ Number.prototype.format = function (n, x) {
             chart: {
                 type: 'column',
                 zoomType: 'xy',
-                backgroundColor : 'transparent'
+                backgroundColor: 'transparent'
             },
             title: {
                 text: data.BarChart.Title,
                 style: {
-                    color : '#fff'
+                    color: '#fff'
                 }
             },
             subtitle: {
@@ -1570,7 +1570,7 @@ Number.prototype.format = function (n, x) {
                     }
                 }
             },
-            legend :{
+            legend: {
                 itemStyle: {
                     "color": '#fff'
                 },
@@ -1715,7 +1715,7 @@ Number.prototype.format = function (n, x) {
                 text: data.LineChart.Title,
                 //x: -20, //center
                 style: {
-                    color : '#fff'
+                    color: '#fff'
                 }
             },
             subtitle: {
@@ -1924,12 +1924,12 @@ Number.prototype.format = function (n, x) {
             chart: {
                 type: 'area',
                 zoomType: 'xy',
-                backgroundColor : 'transparent'
+                backgroundColor: 'transparent'
             },
             title: {
                 text: data.AreaChart.Title,
                 style: {
-                    color : '#fff'
+                    color: '#fff'
                 }
             },
             subtitle: {
@@ -1949,7 +1949,7 @@ Number.prototype.format = function (n, x) {
                         color: '#fff'
                     }
                 },
-                gridLineColor : '#fff',
+                gridLineColor: '#fff',
                 categories: data.AreaChart.Periodes
             },
             yAxis: {
@@ -2066,12 +2066,12 @@ Number.prototype.format = function (n, x) {
             chart: {
                 type: 'area',
                 zoomType: 'xy',
-                backgroundColor : 'transparent'
+                backgroundColor: 'transparent'
             },
             title: {
                 text: data.AreaChart.Title,
                 style: {
-                    color : '#fff'
+                    color: '#fff'
                 }
             },
             subtitle: {
@@ -2090,7 +2090,7 @@ Number.prototype.format = function (n, x) {
                     }
                 },
                 categories: data.AreaChart.Periodes,
-                gridLineColor : '#fff'
+                gridLineColor: '#fff'
             },
             yAxis: {
                 title: {
@@ -2103,7 +2103,7 @@ Number.prototype.format = function (n, x) {
                 max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale,
                 labels: {
                     style: {
-                        color : '#fff'
+                        color: '#fff'
                     }
                 }
             },
@@ -2335,13 +2335,13 @@ Number.prototype.format = function (n, x) {
                 plotBackgroundImage: null,
                 plotBorderWidth: 0,
                 plotShadow: false,
-                backgroundColor : 'transparent'
+                backgroundColor: 'transparent'
             },
 
             title: {
                 text: data.SpeedometerChart.Title,
                 style: {
-                    color : '#fff'
+                    color: '#fff'
                 }
             },
             subtitle: {
@@ -3074,14 +3074,14 @@ Number.prototype.format = function (n, x) {
                 labels: {
                     //format: '{value} ' + data.MultiaxisChart.Charts[i].Measurement,
                     style: {
-                        color : '#fff',
+                        color: '#fff',
                         //color: data.MultiaxisChart.Charts[i].ValueAxisColor
                     }
                 },
                 title: {
                     text: data.MultiaxisChart.Charts[i].Measurement, //data.MultiaxisChart.Charts[i].ValueAxisTitle + ' (' + data.MultiaxisChart.Charts[i].Measurement + ')',
                     style: {
-                        color : '#fff'
+                        color: '#fff'
                         //color: data.MultiaxisChart.Charts[i].ValueAxisColor
                     }
                 },
@@ -3147,12 +3147,12 @@ Number.prototype.format = function (n, x) {
             chart: {
                 zoomType: 'xy',
                 alignTicks: false,
-                backgroundColor : 'transparent'
+                backgroundColor: 'transparent'
             },
             title: {
                 text: data.MultiaxisChart.Title,
                 style: {
-                    color : '#fff'
+                    color: '#fff'
                 }
             },
             subtitle: {
@@ -3374,12 +3374,12 @@ Number.prototype.format = function (n, x) {
         container.highcharts({
             chart: {
                 zoomType: 'xy',
-                backgroundColor : 'transparent'
+                backgroundColor: 'transparent'
             },
             title: {
                 text: data.ComboChart.Title,
                 style: {
-                    color : '#fff'
+                    color: '#fff'
                 }
             },
             subtitle: {
@@ -3531,7 +3531,7 @@ Number.prototype.format = function (n, x) {
                     alpha: 60,
                     beta: 0
                 },
-                backgroundColor : 'transparent'
+                backgroundColor: 'transparent'
                 //margin: [0, 0, 0, 0],
                 //spacingTop: 0,
                 //spacingBottom: 0,
@@ -3541,7 +3541,7 @@ Number.prototype.format = function (n, x) {
             title: {
                 text: data.Pie.Title,
                 style: {
-                    color : '#fff'
+                    color: '#fff'
                 }
             },
             subtitle: {
@@ -4044,8 +4044,11 @@ Number.prototype.format = function (n, x) {
         });
     }
 
-    Pear.NLS.FormSetup = function(){
+    Pear.NLS.FormSetup = function () {
         Pear.VesselSchedule._autocomplete('#VesselScheduleId');
+        $('.datepicker').datetimepicker({
+            format: "MM/DD/YYYY"
+        });
     }
 
     Pear.ConstantUsage._autocomplete = function ($field) {
@@ -4072,14 +4075,14 @@ Number.prototype.format = function (n, x) {
         });
     };
 
-    Pear.ConstantUsage.FormSetup = function() {
+    Pear.ConstantUsage.FormSetup = function () {
         var length = $('.constants-holder').find('.constant-template').length + 1;
         if (length > 1) {
-            $('.constants-holder .constant-template .constant').each(function(i, val) {
+            $('.constants-holder .constant-template .constant').each(function (i, val) {
                 Pear.ConstantUsage._autocomplete($(val));
             });
         }
-        $('.add-constant').click(function(e) {
+        $('.add-constant').click(function (e) {
             e.preventDefault();
             var constantTemplate = $('.constant-template.original').clone(true);
             constantTemplate.removeClass('original');
@@ -4094,12 +4097,12 @@ Number.prototype.format = function (n, x) {
             holder.append(constantTemplate);
             length++;
         });
-        $('.constant-template .remove').click(function(e) {
+        $('.constant-template .remove').click(function (e) {
             e.preventDefault();
             $(this).closest('.constant-template').remove();
         });
     };
-    
+
     $(document).ready(function () {
         if ($('.artifact-designer').length) {
             Pear.Artifact.Designer.GraphicSettingSetup();
@@ -4126,13 +4129,13 @@ Number.prototype.format = function (n, x) {
         if ($('.vessel-schedule-save').length) {
             Pear.VesselSchedule.FormSetup();
         }
-        if($('.nls-save').length){
+        if ($('.nls-save').length) {
             Pear.NLS.FormSetup();
         }
         if ($('.constant-usage-save').length) {
             Pear.ConstantUsage.FormSetup();
         }
-        
+
         if ($('.calculator').length) {
             Pear.PricingCalculator.Init();
             Pear.ProductionYieldCalculator.Init();
@@ -4140,6 +4143,31 @@ Number.prototype.format = function (n, x) {
             Pear.PlantAvailabilityCalculator.Init();
             Pear.CalculatorConstant.Init();
         }
+        $('.see-more').click(function () {
+            var modalHeader = $('<div/>');
+            modalHeader.addClass('modal-header');
+            modalHeader.html('<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>');
+            modalHeader.append($('<div/>').addClass('row').addClass('modal-header-detail').html('<div class="title">' + $(this).closest('td').find('.highlight-title').html() + '</div>'));
+            var modalBody = $('<div/>');
+            modalBody.addClass('modal-body');
+            modalBody.html($(this).next('.full-string').clone());
+            modalBody.find('.full-string').show();
+            var more = $('#modalDialog .modal-content');
+            more.html('');
+            more.append(modalHeader);
+            more.append(modalBody);
+            $('#modalDialog .modal-content').removeClass('ajax-loading');
+        });
+        $('.nls-see-all').click(function (e) {
+            e.preventDefault();
+            $.get($(this).attr('href'), function (data) {
+            });
+        });
+        $('.highlight-order').keyup(function () {
+            var form = $(this).closest('form');
+            $.post(form.attr('action'), form.serialize().replace(/item\./g, ''), function (data) {
+            });
+        });
     });
     window.Pear = Pear;
 }(window, jQuery, undefined));

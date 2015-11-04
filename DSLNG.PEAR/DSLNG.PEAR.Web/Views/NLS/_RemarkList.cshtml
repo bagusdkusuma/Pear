@@ -1,0 +1,37 @@
+﻿@model IEnumerable<DSLNG.PEAR.Web.ViewModels.NLS.NLSViewModel>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="row modal-header-detail">
+        <div class="title">All Remarks</div>
+    </div>
+
+</div>
+<div class="modal-body">
+    <div class="panel panel-default der-panel">
+        <table class="der table-bordered">
+            <tr>
+                <th style="width: 50px">
+                    @Html.DisplayNameFor(model => model.CreatedAtDisplay)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Remark)
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedAtDisplay)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Remark)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

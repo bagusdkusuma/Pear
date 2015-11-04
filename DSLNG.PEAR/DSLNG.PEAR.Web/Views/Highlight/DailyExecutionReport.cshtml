@@ -1,4 +1,6 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Highlight.DailyExecutionReportViewModel
+@using DSLNG.PEAR.Web.Helpers
+
 <div class="daily-execution-report ">
     <div class="row">
         <div class="col-md-12">
@@ -24,20 +26,22 @@
                     <tr>
                         <th>Next Loading Schedule</th>
                         <th>Vessel (Capacity)</th>
+                        <th>Customer</th>
                         <th>ETA</th>
                         <th>ETD</th>
                         <th>Cargo#</th>
-                        <th>Customer / Other Remarks</th>
+                        <th>Remarks</th>
                     </tr>
                     @foreach (var nls in Model.NLSList)
                     { 
                         <tr>
                             <td>@nls.VesselType</td>
                             <td>@nls.Vessel (@nls.Capacity @nls.Measurement)</td>
+                            <td>@nls.Buyer</td>
                             <td>@nls.ETA.ToString("dd-MM-yyyy")</td>
                             <td>@nls.ETD.ToString("dd-MM-yyyy")</td>
                             <td>@nls.Cargo</td>
-                            <td>@nls.Buyer / @nls.RemarkDate.ToString("dd-MM-yyyy");@nls.Remark</td>
+                            <td>@nls.RemarkDate.ToString("dd-MM-yyyy");@nls.Remark | @Html.ActionLink("See All", "InVesselSchedule", "NLS", new{id=nls.Id}, new { @class="nls-see-all", data_toggle="modal", data_target="#modalDialog" })</td>
                         </tr>
                     }
                 </table>
@@ -62,16 +66,16 @@
                                 <td @colspan>
                                     @if (Model.Highlights.Count > i)
                                     { 
-                                        <h4 style="float: none; margin-top: 10px">@Model.Highlights[i].Title</h4>
-                                        <p>@Model.Highlights[i].Message</p>
+                                        <h4 class="highlight-title" style="float: none; margin-top: 10px">@Model.Highlights[i].Title</h4>
+                                        <p>@Html.LimitString(@Model.Highlights[i].Message,140)</p>
                                     }
                                 </td>
 
                                 @if (Model.Highlights.Count > i + 1)
                                 {
                                     <td>
-                                        <h4 style="float: none; margin-top: 10px">@Model.Highlights[i + 1].Title</h4>
-                                        <p>@Model.Highlights[i + 1].Message</p>
+                                        <h4 class="highlight-title" style="float: none; margin-top: 10px">@Model.Highlights[i + 1].Title</h4>
+                                        <p>@Html.LimitString(@Model.Highlights[i + 1].Message,140)</p>
                                     </td>
                                 }
 
@@ -83,3 +87,4 @@
         </div>
     }
 </div>
+@Html.Partial("_Modal")

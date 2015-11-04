@@ -17,6 +17,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Vessel
         public int Id { get; set; }
         public string Name { get; set; }
         public double Capacity { get; set; }
+        [Display(Name="Cargo Type")]
         public string Type { get; set; }
         public IList<SelectListItem> Types { get; set; }
         [Display(Name="Measurement")]

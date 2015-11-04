@@ -12,6 +12,7 @@ using System.Linq;
 using DSLNG.PEAR.Services.Requests.NLS;
 using DSLNG.PEAR.Services.Requests.VesselSchedule;
 using DSLNG.PEAR.Services.Requests.Weather;
+using DSLNG.PEAR.Services.Requests.HighlightOrder;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -22,18 +23,21 @@ namespace DSLNG.PEAR.Web.Controllers
         private INLSService _nlsService;
         private IVesselScheduleService _vesselScheduleService;
         private IWeatherService _waetherService;
+        private IHighlightOrderService _highlightOrderService;
 
         public HighlightController(IHighlightService highlightService,
             ISelectService selectService,
             INLSService nlsService,
             IVesselScheduleService vesselScheduleService,
-            IWeatherService weatherService)
+            IWeatherService weatherService,
+            IHighlightOrderService highlightOrderService)
         {
             _highlightService = highlightService;
             _selectService = selectService;
             _nlsService = nlsService;
             _vesselScheduleService = vesselScheduleService;
             _waetherService = weatherService;
+            _highlightOrderService = highlightOrderService;
         }
         public ActionResult Index()
         {
@@ -64,6 +68,7 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.Columns.Add("Type");
             viewModel.Columns.Add("Title");
             viewModel.Columns.Add("Date");
+            viewModel.Columns.Add("IsActive");
             viewModel.Pager.PageSize = 10;
             return viewModel;
         }
@@ -122,8 +127,14 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create(HighlightViewModel viewModel)
         {
             var req = viewModel.MapTo<SaveHighlightRequest>();
-            _highlightService.SaveHighlight(req);
-            return RedirectToAction("Index");
+            var resp = _highlightService.SaveHighlight(req);
+            TempData["IsSuccess"] = resp.IsSuccess;
+            TempData["Message"] = resp.Message;
+            if (resp.IsSuccess)
+            {
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Create");
         }
 
         //
@@ -168,8 +179,16 @@ namespace DSLNG.PEAR.Web.Controllers
             var viewModel = new DailyExecutionReportViewModel();
             viewModel.NLSList = vesselSchedules.VesselSchedules.MapTo<DailyExecutionReportViewModel.NLSViewModel>();
             viewModel.Weather = _waetherService.GetWeather(new GetWeatherRequest { Date = DateTime.Now.Date }).MapTo<DailyExecutionReportViewModel.WeatherViewModel>();
-            viewModel.Highlights = _highlightService.GetHighlights(new GetHighlightsRequest { Except = new string[1] { "alert" },Date = DateTime.Now.Date }).Highlights.MapTo<DailyExecutionReportViewModel.HighlightViewModel>();
+            viewModel.Highlights = _highlightService.GetHighlights(new GetHighlightsRequest { Except = new string[1] { "alert" },Date = DateTime.Now.Date, IsActive=true }).Highlights.MapTo<DailyExecutionReportViewModel.HighlightViewModel>();
             viewModel.Alert = _highlightService.GetHighlight(new GetHighlightRequest { Type = "alert", Date = DateTime.Now.Date }).MapTo<DailyExecutionReportViewModel.AlertViewModel>();
+            var highlightOrders = _highlightOrderService.GetHighlights(new GetHighlightOrdersRequest());
+            foreach (var highlight in highlightOrders.HighlightOrders) {
+                var highlightVM = viewModel.Highlights.FirstOrDefault(x => x.Type == highlight.Value);
+                if (highlightVM != null) {
+                    highlightVM.Order = highlight.Order;
+                }
+            }
+            viewModel.Highlights = viewModel.Highlights.OrderBy(x => x.Order).ToList();
             return View(viewModel);
         }
     }

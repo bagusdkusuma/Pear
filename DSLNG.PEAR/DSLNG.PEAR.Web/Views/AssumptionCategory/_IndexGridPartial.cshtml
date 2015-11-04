@@ -1,0 +1,34 @@
+﻿@Html.DevExpress().GridView(settings =>
+        {
+            settings.Name = "gridAssumptionCategoryIndex";
+            settings.CallbackRouteValues = new { Controller = "AssumptionCategory", Action = "IndexPartial" };
+            settings.CustomBindingRouteValuesCollection.Add(
+                GridViewOperationType.Paging, new { Controller = "AssumptionCategory", Action = "PagingAction" });
+
+
+            settings.SettingsEditing.Mode = GridViewEditingMode.EditForm;
+            settings.SettingsBehavior.ConfirmDelete = true;
+            settings.Width = Unit.Percentage(60);
+            settings.KeyFieldName = "Id";
+
+
+            settings.Columns.Add("Id").Visible = false;
+            settings.Columns.Add("Name", "Name");
+            settings.Columns.Add("Desc", "Desc");
+            settings.Columns.Add("IsActive", MVCxGridViewColumnType.CheckBox);
+            settings.Columns.Add(column =>
+            {
+                column.Caption = "Action";
+                column.SetDataItemTemplateContent(c =>
+                                                  ViewContext.Writer.Write(
+                                                      Html.ActionLink("Edit", "Edit", new { Id = DataBinder.Eval(c.DataItem, "Id") }) + " | " +
+                                                      "<a href='javascript:;' onclick='confirmDelete(" + DataBinder.Eval(c.DataItem, "Id") + ")'>Delete</a>"
+                                                      )
+
+
+                    );
+            });
+
+            settings.SettingsPager.PageSizeItemSettings.Visible = true;
+            settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+        }).BindToCustomData(Model).GetHtml()

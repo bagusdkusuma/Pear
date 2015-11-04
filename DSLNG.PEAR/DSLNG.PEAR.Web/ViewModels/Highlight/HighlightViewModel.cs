@@ -15,6 +15,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Highlight
             PeriodeTypes = new List<SelectListItem>();
             Types = new List<SelectListItem>();
             AlertConditions = new List<SelectListItem>();
+            IsActive = true;
         }
         public int Id { get; set; }
         [Display(Name = "Periode Type")]
@@ -87,5 +88,6 @@ namespace DSLNG.PEAR.Web.ViewModels.Highlight
         [Required]
         [DataType(DataType.MultilineText)]
         public string Message { get; set; }
+        public bool IsActive { get; set; }
     }
 }
