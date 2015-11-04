@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DSLNG.PEAR.Data.Enums;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -9,7 +10,9 @@ namespace DSLNG.PEAR.Data.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-
+        public Select Parent { get; set; }
+        public Select Child { get; set; }
+        public SelectType Type { get; set; }
         public string Name { get; set; }
         public IList<SelectOption> Options { get; set; }
         public bool IsActive { get; set; }

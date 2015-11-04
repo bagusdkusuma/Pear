@@ -129,6 +129,7 @@
     <Compile Include="Enums\PmsSummaryScoringIndicatorType.cs" />
     <Compile Include="Enums\RangeFilter.cs" />
     <Compile Include="Enums\ScoringType.cs" />
+    <Compile Include="Enums\SelectType.cs" />
     <Compile Include="Enums\SeriesType.cs" />
     <Compile Include="Enums\TargetType.cs" />
     <Compile Include="Entities\Type.cs" />

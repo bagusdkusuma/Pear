@@ -4,6 +4,8 @@ using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Select;
 using DSLNG.PEAR.Web.ViewModels.Select;
 using DevExpress.Web.Mvc;
+using System;
+using DSLNG.PEAR.Data.Enums;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -74,6 +76,10 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create()
         {
             var viewModel = new CreateSelectViewModel();
+            foreach (var name in Enum.GetNames(typeof(SelectType)))
+            {
+                    viewModel.Types.Add(new SelectListItem { Text = name, Value = name });
+            }
             return View(viewModel);
         }
 
