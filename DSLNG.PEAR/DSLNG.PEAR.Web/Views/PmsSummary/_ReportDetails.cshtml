@@ -97,11 +97,11 @@
                                 @foreach (var item in Model.KpiRelations)
                                 {
                                     <tr data-toggle="modal" data-target="#ModalFatality">
-                                        <td>@item.Name</td>
-                                        <td>@item.Unit</td>
-                                        <td>@item.Method</td>
-                                        <td>@(item.ActualYearly.HasValue ? item.ActualYearly.Value.ToString(FormatNumber.DecimalFormat) : "") </td>
-                                        <td>@(item.ActualMonthly.HasValue ? item.ActualMonthly.Value.ToString(FormatNumber.DecimalFormat) : "") </td>
+                                        <td  style="text-align: left;padding-left: 15px;">@item.Name</td>
+                                        <td  style="text-align: left;padding-left: 15px;">@item.Unit</td>
+                                        <td  style="text-align: left;padding-left: 15px;">@item.Method</td>
+                                        <td  style="text-align: right;padding-right: 15px;">@(item.ActualYearly.HasValue ? item.ActualYearly.Value.ToString(FormatNumber.DecimalFormat) : "") </td>
+                                        <td  style="text-align: right;padding-right: 15px;">@(item.ActualMonthly.HasValue ? item.ActualMonthly.Value.ToString(FormatNumber.DecimalFormat) : "") </td>
                                     </tr>
                                 }
                             </tbody>
