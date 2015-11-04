@@ -1,0 +1,56 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.OperationalData.OperationalDataViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="Operation-save">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="col-md-12">
+            <div class="title">Operation</div>
+            <div class="description_year">Edit</div>
+            <div>@Html.ValidationSummary(true)</div>
+            @Html.HiddenFor(x => x.Id)
+        </div>
+        <div class="col-md-12">
+            <div class="form-inline whitebox">
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.IdKeyOperation)
+                    @Html.DropDownListFor(model => model.IdKeyOperation, Model.KeyOperations, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IdKeyOperation)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.IdKPI)
+                    @Html.DropDownListFor(model => model.IdKPI, Model.KPIS, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IdKPI)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.ActualValue)
+                    @Html.TextBoxFor(model => model.ActualValue, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ActualValue)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.ForecastValue)
+                    @Html.TextBoxFor(model => model.ForecastValue, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ForecastValue)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.Remark)
+                    @Html.TextAreaFor(model => model.Remark, 5, 100, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Remark)
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 artifact-designer-btns">
+            <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
+            <a onclick="location.reload();" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>
+            <a href="/OperationalData" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

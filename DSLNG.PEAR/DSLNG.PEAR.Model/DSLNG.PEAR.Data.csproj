@@ -79,7 +79,9 @@
     <Compile Include="Entities\ConstantUsage.cs" />
     <Compile Include="Entities\Conversion.cs" />
     <Compile Include="Entities\DashboardTemplate.cs" />
+    <Compile Include="Entities\EconomicModel\EconomicSummaryConfig.cs" />
     <Compile Include="Entities\EconomicModel\KeyAssumptionData.cs" />
+    <Compile Include="Entities\EconomicModel\KeyOperation.cs" />
     <Compile Include="Entities\EconomicModel\Scenario.cs" />
     <Compile Include="Entities\ResetPassword.cs" />
     <Compile Include="Entities\Select.cs" />
