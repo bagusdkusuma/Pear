@@ -8,7 +8,7 @@
             <span aria-hidden="true">&times;</span>
         </button>
         <div class="row modal-header-detail">
-            <div class="roundlight pull-left" style="background-color: green; margin-top: 10px"></div>
+            <div class="roundlight pull-left" style="background-color: @Model.Color; margin-top: 10px"></div>
             <div class="title">@Model.KpiName</div>
             <div class="description_year">@Model.Title</div>
             <div class="description_month">@Model.Month @Model.Year</div>
@@ -52,12 +52,8 @@
                     <table class="table-transparent table table-bordered table-responsive">
                         <tbody>
                             <tr>
-                                <th rowspan="2">Groups</th>
                                 <th rowspan="2">Performance Indicator</th>
                                 <th rowspan="2">Unit</th>
-
-                                <th rowspan="2">Period</th>
-
                                 <th colspan="2">Actual</th>
                             </tr>
                             <tr style="border-bottom: 1px solid #ffffff">
@@ -68,12 +64,10 @@
                             @foreach (var item in Model.Groups)
                             {
                                 <tr data-toggle="modal" data-target="#ModalFatality">
-                                    <td>@item.Name</td>
-                                    <td>@item.PerformanceIndicator</td>
-                                    <td>@item.Unit</td>
-                                    <td>@item.Periode</td>
-                                    <td>@(item.ActualYearly.HasValue ? item.ActualYearly.Value.ToString(FormatNumber.DecimalFormat) : "") </td>
-                                    <td>@(item.ActualMonthly.HasValue ? item.ActualMonthly.Value.ToString(FormatNumber.DecimalFormat) : "") </td>
+                                    <td style="text-align: left;padding-left: 15px;">@item.PerformanceIndicator</td>
+                                    <td style="text-align: right;padding-right: 15px;">@item.Unit</td>
+                                    <td style="text-align: right;padding-right: 15px;">@(item.ActualYearly.HasValue ? item.ActualYearly.Value.ToString(FormatNumber.DecimalFormat) : "") </td>
+                                    <td style="text-align: right;padding-right: 15px;">@(item.ActualMonthly.HasValue ? item.ActualMonthly.Value.ToString(FormatNumber.DecimalFormat) : "") </td>
                                 </tr>
                             }
 

@@ -59,7 +59,7 @@ border-left: 1px solid #ffffff">Yearly</td>
 
                     }
                     pillarScore += Convert.ToDecimal(item.Score);
-                    <tr class="kpi-row" onclick="OnCellClick('5', @item.PmsConfigDetailId);">
+                    <tr class="kpi-row" onclick="OnCellClick('5', @item.PmsConfigDetailId, '@item.KpiColor');">
                         <td>&nbsp;</td>
                         @if (!string.IsNullOrEmpty(item.KpiIcon))
                         {

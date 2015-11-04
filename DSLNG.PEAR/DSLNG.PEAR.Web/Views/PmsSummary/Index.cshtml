@@ -64,12 +64,12 @@
         });*/
     });
 
-    function OnCellClick(visibleIndex, fieldName) {
+    function OnCellClick(visibleIndex, fieldName, kpiColor) {
         var id = fieldName;
         var month = $('#month').val();
         var year = $('#year').val();
         $('#modalDialog').modal({
-            remote: '@Url.Action("ReportDetails", "PmsSummary")' + '/' + id + '?month=' + month + '&year=' + year
+            remote: '@Url.Action("ReportDetails", "PmsSummary")' + '/' + id + '?month=' + month + '&year=' + year + '&color=' + kpiColor
         });
     }
     

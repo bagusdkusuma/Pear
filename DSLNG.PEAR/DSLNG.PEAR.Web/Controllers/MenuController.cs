@@ -6,6 +6,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Services.Requests.Pillar;
+using DSLNG.PEAR.Web.Grid;
 using DSLNG.PEAR.Web.ViewModels.Menu;
 using DSLNG.PEAR.Data.Entities;
 using DevExpress.Web.Mvc;
@@ -14,6 +16,7 @@ using DSLNG.PEAR.Services.Requests.User;
 using DSLNG.PEAR.Services.Responses.Menu;
 using DSLNG.PEAR.Web.DependencyResolution;
 using DSLNG.PEAR.Web.ViewModels;
+using Newtonsoft.Json;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -207,6 +210,32 @@ namespace DSLNG.PEAR.Web.Controllers
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Grid(GridParams gridParams)
+        {
+            var menus = _menuService.GetMenusForGrid(new GetMenusRequest
+            {
+                Skip = gridParams.DisplayStart,
+                Take = gridParams.DisplayLength,
+                SortingDictionary = gridParams.SortingDictionary,
+                Search = gridParams.Search
+            });
+
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalRecords = menus.Menus.Count,
+                iTotalDisplayRecords = menus.TotalRecords,
+                aaData = menus.Menus
+            };
+            var list = JsonConvert.SerializeObject(data,
+                                                   Formatting.None,
+                                                   new JsonSerializerSettings
+                                                       {
+                                                           ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                                       });
+            return Content(list, "application/json");
         }
     }
 }
