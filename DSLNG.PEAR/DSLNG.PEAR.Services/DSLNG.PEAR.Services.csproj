@@ -82,6 +82,7 @@
     <Compile Include="ConstantUsageService.cs" />
     <Compile Include="ConversionService.cs" />
     <Compile Include="DropdownService.cs" />
+    <Compile Include="EconomicSummaryService.cs" />
     <Compile Include="GroupService.cs" />
     <Compile Include="HighlightOrderService.cs" />
     <Compile Include="HighlightService.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Interfaces\IBuyerService.cs" />
     <Compile Include="Interfaces\ICalculatorConstantService.cs" />
     <Compile Include="Interfaces\IConstantUsageService.cs" />
+    <Compile Include="Interfaces\IEconomicSummaryService.cs" />
     <Compile Include="Interfaces\IHighlightOrderService.cs" />
     <Compile Include="Interfaces\IHighlightService.cs" />
     <Compile Include="Interfaces\IKpiAchievementService.cs" />
@@ -152,6 +154,10 @@
     <Compile Include="Requests\ConstantUsage\SaveConstantUsageRequest.cs" />
     <Compile Include="Requests\Conversion\CreateConversionRequest.cs" />
     <Compile Include="Requests\Conversion\UpdateConversionRequest.cs" />
+    <Compile Include="Requests\EconomicSummary\DeleteEconomicSummaryRequest.cs" />
+    <Compile Include="Requests\EconomicSummary\GetEconomicSummariesRequest.cs" />
+    <Compile Include="Requests\EconomicSummary\GetEconomicSummaryRequest.cs" />
+    <Compile Include="Requests\EconomicSummary\SaveEconomicSummaryRequest.cs" />
     <Compile Include="Requests\HighlightOrder\GetHighlightOrdersRequest.cs" />
     <Compile Include="Requests\HighlightOrder\SaveHighlightOrderRequest.cs" />
     <Compile Include="Requests\Highlight\DeleteRequest.cs" />
@@ -283,6 +289,10 @@
     <Compile Include="Responses\Conversion\DeleteConversionResponse.cs" />
     <Compile Include="Responses\Conversion\Measurement.cs" />
     <Compile Include="Responses\Conversion\UpdateConversionResponse.cs" />
+    <Compile Include="Responses\EconomicSummary\DeleteEconomicSummaryResponse.cs" />
+    <Compile Include="Responses\EconomicSummary\GetEconomicSummariesResponse.cs" />
+    <Compile Include="Responses\EconomicSummary\GetEconomicSummaryResponse.cs" />
+    <Compile Include="Responses\EconomicSummary\SaveEconomicSummaryResponse.cs" />
     <Compile Include="Responses\Group\CreateGroupResponse.cs" />
     <Compile Include="Responses\Group\DeleteGroupResponse.cs" />
     <Compile Include="Responses\Group\UpdateGroupResponse.cs" />

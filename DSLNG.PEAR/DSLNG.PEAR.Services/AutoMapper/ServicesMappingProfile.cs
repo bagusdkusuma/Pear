@@ -76,6 +76,8 @@ using DSLNG.PEAR.Services.Responses.Operation;
 using DSLNG.PEAR.Services.Requests.Operation;
 using DSLNG.PEAR.Services.Responses.OperationalData;
 using DSLNG.PEAR.Services.Requests.OperationalData;
+using DSLNG.PEAR.Services.Responses.EconomicSummary;
+using DSLNG.PEAR.Services.Requests.EconomicSummary;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -429,6 +431,10 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<OperationDataConfiguration, GetOperationalDataResponse>()
                 .ForMember(x => x.IdKeyOperation, o => o.MapFrom(s => s.KeyOperation.Id))
                 .ForMember(x => x.IdKPI, o => o.MapFrom(s => s.Kpi.Id));
+
+            Mapper.CreateMap<EconomicSummaryConfig, GetEconomicSummariesResponse.EconomicSummary>();
+            Mapper.CreateMap<SaveEconomicSummaryRequest, EconomicSummaryConfig>();
+            Mapper.CreateMap<EconomicSummaryConfig, GetEconomicSummaryResponse>();
 
             base.Configure();
         }

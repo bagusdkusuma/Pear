@@ -504,10 +504,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Compile Include="Controllers\AssumptionDataController.cs" />
+    <Compile Include="Controllers\EconomicSummaryController.cs" />
     <Compile Include="Controllers\OperationalDataController.cs" />
     <Compile Include="Controllers\OperationController.cs" />
     <Compile Include="Controllers\ScenarioController.cs" />
     <Compile Include="ViewModels\AssumptionData\AssumptionDataViewModel.cs" />
+    <Compile Include="ViewModels\EconomicSummary\EconomicSummaryViewModel.cs" />
     <Compile Include="ViewModels\Kpi\UploadViewModel.cs" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
@@ -679,6 +681,10 @@
     <Content Include="Views\AssumptionData\Edit.cshtml" />
     <Content Include="Views\AssumptionData\Index.cshtml" />
     <Content Include="Views\AssumptionData\_IndexGridPartial.cshtml" />
+    <Content Include="Views\EconomicSummary\Create.cshtml" />
+    <Content Include="Views\EconomicSummary\Edit.cshtml" />
+    <Content Include="Views\EconomicSummary\Config.cshtml" />
+    <Content Include="Views\EconomicSummary\_ConfigGridPartial.cshtml" />
     <None Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\SpeedometerChart\_Edit.cshtml" />
     <Content Include="Views\Tabular\_Create.cshtml" />
@@ -730,10 +736,6 @@
     <Content Include="Views\Weather\Edit.cshtml" />
     <Content Include="Views\Weather\Index.cshtml" />
     <Content Include="Views\HighlightOrder\Index.cshtml" />
-    <Content Include="Views\OuputCategory\Create.cshtml" />
-    <Content Include="Views\OuputCategory\Edit.cshtml" />
-    <Content Include="Views\OuputCategory\Index.cshtml" />
-    <Content Include="Views\OuputCategory\_IndexGridPartial.cshtml" />
     <Content Include="Views\OperationGroup\Create.cshtml" />
     <Content Include="Views\OperationGroup\Edit.cshtml" />
     <Content Include="Views\OperationGroup\Index.cshtml" />
