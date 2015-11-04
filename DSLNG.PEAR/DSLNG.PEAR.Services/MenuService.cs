@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Data.SqlClient;
+using AutoMapper;
 using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Menu;
@@ -230,6 +231,18 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
+        public GetMenusResponse GetMenusForGrid(GetMenusRequest request)
+        {
+            int totalRecords;
+            var menus = SortData(request.Search, request.SortingDictionary, out totalRecords).Skip(request.Skip).Take(request.Take).ToList();
+
+            var response = new GetMenusResponse();
+            response.Menus = menus.MapTo<GetMenusResponse.Menu>();
+            response.TotalRecords = totalRecords;
+
+            return response;
+        }
+
         public GetMenuResponse GetMenu(GetMenuRequest request)
         {
             try
@@ -450,6 +463,39 @@ namespace DSLNG.PEAR.Services
                 i++;
             }
             return new GetRootMenuResponse();
+        }
+
+        private IEnumerable<Data.Entities.Menu> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int totalRecords)
+        {
+            var data = DataContext.Menus.Include(x=> x.RoleGroups).AsQueryable();
+            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            {
+                data = data.Where(x => x.Module.Contains(search) || x.Name.Contains(search));
+            }
+
+            foreach (var sortOrder in sortingDictionary)
+            {
+                switch (sortOrder.Key)
+                {
+                    case "Module":
+                        data = sortOrder.Value == SortOrder.Ascending
+                                   ? data.OrderBy(x => x.Module)
+                                   : data.OrderByDescending(x => x.Module);
+                        break;
+                    case "Name":
+                        data = sortOrder.Value == SortOrder.Ascending
+                                   ? data.OrderBy(x => x.Name)
+                                   : data.OrderByDescending(x => x.Name);
+                        break;
+                    default:
+                        data = sortOrder.Value == SortOrder.Ascending
+                                   ? data.OrderBy(x => x.Order)
+                                   : data.OrderByDescending(x => x.Order);
+                        break;
+                }
+            }
+            totalRecords = data.Count();
+            return data;
         }
     }
 }

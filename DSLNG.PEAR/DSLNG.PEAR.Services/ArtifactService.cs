@@ -13,6 +13,7 @@ using DSLNG.PEAR.Common.Extensions;
 using System.Data.Entity;
 using System.Globalization;
 using DSLNG.PEAR.Common.Contants;
+using System.Data.SqlClient;
 
 namespace DSLNG.PEAR.Services
 {
@@ -2198,7 +2199,15 @@ namespace DSLNG.PEAR.Services
 
         public GetArtifactsResponse GetArtifacts(GetArtifactsRequest request)
         {
-            if (request.OnlyCount)
+            int totalRecords;
+            var artifacts = SortData(request.Search, request.SortingDictionary, out totalRecords).Skip(request.Skip).Take(request.Take).ToList();
+
+            var response = new GetArtifactsResponse();
+            response.Artifacts = artifacts.MapTo<GetArtifactsResponse.Artifact>();
+            response.TotalRecords = totalRecords;
+
+            return response;
+            /*if (request.OnlyCount)
             {
                 return new GetArtifactsResponse { Count = DataContext.Artifacts.Count() };
             }
@@ -2209,7 +2218,35 @@ namespace DSLNG.PEAR.Services
                     Artifacts = DataContext.Artifacts.OrderByDescending(x => x.Id).Skip(request.Skip).Take(request.Take)
                                     .ToList().MapTo<GetArtifactsResponse.Artifact>()
                 };
+            }*/
+        }
+
+        private IEnumerable<Artifact> SortData(string search, IDictionary<string, System.Data.SqlClient.SortOrder> sortingDictionary, out int totalRecords)
+        {
+            var data = DataContext.Artifacts.AsQueryable();
+            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            {
+                data = data.Where(x => x.GraphicName.Contains(search) || x.GraphicType.Contains(search));
             }
+
+            foreach (var sortOrder in sortingDictionary)
+            {
+                switch (sortOrder.Key)
+                {
+                    case "GraphicName":
+                        data = sortOrder.Value == SortOrder.Ascending
+                                   ? data.OrderBy(x => x.GraphicName)
+                                   : data.OrderByDescending(x => x.GraphicName);
+                        break;
+                    case "GraphicType":
+                        data = sortOrder.Value == SortOrder.Ascending
+                                   ? data.OrderBy(x => x.GraphicType)
+                                   : data.OrderByDescending(x => x.GraphicType);
+                        break;
+                }
+            }
+            totalRecords = data.Count();
+            return data;
         }
 
         public GetArtifactResponse GetArtifact(GetArtifactRequest request)

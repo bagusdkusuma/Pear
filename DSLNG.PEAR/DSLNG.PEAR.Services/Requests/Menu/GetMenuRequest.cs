@@ -11,7 +11,7 @@ namespace DSLNG.PEAR.Services.Requests.Menu
         public int Id { get; set; }
     }
 
-    public class GetMenusRequest
+    public class GetMenusRequest : GridBaseRequest
     {
         public int Skip { get; set; }
         public int Take { get; set; }

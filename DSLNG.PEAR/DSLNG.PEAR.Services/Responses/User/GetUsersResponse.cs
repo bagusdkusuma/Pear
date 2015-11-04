@@ -9,6 +9,7 @@ namespace DSLNG.PEAR.Services.Responses.User
     public class GetUsersResponse : BaseResponse
     {
         public IList<User> Users { get; set; }
+        public int  TotalRecords { get; set; }
 
         public class User
         {

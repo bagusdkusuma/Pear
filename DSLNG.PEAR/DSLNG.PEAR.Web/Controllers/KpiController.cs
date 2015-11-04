@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,6 +9,7 @@ using DSLNG.PEAR.Services;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Responses.Kpi;
 using System.Web.Mvc;
+using DSLNG.PEAR.Web.Grid;
 using DevExpress.Web.Mvc;
 using DSLNG.PEAR.Services.Requests.Kpi;
 using DSLNG.PEAR.Web.ViewModels.Kpi;
@@ -318,6 +320,26 @@ namespace DSLNG.PEAR.Web.Controllers
             }
 
             return RedirectToAction(redirectAction);
+        }
+
+        public ActionResult Grid(GridParams gridParams)
+        {
+            var kpis = _kpiService.GetKpis(new GetKpisRequest
+                {
+                    Skip = gridParams.DisplayStart,
+                    Take = gridParams.DisplayLength,
+                    SortingDictionary = gridParams.SortingDictionary,
+                    Search = gridParams.Search
+                });
+            IList<GetKpisResponse.Kpi> kpisResponse = kpis.Kpis;
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = kpis.TotalRecords,
+                iTotalRecords = kpis.Kpis.Count,
+                aaData = kpisResponse
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
     }
 }

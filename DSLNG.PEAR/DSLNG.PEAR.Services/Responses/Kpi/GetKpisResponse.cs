@@ -9,6 +9,7 @@ namespace DSLNG.PEAR.Services.Responses.Kpi
     public class GetKpisResponse : BaseResponse
     {
         public IList<Kpi> Kpis { get; set; }
+        public int TotalRecords { get; set; }
 
         public class Kpi
         {

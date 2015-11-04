@@ -5,19 +5,46 @@
 <div class="artifact-list">
     <h2>List</h2>
     @Html.Partial("_MessageResponse")
-    @Html.ActionLink("Create New", "Designer")
-    @Html.Action("IndexPartial")
+    <div class="add-button-wrapper">
+        @Html.ActionLink("Create New", "Designer")
+    </div>
+    @*@Html.Action("IndexPartial")*@
+    
+    <table id="artifact-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+    </table>
 
     @section Scripts{
         <script type="text/javascript">
-            var confirmDelete = function (id) {
-                if (confirm('Are you sure want to delete this item?')) {
-                    var url = '@Url.Action("Delete", "Measurement")';
-                $('<form action="' + url + '" method="POST">' +
-                    '<input type="hidden" name="id" value="' + id + '">' +
-                    '</form>').submit();
-            }
-        };
+            $(document).ready(function () {
+                $('#artifact-table').DataTable({
+                    "bProcessing": true,
+                    "bServerSide": true,
+                    "sServerMethod": "POST",
+                    "sAjaxSource": '@Url.Action("Grid", "Artifact")',
+                    "order": [[1, "asc"]],
+                    "aoColumns": [
+                        { "mDataProp": "GraphicName", "name": "Name" },
+                        { "mDataProp": "GraphicType", "name": "Order" },
+                        {
+                            "orderable": false,
+                            "data": null,
+                            "defaultContent": '',
+                            "mRender": function(data, type, row) {
+                                var viewLink = '@Html.ActionLink("View", "View", new { Id = "_id_" }, new { @class="artifact-view" })'.replace('_id_', data.Id);
+                                var editLink = '@Html.ActionLink("Edit", "Edit", "Artifact", new { id = "_id_" }, null)'.replace('_id_', data.Id);
+                                return editLink + ' | ' + viewLink;
+                            }
+                        }
+                    ]
+                });
+            });
         </script>
     }
 

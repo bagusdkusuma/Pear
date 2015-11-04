@@ -9,6 +9,7 @@ namespace DSLNG.PEAR.Services.Responses.Menu
     public class GetMenusResponse : BaseResponse
     {
         public IList<Menu> Menus { get; set; }
+        public int TotalRecords { get; set; }
 
         public class Menu
         {

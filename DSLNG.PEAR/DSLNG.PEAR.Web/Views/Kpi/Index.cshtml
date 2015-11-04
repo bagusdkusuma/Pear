@@ -5,19 +5,88 @@
 
 <h2>KPI List</h2>
 @Html.Partial("_MessageResponse")
-@Html.ActionLink("New", "Create", null, new { @class = "btn btn-primary" })
-@Html.Action("IndexPartial")
+<div class="add-button-wrapper">
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })    
+</div>
 
+@*@Html.Action("IndexPartial")*@
+<table id="kpi-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Pillar Name</th>
+            <th>Order</th>
+            <th>Is Economic</th>
+            <th>Remark</th>
+            <th>Is Active</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+</table>
 
 @section Scripts{
     <script type="text/javascript">
-        var confirmDelete = function(id) {
-            if (confirm('Are you sure want to delete this item?')) {
-                var url = '@Url.Action("Delete", "Kpi")';
-                $('<form action="' + url + '" method="POST">' +
-                    '<input type="hidden" name="id" value="' + id + '">' +
-                    '</form>').submit();
-            }
-        };
+        $(document).ready(function() {
+            $('#kpi-table').DataTable({
+                "bProcessing": true,
+                "bServerSide": true,
+                "sServerMethod": "POST",
+                "sAjaxSource": '@Url.Action("Grid", "Kpi")',
+                "order": [[3, "asc"]],
+                "aoColumns": [
+                    { "mDataProp": "Code", "name": "Code" },
+                    { "mDataProp": "Name", "name": "Name" },
+                    { "mDataProp": "PillarName", "name": "PillarName" },
+                    { "mDataProp": "Order", "name": "Order" },
+                    {
+                        "mDataProp": "IsEconomic", "name": "IsEconomic",
+                        render: function (data, type, row) {
+                            if (type === 'display') {
+                                return '<input type="checkbox" class="is-economic">';
+                            }
+                            return data;
+                        }
+                    },
+                    { "mDataProp": "Remark", "name": "Remark", "sortable": false },
+                    {
+                        "mDataProp": "IsActive", "name": "IsActive",
+                        render: function (data, type, row) {
+                            if (type === 'display') {
+                                return '<input type="checkbox" class="is-active">';
+                            }
+                            return data;
+                        }
+                    },
+                    {
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": '',
+                        "mRender": function (data, type, row) {
+                            var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
+                            var editLink = '@Html.ActionLink("Edit", "Update", "Kpi", new {id = "_id_"}, null)'.replace('_id_', data.Id);
+                            return editLink + ' | ' + deleteLink;
+                        }
+                    }
+                ],
+                rowCallback: function (row, data) {
+                    // Set the checked state of the checkbox in the table
+                    $('input.is-active', row).prop('checked', data.IsActive == 1);
+                    $('input.is-economic', row).prop('checked', data.IsEconomic == 1);
+                }
+            });
+            
+            $('#kpi-table').on('click', '.delete', function () {
+                var id = $(this).attr('data-id');
+                if (confirm('Are you sure want to delete this item?' + id)) {
+                    var url = '@Url.Action("Delete", "Kpi")';
+                    
+                    $('<form action="' + url + '" method="POST">' +
+                        '<input type="hidden" name="id" value="' + id + '">' +
+                        '</form>').submit();
+                }
+            });
+            
+        });
     </script>
 }
