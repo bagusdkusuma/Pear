@@ -76,7 +76,7 @@ namespace DSLNG.PEAR.Services
             return new DeleteEconomicSummaryResponse
             {
                 IsSuccess = true,
-                Message = "Economic Summary has been Remove"
+                Message = "Economic Summary has deleted successfully"
             };
         }
     }

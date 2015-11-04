@@ -51,7 +51,7 @@ namespace DSLNG.PEAR.Services
             return new SaveScenarioResponse
             {
                 IsSuccess = true,
-                Message = "Scenario has been saved"
+                Message = "Scenario has been save"
             };
         }
 
@@ -74,7 +74,7 @@ namespace DSLNG.PEAR.Services
             return new DeleteScenarioResponse
             {
                 IsSuccess = true,
-                Message = "Scenario has been Delete"
+                Message = "Scenario has been deleted successfully"
             };
         }
     }

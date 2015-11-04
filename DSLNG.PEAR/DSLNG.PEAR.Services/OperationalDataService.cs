@@ -97,7 +97,7 @@ namespace DSLNG.PEAR.Services
             return new DeleteOperationalDataResponse
             {
                 IsSuccess = true,
-                Message = "Operational Data has been Delete"
+                Message = "Operational Data has been deleted successfully"
             };
         }
     }

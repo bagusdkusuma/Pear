@@ -78,6 +78,8 @@ using DSLNG.PEAR.Services.Responses.OperationalData;
 using DSLNG.PEAR.Services.Requests.OperationalData;
 using DSLNG.PEAR.Services.Responses.EconomicSummary;
 using DSLNG.PEAR.Services.Requests.EconomicSummary;
+using DSLNG.PEAR.Services.Responses.EconomicConfig;
+using DSLNG.PEAR.Services.Requests.EconomicConfig;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -436,6 +438,17 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<SaveEconomicSummaryRequest, EconomicSummaryConfig>();
             Mapper.CreateMap<EconomicSummaryConfig, GetEconomicSummaryResponse>();
 
+            Mapper.CreateMap<EconomicConfigDetail, GetEconomicConfigsResponse.EconomicConfig>()
+                .ForMember(x => x.Scenario, o => o.MapFrom(s => s.Scenario.Name))
+                .ForMember(x => x.EconomicSummary, o => o.MapFrom(s => s.EconomicSummary.Name));
+            Mapper.CreateMap<Scenario, GetEconomicConfigSelectListResponse.Scenario>();
+            Mapper.CreateMap<EconomicSummaryConfig, GetEconomicConfigSelectListResponse.EconomicSummary>();
+            Mapper.CreateMap<SaveEconomicConfigRequest, EconomicConfigDetail>()
+                .ForMember(x => x.Scenario, o => o.Ignore())
+                .ForMember(x => x.EconomicSummary, o => o.Ignore());
+            Mapper.CreateMap<EconomicConfigDetail, GetEconomicConfigResponse>()
+                .ForMember(x => x.IdScenario, o => o.MapFrom(s => s.Scenario.Id))
+                .ForMember(x => x.IdEconomicSummary, o => o.MapFrom(s => s.EconomicSummary.Id));
             base.Configure();
         }
 

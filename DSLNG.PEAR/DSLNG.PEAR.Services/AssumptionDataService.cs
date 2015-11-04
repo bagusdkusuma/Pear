@@ -96,7 +96,7 @@ namespace DSLNG.PEAR.Services
             return new DeleteAssumptionDataResponse
             {
                 IsSuccess = true,
-                Message = "Assumption Data has been Delete"
+                Message = "Assumption Data has been deleted successfully"
             };
         }
     }

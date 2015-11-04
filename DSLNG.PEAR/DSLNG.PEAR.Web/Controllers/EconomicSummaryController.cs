@@ -11,7 +11,7 @@ using DSLNG.PEAR.Common.Extensions;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
-    public class EconomicSummaryController : Controller
+    public class EconomicSummaryController : BaseController
     {
         private IEconomicSummaryService _economicSummaryService;
         public EconomicSummaryController(IEconomicSummaryService economicSummaryService)

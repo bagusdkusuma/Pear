@@ -82,6 +82,7 @@
     <Compile Include="ConstantUsageService.cs" />
     <Compile Include="ConversionService.cs" />
     <Compile Include="DropdownService.cs" />
+    <Compile Include="EconomicConfigService.cs" />
     <Compile Include="EconomicSummaryService.cs" />
     <Compile Include="GroupService.cs" />
     <Compile Include="HighlightOrderService.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Interfaces\IBuyerService.cs" />
     <Compile Include="Interfaces\ICalculatorConstantService.cs" />
     <Compile Include="Interfaces\IConstantUsageService.cs" />
+    <Compile Include="Interfaces\IEconomicConfigService.cs" />
     <Compile Include="Interfaces\IEconomicSummaryService.cs" />
     <Compile Include="Interfaces\IHighlightOrderService.cs" />
     <Compile Include="Interfaces\IHighlightService.cs" />
@@ -154,6 +156,10 @@
     <Compile Include="Requests\ConstantUsage\SaveConstantUsageRequest.cs" />
     <Compile Include="Requests\Conversion\CreateConversionRequest.cs" />
     <Compile Include="Requests\Conversion\UpdateConversionRequest.cs" />
+    <Compile Include="Requests\EconomicConfig\DeleteEconomicConfigRequest.cs" />
+    <Compile Include="Requests\EconomicConfig\GetEconomicConfigRequest.cs" />
+    <Compile Include="Requests\EconomicConfig\GetEconomicConfigsRequest.cs" />
+    <Compile Include="Requests\EconomicConfig\SaveEconomicConfigRequest.cs" />
     <Compile Include="Requests\EconomicSummary\DeleteEconomicSummaryRequest.cs" />
     <Compile Include="Requests\EconomicSummary\GetEconomicSummariesRequest.cs" />
     <Compile Include="Requests\EconomicSummary\GetEconomicSummaryRequest.cs" />
@@ -289,6 +295,11 @@
     <Compile Include="Responses\Conversion\DeleteConversionResponse.cs" />
     <Compile Include="Responses\Conversion\Measurement.cs" />
     <Compile Include="Responses\Conversion\UpdateConversionResponse.cs" />
+    <Compile Include="Responses\EconomicConfig\DeleteEconomicConfigResponse.cs" />
+    <Compile Include="Responses\EconomicConfig\GetEconomicConfigResponse.cs" />
+    <Compile Include="Responses\EconomicConfig\GetEconomicConfigSelectListResponse.cs" />
+    <Compile Include="Responses\EconomicConfig\GetEconomicConfigsResponse.cs" />
+    <Compile Include="Responses\EconomicConfig\SaveEconomicConfigResponse.cs" />
     <Compile Include="Responses\EconomicSummary\DeleteEconomicSummaryResponse.cs" />
     <Compile Include="Responses\EconomicSummary\GetEconomicSummariesResponse.cs" />
     <Compile Include="Responses\EconomicSummary\GetEconomicSummaryResponse.cs" />
