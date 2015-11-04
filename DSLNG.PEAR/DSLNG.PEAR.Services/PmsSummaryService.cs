@@ -142,8 +142,8 @@ namespace DSLNG.PEAR.Services
 
                             #region Score
 
-                            if (kpiData.ActualYtd.HasValue && kpiData.TargetYtd.HasValue)
-                            {
+                            //if (kpiData.ActualYtd.HasValue && kpiData.TargetYtd.HasValue)
+                            //{
                                 //var indexYtd = (kpiData.ActualYtd.Value / kpiData.TargetYtd.Value);
 
                                 switch (pmsConfigDetails.ScoringType)
@@ -198,7 +198,7 @@ namespace DSLNG.PEAR.Services
                                         break;
                                 }
 
-                            }
+                            //}
 
                             #endregion
 

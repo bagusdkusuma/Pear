@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
 using DSLNG.PEAR.Data.Entities;
 using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Services.Interfaces;
@@ -26,10 +28,16 @@ namespace DSLNG.PEAR.Services
 
         public GetUsersResponse GetUsers(GetUsersRequest request)
         {
-            var users = DataContext.Users.Include(u => u.Role).ToList();
+            int totalRecords;
+            var users = SortData(request.Search, request.SortingDictionary, out totalRecords).Skip(request.Skip).Take(request.Take);
+
+            var response = new GetUsersResponse();
+            response.Users = users.MapTo<GetUsersResponse.User>();
+            response.TotalRecords = totalRecords;
+            /*var users = DataContext.Users.Include(u => u.Role).ToList();
             var response = new GetUsersResponse();
 
-            response.Users = users.MapTo<GetUsersResponse.User>();
+            response.Users = users.MapTo<GetUsersResponse.User>();*/
 
             return response;
         }
@@ -305,9 +313,6 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-
-
-
         public GetUserResponse GetUserByEmail(GetUserRequest request)
         {
             try
@@ -325,6 +330,50 @@ namespace DSLNG.PEAR.Services
                     Message = x.Message
                 };
             }
+        }
+
+        private IEnumerable<User> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int totalRecords)
+        {
+            var data = DataContext.Users.Include(x => x.Role).AsQueryable();
+            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            {
+                data = data.Where(x => x.Username.Contains(search) || x.Email.Contains(search)
+                    || x.Role.Name.Contains(search));
+            }
+
+            foreach (var sortOrder in sortingDictionary)
+            {
+                switch (sortOrder.Key)
+                {
+                    case "Username":
+                        data = sortOrder.Value == SortOrder.Ascending
+                                   ? data.OrderBy(x => x.Username)
+                                   : data.OrderByDescending(x => x.Username);
+                        break;
+                    case "Email":
+                        data = sortOrder.Value == SortOrder.Ascending
+                                   ? data.OrderBy(x => x.Email)
+                                   : data.OrderByDescending(x => x.Email);
+                        break;
+                    case "isActive":
+                        data = sortOrder.Value == SortOrder.Ascending
+                                   ? data.OrderBy(x => x.IsActive)
+                                   : data.OrderByDescending(x => x.IsActive);
+                        break;
+                    case "IsSuperAdmin":
+                        data = sortOrder.Value == SortOrder.Ascending
+                                   ? data.OrderBy(x => x.IsSuperAdmin)
+                                   : data.OrderByDescending(x => x.IsSuperAdmin);
+                        break;
+                    case "RoleName":
+                        data = sortOrder.Value == SortOrder.Ascending
+                                   ? data.OrderBy(x => x.Role.Name)
+                                   : data.OrderByDescending(x => x.Role.Name);
+                        break;
+                }
+            }
+            totalRecords = data.Count();
+            return data;
         }
     }
 }

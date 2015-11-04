@@ -39,9 +39,25 @@
                     { "mDataProp": "Name", "name": "Name" },
                     { "mDataProp": "PillarName", "name": "PillarName" },
                     { "mDataProp": "Order", "name": "Order" },
-                    { "mDataProp": "IsEconomic", "name": "IsEconomic" },
+                    {
+                        "mDataProp": "IsEconomic", "name": "IsEconomic",
+                        render: function (data, type, row) {
+                            if (type === 'display') {
+                                return '<input type="checkbox" class="is-economic">';
+                            }
+                            return data;
+                        }
+                    },
                     { "mDataProp": "Remark", "name": "Remark", "sortable": false },
-                    { "mDataProp": "IsActive", "name": "IsActive" },
+                    {
+                        "mDataProp": "IsActive", "name": "IsActive",
+                        render: function (data, type, row) {
+                            if (type === 'display') {
+                                return '<input type="checkbox" class="is-active">';
+                            }
+                            return data;
+                        }
+                    },
                     {
                         "orderable": false,
                         "data": null,
@@ -52,7 +68,12 @@
                             return editLink + ' | ' + deleteLink;
                         }
                     }
-                ]
+                ],
+                rowCallback: function (row, data) {
+                    // Set the checked state of the checkbox in the table
+                    $('input.is-active', row).prop('checked', data.IsActive == 1);
+                    $('input.is-economic', row).prop('checked', data.IsEconomic == 1);
+                }
             });
             
             $('#kpi-table').on('click', '.delete', function () {

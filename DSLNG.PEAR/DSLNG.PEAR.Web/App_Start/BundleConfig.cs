@@ -46,7 +46,7 @@ namespace DSLNG.PEAR.Web.App_Start
                   "~/Content/bootstrap.vertical-tabs.css",
                   "~/Content/style.css",
                   "~/Content/style-regawa.css",
-                  "~/Content/jquery.dataTables.min.css"));
+                  "~/Content/datatables/jquery.dataTables.min.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/js_login").Include(
                          "~/Scripts/moment.js",

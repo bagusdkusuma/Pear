@@ -5,7 +5,9 @@
 <div class="artifact-list">
     <h2>List</h2>
     @Html.Partial("_MessageResponse")
-    @Html.ActionLink("Create New", "Designer")
+    <div class="add-button-wrapper">
+        @Html.ActionLink("Create New", "Designer")
+    </div>
     @*@Html.Action("IndexPartial")*@
     
     <table id="artifact-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">

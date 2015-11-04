@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Requests.User
 {
-    public class GetUsersRequest
+    public class GetUsersRequest : GridBaseRequest
     {
         public int Skip { get; set; }
         public int Take { get; set; }
