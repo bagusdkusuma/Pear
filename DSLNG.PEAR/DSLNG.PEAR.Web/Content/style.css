@@ -1928,4 +1928,7 @@ table.dataTable.no-footer {
     border-bottom: 1px solid #ffffff !important;
 }
 
+.dataTables_wrapper {
+    margin-bottom: 60px;
+}
 

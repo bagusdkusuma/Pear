@@ -487,6 +487,16 @@ namespace DSLNG.PEAR.Services
                                    ? data.OrderBy(x => x.Name)
                                    : data.OrderByDescending(x => x.Name);
                         break;
+                    case "IsActive":
+                        data = sortOrder.Value == SortOrder.Ascending
+                                   ? data.OrderBy(x => x.IsActive)
+                                   : data.OrderByDescending(x => x.IsActive);
+                        break;
+                    case "IsRoot":
+                        data = sortOrder.Value == SortOrder.Ascending
+                                   ? data.OrderBy(x => x.IsRoot)
+                                   : data.OrderByDescending(x => x.IsRoot);
+                        break;
                     default:
                         data = sortOrder.Value == SortOrder.Ascending
                                    ? data.OrderBy(x => x.Order)
