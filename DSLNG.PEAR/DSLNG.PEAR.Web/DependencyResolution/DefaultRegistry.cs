@@ -75,6 +75,7 @@ namespace DSLNG.PEAR.Web.DependencyResolution {
             For<IOperationService>().Use<OperationService>();
             For<IOperationalDataService>().Use<OperationalDataService>();
             For<IEconomicSummaryService>().Use<EconomicSummaryService>();
+            For<IEconomicConfigService>().Use<EconomicConfigService>();
         }
 
         #endregion

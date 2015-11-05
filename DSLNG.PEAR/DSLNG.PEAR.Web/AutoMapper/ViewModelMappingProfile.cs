@@ -124,6 +124,9 @@ using DSLNG.PEAR.Services.Responses.OperationalData;
 using DSLNG.PEAR.Web.ViewModels.EconomicSummary;
 using DSLNG.PEAR.Services.Requests.EconomicSummary;
 using DSLNG.PEAR.Services.Responses.EconomicSummary;
+using DSLNG.PEAR.Web.ViewModels.EconomicConfigDetail;
+using DSLNG.PEAR.Services.Requests.EconomicConfig;
+using DSLNG.PEAR.Services.Responses.EconomicConfig;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -537,6 +540,9 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<EconomicSummaryViewModel, SaveEconomicSummaryRequest>();
             Mapper.CreateMap<GetEconomicSummaryResponse, EconomicSummaryViewModel>();
+
+            Mapper.CreateMap<EconomicConfigViewModel, SaveEconomicConfigRequest>();
+            Mapper.CreateMap<GetEconomicConfigResponse, EconomicConfigViewModel>();
             base.Configure();
         }
 

@@ -62,7 +62,7 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<KeyOperation> KeyOperations { get; set; }
         public IDbSet<OperationDataConfiguration> KeyOperasionalDatas { get; set; }
         public IDbSet<EconomicSummaryConfig> EconomicSummaryConfigs { get; set; }
-
+        public IDbSet<EconomicConfigDetail> EconomicConfigDetails { get; set; }
         public IDbSet<ResetPassword> ResetPasswords { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -88,7 +88,7 @@ namespace DSLNG.PEAR.Services
             return new DeleteOperationResponse
             {
                 IsSuccess = true,
-                Message = "Operation has been Delete"
+                Message = "Operation has been deleted successfully"
             };
         }
     }
