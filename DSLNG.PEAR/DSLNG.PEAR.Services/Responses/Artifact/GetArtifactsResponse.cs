@@ -6,6 +6,7 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
     {
         public IList<Artifact> Artifacts { get; set; }
         public int Count { get; set; }
+        public int TotalRecords { get; set; }
         public class Artifact {
             public int Id { get; set; }
             public string GraphicType { get; set; }

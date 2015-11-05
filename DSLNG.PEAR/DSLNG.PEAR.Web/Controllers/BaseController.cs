@@ -13,7 +13,7 @@ using WebMatrix.WebData;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class BaseController : Controller
     {
         public const string UploadDirectory = "~/Content/UploadedFiles/";

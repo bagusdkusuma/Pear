@@ -24,7 +24,8 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
         public double? KpiActualMonthly { get; set; }
         public List<KpiAchievment> KpiAchievmentMonthly { get; set; }
         public List<KpiRelation> KpiRelations { get; set; }
-        public List<Group> Groups { get; set; } 
+        public List<Group> Groups { get; set; }
+        public string Color { get; set; }
 
         public class Group
         {

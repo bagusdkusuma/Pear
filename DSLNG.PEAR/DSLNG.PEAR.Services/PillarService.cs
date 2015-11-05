@@ -1,4 +1,5 @@
-﻿using DSLNG.PEAR.Data.Persistence;
+﻿using System.Data.SqlClient;
+using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Pillar;
 using DSLNG.PEAR.Services.Responses.Pillar;
@@ -42,9 +43,12 @@ namespace DSLNG.PEAR.Services
 
         public GetPillarsResponse GetPillars(GetPillarsRequest request)
         {
-            var pillars = DataContext.Pillars.ToList();
+            int totalRecords;
+            var pillars = SortData(request.Search, request.SortingDictionary, out totalRecords).Skip(request.Skip).Take(request.Take);
+
             var response = new GetPillarsResponse();
             response.Pillars = pillars.MapTo<GetPillarsResponse.Pillar>();
+            response.TotalRecords = totalRecords;
 
             return response;
         }
@@ -106,6 +110,44 @@ namespace DSLNG.PEAR.Services
             }
 
             return response;
+        }
+
+        private IEnumerable<Pillar> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int totalRecords)
+        {
+            var data = DataContext.Pillars.AsQueryable();
+            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            {
+                data = data.Where(x => x.Code.Contains(search) || x.Name.Contains(search));
+            }
+
+            foreach (var sortOrder in sortingDictionary)
+            {
+                switch (sortOrder.Key)
+                {
+                    case "Code":
+                        data = sortOrder.Value == SortOrder.Ascending
+                                   ? data.OrderBy(x => x.Code)
+                                   : data.OrderByDescending(x => x.Code);
+                        break;
+                    case "Name":
+                        data = sortOrder.Value == SortOrder.Ascending
+                                   ? data.OrderBy(x => x.Name)
+                                   : data.OrderByDescending(x => x.Name);
+                        break;
+                    case "IsActive":
+                        data = sortOrder.Value == SortOrder.Ascending
+                                   ? data.OrderBy(x => x.IsActive)
+                                   : data.OrderByDescending(x => x.IsActive);
+                        break;
+                    default:
+                        data = sortOrder.Value == SortOrder.Ascending
+                                   ? data.OrderBy(x => x.Order)
+                                   : data.OrderByDescending(x => x.Order);
+                        break;
+                }
+            }
+            totalRecords = data.Count();
+            return data;
         }
     }
 }

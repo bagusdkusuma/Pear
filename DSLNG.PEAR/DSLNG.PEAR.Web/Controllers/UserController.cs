@@ -1,5 +1,6 @@
 ﻿using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.User;
+using DSLNG.PEAR.Web.Grid;
 using DSLNG.PEAR.Web.ViewModels.User;
 using DSLNG.PEAR.Common.Extensions;
 using System.Web.Mvc;
@@ -182,6 +183,26 @@ namespace DSLNG.PEAR.Web.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Grid(GridParams gridParams)
+        {
+            var users = _userService.GetUsers(new GetUsersRequest
+            {
+                Skip = gridParams.DisplayStart,
+                Take = gridParams.DisplayLength,
+                SortingDictionary = gridParams.SortingDictionary,
+                Search = gridParams.Search
+            });
+
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalRecords = users.Users.Count,
+                iTotalDisplayRecords = users.TotalRecords,
+                aaData = users.Users
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
+
+        }
         
 	}
 }

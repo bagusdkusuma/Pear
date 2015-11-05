@@ -5,19 +5,57 @@
 <div class="template-list">
     <h2>List</h2>
     @Html.Partial("_MessageResponse")
-    @Html.ActionLink("New", "Create", null, new { @class = "btn btn-primary" })
-    @Html.Action("IndexPartial")
+    <div class="add-button-wrapper">
+        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+    </div>
+    @*@Html.Action("IndexPartial")*@
+
+    <table id="template-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Remark</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+    </table>
 
     @section Scripts{
         <script type="text/javascript">
-            var confirmDelete = function (id) {
-                if (confirm('Are you sure want to delete this item?')) {
-                    var url = '@Url.Action("Delete", "Template")';
-                $('<form action="' + url + '" method="POST">' +
-                    '<input type="hidden" name="id" value="' + id + '">' +
-                    '</form>').submit();
-            }
-        };
+            $(document).ready(function () {
+                $('#template-table').DataTable({
+                    "bProcessing": true,
+                    "bServerSide": true,
+                    "sServerMethod": "POST",
+                    "sAjaxSource": '@Url.Action("Grid", "Template")',
+                    "order": [[1, "asc"]],
+                    "aoColumns": [
+                        { "mDataProp": "Name", "name": "Name" },
+                        { "mDataProp": "Remark", "name": "Remark" },
+                        {
+                            "orderable": false,
+                            "data": null,
+                            "defaultContent": '',
+                            "mRender": function (data, type, row) {
+                                var viewLink = '@Html.ActionLink("View", "View", "Template", new { id = "_id_" }, null)'.replace('_id_', data.Id);
+                                var editLink = '@Html.ActionLink("Edit", "Update", "Template", new { id = "_id_" }, null)'.replace('_id_', data.Id);
+                                return editLink + ' | ' + viewLink;
+                        }
+                    }
+                ]
+                });
+
+                $('#template-table').on('click', '.delete', function () {
+                    var id = $(this).attr('data-id');
+                    if (confirm('Are you sure want to delete this item?')) {
+                        var url = '@Url.Action("Delete", "Template")';
+                        $('<form action="' + url + '" method="POST">' +
+                            '<input type="hidden" name="id" value="' + id + '">' +
+                            '</form>').submit();
+                    }
+                });
+
+            });
         </script>
     }
 

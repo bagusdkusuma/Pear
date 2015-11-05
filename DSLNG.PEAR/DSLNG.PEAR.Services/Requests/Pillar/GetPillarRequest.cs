@@ -11,7 +11,7 @@ namespace DSLNG.PEAR.Services.Requests.Pillar
         public int Id { get; set; }
     }
 
-    public class GetPillarsRequest
+    public class GetPillarsRequest : GridBaseRequest
     {
         public int Take { get; set; }
         public int Skip { get; set; }

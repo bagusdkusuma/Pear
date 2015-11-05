@@ -74,7 +74,7 @@ namespace DSLNG.PEAR.Web.Controllers
             return PartialView("_IndexGridPartial", viewModel);
         }
 
-        public ActionResult ReportDetails(int id, int month, int year)
+        public ActionResult ReportDetails(int id, int month, int year, string color)
         {
             try
             {
@@ -87,6 +87,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 viewModel.MonthInt = month;
                 viewModel.KpiAchievmentMonthly = response.KpiAchievmentMonthly.MapTo<PmsReportDetailsViewModel.KpiAchievment>();
                 viewModel.KpiRelations = response.KpiRelations.MapTo<PmsReportDetailsViewModel.KpiRelation>();
+                viewModel.Color = color;
                 return PartialView("_ReportDetails", viewModel);
             }
             catch (Exception exception)

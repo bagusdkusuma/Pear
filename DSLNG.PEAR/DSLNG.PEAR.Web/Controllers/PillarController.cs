@@ -8,6 +8,7 @@ using DSLNG.PEAR.Services;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Responses.Pillar;
 using System.Web.Mvc;
+using DSLNG.PEAR.Web.Grid;
 using DevExpress.Web.Mvc;
 using DSLNG.PEAR.Services.Requests.Pillar;
 using DSLNG.PEAR.Web.ViewModels.Pillar;
@@ -226,6 +227,27 @@ namespace DSLNG.PEAR.Web.Controllers
             }
 
             return RedirectToAction(redirectAction);
+        }
+
+        public ActionResult Grid(GridParams gridParams)
+        {
+            var pillars = _pillarService.GetPillars(new GetPillarsRequest
+                {
+                    Skip = gridParams.DisplayStart,
+                    Take = gridParams.DisplayLength,
+                    SortingDictionary = gridParams.SortingDictionary,
+                    Search = gridParams.Search
+                });
+
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalRecords = pillars.Pillars.Count,
+                iTotalDisplayRecords = pillars.TotalRecords,
+                aaData = pillars.Pillars
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
+        
         }
     }
 }

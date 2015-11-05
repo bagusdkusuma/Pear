@@ -11,6 +11,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetMenuResponse GetParentMenu(GetParentMenuRequest request);
         GetMenuResponse GetMenuByUrl(GetMenuRequestByUrl request);
         GetMenusResponse GetMenus(GetMenusRequest request);
+        GetMenusResponse GetMenusForGrid(GetMenusRequest request);
         CreateMenuResponse Create(CreateMenuRequest request);
         UpdateMenuResponse Update(UpdateMenuRequest request);
         DeleteMenuResponse Delete(int id);
