@@ -79,7 +79,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Weather
         [Display(Name = "Date")]
         public string DateInDisplay { get; set; }
         [Required]
-        public string Value { get; set; }
+        public int ValueId { get; set; }
         public IList<SelectListItem> Values { get; set; }
         [Required]
         public string Temperature { get; set; }

@@ -97,10 +97,11 @@ namespace DSLNG.PEAR.Services
                 if (request.Id == 0)
                 {
                     var vesselSchedule = request.MapTo<VesselSchedule>();
-                    var buyer = new Buyer { Id = request.BuyerId };
-                    DataContext.Buyers.Attach(buyer);
-                    var vessel = new Vessel { Id = request.VesselId };
-                    DataContext.Vessels.Attach(vessel);
+                    var buyer = DataContext.Buyers.First(x => x.Id == request.BuyerId);// new Buyer { Id = request.BuyerId };
+                    //DataContext.Buyers.Attach(buyer);
+                    var vessel = DataContext.Vessels.First(x => x.Id == request.VesselId);// new Vessel { Id = request.VesselId };
+                    //DataContext.Vessels.Attach(vessel);
+                    vesselSchedule.Name = vessel.Name + "-" + buyer.Name + "-" + vessel.Type + "-" + vesselSchedule.Cargo;
                     vesselSchedule.Buyer = buyer;
                     vesselSchedule.Vessel = vessel;
                     DataContext.VesselSchedules.Add(vesselSchedule);
@@ -111,10 +112,11 @@ namespace DSLNG.PEAR.Services
                     if (vesselSchedule != null)
                     {
                         request.MapPropertiesToInstance<VesselSchedule>(vesselSchedule);
-                        var buyer = new Buyer { Id = request.BuyerId };
-                        DataContext.Buyers.Attach(buyer);
-                        var vessel = new Vessel { Id = request.VesselId };
-                        DataContext.Vessels.Attach(vessel);
+                        var buyer = DataContext.Buyers.First(x => x.Id == request.BuyerId);// new Buyer { Id = request.BuyerId };
+                        //DataContext.Buyers.Attach(buyer);
+                        var vessel = DataContext.Vessels.First(x => x.Id == request.VesselId);// new Vessel { Id = request.VesselId };
+                        //DataContext.Vessels.Attach(vessel);
+                        vesselSchedule.Name = vessel.Name + "-" + buyer.Name + "-" + vessel.Type + "-" + vesselSchedule.Cargo;
                         vesselSchedule.Buyer = buyer;
                         vesselSchedule.Vessel = vessel;
                     }

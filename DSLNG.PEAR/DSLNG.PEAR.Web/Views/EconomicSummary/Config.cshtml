@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Economic Summary Config";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="artifact-list">
+    <h2>Economic Summary Config</h2>
+    @Html.Partial("_MessageResponse")
+    @Html.ActionLink("Create New", "Create")
+    @Html.Action("ConfigPartial")
+
+    @section Scripts{
+        <script type="text/javascript">
+            var confirmDelete = function (id) {
+                if (confirm('Are you sure want to delete this item?')) {
+                    var url = '@Url.Action("Delete", "EconomicSummary")';
+                $('<form action="' + url + '" method="POST">' +
+                    '<input type="hidden" name="id" value="' + id + '">' +
+                    '</form>').submit();
+            }
+        };
+        </script>
+    }
+
+</div>

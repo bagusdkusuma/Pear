@@ -179,8 +179,9 @@ namespace DSLNG.PEAR.Web.Controllers
             var viewModel = new DailyExecutionReportViewModel();
             viewModel.NLSList = vesselSchedules.VesselSchedules.MapTo<DailyExecutionReportViewModel.NLSViewModel>();
             viewModel.Weather = _waetherService.GetWeather(new GetWeatherRequest { Date = DateTime.Now.Date }).MapTo<DailyExecutionReportViewModel.WeatherViewModel>();
-            viewModel.Highlights = _highlightService.GetHighlights(new GetHighlightsRequest { Except = new string[1] { "alert" },Date = DateTime.Now.Date, IsActive=true }).Highlights.MapTo<DailyExecutionReportViewModel.HighlightViewModel>();
-            viewModel.Alert = _highlightService.GetHighlight(new GetHighlightRequest { Type = "alert", Date = DateTime.Now.Date }).MapTo<DailyExecutionReportViewModel.AlertViewModel>();
+            viewModel.Highlights = _highlightService.GetHighlights(new GetHighlightsRequest { Except = new string[5] { "Alert", "Process Train", "Storage And Loading", "Utility", "Upstream" },Date = DateTime.Now.Date, IsActive=true }).Highlights.MapTo<DailyExecutionReportViewModel.HighlightViewModel>();
+            viewModel.PlantOperations = _highlightService.GetHighlights(new GetHighlightsRequest { Include = new string[4] { "Process Train", "Storage And Loading", "Utility", "Upstream" }, Date = DateTime.Now.Date, IsActive = true }).Highlights.MapTo<DailyExecutionReportViewModel.HighlightViewModel>();
+            viewModel.Alert = _highlightService.GetHighlight(new GetHighlightRequest { Type = "Alert", Date = DateTime.Now.Date }).MapTo<DailyExecutionReportViewModel.AlertViewModel>();
             var highlightOrders = _highlightOrderService.GetHighlights(new GetHighlightOrdersRequest());
             foreach (var highlight in highlightOrders.HighlightOrders) {
                 var highlightVM = viewModel.Highlights.FirstOrDefault(x => x.Type == highlight.Value);

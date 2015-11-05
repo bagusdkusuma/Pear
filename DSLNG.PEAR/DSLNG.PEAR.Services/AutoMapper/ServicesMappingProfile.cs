@@ -66,6 +66,20 @@ using DSLNG.PEAR.Services.Responses.OutputCategory;
 using DSLNG.PEAR.Services.Requests.OutputCategory;
 using DSLNG.PEAR.Services.Responses.OperationGroup;
 using DSLNG.PEAR.Services.Requests.OperationGroup;
+using DSLNG.PEAR.Services.Responses.AssumptionConfig;
+using DSLNG.PEAR.Services.Requests.AssumptionConfig;
+using DSLNG.PEAR.Services.Responses.Scenario;
+using DSLNG.PEAR.Services.Requests.Scenario;
+using DSLNG.PEAR.Services.Responses.AssumptionData;
+using DSLNG.PEAR.Services.Requests.AssumptionData;
+using DSLNG.PEAR.Services.Responses.Operation;
+using DSLNG.PEAR.Services.Requests.Operation;
+using DSLNG.PEAR.Services.Responses.OperationalData;
+using DSLNG.PEAR.Services.Requests.OperationalData;
+using DSLNG.PEAR.Services.Responses.EconomicSummary;
+using DSLNG.PEAR.Services.Requests.EconomicSummary;
+using DSLNG.PEAR.Services.Responses.EconomicConfig;
+using DSLNG.PEAR.Services.Requests.EconomicConfig;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -327,8 +341,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<SaveVesselScheduleRequest, VesselSchedule>();
             Mapper.CreateMap<VesselSchedule, GetVesselSchedulesResponse.VesselScheduleResponse>()
                 .ForMember(x => x.Vessel, o => o.MapFrom(s => s.Vessel.Name))
-                .ForMember(x => x.Buyer, o => o.MapFrom(s => s.Buyer.Name))
-                .ForMember(x => x.Name, o => o.MapFrom(s => s.Vessel.Name));
+                .ForMember(x => x.Buyer, o => o.MapFrom(s => s.Buyer.Name));
             Mapper.CreateMap<VesselSchedule, GetVesselScheduleResponse>()
                 .ForMember(x => x.VesselId, o => o.MapFrom(s => s.Vessel.Id))
                 .ForMember(x => x.BuyerId, o => o.MapFrom(s => s.Buyer.Id))
@@ -356,9 +369,12 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<CalculatorConstant, GetConstantUsageResponse.CalculatorConstantResponse>();
 
             Mapper.CreateMap<Highlight, GetHighlightResponse>();
-            Mapper.CreateMap<Weather, GetWeathersResponse.WeatherResponse>();
+            Mapper.CreateMap<Weather, GetWeathersResponse.WeatherResponse>()
+                .ForMember(x => x.Value, o => o.MapFrom(s => s.Value.Text));
             Mapper.CreateMap<SaveWeatherRequest, Weather>();
-            Mapper.CreateMap<Weather, GetWeatherResponse>();
+            Mapper.CreateMap<Weather, GetWeatherResponse>()
+                .ForMember(x => x.Value, o => o.MapFrom(s => s.Value.Value))
+                .ForMember(x => x.Text, o => o.MapFrom(s => s.Value.Text));
             Mapper.CreateMap<SelectOption, GetHighlightOrdersResponse.HighlightOrderResponse>();
             Mapper.CreateMap<KeyAssumptionCategory, GetAssumptionCategoriesResponse.AssumptionCategory>();
             Mapper.CreateMap<SaveAssumptionCategoryRequest, KeyAssumptionCategory>();
@@ -372,6 +388,70 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<KeyOperationGroup, GetOperationGroupsResponse.OperationGroup>();
             Mapper.CreateMap<SaveOperationGroupRequest, KeyOperationGroup>();
             Mapper.CreateMap<KeyOperationGroup, GetOperationGroupResponse>();
+
+            Mapper.CreateMap<KeyAssumptionConfig, GetAssumptionConfigsResponse.AssumptionConfig>()
+                .ForMember(x => x.Category, o => o.MapFrom(s => s.Category.Name))
+                .ForMember(x => x.Measurement, o => o.MapFrom(s => s.Measurement.Name));
+            Mapper.CreateMap<KeyAssumptionCategory, GetAssumptionConfigCategoryResponse.AssumptionConfigCategoryResponse>();
+            Mapper.CreateMap<KeyAssumptionConfig, GetAssumptionConfigResponse>()
+                .ForMember(x => x.IdCategory, o => o.MapFrom(s => s.Category.Id))
+                .ForMember(x => x.IdMeasurement, o => o.MapFrom(s => s.Measurement.Id));
+            Mapper.CreateMap<SaveAssumptionConfigRequest, KeyAssumptionConfig>()
+                .ForMember(x => x.Category, o => o.Ignore())
+                .ForMember(x => x.Measurement, o => o.Ignore());
+
+            Mapper.CreateMap<Scenario, GetScenariosResponse.Scenario>();
+            Mapper.CreateMap<SaveScenarioRequest, Scenario>();
+            Mapper.CreateMap<Scenario, GetScenarioResponse>();
+
+
+            Mapper.CreateMap<KeyAssumptionData, GetAssumptionDatasResponse.AssumptionData>()
+                .ForMember(x => x.Scenario, o => o.MapFrom(s => s.Scenario.Name))
+                .ForMember(x => x.Config, o => o.MapFrom(s => s.KeyAssumptionConfig.Name));
+            Mapper.CreateMap<KeyAssumptionConfig, GetAssumptionDataConfigResponse.AssumptionDataConfig>();
+            Mapper.CreateMap<Scenario, GetAssumptionDataConfigResponse.Scenario>();
+            Mapper.CreateMap<SaveAssumptionDataRequest, KeyAssumptionData>()
+                .ForMember(x => x.Scenario, o => o.Ignore())
+                .ForMember(x => x.KeyAssumptionConfig, o => o.Ignore());
+            Mapper.CreateMap<KeyAssumptionData, GetAssumptionDataResponse>()
+                .ForMember(x => x.IdScenario, o => o.MapFrom(s => s.Scenario.Id))
+                .ForMember(x => x.IdConfig, o =>  o.MapFrom(s => s.KeyAssumptionConfig.Id));
+
+            Mapper.CreateMap<KeyOperation, GetOperationsResponse.Operation>()
+                .ForMember(x => x.KeyOperationGroup, o => o.MapFrom(s => s.KeyOperationGroup.Name));
+            Mapper.CreateMap<KeyOperationGroup, OperationGroupsResponse.OperationGroup>();
+            Mapper.CreateMap<SaveOperationRequest, KeyOperation>()
+                .ForMember(x => x.KeyOperationGroup, o => o.Ignore());
+            Mapper.CreateMap<KeyOperation, GetOperationResponse>()
+                .ForMember(x => x.IdKeyOperationGroup, o => o.MapFrom(s => s.KeyOperationGroup.Id));
+
+            Mapper.CreateMap<OperationDataConfiguration, GetOperationalDatasResponse.OperationalData>()
+                .ForMember(x => x.KeyOperation, o => o.MapFrom(s => s.KeyOperation.Name))
+                .ForMember(x => x.KPI, o => o.MapFrom(s => s.Kpi.Name));
+            Mapper.CreateMap<KeyOperation, GetOperationalSelectListResponse.Operation>();
+            Mapper.CreateMap<Kpi, GetOperationalSelectListResponse.KPI>();
+            Mapper.CreateMap<SaveOperationalDataRequest, OperationDataConfiguration>()
+                .ForMember(x => x.KeyOperation, o => o.Ignore())
+                .ForMember(x => x.Kpi, o => o.Ignore());
+            Mapper.CreateMap<OperationDataConfiguration, GetOperationalDataResponse>()
+                .ForMember(x => x.IdKeyOperation, o => o.MapFrom(s => s.KeyOperation.Id))
+                .ForMember(x => x.IdKPI, o => o.MapFrom(s => s.Kpi.Id));
+
+            Mapper.CreateMap<EconomicSummaryConfig, GetEconomicSummariesResponse.EconomicSummary>();
+            Mapper.CreateMap<SaveEconomicSummaryRequest, EconomicSummaryConfig>();
+            Mapper.CreateMap<EconomicSummaryConfig, GetEconomicSummaryResponse>();
+
+            Mapper.CreateMap<EconomicConfigDetail, GetEconomicConfigsResponse.EconomicConfig>()
+                .ForMember(x => x.Scenario, o => o.MapFrom(s => s.Scenario.Name))
+                .ForMember(x => x.EconomicSummary, o => o.MapFrom(s => s.EconomicSummary.Name));
+            Mapper.CreateMap<Scenario, GetEconomicConfigSelectListResponse.Scenario>();
+            Mapper.CreateMap<EconomicSummaryConfig, GetEconomicConfigSelectListResponse.EconomicSummary>();
+            Mapper.CreateMap<SaveEconomicConfigRequest, EconomicConfigDetail>()
+                .ForMember(x => x.Scenario, o => o.Ignore())
+                .ForMember(x => x.EconomicSummary, o => o.Ignore());
+            Mapper.CreateMap<EconomicConfigDetail, GetEconomicConfigResponse>()
+                .ForMember(x => x.IdScenario, o => o.MapFrom(s => s.Scenario.Id))
+                .ForMember(x => x.IdEconomicSummary, o => o.MapFrom(s => s.EconomicSummary.Id));
             base.Configure();
         }
 

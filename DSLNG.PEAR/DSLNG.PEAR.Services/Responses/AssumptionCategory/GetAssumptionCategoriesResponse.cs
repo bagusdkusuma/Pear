@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Responses.AssumptionCategory
 {
-    public class GetAssumptionCategoriesResponse
+    public class GetAssumptionCategoriesResponse : BaseResponse
     {
         public IList<AssumptionCategory> AssumptionCategorys { get; set; }
         public int Count { get; set; }

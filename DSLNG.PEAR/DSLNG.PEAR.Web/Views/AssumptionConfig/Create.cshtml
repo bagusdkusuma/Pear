@@ -1,0 +1,59 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.AssumptionConfig.AssumptionConfigViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="AssumptionConfig-save">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="col-md-12">
+            <div class="title">Assumption Config</div>
+            <div class="description_year">New</div>
+            <div>@Html.ValidationSummary(true)</div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-inline whitebox">
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.Name)
+                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.IdCategory)
+                    @Html.DropDownListFor(model => model.IdCategory, Model.Categories, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IdCategory)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.IdMeasurement)
+                    @Html.DropDownListFor(model => model.IdMeasurement, Model.Measurements, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IdMeasurement)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.Order)
+                    @Html.TextBoxFor(model => model.Order, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Order)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.Remark)
+                    @Html.TextAreaFor(model => model.Remark, 5, 100, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Remark)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IsActive, new { @class = "control-label" })
+                    @Html.EditorFor(model => model.IsActive, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IsActive)
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 artifact-designer-btns">
+            <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
+            <a onclick="location.reload();" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>
+            <a href="/AssumptionConfig" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+        </div>
+    }
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

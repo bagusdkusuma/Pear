@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DSLNG.PEAR.Data.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,9 @@ namespace DSLNG.PEAR.Services.Requests.Select
 
         public string Name { get; set; }
         public bool IsActive { get; set; }
-        public IList<SelectOption> Options { get; set; } 
+        public IList<SelectOption> Options { get; set; }
+        public SelectType Type { get; set; }
+        public int ParentId { get; set; }
 
         public class SelectOption
         {

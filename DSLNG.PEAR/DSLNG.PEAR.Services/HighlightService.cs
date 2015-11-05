@@ -27,6 +27,14 @@ namespace DSLNG.PEAR.Services
                     .ToList().MapTo<GetHighlightsResponse.HighlightResponse>()
                 };
             }
+            else if (request.Include.Length > 0 && request.Date.HasValue)
+            {
+                return new GetHighlightsResponse
+                {
+                    Highlights = DataContext.Highlights.Where(x => x.Date == request.Date.Value && request.Include.Contains(x.Type) && x.IsActive == request.IsActive)
+                    .ToList().MapTo<GetHighlightsResponse.HighlightResponse>()
+                };
+            }
             else
             {
                 return new GetHighlightsResponse

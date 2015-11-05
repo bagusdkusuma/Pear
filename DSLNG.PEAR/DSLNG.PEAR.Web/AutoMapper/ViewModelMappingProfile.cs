@@ -106,6 +106,27 @@ using DSLNG.PEAR.Services.Responses.OutputCategory;
 using DSLNG.PEAR.Web.ViewModels.OperationGroup;
 using DSLNG.PEAR.Services.Requests.OperationGroup;
 using DSLNG.PEAR.Services.Responses.OperationGroup;
+using DSLNG.PEAR.Web.ViewModels.AssumptionConfig;
+using DSLNG.PEAR.Services.Requests.AssumptionConfig;
+using DSLNG.PEAR.Services.Responses.AssumptionConfig;
+using DSLNG.PEAR.Services.Requests.Scenario;
+using DSLNG.PEAR.Web.ViewModels.Scenario;
+using DSLNG.PEAR.Services.Responses.Scenario;
+using DSLNG.PEAR.Web.ViewModels.AssumptionData;
+using DSLNG.PEAR.Services.Requests.AssumptionData;
+using DSLNG.PEAR.Services.Responses.AssumptionData;
+using DSLNG.PEAR.Web.ViewModels.Operation;
+using DSLNG.PEAR.Services.Requests.Operation;
+using DSLNG.PEAR.Services.Responses.Operation;
+using DSLNG.PEAR.Web.ViewModels.OperationalData;
+using DSLNG.PEAR.Services.Requests.OperationalData;
+using DSLNG.PEAR.Services.Responses.OperationalData;
+using DSLNG.PEAR.Web.ViewModels.EconomicSummary;
+using DSLNG.PEAR.Services.Requests.EconomicSummary;
+using DSLNG.PEAR.Services.Responses.EconomicSummary;
+using DSLNG.PEAR.Web.ViewModels.EconomicConfigDetail;
+using DSLNG.PEAR.Services.Requests.EconomicConfig;
+using DSLNG.PEAR.Services.Responses.EconomicConfig;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -501,16 +522,39 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<OperationGroupViewModel, SaveOperationGroupRequest>();
             Mapper.CreateMap<GetOperationGroupResponse, OperationGroupViewModel>();
+
+            Mapper.CreateMap<AssumptionConfigViewModel, SaveAssumptionConfigRequest>();
+            Mapper.CreateMap<GetAssumptionConfigResponse, AssumptionConfigViewModel>();
+
+            Mapper.CreateMap<ScenarioViewModel, SaveScenarioRequest>();
+            Mapper.CreateMap<GetScenarioResponse, ScenarioViewModel>();
+
+            Mapper.CreateMap<AssumptionDataViewModel, SaveAssumptionDataRequest>();
+            Mapper.CreateMap<GetAssumptionDataResponse, AssumptionDataViewModel>();
+
+            Mapper.CreateMap<OperationViewModel, SaveOperationRequest>();
+            Mapper.CreateMap<GetOperationResponse, OperationViewModel>();
+
+            Mapper.CreateMap<OperationalDataViewModel, SaveOperationalDataRequest>();
+            Mapper.CreateMap<GetOperationalDataResponse, OperationalDataViewModel>();
+
+            Mapper.CreateMap<EconomicSummaryViewModel, SaveEconomicSummaryRequest>();
+            Mapper.CreateMap<GetEconomicSummaryResponse, EconomicSummaryViewModel>();
+
+            Mapper.CreateMap<EconomicConfigViewModel, SaveEconomicConfigRequest>();
+            Mapper.CreateMap<GetEconomicConfigResponse, EconomicConfigViewModel>();
             base.Configure();
         }
 
         private void ConfigureSelect()
         {
-            Mapper.CreateMap<CreateSelectViewModel, CreateSelectRequest>();
+            Mapper.CreateMap<CreateSelectViewModel, CreateSelectRequest>()
+                .ForMember(x => x.Type, o => o.MapFrom(s => (SelectType)Enum.Parse(typeof(SelectType), s.Type, true)));
             Mapper.CreateMap<SelectOptionViewModel, CreateSelectRequest.SelectOption>();
             Mapper.CreateMap<GetSelectResponse, UpdateSelectViewModel>();
             Mapper.CreateMap<GetSelectResponse.SelectOptionResponse, SelectOptionViewModel>();
-            Mapper.CreateMap<UpdateSelectViewModel, UpdateSelectRequest>();
+            Mapper.CreateMap<UpdateSelectViewModel, UpdateSelectRequest>()
+                .ForMember(x => x.Type, o => o.MapFrom(s => (SelectType)Enum.Parse(typeof(SelectType), s.Type, true)));
             Mapper.CreateMap<SelectOptionViewModel, UpdateSelectRequest.SelectOption>();
             //Mapper.CreateMap<GetSelectsResponse, Ind>()
         }

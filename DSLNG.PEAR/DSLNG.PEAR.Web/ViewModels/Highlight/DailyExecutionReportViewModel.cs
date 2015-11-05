@@ -14,6 +14,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Highlight
         }
         public IList<NLSViewModel> NLSList { get; set; }
         public IList<HighlightViewModel> Highlights { get; set; }
+        public IList<HighlightViewModel> PlantOperations { get; set; }
         public AlertViewModel Alert {get;set;}
         public WeatherViewModel Weather {get;set;}
         public class NLSViewModel {
@@ -32,6 +33,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Highlight
         }
         public class WeatherViewModel {
             public string Value { get; set; }
+            public string Text { get; set; }
             public string Temperature { get; set; }
         }
         public class AlertViewModel {
@@ -43,5 +45,6 @@ namespace DSLNG.PEAR.Web.ViewModels.Highlight
             public int Order { get; set; }
             public string Type { get; set; }
         }
+       
     }
 }
