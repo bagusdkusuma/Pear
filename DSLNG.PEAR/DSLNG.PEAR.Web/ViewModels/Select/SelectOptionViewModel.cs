@@ -10,5 +10,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Select
         public int Id { get; set; }
         public string Value { get; set; }
         public string Text { get; set; }
+        public HttpPostedFileBase ValueFile { get; set; }
+        public bool IsEdited { get; set; }
     }
 }

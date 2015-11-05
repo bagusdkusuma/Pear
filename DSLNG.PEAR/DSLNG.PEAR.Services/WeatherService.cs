@@ -18,14 +18,24 @@ namespace DSLNG.PEAR.Services
 
         public GetWeatherResponse GetWeather(GetWeatherRequest request)
         {
-            if (request.Date.HasValue) {
-                var weather = DataContext.Weathers.FirstOrDefault(x => x.Date == request.Date.Value);
-                if(weather != null){
-                    return weather.MapTo<GetWeatherResponse>();
+            if (request.Date.HasValue)
+            {
+                var weather = DataContext.Weathers.Include(x => x.Value).FirstOrDefault(x => x.Date == request.Date.Value);
+                if (weather != null)
+                {
+                    var resp = weather.MapTo<GetWeatherResponse>();
+                    resp.ValueId = weather.Value.Id;
+                    return resp;
                 }
                 return new GetWeatherResponse();
             }
-            return DataContext.Weathers.FirstOrDefault(x => x.Id == request.Id).MapTo<GetWeatherResponse>();
+            else
+            {
+                var weather = DataContext.Weathers.FirstOrDefault(x => x.Id == request.Id);
+                var resp = weather.MapTo<GetWeatherResponse>();
+                resp.ValueId = weather.Value.Id;
+                return resp;
+            }
         }
 
         public GetWeathersResponse GetWeathers(GetWeathersRequest request)
@@ -36,6 +46,7 @@ namespace DSLNG.PEAR.Services
                 return new GetWeathersResponse { Count = query.Count() };
             }
             else {
+                query = query.Include(x => x.Value);
                 query = query.OrderByDescending(x => x.Id).Skip(request.Skip).Take(request.Take);
                 return new GetWeathersResponse
                 {
@@ -52,10 +63,16 @@ namespace DSLNG.PEAR.Services
                 {
                     var weather = DataContext.Weathers.First(x => x.Id == request.Id);
                     request.MapPropertiesToInstance<Weather>(weather);
+                    var value = new SelectOption { Id = request.ValueId };
+                    DataContext.SelectOptions.Attach(value);
+                    weather.Value = value;
                 }
                 else
                 {
                     var weather = request.MapTo<Weather>();
+                    var value = new SelectOption { Id = request.ValueId };
+                    DataContext.SelectOptions.Attach(value);
+                    weather.Value = value;
                     DataContext.Weathers.Add(weather);
                 }
                 DataContext.SaveChanges();

@@ -15,12 +15,15 @@ namespace DSLNG.PEAR.Web.ViewModels.Select
                 {
                     new SelectOptionViewModel()
                 };
+            Types = new List<SelectListItem>();
+            Parents = new List<SelectListItem>();
         }
 
         [Required]
         public string Name { get; set; }
         public IList<SelectOptionViewModel> Options { get; set; }
         public IList<SelectListItem> Types { get; set; }
+        public IList<SelectListItem> Parents { get; set; }
         public int ParentId { get; set; }
         public string Type { get; set; }
         public bool IsActive { get; set; }

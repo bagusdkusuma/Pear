@@ -6,6 +6,9 @@ using DSLNG.PEAR.Web.ViewModels.Select;
 using DevExpress.Web.Mvc;
 using System;
 using DSLNG.PEAR.Data.Enums;
+using System.Linq;
+using DSLNG.PEAR.Common.Contants;
+using System.IO;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -78,14 +81,53 @@ namespace DSLNG.PEAR.Web.Controllers
             var viewModel = new CreateSelectViewModel();
             foreach (var name in Enum.GetNames(typeof(SelectType)))
             {
-                    viewModel.Types.Add(new SelectListItem { Text = name, Value = name });
+                viewModel.Types.Add(new SelectListItem { Text = name, Value = name });
             }
+            viewModel.Parents = _selectService.GetSelects(new GetSelectsRequest())
+                .Selects.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name.ToString() }).ToList();
+            viewModel.Parents.Insert(0, new SelectListItem { Value = "0", Text = "No Parent" });
             return View(viewModel);
         }
 
         [HttpPost]
         public ActionResult Create(CreateSelectViewModel viewModel)
         {
+          
+            var validImageTypes = new string[]
+                {
+                    "image/gif",
+                    "image/jpeg",
+                    "image/pjpeg",
+                    "image/png"
+                };
+            var valids = viewModel.Options.Select(x => x.ValueFile != null &&
+                validImageTypes.Contains(x.ValueFile.ContentType)).Count();
+            if ((SelectType)Enum.Parse(typeof(SelectType), viewModel.Type, true) == SelectType.Image && valids != viewModel.Options.Count)
+            {
+                TempData["IsSuccess"] = false;
+                TempData["Message"] = string.Format(@"Please choose either a GIF, JPG or PNG image");
+            }
+            else if((SelectType)Enum.Parse(typeof(SelectType), viewModel.Type, true) == SelectType.Image && valids == viewModel.Options.Count)
+            {
+                foreach (var option in viewModel.Options)
+                {
+                    if (option.ValueFile != null)
+                    {
+                        using (System.Drawing.Image image = System.Drawing.Image.FromStream(option.ValueFile.InputStream, true, true))
+                        {
+                            if (!Directory.Exists(Server.MapPath(PathConstant.SelectPath)))
+                            {
+                                Directory.CreateDirectory(Server.MapPath(PathConstant.SelectPath));
+                            }
+                            var imagePath = Path.Combine(Server.MapPath(PathConstant.SelectPath), option.ValueFile.FileName);
+                            option.ValueFile.SaveAs(imagePath);
+                            option.Value = option.ValueFile.FileName;
+                        }
+                       
+
+                    }
+                }
+            }
             var request = viewModel.MapTo<CreateSelectRequest>();
             var response = _selectService.Create(request);
             if (response.IsSuccess)
@@ -100,12 +142,54 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             var response = _selectService.GetSelect(new GetSelectRequest { Id = id });
             var viewModel = response.MapTo<UpdateSelectViewModel>();
+            foreach (var name in Enum.GetNames(typeof(SelectType)))
+            {
+                viewModel.Types.Add(new SelectListItem { Text = name, Value = name });
+            }
+            viewModel.Parents = _selectService.GetSelects(new GetSelectsRequest())
+               .Selects.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name.ToString() }).ToList();
+            viewModel.Parents.Insert(0, new SelectListItem { Value = "0", Text = "No Parent" });
             return View(viewModel);
         }
 
         [HttpPost]
         public ActionResult Update(UpdateSelectViewModel viewModel)
         {
+            var validImageTypes = new string[]
+                {
+                    "image/gif",
+                    "image/jpeg",
+                    "image/pjpeg",
+                    "image/png"
+                };
+            var valids = viewModel.Options.Select(x => x.ValueFile != null &&
+                validImageTypes.Contains(x.ValueFile.ContentType)).Count();
+            if ((SelectType)Enum.Parse(typeof(SelectType), viewModel.Type, true) == SelectType.Image && valids != viewModel.Options.Count)
+            {
+                TempData["IsSuccess"] = false;
+                TempData["Message"] = string.Format(@"Please choose either a GIF, JPG or PNG image");
+            }
+            else if ((SelectType)Enum.Parse(typeof(SelectType), viewModel.Type, true) == SelectType.Image && valids == viewModel.Options.Count)
+            {
+                foreach (var option in viewModel.Options)
+                {
+                    if (option.ValueFile != null)
+                    {
+                        using (System.Drawing.Image image = System.Drawing.Image.FromStream(option.ValueFile.InputStream, true, true))
+                        {
+                            if (!Directory.Exists(Server.MapPath(PathConstant.SelectPath)))
+                            {
+                                Directory.CreateDirectory(Server.MapPath(PathConstant.SelectPath));
+                            }
+                            var imagePath = Path.Combine(Server.MapPath(PathConstant.SelectPath), option.ValueFile.FileName);
+                            option.ValueFile.SaveAs(imagePath);
+                            option.Value = option.ValueFile.FileName;
+                        }
+
+
+                    }
+                }
+            }
             var request = viewModel.MapTo<UpdateSelectRequest>();
             var response = _selectService.Update(request);
             TempData["IsSuccess"] = response.IsSuccess;
@@ -126,5 +210,5 @@ namespace DSLNG.PEAR.Web.Controllers
             TempData["Message"] = response.Message;
             return RedirectToAction("Index");
         }
-	}
+    }
 }

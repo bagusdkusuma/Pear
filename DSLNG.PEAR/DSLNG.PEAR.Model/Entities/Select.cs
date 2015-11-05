@@ -11,7 +11,6 @@ namespace DSLNG.PEAR.Data.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public Select Parent { get; set; }
-        public Select Child { get; set; }
         public SelectType Type { get; set; }
         public string Name { get; set; }
         public IList<SelectOption> Options { get; set; }

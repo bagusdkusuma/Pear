@@ -88,7 +88,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 }
             }
             viewModel.Values = _selectService.GetSelect(new GetSelectRequest { Name = "weather-values" }).Options
-                .Select(x => new SelectListItem { Text = x.Text, Value = x.Value }).ToList();
+                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Text }).ToList();
             return View(viewModel);
         }
 
@@ -109,7 +109,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 }
             }
             viewModel.Values = _selectService.GetSelect(new GetSelectRequest { Name = "weather-values" }).Options
-                .Select(x => new SelectListItem { Text = x.Text, Value = x.Value }).ToList();
+                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Text }).ToList();
             return View(viewModel);
         }
 

@@ -367,9 +367,12 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<CalculatorConstant, GetConstantUsageResponse.CalculatorConstantResponse>();
 
             Mapper.CreateMap<Highlight, GetHighlightResponse>();
-            Mapper.CreateMap<Weather, GetWeathersResponse.WeatherResponse>();
+            Mapper.CreateMap<Weather, GetWeathersResponse.WeatherResponse>()
+                .ForMember(x => x.Value, o => o.MapFrom(s => s.Value.Text));
             Mapper.CreateMap<SaveWeatherRequest, Weather>();
-            Mapper.CreateMap<Weather, GetWeatherResponse>();
+            Mapper.CreateMap<Weather, GetWeatherResponse>()
+                .ForMember(x => x.Value, o => o.MapFrom(s => s.Value.Value))
+                .ForMember(x => x.Text, o => o.MapFrom(s => s.Value.Text));
             Mapper.CreateMap<SelectOption, GetHighlightOrdersResponse.HighlightOrderResponse>();
             Mapper.CreateMap<KeyAssumptionCategory, GetAssumptionCategoriesResponse.AssumptionCategory>();
             Mapper.CreateMap<SaveAssumptionCategoryRequest, KeyAssumptionCategory>();

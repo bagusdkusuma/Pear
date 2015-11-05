@@ -542,11 +542,13 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
         private void ConfigureSelect()
         {
-            Mapper.CreateMap<CreateSelectViewModel, CreateSelectRequest>();
+            Mapper.CreateMap<CreateSelectViewModel, CreateSelectRequest>()
+                .ForMember(x => x.Type, o => o.MapFrom(s => (SelectType)Enum.Parse(typeof(SelectType), s.Type, true)));
             Mapper.CreateMap<SelectOptionViewModel, CreateSelectRequest.SelectOption>();
             Mapper.CreateMap<GetSelectResponse, UpdateSelectViewModel>();
             Mapper.CreateMap<GetSelectResponse.SelectOptionResponse, SelectOptionViewModel>();
-            Mapper.CreateMap<UpdateSelectViewModel, UpdateSelectRequest>();
+            Mapper.CreateMap<UpdateSelectViewModel, UpdateSelectRequest>()
+                .ForMember(x => x.Type, o => o.MapFrom(s => (SelectType)Enum.Parse(typeof(SelectType), s.Type, true)));
             Mapper.CreateMap<SelectOptionViewModel, UpdateSelectRequest.SelectOption>();
             //Mapper.CreateMap<GetSelectsResponse, Ind>()
         }

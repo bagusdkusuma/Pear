@@ -28,6 +28,11 @@ namespace DSLNG.PEAR.Services
             {
                 var select = request.MapTo<Select>();
                 DataContext.Selects.Add(select);
+                if (request.ParentId != 0) {
+                    var parent = new Select { Id = request.ParentId };
+                    DataContext.Selects.Attach(parent);
+                    select.Parent = parent;
+                }
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
                 response.Message = "Select has been added successfully";
@@ -74,6 +79,12 @@ namespace DSLNG.PEAR.Services
                             };
                         select.Options.Add(newOption);
                     }
+                }
+                if (request.ParentId != 0)
+                {
+                    var parent = new Select { Id = request.ParentId };
+                    DataContext.Selects.Attach(parent);
+                    select.Parent = parent;
                 }
 
                 DataContext.SaveChanges();
@@ -134,8 +145,12 @@ namespace DSLNG.PEAR.Services
                 else if (!string.IsNullOrEmpty(request.Name)) {
                     query = query.Where(x => x.Name == request.Name);
                 }
-                var select = query.FirstOrDefault();
+                var select = query.Include(x => x.Parent).FirstOrDefault();
                 response = select.MapTo<GetSelectResponse>();
+                if (select.Parent != null)
+                {
+                    response.ParentId = select.Parent.Id;
+                }
                 response.IsSuccess = true;
                 response.Message = "Success get select with id=" + request.Id;
             }
