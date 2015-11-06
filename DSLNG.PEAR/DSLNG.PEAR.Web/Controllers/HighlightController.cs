@@ -114,7 +114,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public void GetDataRowCount(GridViewCustomBindingGetDataRowCountArgs e)
         {
 
-            e.DataRowCount = _highlightService.GetHighlights(new GetHighlightsRequest {PeriodeType = PeriodeType.Daily,  OnlyCount = true }).Count;
+            e.DataRowCount = _highlightService.GetHighlights(new GetHighlightsRequest { PeriodeType = PeriodeType.Daily, OnlyCount = true }).Count;
         }
 
         public void GetData(GridViewCustomBindingGetDataArgs e)
@@ -235,24 +235,36 @@ namespace DSLNG.PEAR.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult DailyExecutionReport() {
+        public ActionResult DailyExecutionReport()
+        {
             //var nlsList = _nlsService.GetNLSList(new GetNLSListRequest { TheActiveOnes = true });
-            var vesselSchedules = _vesselScheduleService.GetVesselSchedules(new GetVesselSchedulesRequest{allActiveList=true});
+            var vesselSchedules = _vesselScheduleService.GetVesselSchedules(new GetVesselSchedulesRequest { allActiveList = true });
             var viewModel = new DailyExecutionReportViewModel();
             viewModel.NLSList = vesselSchedules.VesselSchedules.MapTo<DailyExecutionReportViewModel.NLSViewModel>();
             viewModel.Weather = _waetherService.GetWeather(new GetWeatherRequest { Date = DateTime.Now.Date }).MapTo<DailyExecutionReportViewModel.WeatherViewModel>();
-            viewModel.Highlights = _highlightService.GetHighlights(new GetHighlightsRequest { Except = new string[5] { "Alert", "Process Train", "Storage And Loading", "Utility", "Upstream" },Date = DateTime.Now.Date, IsActive=true }).Highlights.MapTo<DailyExecutionReportViewModel.HighlightViewModel>();
+            viewModel.Highlights = _highlightService.GetHighlights(new GetHighlightsRequest { Except = new string[5] { "Alert", "Process Train", "Storage And Loading", "Utility", "Upstream" }, Date = DateTime.Now.Date, IsActive = true }).Highlights.MapTo<DailyExecutionReportViewModel.HighlightViewModel>();
             viewModel.PlantOperations = _highlightService.GetHighlights(new GetHighlightsRequest { Include = new string[4] { "Process Train", "Storage And Loading", "Utility", "Upstream" }, Date = DateTime.Now.Date, IsActive = true }).Highlights.MapTo<DailyExecutionReportViewModel.HighlightViewModel>();
             viewModel.Alert = _highlightService.GetHighlight(new GetHighlightRequest { Type = "Alert", Date = DateTime.Now.Date }).MapTo<DailyExecutionReportViewModel.AlertViewModel>();
             var highlightOrders = _highlightOrderService.GetHighlights(new GetHighlightOrdersRequest());
-            foreach (var highlight in highlightOrders.HighlightOrders) {
+            foreach (var highlight in highlightOrders.HighlightOrders)
+            {
                 var highlightVM = viewModel.Highlights.FirstOrDefault(x => x.Type == highlight.Value);
-                if (highlightVM != null) {
+                if (highlightVM != null)
+                {
                     highlightVM.Order = highlight.Order;
                 }
             }
             viewModel.Highlights = viewModel.Highlights.OrderBy(x => x.Order).ToList();
             return View(viewModel);
+        }
+
+        public JsonResult MessageOptions() {
+            var parentOptionValue = Request.QueryString["value"];
+            var select = _selectService.GetSelect(new GetSelectRequest{ParentName = "highlight-types",ParentOptionValue = parentOptionValue});
+            if(select != null){
+                return Json(select.Options, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new string[0]{},JsonRequestBehavior.AllowGet);
         }
     }
 }

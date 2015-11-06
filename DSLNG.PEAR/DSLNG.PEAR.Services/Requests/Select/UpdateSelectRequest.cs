@@ -20,7 +20,7 @@ namespace DSLNG.PEAR.Services.Requests.Select
         public bool IsActive { get; set; }
         public SelectType Type { get; set; }
         public int ParentId { get; set; }
-
+        public int ParentOptionId { get; set; }
         public class SelectOption
         {
             public int Id { get; set; }

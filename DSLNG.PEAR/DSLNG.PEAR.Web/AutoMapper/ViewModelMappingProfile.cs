@@ -551,7 +551,8 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<CreateSelectViewModel, CreateSelectRequest>()
                 .ForMember(x => x.Type, o => o.MapFrom(s => (SelectType)Enum.Parse(typeof(SelectType), s.Type, true)));
             Mapper.CreateMap<SelectOptionViewModel, CreateSelectRequest.SelectOption>();
-            Mapper.CreateMap<GetSelectResponse, UpdateSelectViewModel>();
+            Mapper.CreateMap<GetSelectResponse, UpdateSelectViewModel>()
+                .ForMember(x => x.ParentOptions, o => o.Ignore());
             Mapper.CreateMap<GetSelectResponse.SelectOptionResponse, SelectOptionViewModel>();
             Mapper.CreateMap<UpdateSelectViewModel, UpdateSelectRequest>()
                 .ForMember(x => x.Type, o => o.MapFrom(s => (SelectType)Enum.Parse(typeof(SelectType), s.Type, true)));
