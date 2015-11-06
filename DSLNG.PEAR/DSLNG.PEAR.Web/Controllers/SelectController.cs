@@ -148,6 +148,9 @@ namespace DSLNG.PEAR.Web.Controllers
             }
             viewModel.Parents = _selectService.GetSelects(new GetSelectsRequest())
                .Selects.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name.ToString() }).ToList();
+            if (viewModel.ParentId != 0) {
+                viewModel.ParentOptions = response.ParentOptions.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Text.ToString() }).ToList();
+            }
             viewModel.Parents.Insert(0, new SelectListItem { Value = "0", Text = "No Parent" });
             return View(viewModel);
         }
@@ -209,6 +212,11 @@ namespace DSLNG.PEAR.Web.Controllers
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
             return RedirectToAction("Index");
+        }
+
+        public JsonResult Options(int id) { 
+            var select = _selectService.GetSelect(new GetSelectRequest{Id = id});
+            return Json(select.Options,JsonRequestBehavior.AllowGet);
         }
     }
 }

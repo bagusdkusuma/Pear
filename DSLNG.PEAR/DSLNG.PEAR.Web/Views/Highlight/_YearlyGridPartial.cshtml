@@ -1,6 +1,6 @@
 ﻿@Html.DevExpress().GridView(settings =>
     {
-        settings.Name = "gridYearlyHighlightIndex";
+        settings.Name = "gridHighlightIndex";
         settings.CallbackRouteValues = new { Controller = "Highlight", Action = "IndexPartial" };
         settings.CustomBindingRouteValuesCollection.Add(
             GridViewOperationType.Paging,

@@ -33,6 +33,12 @@ namespace DSLNG.PEAR.Services
                     DataContext.Selects.Attach(parent);
                     select.Parent = parent;
                 }
+                if (request.ParentOptionId != 0)
+                {
+                    var parentOption = new SelectOption { Id = request.ParentOptionId };
+                    DataContext.SelectOptions.Attach(parentOption);
+                    select.ParentOption = parentOption;
+                }
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
                 response.Message = "Select has been added successfully";
@@ -52,6 +58,8 @@ namespace DSLNG.PEAR.Services
             {
                 var select = DataContext.Selects.Where(p => p.Id == request.Id)
                                         .Include(p => p.Options)
+                                        .Include(p => p.Parent)
+                                        .Include(p => p.ParentOption)
                                         .Single();
 
                 DataContext.Entry(select).CurrentValues.SetValues(request);
@@ -85,6 +93,13 @@ namespace DSLNG.PEAR.Services
                     var parent = new Select { Id = request.ParentId };
                     DataContext.Selects.Attach(parent);
                     select.Parent = parent;
+                     var parentOption = new SelectOption { Id = request.ParentOptionId };
+                    DataContext.SelectOptions.Attach(parentOption);
+                    select.ParentOption = parentOption;
+                }
+                else {
+                    select.Parent = null;
+                    select.ParentOption = null;
                 }
 
                 DataContext.SaveChanges();
@@ -145,11 +160,20 @@ namespace DSLNG.PEAR.Services
                 else if (!string.IsNullOrEmpty(request.Name)) {
                     query = query.Where(x => x.Name == request.Name);
                 }
-                var select = query.Include(x => x.Parent).FirstOrDefault();
+                else if (!string.IsNullOrEmpty(request.ParentName) && !string.IsNullOrEmpty(request.ParentOptionValue)) {
+                    query = query.Where(x => x.Parent.Name == request.ParentName && x.ParentOption.Value == request.ParentOptionValue);
+                }
+
+                var select = query.Include(x => x.Parent).Include(x => x.Parent.Options).FirstOrDefault();
                 response = select.MapTo<GetSelectResponse>();
                 if (select.Parent != null)
                 {
                     response.ParentId = select.Parent.Id;
+                    response.ParentOptions = select.Parent.Options.MapTo<GetSelectResponse.SelectOptionResponse>();
+                }
+                if (select.ParentOption != null)
+                {
+                    response.ParentOptionId = select.ParentOption.Id;
                 }
                 response.IsSuccess = true;
                 response.Message = "Success get select with id=" + request.Id;

@@ -13,6 +13,7 @@ namespace DSLNG.PEAR.Data.Entities
         public Select Parent { get; set; }
         public SelectType Type { get; set; }
         public string Name { get; set; }
+        public SelectOption ParentOption { get; set; }
         public IList<SelectOption> Options { get; set; }
         public bool IsActive { get; set; }
     }

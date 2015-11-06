@@ -50,6 +50,20 @@ namespace DSLNG.PEAR.Web.Controllers
                 viewModel = CreateGridViewModel();
             return BindingCore(viewModel);
         }
+        public ActionResult MonthlyPartial()
+        {
+            var viewModel = GridViewExtension.GetViewModel("gridArtifactIndex");
+            if (viewModel == null)
+                viewModel = CreateGridViewModel();
+            return MonthlyBindingCore(viewModel);
+        }
+        public ActionResult YearlyPartial()
+        {
+            var viewModel = GridViewExtension.GetViewModel("gridArtifactIndex");
+            if (viewModel == null)
+                viewModel = CreateGridViewModel();
+            return YearlyBindingCore(viewModel);
+        }
 
         PartialViewResult BindingCore(GridViewModel gridViewModel)
         {
@@ -58,6 +72,23 @@ namespace DSLNG.PEAR.Web.Controllers
                 GetData
             );
             return PartialView("_IndexGridPartial", gridViewModel);
+        }
+        PartialViewResult MonthlyBindingCore(GridViewModel gridViewModel)
+        {
+            gridViewModel.ProcessCustomBinding(
+                MonthlyGetDataRowCount,
+                MonthlyGetData
+            );
+            return PartialView("_MonthlyGridPartial", gridViewModel);
+        }
+
+        PartialViewResult YearlyBindingCore(GridViewModel gridViewModel)
+        {
+            gridViewModel.ProcessCustomBinding(
+                YearlyGetDataRowCount,
+                YearlyGetData
+            );
+            return PartialView("_YearlyGridPartial", gridViewModel);
         }
 
         static GridViewModel CreateGridViewModel()
@@ -83,13 +114,44 @@ namespace DSLNG.PEAR.Web.Controllers
         public void GetDataRowCount(GridViewCustomBindingGetDataRowCountArgs e)
         {
 
-            e.DataRowCount = _highlightService.GetHighlights(new GetHighlightsRequest { OnlyCount = true }).Count;
+            e.DataRowCount = _highlightService.GetHighlights(new GetHighlightsRequest { PeriodeType = PeriodeType.Daily, OnlyCount = true }).Count;
         }
 
         public void GetData(GridViewCustomBindingGetDataArgs e)
         {
             e.Data = _highlightService.GetHighlights(new GetHighlightsRequest
             {
+                PeriodeType = PeriodeType.Daily,
+                Skip = e.StartDataRowIndex,
+                Take = e.DataRowCount
+            }).Highlights;
+        }
+        public void MonthlyGetDataRowCount(GridViewCustomBindingGetDataRowCountArgs e)
+        {
+
+            e.DataRowCount = _highlightService.GetHighlights(new GetHighlightsRequest { PeriodeType = PeriodeType.Monthly, OnlyCount = true }).Count;
+        }
+
+        public void MonthlyGetData(GridViewCustomBindingGetDataArgs e)
+        {
+            e.Data = _highlightService.GetHighlights(new GetHighlightsRequest
+            {
+                PeriodeType = PeriodeType.Monthly,
+                Skip = e.StartDataRowIndex,
+                Take = e.DataRowCount
+            }).Highlights;
+        }
+        public void YearlyGetDataRowCount(GridViewCustomBindingGetDataRowCountArgs e)
+        {
+
+            e.DataRowCount = _highlightService.GetHighlights(new GetHighlightsRequest { PeriodeType = PeriodeType.Yearly, OnlyCount = true }).Count;
+        }
+
+        public void YearlyGetData(GridViewCustomBindingGetDataArgs e)
+        {
+            e.Data = _highlightService.GetHighlights(new GetHighlightsRequest
+            {
+                PeriodeType = PeriodeType.Yearly,
                 Skip = e.StartDataRowIndex,
                 Take = e.DataRowCount
             }).Highlights;
@@ -173,24 +235,36 @@ namespace DSLNG.PEAR.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult DailyExecutionReport() {
+        public ActionResult DailyExecutionReport()
+        {
             //var nlsList = _nlsService.GetNLSList(new GetNLSListRequest { TheActiveOnes = true });
-            var vesselSchedules = _vesselScheduleService.GetVesselSchedules(new GetVesselSchedulesRequest{allActiveList=true});
+            var vesselSchedules = _vesselScheduleService.GetVesselSchedules(new GetVesselSchedulesRequest { allActiveList = true });
             var viewModel = new DailyExecutionReportViewModel();
             viewModel.NLSList = vesselSchedules.VesselSchedules.MapTo<DailyExecutionReportViewModel.NLSViewModel>();
             viewModel.Weather = _waetherService.GetWeather(new GetWeatherRequest { Date = DateTime.Now.Date }).MapTo<DailyExecutionReportViewModel.WeatherViewModel>();
-            viewModel.Highlights = _highlightService.GetHighlights(new GetHighlightsRequest { Except = new string[5] { "Alert", "Process Train", "Storage And Loading", "Utility", "Upstream" },Date = DateTime.Now.Date, IsActive=true }).Highlights.MapTo<DailyExecutionReportViewModel.HighlightViewModel>();
+            viewModel.Highlights = _highlightService.GetHighlights(new GetHighlightsRequest { Except = new string[5] { "Alert", "Process Train", "Storage And Loading", "Utility", "Upstream" }, Date = DateTime.Now.Date, IsActive = true }).Highlights.MapTo<DailyExecutionReportViewModel.HighlightViewModel>();
             viewModel.PlantOperations = _highlightService.GetHighlights(new GetHighlightsRequest { Include = new string[4] { "Process Train", "Storage And Loading", "Utility", "Upstream" }, Date = DateTime.Now.Date, IsActive = true }).Highlights.MapTo<DailyExecutionReportViewModel.HighlightViewModel>();
             viewModel.Alert = _highlightService.GetHighlight(new GetHighlightRequest { Type = "Alert", Date = DateTime.Now.Date }).MapTo<DailyExecutionReportViewModel.AlertViewModel>();
             var highlightOrders = _highlightOrderService.GetHighlights(new GetHighlightOrdersRequest());
-            foreach (var highlight in highlightOrders.HighlightOrders) {
+            foreach (var highlight in highlightOrders.HighlightOrders)
+            {
                 var highlightVM = viewModel.Highlights.FirstOrDefault(x => x.Type == highlight.Value);
-                if (highlightVM != null) {
+                if (highlightVM != null)
+                {
                     highlightVM.Order = highlight.Order;
                 }
             }
             viewModel.Highlights = viewModel.Highlights.OrderBy(x => x.Order).ToList();
             return View(viewModel);
+        }
+
+        public JsonResult MessageOptions() {
+            var parentOptionValue = Request.QueryString["value"];
+            var select = _selectService.GetSelect(new GetSelectRequest{ParentName = "highlight-types",ParentOptionValue = parentOptionValue});
+            if(select != null){
+                return Json(select.Options, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new string[0]{},JsonRequestBehavior.AllowGet);
         }
     }
 }

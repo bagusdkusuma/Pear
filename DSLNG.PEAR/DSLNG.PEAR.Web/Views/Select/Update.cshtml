@@ -5,7 +5,7 @@
 
 <h2>@ViewBag.Title</h2>
 @Html.Partial("_MessageResponse")
-<div class="row">
+<div class="row select-form">
     <div class="col-md-6">
         <form action="@Url.Action("Update")" method="POST" enctype='multipart/form-data'>
             @Html.HiddenFor(x => x.Id)
@@ -16,8 +16,19 @@
             </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.ParentId, new { @class = "control-label" })
-                @Html.DropDownListFor(model => model.ParentId, Model.Parents, new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.ParentId, Model.Parents, new { @class = "form-control", data_url=Url.Action("options") })
                 @Html.ValidationMessageFor(model => model.ParentId)
+            </div>
+            @{ var display = "none";
+            if (Model.ParentId != 0)
+            {
+                display = "block";
+            }
+            }
+             <div class="form-group parent-options" style="display:@display">
+                @Html.LabelFor(model => model.ParentOptionId, new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.ParentOptionId, Model.ParentOptions, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ParentOptionId)
             </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.IsActive, new { @class = "control-label" })

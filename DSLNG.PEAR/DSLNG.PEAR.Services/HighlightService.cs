@@ -18,7 +18,11 @@ namespace DSLNG.PEAR.Services
         {
             if (request.OnlyCount)
             {
-                return new GetHighlightsResponse { Count = DataContext.Highlights.Count() };
+                var query = DataContext.Highlights.AsQueryable();
+                if (request.PeriodeType != null) {
+                    query = query.Where(x => x.PeriodeType == request.PeriodeType);
+                }
+                return new GetHighlightsResponse { Count = query.Count() };
             }
             else if (request.Except.Length > 0 && request.Date.HasValue) {
                 return new GetHighlightsResponse
@@ -37,9 +41,13 @@ namespace DSLNG.PEAR.Services
             }
             else
             {
+                var query = DataContext.Highlights.AsQueryable();
+                if(request.PeriodeType == request.PeriodeType){
+                    query = query.Where(x => x.PeriodeType == request.PeriodeType);
+                }
                 return new GetHighlightsResponse
                 {
-                    Highlights = DataContext.Highlights.OrderByDescending(x => x.Id).Skip(request.Skip).Take(request.Take)
+                    Highlights = query.OrderByDescending(x => x.Id).Skip(request.Skip).Take(request.Take)
                                     .ToList().MapTo<GetHighlightsResponse.HighlightResponse>()
                 };
             }
@@ -49,7 +57,7 @@ namespace DSLNG.PEAR.Services
             try
             {
                 var todayHighlight = DataContext.Highlights.FirstOrDefault(x => x.Date == request.Date && x.Type == request.Type);
-                if (todayHighlight != null) {
+                if (todayHighlight != null && todayHighlight.Id != request.Id) {
                     return new SaveHighlightResponse
                     {
                         IsSuccess = false,

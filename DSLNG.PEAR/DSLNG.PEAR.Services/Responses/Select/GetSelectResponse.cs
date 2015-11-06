@@ -17,9 +17,11 @@ namespace DSLNG.PEAR.Services.Responses.Select
         public int Id { get; set; }
         public string Name { get; set; }
         public IList<SelectOptionResponse> Options { get; set; }
+        public IList<SelectOptionResponse> ParentOptions { get; set; }
         public bool IsActive { get; set; }
         public SelectType Type { get; set; }
         public int ParentId { get; set; }
+        public int ParentOptionId { get; set; }
 
         public class SelectOptionResponse
         {
