@@ -489,7 +489,7 @@ img
 {
     background-color: #ffffff;
     color: #004374;
-    border: none;
+    border-color: #fff;
     text-align: center;
 }
 
@@ -1186,8 +1186,13 @@ table.text-center th
 
 .nav-tabs > li > a
 {
+    background-color: #1e90ff;
+    color: #fff;
+    border-color: #1e90ff;
     text-align: center;
-    color: #3f454f;
+    border-bottom-color:#fff;
+    /*text-align: center;
+    color: #3f454f;*/
 }
 
 .form-inline .form-group

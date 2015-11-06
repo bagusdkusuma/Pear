@@ -1,5 +1,6 @@
 ﻿
 
+using DSLNG.PEAR.Data.Enums;
 using System;
 namespace DSLNG.PEAR.Services.Requests.Highlight
 {
@@ -16,6 +17,7 @@ namespace DSLNG.PEAR.Services.Requests.Highlight
         public string[] Except { get; set; }
         public string[] Include { get; set; }
         public DateTime? Date { get; set; }
+        public PeriodeType PeriodeType { get; set; }
         public bool IsActive { get; set; }
     }
 }

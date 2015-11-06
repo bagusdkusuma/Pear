@@ -50,6 +50,20 @@ namespace DSLNG.PEAR.Web.Controllers
                 viewModel = CreateGridViewModel();
             return BindingCore(viewModel);
         }
+        public ActionResult MonthlyPartial()
+        {
+            var viewModel = GridViewExtension.GetViewModel("gridArtifactIndex");
+            if (viewModel == null)
+                viewModel = CreateGridViewModel();
+            return MonthlyBindingCore(viewModel);
+        }
+        public ActionResult YearlyPartial()
+        {
+            var viewModel = GridViewExtension.GetViewModel("gridArtifactIndex");
+            if (viewModel == null)
+                viewModel = CreateGridViewModel();
+            return YearlyBindingCore(viewModel);
+        }
 
         PartialViewResult BindingCore(GridViewModel gridViewModel)
         {
@@ -58,6 +72,23 @@ namespace DSLNG.PEAR.Web.Controllers
                 GetData
             );
             return PartialView("_IndexGridPartial", gridViewModel);
+        }
+        PartialViewResult MonthlyBindingCore(GridViewModel gridViewModel)
+        {
+            gridViewModel.ProcessCustomBinding(
+                MonthlyGetDataRowCount,
+                MonthlyGetData
+            );
+            return PartialView("_MonthlyGridPartial", gridViewModel);
+        }
+
+        PartialViewResult YearlyBindingCore(GridViewModel gridViewModel)
+        {
+            gridViewModel.ProcessCustomBinding(
+                YearlyGetDataRowCount,
+                YearlyGetData
+            );
+            return PartialView("_YearlyGridPartial", gridViewModel);
         }
 
         static GridViewModel CreateGridViewModel()
@@ -83,13 +114,44 @@ namespace DSLNG.PEAR.Web.Controllers
         public void GetDataRowCount(GridViewCustomBindingGetDataRowCountArgs e)
         {
 
-            e.DataRowCount = _highlightService.GetHighlights(new GetHighlightsRequest { OnlyCount = true }).Count;
+            e.DataRowCount = _highlightService.GetHighlights(new GetHighlightsRequest {PeriodeType = PeriodeType.Daily,  OnlyCount = true }).Count;
         }
 
         public void GetData(GridViewCustomBindingGetDataArgs e)
         {
             e.Data = _highlightService.GetHighlights(new GetHighlightsRequest
             {
+                PeriodeType = PeriodeType.Daily,
+                Skip = e.StartDataRowIndex,
+                Take = e.DataRowCount
+            }).Highlights;
+        }
+        public void MonthlyGetDataRowCount(GridViewCustomBindingGetDataRowCountArgs e)
+        {
+
+            e.DataRowCount = _highlightService.GetHighlights(new GetHighlightsRequest { PeriodeType = PeriodeType.Monthly, OnlyCount = true }).Count;
+        }
+
+        public void MonthlyGetData(GridViewCustomBindingGetDataArgs e)
+        {
+            e.Data = _highlightService.GetHighlights(new GetHighlightsRequest
+            {
+                PeriodeType = PeriodeType.Monthly,
+                Skip = e.StartDataRowIndex,
+                Take = e.DataRowCount
+            }).Highlights;
+        }
+        public void YearlyGetDataRowCount(GridViewCustomBindingGetDataRowCountArgs e)
+        {
+
+            e.DataRowCount = _highlightService.GetHighlights(new GetHighlightsRequest { PeriodeType = PeriodeType.Yearly, OnlyCount = true }).Count;
+        }
+
+        public void YearlyGetData(GridViewCustomBindingGetDataArgs e)
+        {
+            e.Data = _highlightService.GetHighlights(new GetHighlightsRequest
+            {
+                PeriodeType = PeriodeType.Yearly,
                 Skip = e.StartDataRowIndex,
                 Take = e.DataRowCount
             }).Highlights;

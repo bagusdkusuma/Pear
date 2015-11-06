@@ -780,6 +780,8 @@
     <Content Include="Views\OperationalData\Edit.cshtml" />
     <Content Include="Views\OperationalData\Index.cshtml" />
     <Content Include="Views\OperationalData\_IndexGridPartial.cshtml" />
+    <Content Include="Views\Highlight\_MonthlyGridPartial.cshtml" />
+    <Content Include="Views\Highlight\_YearlyGridPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

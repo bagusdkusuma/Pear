@@ -5,19 +5,46 @@
 <div class="artifact-list">
     <h2>List</h2>
     @Html.Partial("_MessageResponse")
-    @Html.ActionLink("Create New", "Create")
-    @Html.Action("IndexPartial")
+    <div class="add-button-wrapper">
+    <a class="btn btn-primary pull-right" href="/Highlight/Create">Create New</a>
+</div>
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#daily" data-toggle="tab">Daily</a></li>
+        <li><a href="#monthly" data-toggle="tab" class="vertical-tab">Monthly</a></li>
+        <li><a href="#yearly" data-toggle="tab">Yearly</a></li>
+    </ul>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane active" id="daily">
+                    @Html.Action("IndexPartial")
+
+                </div>
+                <div class="tab-pane" id="monthly">
+                    @Html.Action("MonthlyPartial")
+
+                </div>
+                <div class="tab-pane" id="yearly">
+                    @Html.Action("YearlyPartial")
+
+                </div>
+                <!-- Tab panes -->
+
+            </div>
+        </div>
+    </div>
 
     @section Scripts{
         <script type="text/javascript">
             var confirmDelete = function (id) {
                 if (confirm('Are you sure want to delete this item?')) {
                     var url = '@Url.Action("Delete", "Highlight")';
-                $('<form action="' + url + '" method="POST">' +
-                    '<input type="hidden" name="id" value="' + id + '">' +
-                    '</form>').submit();
-            }
-        };
+                    $('<form action="' + url + '" method="POST">' +
+                        '<input type="hidden" name="id" value="' + id + '">' +
+                        '</form>').submit();
+                }
+            };
         </script>
     }
 
