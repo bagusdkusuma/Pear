@@ -17,7 +17,7 @@ namespace DSLNG.PEAR.Data.Entities
         public int Id { get; set; }
         public string Label { get; set; }
         public ICollection<ArtifactStack> Stacks { get; set; }
-
+        public Artifact Artifact { get; set; }
         //public string Aggregation { get; set; }
         public string Color { get; set; }
         public string PreviousColor { get; set; }

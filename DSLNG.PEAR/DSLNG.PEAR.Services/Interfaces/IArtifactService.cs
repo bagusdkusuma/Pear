@@ -21,5 +21,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetMultiaxisChartDataResponse GetMultiaxisChartData(GetMultiaxisChartDataRequest request);
         GetPieDataResponse GetPieData(GetPieDataRequest request);
         GetComboChartDataResponse GetComboChartData(GetComboChartDataRequest request);
+        DeleteArtifactResponse Delete(DeleteArtifactRequest request);
     }
 }

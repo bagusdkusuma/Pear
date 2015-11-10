@@ -120,6 +120,7 @@
     <Compile Include="OutputCategoryService.cs" />
     <Compile Include="PeriodeService.cs" />
     <Compile Include="Requests\Artifact\CreateArtifactRequest.cs" />
+    <Compile Include="Requests\Artifact\DeleteArtifactRequest.cs" />
     <Compile Include="Requests\Artifact\GetArtifactRequest.cs" />
     <Compile Include="Requests\Artifact\GetArtifactsRequest.cs" />
     <Compile Include="Requests\Artifact\GetArtifactsToSelectRequest.cs" />
@@ -257,6 +258,7 @@
     <Compile Include="Requests\Weather\GetWeathersRequest.cs" />
     <Compile Include="Requests\Weather\SaveWeatherRequest.cs" />
     <Compile Include="Responses\Artifact\CreateArtifactResponse.cs" />
+    <Compile Include="Responses\Artifact\DeleteArtifactResponse.cs" />
     <Compile Include="Responses\Artifact\GetArtifactResponse.cs" />
     <Compile Include="Responses\Artifact\GetArtifactsResponse.cs" />
     <Compile Include="Responses\Artifact\GetArtifactsToSelectResponse.cs" />
