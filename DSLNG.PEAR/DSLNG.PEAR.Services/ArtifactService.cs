@@ -2200,7 +2200,11 @@ namespace DSLNG.PEAR.Services
         public GetArtifactsResponse GetArtifacts(GetArtifactsRequest request)
         {
             int totalRecords;
-            var artifacts = SortData(request.Search, request.SortingDictionary, out totalRecords).Skip(request.Skip).Take(request.Take).ToList();
+            var query = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            if (request.Take != -1) {
+                query = query.Skip(request.Skip).Take(request.Take);
+            }
+            var artifacts = query.ToList();
 
             var response = new GetArtifactsResponse();
             response.Artifacts = artifacts.MapTo<GetArtifactsResponse.Artifact>();
@@ -2223,7 +2227,7 @@ namespace DSLNG.PEAR.Services
 
         private IEnumerable<Artifact> SortData(string search, IDictionary<string, System.Data.SqlClient.SortOrder> sortingDictionary, out int totalRecords)
         {
-            var data = DataContext.Artifacts.AsQueryable();
+            var data = DataContext.Artifacts.Include(x => x.LayoutColumns).AsQueryable();
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             {
                 data = data.Where(x => x.GraphicName.Contains(search) || x.GraphicType.Contains(search));
@@ -2233,15 +2237,20 @@ namespace DSLNG.PEAR.Services
             {
                 switch (sortOrder.Key)
                 {
-                    case "GraphicName":
+                    case "Name":
                         data = sortOrder.Value == SortOrder.Ascending
                                    ? data.OrderBy(x => x.GraphicName)
                                    : data.OrderByDescending(x => x.GraphicName);
                         break;
-                    case "GraphicType":
+                    case "Order":
                         data = sortOrder.Value == SortOrder.Ascending
                                    ? data.OrderBy(x => x.GraphicType)
                                    : data.OrderByDescending(x => x.GraphicType);
+                        break;
+                    case "Used":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.LayoutColumns.Count > 0 ? 1 : 0).ThenBy(x => x.GraphicName)
+                            : data.OrderByDescending(x => x.LayoutColumns.Count > 0 ? 1 : 0).ThenBy(x => x.GraphicName);
                         break;
                 }
             }
@@ -2285,6 +2294,40 @@ namespace DSLNG.PEAR.Services
                 Artifacts = DataContext.Artifacts.Where(x => x.GraphicName.Contains(request.Term)).Take(20).ToList()
                 .MapTo<GetArtifactsToSelectResponse.ArtifactResponse>()
             };
+        }
+
+
+        public DeleteArtifactResponse Delete(DeleteArtifactRequest request)
+        {
+            try {
+                var artifact = DataContext.Artifacts.Include(x => x.Series).Include(x => x.Plots).Include(x => x.LayoutColumns).FirstOrDefault(x => x.Id == request.Id);
+                if (artifact.LayoutColumns.Count > 0) {
+                    return new DeleteArtifactResponse
+                    {
+                        IsSuccess = false,
+                        Message = "The item couldn't be deleted. It is being used by your aplication"
+                    };
+                }
+                foreach (var serie in artifact.Series.ToList()) {
+                    DataContext.ArtifactSeries.Remove(serie);
+                }
+                foreach (var plot in artifact.Plots.ToList())
+                {
+                    DataContext.ArtifactPlots.Remove(plot);
+                }
+                DataContext.Artifacts.Remove(artifact);
+                DataContext.SaveChanges();
+                return new DeleteArtifactResponse{
+                    IsSuccess = true,
+                    Message = "The item has been deleted successfully"
+                };
+            }catch{
+                return new DeleteArtifactResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error has been occured please contact the administrator for further information"
+                };
+            }
         }
     }
 }

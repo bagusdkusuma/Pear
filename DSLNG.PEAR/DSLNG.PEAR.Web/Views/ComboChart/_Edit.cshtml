@@ -17,12 +17,12 @@
                 <div class="col-sm-6">
                     <div class="form-group form-list">
                         @{
-        if (i != 0)
-        {
-            Model.ComboChart.GraphicTypes.Where(x => x.Value == Model.ComboChart.Charts[i].GraphicType).First().Selected = true;
-        }
+        //if (i != 0)
+        //{
+        //    Model.ComboChart.GraphicTypes.Where(x => x.Value == Model.ComboChart.Charts[i].GraphicType).First().Selected = true;
+        //}
                             @Html.LabelFor(model => model.ComboChart.Charts[i].GraphicType)
-                            @Html.DropDownListFor(model => model.ComboChart.Charts[i].GraphicType, Model.ComboChart.GraphicTypes, new { @class = "form-control multiaxis-graphic-type", data_graph_url = Url.Action("ComboSettings", "Artifact") })
+                            @Html.DropDownListFor(model => model.ComboChart.Charts[i].GraphicType, new SelectList(Model.ComboChart.GraphicTypes, "Value", "Text", Model.ComboChart.Charts[i].GraphicType), new { @class = "form-control multiaxis-graphic-type", data_graph_url = Url.Action("ComboSettings", "Artifact") })
                             @Html.ValidationMessageFor(model => model.ComboChart.Charts[i].GraphicType)
                         }
                     </div>
@@ -30,13 +30,13 @@
                 
                 <div class="col-sm-6  value-axis-holder">
                     @{
-        if (i != 0)
-        {
-            Model.ComboChart.ValueAxes.Where(x => x.Value == Model.ComboChart.Charts[i].ValueAxis).First().Selected = true;
-        }
+        //if (i != 0)
+        //{
+        //    Model.ComboChart.ValueAxes.Where(x => x.Value == Model.ComboChart.Charts[i].ValueAxis).First().Selected = true;
+        //}
                         <div class="form-group form-list">
                             @Html.LabelFor(model => model.ComboChart.Charts[i].ValueAxis)
-                            @Html.DropDownListFor(model => model.ComboChart.Charts[i].ValueAxis, Model.ComboChart.ValueAxes, new { @class = "form-control value-axis-opt" })
+                            @Html.DropDownListFor(model => model.ComboChart.Charts[i].ValueAxis, new SelectList(Model.ComboChart.ValueAxes,"Value","Text",Model.ComboChart.Charts[i].ValueAxis), new { @class = "form-control value-axis-opt" })
                             @Html.ValidationMessageFor(model => model.ComboChart.Charts[i].ValueAxis)
                         </div>
                     }

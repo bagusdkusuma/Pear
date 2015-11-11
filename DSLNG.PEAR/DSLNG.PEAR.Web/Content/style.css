@@ -832,7 +832,7 @@ a:hover.btn-lightblue
 .form-list
 {
     width: 100%;
-    padding-bottom: 20px;
+    padding-bottom: 15px;
 }
 
 label
@@ -1201,7 +1201,7 @@ table.text-center th
 .form-inline .form-group
 {
     margin-right: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
 }
 
 .notification

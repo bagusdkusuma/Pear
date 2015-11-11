@@ -522,6 +522,7 @@
     <Compile Include="Controllers\OperationalDataController.cs" />
     <Compile Include="Controllers\OperationController.cs" />
     <Compile Include="Controllers\ScenarioController.cs" />
+    <Compile Include="Helpers\EmailHelper.cs" />
     <Compile Include="ViewModels\AssumptionData\AssumptionDataViewModel.cs" />
     <Compile Include="ViewModels\EconomicConfigDetail\EconomicConfigViewModel.cs" />
     <Compile Include="ViewModels\EconomicSummary\EconomicSummaryViewModel.cs" />

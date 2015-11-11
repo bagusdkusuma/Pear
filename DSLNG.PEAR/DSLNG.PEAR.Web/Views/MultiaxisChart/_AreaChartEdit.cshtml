@@ -58,14 +58,14 @@
                     </div>
                     <div class="col-sm-6">
                         @{
-        if (i != 0)
-        {
-            Model.ValueAxes.Where(x => x.Value == Model.Series[i].ValueAxis).First().Selected = true;
-        }
+        //if (i != 0)
+        //{
+        //    Model.ValueAxes.Where(x => x.Value == Model.Series[i].ValueAxis).First().Selected = true;
+        //}
                         }
                         <div class="form-group value-axis form-list">
                             @Html.LabelFor(model => Model.Series[i].ValueAxis)
-                            @Html.DropDownListFor(model => model.Series[i].ValueAxis, Model.ValueAxes, new
+                            @Html.DropDownListFor(model => model.Series[i].ValueAxis, new SelectList(Model.ValueAxes, "Value","Text",Model.Series[i].ValueAxis), new
                        {
                            @class = "form-control",
                            @Name = "MultiaxisChart.Charts[" + @ViewData["ChartIndex"] + "].AreaChart.Series[" + i + "].ValueAxis",

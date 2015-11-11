@@ -17,38 +17,38 @@
                 <div class="col-sm-6">
                     <div class="form-group form-list">
                         @{
-        if (i != 0)
-        {
-            Model.MultiaxisChart.GraphicTypes.Where(x => x.Value == Model.MultiaxisChart.Charts[i].GraphicType).First().Selected = true;
-        }
+        //if (i != 0)
+        //{
+        //    Model.MultiaxisChart.GraphicTypes.Where(x => x.Value == Model.MultiaxisChart.Charts[i].GraphicType).First().Selected = true;
+        //}
                             @Html.LabelFor(model => model.MultiaxisChart.Charts[i].GraphicType)
-                            @Html.DropDownListFor(model => model.MultiaxisChart.Charts[i].GraphicType, Model.MultiaxisChart.GraphicTypes, new { @class = "form-control multiaxis-graphic-type", data_graph_url = Url.Action("MultiaxisSettings", "Artifact") })
+                            @Html.DropDownListFor(model => model.MultiaxisChart.Charts[i].GraphicType, new SelectList(Model.MultiaxisChart.GraphicTypes, "Value", "Text", Model.MultiaxisChart.Charts[i].GraphicType), new { @class = "form-control multiaxis-graphic-type", data_graph_url = Url.Action("MultiaxisSettings", "Artifact") })
                             @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].GraphicType)
                         }
                     </div>
                 </div>
                 <div class="col-sm-6">
                     @{
-        if (i != 0)
-        {
-            Model.MultiaxisChart.Measurements.Where(x => x.Value == Model.MultiaxisChart.Charts[i].MeasurementId.ToString()).First().Selected = true;
-        }
+        //if (i != 0)
+        //{
+        //    Model.MultiaxisChart.Measurements.Where(x => x.Value == Model.MultiaxisChart.Charts[i].MeasurementId.ToString()).First().Selected = true;
+        //}
                     }
                     <div class="form-group form-list">
                         @Html.LabelFor(model => model.MultiaxisChart.Charts[i].MeasurementId)
-                        @Html.DropDownListFor(model => model.MultiaxisChart.Charts[i].MeasurementId, Model.MultiaxisChart.Measurements, new { @class = "form-control measurement" })
+                        @Html.DropDownListFor(model => model.MultiaxisChart.Charts[i].MeasurementId, new SelectList(Model.MultiaxisChart.Measurements, "Value", "Text", Model.MultiaxisChart.Charts[i].MeasurementId), new { @class = "form-control measurement" })
                         @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].MeasurementId)
                     </div>
                 </div>
                 <div class="col-sm-6  value-axis-holder">
                     @{
-        if (i != 0)
-        {
-            Model.MultiaxisChart.ValueAxes.Where(x => x.Value == Model.MultiaxisChart.Charts[i].ValueAxis).First().Selected = true;
-        }
+        //if (i != 0)
+        //{
+        //    Model.MultiaxisChart.ValueAxes.Where(x => x.Value == Model.MultiaxisChart.Charts[i].ValueAxis).First().Selected = true;
+        //}
                         <div class="form-group form-list">
                             @Html.LabelFor(model => model.MultiaxisChart.Charts[i].ValueAxis)
-                            @Html.DropDownListFor(model => model.MultiaxisChart.Charts[i].ValueAxis, Model.MultiaxisChart.ValueAxes, new { @class = "form-control value-axis-opt" })
+                            @Html.DropDownListFor(model => model.MultiaxisChart.Charts[i].ValueAxis, new SelectList(Model.MultiaxisChart.ValueAxes, "Value", "Text", Model.MultiaxisChart.Charts[i].ValueAxis), new { @class = "form-control value-axis-opt" })
                             @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].ValueAxis)
                         </div>
                     }

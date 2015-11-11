@@ -79,5 +79,6 @@ namespace DSLNG.PEAR.Data.Entities
 
             set { this.updatedDate = value; }
         }
+        public ICollection<LayoutColumn> LayoutColumns { get; set; }
     }
 }

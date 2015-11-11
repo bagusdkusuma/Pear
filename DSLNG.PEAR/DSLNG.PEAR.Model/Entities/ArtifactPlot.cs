@@ -14,5 +14,7 @@ namespace DSLNG.PEAR.Data.Entities
         public double To { get; set; }
         public string Color { get; set; }
         public string Label { get; set; }
+        public Artifact Artifact { get; set; }
+        public ArtifactChart ArtifactChart { get; set; }
     }
 }
