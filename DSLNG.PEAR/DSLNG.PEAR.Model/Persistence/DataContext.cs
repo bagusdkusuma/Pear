@@ -45,7 +45,7 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<ArtifactTank> ArtifactTanks { get; set; }
         public IDbSet<Highlight> Highlights { get; set; }
         public IDbSet<Select> Selects { get; set; }
-        public IDbSet<SelectOption> SelectOptions { get; set; } 
+        public IDbSet<SelectOption> SelectOptions { get; set; }
         public IDbSet<Vessel> Vessels { get; set; }
         public IDbSet<VesselSchedule> VesselSchedules { get; set; }
         public IDbSet<NextLoadingSchedule> NextLoadingSchedules { get; set; }
@@ -96,6 +96,36 @@ namespace DSLNG.PEAR.Data.Persistence
             //            x.MapRightKey("ParentId");
             //        }
             //    );
+
+            //modelBuilder.Entity<Artifact>()
+            //   .HasMany(x => x.Series)
+            //    .WithOptional()
+            //   .WillCascadeOnDelete();
+            modelBuilder.Entity<ArtifactSerie>()
+              .HasMany(x => x.Stacks)
+               .WithOptional()
+              .WillCascadeOnDelete();
+            //modelBuilder.Entity<Artifact>()
+            //   .HasMany(x => x.Plots)
+            //      .WithOptional(x => x.Artifact)
+            //   .WillCascadeOnDelete();
+            modelBuilder.Entity<Artifact>()
+               .HasMany(x => x.Charts)
+                  .WithOptional()
+               .WillCascadeOnDelete();
+            modelBuilder.Entity<ArtifactChart>()
+           .HasMany(x => x.Series)
+            .WithOptional()
+           .WillCascadeOnDelete();
+            modelBuilder.Entity<ArtifactChart>()
+          .HasMany(x => x.Plots)
+           .WithOptional(x => x.ArtifactChart)
+          .WillCascadeOnDelete();
+            modelBuilder.Entity<Artifact>()
+               .HasMany(x => x.Rows)
+                  .WithOptional()
+               .WillCascadeOnDelete();
+
 
             base.OnModelCreating(modelBuilder);
         }

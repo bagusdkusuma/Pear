@@ -1251,5 +1251,11 @@ namespace DSLNG.PEAR.Web.Controllers
                     return string.Empty;
             }
         }
+        public ActionResult Delete(int id) {
+            var resp = _artifactServie.Delete(new DeleteArtifactRequest { Id = id });
+            TempData["IsSuccess"] = resp.IsSuccess;
+            TempData["Message"] = resp.Message;
+            return RedirectToAction("Index");
+        } 
     }
 }

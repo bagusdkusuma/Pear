@@ -40,13 +40,13 @@
                 </div>
                 <div class="col-sm-6">
                     @{
-                            if (i != 0)
-                            {
-                                Model.LineChart.ValueAxes.Where(x => x.Value == Model.LineChart.Series[i].ValueAxis).First().Selected = true;
-                            }
+                            //if (i != 0)
+                            //{
+                            //    Model.LineChart.ValueAxes.Where(x => x.Value == Model.LineChart.Series[i].ValueAxis).First().Selected = true;
+                            //}
                         <div class="form-group value-axis form-list">
                             @Html.LabelFor(model => Model.LineChart.Series[i].ValueAxis)
-                            @Html.DropDownListFor(model => model.LineChart.Series[i].ValueAxis, Model.LineChart.ValueAxes, new { @class = "form-control" })
+                            @Html.DropDownListFor(model => model.LineChart.Series[i].ValueAxis, new SelectList(Model.LineChart.ValueAxes, "Value","Text",Model.LineChart.Series[i].ValueAxis), new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.LineChart.Series[i].ValueAxis)
                         </div>
                     }

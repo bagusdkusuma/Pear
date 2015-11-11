@@ -11,6 +11,7 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
             public int Id { get; set; }
             public string GraphicType { get; set; }
             public string GraphicName { get; set; }
+            public bool Used { get; set; }
         }
     }
 }
