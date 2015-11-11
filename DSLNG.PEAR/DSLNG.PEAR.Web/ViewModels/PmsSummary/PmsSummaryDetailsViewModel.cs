@@ -13,6 +13,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
         public IList<PmsConfig> PmsConfigs { get; set; }
         public int[] PillarIds { get; set; }
         public int PmsSummaryId { get; set; }
+        public int Year { get; set; }
         public double TotalScoreAllPillar
         {
             get

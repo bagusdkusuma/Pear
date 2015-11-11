@@ -15,6 +15,7 @@ namespace DSLNG.PEAR.Services.Responses.KpiTarget
         }
 
         public int Id { get; set; }
+        public int Year { get; set; }
         public IList<Pillar> Pillars { get; set; }
 
         public class Pillar

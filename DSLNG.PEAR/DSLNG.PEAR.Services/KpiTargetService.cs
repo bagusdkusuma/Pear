@@ -90,7 +90,7 @@ namespace DSLNG.PEAR.Services
             try
             {
                 var pmsSummary = DataContext.PmsSummaries.Single(x => x.Id == request.PmsSummaryId);
-
+                response.Year = pmsSummary.Year;
                 var pillarsAndKpis = DataContext.PmsConfigDetails
                         .Include(x => x.Kpi)
                         .Include(x => x.Kpi.KpiTargets)

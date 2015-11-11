@@ -21,6 +21,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetPmsConfigDetailsResponse GetPmsConfigDetails(int id);
         GetKpisByPillarIdResponse GetKpis(int pillarId);
         DeletePmsResponse DeletePmsSummary(int id);
+        int GetYearActive();
 
         #region PMS Config
 

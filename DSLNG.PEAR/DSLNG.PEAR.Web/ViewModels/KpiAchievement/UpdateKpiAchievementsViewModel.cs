@@ -17,6 +17,7 @@ namespace DSLNG.PEAR.Web.ViewModels.KpiAchievement
         public IList<Pillar> Pillars { get; set; }
         public string ViewName { get { return PeriodeType.ToLowerInvariant() == "yearly" ? "_Yearly" : "_Monthly"; } }
         public IList<SelectListItem> PeriodeTypes { get; set; }
+        public int Year { get; set; }
 
         public class Pillar
         {

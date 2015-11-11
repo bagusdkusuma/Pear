@@ -5,18 +5,17 @@
     int a = 0;
     foreach (var pillar in Model.Pillars)
     {
-    <div>
-        <h5>@pillar.Name</h5>
+    <div style="margin: 50px 0">
+        <h4>@pillar.Name</h4>
         <div class="kpi-message">
         </div>
         <hr>
-        <table class="no-border tablekpitarget">
+        <table class="no-border tablekpitarget" width="650">
             <thead>
                 <tr>
-                    <th style="width: 250px;"></th>
-                    <th style="width: 100px;"></th>
-                    @*<th style="width: 200px;"></th>*@
-                    <th>Value</th>
+                    <th width=350></th>
+                    <th width=100></th>
+                    <th width=200>Value</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,10 +25,10 @@
                     @Html.HiddenFor(x => Model.Pillars[a].Kpis[b].Id, new {@class="form-control-small"})
                     <tr>
                         <td>
-                            <h6>@kpi.Name</h6>
+                            @kpi.Name
                         </td>
                         <td>
-                            <h6>@kpi.Measurement</h6>
+                            @kpi.Measurement
                         </td>
                         @*<td>
                             <input type="text" class="form-control" placeholder="Remark"></td>*@
@@ -48,7 +47,7 @@
                                 @Html.HiddenFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Id, new { @class = "id" })
                                 @Html.HiddenFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Periode, new { @class = "periode" })
                                 @Html.HiddenFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Remark, new { @class = "remark" })
-                                @Html.TextBoxFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Value, new { @class = "form-control kpi-popover value " + remarkSign, @readonly="readonly" })
+                                @Html.TextBoxFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Value, new { @class = "form-control kpi-popover value " + remarkSign, @readonly="readonly", data_toggle="popover" })
                             </td>
                             c++;
                             @*<td>

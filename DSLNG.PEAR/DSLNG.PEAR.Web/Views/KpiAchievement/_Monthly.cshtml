@@ -5,8 +5,8 @@
     int a = 0;
     foreach (var pillar in Model.Pillars)
     {
-    <div>
-        <h5>@pillar.Name</h5>
+    <div style="margin: 50px 0">
+        <h4>@pillar.Name</h4>
         <div class="kpi-message">
         </div>
         <hr>
@@ -37,10 +37,10 @@
                     @Html.HiddenFor(x => Model.Pillars[a].Kpis[b].Id, new {@class="form-control-small"})
                     <tr>
                         <td>
-                            <h6>@kpi.Name</h6>
+                            @kpi.Name
                         </td>
                         <td>
-                            <h6>@kpi.Measurement</h6>
+                            @kpi.Measurement
                         </td>
                         <td>
                             @*<input type="text" class="form-control" placeholder="Remark">*@</td>

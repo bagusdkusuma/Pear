@@ -15,6 +15,7 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
         public string KpiGroup { get; set; }
         public int KpiId { get; set; }
         public int MeasurementId { get; set; }
+        public string MeasurementName { get; set; }
         public string KpiName { get; set; }
         public string KpiUnit { get; set; }
         public string KpiPeriod { get; set; }

@@ -9,8 +9,8 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
     {
         public IList<Pillar> Pillars { get; set; }
         public IList<Kpi> Kpis { get; set; }
-        public IList<PmsConfig> PmsConfigs { get; set; } 
-
+        public IList<PmsConfig> PmsConfigs { get; set; }
+        public int Year { get; set; }
         public class Pillar
         {
             public int Id { get; set; }
