@@ -93,14 +93,13 @@
 
     }
     @*<div id="proceed">Process</div>*@
-    <table class="table table-hover table-transparent table-bordered">
+    <table class="table table-hover table-transparent table-bordered" style="table-layout: fixed">
         <tbody>
             <tr>
-                <th style="width: 40%;">KPI Name</th>
-                @*<th style="width: 10%;">Measurement</th>*@
+                <th style="width: 165px;">KPI Name</th>
                 @for (int i = 1; i <= length; i++)
                 {
-                    <th style="width: 25px;">@i</th>
+                    <th style="width: 52px;">@i</th>
                 }
             </tr>
             @{ var a = 0;}
@@ -108,7 +107,7 @@
             @foreach (var kpi in Model.Kpis)
             {
                 <tr>
-                    <td>@kpi.Name (@kpi.Measurement)</td>
+                    <td style="text-align: left">@kpi.Name (@kpi.Measurement)</td>
                     @*<td>@kpi.Measurement</td>*@
                     @{ var b = 0;}
                     @foreach (var kpiAchievement in kpi.KpiAchievements)
