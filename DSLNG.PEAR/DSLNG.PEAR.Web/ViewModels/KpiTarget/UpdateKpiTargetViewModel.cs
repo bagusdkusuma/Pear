@@ -15,6 +15,7 @@ namespace DSLNG.PEAR.Web.ViewModels.KpiTarget
             Pillars = new List<Pillar>();
         }
 
+        public int Year { get; set; }
         public int PmsSummaryId { get; set; }
         public string PeriodeType { get; set; }
         public IList<Pillar> Pillars { get; set; }

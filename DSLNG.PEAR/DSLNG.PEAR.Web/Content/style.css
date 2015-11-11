@@ -418,11 +418,13 @@ img
 .tablekpitarget
 {
     text-align: center;
+    border-collapse: separate;
+    border-spacing: 0px 6px;
 }
 
     .tablekpitarget .form-control
     {
-        width: 90%;
+        width: 200px;
     }
 
     .tablekpitarget .form-control-small
@@ -937,6 +939,7 @@ h2
 hr
 {
     border-top: 1px solid #ccc;
+    margin-top: 8px;
 }
 
 .labletop

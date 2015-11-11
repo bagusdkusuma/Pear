@@ -5,19 +5,18 @@
     int a = 0;
     foreach (var pillar in Model.Pillars)
     {
-        <div>
-            <h5>@pillar.Name</h5>
+        <div style="margin: 50px 0">
+            <h4>@pillar.Name</h4>
             <div class="kpi-message">
             </div>
             <hr>
-            <table class="no-border tablekpitarget">
-                <thead>
-                    <tr>
-                        <th style="width: 250px;"></th>
-                        <th style="width: 100px;"></th>
-                        @*<th style="width: 200px;"></th>*@
-                        <th>Value</th>
-                    </tr>
+           <table class="no-border tablekpitarget" width="650">
+            <thead>
+                <tr>
+                    <th width=350></th>
+                    <th width=100></th>
+                    <th width=200>Value</th>
+                </tr>
                 </thead>
                 <tbody>
                     @{ int b = 0;}
@@ -26,10 +25,10 @@
                         @Html.HiddenFor(x => Model.Pillars[a].Kpis[b].Id, new { @class = "form-control" })
                         <tr>
                             <td>
-                                <h6>@kpi.Name</h6>
+                                @kpi.Name
                             </td>
                             <td>
-                                <h6>@kpi.Measurement</h6>
+                                @kpi.Measurement
                             </td>
                             @*<td>
                                 <input type="text" class="form-control" placeholder="Remark"></td>*@

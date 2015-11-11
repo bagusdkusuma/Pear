@@ -37,10 +37,12 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Index(int? month, int? year)
         {
             var viewModel = new PmsSummaryIndexViewModel();
+            var yearActive = _pmsSummaryService.GetYearActive();
+
             var request = new GetPmsSummaryReportRequest
                 {
                     Month = month.HasValue ? month.Value : DateTime.Now.Month,
-                    Year = year.HasValue ? year.Value : DateTime.Now.Year
+                    Year = year.HasValue ? year.Value : yearActive
                 };
 
             var response = _pmsSummaryService.GetPmsSummaryReport(request);
