@@ -101,14 +101,13 @@
             settings.ValidationSettings.Assign(DSLNG.PEAR.Web.Extensions.ExcelUploadHelper.ValidationSettings);
         }).GetHtml()
     }
-    <table class="table table-hover table-transparent table-bordered">
+    <table class="table table-hover table-transparent table-bordered" style="table-layout: fixed">
         <tbody>
             <tr>
-                <th style="width: 30%;">KPI Name</th>
-                <th style="width: 10%;">Measurement</th>
+                <th style="width: 165px;">KPI Name</th>
                 @for (int i = 1; i <= length; i++)
                 {
-                    <th style="width: 25px;">@i</th>
+                    <th style="width: 52px;">@i</th>
                 }
             </tr>
             @{ var a = 0;}
@@ -116,8 +115,7 @@
             @foreach (var kpi in Model.Kpis)
             {
                 <tr>
-                    <td>@kpi.Name</td>
-                    <td>@kpi.Measurement</td>
+                    <td style="text-align: left">@kpi.Name (@kpi.Measurement)</td>
                     @{ var b = 0;}
                     @foreach (var kpiTarget in kpi.KpiTargets)
                     {

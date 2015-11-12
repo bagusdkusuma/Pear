@@ -41,7 +41,7 @@ namespace DSLNG.PEAR.Services
                                             .Include("PmsConfigs.PmsConfigDetailsList.Kpi.KpiTargets")
                                             .Include("PmsConfigs.PmsConfigDetailsList.Kpi.Pillar")
                                             .Include("PmsConfigs.PmsConfigDetailsList.ScoreIndicators")
-                                            .FirstOrDefault(x => x.IsActive && x.Year == request.Year);
+                                            .FirstOrDefault(x => x.Year == request.Year);
                 if (pmsSummary != null)
                 {
                     response.Title = pmsSummary.Title;
@@ -268,6 +268,9 @@ namespace DSLNG.PEAR.Services
                     response.KpiName = config.Kpi.Name;
                     response.KpiId = config.Kpi.Id;
                     response.MeasurementId = config.Kpi.Measurement != null ? config.Kpi.Measurement.Id : 0;
+                    response.MeasurementName = config.Kpi.Measurement != null
+                                                   ? config.Kpi.Measurement.Name
+                                                   : string.Empty;
                     response.KpiUnit = config.Kpi.Measurement != null ? config.Kpi.Measurement.Name : "";
                     response.KpiPeriod = config.Kpi.Period.ToString();
 
@@ -494,7 +497,7 @@ namespace DSLNG.PEAR.Services
                 response.Pillars = DataContext.Pillars.ToList().MapTo<GetPmsSummaryConfigurationResponse.Pillar>();
                 response.Kpis = DataContext.Kpis.Include(x => x.Measurement).ToList().MapTo<GetPmsSummaryConfigurationResponse.Kpi>();
                 response.PmsConfigs = pmsSummary.PmsConfigs.MapTo<GetPmsSummaryConfigurationResponse.PmsConfig>();
-
+                response.Year = pmsSummary.Year;
                 response.IsSuccess = true;
             }
             catch (ArgumentNullException argumentNullException)
@@ -556,6 +559,12 @@ namespace DSLNG.PEAR.Services
         #endregion
 
         #region PMS Config
+
+        public int GetYearActive()
+        {
+            var pmsSummary = DataContext.PmsSummaries.FirstOrDefault(x => x.IsActive);
+            return pmsSummary != null ? pmsSummary.Year : DateTime.Now.Year;
+        }
 
         public CreatePmsConfigResponse CreatePmsConfig(CreatePmsConfigRequest request)
         {

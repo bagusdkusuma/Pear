@@ -418,11 +418,13 @@ img
 .tablekpitarget
 {
     text-align: center;
+    border-collapse: separate;
+    border-spacing: 0px 6px;
 }
 
     .tablekpitarget .form-control
     {
-        width: 90%;
+        width: 200px;
     }
 
     .tablekpitarget .form-control-small
@@ -937,6 +939,7 @@ h2
 hr
 {
     border-top: 1px solid #ccc;
+    margin-top: 8px;
 }
 
 .labletop
@@ -1956,4 +1959,17 @@ html>body tbody.scrollContent {
 	width: 100%
 }
 
-
+.widget-menu {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(51, 51, 51, 0.7);
+    border-radius: 5px;
+    color: #fff;
+    position: fixed; 
+    text-align: center; 
+    bottom: 10px; 
+    left: 135px;
+    font-size: 24px; 
+    line-height: 1.5em;
+    z-index: 1;
+}

@@ -63,7 +63,7 @@ border-left: 1px solid #ffffff">Yearly</td>
                         <td>&nbsp;</td>
                         @if (!string.IsNullOrEmpty(item.KpiIcon))
                         {
-                            <td class="text-left">
+                            <td class="text-left" style="padding-left: 21px;">
                                 <div class="roundlight popover-pillar" data-toggle="popover" style="background-color: @item.KpiColor" data-poload="@scoreIndicatorPmsConfigDetailsUrl"></div>@item.KpiName
                                 <img src="@Url.Content(PathConstant.KpiPath)/@item.KpiIcon" onerror="this.onerror = null; this.src = '@Url.Content(PathConstant.KpiPath)/default.png'" />
                             </td>
@@ -71,7 +71,7 @@ border-left: 1px solid #ffffff">Yearly</td>
                         else
                         {
                         
-                            <td class="text-left">
+                            <td class="text-left" style="padding-left: 21px;">
                                 <div class="roundlight popover-pillar" data-toggle="popover" style="background-color: @item.KpiColor" data-poload="@scoreIndicatorPmsConfigDetailsUrl"></div>@item.KpiName
                             </td>
                         }

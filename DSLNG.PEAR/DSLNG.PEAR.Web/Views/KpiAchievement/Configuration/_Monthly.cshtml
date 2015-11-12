@@ -99,7 +99,6 @@
             <tbody>
                 <tr>
                     <th style="width: 30%;">KPI Name</th>
-                    <th>Measurement</th>
                     <th style="width: 50px;">Jan</th>
                     <th style="width: 50px;">Feb</th>
                     <th style="width: 50px;">Mar</th>
@@ -117,8 +116,7 @@
                 @foreach (var kpi in Model.Kpis)
                 {
                     <tr>
-                        <td>@kpi.Name</td>
-                        <td>@kpi.Measurement</td>
+                        <td style="text-align: left">@kpi.Name (@kpi.Measurement)</td>
                         @{ var b = 0;}
                         @foreach (var kpiAchievement in kpi.KpiAchievements)
                         {

@@ -7,15 +7,16 @@
 <section>
     <div class="row">
         <div class="title_page" style="border: none!important;">
-            <div class="title">@ViewBag.Title</div>
+            <h3>@ViewBag.Title @Model.Year</h3>
         </div>
     </div>
     <div class="row">
         <form class="form-inline">
             <div class="form-group"
                 style="margin: 5px 40px 0px 25px; padding-right: 30px;">
-                <label>Period :</label>
-                @Html.DropDownListFor(x => x.PeriodeType, Model.PeriodeTypes, new { @class = "form-control", id = "periodeType" })
+                <label style="width: 60px">Period :</label>
+                @Html.DropDownListFor(x => x.PeriodeType, Model.PeriodeTypes, new { @class = "form-control", id = "periodeType", style="margin-bottom: 3px;" })
+                <a href="@Url.Action("Configuration", "PmsSummary")" class="btn-lightblue" style="margin-left: 10px">Back</a>
                 <img class="ajax-loader2" src="@Url.Content("~/content/img/ajax-loader1.gif")" style="display: none"></img>
             </div>
         </form>
@@ -55,7 +56,6 @@
     $(document).ready(function () {
         $('#periodeType').change(function () {
             var val = $(this).val();
-            console.log('sini' + val);
             $.ajax({
                 url: '@Url.Action("UpdatePartial")',
                 type: 'GET',
@@ -99,6 +99,7 @@
         $('.popover').find('input[name="KpiId"]').attr('value', kpiId);
         $('.popover').find('input[name="Periode"]').attr('value', periode);
         $('.popover').find('input[name="PeriodeType"]').attr('value', periodeType);
+        $('.popover').find('input[name="Value"]').focus();
         popOverElem = $(this);
     });
 

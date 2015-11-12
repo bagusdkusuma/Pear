@@ -46,97 +46,13 @@
                                  <img src="@Url.Content("~/Content/img/logo_blue.png")" />
                              </div>
             </div>
-
-            @*<ul class="main-nav">
-                <li class="active"><a href="#" class="menu_dashboard"><i class="fa fa-dashboard"></i><span>DASH BOARD</span></a>
-                    <ul class="sub-nav">
-                        <li>
-                            <a href="@Url.Action("Index", "PmsSummary")">PMS Summary<span class="fa"></span></a><br />
-                        </li>
-                        <li>
-                            <a href="#">Corporate Performance<span class="fa fa-angle-down"></span></a><br />
-                            <ul class="sublevel">
-                                <li><a href="#">Productivity & Efficiency</a></li>
-                                <li><a href="#">Financial Strength</a></li>
-                                <li><a href="#">Stakeholder Responsible</a></li>
-                                <li><a href="#">Safety</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#">Directorate Performance</a><br />
-                            
-                        </li>
-                        <li>
-                            <a href="#">Function Performance</a>
-                            <ul>
-                                <li>
-                                    <a href="#">QHSE</a>
-                                </li>
-                                <li><a href="#">HCD</a></li>
-                                <li><a href="#">Procurement</a></li>
-                                <li><a href="#">Maintance</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#">Configuration Settings <span class="fa fa-angle-down"></span></a>
-                            <ul>
-                                <li>
-                                    <a href="@Url.Action("Index", "Artifact")">Artifact</a>
-                                </li>
-                            </ul>
-                        </li>
-                        
-                    </ul>
-                </li>
-                <li><a href="#" class="menu_plan"><i class="fa fa-calendar"></i><span>PLAN</span></a>
-                    <ul class="sub-nav">
-                        <li>
-                            <a href="@Url.Action("Index", "Kpi")">Business Indicator<span class="fa fa-angle-down"></span></a><br />
-                            <ul class="sublevel">
-                                <li><a href="@Url.Action("Index", "Pillar")">Pillar</a></li>
-                                <li><a href="@Url.Action("Index", "Type")">Type</a></li>
-                                <li><a href="#">Period</a></li>
-                                <li><a href="#">Method</a></li>
-                                <li><a href="#">Level</a></li>
-                                <li><a href="@Url.Action("Index", "Measurement")">Measurement</a></li>
-                                <li><a href="#">Group</a></li>
-                                <li><a href="#">Activity</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#">Economic Model<span class="fa fa-angle-down"></span></a><br />
-                            <ul class="sublevel">
-                                <li><a href="#">Scenario List</a></li>
-                                <li><a href="#">EM Summary</a></li>
-                                <li><a href="#">Configuration</a></li>
-                                <li><a href="#">Master</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#">Performance Setting<span class="fa fa-angle-down"></span></a><br />
-                            <ul class="sublevel">
-                                <li><a href="#">Scenario List</a></li>
-                                <li><a href="#">EM Summary</a></li>
-                                <li><a href="@Url.Action("Configuration", "PmsSummary")">Configuration</a></li>
-                                <li><a href="#">Master</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li><a href="#" class="menu_execute"><i class="fa fa-gavel"></i><span>EXECUTE</span></a></li>
-                <li><a href="#" class="menu_assess"><i class="fa fa-edit"></i><span>ASSESS</span></a></li>
-                <li><a href="#" class="menu_report"><i class="fa fa-bar-chart-o"></i><span>REPORT</span></a></li>
-                <li><a href="#" class="menu_setting"><i class="fa fa-cog"></i><span>SETTING</span></a>
-                    <ul class="sub-nav">
-                        <li><a href="@Url.Action("Index", "User")">User</a></li>
-                        <li><a href="@Url.Action("Index", "RoleGroup")">Group</a></li>
-                        <li><a href="#">Configuration</a></li>
-                        <li><a href="#">Master</a></li>
-                    </ul>
-                </li>
-            </ul>*@
-
             @Html.Action("SiteMap", "Menu")
+            <div class="widget-menu">
+                <a href="@Url.Action("Index", "Calculator")" target="_blank">
+                    <i class="fa fa-calculator" style="margin-left: 7px;margin-top: 7px;"></i>
+                </a>
+            </div>
+            
 
             <div class="left-content-toggle">
                 <i class="fa fa-caret-left"></i>

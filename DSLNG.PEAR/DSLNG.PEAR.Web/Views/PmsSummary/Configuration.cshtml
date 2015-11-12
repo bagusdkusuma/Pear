@@ -52,7 +52,7 @@
                 <td class="text-button">
                     <a href="@Url.Action("ScoreIndicatorDetails", "PmsSummary", new { id = item.Id }, null)" data-toggle="modal" data-target="#modalDialogScoreIndicator"><span class="fa fa-table"></span>Details</a>
                 </td>
-                <td>@item.IsActive</td>
+                <td><input type="checkbox" checked="@item.IsActive" onchange="changeStatus()"/></td>
                 <td class="text-button">
                     <a href="@Url.Action("Update", "PmsSummary", new { id = item.Id }, null)" data-toggle="modal" data-target="#modalDialog"><span class="fa fa-pencil-square-o"></span>Edit</a>
                     <a href='javascript:;' onclick='confirmDelete(@item.Id)'><span class="fa fa-trash-o"></span>Delete</a>
@@ -75,6 +75,10 @@
                     '</form>').submit();
             }
         };
+
+        $(document).ready(function() {
+
+        });
     </script>
 }
 
