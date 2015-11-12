@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Artifact;
+using DSLNG.PEAR.Services.Requests.Kpi;
 using DSLNG.PEAR.Services.Requests.Measurement;
 using DSLNG.PEAR.Services.Requests.PmsSummary;
 using DSLNG.PEAR.Web.ViewModels.PmsConfigDetails;
@@ -15,6 +16,8 @@ using DevExpress.Web;
 using DevExpress.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Web.ViewModels.Artifact;
+using PeriodeType = DSLNG.PEAR.Data.Enums.PeriodeType;
+using YtdFormula = DSLNG.PEAR.Services.Responses.Kpi.YtdFormula;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -25,13 +28,15 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IDropdownService _dropdownService;
         private readonly IMeasurementService _measurementService;
         private readonly IArtifactService _artifactService;
+        private readonly IKpiService _kpiService;
 
-        public PmsSummaryController(IPmsSummaryService pmsSummaryService, IDropdownService dropdownService, IMeasurementService measurementService, IArtifactService artifactService)
+        public PmsSummaryController(IPmsSummaryService pmsSummaryService, IDropdownService dropdownService, IMeasurementService measurementService, IArtifactService artifactService, IKpiService kpiService)
         {
             _pmsSummaryService = pmsSummaryService;
             _dropdownService = dropdownService;
             _measurementService = measurementService;
             _artifactService = artifactService;
+            _kpiService = kpiService;
         }
 
         public ActionResult Index(int? month, int? year)
@@ -207,6 +212,8 @@ namespace DSLNG.PEAR.Web.Controllers
             previewViewModel.BarChart.Series = chartData.Series.MapTo<BarChartDataViewModel.SeriesViewModel>();
             previewViewModel.BarChart.Periodes = chartData.Periodes;
             previewViewModel.BarChart.SeriesType = chartData.SeriesType;
+            previewViewModel.PeriodeType = "Monthly";
+            previewViewModel.TimePeriodes = chartData.TimePeriodes;
             return Json(previewViewModel, JsonRequestBehavior.AllowGet);
         }
 
@@ -242,42 +249,52 @@ namespace DSLNG.PEAR.Web.Controllers
             previewViewModel.BarChart.Series = chartData.Series.MapTo<BarChartDataViewModel.SeriesViewModel>();
             previewViewModel.BarChart.Periodes = chartData.Periodes;
             previewViewModel.BarChart.SeriesType = chartData.SeriesType;
+            previewViewModel.PeriodeType = "Monthly";
+            previewViewModel.TimePeriodes = chartData.TimePeriodes;
             return Json(previewViewModel, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult ChartYtd(ViewModels.PmsSummary.ChartViewModel viewModel)
         {
-            var artifactDesignerViewModel = new ArtifactDesignerViewModel();
-            artifactDesignerViewModel.BarChart = new BarChartViewModel();
-            var previewViewModel = new ArtifactPreviewViewModel();
-            artifactDesignerViewModel.BarChart.Series.Add(new BarChartViewModel.SeriesViewModel
+            var kpi = _kpiService.GetKpi(new GetKpiRequest {Id = viewModel.Id});
+            if (kpi.YtdFormula == YtdFormula.Sum)
             {
-                KpiId = viewModel.Id,
-                Label = "Achievement",
-                ValueAxis = ValueAxis.KpiActual.ToString()
-            });
+                var artifactDesignerViewModel = new ArtifactDesignerViewModel();
+                artifactDesignerViewModel.BarChart = new BarChartViewModel();
+                var previewViewModel = new ArtifactPreviewViewModel();
+                artifactDesignerViewModel.BarChart.Series.Add(new BarChartViewModel.SeriesViewModel
+                {
+                    KpiId = viewModel.Id,
+                    Label = "Achievement",
+                    ValueAxis = ValueAxis.KpiActual.ToString()
+                });
 
-            var request = new GetCartesianChartDataRequest();
-            request.GraphicName = "Year To Date";
-            request.GraphicType = "barachievement";
-            request.HeaderTitle = "Year To Date";
-            request.MeasurementId = viewModel.MeasurementId;
-            request.PeriodeType = PeriodeType.Monthly;
-            request.RangeFilter = RangeFilter.YTD;
-            request.Start = new DateTime(viewModel.Year, 1, 1);
-            request.End = new DateTime(viewModel.Year, 12, 1);
-            request.ValueAxis = ValueAxis.KpiActual;
+                var request = new GetCartesianChartDataRequest();
+                request.GraphicName = "Year To Date";
+                request.GraphicType = "barachievement";
+                request.HeaderTitle = "Year To Date";
+                request.MeasurementId = viewModel.MeasurementId;
+                request.PeriodeType = PeriodeType.Monthly;
+                request.RangeFilter = RangeFilter.YTD;
+                request.Start = new DateTime(viewModel.Year, 1, 1);
+                request.End = new DateTime(viewModel.Year, 12, 1);
+                request.ValueAxis = ValueAxis.KpiActual;
 
-            artifactDesignerViewModel.BarChart.MapPropertiesToInstance<GetCartesianChartDataRequest>(request);
-            var chartData = _artifactService.GetChartData(request);
-            previewViewModel.GraphicType = "barachievement";
-            previewViewModel.BarChart = new BarChartDataViewModel();
-            previewViewModel.BarChart.Title = "Year To Date";
-            previewViewModel.BarChart.ValueAxisTitle = _measurementService.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId }).Name;
-            previewViewModel.BarChart.Series = chartData.Series.MapTo<BarChartDataViewModel.SeriesViewModel>();
-            previewViewModel.BarChart.Periodes = chartData.Periodes;
-            previewViewModel.BarChart.SeriesType = chartData.SeriesType;
-            return Json(previewViewModel, JsonRequestBehavior.AllowGet);
+                artifactDesignerViewModel.BarChart.MapPropertiesToInstance<GetCartesianChartDataRequest>(request);
+                var chartData = _artifactService.GetChartData(request);
+                previewViewModel.GraphicType = "barachievement";
+                previewViewModel.BarChart = new BarChartDataViewModel();
+                previewViewModel.BarChart.Title = "Year To Date";
+                previewViewModel.BarChart.ValueAxisTitle = _measurementService.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId }).Name;
+                previewViewModel.BarChart.Series = chartData.Series.MapTo<BarChartDataViewModel.SeriesViewModel>();
+                previewViewModel.BarChart.Periodes = chartData.Periodes;
+                previewViewModel.BarChart.SeriesType = chartData.SeriesType;
+                previewViewModel.PeriodeType = "Monthly";
+                previewViewModel.TimePeriodes = chartData.TimePeriodes;
+                return Json(previewViewModel, JsonRequestBehavior.AllowGet);
+            }
+
+            return Content("KPI's Year To Date formula is not SUM type");
         }
 
         public ActionResult ScoreIndicatorDetails(int id)

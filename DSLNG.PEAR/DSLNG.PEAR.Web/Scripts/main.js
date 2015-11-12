@@ -1614,7 +1614,7 @@ Number.prototype.format = function (n, x) {
                                 tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br>';
                             }
                         }
-                        if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
+                        if (!nextExist && data.Highlights!== null && data.Highlights[this.points[i].point.index] != null) {
                             tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
                             tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
                         }
