@@ -128,7 +128,6 @@
                 <tr>
                     <th>No</th>
                     <th>KPI Name</th>
-                    <th>Measurement</th>
                     <th>Type</th>
                     <th style="width: 13%;">Action</th>
                 </tr>
@@ -136,7 +135,7 @@
                 @foreach (var roleGroup in Model.RoleGroups)
                 {
                     <tr>
-                        <td colspan="4" style="text-align: left;" class="grey_text">
+                        <td colspan="3" style="text-align: left;" class="grey_text">
                             @roleGroup.Name
                         </td>
                         <td class="text-button" style="margin: auto;">
@@ -149,10 +148,8 @@
                         <tr>
 
                             <td>@(++number)</td>
-                            <td>@kpi.Name</td>
-                            <td>@kpi.Measurement</td>
-
-                            <td>@kpi.Type</td>
+                            <td style="text-align: left">@kpi.Name (@kpi.Measurement)</td>
+                            <td style="text-align: left">@kpi.Type</td>
                             <td class="text-button" style="margin: auto;"></td>
 
                         </tr>
