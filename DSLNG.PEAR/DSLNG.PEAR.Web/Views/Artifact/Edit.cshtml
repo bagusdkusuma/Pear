@@ -21,7 +21,8 @@
                         <h2>Graphic Type</h2>
                         <div class="form-group form-list">
                             @Html.LabelFor(model => model.GraphicType)
-                            @Html.DropDownListFor(model => model.GraphicType, Model.GraphicTypes, new { @class = "form-control", @readonly = "readonly", id = "graphic-type", data_graph_url = Url.Action("GraphSettings", "Artifact") })
+                            @Html.DropDownListFor(model => model.GraphicType, Model.GraphicTypes, new { @class = "form-control", disabled = "disabled", id = "graphic-type", data_graph_url = Url.Action("GraphSettings", "Artifact") })
+                            @Html.HiddenFor(model => model.GraphicType)
                             @Html.ValidationMessageFor(model => model.GraphicType)
                         </div>
 

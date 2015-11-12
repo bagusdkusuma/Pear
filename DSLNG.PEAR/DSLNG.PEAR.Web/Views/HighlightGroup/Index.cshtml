@@ -1,0 +1,72 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+@*<div class="highlight-orders">*@
+<div class="row">
+    <div class="col-md-12">
+        <h3>Highlight Group</h3>
+        <br />
+        @Html.Partial("_MessageResponse")
+        <div class="add-button-wrapper">
+            @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+        </div>
+        <table id="highlight-order-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Name
+                    </th>
+                    <th>Order
+                    </th>
+                    <th>Action
+                    </th>
+                </tr>
+            </thead>
+        </table>
+        @section Scripts{
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('#highlight-order-table').DataTable({
+                        "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                        "iDisplayLength": -1,
+                        "bProcessing": true,
+                        "bServerSide": true,
+                        "sServerMethod": "POST",
+                        "sAjaxSource": '@Url.Action("Grid", "HighlightGroup")',
+                    "order": [[1, "asc"]],
+                    "aoColumns": [
+                        { "mDataProp": "Name", "name": "Name", "sClass": "dt-head-center text-left" },
+                        {
+                            "mDataProp": "Order", "name": "Order", "sClass": "dt-head-center text-center"
+                        },
+                        {
+                            "orderable": false,
+                            "data": null,
+                            "defaultContent": '',
+                            "mRender": function (data, type, row) {
+                                var viewLink = '@Html.ActionLink("View", "View", new { Id = "_id_" }, new { @class = "artifact-view" })'.replace('_id_', data.Id);
+                                var editLink = '@Html.ActionLink("Edit", "Edit", "HighlightGroup", new { id = "_id_" }, null)'.replace('_id_', data.Id);
+                                var deleteLink = '<a href="javascript:confirmDelete(' + data.Id + ')">Delete</a>';
+                                return editLink + ' | ' + viewLink + ' | ' + deleteLink;
+                            }
+                        }
+                    ]
+                });
+            });
+                var confirmDelete = function (id) {
+                    if (confirm('Are you sure want to delete this item?')) {
+                        var url = '@Url.Action("Delete", "HighlightGroup")';
+                    $('<form action="' + url + '" method="POST">' +
+                        '<input type="hidden" name="id" value="' + id + '">' +
+                        '</form>').submit();
+                }
+            };
+            </script>
+        }
+    </div>
+</div>
+
+
+
+@*</div>*@
+@*</div>*@

@@ -14,7 +14,7 @@
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Remark</th>
+                <th>IsActive</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -24,14 +24,24 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 $('#template-table').DataTable({
+                    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                    "iDisplayLength": -1,
                     "bProcessing": true,
                     "bServerSide": true,
                     "sServerMethod": "POST",
                     "sAjaxSource": '@Url.Action("Grid", "Template")',
-                    "order": [[1, "asc"]],
+                    "order": [[1, "desc"]],
                     "aoColumns": [
-                        { "mDataProp": "Name", "name": "Name" },
-                        { "mDataProp": "Remark", "name": "Remark" },
+                        { "mDataProp": "Name", "name": "Name", "sClass": "dt-head-center text-left" },
+                        {
+                            "mDataProp": "IsActive", "name": "IsActive", "sClass": "dt-head-center text-center", "render": function (data, type, row) {
+                                var checked = '';
+                                if (data) {
+                                    checked = 'checked="checked"';
+                                }
+                                return '<input type="checkbox" class="editor-active grid-is-active" ' + checked + ' disabled="disabled">';
+                            },
+                        },
                         {
                             "orderable": false,
                             "data": null,

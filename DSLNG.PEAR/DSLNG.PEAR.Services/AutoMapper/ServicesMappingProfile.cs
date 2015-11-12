@@ -80,6 +80,8 @@ using DSLNG.PEAR.Services.Responses.EconomicSummary;
 using DSLNG.PEAR.Services.Requests.EconomicSummary;
 using DSLNG.PEAR.Services.Responses.EconomicConfig;
 using DSLNG.PEAR.Services.Requests.EconomicConfig;
+using DSLNG.PEAR.Services.Responses.HighlightGroup;
+using DSLNG.PEAR.Services.Requests.HighlightGroup;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -376,7 +378,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Weather, GetWeatherResponse>()
                 .ForMember(x => x.Value, o => o.MapFrom(s => s.Value.Value))
                 .ForMember(x => x.Text, o => o.MapFrom(s => s.Value.Text));
-            Mapper.CreateMap<SelectOption, GetHighlightOrdersResponse.HighlightOrderResponse>();
+            Mapper.CreateMap<SelectOption, GetHighlightOrdersResponse.HighlightOrderResponse>()
+                .ForMember(x => x.GroupId, o => o.MapFrom(x =>x.Group != null ?  x.Group.Id : 0));
             Mapper.CreateMap<KeyAssumptionCategory, GetAssumptionCategoriesResponse.AssumptionCategory>();
             Mapper.CreateMap<SaveAssumptionCategoryRequest, KeyAssumptionCategory>();
             Mapper.CreateMap<KeyAssumptionCategory, GetAssumptionCategoryResponse>();
@@ -453,6 +456,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<EconomicConfigDetail, GetEconomicConfigResponse>()
                 .ForMember(x => x.IdScenario, o => o.MapFrom(s => s.Scenario.Id))
                 .ForMember(x => x.IdEconomicSummary, o => o.MapFrom(s => s.EconomicSummary.Id));
+            Mapper.CreateMap<HighlightGroup, GetHighlightGroupsResponse.HighlightGroupResponse>();
+            Mapper.CreateMap<HighlightGroup, GetHighlightGroupResponse>();
+            Mapper.CreateMap<SaveHighlightGroupRequest, HighlightGroup>();
             base.Configure();
         }
 

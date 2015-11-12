@@ -403,6 +403,7 @@
     <Content Include="Scripts\calculator.standard.js" />
     <Content Include="Scripts\calculator.plant-availability.js" />
     <Content Include="Scripts\jquery.dataTables.min.js" />
+    <Content Include="Scripts\jquery.freezeheader.js" />
     <Content Include="Scripts\perfect-scrollbar.jquery.min.js" />
     <Content Include="Scripts\tank.js" />
     <Content Include="Scripts\exporting.js" />
@@ -519,6 +520,7 @@
     <Compile Include="Controllers\AssumptionDataController.cs" />
     <Compile Include="Controllers\EconomicConfigController.cs" />
     <Compile Include="Controllers\EconomicSummaryController.cs" />
+    <Compile Include="Controllers\HighlightGroupController.cs" />
     <Compile Include="Controllers\OperationalDataController.cs" />
     <Compile Include="Controllers\OperationController.cs" />
     <Compile Include="Controllers\ScenarioController.cs" />
@@ -528,6 +530,7 @@
     <Compile Include="ViewModels\EconomicSummary\EconomicSummaryViewModel.cs" />
     <Compile Include="Grid\GridModelBinder.cs" />
     <Compile Include="Grid\GridParams.cs" />
+    <Compile Include="ViewModels\HighlightGroup\HighlightGroupViewModel.cs" />
     <Compile Include="ViewModels\Kpi\UploadViewModel.cs" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
@@ -783,6 +786,9 @@
     <Content Include="Views\OperationalData\_IndexGridPartial.cshtml" />
     <Content Include="Views\Highlight\_MonthlyGridPartial.cshtml" />
     <Content Include="Views\Highlight\_YearlyGridPartial.cshtml" />
+    <Content Include="Views\HighlightGroup\Index.cshtml" />
+    <Content Include="Views\HighlightGroup\Create.cshtml" />
+    <Content Include="Views\HighlightGroup\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

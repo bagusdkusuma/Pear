@@ -1,43 +1,108 @@
-﻿@model IEnumerable<DSLNG.PEAR.Web.ViewModels.HighlightOrder.HighlightOrderViewModel>
+﻿@model DSLNG.PEAR.Web.ViewModels.HighlightOrder.HighlightOrderViewModel
 
 @{
     ViewBag.Title = "Index";
 }
-
-<div class="highlight-orders">
+@Html.DropDownListFor(model => model.GroupId, Model.Groups,new{@class = "form-control highlight-groups"})
+@*<div class="highlight-orders">*@
     <div class="row">
         <div class="col-md-12">
             <div class="title " style="margin-bottom: 50px">Highlight Order</div>
-        </div>
-    </div>
-
-    <div class="panel panel-default der-panel">
-        <table class="der table-bordered">
+              <table id="highlight-order-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
+            <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Text)
+                    Text
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Order)
+                    Order
+                </th>
+                <th>
+                    Group
                 </th>
             </tr>
-
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Text)
-                    </td>
-                    <td>
-                        @using (Html.BeginForm("Save", "HighlightOrder"))
-                        {
-                            @Html.HiddenFor(modelItem => item.Id, new { name = "Id" })
-                            @Html.TextBoxFor(modelItem => item.Order, new { @class = "highlight-order", name = "Order" })
-                        }
-                    </td>
-                </tr>
-            }
-
+            </thead>
         </table>
+    @section Scripts{
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#highlight-order-table').DataTable({
+                    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                    "iDisplayLength": -1,
+                    "bProcessing": true,
+                    "bServerSide": true,
+                    "sServerMethod": "POST",
+                    "sAjaxSource": '@Url.Action("Grid", "HighlightOrder")',
+                    "order": [[0, "desc"]],
+                    "aoColumns": [
+                        { "mDataProp": "Text", "name": "Text", "sClass": "dt-head-center text-left" },
+                        {
+                            "mDataProp": "Order", "name": "Order", "sClass": "dt-head-center text-center",
+                            "render": function (data, type, row) {
+                                console.log(row);
+                                        return '<form action="/highlightOrder/save" method="POST"><input type="hidden" name="Id" value="'+row.Id+'"><input type="number" class="highlight-order" name="Order" class="form-control" value="'+data+'"></form>';
+                            },
+                        },
+                         {
+                            "mDataProp": "GroupId", "name": "GroupId",
+                            "orderable": false,
+                            "data": null,
+                            "defaultContent": '',
+                            "mRender": function(data, type, row) {
+                                //console.log(row);
+                                var groups = $('.highlight-groups').clone().val(row.GroupId).prop('outerHTML');
+                                return '<form action="/highlightOrder/save" method="POST"><input type="hidden" name="Id" value="' + row.Id + '">'+groups+'</form>';
+                            }
+                        }
+                        //{
+                        //    "mDataProp": "Used", "name": "Used", "render": function (data, type, row) {
+                        //        var checked = '';
+                        //        if (data) {
+                        //            checked = 'checked="checked"';
+                        //        }
+                        //            return '<input type="checkbox" class="editor-active" '+checked+' disabled="disabled">';
+                        //    },
+                        //},
+                       @* {
+                            "orderable": false,
+                            "data": null,
+                            "defaultContent": '',
+                            "mRender": function(data, type, row) {
+                                var viewLink = '@Html.ActionLink("View", "View", new { Id = "_id_" }, new { @class="artifact-view" })'.replace('_id_', data.Id);
+                                var editLink = '@Html.ActionLink("Edit", "Edit", "Artifact", new { id = "_id_" }, null)'.replace('_id_', data.Id);
+                                var deleteLink = '<a href="javascript:confirmDelete(' + data.Id + ')">Delete</a>';
+                                return editLink + ' | ' + viewLink  + ' | ' + deleteLink;
+                            }
+                        }*@
+                    ],
+                    "fnDrawCallback": function (oSettings) {
+                        $('.highlight-order').keyup(function () {
+                            var form = $(this).closest('form');
+                            $.post(form.attr('action'), form.serialize().replace(/item\./g, ''), function (data) {
+                            });
+                        });
+                        $('.highlight-groups').change(function () {
+                            var form = $(this).closest('form');
+                            $.post(form.attr('action'), form.serialize().replace(/item\./g, ''), function (data) {
+                            });
+                        });
+                    }
+                });
+            });
+            var confirmDelete = function (id) {
+                if (confirm('Are you sure want to delete this item?')) {
+                    var url = '@Url.Action("Delete", "Artifact")';
+                    $('<form action="' + url + '" method="POST">' +
+                        '<input type="hidden" name="id" value="' + id + '">' +
+                        '</form>').submit();
+                }
+            };
+        </script>
+    }
+        </div>
     </div>
-</div>
+    
+      
+
+    @*</div>*@
+@*</div>*@
