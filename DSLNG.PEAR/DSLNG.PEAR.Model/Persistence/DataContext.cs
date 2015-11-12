@@ -44,6 +44,7 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<KpiRelationModel> KpiRelationModels { get; set; }
         public IDbSet<ArtifactTank> ArtifactTanks { get; set; }
         public IDbSet<Highlight> Highlights { get; set; }
+        public IDbSet<HighlightGroup> HighlightGroups { get; set; }
         public IDbSet<Select> Selects { get; set; }
         public IDbSet<SelectOption> SelectOptions { get; set; }
         public IDbSet<Vessel> Vessels { get; set; }
@@ -126,6 +127,10 @@ namespace DSLNG.PEAR.Data.Persistence
                   .WithOptional()
                .WillCascadeOnDelete();
 
+            modelBuilder.Entity<Select>()
+                .HasMany(x => x.Options)
+                .WithRequired(x => x.Select)
+                .WillCascadeOnDelete();
 
             base.OnModelCreating(modelBuilder);
         }

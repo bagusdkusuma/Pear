@@ -85,6 +85,7 @@
     <Compile Include="EconomicConfigService.cs" />
     <Compile Include="EconomicSummaryService.cs" />
     <Compile Include="GroupService.cs" />
+    <Compile Include="HighlightGroupService.cs" />
     <Compile Include="HighlightOrderService.cs" />
     <Compile Include="HighlightService.cs" />
     <Compile Include="Interfaces\IAssumptionCategoryService.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Interfaces\IConstantUsageService.cs" />
     <Compile Include="Interfaces\IEconomicConfigService.cs" />
     <Compile Include="Interfaces\IEconomicSummaryService.cs" />
+    <Compile Include="Interfaces\IHighlightGroupService.cs" />
     <Compile Include="Interfaces\IHighlightOrderService.cs" />
     <Compile Include="Interfaces\IHighlightService.cs" />
     <Compile Include="Interfaces\IKpiAchievementService.cs" />
@@ -166,6 +168,9 @@
     <Compile Include="Requests\EconomicSummary\GetEconomicSummaryRequest.cs" />
     <Compile Include="Requests\EconomicSummary\SaveEconomicSummaryRequest.cs" />
     <Compile Include="Requests\GridBaseRequest.cs" />
+    <Compile Include="Requests\HighlightGroup\GetHighlightGroupRequest.cs" />
+    <Compile Include="Requests\HighlightGroup\GetHighlightGroupsRequest.cs" />
+    <Compile Include="Requests\HighlightGroup\SaveHighlightGroupRequest.cs" />
     <Compile Include="Requests\HighlightOrder\GetHighlightOrdersRequest.cs" />
     <Compile Include="Requests\HighlightOrder\SaveHighlightOrderRequest.cs" />
     <Compile Include="Requests\Highlight\DeleteRequest.cs" />
@@ -310,6 +315,9 @@
     <Compile Include="Responses\Group\CreateGroupResponse.cs" />
     <Compile Include="Responses\Group\DeleteGroupResponse.cs" />
     <Compile Include="Responses\Group\UpdateGroupResponse.cs" />
+    <Compile Include="Responses\HighlightGroup\GetHighlightGroupResponse.cs" />
+    <Compile Include="Responses\HighlightGroup\SaveHighlightGroupResponse.cs" />
+    <Compile Include="Responses\HighlightGroup\GetHighlightGroupsResponse.cs" />
     <Compile Include="Responses\HighlightOrder\GetHighlightOrdersResponse.cs" />
     <Compile Include="Responses\HighlightOrder\SaveHighlightOrderResponse.cs" />
     <Compile Include="Responses\Highlight\DeleteResponse.cs" />

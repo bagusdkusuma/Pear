@@ -127,6 +127,9 @@ using DSLNG.PEAR.Services.Responses.EconomicSummary;
 using DSLNG.PEAR.Web.ViewModels.EconomicConfigDetail;
 using DSLNG.PEAR.Services.Requests.EconomicConfig;
 using DSLNG.PEAR.Services.Responses.EconomicConfig;
+using DSLNG.PEAR.Web.ViewModels.HighlightGroup;
+using DSLNG.PEAR.Services.Requests.HighlightGroup;
+using DSLNG.PEAR.Services.Responses.HighlightGroup;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -543,6 +546,9 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<EconomicConfigViewModel, SaveEconomicConfigRequest>();
             Mapper.CreateMap<GetEconomicConfigResponse, EconomicConfigViewModel>();
+            Mapper.CreateMap<HighlightGroupViewModel, SaveHighlightGroupRequest>();
+            Mapper.CreateMap<GetHighlightGroupResponse, HighlightGroupViewModel>();
+     
             base.Configure();
         }
 

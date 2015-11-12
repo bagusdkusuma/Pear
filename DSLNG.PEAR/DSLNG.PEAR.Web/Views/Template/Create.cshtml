@@ -46,7 +46,7 @@
 
         </div>
         <div id="rows-holder">
-           @* <div class="col-md-12 layout-row-wrapper">
+            @* <div class="col-md-12 layout-row-wrapper">
                 <div class="whitebox">
                     <input type="button" value="Add Column" class="add-column" />
                     <input type="button" value="Remove Row" class="remove-row" />
@@ -77,12 +77,12 @@
         <div class="col-md-12 artifact-designer-btns">
             <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
             <button data-preview-url="@Url.Action("Preview", "Template")"  id="graphic-preview-btn" type="button" class="btn btn-primary btn-lg"><span class="fa fa-eye"></span>View</button>
-            <button type="button" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</button>
-            <button type="button" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</button>
+            <a onclick="location.reload();" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Refresh</a>
+            <a href="@Url.Action("Index", "Template")" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
         </div>
     }
 </div>
-<div id="hidden-fields-holder" data-artifact-url="@Url.Action("ArtifactList","Template")">
+<div id="hidden-fields-holder" data-artifact-url="@Url.Action("ArtifactList", "Template")">
     @*<div class="layout-column original" style="width: 100%">
         <div class="column-properties">
             <div class="form-group">
@@ -115,10 +115,10 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <select name="LayoutRows[0].LayoutColumns[0].ArtifactId" class="form-control artifact-list" style="width:170px">
+                            <select name="LayoutRows[0].LayoutColumns[0].ArtifactId" class="form-control artifact-list" style="width: 170px">
                                 <option>Select Artifact</option>
                             </select>
-                            @Html.ActionLink("Edit", "Edit", "Artifact", new {id = "_Id_"}, new {style="color: #000000;visibility:hidden", target="_blank"})
+                            @Html.ActionLink("Edit", "Edit", "Artifact", new { id = "_Id_" }, new { style = "color: #000000;visibility:hidden", target = "_blank" })
                         </div>
                         <div class="form-group">
                             <input type="button" value="Remove Column" class="remove-column" />

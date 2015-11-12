@@ -63,7 +63,11 @@ namespace DSLNG.PEAR.Services
         {
 
             int totalRecords;
-            var templates = SortData(request.Search, request.SortingDictionary, out totalRecords).Skip(request.Skip).Take(request.Take).ToList();
+            var query = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            if(request.Take != - 1){
+                query = query.Skip(request.Skip).Take(request.Take);
+            }
+            var templates = query.ToList();
 
             var response = new GetTemplatesResponse();
             response.Artifacts = templates.MapTo<GetTemplatesResponse.TemplateResponse>();
@@ -165,6 +169,11 @@ namespace DSLNG.PEAR.Services
                         data = sortOrder.Value == SortOrder.Ascending
                                    ? data.OrderBy(x => x.Name)
                                    : data.OrderByDescending(x => x.Name);
+                        break;
+                    case "IsActive":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.IsActive).ThenBy(x => x.Name)
+                            : data.OrderByDescending(x => x.IsActive).ThenBy(x => x.Name);
                         break;
                 }
             }

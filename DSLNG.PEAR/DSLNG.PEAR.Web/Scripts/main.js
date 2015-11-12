@@ -2612,7 +2612,9 @@ Number.prototype.format = function (n, x) {
             rowHeader.append($('<th>').html('Remark'));
         }
         //rowHeader.append($('<th>').html('Measurement'));
-        $table.append(rowHeader);
+        $table.append($('<thead />').append(rowHeader));
+        var $tbody = $('<tbody />');
+        //$table.append(rowHeader);
         for (var i in data.Tabular.Rows) {
             var dataRow = data.Tabular.Rows[i];
             var row = $('<tr>');
@@ -2629,8 +2631,9 @@ Number.prototype.format = function (n, x) {
                 row.append($('<td>').html(dataRow.Remark));
             }
             //row.append($('<td>').html(dataRow.Measurement));
-            $table.append(row);
+            $tbody.append(row);
         }
+        $table.append($tbody);
         //wrapper.append($table);
         //container.css('height', 'auto');
         //container.css('min-height', '350px');
@@ -2638,11 +2641,40 @@ Number.prototype.format = function (n, x) {
         //change from pak Marwan
         tableScrollContainer.append(panel);
         panel.append($table);
-        wrapper.append(tableScrollContainer);
+        //wrapper.append(tableScrollContainer);
 
         //wrapper.append($table);
-        container.html(wrapper);
-        $('.perfect-scrollbar').perfectScrollbar();
+        container.html(panel);
+        var firstRow = $table.find('tbody tr:first-child td');
+        $table.find('thead tr th').each(function (i, val) {
+            $(val).width($(firstRow[i]).width());
+            $(val).height($(firstRow[i]).height());
+        });
+        $table.find('tbody tr').each(function (i, val) {
+            $(val).find('td').each(function (j, sval) {
+                $(sval).width($(firstRow[j]).width());
+                $(sval).height($(firstRow[j]).height());
+            });
+        });
+        panel.css({ 'position': 'relative' , 'padding-top':'40px'});
+        $table.find('thead').css({
+            position: 'absolute',
+            top:'0'
+        });
+        $table.find('tbody').height(100).css({
+            display: 'block',
+            width:'100%'
+        });
+        $table.find('tbody').perfectScrollbar();
+        //$(window).resize(function () {
+        //    var leftWidth = panel.width() - $table.width();
+        //    var width = leftWidth / $table.find('thead th').length;
+        //    $table.find('td, th').each(function (i, val) {
+        //        $(val).width($(val).width() + width);
+        //        $(val).height($(val).height() + width);
+                
+        //    });
+        //});
     };
 
     //trafficlight
@@ -4190,11 +4222,7 @@ Number.prototype.format = function (n, x) {
             $.get($(this).attr('href'), function (data) {
             });
         });
-        $('.highlight-order').keyup(function () {
-            var form = $(this).closest('form');
-            $.post(form.attr('action'), form.serialize().replace(/item\./g, ''), function (data) {
-            });
-        });
+       
         $('.select-form #ParentId').change(function () {
             var $this = $(this);
             var url = $this.data('url');
