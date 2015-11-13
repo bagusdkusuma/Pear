@@ -397,6 +397,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.Category, o => o.MapFrom(s => s.Category.Name))
                 .ForMember(x => x.Measurement, o => o.MapFrom(s => s.Measurement.Name));
             Mapper.CreateMap<KeyAssumptionCategory, GetAssumptionConfigCategoryResponse.AssumptionConfigCategoryResponse>();
+            Mapper.CreateMap<Data.Entities.Measurement, GetAssumptionConfigCategoryResponse.MeasurementSelectList>();
             Mapper.CreateMap<KeyAssumptionConfig, GetAssumptionConfigResponse>()
                 .ForMember(x => x.IdCategory, o => o.MapFrom(s => s.Category.Id))
                 .ForMember(x => x.IdMeasurement, o => o.MapFrom(s => s.Measurement.Id));

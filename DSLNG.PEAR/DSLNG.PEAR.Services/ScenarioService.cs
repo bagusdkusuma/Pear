@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Entities.EconomicModel;
+using System.Data.SqlClient;
 
 namespace DSLNG.PEAR.Services
 {
@@ -18,17 +19,25 @@ namespace DSLNG.PEAR.Services
 
         public GetScenariosResponse GetScenarios(GetScenariosRequest request)
         {
-            if (request.OnlyCount)
+            int totalRecords;
+            var data = SortData(request.Search, request.SortingDictionary, out totalRecords).Skip(request.Skip).Take(request.Take).ToList();
+
+            return new GetScenariosResponse
             {
-                return new GetScenariosResponse { Count = DataContext.Scenarios.Count() };
-            }
-            else
-            {
-                return new GetScenariosResponse
-                {
-                    Scenarios = DataContext.Scenarios.OrderByDescending(x => x.Id).Skip(request.Skip).Take(request.Take).ToList().MapTo<GetScenariosResponse.Scenario>()
-                };
-            }
+                TotalRecords = totalRecords,
+                Scenarios = data.MapTo<GetScenariosResponse.Scenario>()
+            };
+            //if (request.OnlyCount)
+            //{
+            //    return new GetScenariosResponse { Count = DataContext.Scenarios.Count() };
+            //}
+            //else
+            //{
+            //    return new GetScenariosResponse
+            //    {
+            //        Scenarios = DataContext.Scenarios.OrderByDescending(x => x.Id).Skip(request.Skip).Take(request.Take).ToList().MapTo<GetScenariosResponse.Scenario>()
+            //    };
+            //}
         }
 
 
@@ -76,6 +85,35 @@ namespace DSLNG.PEAR.Services
                 IsSuccess = true,
                 Message = "Scenario has been deleted successfully"
             };
+        }
+
+        public IEnumerable<Scenario> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        {
+            var data = DataContext.Scenarios.AsQueryable();
+            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            {
+                data = data.Where(x => x.Name.Contains(search));
+            }
+
+            foreach (var sortOrder in sortingDictionary)
+            {
+                switch (sortOrder.Key)
+                {
+                    case "Name":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Name)
+                            : data.OrderByDescending(x => x.Name);
+                        break;
+                    case "IsActive":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.IsActive)
+                            : data.OrderByDescending(x => x.IsActive);
+                        break;
+                }
+            }
+
+            TotalRecords = data.Count();
+            return data;
         }
     }
 }
