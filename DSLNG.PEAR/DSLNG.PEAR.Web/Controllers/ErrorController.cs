@@ -14,5 +14,10 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult GeneralError()
+        {
+            return View();
+        }
     }
 }
