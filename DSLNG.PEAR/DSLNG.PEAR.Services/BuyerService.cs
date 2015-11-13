@@ -4,7 +4,6 @@ using DSLNG.PEAR.Services.Requests.Buyer;
 using DSLNG.PEAR.Services.Responses.Buyer;
 using System.Linq;
 using DSLNG.PEAR.Common.Extensions;
-using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Entities;
 using System;
 using System.Data.Entity.Infrastructure;
