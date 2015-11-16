@@ -9,6 +9,7 @@ namespace DSLNG.PEAR.Services.Responses.EconomicConfig
     public class GetEconomicConfigsResponse
     {
         public IList<EconomicConfig> EconomicConfigs { get; set; }
+        public int TotalRecords { get; set; }
         public int Count { get; set; }
         public class EconomicConfig
         {

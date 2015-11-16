@@ -10,6 +10,7 @@ using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Common.Extensions;
 using System.Data.Entity;
 using DSLNG.PEAR.Data.Entities.EconomicModel;
+using System.Data.SqlClient;
 
 namespace DSLNG.PEAR.Services
 {
@@ -19,19 +20,31 @@ namespace DSLNG.PEAR.Services
 
         public GetAssumptionConfigsResponse GetAssumptionConfigs(GetAssumptionConfigsRequest request)
         {
-            if (request.OnlyCount)
+            int totalRecords;
+            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            if (request.Take != -1)
             {
-                return new GetAssumptionConfigsResponse { Count = DataContext.KeyAssumptionConfigs.Count() };
+                data = data.Skip(request.Skip).Take(request.Take);
             }
-            else
+
+            return new GetAssumptionConfigsResponse
             {
-                return new GetAssumptionConfigsResponse
-                {
-                    AssumptionConfigs = DataContext.KeyAssumptionConfigs.OrderByDescending(x => x.Id)
-                    .Include(x => x.Category).Include(y => y.Measurement)
-                    .Skip(request.Skip).Take(request.Take).ToList().MapTo<GetAssumptionConfigsResponse.AssumptionConfig>()
-                };
-            }
+                TotalRecords = totalRecords,
+                AssumptionConfigs = data.ToList().MapTo<GetAssumptionConfigsResponse.AssumptionConfig>()
+            };
+            //if (request.OnlyCount)
+            //{
+            //    return new GetAssumptionConfigsResponse { Count = DataContext.KeyAssumptionConfigs.Count() };
+            //}
+            //else
+            //{
+            //    return new GetAssumptionConfigsResponse
+            //    {
+            //        AssumptionConfigs = DataContext.KeyAssumptionConfigs.OrderByDescending(x => x.Id)
+            //        .Include(x => x.Category).Include(y => y.Measurement)
+            //        .Skip(request.Skip).Take(request.Take).ToList().MapTo<GetAssumptionConfigsResponse.AssumptionConfig>()
+            //    };
+            //}
         }
 
 
@@ -39,7 +52,8 @@ namespace DSLNG.PEAR.Services
         {
             return new GetAssumptionConfigCategoryResponse
             {
-                AssumptionConfigCategoriesResponse = DataContext.KeyAssumptionCategories.ToList().MapTo<GetAssumptionConfigCategoryResponse.AssumptionConfigCategoryResponse>()
+                AssumptionConfigCategoriesResponse = DataContext.KeyAssumptionCategories.ToList().MapTo<GetAssumptionConfigCategoryResponse.AssumptionConfigCategoryResponse>(),
+                MeasurementsSelectList = DataContext.Measurements.ToList().MapTo < GetAssumptionConfigCategoryResponse.MeasurementSelectList>()
             };
 
         }
@@ -88,15 +102,62 @@ namespace DSLNG.PEAR.Services
 
         public DeleteAssumptionConfigResponse DeleteAssumptionConfig(DeleteAssumptionConfigRequest request)
         {
-            var AssumptionConfig = new KeyAssumptionConfig();
-            AssumptionConfig.Id = request.Id;
-            DataContext.Entry(AssumptionConfig).State = EntityState.Deleted;
+            var AssumptionConfig = new KeyAssumptionConfig { Id = request.Id };
+            DataContext.KeyAssumptionConfigs.Attach(AssumptionConfig);
+            DataContext.KeyAssumptionConfigs.Remove(AssumptionConfig);
             DataContext.SaveChanges();
+           
             return new DeleteAssumptionConfigResponse
             {
                 IsSuccess = true,
                 Message = "The Assumption Category has been deleted successfully"
             };
+        }
+
+
+        public IEnumerable<KeyAssumptionConfig> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        {
+            var data = DataContext.KeyAssumptionConfigs.Include(x => x.Category).Include(x => x.Measurement).AsQueryable();
+            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            {
+                data = data.Where(x => x.Name.Contains(search) || x.Category.Name.Contains(search)
+                    || x.Measurement.Name.Contains(search));
+            }
+
+            foreach (var sortOrder in sortingDictionary)
+            {
+                switch (sortOrder.Key)
+                {
+                    case "Name":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Name).ThenBy(x => x.Order)
+                            : data.OrderByDescending(x => x.Name).ThenBy(x => x.Order);
+                        break;
+                    case "Category":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Category.Name).ThenBy(x => x.Order)
+                            : data.OrderByDescending(x => x.Category.Name).ThenBy(x => x.Order);
+                        break;
+                    case "Measurement":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Measurement.Name).ThenBy(x => x.Order)
+                            : data.OrderByDescending(x => x.Measurement.Name).ThenBy(x => x.Order);
+                        break;
+                    case "Order":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Order)
+                            : data.OrderByDescending(x => x.Order);
+                        break;
+                    case "IsActive":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.IsActive).ThenBy(x => x.Order)
+                            : data.OrderByDescending(x => x.IsActive).ThenBy(x => x.Order);
+                        break;
+                }
+            }
+
+            TotalRecords = data.Count();
+            return data;
         }
     }
 }

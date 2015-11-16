@@ -14,7 +14,7 @@ namespace DSLNG.PEAR.Web.ViewModels.OutputCategory
         [Required]
         public int Order { get; set; }
         [Required]
-        public string Desc { get; set; }
+        public string Remark { get; set; }
         public bool IsActive { get; set; }       
 
     }

@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Responses.AssumptionCategory;
+using DSLNG.PEAR.Web.Grid;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -142,6 +143,27 @@ namespace DSLNG.PEAR.Web.Controllers
             }
 
             return View();
+        }
+
+        public ActionResult Grid(GridParams gridParams)
+        {
+            var assumptionCategory = _assumptionCategoryService.GetAssumptionCategories(new GetAssumptionCategoriesRequest
+                {
+                    Skip = gridParams.DisplayStart,
+                    Take = gridParams.DisplayLength,
+                    SortingDictionary = gridParams.SortingDictionary,
+                    Search = gridParams.Search
+                });
+            IList<GetAssumptionCategoriesResponse.AssumptionCategory> CategoriesResponse = assumptionCategory.AssumptionCategorys;
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = assumptionCategory.TotalRecords,
+                iTotalRecords = assumptionCategory.AssumptionCategorys.Count,
+                aaData = CategoriesResponse
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
+            
         }
     }
 }

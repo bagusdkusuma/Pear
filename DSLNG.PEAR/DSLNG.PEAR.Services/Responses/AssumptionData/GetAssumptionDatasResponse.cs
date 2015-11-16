@@ -10,6 +10,7 @@ namespace DSLNG.PEAR.Services.Responses.AssumptionData
     {
         public IList<AssumptionData> AssumptionDatas { get; set; }
         public int Count { get; set;  }
+        public int TotalRecords { get; set; }
         public class AssumptionData
         {
             public int Id { get; set; }

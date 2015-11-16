@@ -9,6 +9,7 @@ namespace DSLNG.PEAR.Services.Responses.Scenario
     public class GetScenariosResponse
     {
         public IList<Scenario> Scenarios { get; set; }
+        public int TotalRecords { get; set; }
         public int Count { get; set; }
         public class Scenario
         {

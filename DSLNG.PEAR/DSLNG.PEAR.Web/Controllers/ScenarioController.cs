@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Web.ViewModels.Scenario;
+using DSLNG.PEAR.Web.Grid;
+using DSLNG.PEAR.Services.Responses.Scenario;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -136,6 +138,26 @@ namespace DSLNG.PEAR.Web.Controllers
                 return RedirectToAction("Index");
             }
             return View();
+        }
+
+        public ActionResult Grid(GridParams gridParams)
+        {
+            var scenario = _scenarioService.GetScenarios(new GetScenariosRequest
+                {
+                    Skip = gridParams.DisplayStart,
+                    Take = gridParams.DisplayLength,
+                    SortingDictionary = gridParams.SortingDictionary,
+                    Search = gridParams.Search
+                });
+            IList<GetScenariosResponse.Scenario> scenarioResponse = scenario.Scenarios;
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = scenario.TotalRecords,
+                iTotalRecords = scenario.Scenarios.Count,
+                aaData = scenarioResponse
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 	}
 }

@@ -399,6 +399,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.Category, o => o.MapFrom(s => s.Category.Name))
                 .ForMember(x => x.Measurement, o => o.MapFrom(s => s.Measurement.Name));
             Mapper.CreateMap<KeyAssumptionCategory, GetAssumptionConfigCategoryResponse.AssumptionConfigCategoryResponse>();
+            Mapper.CreateMap<Data.Entities.Measurement, GetAssumptionConfigCategoryResponse.MeasurementSelectList>();
             Mapper.CreateMap<KeyAssumptionConfig, GetAssumptionConfigResponse>()
                 .ForMember(x => x.IdCategory, o => o.MapFrom(s => s.Category.Id))
                 .ForMember(x => x.IdMeasurement, o => o.MapFrom(s => s.Measurement.Id));
@@ -433,7 +434,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
             Mapper.CreateMap<OperationDataConfiguration, GetOperationalDatasResponse.OperationalData>()
                 .ForMember(x => x.KeyOperation, o => o.MapFrom(s => s.KeyOperation.Name))
-                .ForMember(x => x.KPI, o => o.MapFrom(s => s.Kpi.Name));
+                .ForMember(x => x.Kpi, o => o.MapFrom(s => s.Kpi.Name));
             Mapper.CreateMap<KeyOperation, GetOperationalSelectListResponse.Operation>();
             Mapper.CreateMap<Kpi, GetOperationalSelectListResponse.KPI>();
             Mapper.CreateMap<SaveOperationalDataRequest, OperationDataConfiguration>()

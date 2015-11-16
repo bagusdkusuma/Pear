@@ -2,23 +2,94 @@
     ViewBag.Title = "Assumption Config";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="artifact-list">
-    <h2>Assumption Config</h2>
-    @Html.Partial("_MessageResponse")
-    @Html.ActionLink("Create New", "Create")
-    @Html.Action("IndexPartial")
 
-    @section Scripts{
-        <script type="text/javascript">
-            var confirmDelete = function (id) {
-                if (confirm('Are you sure want to delete this item?')) {
-                    var url = '@Url.Action("Delete", "AssumptionConfig")';
+<h2>Assumption Config List</h2>
+@Html.Partial("_MessageResponse")
+@Html.ActionLink("Create New", "Create")
+@*@Html.Action("IndexPartial")*@
+
+@*@section Scripts{
+    <script type="text/javascript">
+        var confirmDelete = function (id) {
+            if (confirm('Are you sure want to delete this item?')) {
+                var url = '@Url.Action("Delete", "AssumptionConfig")';
                 $('<form action="' + url + '" method="POST">' +
                     '<input type="hidden" name="id" value="' + id + '">' +
                     '</form>').submit();
             }
         };
-        </script>
-    }
+    </script>
+}*@
 
-</div>
+<table id="assumptionConfig-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Measurement</th>
+            <th>Order</th>
+            <th>Remark</th>
+            <th>Is Active</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+</table>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#assumptionConfig-table').DataTable({
+                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                "iDisplayLength": -1,
+                "bProcessing": true,
+                "bServerSide": true,
+                "sServerMethod": "POST",
+                "sAjaxSource": '@Url.Action("Grid", "AssumptionConfig")',
+                "order": [[3, "asc"]],
+                "aoColumns": [
+                    { "mDataProp": "Name", "name": "Name" },
+                    { "mDataProp": "Category", "name": "Category" },
+                    { "mDataProp": "Measurement", "name": "Measurement" },
+                    { "mDataProp": "Order", "name": "Order" },
+                    { "mDataProp": "Remark", "name": "Remark", "sortable": false },
+                    {
+                        "mDataProp": "IsActive", "name": "IsActive",
+                        render: function (data, type, row) {
+                            if (type === 'display') {
+                                return '<input type="checkbox" class="is-active">';
+                            }
+                            return data;
+                        }
+                    },
+                    {
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": '',
+                        "mRender": function (data, type, row) {
+                            var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
+                            var editLink = '@Html.ActionLink("Edit", "Edit", "AssumptionConfig", new {id = "_id_"}, null)'.replace('_id_', data.Id);
+                            return editLink + ' | ' + deleteLink;
+                        }
+                    }
+                ],
+                rowCallback: function (row, data) {
+                    // Set the checked state of the checkbox in the table
+                    $('input.is-active', row).prop('checked', data.IsActive == 1);
+                }
+            });
+
+            $('#assumptionConfig-table').on('click', '.delete', function () {
+                var id = $(this).attr('data-id');
+                if (confirm('Are you sure want to delete this item?' + id)) {
+                    var url = '@Url.Action("Delete", "AssumptionConfig")';
+
+                    $('<form action="' + url + '" method="POST">' +
+                        '<input type="hidden" name="id" value="' + id + '">' +
+                        '</form>').submit();
+                }
+            });
+
+        });
+    </script>
+}
+

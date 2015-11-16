@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Entities.EconomicModel;
+using System.Data.SqlClient;
 
 namespace DSLNG.PEAR.Services
 {
@@ -19,20 +20,33 @@ namespace DSLNG.PEAR.Services
 
         public GetAssumptionCategoriesResponse GetAssumptionCategories(GetAssumptionCategoriesRequest request)
         {
-            if (request.OnlyCount)
+            int totalRecords;
+            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            if (request.Take != -1)
             {
-
-                return new GetAssumptionCategoriesResponse { Count = DataContext.KeyAssumptionCategories.Count() };
-
+                data = data.Skip(request.Skip).Take(request.Take);
             }
-            else
+
+            return new GetAssumptionCategoriesResponse
             {
-                return new GetAssumptionCategoriesResponse
-                {
-                    AssumptionCategorys = DataContext.KeyAssumptionCategories.OrderByDescending(x => x.Id).Skip(request.Skip).Take(request.Take).ToList().MapTo<GetAssumptionCategoriesResponse.AssumptionCategory>()
+                TotalRecords = totalRecords,
+                AssumptionCategorys = data.ToList().MapTo<GetAssumptionCategoriesResponse.AssumptionCategory>()
+            };
 
-                };
-            }
+            //if (request.OnlyCount)
+            //{
+
+            //    return new GetAssumptionCategoriesResponse { Count = DataContext.KeyAssumptionCategories.Count() };
+
+            //}
+            //else
+            //{
+            //    return new GetAssumptionCategoriesResponse
+            //    {
+            //        AssumptionCategorys = DataContext.KeyAssumptionCategories.OrderByDescending(x => x.Id).Skip(request.Skip).Take(request.Take).ToList().MapTo<GetAssumptionCategoriesResponse.AssumptionCategory>()
+
+            //    };
+            //}
         }
 
 
@@ -82,6 +96,36 @@ namespace DSLNG.PEAR.Services
                 IsSuccess = true,
                 Message = "The Assumption Category has been deleted successfully"
             };
+        }
+
+
+        public IEnumerable<KeyAssumptionCategory> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        {
+            var data = DataContext.KeyAssumptionCategories.AsQueryable();
+            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            {
+                data = data.Where(x => x.Name.Contains(search));
+            }
+
+            foreach (var sortOrder in sortingDictionary)
+            {
+                switch (sortOrder.Key)
+                {
+                    case "Name" :
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Name)
+                            : data.OrderByDescending(x => x.Name);
+                        break;
+                    case "IsActive" :
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.IsActive)
+                            : data.OrderByDescending(x => x.IsActive);
+                        break;
+                }
+            }
+
+            TotalRecords = data.Count();
+            return data;
         }
     }
 }
