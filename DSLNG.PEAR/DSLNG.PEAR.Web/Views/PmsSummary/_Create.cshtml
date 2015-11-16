@@ -6,6 +6,7 @@
 <div class="whitebox">
     <h5>Create Pms Summary</h5><br/>
     <form class="form-group" action="@Url.Action("Create")" method="POST">
+        @Html.HiddenFor(x => x.IsActive)
         <div class="form-group form-list">
             @Html.LabelFor(x => x.Year)
             <input class="datepicker form-control" data-provide="datepicker" name="year" type="text" value="">
@@ -18,11 +19,11 @@
             @Html.ValidationMessageFor(x => x.Title)
         </div>
 
-        <div class="form-group form-list form-inline">
+        @*<div class="form-group form-list form-inline">
             @Html.LabelFor(x => x.IsActive)
             @Html.CheckBoxFor(x => x.IsActive, new { @class = "form-control" })
             @Html.ValidationMessageFor(x => x.IsActive)
-        </div>
+        </div>*@
         @Html.Partial("_ScoringIndicator", Model.ScoreIndicators)
         
         <div class="centering margin">

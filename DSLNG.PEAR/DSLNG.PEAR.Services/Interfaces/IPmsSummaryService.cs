@@ -22,6 +22,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetKpisByPillarIdResponse GetKpis(int pillarId);
         DeletePmsResponse DeletePmsSummary(int id);
         int GetYearActive();
+        bool UpdateStatus(int id, bool isActive);
 
         #region PMS Config
 

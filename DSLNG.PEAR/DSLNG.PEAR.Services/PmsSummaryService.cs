@@ -177,7 +177,24 @@ namespace DSLNG.PEAR.Services
                                         }
 
                                     case ScoringType.Boolean:
-                                        bool isMoreThanZero = false;
+                                        var kpiAchievement =
+                                            pmsConfigDetails.Kpi.KpiAchievements.Where(x => x.Value.HasValue && x.Periode.Year == request.Year).ToList();
+                                        bool isNull = kpiAchievement.Count == 0;
+                                        bool exceedValue = false;
+                                        foreach (var achievement in kpiAchievement)
+                                        {
+                                            if (pmsConfigDetails.Target.HasValue && achievement.Value > pmsConfigDetails.Target.Value)
+                                            {
+                                                exceedValue = true;
+                                                break;
+                                            }
+                                        }
+
+                                        if (!isNull)
+                                        {
+                                            kpiData.Score = exceedValue ? 0 : Double.Parse(kpiData.Weight.ToString());
+                                        }
+                                        /*bool isMoreThanZero = false;
                                         var kpiAchievement =
                                             pmsConfigDetails.Kpi.KpiAchievements.Where(x => x.Value.HasValue && x.Periode.Year == request.Year).ToList();
                                         bool isNull = kpiAchievement.Count == 0;
@@ -194,7 +211,7 @@ namespace DSLNG.PEAR.Services
                                         if (!isNull)
                                         {
                                             kpiData.Score = isMoreThanZero ? 0 : Double.Parse(kpiData.Weight.ToString());
-                                        }
+                                        }*/
 
                                         break;
                                 }
@@ -447,6 +464,15 @@ namespace DSLNG.PEAR.Services
                     .Where(x => x.Id == request.Id)
                     .Include(x => x.ScoreIndicators)
                     .Single();
+
+                string expression;
+                bool isExpressionValid = IsExpressionValid(updatedPmsSummary.ScoreIndicators, out expression);
+                if (!isExpressionValid)
+                {
+                    response.Message = string.Format(@"This Score Indicator ({0}) Is Not Valid", expression);
+                    return response;
+                }
+
                 var existedPmsSummaryEntry = DataContext.Entry(existedPmsSummary);
                 existedPmsSummaryEntry.CurrentValues.SetValues(updatedPmsSummary);
 
@@ -566,6 +592,23 @@ namespace DSLNG.PEAR.Services
             return pmsSummary != null ? pmsSummary.Year : DateTime.Now.Year;
         }
 
+        public bool UpdateStatus(int id, bool isActive)
+        {
+            var existed = DataContext.PmsSummaries.FirstOrDefault(x => x.IsActive);
+            if (existed != null)
+            {
+                existed.IsActive = false;
+                DataContext.PmsSummaries.Attach(existed);
+                DataContext.Entry(existed).State = EntityState.Modified;    
+            }
+
+            var pmsSummary = DataContext.PmsSummaries.Single(x => x.Id == id);
+            pmsSummary.IsActive = isActive;
+            DataContext.PmsSummaries.Attach(pmsSummary);
+            DataContext.Entry(pmsSummary).State = EntityState.Modified;
+            return DataContext.SaveChanges() > 0;
+        }
+
         public CreatePmsConfigResponse CreatePmsConfig(CreatePmsConfigRequest request)
         {
             var response = new CreatePmsConfigResponse();
@@ -604,6 +647,16 @@ namespace DSLNG.PEAR.Services
                     .Include(x => x.PmsSummary)
                     .Include(x => x.ScoreIndicators)
                     .Single();
+                response.PmsSummaryId = existedPmsConfig.PmsSummary.Id;
+
+                string expression;
+                bool isExpressionValid = IsExpressionValid(updatedPmsConfig.ScoreIndicators, out expression);
+                if (!isExpressionValid)
+                {
+                    response.Message = string.Format(@"This Score Indicator ({0}) Is Not Valid", expression);
+                    return response;
+                }
+
                 var existedPmsConfigEntry = DataContext.Entry(existedPmsConfig);
                 existedPmsConfigEntry.CurrentValues.SetValues(updatedPmsConfig);
 
@@ -632,7 +685,6 @@ namespace DSLNG.PEAR.Services
 
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
-                response.PmsSummaryId = existedPmsConfig.PmsSummary.Id;
                 response.Message = "Pms Config has been updated";
             }
             catch (DbUpdateException dbUpdateException)
@@ -743,6 +795,16 @@ namespace DSLNG.PEAR.Services
                     .Include(x => x.ScoreIndicators)
                     .Include(x => x.Kpi)
                     .Single();
+
+                response.PmsSummaryId = existedPmsConfigDetails.PmsConfig.PmsSummary.Id;
+                string expression;
+                bool isExpressionValid = IsExpressionValid(updatedPmsConfigDetails.ScoreIndicators, out expression);
+                if (!isExpressionValid)
+                {
+                    response.Message = string.Format(@"This Score Indicator ({0}) Is Not Valid", expression);
+                    return response;
+                }
+
                 var existedPmsConfigDetailsEntry = DataContext.Entry(existedPmsConfigDetails);
                 existedPmsConfigDetailsEntry.CurrentValues.SetValues(updatedPmsConfigDetails);
                 //existedPmsConfigDetailsEntry.CurrentValues.SetValues(updatedPmsConfigDetails.Kpi);
@@ -799,7 +861,6 @@ namespace DSLNG.PEAR.Services
 
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
-                response.PmsSummaryId = existedPmsConfigDetails.PmsConfig.PmsSummary.Id;
                 response.Message = "KPI has been updated successfully";
             }
             catch (DbUpdateException dbUpdateException)
@@ -980,8 +1041,7 @@ namespace DSLNG.PEAR.Services
 
             return response;
         }
-
-
+        
         public DeletePmsResponse DeletePmsSummary(int id)
         {
             var response = new DeletePmsResponse();
@@ -1056,6 +1116,31 @@ namespace DSLNG.PEAR.Services
             }
 
             return response;
+        }
+
+        private bool IsExpressionValid(ICollection<ScoreIndicator> scoreIndicators, out string expression)
+        {
+            bool isValid = false;
+            expression = string.Empty;
+            foreach (var scoreIndicator in scoreIndicators)
+            {
+                try
+                {
+                    Expression e =
+                        new Expression(scoreIndicator.Expression.Replace("x",
+                                                                         1.ToString("f2", CultureInfo.InvariantCulture)));
+                    expression = scoreIndicator.Expression;
+                    bool evaluate = (bool) e.Evaluate();
+                    isValid = true;
+                }
+                catch (Exception exception)
+                {
+                    return false;
+                }
+                
+            }
+
+            return isValid;
         }
     }
 }

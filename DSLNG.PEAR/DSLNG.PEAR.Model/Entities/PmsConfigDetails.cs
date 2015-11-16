@@ -28,7 +28,7 @@ namespace DSLNG.PEAR.Data.Entities
         //public ICollection<KpiTarget> KpiTargets { get; set; }
         //public ICollection<KpiAchievement> KpiAchievements { get; set; }
         public TargetType TargetType { get; set; }
-
+        public double? Target { get; set; }
         public bool IsActive { get; set; }
     }
 }

@@ -49,7 +49,7 @@
 </section>
 <div class="popover-content" style="display: none">
     <label class="control-label">Value</label>
-    <input type="text" name="Value" class="form-control" />
+    <input type="text" name="Value" class="form-control value-popover" />
     <label class="control-label">Remark</label>
     <textarea name="Remark" class="form-control"></textarea>
     <input type="hidden" name="Id" />
@@ -63,6 +63,12 @@
 {
     <script type="text/javascript">
         $(document).ready(function () {
+            /*$('.value-popover').keypress(function () {
+            //$('body').on('click', '.value-popover', function () {
+                console.log('sini woi');
+                console.log($(this).val());
+                $(this).val().replace(',', '.');
+            });*/
             var _periodeType = '@Model.PeriodeType';
             $('[data-toggle=tab]').click(function () {
                 var that = $(this);
