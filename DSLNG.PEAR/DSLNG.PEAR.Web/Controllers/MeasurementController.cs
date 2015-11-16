@@ -5,6 +5,8 @@ using System.Web.Mvc;
 using DSLNG.PEAR.Web.ViewModels.Measurement;
 using DevExpress.Web.Mvc;
 using System.Collections.Generic;
+using DSLNG.PEAR.Web.Grid;
+using DSLNG.PEAR.Services.Responses.Measurement;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -123,6 +125,27 @@ namespace DSLNG.PEAR.Web.Controllers
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
             return RedirectToAction("Index");
+        }
+
+        
+        public ActionResult Grid(GridParams gridParams)
+        {
+            var measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
+                {
+                    Skip = gridParams.DisplayStart,
+                    Take = gridParams.DisplayLength,
+                    SortingDictionary = gridParams.SortingDictionary,
+                    Search = gridParams.Search
+                });
+            IList<GetMeasurementsResponse.Measurement> measurementsResponse = measurements.Measurements;
+            var data = new 
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = measurements.TotalRecords,
+                iTotalRecords = measurements.Measurements.Count,
+                aaData = measurementsResponse
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         

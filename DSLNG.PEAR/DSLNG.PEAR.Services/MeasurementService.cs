@@ -9,6 +9,7 @@ using System.Linq;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Responses.Measurement;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace DSLNG.PEAR.Services
 {
@@ -21,18 +22,34 @@ namespace DSLNG.PEAR.Services
 
         public GetMeasurementsResponse GetMeasurements(GetMeasurementsRequest request)
         {
-            var measurements = new List<Measurement>();
-            if (request.Take != 0)
+            int totalRecords;
+            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            if (request.Take != -1)
             {
-                measurements = DataContext.Measurements.OrderBy(x => x.Id).Skip(request.Skip).Take(request.Take).ToList();                
+                data = data.Skip(request.Skip).Take(request.Take);
             }
-            else
-            {
-                measurements = DataContext.Measurements.OrderBy(x => x.Id).ToList();
-            }
-            var response = new GetMeasurementsResponse();
-            response.Measurements = measurements.MapTo<GetMeasurementsResponse.Measurement>();
-            return response;
+
+           return new GetMeasurementsResponse
+           {
+               TotalRecords = totalRecords,
+               Measurements = data.ToList().MapTo<GetMeasurementsResponse.Measurement>()
+           };
+            //var measurements = new List<Measurement>();
+            //if (request.Take != 0)
+            //{
+            //    measurements = DataContext.Measurements.OrderBy(x => x.Id).Skip(request.Skip).Take(request.Take).ToList();
+            //}
+            //else
+            //{
+            //    measurements = DataContext.Measurements.OrderBy(x => x.Id).ToList();
+            //}
+            //var response = new GetMeasurementsResponse();
+            //response.Measurements = measurements.MapTo<GetMeasurementsResponse.Measurement>();
+            //return response;
+
+
+
+
         }
 
         public GetMeasurementResponse GetMeasurement(GetMeasurementRequest request)
@@ -112,5 +129,35 @@ namespace DSLNG.PEAR.Services
 
             return response;
         }
+
+
+        private IEnumerable<Measurement> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        {
+            var data = DataContext.Measurements.AsQueryable();
+            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            {
+                data = data.Where(x => x.Name.Contains(search));
+            }
+
+            foreach (var sortOrder in sortingDictionary)
+            {
+                switch (sortOrder.Key)
+                {
+                    case "Name" :
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Name)
+                            : data.OrderByDescending(x => x.Name);
+                        break;
+                    case "IsActive" :
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.IsActive)
+                            : data.OrderByDescending(x => x.IsActive);
+                        break;
+                }
+            }
+            TotalRecords = data.Count();
+            return data;
+        }
+
     }
 }

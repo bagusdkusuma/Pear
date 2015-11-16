@@ -3998,10 +3998,11 @@ Number.prototype.format = function (n, x) {
         var $messageHolderClone = $messageHolder.clone(true);
         $messageHolder.html('');
         var onceChanged = false;
-        $('#Type').change(function (e) {
+        $('#TypeId').change(function (e) {
+            console.log($(this).val());
             e.preventDefault();
             var $this = $(this);
-            $('#Title').val($this.val());
+            $('#Title').val($this.find('option:selected').text());
             var url = $this.data('url');
             $.get(url, 'value=' + $this.val(), function (data) {
                 if (data.length) {
@@ -4036,7 +4037,7 @@ Number.prototype.format = function (n, x) {
             //    }
             //}
         });
-        $('#Type').change();
+        $('#TypeId').change();
     };
 
     Pear.VesselSchedule._autocomplete = function (fieldId) {

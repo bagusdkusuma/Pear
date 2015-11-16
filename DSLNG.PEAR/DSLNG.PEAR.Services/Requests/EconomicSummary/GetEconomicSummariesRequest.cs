@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Requests.EconomicSummary
 {
-    public class GetEconomicSummariesRequest
+    public class GetEconomicSummariesRequest : GridBaseRequest
     {
         public int Take { get; set; }
         public int Skip { get; set; }

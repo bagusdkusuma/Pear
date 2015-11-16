@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Entities.EconomicModel;
+using System.Data.SqlClient;
 
 namespace DSLNG.PEAR.Services
 {
@@ -22,19 +23,31 @@ namespace DSLNG.PEAR.Services
 
         public GetOperationalDatasResponse GetOperationalDatas(GetOperationalDatasRequest request)
         {
-            if (request.OnlyCount)
+            int totalRecords;
+            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            if (request.Take != -1)
             {
-                return new GetOperationalDatasResponse { Count = DataContext.KeyOperasionalDatas.Count() };
+                data = data.Skip(request.Skip).Take(request.Take);
             }
-            else
+
+            return new GetOperationalDatasResponse
             {
-                return new GetOperationalDatasResponse
-                {
-                    OperationalDatas = DataContext.KeyOperasionalDatas.OrderByDescending(x => x.Id)
-                    .Include(x => x.KeyOperation).Include(x => x.Kpi)
-                    .Skip(request.Skip).Take(request.Take).ToList().MapTo<GetOperationalDatasResponse.OperationalData>()
-                };
-            }
+                TotalRecords = totalRecords,
+                OperationalDatas = data.ToList().MapTo<GetOperationalDatasResponse.OperationalData>()
+            };
+            //if (request.OnlyCount)
+            //{
+            //    return new GetOperationalDatasResponse { Count = DataContext.KeyOperasionalDatas.Count() };
+            //}
+            //else
+            //{
+            //    return new GetOperationalDatasResponse
+            //    {
+            //        OperationalDatas = DataContext.KeyOperasionalDatas.OrderByDescending(x => x.Id)
+            //        .Include(x => x.KeyOperation).Include(x => x.Kpi)
+            //        .Skip(request.Skip).Take(request.Take).ToList().MapTo<GetOperationalDatasResponse.OperationalData>()
+            //    };
+            //}
         }
 
 
@@ -99,6 +112,46 @@ namespace DSLNG.PEAR.Services
                 IsSuccess = true,
                 Message = "Operational Data has been deleted successfully"
             };
+        }
+
+        public IEnumerable<OperationDataConfiguration> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        {
+            var data = DataContext.KeyOperasionalDatas.Include(x => x.KeyOperation).Include(x => x.Kpi).AsQueryable();
+            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            {
+                data = data.Where(x => x.KeyOperation.Name.Contains(search) || x.Kpi.Name.Contains(search));
+            }
+
+            foreach (var sortOrder in sortingDictionary)
+            {
+                switch(sortOrder.Key)
+                {
+                    case "KeyOperation":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.KeyOperation.Name)
+                            : data.OrderByDescending(x => x.KeyOperation.Name);
+                        break;
+                    case "Kpi" :
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Kpi.Name)
+                            : data.OrderByDescending(x => x.Kpi.Name);
+                        break;
+                    case "ActualValue":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.ActualValue)
+                            : data.OrderByDescending(x => x.ActualValue);
+                        break;
+                    case "ForecastValue":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.ForecastValue)
+                            : data.OrderByDescending(x => x.ForecastValue);
+                        break;
+                }
+            }
+
+            TotalRecords = data.Count();
+            return data;
+
         }
     }
 }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Data.Entities.EconomicModel;
+using System.Data.SqlClient;
 
 namespace DSLNG.PEAR.Services
 {
@@ -18,17 +19,30 @@ namespace DSLNG.PEAR.Services
 
         public GetOperationGroupsResponse GetOperationGroups(GetOperationGroupsRequest request)
         {
-            if (request.OnlyCount)
+            int totalRecords;
+            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            if (request.Take != -1)
             {
-                return new GetOperationGroupsResponse { Count = DataContext.KeyOperationGroups.Count()};
+                data = data.Skip(request.Skip).Take(request.Take);
             }
-            else
+
+            return new GetOperationGroupsResponse
             {
-                return new GetOperationGroupsResponse
-                {
-                    OperationGroups = DataContext.KeyOperationGroups.OrderByDescending(x => x.Id).Skip(request.Skip).Take(request.Take).ToList().MapTo<GetOperationGroupsResponse.OperationGroup>()
-                };
-            }
+                TotalRecords = totalRecords,
+                OperationGroups = data.ToList().MapTo<GetOperationGroupsResponse.OperationGroup>()
+            }; 
+           
+            //if (request.OnlyCount)
+            //{
+            //    return new GetOperationGroupsResponse { Count = DataContext.KeyOperationGroups.Count()};
+            //}
+            //else
+            //{
+            //    return new GetOperationGroupsResponse
+            //    {
+            //        OperationGroups = DataContext.KeyOperationGroups.OrderByDescending(x => x.Id).Skip(request.Skip).Take(request.Take).ToList().MapTo<GetOperationGroupsResponse.OperationGroup>()
+            //    };
+            //}
         }
 
 
@@ -74,6 +88,42 @@ namespace DSLNG.PEAR.Services
                 IsSuccess = true,
                 Message = "The Operation Group has been deleted successfully"
             };
+        }
+
+
+
+        public IEnumerable<KeyOperationGroup> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        {
+            var data = DataContext.KeyOperationGroups.AsQueryable();
+            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            {
+                data = data.Where(x => x.Name.Contains(search));
+            }
+
+            foreach (var sortOrder in sortingDictionary)
+            {
+                switch (sortOrder.Key)
+                {
+                    case "Name":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Name).ThenBy(x => x.Order)
+                            : data.OrderByDescending(x => x.Name).ThenBy(x => x.Order);
+                        break;
+                    case "Order":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Order)
+                            : data.OrderByDescending(x => x.Order);
+                        break;
+                    case "IsActive":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.IsActive).ThenBy(x => x.Order)
+                            : data.OrderByDescending(x => x.IsActive).ThenBy(x => x.Order);
+                        break;
+                }
+            }
+
+            TotalRecords = data.Count();
+            return data;
         }
     }
 }

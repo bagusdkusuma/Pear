@@ -80,7 +80,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Highlight
         [Display(Name = "Date")]
         public string DateInDisplay { get; set; }
         [Required]
-        public string Type { get; set; }
+        public int TypeId { get; set; }
         public IList<SelectListItem> Types { get; set; }
         public IList<SelectListItem> AlertConditions { get; set; }
         [Required]

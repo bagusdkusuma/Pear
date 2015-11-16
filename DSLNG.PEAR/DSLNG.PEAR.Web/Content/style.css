@@ -351,7 +351,9 @@ img
 
 .series-template,
 .stack-template,
-.plot-band-template
+.plot-band-template,
+.row-template,
+.chart-template
 {
     position: relative;
 }
@@ -363,7 +365,9 @@ img
 
     .series-template .remove,
     .stack-template .remove,
-    .plot-band-template .remove
+    .plot-band-template .remove,
+    .row-template .remove,
+    .chart-template .remove
     {
         position: absolute;
         top: 0;
@@ -908,7 +912,7 @@ h2
 
 .column-properties
 {
-    width: 200px;
+    width: 225px;
     display: inline-block;
 }
 
@@ -1972,4 +1976,15 @@ html>body tbody.scrollContent {
     font-size: 24px; 
     line-height: 1.5em;
     z-index: 1;
+}
+.series-template > h2,
+.row-template > h2,
+.chart-template > h2 {
+    border-bottom:1px solid #fff;
+}
+.chart-template  .series-template {
+    padding-left:100px;
+}
+table.der td {
+    vertical-align:top;
 }

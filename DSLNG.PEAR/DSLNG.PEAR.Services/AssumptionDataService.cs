@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Entities.EconomicModel;
+using System.Data.SqlClient;
 
 namespace DSLNG.PEAR.Services
 {
@@ -19,19 +20,31 @@ namespace DSLNG.PEAR.Services
 
         public GetAssumptionDatasResponse GetAssumptionDatas(GetAssumptionDatasRequest request)
         {
-            if (request.OnlyCount)
+            int totalRecords;
+            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            if (request.Take != -1)
             {
-                return new GetAssumptionDatasResponse { Count = DataContext.KeyAssumptionDatas.Count() };
+                data = data.Skip(request.Skip).Take(request.Take);
             }
-            else
+
+            return new GetAssumptionDatasResponse
             {
-                return new GetAssumptionDatasResponse
-                {
-                    AssumptionDatas = DataContext.KeyAssumptionDatas.OrderByDescending(x => x.Id)
-                    .Include(x => x.Scenario).Include(x => x.KeyAssumptionConfig)
-                    .Skip(request.Skip).Take(request.Take).ToList().MapTo<GetAssumptionDatasResponse.AssumptionData>()
-                };
-            }
+                TotalRecords = totalRecords,
+                AssumptionDatas = data.ToList().MapTo<GetAssumptionDatasResponse.AssumptionData>()
+            };
+            //if (request.OnlyCount)
+            //{
+            //    return new GetAssumptionDatasResponse { Count = DataContext.KeyAssumptionDatas.Count() };
+            //}
+            //else
+            //{
+            //    return new GetAssumptionDatasResponse
+            //    {
+            //        AssumptionDatas = DataContext.KeyAssumptionDatas.OrderByDescending(x => x.Id)
+            //        .Include(x => x.Scenario).Include(x => x.KeyAssumptionConfig)
+            //        .Skip(request.Skip).Take(request.Take).ToList().MapTo<GetAssumptionDatasResponse.AssumptionData>()
+            //    };
+            //}
         }
 
 
@@ -98,6 +111,46 @@ namespace DSLNG.PEAR.Services
                 IsSuccess = true,
                 Message = "Assumption Data has been deleted successfully"
             };
+        }
+
+
+        public IEnumerable<KeyAssumptionData> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        {
+            var data = DataContext.KeyAssumptionDatas.Include(x => x.Scenario).Include(x => x.KeyAssumptionConfig).AsQueryable();
+            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            {
+                data = data.Where(x => x.KeyAssumptionConfig.Name.Contains(search) || x.Scenario.Name.Contains(search));
+            }
+
+            foreach (var sortOrder in sortingDictionary)
+            {
+                switch (sortOrder.Key)
+                {
+                    case "Scenario":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Scenario.Name)
+                            : data.OrderByDescending(x => x.Scenario.Name);
+                        break;
+                    case "Config":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.KeyAssumptionConfig.Name)
+                            : data.OrderByDescending(x => x.KeyAssumptionConfig.Name);
+                        break;
+                    case "ActualValue":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.ActualValue)
+                            : data.OrderByDescending(x => x.ActualValue);
+                        break;
+                    case "ForecastValue":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.ForecastValue)
+                            : data.OrderByDescending(x => x.ForecastValue);
+                        break;
+                }
+            }
+
+            TotalRecords = data.Count();
+            return data;
         }
     }
 }

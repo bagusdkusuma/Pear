@@ -326,7 +326,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<KpiAchievement, GetConfigurationResponse.KpiAchievement>();
             Mapper.CreateMap<KpiTarget, GetConfigurationResponse.KpiTarget>();
             Mapper.CreateMap<Economic, GetConfigurationResponse.Economic>();
-            Mapper.CreateMap<Highlight, GetHighlightsResponse.HighlightResponse>();
+            Mapper.CreateMap<Highlight, GetHighlightsResponse.HighlightResponse>()
+                .ForMember(x => x.Type, o => o.MapFrom(s => s.HighlightType.Text));
             Mapper.CreateMap<SaveHighlightRequest, Highlight>();
 
             Mapper.CreateMap<SaveVesselRequest, Vessel>();
@@ -371,7 +372,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<ConstantUsage, GetConstantUsageResponse>();
             Mapper.CreateMap<CalculatorConstant, GetConstantUsageResponse.CalculatorConstantResponse>();
 
-            Mapper.CreateMap<Highlight, GetHighlightResponse>();
+            Mapper.CreateMap<Highlight, GetHighlightResponse>()
+                .ForMember(x => x.TypeId, o => o.MapFrom(s => s.HighlightType.Id));
             Mapper.CreateMap<Weather, GetWeathersResponse.WeatherResponse>()
                 .ForMember(x => x.Value, o => o.MapFrom(s => s.Value.Text));
             Mapper.CreateMap<SaveWeatherRequest, Weather>();
@@ -397,6 +399,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.Category, o => o.MapFrom(s => s.Category.Name))
                 .ForMember(x => x.Measurement, o => o.MapFrom(s => s.Measurement.Name));
             Mapper.CreateMap<KeyAssumptionCategory, GetAssumptionConfigCategoryResponse.AssumptionConfigCategoryResponse>();
+            Mapper.CreateMap<Data.Entities.Measurement, GetAssumptionConfigCategoryResponse.MeasurementSelectList>();
             Mapper.CreateMap<KeyAssumptionConfig, GetAssumptionConfigResponse>()
                 .ForMember(x => x.IdCategory, o => o.MapFrom(s => s.Category.Id))
                 .ForMember(x => x.IdMeasurement, o => o.MapFrom(s => s.Measurement.Id));
@@ -431,7 +434,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
             Mapper.CreateMap<OperationDataConfiguration, GetOperationalDatasResponse.OperationalData>()
                 .ForMember(x => x.KeyOperation, o => o.MapFrom(s => s.KeyOperation.Name))
-                .ForMember(x => x.KPI, o => o.MapFrom(s => s.Kpi.Name));
+                .ForMember(x => x.Kpi, o => o.MapFrom(s => s.Kpi.Name));
             Mapper.CreateMap<KeyOperation, GetOperationalSelectListResponse.Operation>();
             Mapper.CreateMap<Kpi, GetOperationalSelectListResponse.KPI>();
             Mapper.CreateMap<SaveOperationalDataRequest, OperationDataConfiguration>()
@@ -456,9 +459,13 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<EconomicConfigDetail, GetEconomicConfigResponse>()
                 .ForMember(x => x.IdScenario, o => o.MapFrom(s => s.Scenario.Id))
                 .ForMember(x => x.IdEconomicSummary, o => o.MapFrom(s => s.EconomicSummary.Id));
-            Mapper.CreateMap<HighlightGroup, GetHighlightGroupsResponse.HighlightGroupResponse>();
+            Mapper.CreateMap<HighlightGroup, GetHighlightGroupsResponse.HighlightGroupResponse>()
+                .ForMember(x => x.HighlightTypes, o => o.MapFrom(s => s.Options));
             Mapper.CreateMap<HighlightGroup, GetHighlightGroupResponse>();
             Mapper.CreateMap<SaveHighlightGroupRequest, HighlightGroup>();
+            Mapper.CreateMap<SelectOption, GetHighlightGroupsResponse.HighlightTypeResponse>();
+            Mapper.CreateMap<Highlight, GetDynamicHighlightsResponse.HighlightResponse>()
+                .ForMember(x => x.TypeId, o => o.MapFrom(s => s.HighlightType.Id));
             base.Configure();
         }
 

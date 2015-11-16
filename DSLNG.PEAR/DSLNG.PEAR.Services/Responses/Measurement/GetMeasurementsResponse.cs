@@ -9,7 +9,7 @@ namespace DSLNG.PEAR.Services.Responses.Measurement
     public class GetMeasurementsResponse : BaseResponse
     {
         public IList<Measurement> Measurements { get; set; }
-
+        public int TotalRecords { get; set; }
         public class Measurement
         {
             public int Id { get; set; }

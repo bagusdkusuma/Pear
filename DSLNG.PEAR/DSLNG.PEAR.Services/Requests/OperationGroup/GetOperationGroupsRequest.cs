@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Requests.OperationGroup
 {
-    public class GetOperationGroupsRequest
+    public class GetOperationGroupsRequest : GridBaseRequest
     {
         public int Take { get; set; }
         public int Skip { get; set; }

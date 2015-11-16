@@ -9,6 +9,7 @@ namespace DSLNG.PEAR.Services.Responses.EconomicSummary
     public class GetEconomicSummariesResponse
     {
         public IList<EconomicSummary> EconomicSummaries { get; set; }
+        public int TotalRecords { get; set; }
         public int Count { get; set; }
         public class EconomicSummary
         {

@@ -2,23 +2,82 @@
     ViewBag.Title = "Assumption Data";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="assumptiondata-list">
-    <h2>Assumption Data</h2>
-    @Html.Partial("_MessageResponse")
-    @Html.ActionLink("Create New", "Create")
-    @Html.Action("IndexPartial")
+<h2>Assumption Data</h2>
+@Html.Partial("_MessageResponse")
+@Html.ActionLink("Create New", "Create")
+@*@Html.Action("IndexPartial")
 
-    @section Scripts{
-        <script type="text/javascript">
-            var confirmDelete = function (id) {
-                if (confirm('Are you sure want to delete this item?')) {
-                    var url = '@Url.Action("Delete", "AssumptionData")';
+@section Scripts{
+    <script type="text/javascript">
+        var confirmDelete = function (id) {
+            if (confirm('Are you sure want to delete this item?')) {
+                var url = '@Url.Action("Delete", "AssumptionData")';
                 $('<form action="' + url + '" method="POST">' +
                     '<input type="hidden" name="id" value="' + id + '">' +
                     '</form>').submit();
             }
         };
-        </script>
-    }
+    </script>
+}*@
 
-</div>
+<table id="assumptionData-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Scenario</th>
+            <th>Config</th>
+            <th>Actual Value</th>
+            <th>Forecast Value</th>
+            <th>Remark</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+</table>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#assumptionData-table').DataTable({
+                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                "iDisplayLength": -1,
+                "bProcessing": true,
+                "bServerSide": true,
+                "sServerMethod": "POST",
+                "sAjaxSource": '@Url.Action("Grid", "AssumptionData")',
+                "order": [[3, "asc"]],
+                "aoColumns": [
+                    { "mDataProp": "Scenario", "name": "Scenario" },
+                    { "mDataProp": "Config", "name": "Config" },
+                    { "mDataProp": "ActualValue", "name": "ActualValue" },
+                    { "mDataProp": "ForecastValue", "name": "ForecastValue" },
+                    { "mDataProp": "Remark", "name": "Remark", "sortable": false },
+                    {
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": '',
+                        "mRender": function (data, type, row) {
+                            var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
+                            var editLink = '@Html.ActionLink("Edit", "Edit", "AssumptionData", new {id = "_id_"}, null)'.replace('_id_', data.Id);
+                            return editLink + ' | ' + deleteLink;
+                        }
+                    }
+                ],
+                rowCallback: function (row, data) {
+                    // Set the checked state of the checkbox in the table
+                    //$('input.is-active', row).prop('checked', data.IsActive == 1);
+                }
+            });
+
+            $('#assumptionData-table').on('click', '.delete', function () {
+                var id = $(this).attr('data-id');
+                if (confirm('Are you sure want to delete this item?' + id)) {
+                    var url = '@Url.Action("Delete", "AssumptionData")';
+
+                    $('<form action="' + url + '" method="POST">' +
+                        '<input type="hidden" name="id" value="' + id + '">' +
+                        '</form>').submit();
+                }
+            });
+
+        });
+    </script>
+}

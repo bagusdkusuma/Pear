@@ -9,6 +9,7 @@ using DSLNG.PEAR.Services.Responses.Group;
 using DSLNG.PEAR.Web.ViewModels.Group;
 using DevExpress.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Web.Grid;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -126,6 +127,27 @@ namespace DSLNG.PEAR.Web.Controllers
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
             return RedirectToAction("Index");
+        }
+
+
+        public ActionResult Grid(GridParams gridParams)
+        {
+            var group = _groupService.GetGroups(new GetGroupsRequest
+                {
+                    Skip = gridParams.DisplayStart,
+                    Take = gridParams.DisplayLength,
+                    Search = gridParams.Search,
+                    SortingDictionary = gridParams.SortingDictionary
+                });
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = group.TotalRecords,
+                iTotalRecords = group.Groups.Count,
+                aaData = group.Groups
+            };
+
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
     }
 }

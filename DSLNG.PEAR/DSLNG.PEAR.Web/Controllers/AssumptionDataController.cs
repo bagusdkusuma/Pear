@@ -10,6 +10,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Web.Grid;
+using DSLNG.PEAR.Services.Responses.AssumptionData;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -139,6 +141,27 @@ namespace DSLNG.PEAR.Web.Controllers
                 return RedirectToAction("Index");
             }
             return View();
+        }
+
+        public ActionResult Grid(GridParams gridParams)
+        {
+            var assumptionData = _assumptionDataService.GetAssumptionDatas(new GetAssumptionDatasRequest
+            {
+                Skip = gridParams.DisplayStart,
+                Take = gridParams.DisplayLength,
+                Search = gridParams.Search,
+                SortingDictionary = gridParams.SortingDictionary
+            });
+            IList<GetAssumptionDatasResponse.AssumptionData> DatasResponse = assumptionData.AssumptionDatas;
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = assumptionData.TotalRecords,
+                iTotalRecords = assumptionData.AssumptionDatas.Count,
+                aaData = DatasResponse
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
+
         }
 	}
 }

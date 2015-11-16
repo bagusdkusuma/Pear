@@ -75,7 +75,7 @@
                                 </div>
                                 <div class="form-group">
                                     @Html.DropDownListFor(model => model.LayoutRows[i].LayoutColumns[j].ArtifactId, new List<SelectListItem> { new SelectListItem { Value = Model.LayoutRows[i].LayoutColumns[j].ArtifactId.ToString(), Text = Model.LayoutRows[i].LayoutColumns[j].ArtifactName } }, new { @class = "artifact-list form-control", style = "width:170px" })
-                                    @Html.ActionLink("Edit", "Edit", "Artifact", new { id = Model.LayoutRows[i].LayoutColumns[j].ArtifactId }, new { style = "color: #000000", target = "_blank" })
+                                    @Html.ActionLink("Edit", "Edit", "Artifact", new { id = Model.LayoutRows[i].LayoutColumns[j].ArtifactId }, new { @class="btn btn-default", target = "_blank" })
                                     <input type="hidden" id="foo" name="LayoutRows[@i].LayoutColumns[@j].Id" value="@column.Id">
                                 </div>
 

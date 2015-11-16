@@ -105,8 +105,12 @@ namespace DSLNG.PEAR.Services
         public GetKpisResponse GetKpis(GetKpisRequest request)
         {
             int totalRecords;
-            var data = SortData(request.Search, request.SortingDictionary, out totalRecords).Skip(request.Skip).Take(request.Take);
-            
+            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            if (request.Take != -1)
+            {
+                data = data.Skip(request.Skip).Take(request.Take);
+            }
+
             //var kpis = new Queryable<Kpi>();
             /*if (request.Take != 0)
             {
@@ -121,6 +125,7 @@ namespace DSLNG.PEAR.Services
             {
                 kpis = kpis.Include(x => x.Pillar).Where(x => x.Pillar.Id == request.PillarId);
             }*/
+
 
             var response = new GetKpisResponse();
             response.TotalRecords = totalRecords;
@@ -346,28 +351,28 @@ namespace DSLNG.PEAR.Services
                 {
                     case "Code" :
                         data = sortOrder.Value == SortOrder.Ascending
-                                   ? data.OrderBy(x => x.Code)
-                                   : data.OrderByDescending(x => x.Code);
+                                   ? data.OrderBy(x => x.Code).ThenBy(x => x.Order)
+                                   : data.OrderByDescending(x => x.Code).ThenBy(x => x.Order);
                         break;
                     case "Name" :
                         data = sortOrder.Value == SortOrder.Ascending
-                                   ? data.OrderBy(x => x.Name)
-                                   : data.OrderByDescending(x => x.Name);
+                                   ? data.OrderBy(x => x.Name).ThenBy(x => x.Order)
+                                   : data.OrderByDescending(x => x.Name).ThenBy(x => x.Order);
                         break;
                     case "PillarName":
                         data = sortOrder.Value == SortOrder.Ascending
-                                   ? data.OrderBy(x => x.Pillar.Name)
-                                   : data.OrderByDescending(x => x.Pillar.Name);
+                                   ? data.OrderBy(x => x.Pillar.Name).ThenBy(x => x.Order)
+                                   : data.OrderByDescending(x => x.Pillar.Name).ThenBy(x => x.Order);
                         break;
                     case "IsActive":
                         data = sortOrder.Value == SortOrder.Ascending
-                                   ? data.OrderBy(x => x.IsActive)
-                                   : data.OrderByDescending(x => x.IsActive);
+                                   ? data.OrderBy(x => x.IsActive).ThenBy(x => x.Order)
+                                   : data.OrderByDescending(x => x.IsActive).ThenBy(x => x.Order);
                         break;
                     case "IsEconomic":
                         data = sortOrder.Value == SortOrder.Ascending
-                                   ? data.OrderBy(x => x.IsEconomic)
-                                   : data.OrderByDescending(x => x.IsEconomic);
+                                   ? data.OrderBy(x => x.IsEconomic).ThenBy(x => x.Order)
+                                   : data.OrderByDescending(x => x.IsEconomic).ThenBy(x => x.Order);
                         break;
                     default:
                         data = sortOrder.Value == SortOrder.Ascending
@@ -376,6 +381,7 @@ namespace DSLNG.PEAR.Services
                         break;
                 }
             }
+            
             totalRecords = data.Count();
             return data;
         }
