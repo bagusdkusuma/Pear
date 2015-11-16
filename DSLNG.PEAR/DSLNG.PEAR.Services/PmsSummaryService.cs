@@ -447,6 +447,15 @@ namespace DSLNG.PEAR.Services
                     .Where(x => x.Id == request.Id)
                     .Include(x => x.ScoreIndicators)
                     .Single();
+
+                string expression;
+                bool isExpressionValid = IsExpressionValid(updatedPmsSummary.ScoreIndicators, out expression);
+                if (!isExpressionValid)
+                {
+                    response.Message = string.Format(@"This Score Indicator ({0}) Is Not Valid", expression);
+                    return response;
+                }
+
                 var existedPmsSummaryEntry = DataContext.Entry(existedPmsSummary);
                 existedPmsSummaryEntry.CurrentValues.SetValues(updatedPmsSummary);
 
@@ -621,6 +630,16 @@ namespace DSLNG.PEAR.Services
                     .Include(x => x.PmsSummary)
                     .Include(x => x.ScoreIndicators)
                     .Single();
+                response.PmsSummaryId = existedPmsConfig.PmsSummary.Id;
+
+                string expression;
+                bool isExpressionValid = IsExpressionValid(updatedPmsConfig.ScoreIndicators, out expression);
+                if (!isExpressionValid)
+                {
+                    response.Message = string.Format(@"This Score Indicator ({0}) Is Not Valid", expression);
+                    return response;
+                }
+
                 var existedPmsConfigEntry = DataContext.Entry(existedPmsConfig);
                 existedPmsConfigEntry.CurrentValues.SetValues(updatedPmsConfig);
 
@@ -649,7 +668,6 @@ namespace DSLNG.PEAR.Services
 
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
-                response.PmsSummaryId = existedPmsConfig.PmsSummary.Id;
                 response.Message = "Pms Config has been updated";
             }
             catch (DbUpdateException dbUpdateException)
@@ -760,6 +778,16 @@ namespace DSLNG.PEAR.Services
                     .Include(x => x.ScoreIndicators)
                     .Include(x => x.Kpi)
                     .Single();
+
+                response.PmsSummaryId = existedPmsConfigDetails.PmsConfig.PmsSummary.Id;
+                string expression;
+                bool isExpressionValid = IsExpressionValid(updatedPmsConfigDetails.ScoreIndicators, out expression);
+                if (!isExpressionValid)
+                {
+                    response.Message = string.Format(@"This Score Indicator ({0}) Is Not Valid", expression);
+                    return response;
+                }
+
                 var existedPmsConfigDetailsEntry = DataContext.Entry(existedPmsConfigDetails);
                 existedPmsConfigDetailsEntry.CurrentValues.SetValues(updatedPmsConfigDetails);
                 //existedPmsConfigDetailsEntry.CurrentValues.SetValues(updatedPmsConfigDetails.Kpi);
@@ -816,7 +844,6 @@ namespace DSLNG.PEAR.Services
 
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
-                response.PmsSummaryId = existedPmsConfigDetails.PmsConfig.PmsSummary.Id;
                 response.Message = "KPI has been updated successfully";
             }
             catch (DbUpdateException dbUpdateException)
@@ -997,8 +1024,7 @@ namespace DSLNG.PEAR.Services
 
             return response;
         }
-
-
+        
         public DeletePmsResponse DeletePmsSummary(int id)
         {
             var response = new DeletePmsResponse();
@@ -1073,6 +1099,31 @@ namespace DSLNG.PEAR.Services
             }
 
             return response;
+        }
+
+        private bool IsExpressionValid(ICollection<ScoreIndicator> scoreIndicators, out string expression)
+        {
+            bool isValid = false;
+            expression = string.Empty;
+            foreach (var scoreIndicator in scoreIndicators)
+            {
+                try
+                {
+                    Expression e =
+                        new Expression(scoreIndicator.Expression.Replace("x",
+                                                                         1.ToString("f2", CultureInfo.InvariantCulture)));
+                    expression = scoreIndicator.Expression;
+                    bool evaluate = (bool) e.Evaluate();
+                    isValid = true;
+                }
+                catch (Exception exception)
+                {
+                    return false;
+                }
+                
+            }
+
+            return isValid;
         }
     }
 }
