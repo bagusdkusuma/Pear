@@ -134,6 +134,11 @@
                     }
                 });
             });
+            
+            //$('.value-popover').keypress(function () {
+            $('body').on('keyup', '.value-popover', function () {
+                this.value = this.value.replace(/,/g, ".");
+            });
         })
     </script>
     @RenderSection("Scripts", required: false)
