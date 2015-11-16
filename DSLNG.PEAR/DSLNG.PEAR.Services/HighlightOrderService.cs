@@ -61,6 +61,11 @@ namespace DSLNG.PEAR.Services
                                    ? data.OrderBy(x => x.Order)
                                    : data.OrderByDescending(x => x.Order);
                         break;
+                    case "GroupId":
+                        data = sortOrder.Value == SortOrder.Ascending
+                                   ? data.OrderBy(x => x.Group.Id).ThenBy(x => x.Order)
+                                   : data.OrderByDescending(x => x.Group.Id).ThenBy(x => x.Order);
+                        break;
                 }
             }
             totalRecords = data.Count();
@@ -71,9 +76,22 @@ namespace DSLNG.PEAR.Services
         {
             try
             {
-                var selectOption = new SelectOption { Id = request.Id };
-                DataContext.SelectOptions.Attach(selectOption);
-                selectOption.Order = request.Order;
+                var selectOption = DataContext.SelectOptions.First(x => x.Id == request.Id);
+                //DataContext.SelectOptions.Attach(selectOption);
+                if (request.Order.HasValue)
+                {
+                    selectOption.Order = request.Order.Value;
+                }
+                if (request.IsActive.HasValue)
+                {
+                    selectOption.IsActive = request.IsActive.Value;
+                }
+                if (request.GroupId != 0) {
+                    var group = new HighlightGroup { Id = request.GroupId };
+                    DataContext.HighlightGroups.Attach(group);
+                    selectOption.Group = group;
+                }
+               
                 DataContext.SaveChanges();
                 return new SaveHighlightOrderResponse
                 {

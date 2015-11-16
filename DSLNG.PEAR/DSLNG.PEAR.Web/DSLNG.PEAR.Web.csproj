@@ -754,13 +754,13 @@
     <Content Include="Views\NLS\Index.cshtml" />
     <Content Include="Views\PmsSummary\_IndexGridPartial.cshtml" />
     <Content Include="Views\Highlight\Edit.cshtml" />
-    <Content Include="Views\Highlight\DailyExecutionReport.cshtml" />
+    <Content Include="Views\Highlight\Display.cshtml" />
     <Content Include="Views\Weather\_IndexGridPartial.cshtml" />
     <Content Include="Views\Weather\Create.cshtml" />
     <Content Include="Views\Weather\DailyExecutionReport.cshtml" />
     <Content Include="Views\Weather\Edit.cshtml" />
     <Content Include="Views\Weather\Index.cshtml" />
-    <Content Include="Views\HighlightOrder\Index.cshtml" />
+    <Content Include="Views\HighlightDashboard\Index.cshtml" />
     <Content Include="Views\OperationGroup\Create.cshtml" />
     <Content Include="Views\OperationGroup\Edit.cshtml" />
     <Content Include="Views\OperationGroup\Index.cshtml" />
@@ -854,7 +854,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HighlightController.cs" />
-    <Compile Include="Controllers\HighlightOrderController.cs" />
+    <Compile Include="Controllers\HighlightDashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KpiAchievementController.cs" />
     <Compile Include="Controllers\KpiTargetController.cs" />
@@ -934,7 +934,7 @@
     <Compile Include="ViewModels\Conversion\IndexConversionViewModel.cs" />
     <Compile Include="ViewModels\Conversion\Measurement.cs" />
     <Compile Include="ViewModels\Conversion\UpdateConversionViewModel.cs" />
-    <Compile Include="ViewModels\HighlightOrder\HighlightOrderViewModel.cs" />
+    <Compile Include="ViewModels\HighlightDashboard\HighlightOrderViewModel.cs" />
     <Compile Include="ViewModels\Highlight\DailyExecutionReportViewModel.cs" />
     <Compile Include="ViewModels\Highlight\HighlightViewModel.cs" />
     <Compile Include="ViewModels\KpiAchievement\ConfigurationKpiAchievementsViewModel.cs" />

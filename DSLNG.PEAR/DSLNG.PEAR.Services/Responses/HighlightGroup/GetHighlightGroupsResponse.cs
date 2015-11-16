@@ -9,9 +9,19 @@ namespace DSLNG.PEAR.Services.Responses.HighlightGroup
         public int TotalRecords { get; set; }
         public int Count { get; set; }
         public class HighlightGroupResponse {
+            public HighlightGroupResponse() {
+                HighlightTypes = new List<HighlightTypeResponse>();
+            }
             public int Id { get; set; }
             public string Name { get; set; }
             public int Order { get; set; }
+            public IList<HighlightTypeResponse> HighlightTypes { get; set; }
+        }
+        public class HighlightTypeResponse {
+            public int Id { get; set; }
+            public string Text { get; set; }
+            public int Order { get; set; }
+            public string Value { get; set; }
         }
     }
 }

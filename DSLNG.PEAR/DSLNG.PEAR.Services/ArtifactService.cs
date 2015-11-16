@@ -2188,6 +2188,7 @@ namespace DSLNG.PEAR.Services
             artifact.Fullfillment = request.Fullfillment;
             artifact.Remark = request.Remark;
             artifact.ShowLegend = request.ShowLegend;
+            artifact.MaxFractionScale = request.MaxFractionScale;
             artifact.Is3D = request.Is3D;
 
             artifact.FractionScale = request.FractionScale;

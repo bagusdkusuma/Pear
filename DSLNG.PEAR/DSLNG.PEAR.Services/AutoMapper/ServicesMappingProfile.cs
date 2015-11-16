@@ -326,7 +326,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<KpiAchievement, GetConfigurationResponse.KpiAchievement>();
             Mapper.CreateMap<KpiTarget, GetConfigurationResponse.KpiTarget>();
             Mapper.CreateMap<Economic, GetConfigurationResponse.Economic>();
-            Mapper.CreateMap<Highlight, GetHighlightsResponse.HighlightResponse>();
+            Mapper.CreateMap<Highlight, GetHighlightsResponse.HighlightResponse>()
+                .ForMember(x => x.Type, o => o.MapFrom(s => s.HighlightType.Text));
             Mapper.CreateMap<SaveHighlightRequest, Highlight>();
 
             Mapper.CreateMap<SaveVesselRequest, Vessel>();
@@ -371,7 +372,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<ConstantUsage, GetConstantUsageResponse>();
             Mapper.CreateMap<CalculatorConstant, GetConstantUsageResponse.CalculatorConstantResponse>();
 
-            Mapper.CreateMap<Highlight, GetHighlightResponse>();
+            Mapper.CreateMap<Highlight, GetHighlightResponse>()
+                .ForMember(x => x.TypeId, o => o.MapFrom(s => s.HighlightType.Id));
             Mapper.CreateMap<Weather, GetWeathersResponse.WeatherResponse>()
                 .ForMember(x => x.Value, o => o.MapFrom(s => s.Value.Text));
             Mapper.CreateMap<SaveWeatherRequest, Weather>();
@@ -456,9 +458,13 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<EconomicConfigDetail, GetEconomicConfigResponse>()
                 .ForMember(x => x.IdScenario, o => o.MapFrom(s => s.Scenario.Id))
                 .ForMember(x => x.IdEconomicSummary, o => o.MapFrom(s => s.EconomicSummary.Id));
-            Mapper.CreateMap<HighlightGroup, GetHighlightGroupsResponse.HighlightGroupResponse>();
+            Mapper.CreateMap<HighlightGroup, GetHighlightGroupsResponse.HighlightGroupResponse>()
+                .ForMember(x => x.HighlightTypes, o => o.MapFrom(s => s.Options));
             Mapper.CreateMap<HighlightGroup, GetHighlightGroupResponse>();
             Mapper.CreateMap<SaveHighlightGroupRequest, HighlightGroup>();
+            Mapper.CreateMap<SelectOption, GetHighlightGroupsResponse.HighlightTypeResponse>();
+            Mapper.CreateMap<Highlight, GetDynamicHighlightsResponse.HighlightResponse>()
+                .ForMember(x => x.TypeId, o => o.MapFrom(s => s.HighlightType.Id));
             base.Configure();
         }
 

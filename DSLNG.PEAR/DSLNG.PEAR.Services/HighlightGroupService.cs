@@ -35,7 +35,7 @@ namespace DSLNG.PEAR.Services
         }
         private IEnumerable<HighlightGroup> SortData(string search, IDictionary<string, System.Data.SqlClient.SortOrder> sortingDictionary, out int totalRecords)
         {
-            var data = DataContext.HighlightGroups.AsQueryable();
+            var data = DataContext.HighlightGroups.Include(x => x.Options).AsQueryable();
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             {
                 data = data.Where(x => x.Name.Contains(search));

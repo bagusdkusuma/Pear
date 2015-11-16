@@ -13,11 +13,11 @@ using System.Data.SqlClient;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
-    public class HighlightOrderController : BaseController
+    public class HighlightDashboardController : BaseController
     {
         public IHighlightOrderService _highlightOrderService;
         private IHighlightGroupService _highlightGroupService;
-        public HighlightOrderController(IHighlightOrderService highlightOrderService, IHighlightGroupService highlightGroupService) {
+        public HighlightDashboardController(IHighlightOrderService highlightOrderService, IHighlightGroupService highlightGroupService) {
             _highlightOrderService = highlightOrderService;
             _highlightGroupService = highlightGroupService;
         }
