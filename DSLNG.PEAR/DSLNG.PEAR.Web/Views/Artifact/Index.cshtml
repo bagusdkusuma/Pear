@@ -58,7 +58,11 @@
                                 var viewLink = '@Html.ActionLink("View", "View", new { Id = "_id_" }, new { @class="artifact-view" })'.replace('_id_', data.Id);
                                 var editLink = '@Html.ActionLink("Edit", "Edit", "Artifact", new { id = "_id_" }, null)'.replace('_id_', data.Id);
                                 var deleteLink = '<a href="javascript:confirmDelete(' + data.Id + ')">Delete</a>';
-                                return editLink + ' | ' + viewLink  + ' | ' + deleteLink;
+                                if (!row.Used) {
+                                    return editLink + ' | ' + viewLink + ' | ' + deleteLink;
+                                } else {
+                                    return editLink + ' | ' + viewLink;
+                                }
                             }
                         }
                     ]

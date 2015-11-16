@@ -2,13 +2,14 @@
     ViewBag.Title = "Assumption Category";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="artifact-list">
-    <h2>Assumption Category</h2>
-    @Html.Partial("_MessageResponse")
-    @Html.ActionLink("Create New", "Create")
-    @Html.Action("IndexPartial")
 
-    @section Scripts{
+
+<h2>Assumption Category List</h2>
+@Html.Partial("_MessageResponse")
+@Html.ActionLink("Create New", "Create")
+@*@Html.Action("IndexPartial")*@
+
+@*@section Scripts{
         <script type="text/javascript">
             var confirmDelete = function (id) {
                 if (confirm('Are you sure want to delete this item?')) {
@@ -19,6 +20,70 @@
             }
         };
         </script>
-    }
+    }*@
 
-</div>
+<table id="assumptioncategory-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Desc</th>
+            <th>Is Active</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+</table>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#assumptioncategory-table').DataTable({
+                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                "iDisplayLength": -1,
+                "bProcessing": true,
+                "bServerSide": true,
+                "sServerMethod": "POST",
+                "sAjaxSource": '@Url.Action("Grid", "AssumptionCategory")',
+                "order": [[3, "asc"]],
+                "aoColumns": [
+                    { "mDataProp": "Name", "name": "Name" },
+                    { "mDataProp": "Desc", "name": "Desc", "sortable": false },
+                    {
+                        "mDataProp": "IsActive", "name": "IsActive",
+                        render: function (data, type, row) {
+                            if (type === 'display') {
+                                return '<input type="checkbox" class="is-active">';
+                            }
+                            return data;
+                        }
+                    },
+                    {
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": '',
+                        "mRender": function (data, type, row) {
+                            var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
+                            var editLink = '@Html.ActionLink("Edit", "Edit", "AssumptionCategory", new {id = "_id_"}, null)'.replace('_id_', data.Id);
+                            return editLink + ' | ' + deleteLink;
+                        }
+                    }
+                ],
+                rowCallback: function (row, data) {
+                    // Set the checked state of the checkbox in the table
+                    $('input.is-active', row).prop('checked', data.IsActive == 1);
+                }
+            });
+
+            $('#assumptioncategory-table').on('click', '.delete', function () {
+                var id = $(this).attr('data-id');
+                if (confirm('Are you sure want to delete this item?' + id)) {
+                    var url = '@Url.Action("Delete", "AssumptionCategory")';
+
+                    $('<form action="' + url + '" method="POST">' +
+                        '<input type="hidden" name="id" value="' + id + '">' +
+                        '</form>').submit();
+                }
+            });
+
+        });
+    </script>
+}

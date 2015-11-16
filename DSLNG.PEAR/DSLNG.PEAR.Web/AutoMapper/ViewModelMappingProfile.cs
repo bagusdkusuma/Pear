@@ -548,6 +548,11 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetEconomicConfigResponse, EconomicConfigViewModel>();
             Mapper.CreateMap<HighlightGroupViewModel, SaveHighlightGroupRequest>();
             Mapper.CreateMap<GetHighlightGroupResponse, HighlightGroupViewModel>();
+
+            Mapper.CreateMap<GetHighlightGroupsResponse.HighlightGroupResponse, DailyExecutionReportViewModel.HighlightGroupViewModel>();
+            Mapper.CreateMap<GetHighlightGroupsResponse.HighlightTypeResponse, DailyExecutionReportViewModel.HighlightTypeViewModel>();
+            Mapper.CreateMap<GetDynamicHighlightsResponse.HighlightGroupResponse, DailyExecutionReportViewModel.HighlightGroupViewModel>();
+            Mapper.CreateMap<GetDynamicHighlightsResponse.HighlightResponse, DailyExecutionReportViewModel.HighlightViewModel>();
      
             base.Configure();
         }

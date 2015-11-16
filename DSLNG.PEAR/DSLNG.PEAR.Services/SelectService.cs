@@ -160,8 +160,8 @@ namespace DSLNG.PEAR.Services
                 else if (!string.IsNullOrEmpty(request.Name)) {
                     query = query.Where(x => x.Name == request.Name);
                 }
-                else if (!string.IsNullOrEmpty(request.ParentName) && !string.IsNullOrEmpty(request.ParentOptionValue)) {
-                    query = query.Where(x => x.Parent.Name == request.ParentName && x.ParentOption.Value == request.ParentOptionValue);
+                else if (!string.IsNullOrEmpty(request.ParentName) && request.ParentOptionId != 0) {
+                    query = query.Where(x => x.Parent.Name == request.ParentName && x.ParentOption.Id == request.ParentOptionId);
                 }
 
                 var select = query.Include(x => x.Parent).Include(x => x.Parent.Options).FirstOrDefault();

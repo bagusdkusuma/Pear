@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Web.Grid;
 
 
 namespace DSLNG.PEAR.Web.Controllers
@@ -130,6 +131,27 @@ namespace DSLNG.PEAR.Web.Controllers
                 return RedirectToAction("Index");
             }
             return View();
+        }
+
+        public ActionResult Grid(GridParams gridParams)
+        {
+            var operationGroup = _operationGroupService.GetOperationGroups(new GetOperationGroupsRequest
+                {
+                    Search = gridParams.Search,
+                    Skip = gridParams.DisplayStart,
+                    Take = gridParams.DisplayLength,
+                    SortingDictionary = gridParams.SortingDictionary
+                });
+
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = operationGroup.TotalRecords,
+                iTotalRecords = operationGroup.OperationGroups.Count,
+                aaData = operationGroup.OperationGroups
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
+
         }
     }
 }

@@ -10,17 +10,17 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Web.Grid;
+using DSLNG.PEAR.Services.Responses.AssumptionConfig;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
     public class AssumptionConfigController : BaseController
     {
         private IAssumptionConfigService _assumptionConfigService;
-        private readonly IMeasurementService _measurementService;
-        public AssumptionConfigController(IAssumptionConfigService assumptionConfigService, IMeasurementService measurementService)
+        public AssumptionConfigController(IAssumptionConfigService assumptionConfigService)
         {
             _assumptionConfigService = assumptionConfigService;
-            _measurementService = measurementService;
         }
 
 
@@ -81,7 +81,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create()
         {
             var viewModel = new AssumptionConfigViewModel();
-            viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest()).Measurements
+            viewModel.Measurements = _assumptionConfigService.GetAssumptionConfigCategories().MeasurementsSelectList
                 .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
             viewModel.Categories = _assumptionConfigService.GetAssumptionConfigCategories().AssumptionConfigCategoriesResponse
@@ -107,8 +107,8 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Edit (int id)
         {
             var viewModel = _assumptionConfigService.GetAssumptionConfig(new GetAssumptionConfigRequest { Id = id }).MapTo<AssumptionConfigViewModel>();
-            
-            viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest()).Measurements
+
+            viewModel.Measurements = _assumptionConfigService.GetAssumptionConfigCategories().MeasurementsSelectList
                 .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
             viewModel.Categories = _assumptionConfigService.GetAssumptionConfigCategories().AssumptionConfigCategoriesResponse
@@ -143,6 +143,27 @@ namespace DSLNG.PEAR.Web.Controllers
                 return RedirectToAction("Index");
             }
             return View();
+        }
+
+
+        public ActionResult Grid(GridParams gridParams)
+        {
+            var assumptionConfig = _assumptionConfigService.GetAssumptionConfigs(new GetAssumptionConfigsRequest
+                {
+                    Skip = gridParams.DisplayStart,
+                    Take = gridParams.DisplayLength,
+                    Search = gridParams.Search,
+                    SortingDictionary = gridParams.SortingDictionary
+                });
+            IList<GetAssumptionConfigsResponse.AssumptionConfig> assumptionConfigResponse = assumptionConfig.AssumptionConfigs;
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = assumptionConfig.TotalRecords,
+                iTotalRecords = assumptionConfig.AssumptionConfigs.Count,
+                aaData = assumptionConfigResponse
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
     }
 }

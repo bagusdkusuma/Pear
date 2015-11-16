@@ -9,12 +9,13 @@ namespace DSLNG.PEAR.Services.Responses.OperationalData
     public class GetOperationalDatasResponse
     {
         public IList<OperationalData> OperationalDatas { get; set; }
+        public int TotalRecords { get; set; }
         public int Count { get; set; }
         public class OperationalData
         {
             public int Id { get; set; }
             public string KeyOperation { get; set; }
-            public string KPI { get; set; }
+            public string Kpi { get; set; }
             public double ActualValue { get; set; }
             public double ForecastValue {get; set;}
             public string Remark { get; set; }

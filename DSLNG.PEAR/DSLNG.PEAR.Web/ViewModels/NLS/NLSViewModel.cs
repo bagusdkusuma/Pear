@@ -7,12 +7,14 @@ namespace DSLNG.PEAR.Web.ViewModels.NLS
     public class NLSViewModel
     {
         public int Id { get; set; }
+        [Display(Name="Vessel Schedule")]
         public int VesselScheduleId { get; set; }
         public string VesselName { get; set; }
+        [Display(Name="Remark Date")]
         public DateTime? CreatedAt { get; set; }
         private string _createdAtDisplay { get; set; }
         [Required]
-        [Display(Name = "Created At")]
+        [Display(Name = "Remark Date")]
         public string CreatedAtDisplay
         {
             get

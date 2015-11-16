@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Requests.AssumptionData
 {
-    public class GetAssumptionDatasRequest
+    public class GetAssumptionDatasRequest : GridBaseRequest
     {
         public int Take { get; set; }
         public int Skip { get; set; }

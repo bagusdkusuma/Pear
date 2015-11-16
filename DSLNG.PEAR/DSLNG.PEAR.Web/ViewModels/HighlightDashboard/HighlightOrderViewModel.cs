@@ -15,8 +15,9 @@ namespace DSLNG.PEAR.Web.ViewModels.HighlightOrder
         public int Id { get; set; }
         [Display(Name="Highlight Type")]
         public string Text { get; set; }
-        public int Order { get; set; }
+        public int? Order { get; set; }
         public int GroupId { get; set; }
         public IList<SelectListItem> Groups { get; set; }
+        public bool? IsActive { get; set; }
     }
 }
