@@ -351,30 +351,24 @@ namespace DSLNG.PEAR.Services
             var response = new UpdateKpiAchievementItemResponse();
             try
             {
-                var kpiAchievement = request.MapTo<KpiAchievement>();
                 var user = DataContext.Users.First(x => x.Id == request.UserId);
+                var kpiAchievement = request.MapTo<KpiAchievement>();
                 if (request.Id != 0)
                 {
-                    var attachedEntity = DataContext.KpiAchievements.Find(request.Id);
-
-                    if (attachedEntity != null && DataContext.Entry(attachedEntity).State != EntityState.Detached)
-                    {
-                        DataContext.Entry(attachedEntity).State = EntityState.Detached;
-                    }
-                    
-                    
-                    DataContext.KpiAchievements.Attach(kpiAchievement);
-                    kpiAchievement.UpdatedBy = user;
-                    DataContext.Entry(kpiAchievement).State = EntityState.Modified;
-                    DataContext.SaveChanges();
+                    kpiAchievement = DataContext.KpiAchievements
+                        .Include(x => x.Kpi)
+                        .Include(x => x.UpdatedBy)
+                        .Single(x => x.Id == request.Id);
+                    request.MapPropertiesToInstance<KpiAchievement>(kpiAchievement);
                 }
                 else
                 {
                     kpiAchievement.CreatedBy = user;
-                    kpiAchievement.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == request.KpiId);
                     DataContext.KpiAchievements.Add(kpiAchievement);
-                    DataContext.SaveChanges();
                 }
+                kpiAchievement.UpdatedBy = user;
+                kpiAchievement.Kpi = DataContext.Kpis.Single(x => x.Id == request.KpiId);
+                DataContext.SaveChanges();
                 response.Id = kpiAchievement.Id;
                 response.IsSuccess = true;
                 response.Message = "KPI Achievement item has been updated successfully";

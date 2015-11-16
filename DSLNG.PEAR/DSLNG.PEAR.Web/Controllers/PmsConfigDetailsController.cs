@@ -64,6 +64,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 //viewModel.Kpis = _dropdownService.GetKpis().MapTo<SelectListItem>();
                 viewModel.Kpis = _dropdownService.GetKpisForPmsConfigDetailsUpdate(viewModel.PmsConfigId, response.KpiId).MapTo<SelectListItem>();
                 viewModel.KpiId = response.KpiId;
+                viewModel.Target = response.Target;
                 return PartialView("_Update", viewModel);
             }
 

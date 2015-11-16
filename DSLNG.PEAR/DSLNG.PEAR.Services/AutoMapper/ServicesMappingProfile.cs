@@ -573,7 +573,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
                   .ForMember(x => x.PillarName, y => y.MapFrom(z => z.Kpi.Pillar.Name));
 
             Mapper.CreateMap<UpdatePmsConfigDetailsRequest, PmsConfigDetails>()
-                .ForMember(x => x.ScoringType, y => y.MapFrom(z => Enum.Parse(typeof(ScoringType), z.ScoringType)));
+                .ForMember(x => x.ScoringType, y => y.MapFrom(z => Enum.Parse(typeof(ScoringType), z.ScoringType)))
+                .ForMember(x => x.TargetType, y => y.Ignore())
+                .ForMember(x => x.Target, y => y.MapFrom(z => z.Target));
         }
 
         private void ConfigureKpiAchievements()
