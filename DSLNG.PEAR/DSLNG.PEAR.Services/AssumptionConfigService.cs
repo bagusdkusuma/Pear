@@ -21,12 +21,16 @@ namespace DSLNG.PEAR.Services
         public GetAssumptionConfigsResponse GetAssumptionConfigs(GetAssumptionConfigsRequest request)
         {
             int totalRecords;
-            var data = SortData(request.Search, request.SortingDictionary, out totalRecords).Skip(request.Skip).Take(request.Take).ToList();
+            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            if (request.Take != -1)
+            {
+                data = data.Skip(request.Skip).Take(request.Take);
+            }
 
             return new GetAssumptionConfigsResponse
             {
                 TotalRecords = totalRecords,
-                AssumptionConfigs = data.MapTo<GetAssumptionConfigsResponse.AssumptionConfig>()
+                AssumptionConfigs = data.ToList().MapTo<GetAssumptionConfigsResponse.AssumptionConfig>()
             };
             //if (request.OnlyCount)
             //{
@@ -98,10 +102,11 @@ namespace DSLNG.PEAR.Services
 
         public DeleteAssumptionConfigResponse DeleteAssumptionConfig(DeleteAssumptionConfigRequest request)
         {
-            var AssumptionConfig = new KeyAssumptionConfig();
-            AssumptionConfig.Id = request.Id;
-            DataContext.Entry(AssumptionConfig).State = EntityState.Deleted;
+            var AssumptionConfig = new KeyAssumptionConfig { Id = request.Id };
+            DataContext.KeyAssumptionConfigs.Attach(AssumptionConfig);
+            DataContext.KeyAssumptionConfigs.Remove(AssumptionConfig);
             DataContext.SaveChanges();
+           
             return new DeleteAssumptionConfigResponse
             {
                 IsSuccess = true,
@@ -125,18 +130,18 @@ namespace DSLNG.PEAR.Services
                 {
                     case "Name":
                         data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.Name)
-                            : data.OrderByDescending(x => x.Name);
+                            ? data.OrderBy(x => x.Name).ThenBy(x => x.Order)
+                            : data.OrderByDescending(x => x.Name).ThenBy(x => x.Order);
                         break;
                     case "Category":
                         data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.Category.Name)
-                            : data.OrderByDescending(x => x.Category.Name);
+                            ? data.OrderBy(x => x.Category.Name).ThenBy(x => x.Order)
+                            : data.OrderByDescending(x => x.Category.Name).ThenBy(x => x.Order);
                         break;
                     case "Measurement":
                         data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.Measurement.Name)
-                            : data.OrderByDescending(x => x.Measurement.Name);
+                            ? data.OrderBy(x => x.Measurement.Name).ThenBy(x => x.Order)
+                            : data.OrderByDescending(x => x.Measurement.Name).ThenBy(x => x.Order);
                         break;
                     case "Order":
                         data = sortOrder.Value == SortOrder.Ascending
@@ -145,8 +150,8 @@ namespace DSLNG.PEAR.Services
                         break;
                     case "IsActive":
                         data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.IsActive)
-                            : data.OrderByDescending(x => x.IsActive);
+                            ? data.OrderBy(x => x.IsActive).ThenBy(x => x.Order)
+                            : data.OrderByDescending(x => x.IsActive).ThenBy(x => x.Order);
                         break;
                 }
             }

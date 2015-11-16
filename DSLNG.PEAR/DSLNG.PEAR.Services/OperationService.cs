@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Entities.EconomicModel;
+using System.Data.SqlClient;
 
 namespace DSLNG.PEAR.Services
 {
@@ -20,18 +21,30 @@ namespace DSLNG.PEAR.Services
 
         public GetOperationsResponse GetOperations(GetOperationsRequest request)
         {
-            if (request.OnlyCount)
+            int totalRecords;
+            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            if (request.Take != -1)
             {
-                return new GetOperationsResponse { Count = DataContext.KeyOperations.Count() };
+                data = data.Skip(request.Skip).Take(request.Take);
             }
-            else
+
+            return new GetOperationsResponse
             {
-                return new GetOperationsResponse
-                {
-                    Operations = DataContext.KeyOperations.OrderByDescending(x => x.Id)
-                    .Include(x => x.KeyOperationGroup).Skip(request.Skip).Take(request.Take).ToList().MapTo<GetOperationsResponse.Operation>()
-                };
-            }
+                TotalRecords = totalRecords,
+                Operations = data.ToList().MapTo<GetOperationsResponse.Operation>()
+            };
+            //if (request.OnlyCount)
+            //{
+            //    return new GetOperationsResponse { Count = DataContext.KeyOperations.Count() };
+            //}
+            //else
+            //{
+            //    return new GetOperationsResponse
+            //    {
+            //        Operations = DataContext.KeyOperations.OrderByDescending(x => x.Id)
+            //        .Include(x => x.KeyOperationGroup).Skip(request.Skip).Take(request.Take).ToList().MapTo<GetOperationsResponse.Operation>()
+            //    };
+            //}
         }
 
 
@@ -90,6 +103,41 @@ namespace DSLNG.PEAR.Services
                 IsSuccess = true,
                 Message = "Operation has been deleted successfully"
             };
+        }
+
+
+        public IEnumerable<KeyOperation> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        {
+            var data = DataContext.KeyOperations.Include(x => x.KeyOperationGroup).AsQueryable();
+            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            {
+                data = data.Where(x => x.KeyOperationGroup.Name.Contains(search) || x.Name.Contains(search));
+            }
+
+            foreach (var sortOrder in sortingDictionary)
+            {
+                switch (sortOrder.Key)
+                {
+                    case "OperationGroup":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.KeyOperationGroup.Name)
+                            : data.OrderByDescending(x => x.KeyOperationGroup.Name);
+                        break;
+                    case "Name":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Name)
+                            : data.OrderByDescending(x => x.Name);
+                        break;
+                    case "IsActive":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.IsActive)
+                            : data.OrderByDescending(x => x.IsActive);
+                        break;
+                }
+            }
+
+            TotalRecords = data.Count();
+            return data;
         }
     }
 }

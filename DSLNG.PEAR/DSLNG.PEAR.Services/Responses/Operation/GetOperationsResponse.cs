@@ -9,6 +9,7 @@ namespace DSLNG.PEAR.Services.Responses.Operation
     public class GetOperationsResponse
     {
         public IList<Operation> Operations { get; set; }
+        public int TotalRecords { get; set; }
         public int Count { get; set; }
         public class Operation
         {

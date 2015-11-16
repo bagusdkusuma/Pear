@@ -11,7 +11,7 @@ namespace DSLNG.PEAR.Services.Requests.OutputCategory
         public int Id { get; set; }
         public string Name { get; set; }
         public int Order { get; set; }
-        public string Desc { get; set; }
+        public string Remark { get; set; }
         public bool IsActive { get; set; }
     }
 }

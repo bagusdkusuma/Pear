@@ -9,6 +9,7 @@ namespace DSLNG.PEAR.Services.Responses.Group
     public class GetGroupsResponse : BaseResponse
     {
         public IList<Group> Groups { get; set; }
+        public int TotalRecords { get; set; }
         public class Group
         {
             public int Id { get; set; }

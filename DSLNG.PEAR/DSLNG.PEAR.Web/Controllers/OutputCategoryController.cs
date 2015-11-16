@@ -9,6 +9,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Web.Grid;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -139,5 +140,25 @@ namespace DSLNG.PEAR.Web.Controllers
             return View();
         }
 
+        public ActionResult Grid(GridParams gridParams)
+        {
+            var outputCategory = _outputCategoryService.GetOutputCategories(new GetOutputCategoriesRequest
+                {
+                    Skip = gridParams.DisplayStart,
+                    Take = gridParams.DisplayLength,
+                    Search = gridParams.Search,
+                    SortingDictionary = gridParams.SortingDictionary
+                });
+
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = outputCategory.TotalRecords,
+                iTotalRecords = outputCategory.OutputCategories.Count,
+                aaData = outputCategory.OutputCategories
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
+
+        }
     }
 }

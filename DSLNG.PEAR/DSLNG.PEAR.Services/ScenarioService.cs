@@ -20,12 +20,17 @@ namespace DSLNG.PEAR.Services
         public GetScenariosResponse GetScenarios(GetScenariosRequest request)
         {
             int totalRecords;
-            var data = SortData(request.Search, request.SortingDictionary, out totalRecords).Skip(request.Skip).Take(request.Take).ToList();
+            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            if (request.Take != -1)
+            {
+                data = data.Skip(request.Skip).Take(request.Take);
+            }
+
 
             return new GetScenariosResponse
             {
                 TotalRecords = totalRecords,
-                Scenarios = data.MapTo<GetScenariosResponse.Scenario>()
+                Scenarios = data.ToList().MapTo<GetScenariosResponse.Scenario>()
             };
             //if (request.OnlyCount)
             //{
