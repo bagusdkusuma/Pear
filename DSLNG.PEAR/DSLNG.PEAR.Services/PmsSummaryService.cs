@@ -177,7 +177,24 @@ namespace DSLNG.PEAR.Services
                                         }
 
                                     case ScoringType.Boolean:
-                                        bool isMoreThanZero = false;
+                                        var kpiAchievement =
+                                            pmsConfigDetails.Kpi.KpiAchievements.Where(x => x.Value.HasValue && x.Periode.Year == request.Year).ToList();
+                                        bool isNull = kpiAchievement.Count == 0;
+                                        bool exceedValue = false;
+                                        foreach (var achievement in kpiAchievement)
+                                        {
+                                            if (pmsConfigDetails.Target.HasValue && achievement.Value > pmsConfigDetails.Target.Value)
+                                            {
+                                                exceedValue = true;
+                                                break;
+                                            }
+                                        }
+
+                                        if (!isNull)
+                                        {
+                                            kpiData.Score = exceedValue ? 0 : Double.Parse(kpiData.Weight.ToString());
+                                        }
+                                        /*bool isMoreThanZero = false;
                                         var kpiAchievement =
                                             pmsConfigDetails.Kpi.KpiAchievements.Where(x => x.Value.HasValue && x.Periode.Year == request.Year).ToList();
                                         bool isNull = kpiAchievement.Count == 0;
@@ -194,7 +211,7 @@ namespace DSLNG.PEAR.Services
                                         if (!isNull)
                                         {
                                             kpiData.Score = isMoreThanZero ? 0 : Double.Parse(kpiData.Weight.ToString());
-                                        }
+                                        }*/
 
                                         break;
                                 }

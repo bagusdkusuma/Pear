@@ -24,6 +24,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsConfigDetails
         public double Weight { get; set; }
         [Required]
         public string ScoringType { get; set; }
+        public double? Target { get; set; }
         public IEnumerable<SelectListItem> ScoringTypes { get; set; }
         public IList<ScoreIndicatorViewModel> ScoreIndicators { get; set; }
     }
