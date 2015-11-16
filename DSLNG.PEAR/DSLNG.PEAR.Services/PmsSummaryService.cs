@@ -566,6 +566,23 @@ namespace DSLNG.PEAR.Services
             return pmsSummary != null ? pmsSummary.Year : DateTime.Now.Year;
         }
 
+        public bool UpdateStatus(int id, bool isActive)
+        {
+            var existed = DataContext.PmsSummaries.FirstOrDefault(x => x.IsActive);
+            if (existed != null)
+            {
+                existed.IsActive = false;
+                DataContext.PmsSummaries.Attach(existed);
+                DataContext.Entry(existed).State = EntityState.Modified;    
+            }
+
+            var pmsSummary = DataContext.PmsSummaries.Single(x => x.Id == id);
+            pmsSummary.IsActive = isActive;
+            DataContext.PmsSummaries.Attach(pmsSummary);
+            DataContext.Entry(pmsSummary).State = EntityState.Modified;
+            return DataContext.SaveChanges() > 0;
+        }
+
         public CreatePmsConfigResponse CreatePmsConfig(CreatePmsConfigRequest request)
         {
             var response = new CreatePmsConfigResponse();

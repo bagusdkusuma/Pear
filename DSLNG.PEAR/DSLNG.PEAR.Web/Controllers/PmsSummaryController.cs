@@ -182,6 +182,15 @@ namespace DSLNG.PEAR.Web.Controllers
             return RedirectToAction("Configuration");
         }
 
+        [HttpPost]
+        public ActionResult UpdateStatus(int id, bool isActive)
+        {
+            var status = _pmsSummaryService.UpdateStatus(id, isActive);
+            string message = status ? "Change Status Success" : "Change Status Failed";
+
+            return Json(new {status, message});
+        }
+
         public ActionResult ChartYearly(ViewModels.PmsSummary.ChartViewModel viewModel)
         {
             var artifactDesignerViewModel = new ArtifactDesignerViewModel();
