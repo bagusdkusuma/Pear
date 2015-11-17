@@ -10,6 +10,7 @@ using DSLNG.PEAR.Services.Requests.Conversion;
 using DSLNG.PEAR.Services.Responses.Conversion;
 using DSLNG.PEAR.Web.ViewModels.Conversion;
 using DevExpress.Web.Mvc;
+using System.Data.SqlClient;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -84,7 +85,10 @@ namespace DSLNG.PEAR.Web.Controllers
         public CreateConversionViewModel CreateViewModel(CreateConversionViewModel viewModel)
         {
             viewModel.MeasurementList = _measurementService.GetMeasurements(
-                new Services.Requests.Measurement.GetMeasurementsRequest { Skip = 0, Take = 0 }).Measurements.Select(x => new SelectListItem
+                new Services.Requests.Measurement.GetMeasurementsRequest {
+                    Take = -1,
+                    SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+                }).Measurements.Select(x => new SelectListItem
                 {
                     Text = x.Name,
                     Value = x.Id.ToString()
@@ -119,7 +123,10 @@ namespace DSLNG.PEAR.Web.Controllers
         public UpdateConversionViewModel UpdateViewModel(UpdateConversionViewModel viewModel)
         {
             viewModel.MeasurementList = _measurementService.GetMeasurements(
-                new Services.Requests.Measurement.GetMeasurementsRequest { Skip = 0, Take = 0 }).Measurements.Select(x => new SelectListItem
+                new Services.Requests.Measurement.GetMeasurementsRequest {
+                    Take = -1,
+                    SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+                }).Measurements.Select(x => new SelectListItem
                 {
                     Text = x.Name,
                     Value = x.Id.ToString()

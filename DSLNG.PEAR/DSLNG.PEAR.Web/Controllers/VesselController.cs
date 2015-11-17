@@ -6,6 +6,8 @@ using DSLNG.PEAR.Web.ViewModels.Vessel;
 using System.Web.Mvc;
 using System.Linq;
 using DSLNG.PEAR.Common.Extensions;
+using System.Data.SqlClient;
+using System.Collections.Generic;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -85,7 +87,10 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create()
         {
             var viewModel = new VesselViewModel();
-            viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest()).Measurements
+            viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest {
+                Take = -1,
+                SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+            }).Measurements
                 .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
             return View(viewModel);
         }
@@ -106,7 +111,10 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             var vessel = _vesselService.GetVessel(new GetVesselRequest { Id = id });
             var viewModel = vessel.MapTo<VesselViewModel>();
-            viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest()).Measurements
+            viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest {
+                Take = -1,
+                SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+            }).Measurements
                 .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
             return View(viewModel);
         }

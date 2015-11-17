@@ -1,7 +1,7 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Highlight.DailyExecutionReportViewModel
 @using DSLNG.PEAR.Web.Helpers
 
-<div class="daily-execution-report ">
+<div class="daily-execution-report highlight-display">
 
     <div class="row">
         <div class="col-md-12">
@@ -12,11 +12,11 @@
         var daily = Model.PeriodeType == DSLNG.PEAR.Data.Enums.PeriodeType.Daily ? "active" : "";
         var monthly = Model.PeriodeType == DSLNG.PEAR.Data.Enums.PeriodeType.Monthly ? "active" : "";
         var yearly = Model.PeriodeType == DSLNG.PEAR.Data.Enums.PeriodeType.Yearly ? "active" : "";
-    <ul class="nav nav-tabs">
-        <li class="@daily"><a href="@Url.Action("Display", new { PeriodeType = "Daily" })">Daily</a></li>
-        <li class="@monthly"><a href="@Url.Action("Display", new { PeriodeType = "Monthly" })" >Monthly</a></li>
-        <li class="@yearly"><a href="@Url.Action("Display", new { PeriodeType = "Yearly" })" >Yearly</a></li>
-    </ul>
+        <ul class="nav nav-tabs">
+            <li class="@daily"><a href="@Url.Action("Display", new { PeriodeType = "Daily" })">Daily</a></li>
+            <li class="@monthly"><a href="@Url.Action("Display", new { PeriodeType = "Monthly" })" >Monthly</a></li>
+            <li class="@yearly"><a href="@Url.Action("Display", new { PeriodeType = "Yearly" })" >Yearly</a></li>
+        </ul>
     }
 
     <div class="row">
@@ -26,6 +26,16 @@
                 <div class="tab-pane active text-left">
                     @if (Model.PeriodeType == DSLNG.PEAR.Data.Enums.PeriodeType.Daily)
                     {
+                        @*<div class="row" style="margin-bottom: 40px">
+                            <div class="col-sm-12">
+                                <form class="form-inline">
+                                    <div class="form-group form-list">
+                                        <label for="GraphicName">Date</label>
+                                        <input class="form-control datepicker" type="text" value="">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>*@
                         <div class="row" style="margin-bottom: 40px">
                             <div class="col-md-4">
                                 <h4>Weather: <span class="weather-value">@Model.Weather.Text</span> <span class="display-image" style="width: 30px; height: 30px; display: inline-block; padding: 2.5px">
@@ -67,6 +77,30 @@
                                 </div>
                             </div>
                         </div>
+                    }
+                    else if (Model.PeriodeType == DSLNG.PEAR.Data.Enums.PeriodeType.Monthly)
+                    {
+                         @*<div class="row" style="margin-bottom: 40px">
+                            <div class="col-sm-12">
+                                <form class="form-inline">
+                                    <div class="form-group form-list">
+                                        <label for="GraphicName">Month</label>
+                                        <input class="form-control monthpicker" type="text" value="">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>*@
+                    }else{
+                        @*<div class="row" style="margin-bottom: 40px">
+                            <div class="col-sm-12">
+                                <form class="form-inline">
+                                    <div class="form-group form-list">
+                                        <label for="GraphicName">Year</label>
+                                        <input class="form-control yearpicker" type="text" value="">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>*@
                     }
                     @for (var i = 0; i < Model.HighlightGroupTemplates.Count; i++)
                     {
