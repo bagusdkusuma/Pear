@@ -21,7 +21,7 @@
                     result = input;
                     break;
             }
-            $resultHolder.html(result.format(4));
+            $resultHolder.html(result.format(2));
             return result;
         };
         var toLNG = function (tonnes) {
@@ -45,15 +45,15 @@
             var lng_yield = parseFloat($('.general.lng-yield').val()) / 100;
             var pav = parseFloat($('.pav.lng').val());
             
-            var lngTonnes = lng_yield * $('.feedgas-tonnes').html();
+            var lngTonnes = lng_yield * $('.feedgas-tonnes').data('value');
             var lngMmbtu = (lngTonnes * 1000) / $('.kg-mmbtu.lng ').val();
             var lngM3 = parseFloat(lngMmbtu / mmbtu_m3);
             var lngMtpa = lngTonnes * pav;
 
-            $('#LNG_Tonnes').val(lngTonnes);
-            $('#LNG_Mmbtu').val(lngMmbtu.format(4));
-            $('#LNG_M3').val(lngM3.format(4));
-            $('#LNG_Mtpa').val(lngMtpa.format(4));
+            $('#LNG_Tonnes').val(lngTonnes.format(2));
+            $('#LNG_Mmbtu').val(lngMmbtu.format(2));
+            $('#LNG_M3').val(lngM3.format(2));
+            $('#LNG_Mtpa').val(lngMtpa.format(2));
         };
 
         var toCDS = function (tonnes) {
@@ -74,16 +74,16 @@
             $('#CDS_Bbl').val(cdsBbl.format(4));*/
             
             var cds_yield = parseFloat($('.general.cds-yield').val()) / 100;
-            var cdsTonnes = cds_yield * $('.feedgas-tonnes').html();
+            var cdsTonnes = cds_yield * $('.feedgas-tonnes').data('value');
             var cdsMmbtu = cdsTonnes * 1000 * $('.kg-mmbtu.cds').val();
             var mmbtu_m3 = parseFloat($('.mmbtu-m3.cds').val());
             var m3_bbl = parseFloat($('.m3-bbl.cds').val());
             var cdsM3 = cdsMmbtu / mmbtu_m3;
             var cdsBbl = cdsM3 / m3_bbl;
-            $('#CDS_Tonnes').val(cdsTonnes.format(4));
-            $('#CDS_Mmbtu').val(cdsMmbtu.format(4));
-            $('#CDS_M3').val(cdsM3.format(4));
-            $('#CDS_Bbl').val(cdsBbl.format(4));
+            $('#CDS_Tonnes').val(cdsTonnes.format(2));
+            $('#CDS_Mmbtu').val(cdsMmbtu.format(2));
+            $('#CDS_M3').val(cdsM3.format(2));
+            $('#CDS_Bbl').val(cdsBbl.format(2));
         };
 
         var convertToOtherUnit = function (input, unit) {
@@ -91,28 +91,57 @@
             console.log(unit);
             switch (unit) {
                 case "tonnes":
-                    $('.feedgas-tonnes').html(input);
-                    $('.feedgas-mmscf').html(parseFloat(input / $('.general.tonnes-mmscf').val()).format(4));
-                    $('.feedgas-mmbtu').html(parseFloat((input * 1000) / $('.general.kg-mmbtu').val()).format(4));
-                    $('.feedgas-kg').html(input * 1000);
+                    $('.feedgas-tonnes').data('value', input);
+                    
+                    $('.feedgas-tonnes').html($('.feedgas-tonnes').data('value').format(2));
+                    
+                    $('.feedgas-mmscf').data('value', parseFloat(input / $('.general.tonnes-mmscf').val()));
+                    $('.feedgas-mmscf').html($('.feedgas-mmscf').data('value').format(2));
+                    
+                    $('.feedgas-mmbtu').data('value', parseFloat((input * 1000) / $('.general.kg-mmbtu').val()));
+                    $('.feedgas-mmbtu').html($('.feedgas-mmbtu').data('value').format(2));
+                    
+                    $('.feedgas-kg').data('value', input * 1000);
+                    $('.feedgas-kg').html($('.feedgas-kg').data('value').format(2));
                     break;
                 case "mmscf":
-                    $('.feedgas-tonnes').html(parseFloat(input * $('.general.tonnes-mmscf').val()).format(4));
-                    $('.feedgas-mmscf').html(input);
-                    $('.feedgas-mmbtu').html(parseFloat(($('.feedgas-tonnes').html() * 1000) / $('.general.kg-mmbtu').val()).format(4));
-                    $('.feedgas-kg').html($('.feedgas-tonnes').html() * 1000);
+                    $('.feedgas-tonnes').data('value', parseFloat(input * $('.general.tonnes-mmscf').val()));
+                    $('.feedgas-tonnes').html($('.feedgas-tonnes').data('value').format(2));
+
+                    $('.feedgas-mmscf').data('value', input);
+                    $('.feedgas-mmscf').html($('.feedgas-mmscf').data('value').format(2));
+
+                    $('.feedgas-mmbtu').data('value', parseFloat(($('.feedgas-tonnes').data('value') * 1000) / $('.general.kg-mmbtu').val()));
+                    $('.feedgas-mmbtu').html($('.feedgas-mmbtu').data('value').format(2));
+
+                    $('.feedgas-kg').data('value', $('.feedgas-tonnes').data('value') * 1000);
+                    $('.feedgas-kg').html($('.feedgas-kg').data('value').format(2));
                     break;
                 case "kg":
-                    $('.feedgas-tonnes').html(input / 1000);
-                    $('.feedgas-mmscf').html(parseFloat((input/1000) / $('.general.tonnes-mmscf').val()).format(4));
-                    $('.feedgas-mmbtu').html(parseFloat(input / $('.general.kg-mmbtu').val()).format(4));
-                    $('.feedgas-kg').html(input);
+                    $('.feedgas-tonnes').data('value', input / 1000);
+                    $('.feedgas-tonnes').html($('.feedgas-tonnes').data('value').format(2));
+
+                    $('.feedgas-mmscf').data('value', parseFloat((input / 1000) / $('.general.tonnes-mmscf').val()));
+                    $('.feedgas-mmscf').html($('.feedgas-mmscf').data('value').format(2));
+
+                    $('.feedgas-mmbtu').data('value', parseFloat(input / $('.general.kg-mmbtu').val()));
+                    $('.feedgas-mmbtu').html($('.feedgas-mmbtu').data('value').format(2));
+
+                    $('.feedgas-kg').data('value', input);
+                    $('.feedgas-kg').html($('.feedgas-kg').data('value').format(2));
                     break;
                 case "mmbtu":
-                    $('.feedgas-tonnes').html(input / 1000);
-                    $('.feedgas-mmscf').html(parseFloat((input / 1000) / $('.general.tonnes-mmscf').val()).format(4));
-                    $('.feedgas-mmbtu').html(input);
-                    $('.feedgas-kg').html(input);
+                    $('.feedgas-tonnes').data('value', input * $('.general.kg-mmbtu').val() / 1000);
+                    $('.feedgas-tonnes').html($('.feedgas-tonnes').data('value').format(2));
+
+                    $('.feedgas-mmscf').data('value', parseFloat((input / 1000) / $('.general.tonnes-mmscf').val()));
+                    $('.feedgas-mmscf').html($('.feedgas-mmscf').data('value').format(2));
+
+                    $('.feedgas-mmbtu').data('value', input);
+                    $('.feedgas-mmbtu').html($('.feedgas-mmbtu').data('value').format(2));
+
+                    $('.feedgas-kg').data('value', input * $('.general.kg-mmbtu').val());
+                    $('.feedgas-kg').html($('.feedgas-kg').data('value').format(2));
                     break;
                 
             }
@@ -120,7 +149,8 @@
 
         var toMCHE = function() {
             var m3_hr = parseFloat($('.m3-hr.mche').val());
-            $('#MCHE_M3PerHr').val($('.feedgas-mmscf').html() * m3_hr);
+            var mcheCapacity = $('.feedgas-mmscf').data('value') * m3_hr;
+            $('#MCHE_M3PerHr').val(mcheCapacity.format(2));
         };
         $('#MainInput').keyup(function (e) {
             e.preventDefault();
@@ -151,8 +181,10 @@
             if (input != 0) {
                 var unit = $('#Unit').val();
                 var tonnes = toTonnes(unit, input);
+                convertToOtherUnit(input, unit);
                 toLNG(tonnes);
                 toCDS(tonnes);
+                toMCHE();
             }
         });
 
