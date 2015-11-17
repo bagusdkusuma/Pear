@@ -11,7 +11,8 @@ namespace DSLNG.PEAR.Services.Requests.RoleGroup
         public int Id { get; set; }
     }
 
-    public class GetRoleGroupsRequest {
+    public class GetRoleGroupsRequest : GridBaseRequest 
+    {
         public int Skip { get; set; }
         public int Take { get; set; }
     }

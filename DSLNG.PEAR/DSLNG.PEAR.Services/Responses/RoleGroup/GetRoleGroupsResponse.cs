@@ -9,6 +9,7 @@ namespace DSLNG.PEAR.Services.Responses.RoleGroup
     public class GetRoleGroupsResponse : BaseResponse
     {
         public IList<RoleGroup> RoleGroups { get; set; }
+        public int TotalRecords { get; set; }
         public class RoleGroup
         {
             public int Id { get; set; }

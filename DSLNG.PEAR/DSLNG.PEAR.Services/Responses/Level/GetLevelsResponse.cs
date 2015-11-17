@@ -9,6 +9,7 @@ namespace DSLNG.PEAR.Services.Responses.Level
     public class GetLevelsResponse : BaseResponse
     {
         public IList<Level> Levels { get; set; }
+        public int TotalRecords { get; set; }
         public class Level {
             public int Id { get; set; }
 

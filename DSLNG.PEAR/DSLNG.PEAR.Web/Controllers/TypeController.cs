@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using DSLNG.PEAR.Web.ViewModels.Type;
 using DSLNG.PEAR.Services.Requests.Type;
 using DevExpress.Web.Mvc;
+using DSLNG.PEAR.Web.Grid;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -122,6 +123,26 @@ namespace DSLNG.PEAR.Web.Controllers
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Grid(GridParams gridParams)
+        {
+            var type = _typeService.GetTypes(new GetTypesRequest
+                {
+                    Skip = gridParams.DisplayStart,
+                    Take = gridParams.DisplayLength,
+                    Search = gridParams.Search,
+                    SortingDictionary = gridParams.SortingDictionary
+                });
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = type.TotalRecords,
+                iTotalRecords = type.Types.Count,
+                aaData = type.Types
+            };
+
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
     }
 }

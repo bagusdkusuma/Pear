@@ -7,6 +7,8 @@ using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Entities;
 using System;
 using System.Data.Entity.Infrastructure;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace DSLNG.PEAR.Services
 {
@@ -21,22 +23,34 @@ namespace DSLNG.PEAR.Services
 
         public GetBuyersResponse GetBuyers(GetBuyersRequest request)
         {
-            if (request.OnlyCount)
+            int totalRecords;
+            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            if (request.Take != -1)
             {
-                return new GetBuyersResponse { Count = DataContext.Buyers.Count() };
+                data = data.Skip(request.Skip).Take(request.Take);
             }
-            else
+
+            return new GetBuyersResponse
             {
-                var query = DataContext.Buyers.AsQueryable();
-                if(!String.IsNullOrEmpty(request.Term)){
-                    query = query.Where(x => x.Name.Contains(request.Term));
-                }
-                query = query.OrderByDescending(x => x.Id).Skip(request.Skip).Take(request.Take);
-                return new GetBuyersResponse
-                {
-                    Buyers =query.ToList().MapTo<GetBuyersResponse.BuyerResponse>()
-                };
-            }
+                TotalRecords = totalRecords,
+                Buyers = data.ToList().MapTo<GetBuyersResponse.BuyerResponse>()
+            };
+            //if (request.OnlyCount)
+            //{
+            //    return new GetBuyersResponse { Count = DataContext.Buyers.Count() };
+            //}
+            //else
+            //{
+            //    var query = DataContext.Buyers.AsQueryable();
+            //    if(!String.IsNullOrEmpty(request.Term)){
+            //        query = query.Where(x => x.Name.Contains(request.Term));
+            //    }
+            //    query = query.OrderByDescending(x => x.Id).Skip(request.Skip).Take(request.Take);
+            //    return new GetBuyersResponse
+            //    {
+            //        Buyers =query.ToList().MapTo<GetBuyersResponse.BuyerResponse>()
+            //    };
+            //}
         }
 
         public SaveBuyerResponse SaveBuyer(SaveBuyerRequest request)
@@ -111,6 +125,40 @@ namespace DSLNG.PEAR.Services
                 };
             }
             
+        }
+
+        public IEnumerable<Buyer> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        {
+            var data = DataContext.Buyers.AsQueryable();
+            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            {
+                data = data.Where(x => x.Name.Contains(search));
+            }
+
+            foreach (var sortOrder in sortingDictionary)
+            {
+                switch (sortOrder.Key)
+                {
+                    case "Name":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Name)
+                            : data.OrderByDescending(x => x.Name);
+                        break;
+                    case "Address":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Address)
+                            : data.OrderByDescending(x => x.Address);
+                        break;
+                    case "IsActive":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.IsActive)
+                            : data.OrderByDescending(x => x.IsActive);
+                        break;
+                }
+            }
+
+            TotalRecords = data.Count();
+            return data;
         }
     }
 }

@@ -7,6 +7,7 @@ namespace DSLNG.PEAR.Services.Responses.ConstantUsage
     public class GetConstantUsagesResponse
     {
         public IList<ConstantUsageResponse> ConstantUsages { get; set; }
+        public int TotalRecords { get; set; }
         public int Count { get; set; }
         public class ConstantUsageResponse {
             public int Id { get; set; }

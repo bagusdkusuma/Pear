@@ -1,7 +1,7 @@
 ﻿
 namespace DSLNG.PEAR.Services.Requests.Buyer
 {
-    public class GetBuyersRequest
+    public class GetBuyersRequest : GridBaseRequest
     {
         public int Take { get; set; }
         public int Skip { get; set; }

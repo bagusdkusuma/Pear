@@ -11,6 +11,7 @@ using DSLNG.PEAR.Services.Responses.Conversion;
 using DSLNG.PEAR.Web.ViewModels.Conversion;
 using DevExpress.Web.Mvc;
 using System.Data.SqlClient;
+using DSLNG.PEAR.Web.Grid;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -167,6 +168,25 @@ namespace DSLNG.PEAR.Web.Controllers
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Grid(GridParams gridParams)
+        {
+            var conversion = _conversionService.GetConversions(new GetConversionsRequest
+                {
+                    Skip = gridParams.DisplayStart,
+                    Take = gridParams.DisplayLength,
+                    Search = gridParams.Search,
+                    SortingDictionary = gridParams.SortingDictionary
+                });
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = conversion.TotalRecords,
+                iTotalRecords = conversion.Conversions.Count,
+                aaData = conversion.Conversions
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
     }
 }
