@@ -15,6 +15,7 @@ using DevExpress.Web.Mvc;
 using DSLNG.PEAR.Services.Requests.Kpi;
 using PeriodeType = DSLNG.PEAR.Data.Enums.PeriodeType;
 using DSLNG.PEAR.Services.Requests.Highlight;
+using System.Data.SqlClient;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -111,7 +112,11 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "tabular", Text = "Tabular" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "tank", Text = "Tank" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "pie", Text = "Pie" });
-            viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest()).Measurements
+            viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
+            {
+                Take = -1,
+                SortingDictionary = new Dictionary<string, SortOrder> { {"Name", SortOrder.Ascending}}
+            }).Measurements
                 .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
             this.SetPeriodeTypes(viewModel.PeriodeTypes);
@@ -140,7 +145,10 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "pie", Text = "Pie" });
 
 
-            viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest()).Measurements
+            viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest {
+                Take = -1,
+                SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+            }).Measurements
                 .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
             this.SetPeriodeTypes(viewModel.PeriodeTypes);
@@ -190,7 +198,10 @@ namespace DSLNG.PEAR.Web.Controllers
                         multiaxisChart.GraphicTypes.Add(new SelectListItem { Value = "barachievement", Text = "Bar Achievement" });
                         multiaxisChart.GraphicTypes.Add(new SelectListItem { Value = "line", Text = "Line" });
                         multiaxisChart.GraphicTypes.Add(new SelectListItem { Value = "area", Text = "Area" });
-                        multiaxisChart.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest()).Measurements
+                        multiaxisChart.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest {
+                            Take = -1,
+                            SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+                        }).Measurements
               .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
                         foreach (var chartRes in artifact.Charts)
                         {
@@ -438,7 +449,10 @@ namespace DSLNG.PEAR.Web.Controllers
                         viewModel.GraphicTypes.Add(new SelectListItem { Value = "line", Text = "Line" });
                         viewModel.GraphicTypes.Add(new SelectListItem { Value = "area", Text = "Area" });
                         viewModel.Charts.Add(chart);
-                        viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest()).Measurements
+                        viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest {
+                            Take = -1,
+                            SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+                        }).Measurements
               .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
                         var artifactViewModel = new ArtifactDesignerViewModel();
                         artifactViewModel.MultiaxisChart = viewModel;
