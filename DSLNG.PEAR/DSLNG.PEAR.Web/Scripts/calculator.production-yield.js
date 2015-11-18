@@ -187,6 +187,18 @@
                 toMCHE();
             }
         });
+        
+        $('.constant-production-wrapper').hide();
+        $('.show-production-constant').click(function () {
+            if ($('.constant-production-wrapper').is(":visible")) {
+                $('.constant-production-wrapper').slideUp();
+                $('.show-production-constant').html('Show Constant');
+            } else {
+                $('.constant-production-wrapper').slideDown();
+                $('.show-production-constant').html('Hide Constant');
+            }
+        });
+
 
     };
 }(window, jQuery));
