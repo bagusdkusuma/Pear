@@ -1,7 +1,17 @@
 ﻿(function (window, $, undefined) {
+    
+    
     var pear = window.Pear;
     pear.PlantAvailabilityCalculator = {};
     pear.PlantAvailabilityCalculator.Init = function () {
+        $('.datepicker').datetimepicker({
+            format: "YYYY"
+        });
+
+        $('.datepicker').on("dp.change", function (e) {
+            calculate();
+        });
+        
         $('#Year, #PlantAvailable').keyup(function (e) {
             e.preventDefault();
             calculate();
@@ -12,7 +22,12 @@
         });
 
         var calculate = function () {
-            var year = $('#Year').val();
+            var theYear = $('#Year').val();
+            var year = 0;
+            for (var i = 0; i < 12; i++) {
+                year += new Date(theYear, i, 0).getDate();
+            }
+            
             var plantAvailable = $('#PlantAvailable').val();
             var unit = $('#pa-unit').val();
             if (unit === 'days') {

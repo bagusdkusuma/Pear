@@ -134,7 +134,15 @@ namespace DSLNG.PEAR.Services
                 return DataContext.Highlights.Include(x => x.HighlightType).FirstOrDefault(x => x.Id == request.Id).MapTo<GetHighlightResponse>();
             }
             else {
-                var highlight = DataContext.Highlights.Include(x => x.HighlightType).FirstOrDefault(x => x.Date == request.Date && x.HighlightType.Value == request.Type);
+                var highlightQuery = DataContext.Highlights.Include(x => x.HighlightType);
+                if (request.Date.HasValue)
+                {
+                    highlightQuery = highlightQuery.Where(x => x.Date == request.Date && x.HighlightType.Value == request.Type);
+                }
+                else {
+                    highlightQuery = highlightQuery.OrderByDescending(x => x.Date).Where(x => x.HighlightType.Value == request.Type);
+                }
+                var highlight = highlightQuery.FirstOrDefault();
                 if (highlight != null) {
                     return highlight.MapTo<GetHighlightResponse>();
                 }
@@ -171,6 +179,9 @@ namespace DSLNG.PEAR.Services
         {
             var latestHighlight = DataContext.Highlights.OrderByDescending(x => x.Date)
                 .FirstOrDefault(x => x.PeriodeType == request.PeriodeType && !x.HighlightType.Text.Equals("Alert", StringComparison.InvariantCultureIgnoreCase));
+            if (request.Periode != null) {
+                latestHighlight = DataContext.Highlights.FirstOrDefault(x => x.PeriodeType == request.PeriodeType && x.Date == request.Periode);
+            }
             var highlights = new List<Highlight>();
             if (latestHighlight != null) {
                 switch (request.PeriodeType) { 
@@ -198,6 +209,7 @@ namespace DSLNG.PEAR.Services
             if (highlights.Count > 0) {
                 return new GetDynamicHighlightsResponse
                 {
+                    Periode = latestHighlight.Date,
                     HighlightGroups = highlights.GroupBy(x => x.HighlightType.Group,
                        x => x,
                         (key, g) => new GetDynamicHighlightsResponse.HighlightGroupResponse

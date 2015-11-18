@@ -19,6 +19,35 @@ namespace DSLNG.PEAR.Services
 
         public GetConstantUsagesResponse GetConstantUsages(GetConstantUsagesRequest request)
         {
+            var query = DataContext.ConstantUsages.Include(x => x.Constants);
+            if (!string.IsNullOrEmpty(request.Term))
+            {
+                query = query.Where(x => x.Role.ToLower().Contains(request.Term.ToLower()) || x.Group.ToLower().Contains(request.Term.ToLower()));
+            }
+            query.OrderByDescending(x => x.Id);
+            if (request.Skip != 0)
+            {
+                query = query.Skip(request.Skip);
+            }
+            if (request.Take != 0)
+            {
+                query = query.Take(request.Take);
+            }
+            if (request.OnlyCount)
+            {
+                return new GetConstantUsagesResponse { Count = query.Count() };
+            }
+            else
+            {
+                return new GetConstantUsagesResponse
+                {
+                    ConstantUsages = query.ToList().MapTo<GetConstantUsagesResponse.ConstantUsageResponse>()
+                };
+            }
+        }
+
+        public GetConstantUsagesResponse GetConstantUsagesForGrid(GetConstantUsagesRequest request)
+        {
             int totalRecords;
             var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
             if (request.Take != -1)
@@ -31,29 +60,6 @@ namespace DSLNG.PEAR.Services
                 TotalRecords = totalRecords,
                 ConstantUsages = data.ToList().MapTo<GetConstantUsagesResponse.ConstantUsageResponse>()
             };
-            //var query = DataContext.ConstantUsages.Include(x => x.Constants);
-            //if (!string.IsNullOrEmpty(request.Term))
-            //{
-            //    query = query.Where(x => x.Role.ToLower().Contains(request.Term.ToLower()) || x.Group.ToLower().Contains(request.Term.ToLower()));
-            //}
-            //query.OrderByDescending(x => x.Id);
-            //if (request.Skip != 0) {
-            //    query = query.Skip(request.Skip);
-            //}
-            //if (request.Take != 0) {
-            //    query = query.Take(request.Take);
-            //}
-            //if (request.OnlyCount)
-            //{
-            //    return new GetConstantUsagesResponse { Count = query.Count() };
-            //}
-            //else
-            //{
-            //    return new GetConstantUsagesResponse
-            //    {
-            //        ConstantUsages = query.ToList().MapTo<GetConstantUsagesResponse.ConstantUsageResponse>()
-            //    };
-            //}
         }
 
         public GetConstantUsageResponse GetConstantUsage(GetConstantUsageRequest request)

@@ -40,7 +40,7 @@
                 <div class="message-holder">
                     <div class="form-group form-list message-text-area">
                         @Html.LabelFor(model => model.Message)
-                        @Html.TextAreaFor(model => model.Message, 5, 100, new { @class = "form-control"})
+                        @Html.TextAreaFor(model => model.Message, 5, 100, new { @class = "form-control highlight-message"})
                         @Html.ValidationMessageFor(model => model.Message)
                     </div>
                     <div class="form-group form-list alert-condition-options">
@@ -49,7 +49,7 @@
                         @Html.ValidationMessageFor(model => model.Message)
                     </div>
                 </div>
-                <div class="form-group form-list">
+                <div class="form-group form-list" style="display:none" >
                     @Html.LabelFor(model => model.IsActive)
                     @Html.CheckBoxFor(model => model.IsActive, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.IsActive)

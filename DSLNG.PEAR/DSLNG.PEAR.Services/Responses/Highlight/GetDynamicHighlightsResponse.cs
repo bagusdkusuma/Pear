@@ -1,5 +1,6 @@
 ﻿
 
+using System;
 using System.Collections.Generic;
 namespace DSLNG.PEAR.Services.Responses.Highlight
 {
@@ -7,7 +8,9 @@ namespace DSLNG.PEAR.Services.Responses.Highlight
     {
         public GetDynamicHighlightsResponse() {
             HighlightGroups = new List<HighlightGroupResponse>();
+            Periode = DateTime.Now;
         }
+        public DateTime Periode { get; set; }
         public IList<HighlightGroupResponse> HighlightGroups { get; set; }
         public class HighlightGroupResponse
         {
@@ -22,6 +25,7 @@ namespace DSLNG.PEAR.Services.Responses.Highlight
         }
         public class HighlightResponse
         {
+            public int Id { get; set; }
             public string Title { get; set; }
             public string Message { get; set; }
             public int Order { get; set; }

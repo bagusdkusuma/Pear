@@ -461,7 +461,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.IdScenario, o => o.MapFrom(s => s.Scenario.Id))
                 .ForMember(x => x.IdEconomicSummary, o => o.MapFrom(s => s.EconomicSummary.Id));
             Mapper.CreateMap<HighlightGroup, GetHighlightGroupsResponse.HighlightGroupResponse>()
-                .ForMember(x => x.HighlightTypes, o => o.MapFrom(s => s.Options));
+                .ForMember(x => x.HighlightTypes, o => o.MapFrom(s => s.Options.Where(x => x.IsActive == true).ToList()));
             Mapper.CreateMap<HighlightGroup, GetHighlightGroupResponse>();
             Mapper.CreateMap<SaveHighlightGroupRequest, HighlightGroup>();
             Mapper.CreateMap<SelectOption, GetHighlightGroupsResponse.HighlightTypeResponse>();

@@ -7,5 +7,6 @@ namespace DSLNG.PEAR.Services.Requests.Weather
     {
         public int Id { get; set; }
         public DateTime? Date { get; set; }
+        public bool ByDate { get; set; }
     }
 }

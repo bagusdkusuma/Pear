@@ -24,7 +24,34 @@ namespace DSLNG.PEAR.Web.ViewModels.Calculator
         public string Unit { get; set; }
         public IList<SelectListItem> Units { get; set; }
         public IList<ConstantUsageViewModel> ConstantUsages { get; set; }
-        public IList<CalculatorConstantViewModel> FeedGasConstants
+        public IList<CalculatorConstantViewModel> SpaConstants
+        {
+            get
+            {
+                var data = ConstantUsages.FirstOrDefault(x => x.Role == "pricing" && x.Group == "spa");
+                if (data != null)
+                {
+                    return data.Constants.MapTo<CalculatorConstantViewModel>();
+                }
+
+                return new List<CalculatorConstantViewModel>();
+            }
+        }
+
+        public IList<CalculatorConstantViewModel> GsaConstants
+        {
+            get
+            {
+                var data = ConstantUsages.FirstOrDefault(x => x.Role == "pricing" && x.Group == "gsa");
+                if (data != null)
+                {
+                    return data.Constants.MapTo<CalculatorConstantViewModel>();
+                }
+
+                return new List<CalculatorConstantViewModel>();
+            }
+        }
+       /* public IList<CalculatorConstantViewModel> FeedGasConstants
         {
             get
             {
@@ -58,6 +85,6 @@ namespace DSLNG.PEAR.Web.ViewModels.Calculator
                 return ConstantUsages.First(x => x.Role == "pricing" && x.Group == "cds-price")
                     .Constants.MapTo<CalculatorConstantViewModel>();
             }
-        }
+        }*/
     }
 }

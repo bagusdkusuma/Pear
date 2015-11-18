@@ -10,5 +10,6 @@ namespace DSLNG.PEAR.Services.Requests.Highlight
     public class GetDynamicHighlightsRequest
     {
         public PeriodeType PeriodeType { get; set; }
+        public DateTime? Periode { get; set; }
     }
 }

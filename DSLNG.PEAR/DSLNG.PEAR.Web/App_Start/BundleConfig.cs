@@ -36,7 +36,8 @@ namespace DSLNG.PEAR.Web.App_Start
                         "~/Scripts/calculator.production-yield.js",
                         "~/Scripts/calculator.standard.js",
                         "~/Scripts/jquery.dataTables.min.js",
-                        "~/Scripts/jquery.freezeheader.js"));
+                        "~/Scripts/jquery.freezeheader.js"
+                       ));
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/bootstrap/css/bootstrap.css",
                 "~/Content/font-awesome/css/font-awesome.css",
                 //"~/Content/datepicker/css/datepicker.css",
