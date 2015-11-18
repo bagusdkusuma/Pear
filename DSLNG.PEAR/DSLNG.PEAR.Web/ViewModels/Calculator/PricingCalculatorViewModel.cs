@@ -28,8 +28,13 @@ namespace DSLNG.PEAR.Web.ViewModels.Calculator
         {
             get
             {
-                return ConstantUsages.First(x => x.Role == "pricing" && x.Group == "spa")
-                    .Constants.MapTo<CalculatorConstantViewModel>();
+                var data = ConstantUsages.FirstOrDefault(x => x.Role == "pricing" && x.Group == "spa");
+                if (data != null)
+                {
+                    return data.Constants.MapTo<CalculatorConstantViewModel>();
+                }
+
+                return new List<CalculatorConstantViewModel>();
             }
         }
 
@@ -37,8 +42,13 @@ namespace DSLNG.PEAR.Web.ViewModels.Calculator
         {
             get
             {
-                return ConstantUsages.First(x => x.Role == "pricing" && x.Group == "gsa")
-                    .Constants.MapTo<CalculatorConstantViewModel>();
+                var data = ConstantUsages.FirstOrDefault(x => x.Role == "pricing" && x.Group == "gsa");
+                if (data != null)
+                {
+                    return data.Constants.MapTo<CalculatorConstantViewModel>();
+                }
+
+                return new List<CalculatorConstantViewModel>();
             }
         }
        /* public IList<CalculatorConstantViewModel> FeedGasConstants
