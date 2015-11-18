@@ -20,7 +20,7 @@ namespace DSLNG.PEAR.Services
         public GetHighlightGroupsResponse GetHighlightGroups(GetHighlightGroupsRequest request)
         {
             int totalRecords;
-            var query = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            var query = SortData(request.Search, request.SortingDictionary, request.OnlyIsActive, out totalRecords);
             if (request.Take != -1)
             {
                 query = query.Skip(request.Skip).Take(request.Take);
@@ -33,9 +33,12 @@ namespace DSLNG.PEAR.Services
 
             return response;
         }
-        private IEnumerable<HighlightGroup> SortData(string search, IDictionary<string, System.Data.SqlClient.SortOrder> sortingDictionary, out int totalRecords)
+        private IEnumerable<HighlightGroup> SortData(string search, IDictionary<string, System.Data.SqlClient.SortOrder> sortingDictionary, bool onlyIsActive, out int totalRecords)
         {
             var data = DataContext.HighlightGroups.Include(x => x.Options).AsQueryable();
+            if (onlyIsActive) {
+                data = data.Where(x => x.Options.Where(y => y.IsActive == true).Count() > 0);
+            }
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             {
                 data = data.Where(x => x.Name.Contains(search));

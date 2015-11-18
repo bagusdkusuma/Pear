@@ -16,6 +16,7 @@ using DSLNG.PEAR.Services.Requests.HighlightOrder;
 using System.Data.SqlClient;
 using System.Collections.Generic;
 using DSLNG.PEAR.Services.Requests.HighlightGroup;
+using System.Globalization;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -175,6 +176,7 @@ namespace DSLNG.PEAR.Web.Controllers
         // GET: /Highlight/Create
         public ActionResult Create()
         {
+            ViewBag.TurnOffDevexpress = true;
             var viewModel = new HighlightViewModel();
             foreach (var name in Enum.GetNames(typeof(PeriodeType)))
             {
@@ -187,6 +189,41 @@ namespace DSLNG.PEAR.Web.Controllers
                 .Select(x => new SelectListItem { Text = x.Text, Value = x.Id.ToString() }).ToList();
             viewModel.AlertConditions = _selectService.GetSelect(new GetSelectRequest { Name = "alert-conditions" }).Options
                 .Select(x => new SelectListItem { Text = x.Text, Value = x.Value }).ToList();
+
+            var TypeId = string.IsNullOrEmpty(Request.QueryString["TypeId"]) ? 0 : int.Parse(Request.QueryString["TypeId"]);
+            var PeriodeType = string.IsNullOrEmpty(Request.QueryString["PeriodeType"]) ? "Daily"
+                : Request.QueryString["PeriodeType"];
+            var periodeQS = !string.IsNullOrEmpty(Request.QueryString["Periode"]) ? Request.QueryString["Periode"] : null;
+            viewModel.TypeId = TypeId;
+            viewModel.PeriodeType = PeriodeType;
+            switch (PeriodeType)
+            {
+                case "Monthly":
+                    viewModel.PeriodeType = PeriodeType;
+                    if (!string.IsNullOrEmpty(periodeQS))
+                    {
+                        viewModel.Date = DateTime.ParseExact("01/" + periodeQS, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    }
+
+                    break;
+                case "Yearly":
+                    viewModel.PeriodeType = PeriodeType;
+                    if (!string.IsNullOrEmpty(periodeQS))
+                    {
+                        viewModel.Date = DateTime.ParseExact("01/01/" + periodeQS, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    }
+
+                    break;
+                default:
+                    viewModel.PeriodeType = PeriodeType;
+                    if (!string.IsNullOrEmpty(periodeQS))
+                    {
+                        viewModel.Date = DateTime.ParseExact(periodeQS, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+                    }
+
+                    break;
+            }
+
             return View(viewModel);
         }
 
@@ -210,6 +247,7 @@ namespace DSLNG.PEAR.Web.Controllers
         // GET: /Highlight/Edit/5
         public ActionResult Edit(int id)
         {
+            ViewBag.TurnOffDevexpress = true;
             var viewModel = _highlightService.GetHighlight(new GetHighlightRequest { Id = id }).MapTo<HighlightViewModel>();
             foreach (var name in Enum.GetNames(typeof(PeriodeType)))
             {
@@ -246,36 +284,70 @@ namespace DSLNG.PEAR.Web.Controllers
             var vesselSchedules = _vesselScheduleService.GetVesselSchedules(new GetVesselSchedulesRequest { allActiveList = true });
             var viewModel = new DailyExecutionReportViewModel();
             var periodeTypeQS = !string.IsNullOrEmpty(Request.QueryString["PeriodeType"]) ? Request.QueryString["PeriodeType"].ToLower() : "daily";
+            var periodeQS = !string.IsNullOrEmpty(Request.QueryString["Periode"]) ? Request.QueryString["Periode"] : null;
             switch (periodeTypeQS)
-            { 
-                case "monthly" :
+            {
+                case "monthly":
                     viewModel.PeriodeType = PeriodeType.Monthly;
+                    if (!string.IsNullOrEmpty(periodeQS))
+                    {
+                        viewModel.Periode = DateTime.ParseExact("01/" + periodeQS, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        if (viewModel.Periode.Value.Month == DateTime.Now.Month
+                       && viewModel.Periode.Value.Year == DateTime.Now.Year)
+                        {
+                            viewModel.Periode = null;
+                        }
+                    }
+                   
                     break;
-                case "yearly" :
+                case "yearly":
                     viewModel.PeriodeType = PeriodeType.Yearly;
+                    if (!string.IsNullOrEmpty(periodeQS))
+                    {
+                        viewModel.Periode = DateTime.ParseExact("01/01/" + periodeQS, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        if (viewModel.Periode.Value.Year == DateTime.Now.Year)
+                        {
+                            viewModel.Periode = null;
+                        }
+                    }
+                    
                     break;
                 default:
                     viewModel.PeriodeType = PeriodeType.Daily;
+                    if (!string.IsNullOrEmpty(periodeQS))
+                    {
+                        viewModel.Periode = DateTime.ParseExact(periodeQS, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+                        if (viewModel.Periode.Value.Day == DateTime.Now.Day
+                        && viewModel.Periode.Value.Month == DateTime.Now.Month
+                        && viewModel.Periode.Value.Year == DateTime.Now.Year)
+                        {
+                            viewModel.Periode = null;
+                        }
+                    }
+                    
                     break;
             }
 
             viewModel.NLSList = vesselSchedules.VesselSchedules.MapTo<DailyExecutionReportViewModel.NLSViewModel>();
-            viewModel.Weather = _waetherService.GetWeather(new GetWeatherRequest { Date = DateTime.Now.Date }).MapTo<DailyExecutionReportViewModel.WeatherViewModel>();
+            viewModel.Weather = _waetherService.GetWeather(new GetWeatherRequest { Date = viewModel.Periode, ByDate=true }).MapTo<DailyExecutionReportViewModel.WeatherViewModel>();
 
             viewModel.HighlightGroupTemplates = _highlightGroupService.GetHighlightGroups(new GetHighlightGroupsRequest
             {
                 Take = -1,
-                SortingDictionary = new Dictionary<string, SortOrder> { {"Order", SortOrder.Ascending}}
+                SortingDictionary = new Dictionary<string, SortOrder> { { "Order", SortOrder.Ascending } },
+                OnlyIsActive = true
             }).HighlightGroups.MapTo<DailyExecutionReportViewModel.HighlightGroupViewModel>();
-            viewModel.HighlightGroups = _highlightService.GetDynamicHighlights(new GetDynamicHighlightsRequest
+            var dynamicHighlights = _highlightService.GetDynamicHighlights(new GetDynamicHighlightsRequest
             {
-                PeriodeType = viewModel.PeriodeType
-            }).HighlightGroups.MapTo<DailyExecutionReportViewModel.HighlightGroupViewModel>();
+                PeriodeType = viewModel.PeriodeType,
+                Periode = viewModel.Periode
+            });
+            viewModel.HighlightGroups = dynamicHighlights.HighlightGroups.MapTo<DailyExecutionReportViewModel.HighlightGroupViewModel>();
 
             //viewModel.Highlights = _highlightService.GetHighlights(new GetHighlightsRequest { Except = new string[1] { "Alert"}, Date = DateTime.Now.Date, IsActive = true }).Highlights.MapTo<DailyExecutionReportViewModel.HighlightViewModel>();
             //viewModel.PlantOperations = _highlightService.GetHighlights(new GetHighlightsRequest { Include = new string[4] { "Process Train", "Storage And Loading", "Utility", "Upstream" }, Date = DateTime.Now.Date, IsActive = true }).Highlights.MapTo<DailyExecutionReportViewModel.HighlightViewModel>();
-            viewModel.Alert = _highlightService.GetHighlight(new GetHighlightRequest { Type = "Alert", Date = DateTime.Now.Date }).MapTo<DailyExecutionReportViewModel.AlertViewModel>();
-            var highlightOrders = _highlightOrderService.GetHighlights(new GetHighlightOrdersRequest { Take = -1, SortingDictionary = new Dictionary<string, SortOrder> {{ "Order", SortOrder.Ascending} } });
+            viewModel.Alert = _highlightService.GetHighlight(new GetHighlightRequest { Type = "Alert", Date = viewModel.Periode }).MapTo<DailyExecutionReportViewModel.AlertViewModel>();
+            var highlightOrders = _highlightOrderService.GetHighlights(new GetHighlightOrdersRequest { Take = -1, SortingDictionary = new Dictionary<string, SortOrder> { { "Order", SortOrder.Ascending } } });
             foreach (var highlight in highlightOrders.HighlightOrders)
             {
                 var highlightVM = viewModel.Highlights.FirstOrDefault(x => x.Type == highlight.Value);
@@ -285,16 +357,21 @@ namespace DSLNG.PEAR.Web.Controllers
                 }
             }
             viewModel.Highlights = viewModel.Highlights.OrderBy(x => x.Order).ToList();
+            if (!viewModel.Periode.HasValue) {
+                viewModel.Periode = dynamicHighlights.Periode;
+            }
             return View(viewModel);
         }
 
-        public JsonResult MessageOptions() {
+        public JsonResult MessageOptions()
+        {
             var parentOptionId = int.Parse(Request.QueryString["value"]);
-            var select = _selectService.GetSelect(new GetSelectRequest{ParentName = "highlight-types",ParentOptionId = parentOptionId});
-            if(select != null){
+            var select = _selectService.GetSelect(new GetSelectRequest { ParentName = "highlight-types", ParentOptionId = parentOptionId });
+            if (select != null)
+            {
                 return Json(select.Options, JsonRequestBehavior.AllowGet);
             }
-            return Json(new string[0]{},JsonRequestBehavior.AllowGet);
+            return Json(new string[0] { }, JsonRequestBehavior.AllowGet);
         }
     }
 }

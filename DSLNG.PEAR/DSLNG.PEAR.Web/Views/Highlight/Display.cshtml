@@ -26,16 +26,16 @@
                 <div class="tab-pane active text-left">
                     @if (Model.PeriodeType == DSLNG.PEAR.Data.Enums.PeriodeType.Daily)
                     {
-                        @*<div class="row" style="margin-bottom: 40px">
+                        <div class="row" style="margin-bottom: 40px">
                             <div class="col-sm-12">
                                 <form class="form-inline">
                                     <div class="form-group form-list">
                                         <label for="GraphicName">Date</label>
-                                        <input class="form-control datepicker" type="text" value="">
+                                        <input class="form-control datepicker" type="text" value="@Model.PeriodeInDisplay">
                                     </div>
                                 </form>
                             </div>
-                        </div>*@
+                        </div>
                         <div class="row" style="margin-bottom: 40px">
                             <div class="col-md-4">
                                 <h4>Weather: <span class="weather-value">@Model.Weather.Text</span> <span class="display-image" style="width: 30px; height: 30px; display: inline-block; padding: 2.5px">
@@ -80,27 +80,27 @@
                     }
                     else if (Model.PeriodeType == DSLNG.PEAR.Data.Enums.PeriodeType.Monthly)
                     {
-                         @*<div class="row" style="margin-bottom: 40px">
+                         <div class="row" style="margin-bottom: 40px">
                             <div class="col-sm-12">
                                 <form class="form-inline">
                                     <div class="form-group form-list">
                                         <label for="GraphicName">Month</label>
-                                        <input class="form-control monthpicker" type="text" value="">
+                                        <input class="form-control monthpicker" type="text" value="@Model.PeriodeInDisplay">
                                     </div>
                                 </form>
                             </div>
-                        </div>*@
+                        </div>
                     }else{
-                        @*<div class="row" style="margin-bottom: 40px">
+                        <div class="row" style="margin-bottom: 40px">
                             <div class="col-sm-12">
                                 <form class="form-inline">
                                     <div class="form-group form-list">
                                         <label for="GraphicName">Year</label>
-                                        <input class="form-control yearpicker" type="text" value="">
+                                        <input class="form-control yearpicker" type="text" value="@Model.PeriodeInDisplay">
                                     </div>
                                 </form>
                             </div>
-                        </div>*@
+                        </div>
                     }
                     @for (var i = 0; i < Model.HighlightGroupTemplates.Count; i++)
                     {
@@ -131,14 +131,17 @@
                                                             if (currentHighlight != null)
                                                             {
                                                         <p>@Html.LimitString(currentHighlight.Message, 140)</p>
+                                                            @Html.ActionLink("Manage", "Edit",new{Id = currentHighlight.Id},new{@class="manage-highlight"})
                                                             }
                                                             else
                                                             {
+                                                                 @Html.ActionLink("Manage", "Create",new{TypeId = Model.HighlightGroupTemplates[i].HighlightTypes[j].Id, PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay },new{@class="manage-highlight"})
                                                         <p>...</p>
                                                             }
                                                         }
                                                         else
                                                         {
+                                                              @Html.ActionLink("Manage", "Create",new{TypeId =  Model.HighlightGroupTemplates[i].HighlightTypes[j].Id, PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay},new{@class="manage-highlight"})
                                                         <p>...</p>
                                                         }
 
@@ -156,15 +159,18 @@
                                                             if (nextHighlight != null)
                                                             {
                                                             <p>@Html.LimitString(nextHighlight.Message, 140)</p>
+                                                             @Html.ActionLink("Manage", "Edit",new{Id = nextHighlight.Id},new{@class="manage-highlight"})
                                                             }
                                                             else
                                                             {
                                                             <p>...</p>
+                                                             @Html.ActionLink("Manage", "Create",new{TypeId = Model.HighlightGroupTemplates[i].HighlightTypes[j+1].Id,PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay },new{@class="manage-highlight"})
                                                             }
                                                         }
                                                         else
                                                         {
                                                             <p>...</p>
+                                                             @Html.ActionLink("Manage", "Create",new{TypeId = Model.HighlightGroupTemplates[i].HighlightTypes[j+1].Id,PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay },new{@class="manage-highlight"})
                                                         }
 
                                                     </td>

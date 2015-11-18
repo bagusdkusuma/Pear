@@ -87,6 +87,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Highlight
         public string Title { get; set; }
         [Required]
         [DataType(DataType.MultilineText)]
+        [AllowHtml]
         public string Message { get; set; }
         public bool IsActive { get; set; }
     }

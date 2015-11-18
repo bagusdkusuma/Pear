@@ -31,10 +31,24 @@ namespace DSLNG.PEAR.Services
             }
             else
             {
-                var weather = DataContext.Weathers.FirstOrDefault(x => x.Id == request.Id);
-                var resp = weather.MapTo<GetWeatherResponse>();
-                resp.ValueId = weather.Value.Id;
-                return resp;
+                if (request.ByDate)
+                {
+                    var weather = DataContext.Weathers.OrderByDescending(x => x.Date).FirstOrDefault();
+                    if (weather != null)
+                    {
+                        var resp = weather.MapTo<GetWeatherResponse>();
+                        resp.ValueId = weather.Value.Id;
+                        return resp;
+                    }
+                    return new GetWeatherResponse();
+                }
+                else
+                {
+                    var weather = DataContext.Weathers.FirstOrDefault(x => x.Id == request.Id);
+                    var resp = weather.MapTo<GetWeatherResponse>();
+                    resp.ValueId = weather.Value.Id;
+                    return resp;
+                }
             }
         }
 
@@ -45,7 +59,8 @@ namespace DSLNG.PEAR.Services
             {
                 return new GetWeathersResponse { Count = query.Count() };
             }
-            else {
+            else
+            {
                 query = query.Include(x => x.Value);
                 query = query.OrderByDescending(x => x.Id).Skip(request.Skip).Take(request.Take);
                 return new GetWeathersResponse
@@ -82,7 +97,8 @@ namespace DSLNG.PEAR.Services
                     Message = "Weather data has been saved successfully"
                 };
             }
-            catch (InvalidOperationException e) {
+            catch (InvalidOperationException e)
+            {
                 return new SaveWeatherResponse
                 {
                     IsSuccess = false,
