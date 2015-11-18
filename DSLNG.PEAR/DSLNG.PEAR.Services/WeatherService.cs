@@ -33,7 +33,7 @@ namespace DSLNG.PEAR.Services
             {
                 if (request.ByDate)
                 {
-                    var weather = DataContext.Weathers.OrderByDescending(x => x.Date).FirstOrDefault();
+                    var weather = DataContext.Weathers.Include(x => x.Value).OrderByDescending(x => x.Date).FirstOrDefault();
                     if (weather != null)
                     {
                         var resp = weather.MapTo<GetWeatherResponse>();
@@ -44,7 +44,7 @@ namespace DSLNG.PEAR.Services
                 }
                 else
                 {
-                    var weather = DataContext.Weathers.FirstOrDefault(x => x.Id == request.Id);
+                    var weather = DataContext.Weathers.Include(x => x.Value).FirstOrDefault(x => x.Id == request.Id);
                     var resp = weather.MapTo<GetWeatherResponse>();
                     resp.ValueId = weather.Value.Id;
                     return resp;
