@@ -11,6 +11,7 @@ using DSLNG.PEAR.Data.Entities;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using DSLNG.PEAR.Common.Extensions;
+using System.Data.SqlClient;
 
 namespace DSLNG.PEAR.Services
 {
@@ -44,11 +45,23 @@ namespace DSLNG.PEAR.Services
 
         public GetMethodsResponse GetMethods(GetMethodsRequest requests)
         {
-            var methods = DataContext.Methods.ToList();
-            var response = new GetMethodsResponse();
-            response.Methods = methods.MapTo<GetMethodsResponse.Method>();
+            int totalRecord;
+            var data = SortData(requests.Search, requests.SortingDictionary, out totalRecord);
+            if (requests.Take != -1)
+            {
+                data = data.Skip(requests.Skip).Take(requests.Take);
+            }
 
-            return response;
+            return new GetMethodsResponse
+            {
+                TotalRecords = totalRecord,
+                Methods = data.ToList().MapTo<GetMethodsResponse.Method>()
+            };
+            //var methods = DataContext.Methods.ToList();
+            //var response = new GetMethodsResponse();
+            //response.Methods = methods.MapTo<GetMethodsResponse.Method>();
+
+            //return response;
         }
 
         public CreateMethodResponse Create(CreateMethodRequest request)
@@ -108,6 +121,37 @@ namespace DSLNG.PEAR.Services
             }
 
             return response;
+        }
+
+
+
+        public IEnumerable<Method> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        {
+            var data = DataContext.Methods.AsQueryable();
+            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            {
+                data = data.Where(x => x.Name.Contains(search));
+            }
+
+            foreach (var sortOrder in sortingDictionary)
+            {
+                switch (sortOrder.Key)
+                {
+                    case "Name":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Name)
+                            : data.OrderByDescending(x => x.Name);
+                        break;
+                    case "IsActive":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.IsActive)
+                            : data.OrderByDescending(x => x.IsActive);
+                        break;
+                }
+            }
+
+            TotalRecords = data.Count();
+            return data;
         }
     }
 }

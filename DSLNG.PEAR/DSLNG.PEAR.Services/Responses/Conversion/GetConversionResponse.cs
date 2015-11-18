@@ -21,7 +21,7 @@ namespace DSLNG.PEAR.Services.Responses.Conversion
     public class GetConversionsResponse : BaseResponse
     {
         public IList<Conversion> Conversions { get; set; }
-
+        public int TotalRecords { get; set; }
         public class Conversion
         {
             public int Id { get; set; }

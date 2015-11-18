@@ -6,6 +6,7 @@ using DSLNG.PEAR.Services.Requests.ConstantUsage;
 using DSLNG.PEAR.Web.ViewModels.ConstantUsage;
 using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Web.Grid;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -127,6 +128,27 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 return View();
             }
+        }
+
+        public ActionResult Grid(GridParams gridParams)
+        {
+            var constantUsage = _constantUsageService.GetConstantUsages(new GetConstantUsagesRequest
+                {
+                    Skip = gridParams.DisplayStart,
+                    Take = gridParams.DisplayLength,
+                    Search = gridParams.Search,
+                    SortingDictionary = gridParams.SortingDictionary
+                });
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = constantUsage.TotalRecords,
+                iTotalRecords = constantUsage.ConstantUsages.Count,
+                aaData = constantUsage.ConstantUsages
+
+            };
+
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
     }
 }

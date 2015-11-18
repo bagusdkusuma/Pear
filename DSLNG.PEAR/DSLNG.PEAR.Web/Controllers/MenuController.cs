@@ -17,6 +17,7 @@ using DSLNG.PEAR.Services.Responses.Menu;
 using DSLNG.PEAR.Web.DependencyResolution;
 using DSLNG.PEAR.Web.ViewModels;
 using Newtonsoft.Json;
+using System.Data.SqlClient;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -117,12 +118,15 @@ namespace DSLNG.PEAR.Web.Controllers
         }
 
         public CreateMenuViewModel CreateViewModel(CreateMenuViewModel viewModel){
-            viewModel.RoleGroupOptions = _roleService.GetRoleGroups(
-                new Services.Requests.RoleGroup.GetRoleGroupsRequest { Skip = 0, Take = 0 }).RoleGroups.Select(x => new SelectListItem
-                {
-                    Text = x.Name,
-                    Value = x.Id.ToString()
-                }).ToList();
+            viewModel.RoleGroupOptions = _roleService.GetRoleGroups(new Services.Requests.RoleGroup.GetRoleGroupsRequest
+            {
+                Take = -1,
+                SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+            }).RoleGroups.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }).ToList();
 
             List<SelectListItem> menuList = _menuService.GetMenus(
                 new Services.Requests.Menu.GetMenusRequest { Skip = 0, Take = 0 }).Menus.Select(x => new SelectListItem
@@ -160,8 +164,10 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public UpdateMenuViewModel UpdateViewModel(UpdateMenuViewModel viewModel)
         {
-            viewModel.RoleGroupOptions = _roleService.GetRoleGroups(
-                new Services.Requests.RoleGroup.GetRoleGroupsRequest { Skip = 0, Take = 0 }).RoleGroups.Select(x => new SelectListItem
+            viewModel.RoleGroupOptions = _roleService.GetRoleGroups(new Services.Requests.RoleGroup.GetRoleGroupsRequest {
+                Take = -1,
+                SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+            }).RoleGroups.Select(x => new SelectListItem
                 {
                     Text = x.Name,
                     Value = x.Id.ToString()

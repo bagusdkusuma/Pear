@@ -11,7 +11,8 @@ namespace DSLNG.PEAR.Services.Requests.Method
         public int Id { get; set; }
     }
 
-    public class GetMethodsRequest {
+    public class GetMethodsRequest : GridBaseRequest
+    {
         public int Take { get; set; }
         public int Skip { get; set; }
     }

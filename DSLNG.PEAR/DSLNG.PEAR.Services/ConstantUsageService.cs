@@ -8,6 +8,8 @@ using System.Data.Entity;
 using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Data.Entities;
 using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace DSLNG.PEAR.Services
 {
@@ -17,29 +19,41 @@ namespace DSLNG.PEAR.Services
 
         public GetConstantUsagesResponse GetConstantUsages(GetConstantUsagesRequest request)
         {
-            var query = DataContext.ConstantUsages.Include(x => x.Constants);
-            if (!string.IsNullOrEmpty(request.Term))
+            int totalRecords;
+            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            if (request.Take != -1)
             {
-                query = query.Where(x => x.Role.ToLower().Contains(request.Term.ToLower()) || x.Group.ToLower().Contains(request.Term.ToLower()));
+                data = data.Skip(request.Skip).Take(request.Take);
             }
-            query.OrderByDescending(x => x.Id);
-            if (request.Skip != 0) {
-                query = query.Skip(request.Skip);
-            }
-            if (request.Take != 0) {
-                query = query.Take(request.Take);
-            }
-            if (request.OnlyCount)
+
+            return new GetConstantUsagesResponse
             {
-                return new GetConstantUsagesResponse { Count = query.Count() };
-            }
-            else
-            {
-                return new GetConstantUsagesResponse
-                {
-                    ConstantUsages = query.ToList().MapTo<GetConstantUsagesResponse.ConstantUsageResponse>()
-                };
-            }
+                TotalRecords = totalRecords,
+                ConstantUsages = data.ToList().MapTo<GetConstantUsagesResponse.ConstantUsageResponse>()
+            };
+            //var query = DataContext.ConstantUsages.Include(x => x.Constants);
+            //if (!string.IsNullOrEmpty(request.Term))
+            //{
+            //    query = query.Where(x => x.Role.ToLower().Contains(request.Term.ToLower()) || x.Group.ToLower().Contains(request.Term.ToLower()));
+            //}
+            //query.OrderByDescending(x => x.Id);
+            //if (request.Skip != 0) {
+            //    query = query.Skip(request.Skip);
+            //}
+            //if (request.Take != 0) {
+            //    query = query.Take(request.Take);
+            //}
+            //if (request.OnlyCount)
+            //{
+            //    return new GetConstantUsagesResponse { Count = query.Count() };
+            //}
+            //else
+            //{
+            //    return new GetConstantUsagesResponse
+            //    {
+            //        ConstantUsages = query.ToList().MapTo<GetConstantUsagesResponse.ConstantUsageResponse>()
+            //    };
+            //}
         }
 
         public GetConstantUsageResponse GetConstantUsage(GetConstantUsageRequest request)
@@ -95,6 +109,37 @@ namespace DSLNG.PEAR.Services
                     Message = e.Message
                 };
             }
+        }
+
+
+
+        public IEnumerable<ConstantUsage> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        {
+            var data = DataContext.ConstantUsages.Include(x => x.Constants).AsQueryable();
+            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            {
+                data = data.Where(x => x.Role.Contains(search) || x.Group.Contains(search));
+            }
+
+            foreach (var sortOrder in sortingDictionary)
+            {
+                switch (sortOrder.Key)
+                {
+                    case "Role":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Role)
+                            : data.OrderByDescending(x => x.Role);
+                        break;
+                    case "Group":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Group)
+                            : data.OrderByDescending(x => x.Group);
+                        break;
+                }
+            }
+
+            TotalRecords = data.Count();
+            return data;
         }
     }
 }

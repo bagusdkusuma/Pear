@@ -234,10 +234,14 @@ namespace DSLNG.PEAR.Services
         public GetMenusResponse GetMenusForGrid(GetMenusRequest request)
         {
             int totalRecords;
-            var menus = SortData(request.Search, request.SortingDictionary, out totalRecords).Skip(request.Skip).Take(request.Take).ToList();
+            var menus = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            if (request.Take != -1)
+            {
+                menus = menus.Skip(request.Skip).Take(request.Take);
+            }
 
             var response = new GetMenusResponse();
-            response.Menus = menus.MapTo<GetMenusResponse.Menu>();
+            response.Menus = menus.ToList().MapTo<GetMenusResponse.Menu>();
             response.TotalRecords = totalRecords;
 
             return response;
@@ -479,23 +483,23 @@ namespace DSLNG.PEAR.Services
                 {
                     case "Module":
                         data = sortOrder.Value == SortOrder.Ascending
-                                   ? data.OrderBy(x => x.Module)
-                                   : data.OrderByDescending(x => x.Module);
+                                   ? data.OrderBy(x => x.Module).ThenBy(x => x.Order)
+                                   : data.OrderByDescending(x => x.Module).ThenBy(x => x.Order);
                         break;
                     case "Name":
                         data = sortOrder.Value == SortOrder.Ascending
-                                   ? data.OrderBy(x => x.Name)
-                                   : data.OrderByDescending(x => x.Name);
+                                   ? data.OrderBy(x => x.Name).ThenBy(x => x.Order)
+                                   : data.OrderByDescending(x => x.Name).ThenBy(x => x.Order);
                         break;
                     case "IsActive":
                         data = sortOrder.Value == SortOrder.Ascending
-                                   ? data.OrderBy(x => x.IsActive)
-                                   : data.OrderByDescending(x => x.IsActive);
+                                   ? data.OrderBy(x => x.IsActive).ThenBy(x => x.Order)
+                                   : data.OrderByDescending(x => x.IsActive).ThenBy(x => x.Order);
                         break;
                     case "IsRoot":
                         data = sortOrder.Value == SortOrder.Ascending
-                                   ? data.OrderBy(x => x.IsRoot)
-                                   : data.OrderByDescending(x => x.IsRoot);
+                                   ? data.OrderBy(x => x.IsRoot).ThenBy(x => x.Order)
+                                   : data.OrderByDescending(x => x.IsRoot).ThenBy(x => x.Order);
                         break;
                     default:
                         data = sortOrder.Value == SortOrder.Ascending

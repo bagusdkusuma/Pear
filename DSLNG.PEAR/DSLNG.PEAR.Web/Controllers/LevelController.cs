@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
 using DevExpress.Web.Mvc;
+using DSLNG.PEAR.Web.Grid;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -123,6 +124,25 @@ namespace DSLNG.PEAR.Web.Controllers
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Grid(GridParams gridParams)
+        {
+            var level = _levelService.GetLevels(new GetLevelsRequest
+                {
+                    Skip = gridParams.DisplayStart,
+                    Take = gridParams.DisplayLength,
+                    Search = gridParams.Search,
+                    SortingDictionary = gridParams.SortingDictionary
+                });
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = level.TotalRecords,
+                iTotalRecords = level.Levels.Count,
+                aaData = level.Levels
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
 	}
