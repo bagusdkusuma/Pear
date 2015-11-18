@@ -27,81 +27,71 @@ namespace DSLNG.PEAR.Services
 
         public GetVesselSchedulesResponse GetVesselSchedules(GetVesselSchedulesRequest request)
         {
-            int totalRecords;
-            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
-            if (request.Take != -1)
+            if (request.OnlyCount)
             {
-                data = data.Skip(request.Skip).Take(request.Take);
+                return new GetVesselSchedulesResponse { Count = DataContext.VesselSchedules.Count() };
             }
-
-            return new GetVesselSchedulesResponse
+            else if (request.allActiveList)
             {
-                TotalRecords = totalRecords,
-                VesselSchedules = data.ToList().MapTo<GetVesselSchedulesResponse.VesselScheduleResponse>()
-            };
-            //if (request.OnlyCount)
-            //{
-            //    return new GetVesselSchedulesResponse { Count = DataContext.VesselSchedules.Count() };
-            //}
-            //else if (request.allActiveList) {
-            //    var query = DataContext.VesselSchedules
-            //        .Include(x => x.Buyer)
-            //        .Include(x => x.Vessel)
-            //        .Include(x => x.Vessel.Measurement)
-            //        .Select(x => new { 
-            //            id = x.Id,
-            //            NextLoadingSchedules = x.NextLoadingSchedules.OrderByDescending(y => y.CreatedAt).Take(1).ToList(),
-            //            Buyer = x.Buyer,
-            //            Vessel = x.Vessel,
-            //            ETA = x.ETA,
-            //            ETD = x.ETD,
-            //            Location = x.Location,
-            //            SalesType = x.SalesType,
-            //            Type = x.Type,
-            //            VesselType = x.Vessel.Type,
-            //            IsActive = x.IsActive,
-            //            Cargo = x.Cargo,
-            //            Measurement = x.Vessel.Measurement.Name,
-            //            Capacity = x.Vessel.Capacity
-            //        });
-            //    return new GetVesselSchedulesResponse
-            //    {
-            //        VesselSchedules = query.Where(x => x.IsActive == true).Select(
-            //            x => new GetVesselSchedulesResponse.VesselScheduleResponse
-            //            {
-            //                Id = x.id,
-            //                Remark = x.NextLoadingSchedules.Count == 1? x.NextLoadingSchedules.FirstOrDefault().Remark : null,
-            //                RemarkDate = x.NextLoadingSchedules.Count == 1 ? x.NextLoadingSchedules.FirstOrDefault().CreatedAt : (DateTime?)null,
-            //                Buyer = x.Buyer.Name,
-            //                Vessel = x.Vessel.Name,
-            //                ETA = x.ETA,
-            //                ETD = x.ETD,
-            //                Location = x.Location,
-            //                SalesType = x.SalesType,
-            //                Type = x.Type,
-            //                IsActive = x.IsActive,
-            //                Cargo = x.Cargo,
-            //                VesselType = x.VesselType,
-            //                Measurement = x.Measurement,
-            //                Capacity = x.Capacity
-            //            }
-            //        ).ToList()
-            //    };
-            //}
-            //else
-            //{
-            //    var query = DataContext.VesselSchedules.Include(x => x.Buyer)
-            //        .Include(x => x.Vessel);
-            //    if (!string.IsNullOrEmpty(request.Term))
-            //    {
-            //        query = query.Where(x => x.Vessel.Name.Contains(request.Term));
-            //    }
-            //    query = query.OrderByDescending(x => x.Id).Skip(request.Skip).Take(request.Take);
-            //    return new GetVesselSchedulesResponse
-            //    {
-            //        VesselSchedules = query.ToList().MapTo<GetVesselSchedulesResponse.VesselScheduleResponse>()
-            //    };
-            //}
+                var query = DataContext.VesselSchedules
+                    .Include(x => x.Buyer)
+                    .Include(x => x.Vessel)
+                    .Include(x => x.Vessel.Measurement)
+                    .Select(x => new
+                    {
+                        id = x.Id,
+                        NextLoadingSchedules = x.NextLoadingSchedules.OrderByDescending(y => y.CreatedAt).Take(1).ToList(),
+                        Buyer = x.Buyer,
+                        Vessel = x.Vessel,
+                        ETA = x.ETA,
+                        ETD = x.ETD,
+                        Location = x.Location,
+                        SalesType = x.SalesType,
+                        Type = x.Type,
+                        VesselType = x.Vessel.Type,
+                        IsActive = x.IsActive,
+                        Cargo = x.Cargo,
+                        Measurement = x.Vessel.Measurement.Name,
+                        Capacity = x.Vessel.Capacity
+                    });
+                return new GetVesselSchedulesResponse
+                {
+                    VesselSchedules = query.Where(x => x.IsActive == true).Select(
+                        x => new GetVesselSchedulesResponse.VesselScheduleResponse
+                        {
+                            Id = x.id,
+                            Remark = x.NextLoadingSchedules.Count == 1 ? x.NextLoadingSchedules.FirstOrDefault().Remark : null,
+                            RemarkDate = x.NextLoadingSchedules.Count == 1 ? x.NextLoadingSchedules.FirstOrDefault().CreatedAt : (DateTime?)null,
+                            Buyer = x.Buyer.Name,
+                            Vessel = x.Vessel.Name,
+                            ETA = x.ETA,
+                            ETD = x.ETD,
+                            Location = x.Location,
+                            SalesType = x.SalesType,
+                            Type = x.Type,
+                            IsActive = x.IsActive,
+                            Cargo = x.Cargo,
+                            VesselType = x.VesselType,
+                            Measurement = x.Measurement,
+                            Capacity = x.Capacity
+                        }
+                    ).ToList()
+                };
+            }
+            else
+            {
+                var query = DataContext.VesselSchedules.Include(x => x.Buyer)
+                    .Include(x => x.Vessel);
+                if (!string.IsNullOrEmpty(request.Term))
+                {
+                    query = query.Where(x => x.Vessel.Name.Contains(request.Term));
+                }
+                query = query.OrderByDescending(x => x.Id).Skip(request.Skip).Take(request.Take);
+                return new GetVesselSchedulesResponse
+                {
+                    VesselSchedules = query.ToList().MapTo<GetVesselSchedulesResponse.VesselScheduleResponse>()
+                };
+            }
         }
 
         public SaveVesselScheduleResponse SaveVesselSchedule(SaveVesselScheduleRequest request)
@@ -264,6 +254,23 @@ namespace DSLNG.PEAR.Services
 
             TotalRecords = data.Count();
             return data;
+        }
+
+
+        public GetVesselSchedulesResponse GetVesselSchedulesForGrid(GetVesselSchedulesRequest request)
+        {
+            int totalRecords;
+            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            if (request.Take != -1)
+            {
+                data = data.Skip(request.Skip).Take(request.Take);
+            }
+
+            return new GetVesselSchedulesResponse
+            {
+                TotalRecords = totalRecords,
+                VesselSchedules = data.ToList().MapTo<GetVesselSchedulesResponse.VesselScheduleResponse>()
+            };
         }
     }
 }

@@ -15,5 +15,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         DeleteSelectResponse Delete(int id);
         GetSelectResponse GetSelect(GetSelectRequest request);
         GetSelectsResponse GetSelects(GetSelectsRequest request);
+        GetSelectsResponse GetSelectsForGrid(GetSelectsRequest request);
     }
 }

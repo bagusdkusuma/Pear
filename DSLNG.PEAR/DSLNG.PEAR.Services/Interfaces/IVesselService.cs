@@ -9,5 +9,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetVesselsResponse GetVessels(GetVesselsRequest request);
         SaveVesselResponse SaveVessel(SaveVesselRequest request);
         DeleteVesselResponse Delete(DeleteVesselRequest request);
+        GetVesselsResponse GetVesselsForGrid(GetVesselsRequest request);
     }
 }

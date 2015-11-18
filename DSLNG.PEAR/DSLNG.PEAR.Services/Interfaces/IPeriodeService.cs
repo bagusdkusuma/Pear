@@ -15,5 +15,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         CreatePeriodeResponse Create(CreatePeriodeRequest request);
         UpdatePeriodeResponse Update(UpdatePeriodeRequest request);
         DeletePeriodeResponse Delete(int id);
+        GetPeriodesResponse GetPeriodesForGrid(GetPeriodesRequest request);
     }
 }

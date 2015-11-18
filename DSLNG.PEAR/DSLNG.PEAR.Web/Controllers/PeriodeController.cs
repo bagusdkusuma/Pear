@@ -10,6 +10,7 @@ using DSLNG.PEAR.Services.Responses.Periode;
 using DevExpress.Web.Mvc;
 using DSLNG.PEAR.Web.ViewModels.Periode;
 using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Web.Grid;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -126,6 +127,26 @@ namespace DSLNG.PEAR.Web.Controllers
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Grid(GridParams gridParams)
+        {
+            var periode = _periodeService.GetPeriodesForGrid(new GetPeriodesRequest
+                {
+                    Skip = gridParams.DisplayStart,
+                    Take = gridParams.DisplayLength,
+                    Search = gridParams.Search,
+                    SortingDictionary = gridParams.SortingDictionary
+                });
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = periode.TotalRecords,
+                iTotalRecords = periode.Periodes.Count,
+                aaData = periode.Periodes
+
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
     }
 }

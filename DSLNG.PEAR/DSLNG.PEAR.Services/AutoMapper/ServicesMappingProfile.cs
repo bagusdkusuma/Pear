@@ -365,6 +365,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<SaveCalculatorConstantRequest, CalculatorConstant>();
             Mapper.CreateMap<CalculatorConstant, GetCalculatorConstantsResponse.CalculatorConstantResponse>();
             Mapper.CreateMap<CalculatorConstant, GetCalculatorConstantResponse>();
+            Mapper.CreateMap<CalculatorConstant, GetCalculatorConstantsForGridRespone.CalculatorConstantsForGrid>();
 
             Mapper.CreateMap<SaveConstantUsageRequest, ConstantUsage>();
             Mapper.CreateMap<ConstantUsage, GetConstantUsagesResponse.ConstantUsageResponse>()

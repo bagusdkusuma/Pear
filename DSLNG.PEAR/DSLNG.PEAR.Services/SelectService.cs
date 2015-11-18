@@ -189,34 +189,22 @@ namespace DSLNG.PEAR.Services
 
         public GetSelectsResponse GetSelects(GetSelectsRequest request)
         {
-            int totalRecords;
-            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
-            if (request.Take != -1)
+            List<Select> selects;
+            if (request.Take != 0)
             {
-                data = data.Skip(request.Skip).Take(request.Take);
+                selects = DataContext.Selects
+                    .Include(x => x.Options)
+                    .OrderBy(x => x.Id).Skip(request.Skip).Take(request.Take).ToList();
             }
-
-            return new GetSelectsResponse
+            else
             {
-                TotalRecords = totalRecords,
-                Selects = data.ToList().MapTo<GetSelectsResponse.Select>()
-            };
-            //List<Select> selects;
-            //if (request.Take != 0)
-            //{
-            //    selects = DataContext.Selects
-            //        .Include(x => x.Options)
-            //        .OrderBy(x => x.Id).Skip(request.Skip).Take(request.Take).ToList();
-            //}
-            //else
-            //{
-            //    selects = DataContext.Selects
-            //        .Include(x => x.Options)
-            //        .OrderByDescending(x => x.Id).ToList();
-            //}
-            //var response = new GetSelectsResponse();
-            //response.Selects = selects.MapTo<GetSelectsResponse.Select>();
-            //return response;
+                selects = DataContext.Selects
+                    .Include(x => x.Options)
+                    .OrderByDescending(x => x.Id).ToList();
+            }
+            var response = new GetSelectsResponse();
+            response.Selects = selects.MapTo<GetSelectsResponse.Select>();
+            return response;
         }
 
 
@@ -248,6 +236,23 @@ namespace DSLNG.PEAR.Services
 
             TotalRecords = data.Count();
             return data;
+        }
+
+
+        public GetSelectsResponse GetSelectsForGrid(GetSelectsRequest request)
+        {
+            int totalRecords;
+            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            if (request.Take != -1)
+            {
+                data = data.Skip(request.Skip).Take(request.Take);
+            }
+
+            return new GetSelectsResponse
+            {
+                TotalRecords = totalRecords,
+                Selects = data.ToList().MapTo<GetSelectsResponse.Select>()
+            };
         }
     }
 }

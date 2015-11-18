@@ -27,35 +27,24 @@ namespace DSLNG.PEAR.Services
 
         public GetVesselsResponse GetVessels(GetVesselsRequest request)
         {
-            int totalRecords;
-            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
-            if (request.Take != -1)
+            if (request.OnlyCount)
             {
-                data = data.Skip(request.Skip).Take(request.Take);
+                return new GetVesselsResponse { Count = DataContext.Vessels.Count() };
             }
-
-            return new GetVesselsResponse
+            else
             {
-                TotalRecords = totalRecords,
-                Vessels = data.ToList().MapTo<GetVesselsResponse.VesselResponse>()
-            };
-            //if (request.OnlyCount)
-            //{
-            //    return new GetVesselsResponse { Count = DataContext.Vessels.Count() };
-            //}
-            //else
-            //{
-            //    var query = DataContext.Vessels
-            //        .Include(x => x.Measurement);
-            //    if (!string.IsNullOrEmpty(request.Term)) {
-            //        query = query.Where(x => x.Name.Contains(request.Term));
-            //    }
-            //    query = query.OrderByDescending(x => x.Id).Skip(request.Skip).Take(request.Take);
-            //    return new GetVesselsResponse
-            //    {
-            //        Vessels = query.ToList().MapTo<GetVesselsResponse.VesselResponse>()
-            //    };
-            //}
+                var query = DataContext.Vessels
+                    .Include(x => x.Measurement);
+                if (!string.IsNullOrEmpty(request.Term))
+                {
+                    query = query.Where(x => x.Name.Contains(request.Term));
+                }
+                query = query.OrderByDescending(x => x.Id).Skip(request.Skip).Take(request.Take);
+                return new GetVesselsResponse
+                {
+                    Vessels = query.ToList().MapTo<GetVesselsResponse.VesselResponse>()
+                };
+            }
         }
 
         public SaveVesselResponse SaveVessel(SaveVesselRequest request)
@@ -175,6 +164,23 @@ namespace DSLNG.PEAR.Services
 
             TotalRecords = data.Count();
             return data;
+        }
+
+
+        public GetVesselsResponse GetVesselsForGrid(GetVesselsRequest request)
+        {
+            int totalRecords;
+            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            if (request.Take != -1)
+            {
+                data = data.Skip(request.Skip).Take(request.Take);
+            }
+
+            return new GetVesselsResponse
+            {
+                TotalRecords = totalRecords,
+                Vessels = data.ToList().MapTo<GetVesselsResponse.VesselResponse>()
+            };
         }
     }
 }

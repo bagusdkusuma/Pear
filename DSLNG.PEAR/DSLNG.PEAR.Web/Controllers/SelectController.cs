@@ -222,7 +222,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Grid(GridParams gridParams)
         {
-            var select = _selectService.GetSelects(new GetSelectsRequest
+            var select = _selectService.GetSelectsForGrid(new GetSelectsRequest
                 {
                     Skip = gridParams.DisplayStart,
                     Take = gridParams.DisplayLength,

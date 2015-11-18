@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
 using System.Data.SqlClient;
+using DSLNG.PEAR.Web.Grid;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -79,10 +80,7 @@ namespace DSLNG.PEAR.Web.Controllers
         }
 
         public ActionResult VesselScheduleList(string term) {
-            var vesselSchedules = _vesselScheduleService.GetVesselSchedules(new GetVesselSchedulesRequest {
-                Take = -1, 
-                Term = term,
-                SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending} }
+            var vesselSchedules = _vesselScheduleService.GetVesselSchedules(new GetVesselSchedulesRequest {Skip = 0, Take = 20, Term = term,
             }).VesselSchedules;
             return Json(new { results = vesselSchedules }, JsonRequestBehavior.AllowGet);
         }
@@ -147,6 +145,27 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult InVesselSchedule(int id) {
             var nlsList = _nlsService.GetNLSList(new GetNLSListRequest { VesselScheduleId = id });
             return PartialView("_RemarkList", nlsList.NLSList.MapTo<NLSViewModel>());
+        }
+
+
+        public ActionResult Grid(GridParams gridParams)
+        {
+            var NLS = _nlsService.GetNLSListForGrid(new GetNLSListRequest
+                {
+                    Skip = gridParams.DisplayStart,
+                    Take = gridParams.DisplayLength,
+                    Search = gridParams.Search,
+                    SortingDictionary = gridParams.SortingDictionary
+                });
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = NLS.TotalRecords,
+                iTotalRecords = NLS.NLSList.Count,
+                aaData = NLS.NLSList
+            };
+
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -136,7 +136,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Grid(GridParams gridParams)
         {
-            var constantUsage = _constantUsageService.GetConstantUsages(new GetConstantUsagesRequest
+            var constantUsage = _constantUsageService.GetConstantUsagesForGrid(new GetConstantUsagesRequest
                 {
                     Skip = gridParams.DisplayStart,
                     Take = gridParams.DisplayLength,

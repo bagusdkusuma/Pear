@@ -128,7 +128,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Grid(GridParams gridParams)
         {
-            var calculator = _calculatorConstantService.GetCalculatorConstants(new GetCalculatorConstantsRequest
+            var calculator = _calculatorConstantService.GetCalculatorConstantsForGrid(new GetCalculatorConstantForGridRequest
                 {
                     Skip = gridParams.DisplayStart,
                     Take = gridParams.DisplayLength,
@@ -139,8 +139,8 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 sEcho = gridParams.Echo + 1,
                 iTotalDisplayRecords = calculator.TotalRecords,
-                iTotalRecords = calculator.CalculatorConstants.Count,
-                aaData = calculator.CalculatorConstants
+                iTotalRecords = calculator.CalculatorConstantsForGrids.Count,
+                aaData = calculator.CalculatorConstantsForGrids
 
             };
 

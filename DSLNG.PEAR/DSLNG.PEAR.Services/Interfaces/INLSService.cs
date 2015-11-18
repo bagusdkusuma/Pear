@@ -10,5 +10,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetNLSListResponse GetNLSList(GetNLSListRequest request);
         SaveNLSResponse SaveNLS(SaveNLSRequest request);
         DeleteNLSResponse Delete(DeleteNLSRequest request);
+        GetNLSListResponse GetNLSListForGrid(GetNLSListRequest request);
     }
 }

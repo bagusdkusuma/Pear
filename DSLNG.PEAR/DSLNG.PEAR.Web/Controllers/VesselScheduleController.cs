@@ -95,7 +95,7 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             var vessels = _vesselService.GetVessels(new GetVesselsRequest {
                 Skip = 0,
-                Take = 0, 
+                Take = 20, 
                 Term = term,
             }).Vessels;
             return Json(new { results = vessels }, JsonRequestBehavior.AllowGet);
@@ -104,9 +104,9 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult BuyerList(string term)
         {
             var buyers = _buyerService.GetBuyers(new GetBuyersRequest {
-                Take = -1, 
+                Skip = 0,
+                Take = 20, 
                 Term = term,
-                SortingDictionary = new Dictionary<string, SortOrder> { {"Name", SortOrder.Ascending}}
             }).Buyers;
             return Json(new { results = buyers }, JsonRequestBehavior.AllowGet);
         }
@@ -166,7 +166,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Grid(GridParams gridParams)
         {
-            var vessel = _vesselScheduleService.GetVesselSchedules(new GetVesselSchedulesRequest
+            var vessel = _vesselScheduleService.GetVesselSchedulesForGrid(new GetVesselSchedulesRequest
                 {
                     Skip = gridParams.DisplayStart,
                     Take = gridParams.DisplayLength,

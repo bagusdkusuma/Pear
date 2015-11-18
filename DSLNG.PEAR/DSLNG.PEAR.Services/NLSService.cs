@@ -8,6 +8,8 @@ using System.Data.Entity;
 using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Data.Entities;
 using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace DSLNG.PEAR.Services
 {
@@ -117,5 +119,48 @@ namespace DSLNG.PEAR.Services
                 };
             }
         }
+
+
+        public IEnumerable<NextLoadingSchedule> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        {
+            var data = DataContext.NextLoadingSchedules.Include(x => x.VesselSchedule).Include(x => x.VesselSchedule.Vessel).AsQueryable();
+            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            {
+                data = data.Where(x => x.VesselSchedule.Name.Contains(search) || x.VesselSchedule.Vessel.Name.Contains(search));
+            }
+
+            foreach (var sortOrder in sortingDictionary)
+            {
+                switch (sortOrder.Key)
+                {
+                    case "Vessel":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.VesselSchedule.Vessel.Name)
+                            : data.OrderByDescending(x => x.VesselSchedule.Vessel.Name);
+                        break;
+                }
+            }
+
+            TotalRecords = data.Count();
+            return data;
+        }
+
+        public GetNLSListResponse GetNLSListForGrid(GetNLSListRequest request)
+        {
+            int totalRecords;
+            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            if (request.Take != -1)
+            {
+                data = data.Skip(request.Skip).Take(request.Take);
+            }
+
+            return new GetNLSListResponse
+            {
+                TotalRecords = totalRecords,
+                NLSList = data.ToList().MapTo<GetNLSListResponse.NLSResponse>()
+            };
+        }
+
+
     }
 }

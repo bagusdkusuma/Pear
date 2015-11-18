@@ -142,7 +142,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Grid(GridParams gridParams)
         {
-            var vessel = _vesselService.GetVessels(new GetVesselsRequest
+            var vessel = _vesselService.GetVesselsForGrid(new GetVesselsRequest
                 {
                     Skip = gridParams.DisplayStart,
                     Take = gridParams.DisplayLength,
