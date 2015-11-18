@@ -11,7 +11,7 @@ namespace DSLNG.PEAR.Services.Requests.Type
         public int Id { get; set; }
     }
 
-    public class GetTypesRequest
+    public class GetTypesRequest : GridBaseRequest
     {
         public int Skip { get; set; }
         public int Take { get; set; }

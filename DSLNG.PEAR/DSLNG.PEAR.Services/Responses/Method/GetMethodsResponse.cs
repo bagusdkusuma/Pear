@@ -10,7 +10,7 @@ namespace DSLNG.PEAR.Services.Responses.Method
     public class GetMethodsResponse : BaseResponse
     {
         public IList<Method> Methods { get; set; }
-
+        public int TotalRecords { get; set; }
         public class Method
         {
             public int Id { get; set; }

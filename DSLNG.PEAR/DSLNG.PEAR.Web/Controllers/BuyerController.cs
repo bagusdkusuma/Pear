@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Web.Grid;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -44,6 +45,7 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.KeyFieldName = "Id";
             viewModel.Columns.Add("Name");
             viewModel.Columns.Add("Address");
+            viewModel.Columns.Add("IsActive");
             viewModel.Pager.PageSize = 10;
             return viewModel;
         }
@@ -123,6 +125,26 @@ namespace DSLNG.PEAR.Web.Controllers
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
                 return RedirectToAction("Index");
+        }
+
+
+        public ActionResult Grid(GridParams gridParams)
+        {
+            var buyer = _buyerService.GetBuyers(new GetBuyersRequest
+                {
+                    Skip = gridParams.DisplayStart,
+                    Take = gridParams.DisplayLength,
+                    Search = gridParams.Search,
+                    SortingDictionary = gridParams.SortingDictionary
+                });
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = buyer.TotalRecords,
+                iTotalRecords = buyer.Buyers.Count,
+                aaData = buyer.Buyers
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
     }
 }

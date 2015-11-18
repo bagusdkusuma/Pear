@@ -14,6 +14,7 @@
         settings.Columns.Add("Id").Visible = false;
         settings.Columns.Add("Name","Name");
         settings.Columns.Add("Address", "Address");
+        settings.Columns.Add("IsActive", MVCxGridViewColumnType.CheckBox);
         settings.Columns.Add(column =>
         {
             column.Caption = "Edit";

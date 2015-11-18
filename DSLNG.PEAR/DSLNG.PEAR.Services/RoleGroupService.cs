@@ -9,6 +9,7 @@ using System.Linq;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Responses.RoleGroup;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace DSLNG.PEAR.Services
 {
@@ -19,18 +20,32 @@ namespace DSLNG.PEAR.Services
         }
 
         public GetRoleGroupsResponse GetRoleGroups (GetRoleGroupsRequest request){
-            var roleGroups = new List<RoleGroup>();
-            if (request.Take != 0)
+
+            int totalRecords;
+            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            if (request.Take != -1)
             {
-                roleGroups = DataContext.RoleGroups.Include(x => x.Level).OrderBy(x => x.Id).Skip(request.Skip).Take(request.Take).ToList();
+                data = data.Skip(request.Skip).Take(request.Take);
             }
-            else
+
+            return new GetRoleGroupsResponse
             {
-                roleGroups = DataContext.RoleGroups.Include(x => x.Level).ToList();
-            }
-            var response = new GetRoleGroupsResponse();
-            response.RoleGroups = roleGroups.MapTo<GetRoleGroupsResponse.RoleGroup>();
-            return response;
+                TotalRecords = totalRecords,
+                RoleGroups = data.ToList().MapTo<GetRoleGroupsResponse.RoleGroup>()
+            };
+
+            //var roleGroups = new List<RoleGroup>();
+            //if (request.Take != 0)
+            //{
+            //    roleGroups = DataContext.RoleGroups.Include(x => x.Level).OrderBy(x => x.Id).Skip(request.Skip).Take(request.Take).ToList();
+            //}
+            //else
+            //{
+            //    roleGroups = DataContext.RoleGroups.Include(x => x.Level).ToList();
+            //}
+            //var response = new GetRoleGroupsResponse();
+            //response.RoleGroups = roleGroups.MapTo<GetRoleGroupsResponse.RoleGroup>();
+            //return response;
         }
 
         public GetRoleGroupResponse GetRoleGroup (GetRoleGroupRequest request){
@@ -112,5 +127,40 @@ namespace DSLNG.PEAR.Services
 
             return response;
         }
+
+        public IEnumerable<RoleGroup> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        {
+            var data = DataContext.RoleGroups.Include(x => x.Level).AsQueryable();
+            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            {
+                data = data.Where(x => x.Name.Contains(search) || x.Level.Name.Contains(search));
+            }
+
+            foreach (var sortOrder in sortingDictionary)
+            {
+                switch (sortOrder.Key)
+                {
+                    case "Name":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Name)
+                            : data.OrderByDescending(x => x.Name);
+                        break;
+                    case "Level":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Level.Name)
+                            : data.OrderByDescending(x => x.Level.Name);
+                        break;
+                    case "IsActive":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.IsActive)
+                            : data.OrderByDescending(x => x.IsActive);
+                        break;
+                }
+            }
+
+            TotalRecords = data.Count();
+            return data;
+        }
+
     }
 }

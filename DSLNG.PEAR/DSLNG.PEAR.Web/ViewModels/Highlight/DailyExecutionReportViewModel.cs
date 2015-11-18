@@ -15,6 +15,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Highlight
             Weather = new WeatherViewModel();
             HighlightGroups = new List<HighlightGroupViewModel>();
             HighlightGroupTemplates = new List<HighlightGroupViewModel>();
+            
         }
         public IList<NLSViewModel> NLSList { get; set; }
         public IList<HighlightViewModel> Highlights { get; set; }
@@ -63,6 +64,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Highlight
             public int Order { get; set; }
         }
         public class HighlightViewModel {
+            public int Id { get; set; }
             public string Title { get; set; }
             public string Message { get; set; }
             public int Order { get; set; }
@@ -70,6 +72,21 @@ namespace DSLNG.PEAR.Web.ViewModels.Highlight
             public int TypeId { get; set; }
         }
         public PeriodeType PeriodeType { get; set; }
-       
+        public DateTime? Periode { get; set; }
+        public string PeriodeInDisplay
+        {
+            get
+            {
+                switch (PeriodeType)
+                {
+                    case Data.Enums.PeriodeType.Monthly:
+                        return this.Periode.Value.ToString("MM/yyyy");
+                    case Data.Enums.PeriodeType.Yearly:
+                        return this.Periode.Value.ToString("yyyy");
+                    default:
+                        return this.Periode.Value.ToString("MM/dd/yyyy");
+                }
+            }
+        }
     }
 }

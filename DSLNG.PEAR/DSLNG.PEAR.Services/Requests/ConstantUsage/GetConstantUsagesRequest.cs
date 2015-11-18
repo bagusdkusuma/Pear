@@ -1,7 +1,7 @@
 ﻿
 namespace DSLNG.PEAR.Services.Requests.ConstantUsage
 {
-    public class GetConstantUsagesRequest
+    public class GetConstantUsagesRequest : GridBaseRequest
     {
         public int Take { get; set; }
         public int Skip { get; set; }

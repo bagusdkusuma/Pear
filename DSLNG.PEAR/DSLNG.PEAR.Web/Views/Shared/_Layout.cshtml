@@ -6,6 +6,7 @@
     <title>@ViewBag.Title</title>
     @*<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>*@
     @*<link href="@Url.Content("~/Content/login.css")" rel="stylesheet" type="text/css" />*@
+
     @Styles.Render("~/Content/css")
     @Html.DevExpress().GetStyleSheets(
     //new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
@@ -33,6 +34,8 @@
     new Script { ExtensionSuite = ExtensionSuite.Spreadsheet }
     //new Script { ExtensionSuite = ExtensionSuite.SpellChecker }
 )
+    <script src="@Url.Content("~/Scripts/tinymce/js/tinymce/tinymce.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/tinymce/js/tinymce/jquery.tinymce.min.js")" type="text/javascript"></script>
 </head>
 
 <body class="@ViewBag.BodyClass">
@@ -68,8 +71,17 @@
     <span id="dataLayout" data-content-url="@Url.Content("/Content")"></span>
     @Scripts.Render("~/bundles/js")
     <script src="@Url.Content("~/Scripts/highcharts-more.js")" type="text/javascript"></script>
+     @*<script src="@Url.Content("~/Scripts/tinymce/tinymce.min.js")" type="text/javascript"></script>*@
     <script type="text/javascript">
-
+        //tinymce.init({
+        //    selector: "textarea",
+        //    plugins: [
+        //        "advlist autolink lists link image charmap print preview anchor",
+        //        "searchreplace visualblocks code fullscreen",
+        //        "insertdatetime media table contextmenu paste"
+        //    ],
+        //    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+        //});
         $(document).ready(function () {
             //if ($('.sub-nav > li > a:has(> ul)')) {
             //    var abc = $(this).find('.sub-nav > li > a:has(> ul)');

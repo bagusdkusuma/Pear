@@ -5,6 +5,7 @@ using DSLNG.PEAR.Services.Requests.CalculatorConstant;
 using DSLNG.PEAR.Web.ViewModels.CalculatorConstant;
 using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Web.Grid;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -110,6 +111,40 @@ namespace DSLNG.PEAR.Web.Controllers
                 return RedirectToAction("Index");    
             }
             
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            var response = _calculatorConstantService.DeleteCalculatorConstant(new DeleteCalculatorConstantRequest { Id = id });
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            if (response.IsSuccess)
+            {
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+
+        public ActionResult Grid(GridParams gridParams)
+        {
+            var calculator = _calculatorConstantService.GetCalculatorConstants(new GetCalculatorConstantsRequest
+                {
+                    Skip = gridParams.DisplayStart,
+                    Take = gridParams.DisplayLength,
+                    Search = gridParams.Search,
+                    SortingDictionary = gridParams.SortingDictionary
+                });
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = calculator.TotalRecords,
+                iTotalRecords = calculator.CalculatorConstants.Count,
+                aaData = calculator.CalculatorConstants
+
+            };
+
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
     }
 }

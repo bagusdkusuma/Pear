@@ -9,5 +9,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetCalculatorConstantsResponse GetCalculatorConstants(GetCalculatorConstantsRequest request);
         GetCalculatorConstantResponse GetCalculatorConstant(GetCalculatorConstantRequest request);
         SaveCalculatorConstantResponse SaveCalculatorConstant(SaveCalculatorConstantRequest request);
+        DeleteCalculatorConstantResponse DeleteCalculatorConstant(DeleteCalculatorConstantRequest request);
     }
 }

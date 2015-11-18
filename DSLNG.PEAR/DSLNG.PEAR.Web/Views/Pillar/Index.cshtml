@@ -28,6 +28,8 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $('#pillar-table').DataTable({
+                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                "iDisplayLength": -1,
                 "bProcessing": true,
                 "bServerSide": true,
                 "sServerMethod": "POST",

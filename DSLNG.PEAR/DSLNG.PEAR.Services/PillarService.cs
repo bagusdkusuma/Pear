@@ -44,10 +44,14 @@ namespace DSLNG.PEAR.Services
         public GetPillarsResponse GetPillars(GetPillarsRequest request)
         {
             int totalRecords;
-            var pillars = SortData(request.Search, request.SortingDictionary, out totalRecords).Skip(request.Skip).Take(request.Take);
+            var pillars = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            if (request.Take != -1)
+            {
+                pillars = pillars.Skip(request.Skip).Take(request.Take);
+            }
 
             var response = new GetPillarsResponse();
-            response.Pillars = pillars.MapTo<GetPillarsResponse.Pillar>();
+            response.Pillars = pillars.ToList().MapTo<GetPillarsResponse.Pillar>();
             response.TotalRecords = totalRecords;
 
             return response;
@@ -126,18 +130,18 @@ namespace DSLNG.PEAR.Services
                 {
                     case "Code":
                         data = sortOrder.Value == SortOrder.Ascending
-                                   ? data.OrderBy(x => x.Code)
-                                   : data.OrderByDescending(x => x.Code);
+                                   ? data.OrderBy(x => x.Code).ThenBy(x => x.Order)
+                                   : data.OrderByDescending(x => x.Code).ThenBy(x => x.Order);
                         break;
                     case "Name":
                         data = sortOrder.Value == SortOrder.Ascending
-                                   ? data.OrderBy(x => x.Name)
-                                   : data.OrderByDescending(x => x.Name);
+                                   ? data.OrderBy(x => x.Name).ThenBy(x => x.Order)
+                                   : data.OrderByDescending(x => x.Name).ThenBy(x => x.Order);
                         break;
                     case "IsActive":
                         data = sortOrder.Value == SortOrder.Ascending
-                                   ? data.OrderBy(x => x.IsActive)
-                                   : data.OrderByDescending(x => x.IsActive);
+                                   ? data.OrderBy(x => x.IsActive).ThenBy(x => x.Order)
+                                   : data.OrderByDescending(x => x.IsActive).ThenBy(x => x.Order);
                         break;
                     default:
                         data = sortOrder.Value == SortOrder.Ascending

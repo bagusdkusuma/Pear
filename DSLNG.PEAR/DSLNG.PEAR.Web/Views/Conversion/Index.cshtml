@@ -6,7 +6,7 @@
 <h2>Conversion List</h2>
 @Html.Partial("_MessageResponse")
 @Html.ActionLink("New", "Create", null, new { @class = "btn btn-primary" })
-@Html.Action("IndexPartial")
+@*@Html.Action("IndexPartial")
 
 
 @section Scripts{
@@ -19,5 +19,86 @@
                     '</form>').submit();
             }
         };
+    </script>
+}*@
+
+<table id="conversion-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Action</th>
+            <th>Name</th>
+            <th>Measurement From</th>
+            <th>Measurement To</th>
+            <th>Value</th>
+            <th>Is Reverse</th>
+            <th>Is Active</th>
+        </tr>
+    </thead>
+</table>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#conversion-table').DataTable({
+                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                "iDisplayLength": -1,
+                "bProcessing": true,
+                "bServerSide": true,
+                "sServerMethod": "POST",
+                "sAjaxSource": '@Url.Action("Grid", "Conversion")',
+                "order": [[3, "asc"]],
+                "aoColumns": [
+                    {
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": '',
+                        "mRender": function (data, type, row) {
+                            var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
+                            var editLink = '@Html.ActionLink("Edit", "Update", "Conversion", new {id = "_id_"}, null)'.replace('_id_', data.Id);
+                            return editLink + ' | ' + deleteLink;
+                        }
+                    },
+                    { "mDataProp": "Name", "name": "Name" },
+                    { "mDataProp": "FromName", "name": "FromName" },
+                    { "mDataProp": "ToName", "name": "ToName" },
+                    { "mDataProp": "Value", "name": "Value" },
+                    {
+                        "mDataProp": "IsReverse", "name": "IsReverse",
+                        render: function (data, type, row) {
+                            if (type === 'display') {
+                                return '<input type="checkbox" class="is-reverse">';
+                            }
+                            return data;
+                        }
+                    },
+                     {
+                         "mDataProp": "IsActive", "name": "IsActive",
+                         render: function (data, type, row) {
+                             if (type === 'display') {
+                                 return '<input type="checkbox" class="is-active">';
+                             }
+                             return data;
+                         }
+                     }
+                ],
+                rowCallback: function (row, data) {
+                    // Set the checked state of the checkbox in the table
+                    $('input.is-active', row).prop('checked', data.IsActive == 1);
+                    $('input.is-reverse', row).prop('checked', data.IsReverse == 1);
+                }
+            });
+
+            $('#conversion-table').on('click', '.delete', function () {
+                var id = $(this).attr('data-id');
+                if (confirm('Are you sure want to delete this item?' + id)) {
+                    var url = '@Url.Action("Delete", "Conversion")';
+
+                    $('<form action="' + url + '" method="POST">' +
+                        '<input type="hidden" name="id" value="' + id + '">' +
+                        '</form>').submit();
+                }
+            });
+
+        });
     </script>
 }

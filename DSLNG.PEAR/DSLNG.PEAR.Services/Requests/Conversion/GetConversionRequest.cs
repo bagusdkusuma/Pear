@@ -11,7 +11,7 @@ namespace DSLNG.PEAR.Services.Requests.Conversion
         public int Id { get; set; }
     }
 
-    public class GetConversionsRequest
+    public class GetConversionsRequest : GridBaseRequest
     {
         public int Take { get; set; }
         public int Skip { get; set; }

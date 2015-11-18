@@ -3996,6 +3996,7 @@ Number.prototype.format = function (n, x) {
         });
         var $messageHolder = $('.message-holder');
         var $messageHolderClone = $messageHolder.clone(true);
+        console.log($messageHolderClone);
         $messageHolder.html('');
         var onceChanged = false;
         $('#TypeId').change(function (e) {
@@ -4026,6 +4027,16 @@ Number.prototype.format = function (n, x) {
                 } else {
                     if (!$messageHolder.find('.message-text-area').length) {
                         $messageHolder.html($messageHolderClone.find('.message-text-area').html());
+
+                        tinyMCE.init({
+                            selector: ".highlight-message",
+                            plugins: [
+                                "advlist autolink lists link image charmap print preview anchor",
+                                "searchreplace visualblocks code fullscreen",
+                                "insertdatetime media table contextmenu paste"
+                            ],
+                            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+                        });
                     }
                 }
             });
@@ -4219,25 +4230,41 @@ Number.prototype.format = function (n, x) {
                 });
             }
         });
-        //if ($('.highlight-display').length) {
-        //    $('.datepicker').datetimepicker({
-        //        format: "MM/DD/YYYY",
+        if ($('.highlight-display').length) {
+            $('.datepicker').datetimepicker({
+                format: "MM/DD/YYYY",
+                focusOnShow : false,
+            }).on('dp.change', function (e) {
+                if (e.oldDate == null || e.date.format("MM/DD/YYYY") == e.oldDate.format("MM/DD/YYYY")) {
+                    return;
+                }
+                var href=$('.nav-tabs .active a').attr('href');
+                var s = href + '&Periode=' + encodeURIComponent(e.date.format("MM/DD/YYYY"));
+                window.location = s;
+            });
 
-        //    }).on('dp.change', function (e) {
-        //        var href=$('.nav-tabs .active a').attr('href');
-        //        var s = href + '&periode=' + e.date._i;
-        //        console.log(e);
-        //        console.log(s);
-        //    });
+            $('.monthpicker').datetimepicker({
+                format: "MM/YYYY"
+            }).on('dp.change', function (e) {
+                if (e.oldDate == null || e.date.format("MM/YYYY") == e.oldDate.format("MM/YYYY")) {
+                    return;
+                }
+                var href = $('.nav-tabs .active a').attr('href');
+                var s = href + '&Periode=' + encodeURIComponent(e.date.format("MM/YYYY"));
+                window.location = s;
+            });
 
-        //    $('.monthpicker').datetimepicker({
-        //        format: "MM/YYYY"
-        //    });
-
-        //    $('.yearpicker').datetimepicker({
-        //        format: "YYYY"
-        //    });
-        //}
+            $('.yearpicker').datetimepicker({
+                format: "YYYY"
+            }).on('dp.change', function (e) {
+                if (e.oldDate == null || e.date.format("YYYY") == e.oldDate.format("YYYY")) {
+                    return;
+                }
+                var href = $('.nav-tabs .active a').attr('href');
+                var s = href + '&Periode=' + encodeURIComponent(e.date.format("YYYY"));
+                window.location = s;
+            });
+        }
     });
     window.Pear = Pear;
 }(window, jQuery, undefined));

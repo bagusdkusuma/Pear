@@ -6,6 +6,8 @@ using DSLNG.PEAR.Services.Requests.RoleGroup;
 using DevExpress.Web.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.SqlClient;
+using DSLNG.PEAR.Web.Grid;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -81,11 +83,10 @@ namespace DSLNG.PEAR.Web.Controllers
         public CreateRoleGroupViewModel CreateViewModel(CreateRoleGroupViewModel viewModel)
         {
             viewModel.LevelList = _levelService.GetLevels(
-                new Services.Requests.Level.GetLevelsRequest { Skip = 0, Take = 0 }).Levels.Select(x => new SelectListItem
-                {
-                    Text = x.Name,
-                    Value = x.Id.ToString()
-                }).ToList();
+                new Services.Requests.Level.GetLevelsRequest {
+                    Take = -1,
+                    SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending} }
+                }).Levels.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString()}).ToList();
 
             return viewModel;
         }
@@ -116,11 +117,11 @@ namespace DSLNG.PEAR.Web.Controllers
         public UpdateRoleGroupViewModel UpdateViewModel(UpdateRoleGroupViewModel viewModel)
         {
             viewModel.LevelList = _levelService.GetLevels(
-                new Services.Requests.Level.GetLevelsRequest { Skip = 0, Take = 0 }).Levels.Select(x => new SelectListItem
+                new Services.Requests.Level.GetLevelsRequest
                 {
-                    Text = x.Name,
-                    Value = x.Id.ToString()
-                }).ToList();
+                    Take = -1,
+                    SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+                }).Levels.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
 
             return viewModel;
         }
@@ -157,6 +158,25 @@ namespace DSLNG.PEAR.Web.Controllers
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Grid(GridParams gridParams)
+        {
+            var role = _roleGroupService.GetRoleGroups(new GetRoleGroupsRequest
+                {
+                    Skip = gridParams.DisplayStart,
+                    Take = gridParams.DisplayLength,
+                    Search = gridParams.Search,
+                    SortingDictionary = gridParams.SortingDictionary
+                });
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = role.TotalRecords,
+                iTotalRecords = role.RoleGroups.Count,
+                aaData = role.RoleGroups
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
     }
 }

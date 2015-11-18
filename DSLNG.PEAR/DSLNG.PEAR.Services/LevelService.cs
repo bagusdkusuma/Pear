@@ -12,6 +12,7 @@ using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Entities;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity;
+using System.Data.SqlClient;
 
 namespace DSLNG.PEAR.Services
 {
@@ -32,12 +33,25 @@ namespace DSLNG.PEAR.Services
 
         public GetLevelsResponse GetLevels(GetLevelsRequest request)
         {
-            var levels = DataContext.Levels.ToList();
-            var response = new GetLevelsResponse();
-            response.Levels = levels.MapTo<GetLevelsResponse.Level>();
-            //response.Levels = levels.MapTo<GetLevelResponse>();
+            int totalRecords;
+            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            if (request.Take != -1)
+            {
+                data = data.Skip(request.Skip).Take(request.Take);
+            }
 
-            return response;
+            return new GetLevelsResponse
+            {
+                TotalRecords = totalRecords,
+                Levels = data.ToList().MapTo<GetLevelsResponse.Level>()
+            };
+
+            //var levels = DataContext.Levels.ToList();
+            //var response = new GetLevelsResponse();
+            //response.Levels = levels.MapTo<GetLevelsResponse.Level>();
+            ////response.Levels = levels.MapTo<GetLevelResponse>();
+
+            //return response;
         }
 
         public CreateLevelResponse Create(CreateLevelRequest request)
@@ -94,5 +108,45 @@ namespace DSLNG.PEAR.Services
             }
             return response;
         }
+
+        public IEnumerable<Level> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        {
+            var data = DataContext.Levels.AsQueryable();
+            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            {
+                data = data.Where(x => x.Code.Contains(search) || x.Name.Contains(search));
+            }
+
+            foreach (var sortOrder in sortingDictionary)
+            {
+                switch (sortOrder.Key)
+                {
+                    case "Code":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Code).ThenBy(x => x.Number)
+                            : data.OrderByDescending(x => x.Code).ThenBy(x => x.Number);
+                        break;
+                    case "Name":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Name).ThenBy(x => x.Number)
+                            : data.OrderByDescending(x => x.Name).ThenBy(x => x.Number);
+                        break;
+                    case "Number":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Number)
+                            : data.OrderByDescending(x => x.Number);
+                        break;
+                    case "IsActive":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.IsActive)
+                            : data.OrderByDescending(x => x.IsActive);
+                        break;
+                }
+            }
+
+            TotalRecords = data.Count();
+            return data;
+        }
+
     }
 }

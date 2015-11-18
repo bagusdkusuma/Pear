@@ -9,5 +9,6 @@ namespace DSLNG.PEAR.Web.ViewModels.Buyer
         public string Name { get; set; }
         [DataType(DataType.MultilineText)]
         public string Address { get; set; }
+        public bool IsActive { get; set; }
     }
 }

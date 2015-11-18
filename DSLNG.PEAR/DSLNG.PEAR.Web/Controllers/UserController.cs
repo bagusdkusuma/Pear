@@ -8,6 +8,7 @@ using DevExpress.Web.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using DSLNG.PEAR.Web.Attributes;
+using System.Data.SqlClient;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -103,11 +104,16 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public CreateUserViewModel CreateViewModel(CreateUserViewModel viewModel)
         {
-            viewModel.RoleGroupList = _roleGroupService.GetRoleGroups(
-                new Services.Requests.RoleGroup.GetRoleGroupsRequest { Skip = 0, Take = 0 }).RoleGroups.Select(x => new SelectListItem
+            viewModel.RoleGroupList = _roleGroupService.GetRoleGroups(new Services.Requests.RoleGroup.GetRoleGroupsRequest
+            {
+                Take = -1,
+                SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+            })
+                .RoleGroups.Select(x => new SelectListItem
                 {
                     Text = x.Name,
-                    Value = x.Id.ToString()
+                    Value = x.Id.ToString(),
+                    Selected = viewModel.RoleId == x.Id ? true : false
                 }).ToList();
 
             return viewModel;
@@ -138,8 +144,11 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public UpdateUserViewModel UpdateViewModel(UpdateUserViewModel viewModel)
         {
-            viewModel.RoleGroupList = _roleGroupService.GetRoleGroups(
-                new Services.Requests.RoleGroup.GetRoleGroupsRequest { Skip = 0, Take = 0 }).RoleGroups.Select(x => new SelectListItem
+            viewModel.RoleGroupList = _roleGroupService.GetRoleGroups(new Services.Requests.RoleGroup.GetRoleGroupsRequest { 
+                    Take = -1,
+                    SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending} }
+                })
+                .RoleGroups.Select(x => new SelectListItem
                 {
                     Text = x.Name,
                     Value = x.Id.ToString(),
