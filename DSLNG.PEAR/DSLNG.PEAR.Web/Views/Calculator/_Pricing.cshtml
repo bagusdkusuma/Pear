@@ -19,12 +19,14 @@
         font-weight: bold;
     }
 
-    .pricing-result.form-horizontal label.control-label{
+    .pricing-result.form-horizontal label.control-label
+    {
         padding: 0;
         text-align: left;
     }
 
-    .pricing-constanta-wrapper > div {
+    .pricing-constanta-wrapper > div
+    {
         margin-bottom: 20px;
     }
 </style>
@@ -38,144 +40,112 @@
         <div class="form-group form-list">
             @Html.LabelFor(model => model.JccPrice, new { style = "width:auto" })
             @Html.TextBoxFor(model => model.JccPrice, new { @class = "form-control" })
-            @Html.DropDownListFor(model => model.Unit, Model.Units, new { @class = "main-input-unit form-control" })
+            USD/bbl
         </div>
     </div>
 </div>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
+        <h4>SPA Price</h4>
         <div class="col-md-12">
             <form class="form-horizontal pricing-result">
                 <div class="form-group">
-                    <label for="resultTonnes" class="control-label col-md-2">Result</label>
+                    <label for="resultTonnes" class="control-label col-md-4">LNG SPA FOB</label>
                     <div class="col-md-6">
                         <input type="text" class="form-control" id="lng-spa-fob" placeholder="">
                     </div>
-                    <label for="resultTonnes" class="control-label col-md-4">LNG SPA FOB</label>
+                    <label for="resultTonnes" class="control-label col-md-2"></label>
                 </div>
                 <div class="form-group">
-                    <label for="resultTonnes" class="control-label col-md-2"></label>
+                    <label for="resultTonnes" class="control-label col-md-4">LNG SPA DES</label>
                     <div class="col-md-6">
                         <input type="text" class="form-control" id="lng-spa-des" placeholder="">
                     </div>
-                    <label for="resultTonnes" class="control-label col-md-4">LNG SPA DES</label>
+                    <label for="resultTonnes" class="control-label col-md-2"></label>
                 </div>
                 <div class="form-group">
-                    <label for="resultTonnes" class="control-label col-md-2"></label>
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" id="senoro-feed-gas" placeholder="">
-                    </div>
-                    <label for="resultTonnes" class="control-label col-md-4">Senoro Feed Gas</label>
-                </div>
-
-                <div class="form-group">
-                    <label for="resultTonnes" class="control-label col-md-2"></label>
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" id="matindok-feed-gas" placeholder="">
-                    </div>
-                    <label for="resultTonnes" class="control-label col-md-4">Matindok Feed Gas</label>
-                </div>
-
-                <div class="form-group">
-                    <label for="resultTonnes" class="control-label col-md-2"></label>
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" id="average-feed-gas" placeholder="">
-                    </div>
-                    <label for="resultTonnes" class="control-label col-md-4">Average Feed Gas</label>
-                </div>
-
-                <div class="form-group">
-                    <label for="resultTonnes" class="control-label col-md-2"></label>
+                    <label for="resultTonnes" class="control-label col-md-4">CDS Price</label>
                     <div class="col-md-6">
                         <input type="text" class="form-control" id="cds-price" placeholder="">
                     </div>
-                    <label for="resultTonnes" class="control-label col-md-4">CDS Price</label>
+                    <label for="resultTonnes" class="control-label col-md-2"></label>
                 </div>
             </form>
         </div>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-6">
+        <h4>GSA Price</h4>
         <div class="col-md-12">
-            <h4 style="margin-left: 55px;">Constant</h4>
-        </div>
-
-        <div class="col-md-12 text-left pricing-constanta-wrapper">
-            <div class="col-md-12">
-                <span class="pricing-category">Feed Gas</span>
-            </div>
-            <form class="form-horizontal production-yield-all constants">
-                @foreach (var constant in Model.FeedGasConstants)
-                { 
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">@constant.DisplayName</label>
-                        <div class="col-sm-3">
-                            @Html.HiddenFor(m => constant.Id)
-                            @Html.TextBoxFor(m => constant.Value, new { @class = constant.Name + " calculator-constant" })
-                        </div>
-                        <div class="col-sm-3">
-                            <label>@constant.Measurement</label>
-                        </div>
-                    </div>    
-                }
-            </form>
-            <hr style="margin-left: 55px;"/>
-            <div class="col-md-12">
-                <span class="pricing-category">Composition</span>
-            </div>
-            <form class="form-horizontal production-yield-all constants">
-                @foreach (var constant in Model.CompositionConstants)
-                { 
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">@constant.DisplayName</label>
-                        <div class="col-sm-3">
-                            @Html.HiddenFor(m => constant.Id)
-                            @Html.TextBoxFor(m => constant.Value, new { @class = constant.Name + " calculator-constant" })
-                        </div>
-                        <div class="col-sm-3">
-                            <label>@constant.Measurement</label>
-                        </div>
-                    </div>    
-                }
-            </form>
-            <hr style="margin-left: 55px;"/>
-            <div class="col-md-12">
-                <span class="pricing-category">CDS Price Constant</span>
-            </div>
-            <form class="form-horizontal production-yield-all constants">
-                @foreach (var constant in Model.CdsPriceConstants)
-                { 
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">@constant.DisplayName</label>
-                        <div class="col-sm-3">
-                            @Html.HiddenFor(m => constant.Id)
-                            @Html.TextBoxFor(m => constant.Value, new { @class = constant.Name + " calculator-constant" })
-                        </div>
-                        <div class="col-sm-3">
-                            <label>@constant.Measurement</label>
-                        </div>
-                    </div>    
-                }
-            </form>
-            <hr style="margin-left: 55px;"/>
-            <div class="col-md-12">
-                <span class="pricing-category">Other Constantas</span>
-            </div>
-            <form class="form-horizontal production-yield-all constants">
-                @foreach (var constant in Model.OtherConstants)
-                { 
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">@constant.DisplayName</label>
-                        <div class="col-sm-3">
-                            @Html.HiddenFor(m => constant.Id)
-                            @Html.TextBoxFor(m => constant.Value, new { @class = constant.Name + " calculator-constant" })
-                        </div>
-                        <div class="col-sm-3">
-                            <label>@constant.Measurement</label>
-                        </div>
+            <form class="form-horizontal pricing-result">
+                <div class="form-group">
+                    <label for="resultTonnes" class="control-label col-md-4">Senoro Feed Gas</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" id="senoro-feed-gas" placeholder="">
                     </div>
-                }
+                    <label for="resultTonnes" class="control-label col-md-2"></label>
+                </div>
+
+                <div class="form-group">
+                    <label for="resultTonnes" class="control-label col-md-4">Matindok Feed Gas</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" id="matindok-feed-gas" placeholder="">
+                    </div>
+                    <label for="resultTonnes" class="control-label col-md-2"></label>
+                </div>
+
+                <div class="form-group">
+                    <label for="resultTonnes" class="control-label col-md-4">Average Feed Gas</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" id="average-feed-gas" placeholder="">
+                    </div>
+                    <label for="resultTonnes" class="control-label col-md-2"></label>
+                </div>
             </form>
         </div>
+    </div>
+</div>
+<a href="javascript:;" class="show-pricing-constant pull-right">Show Constant</a><br/>
+<hr/>
+<div class="row constant-pricing-wrapper">
+    <div class="col-md-6">
+        <div class="col-md-12">
+            <span class="pricing-category">SPA Constant</span>
+        </div>
+        <form class="form-horizontal production-yield-all constants">
+            @foreach (var constant in Model.SpaConstants)
+            { 
+                <div class="form-group">
+                    <label class="col-md-4 control-label">@constant.DisplayName</label>
+                    <div class="col-md-5">
+                        @Html.HiddenFor(m => constant.Id)
+                        @Html.TextBoxFor(m => constant.Value, new { @class = constant.Name + " calculator-constant" })
+                    </div>
+                    <div class="col-md-3">
+                        <label>@constant.Measurement</label>
+                    </div>
+                </div>    
+            }
+        </form>
+    </div>
+    <div class="col-md-6">
+        <div class="col-md-12">
+            <span class="pricing-category">GSA Constant</span>
+        </div>
+        <form class="form-horizontal production-yield-all constants">
+            @foreach (var constant in Model.GsaConstants)
+            { 
+                <div class="form-group">
+                    <label class="col-md-4 control-label">@constant.DisplayName</label>
+                    <div class="col-md-5">
+                        @Html.HiddenFor(m => constant.Id)
+                        @Html.TextBoxFor(m => constant.Value, new { @class = constant.Name + " calculator-constant" })
+                    </div>
+                    <div class="col-md-3">
+                        <label>@constant.Measurement</label>
+                    </div>
+                </div>    
+            }
+        </form>
     </div>
 </div>
 

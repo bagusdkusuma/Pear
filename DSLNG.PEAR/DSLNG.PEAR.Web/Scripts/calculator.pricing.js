@@ -109,5 +109,17 @@
             var result = (val / priceVariable) + priceConstanta;
             $('#cds-price').val(result.format(2));
         };
+
+        $('.constant-pricing-wrapper').hide();
+        $('.show-pricing-constant').click(function () {
+            if ($('.constant-pricing-wrapper').is(":visible")) {
+                $('.constant-pricing-wrapper').slideUp();
+                $('.show-pricing-constant').html('Show Constant');
+            } else {
+                $('.constant-pricing-wrapper').slideDown();
+                $('.show-pricing-constant').html('Hide Constant');
+            }
+        });
+
     };
 }(window, jQuery));
