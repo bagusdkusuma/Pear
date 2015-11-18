@@ -15,7 +15,8 @@ namespace DSLNG.PEAR.Web.Controllers
         private IConstantUsageService _constantUsageService;
         private ICalculatorConstantService _calculatorConstantService;
         public ConstantUsageController(IConstantUsageService constantUsageService,
-            ICalculatorConstantService calculatorConstantServcie) {
+            ICalculatorConstantService calculatorConstantServcie)
+        {
             _constantUsageService = constantUsageService;
             _calculatorConstantService = calculatorConstantServcie;
         }
@@ -62,19 +63,20 @@ namespace DSLNG.PEAR.Web.Controllers
         public void GetDataRowCount(GridViewCustomBindingGetDataRowCountArgs e)
         {
 
-            e.DataRowCount = _constantUsageService.GetConstantUsages(new GetConstantUsagesRequest{ OnlyCount = true }).Count;
+            e.DataRowCount = _constantUsageService.GetConstantUsages(new GetConstantUsagesRequest { OnlyCount = true }).Count;
         }
 
         public void GetData(GridViewCustomBindingGetDataArgs e)
         {
-            e.Data =  _constantUsageService.GetConstantUsages(new GetConstantUsagesRequest
+            e.Data = _constantUsageService.GetConstantUsagesForGrid(new GetConstantUsagesRequest
             {
                 Skip = e.StartDataRowIndex,
                 Take = e.DataRowCount
             }).ConstantUsages;
         }
 
-        public ActionResult CalculatorConstants(string term) {
+        public ActionResult CalculatorConstants(string term)
+        {
             var results = _calculatorConstantService.GetCalculatorConstants(new GetCalculatorConstantsRequest { Take = 20, Term = term });
             return Json(new { results = results.CalculatorConstants }, JsonRequestBehavior.AllowGet);
         }
@@ -85,13 +87,15 @@ namespace DSLNG.PEAR.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(ConstantUsageViewModel viewModel) {
+        public ActionResult Create(ConstantUsageViewModel viewModel)
+        {
             var req = viewModel.MapTo<SaveConstantUsageRequest>();
             _constantUsageService.SaveConstantUsage(req);
             return RedirectToAction("Index");
         }
 
-        public ActionResult Edit(int id) {
+        public ActionResult Edit(int id)
+        {
             var viewModel = _constantUsageService.GetConstantUsage(new GetConstantUsageRequest { Id = id }).MapTo<ConstantUsageViewModel>();
             viewModel.Constants.Insert(0, new ConstantUsageViewModel.CalculatorConstantViewModel());
             return View(viewModel);
