@@ -341,6 +341,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<SaveBuyerRequest, Buyer>();
             Mapper.CreateMap<Buyer, GetBuyersResponse.BuyerResponse>();
             Mapper.CreateMap<Buyer, GetBuyerResponse>();
+            Mapper.CreateMap<Buyer, GetBuyerForGridResponse.BuyerForGrid>();
 
             Mapper.CreateMap<SaveVesselScheduleRequest, VesselSchedule>();
             Mapper.CreateMap<VesselSchedule, GetVesselSchedulesResponse.VesselScheduleResponse>()

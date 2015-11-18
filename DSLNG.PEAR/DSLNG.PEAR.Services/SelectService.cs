@@ -11,6 +11,7 @@ using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Select;
 using DSLNG.PEAR.Services.Responses.Select;
+using System.Data.SqlClient;
 
 namespace DSLNG.PEAR.Services
 {
@@ -188,22 +189,65 @@ namespace DSLNG.PEAR.Services
 
         public GetSelectsResponse GetSelects(GetSelectsRequest request)
         {
-            List<Select> selects;
-            if (request.Take != 0)
+            int totalRecords;
+            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            if (request.Take != -1)
             {
-                selects = DataContext.Selects
-                    .Include(x => x.Options)
-                    .OrderBy(x => x.Id).Skip(request.Skip).Take(request.Take).ToList();
+                data = data.Skip(request.Skip).Take(request.Take);
             }
-            else
+
+            return new GetSelectsResponse
             {
-                selects = DataContext.Selects
-                    .Include(x => x.Options)
-                    .OrderByDescending(x => x.Id).ToList();
+                TotalRecords = totalRecords,
+                Selects = data.ToList().MapTo<GetSelectsResponse.Select>()
+            };
+            //List<Select> selects;
+            //if (request.Take != 0)
+            //{
+            //    selects = DataContext.Selects
+            //        .Include(x => x.Options)
+            //        .OrderBy(x => x.Id).Skip(request.Skip).Take(request.Take).ToList();
+            //}
+            //else
+            //{
+            //    selects = DataContext.Selects
+            //        .Include(x => x.Options)
+            //        .OrderByDescending(x => x.Id).ToList();
+            //}
+            //var response = new GetSelectsResponse();
+            //response.Selects = selects.MapTo<GetSelectsResponse.Select>();
+            //return response;
+        }
+
+
+
+        public IEnumerable<Select> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        {
+            var data = DataContext.Selects.Include(x => x.Options).AsQueryable();
+            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            {
+                data = data.Where(x => x.Name.Contains(search));
             }
-            var response = new GetSelectsResponse();
-            response.Selects = selects.MapTo<GetSelectsResponse.Select>();
-            return response;
+
+            foreach (var sortOrder in sortingDictionary)
+            {
+                switch (sortOrder.Key)
+                {
+                    case "Name":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Name)
+                            : data.OrderByDescending(x => x.Name);
+                        break;
+                    case "IsActive":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.IsActive)
+                            : data.OrderByDescending(x => x.IsActive);
+                        break;
+                }
+            }
+
+            TotalRecords = data.Count();
+            return data;
         }
     }
 }

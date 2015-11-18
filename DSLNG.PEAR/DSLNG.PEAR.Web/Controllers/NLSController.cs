@@ -9,6 +9,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
+using System.Data.SqlClient;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -78,7 +79,11 @@ namespace DSLNG.PEAR.Web.Controllers
         }
 
         public ActionResult VesselScheduleList(string term) {
-            var vesselSchedules = _vesselScheduleService.GetVesselSchedules(new GetVesselSchedulesRequest { Skip = 0, Take = 20, Term = term }).VesselSchedules;
+            var vesselSchedules = _vesselScheduleService.GetVesselSchedules(new GetVesselSchedulesRequest {
+                Take = -1, 
+                Term = term,
+                SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending} }
+            }).VesselSchedules;
             return Json(new { results = vesselSchedules }, JsonRequestBehavior.AllowGet);
         }
 

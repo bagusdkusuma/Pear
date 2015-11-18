@@ -12,5 +12,6 @@ namespace DSLNG.PEAR.Services.Requests.Select
         public string Name { get; set; }
         public string ParentName { get; set; }
         public int ParentOptionId { get; set; }
+        public bool IsActive { get; set; }
     }
 }

@@ -9,6 +9,7 @@ using DSLNG.PEAR.Data.Enums;
 using System.Linq;
 using DSLNG.PEAR.Common.Contants;
 using System.IO;
+using DSLNG.PEAR.Web.Grid;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -217,6 +218,25 @@ namespace DSLNG.PEAR.Web.Controllers
         public JsonResult Options(int id) { 
             var select = _selectService.GetSelect(new GetSelectRequest{Id = id});
             return Json(select.Options,JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Grid(GridParams gridParams)
+        {
+            var select = _selectService.GetSelects(new GetSelectsRequest
+                {
+                    Skip = gridParams.DisplayStart,
+                    Take = gridParams.DisplayLength,
+                    Search = gridParams.Search,
+                    SortingDictionary = gridParams.SortingDictionary
+                });
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = select.TotalRecords,
+                iTotalRecords = select.Selects.Count,
+                aaData = select.Selects
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
     }
 }

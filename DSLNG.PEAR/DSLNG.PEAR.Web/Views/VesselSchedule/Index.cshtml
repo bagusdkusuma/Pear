@@ -2,29 +2,107 @@
     ViewBag.Title = "Vessel Schedule List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="artifact-list">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="title">Vessel Schedule</div>
-            <div class="description_year">New</div>
-            <div>@Html.ValidationSummary(true)</div>
-        </div>
-        <div class="col-md-12">
-            @Html.Partial("_MessageResponse")
-            @Html.ActionLink("Create New", "Create")
-            @Html.Action("IndexPartial")
-        </div>
-        @section Scripts{
-            <script type="text/javascript">
-                var confirmDelete = function (id) {
-                    if (confirm('Are you sure want to delete this item?')) {
-                        var url = '@Url.Action("Delete", "VesselSchedule")';
+
+<div class="col-md-12">
+    <div class="title">Vessel Schedule</div>
+    <div>@Html.ValidationSummary(true)</div>
+</div>
+<div class="col-md-12">
+    @Html.Partial("_MessageResponse")
+    @Html.ActionLink("Create New", "Create")
+    @*@Html.Action("IndexPartial")*@
+</div>
+@*@section Scripts{
+    <script type="text/javascript">
+        var confirmDelete = function (id) {
+            if (confirm('Are you sure want to delete this item?')) {
+                var url = '@Url.Action("Delete", "VesselSchedule")';
+                $('<form action="' + url + '" method="POST">' +
+                    '<input type="hidden" name="id" value="' + id + '">' +
+                    '</form>').submit();
+            }
+        };
+    </script>
+}*@
+
+<table id="vesselSchedule-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Vessel</th>
+            <th>ETA</th>
+            <th>ETD</th>
+            <th>Buyer</th>
+            <th>Location</th>
+            <th>Sales Type</th>
+            <th>Type</th>
+            <th>Cargo</th>
+            <th>Is Active</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+</table>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#vesselSchedule-table').DataTable({
+                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                "iDisplayLength": -1,
+                "bProcessing": true,
+                "bServerSide": true,
+                "sServerMethod": "POST",
+                "sAjaxSource": '@Url.Action("Grid", "VesselSchedule")',
+                "order": [[3, "asc"]],
+                "aoColumns": [
+                    { "mDataProp": "Vessel", "name": "Vessel" },
+                    { "mDataProp": "ETA", "name": "ETA" },
+                    { "mDataProp": "ETD", "name": "ETD" },
+                    { "mDataProp": "Buyer", "name": "Buyer" },
+                    { "mDataProp": "Location", "name": "Location" },
+                    { "mDataProp": "SalesType", "name": "SalesType" },
+                    { "mDataProp": "Type", "name": "Type" },
+                    { "mDataProp": "Cargo", "name": "Cargo" },
+                    {
+                        "mDataProp": "IsActive", "name": "IsActive",
+                        render: function (data, type, row) {
+                            if (type === 'display') {
+                                return '<input type="checkbox" class="is-active">';
+                            }
+                            return data;
+                        }
+                    },
+                    {
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": '',
+                        "mRender": function (data, type, row) {
+                            var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
+                            var editLink = '@Html.ActionLink("Edit", "Edit", "VesselSchedule", new { id = "_id_" }, null)'.replace('_id_', data.Id);
+                            return editLink + ' | ' + deleteLink;
+                        }
+                    }
+                ],
+                rowCallback: function (row, data) {
+                    // Set the checked state of the checkbox in the table
+                    $('input.is-active', row).prop('checked', data.IsActive == 1);
+                }
+            });
+
+            $('#vesselSchedule-table').on('click', '.delete', function () {
+                var id = $(this).attr('data-id');
+                if (confirm('Are you sure want to delete this item?' + id)) {
+                    var url = '@Url.Action("Delete", "VesselSchedule")';
+
                     $('<form action="' + url + '" method="POST">' +
                         '<input type="hidden" name="id" value="' + id + '">' +
                         '</form>').submit();
                 }
-            };
-            </script>
-        }
-    </div>
-</div>
+            });
+
+        });
+    </script>
+}
+
+
+
+
