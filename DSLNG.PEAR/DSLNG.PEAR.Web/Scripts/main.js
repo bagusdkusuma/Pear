@@ -4219,6 +4219,25 @@ Number.prototype.format = function (n, x) {
                 });
             }
         });
+        //if ($('.highlight-display').length) {
+        //    $('.datepicker').datetimepicker({
+        //        format: "MM/DD/YYYY",
+
+        //    }).on('dp.change', function (e) {
+        //        var href=$('.nav-tabs .active a').attr('href');
+        //        var s = href + '&periode=' + e.date._i;
+        //        console.log(e);
+        //        console.log(s);
+        //    });
+
+        //    $('.monthpicker').datetimepicker({
+        //        format: "MM/YYYY"
+        //    });
+
+        //    $('.yearpicker').datetimepicker({
+        //        format: "YYYY"
+        //    });
+        //}
     });
     window.Pear = Pear;
 }(window, jQuery, undefined));
