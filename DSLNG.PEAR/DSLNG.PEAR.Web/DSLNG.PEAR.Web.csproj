@@ -674,6 +674,7 @@
     <Compile Include="Controllers\AssumptionDataController.cs" />
     <Compile Include="Controllers\EconomicConfigController.cs" />
     <Compile Include="Controllers\EconomicSummaryController.cs" />
+    <Compile Include="Controllers\HighlightController.cs" />
     <Compile Include="Controllers\HighlightGroupController.cs" />
     <Compile Include="Controllers\OperationalDataController.cs" />
     <Compile Include="Controllers\OperationController.cs" />
@@ -897,7 +898,6 @@
     <Content Include="Views\MultiaxisChart\_AreaChartEdit.cshtml" />
     <Content Include="Views\Pie\_Create.cshtml" />
     <Content Include="Views\Pie\_Edit.cshtml" />
-    <Content Include="Views\Highlight\_IndexGridPartial.cshtml" />
     <Content Include="Views\Highlight\Index.cshtml" />
     <Content Include="Views\Highlight\Create.cshtml" />
     <Content Include="Views\Select\_IndexGridPartial.cshtml" />
@@ -949,14 +949,12 @@
     <Content Include="Views\OperationalData\Edit.cshtml" />
     <Content Include="Views\OperationalData\Index.cshtml" />
     <Content Include="Views\OperationalData\_IndexGridPartial.cshtml" />
-    <Content Include="Views\Highlight\_MonthlyGridPartial.cshtml" />
     <Content Include="Views\Highlight\_YearlyGridPartial.cshtml" />
     <Content Include="Views\HighlightGroup\Index.cshtml" />
     <Content Include="Views\HighlightGroup\Create.cshtml" />
     <Content Include="Views\HighlightGroup\Edit.cshtml" />
-    <Content Include="Views\Highlight\_DailyHighlightPartial.cshtml" />
-    <Content Include="Views\Highlight\_MontlyHighlightPartial.cshtml" />
-    <Content Include="Views\Highlight\_YearlyHighlightPartial.cshtml" />
+    <Content Include="Views\Highlight\_IndexGridPartial.cshtml" />
+    <Content Include="Views\Highlight\_MonthlyGridPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -1021,7 +1019,6 @@
     <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
-    <Compile Include="Controllers\HighlightController.cs" />
     <Compile Include="Controllers\HighlightDashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KpiAchievementController.cs" />

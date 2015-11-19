@@ -17,7 +17,6 @@ using System.Data.SqlClient;
 using System.Collections.Generic;
 using DSLNG.PEAR.Services.Requests.HighlightGroup;
 using System.Globalization;
-using DSLNG.PEAR.Web.Grid;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -282,7 +281,8 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Display()
         {
             //var nlsList = _nlsService.GetNLSList(new GetNLSListRequest { TheActiveOnes = true });
-            var vesselSchedules = _vesselScheduleService.GetVesselSchedules(new GetVesselSchedulesRequest { 
+            var vesselSchedules = _vesselScheduleService.GetVesselSchedules(new GetVesselSchedulesRequest
+            {
                 allActiveList = true,
                 Skip = 0,
                 Take = 20,
@@ -303,7 +303,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             viewModel.Periode = null;
                         }
                     }
-                   
+
                     break;
                 case "yearly":
                     viewModel.PeriodeType = PeriodeType.Yearly;
@@ -315,7 +315,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             viewModel.Periode = null;
                         }
                     }
-                    
+
                     break;
                 default:
                     viewModel.PeriodeType = PeriodeType.Daily;
@@ -329,12 +329,12 @@ namespace DSLNG.PEAR.Web.Controllers
                             viewModel.Periode = null;
                         }
                     }
-                    
+
                     break;
             }
 
             viewModel.NLSList = vesselSchedules.VesselSchedules.MapTo<DailyExecutionReportViewModel.NLSViewModel>();
-            viewModel.Weather = _waetherService.GetWeather(new GetWeatherRequest { Date = viewModel.Periode, ByDate=true }).MapTo<DailyExecutionReportViewModel.WeatherViewModel>();
+            viewModel.Weather = _waetherService.GetWeather(new GetWeatherRequest { Date = viewModel.Periode, ByDate = true }).MapTo<DailyExecutionReportViewModel.WeatherViewModel>();
 
             viewModel.HighlightGroupTemplates = _highlightGroupService.GetHighlightGroups(new GetHighlightGroupsRequest
             {
@@ -362,7 +362,8 @@ namespace DSLNG.PEAR.Web.Controllers
                 }
             }
             viewModel.Highlights = viewModel.Highlights.OrderBy(x => x.Order).ToList();
-            if (!viewModel.Periode.HasValue) {
+            if (!viewModel.Periode.HasValue)
+            {
                 viewModel.Periode = dynamicHighlights.Periode;
             }
             return View(viewModel);
@@ -377,26 +378,6 @@ namespace DSLNG.PEAR.Web.Controllers
                 return Json(select.Options, JsonRequestBehavior.AllowGet);
             }
             return Json(new string[0] { }, JsonRequestBehavior.AllowGet);
-        }
-
-        public ActionResult Grid(GridParams gridParams)
-        {
-            var highlight = _highlightService.GetHighlightsForGrid(new GetHighlightsRequest
-                {
-                    Skip = gridParams.DisplayStart,
-                    Take = gridParams.DisplayLength,
-                    Search = gridParams.Search,
-                    SortingDictionary = gridParams.SortingDictionary
-                });
-            var data = new
-            {
-                sEcho = gridParams.Echo + 1,
-                iTotalDisplayRecords = highlight.TotalRecords,
-                iTotalRecords = highlight.Highlights.Count,
-                aaData = highlight.Highlights
-            };
-
-            return Json(data, JsonRequestBehavior.AllowGet);
         }
     }
 }
