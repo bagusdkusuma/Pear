@@ -9,7 +9,7 @@ namespace DSLNG.PEAR.Services.Responses.Buyer
         public int TotalRecords { get; set; }
         public int Count { get; set; }
         public class BuyerResponse {
-            public int Id { get; set; }
+            public int id { get; set; }
             public string Name { get; set; }
             public string Address { get; set; }
             public bool IsActive { get; set; }

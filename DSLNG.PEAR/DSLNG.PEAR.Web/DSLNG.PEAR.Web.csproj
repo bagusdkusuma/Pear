@@ -954,6 +954,9 @@
     <Content Include="Views\HighlightGroup\Index.cshtml" />
     <Content Include="Views\HighlightGroup\Create.cshtml" />
     <Content Include="Views\HighlightGroup\Edit.cshtml" />
+    <Content Include="Views\Highlight\_DailyHighlightPartial.cshtml" />
+    <Content Include="Views\Highlight\_MontlyHighlightPartial.cshtml" />
+    <Content Include="Views\Highlight\_YearlyHighlightPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

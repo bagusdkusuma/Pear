@@ -17,6 +17,7 @@ using System.Data.SqlClient;
 using System.Collections.Generic;
 using DSLNG.PEAR.Services.Requests.HighlightGroup;
 using System.Globalization;
+using DSLNG.PEAR.Web.Grid;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -376,6 +377,26 @@ namespace DSLNG.PEAR.Web.Controllers
                 return Json(select.Options, JsonRequestBehavior.AllowGet);
             }
             return Json(new string[0] { }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Grid(GridParams gridParams)
+        {
+            var highlight = _highlightService.GetHighlightsForGrid(new GetHighlightsRequest
+                {
+                    Skip = gridParams.DisplayStart,
+                    Take = gridParams.DisplayLength,
+                    Search = gridParams.Search,
+                    SortingDictionary = gridParams.SortingDictionary
+                });
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = highlight.TotalRecords,
+                iTotalRecords = highlight.Highlights.Count,
+                aaData = highlight.Highlights
+            };
+
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
     }
 }

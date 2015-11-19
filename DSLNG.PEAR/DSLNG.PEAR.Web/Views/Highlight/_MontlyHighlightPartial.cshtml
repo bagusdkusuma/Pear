@@ -1,32 +1,11 @@
-﻿@{
-    ViewBag.Title = "Buyer List";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<h2>Buyer List</h2>
-@Html.Partial("_MessageResponse")
-@Html.ActionLink("Create New", "Create")
-@*@Html.Action("IndexPartial")
-
-@section Scripts{
-    <script type="text/javascript">
-        var confirmDelete = function (id) {
-            if (confirm('Are you sure want to delete this item?')) {
-                var url = '@Url.Action("Delete", "Buyer")';
-                $('<form action="' + url + '" method="POST">' +
-                    '<input type="hidden" name="id" value="' + id + '">' +
-                    '</form>').submit();
-            }
-        };
-    </script>
-}*@
-
-
-<table id="buyer-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
+﻿
+<table id="montlyHighlight-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
     <thead>
         <tr>
-            <th>Name</th>
-            <th>Address</th>
+            <th>Periode Type</th>
+            <th>Type</th>
+            <th>Title</th>
+            <th>Date</th>
             <th>Is Active</th>
             <th>Action</th>
         </tr>
@@ -36,17 +15,19 @@
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#buyer-table').DataTable({
+            $('#montlyHighlight-table').DataTable({
                 "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
                 "iDisplayLength": -1,
                 "bProcessing": true,
                 "bServerSide": true,
                 "sServerMethod": "POST",
-                "sAjaxSource": '@Url.Action("Grid", "Buyer")',
+                "sAjaxSource": '@Url.Action("Grid", "Highlight")',
                 "order": [[3, "asc"]],
                 "aoColumns": [
-                    { "mDataProp": "Name", "name": "Name" },
-                    { "mDataProp": "Address", "name": "Address", "sortable": false },
+                    { "mDataProp": "PeriodeType", "name": "PeriodeType" },
+                    { "mDataProp": "Type", "name": "Type" },
+                    { "mDataProp": "Title", "name": "Title" },
+                    { "mDataProp": "Date", "name": "Date" },
                     {
                         "mDataProp": "IsActive", "name": "IsActive",
                         render: function (data, type, row) {
@@ -61,8 +42,8 @@
                         "data": null,
                         "defaultContent": '',
                         "mRender": function (data, type, row) {
-                            var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.id);
-                            var editLink = '@Html.ActionLink("Edit", "Edit", "Buyer", new {id = "_id_"}, null)'.replace('_id_', data.id);
+                            var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
+                            var editLink = '@Html.ActionLink("Edit", "Edit", "Highlight", new {id = "_id_"}, null)'.replace('_id_', data.Id);
                             return editLink + ' | ' + deleteLink;
                         }
                     }
@@ -73,10 +54,10 @@
                 }
             });
 
-            $('#buyer-table').on('click', '.delete', function () {
+            $('#montlyHighlight-table').on('click', '.delete', function () {
                 var id = $(this).attr('data-id');
                 if (confirm('Are you sure want to delete this item?' + id)) {
-                    var url = '@Url.Action("Delete", "Buyer")';
+                    var url = '@Url.Action("Delete", "Highlight")';
 
                     $('<form action="' + url + '" method="POST">' +
                         '<input type="hidden" name="id" value="' + id + '">' +

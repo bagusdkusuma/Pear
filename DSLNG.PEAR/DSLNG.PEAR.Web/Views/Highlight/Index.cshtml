@@ -18,15 +18,17 @@
             <!-- Tab panes -->
             <div class="tab-content">
                 <div class="tab-pane active" id="daily">
-                    @Html.Action("IndexPartial")
+                    @*@Html.Action("IndexPartial")*@
+                    @Html.Partial("_DailyHighlightPartial")
 
                 </div>
                 <div class="tab-pane" id="monthly">
-                    @Html.Action("MonthlyPartial")
+                    @*@Html.Action("MonthlyPartial")*@
+                    @Html.Partial("_MontlyHighlightPartial")
 
                 </div>
                 <div class="tab-pane" id="yearly">
-                    @Html.Action("YearlyPartial")
+                    @Html.Partial("_YearlyHighlightPartial")
 
                 </div>
                 <!-- Tab panes -->
@@ -35,7 +37,7 @@
         </div>
     </div>
 
-    @section Scripts{
+    @*@section Scripts{
         <script type="text/javascript">
             var confirmDelete = function (id) {
                 if (confirm('Are you sure want to delete this item?')) {
@@ -46,6 +48,6 @@
                 }
             };
         </script>
-    }
+    }*@
 
 </div>
