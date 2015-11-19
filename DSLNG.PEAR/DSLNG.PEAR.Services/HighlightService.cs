@@ -69,7 +69,9 @@ namespace DSLNG.PEAR.Services
                 if (request.Id == 0)
                 {
                     var highlight = request.MapTo<Highlight>();
-                    var highlightType = new SelectOption { Id = request.TypeId };
+                    var selectOption = DataContext.SelectOptions.Single(x => x.Id == request.TypeId);
+                    var highlightType = selectOption;
+                    highlight.Type = selectOption.Value;
                     DataContext.SelectOptions.Attach(highlightType);
                     highlight.HighlightType = highlightType;
                     DataContext.Highlights.Add(highlight);
@@ -80,7 +82,9 @@ namespace DSLNG.PEAR.Services
                     if (highlight != null)
                     {
                         request.MapPropertiesToInstance<Highlight>(highlight);
-                        var highlightType = new SelectOption { Id = request.TypeId };
+                        var selectOption = DataContext.SelectOptions.Single(x => x.Id == request.TypeId);
+                        var highlightType = selectOption;
+                        highlight.Type = selectOption.Value;
                         DataContext.SelectOptions.Attach(highlightType);
                         highlight.HighlightType = highlightType;
                     }
