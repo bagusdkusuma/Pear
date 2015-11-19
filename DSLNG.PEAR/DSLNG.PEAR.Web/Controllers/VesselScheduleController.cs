@@ -190,7 +190,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         x.Type,
                         x.Cargo, 
                         x.IsActive,
-                        x.Id
+                        x.id
                     })
             };
             return Json(data, JsonRequestBehavior.AllowGet);
