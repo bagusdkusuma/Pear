@@ -24,7 +24,7 @@ namespace DSLNG.PEAR.Services
                 .Include(x => x.VesselSchedule)
                 .Include(x => x.VesselSchedule.Vessel)
                 .Include(x => x.VesselSchedule.Buyer)
-                .FirstOrDefault().MapTo<GetNLSResponse>();
+                .FirstOrDefault(x => x.Id == request.Id).MapTo<GetNLSResponse>();
         }
 
         public GetNLSListResponse GetNLSList(GetNLSListRequest request)
