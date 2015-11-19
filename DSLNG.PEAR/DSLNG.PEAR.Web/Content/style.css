@@ -1988,3 +1988,13 @@ html>body tbody.scrollContent {
 table.der td {
     vertical-align:top;
 }
+table.dynamic-highlights td {
+    width:50%;
+}
+a.manage-highlight {
+    color: #72afd2;
+    text-decoration:underline;
+}
+a.manage-highlight {
+    color:#004071;
+}

@@ -38,14 +38,14 @@
                         </div>
                         <div class="row" style="margin-bottom: 40px">
                             <div class="col-md-4">
-                                <h4>Weather: <span class="weather-value">@Model.Weather.Text</span> <span class="display-image" style="width: 30px; height: 30px; display: inline-block; padding: 2.5px">
+                                <h4>Weather: <span class="weather-value">@Model.Weather.Text</span> <span class="display-image" style="width: 60px; height: 60px; display: inline-block; padding: 2.5px">
                                     <img src="~/Content/img/select/@Model.Weather.Value"  style="width:100%;height:100%;display:inline-block"/></span></h4>
                             </div>
                             <div class="col-md-4">
-                                <h4>Outside Temperature: <span class="weather-value">@Model.Weather.Temperature</span></h4>
+                                <h4 style="margin-top:22px">Outside Temperature: <span class="weather-value">@Model.Weather.Temperature</span></h4>
                             </div>
                             <div class="col-md-4">
-                                <h4>Alert Condition: <span class="weather-value alert">@Model.Alert.Message</span></h4>
+                                <h4 style="margin-top:22px">Alert Condition: <span class="weather-value alert">@Model.Alert.Message</span></h4>
                             </div>
                         </div>
                         <div class="row" style="margin-bottom: 40px">
@@ -110,7 +110,7 @@
                             <div class="col-md-12">
                                 <h4>@Model.HighlightGroupTemplates[i].Name</h4>
                                 <div class="panel panel-default der-panel">
-                                    <table class="der highlights table-bordered">
+                                    <table class="der highlights table-bordered dynamic-highlights">
                                         @for (var j = 0; j < Model.HighlightGroupTemplates[i].HighlightTypes.Count; j += 2)
                                         {
                                             var colspan = "";
@@ -131,18 +131,27 @@
                                                             if (currentHighlight != null)
                                                             {
                                                         <p>@Html.LimitString(currentHighlight.Message, 140)</p>
-                                                            @Html.ActionLink("Manage", "Edit",new{Id = currentHighlight.Id},new{@class="manage-highlight"})
+                                                            <a class="manage-highlight" href="@Url.Action("Edit", "Highlight", new{Id = currentHighlight.Id})">
+                                                                <span class="fa fa-pencil-square-o"></span>
+                                                                Manage
+                                                            </a>
                                                             }
                                                             else
                                                             {
-                                                                 @Html.ActionLink("Manage", "Create",new{TypeId = Model.HighlightGroupTemplates[i].HighlightTypes[j].Id, PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay },new{@class="manage-highlight"})
                                                         <p>...</p>
+                                                        <a class="manage-highlight" href="@Url.Action("Create", "Highlight", new{TypeId = Model.HighlightGroupTemplates[i].HighlightTypes[j].Id, PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay })">
+                                                                <span class="fa fa-pencil-square-o"></span>
+                                                                Manage
+                                                            </a>
                                                             }
                                                         }
                                                         else
                                                         {
-                                                              @Html.ActionLink("Manage", "Create",new{TypeId =  Model.HighlightGroupTemplates[i].HighlightTypes[j].Id, PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay},new{@class="manage-highlight"})
                                                         <p>...</p>
+                                                        <a class="manage-highlight" href="@Url.Action("Create", "Highlight", new{TypeId =  Model.HighlightGroupTemplates[i].HighlightTypes[j].Id, PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay})">
+                                                                <span class="fa fa-pencil-square-o"></span>
+                                                                Manage
+                                                            </a>
                                                         }
 
                                                     }
@@ -159,18 +168,27 @@
                                                             if (nextHighlight != null)
                                                             {
                                                             <p>@Html.LimitString(nextHighlight.Message, 140)</p>
-                                                             @Html.ActionLink("Manage", "Edit",new{Id = nextHighlight.Id},new{@class="manage-highlight"})
+                                                            <a class="manage-highlight" href="@Url.Action("Edit", "Highlight", new{Id = nextHighlight.Id})">
+                                                                <span class="fa fa-pencil-square-o"></span>
+                                                                Manage
+                                                            </a>
                                                             }
                                                             else
                                                             {
                                                             <p>...</p>
-                                                             @Html.ActionLink("Manage", "Create",new{TypeId = Model.HighlightGroupTemplates[i].HighlightTypes[j+1].Id,PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay },new{@class="manage-highlight"})
+                                                             <a class="manage-highlight" href="@Url.Action("Edit", "Highlight", new{TypeId = Model.HighlightGroupTemplates[i].HighlightTypes[j+1].Id,PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay })">
+                                                                <span class="fa fa-pencil-square-o"></span>
+                                                                Manage
+                                                            </a>
                                                             }
                                                         }
                                                         else
                                                         {
                                                             <p>...</p>
-                                                             @Html.ActionLink("Manage", "Create",new{TypeId = Model.HighlightGroupTemplates[i].HighlightTypes[j+1].Id,PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay },new{@class="manage-highlight"})
+                                                            <a class="manage-highlight" href="@Url.Action("Edit", "Highlight", new{TypeId = Model.HighlightGroupTemplates[i].HighlightTypes[j+1].Id,PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay })">
+                                                                <span class="fa fa-pencil-square-o"></span>
+                                                                Manage
+                                                            </a>
                                                         }
 
                                                     </td>

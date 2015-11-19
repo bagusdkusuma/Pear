@@ -238,7 +238,7 @@ namespace DSLNG.PEAR.Web.Controllers
             TempData["Message"] = resp.Message;
             if (resp.IsSuccess)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Display");
             }
             return RedirectToAction("Create");
         }
@@ -268,7 +268,7 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             var req = viewModel.MapTo<SaveHighlightRequest>();
             _highlightService.SaveHighlight(req);
-            return RedirectToAction("Index");
+            return RedirectToAction("Display");
         }
 
         [HttpPost]
