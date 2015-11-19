@@ -4,7 +4,7 @@ using DSLNG.PEAR.Data.Enums;
 using System;
 namespace DSLNG.PEAR.Services.Requests.Highlight
 {
-    public class GetHighlightsRequest
+    public class GetHighlightsRequest : GridBaseRequest
     {
         public GetHighlightsRequest()
         {

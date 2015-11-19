@@ -9,5 +9,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetWeathersResponse GetWeathers(GetWeathersRequest request);
         SaveWeatherResponse SaveWeather(SaveWeatherRequest request);
         DeleteWeatherResponse Delete(DeleteWeatherRequest request);
+        GetWeathersResponse GetWeathersForGrid(GetWeathersRequest request);
     }
 }
