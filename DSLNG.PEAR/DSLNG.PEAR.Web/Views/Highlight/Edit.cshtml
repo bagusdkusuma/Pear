@@ -1,7 +1,7 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Highlight.HighlightViewModel
 
 @{
-    ViewBag.Title = "Edut";
+    ViewBag.Title = "Edit";
 }
 
 <div class="highlight-save">
@@ -12,9 +12,11 @@
             <div class="title">Highlight</div>
             <div class="description_year">New</div>
             <div>@Html.ValidationSummary(true)</div>
+           
             @Html.HiddenFor(x => x.Id)
         </div>
         <div class="col-md-12">
+             @Html.Partial("_MessageResponse")
             <div class="form-inline whitebox">
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.PeriodeType)
@@ -58,7 +60,7 @@
         <div class="col-md-12 artifact-designer-btns">
             <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
             <a onclick="location.reload();" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>
-            <a href="/Highlight" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+            <a href="@Url.Action("Display")" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
         </div>
     }
 </div>

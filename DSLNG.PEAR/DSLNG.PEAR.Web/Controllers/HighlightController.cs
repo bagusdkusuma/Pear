@@ -240,7 +240,7 @@ namespace DSLNG.PEAR.Web.Controllers
             TempData["Message"] = resp.Message;
             if (resp.IsSuccess)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Display");
             }
             return RedirectToAction("Create");
         }
@@ -269,8 +269,14 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Edit(HighlightViewModel viewModel)
         {
             var req = viewModel.MapTo<SaveHighlightRequest>();
-            _highlightService.SaveHighlight(req);
-            return RedirectToAction("Index");
+            var resp = _highlightService.SaveHighlight(req);
+            TempData["IsSuccess"] = resp.IsSuccess;
+            TempData["Message"] = resp.Message;
+            if (resp.IsSuccess)
+            {
+                return RedirectToAction("Display");
+            }
+            return RedirectToAction("Edit", new { id = viewModel.Id });
         }
 
         [HttpPost]

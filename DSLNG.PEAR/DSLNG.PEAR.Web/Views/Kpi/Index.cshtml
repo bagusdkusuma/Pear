@@ -6,7 +6,7 @@
 <h2>KPI List</h2>
 @Html.Partial("_MessageResponse")
 <div class="add-button-wrapper">
-    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })    
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
 </div>
 
 @*@Html.Action("IndexPartial")*@
@@ -27,7 +27,7 @@
 
 @section Scripts{
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#kpi-table').DataTable({
                 "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
                 "iDisplayLength": -1,
@@ -37,9 +37,14 @@
                 "sAjaxSource": '@Url.Action("Grid", "Kpi")',
                 "order": [[3, "asc"]],
                 "aoColumns": [
-                    { "mDataProp": "Code", "name": "Code" },
-                    { "mDataProp": "Name", "name": "Name" },
-                    { "mDataProp": "PillarName", "name": "PillarName" },
+                    { "mDataProp": "Code", "name": "Code", "className": "text-align-left" },
+                    {
+                        "mDataProp": "Name", "name": "Name", "className": "text-align-left",
+                        render: function (data, type, row) {
+                            return data + ' (' + row.Measurement.Name +')';
+                        }
+                    },
+                    { "mDataProp": "PillarName", "name": "PillarName", "className": "text-align-left" },
                     { "mDataProp": "Order", "name": "Order" },
                     {
                         "mDataProp": "IsEconomic", "name": "IsEconomic",
@@ -66,7 +71,7 @@
                         "defaultContent": '',
                         "mRender": function (data, type, row) {
                             var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
-                            var editLink = '@Html.ActionLink("Edit", "Update", "Kpi", new {id = "_id_"}, null)'.replace('_id_', data.Id);
+                            var editLink = '@Html.ActionLink("Edit", "Update", "Kpi", new { id = "_id_" }, null)'.replace('_id_', data.Id);
                             return editLink + ' | ' + deleteLink;
                         }
                     }
@@ -77,18 +82,18 @@
                     $('input.is-economic', row).prop('checked', data.IsEconomic == 1);
                 }
             });
-            
+
             $('#kpi-table').on('click', '.delete', function () {
                 var id = $(this).attr('data-id');
                 if (confirm('Are you sure want to delete this item?' + id)) {
                     var url = '@Url.Action("Delete", "Kpi")';
-                    
-                    $('<form action="' + url + '" method="POST">' +
-                        '<input type="hidden" name="id" value="' + id + '">' +
-                        '</form>').submit();
-                }
+
+                        $('<form action="' + url + '" method="POST">' +
+                            '<input type="hidden" name="id" value="' + id + '">' +
+                            '</form>').submit();
+                    }
             });
-            
+
         });
     </script>
 }
