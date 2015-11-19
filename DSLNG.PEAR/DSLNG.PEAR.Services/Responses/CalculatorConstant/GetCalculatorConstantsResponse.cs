@@ -9,7 +9,7 @@ namespace DSLNG.PEAR.Services.Responses.CalculatorConstant
         public int TotalRecords { get; set; }
         public int Count { get; set; }
         public class CalculatorConstantResponse {
-            public int Id { get; set; }
+            public int id { get; set; }
             public string Name { get; set; }
             public string DisplayName { get; set; }
             public double Value { get; set; }
