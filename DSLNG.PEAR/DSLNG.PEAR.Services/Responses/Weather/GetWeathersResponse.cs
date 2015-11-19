@@ -8,6 +8,7 @@ namespace DSLNG.PEAR.Services.Responses.Weather
     public class GetWeathersResponse
     {
         public IList<WeatherResponse> Weathers { get; set; }
+        public int TotalRecords { get; set; }
         public int Count { get; set; }
         public class WeatherResponse
         {

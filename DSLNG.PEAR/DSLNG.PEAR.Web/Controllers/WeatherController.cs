@@ -9,6 +9,8 @@ using System.Linq;
 using System;
 using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Web.Grid;
+using DSLNG.PEAR.Common.Contants;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -127,6 +129,33 @@ namespace DSLNG.PEAR.Web.Controllers
             return RedirectToAction("Index");
         }
 
+
+        public ActionResult Grid(GridParams gridParams)
+        {
+            var weather = _weatherService.GetWeathersForGrid(new GetWeathersRequest
+                {
+                    Skip = gridParams.DisplayStart,
+                    Take = gridParams.DisplayLength,
+                    Search = gridParams.Search,
+                    SortingDictionary = gridParams.SortingDictionary
+                });
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = weather.TotalRecords,
+                iTotalRecords = weather.Weathers.Count,
+                aaData = weather.Weathers.Select(x => new
+                {
+                    x.Id,
+                    x.PeriodeType,
+                    Date = x.Date.ToString(DateFormat.DateForGrid),
+                    x.Value,
+                    x.Temperature
+                })
+            };
+
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
 
     }
 }
