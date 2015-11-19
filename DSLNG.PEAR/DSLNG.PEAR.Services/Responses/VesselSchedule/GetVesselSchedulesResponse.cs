@@ -11,7 +11,7 @@ namespace DSLNG.PEAR.Services.Responses.VesselSchedule
         public class VesselScheduleResponse {
             public VesselScheduleResponse() {
             }
-            public int Id { get; set; }
+            public int id { get; set; }
             public string Vessel { get; set; }
             public string Name { get; set; }
             public DateTime? ETA { get; set; }
