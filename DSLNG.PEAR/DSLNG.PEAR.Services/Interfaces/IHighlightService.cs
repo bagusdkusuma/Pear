@@ -12,5 +12,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetReportHighlightsResponse GetReportHighlights(GetReportHighlightsRequest request);
         DeleteResponse DeleteHighlight(DeleteRequest request);
         GetDynamicHighlightsResponse GetDynamicHighlights(GetDynamicHighlightsRequest request);
+        GetHighlightsResponse GetHighlightsForGrid(GetHighlightsRequest request);
     }
 }

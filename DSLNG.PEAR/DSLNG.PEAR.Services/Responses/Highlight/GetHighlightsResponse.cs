@@ -8,6 +8,7 @@ namespace DSLNG.PEAR.Services.Responses.Highlight
     public class GetHighlightsResponse
     {
         public IList<HighlightResponse> Highlights { get; set; }
+        public int TotalRecords { get; set; }
         public int Count { get; set; }
         public class HighlightResponse {
             public int Id { get; set; }
