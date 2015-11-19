@@ -338,7 +338,10 @@ namespace DSLNG.PEAR.Services
 
         private IEnumerable<Kpi> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int totalRecords)
         {
-            var data = DataContext.Kpis.Include(x => x.Pillar).AsQueryable();
+            var data = DataContext.Kpis
+                .Include(x => x.Pillar)
+                .Include(x => x.Measurement)
+                .AsQueryable();
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             {
                 data = data.Where(x => x.Code.Contains(search) || x.Pillar.Name.Contains(search) ||

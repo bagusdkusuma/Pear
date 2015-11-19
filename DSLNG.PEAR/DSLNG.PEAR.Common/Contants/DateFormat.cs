@@ -12,5 +12,6 @@ namespace DSLNG.PEAR.Common.Contants
         public const string Daily = "dd-MMM-yyyy";
         public const string Monthly = "MMM-yyyy";
         public const string Yearly = "yyyy";
+        public const string DateForGrid = "MM/dd/yyyy";
     }
 }
