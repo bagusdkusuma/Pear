@@ -1991,10 +1991,12 @@ table.der td {
 table.dynamic-highlights td {
     width:50%;
 }
-a.manage-highlight {
+a.manage-highlight,
+a.see-more {
     color: #72afd2;
     text-decoration:underline;
 }
-a.manage-highlight {
+a.manage-highlight:hover,
+a.see-more:hover {
     color:#004071;
 }
