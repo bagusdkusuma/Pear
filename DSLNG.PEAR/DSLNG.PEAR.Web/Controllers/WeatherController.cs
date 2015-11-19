@@ -147,7 +147,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 aaData = weather.Weathers.Select(x => new
                 {
                     x.Id,
-                    x.PeriodeType,
+                    PeriodeType = x.PeriodeType.ToString(),
                     Date = x.Date.ToString(DateFormat.DateForGrid),
                     x.Value,
                     x.Temperature

@@ -17,6 +17,8 @@ using System.Data.SqlClient;
 using System.Collections.Generic;
 using DSLNG.PEAR.Services.Requests.HighlightGroup;
 using System.Globalization;
+using DSLNG.PEAR.Web.Grid;
+using DSLNG.PEAR.Common.Contants;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -379,5 +381,37 @@ namespace DSLNG.PEAR.Web.Controllers
             }
             return Json(new string[0] { }, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult Grid(GridParams gridParams, string periodeType)
+        {
+            var highlight = _highlightService.GetHighlightsForGrid(new GetHighlightsRequest
+                {
+                    Skip = gridParams.DisplayStart,
+                    Take = gridParams.DisplayLength,
+                    Search = gridParams.Search,
+                    SortingDictionary = gridParams.SortingDictionary
+                });
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = highlight.TotalRecords,
+                iTotalRecords = highlight.Highlights.Count,
+                aaData = highlight.Highlights.Where(x => x.PeriodeType == (PeriodeType)Enum.Parse(typeof(PeriodeType),periodeType)).Select(x => new
+                {
+                    x.Id,
+                    Date = x.Date.ToString(DateFormat.DateForGrid),
+                    x.IsActive,
+                    PeriodeType = x.PeriodeType.ToString(),
+                    x.Type,
+                    x.Title,
+                    x.Message
+                })
+            };
+
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+
+       
     }
 }

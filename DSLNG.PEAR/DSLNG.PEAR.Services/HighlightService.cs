@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using DSLNG.PEAR.Data.Enums;
+using System.Data.SqlClient;
 
 namespace DSLNG.PEAR.Services
 {
@@ -239,6 +240,67 @@ namespace DSLNG.PEAR.Services
                 };
             }
             return new GetDynamicHighlightsResponse();
+        }
+
+
+        public IEnumerable<Highlight> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        {
+            var data = DataContext.Highlights.Include(x => x.HighlightType).AsQueryable();
+            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            {
+                data = data.Where(x => x.Type.Contains(search) || x.Title.Contains(search));
+            }
+
+            foreach (var sortOrder in sortingDictionary)
+            {
+                switch (sortOrder.Key)
+                {
+                    case "PeriodeType":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.PeriodeType)
+                            : data.OrderByDescending(x => x.PeriodeType);
+                        break;
+                    case "Type":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Type)
+                            : data.OrderByDescending(x => x.Type);
+                        break;
+                    case "Title":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Title)
+                            : data.OrderByDescending(x => x.Title);
+                        break;
+                    case "Date":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Date)
+                            : data.OrderByDescending(x => x.Date);
+                        break;
+                    case "IsActive":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.IsActive)
+                            : data.OrderByDescending(x => x.IsActive);
+                        break;
+                }
+            }
+            TotalRecords = data.Count();
+            return data;
+        }
+
+
+        public GetHighlightsResponse GetHighlightsForGrid(GetHighlightsRequest request)
+        {
+            int totalRecords;
+            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            if (request.Take != -1)
+            {
+                data = data.Skip(request.Skip).Take(request.Take);
+            }
+
+            return new GetHighlightsResponse
+            {
+                TotalRecords = totalRecords,
+                Highlights = data.ToList().MapTo<GetHighlightsResponse.HighlightResponse>()
+            };
         }
     }
 }
