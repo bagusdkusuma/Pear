@@ -59,7 +59,7 @@ namespace DSLNG.PEAR.Services
                     VesselSchedules = query.Where(x => x.IsActive == true).Select(
                         x => new GetVesselSchedulesResponse.VesselScheduleResponse
                         {
-                            Id = x.id,
+                            id = x.id,
                             Remark = x.NextLoadingSchedules.Count == 1 ? x.NextLoadingSchedules.FirstOrDefault().Remark : null,
                             RemarkDate = x.NextLoadingSchedules.Count == 1 ? x.NextLoadingSchedules.FirstOrDefault().CreatedAt : (DateTime?)null,
                             Buyer = x.Buyer.Name,

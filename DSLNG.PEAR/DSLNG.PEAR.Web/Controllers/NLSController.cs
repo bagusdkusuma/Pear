@@ -1,4 +1,5 @@
-﻿using DevExpress.Web.Mvc;
+﻿using DSLNG.PEAR.Common.Contants;
+using DevExpress.Web.Mvc;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.NLS;
 using DSLNG.PEAR.Services.Requests.VesselSchedule;
@@ -162,7 +163,13 @@ namespace DSLNG.PEAR.Web.Controllers
                 sEcho = gridParams.Echo + 1,
                 iTotalDisplayRecords = NLS.TotalRecords,
                 iTotalRecords = NLS.NLSList.Count,
-                aaData = NLS.NLSList
+                aaData = NLS.NLSList.Select(x => new
+                    {
+                        x.Vessel,
+                        CreatedAt = x.CreatedAt.ToString(DateFormat.DateForGrid),
+                        x.Remark,
+                        x.Id
+                    })
             };
 
             return Json(data, JsonRequestBehavior.AllowGet);

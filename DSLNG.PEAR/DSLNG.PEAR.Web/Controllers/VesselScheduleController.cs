@@ -1,4 +1,5 @@
-﻿using DevExpress.Web.Mvc;
+﻿using DSLNG.PEAR.Common.Contants;
+using DevExpress.Web.Mvc;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Buyer;
 using DSLNG.PEAR.Services.Requests.Vessel;
@@ -178,7 +179,19 @@ namespace DSLNG.PEAR.Web.Controllers
                 sEcho = gridParams.Echo + 1,
                 iTotalDisplayRecords = vessel.TotalRecords,
                 iTotalRecords = vessel.VesselSchedules.Count,
-                aaData = vessel.VesselSchedules
+                aaData = vessel.VesselSchedules.Select(x => new
+                    {
+                        x.Vessel,
+                        ETA = x.ETA.HasValue ? x.ETA.Value.ToString(DateFormat.DateForGrid) : string.Empty,
+                        ETD = x.ETD.HasValue ? x.ETD.Value.ToString(DateFormat.DateForGrid) : string.Empty,
+                        x.Buyer,
+                        x.Location,
+                        x.SalesType,
+                        x.Type,
+                        x.Cargo, 
+                        x.IsActive,
+                        x.id
+                    })
             };
             return Json(data, JsonRequestBehavior.AllowGet);
         }
