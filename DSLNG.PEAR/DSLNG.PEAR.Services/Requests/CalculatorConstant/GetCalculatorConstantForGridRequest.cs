@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DSLNG.PEAR.Services.Requests.Select
+namespace DSLNG.PEAR.Services.Requests.CalculatorConstant
 {
-    public class GetSelectsRequest : GridBaseRequest
+    public class GetCalculatorConstantForGridRequest : GridBaseRequest
     {
-        public int Skip { get; set; }
         public int Take { get; set; }
+        public int Skip { get; set; }
     }
 }

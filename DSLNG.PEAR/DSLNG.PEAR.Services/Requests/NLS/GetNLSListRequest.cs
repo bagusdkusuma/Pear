@@ -2,7 +2,7 @@
 
 namespace DSLNG.PEAR.Services.Requests.NLS
 {
-    public class GetNLSListRequest
+    public class GetNLSListRequest : GridBaseRequest
     {
         public int Take { get; set; }
         public int Skip { get; set; }

@@ -130,7 +130,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Grid(GridParams gridParams)
         {
-            var buyer = _buyerService.GetBuyers(new GetBuyersRequest
+            var buyer = _buyerService.GetBuyersForGrid(new GetBuyerForGridRequest
                 {
                     Skip = gridParams.DisplayStart,
                     Take = gridParams.DisplayLength,
@@ -141,8 +141,8 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 sEcho = gridParams.Echo + 1,
                 iTotalDisplayRecords = buyer.TotalRecords,
-                iTotalRecords = buyer.Buyers.Count,
-                aaData = buyer.Buyers
+                iTotalRecords = buyer.BuyerForGrids.Count,
+                aaData = buyer.BuyerForGrids
             };
             return Json(data, JsonRequestBehavior.AllowGet);
         }

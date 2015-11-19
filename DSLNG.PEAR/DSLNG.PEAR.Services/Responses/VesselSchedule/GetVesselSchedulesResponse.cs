@@ -7,10 +7,11 @@ namespace DSLNG.PEAR.Services.Responses.VesselSchedule
     {
         public int Count { get; set; }
         public IList<VesselScheduleResponse> VesselSchedules { get; set; }
+        public int TotalRecords { get; set; }
         public class VesselScheduleResponse {
             public VesselScheduleResponse() {
             }
-            public int id { get; set; }
+            public int Id { get; set; }
             public string Vessel { get; set; }
             public string Name { get; set; }
             public DateTime? ETA { get; set; }

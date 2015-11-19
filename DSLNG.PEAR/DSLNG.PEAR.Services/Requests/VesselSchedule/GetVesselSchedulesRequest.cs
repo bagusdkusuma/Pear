@@ -1,7 +1,7 @@
 ﻿
 namespace DSLNG.PEAR.Services.Requests.VesselSchedule
 {
-    public class GetVesselSchedulesRequest
+    public class GetVesselSchedulesRequest : GridBaseRequest
     {
         public int Take { get; set; }
         public int Skip { get; set; }

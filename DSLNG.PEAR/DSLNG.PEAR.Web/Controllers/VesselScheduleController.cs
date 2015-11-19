@@ -12,6 +12,8 @@ using System.Web;
 using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Requests.Select;
+using System.Data.SqlClient;
+using DSLNG.PEAR.Web.Grid;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -91,13 +93,21 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult VesselList(string term)
         {
-            var vessels = _vesselService.GetVessels(new GetVesselsRequest { Skip = 0, Take = 20, Term = term }).Vessels;
+            var vessels = _vesselService.GetVessels(new GetVesselsRequest {
+                Skip = 0,
+                Take = 20, 
+                Term = term,
+            }).Vessels;
             return Json(new { results = vessels }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult BuyerList(string term)
         {
-            var buyers = _buyerService.GetBuyers(new GetBuyersRequest { Skip = 0, Take = 20, Term = term }).Buyers;
+            var buyers = _buyerService.GetBuyers(new GetBuyersRequest {
+                Skip = 0,
+                Take = 20, 
+                Term = term,
+            }).Buyers;
             return Json(new { results = buyers }, JsonRequestBehavior.AllowGet);
         }
 
@@ -151,6 +161,26 @@ namespace DSLNG.PEAR.Web.Controllers
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
             return RedirectToAction("Index");
+        }
+
+
+        public ActionResult Grid(GridParams gridParams)
+        {
+            var vessel = _vesselScheduleService.GetVesselSchedulesForGrid(new GetVesselSchedulesRequest
+                {
+                    Skip = gridParams.DisplayStart,
+                    Take = gridParams.DisplayLength,
+                    Search = gridParams.Search,
+                    SortingDictionary = gridParams.SortingDictionary
+                });
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = vessel.TotalRecords,
+                iTotalRecords = vessel.VesselSchedules.Count,
+                aaData = vessel.VesselSchedules
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
     }
 }

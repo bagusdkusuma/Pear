@@ -9,6 +9,8 @@ using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Entities;
 using System;
 using System.Data.Entity.Infrastructure;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace DSLNG.PEAR.Services
 {
@@ -29,12 +31,14 @@ namespace DSLNG.PEAR.Services
             {
                 return new GetVesselSchedulesResponse { Count = DataContext.VesselSchedules.Count() };
             }
-            else if (request.allActiveList) {
+            else if (request.allActiveList)
+            {
                 var query = DataContext.VesselSchedules
                     .Include(x => x.Buyer)
                     .Include(x => x.Vessel)
                     .Include(x => x.Vessel.Measurement)
-                    .Select(x => new { 
+                    .Select(x => new
+                    {
                         id = x.Id,
                         NextLoadingSchedules = x.NextLoadingSchedules.OrderByDescending(y => y.CreatedAt).Take(1).ToList(),
                         Buyer = x.Buyer,
@@ -55,8 +59,8 @@ namespace DSLNG.PEAR.Services
                     VesselSchedules = query.Where(x => x.IsActive == true).Select(
                         x => new GetVesselSchedulesResponse.VesselScheduleResponse
                         {
-                            id = x.id,
-                            Remark = x.NextLoadingSchedules.Count == 1? x.NextLoadingSchedules.FirstOrDefault().Remark : null,
+                            Id = x.id,
+                            Remark = x.NextLoadingSchedules.Count == 1 ? x.NextLoadingSchedules.FirstOrDefault().Remark : null,
                             RemarkDate = x.NextLoadingSchedules.Count == 1 ? x.NextLoadingSchedules.FirstOrDefault().CreatedAt : (DateTime?)null,
                             Buyer = x.Buyer.Name,
                             Vessel = x.Vessel.Name,
@@ -176,6 +180,97 @@ namespace DSLNG.PEAR.Services
                     Message = "An error occured while trying to delete this item"
                 };
             }
+        }
+
+
+        public IEnumerable<VesselSchedule> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        {
+            var data = DataContext.VesselSchedules.Include(x => x.Buyer).Include(x => x.Vessel).Include(x => x.Vessel.Measurement).AsQueryable();
+            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            {
+                data = data.Where(x => x.Vessel.Name.Contains(search)
+                    || x.Buyer.Name.Contains(search)
+                    || x.Location.Contains(search)
+                    || x.SalesType.Contains(search)
+                    || x.Type.Contains(search)
+                    || x.Cargo.Contains(search)
+                    //|| x.Vessel.Measurement.Name.Contains(search)
+                    );
+            }
+
+            foreach (var sortOrder in sortingDictionary)
+            {
+                switch (sortOrder.Key)
+                {
+                    case "Vessel":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Vessel.Name)
+                            : data.OrderByDescending(x => x.Vessel.Name);
+                        break;
+                    case "ETA":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.ETA)
+                            : data.OrderByDescending(x => x.ETA);
+                        break;
+                    case "ETD":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.ETD)
+                            : data.OrderByDescending(x => x.ETD);
+                        break;
+                    case "Buyer":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Buyer.Name)
+                            : data.OrderByDescending(x => x.Buyer.Name);
+                        break;
+                    case "Location":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Location)
+                            : data.OrderByDescending(x => x.Location);
+                        break;
+                    case "SalesType":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.SalesType)
+                            : data.OrderByDescending(x => x.SalesType);
+                        break;
+                    case "Type":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Type)
+                            : data.OrderByDescending(x => x.Type);
+                        break;
+                    case "Cargo":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Cargo)
+                            : data.OrderByDescending(x => x.Cargo);
+                        break;
+                    case "IsActive":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.IsActive)
+                            : data.OrderByDescending(x => x.IsActive);
+                        break;
+
+
+                }
+            }
+
+            TotalRecords = data.Count();
+            return data;
+        }
+
+
+        public GetVesselSchedulesResponse GetVesselSchedulesForGrid(GetVesselSchedulesRequest request)
+        {
+            int totalRecords;
+            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            if (request.Take != -1)
+            {
+                data = data.Skip(request.Skip).Take(request.Take);
+            }
+
+            return new GetVesselSchedulesResponse
+            {
+                TotalRecords = totalRecords,
+                VesselSchedules = data.ToList().MapTo<GetVesselSchedulesResponse.VesselScheduleResponse>()
+            };
         }
     }
 }

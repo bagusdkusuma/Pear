@@ -8,6 +8,8 @@ using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Data.Entities;
 using System;
 using System.Data.Entity.Infrastructure;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace DSLNG.PEAR.Services
 {
@@ -33,7 +35,8 @@ namespace DSLNG.PEAR.Services
             {
                 var query = DataContext.Vessels
                     .Include(x => x.Measurement);
-                if (!string.IsNullOrEmpty(request.Term)) {
+                if (!string.IsNullOrEmpty(request.Term))
+                {
                     query = query.Where(x => x.Name.Contains(request.Term));
                 }
                 query = query.OrderByDescending(x => x.Id).Skip(request.Skip).Take(request.Take);
@@ -121,6 +124,63 @@ namespace DSLNG.PEAR.Services
                     Message = "An error occured while trying to delete this item"
                 };
             }
+        }
+
+
+        public IEnumerable<Vessel> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        {
+            var data = DataContext.Vessels.Include(x => x.Measurement).AsQueryable();
+            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            {
+                data = data.Where(x => x.Name.Contains(search) || x.Type.Contains(search) || x.Measurement.Name.Contains(search));
+            }
+
+            foreach (var sortOrder in sortingDictionary)
+            {
+                switch (sortOrder.Key)
+                {
+                    case "Name":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Name).ThenBy(x => x.Capacity)
+                            : data.OrderByDescending(x => x.Name).ThenBy(x => x.Capacity);
+                        break;
+                    case "Capacity":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Capacity)
+                            : data.OrderByDescending(x => x.Capacity);
+                        break;
+                    case "Type":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Type).ThenBy(x => x.Capacity)
+                            : data.OrderByDescending(x => x.Type).ThenBy(x => x.Capacity);
+                        break;
+                    case "Measurement":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Measurement.Name).ThenBy(x => x.Capacity)
+                            : data.OrderByDescending(x => x.Measurement.Name).ThenBy(x => x.Capacity);
+                        break;
+                }
+            }
+
+            TotalRecords = data.Count();
+            return data;
+        }
+
+
+        public GetVesselsResponse GetVesselsForGrid(GetVesselsRequest request)
+        {
+            int totalRecords;
+            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            if (request.Take != -1)
+            {
+                data = data.Skip(request.Skip).Take(request.Take);
+            }
+
+            return new GetVesselsResponse
+            {
+                TotalRecords = totalRecords,
+                Vessels = data.ToList().MapTo<GetVesselsResponse.VesselResponse>()
+            };
         }
     }
 }

@@ -147,10 +147,12 @@
     <Compile Include="Requests\AssumptionData\GetAssumptionDatasRequest.cs" />
     <Compile Include="Requests\AssumptionData\SaveAssumptionDataRequest.cs" />
     <Compile Include="Requests\Buyer\DeleteBuyerRequest.cs" />
+    <Compile Include="Requests\Buyer\GetBuyerForGridRequest.cs" />
     <Compile Include="Requests\Buyer\GetBuyerRequest.cs" />
     <Compile Include="Requests\Buyer\GetBuyersRequest.cs" />
     <Compile Include="Requests\Buyer\SaveBuyerRequest.cs" />
     <Compile Include="Requests\CalculatorConstant\DeleteCalculatorConstantRequest.cs" />
+    <Compile Include="Requests\CalculatorConstant\GetCalculatorConstantForGridRequest.cs" />
     <Compile Include="Requests\CalculatorConstant\GetCalculatorConstantRequest.cs" />
     <Compile Include="Requests\CalculatorConstant\GetCalculatorConstantsRequest.cs" />
     <Compile Include="Requests\CalculatorConstant\SaveCalculatorConstantRequest.cs" />
@@ -291,11 +293,13 @@
     <Compile Include="Responses\AssumptionData\GetAssumptionDatasResponse.cs" />
     <Compile Include="Responses\AssumptionData\SaveAssumptionDataResponse.cs" />
     <Compile Include="Responses\Buyer\DeleteBuyerResponse.cs" />
+    <Compile Include="Responses\Buyer\GetBuyerForGridResponse.cs" />
     <Compile Include="Responses\Buyer\GetBuyerResponse.cs" />
     <Compile Include="Responses\Buyer\GetBuyersResponse.cs" />
     <Compile Include="Responses\Buyer\SaveBuyerResponse.cs" />
     <Compile Include="Responses\CalculatorConstant\DeleteCalculatorConstantResponse.cs" />
     <Compile Include="Responses\CalculatorConstant\GetCalculatorConstantResponse.cs" />
+    <Compile Include="Responses\CalculatorConstant\GetCalculatorConstantsForGridRespone.cs" />
     <Compile Include="Responses\CalculatorConstant\GetCalculatorConstantsResponse.cs" />
     <Compile Include="Responses\CalculatorConstant\SaveCalculatorConstantResponse.cs" />
     <Compile Include="Responses\Config\GetConfigurationResponse.cs" />

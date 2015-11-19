@@ -19,46 +19,37 @@ namespace DSLNG.PEAR.Services
 
         public GetCalculatorConstantsResponse GetCalculatorConstants(GetCalculatorConstantsRequest request)
         {
-            int totalRecords;
-            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
-            if (request.Take != -1)
+            if (request.OnlyCount)
             {
-                data = data.Skip(request.Skip).Take(request.Take);
+                var query = DataContext.CalculatorConstants.AsQueryable();
+                if (!string.IsNullOrEmpty(request.Term))
+                {
+                    query = query.Where(x => x.Name.ToLower().Contains(request.Term.ToLower()));
+                }
+                return new GetCalculatorConstantsResponse { Count = query.Count() };
             }
-
-            return new GetCalculatorConstantsResponse
+            else
             {
-                TotalRecords = totalRecords,
-                CalculatorConstants = data.ToList().MapTo<GetCalculatorConstantsResponse.CalculatorConstantResponse>()
-            };
-            //if (request.OnlyCount)
-            //{
-            //    var query = DataContext.CalculatorConstants.AsQueryable();
-            //    if (!string.IsNullOrEmpty(request.Term))
-            //    {
-            //        query = query.Where(x => x.Name.ToLower().Contains(request.Term.ToLower()));
-            //    }
-            //    return new GetCalculatorConstantsResponse { Count = query.Count() };
-            //}
-            //else {
-            //    var query = DataContext.CalculatorConstants.AsQueryable();
-            //    if (!string.IsNullOrEmpty(request.Term))
-            //    {
-            //        query = query.Where(x => x.Name.ToLower().Contains(request.Term.ToLower()));
-            //    }
-            //    query = query.OrderByDescending(x => x.Id);
-            //    if (request.Skip != 0) {
-            //        query = query.Skip(request.Skip);
-            //    }
-            //    if (request.Take != 0) {
-            //        query = query.Take(request.Take);
-            //    }
-            //    return new GetCalculatorConstantsResponse
-            //    {
-            //        CalculatorConstants = query.ToList()
-            //            .MapTo<GetCalculatorConstantsResponse.CalculatorConstantResponse>()
-            //    };
-            //}
+                var query = DataContext.CalculatorConstants.AsQueryable();
+                if (!string.IsNullOrEmpty(request.Term))
+                {
+                    query = query.Where(x => x.Name.ToLower().Contains(request.Term.ToLower()));
+                }
+                query = query.OrderByDescending(x => x.Id);
+                if (request.Skip != 0)
+                {
+                    query = query.Skip(request.Skip);
+                }
+                if (request.Take != 0)
+                {
+                    query = query.Take(request.Take);
+                }
+                return new GetCalculatorConstantsResponse
+                {
+                    CalculatorConstants = query.ToList()
+                        .MapTo<GetCalculatorConstantsResponse.CalculatorConstantResponse>()
+                };
+            }
         }
 
         public GetCalculatorConstantResponse GetCalculatorConstant(GetCalculatorConstantRequest request)
@@ -160,6 +151,23 @@ namespace DSLNG.PEAR.Services
             {
                 IsSuccess = true,
                 Message = "Calculator Constant has been deleted successfully"
+            };
+        }
+
+
+        public GetCalculatorConstantsForGridRespone GetCalculatorConstantsForGrid(GetCalculatorConstantForGridRequest request)
+        {
+            int totalRecords;
+            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            if (request.Take != -1)
+            {
+                data = data.Skip(request.Skip).Take(request.Take);
+            }
+
+            return new GetCalculatorConstantsForGridRespone
+            {
+                TotalRecords = totalRecords,
+                CalculatorConstantsForGrids = data.ToList().MapTo<GetCalculatorConstantsForGridRespone.CalculatorConstantsForGrid>()
             };
         }
     }

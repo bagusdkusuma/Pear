@@ -8,6 +8,7 @@ using System.Linq;
 using DSLNG.PEAR.Common.Extensions;
 using System.Data.SqlClient;
 using System.Collections.Generic;
+using DSLNG.PEAR.Web.Grid;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -137,6 +138,26 @@ namespace DSLNG.PEAR.Web.Controllers
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
                 return RedirectToAction("Index");
+        }
+
+        public ActionResult Grid(GridParams gridParams)
+        {
+            var vessel = _vesselService.GetVesselsForGrid(new GetVesselsRequest
+                {
+                    Skip = gridParams.DisplayStart,
+                    Take = gridParams.DisplayLength,
+                    Search = gridParams.Search,
+                    SortingDictionary = gridParams.SortingDictionary
+                });
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = vessel.TotalRecords,
+                iTotalRecords = vessel.Vessels.Count,
+                aaData = vessel.Vessels
+            };
+
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
     }
 }

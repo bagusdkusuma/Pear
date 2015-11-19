@@ -11,7 +11,7 @@ namespace DSLNG.PEAR.Services.Requests.Periode
         public int Id { get; set; }
     }
 
-    public class GetPeriodesRequest
+    public class GetPeriodesRequest : GridBaseRequest
     {
         public int Take { get; set; }
         public int Skip { get; set; }

@@ -11,6 +11,7 @@ using DSLNG.PEAR.Common.Extensions;
 using System.Data.Entity.Infrastructure;
 using DSLNG.PEAR.Data.Entities;
 using System.Data.Entity;
+using System.Data.SqlClient;
 
 namespace DSLNG.PEAR.Services
 {
@@ -107,6 +108,53 @@ namespace DSLNG.PEAR.Services
                 response.Message = dbUpdateException.Message;
             }
             return response;
+        }
+
+
+        public IEnumerable<Periode> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        {
+            var data = DataContext.Periodes.AsQueryable();
+            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            {
+                //data = data.Where(x => x.Nam);
+            }
+
+            foreach (var sortOrder in sortingDictionary)
+            {
+                switch (sortOrder.Key)
+                {
+                    case "Name":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Name)
+                            : data.OrderByDescending(x => x.Name);
+                        break;
+                    case "IsActive":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.IsActive)
+                            : data.OrderByDescending(x => x.IsActive);
+                        break;
+                }
+            }
+
+            TotalRecords = data.Count();
+            return data;
+        }
+
+
+        public GetPeriodesResponse GetPeriodesForGrid(GetPeriodesRequest request)
+        {
+            int totalRecords;
+            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            if (request.Take != -1)
+            {
+                data = data.Skip(request.Skip).Take(request.Take);
+            }
+
+            return new GetPeriodesResponse
+            {
+                TotalRecords = totalRecords,
+                Periodes = data.ToList().MapTo<GetPeriodesResponse.Periode>()
+            };
         }
     }
 }

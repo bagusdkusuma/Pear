@@ -281,7 +281,11 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Display()
         {
             //var nlsList = _nlsService.GetNLSList(new GetNLSListRequest { TheActiveOnes = true });
-            var vesselSchedules = _vesselScheduleService.GetVesselSchedules(new GetVesselSchedulesRequest { allActiveList = true });
+            var vesselSchedules = _vesselScheduleService.GetVesselSchedules(new GetVesselSchedulesRequest { 
+                allActiveList = true,
+                Skip = 0,
+                Take = 20,
+            });
             var viewModel = new DailyExecutionReportViewModel();
             var periodeTypeQS = !string.IsNullOrEmpty(Request.QueryString["PeriodeType"]) ? Request.QueryString["PeriodeType"].ToLower() : "daily";
             var periodeQS = !string.IsNullOrEmpty(Request.QueryString["Periode"]) ? Request.QueryString["Periode"] : null;

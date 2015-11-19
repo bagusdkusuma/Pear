@@ -17,7 +17,7 @@ namespace DSLNG.PEAR.Services.Responses.Periode
     public class GetPeriodesResponse : BaseResponse
     {
         public IList<Periode> Periodes { get; set; }
-
+        public int TotalRecords { get; set; }
         public class Periode
         {
             public int Id { get; set; }
