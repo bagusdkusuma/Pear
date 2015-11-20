@@ -52,7 +52,7 @@ namespace DSLNG.PEAR.Services
         {
             return new GetAssumptionDataConfigResponse
             {
-                AssumptionDataConfigs = DataContext.KeyAssumptionConfigs.ToList().MapTo<GetAssumptionDataConfigResponse.AssumptionDataConfig>(),
+                AssumptionDataConfigs = DataContext.KeyAssumptionConfigs.Include(x => x.Measurement).ToList().MapTo<GetAssumptionDataConfigResponse.AssumptionDataConfig>(),
                 Scenarios = DataContext.Scenarios.ToList().MapTo<GetAssumptionDataConfigResponse.Scenario>()
             };
 

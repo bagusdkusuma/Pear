@@ -80,6 +80,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create()
         {
             var viewModel = new OperationGroupViewModel();
+            viewModel.IsActive = true;
             return View(viewModel);
         }
 
@@ -95,6 +96,7 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 return RedirectToAction("Index");
             }
+            ViewBag.IsActive = true;
             return View("Create", viewModel);
         }
 

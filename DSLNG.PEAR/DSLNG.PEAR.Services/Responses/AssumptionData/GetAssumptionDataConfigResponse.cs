@@ -14,6 +14,7 @@ namespace DSLNG.PEAR.Services.Responses.AssumptionData
         {
             public int Id { get; set; }
             public string Name { get; set; }
+            public string Measurement { get; set; }
         }
 
         public class Scenario

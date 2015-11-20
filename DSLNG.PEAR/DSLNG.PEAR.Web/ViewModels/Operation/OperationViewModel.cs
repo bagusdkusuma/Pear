@@ -20,6 +20,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Operation
         [Display(Name= "Operation Group")]
         public int IdKeyOperationGroup { get; set; }
         [Required]
+        [Display(Name="Key Operation")]
         public string Name { get; set; }
         public string Desc { get; set; }
         public bool IsActive { get; set; }

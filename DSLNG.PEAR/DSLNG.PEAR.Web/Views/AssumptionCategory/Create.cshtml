@@ -9,7 +9,7 @@
     {
         @Html.AntiForgeryToken()
         <div class="col-md-12">
-            <div class="title">Assumption Category</div>
+            <div class="title">Key Assumption</div>
             <div class="description_year">New</div>
             <div>@Html.ValidationSummary(true)</div>
         </div>
@@ -19,6 +19,11 @@
                     @Html.LabelFor(model => model.Name)
                     @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Name)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.Order)
+                    @Html.TextBoxFor(model => model.Order, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Order)
                 </div>
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.Desc)

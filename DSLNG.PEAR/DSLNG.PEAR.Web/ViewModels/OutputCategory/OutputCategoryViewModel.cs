@@ -10,6 +10,7 @@ namespace DSLNG.PEAR.Web.ViewModels.OutputCategory
     {
         public int Id { get; set; }
         [Required]
+        [Display(Name="Key Output Category")]
         public string Name { get; set; }
         [Required]
         public int Order { get; set; }

@@ -12,5 +12,6 @@ namespace DSLNG.PEAR.Data.Entities.EconomicModel
         //public KeyAssumptionStage KeyAssumptionStage { get; set; }
         public string Desc { get; set; }
         public bool IsActive { get; set; }
+        public int Order { get; set; }
     }
 }

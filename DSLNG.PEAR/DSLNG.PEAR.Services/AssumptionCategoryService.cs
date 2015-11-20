@@ -113,13 +113,18 @@ namespace DSLNG.PEAR.Services
                 {
                     case "Name" :
                         data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.Name)
-                            : data.OrderByDescending(x => x.Name);
+                            ? data.OrderBy(x => x.Name).ThenBy(X => X.Order)
+                            : data.OrderByDescending(x => x.Name).ThenBy(X => X.Order);
+                        break;
+                    case "Order":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Order)
+                            : data.OrderByDescending(x => x.Order);
                         break;
                     case "IsActive" :
                         data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.IsActive)
-                            : data.OrderByDescending(x => x.IsActive);
+                            ? data.OrderBy(x => x.IsActive).ThenBy(X => X.Order)
+                            : data.OrderByDescending(x => x.IsActive).ThenBy(X => X.Order);
                         break;
                 }
             }

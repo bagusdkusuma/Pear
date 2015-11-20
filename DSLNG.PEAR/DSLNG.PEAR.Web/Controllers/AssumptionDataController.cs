@@ -83,7 +83,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
             viewModel.Configs = _assumptionDataService.GetAssumptionDataConfig().AssumptionDataConfigs
-                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name + "(" + x.Measurement + ")" }).ToList();
 
 
             return View(viewModel);
