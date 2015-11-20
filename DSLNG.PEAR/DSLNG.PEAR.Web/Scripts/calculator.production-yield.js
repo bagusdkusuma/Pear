@@ -42,13 +42,13 @@
             $('#LNG_M3').val(lngM3.format(4));
             $('#LNG_Mtpa').val(lngMtpa.format(4));*/
             var mmbtu_m3 = parseFloat($('.mmbtu-m3.lng').val());
-            var lng_yield = parseFloat($('.general.lng-yield').val()) / 100;
+            var lng_yield = parseFloat($('.lng.lng-yield').val()) / 100;
             var pav = parseFloat($('.pav.lng').val());
             
             var lngTonnes = lng_yield * $('.feedgas-tonnes').data('value');
             var lngMmbtu = (lngTonnes * 1000) / $('.kg-mmbtu.lng ').val();
             var lngM3 = parseFloat(lngMmbtu / mmbtu_m3);
-            var lngMtpa = lngTonnes * pav;
+            var lngMtpa = (lngTonnes * pav) / 1000000;
 
             $('#LNG_Tonnes').val(lngTonnes.format(2));
             $('#LNG_Mmbtu').val(lngMmbtu.format(2));
@@ -73,7 +73,7 @@
             $('#CDS_M3').val(cdsM3.format(4));
             $('#CDS_Bbl').val(cdsBbl.format(4));*/
             
-            var cds_yield = parseFloat($('.general.cds-yield').val()) / 100;
+            var cds_yield = parseFloat($('.cds.cds-yield').val()) / 100;
             var cdsTonnes = cds_yield * $('.feedgas-tonnes').data('value');
             var cdsMmbtu = cdsTonnes * 1000 * $('.kg-mmbtu.cds').val();
             var mmbtu_m3 = parseFloat($('.mmbtu-m3.cds').val());
@@ -148,7 +148,7 @@
         };
 
         var toMCHE = function() {
-            var m3_hr = parseFloat($('.m3-hr.mche').val());
+            var m3_hr = parseFloat($('.m3-hr').val());
             var mcheCapacity = $('.feedgas-mmscf').data('value') * m3_hr;
             $('#MCHE_M3PerHr').val(mcheCapacity.format(2));
         };
