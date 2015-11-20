@@ -9,6 +9,8 @@ using System.Linq;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Entities;
 using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace DSLNG.PEAR.Services
 {
@@ -129,6 +131,64 @@ namespace DSLNG.PEAR.Services
                     Message = "An error occured while trying to delete this highlight"
                 };
             }
+        }
+
+
+        public IEnumerable<Weather> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        {
+            var data = DataContext.Weathers.Include(x => x.Value).AsQueryable();
+            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            {
+                data = data.Where(x => x.Value.Value.Contains(search));
+            }
+
+            foreach (var sortOrder in sortingDictionary)
+            {
+                switch (sortOrder.Key)
+                {
+                    case "PeriodeType":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.PeriodeType)
+                            : data.OrderByDescending(x => x.PeriodeType);
+                        break;
+                    case "Date":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Date)
+                            : data.OrderByDescending(x => x.Date);
+                        break;
+                    case "Value":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Value)
+                            : data.OrderByDescending(x => x.Value);
+                        break;
+                    case "Temperature":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Temperature)
+                            : data.OrderByDescending(x => x.Temperature);
+                        break;
+                }
+            }
+
+            TotalRecords = data.Count();
+            return data;
+        }
+
+
+
+        public GetWeathersResponse GetWeathersForGrid(GetWeathersRequest request)
+        {
+            int totalRecords;
+            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            if (request.Take != -1)
+            {
+                data = data.Skip(request.Skip).Take(request.Take);
+            }
+
+            return new GetWeathersResponse
+            {
+                TotalRecords = totalRecords,
+                Weathers = data.ToList().MapTo<GetWeathersResponse.WeatherResponse>()
+            };
         }
     }
 }

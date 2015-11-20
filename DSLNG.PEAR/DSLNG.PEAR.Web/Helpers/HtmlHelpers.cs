@@ -9,9 +9,9 @@ namespace DSLNG.PEAR.Web.Helpers
             if (source.Length > length) {
                 var result = source.Substring(0, length);
                 result += "... <a class=\"see-more\" href=\"#\" data-toggle=\"modal\" data-target=\"#modalDialog\">See More</a>";
-                result += "<span style=\"display:none;color:#fff\" class=\"full-string\">";
+                result += "<div style=\"display:none;color:#fff\" class=\"full-string\">";
                 result += source;
-                result += "</span>";
+                result += "</div>";
                 return MvcHtmlString.Create(result);
             }
             return MvcHtmlString.Create(source);

@@ -75,7 +75,7 @@ namespace DSLNG.PEAR.Services
                 {
                     var existingOption = select.Options.SingleOrDefault(c => c.Id == option.Id);
 
-                    if (existingOption != null)
+                    if (existingOption != null && option.Id != 0)
                     {
                         DataContext.Entry(existingOption).CurrentValues.SetValues(option);
                     }
@@ -89,7 +89,7 @@ namespace DSLNG.PEAR.Services
                         select.Options.Add(newOption);
                     }
                 }
-                if (request.ParentId != 0)
+                if (request.ParentId != 0 && (select.Parent == null || select.Parent.Id != request.ParentId))
                 {
                     var parent = new Select { Id = request.ParentId };
                     DataContext.Selects.Attach(parent);

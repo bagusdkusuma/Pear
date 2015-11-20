@@ -4189,7 +4189,7 @@ Number.prototype.format = function (n, x) {
             modalHeader.append($('<div/>').addClass('row').addClass('modal-header-detail').html('<div class="title">' + $(this).closest('td').find('.highlight-title').html() + '</div>'));
             var modalBody = $('<div/>');
             modalBody.addClass('modal-body');
-            modalBody.html($(this).next('.full-string').clone());
+            modalBody.html($(this).closest('td').find('.full-string').clone());
             modalBody.find('.full-string').show();
             var more = $('#modalDialog .modal-content');
             more.html('');

@@ -10,10 +10,11 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using DSLNG.PEAR.Data.Enums;
+using System.Data.SqlClient;
 
 namespace DSLNG.PEAR.Services
 {
-    public class HighlightService  : BaseService,IHighlightService
+    public class HighlightService : BaseService, IHighlightService
     {
         public HighlightService(IDataContext context) : base(context) { }
         public GetHighlightsResponse GetHighlights(GetHighlightsRequest request)
@@ -21,12 +22,14 @@ namespace DSLNG.PEAR.Services
             if (request.OnlyCount)
             {
                 var query = DataContext.Highlights.Include(x => x.HighlightType).AsQueryable();
-                if (request.PeriodeType != null) {
+                if (request.PeriodeType != null)
+                {
                     query = query.Where(x => x.PeriodeType == request.PeriodeType);
                 }
                 return new GetHighlightsResponse { Count = query.Count() };
             }
-            else if (request.Except.Length > 0 && request.Date.HasValue) {
+            else if (request.Except.Length > 0 && request.Date.HasValue)
+            {
                 return new GetHighlightsResponse
                 {
                     Highlights = DataContext.Highlights.Include(x => x.HighlightType).Where(x => x.Date == request.Date.Value && !request.Except.Contains(x.HighlightType.Value) && x.IsActive == request.IsActive)
@@ -44,7 +47,8 @@ namespace DSLNG.PEAR.Services
             else
             {
                 var query = DataContext.Highlights.Include(x => x.HighlightType).AsQueryable();
-                if(request.PeriodeType == request.PeriodeType){
+                if (request.PeriodeType == request.PeriodeType)
+                {
                     query = query.Where(x => x.PeriodeType == request.PeriodeType);
                 }
                 return new GetHighlightsResponse
@@ -59,7 +63,8 @@ namespace DSLNG.PEAR.Services
             try
             {
                 var todayHighlight = DataContext.Highlights.FirstOrDefault(x => x.Date == request.Date && x.HighlightType.Id == request.TypeId);
-                if (todayHighlight != null && todayHighlight.Id != request.Id) {
+                if (todayHighlight != null && todayHighlight.Id != request.Id)
+                {
                     return new SaveHighlightResponse
                     {
                         IsSuccess = false,
@@ -96,16 +101,18 @@ namespace DSLNG.PEAR.Services
                     Message = "Highlight has been saved"
                 };
             }
-            catch (InvalidOperationException e) {
+            catch (InvalidOperationException e)
+            {
                 return new SaveHighlightResponse
                 {
                     IsSuccess = false,
                     Message = e.Message
-                }; 
+                };
             }
-      
+
         }
-        public GetReportHighlightsResponse GetReportHighlights(GetReportHighlightsRequest request) {
+        public GetReportHighlightsResponse GetReportHighlights(GetReportHighlightsRequest request)
+        {
             var response = new GetReportHighlightsResponse();
             var start = request.TimePeriodes.First();
             var end = request.TimePeriodes[request.TimePeriodes.Count - 1];
@@ -113,16 +120,19 @@ namespace DSLNG.PEAR.Services
                  && x.HighlightType.Value == request.Type
                  && x.PeriodeType == request.PeriodeType).ToList();
             var reportHighlights = new List<GetReportHighlightsResponse.HighlightResponse>();
-            foreach (var time in request.TimePeriodes) {
+            foreach (var time in request.TimePeriodes)
+            {
                 var highlight = highlights.FirstOrDefault(x => x.Date == time);
                 if (highlight != null)
                 {
-                    reportHighlights.Add(new GetReportHighlightsResponse.HighlightResponse {
+                    reportHighlights.Add(new GetReportHighlightsResponse.HighlightResponse
+                    {
                         Title = highlight.Title,
                         Message = highlight.Message
                     });
                 }
-                else {
+                else
+                {
                     reportHighlights.Add(null);
                 }
             }
@@ -137,17 +147,20 @@ namespace DSLNG.PEAR.Services
             {
                 return DataContext.Highlights.Include(x => x.HighlightType).FirstOrDefault(x => x.Id == request.Id).MapTo<GetHighlightResponse>();
             }
-            else {
+            else
+            {
                 var highlightQuery = DataContext.Highlights.Include(x => x.HighlightType);
                 if (request.Date.HasValue)
                 {
                     highlightQuery = highlightQuery.Where(x => x.Date == request.Date && x.HighlightType.Value == request.Type);
                 }
-                else {
+                else
+                {
                     highlightQuery = highlightQuery.OrderByDescending(x => x.Date).Where(x => x.HighlightType.Value == request.Type);
                 }
                 var highlight = highlightQuery.FirstOrDefault();
-                if (highlight != null) {
+                if (highlight != null)
+                {
                     return highlight.MapTo<GetHighlightResponse>();
                 }
                 return new GetHighlightResponse();
@@ -169,7 +182,8 @@ namespace DSLNG.PEAR.Services
                     Message = "The highlight has been deleted successfully"
                 };
             }
-            catch (InvalidOperationException) {
+            catch (InvalidOperationException)
+            {
                 return new DeleteResponse
                 {
                     IsSuccess = false,
@@ -183,13 +197,16 @@ namespace DSLNG.PEAR.Services
         {
             var latestHighlight = DataContext.Highlights.OrderByDescending(x => x.Date)
                 .FirstOrDefault(x => x.PeriodeType == request.PeriodeType && !x.HighlightType.Text.Equals("Alert", StringComparison.InvariantCultureIgnoreCase));
-            if (request.Periode != null) {
+            if (request.Periode != null)
+            {
                 latestHighlight = DataContext.Highlights.FirstOrDefault(x => x.PeriodeType == request.PeriodeType && x.Date == request.Periode);
             }
             var highlights = new List<Highlight>();
-            if (latestHighlight != null) {
-                switch (request.PeriodeType) { 
-                    
+            if (latestHighlight != null)
+            {
+                switch (request.PeriodeType)
+                {
+
                     case PeriodeType.Monthly:
                         highlights = DataContext.Highlights.Include(x => x.HighlightType)
                             .Include(x => x.HighlightType.Group)
@@ -210,7 +227,8 @@ namespace DSLNG.PEAR.Services
                         break;
                 }
             }
-            if (highlights.Count > 0) {
+            if (highlights.Count > 0)
+            {
                 return new GetDynamicHighlightsResponse
                 {
                     Periode = latestHighlight.Date,
@@ -226,6 +244,67 @@ namespace DSLNG.PEAR.Services
                 };
             }
             return new GetDynamicHighlightsResponse();
+        }
+
+
+        public IEnumerable<Highlight> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        {
+            var data = DataContext.Highlights.Include(x => x.HighlightType).AsQueryable();
+            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            {
+                data = data.Where(x => x.Type.Contains(search) || x.Title.Contains(search));
+            }
+
+            foreach (var sortOrder in sortingDictionary)
+            {
+                switch (sortOrder.Key)
+                {
+                    case "PeriodeType":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.PeriodeType)
+                            : data.OrderByDescending(x => x.PeriodeType);
+                        break;
+                    case "Type":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Type)
+                            : data.OrderByDescending(x => x.Type);
+                        break;
+                    case "Title":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Title)
+                            : data.OrderByDescending(x => x.Title);
+                        break;
+                    case "Date":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Date)
+                            : data.OrderByDescending(x => x.Date);
+                        break;
+                    case "IsActive":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.IsActive)
+                            : data.OrderByDescending(x => x.IsActive);
+                        break;
+                }
+            }
+            TotalRecords = data.Count();
+            return data;
+        }
+
+
+        public GetHighlightsResponse GetHighlightsForGrid(GetHighlightsRequest request)
+        {
+            int totalRecords;
+            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            if (request.Take != -1)
+            {
+                data = data.Skip(request.Skip).Take(request.Take);
+            }
+
+            return new GetHighlightsResponse
+            {
+                TotalRecords = totalRecords,
+                Highlights = data.ToList().MapTo<GetHighlightsResponse.HighlightResponse>()
+            };
         }
     }
 }

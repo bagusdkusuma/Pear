@@ -21,6 +21,7 @@
 
     <div class="row">
         <div class="col-md-12">
+            @Html.Partial("_MessageResponse")
             <!-- Tab panes -->
             <div class="tab-content">
                 <div class="tab-pane active text-left">
@@ -38,14 +39,15 @@
                         </div>
                         <div class="row" style="margin-bottom: 40px">
                             <div class="col-md-4">
-                                <h4>Weather: <span class="weather-value">@Model.Weather.Text</span> <span class="display-image" style="width: 30px; height: 30px; display: inline-block; padding: 2.5px">
+                                <h4>Weather: <span class="weather-value">@Model.Weather.Text</span> <span class="display-image" style="width: 60px; height: 60px; display: inline-block; padding: 2.5px">
                                     <img src="~/Content/img/select/@Model.Weather.Value"  style="width:100%;height:100%;display:inline-block"/></span></h4>
                             </div>
                             <div class="col-md-4">
-                                <h4>Outside Temperature: <span class="weather-value">@Model.Weather.Temperature</span></h4>
+                                <h4 style="margin-top:22px">Outside Temperature: <span class="weather-value">@Model.Weather.Temperature</span></h4>
                             </div>
                             <div class="col-md-4">
-                                <h4>Alert Condition: <span class="weather-value alert">@Model.Alert.Message</span></h4>
+                                <h4 style="margin-top:19px">Alert Condition: <span class="display-image" style="max-width:180px; height: 25px; display: inline-block; padding: 2.5px">
+                                    <img src="~/Content/img/select/@Model.Alert.Message"  style="width:100%;height:100%;display:inline-block"/></span></h4>
                             </div>
                         </div>
                         <div class="row" style="margin-bottom: 40px">
@@ -110,7 +112,7 @@
                             <div class="col-md-12">
                                 <h4>@Model.HighlightGroupTemplates[i].Name</h4>
                                 <div class="panel panel-default der-panel">
-                                    <table class="der highlights table-bordered">
+                                    <table class="der highlights table-bordered dynamic-highlights">
                                         @for (var j = 0; j < Model.HighlightGroupTemplates[i].HighlightTypes.Count; j += 2)
                                         {
                                             var colspan = "";
@@ -130,19 +132,28 @@
                                                             var currentHighlight = currentGroup.Highlights.FirstOrDefault(x => x.TypeId == Model.HighlightGroupTemplates[i].HighlightTypes[j].Id);
                                                             if (currentHighlight != null)
                                                             {
-                                                        <p>@Html.LimitString(currentHighlight.Message, 140)</p>
-                                                            @Html.ActionLink("Manage", "Edit",new{Id = currentHighlight.Id},new{@class="manage-highlight"})
+                                                        <p>@Html.LimitString(currentHighlight.Message, 350)</p>
+                                                            <a class="manage-highlight" href="@Url.Action("Edit", "Highlight", new{Id = currentHighlight.Id})">
+                                                                <span class="fa fa-pencil-square-o"></span>
+                                                                Manage
+                                                            </a>
                                                             }
                                                             else
                                                             {
-                                                                 @Html.ActionLink("Manage", "Create",new{TypeId = Model.HighlightGroupTemplates[i].HighlightTypes[j].Id, PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay },new{@class="manage-highlight"})
                                                         <p>...</p>
+                                                        <a class="manage-highlight" href="@Url.Action("Create", "Highlight", new{TypeId = Model.HighlightGroupTemplates[i].HighlightTypes[j].Id, PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay })">
+                                                                <span class="fa fa-pencil-square-o"></span>
+                                                                Manage
+                                                            </a>
                                                             }
                                                         }
                                                         else
                                                         {
-                                                              @Html.ActionLink("Manage", "Create",new{TypeId =  Model.HighlightGroupTemplates[i].HighlightTypes[j].Id, PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay},new{@class="manage-highlight"})
                                                         <p>...</p>
+                                                        <a class="manage-highlight" href="@Url.Action("Create", "Highlight", new{TypeId =  Model.HighlightGroupTemplates[i].HighlightTypes[j].Id, PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay})">
+                                                                <span class="fa fa-pencil-square-o"></span>
+                                                                Manage
+                                                            </a>
                                                         }
 
                                                     }
@@ -158,19 +169,28 @@
                                                             var nextHighlight = currentGroup.Highlights.FirstOrDefault(x => x.TypeId == Model.HighlightGroupTemplates[i].HighlightTypes[j + 1].Id);
                                                             if (nextHighlight != null)
                                                             {
-                                                            <p>@Html.LimitString(nextHighlight.Message, 140)</p>
-                                                             @Html.ActionLink("Manage", "Edit",new{Id = nextHighlight.Id},new{@class="manage-highlight"})
+                                                            <p>@Html.LimitString(nextHighlight.Message, 350)</p>
+                                                            <a class="manage-highlight" href="@Url.Action("Edit", "Highlight", new{Id = nextHighlight.Id})">
+                                                                <span class="fa fa-pencil-square-o"></span>
+                                                                Manage
+                                                            </a>
                                                             }
                                                             else
                                                             {
                                                             <p>...</p>
-                                                             @Html.ActionLink("Manage", "Create",new{TypeId = Model.HighlightGroupTemplates[i].HighlightTypes[j+1].Id,PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay },new{@class="manage-highlight"})
+                                                             <a class="manage-highlight" href="@Url.Action("Create", "Highlight", new{TypeId = Model.HighlightGroupTemplates[i].HighlightTypes[j+1].Id,PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay })">
+                                                                <span class="fa fa-pencil-square-o"></span>
+                                                                Manage
+                                                            </a>
                                                             }
                                                         }
                                                         else
                                                         {
                                                             <p>...</p>
-                                                             @Html.ActionLink("Manage", "Create",new{TypeId = Model.HighlightGroupTemplates[i].HighlightTypes[j+1].Id,PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay },new{@class="manage-highlight"})
+                                                            <a class="manage-highlight" href="@Url.Action("Create", "Highlight", new{TypeId = Model.HighlightGroupTemplates[i].HighlightTypes[j+1].Id,PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay })">
+                                                                <span class="fa fa-pencil-square-o"></span>
+                                                                Manage
+                                                            </a>
                                                         }
 
                                                     </td>
@@ -207,7 +227,7 @@
                                     @if (Model.Highlights.Count > i)
                                     { 
                                         <h4 class="highlight-title" style="float: none; margin-top: 10px">@Model.Highlights[i].Title</h4>
-                                        <p>@Html.LimitString(@Model.Highlights[i].Message,140)</p>
+                                        <p>@Html.LimitString(@Model.Highlights[i].Message,350)</p>
                                     }
                                 </td>
 
@@ -215,7 +235,7 @@
                                 {
                                     <td>
                                         <h4 class="highlight-title" style="float: none; margin-top: 10px">@Model.Highlights[i + 1].Title</h4>
-                                        <p>@Html.LimitString(@Model.Highlights[i + 1].Message,140)</p>
+                                        <p>@Html.LimitString(@Model.Highlights[i + 1].Message,350)</p>
                                     </td>
                                 }
 
@@ -246,7 +266,7 @@
                                     @if (Model.PlantOperations.Count > i)
                                     { 
                                         <h4 class="highlight-title" style="float: none; margin-top: 10px">@Model.PlantOperations[i].Title</h4>
-                                        <p>@Html.LimitString(@Model.PlantOperations[i].Message,140)</p>
+                                        <p>@Html.LimitString(@Model.PlantOperations[i].Message,350)</p>
                                     }
                                 </td>
 
@@ -254,7 +274,7 @@
                                 {
                                     <td>
                                         <h4 class="highlight-title" style="float: none; margin-top: 10px">@Model.PlantOperations[i + 1].Title</h4>
-                                        <p>@Html.LimitString(@Model.PlantOperations[i + 1].Message,140)</p>
+                                        <p>@Html.LimitString(@Model.PlantOperations[i + 1].Message,350)</p>
                                     </td>
                                 }
 

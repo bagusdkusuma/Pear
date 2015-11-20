@@ -1197,7 +1197,7 @@ table.text-center th
     color: #fff;
     border-color: #1e90ff;
     text-align: center;
-    border-bottom-color:#fff;
+    border-bottom-color: #fff;
     /*text-align: center;
     color: #3f454f;*/
 }
@@ -1330,7 +1330,9 @@ table.der
         color: #fff;
         padding: 10px 20px;
     }
-    table.der th {
+
+    table.der th
+    {
         background-color: transparent;
     }
 
@@ -1591,10 +1593,11 @@ td .btn_small_lightblue a:hover
     border: 1px solid #ffffff;
 }
 
-.table-transparent .odd,
-.table-transparent .even {
-    background: transparent;
-}
+    .table-transparent .odd,
+    .table-transparent .even
+    {
+        background: transparent;
+    }
 
 .constant-template.original
 {
@@ -1905,42 +1908,50 @@ input[type="text"]
     text-align: center;
 }
 
-.dataTables_filter  label {
+.dataTables_filter label
+{
     width: 100% !important;
 }
 
-.add-button-wrapper {
+.add-button-wrapper
+{
     margin-bottom: 20px;
 }
 
 .dataTables_wrapper input,
-.dataTables_wrapper select {
+.dataTables_wrapper select
+{
     color: #000000;
 }
 
 .dataTables_info,
 .dataTables_paginate,
-.paginate_button  {
+.paginate_button
+{
     color: #ffffff !important;
 }
 
 .dataTables_wrapper .dataTables_paginate.paging_simple_numbers .paginate_button.disabled,
-.dataTables_wrapper .dataTables_paginate a.paginate_button {
+.dataTables_wrapper .dataTables_paginate a.paginate_button
+{
     color: #ffffff !important;
 }
 
-.dataTables_wrapper .dataTables_paginate a.paginate_button:hover {
-    background: linear-gradient(to bottom, #fff 0%, #dcdcdc 100%);
-    color: #000000 !important;
-    border: 1px solid #979797;
-}
+    .dataTables_wrapper .dataTables_paginate a.paginate_button:hover
+    {
+        background: linear-gradient(to bottom, #fff 0%, #dcdcdc 100%);
+        color: #000000 !important;
+        border: 1px solid #979797;
+    }
 
 table.dataTable thead th, table.dataTable thead td,
-table.dataTable.no-footer {
+table.dataTable.no-footer
+{
     border-bottom: 1px solid #ffffff !important;
 }
 
-.dataTables_wrapper {
+.dataTables_wrapper
+{
     margin-bottom: 60px;
 }
 
@@ -1948,51 +1959,82 @@ table.dataTable.no-footer {
 /* In WinIE 6.x, any element with a position property set to relative and is a child of       */
 /* an element that has an overflow property set, the relative value translates into fixed.    */
 /* Ex: parent element DIV with a class of tableContainer has an overflow property set to auto */
-thead.fixedHeader tr {
-	position: relative
+thead.fixedHeader tr
+{
+    position: relative;
 }
 
 /* set THEAD element to have block level attributes. All other non-IE browsers            */
 /* this enables overflow to work on TBODY element. All other non-IE, non-Mozilla browsers */
-html>body thead.fixedHeader tr {
-	display: block
-}
-html>body tbody.scrollContent {
-	display: block;
-	overflow: auto;
-	width: 100%
+html > body thead.fixedHeader tr
+{
+    display: block;
 }
 
-.widget-menu {
+html > body tbody.scrollContent
+{
+    display: block;
+    overflow: auto;
+    width: 100%;
+}
+
+.widget-menu
+{
     width: 40px;
     height: 40px;
     background-color: rgba(51, 51, 51, 0.7);
     border-radius: 5px;
     color: #fff;
-    position: fixed; 
-    text-align: center; 
-    bottom: 10px; 
+    position: fixed;
+    text-align: center;
+    bottom: 10px;
     left: 135px;
-    font-size: 24px; 
+    font-size: 24px;
     line-height: 1.5em;
     z-index: 1;
 }
+
 .series-template > h2,
 .row-template > h2,
-.chart-template > h2 {
-    border-bottom:1px solid #fff;
-}
-.chart-template  .series-template {
-    padding-left:100px;
-}
-table.der td {
-    vertical-align:top;
+.chart-template > h2
+{
+    border-bottom: 1px solid #fff;
 }
 
-.text-align-left {
+.chart-template .series-template
+{
+    padding-left: 100px;
+}
+
+table.der td
+{
+    vertical-align: top;
+}
+
+.text-align-left
+{
     text-align: left !important;
 }
 
-.text-align-right {
+.text-align-right
+{
     text-align: right !important;
 }
+
+table.dynamic-highlights td
+{
+    width: 50%;
+}
+
+a.manage-highlight,
+a.see-more
+{
+    color: #72afd2;
+    text-decoration: underline;
+}
+
+    a.manage-highlight:hover,
+    a.see-more:hover
+    {
+        color: #004071;
+    }
