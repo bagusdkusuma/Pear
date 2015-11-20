@@ -474,7 +474,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
         private void ConfigureSelects()
         {
             Mapper.CreateMap<Select, GetSelectsResponse.Select>()
-                  .ForMember(x => x.Options, y => y.MapFrom(z => string.Join(", ", z.Options.Select(opt => opt.Text))));
+                  .ForMember(x => x.Options, y => y.MapFrom(z => string.Join(", ", z.Options.Select(opt => opt.Text))))
+                  .ForMember(x => x.Parent, o => o.MapFrom(s => s.Parent.Name))
+                  .ForMember(x => x.ParentOption, o => o.MapFrom(s => s.ParentOption.Text));
             Mapper.CreateMap<CreateSelectRequest, Select>();
             Mapper.CreateMap<CreateSelectRequest.SelectOption, SelectOption>();
             Mapper.CreateMap<Select, GetSelectResponse>();

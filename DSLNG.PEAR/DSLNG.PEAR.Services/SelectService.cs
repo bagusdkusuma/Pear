@@ -211,10 +211,10 @@ namespace DSLNG.PEAR.Services
 
         public IEnumerable<Select> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
         {
-            var data = DataContext.Selects.Include(x => x.Options).AsQueryable();
+            var data = DataContext.Selects.Include(x => x.Options).Include(x => x.Parent).Include(x => x.ParentOption).AsQueryable();
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             {
-                data = data.Where(x => x.Name.Contains(search));
+                data = data.Where(x => x.Name.Contains(search) || x.Parent.Name.Contains(search) || x.ParentOption.Text.Contains(search));
             }
 
             foreach (var sortOrder in sortingDictionary)
@@ -225,6 +225,16 @@ namespace DSLNG.PEAR.Services
                         data = sortOrder.Value == SortOrder.Ascending
                             ? data.OrderBy(x => x.Name)
                             : data.OrderByDescending(x => x.Name);
+                        break;
+                    case "Parent":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Parent.Name)
+                            : data.OrderByDescending(x => x.Parent.Name);
+                        break;
+                    case "ParentOption":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.ParentOption.Text)
+                            : data.OrderByDescending(x => x.ParentOption.Text);
                         break;
                     case "IsActive":
                         data = sortOrder.Value == SortOrder.Ascending
