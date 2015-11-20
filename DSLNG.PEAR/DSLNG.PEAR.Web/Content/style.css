@@ -1988,3 +1988,11 @@ html>body tbody.scrollContent {
 table.der td {
     vertical-align:top;
 }
+
+.text-align-left {
+    text-align: left !important;
+}
+
+.text-align-right {
+    text-align: right !important;
+}
