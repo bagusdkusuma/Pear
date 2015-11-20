@@ -52,21 +52,21 @@
                 <div class="form-group">
                     <label for="resultTonnes" class="control-label col-md-4">LNG SPA FOB</label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" id="lng-spa-fob" placeholder="">
+                        <input type="text" class="form-control text-align-right" id="lng-spa-fob" placeholder="">
                     </div>
                     <label for="resultTonnes" class="control-label col-md-2"></label>
                 </div>
                 <div class="form-group">
                     <label for="resultTonnes" class="control-label col-md-4">LNG SPA DES</label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" id="lng-spa-des" placeholder="">
+                        <input type="text" class="form-control text-align-right" id="lng-spa-des" placeholder="">
                     </div>
                     <label for="resultTonnes" class="control-label col-md-2"></label>
                 </div>
                 <div class="form-group">
                     <label for="resultTonnes" class="control-label col-md-4">CDS Price</label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" id="cds-price" placeholder="">
+                        <input type="text" class="form-control text-align-right" id="cds-price" placeholder="">
                     </div>
                     <label for="resultTonnes" class="control-label col-md-2"></label>
                 </div>
@@ -80,7 +80,7 @@
                 <div class="form-group">
                     <label for="resultTonnes" class="control-label col-md-4">Senoro Feed Gas</label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" id="senoro-feed-gas" placeholder="">
+                        <input type="text" class="form-control text-align-right" id="senoro-feed-gas" placeholder="">
                     </div>
                     <label for="resultTonnes" class="control-label col-md-2"></label>
                 </div>
@@ -88,7 +88,7 @@
                 <div class="form-group">
                     <label for="resultTonnes" class="control-label col-md-4">Matindok Feed Gas</label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" id="matindok-feed-gas" placeholder="">
+                        <input type="text" class="form-control text-align-right" id="matindok-feed-gas" placeholder="">
                     </div>
                     <label for="resultTonnes" class="control-label col-md-2"></label>
                 </div>
@@ -96,7 +96,7 @@
                 <div class="form-group">
                     <label for="resultTonnes" class="control-label col-md-4">Average Feed Gas</label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" id="average-feed-gas" placeholder="">
+                        <input type="text" class="form-control text-align-right" id="average-feed-gas" placeholder="">
                     </div>
                     <label for="resultTonnes" class="control-label col-md-2"></label>
                 </div>
@@ -118,7 +118,7 @@
                     <label class="col-md-4 control-label">@constant.DisplayName</label>
                     <div class="col-md-5">
                         @Html.HiddenFor(m => constant.Id)
-                        @Html.TextBoxFor(m => constant.Value, new { @class = constant.Name + " calculator-constant" })
+                        @Html.TextBoxFor(m => constant.Value, new { @class = constant.Name + " calculator-constant text-align-right" })
                     </div>
                     <div class="col-md-3">
                         <label>@constant.Measurement</label>
@@ -138,7 +138,7 @@
                     <label class="col-md-4 control-label">@constant.DisplayName</label>
                     <div class="col-md-5">
                         @Html.HiddenFor(m => constant.Id)
-                        @Html.TextBoxFor(m => constant.Value, new { @class = constant.Name + " calculator-constant" })
+                        @Html.TextBoxFor(m => constant.Value, new { @class = constant.Name + " calculator-constant text-align-right" })
                     </div>
                     <div class="col-md-3">
                         <label>@constant.Measurement</label>
