@@ -16,6 +16,8 @@ namespace DSLNG.PEAR.Services.Responses.Select
             public string Name { get; set; }
             public string Options { get; set; }
             public bool IsActive { get; set; }
+            public string Parent { get; set; }
+            public string ParentOption { get; set; }
         }
     }
 }

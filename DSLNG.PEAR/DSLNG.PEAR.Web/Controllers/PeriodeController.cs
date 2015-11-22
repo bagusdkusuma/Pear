@@ -143,7 +143,13 @@ namespace DSLNG.PEAR.Web.Controllers
                 sEcho = gridParams.Echo + 1,
                 iTotalDisplayRecords = periode.TotalRecords,
                 iTotalRecords = periode.Periodes.Count,
-                aaData = periode.Periodes
+                aaData = periode.Periodes.Select(x => new
+                {
+                    x.Id,
+                    x.IsActive,
+                    Name = x.Name.ToString(),
+                    x.Remark
+                })
 
             };
             return Json(data, JsonRequestBehavior.AllowGet);
