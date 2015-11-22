@@ -15,6 +15,7 @@
         <tr>
             <th>Code</th>
             <th>Name</th>
+            <th>Type</th>
             <th>Pillar Name</th>
             <th>Order</th>
             <th>Is Economic</th>
@@ -43,6 +44,9 @@
                         render: function (data, type, row) {
                             return data + ' (' + row.Measurement.Name +')';
                         }
+                    },
+                    {
+                        "mDataProp": "Type.Name", "name": "Type", "className": "text-align-left"
                     },
                     { "mDataProp": "PillarName", "name": "PillarName", "className": "text-align-left" },
                     { "mDataProp": "Order", "name": "Order" },

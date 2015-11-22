@@ -341,6 +341,7 @@ namespace DSLNG.PEAR.Services
             var data = DataContext.Kpis
                 .Include(x => x.Pillar)
                 .Include(x => x.Measurement)
+                .Include(x => x.Type)
                 .AsQueryable();
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             {
@@ -376,6 +377,12 @@ namespace DSLNG.PEAR.Services
                         data = sortOrder.Value == SortOrder.Ascending
                                    ? data.OrderBy(x => x.IsEconomic).ThenBy(x => x.Order)
                                    : data.OrderByDescending(x => x.IsEconomic).ThenBy(x => x.Order);
+                        break;
+                    case "Type.Name":
+                    case "Type":
+                        data = sortOrder.Value == SortOrder.Ascending
+                                   ? data.OrderBy(x => x.Type.Name).ThenBy(x => x.Order)
+                                   : data.OrderByDescending(x => x.Type.Name).ThenBy(x => x.Order);
                         break;
                     default:
                         data = sortOrder.Value == SortOrder.Ascending

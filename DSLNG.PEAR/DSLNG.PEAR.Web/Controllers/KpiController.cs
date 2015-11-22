@@ -115,6 +115,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var periode = Enum.GetValues(typeof(DSLNG.PEAR.Data.Enums.PeriodeType)).Cast<DSLNG.PEAR.Data.Enums.PeriodeType>();
             viewModel.YtdFormulaList = ytd.Select(x => new SelectListItem { Text = x.ToString(), Value = x.ToString() }).ToList();
             viewModel.PeriodeList = periode.Select(x => new SelectListItem { Text = x.ToString(), Value = x.ToString() }).ToList();
+            viewModel.IsActive = true;
             return viewModel;
         }
 
