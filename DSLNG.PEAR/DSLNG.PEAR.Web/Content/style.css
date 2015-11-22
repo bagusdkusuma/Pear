@@ -844,7 +844,7 @@ label
     color: #ffffff;
     font-weight: normal;
     padding-right: 10px;
-    width: 180px;
+    /*width: 180px;*/
 }
 
 .form-control
@@ -2038,3 +2038,12 @@ a.see-more
     {
         color: #004071;
     }
+
+    .form-group span.field-validation-error {
+        color: red;
+    }
+
+    .form-group > span {
+        color: #ffffff;
+    }
+    
