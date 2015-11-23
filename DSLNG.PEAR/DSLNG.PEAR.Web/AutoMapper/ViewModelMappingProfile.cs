@@ -553,7 +553,12 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetHighlightGroupsResponse.HighlightTypeResponse, DailyExecutionReportViewModel.HighlightTypeViewModel>();
             Mapper.CreateMap<GetDynamicHighlightsResponse.HighlightGroupResponse, DailyExecutionReportViewModel.HighlightGroupViewModel>();
             Mapper.CreateMap<GetDynamicHighlightsResponse.HighlightResponse, DailyExecutionReportViewModel.HighlightViewModel>();
-     
+
+            Mapper.CreateMap<GetScenarioResponse, AssumptionDataInputViewModel.ScenarioViewModel>();
+            Mapper.CreateMap<GetAssumptionCategoriesResponse.AssumptionCategory, AssumptionDataInputViewModel.AssumptionCategoryViewModel>();
+            Mapper.CreateMap<GetAssumptionCategoriesResponse.Assumption, AssumptionDataInputViewModel.AssumptionViewModel>();
+            Mapper.CreateMap<GetAssumptionDatasResponse.AssumptionData, AssumptionDataInputViewModel.AssumptionDataViewModel>();
+
             base.Configure();
         }
 

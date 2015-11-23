@@ -21,7 +21,7 @@ namespace DSLNG.PEAR.Services
         public GetAssumptionDatasResponse GetAssumptionDatas(GetAssumptionDatasRequest request)
         {
             int totalRecords;
-            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            var data = SortData(request.Search, request.SortingDictionary,request.ScenarioId, out totalRecords);
             if (request.Take != -1)
             {
                 data = data.Skip(request.Skip).Take(request.Take);
@@ -114,14 +114,16 @@ namespace DSLNG.PEAR.Services
         }
 
 
-        public IEnumerable<KeyAssumptionData> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        public IEnumerable<KeyAssumptionData> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, int ScenarioId, out int TotalRecords)
         {
             var data = DataContext.KeyAssumptionDatas.Include(x => x.Scenario).Include(x => x.KeyAssumptionConfig).AsQueryable();
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             {
                 data = data.Where(x => x.KeyAssumptionConfig.Name.Contains(search) || x.Scenario.Name.Contains(search));
             }
-
+            if (ScenarioId != 0) {
+                data = data.Where(x => x.Scenario.Id == ScenarioId);
+            }
             foreach (var sortOrder in sortingDictionary)
             {
                 switch (sortOrder.Key)

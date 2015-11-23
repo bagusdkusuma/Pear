@@ -15,7 +15,9 @@ namespace DSLNG.PEAR.Services.Responses.AssumptionData
         {
             public int Id { get; set; }
             public string Scenario { get; set; }
+            public int IdScenario { get; set; }
             public string Config { get; set; }
+            public int IdConfig { get; set; }
             public string ActualValue { get; set; }
             public string ForecastValue { get; set; }
             public string Remark { get; set; }
