@@ -22,8 +22,8 @@ namespace DSLNG.PEAR.Web.ViewModels.AssumptionData
         [Required]
         [Display(Name = "Config")]
         public int IdConfig { get; set; }
-        public double ActualValue { get; set; }
-        public double ForecastValue { get; set; }
+        public string ActualValue { get; set; }
+        public string ForecastValue { get; set; }
         public string Remark { get; set; }
         public int Id { get; set; }
 
