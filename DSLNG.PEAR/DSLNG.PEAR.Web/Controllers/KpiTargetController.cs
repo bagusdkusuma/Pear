@@ -205,7 +205,7 @@ namespace DSLNG.PEAR.Web.Controllers
             worksheet.FreezePanes(HeaderRow.Index, KpiNameColumn.Index);
             using (FileStream stream = new FileStream(resultFilePath, FileMode.Create, FileAccess.ReadWrite))
             {
-                workbook.SaveDocument(stream, DocumentFormat.Xlsx);
+                workbook.SaveDocument(stream, DevExpress.Spreadsheet.DocumentFormat.Xlsx);
                 stream.Close();
             }
 
