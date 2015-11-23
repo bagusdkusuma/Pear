@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using ClosedXML.Excel;
 using DSLNG.PEAR.Common.Contants;
 using DSLNG.PEAR.Services;
 using DSLNG.PEAR.Services.Interfaces;
@@ -341,6 +344,58 @@ namespace DSLNG.PEAR.Web.Controllers
                 aaData = kpisResponse
             };
             return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Download()
+        {
+            var sheetName = "Kpi";
+            var data = _kpiService.DownloadKpis().Select(x => new
+                {
+                    x.Id,
+                    x.Code,
+                    x.Name,
+                    PillarId = x.Pillar != null ? x.Pillar.Id.ToString() : string.Empty,
+                    PillarName = x.Pillar != null ? x.Pillar.Name : string.Empty,
+                    TypeName = x.Type != null ? x.Type.Name : string.Empty,
+                    x.IsEconomic,
+                    x.Order,
+                    x.YtdFormula,
+                    x.ConversionId,
+                    x.FormatInput,
+                    x.Period,
+                    x.Remark,
+                    x.Value,
+                    x.Icon,
+                    x.Color,
+                    x.IsActive,
+                    CreatedDate = x.CreatedDate.ToString(DateFormat.DateForGrid),
+                    UpdatedDate = x.UpdatedDate.ToString(DateFormat.DateForGrid),
+                    CreatedBy_Id = x.CreatedBy != null ? x.CreatedBy.Id.ToString() : string.Empty,
+                    Group_Id = x.Group != null ? x.Group.Id.ToString() : string.Empty,
+                    Level_Id = x.Level != null ? x.Level.Id.ToString() : string.Empty,
+                    Measurement_Id = x.Measurement != null ?  x.Measurement.Id.ToString() : string.Empty,
+                    Measurement = x.Measurement != null ? x.Measurement.Name : string.Empty,
+                    Method_Id = x.Method != null ? x.Method.Id.ToString() : string.Empty,
+                    RoleGroup_Id = x.RoleGroup != null ? x.RoleGroup.Id.ToString() : string.Empty,
+                    Type_Id = x.Type != null ? x.Type.Id.ToString() : string.Empty,
+                    UpdatedBy_Id = x.UpdatedBy != null ? x.UpdatedBy.Id.ToString() : string.Empty
+                });
+            XLWorkbook wb = new XLWorkbook();
+            var ws = wb.Worksheets.Add(sheetName);
+            ws.Cell(2, 1).InsertTable(data);
+            Response.Clear();
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.AddHeader("content-disposition", String.Format(@"attachment;filename={0}.xlsx", sheetName.Replace(" ", "_")));
+
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                wb.SaveAs(memoryStream);
+                memoryStream.WriteTo(Response.OutputStream);
+                memoryStream.Close();
+            }
+
+            Response.End();
+            return View("Index");
         }
     }
 }

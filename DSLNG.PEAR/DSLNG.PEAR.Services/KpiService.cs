@@ -349,50 +349,70 @@ namespace DSLNG.PEAR.Services
                                        x.Name.Contains(search));
             }
 
-            foreach (var sortOrder in sortingDictionary)
+            if (sortingDictionary != null && sortingDictionary.Count > 0)
             {
-                switch (sortOrder.Key)
+                foreach (var sortOrder in sortingDictionary)
                 {
-                    case "Code" :
-                        data = sortOrder.Value == SortOrder.Ascending
-                                   ? data.OrderBy(x => x.Code).ThenBy(x => x.Order)
-                                   : data.OrderByDescending(x => x.Code).ThenBy(x => x.Order);
-                        break;
-                    case "Name" :
-                        data = sortOrder.Value == SortOrder.Ascending
-                                   ? data.OrderBy(x => x.Name).ThenBy(x => x.Order)
-                                   : data.OrderByDescending(x => x.Name).ThenBy(x => x.Order);
-                        break;
-                    case "PillarName":
-                        data = sortOrder.Value == SortOrder.Ascending
-                                   ? data.OrderBy(x => x.Pillar.Name).ThenBy(x => x.Order)
-                                   : data.OrderByDescending(x => x.Pillar.Name).ThenBy(x => x.Order);
-                        break;
-                    case "IsActive":
-                        data = sortOrder.Value == SortOrder.Ascending
-                                   ? data.OrderBy(x => x.IsActive).ThenBy(x => x.Order)
-                                   : data.OrderByDescending(x => x.IsActive).ThenBy(x => x.Order);
-                        break;
-                    case "IsEconomic":
-                        data = sortOrder.Value == SortOrder.Ascending
-                                   ? data.OrderBy(x => x.IsEconomic).ThenBy(x => x.Order)
-                                   : data.OrderByDescending(x => x.IsEconomic).ThenBy(x => x.Order);
-                        break;
-                    case "Type.Name":
-                    case "Type":
-                        data = sortOrder.Value == SortOrder.Ascending
-                                   ? data.OrderBy(x => x.Type.Name).ThenBy(x => x.Order)
-                                   : data.OrderByDescending(x => x.Type.Name).ThenBy(x => x.Order);
-                        break;
-                    default:
-                        data = sortOrder.Value == SortOrder.Ascending
-                                   ? data.OrderBy(x => x.Order)
-                                   : data.OrderByDescending(x => x.Order);
-                        break;
+                    switch (sortOrder.Key)
+                    {
+                        case "Code":
+                            data = sortOrder.Value == SortOrder.Ascending
+                                       ? data.OrderBy(x => x.Code).ThenBy(x => x.Order)
+                                       : data.OrderByDescending(x => x.Code).ThenBy(x => x.Order);
+                            break;
+                        case "Name":
+                            data = sortOrder.Value == SortOrder.Ascending
+                                       ? data.OrderBy(x => x.Name).ThenBy(x => x.Order)
+                                       : data.OrderByDescending(x => x.Name).ThenBy(x => x.Order);
+                            break;
+                        case "PillarName":
+                            data = sortOrder.Value == SortOrder.Ascending
+                                       ? data.OrderBy(x => x.Pillar.Name).ThenBy(x => x.Order)
+                                       : data.OrderByDescending(x => x.Pillar.Name).ThenBy(x => x.Order);
+                            break;
+                        case "IsActive":
+                            data = sortOrder.Value == SortOrder.Ascending
+                                       ? data.OrderBy(x => x.IsActive).ThenBy(x => x.Order)
+                                       : data.OrderByDescending(x => x.IsActive).ThenBy(x => x.Order);
+                            break;
+                        case "IsEconomic":
+                            data = sortOrder.Value == SortOrder.Ascending
+                                       ? data.OrderBy(x => x.IsEconomic).ThenBy(x => x.Order)
+                                       : data.OrderByDescending(x => x.IsEconomic).ThenBy(x => x.Order);
+                            break;
+                        case "Type.Name":
+                        case "Type":
+                            data = sortOrder.Value == SortOrder.Ascending
+                                       ? data.OrderBy(x => x.Type.Name).ThenBy(x => x.Order)
+                                       : data.OrderByDescending(x => x.Type.Name).ThenBy(x => x.Order);
+                            break;
+                        default:
+                            data = sortOrder.Value == SortOrder.Ascending
+                                       ? data.OrderBy(x => x.Order)
+                                       : data.OrderByDescending(x => x.Order);
+                            break;
+                    }
                 }
             }
             
             totalRecords = data.Count();
+            return data;
+        }
+
+
+        public IList<Kpi> DownloadKpis()
+        {
+            var data =  DataContext.Kpis
+                .Include(x => x.Pillar)
+                .Include(x => x.Measurement)
+                .Include(x => x.Type)
+                .Include(x => x.Level)
+                .Include(x => x.Group)
+                .Include(x => x.UpdatedBy)
+                .Include(x => x.CreatedBy)
+                .Include(x => x.Method)
+                .Include(x => x.RoleGroup)
+                .ToList();
             return data;
         }
     }

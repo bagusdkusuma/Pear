@@ -200,7 +200,7 @@ namespace DSLNG.PEAR.Web.Controllers
             Workbook workbook = new Workbook();
             using (FileStream stream = new FileStream(file, FileMode.Open))
             {
-                workbook.LoadDocument(stream, DocumentFormat.OpenXml);
+                workbook.LoadDocument(stream, DevExpress.Spreadsheet.DocumentFormat.OpenXml);
                 foreach (var worksheet in workbook.Worksheets)
                 {
                     string[] name = worksheet.Name.Split('_');
@@ -433,7 +433,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
             using (FileStream stream = new FileStream(resultFilePath, FileMode.Create, FileAccess.ReadWrite))
             {
-                workbook.SaveDocument(stream, DocumentFormat.Xlsx);
+                workbook.SaveDocument(stream, DevExpress.Spreadsheet.DocumentFormat.Xlsx);
                 stream.Close();
             }
 
