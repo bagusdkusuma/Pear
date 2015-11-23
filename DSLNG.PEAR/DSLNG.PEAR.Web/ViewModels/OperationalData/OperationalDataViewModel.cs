@@ -18,14 +18,16 @@ namespace DSLNG.PEAR.Web.ViewModels.OperationalData
 
         public int Id { get; set; }
         [Required]
-        [Display(Name="KeyOperation")]
+        [Display(Name="Key Operation")]
         public int IdKeyOperation { get; set; }
         public IList<SelectListItem> KeyOperations { get; set; }
         [Required]
         [Display(Name = "KPI")]
         public int IdKPI { get; set;  }
         public IList<SelectListItem> KPIS { get; set; }
+        [Display(Name = "Actual Value")]
         public double ActualValue { get; set; }
+        [Display(Name = "ForecastValue")]
         public double ForecastValue { get; set; }
         public string Remark { get; set; }
     }

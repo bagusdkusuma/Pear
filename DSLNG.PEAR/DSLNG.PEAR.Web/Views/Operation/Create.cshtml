@@ -17,7 +17,7 @@
             <div class="form-inline whitebox">
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.IdKeyOperationGroup)
-                    @Html.DropDownListFor(model => model.IdKeyOperationGroup, Model.KeyOperationGroups, new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.IdKeyOperationGroup, Model.KeyOperationGroups,"Select Operation Group", new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.IdKeyOperationGroup)
                 </div>
                 <div class="form-group form-list">

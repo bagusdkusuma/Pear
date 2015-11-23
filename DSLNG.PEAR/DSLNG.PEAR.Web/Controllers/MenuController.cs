@@ -142,6 +142,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create()
         {
             var viewModel = new CreateMenuViewModel();
+            viewModel.IsActive = true;
             viewModel = CreateViewModel(viewModel);
 
             return View(viewModel);

@@ -25,6 +25,7 @@ namespace DSLNG.PEAR.Web.ViewModels.User
         public string Email { get; set; }
         public string ChangeModel { get; set; }
         public bool IsActive { get; set; }
+        [Display(Name="Role")]
         public int RoleId { get; set; }
         public bool IsSuperAdmin { get; set; }
         public List<SelectListItem> RoleGroupList { get; set; }

@@ -87,6 +87,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     Take = -1,
                     SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending} }
                 }).Levels.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString()}).ToList();
+            viewModel.IsActive = true;
 
             return viewModel;
         }

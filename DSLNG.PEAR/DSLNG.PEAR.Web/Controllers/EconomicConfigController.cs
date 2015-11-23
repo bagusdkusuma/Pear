@@ -88,6 +88,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
             viewModel.EconomicSummaries = _economicConfigService.GetEconomicConfigSelectList().EconomicSummaries
                 .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+            viewModel.IsActive = true;
 
             return View(viewModel);
         }

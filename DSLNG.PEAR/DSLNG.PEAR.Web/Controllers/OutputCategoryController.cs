@@ -86,6 +86,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create()
         {
             var viewModel = new OutputCategoryViewModel();
+            viewModel.IsActive = true;
             return View(viewModel);
         }
 

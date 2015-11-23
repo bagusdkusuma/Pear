@@ -86,6 +86,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
             viewModel.Categories = _assumptionConfigService.GetAssumptionConfigCategories().AssumptionConfigCategoriesResponse
                 .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+            viewModel.IsActive = true;
 
             return View(viewModel);
         }

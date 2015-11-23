@@ -27,12 +27,12 @@
             </div>
             <div class="form-group form-list">
                 @Html.LabelFor(model => model.Type)
-                @Html.DropDownListFor(model => model.Type, Model.Types, new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.Type, Model.Types,"Select Type", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Type)
             </div>
             <div class="form-group form-list">
                 @Html.LabelFor(model => model.MeasurementId)
-                @Html.DropDownListFor(model => model.MeasurementId, Model.Measurements,new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.MeasurementId, Model.Measurements,"Select Measurement",new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.MeasurementId)
             </div>
         </div>

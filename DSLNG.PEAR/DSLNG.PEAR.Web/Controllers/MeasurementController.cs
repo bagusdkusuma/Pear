@@ -78,6 +78,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create()
         {
             var viewModel = new CreateMeasurementViewModel();
+            viewModel.IsActive = true;
             return View(viewModel);
         }
 

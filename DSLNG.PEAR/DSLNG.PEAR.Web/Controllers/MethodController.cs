@@ -80,6 +80,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create()
         {
             var viewModel = new CreateMethodViewModel();
+            viewModel.IsActive = true;
             return View(viewModel);
         }
 
