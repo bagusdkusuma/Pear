@@ -20,33 +20,33 @@
             <label>@assumption.Name</label>
         </div>
         <div class="col-sm-4">
-            <form action="@Url.Action("Update")">
+            <form action="@Url.Action("Save")">
                 @Html.Hidden("IdScenario", Model.Scenario.Id)
                 @Html.Hidden("IdConfig", assumption.Id)
                 @if (realValue != null)
                 {
                     @Html.Hidden("Id", realValue.Id)
-                    <label>Forecast</label><input type="text" class="control-form forecast" name="ForecastValue" value="@realValue.ForecastValue" />
+                    <label>Forecast</label><input type="text" class="control-form assumption-input" name="ForecastValue" value="@realValue.ForecastValue" />
                 }
                 else
                 {
-                    <label>Forecast</label><input type="text" class="control-form forecast" name="ForecastValue" />
+                    <label>Forecast</label><input type="text" class="control-form assumption-input" name="ForecastValue" />
                 }
                 <label>@assumption.Measurement</label>
             </form>
         </div>
         <div class="col-sm-4">
-            <form action="@Url.Action("Update")">
+            <form action="@Url.Action("Save")">
                 @Html.Hidden("IdScenario", Model.Scenario.Id)
                 @Html.Hidden("IdConfig", assumption.Id)
                 @if (realValue != null)
                 {
                     @Html.Hidden("Id", realValue.Id)
-                    <label>Actual</label><input type="text" class="control-form forecast" name="ActualValue" value="@realValue.ActualValue" />
+                    <label>Actual</label><input type="text" class="control-form assumption-input" name="ActualValue" value="@realValue.ActualValue" />
                 }
                 else
                 {
-                    <label>Actual</label><input type="text" class="control-form forecast" name="ActualValue" />
+                    <label>Actual</label><input type="text" class="control-form assumption-input" name="ActualValue" />
                 }
                 <label>@assumption.Measurement</label>
             </form>
@@ -60,10 +60,12 @@
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            $('.add-assumption-group').click(function (e) {
+            $('.assumption-input').change(function (e) {
                 e.preventDefault();
-                var assumptionGroups = $('.assumption-groups').clone(true).show();
-                $('.assumption-input-list').append(assumptionGroups);
+                var $this = $(this).val();
+                var $form = $(this).closest('form');
+                var url = $form.attr('action');
+                $.post(url, $form.serialize(), function (data) { });
             });
         });
     </script>

@@ -188,7 +188,9 @@ namespace DSLNG.PEAR.Web.Controllers
         
         [HttpPost]
         public ActionResult Save(AssumptionDataViewModel viewModel) {
-            throw new NotImplementedException();
+            var request = viewModel.MapTo<SaveAssumptionDataRequest>();
+            var response = _assumptionDataService.SaveAssumptionData(request);
+            return Json(response, JsonRequestBehavior.DenyGet);
         }
 	}
 }
