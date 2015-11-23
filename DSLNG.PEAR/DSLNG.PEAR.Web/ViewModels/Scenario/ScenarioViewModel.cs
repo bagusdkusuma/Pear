@@ -11,5 +11,6 @@ namespace DSLNG.PEAR.Web.ViewModels.Scenario
         public string Name { get; set; }
         public string Desc { get; set; }
         public bool IsActive { get; set; }
+        public int Order { get; set; }
     }
 }

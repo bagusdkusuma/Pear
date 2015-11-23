@@ -22,6 +22,11 @@
                     @Html.ValidationMessageFor(model => model.Name)
                 </div>
                 <div class="message-holder">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.Order)
+                        @Html.TextBoxFor(model => model.Order, new { @class = "form-control datepicker" })
+                        @Html.ValidationMessageFor(model => model.Order)
+                    </div>
                     <div class="form-group form-list message-text-area">
                         @Html.LabelFor(model => model.Desc)
                         @Html.TextAreaFor(model => model.Desc, 5, 100, new { @class = "form-control" })
