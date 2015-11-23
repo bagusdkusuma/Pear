@@ -75,6 +75,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create()
         {
             var viewModel = new EconomicSummaryViewModel();
+            viewModel.IsActive = true;
             return View(viewModel);
         }
 

@@ -15,8 +15,8 @@ namespace DSLNG.PEAR.Data.Entities.EconomicModel
         public int Id { get; set; }
         public Scenario Scenario { get; set; }
         public KeyAssumptionConfig KeyAssumptionConfig { get; set; }
-        public double ActualValue { get; set; }
-        public double ForecastValue { get; set; }
+        public string ActualValue { get; set; }
+        public string ForecastValue { get; set; }
         public string Remark { get; set;  }
     }
 }

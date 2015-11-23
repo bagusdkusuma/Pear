@@ -10,6 +10,7 @@ namespace DSLNG.PEAR.Services.Requests.AssumptionData
     {
         public int Take { get; set; }
         public int Skip { get; set; }
+        public int ScenarioId { get; set; }
         public bool OnlyCount { get; set; }
     }
 }

@@ -27,14 +27,14 @@
                     @Html.ValidationMessageFor(model => model.IdKPI)
                 </div>
                 <div class="form-group form-list">
-                    @Html.LabelFor(model => model.ActualValue)
-                    @Html.TextBoxFor(model => model.ActualValue, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.ActualValue)
-                </div>
-                <div class="form-group form-list">
                     @Html.LabelFor(model => model.ForecastValue)
                     @Html.TextBoxFor(model => model.ForecastValue, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.ForecastValue)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.ActualValue)
+                    @Html.TextBoxFor(model => model.ActualValue, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ActualValue)
                 </div>
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.Remark)

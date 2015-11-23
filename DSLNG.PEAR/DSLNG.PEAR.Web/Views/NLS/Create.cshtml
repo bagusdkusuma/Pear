@@ -17,7 +17,7 @@
             <div class="form-inline whitebox">
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.VesselScheduleId)
-                    @Html.DropDownListFor(model => model.VesselScheduleId, new List<SelectListItem>(), new { @class = "form-control", data_url = Url.Action("VesselScheduleList"), style = "width:200px" })
+                    @Html.DropDownListFor(model => model.VesselScheduleId, new List<SelectListItem>(), "Select Vessel Schedule", new { @class = "form-control", data_url = Url.Action("VesselScheduleList"), style = "width:200px" })
                     @Html.ValidationMessageFor(model => model.VesselScheduleId)
                 </div>
                 <div class="form-group form-list">

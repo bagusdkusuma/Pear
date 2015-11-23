@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Entities.EconomicModel;
 using System.Data.SqlClient;
+using System.Data.Entity;
 
 namespace DSLNG.PEAR.Services
 {
@@ -21,7 +22,7 @@ namespace DSLNG.PEAR.Services
         public GetAssumptionCategoriesResponse GetAssumptionCategories(GetAssumptionCategoriesRequest request)
         {
             int totalRecords;
-            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            var data = SortData(request.Search, request.SortingDictionary, request.IncludeAssumptionList, out totalRecords);
             if (request.Take != -1)
             {
                 data = data.Skip(request.Skip).Take(request.Take);
@@ -99,9 +100,13 @@ namespace DSLNG.PEAR.Services
         }
 
 
-        public IEnumerable<KeyAssumptionCategory> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        public IEnumerable<KeyAssumptionCategory> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, bool includeAssumptionList, out int TotalRecords)
         {
             var data = DataContext.KeyAssumptionCategories.AsQueryable();
+            if (includeAssumptionList) {
+                data = data.Include(x => x.KeyAssumptions)
+                    .Include(x => x.KeyAssumptions.Select(y => y.Measurement));
+            }
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             {
                 data = data.Where(x => x.Name.Contains(search));
@@ -113,13 +118,18 @@ namespace DSLNG.PEAR.Services
                 {
                     case "Name" :
                         data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.Name)
-                            : data.OrderByDescending(x => x.Name);
+                            ? data.OrderBy(x => x.Name).ThenBy(X => X.Order)
+                            : data.OrderByDescending(x => x.Name).ThenBy(X => X.Order);
+                        break;
+                    case "Order":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Order)
+                            : data.OrderByDescending(x => x.Order);
                         break;
                     case "IsActive" :
                         data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.IsActive)
-                            : data.OrderByDescending(x => x.IsActive);
+                            ? data.OrderBy(x => x.IsActive).ThenBy(X => X.Order)
+                            : data.OrderByDescending(x => x.IsActive).ThenBy(X => X.Order);
                         break;
                 }
             }

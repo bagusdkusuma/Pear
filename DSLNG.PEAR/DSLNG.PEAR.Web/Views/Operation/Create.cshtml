@@ -9,7 +9,7 @@
     {
         @Html.AntiForgeryToken()
         <div class="col-md-12">
-            <div class="title">Operation</div>
+            <div class="title">Key Operation</div>
             <div class="description_year">New</div>
             <div>@Html.ValidationSummary(true)</div>
         </div>
@@ -17,7 +17,7 @@
             <div class="form-inline whitebox">
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.IdKeyOperationGroup)
-                    @Html.DropDownListFor(model => model.IdKeyOperationGroup, Model.KeyOperationGroups, new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.IdKeyOperationGroup, Model.KeyOperationGroups,"Select Operation Group", new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.IdKeyOperationGroup)
                 </div>
                 <div class="form-group form-list">

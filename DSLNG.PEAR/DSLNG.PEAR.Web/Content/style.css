@@ -2046,4 +2046,9 @@ a.see-more
     .form-group > span {
         color: #ffffff;
     }
+
+    .form-inline label 
+    {
+        width : 180px;
+    }
     

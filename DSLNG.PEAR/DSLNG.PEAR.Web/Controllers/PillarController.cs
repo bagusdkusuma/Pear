@@ -91,6 +91,7 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             var viewModel = new CreatePillarViewModel();
             viewModel.Icons = Directory.EnumerateFiles(Server.MapPath(PathConstant.PillarPath)).ToList();
+            viewModel.IsActive = true;
             return View(viewModel);
         }
 

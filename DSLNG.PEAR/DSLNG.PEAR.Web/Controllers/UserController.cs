@@ -115,6 +115,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     Value = x.Id.ToString(),
                     Selected = viewModel.RoleId == x.Id ? true : false
                 }).ToList();
+            viewModel.IsActive = true;
 
             return viewModel;
         }

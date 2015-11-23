@@ -1,0 +1,72 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.AssumptionData.AssumptionDataInputViewModel
+@{
+    ViewBag.Title = "Input";
+}
+
+<h2>Key Assumption For : @Model.Scenario.Name</h2>
+@{
+    foreach (var category in Model.KeyAssumptionCategories.Where(x => x.IsActive == true).OrderBy(x => x.Order).ToList())
+    {
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>@category.Name</h3>
+        </div>
+    </div>
+        foreach (var assumption in category.Assumptions)
+        {
+            var realValue = Model.AssumptionDataList.FirstOrDefault(x => x.IdConfig == assumption.Id && x.IdScenario == Model.Scenario.Id);    
+    <div class="row">
+        <div class="col-sm-4" style="padding-left: 50px">
+            <label>@assumption.Name</label>
+        </div>
+        <div class="col-sm-4">
+            <form action="@Url.Action("Save")">
+                @Html.Hidden("IdScenario", Model.Scenario.Id)
+                @Html.Hidden("IdConfig", assumption.Id)
+                @if (realValue != null)
+                {
+                    @Html.Hidden("Id", realValue.Id)
+                    <label>Forecast</label><input type="text" class="control-form assumption-input" name="ForecastValue" value="@realValue.ForecastValue" />
+                }
+                else
+                {
+                    <label>Forecast</label><input type="text" class="control-form assumption-input" name="ForecastValue" />
+                }
+                <label>@assumption.Measurement</label>
+            </form>
+        </div>
+        <div class="col-sm-4">
+            <form action="@Url.Action("Save")">
+                @Html.Hidden("IdScenario", Model.Scenario.Id)
+                @Html.Hidden("IdConfig", assumption.Id)
+                @if (realValue != null)
+                {
+                    @Html.Hidden("Id", realValue.Id)
+                    <label>Actual</label><input type="text" class="control-form assumption-input" name="ActualValue" value="@realValue.ActualValue" />
+                }
+                else
+                {
+                    <label>Actual</label><input type="text" class="control-form assumption-input" name="ActualValue" />
+                }
+                <label>@assumption.Measurement</label>
+            </form>
+        </div>
+        <div class="col-sm-4">
+        </div>
+    </div>
+        }
+    }
+}
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.assumption-input').change(function (e) {
+                e.preventDefault();
+                var $this = $(this).val();
+                var $form = $(this).closest('form');
+                var url = $form.attr('action');
+                $.post(url, $form.serialize(), function (data) { });
+            });
+        });
+    </script>
+}

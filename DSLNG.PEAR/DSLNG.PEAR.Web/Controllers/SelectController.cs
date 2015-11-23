@@ -87,6 +87,7 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.Parents = _selectService.GetSelects(new GetSelectsRequest())
                 .Selects.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name.ToString() }).ToList();
             viewModel.Parents.Insert(0, new SelectListItem { Value = "0", Text = "No Parent" });
+            viewModel.IsActive = true;
             return View(viewModel);
         }
 

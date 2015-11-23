@@ -17,12 +17,12 @@
             <div class="form-inline whitebox">
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.IdScenario)
-                    @Html.DropDownListFor(model => model.IdScenario, Model.Scenarios, new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.IdScenario, Model.Scenarios,"Select Scenario", new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.IdScenario)
                 </div>
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.IdEconomicSummary)
-                    @Html.DropDownListFor(model => model.IdEconomicSummary, Model.EconomicSummaries, new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.IdEconomicSummary, Model.EconomicSummaries,"Select Economic Summary", new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.IdEconomicSummary)
                 </div>
                 <div class="form-group">
