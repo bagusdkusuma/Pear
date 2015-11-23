@@ -1294,6 +1294,7 @@
     <Folder Include="ViewModels\CorporatePortofolio\" />
     <Folder Include="Views\Chart\" />
     <Folder Include="Views\CorporatePortofolio\" />
+    <Folder Include="Views\KeyOperation\" />
     <Folder Include="Views\Test\" />
     <Folder Include="Views\UnAuthorize\" />
   </ItemGroup>

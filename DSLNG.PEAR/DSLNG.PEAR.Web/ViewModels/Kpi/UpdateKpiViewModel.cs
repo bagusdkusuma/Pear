@@ -44,6 +44,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Kpi
         public IEnumerable<SelectListItem> LevelList { get; set; }
         //public Level Level { get; set; }
 
+        [Required]
         [Display(Name = "Accountability")]
         public int? RoleGroupId { get; set; }
         public IEnumerable<SelectListItem> RoleGroupList { get; set; }
