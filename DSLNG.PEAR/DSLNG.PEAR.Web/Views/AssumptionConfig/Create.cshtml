@@ -9,7 +9,7 @@
     {
         @Html.AntiForgeryToken()
         <div class="col-md-12">
-            <div class="title">Assumption Config</div>
+            <div class="title">Key Assumption Config</div>
             <div class="description_year">New</div>
             <div>@Html.ValidationSummary(true)</div>
         </div>
@@ -22,12 +22,12 @@
                 </div>
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.IdCategory)
-                    @Html.DropDownListFor(model => model.IdCategory, Model.Categories, new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.IdCategory, Model.Categories,"Select Category", new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.IdCategory)
                 </div>
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.IdMeasurement)
-                    @Html.DropDownListFor(model => model.IdMeasurement, Model.Measurements, new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.IdMeasurement, Model.Measurements,"Select Measurement", new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.IdMeasurement)
                 </div>
                 <div class="form-group form-list">

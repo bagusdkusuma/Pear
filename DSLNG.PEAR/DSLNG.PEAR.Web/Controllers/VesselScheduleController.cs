@@ -120,6 +120,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var viewModel = new VesselScheduleViewModel();
             viewModel.SalesTypes = _selectService.GetSelect(new GetSelectRequest { Name = "vessel-schedule-sales-types" }).Options
                 .Select(x => new SelectListItem { Text = x.Text, Value = x.Value }).ToList();
+            viewModel.IsActive = true;
             return View(viewModel);
         }
 

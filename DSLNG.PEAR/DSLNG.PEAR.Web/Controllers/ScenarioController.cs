@@ -85,7 +85,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create()
         {
             var viewModel = new ScenarioViewModel();
-
+            viewModel.IsActive = true;
             return View(viewModel);
         }
 

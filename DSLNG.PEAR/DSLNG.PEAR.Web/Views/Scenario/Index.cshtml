@@ -25,6 +25,10 @@
     <thead>
         <tr>
             <th>Name</th>
+            <th>Order</th>
+            <th>Key Assumption</th>
+             <th>Key Operation</th>
+             <th>Key Output</th>
             <th>Desc</th>
             <th>Is Active</th>
             <th>Action</th>
@@ -45,6 +49,33 @@
                 "order": [[3, "asc"]],
                 "aoColumns": [
                     { "mDataProp": "Name", "name": "Name" },
+                    { "mDataProp": "Order", "name": "Order" },
+                    {
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": '',
+                        "mRender": function (data, type, row) {
+                            var link = '<a href="@Url.Action("Input", "AssumptionData", new { scenarioId = "_scenarioId"})"><span class="fa fa-table"></span>Details</a>';
+                            link = link.replace('_scenarioId', row.Id);
+                            return link;
+                        }
+                    },
+                    {
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": '',
+                        "mRender": function (data, type, row) {
+                            return '<a href="@Url.Action("Input", "OperationalData")"><span class="fa fa-table"></span>Details</a>';
+                        }
+                    },
+                    {
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": '',
+                        "mRender": function (data, type, row) {
+                            return '<a href="@Url.Action("Input", "AssumptionData")"><span class="fa fa-table"></span>Details</a>';
+                        }
+                    },
                     { "mDataProp": "Desc", "name": "Desc", "sortable": false },
                     {
                         "mDataProp": "IsActive", "name": "IsActive",

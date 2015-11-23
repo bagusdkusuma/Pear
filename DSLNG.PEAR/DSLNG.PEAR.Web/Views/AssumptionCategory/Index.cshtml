@@ -4,7 +4,7 @@
 }
 
 
-<h2>Assumption Category List</h2>
+<h2>Key Assumption Category</h2>
 @Html.Partial("_MessageResponse")
 @Html.ActionLink("Create New", "Create")
 @*@Html.Action("IndexPartial")*@
@@ -25,8 +25,9 @@
 <table id="assumptioncategory-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
     <thead>
         <tr>
-            <th>Name</th>
-            <th>Desc</th>
+            <th>Key Assumption Category</th>
+            <th>Order</th>
+            <th>Desc</th>            
             <th>Is Active</th>
             <th>Action</th>
         </tr>
@@ -46,6 +47,7 @@
                 "order": [[3, "asc"]],
                 "aoColumns": [
                     { "mDataProp": "Name", "name": "Name" },
+                    { "mDataProp": "Order", "name": "Order" },
                     { "mDataProp": "Desc", "name": "Desc", "sortable": false },
                     {
                         "mDataProp": "IsActive", "name": "IsActive",

@@ -84,7 +84,9 @@ namespace DSLNG.PEAR.Web.Controllers
         // GET: /Buyer/Create
         public ActionResult Create()
         {
-            return View();
+            var viewModel = new BuyerViewModel();
+            viewModel.IsActive = true;
+            return View(viewModel);
         }
 
         //

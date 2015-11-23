@@ -81,6 +81,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create()
         {
             var viewModel = new CreateGroupViewModel();
+            viewModel.IsActive = true;
             return View(viewModel);
         }
 

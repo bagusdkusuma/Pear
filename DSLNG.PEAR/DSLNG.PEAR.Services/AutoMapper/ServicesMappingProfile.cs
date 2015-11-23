@@ -82,6 +82,7 @@ using DSLNG.PEAR.Services.Responses.EconomicConfig;
 using DSLNG.PEAR.Services.Requests.EconomicConfig;
 using DSLNG.PEAR.Services.Responses.HighlightGroup;
 using DSLNG.PEAR.Services.Requests.HighlightGroup;
+using System.Collections.Generic;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -384,7 +385,13 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.Text, o => o.MapFrom(s => s.Value.Text));
             Mapper.CreateMap<SelectOption, GetHighlightOrdersResponse.HighlightOrderResponse>()
                 .ForMember(x => x.GroupId, o => o.MapFrom(x =>x.Group != null ?  x.Group.Id : 0));
-            Mapper.CreateMap<KeyAssumptionCategory, GetAssumptionCategoriesResponse.AssumptionCategory>();
+            Mapper.CreateMap<KeyAssumptionCategory, GetAssumptionCategoriesResponse.AssumptionCategory>()
+                .ForMember(x => x.Assumptions, o =>
+                    o.MapFrom(s => s.KeyAssumptions != null ?
+                        s.KeyAssumptions.Where(x => x.IsActive == true).MapTo<GetAssumptionCategoriesResponse.Assumption>()
+                        : new List<GetAssumptionCategoriesResponse.Assumption>()));
+            Mapper.CreateMap<KeyAssumptionConfig, GetAssumptionCategoriesResponse.Assumption>()
+                .ForMember(x => x.Measurement, o => o.MapFrom(s => s.Measurement.Name));
             Mapper.CreateMap<SaveAssumptionCategoryRequest, KeyAssumptionCategory>();
             Mapper.CreateMap<KeyAssumptionCategory, GetAssumptionCategoryResponse>();
 
@@ -416,8 +423,11 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
             Mapper.CreateMap<KeyAssumptionData, GetAssumptionDatasResponse.AssumptionData>()
                 .ForMember(x => x.Scenario, o => o.MapFrom(s => s.Scenario.Name))
+                .ForMember(x => x.IdScenario, o => o.MapFrom(s => s.Scenario.Id))
+                .ForMember(x => x.IdConfig, o => o.MapFrom(s => s.KeyAssumptionConfig.Id))
                 .ForMember(x => x.Config, o => o.MapFrom(s => s.KeyAssumptionConfig.Name));
-            Mapper.CreateMap<KeyAssumptionConfig, GetAssumptionDataConfigResponse.AssumptionDataConfig>();
+            Mapper.CreateMap<KeyAssumptionConfig, GetAssumptionDataConfigResponse.AssumptionDataConfig>()
+                .ForMember(x => x.Measurement, o => o.MapFrom(s => s.Measurement.Name));
             Mapper.CreateMap<Scenario, GetAssumptionDataConfigResponse.Scenario>();
             Mapper.CreateMap<SaveAssumptionDataRequest, KeyAssumptionData>()
                 .ForMember(x => x.Scenario, o => o.Ignore())

@@ -9,7 +9,7 @@
     {
         @Html.AntiForgeryToken()
         <div class="col-md-12">
-            <div class="title">Assumption Data</div>
+            <div class="title">Key Assumption Data</div>
             <div class="description_year">New</div>
             <div>@Html.ValidationSummary(true)</div>
         </div>
@@ -17,23 +17,23 @@
             <div class="form-inline whitebox">
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.IdScenario)
-                    @Html.DropDownListFor(model => model.IdScenario, Model.Scenarios, new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.IdScenario, Model.Scenarios,"Select Scenario", new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.IdScenario)
                 </div>
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.IdConfig)
-                    @Html.DropDownListFor(model => model.IdConfig, Model.Configs, new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.IdConfig, Model.Configs,"Select Assumption Config", new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.IdConfig)
-                </div>
-                <div class="form-group form-list">
-                    @Html.LabelFor(model => model.ActualValue)
-                    @Html.TextBoxFor(model => model.ActualValue, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.ActualValue)
                 </div>
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.ForecastValue)
                     @Html.TextBoxFor(model => model.ForecastValue, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.ForecastValue)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.ActualValue)
+                    @Html.TextBoxFor(model => model.ActualValue, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ActualValue)
                 </div>
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.Remark)
