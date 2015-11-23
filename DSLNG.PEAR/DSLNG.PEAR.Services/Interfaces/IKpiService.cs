@@ -1,4 +1,6 @@
-﻿using DSLNG.PEAR.Services.Requests.Kpi;
+﻿using System.Collections.Generic;
+using DSLNG.PEAR.Data.Entities;
+using DSLNG.PEAR.Services.Requests.Kpi;
 using DSLNG.PEAR.Services.Responses;
 using DSLNG.PEAR.Services.Responses.Kpi;
 
@@ -17,5 +19,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         DeleteKpiResponse Delete(int id);
 
         bool IsValidKpi(GetKpiByRole request);
+        IList<Kpi> DownloadKpis();
     }
 }
