@@ -21,9 +21,14 @@
                     @Html.ValidationMessageFor(model => model.IdKeyOperationGroup)
                 </div>
                 <div class="form-group form-list">
-                    @Html.LabelFor(model => model.Name)
-                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Name)
+                    @Html.LabelFor(model => model.IdKPI)
+                    @Html.DropDownListFor(model => model.IdKPI, Model.KPIS, "Select KPI", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IdKPI)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.Order)
+                    @Html.TextBoxFor(model => model.Order, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Order)
                 </div>
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.Desc)
