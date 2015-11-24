@@ -108,36 +108,37 @@ namespace DSLNG.PEAR.Services
 
         public IEnumerable<KeyOperationConfig> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
         {
-            var data = DataContext.KeyOperations.Include(x => x.KeyOperationGroup).AsQueryable();
-            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
-            {
-                data = data.Where(x => x.KeyOperationGroup.Name.Contains(search) || x.Name.Contains(search));
-            }
+            //var data = DataContext.KeyOperations.Include(x => x.KeyOperationGroup).AsQueryable();
+            //if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            //{
+            //    data = data.Where(x => x.KeyOperationGroup.Name.Contains(search) || x.Name.Contains(search));
+            //}
 
-            foreach (var sortOrder in sortingDictionary)
-            {
-                switch (sortOrder.Key)
-                {
-                    case "OperationGroup":
-                        data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.KeyOperationGroup.Name)
-                            : data.OrderByDescending(x => x.KeyOperationGroup.Name);
-                        break;
-                    case "Name":
-                        data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.Name)
-                            : data.OrderByDescending(x => x.Name);
-                        break;
-                    case "IsActive":
-                        data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.IsActive)
-                            : data.OrderByDescending(x => x.IsActive);
-                        break;
-                }
-            }
+            //foreach (var sortOrder in sortingDictionary)
+            //{
+            //    switch (sortOrder.Key)
+            //    {
+            //        case "OperationGroup":
+            //            data = sortOrder.Value == SortOrder.Ascending
+            //                ? data.OrderBy(x => x.KeyOperationGroup.Name)
+            //                : data.OrderByDescending(x => x.KeyOperationGroup.Name);
+            //            break;
+            //        case "Name":
+            //            data = sortOrder.Value == SortOrder.Ascending
+            //                ? data.OrderBy(x => x.Name)
+            //                : data.OrderByDescending(x => x.Name);
+            //            break;
+            //        case "IsActive":
+            //            data = sortOrder.Value == SortOrder.Ascending
+            //                ? data.OrderBy(x => x.IsActive)
+            //                : data.OrderByDescending(x => x.IsActive);
+            //            break;
+            //    }
+            //}
 
-            TotalRecords = data.Count();
-            return data;
+            //TotalRecords = data.Count();
+            //return data;
+            throw new NotImplementedException();
         }
     }
 }
