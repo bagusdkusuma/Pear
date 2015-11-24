@@ -15,7 +15,6 @@ namespace DSLNG.PEAR.Data.Entities.EconomicModel
         public int Id { get; set; }
         public KeyOperationGroup KeyOperationGroup { get; set; }
         public Kpi Kpi { get; set; }
-        public string Name { get; set; }
         public string Desc { get; set; }
         public bool IsActive { get; set; }
         public int Order { get; set; }
