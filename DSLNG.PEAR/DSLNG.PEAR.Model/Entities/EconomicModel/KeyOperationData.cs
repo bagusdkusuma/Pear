@@ -1,24 +1,25 @@
-﻿using System;
+﻿using DSLNG.PEAR.Data.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DSLNG.PEAR.Data.Enums;
 
 namespace DSLNG.PEAR.Data.Entities.EconomicModel
 {
-    public class KeyOperationGroup
+    public class KeyOperationData
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-
-        public string Name { get; set; }
-        //public PeriodeStart PeriodeStart { get; set; }
-        public int Order { get; set; }
+        public Scenario Scenario { get; set; }
+        public KeyOperationConfig KeyOperation { get; set; }
+        public Kpi Kpi { get; set; }
+        public double Value { get; set; }
         public string Remark { get; set; }
-        public bool IsActive { get; set; }  
+        public DateTime Periode { get; set; }
+        public PeriodeType PeriodeType { get; set; }
     }
 }
