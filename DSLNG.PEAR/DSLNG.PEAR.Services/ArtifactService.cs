@@ -14,6 +14,7 @@ using System.Data.Entity;
 using System.Globalization;
 using DSLNG.PEAR.Common.Contants;
 using System.Data.SqlClient;
+using DSLNG.PEAR.Data.Entities.EconomicModel;
 
 namespace DSLNG.PEAR.Services
 {
@@ -286,6 +287,19 @@ namespace DSLNG.PEAR.Services
                                 .GroupBy(x => x.Kpi.Id)
                                 .Select(x => x.Sum(y => (double?)y.Value ?? 0)).FirstOrDefault();
                         }
+                        else if (request.ValueAxis == ValueAxis.KpiEconomic)
+                        {
+                            var scenarioId = 0;
+                            var scenario = DataContext.Scenarios.FirstOrDefault(x => x.IsDashboard == true);
+                            if (scenario != null)
+                            {
+                                scenarioId = scenario.Id;
+                            }
+                            seriesResponse.y = DataContext.KeyOperasionalDatas.Where(x => x.PeriodeType == request.PeriodeType
+                               && x.Periode >= start && x.Periode <= end && x.Kpi.Id == kpi.Id && x.Scenario.Id == scenarioId)
+                               .GroupBy(x => x.Kpi.Id)
+                               .Select(x => x.Sum(y => (double?)y.Value ?? 0)).FirstOrDefault();
+                        }
                         break;
 
                     case YtdFormula.Average:
@@ -302,6 +316,19 @@ namespace DSLNG.PEAR.Services
                                 && x.Periode >= start && x.Periode <= end && x.Kpi.Id == kpi.Id)
                                 .GroupBy(x => x.Kpi.Id)
                                 .Select(x => x.Average(y => (double?)y.Value ?? 0)).FirstOrDefault();
+                        }
+                        else if (request.ValueAxis == ValueAxis.KpiEconomic)
+                        {
+                            var scenarioId = 0;
+                            var scenario = DataContext.Scenarios.FirstOrDefault(x => x.IsDashboard == true);
+                            if (scenario != null)
+                            {
+                                scenarioId = scenario.Id;
+                            }
+                            seriesResponse.y = DataContext.KeyOperasionalDatas.Where(x => x.PeriodeType == request.PeriodeType
+                               && x.Periode >= start && x.Periode <= end && x.Kpi.Id == kpi.Id && x.Scenario.Id == scenarioId)
+                               .GroupBy(x => x.Kpi.Id)
+                               .Select(x => x.Average(y => (double?)y.Value ?? 0)).FirstOrDefault();
                         }
                         break;
                 }
@@ -341,6 +368,30 @@ namespace DSLNG.PEAR.Services
                         if (kpiTarget != null && kpiTarget.Value.HasValue)
                         {
                             seriesResponse.y = kpiTarget.Value.Value;
+                        }
+                    }
+                }
+                if (request.ValueAxis == ValueAxis.KpiEconomic && latestActual != null)
+                {
+                    if ((request.PeriodeType == PeriodeType.Hourly && request.RangeFilter == RangeFilter.CurrentHour) ||
+                        (request.PeriodeType == PeriodeType.Daily && request.RangeFilter == RangeFilter.CurrentDay) ||
+                        (request.PeriodeType == PeriodeType.Monthly && request.RangeFilter == RangeFilter.CurrentMonth) ||
+                        (request.PeriodeType == PeriodeType.Yearly && request.RangeFilter == RangeFilter.CurrentYear))
+                    {
+                        var scenarioId = 0;
+                        var scenario = DataContext.Scenarios.FirstOrDefault(x => x.IsDashboard == true);
+                        if (scenario != null)
+                        {
+                            scenarioId = scenario.Id;
+                        }
+                        var kpiEconomic = DataContext.KeyOperasionalDatas.Where(x => x.PeriodeType == request.PeriodeType &&
+                                                                          x.Periode == latestActual.Periode &&
+                                                                          x.Kpi.Id == kpi.Id &&
+                                                                          x.Scenario.Id == scenarioId)
+                                                   .OrderByDescending(x => x.Periode).FirstOrDefault();
+                        if (kpiEconomic != null && kpiEconomic.Value.HasValue)
+                        {
+                            seriesResponse.y = kpiEconomic.Value.Value;
                         }
                     }
                 }
@@ -408,6 +459,22 @@ namespace DSLNG.PEAR.Services
                                 .Select(x => x.Sum(y => y.Value).Value).FirstOrDefault()
                             };
                             break;
+                        case ValueAxis.KpiEconomic:
+                            var scenarioId = 0;
+                            var scenario = DataContext.Scenarios.FirstOrDefault(x => x.IsDashboard == true);
+                            if (scenario != null)
+                            {
+                                scenarioId = scenario.Id;
+                            }
+                            response.Series = new GetSpeedometerChartDataResponse.SeriesResponse
+                            {
+                                name = request.Series.Label,
+                                data = DataContext.KeyOperasionalDatas.Where(x => x.PeriodeType == request.PeriodeType &&
+                                x.Periode >= start && x.Periode <= end && x.Kpi.Id == request.Series.KpiId && x.Scenario.Id == scenarioId)
+                                .GroupBy(x => x.Kpi.Id)
+                                .Select(x => x.Sum(y => y.Value).Value).FirstOrDefault()
+                            };
+                            break;
                     }
                     break;
                 case YtdFormula.Average:
@@ -429,6 +496,22 @@ namespace DSLNG.PEAR.Services
                                 name = request.Series.Label,
                                 data = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType &&
                                 x.Periode >= start && x.Periode <= end && x.Kpi.Id == request.Series.KpiId)
+                                .GroupBy(x => x.Kpi.Id)
+                                .Select(x => x.Average(y => y.Value).Value).FirstOrDefault()
+                            };
+                            break;
+                        case ValueAxis.KpiEconomic:
+                            var scenarioId = 0;
+                            var scenario = DataContext.Scenarios.FirstOrDefault(x => x.IsDashboard == true);
+                            if (scenario != null)
+                            {
+                                scenarioId = scenario.Id;
+                            }
+                            response.Series = new GetSpeedometerChartDataResponse.SeriesResponse
+                            {
+                                name = request.Series.Label,
+                                data = DataContext.KeyOperasionalDatas.Where(x => x.PeriodeType == request.PeriodeType &&
+                                x.Periode >= start && x.Periode <= end && x.Kpi.Id == request.Series.KpiId && x.Scenario.Id == scenarioId)
                                 .GroupBy(x => x.Kpi.Id)
                                 .Select(x => x.Average(y => y.Value).Value).FirstOrDefault()
                             };
@@ -474,6 +557,32 @@ namespace DSLNG.PEAR.Services
                         {
                             name = request.Series.Label,
                             data = target.Value.Value
+                        };
+                    }
+                }
+            }
+            if (request.ValueAxis == ValueAxis.KpiEconomic && latestActual != null)
+            {
+                if ((request.PeriodeType == PeriodeType.Hourly && request.RangeFilter == RangeFilter.CurrentHour) ||
+                      (request.PeriodeType == PeriodeType.Daily && request.RangeFilter == RangeFilter.CurrentDay) ||
+                      (request.PeriodeType == PeriodeType.Monthly && request.RangeFilter == RangeFilter.CurrentMonth) ||
+                      (request.PeriodeType == PeriodeType.Yearly && request.RangeFilter == RangeFilter.CurrentYear))
+                {
+                    var scenarioId = 0;
+                    var scenario = DataContext.Scenarios.FirstOrDefault(x => x.IsDashboard == true);
+                    if (scenario != null)
+                    {
+                        scenarioId = scenario.Id;
+                    }
+                    var economic = DataContext.KeyOperasionalDatas.Where(x => x.PeriodeType == request.PeriodeType &&
+                  x.Periode == latestActual.Periode && x.Kpi.Id == request.Series.KpiId && x.Scenario.Id == scenarioId)
+                  .OrderByDescending(x => x.Periode).FirstOrDefault();
+                    if (economic != null)
+                    {
+                        response.Series = new GetSpeedometerChartDataResponse.SeriesResponse
+                        {
+                            name = request.Series.Label,
+                            data = economic.Value.Value
                         };
                     }
                 }
@@ -547,6 +656,22 @@ namespace DSLNG.PEAR.Services
                                 .Select(x => x.Sum(y => y.Value).Value).FirstOrDefault()
                             };
                             break;
+                        case ValueAxis.KpiEconomic:
+                            var scenarioId = 0;
+                            var scenario = DataContext.Scenarios.FirstOrDefault(x => x.IsDashboard == true);
+                            if (scenario != null)
+                            {
+                                scenarioId = scenario.Id;
+                            }
+                            response.Series = new GetTrafficLightChartDataResponse.SeriesResponse
+                            {
+                                name = request.Series.Label,
+                                data = DataContext.KeyOperasionalDatas.Where(x => x.PeriodeType == request.PeriodeType &&
+                                x.Periode >= start && x.Periode <= end && x.Kpi.Id == request.Series.KpiId && x.Scenario.Id == scenarioId)
+                                .GroupBy(x => x.Kpi.Id)
+                                .Select(x => x.Sum(y => y.Value).Value).FirstOrDefault()
+                            };
+                            break;
                     }
                     break;
                 case YtdFormula.Average:
@@ -568,6 +693,22 @@ namespace DSLNG.PEAR.Services
                                 name = request.Series.Label,
                                 data = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType &&
                                 x.Periode >= start && x.Periode <= end && x.Kpi.Id == request.Series.KpiId)
+                                .GroupBy(x => x.Kpi.Id)
+                                .Select(x => x.Average(y => y.Value).Value).FirstOrDefault()
+                            };
+                            break;
+                        case ValueAxis.KpiEconomic:
+                            var scenarioId = 0;
+                            var scenario = DataContext.Scenarios.FirstOrDefault(x => x.IsDashboard == true);
+                            if (scenario != null)
+                            {
+                                scenarioId = scenario.Id;
+                            }
+                            response.Series = new GetTrafficLightChartDataResponse.SeriesResponse
+                            {
+                                name = request.Series.Label,
+                                data = DataContext.KeyOperasionalDatas.Where(x => x.PeriodeType == request.PeriodeType &&
+                                x.Periode >= start && x.Periode <= end && x.Kpi.Id == request.Series.KpiId && x.Scenario.Id == scenarioId)
                                 .GroupBy(x => x.Kpi.Id)
                                 .Select(x => x.Average(y => y.Value).Value).FirstOrDefault()
                             };
@@ -615,21 +756,49 @@ namespace DSLNG.PEAR.Services
                             data = target.Value.Value
                         };
                     }
-                    switch (request.PeriodeType)
+                }
+            }
+            if (request.ValueAxis == ValueAxis.KpiEconomic && latestActual != null)
+            {
+                if ((request.PeriodeType == PeriodeType.Hourly && request.RangeFilter == RangeFilter.CurrentHour) ||
+                      (request.PeriodeType == PeriodeType.Daily && request.RangeFilter == RangeFilter.CurrentDay) ||
+                      (request.PeriodeType == PeriodeType.Monthly && request.RangeFilter == RangeFilter.CurrentMonth) ||
+                      (request.PeriodeType == PeriodeType.Yearly && request.RangeFilter == RangeFilter.CurrentYear))
+                {
+                    var scenarioId = 0;
+                    var scenario = DataContext.Scenarios.FirstOrDefault(x => x.IsDashboard == true);
+                    if (scenario != null)
                     {
-                        case PeriodeType.Hourly:
-                            timeInformation = latestActual.Periode.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
-                            break;
-                        case PeriodeType.Daily:
-                            timeInformation = latestActual.Periode.ToString("dd MMM yy", CultureInfo.InvariantCulture);
-                            break;
-                        case PeriodeType.Monthly:
-                            timeInformation = latestActual.Periode.ToString("MMM yy", CultureInfo.InvariantCulture);
-                            break;
-                        case PeriodeType.Yearly:
-                            timeInformation = latestActual.Periode.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
-                            break;
+                        scenarioId = scenario.Id;
                     }
+                    var economic = DataContext.KeyOperasionalDatas.Where(x => x.PeriodeType == request.PeriodeType &&
+                  x.Periode == latestActual.Periode && x.Kpi.Id == request.Series.KpiId && x.Scenario.Id == scenarioId)
+                  .OrderByDescending(x => x.Periode).FirstOrDefault();
+                    if (economic != null)
+                    {
+                        response.Series = new GetTrafficLightChartDataResponse.SeriesResponse
+                        {
+                            name = request.Series.Label,
+                            data = economic.Value.Value
+                        };
+                    }
+                }
+            }
+            if (latestActual != null) {
+                switch (request.PeriodeType)
+                {
+                    case PeriodeType.Hourly:
+                        timeInformation = latestActual.Periode.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
+                        break;
+                    case PeriodeType.Daily:
+                        timeInformation = latestActual.Periode.ToString("dd MMM yy", CultureInfo.InvariantCulture);
+                        break;
+                    case PeriodeType.Monthly:
+                        timeInformation = latestActual.Periode.ToString("MMM yy", CultureInfo.InvariantCulture);
+                        break;
+                    case PeriodeType.Yearly:
+                        timeInformation = latestActual.Periode.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
+                        break;
                 }
             }
             foreach (var plot in request.PlotBands)
@@ -729,13 +898,18 @@ namespace DSLNG.PEAR.Services
                 case ValueAxis.KpiActual:
                     seriesResponse = this._getKpiActualSeries(request.Series, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes);
                     break;
+                case ValueAxis.KpiEconomic:
+                    seriesResponse = this._getKpiEconomicSeries(request.Series, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes);
+                    break;
                 default:
                     var actualSeries = request.Series.Where(x => x.ValueAxis == ValueAxis.KpiActual).ToList();
                     var targetSeries = request.Series.Where(x => x.ValueAxis == ValueAxis.KpiTarget).ToList();
+                    var economicSeries = request.Series.Where(x => x.ValueAxis == ValueAxis.KpiEconomic).ToList();
                     seriesType = "multi-stacks-grouped";
                     var series1 = this._getKpiTargetSeries(targetSeries, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes, true);
                     var series2 = this._getKpiActualSeries(actualSeries, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes, true);
-                    seriesResponse = series1.Concat(series2).ToList();
+                    var series3 = this._getKpiEconomicSeries(economicSeries, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes, true);
+                    seriesResponse = series1.Concat(series2).Concat(series3).ToList();
                     break;
 
             }
@@ -1276,6 +1450,327 @@ namespace DSLNG.PEAR.Services
             }
             return seriesResponse;
         }
+
+        private IList<GetCartesianChartDataResponse.SeriesResponse> _getKpiEconomicSeries(IList<GetCartesianChartDataRequest.SeriesRequest> configSeries, PeriodeType periodeType, IList<DateTime> dateTimePeriodes, string seriesType, RangeFilter rangeFilter, string graphicType, out string newTimeInformation, out IList<DateTime> newDatetimePeriodes, bool comparison = false)
+        {
+            var seriesResponse = new List<GetCartesianChartDataResponse.SeriesResponse>();
+            var start = dateTimePeriodes[0];
+            var end = dateTimePeriodes[dateTimePeriodes.Count - 1];
+            var scenarioId = 0;
+            var scenario = DataContext.Scenarios.FirstOrDefault(x => x.IsDashboard == true);
+            if (scenario != null) {
+                scenarioId = scenario.Id;
+            }
+            newTimeInformation = null;
+            newDatetimePeriodes = new List<DateTime>();
+            foreach (var series in configSeries)
+            {
+
+                if (series.Stacks.Count == 0)
+                {
+                    var kpiEconomics = DataContext.KeyOperasionalDatas.Where(x => x.PeriodeType == periodeType &&
+                      x.Periode >= start && x.Periode <= end && x.Kpi.Id == series.KpiId && x.Scenario.Id == scenarioId)
+                      .OrderBy(x => x.Periode).ToList();
+
+                    if ((periodeType == PeriodeType.Hourly && rangeFilter == RangeFilter.CurrentHour) ||
+                        (periodeType == PeriodeType.Daily && rangeFilter == RangeFilter.CurrentDay) ||
+                        (periodeType == PeriodeType.Monthly && rangeFilter == RangeFilter.CurrentMonth) ||
+                        (periodeType == PeriodeType.Yearly && rangeFilter == RangeFilter.CurrentYear))
+                    {
+                        var kpiEconomic = DataContext.KeyOperasionalDatas.Where(x => x.PeriodeType == periodeType &&
+                      x.Periode <= end && x.Kpi.Id == series.KpiId && (x.Value != null && x.Value.Value != 0) && x.Scenario.Id == scenarioId)
+                      .OrderByDescending(x => x.Periode).FirstOrDefault();
+                        if (kpiEconomic != null)
+                        {
+                            kpiEconomics = new List<KeyOperationData> { kpiEconomic };
+                            switch (periodeType)
+                            {
+                                case PeriodeType.Hourly:
+                                    newTimeInformation = kpiEconomic.Periode.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
+                                    break;
+                                case PeriodeType.Daily:
+                                    newTimeInformation = kpiEconomic.Periode.ToString("dd MMM yy", CultureInfo.InvariantCulture);
+                                    break;
+                                case PeriodeType.Monthly:
+                                    newTimeInformation = kpiEconomic.Periode.ToString("MMM yy", CultureInfo.InvariantCulture);
+                                    break;
+                                case PeriodeType.Yearly:
+                                    newTimeInformation = kpiEconomic.Periode.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
+                                    break;
+                            }
+                            dateTimePeriodes = new List<DateTime> { kpiEconomic.Periode };
+                            newDatetimePeriodes = dateTimePeriodes;
+                        }
+
+                    }
+
+                    if (seriesType == "multi-stacks-grouped")
+                    {
+                        var aSeries = new GetCartesianChartDataResponse.SeriesResponse
+                        {
+                            Name = series.Label,
+                            Stack = series.Label,
+                            Color = series.Color
+                        };
+                        if (rangeFilter == RangeFilter.YTD || rangeFilter == RangeFilter.DTD || rangeFilter == RangeFilter.MTD)
+                        {
+
+                            foreach (var periode in dateTimePeriodes)
+                            {
+                                var economicValue = kpiEconomics.Where(x => x.Periode <= periode).GroupBy(x => x.Kpi)
+                                    .Select(x => x.Sum(y => y.Value)).FirstOrDefault();
+                                if (economicValue == null || !economicValue.HasValue)
+                                {
+                                    aSeries.Data.Add(null);
+                                }
+                                else
+                                {
+                                    aSeries.Data.Add(economicValue.Value);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            foreach (var periode in dateTimePeriodes)
+                            {
+                                var target = kpiEconomics.Where(x => x.Periode == periode).FirstOrDefault();
+                                if (target == null || !target.Value.HasValue)
+                                {
+                                    aSeries.Data.Add(null);
+                                }
+                                else
+                                {
+                                    aSeries.Data.Add(target.Value.Value);
+                                }
+                            }
+                        }
+
+
+                        if (graphicType == "baraccumulative")
+                        {
+                            var previousSeries = new GetCartesianChartDataResponse.SeriesResponse
+                            {
+                                Name = "Previous Accumulation",
+                                Color = string.IsNullOrEmpty(series.PreviousColor) ? "#004071" : series.PreviousColor,
+                                Stack = series.Label
+                            };
+                            for (var i = 0; i < aSeries.Data.Count; i++)
+                            {
+                                double data = 0;
+                                for (var j = 0; j < i; j++)
+                                {
+                                    data += aSeries.Data[j].HasValue ? aSeries.Data[j].Value : 0;
+                                }
+                                previousSeries.Data.Add(data);
+                            }
+                            seriesResponse.Add(previousSeries);
+                        }
+                        seriesResponse.Add(aSeries);
+                    }
+                    else
+                    {
+                        var aSeries = new GetCartesianChartDataResponse.SeriesResponse
+                        {
+                            Name = series.Label,
+                            Color = series.Color
+                        };
+                        if (comparison)
+                        {
+                            aSeries.Stack = "KpiTarget";
+                        }
+                        if (rangeFilter == RangeFilter.YTD || rangeFilter == RangeFilter.DTD || rangeFilter == RangeFilter.MTD)
+                        {
+
+                            foreach (var periode in dateTimePeriodes)
+                            {
+                                var targetValue = kpiEconomics.Where(x => x.Periode <= periode).GroupBy(x => x.Kpi)
+                                    .Select(x => x.Sum(y => y.Value)).FirstOrDefault();
+                                if (targetValue == null || !targetValue.HasValue)
+                                {
+                                    aSeries.Data.Add(null);
+                                }
+                                else
+                                {
+                                    aSeries.Data.Add(targetValue.Value);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            foreach (var periode in dateTimePeriodes)
+                            {
+                                var target = kpiEconomics.Where(x => x.Periode == periode).FirstOrDefault();
+                                if (target == null || !target.Value.HasValue)
+                                {
+                                    aSeries.Data.Add(null);
+                                }
+                                else
+                                {
+                                    aSeries.Data.Add(target.Value.Value);
+                                }
+                            }
+                        }
+
+                        if (graphicType == "baraccumulative")
+                        {
+                            var previousSeries = new GetCartesianChartDataResponse.SeriesResponse
+                            {
+                                Name = "Previous Accumulation",
+                                Color = string.IsNullOrEmpty(series.PreviousColor) ? "#004071" : series.PreviousColor,
+                            };
+                            if (comparison)
+                            {
+                                previousSeries.Stack = "KpiTarget";
+                            }
+                            for (var i = 0; i < aSeries.Data.Count; i++)
+                            {
+                                double data = 0;
+                                for (var j = 0; j < i; j++)
+                                {
+                                    data += aSeries.Data[j].HasValue ? aSeries.Data[j].Value : 0;
+                                }
+                                previousSeries.Data.Add(data);
+                            }
+                            seriesResponse.Add(previousSeries);
+                        }
+                        seriesResponse.Add(aSeries);
+                    }
+
+                }
+                else
+                {
+                    foreach (var stack in series.Stacks)
+                    {
+                        var kpiEconomics = DataContext.KeyOperasionalDatas.Where(x => x.PeriodeType == periodeType &&
+                        x.Periode >= start && x.Periode <= end && x.Kpi.Id == stack.KpiId && x.Scenario.Id == scenarioId)
+                        .OrderBy(x => x.Periode).ToList();
+
+                        if ((periodeType == PeriodeType.Hourly && rangeFilter == RangeFilter.CurrentHour) ||
+                        (periodeType == PeriodeType.Daily && rangeFilter == RangeFilter.CurrentDay) ||
+                        (periodeType == PeriodeType.Monthly && rangeFilter == RangeFilter.CurrentMonth) ||
+                        (periodeType == PeriodeType.Yearly && rangeFilter == RangeFilter.CurrentYear))
+                        {
+                            var kpiEconomic = DataContext.KeyOperasionalDatas.Where(x => x.PeriodeType == periodeType &&
+                          x.Periode <= end && x.Kpi.Id == stack.KpiId && (x.Value != null && x.Value.Value != 0))
+                          .OrderByDescending(x => x.Periode).FirstOrDefault();
+                            if (kpiEconomic != null)
+                            {
+                                kpiEconomics = new List<KeyOperationData> { kpiEconomic };
+                                switch (periodeType)
+                                {
+                                    case PeriodeType.Hourly:
+                                        newTimeInformation = kpiEconomic.Periode.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
+                                        break;
+                                    case PeriodeType.Daily:
+                                        newTimeInformation = kpiEconomic.Periode.ToString("dd MMM yy", CultureInfo.InvariantCulture);
+                                        break;
+                                    case PeriodeType.Monthly:
+                                        newTimeInformation = kpiEconomic.Periode.ToString("MMM yy", CultureInfo.InvariantCulture);
+                                        break;
+                                    case PeriodeType.Yearly:
+                                        newTimeInformation = kpiEconomic.Periode.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
+                                        break;
+                                }
+                                dateTimePeriodes = new List<DateTime> { kpiEconomic.Periode };
+                                newDatetimePeriodes = dateTimePeriodes;
+                            }
+
+                        }
+
+                        if (seriesType == "multi-stacks-grouped")
+                        {
+                            var aSeries = new GetCartesianChartDataResponse.SeriesResponse
+                            {
+                                Name = stack.Label,
+                                Stack = series.Label,
+                                Color = stack.Color
+                            };
+                            if (rangeFilter == RangeFilter.YTD || rangeFilter == RangeFilter.DTD || rangeFilter == RangeFilter.MTD)
+                            {
+
+                                foreach (var periode in dateTimePeriodes)
+                                {
+                                    var economicValue = kpiEconomics.Where(x => x.Periode <= periode).GroupBy(x => x.Kpi)
+                                        .Select(x => x.Sum(y => y.Value)).FirstOrDefault();
+                                    if (economicValue == null || !economicValue.HasValue)
+                                    {
+                                        aSeries.Data.Add(null);
+                                    }
+                                    else
+                                    {
+                                        aSeries.Data.Add(economicValue.Value);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                foreach (var periode in dateTimePeriodes)
+                                {
+                                    var economic = kpiEconomics.Where(x => x.Periode == periode).FirstOrDefault();
+                                    if (economic == null || !economic.Value.HasValue)
+                                    {
+                                        aSeries.Data.Add(null);
+                                    }
+                                    else
+                                    {
+                                        aSeries.Data.Add(economic.Value.Value);
+                                    }
+                                }
+                            }
+                            seriesResponse.Add(aSeries);
+                        }
+                        else
+                        {
+
+                            var aSeries = new GetCartesianChartDataResponse.SeriesResponse
+                            {
+                                Name = stack.Label,
+                                Color = stack.Color
+                            };
+                            if (comparison)
+                            {
+                                aSeries.Stack = "KpiTarget";
+                            }
+                            if (rangeFilter == RangeFilter.YTD || rangeFilter == RangeFilter.DTD || rangeFilter == RangeFilter.MTD)
+                            {
+
+                                foreach (var periode in dateTimePeriodes)
+                                {
+                                    var economicValue = kpiEconomics.Where(x => x.Periode <= periode).GroupBy(x => x.Kpi)
+                                        .Select(x => x.Sum(y => y.Value)).FirstOrDefault();
+                                    if (economicValue == null || !economicValue.HasValue)
+                                    {
+                                        aSeries.Data.Add(null);
+                                    }
+                                    else
+                                    {
+                                        aSeries.Data.Add(economicValue.Value);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                foreach (var periode in dateTimePeriodes)
+                                {
+                                    var economic = kpiEconomics.Where(x => x.Periode == periode).FirstOrDefault();
+                                    if (economic == null || !economic.Value.HasValue)
+                                    {
+                                        aSeries.Data.Add(null);
+                                    }
+                                    else
+                                    {
+                                        aSeries.Data.Add(economic.Value.Value);
+                                    }
+                                }
+                            }
+                            seriesResponse.Add(aSeries);
+                        }
+                    }
+                }
+            }
+            return seriesResponse;
+        }
+
 
         private IList<GetCartesianChartDataResponse.SeriesResponse> _getKpiActualSeries(IList<GetCartesianChartDataRequest.SeriesRequest> configSeries, PeriodeType periodeType, IList<DateTime> dateTimePeriodes, string seriesType, RangeFilter rangeFilter, string graphicType, out string newTimeInformation, out IList<DateTime> newDatetimePeriodes, bool comparison = false)
         {
@@ -2202,7 +2697,8 @@ namespace DSLNG.PEAR.Services
         {
             int totalRecords;
             var query = SortData(request.Search, request.SortingDictionary, out totalRecords);
-            if (request.Take != -1) {
+            if (request.Take != -1)
+            {
                 query = query.Skip(request.Skip).Take(request.Take);
             }
             var artifacts = query.ToList();
@@ -2300,16 +2796,19 @@ namespace DSLNG.PEAR.Services
 
         public DeleteArtifactResponse Delete(DeleteArtifactRequest request)
         {
-            try {
+            try
+            {
                 var artifact = DataContext.Artifacts.Include(x => x.Series).Include(x => x.Plots).Include(x => x.LayoutColumns).FirstOrDefault(x => x.Id == request.Id);
-                if (artifact.LayoutColumns.Count > 0) {
+                if (artifact.LayoutColumns.Count > 0)
+                {
                     return new DeleteArtifactResponse
                     {
                         IsSuccess = false,
                         Message = "The item couldn't be deleted. It is being used by your aplication"
                     };
                 }
-                foreach (var serie in artifact.Series.ToList()) {
+                foreach (var serie in artifact.Series.ToList())
+                {
                     DataContext.ArtifactSeries.Remove(serie);
                 }
                 foreach (var plot in artifact.Plots.ToList())
@@ -2318,11 +2817,14 @@ namespace DSLNG.PEAR.Services
                 }
                 DataContext.Artifacts.Remove(artifact);
                 DataContext.SaveChanges();
-                return new DeleteArtifactResponse{
+                return new DeleteArtifactResponse
+                {
                     IsSuccess = true,
                     Message = "The item has been deleted successfully"
                 };
-            }catch{
+            }
+            catch
+            {
                 return new DeleteArtifactResponse
                 {
                     IsSuccess = false,
