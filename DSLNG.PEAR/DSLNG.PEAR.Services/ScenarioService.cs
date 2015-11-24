@@ -119,6 +119,11 @@ namespace DSLNG.PEAR.Services
                             ? data.OrderBy(x => x.IsActive).ThenBy(x => x.Order)
                             : data.OrderByDescending(x => x.IsActive).ThenBy(x => x.Order);
                         break;
+                    case "IsDashboard":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.IsDashboard).ThenBy(x => x.Order)
+                            : data.OrderByDescending(x => x.IsDashboard).ThenBy(x => x.Order);
+                        break;
                 }
             }
 

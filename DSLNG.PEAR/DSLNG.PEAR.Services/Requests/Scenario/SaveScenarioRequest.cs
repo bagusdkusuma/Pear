@@ -13,5 +13,6 @@ namespace DSLNG.PEAR.Services.Requests.Scenario
         public string Desc { get; set; }
         public bool IsActive { get; set; }
         public int Order { get; set; }
+        public bool IsDashboard { get; set; }
     }
 }
