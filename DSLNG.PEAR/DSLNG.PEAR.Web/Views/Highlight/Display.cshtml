@@ -66,7 +66,7 @@
                                         @foreach (var nls in Model.NLSList)
                                         { 
                                             <tr>
-                                                <td>@nls.VesselType</td>
+                                                <td>@nls.VesselType - @nls.SalesType - @nls.Type</td>
                                                 <td>@nls.Vessel (@nls.Capacity @nls.Measurement)</td>
                                                 <td>@nls.Buyer</td>
                                                 <td>@nls.ETA.ToString("dd-MM-yyyy")</td>

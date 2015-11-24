@@ -37,6 +37,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Highlight
             public string Buyer { get; set; }
             public DateTime RemarkDate { get; set; }
             public string Measurement { get; set; }
+            public string SalesType { get; set; }
         }
         public class WeatherViewModel {
             public string Value { get; set; }
