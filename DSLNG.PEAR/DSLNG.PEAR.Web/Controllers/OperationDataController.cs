@@ -12,12 +12,12 @@ using DSLNG.PEAR.Web.Grid;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
-    public class OperationalDataController : Controller
+    public class OperationDataController : Controller
     {
-        private IOperationalDataService _operationalDataService;
-        public OperationalDataController(IOperationalDataService operationalDataService)
+        private readonly IOperationDataService _operationDataService;
+        public OperationDataController(IOperationDataService operationDataService)
         {
-            _operationalDataService = operationalDataService;
+            _operationDataService = operationDataService;
         }
 
 
@@ -62,12 +62,12 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public void GetDataRowCount(GridViewCustomBindingGetDataRowCountArgs e)
         {
-            e.DataRowCount = _operationalDataService.GetOperationalDatas(new GetOperationalDatasRequest { OnlyCount = true }).Count;
+            e.DataRowCount = _operationDataService.GetOperationalDatas(new GetOperationalDatasRequest { OnlyCount = true }).Count;
         }
 
         public void GetData(GridViewCustomBindingGetDataArgs e)
         {
-            e.Data = _operationalDataService.GetOperationalDatas(new GetOperationalDatasRequest
+            e.Data = _operationDataService.GetOperationalDatas(new GetOperationalDatasRequest
                 {
                     Skip = e.StartDataRowIndex,
                     Take = e.DataRowCount
@@ -78,10 +78,10 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create()
         {
             var viewModel = new OperationalDataViewModel();
-            viewModel.KeyOperations = _operationalDataService.GetOperationalSelectList().Operations
+            viewModel.KeyOperations = _operationDataService.GetOperationalSelectList().Operations
                 .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
-            viewModel.KPIS = _operationalDataService.GetOperationalSelectList().KPIS
+            viewModel.KPIS = _operationDataService.GetOperationalSelectList().KPIS
                 .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
             return View(viewModel);
@@ -92,7 +92,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create(OperationalDataViewModel viewModel)
         {
             var request = viewModel.MapTo<SaveOperationalDataRequest>();
-            var response = _operationalDataService.SaveOperationalData(request);
+            var response = _operationDataService.SaveOperationalData(request);
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
             if (response.IsSuccess)
@@ -105,11 +105,11 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Edit(int id)
         {
-            var viewModel = _operationalDataService.GetOperationalData(new GetOperationalDataRequest { Id = id }).MapTo<OperationalDataViewModel>();
-            viewModel.KeyOperations = _operationalDataService.GetOperationalSelectList().Operations
+            var viewModel = _operationDataService.GetOperationalData(new GetOperationalDataRequest { Id = id }).MapTo<OperationalDataViewModel>();
+            viewModel.KeyOperations = _operationDataService.GetOperationalSelectList().Operations
                 .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
-            viewModel.KPIS = _operationalDataService.GetOperationalSelectList().KPIS
+            viewModel.KPIS = _operationDataService.GetOperationalSelectList().KPIS
                 .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
             return View(viewModel);
@@ -119,7 +119,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Edit(OperationalDataViewModel viewModel)
         {
             var request = viewModel.MapTo<SaveOperationalDataRequest>();
-            var response = _operationalDataService.SaveOperationalData(request);
+            var response = _operationDataService.SaveOperationalData(request);
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
             if (response.IsSuccess)
@@ -132,7 +132,7 @@ namespace DSLNG.PEAR.Web.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            var response = _operationalDataService.DeleteOperationalData(new DeleteOperationalDataRequest { Id = id });
+            var response = _operationDataService.DeleteOperationalData(new DeleteOperationalDataRequest { Id = id });
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
             if (response.IsSuccess)
@@ -144,7 +144,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Grid(GridParams gridParams)
         {
-            var operational = _operationalDataService.GetOperationalDatas(new GetOperationalDatasRequest
+            var operational = _operationDataService.GetOperationalDatas(new GetOperationalDatasRequest
                 {
                     Skip = gridParams.DisplayStart,
                     Take = gridParams.DisplayLength,
@@ -160,6 +160,11 @@ namespace DSLNG.PEAR.Web.Controllers
             };
 
             return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Detail(int id)
+        {
+            return Content("");
         }
     }
 }

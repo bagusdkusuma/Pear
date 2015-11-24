@@ -17,6 +17,7 @@ namespace DSLNG.PEAR.Data.Entities.EconomicModel
         public string Name { get; set; }
         public int Order { get; set; }
         public string Remark { get; set; }
-        public bool IsActive { get; set; }  
+        public bool IsActive { get; set; }
+        public IList<KeyOperationConfig> KeyOperationConfigs { get; set; }
     }
 }

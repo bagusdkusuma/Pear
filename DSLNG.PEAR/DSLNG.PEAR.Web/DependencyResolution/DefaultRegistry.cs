@@ -72,8 +72,8 @@ namespace DSLNG.PEAR.Web.DependencyResolution {
             For<IAssumptionConfigService>().Use<AssumptionConfigService>();
             For<IScenarioService>().Use<ScenarioService>();
             For<IAssumptionDataService>().Use<AssumptionDataService>();
-            For<IOperationService>().Use<OperationService>();
-            For<IOperationalDataService>().Use<OperationalDataService>();
+            For<IOperationConfigService>().Use<OperationConfigService>();
+            For<IOperationDataService>().Use<OperationDataService>();
             For<IEconomicSummaryService>().Use<EconomicSummaryService>();
             For<IEconomicConfigService>().Use<EconomicConfigService>();
             For<IHighlightGroupService>().Use<HighlightGroupService>();

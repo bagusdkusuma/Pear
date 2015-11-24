@@ -14,9 +14,9 @@ using System.Data.SqlClient;
 
 namespace DSLNG.PEAR.Services
 {
-    public class OperationalDataService : BaseService, IOperationalDataService
+    public class OperationDataService : BaseService, IOperationDataService
     {
-        public OperationalDataService(IDataContext context) : base(context) {}
+        public OperationDataService(IDataContext context) : base(context) {}
 
 
 
@@ -55,7 +55,7 @@ namespace DSLNG.PEAR.Services
         {
             return new GetOperationalSelectListResponse
             {
-                Operations = DataContext.KeyOperations.ToList().MapTo<GetOperationalSelectListResponse.Operation>(),
+                Operations = DataContext.KeyOperationConfigs.ToList().MapTo<GetOperationalSelectListResponse.Operation>(),
                 KPIS = DataContext.Kpis.ToList().MapTo<GetOperationalSelectListResponse.KPI>()
             };
         }
@@ -114,6 +114,16 @@ namespace DSLNG.PEAR.Services
                 IsSuccess = true,
                 Message = "Operational Data has been deleted successfully"
             };
+        }
+
+        public GetOperationalDataDetailResponse GetOperationalDataDetail(GetOperationalDataDetailRequest request)
+        {
+            var operationData = DataContext.KeyOperasionalDatas.Where(x => x.Scenario.Id == request.Id).ToList();
+            foreach (var item in operationData)
+            {
+                //item.KeyOperation
+            }
+            return new GetOperationalDataDetailResponse();
         }
 
         public IEnumerable<KeyOperationData> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
