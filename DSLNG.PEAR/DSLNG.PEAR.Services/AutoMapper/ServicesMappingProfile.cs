@@ -436,24 +436,24 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.IdScenario, o => o.MapFrom(s => s.Scenario.Id))
                 .ForMember(x => x.IdConfig, o =>  o.MapFrom(s => s.KeyAssumptionConfig.Id));
 
-            Mapper.CreateMap<KeyOperation, GetOperationsResponse.Operation>()
+            Mapper.CreateMap<KeyOperationConfig, GetOperationsResponse.Operation>()
                 .ForMember(x => x.KeyOperationGroup, o => o.MapFrom(s => s.KeyOperationGroup.Name));
             Mapper.CreateMap<KeyOperationGroup, OperationGroupsResponse.OperationGroup>();
-            Mapper.CreateMap<SaveOperationRequest, KeyOperation>()
+            Mapper.CreateMap<SaveOperationRequest, KeyOperationConfig>()
                 .ForMember(x => x.KeyOperationGroup, o => o.Ignore());
-            Mapper.CreateMap<KeyOperation, GetOperationResponse>()
+            Mapper.CreateMap<KeyOperationConfig, GetOperationResponse>()
                 .ForMember(x => x.IdKeyOperationGroup, o => o.MapFrom(s => s.KeyOperationGroup.Id));
 
-            Mapper.CreateMap<OperationDataConfiguration, GetOperationalDatasResponse.OperationalData>()
-                .ForMember(x => x.KeyOperation, o => o.MapFrom(s => s.KeyOperation.Name))
+            Mapper.CreateMap<KeyOperationData, GetOperationalDatasResponse.OperationalData>()
+                //.ForMember(x => x.KeyOperation, o => o.MapFrom(s => s.KeyOperation.Name))
                 .ForMember(x => x.Kpi, o => o.MapFrom(s => s.Kpi.Name));
-            Mapper.CreateMap<KeyOperation, GetOperationalSelectListResponse.Operation>();
+            Mapper.CreateMap<KeyOperationConfig, GetOperationalSelectListResponse.Operation>();
             Mapper.CreateMap<Kpi, GetOperationalSelectListResponse.KPI>();
-            Mapper.CreateMap<SaveOperationalDataRequest, OperationDataConfiguration>()
-                .ForMember(x => x.KeyOperation, o => o.Ignore())
+            Mapper.CreateMap<SaveOperationalDataRequest, KeyOperationData>()
+                //.ForMember(x => x.KeyOperation, o => o.Ignore())
                 .ForMember(x => x.Kpi, o => o.Ignore());
-            Mapper.CreateMap<OperationDataConfiguration, GetOperationalDataResponse>()
-                .ForMember(x => x.IdKeyOperation, o => o.MapFrom(s => s.KeyOperation.Id))
+            Mapper.CreateMap<KeyOperationData, GetOperationalDataResponse>()
+                //.ForMember(x => x.IdKeyOperation, o => o.MapFrom(s => s.KeyOperation.Id))
                 .ForMember(x => x.IdKPI, o => o.MapFrom(s => s.Kpi.Id));
 
             Mapper.CreateMap<EconomicSummaryConfig, GetEconomicSummariesResponse.EconomicSummary>();

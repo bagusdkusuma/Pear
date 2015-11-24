@@ -8,14 +8,15 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Data.Entities.EconomicModel
 {
-    public class KeyOperation
+    public class KeyOperationConfig
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public KeyOperationGroup KeyOperationGroup { get; set; }
-        public string Name { get; set; }
+        public Kpi Kpi { get; set; }
         public string Desc { get; set; }
         public bool IsActive { get; set; }
+        public int Order { get; set; }
     }
 }

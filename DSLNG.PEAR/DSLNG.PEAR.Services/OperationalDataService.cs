@@ -63,38 +63,40 @@ namespace DSLNG.PEAR.Services
 
         public SaveOperationalDataResponse SaveOperationalData(SaveOperationalDataRequest request)
         {
-            if (request.Id == 0)
-            {
-                var OperationalData = request.MapTo<OperationDataConfiguration>();
-                OperationalData.KeyOperation = DataContext.KeyOperations.FirstOrDefault(x => x.Id == request.IdKeyOperation);
-                OperationalData.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == request.IdKPI);
-                DataContext.KeyOperasionalDatas.Add(OperationalData);
+            //if (request.Id == 0)
+            //{
+            //    var OperationalData = request.MapTo<KeyOperationData>();
+            //    OperationalData.KeyOperation = DataContext.KeyOperations.FirstOrDefault(x => x.Id == request.IdKeyOperation);
+            //    OperationalData.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == request.IdKPI);
+            //    DataContext.KeyOperasionalDatas.Add(OperationalData);
 
-            }
-            else
-            {
-                var OperationalData = DataContext.KeyOperasionalDatas.FirstOrDefault(x => x.Id == request.Id);
-                if (OperationalData != null)
-                {
-                    var operational = request.MapPropertiesToInstance<OperationDataConfiguration>(OperationalData);
-                    operational.KeyOperation = DataContext.KeyOperations.FirstOrDefault(x => x.Id == request.IdKeyOperation);
-                    operational.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == request.IdKPI);
-                }
-            }
-            DataContext.SaveChanges();
-            return new SaveOperationalDataResponse
-            {
-                IsSuccess = true,
-                Message = "Operational Data has been Save"
-            };
+            //}
+            //else
+            //{
+            //    var OperationalData = DataContext.KeyOperasionalDatas.FirstOrDefault(x => x.Id == request.Id);
+            //    if (OperationalData != null)
+            //    {
+            //        var operational = request.MapPropertiesToInstance<KeyOperationData>(OperationalData);
+            //        operational.KeyOperation = DataContext.KeyOperations.FirstOrDefault(x => x.Id == request.IdKeyOperation);
+            //        operational.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == request.IdKPI);
+            //    }
+            //}
+            //DataContext.SaveChanges();
+            //return new SaveOperationalDataResponse
+            //{
+            //    IsSuccess = true,
+            //    Message = "Operational Data has been Save"
+            //};
+            throw new NotImplementedException();
         }
 
 
         public GetOperationalDataResponse GetOperationalData(GetOperationalDataRequest request)
         {
-            return DataContext.KeyOperasionalDatas
-                .Include(x => x.KeyOperation).Include(x => x.Kpi)
-                .FirstOrDefault(x => x.Id == request.Id).MapTo<GetOperationalDataResponse>();
+            //return DataContext.KeyOperasionalDatas
+            //    .Include(x => x.KeyOperation).Include(x => x.Kpi)
+            //    .FirstOrDefault(x => x.Id == request.Id).MapTo<GetOperationalDataResponse>();
+            throw new NotImplementedException();
         }
 
 
@@ -114,43 +116,45 @@ namespace DSLNG.PEAR.Services
             };
         }
 
-        public IEnumerable<OperationDataConfiguration> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        public IEnumerable<KeyOperationData> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
         {
-            var data = DataContext.KeyOperasionalDatas.Include(x => x.KeyOperation).Include(x => x.Kpi).AsQueryable();
-            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
-            {
-                data = data.Where(x => x.KeyOperation.Name.Contains(search) || x.Kpi.Name.Contains(search));
-            }
+            //var data = DataContext.KeyOperasionalDatas.Include(x => x.KeyOperation).Include(x => x.Kpi).AsQueryable();
+            //if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            //{
+            //    data = data.Where(x => x.KeyOperation.Name.Contains(search) || x.Kpi.Name.Contains(search));
+            //}
 
-            foreach (var sortOrder in sortingDictionary)
-            {
-                switch(sortOrder.Key)
-                {
-                    case "KeyOperation":
-                        data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.KeyOperation.Name)
-                            : data.OrderByDescending(x => x.KeyOperation.Name);
-                        break;
-                    case "Kpi" :
-                        data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.Kpi.Name)
-                            : data.OrderByDescending(x => x.Kpi.Name);
-                        break;
-                    case "ActualValue":
-                        data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.ActualValue)
-                            : data.OrderByDescending(x => x.ActualValue);
-                        break;
-                    case "ForecastValue":
-                        data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.ForecastValue)
-                            : data.OrderByDescending(x => x.ForecastValue);
-                        break;
-                }
-            }
+            //foreach (var sortOrder in sortingDictionary)
+            //{
+            //    switch(sortOrder.Key)
+            //    {
+            //        case "KeyOperation":
+            //            data = sortOrder.Value == SortOrder.Ascending
+            //                ? data.OrderBy(x => x.KeyOperation.Name)
+            //                : data.OrderByDescending(x => x.KeyOperation.Name);
+            //            break;
+            //        case "Kpi" :
+            //            data = sortOrder.Value == SortOrder.Ascending
+            //                ? data.OrderBy(x => x.Kpi.Name)
+            //                : data.OrderByDescending(x => x.Kpi.Name);
+            //            break;
+            //        case "Value":
+            //            data = sortOrder.Value == SortOrder.Ascending
+            //                ? data.OrderBy(x => x.Value)
+            //                : data.OrderByDescending(x => x.ActualValue);
+            //            break;
+            //        case "ForecastValue":
+            //            data = sortOrder.Value == SortOrder.Ascending
+            //                ? data.OrderBy(x => x.ForecastValue)
+            //                : data.OrderByDescending(x => x.ForecastValue);
+            //            break;
+            //    }
+            //}
 
-            TotalRecords = data.Count();
-            return data;
+            //TotalRecords = data.Count();
+            //return data;
+            throw new NotImplementedException();
+
 
         }
     }

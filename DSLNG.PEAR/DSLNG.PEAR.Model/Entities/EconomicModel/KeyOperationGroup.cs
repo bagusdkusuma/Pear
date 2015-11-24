@@ -5,18 +5,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DSLNG.PEAR.Data.Enums;
 
 namespace DSLNG.PEAR.Data.Entities.EconomicModel
 {
-    public class OperationDataConfiguration
+    public class KeyOperationGroup
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public KeyOperation KeyOperation { get; set; }
-        public Kpi Kpi { get; set; }
-        public double ActualValue { get; set; }
-        public double ForecastValue { get; set; }
+        public string Name { get; set; }
+        public int Order { get; set; }
         public string Remark { get; set; }
+        public bool IsActive { get; set; }  
     }
 }
