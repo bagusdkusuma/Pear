@@ -17,7 +17,7 @@ namespace DSLNG.PEAR.Data.Entities.EconomicModel
         public Scenario Scenario { get; set; }
         public KeyOperationConfig KeyOperation { get; set; }
         public Kpi Kpi { get; set; }
-        public double Value { get; set; }
+        public double? Value { get; set; }
         public string Remark { get; set; }
         public DateTime Periode { get; set; }
         public PeriodeType PeriodeType { get; set; }
