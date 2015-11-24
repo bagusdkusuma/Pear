@@ -76,10 +76,12 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create()
         {
             var viewModel = new OperationViewModel();
-            viewModel.KeyOperationGroups = _operationService.GetOperationGroups().OperationGroups
-                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
-            viewModel.KPIS = _operationService.GetOperationGroups().KPIS
-                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+            var SelectList = _operationService.GetOperationGroups();
+            viewModel.KeyOperationGroups = SelectList.OperationGroups.Select
+                (x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+
+            viewModel.KPIS = SelectList.KPIS.Select
+                (x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
             viewModel.IsActive = true;
             return View(viewModel);
         }
@@ -101,10 +103,12 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Edit (int id)
         {
             var viewModel = _operationService.GetOperation(new GetOperationRequest { Id = id }).MapTo<OperationViewModel>();
-            viewModel.KeyOperationGroups = _operationService.GetOperationGroups().OperationGroups
-                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
-            viewModel.KPIS = _operationService.GetOperationGroups().KPIS
-                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+            var SelectList = _operationService.GetOperationGroups();
+            viewModel.KeyOperationGroups = SelectList.OperationGroups.Select
+                (x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+
+            viewModel.KPIS = SelectList.KPIS.Select
+                (x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
             return View(viewModel);
         }

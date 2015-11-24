@@ -79,11 +79,12 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create()
         {
             var viewModel = new OperationalDataViewModel();
-            viewModel.KeyOperations = _operationalDataService.GetOperationalSelectList().Operations
-                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+            var SelectList = _operationalDataService.GetOperationalSelectList();
+            viewModel.KeyOperations = SelectList.Operations.Select
+                (x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
-            viewModel.KPIS = _operationalDataService.GetOperationalSelectList().KPIS
-                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+            viewModel.KPIS = SelectList.KPIS.Select
+                (x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
             return View(viewModel);
 
@@ -107,11 +108,12 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Edit(int id)
         {
             var viewModel = _operationalDataService.GetOperationalData(new GetOperationalDataRequest { Id = id }).MapTo<OperationalDataViewModel>();
-            viewModel.KeyOperations = _operationalDataService.GetOperationalSelectList().Operations
-                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+            var SelectList = _operationalDataService.GetOperationalSelectList();
+            viewModel.KeyOperations = SelectList.Operations.Select
+                (x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
-            viewModel.KPIS = _operationalDataService.GetOperationalSelectList().KPIS
-                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+            viewModel.KPIS = SelectList.KPIS.Select
+                (x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
             return View(viewModel);
         }

@@ -85,11 +85,12 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create()
         {
             var viewModel = new AssumptionDataViewModel();
-            viewModel.Scenarios = _assumptionDataService.GetAssumptionDataConfig().Scenarios
-                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+            var SelectList = _assumptionDataService.GetAssumptionDataConfig();
+            viewModel.Scenarios = SelectList.Scenarios.Select
+                (x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
-            viewModel.Configs = _assumptionDataService.GetAssumptionDataConfig().AssumptionDataConfigs
-                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name + "(" + x.Measurement + ")" }).ToList();
+            viewModel.Configs = SelectList.AssumptionDataConfigs.Select
+                (x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name + "(" + x.Measurement + ")" }).ToList();
 
 
             return View(viewModel);
@@ -113,11 +114,12 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Edit(int id)
         {
             var viewModel = _assumptionDataService.GetAssumptionData(new GetAssumptionDataRequest { Id = id }).MapTo<AssumptionDataViewModel>();
-            viewModel.Scenarios = _assumptionDataService.GetAssumptionDataConfig().Scenarios
-                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+            var SelectList = _assumptionDataService.GetAssumptionDataConfig();
+            viewModel.Scenarios = SelectList.Scenarios.Select
+                (x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
-            viewModel.Configs = _assumptionDataService.GetAssumptionDataConfig().AssumptionDataConfigs
-                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+            viewModel.Configs = SelectList.AssumptionDataConfigs.Select
+                (x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name + "(" + x.Measurement + ")" }).ToList();
 
             return View(viewModel);
         }
