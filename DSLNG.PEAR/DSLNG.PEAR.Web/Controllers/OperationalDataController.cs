@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Web.Grid;
+using DSLNG.PEAR.Common.Contants;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -156,7 +157,16 @@ namespace DSLNG.PEAR.Web.Controllers
                 sEcho = gridParams.Echo + 1,
                 iTotalDisplayRecords = operational.TotalRecords,
                 iTotalRecords = operational.OperationalDatas.Count,
-                aaData = operational.OperationalDatas
+                aaData = operational.OperationalDatas.Select(x => new {
+                    x.Id,
+                    x.KeyOperation,
+                    x.Kpi,
+                    Periode = x.Periode.ToString(DateFormat.DateForGrid),
+                    x.PeriodeType,
+                    x.Remark,
+                    x.Scenario,
+                    x.Value               
+                })
             };
 
             return Json(data, JsonRequestBehavior.AllowGet);
