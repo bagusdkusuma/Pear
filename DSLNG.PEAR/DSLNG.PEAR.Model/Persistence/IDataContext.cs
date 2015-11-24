@@ -51,13 +51,13 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<Weather> Weathers { get; set; }
         IDbSet<KeyAssumptionCategory> KeyAssumptionCategories { get; set; }
         IDbSet<KeyOutputCategory> KeyOutputCategories { get; set; }
-        IDbSet<KeyOperationGroup> KeyOperationGroups { get; set; }
         IDbSet<KeyAssumptionConfig> KeyAssumptionConfigs { get; set; }
         IDbSet<ResetPassword> ResetPasswords { get; set; }
         IDbSet<Scenario> Scenarios { get; set; }
         IDbSet<KeyAssumptionData> KeyAssumptionDatas { get; set; }
         IDbSet<KeyOperationConfig> KeyOperationConfigs { get; set; }
-        IDbSet<KeyOperationData> KeyOperasionalDatas { get; set; }
+        IDbSet<KeyOperationData> KeyOperationDatas { get; set; }
+        IDbSet<KeyOperationGroup> KeyOperationGroups { get; set; }
         IDbSet<EconomicSummaryConfig> EconomicSummaryConfigs { get; set; }
         IDbSet<EconomicConfigDetail> EconomicConfigDetails { get; set; }
 

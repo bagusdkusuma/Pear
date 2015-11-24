@@ -37,13 +37,13 @@ namespace DSLNG.PEAR.Services
             };
             //if (request.OnlyCount)
             //{
-            //    return new GetOperationalDatasResponse { Count = DataContext.KeyOperasionalDatas.Count() };
+            //    return new GetOperationalDatasResponse { Count = DataContext.KeyOperationDatas.Count() };
             //}
             //else
             //{
             //    return new GetOperationalDatasResponse
             //    {
-            //        OperationalDatas = DataContext.KeyOperasionalDatas.OrderByDescending(x => x.Id)
+            //        OperationalDatas = DataContext.KeyOperationDatas.OrderByDescending(x => x.Id)
             //        .Include(x => x.KeyOperation).Include(x => x.Kpi)
             //        .Skip(request.Skip).Take(request.Take).ToList().MapTo<GetOperationalDatasResponse.OperationalData>()
             //    };
@@ -68,12 +68,12 @@ namespace DSLNG.PEAR.Services
             //    var OperationalData = request.MapTo<KeyOperationData>();
             //    OperationalData.KeyOperation = DataContext.KeyOperations.FirstOrDefault(x => x.Id == request.IdKeyOperation);
             //    OperationalData.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == request.IdKPI);
-            //    DataContext.KeyOperasionalDatas.Add(OperationalData);
+            //    DataContext.KeyOperationDatas.Add(OperationalData);
 
             //}
             //else
             //{
-            //    var OperationalData = DataContext.KeyOperasionalDatas.FirstOrDefault(x => x.Id == request.Id);
+            //    var OperationalData = DataContext.KeyOperationDatas.FirstOrDefault(x => x.Id == request.Id);
             //    if (OperationalData != null)
             //    {
             //        var operational = request.MapPropertiesToInstance<KeyOperationData>(OperationalData);
@@ -93,7 +93,7 @@ namespace DSLNG.PEAR.Services
 
         public GetOperationalDataResponse GetOperationalData(GetOperationalDataRequest request)
         {
-            //return DataContext.KeyOperasionalDatas
+            //return DataContext.KeyOperationDatas
             //    .Include(x => x.KeyOperation).Include(x => x.Kpi)
             //    .FirstOrDefault(x => x.Id == request.Id).MapTo<GetOperationalDataResponse>();
             throw new NotImplementedException();
@@ -102,11 +102,11 @@ namespace DSLNG.PEAR.Services
 
         public DeleteOperationalDataResponse DeleteOperationalData(DeleteOperationalDataRequest request)
         {
-            var checkId = DataContext.KeyOperasionalDatas.FirstOrDefault(x => x.Id == request.Id);
+            var checkId = DataContext.KeyOperationDatas.FirstOrDefault(x => x.Id == request.Id);
             if (checkId != null)
             {
-                DataContext.KeyOperasionalDatas.Attach(checkId);
-                DataContext.KeyOperasionalDatas.Remove(checkId);
+                DataContext.KeyOperationDatas.Attach(checkId);
+                DataContext.KeyOperationDatas.Remove(checkId);
                 DataContext.SaveChanges();
             }
             return new DeleteOperationalDataResponse
@@ -118,7 +118,7 @@ namespace DSLNG.PEAR.Services
 
         public GetOperationalDataDetailResponse GetOperationalDataDetail(GetOperationalDataDetailRequest request)
         {
-            var operationData = DataContext.KeyOperasionalDatas.Where(x => x.Scenario.Id == request.Id).ToList();
+            var operationData = DataContext.KeyOperationDatas.Where(x => x.Scenario.Id == request.Id).ToList();
             foreach (var item in operationData)
             {
                 //item.KeyOperation
@@ -128,7 +128,7 @@ namespace DSLNG.PEAR.Services
 
         public IEnumerable<KeyOperationData> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
         {
-            //var data = DataContext.KeyOperasionalDatas.Include(x => x.KeyOperation).Include(x => x.Kpi).AsQueryable();
+            //var data = DataContext.KeyOperationDatas.Include(x => x.KeyOperation).Include(x => x.Kpi).AsQueryable();
             //if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             //{
             //    data = data.Where(x => x.KeyOperation.Name.Contains(search) || x.Kpi.Name.Contains(search));
