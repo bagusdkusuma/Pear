@@ -61,7 +61,7 @@ namespace DSLNG.PEAR.Services
         {
             if (request.Id == 0)
             {
-                var Operation = request.MapTo<KeyOperation>();
+                var Operation = request.MapTo<KeyOperationConfig>();
                 Operation.KeyOperationGroup = DataContext.KeyOperationGroups.Where(x => x.Id == request.IdKeyOperationGroup).FirstOrDefault();
                 DataContext.KeyOperations.Add(Operation);
             }
@@ -70,7 +70,7 @@ namespace DSLNG.PEAR.Services
                 var Operation = DataContext.KeyOperations.Where(x => x.Id == request.Id).FirstOrDefault();
                 if (Operation != null)
                 {
-                    request.MapPropertiesToInstance<KeyOperation>(Operation);
+                    request.MapPropertiesToInstance<KeyOperationConfig>(Operation);
                     Operation.KeyOperationGroup = DataContext.KeyOperationGroups.Where(x => x.Id == request.IdKeyOperationGroup).FirstOrDefault();
                 }
             }
@@ -106,7 +106,7 @@ namespace DSLNG.PEAR.Services
         }
 
 
-        public IEnumerable<KeyOperation> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        public IEnumerable<KeyOperationConfig> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
         {
             var data = DataContext.KeyOperations.Include(x => x.KeyOperationGroup).AsQueryable();
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))

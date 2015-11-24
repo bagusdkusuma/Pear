@@ -82,7 +82,7 @@
     <Compile Include="Entities\EconomicModel\EconomicConfigDetail.cs" />
     <Compile Include="Entities\EconomicModel\EconomicSummaryConfig.cs" />
     <Compile Include="Entities\EconomicModel\KeyAssumptionData.cs" />
-    <Compile Include="Entities\EconomicModel\KeyOperation.cs" />
+    <Compile Include="Entities\EconomicModel\KeyOperationConfig.cs" />
     <Compile Include="Entities\EconomicModel\Scenario.cs" />
     <Compile Include="Entities\HighlightGroup.cs" />
     <Compile Include="Entities\ResetPassword.cs" />
@@ -95,8 +95,8 @@
     <Compile Include="Entities\EconomicModel\KeyOutputConfiguration.cs" />
     <Compile Include="Entities\EconomicModel\KeyOutputTemplate.cs" />
     <Compile Include="Entities\EconomicModel\KeyOutputTemplateItem.cs" />
-    <Compile Include="Entities\EconomicModel\OperationDataCategory.cs" />
-    <Compile Include="Entities\EconomicModel\OperationDataConfiguration.cs" />
+    <Compile Include="Entities\EconomicModel\KeyOperationGroup.cs" />
+    <Compile Include="Entities\EconomicModel\KeyOperationData.cs" />
     <Compile Include="Entities\FormatInput.cs" />
     <Compile Include="Entities\Group.cs" />
     <Compile Include="Entities\Highlight.cs" />
