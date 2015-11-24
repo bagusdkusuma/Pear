@@ -437,12 +437,16 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.IdConfig, o =>  o.MapFrom(s => s.KeyAssumptionConfig.Id));
 
             Mapper.CreateMap<KeyOperationConfig, GetOperationsResponse.Operation>()
-                .ForMember(x => x.KeyOperationGroup, o => o.MapFrom(s => s.KeyOperationGroup.Name));
+                .ForMember(x => x.KeyOperationGroup, o => o.MapFrom(s => s.KeyOperationGroup.Name))
+                .ForMember(x => x.KPI, o => o.MapFrom(s => s.Kpi.Name));
             Mapper.CreateMap<KeyOperationGroup, OperationGroupsResponse.OperationGroup>();
+            Mapper.CreateMap<Kpi, OperationGroupsResponse.KPI>();
             Mapper.CreateMap<SaveOperationRequest, KeyOperationConfig>()
-                .ForMember(x => x.KeyOperationGroup, o => o.Ignore());
+                .ForMember(x => x.KeyOperationGroup, o => o.Ignore())
+                .ForMember(x => x.Kpi, o => o.Ignore());
             Mapper.CreateMap<KeyOperationConfig, GetOperationResponse>()
-                .ForMember(x => x.IdKeyOperationGroup, o => o.MapFrom(s => s.KeyOperationGroup.Id));
+                .ForMember(x => x.IdKeyOperationGroup, o => o.MapFrom(s => s.KeyOperationGroup.Id))
+                .ForMember(x => x.IdKPI, o => o.MapFrom(s => s.Kpi.Id));
 
             Mapper.CreateMap<KeyOperationData, GetOperationalDatasResponse.OperationalData>()
                 //.ForMember(x => x.KeyOperation, o => o.MapFrom(s => s.KeyOperation.Name))

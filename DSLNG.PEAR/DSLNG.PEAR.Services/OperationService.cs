@@ -52,7 +52,8 @@ namespace DSLNG.PEAR.Services
         {
             return new OperationGroupsResponse
             {
-                OperationGroups = DataContext.KeyOperationGroups.ToList().MapTo<OperationGroupsResponse.OperationGroup>()
+                OperationGroups = DataContext.KeyOperationGroups.ToList().MapTo<OperationGroupsResponse.OperationGroup>(),
+                KPIS = DataContext.Kpis.ToList().MapTo<OperationGroupsResponse.KPI>()
             };
         }
 
@@ -63,6 +64,7 @@ namespace DSLNG.PEAR.Services
             {
                 var Operation = request.MapTo<KeyOperationConfig>();
                 Operation.KeyOperationGroup = DataContext.KeyOperationGroups.Where(x => x.Id == request.IdKeyOperationGroup).FirstOrDefault();
+                Operation.Kpi = DataContext.Kpis.Where(x => x.Id == request.IdKPI).FirstOrDefault();
                 DataContext.KeyOperations.Add(Operation);
             }
             else
@@ -72,6 +74,7 @@ namespace DSLNG.PEAR.Services
                 {
                     request.MapPropertiesToInstance<KeyOperationConfig>(Operation);
                     Operation.KeyOperationGroup = DataContext.KeyOperationGroups.Where(x => x.Id == request.IdKeyOperationGroup).FirstOrDefault();
+                    Operation.Kpi = DataContext.Kpis.Where(x => x.Id == request.IdKPI).FirstOrDefault();
                 }
             }
             DataContext.SaveChanges();
@@ -85,7 +88,8 @@ namespace DSLNG.PEAR.Services
 
         public GetOperationResponse GetOperation(GetOperationRequest request)
         {
-            return DataContext.KeyOperations.Where(x => x.Id == request.Id).Include(x => x.KeyOperationGroup).FirstOrDefault().MapTo<GetOperationResponse>();
+            return DataContext.KeyOperations.Where(x => x.Id == request.Id)
+                .Include(x => x.Kpi).Include(x => x.KeyOperationGroup).FirstOrDefault().MapTo<GetOperationResponse>();
         }
 
 
@@ -108,10 +112,10 @@ namespace DSLNG.PEAR.Services
 
         public IEnumerable<KeyOperationConfig> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
         {
-            var data = DataContext.KeyOperations.Include(x => x.KeyOperationGroup).AsQueryable();
+            var data = DataContext.KeyOperations.Include(x => x.KeyOperationGroup).Include(x => x.Kpi).AsQueryable();
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             {
-                data = data.Where(x => x.KeyOperationGroup.Name.Contains(search) || x.Name.Contains(search));
+                data = data.Where(x => x.KeyOperationGroup.Name.Contains(search) || x.Kpi.Name.Contains(search));
             }
 
             foreach (var sortOrder in sortingDictionary)
@@ -120,13 +124,18 @@ namespace DSLNG.PEAR.Services
                 {
                     case "OperationGroup":
                         data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.KeyOperationGroup.Name)
-                            : data.OrderByDescending(x => x.KeyOperationGroup.Name);
+                            ? data.OrderBy(x => x.KeyOperationGroup.Name).ThenBy(x => x.Order)
+                            : data.OrderByDescending(x => x.KeyOperationGroup.Name).ThenBy(x => x.Order);
                         break;
-                    case "Name":
+                    case "KPI":
                         data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.Name)
-                            : data.OrderByDescending(x => x.Name);
+                            ? data.OrderBy(x => x.Kpi.Name).ThenBy(x => x.Order)
+                            : data.OrderByDescending(x => x.Kpi.Name).ThenBy(x => x.Order);
+                        break;
+                    case "Order":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Order)
+                            : data.OrderByDescending(x => x.Order);
                         break;
                     case "IsActive":
                         data = sortOrder.Value == SortOrder.Ascending

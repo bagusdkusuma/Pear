@@ -10,7 +10,8 @@ namespace DSLNG.PEAR.Services.Requests.Operation
     {
         public int Id { get; set; }
         public int IdKeyOperationGroup { get; set; }
-        public string Name { get; set; }
+        public int IdKPI { get; set; }
+        public int Order { get; set; }
         public string Desc { get; set; }
         public bool IsActive { get; set; }
     }

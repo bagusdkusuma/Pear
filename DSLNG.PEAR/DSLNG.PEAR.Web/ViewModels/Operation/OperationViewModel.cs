@@ -12,6 +12,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Operation
         public OperationViewModel()
         {
             KeyOperationGroups = new List<SelectListItem>();
+            KPIS = new List<SelectListItem>();
         }
 
         public int Id { get; set; }
@@ -20,8 +21,10 @@ namespace DSLNG.PEAR.Web.ViewModels.Operation
         [Display(Name= "Operation Group")]
         public int IdKeyOperationGroup { get; set; }
         [Required]
-        [Display(Name="Key Operation")]
-        public string Name { get; set; }
+        [Display(Name="KPI")]
+        public int IdKPI { get; set; }
+        public IList<SelectListItem> KPIS { get; set; }
+        public int Order { get; set; }
         public string Desc { get; set; }
         public bool IsActive { get; set; }
     }
