@@ -145,6 +145,7 @@ namespace DSLNG.PEAR.Services
                 }
             }
 
+
             TotalRecords = data.Count();
             return data;
         }
