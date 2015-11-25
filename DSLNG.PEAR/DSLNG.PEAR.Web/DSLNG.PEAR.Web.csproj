@@ -760,6 +760,7 @@
     <Compile Include="Controllers\HighlightGroupController.cs" />
     <Compile Include="Controllers\OperationalDataController.cs" />
     <Compile Include="Controllers\OperationController.cs" />
+    <Compile Include="Controllers\OutputConfigController.cs" />
     <Compile Include="Controllers\ScenarioController.cs" />
     <Compile Include="Helpers\EmailHelper.cs" />
     <Compile Include="ViewModels\AssumptionData\AssumptionDataInputViewModel.cs" />
@@ -1049,6 +1050,7 @@
     <Content Include="Views\Highlight\_DailyHighlightPartial.cshtml" />
     <Content Include="Views\Highlight\_MonthlyHighlightPartial.cshtml" />
     <Content Include="Views\Highlight\_YearlyHighlightPartial.cshtml" />
+    <Content Include="Views\OutputConfig\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -1210,6 +1212,7 @@
     <Compile Include="ViewModels\OperationGroup\OperationGroupViewModel.cs" />
     <Compile Include="ViewModels\Operation\OperationViewModel.cs" />
     <Compile Include="ViewModels\OutputCategory\OutputCategoryViewModel.cs" />
+    <Compile Include="ViewModels\OutputConfig\OutputConfigViewModel.cs" />
     <Compile Include="ViewModels\PmsConfigDetails\CreatePmsConfigDetailsViewModel.cs" />
     <Compile Include="ViewModels\PmsConfig\UpdatePmsConfigViewModel.cs" />
     <Compile Include="ViewModels\PmsConfig\CreatePmsConfigViewModel.cs" />

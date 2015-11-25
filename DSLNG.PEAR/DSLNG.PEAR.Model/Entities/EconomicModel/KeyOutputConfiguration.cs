@@ -14,12 +14,13 @@ namespace DSLNG.PEAR.Data.Entities.EconomicModel
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-
         public string Name { get; set; }
         public KeyOutputCategory Category { get; set; }
         public Measurement Measurement { get; set; }
-        public FormulaType FormulaType { get; set; }
         public Formula Formula { get; set; }
+        public IList<Kpi> Kpis { get; set; }
+        public IList<KeyAssumptionConfig> KeyAssumptions { get; set; }
+        public double? ExcludeValue { get; set; }
         public int Order { get; set; }
         public string Remark { get; set; }
         public bool IsActive { get; set; }

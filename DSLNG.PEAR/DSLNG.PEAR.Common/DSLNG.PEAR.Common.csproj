@@ -48,6 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Calculator\ICalculator.cs" />
+    <Compile Include="Calculator\IRRCalculationException.cs" />
+    <Compile Include="Calculator\NewtonRaphsonIRRCalculator.cs" />
     <Compile Include="Contants\DateFormat.cs" />
     <Compile Include="Contants\FormatNumber.cs" />
     <Compile Include="Contants\ImageConstant.cs" />

@@ -83,6 +83,9 @@ using DSLNG.PEAR.Services.Requests.EconomicConfig;
 using DSLNG.PEAR.Services.Responses.HighlightGroup;
 using DSLNG.PEAR.Services.Requests.HighlightGroup;
 using System.Collections.Generic;
+using OGetKpisResponse = DSLNG.PEAR.Services.Responses.OutputConfig.GetKpisResponse;
+using GetKpisResponse = DSLNG.PEAR.Services.Responses.Kpi.GetKpisResponse;
+using DSLNG.PEAR.Services.Responses.OutputConfig;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -482,6 +485,10 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<SelectOption, GetHighlightGroupsResponse.HighlightTypeResponse>();
             Mapper.CreateMap<Highlight, GetDynamicHighlightsResponse.HighlightResponse>()
                 .ForMember(x => x.TypeId, o => o.MapFrom(s => s.HighlightType.Id));
+
+            Mapper.CreateMap<Kpi, OGetKpisResponse.Kpi>();
+            Mapper.CreateMap<KeyAssumptionConfig, GetKeyAssumptionsResponse.KeyAssumption>();
+           
             base.Configure();
         }
 

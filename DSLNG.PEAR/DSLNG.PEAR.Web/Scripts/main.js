@@ -159,6 +159,7 @@ Number.prototype.format = function (n, x) {
     Pear.NLS = {};
     Pear.ConstantUsage = {};
     Pear.Calculator = {};
+    Pear.OutputConfig = {};
 
     Pear.Loading.Show = function (container) {
         var loadingImage = $('#dataLayout').attr('data-content-url') + '/img/ajax-loader2.gif';
@@ -175,7 +176,7 @@ Number.prototype.format = function (n, x) {
 
     //helper
     artifactDesigner._formatKpi = function (kpi) {
-        //console.log(kpi);
+        console.log(kpi);
         if (kpi.loading) return kpi.text;
         return '<div class="clearfix"><div class="col-sm-12">' + kpi.Name + '</div></div>';
     };
@@ -4142,6 +4143,102 @@ Number.prototype.format = function (n, x) {
         });
     };
 
+    Pear.OutputConfig.FormSetup = function () {
+        //Pear.OutputConfig._autocomplete($('.key-assumption-options'));
+        //Pear.OutputConfig._autocomplete($('.kpi-options'));
+        var kpiParam = $('.kpi-param');
+        var assumptionParam = $('.assumption-param');
+        var excludeValue = $('.exclude-value');
+        var paramsHolder = $('.params-holder');
+
+        $('.output-formula').change(function (e) {
+            var $this = $(this);
+            var val = $this.val();
+            paramsHolder.html('');
+            switch (val) {
+                case "AVERAGE":
+                case "MIN":
+                case "MINDATE":
+                case "BREAKEVENTYEAR":
+                case "PAYBACK":
+                case "PROJECTIRR":
+                case "EQUITYIRR":
+                case "PROFITINVESTMENTRATIO":
+                case "SUM":
+                    var kpi = kpiParam.clone(true);
+                    Pear.OutputConfig._autocomplete(kpi.find('select'));
+                    paramsHolder.append(kpi.show());
+                    var start = assumptionParam.clone(true);
+                    Pear.OutputConfig._autocomplete(start.find('select'));
+                    start.find('label').html('Start');
+                    paramsHolder.append(start.show());
+                    var end = assumptionParam.clone(true);
+                    Pear.OutputConfig._autocomplete(end.find('select'));
+                    end.find('label').html('End');
+                    paramsHolder.append(end.show());
+                    if (val == "PROFITINVESTMENTRATIO") {
+                        var projectCost = assumptionParam.clone(true);
+                        Pear.OutputConfig._autocomplete(projectCost.find('select'));
+                        projectCost.find('label').html('Project Cost');
+                        paramsHolder.append(projectCost.show());
+                    }
+                    if(val == 'MIN' || val == 'MINDATE'){
+                        var exclude = excludeValue.clone(true);
+                        paramsHolder.append(exclude.show());
+                    }
+                    break;
+                case "COMPLETIONDATE":
+                    var kpi = kpiParam.clone(true);
+                    Pear.OutputConfig._autocomplete(kpi.find('select'));
+                    paramsHolder.append(kpi.show());
+                    var start = assumptionParam.clone(true);
+                    Pear.OutputConfig._autocomplete(start.find('select'));
+                    start.find('label').html('Completion Date');
+                    paramsHolder.append(start.show());
+                    break;
+                case "GROSSPROFIT":
+                    for (var i = 0; i < 4; i++) {
+                        var kpi = kpiParam.clone(true);
+                        Pear.OutputConfig._autocomplete(kpi.find('select'));
+                        paramsHolder.append(kpi.show());
+                    }
+                    break;
+                case "NETBACKVALUE":
+                    for (var i = 0; i < 9; i++) {
+                        var kpi = kpiParam.clone(true);
+                        Pear.OutputConfig._autocomplete(kpi.find('select'));
+                        paramsHolder.append(kpi.show());
+                    }
+                    break;
+            }
+        });
+    }
+
+    Pear.OutputConfig._autocomplete = function ($field) {
+        var url = $field.data('url');
+        $field.select2({
+            ajax: {
+                url: url,
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        term: params.term, // search term
+                    };
+                },
+                processResults: function (data, page) {
+                    console.log(data);
+                    return data;
+                },
+                cache: true
+            },
+            escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+            minimumInputLength: 1,
+            templateResult: Pear.Artifact.Designer._formatKpi, // omitted for brevity, see the source of this page
+            templateSelection: Pear.Artifact.Designer._formatKpiSelection // omitted for brevity, see the source of this page
+        });
+    };
+
     $(document).ready(function () {
         if ($('.artifact-designer').length) {
             Pear.Artifact.Designer.GraphicSettingSetup();
@@ -4182,6 +4279,11 @@ Number.prototype.format = function (n, x) {
             Pear.PlantAvailabilityCalculator.Init();
             Pear.CalculatorConstant.Init();
         }
+
+        if ($('.output-config-save').length) {
+            Pear.OutputConfig.FormSetup();
+        }
+
         $('.see-more').click(function () {
             var modalHeader = $('<div/>');
             modalHeader.addClass('modal-header');
