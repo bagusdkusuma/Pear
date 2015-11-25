@@ -234,6 +234,7 @@
     <Compile Include="Requests\OutputCategory\SaveOutputCategoryRequest.cs" />
     <Compile Include="Requests\OutputConfig\GetKeyAssumptionsRequest.cs" />
     <Compile Include="Requests\OutputConfig\GetKpisRequest.cs" />
+    <Compile Include="Requests\OutputConfig\GetOutputConfigsRequest.cs" />
     <Compile Include="Requests\Periode\PeriodeRequest.cs" />
     <Compile Include="Requests\PmsSummary\CreatePmsConfigDetailsRequest.cs" />
     <Compile Include="Requests\PmsSummary\CreatePmsConfigRequest.cs" />
@@ -422,6 +423,7 @@
     <Compile Include="Responses\OutputCategory\SaveOutputCategoryRespone.cs" />
     <Compile Include="Responses\OutputConfig\GetKeyAssumptionsResponse.cs" />
     <Compile Include="Responses\OutputConfig\GetKpisResponse.cs" />
+    <Compile Include="Responses\OutputConfig\GetOutputConfigsResponse.cs" />
     <Compile Include="Responses\PmsSummary\CreatePmsConfigDetailsResponse.cs" />
     <Compile Include="Responses\PmsSummary\CreatePmsConfigResponse.cs" />
     <Compile Include="Responses\PmsSummary\CreatePmsSummaryResponse.cs" />

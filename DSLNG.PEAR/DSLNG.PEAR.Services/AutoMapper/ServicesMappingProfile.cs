@@ -489,7 +489,11 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
             Mapper.CreateMap<Kpi, OGetKpisResponse.Kpi>();
             Mapper.CreateMap<KeyAssumptionConfig, GetKeyAssumptionsResponse.KeyAssumption>();
-           
+
+            Mapper.CreateMap<KeyOutputConfiguration, GetOutputConfigsResponse.OutputConfig>()
+                .ForMember(x => x.Category, o => o.MapFrom(s => s.Category.Name))
+                .ForMember(x => x.Measurement, o => o.MapFrom(s => s.Measurement.Name));
+
             base.Configure();
         }
 
