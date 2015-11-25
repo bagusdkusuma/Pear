@@ -16,5 +16,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetOperationalDataResponse GetOperationalData(GetOperationalDataRequest request);
         DeleteOperationalDataResponse DeleteOperationalData(DeleteOperationalDataRequest request);
         GetOperationalDataDetailResponse GetOperationalDataDetail(GetOperationalDataDetailRequest request);
+        GetOperationDataConfigurationResponse GetOperationDataConfiguration(GetOperationDataConfigurationRequest request);
+        UpdateOperationDataResponse Update(UpdateOperationDataRequest request);
     }
 }

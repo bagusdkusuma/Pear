@@ -1,4 +1,7 @@
-﻿using DevExpress.Web.Mvc;
+﻿using AutoMapper;
+using DSLNG.PEAR.Data.Enums;
+using DSLNG.PEAR.Web.ViewModels.OperationData;
+using DevExpress.Web.Mvc;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.OperationalData;
 using DSLNG.PEAR.Web.ViewModels.OperationalData;
@@ -15,9 +18,11 @@ namespace DSLNG.PEAR.Web.Controllers
     public class OperationDataController : Controller
     {
         private readonly IOperationDataService _operationDataService;
-        public OperationDataController(IOperationDataService operationDataService)
+        private readonly IDropdownService _dropdownService;
+        public OperationDataController(IOperationDataService operationDataService, IDropdownService dropdownService)
         {
             _operationDataService = operationDataService;
+            _dropdownService = dropdownService;
         }
 
 
@@ -164,7 +169,51 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Detail(int id)
         {
-            return Content("");
+            var response =
+                _operationDataService.GetOperationalDataDetail(new GetOperationalDataDetailRequest() {Id = id});
+            var viewModel = response.MapTo<OperationDataDetailViewModel>();
+            viewModel.ScenarioId = id;
+            return View(viewModel);
+        }
+
+        public ActionResult ConfigurationPartial(OperationDataParamConfigurationViewModel paramViewModel)
+        {
+            PeriodeType pType = string.IsNullOrEmpty(paramViewModel.PeriodeType)
+                                    ? PeriodeType.Yearly
+                                    : (PeriodeType)Enum.Parse(typeof(PeriodeType), paramViewModel.PeriodeType);
+
+            var request = paramViewModel.MapTo<GetOperationDataConfigurationRequest>();
+            var response = _operationDataService.GetOperationDataConfiguration(request);
+
+            var viewModel = response.MapTo<OperationDataConfigurationViewModel>();
+            viewModel.Years = _dropdownService.GetYears().MapTo<SelectListItem>();
+            viewModel.PeriodeType = pType.ToString();
+            viewModel.Year = request.Year;
+            return PartialView("Configuration/_" + viewModel.PeriodeType, viewModel);
+            
+        }
+
+        public ActionResult Configuration(OperationDataParamConfigurationViewModel paramViewModel)
+        {
+            PeriodeType pType = string.IsNullOrEmpty(paramViewModel.PeriodeType)
+                                    ? PeriodeType.Yearly
+                                    : (PeriodeType)Enum.Parse(typeof(PeriodeType), paramViewModel.PeriodeType);
+            var request = paramViewModel.MapTo<GetOperationDataConfigurationRequest>();
+            var response = _operationDataService.GetOperationDataConfiguration(request);
+
+            var viewModel = response.MapTo<OperationDataConfigurationViewModel>();
+            viewModel.Years = _dropdownService.GetYears().MapTo<SelectListItem>();
+            viewModel.PeriodeType = pType.ToString();
+            viewModel.Year = request.Year;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Update(UpdateOperationDataViewModel viewModel)
+        {
+            var request = viewModel.MapTo<UpdateOperationDataRequest>();
+            var response = _operationDataService.Update(request);
+            return Json(new { Message = response.Message, isSuccess = response.IsSuccess });
         }
     }
 }

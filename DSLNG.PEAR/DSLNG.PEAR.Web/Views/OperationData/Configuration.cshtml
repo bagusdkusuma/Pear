@@ -1,0 +1,193 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.OperationData.OperationDataConfigurationViewModel
+@{
+    ViewBag.Title = "Configuration";
+}
+<style>
+    .nav-tabs > li > a
+    {
+        color: #ffffff;
+    }
+
+    .nav-tabs > li:active > a
+    {
+        color: #000000;
+    }
+</style>
+<div class="notification"></div>
+<section>
+    <div class="row">
+        <div class="title_page" style="border: none!important;">
+            <div class="title" style="margin-right: 25px;">Key Operation Data</div>
+            <img class="ajax-loader2" src="@Url.Content("~/content/img/ajax-loader1.gif")" style="display: none;width: 30px;height: 30px;" />
+            <div class="description_year"></div>
+        </div>
+
+    </div>
+    <ul class="nav nav-tabs">
+        <li role="presentation" @(Model.PeriodeType == DSLNG.PEAR.Data.Enums.PeriodeType.Yearly.ToString() ? Html.Raw("class=active") : Html.Raw("")) >
+            <a href="#yearly" aria-controls="home" role="tab" data-toggle="tab" data-periodetype="Yearly">
+                <div>Yearly</div>
+            </a>
+        </li>
+        <li role="presentation" @(Model.PeriodeType == DSLNG.PEAR.Data.Enums.PeriodeType.Monthly.ToString() ? Html.Raw("class=active") : Html.Raw(""))>
+            <a href="#monthly" aria-controls="home" role="tab" data-toggle="tab" data-periodetype="Monthly">
+                <div>Monthly</div>
+            </a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active config-content">
+            @Html.Partial("Configuration/_" + Model.PeriodeType, Model)
+        </div>
+    </div>
+</section>
+<div class="popover-content" style="display: none">
+    <form name="operationDataForm" id="operation-data-form" method="POST" action="/Update">
+        <label class="control-label">Value</label>
+        <input type="text" name="Value" class="form-control value-popover" />
+        <label class="control-label">Remark</label>
+        <textarea name="Remark" class="form-control"></textarea>
+        <input type="hidden" name="Id" />
+        <input type="hidden" name="KpiId" />
+        <input type="hidden" name="Periode" />
+        <input type="hidden" name="PeriodeType" />
+        <input type="hidden" name="ScenarioId" />
+        <input type="hidden" name="KeyOperationConfigId" />
+        <button type="button" class="btn btn-primary submit-popover">Ok</button>
+        <button type="button" class="btn btn-primary cancel-popover">Cancel</button>
+    </form>
+</div>
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var _periodeType = '@Model.PeriodeType';
+            $('[data-toggle=tab]').click(function () {
+                var that = $(this);
+                var periodeType = that.attr('data-periodeType');
+                var data = {};
+                data.groupId = '@Model.GroupId';
+                data.scenarioId = '@Model.ScenarioId';
+                data.periodeType = periodeType;
+                _periodeType = periodeType;
+                if (periodeType === 'Monthly') {
+                    data.year = '@DateTime.Now.Year';
+                }
+                else if (periodeType === 'Daily') {
+                    data.year = '@DateTime.Now.Year';
+                    data.month = '@DateTime.Now.Month';
+                }
+                console.log(data);
+                $.ajax({
+                    url: '@Url.Action("ConfigurationPartial")',
+                    type: 'GET',
+                    data: data,
+                    beforeSend: function () {
+                        $('.ajax-loader2').show();
+                        $('.config-content').hide();
+                    }
+                })
+                .done(function (result) {
+                    $('.ajax-loader2').hide();
+                    $('.config-content').html(result);
+                    $('.config-content').show();
+                });
+
+            });
+
+            $('body').popover({
+                selector: '.kpi-popover',
+                html: true,
+                title: function () {
+                    return $(this).parent().find('.header-popover').val();
+                },
+                content: function () {
+                    return $('.popover-content').html();
+                }
+            });
+
+            var popOverElem;
+            $(document).on('click', '.kpi-popover', function () {
+                if (popOverElem !== undefined && $(this).attr('id') !== popOverElem.attr('id')) {
+                    popOverElem.popover('hide');
+                }
+                var value = $(this).parent().find('.value').val();
+                var remark = $(this).parent().find('.remark').val();
+                var id = $(this).parent().find('.id').val();
+                var kpiId = $(this).parent().find('.kpiId').val();
+                var periode = $(this).parent().find('.periode').val();
+                var periodeType = $(this).parent().find('.periodeType').val();
+                var scenarioId = $(this).parent().find('.scenario-id').val();
+                var keyOperationConfigId = $(this).parent().find('.key-operation-config-id').val();
+                $('.popover').find('input[name="Value"]').attr('value', value);
+                $('.popover').find('textarea').val(remark);
+                $('.popover').find('input[name="Id"]').attr('value', id);
+                $('.popover').find('input[name="KpiId"]').attr('value', kpiId);
+                $('.popover').find('input[name="Periode"]').attr('value', periode);
+                $('.popover').find('input[name="PeriodeType"]').attr('value', periodeType);
+                $('.popover').find('input[name="ScenarioId"]').attr('value', scenarioId);
+                $('.popover').find('input[name="KeyOperationConfigId"]').attr('value', keyOperationConfigId);
+                $('.popover').find('input[name="Value"]').focus();
+                popOverElem = $(this);
+            });
+
+            $(document).on('click', '.submit-popover', function () {
+                var that = $(this);
+                var value = $(this).parent().find('input[name="Value"]').val();
+                var remark = $(this).parent().find('textarea').val();
+                var kpiTarget = $('.popover').parent();
+
+                $(kpiTarget).find('.value').attr('value', value);
+                $(kpiTarget).find('.remark').attr('value', remark);
+                var formData = {
+                    'id': $(this).parent().find('input[name=Id]').val(),
+                    'kpiId': $(this).parent().find('input[name=KpiId]').val(),
+                    'value': $(this).parent().find('input[name=Value]').val(),
+                    'remark': $(this).parent().find('textarea').val(),
+                    'periode': $(this).parent().find('input[name=Periode]').val(),
+                    'periodeType': $(this).parent().find('input[name=PeriodeType]').val(),
+                    'scenarioId': $(this).parent().find('input[name=ScenarioId]').val(),
+                    'keyOperationConfigId': $(this).parent().find('input[name=KeyOperationConfigId]').val(),
+                };
+                
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Update")',
+                    data: formData,
+                    success: function (data) {
+                        $('.popover').parent().find('.id').attr('value', data.Id);
+                        if (remark.length > 0) {
+                            $('.popover').parent().find('.value').addClass('remark_sign');
+                        }
+
+                        $('.notification').empty();
+                        var alertType = data.isSuccess === true ? 'alert-success' : 'alert-danger';
+                        var message = '<div class="alert ' + alertType + '" role="alert">' + data.Message + '</div>';
+                        $('.notification').append(message).fadeIn().delay(1000).fadeOut();
+                        $('.popover').popover('hide');
+                    },
+                });
+            });
+
+            $(document).on('click', '.cancel-popover', function () {
+                $('.popover').popover('hide');
+            });
+
+            $(document).on('change', '.ddl-year, .ddl-month', function () {
+                var year = $('.ddl-year').val();
+                var month = $('.ddl-month').val();
+                var _groupId = '@Model.GroupId';
+                var _scenarioId = '@Model.ScenarioId';
+                var url;
+                if (month !== undefined) {
+                    url = '@Html.Raw(Url.Action("Configuration", "OperationData", new { year = "_year_", month = "_month_", periodeType = "_periodeType_", groupId= "_groupId_", scenarioId = "_scenarioId_" }))'.replace('_year_', year).replace('_month_', month).replace("_periodeType_", _periodeType).replace("_groupId_", _groupId).replace("_scenarioId_", _scenarioId);
+                } else {
+                    url = '@Html.Raw(Url.Action("Configuration", "OperationData", new { year = "_year_", periodeType = "_periodeType_", groupId= "_groupId_", scenarioId = "_scenarioId_" }))'.replace('_year_', year).replace("_periodeType_", _periodeType).replace("_groupId_", _groupId).replace("_scenarioId_", _scenarioId);
+                }
+
+                window.location = url;
+            });
+        });
+    </script>
+}

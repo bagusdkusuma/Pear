@@ -88,6 +88,9 @@
     <Compile Include="HighlightGroupService.cs" />
     <Compile Include="HighlightOrderService.cs" />
     <Compile Include="HighlightService.cs" />
+    <Compile Include="Requests\OperationalData\GetOperationDataConfigurationRequest.cs" />
+    <Compile Include="Requests\OperationalData\UpdateOperationDataRequest.cs" />
+    <Compile Include="Responses\OperationalData\GetOperationDataConfigurationResponse.cs" />
     <Compile Include="Responses\OperationalData\GetOperationalDataDetailResponse.cs" />
     <Compile Include="Requests\OperationalData\GetOperationalDataDetailRequest.cs" />
     <Compile Include="Interfaces\IAssumptionCategoryService.cs" />
@@ -405,6 +408,7 @@
     <Compile Include="Responses\OperationalData\GetOperationalDatasResponse.cs" />
     <Compile Include="Responses\OperationalData\GetOperationalSelectListResponse.cs" />
     <Compile Include="Responses\OperationalData\SaveOperationalDataResponse.cs" />
+    <Compile Include="Responses\OperationalData\UpdateOperationDataResponse.cs" />
     <Compile Include="Responses\OperationGroup\DeleteOperationGroupResponse.cs" />
     <Compile Include="Responses\OperationGroup\GetOperationGroupResponse.cs" />
     <Compile Include="Responses\OperationGroup\GetOperationGroupsResponse.cs" />

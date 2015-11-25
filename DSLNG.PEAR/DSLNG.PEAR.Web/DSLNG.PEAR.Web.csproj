@@ -1049,6 +1049,10 @@
     <Content Include="Views\Highlight\_DailyHighlightPartial.cshtml" />
     <Content Include="Views\Highlight\_MonthlyHighlightPartial.cshtml" />
     <Content Include="Views\Highlight\_YearlyHighlightPartial.cshtml" />
+    <Content Include="Views\OperationData\Detail.cshtml" />
+    <Content Include="Views\OperationData\Configuration.cshtml" />
+    <Content Include="Views\OperationData\Configuration\_Yearly.cshtml" />
+    <Content Include="Views\OperationData\Configuration\_Monthly.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -1206,8 +1210,11 @@
     <Compile Include="ViewModels\KpiTarget\IndexKpiTargetViewModel.cs" />
     <Compile Include="ViewModels\KpiTarget\UpdateKpiTargetViewModel.cs" />
     <Compile Include="ViewModels\NLS\NLSViewModel.cs" />
-    <Compile Include="ViewModels\OperationalData\OperationalDataDetailViewModel.cs" />
+    <Compile Include="ViewModels\OperationalData\OperationDataDetailViewModel.cs" />
     <Compile Include="ViewModels\OperationalData\OperationalDataViewModel.cs" />
+    <Compile Include="ViewModels\OperationData\OperationDataConfigurationViewModel.cs" />
+    <Compile Include="ViewModels\OperationData\OperationDataParamConfigurationViewModel.cs" />
+    <Compile Include="ViewModels\OperationData\UpdateOperationDataViewModel.cs" />
     <Compile Include="ViewModels\OperationGroup\OperationGroupViewModel.cs" />
     <Compile Include="ViewModels\Operation\OperationViewModel.cs" />
     <Compile Include="ViewModels\OutputCategory\OutputCategoryViewModel.cs" />

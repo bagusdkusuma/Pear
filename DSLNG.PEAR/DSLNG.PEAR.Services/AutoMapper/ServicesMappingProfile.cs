@@ -97,6 +97,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             ConfigurePmsConfigDetails();
             ConfigureKpiAchievements();
             ConfigureSelects();
+            ConfigureKeyOperation();
 
             Mapper.CreateMap<Data.Entities.User, GetUsersResponse.User>();
             Mapper.CreateMap<GetUsersResponse.User, Data.Entities.User>();
@@ -619,6 +620,17 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
             Mapper.CreateMap<KpiAchievement, GetAchievementsResponse>();
             Mapper.CreateMap<Kpi, GetAchievementsResponse>();
+        }
+
+        private void ConfigureKeyOperation()
+        {
+            Mapper.CreateMap<Kpi, GetOperationDataConfigurationResponse.Kpi>()
+                  .ForMember(x => x.MeasurementName, y => y.MapFrom(z => z.Measurement.Name));
+            Mapper.CreateMap<KeyOperationData, GetOperationDataConfigurationResponse.OperationData>()
+                  .ForMember(x => x.ScenarioId, y => y.MapFrom(z => z.Scenario.Id))
+                  .ForMember(x => x.KeyOperationConfigId, y => y.MapFrom(z => z.KeyOperationConfig.Id));
+            Mapper.CreateMap<UpdateOperationDataRequest, KeyOperationData>()
+                  .ForMember(x => x.PeriodeType, y => y.MapFrom(z => (PeriodeType)Enum.Parse(typeof (PeriodeType), z.PeriodeType)));
         }
     }
 }

@@ -26,6 +26,7 @@ using DSLNG.PEAR.Web.ViewModels.Menu;
 using DSLNG.PEAR.Services.Requests.Level;
 using DSLNG.PEAR.Services.Requests.User;
 using DSLNG.PEAR.Services.Responses.User;
+using DSLNG.PEAR.Web.ViewModels.OperationData;
 using DSLNG.PEAR.Web.ViewModels.PmsConfig;
 using DSLNG.PEAR.Web.ViewModels.PmsConfigDetails;
 using DSLNG.PEAR.Web.ViewModels.PmsSummary;
@@ -143,6 +144,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             ConfigureKpiAchievement();
             ConfigureTrafficLight();
             ConfigureSelect();
+            ConfigureOperationData();
 
             Mapper.CreateMap<Dropdown, SelectListItem>();
             Mapper.CreateMap<SearchKpiViewModel, GetKpiToSeriesRequest>();
@@ -562,6 +564,15 @@ namespace DSLNG.PEAR.Web.AutoMapper
             base.Configure();
         }
 
+        private void ConfigureOperationData()
+        {
+            Mapper.CreateMap<GetOperationDataConfigurationResponse, OperationDataConfigurationViewModel>();
+            Mapper.CreateMap<GetOperationDataConfigurationResponse.Kpi, OperationDataConfigurationViewModel.Kpi>();
+            Mapper.CreateMap<GetOperationDataConfigurationResponse.OperationData, OperationDataConfigurationViewModel.OperationData>();
+            Mapper.CreateMap<UpdateOperationDataViewModel, UpdateOperationDataRequest>();
+            Mapper.CreateMap<OperationDataParamConfigurationViewModel, GetOperationDataConfigurationRequest>();
+        }
+
         private void ConfigureSelect()
         {
             Mapper.CreateMap<CreateSelectViewModel, CreateSelectRequest>()
@@ -609,6 +620,11 @@ namespace DSLNG.PEAR.Web.AutoMapper
                 .ForMember(x => x.Series, o => o.MapFrom(s => s.Series.FirstOrDefault()));
             Mapper.CreateMap<GetArtifactResponse.SeriesResponse, TrafficLightChartViewModel.SeriesViewModel>();
             Mapper.CreateMap<GetArtifactResponse.PlotResponse, TrafficLightChartViewModel.PlotBand>();
+
+            Mapper.CreateMap<GetOperationalDataDetailResponse, OperationDataDetailViewModel>();
+            Mapper.CreateMap<GetOperationalDataDetailResponse.KeyOperationConfig, OperationDataDetailViewModel.KeyOperationConfigViewModel>();
+            Mapper.CreateMap<GetOperationalDataDetailResponse.KeyOperationGroup, OperationDataDetailViewModel.KeyOperationGroupViewModel>();
+            Mapper.CreateMap<GetOperationalDataDetailResponse.Kpi, OperationDataDetailViewModel.KpiViewModel>();
         }
 
         private void ConfigureCorporatePortofolio()
