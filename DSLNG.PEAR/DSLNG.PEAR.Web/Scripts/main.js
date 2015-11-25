@@ -4151,6 +4151,11 @@ Number.prototype.format = function (n, x) {
         var excludeValue = $('.exclude-value');
         var paramsHolder = $('.params-holder');
 
+        paramsHolder.find('.kpi-options, .key-assumption-options').each(function (i, val) {
+            var select = $(val);
+            Pear.OutputConfig._autocomplete(select);
+        });
+
         $('.output-formula').change(function (e) {
             var $this = $(this);
             var val = $this.val();

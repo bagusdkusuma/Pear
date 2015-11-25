@@ -11,6 +11,11 @@ namespace DSLNG.PEAR.Data.Entities.EconomicModel
 {
     public class KeyOutputConfiguration
     {
+        public KeyOutputConfiguration()
+        {
+            Kpis = new List<Kpi>();
+            KeyAssumptions = new List<KeyAssumptionConfig>();
+        }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

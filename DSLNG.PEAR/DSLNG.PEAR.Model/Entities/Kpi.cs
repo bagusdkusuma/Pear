@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using DSLNG.PEAR.Data.Enums;
+using DSLNG.PEAR.Data.Entities.EconomicModel;
 
 namespace DSLNG.PEAR.Data.Entities
 {
@@ -46,5 +47,6 @@ namespace DSLNG.PEAR.Data.Entities
         public string Icon { get; set; }
         public string Color { get; set; }
         public bool IsActive { get; set; }
+        public ICollection<KeyOutputConfiguration> KeyOutputConfigurations { get; set; }
     }
 }

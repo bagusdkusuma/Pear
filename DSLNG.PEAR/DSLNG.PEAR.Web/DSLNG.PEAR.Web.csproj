@@ -1051,6 +1051,7 @@
     <Content Include="Views\Highlight\_MonthlyHighlightPartial.cshtml" />
     <Content Include="Views\Highlight\_YearlyHighlightPartial.cshtml" />
     <Content Include="Views\OutputConfig\Create.cshtml" />
+    <Content Include="Views\OutputConfig\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

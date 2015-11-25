@@ -10,6 +10,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DSLNG.PEAR.Common.Extensions;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -53,7 +54,44 @@ namespace DSLNG.PEAR.Web.Controllers
         
         [HttpPost]
         public ActionResult Create(OutputConfigViewModel viewModel) {
-            return View();
+            var request = viewModel.MapTo<SaveOutputConfigRequest>();
+            var resp = _outputConfigService.Save(request);
+            TempData["IsSuccess"] = resp.IsSuccess;
+            TempData["Message"] = resp.Message;
+            return RedirectToAction("Index");
+        }
+
+
+        public ActionResult Edit(int id)
+        {
+            var viewModel = _outputConfigService.Get(new GetOutputConfigRequest { Id = id }).MapTo<OutputConfigViewModel>();
+            viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
+            {
+                Take = -1,
+                SortingDictionary = new SortedDictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+            }).Measurements.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
+
+            viewModel.OutputCategories = _outputCategoryService.GetOutputCategories(new GetOutputCategoriesRequest
+            {
+                Take = -1,
+                SortingDictionary = new SortedDictionary<string, SortOrder> { { "Order", SortOrder.Ascending } }
+            }).OutputCategories.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+            foreach (var name in Enum.GetNames(typeof(Formula)))
+            {
+                viewModel.Formulas.Add(new SelectListItem { Text = name, Value = name });
+            }
+            viewModel.IsActive = true;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(OutputConfigViewModel viewModel)
+        {
+            var request = viewModel.MapTo<SaveOutputConfigRequest>();
+            var resp = _outputConfigService.Save(request);
+            TempData["IsSuccess"] = resp.IsSuccess;
+            TempData["Message"] = resp.Message;
+            return RedirectToAction("Index");
         }
 
         public ActionResult EconomicKpis(string term) {

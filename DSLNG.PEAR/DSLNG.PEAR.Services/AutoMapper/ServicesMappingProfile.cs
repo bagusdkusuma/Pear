@@ -86,6 +86,7 @@ using System.Collections.Generic;
 using OGetKpisResponse = DSLNG.PEAR.Services.Responses.OutputConfig.GetKpisResponse;
 using GetKpisResponse = DSLNG.PEAR.Services.Responses.Kpi.GetKpisResponse;
 using DSLNG.PEAR.Services.Responses.OutputConfig;
+using DSLNG.PEAR.Services.Requests.OutputConfig;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -489,6 +490,12 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
             Mapper.CreateMap<Kpi, OGetKpisResponse.Kpi>();
             Mapper.CreateMap<KeyAssumptionConfig, GetKeyAssumptionsResponse.KeyAssumption>();
+            Mapper.CreateMap<SaveOutputConfigRequest, KeyOutputConfiguration>();
+            Mapper.CreateMap<KeyOutputConfiguration, GetOutputConfigResponse>()
+                .ForMember(x => x.MeasurementId, o => o.MapFrom(s => s.Measurement.Id))
+                .ForMember(x => x.CategoryId, o => o.MapFrom(s => s.Category.Id));
+            Mapper.CreateMap<Kpi, GetOutputConfigResponse.Kpi>();
+            Mapper.CreateMap<KeyAssumptionConfig, GetOutputConfigResponse.KeyAssumptionConfig>();
            
             base.Configure();
         }

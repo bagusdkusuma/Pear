@@ -8,6 +8,7 @@ namespace DSLNG.PEAR.Services.Interfaces
     {
         GetKpisResponse GetKpis(GetKpisRequest request);
         GetKeyAssumptionsResponse GetKeyAssumptions(GetKeyAssumptionsRequest request);
-        //SaveOutputConfigResponse Save(SaveOutputConfigRequest request);
+        SaveOutputConfigResponse Save(SaveOutputConfigRequest request);
+        GetOutputConfigResponse Get(GetOutputConfigRequest request);
     }
 }

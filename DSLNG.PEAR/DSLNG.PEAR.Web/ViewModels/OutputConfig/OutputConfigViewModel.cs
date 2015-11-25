@@ -22,5 +22,7 @@ namespace DSLNG.PEAR.Web.ViewModels.OutputConfig
         public int Order { get; set; }
         public string Remark { get; set; }
         public bool IsActive { get; set; }
+        public IList<SelectListItem> Kpis { get; set; }
+        public IList<SelectListItem> KeyAssumptions { get; set; }
     }
 }
