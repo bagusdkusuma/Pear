@@ -10,5 +10,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetKeyAssumptionsResponse GetKeyAssumptions(GetKeyAssumptionsRequest request);
         SaveOutputConfigResponse Save(SaveOutputConfigRequest request);
         GetOutputConfigResponse Get(GetOutputConfigRequest request);
+        GetOutputConfigsResponse GetOutputConfigs(GetOutputConfigsRequest request);
     }
 }

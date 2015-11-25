@@ -3,6 +3,7 @@ using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Measurement;
 using DSLNG.PEAR.Services.Requests.OutputCategory;
 using DSLNG.PEAR.Services.Requests.OutputConfig;
+using DSLNG.PEAR.Web.Grid;
 using DSLNG.PEAR.Web.ViewModels.OutputConfig;
 using System;
 using System.Collections.Generic;
@@ -99,6 +100,37 @@ namespace DSLNG.PEAR.Web.Controllers
         }
         public ActionResult KeyAssumptions(string term) {
             return Json(new { results = _outputConfigService.GetKeyAssumptions(new GetKeyAssumptionsRequest { Term = term }).KeyAssumptions }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public ActionResult Grid(GridParams gridParams)
+        {
+            var outputConfig = _outputConfigService.GetOutputConfigs(new GetOutputConfigsRequest
+                {
+                    Skip = gridParams.DisplayStart,
+                    Take = gridParams.DisplayLength,
+                    Search = gridParams.Search,
+                    SortingDictionary = gridParams.SortingDictionary
+                });
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = outputConfig.TotalRecords,
+                iTotalRecords = outputConfig.OutputConfigs.Count,
+                aaData = outputConfig.OutputConfigs.Select(x => new
+                {
+                    x.Id,
+                    x.Name,
+                    x.Category,
+                    x.Measurement,
+                    Formula = x.Formula.ToString(),
+                    x.Order,
+                    x.Remark,
+                    x.IsActive
+                    
+                })
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 	}
 }
