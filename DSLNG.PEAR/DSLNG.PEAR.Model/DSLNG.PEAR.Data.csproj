@@ -89,7 +89,6 @@
     <Compile Include="Entities\Select.cs" />
     <Compile Include="Entities\SelectOption.cs" />
     <Compile Include="Entities\Economic.cs" />
-    <Compile Include="Entities\EconomicModel\FormulaType.cs" />
     <Compile Include="Entities\EconomicModel\KeyAssumptionConfig.cs" />
     <Compile Include="Entities\EconomicModel\KeyOutputCategory.cs" />
     <Compile Include="Entities\EconomicModel\KeyOutputConfiguration.cs" />

@@ -83,11 +83,12 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create()
         {
             var viewModel = new EconomicConfigViewModel();
-            viewModel.Scenarios = _economicConfigService.GetEconomicConfigSelectList().Scenarios
-                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+            var SelectList = _economicConfigService.GetEconomicConfigSelectList();
+            viewModel.Scenarios = SelectList.Scenarios.Select
+                (x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
-            viewModel.EconomicSummaries = _economicConfigService.GetEconomicConfigSelectList().EconomicSummaries
-                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+            viewModel.EconomicSummaries = SelectList.EconomicSummaries.Select
+                (x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
             viewModel.IsActive = true;
 
             return View(viewModel);
@@ -110,11 +111,12 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Edit(int id)
         {
             var viewModel = _economicConfigService.GetEconomicConfig(new GetEconomicConfigRequest { Id = id }).MapTo<EconomicConfigViewModel>();
-            viewModel.Scenarios = _economicConfigService.GetEconomicConfigSelectList().Scenarios
-                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+            var SelectList = _economicConfigService.GetEconomicConfigSelectList();
+            viewModel.Scenarios = SelectList.Scenarios.Select
+                (x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
-            viewModel.EconomicSummaries = _economicConfigService.GetEconomicConfigSelectList().EconomicSummaries
-                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+            viewModel.EconomicSummaries = SelectList.EconomicSummaries.Select
+                (x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
             return View(viewModel);
             

@@ -5,6 +5,16 @@ namespace DSLNG.PEAR.Data.Enums
 {
     public enum Formula
     {
-        ProjectCashFlow
+        SUM,
+        AVERAGE,
+        MIN,
+        MINDATE,
+        BREAKEVENTYEAR,
+        PROJECTIRR,
+        EQUITYIRR,
+        PROFITINVESTMENTRATIO,
+        PAYBACK,
+        GROSSPROFIT,
+        NETBACKVALUE
     }
 }

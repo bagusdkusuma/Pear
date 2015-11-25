@@ -83,6 +83,10 @@ using DSLNG.PEAR.Services.Requests.EconomicConfig;
 using DSLNG.PEAR.Services.Responses.HighlightGroup;
 using DSLNG.PEAR.Services.Requests.HighlightGroup;
 using System.Collections.Generic;
+using OGetKpisResponse = DSLNG.PEAR.Services.Responses.OutputConfig.GetKpisResponse;
+using GetKpisResponse = DSLNG.PEAR.Services.Responses.Kpi.GetKpisResponse;
+using DSLNG.PEAR.Services.Responses.OutputConfig;
+using DSLNG.PEAR.Services.Requests.OutputConfig;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -449,8 +453,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.IdKPI, o => o.MapFrom(s => s.Kpi.Id));
 
             Mapper.CreateMap<KeyOperationData, GetOperationalDatasResponse.OperationalData>()
-                //.ForMember(x => x.KeyOperation, o => o.MapFrom(s => s.KeyOperation.Name))
-                .ForMember(x => x.Kpi, o => o.MapFrom(s => s.Kpi.Name));
+                .ForMember(x => x.KeyOperation, o => o.MapFrom(s => s.KeyOperation.Kpi.Name))
+                .ForMember(x => x.Kpi, o => o.MapFrom(s => s.Kpi.Name))
+                .ForMember(x => x.Scenario, o => o.MapFrom(s => s.Scenario.Name));
             Mapper.CreateMap<KeyOperationConfig, GetOperationalSelectListResponse.Operation>();
             Mapper.CreateMap<Kpi, GetOperationalSelectListResponse.KPI>();
             Mapper.CreateMap<SaveOperationalDataRequest, KeyOperationData>()
@@ -482,6 +487,19 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<SelectOption, GetHighlightGroupsResponse.HighlightTypeResponse>();
             Mapper.CreateMap<Highlight, GetDynamicHighlightsResponse.HighlightResponse>()
                 .ForMember(x => x.TypeId, o => o.MapFrom(s => s.HighlightType.Id));
+
+            Mapper.CreateMap<Kpi, OGetKpisResponse.Kpi>();
+            Mapper.CreateMap<KeyAssumptionConfig, GetKeyAssumptionsResponse.KeyAssumption>();
+            Mapper.CreateMap<SaveOutputConfigRequest, KeyOutputConfiguration>();
+            Mapper.CreateMap<KeyOutputConfiguration, GetOutputConfigResponse>()
+                .ForMember(x => x.MeasurementId, o => o.MapFrom(s => s.Measurement.Id))
+                .ForMember(x => x.CategoryId, o => o.MapFrom(s => s.Category.Id));
+            Mapper.CreateMap<Kpi, GetOutputConfigResponse.Kpi>();
+            Mapper.CreateMap<KeyAssumptionConfig, GetOutputConfigResponse.KeyAssumptionConfig>();
+           
+            Mapper.CreateMap<KeyOutputConfiguration, GetOutputConfigsResponse.OutputConfig>()
+                .ForMember(x => x.Category, o => o.MapFrom(s => s.Category.Name))
+                .ForMember(x => x.Measurement, o => o.MapFrom(s => s.Measurement.Name));
             base.Configure();
         }
 
