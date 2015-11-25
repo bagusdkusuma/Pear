@@ -15,7 +15,7 @@ namespace DSLNG.PEAR.Data.Entities.EconomicModel
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public Scenario Scenario { get; set; }
-        public KeyOperationConfig KeyOperation { get; set; }
+        public KeyOperationConfig KeyOperationConfig { get; set; }
         public Kpi Kpi { get; set; }
         public double? Value { get; set; }
         public string Remark { get; set; }

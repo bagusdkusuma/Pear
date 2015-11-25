@@ -1,4 +1,7 @@
-﻿using DevExpress.Web.Mvc;
+﻿using AutoMapper;
+using DSLNG.PEAR.Data.Enums;
+using DSLNG.PEAR.Web.ViewModels.OperationData;
+using DevExpress.Web.Mvc;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.OperationalData;
 using DSLNG.PEAR.Web.ViewModels.OperationalData;
@@ -13,12 +16,14 @@ using DSLNG.PEAR.Common.Contants;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
-    public class OperationalDataController : Controller
+    public class OperationDataController : Controller
     {
-        private IOperationalDataService _operationalDataService;
-        public OperationalDataController(IOperationalDataService operationalDataService)
+        private readonly IOperationDataService _operationDataService;
+        private readonly IDropdownService _dropdownService;
+        public OperationDataController(IOperationDataService operationDataService, IDropdownService dropdownService)
         {
-            _operationalDataService = operationalDataService;
+            _operationDataService = operationDataService;
+            _dropdownService = dropdownService;
         }
 
 
@@ -63,12 +68,12 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public void GetDataRowCount(GridViewCustomBindingGetDataRowCountArgs e)
         {
-            e.DataRowCount = _operationalDataService.GetOperationalDatas(new GetOperationalDatasRequest { OnlyCount = true }).Count;
+            e.DataRowCount = _operationDataService.GetOperationalDatas(new GetOperationalDatasRequest { OnlyCount = true }).Count;
         }
 
         public void GetData(GridViewCustomBindingGetDataArgs e)
         {
-            e.Data = _operationalDataService.GetOperationalDatas(new GetOperationalDatasRequest
+            e.Data = _operationDataService.GetOperationalDatas(new GetOperationalDatasRequest
                 {
                     Skip = e.StartDataRowIndex,
                     Take = e.DataRowCount
@@ -79,22 +84,21 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create()
         {
             var viewModel = new OperationalDataViewModel();
-            var SelectList = _operationalDataService.GetOperationalSelectList();
-            viewModel.KeyOperations = SelectList.Operations.Select
+            var selectList = _operationDataService.GetOperationalSelectList();
+            viewModel.KeyOperations = selectList.Operations.Select
                 (x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
-            viewModel.KPIS = SelectList.KPIS.Select
+            viewModel.KPIS = selectList.KPIS.Select
                 (x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
             return View(viewModel);
-
         }
 
         [HttpPost]
         public ActionResult Create(OperationalDataViewModel viewModel)
         {
             var request = viewModel.MapTo<SaveOperationalDataRequest>();
-            var response = _operationalDataService.SaveOperationalData(request);
+            var response = _operationDataService.SaveOperationalData(request);
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
             if (response.IsSuccess)
@@ -107,12 +111,12 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Edit(int id)
         {
-            var viewModel = _operationalDataService.GetOperationalData(new GetOperationalDataRequest { Id = id }).MapTo<OperationalDataViewModel>();
-            var SelectList = _operationalDataService.GetOperationalSelectList();
-            viewModel.KeyOperations = SelectList.Operations.Select
+            var viewModel = _operationDataService.GetOperationalData(new GetOperationalDataRequest { Id = id }).MapTo<OperationalDataViewModel>();
+            var selectList = _operationDataService.GetOperationalSelectList();
+            viewModel.KeyOperations = selectList.Operations.Select
                 (x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
-            viewModel.KPIS = SelectList.KPIS.Select
+            viewModel.KPIS = selectList.KPIS.Select
                 (x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
             return View(viewModel);
@@ -122,7 +126,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Edit(OperationalDataViewModel viewModel)
         {
             var request = viewModel.MapTo<SaveOperationalDataRequest>();
-            var response = _operationalDataService.SaveOperationalData(request);
+            var response = _operationDataService.SaveOperationalData(request);
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
             if (response.IsSuccess)
@@ -135,7 +139,7 @@ namespace DSLNG.PEAR.Web.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            var response = _operationalDataService.DeleteOperationalData(new DeleteOperationalDataRequest { Id = id });
+            var response = _operationDataService.DeleteOperationalData(new DeleteOperationalDataRequest { Id = id });
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
             if (response.IsSuccess)
@@ -147,7 +151,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Grid(GridParams gridParams)
         {
-            var operational = _operationalDataService.GetOperationalDatas(new GetOperationalDatasRequest
+            var operational = _operationDataService.GetOperationalDatas(new GetOperationalDatasRequest
                 {
                     Skip = gridParams.DisplayStart,
                     Take = gridParams.DisplayLength,
@@ -172,6 +176,55 @@ namespace DSLNG.PEAR.Web.Controllers
             };
 
             return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Detail(int id)
+        {
+            var response =
+                _operationDataService.GetOperationalDataDetail(new GetOperationalDataDetailRequest() {Id = id});
+            var viewModel = response.MapTo<OperationDataDetailViewModel>();
+            viewModel.ScenarioId = id;
+            return View(viewModel);
+        }
+
+        public ActionResult ConfigurationPartial(OperationDataParamConfigurationViewModel paramViewModel)
+        {
+            PeriodeType pType = string.IsNullOrEmpty(paramViewModel.PeriodeType)
+                                    ? PeriodeType.Yearly
+                                    : (PeriodeType)Enum.Parse(typeof(PeriodeType), paramViewModel.PeriodeType);
+
+            var request = paramViewModel.MapTo<GetOperationDataConfigurationRequest>();
+            var response = _operationDataService.GetOperationDataConfiguration(request);
+
+            var viewModel = response.MapTo<OperationDataConfigurationViewModel>();
+            viewModel.Years = _dropdownService.GetYears().MapTo<SelectListItem>();
+            viewModel.PeriodeType = pType.ToString();
+            viewModel.Year = request.Year;
+            return PartialView("Configuration/_" + viewModel.PeriodeType, viewModel);
+            
+        }
+
+        public ActionResult Configuration(OperationDataParamConfigurationViewModel paramViewModel)
+        {
+            PeriodeType pType = string.IsNullOrEmpty(paramViewModel.PeriodeType)
+                                    ? PeriodeType.Yearly
+                                    : (PeriodeType)Enum.Parse(typeof(PeriodeType), paramViewModel.PeriodeType);
+            var request = paramViewModel.MapTo<GetOperationDataConfigurationRequest>();
+            var response = _operationDataService.GetOperationDataConfiguration(request);
+
+            var viewModel = response.MapTo<OperationDataConfigurationViewModel>();
+            viewModel.Years = _dropdownService.GetYears().MapTo<SelectListItem>();
+            viewModel.PeriodeType = pType.ToString();
+            viewModel.Year = request.Year;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Update(UpdateOperationDataViewModel viewModel)
+        {
+            var request = viewModel.MapTo<UpdateOperationDataRequest>();
+            var response = _operationDataService.Update(request);
+            return Json(new { Message = response.Message, isSuccess = response.IsSuccess });
         }
     }
 }

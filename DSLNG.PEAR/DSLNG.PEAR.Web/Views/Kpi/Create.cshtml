@@ -52,7 +52,7 @@
                 @Html.ValidationMessageFor(model => model.TypeId)
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.GroupId, new { @class = "control-label" })
+                @Html.LabelFor(model => model.GroupId, new { @class = "control-label" })<span>(*)</span>
                 @Html.DropDownListFor(model => model.GroupId, Model.GroupList, "Select Group", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.GroupId)
             </div>

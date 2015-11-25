@@ -14,9 +14,9 @@ using System.Data.SqlClient;
 
 namespace DSLNG.PEAR.Services
 {
-    public class OperationService : BaseService, IOperationService
+    public class OperationConfigService : BaseService, IOperationConfigService
     {
-        public OperationService(IDataContext context) : base(context) { }
+        public OperationConfigService(IDataContext context) : base(context) { }
 
 
         public GetOperationsResponse GetOperations(GetOperationsRequest request)
@@ -35,13 +35,13 @@ namespace DSLNG.PEAR.Services
             };
             //if (request.OnlyCount)
             //{
-            //    return new GetOperationsResponse { Count = DataContext.KeyOperations.Count() };
+            //    return new GetOperationsResponse { Count = DataContext.KeyOperationConfigs.Count() };
             //}
             //else
             //{
             //    return new GetOperationsResponse
             //    {
-            //        Operations = DataContext.KeyOperations.OrderByDescending(x => x.Id)
+            //        Operations = DataContext.KeyOperationConfigs.OrderByDescending(x => x.Id)
             //        .Include(x => x.KeyOperationGroup).Skip(request.Skip).Take(request.Take).ToList().MapTo<GetOperationsResponse.Operation>()
             //    };
             //}
@@ -63,18 +63,18 @@ namespace DSLNG.PEAR.Services
             if (request.Id == 0)
             {
                 var Operation = request.MapTo<KeyOperationConfig>();
-                Operation.KeyOperationGroup = DataContext.KeyOperationGroups.Where(x => x.Id == request.IdKeyOperationGroup).FirstOrDefault();
-                Operation.Kpi = DataContext.Kpis.Where(x => x.Id == request.IdKPI).FirstOrDefault();
-                DataContext.KeyOperations.Add(Operation);
+                Operation.KeyOperationGroup = DataContext.KeyOperationGroups.FirstOrDefault(x => x.Id == request.IdKeyOperationGroup);
+                Operation.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == request.IdKPI);
+                DataContext.KeyOperationConfigs.Add(Operation);
             }
             else
             {
-                var Operation = DataContext.KeyOperations.Where(x => x.Id == request.Id).FirstOrDefault();
+                var Operation = DataContext.KeyOperationConfigs.FirstOrDefault(x => x.Id == request.Id);
                 if (Operation != null)
                 {
                     request.MapPropertiesToInstance<KeyOperationConfig>(Operation);
-                    Operation.KeyOperationGroup = DataContext.KeyOperationGroups.Where(x => x.Id == request.IdKeyOperationGroup).FirstOrDefault();
-                    Operation.Kpi = DataContext.Kpis.Where(x => x.Id == request.IdKPI).FirstOrDefault();
+                    Operation.KeyOperationGroup = DataContext.KeyOperationGroups.FirstOrDefault(x => x.Id == request.IdKeyOperationGroup);
+                    Operation.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == request.IdKPI);
                 }
             }
             DataContext.SaveChanges();
@@ -88,18 +88,18 @@ namespace DSLNG.PEAR.Services
 
         public GetOperationResponse GetOperation(GetOperationRequest request)
         {
-            return DataContext.KeyOperations.Where(x => x.Id == request.Id)
+            return DataContext.KeyOperationConfigs.Where(x => x.Id == request.Id)
                 .Include(x => x.Kpi).Include(x => x.KeyOperationGroup).FirstOrDefault().MapTo<GetOperationResponse>();
         }
 
 
         public DeleteOperationResponse DeleteOperation(DeleteOperationRequest request)
         {
-            var checkId = DataContext.KeyOperations.Where(x => x.Id == request.Id).FirstOrDefault();
+            var checkId = DataContext.KeyOperationConfigs.FirstOrDefault(x => x.Id == request.Id);
             if (checkId != null)
             {
-                DataContext.KeyOperations.Attach(checkId);
-                DataContext.KeyOperations.Remove(checkId);
+                DataContext.KeyOperationConfigs.Attach(checkId);
+                DataContext.KeyOperationConfigs.Remove(checkId);
                 DataContext.SaveChanges();
             }
             return new DeleteOperationResponse
@@ -112,7 +112,7 @@ namespace DSLNG.PEAR.Services
 
         public IEnumerable<KeyOperationConfig> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
         {
-            var data = DataContext.KeyOperations.Include(x => x.KeyOperationGroup).Include(x => x.Kpi).AsQueryable();
+            var data = DataContext.KeyOperationConfigs.Include(x => x.KeyOperationGroup).Include(x => x.Kpi).AsQueryable();
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             {
                 data = data.Where(x => x.KeyOperationGroup.Name.Contains(search) || x.Kpi.Name.Contains(search));

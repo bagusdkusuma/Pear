@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Interfaces
 {
-    public interface IOperationService
+    public interface IOperationConfigService
     {
         GetOperationsResponse GetOperations(GetOperationsRequest request);
         OperationGroupsResponse GetOperationGroups();

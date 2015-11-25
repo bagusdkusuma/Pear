@@ -1,0 +1,121 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.OperationData.OperationDataConfigurationViewModel
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#div-proceed').hide();
+        $('#btn-proceed').click(function () {
+            var formData = {
+                'filename': encodeURIComponent(link)
+            };
+            
+            $.ajax({
+                url: '@Url.Action("ProceedFile", "KpiAchievement")',
+                type: 'POST',
+                data: formData,
+                beforeSend: function () {
+                    $('.ajax-loader2').show();
+                    $('.notification').empty();
+                    $('.notification').hide();
+                }
+            }).done(function (result) {
+                    $('.ajax-loader2').hide();
+                    var alertType = result.isSuccess === true ? 'alert-success' : 'alert-danger';
+                    if (result.isSuccess === true || result.message === null) {
+                        $('.notification').html('<div class="alert ' + alertType + '" role="alert">File Successfully Parsed : ' + link + ' </div>').fadeIn().delay(10000).fadeOut();
+                        $(".nav-tabs .active").find('a').click();
+                    } else {
+                        $('.notification').html('<div class="alert ' + alertType + '" role="alert">' + result.Message + '</div>').fadeIn().delay(10000).fadeOut();
+                    }
+
+                    $('.notification').show();
+                });
+        });
+    });
+    var link = null;
+    function OnClick(s, e) {
+        uc.Upload();
+    }
+    function OnUploadTextChanged(s, e) {
+        uc.Upload();
+    }
+    function OnFileUploadComplete(s, e) {
+        if (e.callbackData !== "") {
+            link = e.callbackData;
+            var callback = 'FileUploadComplete: ' + e.callbackData;
+            $('.notification').empty();
+            var message = '<div class="alert alert-success" role="alert">' + callback + '</div>';
+            $('.notification').append(message).fadeIn().delay(10000).fadeOut();
+            //alert('FileUploadComplete: ' + e.callbackData);
+            $('#div-proceed').show();
+            //proceed(e.callbackData);
+        }
+        else {
+            $('.notification').empty();
+            var callback = 'The selected file was not uploaded.'
+            var message = '<div class="alert alert-danger" role="alert">' + callback + '</div>';
+            $('.notification').append(message).fadeIn().delay(1000).fadeOut();
+        }
+    }
+    function proceed(s) {
+        alert(s);
+        //$('#proceed').html('<a href="' + s + '">Process</a>');
+        //$('#proceed').show();
+
+
+    }
+
+</script>
+<div style="overflow: auto">
+    <table class="table table-hover table-transparent table-bordered">
+        <tbody>
+            <tr>
+                <th style="width: 30%;">KPI Name</th>
+                <th style="width: 50px;">2015</th>
+                <th style="width: 50px;">2016</th>
+                <th style="width: 50px;">2017</th>
+                <th style="width: 50px;">2018</th>
+                <th style="width: 50px;">2019</th>
+                <th style="width: 50px;">2020</th>
+                <th style="width: 50px;">2021</th>
+                <th style="width: 50px;">2022</th>
+                <th style="width: 50px;">2023</th>
+                <th style="width: 50px;">2024</th>
+                <th style="width: 50px;">2025</th>
+                <th style="width: 50px;">2026</th>
+                <th style="width: 50px;">2027</th>
+                <th style="width: 50px;">2028</th>
+                <th style="width: 50px;">2029</th>
+                <th style="width: 50px;">2030</th>
+            </tr>
+            @{ var a = 0;}
+            @foreach (var kpi in Model.Kpis)
+            {
+                <tr>
+                    <td style="text-align: left">@kpi.Name (@kpi.MeasurementName)</td>
+                    @{ var b = 0;}
+                    @foreach (var operationData in kpi.OperationDatas)
+                    {
+                        var remarkSign = "";
+                        if (!string.IsNullOrEmpty(operationData.Remark))
+                        {
+                            remarkSign = "remark_sign";
+                        }
+                        var idValue = "Kpis_" + a + "__OperationDatas_" + b + "__Value";
+                        <th>
+                            <input type="text" data-toggle="popover" class="form-control-small value kpi-popover @remarkSign" id="@idValue" value="@operationData.Value" readonly="readonly">
+                            <input type="hidden" name="KpiId" class="kpiId" value="@kpi.Id" />
+                            <input type="hidden" name="HeaderPopover" class="header-popover" value="" />
+                            <input type="hidden" name="Id" class="form-control-small id" value="@operationData.Id">
+                            <input type="hidden" name="ScenarioId" class="form-control-small scenario-id" value="@Model.ScenarioId">
+                            <input type="hidden" name="KeyOperationConfigId" class="form-control-small key-operation-config-id" value="@operationData.KeyOperationConfigId">
+                            <input type="hidden" name="PeriodeType" class="periodeType" value="@DSLNG.PEAR.Data.Enums.PeriodeType.Yearly" />
+                            <input type="hidden" name="Remark" class="form-control-small remark" value="@operationData.Remark">
+                            <input type="hidden" name="Periode" class="form-control-small periode" value="@operationData.Periode">
+                        </th>
+                        b++;
+                    }
+                </tr>
+                a++;
+            }
+        </tbody>
+    </table>
+</div>

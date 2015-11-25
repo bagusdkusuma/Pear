@@ -13,10 +13,10 @@ using DSLNG.PEAR.Services.Responses.Operation;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
-    public class OperationController : BaseController
+    public class OperationConfigController : BaseController
     {
-        private IOperationService _operationService;
-        public OperationController(IOperationService operationService)
+        private readonly IOperationConfigService _operationService;
+        public OperationConfigController(IOperationConfigService operationService)
         {
             _operationService = operationService;
         }
@@ -76,12 +76,8 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create()
         {
             var viewModel = new OperationViewModel();
-            var SelectList = _operationService.GetOperationGroups();
-            viewModel.KeyOperationGroups = SelectList.OperationGroups.Select
-                (x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
-
-            viewModel.KPIS = SelectList.KPIS.Select
-                (x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+            viewModel.KeyOperationGroups = _operationService.GetOperationGroups().OperationGroups
+                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
             viewModel.IsActive = true;
             return View(viewModel);
         }
@@ -103,12 +99,8 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Edit (int id)
         {
             var viewModel = _operationService.GetOperation(new GetOperationRequest { Id = id }).MapTo<OperationViewModel>();
-            var SelectList = _operationService.GetOperationGroups();
-            viewModel.KeyOperationGroups = SelectList.OperationGroups.Select
-                (x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
-
-            viewModel.KPIS = SelectList.KPIS.Select
-                (x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+            viewModel.KeyOperationGroups = _operationService.GetOperationGroups().OperationGroups
+                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
             return View(viewModel);
         }

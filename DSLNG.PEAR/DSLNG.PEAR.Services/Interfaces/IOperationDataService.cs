@@ -8,12 +8,15 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Interfaces
 {
-    public interface IOperationalDataService
+    public interface IOperationDataService
     {
         GetOperationalDatasResponse GetOperationalDatas(GetOperationalDatasRequest request);
         GetOperationalSelectListResponse GetOperationalSelectList();
         SaveOperationalDataResponse SaveOperationalData(SaveOperationalDataRequest request);
         GetOperationalDataResponse GetOperationalData(GetOperationalDataRequest request);
         DeleteOperationalDataResponse DeleteOperationalData(DeleteOperationalDataRequest request);
+        GetOperationalDataDetailResponse GetOperationalDataDetail(GetOperationalDataDetailRequest request);
+        GetOperationDataConfigurationResponse GetOperationDataConfiguration(GetOperationDataConfigurationRequest request);
+        UpdateOperationDataResponse Update(UpdateOperationDataRequest request);
     }
 }

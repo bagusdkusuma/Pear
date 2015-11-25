@@ -1,0 +1,59 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.OperationalData.OperationDataDetailViewModel
+@{
+    ViewBag.Title = "Detail";
+}
+
+<style>
+    .nav-tabs > li > a {
+        color: #ffffff;
+    }
+
+    .nav-tabs > li:active > a {
+        color: #000000;
+    }
+</style>
+<section>
+    <div class="row">
+        <div class="title_page" style="border: none!important;">
+            <div class="row">
+                <div class="title">KPI Achievement</div>
+            </div>
+        </div>
+        <div class="notification"></div>
+    </div>
+    
+    <div class="col-md-12">
+        <table class="table table-hover table-transparent table-bordered">
+            <tbody>
+                <tr>
+                    <th>No</th>
+                    <th>KPI Name</th>
+                    <th style="width: 13%;">Action</th>
+                </tr>
+                @{ int number = 0;}
+                @foreach (var group in Model.KeyOperationGroups)
+                {
+                    <tr>
+                        <td colspan="2" style="text-align: left;" class="grey_text">
+                            @group.Name
+                        </td>
+                        <td class="text-button" style="margin: auto;">
+                            <a href="@Url.Action("Configuration", "OperationData", new {groupId = group.Id, scenarioId = Model.ScenarioId})"><span class="fa fa-pencil-square-o"></span>Manage</a>
+                        </td>
+                    </tr>
+
+                    foreach (var config in group.KeyOperationConfigs)
+                    {
+                        <tr>
+                            <td>@(++number)</td>
+                            <td style="text-align: left">@config.Kpi.Name (@config.Kpi.MeasurementName)</td>
+                            <td class="text-button" style="margin: auto;"></td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+</section>
+
