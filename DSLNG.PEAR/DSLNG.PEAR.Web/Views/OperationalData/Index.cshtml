@@ -25,11 +25,13 @@
 <table id="operational-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
     <thead>
         <tr>
+            <th>Scenario</th>
             <th>Key Operation</th>
             <th>KPI</th>
-            <th>Forecast</th>
-            <th>Actual</th>
+            <th>Value</th>
             <th>Remark</th>
+            <th>Periode</th>
+            <th>Periode Type</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -47,11 +49,13 @@
                 "sAjaxSource": '@Url.Action("Grid", "OperationalData")',
                 "order": [[3, "asc"]],
                 "aoColumns": [
+                    { "mDataProp": "Scenario", "name": "Scenario" },
                     { "mDataProp": "KeyOperation", "name": "KeyOperation" },
                     { "mDataProp": "Kpi", "name": "Kpi" },
-                    { "mDataProp": "ForecastValue", "name": "ForecastValue" },
-                    { "mDataProp": "ActualValue", "name": "ActualValue" },
+                    { "mDataProp": "Value", "name": "Value" },
                     { "mDataProp": "Remark", "name": "Remark", "sortable": false },
+                    { "mDataProp": "Periode", "name": "Periode" },
+                    { "mDataProp": "PeriodeType", "name": "PeriodeType" },
                     {
                         "orderable": false,
                         "data": null,
