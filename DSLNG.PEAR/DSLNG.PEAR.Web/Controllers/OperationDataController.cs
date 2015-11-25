@@ -12,6 +12,7 @@ using System.Web;
 using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Web.Grid;
+using DSLNG.PEAR.Common.Contants;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -83,14 +84,14 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create()
         {
             var viewModel = new OperationalDataViewModel();
-            viewModel.KeyOperations = _operationDataService.GetOperationalSelectList().Operations
-                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+            var selectList = _operationDataService.GetOperationalSelectList();
+            viewModel.KeyOperations = selectList.Operations.Select
+                (x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
-            viewModel.KPIS = _operationDataService.GetOperationalSelectList().KPIS
-                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+            viewModel.KPIS = selectList.KPIS.Select
+                (x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
             return View(viewModel);
-
         }
 
         [HttpPost]
@@ -111,11 +112,12 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Edit(int id)
         {
             var viewModel = _operationDataService.GetOperationalData(new GetOperationalDataRequest { Id = id }).MapTo<OperationalDataViewModel>();
-            viewModel.KeyOperations = _operationDataService.GetOperationalSelectList().Operations
-                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+            var selectList = _operationDataService.GetOperationalSelectList();
+            viewModel.KeyOperations = selectList.Operations.Select
+                (x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
-            viewModel.KPIS = _operationDataService.GetOperationalSelectList().KPIS
-                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+            viewModel.KPIS = selectList.KPIS.Select
+                (x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
             return View(viewModel);
         }
@@ -161,7 +163,16 @@ namespace DSLNG.PEAR.Web.Controllers
                 sEcho = gridParams.Echo + 1,
                 iTotalDisplayRecords = operational.TotalRecords,
                 iTotalRecords = operational.OperationalDatas.Count,
-                aaData = operational.OperationalDatas
+                aaData = operational.OperationalDatas.Select(x => new {
+                    x.Id,
+                    x.KeyOperation,
+                    x.Kpi,
+                    Periode = x.Periode.ToString(DateFormat.DateForGrid),
+                    x.PeriodeType,
+                    x.Remark,
+                    x.Scenario,
+                    x.Value               
+                })
             };
 
             return Json(data, JsonRequestBehavior.AllowGet);

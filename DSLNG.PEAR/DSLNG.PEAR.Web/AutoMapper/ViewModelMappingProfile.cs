@@ -131,6 +131,9 @@ using DSLNG.PEAR.Services.Responses.EconomicConfig;
 using DSLNG.PEAR.Web.ViewModels.HighlightGroup;
 using DSLNG.PEAR.Services.Requests.HighlightGroup;
 using DSLNG.PEAR.Services.Responses.HighlightGroup;
+using DSLNG.PEAR.Web.ViewModels.OutputConfig;
+using DSLNG.PEAR.Services.Requests.OutputConfig;
+using DSLNG.PEAR.Services.Responses.OutputConfig;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -561,6 +564,15 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetAssumptionCategoriesResponse.Assumption, AssumptionDataInputViewModel.AssumptionViewModel>();
             Mapper.CreateMap<GetAssumptionDatasResponse.AssumptionData, AssumptionDataInputViewModel.AssumptionDataViewModel>();
 
+            Mapper.CreateMap<OutputConfigViewModel, SaveOutputConfigRequest>();
+            Mapper.CreateMap<GetOutputConfigResponse, OutputConfigViewModel>();
+            Mapper.CreateMap<GetOutputConfigResponse.KeyAssumptionConfig, SelectListItem>()
+                .ForMember(x => x.Value, o => o.MapFrom(s => s.Id.ToString()))
+                .ForMember(x => x.Text, o => o.MapFrom(s => s.Name));
+            Mapper.CreateMap<GetOutputConfigResponse.Kpi, SelectListItem>()
+                .ForMember(x => x.Value, o => o.MapFrom(s => s.Id.ToString()))
+                .ForMember(x => x.Text, o => o.MapFrom(s => s.Name));
+            
             base.Configure();
         }
 

@@ -81,12 +81,13 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create()
         {
             var viewModel = new AssumptionConfigViewModel();
-            viewModel.Measurements = _assumptionConfigService.GetAssumptionConfigCategories().MeasurementsSelectList
-                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+            var Selectlist = _assumptionConfigService.GetAssumptionConfigCategories();
 
-            viewModel.Categories = _assumptionConfigService.GetAssumptionConfigCategories().AssumptionConfigCategoriesResponse
-                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
-            viewModel.IsActive = true;
+            viewModel.Measurements = Selectlist.MeasurementsSelectList.Select
+                (x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
+            viewModel.Categories = Selectlist.AssumptionConfigCategoriesResponse.Select
+                (x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
+
 
             return View(viewModel);
         }
@@ -108,12 +109,12 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Edit (int id)
         {
             var viewModel = _assumptionConfigService.GetAssumptionConfig(new GetAssumptionConfigRequest { Id = id }).MapTo<AssumptionConfigViewModel>();
+            var Selectlist = _assumptionConfigService.GetAssumptionConfigCategories();
 
-            viewModel.Measurements = _assumptionConfigService.GetAssumptionConfigCategories().MeasurementsSelectList
-                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
-
-            viewModel.Categories = _assumptionConfigService.GetAssumptionConfigCategories().AssumptionConfigCategoriesResponse
-                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+            viewModel.Measurements = Selectlist.MeasurementsSelectList.Select
+                (x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
+            viewModel.Categories = Selectlist.AssumptionConfigCategoriesResponse.Select
+                (x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
 
             return View(viewModel);
         }

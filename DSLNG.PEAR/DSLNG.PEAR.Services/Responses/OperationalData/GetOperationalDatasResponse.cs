@@ -14,11 +14,13 @@ namespace DSLNG.PEAR.Services.Responses.OperationalData
         public class OperationalData
         {
             public int Id { get; set; }
+            public string Scenario { get; set; }
             public string KeyOperation { get; set; }
             public string Kpi { get; set; }
-            public double ActualValue { get; set; }
-            public double ForecastValue {get; set;}
+            public double? Value { get; set; }
             public string Remark { get; set; }
+            public DateTime Periode { get; set; }
+            public string PeriodeType { get; set; }
         }
     }
 }

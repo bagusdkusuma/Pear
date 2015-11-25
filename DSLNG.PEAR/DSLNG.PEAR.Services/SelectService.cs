@@ -98,7 +98,7 @@ namespace DSLNG.PEAR.Services
                     DataContext.SelectOptions.Attach(parentOption);
                     select.ParentOption = parentOption;
                 }
-                else {
+                else if(request.ParentId == 0){
                     select.Parent = null;
                     select.ParentOption = null;
                 }
