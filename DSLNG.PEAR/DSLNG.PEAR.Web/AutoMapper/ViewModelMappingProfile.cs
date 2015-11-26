@@ -583,6 +583,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetOperationDataConfigurationResponse.OperationData, OperationDataConfigurationViewModel.OperationData>();
             Mapper.CreateMap<UpdateOperationDataViewModel, UpdateOperationDataRequest>();
             Mapper.CreateMap<OperationDataParamConfigurationViewModel, GetOperationDataConfigurationRequest>();
+            //.ForMember(x => x.PeriodeType, y => y.MapFrom(z => (Data.Enums.PeriodeType)Enum.Parse(typeof(Data.Enums.PeriodeType), z.PeriodeType)));
         }
 
         private void ConfigureSelect()

@@ -187,35 +187,17 @@ namespace DSLNG.PEAR.Web.Controllers
             return View(viewModel);
         }
 
+        //actually it can also be processed by check if it is ajax request but you know.. deadline happens
         public ActionResult ConfigurationPartial(OperationDataParamConfigurationViewModel paramViewModel)
         {
-            PeriodeType pType = string.IsNullOrEmpty(paramViewModel.PeriodeType)
-                                    ? PeriodeType.Yearly
-                                    : (PeriodeType)Enum.Parse(typeof(PeriodeType), paramViewModel.PeriodeType);
-
-            var request = paramViewModel.MapTo<GetOperationDataConfigurationRequest>();
-            var response = _operationDataService.GetOperationDataConfiguration(request);
-
-            var viewModel = response.MapTo<OperationDataConfigurationViewModel>();
-            viewModel.Years = _dropdownService.GetYears().MapTo<SelectListItem>();
-            viewModel.PeriodeType = pType.ToString();
-            viewModel.Year = request.Year;
+            var viewModel = ConfigurationViewModel(paramViewModel);
             return PartialView("Configuration/_" + viewModel.PeriodeType, viewModel);
             
         }
 
         public ActionResult Configuration(OperationDataParamConfigurationViewModel paramViewModel)
         {
-            PeriodeType pType = string.IsNullOrEmpty(paramViewModel.PeriodeType)
-                                    ? PeriodeType.Yearly
-                                    : (PeriodeType)Enum.Parse(typeof(PeriodeType), paramViewModel.PeriodeType);
-            var request = paramViewModel.MapTo<GetOperationDataConfigurationRequest>();
-            var response = _operationDataService.GetOperationDataConfiguration(request);
-
-            var viewModel = response.MapTo<OperationDataConfigurationViewModel>();
-            viewModel.Years = _dropdownService.GetYears().MapTo<SelectListItem>();
-            viewModel.PeriodeType = pType.ToString();
-            viewModel.Year = request.Year;
+            var viewModel = ConfigurationViewModel(paramViewModel);
             return View(viewModel);
         }
 
@@ -225,6 +207,22 @@ namespace DSLNG.PEAR.Web.Controllers
             var request = viewModel.MapTo<UpdateOperationDataRequest>();
             var response = _operationDataService.Update(request);
             return Json(new { Message = response.Message, isSuccess = response.IsSuccess });
+        }
+
+        private OperationDataConfigurationViewModel ConfigurationViewModel(OperationDataParamConfigurationViewModel paramViewModel)
+        {
+            PeriodeType pType = string.IsNullOrEmpty(paramViewModel.PeriodeType)
+                                    ? PeriodeType.Yearly
+                                    : (PeriodeType)Enum.Parse(typeof(PeriodeType), paramViewModel.PeriodeType);
+
+            var request = paramViewModel.MapTo<GetOperationDataConfigurationRequest>();
+            request.PeriodeType = pType;
+            var response = _operationDataService.GetOperationDataConfiguration(request);
+            var viewModel = response.MapTo<OperationDataConfigurationViewModel>();
+            viewModel.Years = _dropdownService.GetYears().MapTo<SelectListItem>();
+            viewModel.PeriodeType = pType.ToString();
+            viewModel.Year = request.Year;
+            return viewModel;
         }
     }
 }
