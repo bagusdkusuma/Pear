@@ -505,7 +505,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             //Mapper.CreateMap<KeyOutputCategory, GetActiveOutputCategoriesResponse.OutputCategoryResponse>();
             //Mapper.CreateMap<KeyOutputConfiguration, GetActiveOutputCategoriesResponse.KeyOutputResponse>()
             //    .ForMember(x => x.
-            Mapper.CreateMap<KeyOutputCategory, CalculateOutputResponse.OutputCategoryResponse>();
+            Mapper.CreateMap<KeyOutputCategory, CalculateOutputResponse.OutputCategoryResponse>()
+                .ForMember(x => x.KeyOutputs, o => o.Ignore());
             Mapper.CreateMap<KeyOutputConfiguration, CalculateOutputResponse.KeyOutputResponse>()
                 .ForMember(x => x.Measurement, o => o.MapFrom(s => s.Measurement.Name));
 
