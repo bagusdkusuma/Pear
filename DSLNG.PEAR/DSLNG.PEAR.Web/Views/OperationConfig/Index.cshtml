@@ -1,9 +1,9 @@
 ﻿@{
-    ViewBag.Title = "Economic Config";
+    ViewBag.Title = "Operation";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Economic Config List</h2>
+<h2>Key Operation Config</h2>
 @Html.Partial("_MessageResponse")
 @Html.ActionLink("Create New", "Create")
 @*@Html.Action("IndexPartial")
@@ -12,7 +12,7 @@
     <script type="text/javascript">
         var confirmDelete = function (id) {
             if (confirm('Are you sure want to delete this item?')) {
-                var url = '@Url.Action("Delete", "EconomicConfig")';
+                var url = '@Url.Action("Delete", "Operation")';
                 $('<form action="' + url + '" method="POST">' +
                     '<input type="hidden" name="id" value="' + id + '">' +
                     '</form>').submit();
@@ -21,11 +21,13 @@
     </script>
 }*@
 
-<table id="economic-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
+<table id="operation-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
     <thead>
         <tr>
-            <th>Scenario</th>
-            <th>Economic Summary</th>
+            <th>Key Operation Group</th>
+            <th>KPI</th>
+            <th>Order</th>
+            <th>Desc</th>
             <th>Is Active</th>
             <th>Action</th>
         </tr>
@@ -35,17 +37,19 @@
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#economic-table').DataTable({
+            $('#operation-table').DataTable({
                 "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
                 "iDisplayLength": -1,
                 "bProcessing": true,
                 "bServerSide": true,
                 "sServerMethod": "POST",
-                "sAjaxSource": '@Url.Action("Grid", "EconomicConfig")',
+                "sAjaxSource": '@Url.Action("Grid", "OperationConfig")',
                 "order": [[3, "asc"]],
                 "aoColumns": [
-                    { "mDataProp": "Scenario", "name": "Scenario" },
-                    { "mDataProp": "EconomicSummary", "name": "EconomicSummary" },
+                    { "mDataProp": "KeyOperationGroup", "name": "OperationGroup" },
+                    { "mDataProp": "KPI", "name": "KPI" },
+                    { "mDataProp": "Order", "name": "Order" },
+                    { "mDataProp": "Desc", "name": "Desc", "sortable": false },
                     {
                         "mDataProp": "IsActive", "name": "IsActive",
                         render: function (data, type, row) {
@@ -61,7 +65,7 @@
                         "defaultContent": '',
                         "mRender": function (data, type, row) {
                             var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
-                            var editLink = '@Html.ActionLink("Edit", "Edit", "EconomicConfig", new {id = "_id_"}, null)'.replace('_id_', data.Id);
+                            var editLink = '@Html.ActionLink("Edit", "Edit", "OperationConfig", new {id = "_id_"}, null)'.replace('_id_', data.Id);
                             return editLink + ' | ' + deleteLink;
                         }
                     }
@@ -72,10 +76,10 @@
                 }
             });
 
-            $('#economic-table').on('click', '.delete', function () {
+            $('#operation-table').on('click', '.delete', function () {
                 var id = $(this).attr('data-id');
-                if (confirm('Are you sure want to delete this item?' + id)) {
-                    var url = '@Url.Action("Delete", "EconomicConfig")';
+                if (confirm('Are you sure want to delete this item?')) {
+                    var url = '@Url.Action("Delete", "OperationConfig")';
 
                     $('<form action="' + url + '" method="POST">' +
                         '<input type="hidden" name="id" value="' + id + '">' +

@@ -82,7 +82,6 @@
     <Compile Include="ConstantUsageService.cs" />
     <Compile Include="ConversionService.cs" />
     <Compile Include="DropdownService.cs" />
-    <Compile Include="EconomicConfigService.cs" />
     <Compile Include="EconomicSummaryService.cs" />
     <Compile Include="GroupService.cs" />
     <Compile Include="HighlightGroupService.cs" />
@@ -101,7 +100,6 @@
     <Compile Include="Interfaces\IBuyerService.cs" />
     <Compile Include="Interfaces\ICalculatorConstantService.cs" />
     <Compile Include="Interfaces\IConstantUsageService.cs" />
-    <Compile Include="Interfaces\IEconomicConfigService.cs" />
     <Compile Include="Interfaces\IEconomicSummaryService.cs" />
     <Compile Include="Interfaces\IHighlightGroupService.cs" />
     <Compile Include="Interfaces\IHighlightOrderService.cs" />

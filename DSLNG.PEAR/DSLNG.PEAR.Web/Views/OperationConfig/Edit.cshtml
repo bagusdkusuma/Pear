@@ -1,29 +1,30 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Operation.OperationViewModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Edit";
+    
 }
-
-<div class="operation-save">
+<div class="operation-config-save">
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
         <div class="col-md-12">
             <div class="title">Key Operation</div>
-            <div class="description_year">New</div>
+            <div class="description_year">Edit</div>
             <div>@Html.ValidationSummary(true)</div>
+            @Html.HiddenFor(x => x.Id)
         </div>
         <div class="col-md-12">
             <div class="form-inline whitebox">
                 <div class="form-group form-list">
-                    @Html.LabelFor(model => model.IdKeyOperationGroup)
-                    @Html.DropDownListFor(model => model.IdKeyOperationGroup, Model.KeyOperationGroups,"Select Operation Group", new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.IdKeyOperationGroup)
+                    @Html.LabelFor(model => model.KeyOperationGroupId)
+                    @Html.DropDownListFor(model => model.KeyOperationGroupId, Model.KeyOperationGroups, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.KeyOperationGroupId)
                 </div>
                 <div class="form-group form-list">
-                    @Html.LabelFor(model => model.IdKPI)
-                    @Html.DropDownListFor(model => model.IdKPI, Model.KPIS, "Select KPI", new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.IdKPI)
+                    @Html.LabelFor(model => model.KpiId)
+                    @Html.DropDownListFor(model => model.KpiId, new List<SelectListItem>() { new SelectListItem { Value = Model.Kpis[0].Id.ToString(), Text = Model.Kpis[0].Name } }, "Select KPI", new { @class = "form-control", data_url = Url.Action("EconomicKpis", "OutputConfig"), style = "width:200px" })
+                    @Html.ValidationMessageFor(model => model.Kpis[0].Id)
                 </div>
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.Order)
@@ -45,11 +46,8 @@
         <div class="col-md-12 artifact-designer-btns">
             <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
             <a onclick="location.reload();" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>
-            <a href="/Operation" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+            <a href="@Url.Action("Index")" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
         </div>
     }
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

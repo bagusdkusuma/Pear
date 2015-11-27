@@ -15,8 +15,8 @@ namespace DSLNG.PEAR.Services.Responses.Operation
             public string Name { get; set; }
         }
 
-        public IList<KPI> KPIS { get; set; }
-        public class KPI
+        public IList<Kpi> Kpis { get; set; }
+        public class Kpi
         {
            public int Id { get; set; }
            public string Name { get; set; }

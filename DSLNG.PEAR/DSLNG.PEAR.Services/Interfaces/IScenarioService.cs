@@ -11,6 +11,7 @@ namespace DSLNG.PEAR.Services.Interfaces
     public interface IScenarioService
     {
         GetScenariosResponse GetScenarios(GetScenariosRequest request);
+        GetScenariosResponse GetScenariosForGrid(GetScenariosRequest request);
         SaveScenarioResponse SaveScenario(SaveScenarioRequest request);
         GetScenarioResponse GetScenario(GetScenarioRequest request);
         DeleteScenarioResponse DeleteScenario(DeleteScenarioRequest request);

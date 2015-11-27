@@ -19,6 +19,41 @@ namespace DSLNG.PEAR.Services
 
         public GetScenariosResponse GetScenarios(GetScenariosRequest request)
         {
+            if (request.OnlyCount)
+            {
+                var query = DataContext.Scenarios.AsQueryable();
+                if (!string.IsNullOrEmpty(request.Term))
+                {
+                    query = query.Where(x => x.Name.ToLower().Contains(request.Term.ToLower()));
+                }
+                return new GetScenariosResponse { Count = query.Count() };
+            }
+            else
+            {
+                var query = DataContext.Scenarios.AsQueryable();
+                if (!string.IsNullOrEmpty(request.Term))
+                {
+                    query = query.Where(x => x.Name.ToLower().Contains(request.Term.ToLower()));
+                }
+                query = query.OrderByDescending(x => x.Id);
+                if (request.Skip != 0)
+                {
+                    query = query.Skip(request.Skip);
+                }
+                if (request.Take != 0)
+                {
+                    query = query.Take(request.Take);
+                }
+                return new GetScenariosResponse
+                {
+                    Scenarios = query.ToList()
+                        .MapTo<GetScenariosResponse.Scenario>()
+                };
+            }
+        }
+
+        public GetScenariosResponse GetScenariosForGrid(GetScenariosRequest request)
+        {
             int totalRecords;
             var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
             if (request.Take != -1)
@@ -32,17 +67,6 @@ namespace DSLNG.PEAR.Services
                 TotalRecords = totalRecords,
                 Scenarios = data.ToList().MapTo<GetScenariosResponse.Scenario>()
             };
-            //if (request.OnlyCount)
-            //{
-            //    return new GetScenariosResponse { Count = DataContext.Scenarios.Count() };
-            //}
-            //else
-            //{
-            //    return new GetScenariosResponse
-            //    {
-            //        Scenarios = DataContext.Scenarios.OrderByDescending(x => x.Id).Skip(request.Skip).Take(request.Take).ToList().MapTo<GetScenariosResponse.Scenario>()
-            //    };
-            //}
         }
 
 

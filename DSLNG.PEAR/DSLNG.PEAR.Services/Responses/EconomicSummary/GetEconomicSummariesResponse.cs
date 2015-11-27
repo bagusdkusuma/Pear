@@ -17,6 +17,7 @@ namespace DSLNG.PEAR.Services.Responses.EconomicSummary
             public string Name { get; set; }
             public string Desc { get; set; }
             public bool IsActive { get; set; }
+            public string Scenarios { get; set; }
         }
     }
 }

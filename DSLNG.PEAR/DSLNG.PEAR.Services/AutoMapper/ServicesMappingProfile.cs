@@ -102,6 +102,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             ConfigureKpiAchievements();
             ConfigureSelects();
             ConfigureKeyOperation();
+            ConfigureEconomicSummary();
 
             Mapper.CreateMap<Data.Entities.User, GetUsersResponse.User>();
             Mapper.CreateMap<GetUsersResponse.User, Data.Entities.User>();
@@ -445,13 +446,13 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.KeyOperationGroup, o => o.MapFrom(s => s.KeyOperationGroup.Name))
                 .ForMember(x => x.KPI, o => o.MapFrom(s => s.Kpi.Name));
             Mapper.CreateMap<KeyOperationGroup, OperationGroupsResponse.OperationGroup>();
-            Mapper.CreateMap<Kpi, OperationGroupsResponse.KPI>();
+            Mapper.CreateMap<Kpi, OperationGroupsResponse.Kpi>();
             Mapper.CreateMap<SaveOperationRequest, KeyOperationConfig>()
                 .ForMember(x => x.KeyOperationGroup, o => o.Ignore())
                 .ForMember(x => x.Kpi, o => o.Ignore());
             Mapper.CreateMap<KeyOperationConfig, GetOperationResponse>()
-                .ForMember(x => x.IdKeyOperationGroup, o => o.MapFrom(s => s.KeyOperationGroup.Id))
-                .ForMember(x => x.IdKPI, o => o.MapFrom(s => s.Kpi.Id));
+                .ForMember(x => x.KeyOperationGroupId, o => o.MapFrom(s => s.KeyOperationGroup.Id))
+                .ForMember(x => x.KpiId, o => o.MapFrom(s => s.Kpi.Id));
 
             Mapper.CreateMap<KeyOperationData, GetOperationalDatasResponse.OperationalData>()
                 .ForMember(x => x.KeyOperation, o => o.MapFrom(s => s.KeyOperationConfig.Kpi.Name))
@@ -466,21 +467,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 //.ForMember(x => x.IdKeyOperation, o => o.MapFrom(s => s.KeyOperation.Id))
                 .ForMember(x => x.IdKPI, o => o.MapFrom(s => s.Kpi.Id));
 
-            Mapper.CreateMap<EconomicSummaryConfig, GetEconomicSummariesResponse.EconomicSummary>();
-            Mapper.CreateMap<SaveEconomicSummaryRequest, EconomicSummaryConfig>();
-            Mapper.CreateMap<EconomicSummaryConfig, GetEconomicSummaryResponse>();
-
-            Mapper.CreateMap<EconomicConfigDetail, GetEconomicConfigsResponse.EconomicConfig>()
-                .ForMember(x => x.Scenario, o => o.MapFrom(s => s.Scenario.Name))
-                .ForMember(x => x.EconomicSummary, o => o.MapFrom(s => s.EconomicSummary.Name));
-            Mapper.CreateMap<Scenario, GetEconomicConfigSelectListResponse.Scenario>();
-            Mapper.CreateMap<EconomicSummaryConfig, GetEconomicConfigSelectListResponse.EconomicSummary>();
-            Mapper.CreateMap<SaveEconomicConfigRequest, EconomicConfigDetail>()
-                .ForMember(x => x.Scenario, o => o.Ignore())
-                .ForMember(x => x.EconomicSummary, o => o.Ignore());
-            Mapper.CreateMap<EconomicConfigDetail, GetEconomicConfigResponse>()
-                .ForMember(x => x.IdScenario, o => o.MapFrom(s => s.Scenario.Id))
-                .ForMember(x => x.IdEconomicSummary, o => o.MapFrom(s => s.EconomicSummary.Id));
+            
             Mapper.CreateMap<HighlightGroup, GetHighlightGroupsResponse.HighlightGroupResponse>()
                 .ForMember(x => x.HighlightTypes, o => o.MapFrom(s => s.Options.OrderBy(x => x.Order).Where(x => x.IsActive == true).ToList()));
             Mapper.CreateMap<HighlightGroup, GetHighlightGroupResponse>();
@@ -511,6 +498,20 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.Measurement, o => o.MapFrom(s => s.Measurement.Name));
 
             base.Configure();
+        }
+
+        private void ConfigureEconomicSummary()
+        {
+            Mapper.CreateMap<EconomicSummary, GetEconomicSummaryResponse>();
+            Mapper.CreateMap<Scenario, GetEconomicSummaryResponse.Scenario>();
+            Mapper.CreateMap<EconomicSummary, GetEconomicSummariesResponse.EconomicSummary>()
+                .ForMember(x => x.Scenarios, y => y.MapFrom(z => string.Join(", ", z.Scenarios.Select(x => x.Name))));
+            Mapper.CreateMap<SaveEconomicSummaryRequest, EconomicSummary>()
+                .ForMember(x => x.Scenarios, y => y.Ignore());
+            Mapper.CreateMap<Scenario, GetEconomicConfigSelectListResponse.Scenario>();
+            Mapper.CreateMap<EconomicSummary, GetEconomicConfigSelectListResponse.EconomicSummary>();
+            Mapper.CreateMap<SaveEconomicSummaryRequest.Scenario, Scenario>();
+
         }
 
         private void ConfigureSelects()
