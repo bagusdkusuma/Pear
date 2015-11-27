@@ -575,6 +575,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<CalculateOutputResponse.OutputCategoryResponse, ScenarioResultViewModel.OutputCategoryViewModel>();
             Mapper.CreateMap<CalculateOutputResponse.KeyOutputResponse, ScenarioResultViewModel.KeyOutputViewModel>();
+            Mapper.CreateMap<CalculateOutputResponse, ScenarioResultViewModel>();
 
             base.Configure();
         }
