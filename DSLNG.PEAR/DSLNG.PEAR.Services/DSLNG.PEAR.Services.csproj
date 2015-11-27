@@ -88,6 +88,12 @@
     <Compile Include="HighlightGroupService.cs" />
     <Compile Include="HighlightOrderService.cs" />
     <Compile Include="HighlightService.cs" />
+    <Compile Include="OperationDataService.cs" />
+    <Compile Include="Requests\OperationalData\GetOperationDataConfigurationRequest.cs" />
+    <Compile Include="Requests\OperationalData\UpdateOperationDataRequest.cs" />
+    <Compile Include="Responses\OperationalData\GetOperationDataConfigurationResponse.cs" />
+    <Compile Include="Responses\OperationalData\GetOperationalDataDetailResponse.cs" />
+    <Compile Include="Requests\OperationalData\GetOperationalDataDetailRequest.cs" />
     <Compile Include="Interfaces\IAssumptionCategoryService.cs" />
     <Compile Include="Interfaces\IAssumptionConfigService.cs" />
     <Compile Include="Interfaces\IAssumptionDataService.cs" />
@@ -103,9 +109,9 @@
     <Compile Include="Interfaces\IDropdownService.cs" />
     <Compile Include="Interfaces\IKpiTargetService.cs" />
     <Compile Include="Interfaces\INLSService.cs" />
-    <Compile Include="Interfaces\IOperationalDataService.cs" />
+    <Compile Include="Interfaces\IOperationDataService.cs" />
     <Compile Include="Interfaces\IOperationGroupService.cs" />
-    <Compile Include="Interfaces\IOperationService.cs" />
+    <Compile Include="Interfaces\IOperationConfigService.cs" />
     <Compile Include="Interfaces\IOutputCategoryService.cs" />
     <Compile Include="Interfaces\IOutputConfigService.cs" />
     <Compile Include="Interfaces\IPeriodeService.cs" />
@@ -117,9 +123,8 @@
     <Compile Include="Interfaces\IWeatherService.cs" />
     <Compile Include="KpiAchievementService.cs" />
     <Compile Include="KpiTargetService.cs" />
-    <Compile Include="OperationalDataService.cs" />
     <Compile Include="OperationGroupService.cs" />
-    <Compile Include="OperationService.cs" />
+    <Compile Include="OperationConfigService.cs" />
     <Compile Include="OutputCategoryService.cs" />
     <Compile Include="OutputConfigService.cs" />
     <Compile Include="PeriodeService.cs" />
@@ -411,6 +416,7 @@
     <Compile Include="Responses\OperationalData\GetOperationalDatasResponse.cs" />
     <Compile Include="Responses\OperationalData\GetOperationalSelectListResponse.cs" />
     <Compile Include="Responses\OperationalData\SaveOperationalDataResponse.cs" />
+    <Compile Include="Responses\OperationalData\UpdateOperationDataResponse.cs" />
     <Compile Include="Responses\OperationGroup\DeleteOperationGroupResponse.cs" />
     <Compile Include="Responses\OperationGroup\GetOperationGroupResponse.cs" />
     <Compile Include="Responses\OperationGroup\GetOperationGroupsResponse.cs" />

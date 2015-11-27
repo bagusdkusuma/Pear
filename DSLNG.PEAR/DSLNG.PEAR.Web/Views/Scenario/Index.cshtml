@@ -66,7 +66,9 @@
                         "data": null,
                         "defaultContent": '',
                         "mRender": function (data, type, row) {
-                            return '<a href="@Url.Action("Input", "OperationalData")"><span class="fa fa-table"></span>Details</a>';
+                            var link = '<a href="@Url.Action("Detail", "OperationData", new {id = "_scenarioId"})"><span class="fa fa-table"></span>Details</a>';
+                            link = link.replace('_scenarioId', row.Id);
+                            return link;
                         }
                     },
                     {

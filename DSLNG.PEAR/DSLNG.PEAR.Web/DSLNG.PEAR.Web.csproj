@@ -758,8 +758,8 @@
     <Compile Include="Controllers\EconomicSummaryController.cs" />
     <Compile Include="Controllers\HighlightController.cs" />
     <Compile Include="Controllers\HighlightGroupController.cs" />
-    <Compile Include="Controllers\OperationalDataController.cs" />
-    <Compile Include="Controllers\OperationController.cs" />
+    <Compile Include="Controllers\OperationDataController.cs" />
+    <Compile Include="Controllers\OperationConfigController.cs" />
     <Compile Include="Controllers\OutputConfigController.cs" />
     <Compile Include="Controllers\ScenarioController.cs" />
     <Compile Include="Helpers\EmailHelper.cs" />
@@ -1050,6 +1050,10 @@
     <Content Include="Views\Highlight\_DailyHighlightPartial.cshtml" />
     <Content Include="Views\Highlight\_MonthlyHighlightPartial.cshtml" />
     <Content Include="Views\Highlight\_YearlyHighlightPartial.cshtml" />
+    <Content Include="Views\OperationData\Detail.cshtml" />
+    <Content Include="Views\OperationData\Configuration.cshtml" />
+    <Content Include="Views\OperationData\Configuration\_Yearly.cshtml" />
+    <Content Include="Views\OperationData\Configuration\_Monthly.cshtml" />
     <Content Include="Views\OutputConfig\Create.cshtml" />
     <Content Include="Views\OutputConfig\Edit.cshtml" />
     <Content Include="Views\OutputConfig\Index.cshtml" />
@@ -1211,7 +1215,11 @@
     <Compile Include="ViewModels\KpiTarget\IndexKpiTargetViewModel.cs" />
     <Compile Include="ViewModels\KpiTarget\UpdateKpiTargetViewModel.cs" />
     <Compile Include="ViewModels\NLS\NLSViewModel.cs" />
+    <Compile Include="ViewModels\OperationalData\OperationDataDetailViewModel.cs" />
     <Compile Include="ViewModels\OperationalData\OperationalDataViewModel.cs" />
+    <Compile Include="ViewModels\OperationData\OperationDataConfigurationViewModel.cs" />
+    <Compile Include="ViewModels\OperationData\OperationDataParamConfigurationViewModel.cs" />
+    <Compile Include="ViewModels\OperationData\UpdateOperationDataViewModel.cs" />
     <Compile Include="ViewModels\OperationGroup\OperationGroupViewModel.cs" />
     <Compile Include="ViewModels\Operation\OperationViewModel.cs" />
     <Compile Include="ViewModels\OutputCategory\OutputCategoryViewModel.cs" />
@@ -1303,6 +1311,7 @@
     <Folder Include="ViewModels\CorporatePortofolio\" />
     <Folder Include="Views\Chart\" />
     <Folder Include="Views\CorporatePortofolio\" />
+    <Folder Include="Views\KeyOperation\" />
     <Folder Include="Views\Test\" />
     <Folder Include="Views\UnAuthorize\" />
   </ItemGroup>

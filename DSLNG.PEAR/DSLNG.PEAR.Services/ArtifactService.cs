@@ -295,7 +295,7 @@ namespace DSLNG.PEAR.Services
                             {
                                 scenarioId = scenario.Id;
                             }
-                            seriesResponse.y = DataContext.KeyOperasionalDatas.Where(x => x.PeriodeType == request.PeriodeType
+                            seriesResponse.y = DataContext.KeyOperationDatas.Where(x => x.PeriodeType == request.PeriodeType
                                && x.Periode >= start && x.Periode <= end && x.Kpi.Id == kpi.Id && x.Scenario.Id == scenarioId)
                                .GroupBy(x => x.Kpi.Id)
                                .Select(x => x.Sum(y => (double?)y.Value ?? 0)).FirstOrDefault();
@@ -325,7 +325,7 @@ namespace DSLNG.PEAR.Services
                             {
                                 scenarioId = scenario.Id;
                             }
-                            seriesResponse.y = DataContext.KeyOperasionalDatas.Where(x => x.PeriodeType == request.PeriodeType
+                            seriesResponse.y = DataContext.KeyOperationDatas.Where(x => x.PeriodeType == request.PeriodeType
                                && x.Periode >= start && x.Periode <= end && x.Kpi.Id == kpi.Id && x.Scenario.Id == scenarioId)
                                .GroupBy(x => x.Kpi.Id)
                                .Select(x => x.Average(y => (double?)y.Value ?? 0)).FirstOrDefault();
@@ -384,7 +384,7 @@ namespace DSLNG.PEAR.Services
                         {
                             scenarioId = scenario.Id;
                         }
-                        var kpiEconomic = DataContext.KeyOperasionalDatas.Where(x => x.PeriodeType == request.PeriodeType &&
+                        var kpiEconomic = DataContext.KeyOperationDatas.Where(x => x.PeriodeType == request.PeriodeType &&
                                                                           x.Periode == latestActual.Periode &&
                                                                           x.Kpi.Id == kpi.Id &&
                                                                           x.Scenario.Id == scenarioId)
@@ -469,7 +469,7 @@ namespace DSLNG.PEAR.Services
                             response.Series = new GetSpeedometerChartDataResponse.SeriesResponse
                             {
                                 name = request.Series.Label,
-                                data = DataContext.KeyOperasionalDatas.Where(x => x.PeriodeType == request.PeriodeType &&
+                                data = DataContext.KeyOperationDatas.Where(x => x.PeriodeType == request.PeriodeType &&
                                 x.Periode >= start && x.Periode <= end && x.Kpi.Id == request.Series.KpiId && x.Scenario.Id == scenarioId)
                                 .GroupBy(x => x.Kpi.Id)
                                 .Select(x => x.Sum(y => y.Value).Value).FirstOrDefault()
@@ -510,7 +510,7 @@ namespace DSLNG.PEAR.Services
                             response.Series = new GetSpeedometerChartDataResponse.SeriesResponse
                             {
                                 name = request.Series.Label,
-                                data = DataContext.KeyOperasionalDatas.Where(x => x.PeriodeType == request.PeriodeType &&
+                                data = DataContext.KeyOperationDatas.Where(x => x.PeriodeType == request.PeriodeType &&
                                 x.Periode >= start && x.Periode <= end && x.Kpi.Id == request.Series.KpiId && x.Scenario.Id == scenarioId)
                                 .GroupBy(x => x.Kpi.Id)
                                 .Select(x => x.Average(y => y.Value).Value).FirstOrDefault()
@@ -574,7 +574,7 @@ namespace DSLNG.PEAR.Services
                     {
                         scenarioId = scenario.Id;
                     }
-                    var economic = DataContext.KeyOperasionalDatas.Where(x => x.PeriodeType == request.PeriodeType &&
+                    var economic = DataContext.KeyOperationDatas.Where(x => x.PeriodeType == request.PeriodeType &&
                   x.Periode == latestActual.Periode && x.Kpi.Id == request.Series.KpiId && x.Scenario.Id == scenarioId)
                   .OrderByDescending(x => x.Periode).FirstOrDefault();
                     if (economic != null)
@@ -666,7 +666,7 @@ namespace DSLNG.PEAR.Services
                             response.Series = new GetTrafficLightChartDataResponse.SeriesResponse
                             {
                                 name = request.Series.Label,
-                                data = DataContext.KeyOperasionalDatas.Where(x => x.PeriodeType == request.PeriodeType &&
+                                data = DataContext.KeyOperationDatas.Where(x => x.PeriodeType == request.PeriodeType &&
                                 x.Periode >= start && x.Periode <= end && x.Kpi.Id == request.Series.KpiId && x.Scenario.Id == scenarioId)
                                 .GroupBy(x => x.Kpi.Id)
                                 .Select(x => x.Sum(y => y.Value).Value).FirstOrDefault()
@@ -707,7 +707,7 @@ namespace DSLNG.PEAR.Services
                             response.Series = new GetTrafficLightChartDataResponse.SeriesResponse
                             {
                                 name = request.Series.Label,
-                                data = DataContext.KeyOperasionalDatas.Where(x => x.PeriodeType == request.PeriodeType &&
+                                data = DataContext.KeyOperationDatas.Where(x => x.PeriodeType == request.PeriodeType &&
                                 x.Periode >= start && x.Periode <= end && x.Kpi.Id == request.Series.KpiId && x.Scenario.Id == scenarioId)
                                 .GroupBy(x => x.Kpi.Id)
                                 .Select(x => x.Average(y => y.Value).Value).FirstOrDefault()
@@ -771,7 +771,7 @@ namespace DSLNG.PEAR.Services
                     {
                         scenarioId = scenario.Id;
                     }
-                    var economic = DataContext.KeyOperasionalDatas.Where(x => x.PeriodeType == request.PeriodeType &&
+                    var economic = DataContext.KeyOperationDatas.Where(x => x.PeriodeType == request.PeriodeType &&
                   x.Periode == latestActual.Periode && x.Kpi.Id == request.Series.KpiId && x.Scenario.Id == scenarioId)
                   .OrderByDescending(x => x.Periode).FirstOrDefault();
                     if (economic != null)
@@ -1468,7 +1468,7 @@ namespace DSLNG.PEAR.Services
 
                 if (series.Stacks.Count == 0)
                 {
-                    var kpiEconomics = DataContext.KeyOperasionalDatas.Where(x => x.PeriodeType == periodeType &&
+                    var kpiEconomics = DataContext.KeyOperationDatas.Where(x => x.PeriodeType == periodeType &&
                       x.Periode >= start && x.Periode <= end && x.Kpi.Id == series.KpiId && x.Scenario.Id == scenarioId)
                       .OrderBy(x => x.Periode).ToList();
 
@@ -1477,7 +1477,7 @@ namespace DSLNG.PEAR.Services
                         (periodeType == PeriodeType.Monthly && rangeFilter == RangeFilter.CurrentMonth) ||
                         (periodeType == PeriodeType.Yearly && rangeFilter == RangeFilter.CurrentYear))
                     {
-                        var kpiEconomic = DataContext.KeyOperasionalDatas.Where(x => x.PeriodeType == periodeType &&
+                        var kpiEconomic = DataContext.KeyOperationDatas.Where(x => x.PeriodeType == periodeType &&
                       x.Periode <= end && x.Kpi.Id == series.KpiId && (x.Value != null && x.Value.Value != 0) && x.Scenario.Id == scenarioId)
                       .OrderByDescending(x => x.Periode).FirstOrDefault();
                         if (kpiEconomic != null)
@@ -1641,7 +1641,7 @@ namespace DSLNG.PEAR.Services
                 {
                     foreach (var stack in series.Stacks)
                     {
-                        var kpiEconomics = DataContext.KeyOperasionalDatas.Where(x => x.PeriodeType == periodeType &&
+                        var kpiEconomics = DataContext.KeyOperationDatas.Where(x => x.PeriodeType == periodeType &&
                         x.Periode >= start && x.Periode <= end && x.Kpi.Id == stack.KpiId && x.Scenario.Id == scenarioId)
                         .OrderBy(x => x.Periode).ToList();
 
@@ -1650,7 +1650,7 @@ namespace DSLNG.PEAR.Services
                         (periodeType == PeriodeType.Monthly && rangeFilter == RangeFilter.CurrentMonth) ||
                         (periodeType == PeriodeType.Yearly && rangeFilter == RangeFilter.CurrentYear))
                         {
-                            var kpiEconomic = DataContext.KeyOperasionalDatas.Where(x => x.PeriodeType == periodeType &&
+                            var kpiEconomic = DataContext.KeyOperationDatas.Where(x => x.PeriodeType == periodeType &&
                           x.Periode <= end && x.Kpi.Id == stack.KpiId && (x.Value != null && x.Value.Value != 0))
                           .OrderByDescending(x => x.Periode).FirstOrDefault();
                             if (kpiEconomic != null)

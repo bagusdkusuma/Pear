@@ -8,7 +8,8 @@ using Type = DSLNG.PEAR.Data.Entities.Type;
 
 namespace DSLNG.PEAR.Data.Installer
 {
-    public class DataInitializer : DropCreateDatabaseIfModelChanges<DataContext> // DropCreateDatabaseAlways<DataContext>//DropCreateDatabaseAlways<DataContext>//
+    public class DataInitializer : DropCreateDatabaseIfModelChanges<DataContext> 
+    //public class DataInitializer : DropCreateDatabaseAlways<DataContext>
     {
         protected override void Seed(DataContext context)
         {
