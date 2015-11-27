@@ -694,7 +694,26 @@ namespace DSLNG.PEAR.Services
              return result;
 
         }
+
+
+        public DeleteOutputConfigResponse DeleteOutput(DeleteOutputConfigRequest request)
+        {
+            var output = DataContext.KeyOutputConfigs.FirstOrDefault(x => x.Id == request.Id);
+            if (output != null)
+            {
+                DataContext.KeyOutputConfigs.Attach(output);
+                DataContext.KeyOutputConfigs.Remove(output);
+                DataContext.SaveChanges();
+            }
+            return new DeleteOutputConfigResponse
+            {
+                IsSuccess = true,
+                Message = "The Output Config has been deleted successfully"
+            };
+        }
     }
+
+
     public class OutputResult
     {
         public string Actual { get; set; }
