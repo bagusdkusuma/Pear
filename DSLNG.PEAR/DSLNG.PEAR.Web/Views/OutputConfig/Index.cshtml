@@ -55,7 +55,7 @@
                         "defaultContent": '',
                         "mRender": function (data, type, row) {
                             var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
-                            var editLink = '@Html.ActionLink("Edit", "Edit", "OutputCconfig", new {id = "_id_"}, null)'.replace('_id_', data.Id);
+                            var editLink = '@Html.ActionLink("Edit", "Edit", "OutputConfig", new {id = "_id_"}, null)'.replace('_id_', data.Id);
                             return editLink + ' | ' + deleteLink;
                         }
                     }
