@@ -161,7 +161,8 @@ Number.prototype.format = function (n, x) {
     Pear.Calculator = {};
     Pear.OutputConfig = {};
     Pear.EconomicSummary = {};
-
+    Pear.OperationConfig = {};
+    
     Pear.Loading.Show = function (container) {
         var loadingImage = $('#dataLayout').attr('data-content-url') + '/img/ajax-loader2.gif';
         container.css('background-position', 'center center');
@@ -4270,7 +4271,6 @@ Number.prototype.format = function (n, x) {
     };
     
     Pear.EconomicSummary.FormSetup = function () {
-        console.log('b');
         var length = $('.scenarios-holder').find('.scenario-template').length + 1;
         if (length > 1) {
             $('.scenarios-holder .scenario-template .scenario').each(function (i, val) {
@@ -4278,7 +4278,6 @@ Number.prototype.format = function (n, x) {
             });
         }
         $('.add-scenario').click(function (e) {
-            console.log('c');
             e.preventDefault();
             var scenarioTemplate = $('.scenario-template.original').clone(true);
             scenarioTemplate.removeClass('original');
@@ -4296,6 +4295,53 @@ Number.prototype.format = function (n, x) {
         $('.scenario-template .remove').click(function (e) {
             e.preventDefault();
             $(this).closest('.scenario-template').remove();
+        });
+    };
+
+    Pear.OperationConfig.FormSetup = function () {
+        Pear.VesselSchedule._autocomplete('#KpiId');
+        /*var kpiParam = $('.kpi-param');
+        var assumptionParam = $('.assumption-param');
+        var excludeValue = $('.exclude-value');
+        var paramsHolder = $('.params-holder');
+
+        paramsHolder.find('.kpi-options, .key-assumption-options').each(function(i, val) {
+            var select = $(val);
+            Pear.OperationConfig._autocomplete(select);
+        });
+
+        $('.output-formula').change(function(e) {
+            var $this = $(this);
+            var val = $this.val();
+            paramsHolder.html('');
+            var kpi = kpiParam.clone(true);
+            Pear.OperationConfig._autocomplete(kpi.find('select'));
+            paramsHolder.append(kpi.show());
+        });*/
+    };
+
+    Pear.OperationConfig._autocomplete = function ($field) {
+        var url = $field.data('url');
+        $field.select2({
+            ajax: {
+                url: url,
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        term: params.term, // search term
+                    };
+                },
+                processResults: function (data, page) {
+                    console.log(data);
+                    return data;
+                },
+                cache: true
+            },
+            escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+            minimumInputLength: 1,
+            templateResult: Pear.Artifact.Designer._formatKpi, // omitted for brevity, see the source of this page
+            templateSelection: Pear.Artifact.Designer._formatKpiSelection // omitted for brevity, see the source of this page
         });
     };
 
@@ -4429,8 +4475,11 @@ Number.prototype.format = function (n, x) {
         }
         
         if ($('.economic-summary-save').length) {
-            console.log('a');
             Pear.EconomicSummary.FormSetup();
+        }
+        
+        if ($('.operation-config-save').length) {
+            Pear.OperationConfig.FormSetup();
         }
     });
     window.Pear = Pear;

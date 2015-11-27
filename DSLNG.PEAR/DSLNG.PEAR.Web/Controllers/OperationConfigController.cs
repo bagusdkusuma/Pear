@@ -1,4 +1,5 @@
-﻿using DevExpress.Web.Mvc;
+﻿using DSLNG.PEAR.Services.Requests.Kpi;
+using DevExpress.Web.Mvc;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Operation;
 using DSLNG.PEAR.Web.ViewModels.Operation;
@@ -16,9 +17,11 @@ namespace DSLNG.PEAR.Web.Controllers
     public class OperationConfigController : BaseController
     {
         private readonly IOperationConfigService _operationService;
-        public OperationConfigController(IOperationConfigService operationService)
+        private IKpiService _kpiService;
+        public OperationConfigController(IOperationConfigService operationService, IKpiService kpiService)
         {
             _operationService = operationService;
+            _kpiService = kpiService;
         }
 
         public ActionResult Index()
@@ -78,6 +81,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var viewModel = new OperationViewModel();
             viewModel.KeyOperationGroups = _operationService.GetOperationGroups().OperationGroups
                 .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+             viewModel.Kpis.Insert(0, new OperationViewModel.Kpi());
             viewModel.IsActive = true;
             return View(viewModel);
         }
@@ -101,6 +105,9 @@ namespace DSLNG.PEAR.Web.Controllers
             var viewModel = _operationService.GetOperation(new GetOperationRequest { Id = id }).MapTo<OperationViewModel>();
             viewModel.KeyOperationGroups = _operationService.GetOperationGroups().OperationGroups
                 .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+            viewModel.Kpis = new List<OperationViewModel.Kpi>();
+            var kpi = _kpiService.GetKpi(new GetKpiRequest {Id = viewModel.KpiId});
+            viewModel.Kpis.Insert(0, new OperationViewModel.Kpi {Id = kpi.Id, Name = kpi.Name});
 
             return View(viewModel);
         }
