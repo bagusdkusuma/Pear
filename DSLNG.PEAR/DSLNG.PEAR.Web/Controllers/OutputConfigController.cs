@@ -12,6 +12,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Services.Requests.Scenario;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -20,12 +21,14 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IMeasurementService _measurementService;
         private readonly IOutputCategoryService _outputCategoryService;
         private readonly IOutputConfigService _outputConfigService;
+        private IScenarioService _scenarioService;
 
         public OutputConfigController(IMeasurementService measurementService,IOutputCategoryService outputCategoryService,
-            IOutputConfigService outputConfigService) {
+            IOutputConfigService outputConfigService, IScenarioService scenarioService) {
             _measurementService = measurementService;
             _outputCategoryService = outputCategoryService;
             _outputConfigService = outputConfigService;
+            _scenarioService = scenarioService;
         }
         //
         // GET: /OutputConfig/
@@ -132,5 +135,13 @@ namespace DSLNG.PEAR.Web.Controllers
             };
             return Json(data, JsonRequestBehavior.AllowGet);
         }
-	}
+
+        public ActionResult ScenarioResult(int scenarioId) {
+            var result = _outputConfigService.CalculateOputput(new CalculateOutputRequest());
+            var viewModel = result.MapTo<ScenarioResultViewModel>();
+            viewModel.ScenarioName = _scenarioService.GetScenario(new GetScenarioRequest { Id = scenarioId }).Name;
+            return View(viewModel);
+        }
+
+    }
 }

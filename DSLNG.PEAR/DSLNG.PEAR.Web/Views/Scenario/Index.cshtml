@@ -74,7 +74,9 @@
                         "data": null,
                         "defaultContent": '',
                         "mRender": function (data, type, row) {
-                            return '<a href="@Url.Action("Input", "AssumptionData")"><span class="fa fa-table"></span>Details</a>';
+                            var link = '<a href="@Url.Action("ScenarioResult", "OutputConfig", new { scenarioId = "_scenarioId"})"><span class="fa fa-table"></span>Details</a>';
+                            link = link.replace('_scenarioId', row.Id);
+                            return link;
                         }
                     },
                     { "mDataProp": "Desc", "name": "Desc", "sortable": false },

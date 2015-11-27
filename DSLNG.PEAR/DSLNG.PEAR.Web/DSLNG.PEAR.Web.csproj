@@ -1053,6 +1053,7 @@
     <Content Include="Views\OutputConfig\Create.cshtml" />
     <Content Include="Views\OutputConfig\Edit.cshtml" />
     <Content Include="Views\OutputConfig\Index.cshtml" />
+    <Content Include="Views\OutputConfig\ScenarioResult.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -1215,6 +1216,7 @@
     <Compile Include="ViewModels\Operation\OperationViewModel.cs" />
     <Compile Include="ViewModels\OutputCategory\OutputCategoryViewModel.cs" />
     <Compile Include="ViewModels\OutputConfig\OutputConfigViewModel.cs" />
+    <Compile Include="ViewModels\OutputConfig\ScenarioResultViewModel.cs" />
     <Compile Include="ViewModels\PmsConfigDetails\CreatePmsConfigDetailsViewModel.cs" />
     <Compile Include="ViewModels\PmsConfig\UpdatePmsConfigViewModel.cs" />
     <Compile Include="ViewModels\PmsConfig\CreatePmsConfigViewModel.cs" />

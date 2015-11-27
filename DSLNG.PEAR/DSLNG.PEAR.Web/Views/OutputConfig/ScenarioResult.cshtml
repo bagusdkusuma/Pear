@@ -1,0 +1,33 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.OutputConfig.ScenarioResultViewModel
+@{
+    ViewBag.Title = "Key Otput Result";
+}
+
+<h2>Key Output For : @Model.ScenarioName</h2>
+@{
+    foreach (var category in Model.OutputCategories.OrderBy(x => x.Order).ToList())
+    {
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>@category.Name</h3>
+        </div>
+    </div>
+        foreach (var output in category.KeyOutputs)
+        {
+            
+    <div class="row">
+        <div class="col-sm-4" style="padding-left: 50px">
+            <label>@output.Name</label>
+        </div>
+        <div class="col-sm-4">
+           <label>Forecast</label><input type="text" class="control-form assumption-input" name="ForecastValue" value="@output.Forecast" />
+        </div>
+        <div class="col-sm-4">
+            <label>Actual</label><input type="text" class="control-form assumption-input" name="ForecastValue" value="@output.Actual" />
+        </div>
+        <div class="col-sm-4">
+        </div>
+    </div>
+        }
+    }
+}

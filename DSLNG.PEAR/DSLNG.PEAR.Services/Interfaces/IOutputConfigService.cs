@@ -11,5 +11,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         SaveOutputConfigResponse Save(SaveOutputConfigRequest request);
         GetOutputConfigResponse Get(GetOutputConfigRequest request);
         GetOutputConfigsResponse GetOutputConfigs(GetOutputConfigsRequest request);
+        CalculateOutputResponse CalculateOputput(CalculateOutputRequest request);
     }
 }
