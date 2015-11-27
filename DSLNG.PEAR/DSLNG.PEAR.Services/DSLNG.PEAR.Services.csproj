@@ -237,6 +237,7 @@
     <Compile Include="Requests\OutputCategory\GetOutputCategoriesRequest.cs" />
     <Compile Include="Requests\OutputCategory\GetOutputCategoryRequest.cs" />
     <Compile Include="Requests\OutputCategory\SaveOutputCategoryRequest.cs" />
+    <Compile Include="Requests\OutputConfig\CalculateOutputRequest.cs" />
     <Compile Include="Requests\OutputConfig\GetKeyAssumptionsRequest.cs" />
     <Compile Include="Requests\OutputConfig\GetKpisRequest.cs" />
     <Compile Include="Requests\OutputConfig\GetOutputConfigRequest.cs" />
@@ -426,9 +427,11 @@
     <Compile Include="Responses\Operation\OperationGroupsResponse.cs" />
     <Compile Include="Responses\Operation\SaveOperationResponse.cs" />
     <Compile Include="Responses\OutputCategory\DeleteOutputCategoryResponse.cs" />
+    <Compile Include="Responses\OutputCategory\GetActiveOutputCategoriesResponse.cs" />
     <Compile Include="Responses\OutputCategory\GetOutputCategoriesResponse.cs" />
     <Compile Include="Responses\OutputCategory\GetOutputCategoryResponse.cs" />
     <Compile Include="Responses\OutputCategory\SaveOutputCategoryRespone.cs" />
+    <Compile Include="Responses\OutputConfig\CalculateOutputResponse.cs" />
     <Compile Include="Responses\OutputConfig\GetKeyAssumptionsResponse.cs" />
     <Compile Include="Responses\OutputConfig\GetKpisResponse.cs" />
     <Compile Include="Responses\OutputConfig\GetOutputConfigResponse.cs" />

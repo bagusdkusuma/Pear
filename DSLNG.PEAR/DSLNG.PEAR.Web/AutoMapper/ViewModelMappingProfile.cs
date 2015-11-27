@@ -572,7 +572,10 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetOutputConfigResponse.Kpi, SelectListItem>()
                 .ForMember(x => x.Value, o => o.MapFrom(s => s.Id.ToString()))
                 .ForMember(x => x.Text, o => o.MapFrom(s => s.Name));
-            
+
+            Mapper.CreateMap<CalculateOutputResponse.OutputCategoryResponse, ScenarioResultViewModel.OutputCategoryViewModel>();
+            Mapper.CreateMap<CalculateOutputResponse.KeyOutputResponse, ScenarioResultViewModel.KeyOutputViewModel>();
+
             base.Configure();
         }
 

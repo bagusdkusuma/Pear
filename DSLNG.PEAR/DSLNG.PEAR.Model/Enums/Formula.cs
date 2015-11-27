@@ -15,6 +15,7 @@ namespace DSLNG.PEAR.Data.Enums
         PROFITINVESTMENTRATIO,
         PAYBACK,
         GROSSPROFIT,
-        NETBACKVALUE
+        NETBACKVALUE,
+        COMPLETIONDATE
     }
 }

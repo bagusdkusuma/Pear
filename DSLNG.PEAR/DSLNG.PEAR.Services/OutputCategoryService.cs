@@ -126,5 +126,20 @@ namespace DSLNG.PEAR.Services
             TotalRecords = data.Count();
             return data;
         }
+
+
+        public GetActiveOutputCategoriesResponse GetActiveOutputCategories()
+        {
+            return new GetActiveOutputCategoriesResponse
+            {
+
+                OutputCategories = DataContext.KeyOutputCategories
+                 .Include(x => x.KeyOutputs)
+                 .Include(x => x.KeyOutputs.Select(y => y.Measurement))
+                 .Include(x => x.KeyOutputs.Select(y => y.Kpis))
+                 .Include(x => x.KeyOutputs.Select(y => y.KeyAssumptions))
+                 .Where(x => x.IsActive == true).MapTo<GetActiveOutputCategoriesResponse.OutputCategoryResponse>()
+            };
+        }
     }
 }
