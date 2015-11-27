@@ -754,7 +754,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Compile Include="Controllers\AssumptionDataController.cs" />
-    <Compile Include="Controllers\EconomicConfigController.cs" />
     <Compile Include="Controllers\EconomicSummaryController.cs" />
     <Compile Include="Controllers\HighlightController.cs" />
     <Compile Include="Controllers\HighlightGroupController.cs" />
@@ -766,6 +765,7 @@
     <Compile Include="ViewModels\AssumptionData\AssumptionDataInputViewModel.cs" />
     <Compile Include="ViewModels\AssumptionData\AssumptionDataViewModel.cs" />
     <Compile Include="ViewModels\EconomicConfigDetail\EconomicConfigViewModel.cs" />
+    <Compile Include="ViewModels\EconomicSummary\EconomicSummaryCreateViewModel.cs" />
     <Compile Include="ViewModels\EconomicSummary\EconomicSummaryViewModel.cs" />
     <Compile Include="Grid\GridModelBinder.cs" />
     <Compile Include="Grid\GridParams.cs" />
@@ -943,12 +943,7 @@
     <Content Include="Views\AssumptionData\_IndexGridPartial.cshtml" />
     <Content Include="Views\EconomicSummary\Create.cshtml" />
     <Content Include="Views\EconomicSummary\Edit.cshtml" />
-    <Content Include="Views\EconomicSummary\Config.cshtml" />
-    <Content Include="Views\EconomicSummary\_ConfigGridPartial.cshtml" />
-    <Content Include="Views\EconomicConfig\Create.cshtml" />
-    <Content Include="Views\EconomicConfig\Edit.cshtml" />
-    <Content Include="Views\EconomicConfig\Index.cshtml" />
-    <Content Include="Views\EconomicConfig\_IndexGridPartial.cshtml" />
+    <Content Include="Views\EconomicSummary\Index.cshtml" />
     <Content Include="Views\Error\GeneralError.cshtml" />
     <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce-small.woff" />
     <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce-small.ttf" />

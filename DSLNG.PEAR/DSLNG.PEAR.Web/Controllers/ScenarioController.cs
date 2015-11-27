@@ -15,7 +15,7 @@ namespace DSLNG.PEAR.Web.Controllers
 {
     public class ScenarioController : BaseController
     {
-        private IScenarioService _scenarioService;
+        private readonly IScenarioService _scenarioService;
         public ScenarioController(IScenarioService scenarioService)
         {
             _scenarioService = scenarioService;
@@ -26,70 +26,13 @@ namespace DSLNG.PEAR.Web.Controllers
             return View();
         }
 
-        public ActionResult IndexPartial()
-        {
-            var viewModel = GridViewExtension.GetViewModel("scenarioIndex");
-            if (viewModel == null)
-                viewModel = CreateGridViewModel();
-            return BindingCore(viewModel);
-        }
-
-
-        PartialViewResult BindingCore(GridViewModel gridViewModel)
-        {
-            gridViewModel.ProcessCustomBinding(
-                GetDataRowCount,
-                GetData
-                );
-            return PartialView("_IndexGridPartial", gridViewModel);
-        }
-
-
-        private static GridViewModel CreateGridViewModel()
-        {
-            var viewModel = new GridViewModel();
-            viewModel.KeyFieldName = "Id";
-            viewModel.Columns.Add("Name");
-            viewModel.Columns.Add("Desc");
-            viewModel.Columns.Add("IsActive");
-            viewModel.Pager.PageSize = 10;
-            return viewModel;
-
-        }
-
-
-        public ActionResult PagingAction(GridViewPagerState pager)
-        {
-            var viewModel = GridViewExtension.GetViewModel("gridScenarioIndex");
-            viewModel.ApplyPagingState(pager);
-            return BindingCore(viewModel);
-        }
-
-
-
-        public void GetDataRowCount(GridViewCustomBindingGetDataRowCountArgs e)
-        {
-            e.DataRowCount = _scenarioService.GetScenarios(new GetScenariosRequest { OnlyCount = true }).Count;
-        }
-
-        public void GetData(GridViewCustomBindingGetDataArgs e)
-        {
-            e.Data = _scenarioService.GetScenarios(new GetScenariosRequest
-            {
-                Skip = e.StartDataRowIndex,
-                Take = e.DataRowCount
-            }).Scenarios;
-        }
-
-
         public ActionResult Create()
         {
             var viewModel = new ScenarioViewModel();
             viewModel.IsActive = true;
             return View(viewModel);
         }
-
-
+        
         [HttpPost]
         public ActionResult Create(ScenarioViewModel viewModel)
         {
@@ -142,7 +85,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Grid(GridParams gridParams)
         {
-            var scenario = _scenarioService.GetScenarios(new GetScenariosRequest
+            var scenario = _scenarioService.GetScenariosForGrid(new GetScenariosRequest
                 {
                     Skip = gridParams.DisplayStart,
                     Take = gridParams.DisplayLength,
@@ -158,6 +101,13 @@ namespace DSLNG.PEAR.Web.Controllers
                 aaData = scenarioResponse
             };
             return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Search(string term)
+        {
+            var results = _scenarioService.GetScenarios(new GetScenariosRequest { Take = 20, Term = term });
+            return Json(new { results = results.Scenarios.Select(x => new {id = x.Id, x.Name}) }, JsonRequestBehavior.AllowGet);
+        
         }
 	}
 }
