@@ -4170,9 +4170,6 @@ Number.prototype.format = function (n, x) {
                 case "EQUITYIRR":
                 case "PROFITINVESTMENTRATIO":
                 case "SUM":
-                    var kpi = kpiParam.clone(true);
-                    Pear.OutputConfig._autocomplete(kpi.find('select'));
-                    paramsHolder.append(kpi.show());
                     var start = assumptionParam.clone(true);
                     Pear.OutputConfig._autocomplete(start.find('select'));
                     start.find('label').html('Start');
@@ -4187,19 +4184,22 @@ Number.prototype.format = function (n, x) {
                         projectCost.find('label').html('Project Cost');
                         paramsHolder.append(projectCost.show());
                     }
-                    if(val == 'MIN' || val == 'MINDATE'){
+                    if (val == 'MIN' || val == 'MINDATE') {
                         var exclude = excludeValue.clone(true);
                         paramsHolder.append(exclude.show());
                     }
-                    break;
-                case "COMPLETIONDATE":
                     var kpi = kpiParam.clone(true);
                     Pear.OutputConfig._autocomplete(kpi.find('select'));
                     paramsHolder.append(kpi.show());
+                    break;
+                case "COMPLETIONDATE":
                     var start = assumptionParam.clone(true);
                     Pear.OutputConfig._autocomplete(start.find('select'));
                     start.find('label').html('Completion Date');
                     paramsHolder.append(start.show());
+                    var kpi = kpiParam.clone(true);
+                    Pear.OutputConfig._autocomplete(kpi.find('select'));
+                    paramsHolder.append(kpi.show());
                     break;
                 case "GROSSPROFIT":
                     for (var i = 0; i < 4; i++) {

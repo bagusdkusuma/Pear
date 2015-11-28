@@ -436,7 +436,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Scenario, GetAssumptionDataConfigResponse.Scenario>();
             Mapper.CreateMap<SaveAssumptionDataRequest, KeyAssumptionData>()
                 .ForMember(x => x.Scenario, o => o.Ignore())
-                .ForMember(x => x.KeyAssumptionConfig, o => o.Ignore());
+                .ForMember(x => x.KeyAssumptionConfig, o => o.Ignore())
+                .ForMember(x => x.ActualValue, o => o.Condition(s => !s.IsSourceValueNull))
+                .ForMember(x => x.ForecastValue, o => o.Condition(s => !s.IsSourceValueNull));
             Mapper.CreateMap<KeyAssumptionData, GetAssumptionDataResponse>()
                 .ForMember(x => x.IdScenario, o => o.MapFrom(s => s.Scenario.Id))
                 .ForMember(x => x.IdConfig, o =>  o.MapFrom(s => s.KeyAssumptionConfig.Id));
