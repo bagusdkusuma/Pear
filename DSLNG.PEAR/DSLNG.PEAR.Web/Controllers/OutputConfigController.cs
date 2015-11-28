@@ -84,7 +84,6 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 viewModel.Formulas.Add(new SelectListItem { Text = name, Value = name });
             }
-            viewModel.IsActive = true;
             return View(viewModel);
         }
 

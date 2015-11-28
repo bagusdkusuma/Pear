@@ -37,18 +37,18 @@
                     @Html.ValidationMessageFor(model => model.Formula)
                 </div>
                 <div class="params-holder">
-                    @foreach (var kpiId in Model.KpiIds)
-                    {
-                        <div class="form-group form-list">
-                            @Html.Label("KPI")
-                            @Html.DropDownListFor(m => kpiId, Model.Kpis.Where(x => x.Value == kpiId.ToString()).ToList(), new { @class = "form-control kpi-options", data_url = Url.Action("EconomicKpis"), style = "width:180px", Name="KpiIds[]" })
-                        </div>
-                    }
                     @foreach (var assumptionId in Model.KeyAssumptionIds)
                     {
                         <div class="form-group form-list">
                             @Html.Label("Key Assumption")
                             @Html.DropDownListFor(m => assumptionId, Model.KeyAssumptions.Where(x => x.Value == assumptionId.ToString()).ToList(), new { @class = "form-control key-assumption-options", data_url = Url.Action("KeyAssumptions"), style = "width:180px", Name="KeyAssumptionIds[]" })
+                        </div>
+                    }
+                    @foreach (var kpiId in Model.KpiIds)
+                    {
+                        <div class="form-group form-list">
+                            @Html.Label("KPI")
+                            @Html.DropDownListFor(m => kpiId, Model.Kpis.Where(x => x.Value == kpiId.ToString()).ToList(), new { @class = "form-control kpi-options", data_url = Url.Action("EconomicKpis"), style = "width:180px", Name="KpiIds[]" })
                         </div>
                     }
                 </div>
