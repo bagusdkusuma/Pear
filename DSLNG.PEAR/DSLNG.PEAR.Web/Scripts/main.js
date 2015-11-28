@@ -4202,6 +4202,14 @@ Number.prototype.format = function (n, x) {
                     paramsHolder.append(kpi.show());
                     break;
                 case "GROSSPROFIT":
+                    var start = assumptionParam.clone(true);
+                    Pear.OutputConfig._autocomplete(start.find('select'));
+                    start.find('label').html('Start');
+                    paramsHolder.append(start.show());
+                    var end = assumptionParam.clone(true);
+                    Pear.OutputConfig._autocomplete(end.find('select'));
+                    end.find('label').html('End');
+                    paramsHolder.append(end.show());
                     for (var i = 0; i < 4; i++) {
                         var kpi = kpiParam.clone(true);
                         Pear.OutputConfig._autocomplete(kpi.find('select'));
@@ -4209,8 +4217,73 @@ Number.prototype.format = function (n, x) {
                     }
                     break;
                 case "NETBACKVALUE":
-                    for (var i = 0; i < 9; i++) {
+                    var start = assumptionParam.clone(true);
+                    Pear.OutputConfig._autocomplete(start.find('select'));
+                    start.find('label').html('Start');
+                    paramsHolder.append(start.show());
+                    var end = assumptionParam.clone(true);
+                    Pear.OutputConfig._autocomplete(end.find('select'));
+                    end.find('label').html('End');
+                    paramsHolder.append(end.show());
+                    for (var i = 0; i < 2; i++) {
                         var kpi = kpiParam.clone(true);
+                        if (i == 1) {
+                            kpi.addClass('dynamic-kpi');
+                            var buttonAdd = $('<a />');
+                            buttonAdd.append($('<i />').addClass('fa fa-plus'));
+                            buttonAdd.addClass('btn btn-default');
+                            buttonAdd.click(function (e) {
+                                e.preventDefault();
+                                var $this = $(this);
+                                var isAdd = $this.find('i').hasClass('fa-plus');
+                                if (isAdd) {
+                                    var newKpi = kpiParam.clone(true);
+                                    newKpi.addClass('dynamic-kpi');
+                                    var remove = $('<a />');
+                                    remove.append($('<i />').addClass('fa fa-minus'));
+                                    remove.addClass('btn btn-default');
+                                    remove.click(function (e) {
+                                        var $thisRemove = $(this);
+                                        $thisRemove.closest('div').remove();
+                                        if (paramsHolder.find('.dynamic-kpi').length == 1) {
+                                            var firstDyn = $(paramsHolder.find('.dynamic-kpi')[0]);
+                                            firstDyn.children('a').each(function (i, val) {
+                                                $(val).remove();
+                                            });
+                                            firstDyn.append(buttonAdd.clone(true));
+                                        }
+                                        if (!paramsHolder.find('.dynamic-kpi .fa-plus').length) {
+                                            paramsHolder.children('.dynamic-kpi:last-child').append(buttonAdd.clone(true));
+                                        }
+                                       
+                                        
+                                    });
+                                    newKpi.append(remove);
+                                    newKpi.append($this.clone(true));
+                                    paramsHolder.append(newKpi.show());
+                                    if ($this.prev().hasClass('btn')) {
+                                        $this.remove();
+                                    } else {
+                                        $this.find('i').removeClass('fa-plus');
+                                        $this.find('i').addClass('fa-minus');
+                                    }
+                                } else {
+                                    $this.closest('div').remove();
+                                    if (paramsHolder.find('.dynamic-kpi').length == 1) {
+                                        var firstDyn = $(paramsHolder.find('.dynamic-kpi')[0]);
+                                        firstDyn.children('a').each(function (i, val) {
+                                            $(val).remove();
+                                        });
+                                        firstDyn.append(buttonAdd.clone(true));
+                                    }
+                                    if (!paramsHolder.find('.dynamic-kpi .fa-plus').length) {
+                                        paramsHolder.children('.dynamic-kpi:last-child').append(buttonAdd.clone(true));
+                                    }
+                                   
+                                }
+                            });
+                            kpi.append(buttonAdd.clone(true));
+                        }
                         Pear.OutputConfig._autocomplete(kpi.find('select'));
                         paramsHolder.append(kpi.show());
                     }
@@ -4340,12 +4413,12 @@ Number.prototype.format = function (n, x) {
         if ($('.highlight-display').length) {
             $('.datepicker').datetimepicker({
                 format: "MM/DD/YYYY",
-                focusOnShow : false,
+                focusOnShow: false,
             }).on('dp.change', function (e) {
                 if (e.oldDate == null || e.date.format("MM/DD/YYYY") == e.oldDate.format("MM/DD/YYYY")) {
                     return;
                 }
-                var href=$('.nav-tabs .active a').attr('href');
+                var href = $('.nav-tabs .active a').attr('href');
                 var s = href + '&Periode=' + encodeURIComponent(e.date.format("MM/DD/YYYY"));
                 window.location = s;
             });
