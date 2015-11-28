@@ -346,7 +346,7 @@ namespace DSLNG.PEAR.Services
             DateTime endForecast;
             if (IsStartAndEndValid(startAssumption.ForecastValue, endAssumption.ForecastValue, out startForecast, out endForecast))
             {
-                var forecastValue = DataContext.KeyOperationDatas.Where(x => x.Kpi.Id == keyOutput.Id && x.Scenario.Id == scenarioId
+                var forecastValue = DataContext.KeyOperationDatas.Where(x => x.Kpi.Id == kpiId && x.Scenario.Id == scenarioId
                     && x.Periode.Year >= startForecast.Year && x.Periode.Year <= endForecast.Year && x.PeriodeType == PeriodeType.Yearly)
                     .Sum(x => x.Value);
                 if (forecastValue.HasValue) result.Forecast = forecastValue.ToString();
@@ -364,8 +364,12 @@ namespace DSLNG.PEAR.Services
                     && x.Periode.Month < currentMonth && x.PeriodeType == PeriodeType.Monthly).Sum(x => x.Value);
                 var thisYearForecastValue = DataContext.KeyOperationDatas.Where(x => x.Kpi.Id == kpiId && x.Periode.Year == currentYear
                     && x.Periode.Month >= currentMonth && x.PeriodeType == PeriodeType.Monthly && x.Scenario.Id == scenarioId).Sum(x => x.Value);
-                var actualValue = pastValue + futureValue + untilNowThisYearValue + thisYearForecastValue;
-                if (actualValue.HasValue) result.Actual = actualValue.ToString();
+                var actualValues =
+                    new List<double?> {pastValue, futureValue, untilNowThisYearValue, thisYearForecastValue};
+                if (actualValues.Any(x => x.HasValue))
+                {
+                     result.Actual = actualValues.Sum().ToString();
+                }
             }
             return result;
         }

@@ -22,6 +22,13 @@ namespace DSLNG.PEAR.Web.Controllers
         
         public ActionResult Index()
         {
+            var response = _economicSummaryService.GetEconomicSummaryReport();
+            var viewModel = response.MapTo<EconomicSummaryReportViewModel>();
+            return View(viewModel);
+        }
+
+        public ActionResult Config()
+        {
             return View();
         }
 

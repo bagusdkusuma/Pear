@@ -268,7 +268,7 @@ namespace DSLNG.PEAR.Services
                                         .Include(x => x.Kpi)
                                         .Include(x => x.Scenario)
                                         .Include(x => x.KeyOperationConfig)
-                                        .Where(x => x.PeriodeType == PeriodeType.Monthly && x.Periode.Year == request.Year).ToList();
+                                        .Where(x => x.PeriodeType == PeriodeType.Monthly && x.Periode.Year == request.Year && x.Scenario.Id == request.ScenarioId).ToList();
 
                         foreach (var keyOperationConfig in keyOperationConfigs)
                         {
