@@ -586,6 +586,11 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetEconomicSummariesResponse.EconomicSummary, EconomicSummaryViewModel>();
             Mapper.CreateMap<GetEconomicSummaryResponse, EconomicSummaryCreateViewModel>();
             Mapper.CreateMap<GetEconomicSummaryResponse.Scenario, EconomicSummaryCreateViewModel.Scenario>();
+            Mapper.CreateMap<GetEconomicSummaryReportResponse, EconomicSummaryReportViewModel>();
+            Mapper.CreateMap<GetEconomicSummaryReportResponse.Group, EconomicSummaryReportViewModel.Group>();
+            Mapper.CreateMap<GetEconomicSummaryReportResponse.Scenario, EconomicSummaryReportViewModel.Scenario>();
+            Mapper.CreateMap<GetEconomicSummaryReportResponse.OutputResult, EconomicSummaryReportViewModel.OutputResult>();
+            Mapper.CreateMap<GetEconomicSummaryReportResponse.KeyOutput, EconomicSummaryReportViewModel.KeyOutput>();
 
         }
 

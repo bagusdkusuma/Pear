@@ -1,91 +1,68 @@
-﻿@{
-    ViewBag.Title = "Economic Summary Config";
+﻿@model DSLNG.PEAR.Web.ViewModels.EconomicSummary.EconomicSummaryReportViewModel
+@{
+    ViewBag.Title = "Economic Summary";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    List<string> groupsAdded = new List<string>();
 }
 
-<h2>Economic Summary Config</h2>
-@Html.Partial("_MessageResponse")
-@Html.ActionLink("Create New", "Create")
-@*@Html.Action("ConfigPartial")
+<h2>Economic Summary</h2>
 
-@section Scripts{
-    <script type="text/javascript">
-        var confirmDelete = function (id) {
-            if (confirm('Are you sure want to delete this item?')) {
-                var url = '@Url.Action("Delete", "EconomicSummary")';
-                $('<form action="' + url + '" method="POST">' +
-                    '<input type="hidden" name="id" value="' + id + '">' +
-                    '</form>').submit();
-            }
-        };
-    </script>
-}*@
-
-
-<table id="economicSummary-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
-    <thead>
+@{
+    foreach (var @group in Model.Groups)
+    {
+        var uniqueGroupName = group.Id + "_" + group.Name;
+        if (!groupsAdded.Contains(uniqueGroupName))
+        {
+    <h1>@group.Name</h1>
+    <table border="1">
         <tr>
-            <th>Name</th>
-            <th>Scenarios</th>
-            <th>Desc</th>
-            <th>Is Active</th>
-            <th>Action</th>
+            <th rowspan="2">No</th>
+            <th rowspan="2">Key Ouput</th>
+            <th rowspan="2">Measurement</th>
+            @foreach (var scenario in Model.Scenarios)
+            {
+                <th colspan="2">@scenario.Name</th>
+            }
         </tr>
-    </thead>
-</table>
+        <tr>
+            @foreach (var scenario in Model.Scenarios)
+            {
+                <th>Actual</th>
+                <th>Forecast</th>
+            }
 
-@section Scripts{
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#economicSummary-table').DataTable({
-                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-                "iDisplayLength": -1,
-                "bProcessing": true,
-                "bServerSide": true,
-                "sServerMethod": "POST",
-                "sAjaxSource": '@Url.Action("Grid", "EconomicSummary")',
-                "order": [[3, "asc"]],
-                "aoColumns": [
-                    { "mDataProp": "Name", "name": "Name" },
-                    { "mDataProp": "Scenarios", "name": "Scenarios" },
-                    { "mDataProp": "Desc", "name": "Desc" },
-                    {
-                        "mDataProp": "IsActive", "name": "IsActive",
-                        render: function (data, type, row) {
-                            if (type === 'display') {
-                                return '<input type="checkbox" class="is-active">';
-                            }
-                            return data;
-                        }
-                    },
-                    {
-                        "orderable": false,
-                        "data": null,
-                        "defaultContent": '',
-                        "mRender": function (data, type, row) {
-                            var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
-                            var editLink = '@Html.ActionLink("Edit", "Edit", "EconomicSummary", new {id = "_id_"}, null)'.replace('_id_', data.Id);
-                            return editLink + ' | ' + deleteLink;
-                        }
-                    }
-                ],
-                rowCallback: function (row, data) {
-                    // Set the checked state of the checkbox in the table
-                    $('input.is-active', row).prop('checked', data.IsActive == 1);
+        </tr>
+        @foreach (var keyoutput in @group.KeyOutputs)
+        {
+            <tr>
+                <td>1</td>
+                <td>@keyoutput.Name</td>
+                <td>@keyoutput.Measurement</td>
+
+                @foreach (var scenario in Model.Scenarios)
+                {
+                    @GetValue(scenario.Id, keyoutput.Name, @group.Id);
                 }
-            });
+            </tr>
+        }
+    </table>
+    <hr />
+        }
 
-            $('#economicSummary-table').on('click', '.delete', function () {
-                var id = $(this).attr('data-id');
-                if (confirm('Are you sure want to delete this item?' + id)) {
-                    var url = '@Url.Action("Delete", "EconomicSummary")';
+        groupsAdded.Add(uniqueGroupName);
+    }
+}
 
-                    $('<form action="' + url + '" method="POST">' +
-                        '<input type="hidden" name="id" value="' + id + '">' +
-                        '</form>').submit();
-                }
-            });
-
-        });
-    </script>
+@helper GetValue(int scenarioId, string keyOutputName, int groupId)
+{
+    var groups = Model.Groups.Where(x => x.Id == groupId).ToList();
+    foreach (var g in groups)
+    {
+        var outputResult = g.KeyOutputs.FirstOrDefault(x => x.Scenario.Id == scenarioId && x.Name == keyOutputName);
+        if (outputResult != null && outputResult.OutputResult != null)
+        {
+    <td>@outputResult.OutputResult.Actual</td>
+    <td>@outputResult.OutputResult.Forecast</td>
+        }
+    }
 }

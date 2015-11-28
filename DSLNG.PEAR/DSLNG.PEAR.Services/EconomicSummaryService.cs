@@ -1,6 +1,7 @@
 ﻿using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.EconomicSummary;
+using DSLNG.PEAR.Services.Requests.OutputConfig;
 using DSLNG.PEAR.Services.Responses.EconomicSummary;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,12 @@ namespace DSLNG.PEAR.Services
 {
     public class EconomicSummaryService : BaseService, IEconomicSummaryService
     {
-        public EconomicSummaryService(IDataContext context) : base(context) { }
+        private IOutputConfigService _outputConfigService;
+        public EconomicSummaryService(IDataContext context, IOutputConfigService outputConfigService)
+            : base(context)
+        {
+            _outputConfigService = outputConfigService;
+        }
 
         public GetEconomicSummariesResponse GetEconomicSummaries(GetEconomicSummariesRequest request)
         {
@@ -146,7 +152,80 @@ namespace DSLNG.PEAR.Services
             };
         }
 
-        public IEnumerable<EconomicSummary> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        public GetEconomicSummaryReportResponse GetEconomicSummaryReport()
+        {
+            var response = new GetEconomicSummaryReportResponse();
+            var activeEconomicSummary = DataContext.EconomicSummaries
+                .Include(x => x.Scenarios)
+                .FirstOrDefault(x => x.IsActive);
+            if (activeEconomicSummary != null)
+            {
+                foreach (var scenario in activeEconomicSummary.Scenarios)
+                {
+                    response.Scenarios.Add(new GetEconomicSummaryReportResponse.Scenario() { Id = scenario.Id, Name = scenario.Name });
+
+                    var output = _outputConfigService.CalculateOputput(new CalculateOutputRequest { ScenarioId = scenario.Id });
+
+                    foreach (var category in output.OutputCategories)
+                    {
+                        var group = new GetEconomicSummaryReportResponse.Group();
+                        group.Name = category.Name;
+                        foreach (var keyOutput in category.KeyOutputs)
+                        {
+                            group.KeyOutputs.Add(new GetEconomicSummaryReportResponse.KeyOutput
+                                {
+                                    Measurement = keyOutput.Measurement,
+                                    Name = keyOutput.Name,
+                                    //OutputResult = new GetEconomicSummaryReportResponse.OutputResult { Actual = keyOutput.Actual, Forecast = keyOutput.Forecast },
+                                    OutputResult = new GetEconomicSummaryReportResponse.OutputResult { Actual = "actual " + scenario.Id + "_" + keyOutput.Name, Forecast = "forecast " + scenario.Id + "_" + keyOutput.Name },
+                                    Scenario = new GetEconomicSummaryReportResponse.Scenario { Id = scenario.Id, Name = scenario.Name }
+                                });
+                        }
+
+                        response.Groups.Add(group);
+                    }
+                }
+
+                /*foreach (var scenario in activeEconomicSummary.Scenarios)
+                {
+                    var output = _outputConfigService.CalculateOputput(new CalculateOutputRequest { ScenarioId = scenario.Id });
+                    foreach (var category in output.OutputCategories)
+                    {
+                        var group = new GetEconomicSummaryReportResponse.Group
+                            {
+                                Id = category.Id,
+                                Name = category.Name
+                            };
+
+                        foreach (var keyOutput in category.KeyOutputs)
+                        {
+                            if (group.KeyOutputs.Count() == 0)
+                            {
+                                var outputResults = new List<GetEconomicSummaryReportResponse.OutputResult>();
+                                outputResults.Add(new GetEconomicSummaryReportResponse.OutputResult
+                                    {
+                                        Actual = keyOutput.Actual,
+                                        Forecast = keyOutput.Forecast,
+                                        Scenario = new GetEconomicSummaryReportResponse.Scenario { Id = scenario.Id }
+                                    });
+                                group.KeyOutputs.Add(new GetEconomicSummaryReportResponse.KeyOutput
+                                    {
+                                        Measurement = keyOutput.Measurement,
+                                        Name = keyOutput.Name,
+                                        OutputResults = outputResults
+                                    });
+                            }
+
+                        }
+                        response.Groups.Add(group);
+                    }
+                }*/
+            }
+
+            return response;
+        }
+
+        private IEnumerable<EconomicSummary> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
         {
             var data = DataContext.EconomicSummaries
                 .Include(x => x.Scenarios)
@@ -180,6 +259,16 @@ namespace DSLNG.PEAR.Services
 
             TotalRecords = data.Count();
             return data;
+        }
+
+        private static readonly Random getrandom = new Random();
+        private static readonly object syncLock = new object();
+        public static int GetRandomNumber(int min, int max)
+        {
+            lock (syncLock)
+            { // synchronize
+                return getrandom.Next(min, max);
+            }
         }
     }
 }
