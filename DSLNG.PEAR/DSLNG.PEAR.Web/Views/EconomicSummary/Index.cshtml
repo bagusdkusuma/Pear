@@ -13,8 +13,8 @@
         var uniqueGroupName = group.Id + "_" + group.Name;
         if (!groupsAdded.Contains(uniqueGroupName))
         {
-    <h1>@group.Name</h1>
-    <table border="1">
+    <h4>@group.Name</h4>
+    <table class="table table-hover table-transparent table-bordered">
         <tr>
             <th rowspan="2">No</th>
             <th rowspan="2">Key Ouput</th>
@@ -61,8 +61,13 @@
         var outputResult = g.KeyOutputs.FirstOrDefault(x => x.Scenario.Id == scenarioId && x.Name == keyOutputName);
         if (outputResult != null && outputResult.OutputResult != null)
         {
-    <td>@outputResult.OutputResult.Actual</td>
-    <td>@outputResult.OutputResult.Forecast</td>
+            <td>@outputResult.OutputResult.Actual</td>
+            <td>@outputResult.OutputResult.Forecast</td>
+        }
+        else
+        {
+            @*<td>nihil</td>
+            <td>nihil</td>*@
         }
     }
 }

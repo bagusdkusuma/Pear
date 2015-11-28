@@ -176,8 +176,8 @@ namespace DSLNG.PEAR.Services
                                 {
                                     Measurement = keyOutput.Measurement,
                                     Name = keyOutput.Name,
-                                    //OutputResult = new GetEconomicSummaryReportResponse.OutputResult { Actual = keyOutput.Actual, Forecast = keyOutput.Forecast },
-                                    OutputResult = new GetEconomicSummaryReportResponse.OutputResult { Actual = "actual " + scenario.Id + "_" + keyOutput.Name, Forecast = "forecast " + scenario.Id + "_" + keyOutput.Name },
+                                    OutputResult = new GetEconomicSummaryReportResponse.OutputResult { Actual = keyOutput.Actual, Forecast = keyOutput.Forecast },
+                                    //OutputResult = new GetEconomicSummaryReportResponse.OutputResult { Actual = "actual " + scenario.Id + "_" + keyOutput.Name, Forecast = "forecast " + scenario.Id + "_" + keyOutput.Name },
                                     Scenario = new GetEconomicSummaryReportResponse.Scenario { Id = scenario.Id, Name = scenario.Name }
                                 });
                         }
@@ -259,16 +259,6 @@ namespace DSLNG.PEAR.Services
 
             TotalRecords = data.Count();
             return data;
-        }
-
-        private static readonly Random getrandom = new Random();
-        private static readonly object syncLock = new object();
-        public static int GetRandomNumber(int min, int max)
-        {
-            lock (syncLock)
-            { // synchronize
-                return getrandom.Next(min, max);
-            }
         }
     }
 }

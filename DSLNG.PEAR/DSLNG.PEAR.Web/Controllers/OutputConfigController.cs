@@ -136,7 +136,7 @@ namespace DSLNG.PEAR.Web.Controllers
         }
 
         public ActionResult ScenarioResult(int scenarioId) {
-            var result = _outputConfigService.CalculateOputput(new CalculateOutputRequest());
+            var result = _outputConfigService.CalculateOputput(new CalculateOutputRequest{ScenarioId = scenarioId});
             var viewModel = result.MapTo<ScenarioResultViewModel>();
             viewModel.ScenarioName = _scenarioService.GetScenario(new GetScenarioRequest { Id = scenarioId }).Name;
             return View(viewModel);
