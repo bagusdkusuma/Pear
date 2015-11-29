@@ -1,21 +1,14 @@
-﻿
-
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Responses.OperationalData
 {
-    public class GetOperationDataConfigurationResponse : BaseResponse
+    public class ViewOperationDataConfigurationResponse
     {
-        public GetOperationDataConfigurationResponse()
-        {
-            Kpis = new List<Kpi>();
-        }
-
         public IList<Kpi> Kpis { get; set; }
-        public int GroupId { get; set; }
-        public int ScenarioId { get; set; }
-
         public class Kpi
         {
             public Kpi()

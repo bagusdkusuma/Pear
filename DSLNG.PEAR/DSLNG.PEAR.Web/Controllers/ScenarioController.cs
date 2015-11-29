@@ -109,5 +109,12 @@ namespace DSLNG.PEAR.Web.Controllers
             return Json(new { results = results.Scenarios.Select(x => new {id = x.Id, x.Name}) }, JsonRequestBehavior.AllowGet);
         
         }
+
+        public ActionResult Detail(int id)
+        {
+            var viewModel = new ScenarioDetailViewModel();
+            viewModel.ScenarioId = id;
+            return View(viewModel);
+        }
 	}
 }

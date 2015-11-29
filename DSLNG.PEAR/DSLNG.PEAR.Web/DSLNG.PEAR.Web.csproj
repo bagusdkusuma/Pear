@@ -965,6 +965,7 @@
     <Content Include="Scripts\tinymce\js\tinymce\skins\lightgray\fonts\tinymce.woff" />
     <Content Include="Views\AssumptionData\Input.cshtml" />
     <Content Include="Views\EconomicSummary\Config.cshtml" />
+    <Content Include="Views\AssumptionData\_DetailPartial.cshtml" />
     <None Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\SpeedometerChart\_Edit.cshtml" />
     <Content Include="Views\Tabular\_Create.cshtml" />
@@ -1055,6 +1056,11 @@
     <Content Include="Views\OutputConfig\Edit.cshtml" />
     <Content Include="Views\OutputConfig\Index.cshtml" />
     <Content Include="Views\OutputConfig\ScenarioResult.cshtml" />
+    <Content Include="Views\Scenario\Detail.cshtml" />
+    <Content Include="Views\OutputConfig\_DetailPartial.cshtml" />
+    <Content Include="Views\OperationData\_DetailPartial.cshtml" />
+    <Content Include="Views\OperationData\DetailPartial\_Monthly.cshtml" />
+    <Content Include="Views\OperationData\DetailPartial\_Yearly.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -1274,6 +1280,7 @@
     <Compile Include="ViewModels\RoleGroup\IndexRoleGroupViewModel.cs" />
     <Compile Include="ViewModels\RoleGroup\RoleGroupViewModel.cs" />
     <Compile Include="ViewModels\RoleGroup\UpdateRoleGroupViewModel.cs" />
+    <Compile Include="ViewModels\Scenario\ScenarioDetailViewModel.cs" />
     <Compile Include="ViewModels\Scenario\ScenarioViewModel.cs" />
     <Compile Include="ViewModels\Select\SelectOptionViewModel.cs" />
     <Compile Include="ViewModels\Select\UpdateSelectViewModel.cs" />

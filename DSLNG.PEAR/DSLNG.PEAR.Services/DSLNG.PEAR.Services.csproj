@@ -417,6 +417,7 @@
     <Compile Include="Responses\OperationalData\GetOperationalSelectListResponse.cs" />
     <Compile Include="Responses\OperationalData\SaveOperationalDataResponse.cs" />
     <Compile Include="Responses\OperationalData\UpdateOperationDataResponse.cs" />
+    <Compile Include="Responses\OperationalData\ViewOperationDataConfigurationResponse.cs" />
     <Compile Include="Responses\OperationGroup\DeleteOperationGroupResponse.cs" />
     <Compile Include="Responses\OperationGroup\GetOperationGroupResponse.cs" />
     <Compile Include="Responses\OperationGroup\GetOperationGroupsResponse.cs" />
