@@ -1,0 +1,41 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.AssumptionData.AssumptionDataInputViewModel
+@{
+    Layout = null;
+    ViewBag.Title = "Input";
+}
+
+<h3 class="text-align-left">Key Assumption For : @Model.Scenario.Name</h3>
+@{
+    foreach (var category in Model.KeyAssumptionCategories.Where(x => x.IsActive == true).OrderBy(x => x.Order).ToList())
+    {
+    <div class="row">
+        <div class="col-sm-12">
+            <h4 class="text-align-left">@category.Name</h4>
+        </div>
+    </div>
+    <table class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
+        <tr>
+            <th style="width: 50%">Name</th>
+            <th style="width: 25%">Forecast</th>
+            <th style="width: 25%">Actual</th>
+        </tr>
+        @foreach (var assumption in category.Assumptions)
+        {
+            var realValue = Model.AssumptionDataList.FirstOrDefault(x => x.IdConfig == assumption.Id && x.IdScenario == Model.Scenario.Id);
+            <tr>
+                <td class="text-align-left">@assumption.Name (@assumption.Measurement)</td>
+                <td class="text-align-right">@if (realValue != null)
+                                             {
+                                                 @realValue.ForecastValue
+                                             }
+                </td>
+                <td class="text-align-right">@if (realValue != null)
+                                             {
+                                                 @realValue.ActualValue
+                                             }
+                </td>
+            </tr>
+        }
+    </table>
+    }
+}

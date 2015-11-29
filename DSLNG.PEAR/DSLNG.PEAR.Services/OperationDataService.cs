@@ -159,59 +159,6 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-        public IEnumerable<KeyOperationData> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
-        {
-            var data = DataContext.KeyOperationDatas.Include(x => x.KeyOperationConfig).Include(x => x.Kpi)
-                .Include(x => x.KeyOperationConfig.Kpi).Include(x => x.Scenario).AsQueryable();
-            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
-            {
-                data = data.Where(x => x.Kpi.Name.Contains(search) || x.Scenario.Name.Contains(search) || x.KeyOperationConfig.Kpi.Name.Contains(search));
-            }
-
-            foreach (var sortOrder in sortingDictionary)
-            {
-                switch (sortOrder.Key)
-                {
-                    case "Scenario":
-                        data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.Scenario.Name)
-                            : data.OrderByDescending(x => x.Scenario.Name);
-                        break;
-                    case "KeyOperation":
-                        data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.KeyOperationConfig.Kpi.Name)
-                            : data.OrderByDescending(x => x.KeyOperationConfig.Kpi.Name);
-                        break;
-                    case "Kpi":
-                        data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.Kpi.Name)
-                            : data.OrderByDescending(x => x.Kpi.Name);
-                        break;
-                    case "Value":
-                        data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.Value)
-                            : data.OrderByDescending(x => x.Value);
-                        break;
-                    case "Periode":
-                        data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.Periode)
-                            : data.OrderByDescending(x => x.Periode);
-                        break;
-                    case "PeriodeType":
-                        data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.PeriodeType)
-                            : data.OrderByDescending(x => x.PeriodeType);
-                        break;
-                }
-            }
-
-            TotalRecords = data.Count();
-            return data;
-            //throw new NotImplementedException();
-
-
-        }
-
         public GetOperationDataConfigurationResponse GetOperationDataConfiguration(GetOperationDataConfigurationRequest request)
         {
             var response = new GetOperationDataConfigurationResponse();
@@ -220,11 +167,21 @@ namespace DSLNG.PEAR.Services
             try
             {
                 var periodeType = request.PeriodeType;
-
-                var keyOperationConfigs = DataContext.KeyOperationConfigs
+                List<KeyOperationConfig> keyOperationConfigs;
+                if (!request.IsPartial)
+                {
+                    keyOperationConfigs = DataContext.KeyOperationConfigs
+                                                         .Include(x => x.Kpi)
+                                                         .Include(x => x.Kpi.Measurement)
+                                                         .Where(x => x.KeyOperationGroup.Id == request.GroupId).ToList();
+                }
+                else
+                {
+                    keyOperationConfigs = DataContext.KeyOperationConfigs
                     .Include(x => x.Kpi)
-                    .Include(x => x.Kpi.Measurement)
-                    .Where(x => x.KeyOperationGroup.Id == request.GroupId).ToList();
+                    .Include(x => x.Kpi.Measurement).ToList();
+                }
+                
 
                 switch (periodeType)
                 {
@@ -344,6 +301,80 @@ namespace DSLNG.PEAR.Services
             }
 
             return response;
+        }
+
+        /*public ViewOperationDataConfigurationResponse ViewOperationDataConfiguration(int scenarioId, PeriodeType periodeType)
+        {
+            var keyOperationConfigs = DataContext.
+                    .Include(x => x.Kpi)
+                    .Include(x => x.Kpi.Measurement)
+                    .Where(x => x.).ToList();
+            switch (periodeType)
+            {
+                case PeriodeType.Yearly:
+                    var operationDataYearly =
+                            DataContext.KeyOperationDatas
+                            .Include(x => x.Kpi)
+                            .Include(x => x.Scenario)
+                            .Include(x => x.KeyOperationConfig)
+                            .Where(x => x.PeriodeType == PeriodeType.Yearly && x.Scenario.Id == scenarioId).ToList();
+                    break;
+                case PeriodeType.Monthly:
+                    break;
+            }
+        }*/
+
+        private IEnumerable<KeyOperationData> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        {
+            var data = DataContext.KeyOperationDatas.Include(x => x.KeyOperationConfig).Include(x => x.Kpi)
+                .Include(x => x.KeyOperationConfig.Kpi).Include(x => x.Scenario).AsQueryable();
+            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            {
+                data = data.Where(x => x.Kpi.Name.Contains(search) || x.Scenario.Name.Contains(search) || x.KeyOperationConfig.Kpi.Name.Contains(search));
+            }
+
+            foreach (var sortOrder in sortingDictionary)
+            {
+                switch (sortOrder.Key)
+                {
+                    case "Scenario":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Scenario.Name)
+                            : data.OrderByDescending(x => x.Scenario.Name);
+                        break;
+                    case "KeyOperation":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.KeyOperationConfig.Kpi.Name)
+                            : data.OrderByDescending(x => x.KeyOperationConfig.Kpi.Name);
+                        break;
+                    case "Kpi":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Kpi.Name)
+                            : data.OrderByDescending(x => x.Kpi.Name);
+                        break;
+                    case "Value":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Value)
+                            : data.OrderByDescending(x => x.Value);
+                        break;
+                    case "Periode":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Periode)
+                            : data.OrderByDescending(x => x.Periode);
+                        break;
+                    case "PeriodeType":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.PeriodeType)
+                            : data.OrderByDescending(x => x.PeriodeType);
+                        break;
+                }
+            }
+
+            TotalRecords = data.Count();
+            return data;
+            //throw new NotImplementedException();
+
+
         }
     }
 }

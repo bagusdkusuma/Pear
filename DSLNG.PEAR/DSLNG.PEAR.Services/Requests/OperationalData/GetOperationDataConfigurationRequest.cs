@@ -11,5 +11,6 @@ namespace DSLNG.PEAR.Services.Requests.OperationalData
         public PeriodeType PeriodeType { get; set; }
         public int ScenarioId { get; set; }
         public int Year { get; set; }
+        public bool IsPartial { get; set; }
     }
 }

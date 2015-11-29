@@ -49,7 +49,17 @@
                 "sAjaxSource": '@Url.Action("Grid", "Scenario")',
                 "order": [[3, "asc"]],
                 "aoColumns": [
-                    { "mDataProp": "Name", "name": "Name" },
+                    //{ "mDataProp": "Name", "name": "Name" },
+                    {
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": '',
+                        "mRender": function (data, type, row) {
+                            var link = '<a href="@Url.Action("Detail", "Scenario", new { id = "_scenarioId"})">'+row.Name+'</a>';
+                            link = link.replace('_scenarioId', row.Id);
+                            return link;
+                        }
+                    },
                     { "mDataProp": "Order", "name": "Order" },
                     {
                         "orderable": false,

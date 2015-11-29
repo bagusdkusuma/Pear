@@ -1,0 +1,105 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.OperationData.OperationDataConfigurationViewModel
+@{
+    ViewBag.Title = "Configuration";
+    Layout = null;
+}
+<style>
+    .nav-tabs > li > a
+    {
+        color: #ffffff;
+    }
+
+    .nav-tabs > li:active > a
+    {
+        color: #000000;
+    }
+</style>
+<div class="notification"></div>
+<section>
+    <div class="row">
+        <div class="title_page" style="border: none!important;">
+            <div class="title" style="margin-right: 25px;">Key Operation Data</div>
+            <img class="ajax-loader2" src="@Url.Content("~/content/img/ajax-loader1.gif")" style="display: none;width: 30px;height: 30px;" />
+            <div class="description_year"></div>
+        </div>
+
+    </div>
+    <ul class="nav nav-tabs">
+        <li role="presentation" @(Model.PeriodeType == DSLNG.PEAR.Data.Enums.PeriodeType.Yearly.ToString() ? Html.Raw("class=active") : Html.Raw("")) >
+            <a href="#yearly" aria-controls="home" role="tab" data-toggle="tab" data-periodetype="Yearly">
+                <div>Yearly</div>
+            </a>
+        </li>
+        <li role="presentation" @(Model.PeriodeType == DSLNG.PEAR.Data.Enums.PeriodeType.Monthly.ToString() ? Html.Raw("class=active") : Html.Raw(""))>
+            <a href="#monthly" aria-controls="home" role="tab" data-toggle="tab" data-periodetype="Monthly">
+                <div>Monthly</div>
+            </a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active config-content">
+            @Html.Partial("DetailPartial/_" + Model.PeriodeType, Model)
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('[data-toggle=tab]').click(function() {
+            var that = $(this);
+            var periodeType = that.attr('data-periodeType');
+            var data = {};
+            data.groupId = '@Model.GroupId';
+            data.scenarioId = '@Model.ScenarioId';
+            data.periodeType = periodeType;
+            _periodeType = periodeType;
+            if (periodeType === 'Monthly') {
+                data.year = '@DateTime.Now.Year';
+            } else if (periodeType === 'Daily') {
+                data.year = '@DateTime.Now.Year';
+                data.month = '@DateTime.Now.Month';
+            }
+            $.ajax({
+                url: '@Url.Action("DetailPartialPeriodeType")',
+                type: 'GET',
+                data: data,
+                beforeSend: function() {
+                    $('.ajax-loader2').show();
+                    $('.config-content').hide();
+                }
+            })
+                .done(function(result) {
+                    $('.ajax-loader2').hide();
+                    $('.config-content').html(result);
+                    $('.config-content').show();
+                });
+
+        });
+
+        $('.tab-pane').on('change', '.ddl-year', function () {
+
+            var that = $(this);
+            var periodeType = 'Monthly';
+            var data = {};
+            data.groupId = '@Model.GroupId';
+            data.scenarioId = '@Model.ScenarioId';
+            data.periodeType = periodeType;
+            data.year = that.val();
+            $.ajax({
+                url: '@Url.Action("DetailPartialPeriodeType")',
+                type: 'GET',
+                data: data,
+                beforeSend: function () {
+                    $('.ajax-loader2').show();
+                    $('.config-content').hide();
+                }
+            })
+                .done(function (result) {
+                    $('.ajax-loader2').hide();
+                    $('.config-content').html(result);
+                    $('.config-content').show();
+                });
+        });
+    })
+</script>
+
