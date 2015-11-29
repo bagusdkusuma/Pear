@@ -294,9 +294,15 @@ namespace DSLNG.PEAR.Services
                     }
                     break;
                 case Formula.GROSSPROFIT:
-                case Formula.NETBACKVALUE:
                     {
                         var result = this.HeaderSubstruction(keyOutput, scenarioId);
+                        resp.Actual = result.Actual;
+                        resp.Forecast = result.Forecast;
+                    }
+                    break;
+                case Formula.NETBACKVALUE:
+                    {
+                        var result = this.HeaderSubstruction(keyOutput, scenarioId, true);
                         resp.Actual = result.Actual;
                         resp.Forecast = result.Forecast;
                     }
@@ -638,7 +644,7 @@ namespace DSLNG.PEAR.Services
             var sumResult = this.Sum(keyOutput, scenarioId);
             var result = new OutputResult();
             var assumptionId = keyOutput.KeyAssumptions[2].Id;
-            var assumption = DataContext.KeyAssumptionDatas.FirstOrDefault(x => x.KeyAssumptionConfig.Id == assumptionId );
+            var assumption = DataContext.KeyAssumptionDatas.FirstOrDefault(x => x.KeyAssumptionConfig.Id == assumptionId);
             if (!string.IsNullOrEmpty(sumResult.Actual) && assumption != null && !string.IsNullOrEmpty(assumption.ActualValue))
             {
                 result.Actual = String.Format("{0:0.0}", double.Parse(sumResult.Actual) /
@@ -662,7 +668,8 @@ namespace DSLNG.PEAR.Services
             var kpiId = keyOutput.Kpis[0].Id;
             var completionId = keyOutput.KeyAssumptions[0].Id;
             var completionAssumption = DataContext.KeyAssumptionDatas.FirstOrDefault(x => x.KeyAssumptionConfig.Id == completionId);
-            if (completionAssumption == null) {
+            if (completionAssumption == null)
+            {
                 return new OutputResult();
             }
 
@@ -701,33 +708,59 @@ namespace DSLNG.PEAR.Services
             return result;
         }
 
-        private OutputResult HeaderSubstruction(KeyOutputConfiguration keyOutput, int scenarioId)
+        //by default it will use sum as aggregator
+        private OutputResult HeaderSubstruction(KeyOutputConfiguration keyOutput, int scenarioId, bool useAverage = false)
         {
-            var result = new OutputResult();
+            var currentYear = DateTime.Now.Year;
+            var currentMonth = DateTime.Now.Month;
+            var currentDate = DateTime.Now;
             var kpiIds = keyOutput.Kpis.Select(x => x.Id).ToList();
             var headId = kpiIds[0];
-            var forecastValues = DataContext.KeyOperationDatas.Include(x => x.Kpi).Where(x => x.Scenario.Id == scenarioId
-                && kpiIds.Contains(x.Kpi.Id)).ToList();
-            var forecastValue = forecastValues.First(x => x.Kpi.Id == headId).Value;
-            foreach (var forecastData in forecastValues)
+            var result = new OutputResult();
+            var startId = keyOutput.KeyAssumptions[0].Id;
+            var endId = keyOutput.KeyAssumptions[1].Id;
+            var startAssumption = DataContext.KeyAssumptionDatas.FirstOrDefault(x => x.KeyAssumptionConfig.Id == startId);
+            var endAssumption = DataContext.KeyAssumptionDatas.FirstOrDefault(x => x.KeyAssumptionConfig.Id == endId);
+            if (startAssumption == null || endAssumption == null)
             {
-                if (forecastData.Kpi.Id != headId)
-                {
-                    forecastValue = forecastValue - forecastData.Value;
-                }
+                return new OutputResult();
             }
-            if (forecastValue.HasValue) result.Forecast = forecastValue.ToString();
 
-            var actualValues = DataContext.KpiAchievements.Include(x => x.Kpi).Where(x => kpiIds.Contains(x.Kpi.Id)).ToList();
-            var actualValue = actualValues.First(x => x.Kpi.Id == headId).Value;
-            foreach (var actualData in actualValues)
-            {
-                if (actualData.Kpi.Id != headId)
-                {
-                    actualValue = actualValue - actualData.Value;
-                }
+            var headKeyOutpu = new KeyOutputConfiguration();
+            headKeyOutpu.KeyAssumptions = keyOutput.KeyAssumptions;
+            headKeyOutpu.Kpis = new List<Kpi> { keyOutput.Kpis.First(x => x.Id == headId) };
+            var headResult = new OutputResult();
+            if(useAverage){
+                headResult = Average(headKeyOutpu,scenarioId);
+            }else{
+                headResult = Sum(headKeyOutpu, scenarioId);
             }
-            if (actualValue.HasValue) result.Actual = actualValue.ToString();
+            var restResults = new List<OutputResult>();
+            foreach (var kpiId in kpiIds)
+            {
+                if (kpiId != headId)
+                {
+                    var newKeyOutput = new KeyOutputConfiguration();
+                    newKeyOutput.KeyAssumptions = keyOutput.KeyAssumptions;
+                    newKeyOutput.Kpis = new List<Kpi> { keyOutput.Kpis.First(x => x.Id == kpiId) };
+                    if (useAverage)
+                    {
+                        restResults.Add(Average(headKeyOutpu, scenarioId));
+                    }
+                    else
+                    {
+                        restResults.Add(Sum(headKeyOutpu, scenarioId));
+                    }
+                }
+
+            }
+            if (!string.IsNullOrEmpty(headResult.Forecast)) {
+                result.Forecast = (double.Parse(headResult.Forecast) - restResults.Select(x => x.Forecast).Sum(x => string.IsNullOrEmpty(x) ? 0.00 : double.Parse(x))).ToString();
+            }
+            if (!string.IsNullOrEmpty(headResult.Actual))
+            {
+                result.Actual = (double.Parse(headResult.Actual) - restResults.Select(x => x.Actual).Sum(x => string.IsNullOrEmpty(x) ? 0.00 : double.Parse(x))).ToString();
+            }
             return result;
         }
 
