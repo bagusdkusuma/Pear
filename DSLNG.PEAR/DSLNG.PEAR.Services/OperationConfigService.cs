@@ -53,7 +53,7 @@ namespace DSLNG.PEAR.Services
             return new OperationGroupsResponse
             {
                 OperationGroups = DataContext.KeyOperationGroups.ToList().MapTo<OperationGroupsResponse.OperationGroup>(),
-                KPIS = DataContext.Kpis.ToList().MapTo<OperationGroupsResponse.KPI>()
+                Kpis = DataContext.Kpis.ToList().MapTo<OperationGroupsResponse.Kpi>()
             };
         }
 
@@ -62,19 +62,19 @@ namespace DSLNG.PEAR.Services
         {
             if (request.Id == 0)
             {
-                var Operation = request.MapTo<KeyOperationConfig>();
-                Operation.KeyOperationGroup = DataContext.KeyOperationGroups.FirstOrDefault(x => x.Id == request.IdKeyOperationGroup);
-                Operation.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == request.IdKPI);
-                DataContext.KeyOperationConfigs.Add(Operation);
+                var operation = request.MapTo<KeyOperationConfig>();
+                operation.KeyOperationGroup = DataContext.KeyOperationGroups.FirstOrDefault(x => x.Id == request.KeyOperationGroupId);
+                operation.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == request.KpiId);
+                DataContext.KeyOperationConfigs.Add(operation);
             }
             else
             {
-                var Operation = DataContext.KeyOperationConfigs.FirstOrDefault(x => x.Id == request.Id);
-                if (Operation != null)
+                var operation = DataContext.KeyOperationConfigs.FirstOrDefault(x => x.Id == request.Id);
+                if (operation != null)
                 {
-                    request.MapPropertiesToInstance<KeyOperationConfig>(Operation);
-                    Operation.KeyOperationGroup = DataContext.KeyOperationGroups.FirstOrDefault(x => x.Id == request.IdKeyOperationGroup);
-                    Operation.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == request.IdKPI);
+                    request.MapPropertiesToInstance<KeyOperationConfig>(operation);
+                    operation.KeyOperationGroup = DataContext.KeyOperationGroups.FirstOrDefault(x => x.Id == request.KeyOperationGroupId);
+                    operation.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == request.KpiId);
                 }
             }
             DataContext.SaveChanges();

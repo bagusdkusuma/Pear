@@ -14,73 +14,34 @@ namespace DSLNG.PEAR.Web.Controllers
 {
     public class EconomicSummaryController : BaseController
     {
-        private IEconomicSummaryService _economicSummaryService;
+        private readonly IEconomicSummaryService _economicSummaryService;
         public EconomicSummaryController(IEconomicSummaryService economicSummaryService)
         {
             _economicSummaryService = economicSummaryService;
         }
         
+        public ActionResult Index()
+        {
+            var response = _economicSummaryService.GetEconomicSummaryReport();
+            var viewModel = response.MapTo<EconomicSummaryReportViewModel>();
+            return View(viewModel);
+        }
+
         public ActionResult Config()
         {
             return View();
         }
 
-        public ActionResult ConfigPartial()
-        {
-            var viewModel = GridViewExtension.GetViewModel("gridEconomicSummary");
-            if (viewModel == null)
-                viewModel = CreateGridViewModel();
-            return BindingCore(viewModel);
-        }
-
-        PartialViewResult BindingCore(GridViewModel gridViewModel)
-        {
-            gridViewModel.ProcessCustomBinding(GetDataRowCount, GetData);
-            return PartialView("_ConfigGridPartial", gridViewModel);
-        }
-
-        public ActionResult PagingAction(GridViewPagerState pager)
-        {
-            var viewModel = GridViewExtension.GetViewModel("gridEconomicSummaryConfig");
-            viewModel.ApplyPagingState(pager);
-            return BindingCore(viewModel);
-        }
-
-        private static GridViewModel CreateGridViewModel()
-        {
-            var viewModel = new GridViewModel();
-            viewModel.KeyFieldName = "Id";
-            viewModel.Columns.Add("Name");
-            viewModel.Columns.Add("Desc");
-            viewModel.Columns.Add("IsActive");
-            viewModel.Pager.PageSize = 10;
-            return viewModel;
-        }
-
-        public void GetDataRowCount(GridViewCustomBindingGetDataRowCountArgs e)
-        {
-            e.DataRowCount = _economicSummaryService.GetEconomicSummaries(new GetEconomicSummariesRequest { OnlyCount = true }).Count;
-        }
-
-        public void GetData(GridViewCustomBindingGetDataArgs e)
-        {
-            e.Data = _economicSummaryService.GetEconomicSummaries(new GetEconomicSummariesRequest
-                {
-                    Skip = e.StartDataRowIndex,
-                    Take = e.DataRowCount
-                }).EconomicSummaries;
-       }
-
-
         public ActionResult Create()
         {
-            var viewModel = new EconomicSummaryViewModel();
+            var viewModel = new EconomicSummaryCreateViewModel();
+            viewModel.Scenarios.Insert(0, new EconomicSummaryCreateViewModel.Scenario());
             viewModel.IsActive = true;
             return View(viewModel);
         }
 
         [HttpPost]
-        public ActionResult Create(EconomicSummaryViewModel viewModel)
+        public ActionResult Create(EconomicSummaryCreateViewModel viewModel)
         {
             var request = viewModel.MapTo<SaveEconomicSummaryRequest>();
             var response = _economicSummaryService.SaveEconomicSummary(request);
@@ -88,20 +49,20 @@ namespace DSLNG.PEAR.Web.Controllers
             TempData["Message"] = response.Message;
             if (response.IsSuccess)
             {
-                return RedirectToAction("Config");
+                return RedirectToAction("Index");
             }
             return View("Create", viewModel);
         }
 
         public ActionResult Edit(int id)
         {
-            var viewModel = _economicSummaryService.GetEconomicSummary(new GetEconomicSummaryRequest { Id = id }).MapTo<EconomicSummaryViewModel>();
-
+            var viewModel = _economicSummaryService.GetEconomicSummary(new GetEconomicSummaryRequest { Id = id }).MapTo<EconomicSummaryCreateViewModel>();
+            viewModel.Scenarios.Insert(0, new EconomicSummaryCreateViewModel.Scenario());
             return View(viewModel);
         }
 
         [HttpPost]
-        public ActionResult Edit(EconomicSummaryViewModel viewModel)
+        public ActionResult Edit(EconomicSummaryCreateViewModel viewModel)
         {
             var request = viewModel.MapTo<SaveEconomicSummaryRequest>();
             var response = _economicSummaryService.SaveEconomicSummary(request);
@@ -109,7 +70,7 @@ namespace DSLNG.PEAR.Web.Controllers
             TempData["Message"] = response.Message;
             if (response.IsSuccess)
             {
-                return RedirectToAction("Config");
+                return RedirectToAction("Index");
             }
             return View("Edit", viewModel);
         }
@@ -129,7 +90,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Grid(GridParams gridParams)
         {
-            var economic = _economicSummaryService.GetEconomicSummaries(new GetEconomicSummariesRequest
+            var economic = _economicSummaryService.GetEconomicSummariesForGrid(new GetEconomicSummariesRequest
                 {
                     Skip = gridParams.DisplayStart,
                     Take = gridParams.DisplayLength,
@@ -146,5 +107,11 @@ namespace DSLNG.PEAR.Web.Controllers
 
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+
+        /*public ActionResult EconomicSummaries(string term)
+        {
+            var results = _economicSummaryService.GetEconomicSummaries(new GetEconomicSummariesRequest() { Take = 20, Term = term });
+            return Json(new { results = results.EconomicSummaries }, JsonRequestBehavior.AllowGet);
+        }*/
 	}
 }

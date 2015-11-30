@@ -24,7 +24,9 @@ namespace DSLNG.PEAR.Data.Entities.EconomicModel
         public Measurement Measurement { get; set; }
         public Formula Formula { get; set; }
         public IList<Kpi> Kpis { get; set; }
+        public string KpiIds { get; set; }
         public IList<KeyAssumptionConfig> KeyAssumptions { get; set; }
+        public string KeyAssumptionIds { get; set; }
         public double? ExcludeValue { get; set; }
         public int Order { get; set; }
         public string Remark { get; set; }

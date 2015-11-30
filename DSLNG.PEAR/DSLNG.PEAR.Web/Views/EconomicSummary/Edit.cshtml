@@ -1,16 +1,16 @@
-﻿@model DSLNG.PEAR.Web.ViewModels.EconomicSummary.EconomicSummaryViewModel
+﻿@model DSLNG.PEAR.Web.ViewModels.EconomicSummary.EconomicSummaryCreateViewModel
 
 @{
     ViewBag.Title = "Edit";
 }
 
-<div class="Economicsummary-save">
+<div class="economic-summary-save">
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
         <div class="col-md-12">
             <div class="title">Economic Summary</div>
-            <div class="description_year">Edit</div>
+            <div class="description_year">New</div>
             <div>@Html.ValidationSummary(true)</div>
             @Html.HiddenFor(x => x.Id)
         </div>
@@ -18,31 +18,51 @@
             <div class="form-inline whitebox">
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.Name)
-                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control datepicker" })
+                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Name)
                 </div>
-                <div class="message-holder">
-                    <div class="form-group form-list message-text-area">
-                        @Html.LabelFor(model => model.Desc)
-                        @Html.TextAreaFor(model => model.Desc, 5, 100, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Desc)
-                    </div>
-                    <div class="form-group form-list alert-condition-options">
-                        @Html.LabelFor(model => model.IsActive, new { @class = "control-label" })
-                        @Html.EditorFor(model => model.IsActive, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.IsActive)
-                    </div>
+                <div class="form-group form-list">
+                    <label>&nbsp;</label>
+                    <input type="button" class="add-scenario" value="Add Scenario" />
+                </div>
+                <div class="scenarios-holder">
+                    @for (var i = 0; i < Model.Scenarios.Count; i++)
+                    {
+                        if (i != 0)
+                        { 
+                        <div class="form-group form-list scenario-template">
+                            <input type="hidden" name="Scenarios.Index" value="@i" />
+                            <label>&nbsp;</label>
+                            @Html.DropDownListFor(model => model.Scenarios[i].Id, new List<SelectListItem> { new SelectListItem { Value = Model.Scenarios[i].Id.ToString(), Text = Model.Scenarios[i].Name } }, new { @class = "scenario", data_url = Url.Action("Search", "Scenario"), style = "width:200px" })
+                            @Html.ValidationMessageFor(model => model.Scenarios[i].Id)
+                            <button class="remove">Remove</button>
+                        </div>
+                        }
+                    }
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.Description)
+                    @Html.TextAreaFor(model => model.Description, 5, 100, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Description)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IsActive, new { @class = "control-label" })
+                    @Html.EditorFor(model => model.IsActive, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IsActive)
                 </div>
             </div>
         </div>
         <div class="col-md-12 artifact-designer-btns">
             <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
             <a onclick="location.reload();" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>
-            <a href="/EconomicSummary/config" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+            <a href="@Url.Action("Index")" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
         </div>
     }
+    
+    <div class="form-group form-list scenario-template original">
+        <label>&nbsp;</label>
+        @Html.DropDownListFor(model => model.Scenarios[0].Id, new List<SelectListItem> { new SelectListItem { Value = Model.Scenarios[0].Id.ToString(), Text = Model.Scenarios[0].Name } }, new { @class = "scenario", data_url = Url.Action("Search", "Scenario"), style = "width:200px" })
+        @Html.ValidationMessageFor(model => model.Scenarios[0].Id)
+        <button class="remove">Remove</button>
+    </div>
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

@@ -1,0 +1,31 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Scenario.ScenarioDetailViewModel
+@{
+    ViewBag.Title = "Detail";
+}
+
+<h2>Detail</h2>
+
+<div>
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#key-assumption" aria-controls="home" role="tab" data-toggle="tab">Key Assumption</a></li>
+        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Operation Data</a></li>
+        <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Key Output</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="key-assumption">
+            @Html.Action("DetailPartial", "AssumptionData", new {scenarioId = Model.ScenarioId})
+        </div>
+        <div role="tabpanel" class="tab-pane" id="profile">
+            @Html.Action("DetailPartial", "OperationData", new {scenarioId = Model.ScenarioId, year = DateTime.Now.Year, periodeType="Yearly"})
+        </div>
+        <div role="tabpanel" class="tab-pane" id="messages">
+            @Html.Action("DetailPartial", "OutputConfig", new {scenarioId = Model.ScenarioId})
+        </div>
+    </div>
+
+</div>
+

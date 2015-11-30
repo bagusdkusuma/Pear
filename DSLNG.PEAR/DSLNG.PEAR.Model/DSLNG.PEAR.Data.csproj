@@ -79,8 +79,7 @@
     <Compile Include="Entities\ConstantUsage.cs" />
     <Compile Include="Entities\Conversion.cs" />
     <Compile Include="Entities\DashboardTemplate.cs" />
-    <Compile Include="Entities\EconomicModel\EconomicConfigDetail.cs" />
-    <Compile Include="Entities\EconomicModel\EconomicSummaryConfig.cs" />
+    <Compile Include="Entities\EconomicModel\EconomicSummary.cs" />
     <Compile Include="Entities\EconomicModel\KeyAssumptionData.cs" />
     <Compile Include="Entities\EconomicModel\KeyOperationConfig.cs" />
     <Compile Include="Entities\EconomicModel\Scenario.cs" />

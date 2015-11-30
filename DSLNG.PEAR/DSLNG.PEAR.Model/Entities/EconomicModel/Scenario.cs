@@ -18,5 +18,6 @@ namespace DSLNG.PEAR.Data.Entities.EconomicModel
         public bool IsActive { get; set; }
         public bool IsDashboard { get; set; }
         public int Order { get; set; }
+        public List<EconomicSummary> EconomicSummaries { get; set; }
     }
 }

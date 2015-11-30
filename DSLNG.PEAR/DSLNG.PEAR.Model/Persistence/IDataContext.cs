@@ -58,8 +58,7 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<KeyOperationConfig> KeyOperationConfigs { get; set; }
         IDbSet<KeyOperationData> KeyOperationDatas { get; set; }
         IDbSet<KeyOperationGroup> KeyOperationGroups { get; set; }
-        IDbSet<EconomicSummaryConfig> EconomicSummaryConfigs { get; set; }
-        IDbSet<EconomicConfigDetail> EconomicConfigDetails { get; set; }
+        IDbSet<EconomicSummary> EconomicSummaries { get; set; }
         IDbSet<KeyOutputConfiguration> KeyOutputConfigs { get; set; }
         Database Database { get; }
         int SaveChanges();

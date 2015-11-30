@@ -1,6 +1,7 @@
 ﻿using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.EconomicSummary;
+using DSLNG.PEAR.Services.Requests.OutputConfig;
 using DSLNG.PEAR.Services.Responses.EconomicSummary;
 using System;
 using System.Collections.Generic;
@@ -10,14 +11,55 @@ using System.Threading.Tasks;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Entities.EconomicModel;
 using System.Data.SqlClient;
+using System.Data.Entity;
 
 namespace DSLNG.PEAR.Services
 {
     public class EconomicSummaryService : BaseService, IEconomicSummaryService
     {
-        public EconomicSummaryService(IDataContext context) : base(context) { }
+        private IOutputConfigService _outputConfigService;
+        public EconomicSummaryService(IDataContext context, IOutputConfigService outputConfigService)
+            : base(context)
+        {
+            _outputConfigService = outputConfigService;
+        }
 
         public GetEconomicSummariesResponse GetEconomicSummaries(GetEconomicSummariesRequest request)
+        {
+            if (request.OnlyCount)
+            {
+                var query = DataContext.EconomicSummaries.AsQueryable();
+                if (!string.IsNullOrEmpty(request.Term))
+                {
+                    query = query.Where(x => x.Name.ToLower().Contains(request.Term.ToLower()));
+                }
+                return new GetEconomicSummariesResponse { Count = query.Count() };
+            }
+            else
+            {
+                var query = DataContext.EconomicSummaries.AsQueryable();
+                if (!string.IsNullOrEmpty(request.Term))
+                {
+                    query = query.Where(x => x.Name.ToLower().Contains(request.Term.ToLower()));
+                }
+                query = query.OrderByDescending(x => x.Id);
+                if (request.Skip != 0)
+                {
+                    query = query.Skip(request.Skip);
+                }
+                if (request.Take != 0)
+                {
+                    query = query.Take(request.Take);
+                }
+                return new GetEconomicSummariesResponse
+                {
+                    EconomicSummaries = query.ToList()
+                        .MapTo<GetEconomicSummariesResponse.EconomicSummary>()
+                };
+            }
+        }
+
+        public GetEconomicSummariesResponse GetEconomicSummariesForGrid(GetEconomicSummariesRequest request)
         {
             int totalRecords;
             var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
@@ -31,59 +73,76 @@ namespace DSLNG.PEAR.Services
                 TotalRecords = totalRecords,
                 EconomicSummaries = data.ToList().MapTo<GetEconomicSummariesResponse.EconomicSummary>()
             };
-            //if (request.OnlyCount)
-            //{
-            //    return new GetEconomicSummariesResponse { Count = DataContext.EconomicSummaryConfigs.Count() };
-            //}
-            //else
-            //{
-            //    return new GetEconomicSummariesResponse
-            //    {
-            //        EconomicSummaries = DataContext.EconomicSummaryConfigs.OrderByDescending(x => x.Id)
-            //        .Skip(request.Skip).Take(request.Take).ToList().MapTo<GetEconomicSummariesResponse.EconomicSummary>()
-            //    };
-            //}
         }
 
 
         public SaveEconomicSummaryResponse SaveEconomicSummary(SaveEconomicSummaryRequest request)
         {
-            if (request.Id == 0)
+            try
             {
-                var Economic = request.MapTo<EconomicSummaryConfig>();
-                DataContext.EconomicSummaryConfigs.Add(Economic);
-            }
-            else
-            {
-                var Economic = DataContext.EconomicSummaryConfigs.FirstOrDefault(x => x.Id == request.Id);
-                if (Economic != null)
+                if (request.Id == 0)
                 {
-                    request.MapPropertiesToInstance<EconomicSummaryConfig>(Economic);
+                    var economicSummary = request.MapTo<EconomicSummary>();
+                    foreach (var scenarioId in request.Scenarios.Select(x => x.Id))
+                    {
+                        var scenario = new Scenario { Id = scenarioId };
+                        DataContext.Scenarios.Attach(scenario);
+                        economicSummary.Scenarios.Add(scenario);
+                    }
+                    DataContext.EconomicSummaries.Add(economicSummary);
                 }
+                else
+                {
+                    var economicSummary = DataContext.EconomicSummaries.Include(x => x.Scenarios).First(x => x.Id == request.Id);
+                    request.MapPropertiesToInstance<EconomicSummary>(economicSummary);
+                    foreach (var scenario in economicSummary.Scenarios.ToList())
+                    {
+                        economicSummary.Scenarios.Remove(scenario);
+                    }
+                    foreach (var scenario in request.Scenarios)
+                    {
+                        var theScenario = DataContext.Scenarios.Local.FirstOrDefault(x => x.Id == scenario.Id);
+                        if (theScenario == null)
+                        {
+                            theScenario = new Scenario { Id = scenario.Id };
+                            DataContext.Scenarios.Attach(theScenario);
+                        }
+                        economicSummary.Scenarios.Add(theScenario);
+                    }
+                }
+                DataContext.SaveChanges();
+                return new SaveEconomicSummaryResponse
+                {
+                    IsSuccess = true,
+                    Message = "Economic Summary Config has been Save"
+                };
             }
-            DataContext.SaveChanges();
-
-            return new SaveEconomicSummaryResponse
+            catch (InvalidOperationException e)
             {
-                IsSuccess = true,
-                Message = "Economic Summary Config has been Save"
-            };
+                return new SaveEconomicSummaryResponse
+                {
+                    IsSuccess = false,
+                    Message = e.Message
+                };
+            }
         }
 
 
         public GetEconomicSummaryResponse GetEconomicSummary(GetEconomicSummaryRequest request)
         {
-            return DataContext.EconomicSummaryConfigs.FirstOrDefault(x => x.Id == request.Id).MapTo<GetEconomicSummaryResponse>();
+            return DataContext.EconomicSummaries
+                .Include(x => x.Scenarios)
+                .Single(x => x.Id == request.Id).MapTo<GetEconomicSummaryResponse>();
         }
 
 
         public DeleteEconomicSummaryResponse DeleteEconomicSummary(DeleteEconomicSummaryRequest request)
         {
-            var checkId = DataContext.EconomicSummaryConfigs.FirstOrDefault(x => x.Id == request.Id);
+            var checkId = DataContext.EconomicSummaries.FirstOrDefault(x => x.Id == request.Id);
             if (checkId != null)
             {
-                DataContext.EconomicSummaryConfigs.Attach(checkId);
-                DataContext.EconomicSummaryConfigs.Remove(checkId);
+                DataContext.EconomicSummaries.Attach(checkId);
+                DataContext.EconomicSummaries.Remove(checkId);
                 DataContext.SaveChanges();
             }
             return new DeleteEconomicSummaryResponse
@@ -93,9 +152,84 @@ namespace DSLNG.PEAR.Services
             };
         }
 
-        public IEnumerable<EconomicSummaryConfig> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        public GetEconomicSummaryReportResponse GetEconomicSummaryReport()
         {
-            var data = DataContext.EconomicSummaryConfigs.AsQueryable();
+            var response = new GetEconomicSummaryReportResponse();
+            var activeEconomicSummary = DataContext.EconomicSummaries
+                .Include(x => x.Scenarios)
+                .FirstOrDefault(x => x.IsActive);
+            if (activeEconomicSummary != null)
+            {
+                foreach (var scenario in activeEconomicSummary.Scenarios)
+                {
+                    response.Scenarios.Add(new GetEconomicSummaryReportResponse.Scenario() { Id = scenario.Id, Name = scenario.Name });
+
+                    var output = _outputConfigService.CalculateOputput(new CalculateOutputRequest { ScenarioId = scenario.Id });
+
+                    foreach (var category in output.OutputCategories)
+                    {
+                        var group = new GetEconomicSummaryReportResponse.Group();
+                        group.Name = category.Name;
+                        foreach (var keyOutput in category.KeyOutputs)
+                        {
+                            group.KeyOutputs.Add(new GetEconomicSummaryReportResponse.KeyOutput
+                                {
+                                    Measurement = keyOutput.Measurement,
+                                    Name = keyOutput.Name,
+                                    OutputResult = new GetEconomicSummaryReportResponse.OutputResult { Actual = keyOutput.Actual, Forecast = keyOutput.Forecast },
+                                    //OutputResult = new GetEconomicSummaryReportResponse.OutputResult { Actual = "actual " + scenario.Id + "_" + keyOutput.Name, Forecast = "forecast " + scenario.Id + "_" + keyOutput.Name },
+                                    Scenario = new GetEconomicSummaryReportResponse.Scenario { Id = scenario.Id, Name = scenario.Name }
+                                });
+                        }
+
+                        response.Groups.Add(group);
+                    }
+                }
+
+                /*foreach (var scenario in activeEconomicSummary.Scenarios)
+                {
+                    var output = _outputConfigService.CalculateOputput(new CalculateOutputRequest { ScenarioId = scenario.Id });
+                    foreach (var category in output.OutputCategories)
+                    {
+                        var group = new GetEconomicSummaryReportResponse.Group
+                            {
+                                Id = category.Id,
+                                Name = category.Name
+                            };
+
+                        foreach (var keyOutput in category.KeyOutputs)
+                        {
+                            if (group.KeyOutputs.Count() == 0)
+                            {
+                                var outputResults = new List<GetEconomicSummaryReportResponse.OutputResult>();
+                                outputResults.Add(new GetEconomicSummaryReportResponse.OutputResult
+                                    {
+                                        Actual = keyOutput.Actual,
+                                        Forecast = keyOutput.Forecast,
+                                        Scenario = new GetEconomicSummaryReportResponse.Scenario { Id = scenario.Id }
+                                    });
+                                group.KeyOutputs.Add(new GetEconomicSummaryReportResponse.KeyOutput
+                                    {
+                                        Measurement = keyOutput.Measurement,
+                                        Name = keyOutput.Name,
+                                        OutputResults = outputResults
+                                    });
+                            }
+
+                        }
+                        response.Groups.Add(group);
+                    }
+                }*/
+            }
+
+            return response;
+        }
+
+        private IEnumerable<EconomicSummary> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        {
+            var data = DataContext.EconomicSummaries
+                .Include(x => x.Scenarios)
+                .AsQueryable();
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             {
                 data = data.Where(x => x.Name.Contains(search));
@@ -110,7 +244,7 @@ namespace DSLNG.PEAR.Services
                             ? data.OrderBy(x => x.Name)
                             : data.OrderByDescending(x => x.Name);
                         break;
-                    case "Desc":
+                    case "Description":
                         data = sortOrder.Value == SortOrder.Ascending
                             ? data.OrderBy(x => x.Desc)
                             : data.OrderByDescending(x => x.Desc);

@@ -34,62 +34,14 @@ namespace DSLNG.PEAR.Web.Controllers
             return View();
         }
 
-        public ActionResult IndexPartial()
-        {
-            var viewModel = GridViewExtension.GetViewModel("gridAssumptionData");
-            if (viewModel == null)
-                viewModel = CreateGridViewModel();
-            return BindingCore(viewModel);
-        }
-
-        PartialViewResult BindingCore(GridViewModel gridViewModel)
-        {
-            gridViewModel.ProcessCustomBinding(GetDataRowCount, GetData);
-            return PartialView("_IndexGridPartial", gridViewModel);
-        }
-
-        public ActionResult PagingAction(GridViewPagerState pager)
-        {
-            var viewModel = GridViewExtension.GetViewModel("gridAssumptiondDataIndex");
-            viewModel.ApplyPagingState(pager);
-            return BindingCore(viewModel);
-        }
-
-        private static GridViewModel CreateGridViewModel()
-        {
-            var viewModel = new GridViewModel();
-            viewModel.KeyFieldName = "Id";
-            viewModel.Columns.Add("Scenario");
-            viewModel.Columns.Add("Config");
-            viewModel.Columns.Add("ActualValue");
-            viewModel.Columns.Add("ForecastValue");
-            viewModel.Columns.Add("Remark");
-            viewModel.Pager.PageSize = 10;
-            return viewModel;
-        }
-
-        public void GetDataRowCount(GridViewCustomBindingGetDataRowCountArgs e)
-        {
-            e.DataRowCount = _assumptionDataService.GetAssumptionDatas(new GetAssumptionDatasRequest { OnlyCount = true }).Count;
-        }
-
-        public void GetData(GridViewCustomBindingGetDataArgs e)
-        {
-            e.Data = _assumptionDataService.GetAssumptionDatas(new GetAssumptionDatasRequest
-                {
-                    Skip = e.StartDataRowIndex,
-                    Take = e.DataRowCount
-                }).AssumptionDatas;
-        }
-
         public ActionResult Create()
         {
             var viewModel = new AssumptionDataViewModel();
-            var SelectList = _assumptionDataService.GetAssumptionDataConfig();
-            viewModel.Scenarios = SelectList.Scenarios.Select
+            var selectList = _assumptionDataService.GetAssumptionDataConfig();
+            viewModel.Scenarios = selectList.Scenarios.Select
                 (x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
-            viewModel.Configs = SelectList.AssumptionDataConfigs.Select
+            viewModel.Configs = selectList.AssumptionDataConfigs.Select
                 (x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name + "(" + x.Measurement + ")" }).ToList();
 
 
@@ -114,18 +66,18 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Edit(int id)
         {
             var viewModel = _assumptionDataService.GetAssumptionData(new GetAssumptionDataRequest { Id = id }).MapTo<AssumptionDataViewModel>();
-            var SelectList = _assumptionDataService.GetAssumptionDataConfig();
-            viewModel.Scenarios = SelectList.Scenarios.Select
+            var selectList = _assumptionDataService.GetAssumptionDataConfig();
+            viewModel.Scenarios = selectList.Scenarios.Select
                 (x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
-            viewModel.Configs = SelectList.AssumptionDataConfigs.Select
+            viewModel.Configs = selectList.AssumptionDataConfigs.Select
                 (x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name + "(" + x.Measurement + ")" }).ToList();
 
             return View(viewModel);
         }
 
         [HttpPost]
-        public ActionResult Edit (AssumptionDataViewModel viewModel)
+        public ActionResult Edit(AssumptionDataViewModel viewModel)
         {
             var request = viewModel.MapTo<SaveAssumptionDataRequest>();
             var response = _assumptionDataService.SaveAssumptionData(request);
@@ -139,7 +91,7 @@ namespace DSLNG.PEAR.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Delete (int id)
+        public ActionResult Delete(int id)
         {
             var response = _assumptionDataService.DeleteAssumptionData(new DeleteAssumptionDataRequest { Id = id });
             TempData["IsSuccess"] = response.IsSuccess;
@@ -172,27 +124,41 @@ namespace DSLNG.PEAR.Web.Controllers
 
         }
 
-        public ActionResult Input(int ScenarioId){
-            var scenario = _scenarioService.GetScenario(new GetScenarioRequest { Id = ScenarioId });
+        public ActionResult Input(int scenarioId)
+        {
+            return View(GetAssumptionDataInputViewModel(scenarioId));
+        }
+
+        public ActionResult DetailPartial(int scenarioId)
+        {
+            return View("_DetailPartial", GetAssumptionDataInputViewModel(scenarioId));
+        }
+
+        [HttpPost]
+        public ActionResult Save(AssumptionDataViewModel viewModel)
+        {
+            var request = viewModel.MapTo<SaveAssumptionDataRequest>();
+            var response = _assumptionDataService.SaveAssumptionData(request);
+            return Json(response, JsonRequestBehavior.DenyGet);
+        }
+
+        private AssumptionDataInputViewModel GetAssumptionDataInputViewModel(int scenarioId)
+        {
+            var scenario = _scenarioService.GetScenario(new GetScenarioRequest { Id = scenarioId });
             var viewModel = new AssumptionDataInputViewModel();
             viewModel.Scenario = scenario.MapTo<AssumptionDataInputViewModel.ScenarioViewModel>();
-            viewModel.KeyAssumptionCategories = _assumptionCategoryService.GetAssumptionCategories(new GetAssumptionCategoriesRequest { Take = -1, SortingDictionary = new Dictionary<string, SortOrder>(),IncludeAssumptionList=true })
+            viewModel.KeyAssumptionCategories = _assumptionCategoryService.GetAssumptionCategories(new GetAssumptionCategoriesRequest { Take = -1, SortingDictionary = new Dictionary<string, SortOrder>(), IncludeAssumptionList = true })
                 .AssumptionCategorys.MapTo<AssumptionDataInputViewModel.AssumptionCategoryViewModel>();
             viewModel.AssumptionDataList = _assumptionDataService.GetAssumptionDatas(new GetAssumptionDatasRequest
             {
                 Take = -1,
                 SortingDictionary = new SortedDictionary<string, SortOrder> { },
-                ScenarioId = ScenarioId
+                ScenarioId = scenarioId
             }).AssumptionDatas.MapTo<AssumptionDataInputViewModel.AssumptionDataViewModel>();
-            return View(viewModel);
-        }
 
-        
-        [HttpPost]
-        public ActionResult Save(AssumptionDataViewModel viewModel) {
-            var request = viewModel.MapTo<SaveAssumptionDataRequest>();
-            var response = _assumptionDataService.SaveAssumptionData(request);
-            return Json(response, JsonRequestBehavior.DenyGet);
+            return viewModel;
         }
-	}
+        
+
+    }
 }

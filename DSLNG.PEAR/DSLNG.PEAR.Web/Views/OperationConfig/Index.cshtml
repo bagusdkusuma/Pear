@@ -43,7 +43,7 @@
                 "bProcessing": true,
                 "bServerSide": true,
                 "sServerMethod": "POST",
-                "sAjaxSource": '@Url.Action("Grid", "Operation")',
+                "sAjaxSource": '@Url.Action("Grid", "OperationConfig")',
                 "order": [[3, "asc"]],
                 "aoColumns": [
                     { "mDataProp": "KeyOperationGroup", "name": "OperationGroup" },
@@ -65,7 +65,7 @@
                         "defaultContent": '',
                         "mRender": function (data, type, row) {
                             var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
-                            var editLink = '@Html.ActionLink("Edit", "Edit", "Operation", new {id = "_id_"}, null)'.replace('_id_', data.Id);
+                            var editLink = '@Html.ActionLink("Edit", "Edit", "OperationConfig", new {id = "_id_"}, null)'.replace('_id_', data.Id);
                             return editLink + ' | ' + deleteLink;
                         }
                     }
@@ -78,8 +78,8 @@
 
             $('#operation-table').on('click', '.delete', function () {
                 var id = $(this).attr('data-id');
-                if (confirm('Are you sure want to delete this item?' + id)) {
-                    var url = '@Url.Action("Delete", "Operation")';
+                if (confirm('Are you sure want to delete this item?')) {
+                    var url = '@Url.Action("Delete", "OperationConfig")';
 
                     $('<form action="' + url + '" method="POST">' +
                         '<input type="hidden" name="id" value="' + id + '">' +

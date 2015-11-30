@@ -21,10 +21,11 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IMeasurementService _measurementService;
         private readonly IOutputCategoryService _outputCategoryService;
         private readonly IOutputConfigService _outputConfigService;
-        private IScenarioService _scenarioService;
+        private readonly IScenarioService _scenarioService;
 
-        public OutputConfigController(IMeasurementService measurementService,IOutputCategoryService outputCategoryService,
-            IOutputConfigService outputConfigService, IScenarioService scenarioService) {
+        public OutputConfigController(IMeasurementService measurementService, IOutputCategoryService outputCategoryService,
+            IOutputConfigService outputConfigService, IScenarioService scenarioService)
+        {
             _measurementService = measurementService;
             _outputCategoryService = outputCategoryService;
             _outputConfigService = outputConfigService;
@@ -36,17 +37,19 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             return View();
         }
-        public ActionResult Create() {
+        public ActionResult Create()
+        {
             var viewModel = new OutputConfigViewModel();
-            viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest { 
+            viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
+            {
                 Take = -1,
-                SortingDictionary = new SortedDictionary<string,SortOrder>{{"Name",SortOrder.Ascending}}
-            }).Measurements.Select(x => new SelectListItem{Text = x.Name, Value = x.Id.ToString()}).ToList();
+                SortingDictionary = new SortedDictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+            }).Measurements.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
 
             viewModel.OutputCategories = _outputCategoryService.GetOutputCategories(new GetOutputCategoriesRequest
             {
                 Take = -1,
-                SortingDictionary = new SortedDictionary<string, SortOrder> {{"Order", SortOrder.Ascending} }
+                SortingDictionary = new SortedDictionary<string, SortOrder> { { "Order", SortOrder.Ascending } }
             }).OutputCategories.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
             foreach (var name in Enum.GetNames(typeof(Formula)))
             {
@@ -55,9 +58,10 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.IsActive = true;
             return View(viewModel);
         }
-        
+
         [HttpPost]
-        public ActionResult Create(OutputConfigViewModel viewModel) {
+        public ActionResult Create(OutputConfigViewModel viewModel)
+        {
             var request = viewModel.MapTo<SaveOutputConfigRequest>();
             var resp = _outputConfigService.Save(request);
             TempData["IsSuccess"] = resp.IsSuccess;
@@ -97,10 +101,12 @@ namespace DSLNG.PEAR.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult EconomicKpis(string term) {
+        public ActionResult EconomicKpis(string term)
+        {
             return Json(new { results = _outputConfigService.GetKpis(new GetKpisRequest { Term = term }).KpiList }, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult KeyAssumptions(string term) {
+        public ActionResult KeyAssumptions(string term)
+        {
             return Json(new { results = _outputConfigService.GetKeyAssumptions(new GetKeyAssumptionsRequest { Term = term }).KeyAssumptions }, JsonRequestBehavior.AllowGet);
         }
 
@@ -129,17 +135,20 @@ namespace DSLNG.PEAR.Web.Controllers
                     x.Order,
                     x.Remark,
                     x.IsActive
-                    
+
                 })
             };
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult ScenarioResult(int scenarioId) {
-            var result = _outputConfigService.CalculateOputput(new CalculateOutputRequest());
-            var viewModel = result.MapTo<ScenarioResultViewModel>();
-            viewModel.ScenarioName = _scenarioService.GetScenario(new GetScenarioRequest { Id = scenarioId }).Name;
-            return View(viewModel);
+        public ActionResult ScenarioResult(int scenarioId)
+        {
+            return View(GetScenarioResultViewModel(scenarioId));
+        }
+
+        public ActionResult DetailPartial(int scenarioId)
+        {
+            return View("_DetailPartial", GetScenarioResultViewModel(scenarioId));
         }
 
         [HttpPost]
@@ -154,6 +163,14 @@ namespace DSLNG.PEAR.Web.Controllers
                 return RedirectToAction("Index");
             }
             return View();
+        }
+
+        private ScenarioResultViewModel GetScenarioResultViewModel(int scenarioId)
+        {
+            var result = _outputConfigService.CalculateOputput(new CalculateOutputRequest { ScenarioId = scenarioId });
+            var viewModel = result.MapTo<ScenarioResultViewModel>();
+            viewModel.ScenarioName = _scenarioService.GetScenario(new GetScenarioRequest { Id = scenarioId }).Name;
+            return viewModel;
         }
 
     }

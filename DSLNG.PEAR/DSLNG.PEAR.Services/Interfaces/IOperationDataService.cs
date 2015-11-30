@@ -18,5 +18,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetOperationalDataDetailResponse GetOperationalDataDetail(GetOperationalDataDetailRequest request);
         GetOperationDataConfigurationResponse GetOperationDataConfiguration(GetOperationDataConfigurationRequest request);
         UpdateOperationDataResponse Update(UpdateOperationDataRequest request);
+        //ViewOperationDataConfigurationResponse ViewOperationDataConfiguration(int scenarioId);
     }
 }

@@ -148,6 +148,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             ConfigureTrafficLight();
             ConfigureSelect();
             ConfigureOperationData();
+            ConfigureEconomicSummary();
 
             Mapper.CreateMap<Dropdown, SelectListItem>();
             Mapper.CreateMap<SearchKpiViewModel, GetKpiToSeriesRequest>();
@@ -546,9 +547,6 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<OperationalDataViewModel, SaveOperationalDataRequest>();
             Mapper.CreateMap<GetOperationalDataResponse, OperationalDataViewModel>();
 
-            Mapper.CreateMap<EconomicSummaryViewModel, SaveEconomicSummaryRequest>();
-            Mapper.CreateMap<GetEconomicSummaryResponse, EconomicSummaryViewModel>();
-
             Mapper.CreateMap<EconomicConfigViewModel, SaveEconomicConfigRequest>();
             Mapper.CreateMap<GetEconomicConfigResponse, EconomicConfigViewModel>();
             Mapper.CreateMap<HighlightGroupViewModel, SaveHighlightGroupRequest>();
@@ -578,6 +576,22 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<CalculateOutputResponse, ScenarioResultViewModel>();
 
             base.Configure();
+        }
+
+        private void ConfigureEconomicSummary()
+        {
+            Mapper.CreateMap<EconomicSummaryCreateViewModel, SaveEconomicSummaryRequest>();
+            Mapper.CreateMap<EconomicSummaryCreateViewModel.Scenario, SaveEconomicSummaryRequest.Scenario>();
+            Mapper.CreateMap<GetEconomicSummaryResponse, EconomicSummaryViewModel>();
+            Mapper.CreateMap<GetEconomicSummariesResponse.EconomicSummary, EconomicSummaryViewModel>();
+            Mapper.CreateMap<GetEconomicSummaryResponse, EconomicSummaryCreateViewModel>();
+            Mapper.CreateMap<GetEconomicSummaryResponse.Scenario, EconomicSummaryCreateViewModel.Scenario>();
+            Mapper.CreateMap<GetEconomicSummaryReportResponse, EconomicSummaryReportViewModel>();
+            Mapper.CreateMap<GetEconomicSummaryReportResponse.Group, EconomicSummaryReportViewModel.Group>();
+            Mapper.CreateMap<GetEconomicSummaryReportResponse.Scenario, EconomicSummaryReportViewModel.Scenario>();
+            Mapper.CreateMap<GetEconomicSummaryReportResponse.OutputResult, EconomicSummaryReportViewModel.OutputResult>();
+            Mapper.CreateMap<GetEconomicSummaryReportResponse.KeyOutput, EconomicSummaryReportViewModel.KeyOutput>();
+
         }
 
         private void ConfigureOperationData()

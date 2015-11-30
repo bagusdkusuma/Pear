@@ -2051,4 +2051,8 @@ a.see-more
     {
         width : 180px;
     }
+
+    .scenario-template.original {
+        display: none;
+    }
     

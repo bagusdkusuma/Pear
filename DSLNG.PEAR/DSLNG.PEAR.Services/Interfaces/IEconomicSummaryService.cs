@@ -11,8 +11,10 @@ namespace DSLNG.PEAR.Services.Interfaces
     public interface IEconomicSummaryService
     {
         GetEconomicSummariesResponse GetEconomicSummaries(GetEconomicSummariesRequest request);
+        GetEconomicSummariesResponse GetEconomicSummariesForGrid(GetEconomicSummariesRequest request);
         SaveEconomicSummaryResponse SaveEconomicSummary(SaveEconomicSummaryRequest request);
         GetEconomicSummaryResponse GetEconomicSummary(GetEconomicSummaryRequest request);
         DeleteEconomicSummaryResponse DeleteEconomicSummary(DeleteEconomicSummaryRequest request);
+        GetEconomicSummaryReportResponse GetEconomicSummaryReport();
     }
 }
