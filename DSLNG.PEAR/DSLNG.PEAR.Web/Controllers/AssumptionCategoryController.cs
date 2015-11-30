@@ -137,12 +137,8 @@ namespace DSLNG.PEAR.Web.Controllers
             var request = _assumptionCategoryService.DeleteAssumptionCategory(new DeleteAssumptionCategoryRequest { Id = id });
             TempData["IsSuccess"] = request.IsSuccess;
             TempData["Message"] = request.Message;
-            if (request.IsSuccess)
-            {
-                return RedirectToAction("Index");
-            }
+            return RedirectToAction("Index");
 
-            return View();
         }
 
         public ActionResult Grid(GridParams gridParams)
@@ -163,7 +159,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 aaData = CategoriesResponse
             };
             return Json(data, JsonRequestBehavior.AllowGet);
-            
+
         }
     }
 }

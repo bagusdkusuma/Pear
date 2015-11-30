@@ -1,6 +1,7 @@
 ﻿
 
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 namespace DSLNG.PEAR.Web.ViewModels.OutputConfig
 {
@@ -11,7 +12,9 @@ namespace DSLNG.PEAR.Web.ViewModels.OutputConfig
         }
         public int Id { get; set; }
         public string Name { get; set; }
+        [Display(Name="Category")]
         public int CategoryId { get; set; }
+        [Display(Name="Measurement")]
         public int MeasurementId { get; set; }
         public IList<SelectListItem> Measurements { get; set; }
         public IList<SelectListItem> OutputCategories { get; set; }

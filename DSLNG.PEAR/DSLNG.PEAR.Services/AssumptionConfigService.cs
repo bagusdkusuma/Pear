@@ -11,6 +11,7 @@ using DSLNG.PEAR.Common.Extensions;
 using System.Data.Entity;
 using DSLNG.PEAR.Data.Entities.EconomicModel;
 using System.Data.SqlClient;
+using System.Data.Entity.Infrastructure;
 
 namespace DSLNG.PEAR.Services
 {
@@ -102,16 +103,28 @@ namespace DSLNG.PEAR.Services
 
         public DeleteAssumptionConfigResponse DeleteAssumptionConfig(DeleteAssumptionConfigRequest request)
         {
-            var AssumptionConfig = new KeyAssumptionConfig { Id = request.Id };
-            DataContext.KeyAssumptionConfigs.Attach(AssumptionConfig);
-            DataContext.KeyAssumptionConfigs.Remove(AssumptionConfig);
-            DataContext.SaveChanges();
-           
-            return new DeleteAssumptionConfigResponse
+            try
             {
-                IsSuccess = true,
-                Message = "The Assumption Category has been deleted successfully"
-            };
+                var assumptionConfig = new KeyAssumptionConfig { Id = request.Id };
+                DataContext.KeyAssumptionConfigs.Attach(assumptionConfig);
+                DataContext.KeyAssumptionConfigs.Remove(assumptionConfig);
+                DataContext.SaveChanges();
+
+                return new DeleteAssumptionConfigResponse
+                {
+                    IsSuccess = true,
+                    Message = "The Assumption Config has been deleted successfully"
+                };
+            }
+            catch(DbUpdateException exception)
+            {
+                return new DeleteAssumptionConfigResponse
+                {
+                    IsSuccess = false,
+                    Message = exception.Message
+                };
+            }
+
         }
 
 
