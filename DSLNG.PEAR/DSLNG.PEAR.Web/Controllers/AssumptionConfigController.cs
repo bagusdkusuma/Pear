@@ -141,11 +141,8 @@ namespace DSLNG.PEAR.Web.Controllers
             var request = _assumptionConfigService.DeleteAssumptionConfig(new DeleteAssumptionConfigRequest { Id = id });
             TempData["IsSuccess"] = request.IsSuccess;
             TempData["Message"] = request.Message;
-            if (request.IsSuccess)
-            {
                 return RedirectToAction("Index");
-            }
-            return View();
+
         }
 
 

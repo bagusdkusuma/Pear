@@ -2,7 +2,6 @@
     ViewBag.Title = "Assumption Config";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <h2>Key Assumption Config</h2>
 @Html.Partial("_MessageResponse")
 @Html.ActionLink("Create New", "Create")
@@ -75,6 +74,7 @@
                 rowCallback: function (row, data) {
                     // Set the checked state of the checkbox in the table
                     $('input.is-active', row).prop('checked', data.IsActive == 1);
+
                 }
             });
 
@@ -86,8 +86,13 @@
                     $('<form action="' + url + '" method="POST">' +
                         '<input type="hidden" name="id" value="' + id + '">' +
                         '</form>').submit();
+
+
                 }
             });
+
+
+
 
         });
     </script>
