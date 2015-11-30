@@ -26,60 +26,10 @@ namespace DSLNG.PEAR.Web.Controllers
             _dropdownService = dropdownService;
         }
 
-
         public ActionResult Index()
         {
             return View();
         }
-
-        public ActionResult IndexPartial()
-        {
-            var viewModel = GridViewExtension.GetViewModel("gridOperationalData");
-            if (viewModel == null)
-                viewModel = CreateGridViewModel();
-            return BindingCore(viewModel);
-        }
-
-        PartialViewResult BindingCore(GridViewModel gridViewModel)
-        {
-            gridViewModel.ProcessCustomBinding(GetDataRowCount, GetData);
-            return PartialView("_IndexGridPartial", gridViewModel);
-        }
-
-        public ActionResult PagingAction(GridViewPagerState pager)
-        {
-            var viewModel = GridViewExtension.GetViewModel("gridAssumptiondDataIndex");
-            viewModel.ApplyPagingState(pager);
-            return BindingCore(viewModel);
-        }
-
-        private static GridViewModel CreateGridViewModel()
-        {
-            var viewModel = new GridViewModel();
-            viewModel.KeyFieldName = "Id";
-            viewModel.Columns.Add("KeyOperation");
-            viewModel.Columns.Add("KPI");
-            viewModel.Columns.Add("ActualValue");
-            viewModel.Columns.Add("ForecastValue");
-            viewModel.Columns.Add("Remark");
-            viewModel.Pager.PageSize = 10;
-            return viewModel;
-        }
-
-        public void GetDataRowCount(GridViewCustomBindingGetDataRowCountArgs e)
-        {
-            e.DataRowCount = _operationDataService.GetOperationalDatas(new GetOperationalDatasRequest { OnlyCount = true }).Count;
-        }
-
-        public void GetData(GridViewCustomBindingGetDataArgs e)
-        {
-            e.Data = _operationDataService.GetOperationalDatas(new GetOperationalDatasRequest
-                {
-                    Skip = e.StartDataRowIndex,
-                    Take = e.DataRowCount
-                }).OperationalDatas;
-        }
-
 
         public ActionResult Create()
         {
@@ -190,14 +140,13 @@ namespace DSLNG.PEAR.Web.Controllers
         //actually it can also be processed by check if it is ajax request but you know.. deadline happens
         public ActionResult ConfigurationPartial(OperationDataParamConfigurationViewModel paramViewModel)
         {
-            var viewModel = ConfigurationViewModel(paramViewModel);
+            var viewModel = ConfigurationViewModel(paramViewModel, null);
             return PartialView("Configuration/_" + viewModel.PeriodeType, viewModel);
-            
         }
 
         public ActionResult Configuration(OperationDataParamConfigurationViewModel paramViewModel)
         {
-            var viewModel = ConfigurationViewModel(paramViewModel);
+            var viewModel = ConfigurationViewModel(paramViewModel, null);
             return View(viewModel);
         }
 
@@ -209,7 +158,18 @@ namespace DSLNG.PEAR.Web.Controllers
             return Json(new { Message = response.Message, isSuccess = response.IsSuccess });
         }
 
-        private OperationDataConfigurationViewModel ConfigurationViewModel(OperationDataParamConfigurationViewModel paramViewModel)
+        public ActionResult DetailPartial(OperationDataParamConfigurationViewModel paramViewModel)
+        {
+            return View("_DetailPartial", ConfigurationViewModel(paramViewModel, true));
+        }
+
+        public ActionResult DetailPartialPeriodeType(OperationDataParamConfigurationViewModel paramViewModel)
+        {
+            var viewModel = ConfigurationViewModel(paramViewModel, true);
+            return PartialView("DetailPartial/_" + viewModel.PeriodeType, viewModel);
+        }
+
+        private OperationDataConfigurationViewModel ConfigurationViewModel(OperationDataParamConfigurationViewModel paramViewModel,  bool? isIncludeGroup)
         {
             PeriodeType pType = string.IsNullOrEmpty(paramViewModel.PeriodeType)
                                     ? PeriodeType.Yearly
@@ -217,6 +177,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
             var request = paramViewModel.MapTo<GetOperationDataConfigurationRequest>();
             request.PeriodeType = pType;
+            request.IsPartial = isIncludeGroup.HasValue && isIncludeGroup.Value;
             var response = _operationDataService.GetOperationDataConfiguration(request);
             var viewModel = response.MapTo<OperationDataConfigurationViewModel>();
             viewModel.Years = _dropdownService.GetYears().MapTo<SelectListItem>();
