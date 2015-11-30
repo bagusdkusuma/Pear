@@ -10,6 +10,7 @@ using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Data.Entities.EconomicModel;
 using System.Data.SqlClient;
+using System.Data.Entity.Infrastructure;
 
 namespace DSLNG.PEAR.Services
 {
@@ -78,16 +79,27 @@ namespace DSLNG.PEAR.Services
 
         public DeleteOperationGroupResponse DeleteOperationGroup(DeleteOperationGroupRequest request)
         {
-            var OperationGroup = new KeyOperationGroup { Id = request.Id };
-            DataContext.KeyOperationGroups.Attach(OperationGroup);
-            DataContext.KeyOperationGroups.Remove(OperationGroup);
-            DataContext.SaveChanges();
-
-            return new DeleteOperationGroupResponse
+            try
             {
-                IsSuccess = true,
-                Message = "The Operation Group has been deleted successfully"
-            };
+                var OperationGroup = new KeyOperationGroup { Id = request.Id };
+                DataContext.KeyOperationGroups.Attach(OperationGroup);
+                DataContext.KeyOperationGroups.Remove(OperationGroup);
+                DataContext.SaveChanges();
+
+                return new DeleteOperationGroupResponse
+                {
+                    IsSuccess = true,
+                    Message = "The Operation Group has been deleted successfully"
+                };
+            }
+            catch(DbUpdateException exception)
+            {
+                return new DeleteOperationGroupResponse
+                {
+                    IsSuccess = false,
+                    Message = exception.Message
+                };
+            }
         }
 
 

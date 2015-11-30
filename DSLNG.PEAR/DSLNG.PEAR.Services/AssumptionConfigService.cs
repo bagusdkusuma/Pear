@@ -121,7 +121,7 @@ namespace DSLNG.PEAR.Services
                 return new DeleteAssumptionConfigResponse
                 {
                     IsSuccess = false,
-                    Message = string.Format("{0} ({1})","Can't Delete Assumption config, File in use", exception.Message)
+                    Message = exception.Message
                 };
             }
 

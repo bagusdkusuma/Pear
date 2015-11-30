@@ -96,11 +96,8 @@ namespace DSLNG.PEAR.Web.Controllers
             var response = _assumptionDataService.DeleteAssumptionData(new DeleteAssumptionDataRequest { Id = id });
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
-            if (response.IsSuccess)
-            {
-                return RedirectToAction("Index");
-            }
-            return View();
+
+            return RedirectToAction("Index");
         }
 
         public ActionResult Grid(GridParams gridParams)
@@ -158,7 +155,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
             return viewModel;
         }
-        
+
 
     }
 }
