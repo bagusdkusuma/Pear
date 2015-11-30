@@ -64,10 +64,21 @@ namespace DSLNG.PEAR.Services
         {
             if (request.Id == 0)
             {
-                var AssumptionData = request.MapTo<KeyAssumptionData>();
+                var AssumptionData = DataContext.KeyAssumptionDatas.FirstOrDefault(x => x.Scenario.Id == request.IdScenario
+                    && x.KeyAssumptionConfig.Id == request.IdConfig);
+                if (AssumptionData == null)
+                {
+                    AssumptionData = request.MapTo<KeyAssumptionData>();
+                    DataContext.KeyAssumptionDatas.Add(AssumptionData);
+                }
+                else {
+                    var currentId = AssumptionData.Id;
+                    request.MapPropertiesToInstance<KeyAssumptionData>(AssumptionData);
+                    AssumptionData.Id = currentId;
+                }
                 AssumptionData.Scenario = DataContext.Scenarios.Where(x => x.Id == request.IdScenario).FirstOrDefault();
                 AssumptionData.KeyAssumptionConfig = DataContext.KeyAssumptionConfigs.Where(x => x.Id == request.IdConfig).FirstOrDefault();
-                DataContext.KeyAssumptionDatas.Add(AssumptionData);
+                
             }
             else
             {
