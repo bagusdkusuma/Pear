@@ -13,13 +13,9 @@ namespace DSLNG.PEAR.Services.Responses.OutputConfig
         public int MeasurementId { get; set; }
         public Formula Formula { get; set; }
         public IList<Kpi> Kpis { get; set; }
-        public IList<int> KpiIds { get {
-            return this.Kpis.Select(x => x.Id).ToList();
-        } }
+        public IList<int> KpiIds { get;set;}
         public IList<KeyAssumptionConfig> KeyAssumptions { get; set; }
-        public IList<int> KeyAssumptionIds { get {
-            return this.KeyAssumptions.Select(x => x.Id).ToList();
-        } }
+        public IList<int> KeyAssumptionIds { get; set; }
         public double? ExcludeValue { get; set; }
         public int Order { get; set; }
         public string Remark { get; set; }

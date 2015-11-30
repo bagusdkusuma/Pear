@@ -133,11 +133,12 @@ namespace DSLNG.PEAR.Services
 
         public GetOutputConfigResponse Get(GetOutputConfigRequest request)
         {
-            return DataContext.KeyOutputConfigs.Include(x => x.Measurement)
+            var config =  DataContext.KeyOutputConfigs.Include(x => x.Measurement)
                 .Include(x => x.Category)
                 .Include(x => x.Kpis)
                 .Include(x => x.KeyAssumptions)
-                .FirstOrDefault(x => x.Id == request.Id).MapTo<GetOutputConfigResponse>();
+                .FirstOrDefault(x => x.Id == request.Id);
+            return config.MapTo<GetOutputConfigResponse>();
         }
         public GetOutputConfigsResponse GetOutputConfigs(GetOutputConfigsRequest request)
         {
@@ -339,9 +340,11 @@ namespace DSLNG.PEAR.Services
             var currentYear = DateTime.Now.Year;
             var currentMonth = DateTime.Now.Month;
             var result = new OutputResult();
-            var kpiId = keyOutput.Kpis[0].Id;
-            var startId = keyOutput.KeyAssumptions[0].Id;
-            var endId = keyOutput.KeyAssumptions[1].Id;
+            var kpiIds = keyOutput.KpiIds.Split(',').Select(x => int.Parse(x)).ToList();
+            var kpiId = keyOutput.Kpis.First(x => x.Id == kpiIds[0]).Id;
+            var assumptionIds = keyOutput.KeyAssumptionIds.Split(',').Select(x => int.Parse(x)).ToList();
+            var startId = keyOutput.KeyAssumptions.First(x => x.Id == assumptionIds[0]).Id;
+            var endId = keyOutput.KeyAssumptions.First(x => x.Id == assumptionIds[1]).Id;
             var startAssumption = DataContext.KeyAssumptionDatas.FirstOrDefault(x => x.KeyAssumptionConfig.Id == startId);
             var endAssumption = DataContext.KeyAssumptionDatas.FirstOrDefault(x => x.KeyAssumptionConfig.Id == endId);
             if (startAssumption == null || endAssumption == null)
@@ -385,9 +388,11 @@ namespace DSLNG.PEAR.Services
             var currentYear = DateTime.Now.Year;
             var currentMonth = DateTime.Now.Month;
             var result = new OutputResult();
-            var kpiId = keyOutput.Kpis[0].Id;
-            var startId = keyOutput.KeyAssumptions[0].Id;
-            var endId = keyOutput.KeyAssumptions[1].Id;
+            var kpiIds = keyOutput.KpiIds.Split(',').Select(x => int.Parse(x)).ToList();
+            var kpiId = keyOutput.Kpis.First(x => x.Id == kpiIds[0]).Id;
+            var assumptionIds = keyOutput.KeyAssumptionIds.Split(',').Select(x => int.Parse(x)).ToList();
+            var startId = keyOutput.KeyAssumptions.First(x => x.Id == assumptionIds[0]).Id;
+            var endId = keyOutput.KeyAssumptions.First(x => x.Id == assumptionIds[1]).Id;
             var startAssumption = DataContext.KeyAssumptionDatas.FirstOrDefault(x => x.KeyAssumptionConfig.Id == startId);
             var endAssumption = DataContext.KeyAssumptionDatas.FirstOrDefault(x => x.KeyAssumptionConfig.Id == endId);
             if (startAssumption == null || endAssumption == null)
@@ -398,7 +403,7 @@ namespace DSLNG.PEAR.Services
             DateTime endForecast;
             if (IsStartAndEndValid(startAssumption.ForecastValue, endAssumption.ForecastValue, out startForecast, out endForecast))
             {
-                var forecastValue = DataContext.KeyOperationDatas.Where(x => x.Kpi.Id == keyOutput.Id && x.Scenario.Id == scenarioId
+                var forecastValue = DataContext.KeyOperationDatas.Where(x => x.Kpi.Id == kpiId && x.Scenario.Id == scenarioId
                 && x.Periode.Year >= startForecast.Year && x.Periode.Year <= endForecast.Year && x.PeriodeType == PeriodeType.Yearly)
                 .Average(x => x.Value);
                 if (forecastValue.HasValue) result.Forecast = forecastValue.ToString();
@@ -432,9 +437,11 @@ namespace DSLNG.PEAR.Services
             var currentMonth = DateTime.Now.Month;
             var currentDate = DateTime.Now;
             var result = new OutputResult();
-            var kpiId = keyOutput.Kpis[0].Id;
-            var startId = keyOutput.KeyAssumptions[0].Id;
-            var endId = keyOutput.KeyAssumptions[1].Id;
+            var kpiIds = keyOutput.KpiIds.Split(',').Select(x => int.Parse(x)).ToList();
+            var kpiId = keyOutput.Kpis.First(x => x.Id == kpiIds[0]).Id;
+            var assumptionIds = keyOutput.KeyAssumptionIds.Split(',').Select(x => int.Parse(x)).ToList();
+            var startId = keyOutput.KeyAssumptions.First(x => x.Id == assumptionIds[0]).Id;
+            var endId = keyOutput.KeyAssumptions.First(x => x.Id == assumptionIds[1]).Id;
             var startAssumption = DataContext.KeyAssumptionDatas.FirstOrDefault(x => x.KeyAssumptionConfig.Id == startId);
             var endAssumption = DataContext.KeyAssumptionDatas.FirstOrDefault(x => x.KeyAssumptionConfig.Id == endId);
             if (startAssumption == null || endAssumption == null)
@@ -445,7 +452,7 @@ namespace DSLNG.PEAR.Services
             DateTime endForecast;
             if (IsStartAndEndValid(startAssumption.ForecastValue, endAssumption.ForecastValue, out startForecast, out endForecast))
             {
-                var forecastValue = DataContext.KeyOperationDatas.Where(x => x.Kpi.Id == keyOutput.Id && x.Scenario.Id == scenarioId
+                var forecastValue = DataContext.KeyOperationDatas.Where(x => x.Kpi.Id == kpiId && x.Scenario.Id == scenarioId
                     && x.Periode >= startForecast && x.Periode <= endForecast && x.PeriodeType == PeriodeType.Monthly)
                     .Min(x => x.Value);
                 if (forecastValue.HasValue) result.Forecast = forecastValue.Value.ToString();
@@ -470,9 +477,11 @@ namespace DSLNG.PEAR.Services
             var currentMonth = DateTime.Now.Month;
             var currentDate = DateTime.Now;
             var result = new OutputResult();
-            var kpiId = keyOutput.Kpis[0].Id;
-            var startId = keyOutput.KeyAssumptions[0].Id;
-            var endId = keyOutput.KeyAssumptions[1].Id;
+            var kpiIds = keyOutput.KpiIds.Split(',').Select(x => int.Parse(x)).ToList();
+            var kpiId = keyOutput.Kpis.First(x => x.Id == kpiIds[0]).Id;
+            var assumptionIds = keyOutput.KeyAssumptionIds.Split(',').Select(x => int.Parse(x)).ToList();
+            var startId = keyOutput.KeyAssumptions.First(x => x.Id == assumptionIds[0]).Id;
+            var endId = keyOutput.KeyAssumptions.First(x => x.Id == assumptionIds[1]).Id;
             var startAssumption = DataContext.KeyAssumptionDatas.FirstOrDefault(x => x.KeyAssumptionConfig.Id == startId);
             var endAssumption = DataContext.KeyAssumptionDatas.FirstOrDefault(x => x.KeyAssumptionConfig.Id == endId);
             if (startAssumption == null || endAssumption == null)
@@ -483,7 +492,7 @@ namespace DSLNG.PEAR.Services
             DateTime endForecast;
             if (IsStartAndEndValid(startAssumption.ForecastValue, endAssumption.ForecastValue, out startForecast, out endForecast))
             {
-                var minForecast = DataContext.KeyOperationDatas.Where(x => x.Kpi.Id == keyOutput.Id && x.Scenario.Id == scenarioId
+                var minForecast = DataContext.KeyOperationDatas.Where(x => x.Kpi.Id == kpiId && x.Scenario.Id == scenarioId
                     && x.Periode >= startForecast && x.Periode <= endForecast && x.PeriodeType == PeriodeType.Monthly)
                     .OrderBy(x => x.Value).FirstOrDefault();
                 if (minForecast != null) result.Forecast = minForecast.Periode.AddMonths(1).AddDays(-1).ToString();
@@ -517,9 +526,11 @@ namespace DSLNG.PEAR.Services
             var currentMonth = DateTime.Now.Month;
             var currentDate = DateTime.Now;
             var result = new OutputResult();
-            var kpiId = keyOutput.Kpis[0].Id;
-            var startId = keyOutput.KeyAssumptions[0].Id;
-            var endId = keyOutput.KeyAssumptions[1].Id;
+            var kpiIds = keyOutput.KpiIds.Split(',').Select(x => int.Parse(x)).ToList();
+            var kpiId = keyOutput.Kpis.First(x => x.Id == kpiIds[0]).Id;
+            var assumptionIds = keyOutput.KeyAssumptionIds.Split(',').Select(x => int.Parse(x)).ToList();
+            var startId = keyOutput.KeyAssumptions.First(x => x.Id == assumptionIds[0]).Id;
+            var endId = keyOutput.KeyAssumptions.First(x => x.Id == assumptionIds[1]).Id;
             var startAssumption = DataContext.KeyAssumptionDatas.FirstOrDefault(x => x.KeyAssumptionConfig.Id == startId);
             var endAssumption = DataContext.KeyAssumptionDatas.FirstOrDefault(x => x.KeyAssumptionConfig.Id == endId);
             if (startAssumption == null || endAssumption == null)
@@ -532,7 +543,7 @@ namespace DSLNG.PEAR.Services
             {
                 var forecast = DataContext.KeyOperationDatas.Where(x => x.Kpi.Id == kpiId && x.Scenario.Id == scenarioId
                    && x.Periode.Year >= startForecast.Year && x.Periode.Year <= endForecast.Year
-                   && x.PeriodeType == PeriodeType.Yearly).OrderBy(x => x.Value).FirstOrDefault(x => x.Value > 0);
+                   && x.PeriodeType == PeriodeType.Yearly).OrderBy(x => x.Periode).FirstOrDefault(x => x.Value > 0);
                 if (forecast != null) result.Forecast = forecast.Periode.Year.ToString();
             }
 
@@ -554,11 +565,11 @@ namespace DSLNG.PEAR.Services
                     && x.PeriodeType == PeriodeType.Monthly && x.Scenario.Id == scenarioId).Sum(x => x.Value);
                 var currentYearValue = new
                 {
-                    Value = thisYearForecastValue + untilNowThisYearValue,
+                    Value = new List<double?>{thisYearForecastValue,untilNowThisYearValue}.Sum(),
                     Periode = DateTime.Now
                 };
                 pastValues.Add(currentYearValue);
-                var actual = pastValues.Concat(futureValues).OrderBy(x => x.Value).FirstOrDefault(x => x.Value > 0);
+                var actual = pastValues.Concat(futureValues).OrderBy(x => x.Periode).FirstOrDefault(x => x.Value > 0);
                 if (actual != null) result.Actual = actual.Periode.Year.ToString();
             }
             return result;
@@ -570,9 +581,11 @@ namespace DSLNG.PEAR.Services
             var currentMonth = DateTime.Now.Month;
             var currentDate = DateTime.Now;
             var result = new OutputResult();
-            var kpiId = keyOutput.Kpis[0].Id;
-            var startId = keyOutput.KeyAssumptions[0].Id;
-            var endId = keyOutput.KeyAssumptions[1].Id;
+            var kpiIds = keyOutput.KpiIds.Split(',').Select(x => int.Parse(x)).ToList();
+            var kpiId = keyOutput.Kpis.First(x => x.Id == kpiIds[0]).Id;
+            var assumptionIds = keyOutput.KeyAssumptionIds.Split(',').Select(x => int.Parse(x)).ToList();
+            var startId = keyOutput.KeyAssumptions.First(x => x.Id == assumptionIds[0]).Id;
+            var endId = keyOutput.KeyAssumptions.First(x => x.Id == assumptionIds[1]).Id;
             var startAssumption = DataContext.KeyAssumptionDatas.FirstOrDefault(x => x.KeyAssumptionConfig.Id == startId);
             var endAssumption = DataContext.KeyAssumptionDatas.FirstOrDefault(x => x.KeyAssumptionConfig.Id == endId);
             if (startAssumption == null || endAssumption == null)
@@ -586,16 +599,19 @@ namespace DSLNG.PEAR.Services
                 var forecastList = DataContext.KeyOperationDatas.Where(x => x.Kpi.Id == kpiId && x.Scenario.Id == scenarioId
                    && x.Periode.Year >= startForecast.Year && x.Periode.Year <= endForecast.Year
                    && x.PeriodeType == PeriodeType.Yearly).ToList();
-                var forecast = forecastList.OrderBy(x => x.Value).FirstOrDefault(x => x.Value > 0);
-                var breakEventYearWeight = 1;
-                if (forecast != null)
+                var forecast = forecastList.OrderBy(x => x.Periode).FirstOrDefault(x => x.Value > 0);
+                double breakEventYearWeight = 1;
+                if (forecast != null && forecast.Periode.Year != startForecast.Year)
                 {
                     var prev = forecastList.FirstOrDefault(x => x.Periode.Year == (forecast.Periode.Year - 1));
-                    if (prev.Value - forecast.Value != 0)
+                    if (prev != null && prev.Value - forecast.Value != 0)
                     {
-                        breakEventYearWeight = int.Parse(string.Format("{0:0.0}", (prev.Value / (prev.Value - forecast.Value))));
+                        breakEventYearWeight = double.Parse(string.Format("{0:0.0}", (prev.Value / (prev.Value - forecast.Value))));
                     }
-                    result.Forecast = (forecast.Periode.Year - startForecast.Year + breakEventYearWeight).ToString();
+                    if (prev != null)
+                    {
+                        result.Forecast = (forecast.Periode.Year - startForecast.Year + breakEventYearWeight).ToString();
+                    }
                 }
             }
             DateTime startActual;
@@ -616,22 +632,25 @@ namespace DSLNG.PEAR.Services
                     && x.PeriodeType == PeriodeType.Monthly && x.Scenario.Id == scenarioId).Sum(x => x.Value);
                 var currentYearValue = new
                 {
-                    Value = thisYearForecastValue + untilNowThisYearValue,
+                    Value = new List<double?>{thisYearForecastValue,untilNowThisYearValue}.Sum(),
                     Periode = DateTime.Now
                 };
                 pastValues.Add(currentYearValue);
                 var actualList = pastValues.Concat(futureValues);
-                var actual = actualList.OrderBy(x => x.Value).FirstOrDefault(x => x.Value > 0);
+                var actual = actualList.OrderBy(x => x.Periode).FirstOrDefault(x => x.Value > 0);
 
-                var actualBreakEventYearWeight = 1;
-                if (actual != null)
+                double actualBreakEventYearWeight = 1;
+                if (actual != null && actual.Periode.Year != startForecast.Year)
                 {
                     var prev = actualList.FirstOrDefault(x => x.Periode.Year == (actual.Periode.Year - 1));
-                    if (prev.Value - actual.Value != 0)
+                    if (prev != null && prev.Value - actual.Value != 0)
                     {
-                        actualBreakEventYearWeight = int.Parse(string.Format("{0:0.0}", (prev.Value / (prev.Value - actual.Value))));
+                        actualBreakEventYearWeight = double.Parse(string.Format("{0:0.0}", (prev.Value / (prev.Value - actual.Value))));
                     }
-                    result.Actual = (actual.Periode.Year - startForecast.Year + actualBreakEventYearWeight).ToString();
+                    if (prev != null)
+                    {
+                        result.Actual = (actual.Periode.Year - startForecast.Year + actualBreakEventYearWeight).ToString();
+                    }
                 }
             }
 
@@ -643,14 +662,15 @@ namespace DSLNG.PEAR.Services
         {
             var sumResult = this.Sum(keyOutput, scenarioId);
             var result = new OutputResult();
-            var assumptionId = keyOutput.KeyAssumptions[2].Id;
+            var assumptionIds = keyOutput.KeyAssumptionIds.Split(',').Select(x => int.Parse(x)).ToList();
+            var assumptionId = keyOutput.KeyAssumptions.First(x => x.Id == assumptionIds[2]).Id;
             var assumption = DataContext.KeyAssumptionDatas.FirstOrDefault(x => x.KeyAssumptionConfig.Id == assumptionId);
             if (!string.IsNullOrEmpty(sumResult.Actual) && assumption != null && !string.IsNullOrEmpty(assumption.ActualValue))
             {
                 result.Actual = String.Format("{0:0.0}", double.Parse(sumResult.Actual) /
                     double.Parse(assumption.ActualValue));
             }
-            if (!string.IsNullOrEmpty(sumResult.Actual) && assumption != null && !string.IsNullOrEmpty(assumption.ForecastValue))
+            if (!string.IsNullOrEmpty(sumResult.Forecast) && assumption != null && !string.IsNullOrEmpty(assumption.ForecastValue))
             {
                 result.Forecast = String.Format("{0:0.0}", double.Parse(sumResult.Forecast) /
                     double.Parse(assumption.ForecastValue));
@@ -678,7 +698,7 @@ namespace DSLNG.PEAR.Services
             if (IsStartAndEndValid(completionAssumption.ForecastValue, completionAssumption.ActualValue, out completionForecast, out completionActual))
             {
                 var forecast = DataContext.KeyOperationDatas.FirstOrDefault(x => x.Kpi.Id == kpiId && x.Scenario.Id == scenarioId
-                    && x.PeriodeType == PeriodeType.Yearly
+                    && x.PeriodeType == PeriodeType.Monthly
                     && x.Periode.Year == completionForecast.Year && x.Periode.Month == completionForecast.Month);
                 if (forecast != null) result.Forecast = forecast.Value.ToString();
 
@@ -700,7 +720,7 @@ namespace DSLNG.PEAR.Services
                 else
                 {
                     var actual = DataContext.KpiAchievements.FirstOrDefault(x => x.Kpi.Id == kpiId
-                    && x.PeriodeType == PeriodeType.Yearly
+                    && x.PeriodeType == PeriodeType.Monthly
                     && x.Periode.Year == completionForecast.Year && x.Periode.Month == completionForecast.Month);
                     if (actual != null) result.Actual = actual.ToString();
                 }
@@ -714,11 +734,12 @@ namespace DSLNG.PEAR.Services
             var currentYear = DateTime.Now.Year;
             var currentMonth = DateTime.Now.Month;
             var currentDate = DateTime.Now;
-            var kpiIds = keyOutput.Kpis.Select(x => x.Id).ToList();
+            var kpiIds = keyOutput.KpiIds.Split(',').Select(x => int.Parse(x)).ToList();
             var headId = kpiIds[0];
             var result = new OutputResult();
-            var startId = keyOutput.KeyAssumptions[0].Id;
-            var endId = keyOutput.KeyAssumptions[1].Id;
+            var assumptionIds = keyOutput.KeyAssumptionIds.Split(',').Select(x => int.Parse(x)).ToList();
+            var startId = keyOutput.KeyAssumptions.First(x => x.Id == assumptionIds[0]).Id;
+            var endId = keyOutput.KeyAssumptions.First(x => x.Id == assumptionIds[1]).Id;
             var startAssumption = DataContext.KeyAssumptionDatas.FirstOrDefault(x => x.KeyAssumptionConfig.Id == startId);
             var endAssumption = DataContext.KeyAssumptionDatas.FirstOrDefault(x => x.KeyAssumptionConfig.Id == endId);
             if (startAssumption == null || endAssumption == null)
@@ -728,7 +749,9 @@ namespace DSLNG.PEAR.Services
 
             var headKeyOutpu = new KeyOutputConfiguration();
             headKeyOutpu.KeyAssumptions = keyOutput.KeyAssumptions;
+            headKeyOutpu.KeyAssumptionIds = keyOutput.KeyAssumptionIds;
             headKeyOutpu.Kpis = new List<Kpi> { keyOutput.Kpis.First(x => x.Id == headId) };
+            headKeyOutpu.KpiIds = headId.ToString();
             var headResult = new OutputResult();
             if(useAverage){
                 headResult = Average(headKeyOutpu,scenarioId);
@@ -742,14 +765,16 @@ namespace DSLNG.PEAR.Services
                 {
                     var newKeyOutput = new KeyOutputConfiguration();
                     newKeyOutput.KeyAssumptions = keyOutput.KeyAssumptions;
+                    newKeyOutput.KeyAssumptionIds  = keyOutput.KeyAssumptionIds;
                     newKeyOutput.Kpis = new List<Kpi> { keyOutput.Kpis.First(x => x.Id == kpiId) };
+                    newKeyOutput.KpiIds = kpiId.ToString();
                     if (useAverage)
                     {
-                        restResults.Add(Average(headKeyOutpu, scenarioId));
+                        restResults.Add(Average(newKeyOutput, scenarioId));
                     }
                     else
                     {
-                        restResults.Add(Sum(headKeyOutpu, scenarioId));
+                        restResults.Add(Sum(newKeyOutput, scenarioId));
                     }
                 }
 

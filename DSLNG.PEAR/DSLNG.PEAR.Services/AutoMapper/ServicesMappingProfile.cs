@@ -480,10 +480,14 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
             Mapper.CreateMap<Kpi, OGetKpisResponse.Kpi>();
             Mapper.CreateMap<KeyAssumptionConfig, GetKeyAssumptionsResponse.KeyAssumption>();
-            Mapper.CreateMap<SaveOutputConfigRequest, KeyOutputConfiguration>();
+            Mapper.CreateMap<SaveOutputConfigRequest, KeyOutputConfiguration>()
+                .ForMember(x => x.KeyAssumptionIds, o => o.MapFrom(s => string.Join(",", s.KeyAssumptionIds)))
+                .ForMember(x => x.KpiIds, o => o.MapFrom(s => string.Join(",", s.KpiIds)));
             Mapper.CreateMap<KeyOutputConfiguration, GetOutputConfigResponse>()
                 .ForMember(x => x.MeasurementId, o => o.MapFrom(s => s.Measurement.Id))
-                .ForMember(x => x.CategoryId, o => o.MapFrom(s => s.Category.Id));
+                .ForMember(x => x.CategoryId, o => o.MapFrom(s => s.Category.Id))
+                .ForMember(x => x.KpiIds, o => o.MapFrom(s => s.KpiIds.Split(',').Select(m => int.Parse(m)).ToList()))
+                .ForMember(x => x.KeyAssumptionIds, o => o.MapFrom(s => s.KeyAssumptionIds.Split(',').Select(m => int.Parse(m)).ToList()));
             Mapper.CreateMap<Kpi, GetOutputConfigResponse.Kpi>();
             Mapper.CreateMap<KeyAssumptionConfig, GetOutputConfigResponse.KeyAssumptionConfig>();
            
