@@ -72,7 +72,8 @@ namespace DSLNG.PEAR.Services
             }
             else
             {
-                var AssumptionConfig = DataContext.KeyAssumptionConfigs.FirstOrDefault(x => x.Id == request.Id);
+                var AssumptionConfig = DataContext.KeyAssumptionConfigs.Include(x => x.Measurement)
+                    .Include(x => x.Category).FirstOrDefault(x => x.Id == request.Id);
                 if (AssumptionConfig != null)
                 {
                     request.MapPropertiesToInstance<KeyAssumptionConfig>(AssumptionConfig);

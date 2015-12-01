@@ -117,7 +117,8 @@ namespace DSLNG.PEAR.Services
             var data = DataContext.KeyAssumptionCategories.AsQueryable();
             if (includeAssumptionList) {
                 data = data.Include(x => x.KeyAssumptions)
-                    .Include(x => x.KeyAssumptions.Select(y => y.Measurement));
+                    .Include(x => x.KeyAssumptions.Select(y => y.Measurement))
+                    .Where(x => x.IsActive == true).OrderBy(x => x.Order);
             }
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             {
