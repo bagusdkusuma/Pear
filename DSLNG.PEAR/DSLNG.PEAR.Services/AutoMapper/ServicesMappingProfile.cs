@@ -484,7 +484,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.KeyAssumptionIds, o => o.MapFrom(s => string.Join(",", s.KeyAssumptionIds)))
                 .ForMember(x => x.KpiIds, o => o.MapFrom(s => string.Join(",", s.KpiIds)));
             Mapper.CreateMap<KeyOutputConfiguration, GetOutputConfigResponse>()
-                .ForMember(x => x.MeasurementId, o => o.MapFrom(s => s.Measurement.Id))
+                .ForMember(x => x.MeasurementId, o => o.MapFrom(s => s.Measurement == null ? 0 : s.Measurement.Id))
                 .ForMember(x => x.CategoryId, o => o.MapFrom(s => s.Category.Id))
                 .ForMember(x => x.KpiIds, o => o.MapFrom(s => s.KpiIds.Split(',').Select(m => int.Parse(m)).ToList()))
                 .ForMember(x => x.KeyAssumptionIds, o => o.MapFrom(s => s.KeyAssumptionIds.Split(',').Select(m => int.Parse(m)).ToList()));

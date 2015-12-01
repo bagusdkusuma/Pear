@@ -62,11 +62,14 @@ namespace DSLNG.PEAR.Services
                     {
                         outputConfig.KeyAssumptions.Remove(assumption);
                     }
-                    if (request.MeasurementId != outputConfig.Measurement.Id)
+                    if (request.MeasurementId != outputConfig.Measurement.Id && request.MeasurementId != 0)
                     {
                         var measurement = new Measurement { Id = request.MeasurementId };
                         DataContext.Measurements.Attach(measurement);
                         outputConfig.Measurement = measurement;
+                    }
+                    if (request.MeasurementId == 0) {
+                        outputConfig.Measurement = null;
                     }
                     if (request.CategoryId != outputConfig.Category.Id)
                     {
@@ -78,9 +81,12 @@ namespace DSLNG.PEAR.Services
                 }
                 else
                 {
-                    var measurement = new Measurement { Id = request.MeasurementId };
-                    DataContext.Measurements.Attach(measurement);
-                    outputConfig.Measurement = measurement;
+                    if (request.MeasurementId != 0)
+                    {
+                        var measurement = new Measurement { Id = request.MeasurementId };
+                        DataContext.Measurements.Attach(measurement);
+                        outputConfig.Measurement = measurement;
+                    }
                     var category = new KeyOutputCategory { Id = request.CategoryId };
                     DataContext.KeyOutputCategories.Attach(category);
                     outputConfig.Category = category;

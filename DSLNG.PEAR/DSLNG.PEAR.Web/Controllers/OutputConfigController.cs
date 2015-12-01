@@ -45,6 +45,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 Take = -1,
                 SortingDictionary = new SortedDictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
             }).Measurements.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
+            viewModel.Measurements.Insert(0, new SelectListItem { Value = "0", Text = "No Measurement" });
 
             viewModel.OutputCategories = _outputCategoryService.GetOutputCategories(new GetOutputCategoriesRequest
             {
@@ -78,6 +79,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 Take = -1,
                 SortingDictionary = new SortedDictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
             }).Measurements.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
+            viewModel.Measurements.Insert(0, new SelectListItem { Value = "0", Text = "No Measurement" });
 
             viewModel.OutputCategories = _outputCategoryService.GetOutputCategories(new GetOutputCategoriesRequest
             {
