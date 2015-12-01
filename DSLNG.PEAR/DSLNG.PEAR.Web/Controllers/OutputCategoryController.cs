@@ -134,11 +134,7 @@ namespace DSLNG.PEAR.Web.Controllers
             TempData["IsSuccess"] = request.IsSuccess;
             TempData["Message"] = request.Message;
 
-            if (request.IsSuccess)
-            {
-                return RedirectToAction("Index");
-            }
-            return View();
+            return RedirectToAction("Index");
         }
 
         public ActionResult Grid(GridParams gridParams)

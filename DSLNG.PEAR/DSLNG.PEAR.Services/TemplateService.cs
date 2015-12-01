@@ -9,6 +9,7 @@ using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Entities;
 using System.Data.Entity;
 using System.Linq;
+using System.Data.Entity.Infrastructure;
 
 namespace DSLNG.PEAR.Services
 {
@@ -179,6 +180,34 @@ namespace DSLNG.PEAR.Services
             }
             totalRecords = data.Count();
             return data;
+        }
+
+
+        public DeleteTemplateResponse DeleteTemplate(DeleteTemplateRequest request)
+        {
+           try
+           {
+               var template = DataContext.DashboardTemplates.FirstOrDefault(x => x.Id == request.Id);
+               if (template != null)
+               {
+                   DataContext.DashboardTemplates.Attach(template);
+                   DataContext.DashboardTemplates.Remove(template);
+                   DataContext.SaveChanges();
+               }
+               return new DeleteTemplateResponse
+               {
+                   IsSuccess = true,
+                   Message = "Template has been deleted"
+               };
+           }
+            catch(DbUpdateException exception)
+           {
+               return new DeleteTemplateResponse
+               {
+                   IsSuccess = false,
+                   Message = exception.Message
+               };
+           }
         }
     }
 }

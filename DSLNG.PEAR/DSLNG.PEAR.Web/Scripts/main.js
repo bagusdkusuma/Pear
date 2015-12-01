@@ -162,7 +162,7 @@ Number.prototype.format = function (n, x) {
     Pear.OutputConfig = {};
     Pear.EconomicSummary = {};
     Pear.OperationConfig = {};
-    
+
     Pear.Loading.Show = function (container) {
         var loadingImage = $('#dataLayout').attr('data-content-url') + '/img/ajax-loader2.gif';
         container.css('background-position', 'center center');
@@ -4158,6 +4158,61 @@ Number.prototype.format = function (n, x) {
             Pear.OutputConfig._autocomplete(select);
         });
 
+        var addKpi = function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var isAdd = $this.find('i').hasClass('fa-plus');
+            if (isAdd) {
+                var newKpi = kpiParam.clone(true);
+                newKpi.addClass('dynamic-kpi');
+                Pear.OutputConfig._autocomplete(newKpi.find('select'));
+                var remove = $('<a />');
+                remove.append($('<i />').addClass('fa fa-minus'));
+                remove.addClass('btn btn-default');
+                remove.click(function (e) {
+                    var $thisRemove = $(this);
+                    removeKpi($thisRemove);
+                });
+                newKpi.append(remove);
+                newKpi.append($this.clone(true));
+                paramsHolder.append(newKpi.show());
+                if ($this.prev().hasClass('btn')) {
+                    $this.remove();
+                } else {
+                    $this.find('i').removeClass('fa-plus');
+                    $this.find('i').addClass('fa-minus');
+                }
+            } else {
+                removeKpi($this);
+            }
+        };
+
+        var buttonAdd = $('<a />');
+        buttonAdd.append($('<i />').addClass('fa fa-plus'));
+        buttonAdd.addClass('btn btn-default');
+        buttonAdd.click(addKpi);
+
+        var removeKpi = function ($this) {
+            $this.closest('div').remove();
+            if (paramsHolder.find('.dynamic-kpi').length == 1) {
+                var firstDyn = $(paramsHolder.find('.dynamic-kpi')[0]);
+                firstDyn.children('a').each(function (i, val) {
+                    $(val).remove();
+                });
+                firstDyn.append(buttonAdd.clone(true));
+            }
+            if (!paramsHolder.find('.dynamic-kpi .fa-plus').length) {
+                paramsHolder.children('.dynamic-kpi:last-child').append(buttonAdd.clone(true));
+            }
+        }
+       
+        $('.remove-kpi').click(function (e) {
+            e.preventDefault();
+            removeKpi($(this));
+        });
+
+        $('.add-kpi').click(addKpi);
+
         $('.output-formula').change(function (e) {
             var $this = $(this);
             var val = $this.val();
@@ -4231,59 +4286,7 @@ Number.prototype.format = function (n, x) {
                         var kpi = kpiParam.clone(true);
                         if (i == 1) {
                             kpi.addClass('dynamic-kpi');
-                            var buttonAdd = $('<a />');
-                            buttonAdd.append($('<i />').addClass('fa fa-plus'));
-                            buttonAdd.addClass('btn btn-default');
-                            buttonAdd.click(function (e) {
-                                e.preventDefault();
-                                var $this = $(this);
-                                var isAdd = $this.find('i').hasClass('fa-plus');
-                                if (isAdd) {
-                                    var newKpi = kpiParam.clone(true);
-                                    newKpi.addClass('dynamic-kpi');
-                                    var remove = $('<a />');
-                                    remove.append($('<i />').addClass('fa fa-minus'));
-                                    remove.addClass('btn btn-default');
-                                    remove.click(function (e) {
-                                        var $thisRemove = $(this);
-                                        $thisRemove.closest('div').remove();
-                                        if (paramsHolder.find('.dynamic-kpi').length == 1) {
-                                            var firstDyn = $(paramsHolder.find('.dynamic-kpi')[0]);
-                                            firstDyn.children('a').each(function (i, val) {
-                                                $(val).remove();
-                                            });
-                                            firstDyn.append(buttonAdd.clone(true));
-                                        }
-                                        if (!paramsHolder.find('.dynamic-kpi .fa-plus').length) {
-                                            paramsHolder.children('.dynamic-kpi:last-child').append(buttonAdd.clone(true));
-                                        }
-                                       
-                                        
-                                    });
-                                    newKpi.append(remove);
-                                    newKpi.append($this.clone(true));
-                                    paramsHolder.append(newKpi.show());
-                                    if ($this.prev().hasClass('btn')) {
-                                        $this.remove();
-                                    } else {
-                                        $this.find('i').removeClass('fa-plus');
-                                        $this.find('i').addClass('fa-minus');
-                                    }
-                                } else {
-                                    $this.closest('div').remove();
-                                    if (paramsHolder.find('.dynamic-kpi').length == 1) {
-                                        var firstDyn = $(paramsHolder.find('.dynamic-kpi')[0]);
-                                        firstDyn.children('a').each(function (i, val) {
-                                            $(val).remove();
-                                        });
-                                        firstDyn.append(buttonAdd.clone(true));
-                                    }
-                                    if (!paramsHolder.find('.dynamic-kpi .fa-plus').length) {
-                                        paramsHolder.children('.dynamic-kpi:last-child').append(buttonAdd.clone(true));
-                                    }
-                                   
-                                }
-                            });
+                           
                             kpi.append(buttonAdd.clone(true));
                         }
                         Pear.OutputConfig._autocomplete(kpi.find('select'));
@@ -4318,7 +4321,7 @@ Number.prototype.format = function (n, x) {
             templateSelection: Pear.Artifact.Designer._formatKpiSelection // omitted for brevity, see the source of this page
         });
     };
-    
+
     Pear.EconomicSummary._autocomplete = function ($field) {
         var url = $field.data('url');
         $field.select2({
@@ -4342,7 +4345,7 @@ Number.prototype.format = function (n, x) {
             templateSelection: Pear.Artifact.Designer._formatKpiSelection // omitted for brevity, see the source of this page
         });
     };
-    
+
     Pear.EconomicSummary.FormSetup = function () {
         var length = $('.scenarios-holder').find('.scenario-template').length + 1;
         if (length > 1) {
@@ -4546,11 +4549,11 @@ Number.prototype.format = function (n, x) {
                 window.location = s;
             });
         }
-        
+
         if ($('.economic-summary-save').length) {
             Pear.EconomicSummary.FormSetup();
         }
-        
+
         if ($('.operation-config-save').length) {
             Pear.OperationConfig.FormSetup();
         }

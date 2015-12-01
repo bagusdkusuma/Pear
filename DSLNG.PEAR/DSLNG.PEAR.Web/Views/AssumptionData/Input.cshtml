@@ -2,17 +2,17 @@
 @{
     ViewBag.Title = "Input";
 }
-
+<div class="notification"></div>
 <h2>Key Assumption For : @Model.Scenario.Name</h2>
 @{
-    foreach (var category in Model.KeyAssumptionCategories.Where(x => x.IsActive == true).OrderBy(x => x.Order).ToList())
+    foreach (var category in Model.KeyAssumptionCategories)
     {
     <div class="row">
         <div class="col-sm-12">
             <h3>@category.Name</h3>
         </div>
     </div>
-        foreach (var assumption in category.Assumptions)
+        foreach (var assumption in category.Assumptions.Where(x => x.IsActive).OrderBy(x => x.Order).ToList())
         {
             var realValue = Model.AssumptionDataList.FirstOrDefault(x => x.IdConfig == assumption.Id && x.IdScenario == Model.Scenario.Id);    
     <div class="row">
@@ -65,8 +65,16 @@
                 var $this = $(this).val();
                 var $form = $(this).closest('form');
                 var url = $form.attr('action');
-                $.post(url, $form.serialize(), function (data) { });
+                $.post(url, $form.serialize(), function (data) {
+                    $('.notification').empty();
+                    var alertType = data.IsSuccess === true ? 'alert-success' : 'alert-danger';
+                    var message = '<div class="alert ' + alertType + '" role="alert">' + data.Message + '</div>';
+                    $('.notification').append(message).fadeIn().delay(1000).fadeOut();
+                });
             });
         });
+
+
+
     </script>
 }

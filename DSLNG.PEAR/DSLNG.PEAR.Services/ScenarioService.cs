@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Entities.EconomicModel;
 using System.Data.SqlClient;
+using System.Data.Entity.Infrastructure;
 
 namespace DSLNG.PEAR.Services
 {
@@ -89,7 +90,7 @@ namespace DSLNG.PEAR.Services
             return new SaveScenarioResponse
             {
                 IsSuccess = true,
-                Message = "Scenario has been save"
+                Message = "Scenario has been saved"
             };
         }
 
@@ -102,18 +103,29 @@ namespace DSLNG.PEAR.Services
 
         public DeleteScenarioResponse DeleteScenario(DeleteScenarioRequest request)
         {
-            var scenario = DataContext.Scenarios.Where(x => x.Id == request.Id).FirstOrDefault();
-            if (scenario != null)
+            try
             {
-                DataContext.Scenarios.Attach(scenario);
-                DataContext.Scenarios.Remove(scenario);
-                DataContext.SaveChanges();
+                var scenario = DataContext.Scenarios.Where(x => x.Id == request.Id).FirstOrDefault();
+                if (scenario != null)
+                {
+                    DataContext.Scenarios.Attach(scenario);
+                    DataContext.Scenarios.Remove(scenario);
+                    DataContext.SaveChanges();
+                }
+                return new DeleteScenarioResponse
+                {
+                    IsSuccess = true,
+                    Message = "Scenario has been deleted successfully"
+                };
             }
-            return new DeleteScenarioResponse
+            catch(DbUpdateException exception)
             {
-                IsSuccess = true,
-                Message = "Scenario has been deleted successfully"
-            };
+                return new DeleteScenarioResponse
+                {
+                    IsSuccess = false,
+                    Message = exception.Message
+                };
+            }
         }
 
         public IEnumerable<Scenario> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)

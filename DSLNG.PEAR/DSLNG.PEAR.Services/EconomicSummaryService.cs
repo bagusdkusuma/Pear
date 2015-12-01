@@ -114,7 +114,7 @@ namespace DSLNG.PEAR.Services
                 return new SaveEconomicSummaryResponse
                 {
                     IsSuccess = true,
-                    Message = "Economic Summary Config has been Save"
+                    Message = "Economic Summary Config has been Saved"
                 };
             }
             catch (InvalidOperationException e)
@@ -151,8 +151,12 @@ namespace DSLNG.PEAR.Services
                 Message = "Economic Summary has deleted successfully"
             };
         }
-
         public GetEconomicSummaryReportResponse GetEconomicSummaryReport()
+        {
+            return GetEconomicSummaryReport(false);
+        }
+
+        public GetEconomicSummaryReportResponse GetEconomicSummaryReport(bool updateResult)
         {
             var response = new GetEconomicSummaryReportResponse();
             var activeEconomicSummary = DataContext.EconomicSummaries
@@ -164,7 +168,7 @@ namespace DSLNG.PEAR.Services
                 {
                     response.Scenarios.Add(new GetEconomicSummaryReportResponse.Scenario() { Id = scenario.Id, Name = scenario.Name });
 
-                    var output = _outputConfigService.CalculateOputput(new CalculateOutputRequest { ScenarioId = scenario.Id });
+                    var output = _outputConfigService.CalculateOputput(new CalculateOutputRequest { ScenarioId = scenario.Id, UpdateResult=updateResult });
 
                     foreach (var category in output.OutputCategories)
                     {
@@ -259,6 +263,12 @@ namespace DSLNG.PEAR.Services
 
             TotalRecords = data.Count();
             return data;
+        }
+
+
+        public void UpdateEconomicSummary()
+        {
+            GetEconomicSummaryReport(true);
         }
     }
 }

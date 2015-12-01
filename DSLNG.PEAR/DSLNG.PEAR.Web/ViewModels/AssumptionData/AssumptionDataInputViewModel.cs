@@ -29,8 +29,9 @@ namespace DSLNG.PEAR.Web.ViewModels.AssumptionData
         {
             public int Id { get; set; }
             public string Name { get; set; }
-            public string Order { get; set; }
+            public int Order { get; set; }
             public string Measurement { get; set; }
+            public bool IsActive {get;set;}
         }
         public class AssumptionDataViewModel
         {

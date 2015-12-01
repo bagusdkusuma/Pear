@@ -6,7 +6,11 @@
 }
 
 <h2>Economic Summary</h2>
-
+<div class="add-button-wrapper">
+    <form action="@Url.Action("UpdateResult")" method="POST">
+        <button type="submit" class="btn btn-primary">Update Result</button>
+    </form>
+</div>
 @{
     foreach (var @group in Model.Groups)
     {

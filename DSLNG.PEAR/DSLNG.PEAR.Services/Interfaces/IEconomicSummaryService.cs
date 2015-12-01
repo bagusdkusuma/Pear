@@ -16,5 +16,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetEconomicSummaryResponse GetEconomicSummary(GetEconomicSummaryRequest request);
         DeleteEconomicSummaryResponse DeleteEconomicSummary(DeleteEconomicSummaryRequest request);
         GetEconomicSummaryReportResponse GetEconomicSummaryReport();
+        void UpdateEconomicSummary();
     }
 }

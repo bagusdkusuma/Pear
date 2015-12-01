@@ -6,7 +6,7 @@
 <h2>Menu List</h2>
 @Html.Partial("_MessageResponse")
 <div class="add-button-wrapper">
-    @Html.ActionLink("Create New", "Create", null, new { @class = "btn_small_lightblue" })
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
 </div>
 @*@Html.Action("IndexPartial")*@
 
@@ -78,13 +78,17 @@
 
             $('#menu-table').on('click', '.delete', function () {
                 var id = $(this).attr('data-id');
-                if (confirm('Are you sure want to delete this item?')) {
+                if (confirm('Are you sure want to delete this item?' + id)) {
                     var url = '@Url.Action("Delete", "Menu")';
-                    $('<form action="' + url + '" method="POST">' +
-                        '<input type="hidden" name="id" value="' + id + '">' +
-                        '</form>').submit();
+                    var form = $('<form />');
+                    form.attr('action', url);
+                    form.attr('method', 'POST');
+                    form.html('<input type="hidden" name="id" value="' + id + '" />');
+                    $('body').append(form);
+                    form.submit();
                 }
             });
+
         });        
     </script>
 }

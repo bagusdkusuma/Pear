@@ -104,7 +104,7 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             var viewModel = _operationGroupService.GetOperationGroup(new GetOperationGroupRequest { Id = id }).MapTo<OperationGroupViewModel>();
             return View(viewModel);
-            
+
         }
 
         [HttpPost]
@@ -121,18 +121,14 @@ namespace DSLNG.PEAR.Web.Controllers
             return View("Edit", viewModel);
         }
 
-        
+
         [HttpPost]
         public ActionResult Delete(int id)
         {
             var request = _operationGroupService.DeleteOperationGroup(new DeleteOperationGroupRequest { Id = id });
             TempData["IsSuccess"] = request.IsSuccess;
             TempData["Message"] = request.Message;
-            if (request.IsSuccess)
-            {
-                return RedirectToAction("Index");
-            }
-            return View();
+            return RedirectToAction("Index");
         }
 
         public ActionResult Grid(GridParams gridParams)

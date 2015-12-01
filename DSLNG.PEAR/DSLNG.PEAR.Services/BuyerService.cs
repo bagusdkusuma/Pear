@@ -75,7 +75,7 @@ namespace DSLNG.PEAR.Services
                 return new SaveBuyerResponse
                 {
                     IsSuccess = true,
-                    Message = "Highlight has been saved"
+                    Message = "Buyer has been saved"
                 };
             }
             catch (InvalidOperationException e)
@@ -100,7 +100,7 @@ namespace DSLNG.PEAR.Services
                 return new DeleteBuyerResponse
                 {
                     IsSuccess = true,
-                    Message = "You have been deleted this itme successfully"
+                    Message = "Buyer has been Deleted successfully"
                 };
             }
             catch (DbUpdateException e)

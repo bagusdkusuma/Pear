@@ -11,6 +11,7 @@ using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Persistence;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using System.Data.Entity.Infrastructure;
 
 namespace DSLNG.PEAR.Services
 {
@@ -80,16 +81,27 @@ namespace DSLNG.PEAR.Services
 
         public DeleteOutputCategoryResponse DeleteOutputCategory(DeleteOutputCategoryRequest request)
         {
-            var OutputCategory = new KeyOutputCategory { Id = request.Id };
-            DataContext.KeyOutputCategories.Attach(OutputCategory);
-            DataContext.KeyOutputCategories.Remove(OutputCategory);
-            DataContext.SaveChanges();
-
-            return new DeleteOutputCategoryResponse
+            try
             {
-                IsSuccess = true,
-                Message = "The Output Category has been deleted successfully"
-            };
+                var OutputCategory = new KeyOutputCategory { Id = request.Id };
+                DataContext.KeyOutputCategories.Attach(OutputCategory);
+                DataContext.KeyOutputCategories.Remove(OutputCategory);
+                DataContext.SaveChanges();
+
+                return new DeleteOutputCategoryResponse
+                {
+                    IsSuccess = true,
+                    Message = "The Output Category has been deleted successfully"
+                };
+            }
+            catch(DbUpdateException exception)
+            {
+                return new DeleteOutputCategoryResponse
+                {
+                    IsSuccess = false,
+                    Message = exception.Message
+                };
+            }
         }
 
 

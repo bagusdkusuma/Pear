@@ -85,8 +85,8 @@ namespace DSLNG.PEAR.Services
                 DataContext.SaveChanges();
                 return new SaveHighlightGroupResponse
                 {
-                    IsSuccess = true, 
-                    Message = "You have been successfully deleted the item"
+                    IsSuccess = true,
+                    Message = "Highlight Group item has been saved successfull"
                 };
             }
             catch {
@@ -96,6 +96,23 @@ namespace DSLNG.PEAR.Services
                     Message = "An error occured, please contact the administrator for further information"
                 };
             }
+        }
+
+
+        public DeleteHighlightGroupResponse DeleteHighlightGroup(DeleteHighlightGroupRequest request)
+        {
+            var highlightGroup = DataContext.HighlightGroups.FirstOrDefault(x => x.Id == request.Id);
+            if (highlightGroup != null)
+            {
+                DataContext.HighlightGroups.Attach(highlightGroup);
+                DataContext.HighlightGroups.Remove(highlightGroup);
+                DataContext.SaveChanges();
+            }
+            return new DeleteHighlightGroupResponse
+            {
+                IsSuccess = true,
+                Message = "Highlight Group has been Deleted"
+            };
         }
     }
 }

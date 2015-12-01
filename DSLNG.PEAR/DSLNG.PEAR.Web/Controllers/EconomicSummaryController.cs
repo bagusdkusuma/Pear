@@ -107,7 +107,12 @@ namespace DSLNG.PEAR.Web.Controllers
 
             return Json(data, JsonRequestBehavior.AllowGet);
         }
-
+        [HttpPost]
+        public ActionResult UpdateResult()
+        {
+            _economicSummaryService.UpdateEconomicSummary();
+            return RedirectToAction("Index");
+        }
         /*public ActionResult EconomicSummaries(string term)
         {
             var results = _economicSummaryService.GetEconomicSummaries(new GetEconomicSummariesRequest() { Take = 20, Term = term });

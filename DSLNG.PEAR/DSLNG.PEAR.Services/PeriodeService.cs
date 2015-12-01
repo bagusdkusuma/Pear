@@ -100,7 +100,7 @@ namespace DSLNG.PEAR.Services
                 DataContext.Entry(periode).State = EntityState.Deleted;
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
-                response.Message = "Periode item has been updated successfully";
+                response.Message = "Periode item has been Deleted successfully";
             }
             catch (DbUpdateException dbUpdateException)
             {

@@ -18,6 +18,7 @@ namespace DSLNG.PEAR.Web.ViewModels.AssumptionConfig
 
 
         public int Id { get; set; }
+        [Display(Name="Key Assumption")]
         public string Name { get; set; }
         [Required]
         [Display(Name="Category")]
@@ -25,8 +26,9 @@ namespace DSLNG.PEAR.Web.ViewModels.AssumptionConfig
         public IList<SelectListItem> Categories { get; set; }
         [Required]
         [Display(Name = "Measurement")]
-        public int IdMeasurement { get; set; }
+        public int? IdMeasurement { get; set; }
         public IList<SelectListItem> Measurements { get; set; }
+        [Required]
         public int Order { get; set; }
         public string Remark { get; set; }
         public bool IsActive { get; set; }

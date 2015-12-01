@@ -120,7 +120,7 @@ namespace DSLNG.PEAR.Services
                 return new DeleteWeatherResponse
                 {
                     IsSuccess = true,
-                    Message = "The highlight has been deleted successfully"
+                    Message = "The Weather has been deleted successfully"
                 };
             }
             catch (InvalidOperationException)
