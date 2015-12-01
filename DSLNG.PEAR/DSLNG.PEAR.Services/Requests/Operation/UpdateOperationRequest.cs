@@ -12,5 +12,6 @@ namespace DSLNG.PEAR.Services.Requests.Operation
         public int? Order { get; set; }
         public bool? IsActive { get; set; }
         public int KeyOperationGroupId { get; set; }
+        public int KpiId { get; set; }
     }
 }

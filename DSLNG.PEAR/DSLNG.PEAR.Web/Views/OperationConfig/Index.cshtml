@@ -7,6 +7,7 @@
 <h2>Key Operation Config</h2>
 @Html.Partial("_MessageResponse")
 @Html.ActionLink("Create New", "Create")
+<div class="alert" style="position: fixed; right: 10px; top:1px;width: 300px;z-index: 1; display: block"></div>
 @*@Html.Action("IndexPartial")
 
 @section Scripts{
@@ -28,16 +29,23 @@
             <th>Key Operation Group</th>
             <th>KPI</th>
             <th>Order</th>
-            <th>Desc</th>
             <th>Is Active</th>
-            <th>Action</th>
         </tr>
     </thead>
 </table>
 
 @section Scripts{
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
+            var showMessage = function (data) {
+                var alertType = data.IsSuccess === true ? 'alert-success' : 'alert-danger';
+                $('.alert').removeClass('alert-success');
+                $('.alert').removeClass('alert-danger');
+                $('.alert').addClass(alertType);
+                $('.alert').html(data.Message);
+                $('.alert').fadeIn().delay(1000).fadeOut();
+            };
+            
             $('#operation-table').DataTable({
                 "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
                 "iDisplayLength": -1,
@@ -65,17 +73,17 @@
                                 });
                             }
                             groups = groups.val(row.OperationGroupId).prop('outerHTML');
-                            return '<form action="/OperationConfig/save" method="POST"><input type="hidden" name="Id" value="' + row.Id + '">' + groups + '</form>';
+                            return '<form action="/OperationConfig/save" method="POST"><input type="hidden" name="KpiId" value="' + row.KpiId + '"><input type="hidden" name="Id" value="' + row.Id + '">' + groups + '</form>';
                         }
                     },
                     { "mDataProp": "Kpi", "name": "Kpi" },
                     {
                         "mDataProp": "Order", "name": "Order", "sClass": "dt-head-center text-center",
                         "render": function (data, type, row) {
-                            return '<form action="/OperationConfig/save" method="POST"><input type="hidden" name="Id" value="' + row.Id + '"><input type="number" class="operation-config-order" name="Order" class="form-control" value="' + data + '"></form>';
+                            return '<form action="/OperationConfig/save" method="POST"><input type="hidden" name="KpiId" value="' + row.KpiId + '"><input type="hidden" name="Id" value="' + row.Id + '"><input type="number" class="operation-config-order" name="Order" class="form-control" value="' + data + '"></form>';
                         },
                     },
-                    { "mDataProp": "Desc", "name": "Desc", "sortable": false },
+                    //{ "mDataProp": "Desc", "name": "Desc", "sortable": false },
                     {
                         "mDataProp": "IsActive", "name": "IsActive", "sClass": "dt-head-center text-center",
                         "render": function (data, type, row) {
@@ -83,7 +91,7 @@
                             if (data) {
                                 checked = 'checked="checked"';
                             }
-                            return '<form action="/OperationConfig/save" method="POST"><input type="hidden" name="Id" value="' + row.Id + '"><input type="checkbox"  class="highlight-is-active" ' + checked + ' ><input type="checkbox" value="True"  name="IsActive" class="highlight-is-active" style="display:none" checked="checked" ></form>';
+                            return '<form action="/OperationConfig/save" method="POST"><input type="hidden" name="KpiId" value="' + row.KpiId + '"><input type="hidden" name="Id" value="' + row.Id + '"><input type="checkbox"  class="highlight-is-active" ' + checked + ' ><input type="checkbox" value="True"  name="IsActive" class="highlight-is-active" style="display:none" checked="checked" ></form>';
                         },
                     },
                     /*{
@@ -95,7 +103,7 @@
                             return data;
                         }
                     },*/
-                    {
+                    @*{
                         "orderable": false,
                         "data": null,
                         "defaultContent": '',
@@ -104,20 +112,31 @@
                             var editLink = '@Html.ActionLink("Edit", "Edit", "OperationConfig", new {id = "_id_"}, null)'.replace('_id_', data.Id);
                             return editLink + ' | ' + deleteLink;
                         }
-                    }
+                    }*@
                 ],
                 "fnDrawCallback": function (oSettings) {
                     $('.operation-config-order').keyup(function () {
+                        var tr = $(this).closest('tr');
                         var form = $(this).closest('form');
                         $.post(form.attr('action'), form.serialize().replace(/item\./g, ''), function (data) {
+                            tr.find('input[name="Id"]').each(function (i, val) {
+                                $(val).val(data.Id);
+                            });
+                            showMessage(data);
                         });
                     });
                     $('.operation-config-groups').change(function () {
+                        var tr = $(this).closest('tr');
                         var form = $(this).closest('form');
                         $.post(form.attr('action'), form.serialize().replace(/item\./g, ''), function (data) {
+                            tr.find('input[name="Id"]').each(function (i, val) {
+                                $(val).val(data.Id);
+                            });
+                            showMessage(data);
                         });
                     });
                     $('.highlight-is-active').change(function () {
+                        var tr = $(this).closest('tr');
                         var form = $(this).closest('form');
                         if ($(this).is(":checked")) {
                             form.find('input[name="IsActive"]').val('True');
@@ -125,6 +144,10 @@
                             form.find('input[name="IsActive"]').val('False');
                         }
                         $.post(form.attr('action'), form.serialize().replace(/item\./g, ''), function (data) {
+                            tr.find('input[name="Id"]').each(function (i, val) {
+                                $(val).val(data.Id);
+                            });
+                            showMessage(data);
                         });
                     });
                 },

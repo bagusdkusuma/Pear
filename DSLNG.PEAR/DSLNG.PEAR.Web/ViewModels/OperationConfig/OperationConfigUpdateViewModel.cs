@@ -11,5 +11,6 @@ namespace DSLNG.PEAR.Web.ViewModels.OperationConfig
         public int? Order { get; set; }
         public bool? IsActive { get; set; }
         public int KeyOperationGroupId { get; set; }
+        public int KpiId { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using DSLNG.PEAR.Data.Persistence;
+﻿using DSLNG.PEAR.Data.Entities;
+using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Operation;
 using DSLNG.PEAR.Services.Responses.Operation;
@@ -25,16 +26,27 @@ namespace DSLNG.PEAR.Services
         public GetOperationsResponse GetOperations(GetOperationsRequest request)
         {
             int totalRecords;
-            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
-            if (request.Take != -1)
-            {
-                data = data.Skip(request.Skip).Take(request.Take);
-            }
+            var operationConfigs = DataContext.KeyOperationConfigs
+                .Include(x => x.KeyOperationGroup)
+                .Include(x => x.Kpi)
+                .Include(x => x.Kpi.Measurement)
+                .ToList().Select(x => new KeyOperationConfig()
+                    {
+                        Desc = x.Desc,
+                        Id = x.Id,
+                        IsActive = x.IsActive,
+                        KeyOperationGroup = x.KeyOperationGroup ?? new KeyOperationGroup(),
+                        Kpi = x.Kpi ?? new Kpi(),
+                        Order = x.Order
+                    }).ToList();
+            var result = AddEconomicKpi(operationConfigs);
+            var data = SortData(request.Search, request.SortingDictionary, out totalRecords, result);
+            
 
             return new GetOperationsResponse
                 {
                     TotalRecords = totalRecords,
-                    Operations = data.ToList().MapTo<GetOperationsResponse.Operation>()
+                    Operations = data.MapTo<GetOperationsResponse.Operation>()
                 };
             //if (request.OnlyCount)
             //{
@@ -120,51 +132,74 @@ namespace DSLNG.PEAR.Services
 
         public UpdateOperationResponse UpdateOperation(UpdateOperationRequest request)
         {
-            var operationConfig = DataContext.KeyOperationConfigs.Single(x => x.Id == request.Id);
-            if (request.IsActive.HasValue)
+            bool isKpiExisted =
+                DataContext.KeyOperationConfigs.Include(x => x.Kpi).FirstOrDefault(x => x.Kpi.Id == request.KpiId) != null;
+            if (request.Id == 0 && !isKpiExisted)
             {
-                operationConfig.IsActive = request.IsActive.Value;
+                var operationConfig = new KeyOperationConfig();
+                operationConfig.IsActive = request.IsActive.HasValue && request.IsActive.Value;
+                operationConfig.Order = request.Order.HasValue ? request.Order.Value : 0;
+                operationConfig.Kpi = DataContext.Kpis.Single(x => x.Id == request.KpiId);
+                DataContext.KeyOperationConfigs.Add(operationConfig);
+                DataContext.SaveChanges();
+                return new UpdateOperationResponse
+                {
+                    IsSuccess = true,
+                    Message = "Operation Config has been saved succesfully",
+                    Id = operationConfig.Id
+                };
             }
-
-            if (request.Order.HasValue)
+            else 
             {
-                operationConfig.Order = request.Order.Value;
+                var operationConfig = DataContext.KeyOperationConfigs.Single(x => x.Id == request.Id);
+                if (request.IsActive.HasValue)
+                {
+                    operationConfig.IsActive = request.IsActive.Value;
+                }
+
+                if (request.Order.HasValue)
+                {
+                    operationConfig.Order = request.Order.Value;
+                }
+
+                if (request.KeyOperationGroupId != 0)
+                {
+                    var group = new KeyOperationGroup { Id = request.KeyOperationGroupId };
+                    DataContext.KeyOperationGroups.Attach(group);
+                    operationConfig.KeyOperationGroup = group;
+                }
+
+                DataContext.SaveChanges();
+                return new UpdateOperationResponse
+                {
+                    IsSuccess = true,
+                    Message = "Operation Config has been saved succesfully",
+                    Id = operationConfig.Id
+                };
             }
-
-            if (request.KeyOperationGroupId != 0)
-            {
-                var group = new KeyOperationGroup {Id = request.KeyOperationGroupId};
-                DataContext.KeyOperationGroups.Attach(group);
-                operationConfig.KeyOperationGroup = group;
-            }
-
-            DataContext.SaveChanges();
-            return new UpdateOperationResponse
-            {
-                IsSuccess = true,
-                Message = "Operation Config has been saved succesfully"
-            };
+            
         }
 
 
-        public IEnumerable<KeyOperationConfig> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        public IEnumerable<KeyOperationConfig> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int totalRecords, IEnumerable<KeyOperationConfig> operationConfigs)
         {
-            var data = DataContext.KeyOperationConfigs.Include(x => x.KeyOperationGroup).Include(x => x.Kpi).AsQueryable();
+            IEnumerable<KeyOperationConfig> data = operationConfigs;
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             {
-                data = data.Where(x => x.KeyOperationGroup.Name.Contains(search) || x.Kpi.Name.Contains(search));
+                //data = data.Where(x => x.KeyOperationGroup != null ? x.KeyOperationGroup.Name.Contains(search) : x.KeyOperationGroup != null || x.Kpi.Name.Contains(search));
+                data = data.Where(x => x.Kpi.Name.ToLower().Contains(search));
             }
 
             foreach (var sortOrder in sortingDictionary)
             {
                 switch (sortOrder.Key)
                 {
-                    case "OperationGroup":
+                    case "Key Operation Group":
                         data = sortOrder.Value == SortOrder.Ascending
                             ? data.OrderBy(x => x.KeyOperationGroup.Name).ThenBy(x => x.Order)
                             : data.OrderByDescending(x => x.KeyOperationGroup.Name).ThenBy(x => x.Order);
                         break;
-                    case "KPI":
+                    case "Kpi":
                         data = sortOrder.Value == SortOrder.Ascending
                             ? data.OrderBy(x => x.Kpi.Name).ThenBy(x => x.Order)
                             : data.OrderByDescending(x => x.Kpi.Name).ThenBy(x => x.Order);
@@ -176,15 +211,37 @@ namespace DSLNG.PEAR.Services
                         break;
                     case "IsActive":
                         data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.IsActive)
-                            : data.OrderByDescending(x => x.IsActive);
+                            ? data.OrderBy(x => x.IsActive).ThenBy(x => x.Order)
+                            : data.OrderByDescending(x => x.IsActive).ThenBy(x => x.Order);
                         break;
                 }
             }
 
-
-            TotalRecords = data.Count();
+            totalRecords = data.Count();
             return data;
+        }
+
+
+
+        private IEnumerable<KeyOperationConfig> AddEconomicKpi(List<KeyOperationConfig> operationConfigs)
+        {
+            IList<int> kpiIds = operationConfigs.Select(x => x.Kpi.Id).ToList();
+            var kpis = DataContext.Kpis
+                .Include(x => x.Measurement)
+                .Where(x => x.IsEconomic && !kpiIds.Contains(x.Id)).ToList();
+            foreach (var kpi in kpis)
+            {
+                operationConfigs.Add(new KeyOperationConfig
+                {
+                    Id = 0,
+                    IsActive = false,
+                    Order = 0,
+                    Desc = string.Empty,
+                    Kpi = new Kpi { Name = kpi.Name, Id = kpi.Id, Measurement = new Measurement { Name = kpi.Measurement.Name } },
+                    KeyOperationGroup = new KeyOperationGroup { Id = 0, Name = string.Empty }
+                });
+            }
+            return operationConfigs;
         }
     }
 }
