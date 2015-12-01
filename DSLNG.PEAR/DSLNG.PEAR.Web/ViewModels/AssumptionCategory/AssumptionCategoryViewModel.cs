@@ -11,10 +11,11 @@ namespace DSLNG.PEAR.Web.ViewModels.AssumptionCategory
 
         public int Id { get; set; }
         [Required]
+        [Display(Name = "Key Assumption Category")]
         public string Name { get; set; }
-        [Required]
         public string Desc { get; set; }
         public bool IsActive { get; set; }
+        [Required]
         public int Order { get; set; }
 
     }

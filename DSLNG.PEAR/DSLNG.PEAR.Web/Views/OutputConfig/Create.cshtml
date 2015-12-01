@@ -68,8 +68,9 @@
         @Html.DropDownList("KeyAssumptionIds[]", new List<SelectListItem> { }, new { @class = "form-control key-assumption-options",data_url=Url.Action("KeyAssumptions"), style="width:180px" })
     </div>
     <div class="form-group form-list exclude-value" style="display:none">
-        @Html.Label("Exclude Value")
-        @Html.TextBox("ExcludeValue", "", new { @class = "form-control"})
+        @Html.LabelFor(model => model.ExcludeValue)
+                            @Html.TextBoxFor(model => model.ExcludeValue, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ExcludeValue)
     </div>
 </div>
 @section Scripts {
