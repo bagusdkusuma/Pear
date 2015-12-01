@@ -49,7 +49,8 @@
                             "mRender": function (data, type, row) {
                                 var viewLink = '@Html.ActionLink("View", "View", "Template", new { id = "_id_" }, null)'.replace('_id_', data.Id);
                                 var editLink = '@Html.ActionLink("Edit", "Update", "Template", new { id = "_id_" }, null)'.replace('_id_', data.Id);
-                                return editLink + ' | ' + viewLink;
+                                var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
+                                return editLink + ' | ' + viewLink + ' | ' + deleteLink;
                         }
                     }
                 ]
@@ -57,11 +58,14 @@
 
                 $('#template-table').on('click', '.delete', function () {
                     var id = $(this).attr('data-id');
-                    if (confirm('Are you sure want to delete this item?')) {
+                    if (confirm('Are you sure want to delete this item?' + id)) {
                         var url = '@Url.Action("Delete", "Template")';
-                        $('<form action="' + url + '" method="POST">' +
-                            '<input type="hidden" name="id" value="' + id + '">' +
-                            '</form>').submit();
+                        var form = $('<form />');
+                        form.attr('action', url);
+                        form.attr('method', 'POST');
+                        form.html('<input type="hidden" name="id" value="' + id + '" />');
+                        $('body').append(form);
+                        form.submit();
                     }
                 });
 

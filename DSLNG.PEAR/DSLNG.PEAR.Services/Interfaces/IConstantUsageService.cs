@@ -10,5 +10,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetConstantUsagesResponse GetConstantUsagesForGrid(GetConstantUsagesRequest request);
         GetConstantUsageResponse GetConstantUsage(GetConstantUsageRequest request);
         SaveConstantUsageResponse SaveConstantUsage(SaveConstantUsageRequest request);
+        DeleteConstantUsageResponse DeleteConstantUsage(DeleteConstantUsageRequest request);
     }
 }

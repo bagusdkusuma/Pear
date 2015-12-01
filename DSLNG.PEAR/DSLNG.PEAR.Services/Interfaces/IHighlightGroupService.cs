@@ -9,5 +9,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetHighlightGroupsResponse GetHighlightGroups(GetHighlightGroupsRequest request);
         GetHighlightGroupResponse GetHighlightGroup(GetHighlightGroupRequest request);
         SaveHighlightGroupResponse Save(SaveHighlightGroupRequest request);
+        DeleteHighlightGroupResponse DeleteHighlightGroup(DeleteHighlightGroupRequest request);
     }
 }

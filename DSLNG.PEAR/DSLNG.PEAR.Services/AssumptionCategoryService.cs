@@ -11,6 +11,7 @@ using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Entities.EconomicModel;
 using System.Data.SqlClient;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 
 namespace DSLNG.PEAR.Services
 {
@@ -87,16 +88,27 @@ namespace DSLNG.PEAR.Services
 
         public DeleteAssumptionCategoryResponse DeleteAssumptionCategory(DeleteAssumptionCategoryRequest request)
         {
-            var AssumptionCategory = new KeyAssumptionCategory { Id = request.Id };
-            DataContext.KeyAssumptionCategories.Attach(AssumptionCategory);
-            DataContext.KeyAssumptionCategories.Remove(AssumptionCategory);
-            DataContext.SaveChanges();
-
-            return new DeleteAssumptionCategoryResponse
+            try
             {
-                IsSuccess = true,
-                Message = "The Assumption Category has been deleted successfully"
-            };
+                var assumptionCategory = new KeyAssumptionCategory { Id = request.Id };
+                DataContext.KeyAssumptionCategories.Attach(assumptionCategory);
+                DataContext.KeyAssumptionCategories.Remove(assumptionCategory);
+                DataContext.SaveChanges();
+
+                return new DeleteAssumptionCategoryResponse
+                {
+                    IsSuccess = true,
+                    Message = "The Assumption Category has been deleted successfully"
+                };
+            }
+            catch(DbUpdateException exception)
+            {
+                return new DeleteAssumptionCategoryResponse
+                {
+                    IsSuccess = false,
+                    Message = exception.Message
+                };
+            }
         }
 
 
@@ -105,7 +117,8 @@ namespace DSLNG.PEAR.Services
             var data = DataContext.KeyAssumptionCategories.AsQueryable();
             if (includeAssumptionList) {
                 data = data.Include(x => x.KeyAssumptions)
-                    .Include(x => x.KeyAssumptions.Select(y => y.Measurement));
+                    .Include(x => x.KeyAssumptions.Select(y => y.Measurement))
+                    .Where(x => x.IsActive == true).OrderBy(x => x.Order);
             }
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             {

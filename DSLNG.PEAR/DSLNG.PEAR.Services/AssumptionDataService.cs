@@ -11,6 +11,7 @@ using System.Data.Entity;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Entities.EconomicModel;
 using System.Data.SqlClient;
+using System.Data.Entity.Infrastructure;
 
 namespace DSLNG.PEAR.Services
 {
@@ -63,10 +64,21 @@ namespace DSLNG.PEAR.Services
         {
             if (request.Id == 0)
             {
-                var AssumptionData = request.MapTo<KeyAssumptionData>();
+                var AssumptionData = DataContext.KeyAssumptionDatas.FirstOrDefault(x => x.Scenario.Id == request.IdScenario
+                    && x.KeyAssumptionConfig.Id == request.IdConfig);
+                if (AssumptionData == null)
+                {
+                    AssumptionData = request.MapTo<KeyAssumptionData>();
+                    DataContext.KeyAssumptionDatas.Add(AssumptionData);
+                }
+                else {
+                    var currentId = AssumptionData.Id;
+                    request.MapPropertiesToInstance<KeyAssumptionData>(AssumptionData);
+                    AssumptionData.Id = currentId;
+                }
                 AssumptionData.Scenario = DataContext.Scenarios.Where(x => x.Id == request.IdScenario).FirstOrDefault();
                 AssumptionData.KeyAssumptionConfig = DataContext.KeyAssumptionConfigs.Where(x => x.Id == request.IdConfig).FirstOrDefault();
-                DataContext.KeyAssumptionDatas.Add(AssumptionData);
+                
             }
             else
             {
@@ -83,7 +95,7 @@ namespace DSLNG.PEAR.Services
             return new SaveAssumptionDataResponse
             {
                 IsSuccess = true,
-                Message = "Assumption Data has been Save"
+                Message = "Assumption Data has been Saved"
             };
         }
 
@@ -99,18 +111,29 @@ namespace DSLNG.PEAR.Services
 
         public DeleteAssumptionDataResponse DeleteAssumptionData(DeleteAssumptionDataRequest request)
         {
-            var checkid = DataContext.KeyAssumptionDatas.Where(x => x.Id == request.Id).FirstOrDefault();
-            if (checkid != null)
+            try
             {
-                DataContext.KeyAssumptionDatas.Attach(checkid);
-                DataContext.KeyAssumptionDatas.Remove(checkid);
-                DataContext.SaveChanges();
+                var assumptionData = DataContext.KeyAssumptionDatas.Where(x => x.Id == request.Id).FirstOrDefault();
+                if (assumptionData != null)
+                {
+                    DataContext.KeyAssumptionDatas.Attach(assumptionData);
+                    DataContext.KeyAssumptionDatas.Remove(assumptionData);
+                    DataContext.SaveChanges();
+                }
+                return new DeleteAssumptionDataResponse
+                {
+                    IsSuccess = true,
+                    Message = "Assumption Data has been deleted successfully"
+                };
             }
-            return new DeleteAssumptionDataResponse
+            catch(DbUpdateException exception)
             {
-                IsSuccess = true,
-                Message = "Assumption Data has been deleted successfully"
-            };
+                return new DeleteAssumptionDataResponse
+                {
+                    IsSuccess = false,
+                    Message = exception.Message
+                };
+            }
         }
 
 

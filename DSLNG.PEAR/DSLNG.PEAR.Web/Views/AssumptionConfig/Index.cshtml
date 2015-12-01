@@ -2,10 +2,11 @@
     ViewBag.Title = "Assumption Config";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <h2>Key Assumption Config</h2>
 @Html.Partial("_MessageResponse")
-@Html.ActionLink("Create New", "Create")
+<div class="add-button-wrapper">
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+</div>
 @*@Html.Action("IndexPartial")*@
 
 @*@section Scripts{
@@ -24,8 +25,8 @@
 <table id="assumptionConfig-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
     <thead>
         <tr>
-            <th>Key Assumption Config</th>
-            <th>Category</th>
+            <th>Key Assumption</th>
+            <th>Key Assumption Category</th>
             <th>Measurement</th>
             <th>Order</th>
             <th>Remark</th>
@@ -75,6 +76,7 @@
                 rowCallback: function (row, data) {
                     // Set the checked state of the checkbox in the table
                     $('input.is-active', row).prop('checked', data.IsActive == 1);
+
                 }
             });
 
@@ -82,12 +84,16 @@
                 var id = $(this).attr('data-id');
                 if (confirm('Are you sure want to delete this item?' + id)) {
                     var url = '@Url.Action("Delete", "AssumptionConfig")';
-
-                    $('<form action="' + url + '" method="POST">' +
-                        '<input type="hidden" name="id" value="' + id + '">' +
-                        '</form>').submit();
+                    var form = $('<form />');
+                    form.attr('action', url);
+                    form.attr('method', 'POST');
+                    form.html('<input type="hidden" name="id" value="' + id + '" />');
+                    $('body').append(form);
+                    form.submit();
                 }
             });
+
+
 
         });
     </script>

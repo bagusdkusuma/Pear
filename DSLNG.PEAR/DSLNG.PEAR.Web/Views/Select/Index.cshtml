@@ -6,7 +6,9 @@
 
 <h2>List</h2>
 @Html.Partial("_MessageResponse")
-@Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+<div class="add-button-wrapper">
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+</div>
 @*@Html.Action("IndexPartial")
 
 @section Scripts{
@@ -82,10 +84,12 @@
                 var id = $(this).attr('data-id');
                 if (confirm('Are you sure want to delete this item?' + id)) {
                     var url = '@Url.Action("Delete", "Select")';
-
-                    $('<form action="' + url + '" method="POST">' +
-                        '<input type="hidden" name="id" value="' + id + '">' +
-                        '</form>').submit();
+                    var form = $('<form />');
+                    form.attr('action', url);
+                    form.attr('method', 'POST');
+                    form.html('<input type="hidden" name="id" value="' + id + '" />');
+                    $('body').append(form);
+                    form.submit();
                 }
             });
 

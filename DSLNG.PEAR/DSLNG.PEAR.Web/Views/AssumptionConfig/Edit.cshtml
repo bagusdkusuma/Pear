@@ -23,12 +23,12 @@
                 </div>
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.IdCategory)
-                    @Html.DropDownListFor(model => model.IdCategory, Model.Categories, new { @class = "form-controlt" })
+                    @Html.DropDownListFor(model => model.IdCategory, Model.Categories,"Select Category", new { @class = "form-controlt" })
                     @Html.ValidationMessageFor(model => model.IdCategory)
                 </div>
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.IdMeasurement)
-                    @Html.DropDownListFor(model => model.IdMeasurement, Model.Measurements, new { @class = "form-controlt" })
+                    @Html.DropDownListFor(model => model.IdMeasurement, Model.Measurements, "Select Measurement",new { @class = "form-controlt" })
                     @Html.ValidationMessageFor(model => model.IdCategory)
                 </div>
                 <div class="form-group form-list">

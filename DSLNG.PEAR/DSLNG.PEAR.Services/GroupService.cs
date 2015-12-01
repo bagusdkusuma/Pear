@@ -112,7 +112,7 @@ namespace DSLNG.PEAR.Services
                 DataContext.Entry(group).State = EntityState.Deleted;
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
-                response.Message = "Group item has been updated successfully";
+                response.Message = "Group item has been Deleted successfully";
             }
             catch (DbUpdateException dbUpdateException)
             {

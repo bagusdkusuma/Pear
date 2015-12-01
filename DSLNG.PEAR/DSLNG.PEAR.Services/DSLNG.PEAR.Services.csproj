@@ -88,11 +88,16 @@
     <Compile Include="HighlightOrderService.cs" />
     <Compile Include="HighlightService.cs" />
     <Compile Include="OperationDataService.cs" />
+    <Compile Include="Requests\ConstantUsage\DeleteConstantUsageRequest.cs" />
+    <Compile Include="Requests\HighlightGroup\DeleteHighlightGroupRequest.cs" />
     <Compile Include="Requests\OperationalData\GetOperationDataConfigurationRequest.cs" />
     <Compile Include="Requests\OperationalData\UpdateOperationDataRequest.cs" />
     <Compile Include="Requests\Operation\UpdateOperationRequest.cs" />
     <Compile Include="Requests\OutputConfig\DeleteOutputConfigRequest.cs" />
+    <Compile Include="Requests\Template\DeleteTemplateRequest.cs" />
+    <Compile Include="Responses\ConstantUsage\DeleteConstantUsageResponse.cs" />
     <Compile Include="Responses\EconomicSummary\GetEconomicSummaryReportResponse.cs" />
+    <Compile Include="Responses\HighlightGroup\DeleteHighlightGroupResponse.cs" />
     <Compile Include="Responses\OperationalData\GetOperationDataConfigurationResponse.cs" />
     <Compile Include="Responses\OperationalData\GetOperationalDataDetailResponse.cs" />
     <Compile Include="Requests\OperationalData\GetOperationalDataDetailRequest.cs" />
@@ -546,6 +551,7 @@
     <Compile Include="Responses\Select\GetSelectsResponse.cs" />
     <Compile Include="Responses\Select\UpdateSelectResponse.cs" />
     <Compile Include="Responses\Template\CreateTemplateResponse.cs" />
+    <Compile Include="Responses\Template\DeleteTemplateResponse.cs" />
     <Compile Include="Responses\Template\GetTemplateResponse.cs" />
     <Compile Include="Responses\Template\GetTemplatesResponse.cs" />
     <Compile Include="Responses\Template\UpdateTemplateResponse.cs" />

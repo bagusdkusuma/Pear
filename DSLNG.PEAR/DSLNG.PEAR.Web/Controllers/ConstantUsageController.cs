@@ -90,8 +90,14 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create(ConstantUsageViewModel viewModel)
         {
             var req = viewModel.MapTo<SaveConstantUsageRequest>();
-            _constantUsageService.SaveConstantUsage(req);
-            return RedirectToAction("Index");
+            var response = _constantUsageService.SaveConstantUsage(req);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            if (response.IsSuccess)
+            {
+                return RedirectToAction("Index");
+            }
+            return View("Create", viewModel);
         }
 
         public ActionResult Edit(int id)
@@ -106,32 +112,31 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Edit(ConstantUsageViewModel viewModel)
         {
             var req = viewModel.MapTo<SaveConstantUsageRequest>();
-            _constantUsageService.SaveConstantUsage(req);
-            return RedirectToAction("Index");
+            var response = _constantUsageService.SaveConstantUsage(req);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            if (response.IsSuccess)
+            {
+                return RedirectToAction("Index");
+            }
+            return View("Edit", viewModel);
         }
 
-        //
-        // GET: /ConstantUsage/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+
 
         //
         // POST: /ConstantUsage/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id)
         {
-            try
+            var response = _constantUsageService.DeleteConstantUsage(new DeleteConstantUsageRequest { Id = id });
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            if (response.IsSuccess)
             {
-                // TODO: Add delete logic here
-
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
         public ActionResult Grid(GridParams gridParams)

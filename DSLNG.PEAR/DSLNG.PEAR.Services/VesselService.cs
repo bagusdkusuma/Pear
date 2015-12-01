@@ -74,7 +74,7 @@ namespace DSLNG.PEAR.Services
                 return new SaveVesselResponse
                 {
                     IsSuccess = true,
-                    Message = "Highlight has been saved"
+                    Message = "Vessel has been saved"
                 };
             }
             catch (InvalidOperationException e)

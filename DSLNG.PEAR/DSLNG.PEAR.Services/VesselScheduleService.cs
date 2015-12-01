@@ -129,7 +129,7 @@ namespace DSLNG.PEAR.Services
                 return new SaveVesselScheduleResponse
                 {
                     IsSuccess = true,
-                    Message = "Highlight has been saved"
+                    Message = "Vessel Schedule has been saved"
                 };
             }
             catch (InvalidOperationException e)

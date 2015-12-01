@@ -6,8 +6,11 @@
 @Html.DropDownListFor(model => model.KeyOperationGroupId, Model.OperationGroups,new{@class = "form-control operation-config-groups", style="display:none"})
 <h2>Key Operation Config</h2>
 @Html.Partial("_MessageResponse")
-@Html.ActionLink("Create New", "Create")
 <div class="alert" style="position: fixed; right: 10px; top:1px;width: 300px;z-index: 1; display: block"></div>
+<div class="add-button-wrapper">
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+</div>
+
 @*@Html.Action("IndexPartial")
 
 @section Scripts{
@@ -27,7 +30,7 @@
     <thead>
         <tr>
             <th>Key Operation Group</th>
-            <th>KPI</th>
+            <th>Key Operation</th>
             <th>Order</th>
             <th>Is Active</th>
         </tr>
@@ -159,12 +162,14 @@
 
             $('#operation-table').on('click', '.delete', function () {
                 var id = $(this).attr('data-id');
-                if (confirm('Are you sure want to delete this item?')) {
+                if (confirm('Are you sure want to delete this item?' + id)) {
                     var url = '@Url.Action("Delete", "OperationConfig")';
-
-                    $('<form action="' + url + '" method="POST">' +
-                        '<input type="hidden" name="id" value="' + id + '">' +
-                        '</form>').submit();
+                    var form = $('<form />');
+                    form.attr('action', url);
+                    form.attr('method', 'POST');
+                    form.html('<input type="hidden" name="id" value="' + id + '" />');
+                    $('body').append(form);
+                    form.submit();
                 }
             });
 

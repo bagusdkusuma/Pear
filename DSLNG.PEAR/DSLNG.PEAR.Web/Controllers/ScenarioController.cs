@@ -32,7 +32,7 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.IsActive = true;
             return View(viewModel);
         }
-        
+
         [HttpPost]
         public ActionResult Create(ScenarioViewModel viewModel)
         {
@@ -76,11 +76,8 @@ namespace DSLNG.PEAR.Web.Controllers
             var response = _scenarioService.DeleteScenario(new DeleteScenarioRequest { Id = id });
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
-            if (response.IsSuccess)
-            {
-                return RedirectToAction("Index");
-            }
-            return View();
+
+            return RedirectToAction("Index");
         }
 
         public ActionResult Grid(GridParams gridParams)
@@ -106,8 +103,8 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Search(string term)
         {
             var results = _scenarioService.GetScenarios(new GetScenariosRequest { Take = 20, Term = term });
-            return Json(new { results = results.Scenarios.Select(x => new {id = x.Id, x.Name}) }, JsonRequestBehavior.AllowGet);
-        
+            return Json(new { results = results.Scenarios.Select(x => new { id = x.Id, x.Name }) }, JsonRequestBehavior.AllowGet);
+
         }
 
         public ActionResult Detail(int id)
@@ -116,5 +113,5 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.ScenarioId = id;
             return View(viewModel);
         }
-	}
+    }
 }
