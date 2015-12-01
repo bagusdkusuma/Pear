@@ -478,7 +478,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Highlight, GetDynamicHighlightsResponse.HighlightResponse>()
                 .ForMember(x => x.TypeId, o => o.MapFrom(s => s.HighlightType.Id));
 
-            Mapper.CreateMap<Kpi, OGetKpisResponse.Kpi>();
+            Mapper.CreateMap<Kpi, OGetKpisResponse.Kpi>()
+                .ForMember(x => x.Name, o => o.MapFrom(s => s.Name + " (" + s.Measurement.Name + ")")); 
             Mapper.CreateMap<KeyAssumptionConfig, GetKeyAssumptionsResponse.KeyAssumption>();
             Mapper.CreateMap<SaveOutputConfigRequest, KeyOutputConfiguration>()
                 .ForMember(x => x.KeyAssumptionIds, o => o.MapFrom(s => string.Join(",", s.KeyAssumptionIds)))

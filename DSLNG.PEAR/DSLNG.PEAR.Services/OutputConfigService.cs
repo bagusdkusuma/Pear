@@ -28,7 +28,7 @@ namespace DSLNG.PEAR.Services
         {
             return new GetKpisResponse
             {
-                KpiList = DataContext.Kpis.Where(x => x.Name.Contains(request.Term) && x.IsEconomic == true).Take(20).ToList().MapTo<GetKpisResponse.Kpi>()
+                KpiList = DataContext.Kpis.Include(x => x.Measurement).Where(x => x.Name.Contains(request.Term) && x.IsEconomic == true).Take(20).ToList().MapTo<GetKpisResponse.Kpi>()
             };
         }
 
@@ -62,15 +62,7 @@ namespace DSLNG.PEAR.Services
                     {
                         outputConfig.KeyAssumptions.Remove(assumption);
                     }
-                    if (request.MeasurementId != outputConfig.Measurement.Id && request.MeasurementId != 0)
-                    {
-                        var measurement = new Measurement { Id = request.MeasurementId };
-                        DataContext.Measurements.Attach(measurement);
-                        outputConfig.Measurement = measurement;
-                    }
-                    if (request.MeasurementId == 0) {
-                        outputConfig.Measurement = null;
-                    }
+                    outputConfig.Measurement = DataContext.Measurements.FirstOrDefault(x => x.Id == request.MeasurementId);
                     if (request.CategoryId != outputConfig.Category.Id)
                     {
                         var category = new KeyOutputCategory { Id = request.CategoryId };
@@ -459,7 +451,8 @@ namespace DSLNG.PEAR.Services
             if (IsStartAndEndValid(startAssumption.ForecastValue, endAssumption.ForecastValue, out startForecast, out endForecast))
             {
                 var forecastValue = DataContext.KeyOperationDatas.Where(x => x.Kpi.Id == kpiId && x.Scenario.Id == scenarioId
-                    && x.Periode >= startForecast && x.Periode <= endForecast && x.PeriodeType == PeriodeType.Monthly)
+                    && x.Periode >= startForecast && x.Periode <= endForecast && x.PeriodeType == PeriodeType.Monthly
+                    && x.Value != keyOutput.ExcludeValue)
                     .Min(x => x.Value);
                 if (forecastValue.HasValue) result.Forecast = forecastValue.Value.ToString();
             }
@@ -468,9 +461,11 @@ namespace DSLNG.PEAR.Services
             if (IsStartAndEndValid(startAssumption.ActualValue, endAssumption.ActualValue, out startActual, out endActual))
             {
                 var pastValues = DataContext.KpiAchievements.Where(x => x.Kpi.Id == kpiId
-                   && x.Periode >= startActual && x.Periode < currentDate && x.PeriodeType == PeriodeType.Monthly).Select(x => x.Value).ToList();
+                   && x.Periode >= startActual && x.Periode < currentDate && x.PeriodeType == PeriodeType.Monthly
+                   && x.Value != keyOutput.ExcludeValue).Select(x => x.Value).ToList();
                 var futureValues = DataContext.KeyOperationDatas.Where(x => x.Kpi.Id == kpiId
-                    && x.Periode >= currentDate && x.Periode <= endForecast && x.PeriodeType == PeriodeType.Monthly && x.Scenario.Id == scenarioId).Select(x => x.Value).ToList();
+                    && x.Periode >= currentDate && x.Periode <= endForecast && x.PeriodeType == PeriodeType.Monthly && x.Scenario.Id == scenarioId
+                    && x.Value != keyOutput.ExcludeValue).Select(x => x.Value).ToList();
                 var minActual = pastValues.Concat(futureValues).Min();
                 if (minActual != null) result.Actual = minActual.ToString();
             }
@@ -499,7 +494,8 @@ namespace DSLNG.PEAR.Services
             if (IsStartAndEndValid(startAssumption.ForecastValue, endAssumption.ForecastValue, out startForecast, out endForecast))
             {
                 var minForecast = DataContext.KeyOperationDatas.Where(x => x.Kpi.Id == kpiId && x.Scenario.Id == scenarioId
-                    && x.Periode >= startForecast && x.Periode <= endForecast && x.PeriodeType == PeriodeType.Monthly)
+                    && x.Periode >= startForecast && x.Periode <= endForecast && x.PeriodeType == PeriodeType.Monthly
+                    && x.Value != keyOutput.ExcludeValue)
                     .OrderBy(x => x.Value).FirstOrDefault();
                 if (minForecast != null) result.Forecast = minForecast.Periode.AddMonths(1).AddDays(-1).ToString();
             }
@@ -508,13 +504,15 @@ namespace DSLNG.PEAR.Services
             if (IsStartAndEndValid(startAssumption.ActualValue, endAssumption.ActualValue, out startActual, out endActual))
             {
                 var pastValues = DataContext.KpiAchievements.Where(x => x.Kpi.Id == kpiId
-                    && x.Periode >= startActual && x.Periode < currentDate && x.PeriodeType == PeriodeType.Monthly).Select(x => new
+                    && x.Periode >= startActual && x.Periode < currentDate && x.PeriodeType == PeriodeType.Monthly
+                    && x.Value != keyOutput.ExcludeValue).Select(x => new
                     {
                         Periode = x.Periode,
                         Value = x.Value
                     });
                 var futureValues = DataContext.KeyOperationDatas.Where(x => x.Kpi.Id == kpiId
-                    && x.Periode >= currentDate && x.Periode <= endForecast && x.PeriodeType == PeriodeType.Monthly && x.Scenario.Id == scenarioId).Select(x => new
+                    && x.Periode >= currentDate && x.Periode <= endForecast && x.PeriodeType == PeriodeType.Monthly && x.Scenario.Id == scenarioId
+                    && x.Value != keyOutput.ExcludeValue).Select(x => new
                     {
                         Periode = x.Periode,
                         Value = x.Value

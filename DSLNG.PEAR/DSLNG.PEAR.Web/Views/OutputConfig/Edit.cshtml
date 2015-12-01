@@ -11,7 +11,7 @@
         @Html.AntiForgeryToken()
         <div class="col-md-12">
             <div class="title">Key Output Config</div>
-            <div class="description_year">New</div>
+            <div class="description_year">Edit</div>
             <div>@Html.ValidationSummary(true)</div>
         </div>
         <div class="col-md-12">
@@ -37,19 +37,63 @@
                     @Html.ValidationMessageFor(model => model.Formula)
                 </div>
                 <div class="params-holder">
-                    @foreach (var assumptionId in Model.KeyAssumptionIds)
-                    {
+                    @{
+        var assumptionsLength = Model.KeyAssumptionIds.Count;
+        var i = 0;
+        foreach (var assumptionId in Model.KeyAssumptionIds)
+        {
                         <div class="form-group form-list">
-                            @Html.Label("Key Assumption")
-                            @Html.DropDownListFor(m => assumptionId, Model.KeyAssumptions.Where(x => x.Value == assumptionId.ToString()).ToList(), new { @class = "form-control key-assumption-options", data_url = Url.Action("KeyAssumptions"), style = "width:180px", Name="KeyAssumptionIds[]" })
+                            @if (assumptionsLength >= 2)
+                            {
+                                switch (i)
+                                {
+                                    case 0:
+                                @Html.Label("Start")
+                                        break;
+                                    case 1:
+                                @Html.Label("End")
+                                        break;
+                                    case 2:
+                                @Html.Label("Project Cost")
+                                        break;
+                                }
+                            }
+                            else
+                            {
+                                @Html.Label("Completion Date")
+                            }
+                            @Html.DropDownListFor(m => assumptionId, Model.KeyAssumptions.Where(x => x.Value == assumptionId.ToString()).ToList(), new { @class = "form-control key-assumption-options", data_url = Url.Action("KeyAssumptions"), style = "width:180px", Name = "KeyAssumptionIds[]" })
                         </div>
-                    }
-                    @foreach (var kpiId in Model.KpiIds)
-                    {
+                            i++;
+        }
+        if (Model.Formula == "MIN" || Model.Formula == "MINDATE")
+        { 
                         <div class="form-group form-list">
+                            @Html.LabelFor(model => model.ExcludeValue)
+                            @Html.TextBoxFor(model => model.ExcludeValue, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ExcludeValue)
+                        </div>
+        }
+                   var j = 0;
+                   var className="form-group form-list";
+                   var kpiLength = Model.KpiIds.Count;
+                   foreach (var kpiId in Model.KpiIds)
+                    {
+                        if (j != 0) {
+                            className = "form-group form-list dynamic-kpi";
+                        }
+                        <div class="@className">
                             @Html.Label("KPI")
-                            @Html.DropDownListFor(m => kpiId, Model.Kpis.Where(x => x.Value == kpiId.ToString()).ToList(), new { @class = "form-control kpi-options", data_url = Url.Action("EconomicKpis"), style = "width:180px", Name="KpiIds[]" })
+                            @Html.DropDownListFor(m => kpiId, Model.Kpis.Where(x => x.Value == kpiId.ToString()).ToList(), new { @class = "form-control kpi-options", data_url = Url.Action("EconomicKpis"), style = "width:180px", Name = "KpiIds[]" })
+                            @if (Model.Formula == "NETBACKVALUE") { 
+                                <a class="btn btn-default remove-kpi" ><i class="fa fa-minus"></i></a>
+                            }
+                            @if (j == kpiLength - 1) {
+                                <a class="btn btn-default add-kpi" ><i class="fa fa-plus"></i></a>
+                            }
                         </div>
+                        j++;
+                    }
                     }
                 </div>
                 <div class="form-group form-list">
@@ -84,8 +128,9 @@
         @Html.DropDownList("KeyAssumptionIds[]", new List<SelectListItem> { }, new { @class = "form-control key-assumption-options", data_url = Url.Action("KeyAssumptions"), style = "width:180px" })
     </div>
     <div class="form-group form-list exclude-value" style="display: none">
-        @Html.Label("Exclude Value")
-        @Html.TextBox("ExcludeValue", "", new { @class = "form-control" })
+         @Html.LabelFor(model => model.ExcludeValue)
+                            @Html.TextBoxFor(model => model.ExcludeValue, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ExcludeValue)
     </div>
 </div>
 @section Scripts {
