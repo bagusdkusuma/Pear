@@ -4,6 +4,12 @@
 }
 
 <h2>Key Output For : @Model.ScenarioName</h2>
+<div class="add-button-wrapper">
+    <form action="@Url.Action("UpdateResult")" method="POST">
+        <input type="hidden" value="@Request.QueryString["scenarioId"]" name="scenarioId" />
+        <button type="submit" class="btn btn-primary">Update Result</button>
+    </form>
+</div>
 @{
     foreach (var category in Model.OutputCategories.OrderBy(x => x.Order).ToList())
     {

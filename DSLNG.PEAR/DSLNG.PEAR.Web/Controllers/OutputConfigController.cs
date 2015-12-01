@@ -175,5 +175,11 @@ namespace DSLNG.PEAR.Web.Controllers
             return viewModel;
         }
 
+        [HttpPost]
+        public ActionResult UpdateResult(int scenarioId) {
+            _outputConfigService.CalculateOputput(new CalculateOutputRequest { ScenarioId = scenarioId,UpdateResult=true });
+            return RedirectToAction("ScenarioResult", new { scenarioId = scenarioId });
+        }
+
     }
 }

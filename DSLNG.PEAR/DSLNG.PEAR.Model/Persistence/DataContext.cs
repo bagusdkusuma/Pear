@@ -2,6 +2,7 @@
 using DSLNG.PEAR.Data.Entities;
 using Type = DSLNG.PEAR.Data.Entities.Type;
 using DSLNG.PEAR.Data.Entities.EconomicModel;
+using System;
 
 namespace DSLNG.PEAR.Data.Persistence
 {

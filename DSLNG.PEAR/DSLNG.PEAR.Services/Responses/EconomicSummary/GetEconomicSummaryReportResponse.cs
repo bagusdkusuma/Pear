@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Responses.EconomicSummary
 {
+    [Serializable]
     public class GetEconomicSummaryReportResponse
     {
         public GetEconomicSummaryReportResponse()
@@ -14,22 +15,23 @@ namespace DSLNG.PEAR.Services.Responses.EconomicSummary
             Groups = new List<Group>();
         }
 
-        public IList<Scenario> Scenarios { get; set; }
-        public IList<Group> Groups { get; set; }
-
+        public List<Scenario> Scenarios { get; set; }
+        public List<Group> Groups { get; set; }
+        
+        [Serializable]
         public class Scenario
         {
             public int Id { get; set; }
             public string Name { get; set; }
         }
-
+        [Serializable]
         public class OutputResult
         {
             public string Actual { get; set; }
             public string Forecast { get; set; }
             //public Scenario Scenario { get; set; }
         }
-
+        [Serializable]
         public class KeyOutput
         {
             public KeyOutput()
@@ -38,12 +40,12 @@ namespace DSLNG.PEAR.Services.Responses.EconomicSummary
             }
             public string Name { get; set; }
             public string Measurement { get; set; }
-            //public IList<OutputResult> OutputResults { get; set; }
-            //public IDictionary<int, IList<OutputResult>> Results { get; set; } 
+            //public List<OutputResult> OutputResults { get; set; }
+            //public IDictionary<int, List<OutputResult>> Results { get; set; } 
             public OutputResult OutputResult { get; set; }
             public Scenario Scenario { get; set; }
         }
-
+        [Serializable]
         public class Group
         {
             public Group()
@@ -53,7 +55,7 @@ namespace DSLNG.PEAR.Services.Responses.EconomicSummary
 
             public int Id { get; set; }
             public string Name { get; set; }
-            public IList<KeyOutput> KeyOutputs { get; set; }
+            public List<KeyOutput> KeyOutputs { get; set; }
         }
     }
 }
