@@ -5,7 +5,10 @@
 
 <h2>List</h2>
 @Html.Partial("_MessageResponse")
-@Html.ActionLink("Create New", "Create")
+<div class="add-button-wrapper">
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+</div>
+
 @*@Html.Action("IndexPartial")
 
 @section Scripts{

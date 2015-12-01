@@ -90,7 +90,7 @@ namespace DSLNG.PEAR.Services
             return new SaveScenarioResponse
             {
                 IsSuccess = true,
-                Message = "Scenario has been save"
+                Message = "Scenario has been saved"
             };
         }
 

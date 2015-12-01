@@ -114,7 +114,7 @@ namespace DSLNG.PEAR.Services
                 return new SaveEconomicSummaryResponse
                 {
                     IsSuccess = true,
-                    Message = "Economic Summary Config has been Save"
+                    Message = "Economic Summary Config has been Saved"
                 };
             }
             catch (InvalidOperationException e)

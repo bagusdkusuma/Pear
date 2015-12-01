@@ -819,7 +819,6 @@
     <Content Include="Views\Type\_GridViewPartial.cshtml" />
     <Content Include="Views\Type\Index.cshtml" />
     <Content Include="Views\RoleGroup\Index.cshtml" />
-    <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\User\Update.cshtml" />
     <Content Include="Views\Type\Create.cshtml" />
     <Content Include="Views\Type\Update.cshtml" />
@@ -1066,6 +1065,7 @@
     <Content Include="Views\OperationData\_DetailPartial.cshtml" />
     <Content Include="Views\OperationData\DetailPartial\_Monthly.cshtml" />
     <Content Include="Views\OperationData\DetailPartial\_Yearly.cshtml" />
+    <Content Include="Views\User\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

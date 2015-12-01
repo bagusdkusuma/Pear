@@ -72,5 +72,18 @@ namespace DSLNG.PEAR.Web.Controllers
             TempData["Message"] = resp.Message;
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            var response = _highlightGroupService.DeleteHighlightGroup(new DeleteHighlightGroupRequest { Id = id });
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            if (response.IsSuccess)
+            {
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
     }
 }

@@ -147,5 +147,22 @@ namespace DSLNG.PEAR.Services
             TotalRecords = data.Count();
             return data;
         }
+
+
+        public DeleteConstantUsageResponse DeleteConstantUsage(DeleteConstantUsageRequest request)
+        {
+            var constantUsage = DataContext.ConstantUsages.FirstOrDefault(x => x.Id == request.Id);
+            if (constantUsage != null)
+            {
+                DataContext.ConstantUsages.Attach(constantUsage);
+                DataContext.ConstantUsages.Remove(constantUsage);
+                DataContext.SaveChanges();
+            }
+            return new DeleteConstantUsageResponse
+            {
+                IsSuccess = true,
+                Message = "Calculator Constant Usage has been Deleted"
+            };
+        }
     }
 }

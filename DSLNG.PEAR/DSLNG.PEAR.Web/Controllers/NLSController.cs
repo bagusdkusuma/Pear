@@ -19,7 +19,8 @@ namespace DSLNG.PEAR.Web.Controllers
     {
         private readonly INLSService _nlsService;
         private readonly IVesselScheduleService _vesselScheduleService;
-        public NLSController(INLSService nlsService, IVesselScheduleService vesselScheduleService) {
+        public NLSController(INLSService nlsService, IVesselScheduleService vesselScheduleService)
+        {
             _nlsService = nlsService;
             _vesselScheduleService = vesselScheduleService;
         }
@@ -80,8 +81,13 @@ namespace DSLNG.PEAR.Web.Controllers
             }).NLSList;
         }
 
-        public ActionResult VesselScheduleList(string term) {
-            var vesselSchedules = _vesselScheduleService.GetVesselSchedules(new GetVesselSchedulesRequest {Skip = 0, Take = 20, Term = term,
+        public ActionResult VesselScheduleList(string term)
+        {
+            var vesselSchedules = _vesselScheduleService.GetVesselSchedules(new GetVesselSchedulesRequest
+            {
+                Skip = 0,
+                Take = 20,
+                Term = term,
             }).VesselSchedules;
             return Json(new { results = vesselSchedules }, JsonRequestBehavior.AllowGet);
         }
@@ -106,8 +112,14 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create(NLSViewModel viewModel)
         {
             var req = viewModel.MapTo<SaveNLSRequest>();
-            _nlsService.SaveNLS(req);
-            return RedirectToAction("Index");
+            var response = _nlsService.SaveNLS(req);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            if (response.IsSuccess)
+            {
+                return RedirectToAction("Index");
+            }
+            return View("Create", viewModel);
         }
 
         //
@@ -125,25 +137,33 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Edit(NLSViewModel viewModel)
         {
             var req = viewModel.MapTo<SaveNLSRequest>();
-            _nlsService.SaveNLS(req);
-            return RedirectToAction("Index");
+            var response = _nlsService.SaveNLS(req);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            if (response.IsSuccess)
+            {
+                return RedirectToAction("Index");
+            }
+            return View("Edit", viewModel);
         }
 
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            try
+
+            var response = _nlsService.Delete(new DeleteNLSRequest { Id = id });
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            if (response.IsSuccess)
             {
-                _nlsService.Delete(new DeleteNLSRequest { Id = id });
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            return View();
+
         }
 
-        public ActionResult InVesselSchedule(int id) {
+        public ActionResult InVesselSchedule(int id)
+        {
             var nlsList = _nlsService.GetNLSList(new GetNLSListRequest { VesselScheduleId = id });
             return PartialView("_RemarkList", nlsList.NLSList.MapTo<NLSViewModel>());
         }

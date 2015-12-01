@@ -80,28 +80,18 @@ namespace DSLNG.PEAR.Web.Controllers
             return View(viewModel);
         }
 
-        //
-        // GET: /Template/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+
 
         //
         // POST: /Template/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            var response = _templateService.DeleteTemplate(new DeleteTemplateRequest { Id = id });
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            return RedirectToAction("Index");
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
         }
 
         public ActionResult Grid(GridParams gridParams)
