@@ -81,7 +81,7 @@ namespace DSLNG.PEAR.Services
             return new SaveOperationResponse
             {
                 IsSuccess = true,
-                Message = "Operation has been Save"
+                Message = "Operation has been Saved"
             };
         }
 

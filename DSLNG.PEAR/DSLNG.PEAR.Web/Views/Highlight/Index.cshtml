@@ -6,7 +6,7 @@
     <h2>List</h2>
     @Html.Partial("_MessageResponse")
     <div class="add-button-wrapper">
-        <a class="btn btn-primary pull-right" href="/Highlight/Create">Create New</a>
+        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
     </div>
     <ul class="nav nav-tabs">
         <li class="active"><a href="#daily" data-toggle="tab">Daily</a></li>

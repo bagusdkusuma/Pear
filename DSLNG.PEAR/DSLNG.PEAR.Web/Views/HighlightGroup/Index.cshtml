@@ -56,17 +56,16 @@
                 var confirmDelete = function (id) {
                     if (confirm('Are you sure want to delete this item?')) {
                         var url = '@Url.Action("Delete", "HighlightGroup")';
-                    $('<form action="' + url + '" method="POST">' +
-                        '<input type="hidden" name="id" value="' + id + '">' +
-                        '</form>').submit();
+                        var form = $('<form />');
+                        form.attr('action', url);
+                        form.attr('method', 'POST');
+                        form.html('<input type="hidden" name="id" value="' + id + '" />');
+                        $('body').append(form);
+                        form.submit();
                 }
             };
+
             </script>
         }
     </div>
 </div>
-
-
-
-@*</div>*@
-@*</div>*@

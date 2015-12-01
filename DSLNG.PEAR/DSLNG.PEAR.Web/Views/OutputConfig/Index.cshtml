@@ -5,7 +5,9 @@
 
 <h2>Key Output Config</h2>
 @Html.Partial("_MessageResponse")
-@Html.ActionLink("Create New", "Create")
+<div class="add-button-wrapper">
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+</div>
 
 <table id="outputConfig-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
     <thead>
@@ -66,16 +68,20 @@
                 }
             });
 
+
             $('#outputConfig-table').on('click', '.delete', function () {
                 var id = $(this).attr('data-id');
                 if (confirm('Are you sure want to delete this item?' + id)) {
                     var url = '@Url.Action("Delete", "OutputConfig")';
-
-                    $('<form action="' + url + '" method="POST">' +
-                        '<input type="hidden" name="id" value="' + id + '">' +
-                        '</form>').submit();
+                    var form = $('<form />');
+                    form.attr('action', url);
+                    form.attr('method', 'POST');
+                    form.html('<input type="hidden" name="id" value="' + id + '" />');
+                    $('body').append(form);
+                    form.submit();
                 }
             });
+
 
         });
     </script>
