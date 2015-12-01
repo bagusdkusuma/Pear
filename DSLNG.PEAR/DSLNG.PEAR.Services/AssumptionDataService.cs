@@ -95,7 +95,7 @@ namespace DSLNG.PEAR.Services
             return new SaveAssumptionDataResponse
             {
                 IsSuccess = true,
-                Message = "Assumption Data has been Save"
+                Message = "Assumption Data has been Saved"
             };
         }
 

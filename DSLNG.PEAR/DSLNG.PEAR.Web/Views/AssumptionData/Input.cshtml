@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Input";
 }
-
+<div class="notification"></div>
 <h2>Key Assumption For : @Model.Scenario.Name</h2>
 @{
     foreach (var category in Model.KeyAssumptionCategories.Where(x => x.IsActive == true).OrderBy(x => x.Order).ToList())
@@ -65,8 +65,16 @@
                 var $this = $(this).val();
                 var $form = $(this).closest('form');
                 var url = $form.attr('action');
-                $.post(url, $form.serialize(), function (data) { });
+                $.post(url, $form.serialize(), function (data) {
+                    $('.notification').empty();
+                    var alertType = data.IsSuccess === true ? 'alert-success' : 'alert-danger';
+                    var message = '<div class="alert ' + alertType + '" role="alert">' + data.Message + '</div>';
+                    $('.notification').append(message).fadeIn().delay(1000).fadeOut();
+                });
             });
         });
+
+
+
     </script>
 }
