@@ -90,6 +90,7 @@
     <Compile Include="OperationDataService.cs" />
     <Compile Include="Requests\OperationalData\GetOperationDataConfigurationRequest.cs" />
     <Compile Include="Requests\OperationalData\UpdateOperationDataRequest.cs" />
+    <Compile Include="Requests\Operation\UpdateOperationRequest.cs" />
     <Compile Include="Requests\OutputConfig\DeleteOutputConfigRequest.cs" />
     <Compile Include="Responses\EconomicSummary\GetEconomicSummaryReportResponse.cs" />
     <Compile Include="Responses\OperationalData\GetOperationDataConfigurationResponse.cs" />
@@ -427,6 +428,7 @@
     <Compile Include="Responses\Operation\GetOperationsResponse.cs" />
     <Compile Include="Responses\Operation\OperationGroupsResponse.cs" />
     <Compile Include="Responses\Operation\SaveOperationResponse.cs" />
+    <Compile Include="Responses\Operation\UpdateOperationResponse.cs" />
     <Compile Include="Responses\OutputCategory\DeleteOutputCategoryResponse.cs" />
     <Compile Include="Responses\OutputCategory\GetActiveOutputCategoriesResponse.cs" />
     <Compile Include="Responses\OutputCategory\GetOutputCategoriesResponse.cs" />

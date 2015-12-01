@@ -16,7 +16,10 @@ namespace DSLNG.PEAR.Services
 {
     public class OperationConfigService : BaseService, IOperationConfigService
     {
-        public OperationConfigService(IDataContext context) : base(context) { }
+        public OperationConfigService(IDataContext context)
+            : base(context)
+        {
+        }
 
 
         public GetOperationsResponse GetOperations(GetOperationsRequest request)
@@ -29,10 +32,10 @@ namespace DSLNG.PEAR.Services
             }
 
             return new GetOperationsResponse
-            {
-                TotalRecords = totalRecords,
-                Operations = data.ToList().MapTo<GetOperationsResponse.Operation>()
-            };
+                {
+                    TotalRecords = totalRecords,
+                    Operations = data.ToList().MapTo<GetOperationsResponse.Operation>()
+                };
             //if (request.OnlyCount)
             //{
             //    return new GetOperationsResponse { Count = DataContext.KeyOperationConfigs.Count() };
@@ -51,10 +54,11 @@ namespace DSLNG.PEAR.Services
         public OperationGroupsResponse GetOperationGroups()
         {
             return new OperationGroupsResponse
-            {
-                OperationGroups = DataContext.KeyOperationGroups.ToList().MapTo<OperationGroupsResponse.OperationGroup>(),
-                Kpis = DataContext.Kpis.ToList().MapTo<OperationGroupsResponse.Kpi>()
-            };
+                {
+                    OperationGroups =
+                        DataContext.KeyOperationGroups.ToList().MapTo<OperationGroupsResponse.OperationGroup>(),
+                    Kpis = DataContext.Kpis.ToList().MapTo<OperationGroupsResponse.Kpi>()
+                };
         }
 
 
@@ -63,7 +67,8 @@ namespace DSLNG.PEAR.Services
             if (request.Id == 0)
             {
                 var operation = request.MapTo<KeyOperationConfig>();
-                operation.KeyOperationGroup = DataContext.KeyOperationGroups.FirstOrDefault(x => x.Id == request.KeyOperationGroupId);
+                operation.KeyOperationGroup =
+                    DataContext.KeyOperationGroups.FirstOrDefault(x => x.Id == request.KeyOperationGroupId);
                 operation.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == request.KpiId);
                 DataContext.KeyOperationConfigs.Add(operation);
             }
@@ -73,23 +78,27 @@ namespace DSLNG.PEAR.Services
                 if (operation != null)
                 {
                     request.MapPropertiesToInstance<KeyOperationConfig>(operation);
-                    operation.KeyOperationGroup = DataContext.KeyOperationGroups.FirstOrDefault(x => x.Id == request.KeyOperationGroupId);
+                    operation.KeyOperationGroup =
+                        DataContext.KeyOperationGroups.FirstOrDefault(x => x.Id == request.KeyOperationGroupId);
                     operation.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == request.KpiId);
                 }
             }
             DataContext.SaveChanges();
             return new SaveOperationResponse
-            {
-                IsSuccess = true,
-                Message = "Operation has been Save"
-            };
+                {
+                    IsSuccess = true,
+                    Message = "Operation has been Save"
+                };
         }
 
 
         public GetOperationResponse GetOperation(GetOperationRequest request)
         {
             return DataContext.KeyOperationConfigs.Where(x => x.Id == request.Id)
-                .Include(x => x.Kpi).Include(x => x.KeyOperationGroup).FirstOrDefault().MapTo<GetOperationResponse>();
+                              .Include(x => x.Kpi)
+                              .Include(x => x.KeyOperationGroup)
+                              .FirstOrDefault()
+                              .MapTo<GetOperationResponse>();
         }
 
 
@@ -103,9 +112,37 @@ namespace DSLNG.PEAR.Services
                 DataContext.SaveChanges();
             }
             return new DeleteOperationResponse
+                {
+                    IsSuccess = true,
+                    Message = "Operation has been deleted successfully"
+                };
+        }
+
+        public UpdateOperationResponse UpdateOperation(UpdateOperationRequest request)
+        {
+            var operationConfig = DataContext.KeyOperationConfigs.Single(x => x.Id == request.Id);
+            if (request.IsActive.HasValue)
+            {
+                operationConfig.IsActive = request.IsActive.Value;
+            }
+
+            if (request.Order.HasValue)
+            {
+                operationConfig.Order = request.Order.Value;
+            }
+
+            if (request.KeyOperationGroupId != 0)
+            {
+                var group = new KeyOperationGroup {Id = request.KeyOperationGroupId};
+                DataContext.KeyOperationGroups.Attach(group);
+                operationConfig.KeyOperationGroup = group;
+            }
+
+            DataContext.SaveChanges();
+            return new UpdateOperationResponse
             {
                 IsSuccess = true,
-                Message = "Operation has been deleted successfully"
+                Message = "Operation Config has been saved succesfully"
             };
         }
 

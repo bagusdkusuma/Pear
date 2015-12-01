@@ -1220,6 +1220,8 @@
     <Compile Include="ViewModels\NLS\NLSViewModel.cs" />
     <Compile Include="ViewModels\OperationalData\OperationDataDetailViewModel.cs" />
     <Compile Include="ViewModels\OperationalData\OperationalDataViewModel.cs" />
+    <Compile Include="ViewModels\OperationConfig\OperationConfigIndexViewModel.cs" />
+    <Compile Include="ViewModels\OperationConfig\OperationConfigUpdateViewModel.cs" />
     <Compile Include="ViewModels\OperationData\OperationDataConfigurationViewModel.cs" />
     <Compile Include="ViewModels\OperationData\OperationDataParamConfigurationViewModel.cs" />
     <Compile Include="ViewModels\OperationData\UpdateOperationDataViewModel.cs" />

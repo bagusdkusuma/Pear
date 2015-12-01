@@ -31,18 +31,6 @@ namespace DSLNG.PEAR.Services
                 TotalRecords = totalRecords,
                 OperationGroups = data.ToList().MapTo<GetOperationGroupsResponse.OperationGroup>()
             }; 
-           
-            //if (request.OnlyCount)
-            //{
-            //    return new GetOperationGroupsResponse { Count = DataContext.KeyOperationGroups.Count()};
-            //}
-            //else
-            //{
-            //    return new GetOperationGroupsResponse
-            //    {
-            //        OperationGroups = DataContext.KeyOperationGroups.OrderByDescending(x => x.Id).Skip(request.Skip).Take(request.Take).ToList().MapTo<GetOperationGroupsResponse.OperationGroup>()
-            //    };
-            //}
         }
 
 
@@ -50,15 +38,15 @@ namespace DSLNG.PEAR.Services
         {
             if (request.Id == 0)
             {
-                var OperationGroup = request.MapTo<KeyOperationGroup>();
-                DataContext.KeyOperationGroups.Add(OperationGroup);
+                var operationGroup = request.MapTo<KeyOperationGroup>();
+                DataContext.KeyOperationGroups.Add(operationGroup);
             }
             else
             {
-                var OperationGroup = DataContext.KeyOperationGroups.FirstOrDefault(x => x.Id == request.Id);
-                if (OperationGroup != null)
+                var operationGroup = DataContext.KeyOperationGroups.FirstOrDefault(x => x.Id == request.Id);
+                if (operationGroup != null)
                 {
-                    request.MapPropertiesToInstance<KeyOperationGroup>(OperationGroup);
+                    request.MapPropertiesToInstance<KeyOperationGroup>(operationGroup);
                 }
             }
             DataContext.SaveChanges();

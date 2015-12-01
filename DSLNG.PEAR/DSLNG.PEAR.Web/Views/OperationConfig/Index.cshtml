@@ -1,8 +1,9 @@
-﻿@{
+﻿@model DSLNG.PEAR.Web.ViewModels.OperationConfig.OperationConfigIndexViewModel 
+@{
     ViewBag.Title = "Operation";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@Html.DropDownListFor(model => model.KeyOperationGroupId, Model.OperationGroups,new{@class = "form-control operation-config-groups", style="display:none"})
 <h2>Key Operation Config</h2>
 @Html.Partial("_MessageResponse")
 @Html.ActionLink("Create New", "Create")
@@ -46,19 +47,54 @@
                 "sAjaxSource": '@Url.Action("Grid", "OperationConfig")',
                 "order": [[3, "asc"]],
                 "aoColumns": [
-                    { "mDataProp": "KeyOperationGroup", "name": "OperationGroup" },
-                    { "mDataProp": "KPI", "name": "KPI" },
-                    { "mDataProp": "Order", "name": "Order" },
+                    {
+                        "mDataProp": "KeyOperationGroupId", "name": "Key Operation Group",
+                        "data": null,
+                        "defaultContent": '',
+                        "mRender": function (data, type, row) {
+                            //console.log($('.highlight-groups').clone().val(row.GroupId));
+                            var groups = $('.operation-config-groups').clone();
+                            groups.css('display', 'block');
+                            groups.find('option:selected').removeAttr('selected');
+                            if (row.GroupId != 0) {
+                                groups.find('option').each(function (i, val) {
+                                    var optVal = $(val).val();
+                                    if (optVal == row.KeyOperationGroupId) {
+                                        $(val).attr('selected', 'selected');
+                                    }
+                                });
+                            }
+                            groups = groups.val(row.OperationGroupId).prop('outerHTML');
+                            return '<form action="/OperationConfig/save" method="POST"><input type="hidden" name="Id" value="' + row.Id + '">' + groups + '</form>';
+                        }
+                    },
+                    { "mDataProp": "Kpi", "name": "Kpi" },
+                    {
+                        "mDataProp": "Order", "name": "Order", "sClass": "dt-head-center text-center",
+                        "render": function (data, type, row) {
+                            return '<form action="/OperationConfig/save" method="POST"><input type="hidden" name="Id" value="' + row.Id + '"><input type="number" class="operation-config-order" name="Order" class="form-control" value="' + data + '"></form>';
+                        },
+                    },
                     { "mDataProp": "Desc", "name": "Desc", "sortable": false },
                     {
-                        "mDataProp": "IsActive", "name": "IsActive",
+                        "mDataProp": "IsActive", "name": "IsActive", "sClass": "dt-head-center text-center",
+                        "render": function (data, type, row) {
+                            var checked = '';
+                            if (data) {
+                                checked = 'checked="checked"';
+                            }
+                            return '<form action="/OperationConfig/save" method="POST"><input type="hidden" name="Id" value="' + row.Id + '"><input type="checkbox"  class="highlight-is-active" ' + checked + ' ><input type="checkbox" value="True"  name="IsActive" class="highlight-is-active" style="display:none" checked="checked" ></form>';
+                        },
+                    },
+                    /*{
+                        "mDataProp": "IsActive", "name": "IsActive", "sClass": "dt-head-center text-center",
                         render: function (data, type, row) {
                             if (type === 'display') {
                                 return '<input type="checkbox" class="is-active">';
                             }
                             return data;
                         }
-                    },
+                    },*/
                     {
                         "orderable": false,
                         "data": null,
@@ -70,6 +106,28 @@
                         }
                     }
                 ],
+                "fnDrawCallback": function (oSettings) {
+                    $('.operation-config-order').keyup(function () {
+                        var form = $(this).closest('form');
+                        $.post(form.attr('action'), form.serialize().replace(/item\./g, ''), function (data) {
+                        });
+                    });
+                    $('.operation-config-groups').change(function () {
+                        var form = $(this).closest('form');
+                        $.post(form.attr('action'), form.serialize().replace(/item\./g, ''), function (data) {
+                        });
+                    });
+                    $('.highlight-is-active').change(function () {
+                        var form = $(this).closest('form');
+                        if ($(this).is(":checked")) {
+                            form.find('input[name="IsActive"]').val('True');
+                        } else {
+                            form.find('input[name="IsActive"]').val('False');
+                        }
+                        $.post(form.attr('action'), form.serialize().replace(/item\./g, ''), function (data) {
+                        });
+                    });
+                },
                 rowCallback: function (row, data) {
                     // Set the checked state of the checkbox in the table
                     $('input.is-active', row).prop('checked', data.IsActive == 1);
