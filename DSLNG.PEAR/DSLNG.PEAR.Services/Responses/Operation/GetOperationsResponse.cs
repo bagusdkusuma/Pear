@@ -14,8 +14,10 @@ namespace DSLNG.PEAR.Services.Responses.Operation
         public class Operation
         {
             public int Id { get; set; }
-            public string KeyOperationGroup { get; set; }
-            public string KPI { get; set; }
+            //public string KeyOperationGroup { get; set; }
+            public int KeyOperationGroupId { get; set; }
+            public string Kpi { get; set; }
+            public string KpiId { get; set; }
             public string Desc { get; set; }
             public bool IsActive { get; set; }
             public int Order { get; set; }

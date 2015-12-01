@@ -1,4 +1,7 @@
-﻿using DSLNG.PEAR.Services.Requests.Kpi;
+﻿using System.Data.SqlClient;
+using DSLNG.PEAR.Services.Requests.Kpi;
+using DSLNG.PEAR.Services.Requests.OperationGroup;
+using DSLNG.PEAR.Web.ViewModels.OperationConfig;
 using DevExpress.Web.Mvc;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Operation;
@@ -16,72 +19,42 @@ namespace DSLNG.PEAR.Web.Controllers
 {
     public class OperationConfigController : BaseController
     {
-        private readonly IOperationConfigService _operationService;
-        private IKpiService _kpiService;
-        public OperationConfigController(IOperationConfigService operationService, IKpiService kpiService)
+        private readonly IOperationConfigService _operationConfigService;
+        private readonly IKpiService _kpiService;
+        private readonly IOperationGroupService _operationGroupService;
+
+        public OperationConfigController(IKpiService kpiService, IOperationGroupService operationGroupService,
+                                         IOperationConfigService operationConfigService)
         {
-            _operationService = operationService;
             _kpiService = kpiService;
+            _operationGroupService = operationGroupService;
+            _operationConfigService = operationConfigService;
         }
 
         public ActionResult Index()
         {
-            return View();
-        }
-
-        public ActionResult IndexPartial()
-        {
-            var viewModel = GridViewExtension.GetViewModel("gridOperation");
-            if (viewModel == null)
-                viewModel = CreateGridViewModel();
-            return BindingCore(viewModel);
-        }
-
-        PartialViewResult BindingCore(GridViewModel gridViewModel)
-        {
-            gridViewModel.ProcessCustomBinding(GetDataRowCount, GetData);
-            return PartialView("_IndexGridPartial", gridViewModel);
-        }
-
-        public ActionResult PagingAction(GridViewPagerState pager)
-        {
-            var viewModel = GridViewExtension.GetViewModel("gridOperationIndex");
-            viewModel.ApplyPagingState(pager);
-            return BindingCore(viewModel);
-        }
-
-        private static GridViewModel CreateGridViewModel()
-        {
-            var viewModel = new GridViewModel();
-            viewModel.KeyFieldName = "Id";
-            viewModel.Columns.Add("KeyOperationGroup");
-            viewModel.Columns.Add("Name");
-            viewModel.Columns.Add("Desc");
-            viewModel.Columns.Add("IsActive");
-            viewModel.Pager.PageSize = 10;
-            return viewModel;
-        }
-
-        public void GetDataRowCount(GridViewCustomBindingGetDataRowCountArgs e)
-        {
-            e.DataRowCount = _operationService.GetOperations(new GetOperationsRequest { OnlyCount = true }).Count;
-        }
-
-        public void GetData(GridViewCustomBindingGetDataArgs e)
-        {
-            e.Data = _operationService.GetOperations(new GetOperationsRequest
-            {
-                Skip = e.StartDataRowIndex,
-                Take = e.DataRowCount
-            }).Operations;
+            var viewModel = new OperationConfigIndexViewModel();
+            viewModel.OperationGroups = _operationGroupService.GetOperationGroups(new GetOperationGroupsRequest
+                {
+                    Take = -1,
+                    SortingDictionary = new Dictionary<string, SortOrder> {{"Order", SortOrder.Ascending}}
+                }).OperationGroups.Select(x => new SelectListItem {Value = x.Id.ToString(), Text = x.Name}).ToList();
+            viewModel.OperationGroups.Insert(0, new SelectListItem {Value = "0", Text = "Choose Group"});
+            return View(viewModel);
         }
 
         public ActionResult Create()
         {
             var viewModel = new OperationViewModel();
-            viewModel.KeyOperationGroups = _operationService.GetOperationGroups().OperationGroups
-                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
-             viewModel.Kpis.Insert(0, new OperationViewModel.Kpi());
+            viewModel.KeyOperationGroups = _operationConfigService.GetOperationGroups().OperationGroups
+                                                                  .Select(
+                                                                      x =>
+                                                                      new SelectListItem
+                                                                          {
+                                                                              Value = x.Id.ToString(),
+                                                                              Text = x.Name
+                                                                          }).ToList();
+            viewModel.Kpis.Insert(0, new OperationViewModel.Kpi());
             viewModel.IsActive = true;
             return View(viewModel);
         }
@@ -90,7 +63,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create(OperationViewModel viewModel)
         {
             var request = viewModel.MapTo<SaveOperationRequest>();
-            var response = _operationService.SaveOperation(request);
+            var response = _operationConfigService.SaveOperation(request);
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
             if (response.IsSuccess)
@@ -100,11 +73,18 @@ namespace DSLNG.PEAR.Web.Controllers
             return View("Create", viewModel);
         }
 
-        public ActionResult Edit (int id)
+        public ActionResult Edit(int id)
         {
-            var viewModel = _operationService.GetOperation(new GetOperationRequest { Id = id }).MapTo<OperationViewModel>();
-            viewModel.KeyOperationGroups = _operationService.GetOperationGroups().OperationGroups
-                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+            var viewModel =
+                _operationConfigService.GetOperation(new GetOperationRequest {Id = id}).MapTo<OperationViewModel>();
+            viewModel.KeyOperationGroups = _operationConfigService.GetOperationGroups().OperationGroups
+                                                                  .Select(
+                                                                      x =>
+                                                                      new SelectListItem
+                                                                          {
+                                                                              Value = x.Id.ToString(),
+                                                                              Text = x.Name
+                                                                          }).ToList();
             viewModel.Kpis = new List<OperationViewModel.Kpi>();
             var kpi = _kpiService.GetKpi(new GetKpiRequest {Id = viewModel.KpiId});
             viewModel.Kpis.Insert(0, new OperationViewModel.Kpi {Id = kpi.Id, Name = kpi.Name});
@@ -116,7 +96,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Edit(OperationViewModel viewModel)
         {
             var request = viewModel.MapTo<SaveOperationRequest>();
-            var response = _operationService.SaveOperation(request);
+            var response = _operationConfigService.SaveOperation(request);
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
             if (response.IsSuccess)
@@ -129,7 +109,7 @@ namespace DSLNG.PEAR.Web.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            var response = _operationService.DeleteOperation(new DeleteOperationRequest { Id = id });
+            var response = _operationConfigService.DeleteOperation(new DeleteOperationRequest {Id = id});
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
             if (response.IsSuccess)
@@ -141,23 +121,29 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Grid(GridParams gridParams)
         {
-            var operation = _operationService.GetOperations(new GetOperationsRequest
-            {
-                Search = gridParams.Search,
-                Skip = gridParams.DisplayStart,
-                Take = gridParams.DisplayLength,
-                SortingDictionary = gridParams.SortingDictionary
-            });
-            IList<GetOperationsResponse.Operation> OperationsResponse = operation.Operations;
+            var operation = _operationConfigService.GetOperations(new GetOperationsRequest
+                {
+                    Search = gridParams.Search,
+                    Skip = gridParams.DisplayStart,
+                    Take = gridParams.DisplayLength,
+                    SortingDictionary = gridParams.SortingDictionary
+                });
+            IList<GetOperationsResponse.Operation> operationsResponse = operation.Operations;
             var data = new
-            {
-                sEcho = gridParams.Echo + 1,
-                iTotalDisplayRecords = operation.TotalRecords,
-                iTotalRecords = operation.Operations.Count,
-                aaData = OperationsResponse
-            };
+                {
+                    sEcho = gridParams.Echo + 1,
+                    iTotalDisplayRecords = operation.TotalRecords,
+                    iTotalRecords = operation.Operations.Count,
+                    aaData = operationsResponse
+                };
             return Json(data, JsonRequestBehavior.AllowGet);
-
         }
-	}
+
+        [HttpPost]
+        public JsonResult Save(OperationConfigUpdateViewModel viewModel)
+        {
+            var request = viewModel.MapTo<UpdateOperationRequest>();
+            return Json(_operationConfigService.UpdateOperation(request));
+        }
+    }
 }
