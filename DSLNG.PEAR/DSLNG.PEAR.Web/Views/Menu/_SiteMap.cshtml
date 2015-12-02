@@ -160,12 +160,14 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        $('.sub-nav > li').click(function () {
-            var $this = $(this);
-            $this.find('ul').stop().slideToggle();
-            $this.find('.fa').toggleClass('fa-angle-down fa-angle-up');
-            $(this).parent().find('sub-nav > li.active').toggle();
-            $(this).toggleClass('active');
+        $('.sub-nav > li').click(function (e) {
+            if (!$(e.target).closest('.sublevel').length) {
+                var $this = $(this);
+                $this.find('ul').stop().slideToggle();
+                $this.find('.fa').toggleClass('fa-angle-down fa-angle-up');
+                $(this).parent().find('sub-nav > li.active').toggle();
+                $(this).toggleClass('active');
+            }
         });
         
         $('.main-nav > li').click(function () {

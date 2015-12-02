@@ -449,10 +449,21 @@ namespace DSLNG.PEAR.Services
 
         public GetRootMenuResponse GetRootMenu(GetRootMenuRequest request)
         {
+            var absoluteAlternative = "Nothing";
+            var absoluteSplit = request.AbsolutePath.Split(new[]{'/'},StringSplitOptions.RemoveEmptyEntries);
+            int result;
+            if (absoluteSplit.Length > 0 && int.TryParse(absoluteSplit[absoluteSplit.Length - 1], out result))
+            {
+                absoluteAlternative = request.AbsolutePath.Replace(result.ToString(),"$/");
+            }
+            if (!request.AbsolutePath.EndsWith("/")) {
+                request.AbsolutePath += "/";
+            }
             var menu = DataContext.Menus.Include(x => x.Parent)
                 .Include(x => x.Parent.Parent)
                 .Include(x => x.Parent.Parent.Parent)
-                .Include(x => x.Parent.Parent.Parent.Parent).FirstOrDefault(x => x.Url == request.AbsolutePath);
+                .Include(x => x.Parent.Parent.Parent.Parent)
+                .FirstOrDefault(x => x.Url == request.AbsolutePath  || x.Url == absoluteAlternative);
             var IsNotRoot = true;
             var i = 0;
             while (menu != null && IsNotRoot && i < 10) {
