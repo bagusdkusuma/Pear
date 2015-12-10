@@ -174,7 +174,7 @@ namespace DSLNG.PEAR.Services
                     {
                         var group = new GetEconomicSummaryReportResponse.Group();
                         group.Name = category.Name;
-                        foreach (var keyOutput in category.KeyOutputs)
+                        foreach (var keyOutput in category.KeyOutputs.OrderBy(x => x.Order))
                         {
                             group.KeyOutputs.Add(new GetEconomicSummaryReportResponse.KeyOutput
                                 {

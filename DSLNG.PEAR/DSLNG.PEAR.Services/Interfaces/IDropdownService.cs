@@ -14,6 +14,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         IEnumerable<Dropdown> GetPillars(int pmsSummaryId);
         IEnumerable<Dropdown> GetKpis(int pillarId);
         IEnumerable<Dropdown> GetYears();
+        IEnumerable<Dropdown> GetYearsForOperationData();
         IEnumerable<Dropdown> GetYearsForPmsSummary();
         IEnumerable<Dropdown> GetMonths();
         IEnumerable<Dropdown> GetKpisForPmsConfigDetails(int pmsConfigId);

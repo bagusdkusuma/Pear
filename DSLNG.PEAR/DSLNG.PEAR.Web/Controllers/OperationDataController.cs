@@ -180,7 +180,7 @@ namespace DSLNG.PEAR.Web.Controllers
             request.IsPartial = isIncludeGroup.HasValue && isIncludeGroup.Value;
             var response = _operationDataService.GetOperationDataConfiguration(request);
             var viewModel = response.MapTo<OperationDataConfigurationViewModel>();
-            viewModel.Years = _dropdownService.GetYears().MapTo<SelectListItem>();
+            viewModel.Years = _dropdownService.GetYearsForOperationData().MapTo<SelectListItem>();
             viewModel.PeriodeType = pType.ToString();
             viewModel.Year = request.Year;
             return viewModel;
