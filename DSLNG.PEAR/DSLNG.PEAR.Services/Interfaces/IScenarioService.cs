@@ -15,5 +15,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         SaveScenarioResponse SaveScenario(SaveScenarioRequest request);
         GetScenarioResponse GetScenario(GetScenarioRequest request);
         DeleteScenarioResponse DeleteScenario(DeleteScenarioRequest request);
+        int GetActiveScenario();
     }
 }

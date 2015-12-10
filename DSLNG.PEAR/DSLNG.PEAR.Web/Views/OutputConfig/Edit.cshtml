@@ -88,7 +88,7 @@
                             @if (Model.Formula == "NETBACKVALUE") { 
                                 <a class="btn btn-default remove-kpi" ><i class="fa fa-minus"></i></a>
                             }
-                            @if (j == kpiLength - 1) {
+                            @if (Model.Formula == "NETBACKVALUE" && j == kpiLength - 1) {
                                 <a class="btn btn-default add-kpi" ><i class="fa fa-plus"></i></a>
                             }
                         </div>
