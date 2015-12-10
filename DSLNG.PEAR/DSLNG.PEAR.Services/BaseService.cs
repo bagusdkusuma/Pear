@@ -31,5 +31,19 @@ namespace DSLNG.PEAR.Services
                 return numbers;
             }
         }
+
+        protected IList<int> YearlyNumbersForOperationData
+        {
+            get
+            {
+                var numbers = new List<int>();
+                for (int i = 2011; i <= 2030; i++)
+                {
+                    numbers.Add(i);
+                }
+
+                return numbers;
+            }
+        }
     }
 }

@@ -125,6 +125,7 @@ namespace DSLNG.PEAR.Services
                     .Include(x => x.Kpi)
                     .Include(x => x.Kpi.Measurement)
                     .Include(x => x.KeyOperationGroup)
+                    .Where(x => x.IsActive)
                     .AsEnumerable()
                     .OrderBy(x => x.KeyOperationGroup.Order).ThenBy(x => x.Order)
                     .GroupBy(x => x.KeyOperationGroup)
@@ -196,7 +197,7 @@ namespace DSLNG.PEAR.Services
                         foreach (var keyOperationConfig in keyOperationConfigs)
                         {
                             var kpiDto = keyOperationConfig.Kpi.MapTo<GetOperationDataConfigurationResponse.Kpi>();
-                            foreach (var number in YearlyNumbers)
+                            foreach (var number in YearlyNumbersForOperationData)
                             {
                                 var operation = operationDataYearly.SingleOrDefault(x => x.Kpi.Id == keyOperationConfig.Kpi.Id && x.Periode.Year == number);
 

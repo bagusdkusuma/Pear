@@ -222,11 +222,11 @@ namespace DSLNG.PEAR.Services
                  .Include(x => x.KeyOutputs.Select(y => y.Measurement))
                  .Include(x => x.KeyOutputs.Select(y => y.Kpis))
                  .Include(x => x.KeyOutputs.Select(y => y.KeyAssumptions))
-                 .Where(x => x.IsActive == true && x.KeyOutputs.Where(y => y.IsActive == true).Count() > 0).OrderBy(x => x.Order).ToList();
+                 .Where(x => x.IsActive && x.KeyOutputs.Any(y => y.IsActive)).OrderBy(x => x.Order).ToList();
             foreach (var category in categories)
             {
                 var categoryResp = category.MapTo<CalculateOutputResponse.OutputCategoryResponse>();
-                foreach (var keyOutput in category.KeyOutputs.Where(x => x.IsActive == true).ToList())
+                foreach (var keyOutput in category.KeyOutputs.Where(x => x.IsActive).OrderBy(x => x.Order).ToList())
                 {
                     var keyOutputResp = this.CalculateFormula(keyOutput, request.ScenarioId);
                     categoryResp.KeyOutputs.Add(keyOutputResp);
