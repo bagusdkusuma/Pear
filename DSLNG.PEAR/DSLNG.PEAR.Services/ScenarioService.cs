@@ -166,5 +166,16 @@ namespace DSLNG.PEAR.Services
             TotalRecords = data.Count();
             return data;
         }
+
+
+        public int GetActiveScenario()
+        {
+            var scenario = DataContext.Scenarios.FirstOrDefault(x => x.IsDashboard == true);
+            if (scenario != null) {
+                return scenario.Id;
+            }
+            return 0;
+            //throw new NotImplementedException();
+        }
     }
 }
