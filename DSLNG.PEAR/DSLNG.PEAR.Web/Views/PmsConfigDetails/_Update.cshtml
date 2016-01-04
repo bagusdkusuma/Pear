@@ -31,7 +31,7 @@
 
         <div class="form-group form-list target" style="display: none">
             <label>Target</label>
-            @Html.TextBoxFor(x => x.Target, new { @class = "form-control" })
+            @Html.DropDownListFor(x => x.Target, Model.Targets, "Select Target From Scoring Indicator", new { @class = "form-control" })
             @Html.ValidationMessageFor(x => x.Target)
         </div>
 
@@ -56,18 +56,32 @@
 <script type="text/javascript">
     $(document).ready(function () {
         if ('@Model.ScoringType' == 'Boolean') {
+            $('.target').show();
+        }
+
+        $('.scoring-type').change(function () {
+            if ($(this).val() == 'Boolean') {
                 $('.target').show();
+            } else {
+                //$('.target').val('');
+                $('.target').hide();
             }
-
-            $('.scoring-type').change(function () {
-                if ($(this).val() == 'Boolean') {
-                    $('.target').show();
-                } else {
-                    $('.target').val('');
-                    $('.target').hide();
-                }
-            });
-
         });
+
+        //$('#Target').click(function () {
+            $('#Target').html('<option value="">Select Target From Scoring Indicator</option>');
+            $('.si-expression').each(function (idx, v) {
+                var target = '@Html.Raw(Model.Target)';
+                var val = $(v).val();
+                var selected = val == target ? 'selected' : '';
+                console.log(target);
+                console.log(val);
+                console.log(selected);
+                $('#Target').append('<option value="' + val + '" '+ selected +'>' + val + '</option>');
+            });
+            
+        //});
+
+    });
 </script>
 
