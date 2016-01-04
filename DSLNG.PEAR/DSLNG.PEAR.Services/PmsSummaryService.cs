@@ -181,6 +181,7 @@ namespace DSLNG.PEAR.Services
                                         // gak terpenuhi jadi false, 
                                         // update : milih score indicator aja jadi radio, nanti targetnya bisa range kek x < 10
 
+                                        kpiData.Score = 0;
                                         if (kpiAchievementYearly.Value.HasValue && !string.IsNullOrEmpty(pmsConfigDetails.Target))
                                         {
                                             Expression e = new Expression(pmsConfigDetails.Target.Replace("x", kpiAchievementYearly.Value.Value.ToString("f2", CultureInfo.InvariantCulture)));
@@ -188,10 +189,6 @@ namespace DSLNG.PEAR.Services
                                             if (isPassed)
                                             {
                                                 kpiData.Score = kpiData.Weight;
-                                            }
-                                            else
-                                            {
-                                                kpiData.Score = 0;
                                             }
                                         }
                                         /*var kpiAchievement =
