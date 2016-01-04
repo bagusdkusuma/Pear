@@ -12,7 +12,7 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
         public int Id { get; set; }
         public double Weight { get; set; }
         public string ScoringType { get; set; }
-        public double? Target { get; set; }
+        public string Target { get; set; }
         public int PillarId { get; set; }
         public string PillarName { get; set; }
         public int KpiId { get; set; }

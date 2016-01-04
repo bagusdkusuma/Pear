@@ -92,6 +92,34 @@
                 $(this).colpickSetColor(this.value.replace('#', ''));
             });
         });
+
+        $('.score-indicator-wrapper').on('change', '.si-expression', function () {
+            //$('#Target').html('');
+            //$('#Target')
+            var arr = [];
+            $('.si-expression').each(function (idx, v) {
+                var val = $(v).val();
+                arr.push(val);
+                //$('#Target').append('<option value="' + val + '">' + val + '</option>');
+            });
+
+            var options = [];
+            $('#Target option').each(function () {
+                var option = $(this).val();
+                if ($.inArray(option, arr) == -1) {
+                    $(this).remove();
+                } else {
+                    options.push(option);
+                }
+            });
+            
+            for (var index in arr) {
+                if (options.indexOf(arr[index]) == -1) {
+                    $('#Target').append('<option value="' + arr[index] + '">' + arr[index] + '</option>');
+                }
+            }
+            //console.log('asas');
+        });
     })
 </script>
 
