@@ -3,7 +3,10 @@
 @{
     ViewBag.Title = "Index";
 }
+<div style="display:none">
 @Html.DropDownListFor(model => model.GroupId, Model.Groups,new{@class = "form-control highlight-groups", style="display:none"})
+@Html.DropDownListFor(model => model.RoleGroupIds, Model.RoleGroupOptions,new{@class = "form-control role-groups", multiple="multiple"})
+</div>
 @*<div class="highlight-orders">*@
     <div class="row">
         <div class="col-md-12">
@@ -23,12 +26,61 @@
                 <th>
                     IsActive
                 </th>
+                <th>
+                    Privilege
+                </th>
             </tr>
             </thead>
         </table>
     @section Scripts{
         <script type="text/javascript">
             $(document).ready(function () {
+                $('body').on('click', '.save-privilege', function (e) {
+                    e.preventDefault();
+                    var $form = $(this).closest('form');
+                    $.post($form.attr('action'), $form.serialize(), function (data) {
+                        location.reload();
+                    });
+                });
+
+                $("body").on("click", ".manage-privilege", function () {
+                    var $this = $(this);
+                    var title = $this.data('name');
+                    var groupId = $this.data('id');
+                    var roleGroupIds = $this.data('role-group-ids') + "";
+                    console.log(roleGroupIds);
+                    var modalHeader = $('<div/>');
+                    modalHeader.addClass('modal-header');
+                    modalHeader.html('<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>');
+                    modalHeader.append($('<div/>').addClass('row').addClass('modal-header-detail').html('<div class="title">Privilege : ' + title  + '</div>'));
+                    var modalBody = $('<div/>');
+                    modalBody.addClass('modal-body');
+                    var form = $('<form />');
+                    form.attr('action', '/highlightdashboard/save')
+                    form.attr('method', 'post');
+                    var hidInput = $('<input />');
+                    hidInput.attr('type', 'hidden');
+                    hidInput.attr('name', 'Id');
+                    hidInput.val(groupId);
+                    var button = $('<button />');
+                    button.attr('type', 'submit');
+                    button.addClass('btn btn-primary save-privilege');
+                    button.html('Save');
+                    form.append(hidInput);
+                    var groups = $('.role-groups').clone(true);
+                          $.each(roleGroupIds.split(","), function (i, e) {
+                              groups.find("option[value='" + e + "']").prop("selected", true);
+                          });
+                    form.append(groups);
+                    form.append($('<br />'));
+                    form.append(button);
+                    modalBody.html(form);
+                    var more = $('#modalDialog .modal-content');
+                    more.html('');
+                    more.append(modalHeader);
+                    more.append(modalBody);
+                    $('#modalDialog .modal-content').removeClass('ajax-loading');
+                });
                 $('#highlight-order-table').DataTable({
                     "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
                     "iDisplayLength": -1,
@@ -76,6 +128,12 @@
                                     checked = 'checked="checked"';
                                 }
                                 return '<form action="/HighlightDashboard/save" method="POST"><input type="hidden" name="Id" value="' + row.Id + '"><input type="checkbox"  class="highlight-is-active" ' + checked + ' ><input type="checkbox" value="True"  name="IsActive" class="highlight-is-active" style="display:none" checked="checked" ></form>';
+                            },
+                        },
+                        {
+                            "mDataProp": "Privilege", "name": "Privilage", "sClass": "dt-head-center text-center",
+                            "render": function (data, type, row) {
+                                return '<a href="#" class="manage-privilege" data-role-group-ids="'+row.RoleGroupIds+'" data-name="'+row.Text+'" data-id="' + row.Id + '" data-toggle = "modal", data-target = "#modalDialog" >Manage</a>';
                             },
                         },
                         //{
@@ -136,7 +194,8 @@
         </div>
     </div>
     
-      
+      @Html.Partial("_Modal")
+
 
     @*</div>*@
 @*</div>*@

@@ -9,6 +9,7 @@ namespace DSLNG.PEAR.Data.Entities
         public RoleGroup()
         {
             Menus = new HashSet<Menu>();
+            SelectOptions = new List<SelectOption>();
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -21,5 +22,6 @@ namespace DSLNG.PEAR.Data.Entities
         public bool IsActive { get; set; }
         public string Code { get; set; }
         public ICollection<Menu> Menus { get; set; }
+        public ICollection<SelectOption> SelectOptions { get; set; }
     }
 }

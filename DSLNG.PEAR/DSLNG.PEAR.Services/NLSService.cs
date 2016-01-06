@@ -35,7 +35,7 @@ namespace DSLNG.PEAR.Services
             }
             else if (request.VesselScheduleId != 0) {
                 var query = DataContext.NextLoadingSchedules.Include(x => x.VesselSchedule).Include(x => x.VesselSchedule.Vessel);
-                query = query.Where(x => x.VesselSchedule.Id == request.VesselScheduleId);
+                query = query.Where(x => x.VesselSchedule.Id == request.VesselScheduleId).OrderByDescending(x => x.CreatedAt);
                 return new GetNLSListResponse
                 {
                     NLSList = query.ToList().MapTo<GetNLSListResponse.NLSResponse>()

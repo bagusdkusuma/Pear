@@ -38,5 +38,6 @@ namespace DSLNG.PEAR.Web.ViewModels.VesselSchedule
         public string SalesType { get; set; }
         public string Type { get; set; }
         public string Cargo { get; set; }
+        public bool AsNew { get; set; }
     }
 }

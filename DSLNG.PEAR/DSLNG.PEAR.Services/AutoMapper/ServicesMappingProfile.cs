@@ -390,7 +390,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.Value, o => o.MapFrom(s => s.Value.Value))
                 .ForMember(x => x.Text, o => o.MapFrom(s => s.Value.Text));
             Mapper.CreateMap<SelectOption, GetHighlightOrdersResponse.HighlightOrderResponse>()
-                .ForMember(x => x.GroupId, o => o.MapFrom(x =>x.Group != null ?  x.Group.Id : 0));
+                .ForMember(x => x.GroupId, o => o.MapFrom(x => x.Group != null ? x.Group.Id : 0))
+                .ForMember(x => x.RoleGroupIds, o => o.MapFrom(s => s.RoleGroups.Select(x => x.Id).ToArray()));
             Mapper.CreateMap<KeyAssumptionCategory, GetAssumptionCategoriesResponse.AssumptionCategory>()
                 .ForMember(x => x.Assumptions, o =>
                     o.MapFrom(s => s.KeyAssumptions != null ?
@@ -474,7 +475,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.HighlightTypes, o => o.MapFrom(s => s.Options.OrderBy(x => x.Order).Where(x => x.IsActive == true).ToList()));
             Mapper.CreateMap<HighlightGroup, GetHighlightGroupResponse>();
             Mapper.CreateMap<SaveHighlightGroupRequest, HighlightGroup>();
-            Mapper.CreateMap<SelectOption, GetHighlightGroupsResponse.HighlightTypeResponse>();
+            Mapper.CreateMap<SelectOption, GetHighlightGroupsResponse.HighlightTypeResponse>()
+                .ForMember(x => x.RoleGroupIds, o => o.MapFrom(s => s.RoleGroups.Select(y => y.Id).ToArray()));
             Mapper.CreateMap<Highlight, GetDynamicHighlightsResponse.HighlightResponse>()
                 .ForMember(x => x.TypeId, o => o.MapFrom(s => s.HighlightType.Id));
 

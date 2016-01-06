@@ -63,6 +63,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Highlight
             public string Text { get; set; }
             public string Value { get; set; }
             public int Order { get; set; }
+            public int[] RoleGroupIds { get; set; }
         }
         public class HighlightViewModel {
             public int Id { get; set; }
@@ -89,5 +90,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Highlight
                 }
             }
         }
+        public int CurrentUserRoleId { get; set; }
+       
     }
 }
