@@ -28,7 +28,7 @@
             <th>Scenario</th>
             <th>Key Assumption</th>
             <th>Forecast Value</th>
-            <th>Actual Value</th>            
+            <th>Current Overview</th>            
             <th>Remark</th>
             <th>Action</th>
         </tr>
@@ -47,11 +47,11 @@
                 "sAjaxSource": '@Url.Action("Grid", "AssumptionData")',
                 "order": [[3, "asc"]],
                 "aoColumns": [
-                    { "mDataProp": "Scenario", "name": "Scenario" },
-                    { "mDataProp": "Config", "name": "Config" },
+                    { "mDataProp": "Scenario", "name": "Scenario", "className": "dt-body-left" },
+                    { "mDataProp": "Config", "name": "Config", "className": "dt-body-left" },
                     { "mDataProp": "ForecastValue", "name": "ForecastValue" },
-                    { "mDataProp": "ActualValue", "name": "ActualValue" },
-                    { "mDataProp": "Remark", "name": "Remark", "sortable": false },
+                    { "mDataProp": "ActualValue", "name": "ActualValue", },
+                    { "mDataProp": "Remark", "name": "Remark", "sortable": false, "className": "dt-body-left" },
                     {
                         "orderable": false,
                         "data": null,

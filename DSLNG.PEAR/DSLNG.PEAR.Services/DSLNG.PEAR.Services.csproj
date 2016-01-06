@@ -91,6 +91,7 @@
     <Compile Include="Requests\ConstantUsage\DeleteConstantUsageRequest.cs" />
     <Compile Include="Requests\HighlightGroup\DeleteHighlightGroupRequest.cs" />
     <Compile Include="Requests\OperationalData\GetOperationDataConfigurationRequest.cs" />
+    <Compile Include="Requests\OperationalData\GetOperationDataRequestByValue.cs" />
     <Compile Include="Requests\OperationalData\UpdateOperationDataRequest.cs" />
     <Compile Include="Requests\Operation\UpdateOperationRequest.cs" />
     <Compile Include="Requests\OutputConfig\DeleteOutputConfigRequest.cs" />
@@ -421,6 +422,8 @@
     <Compile Include="Responses\OperationalData\GetOperationalDataResponse.cs" />
     <Compile Include="Responses\OperationalData\GetOperationalDatasResponse.cs" />
     <Compile Include="Responses\OperationalData\GetOperationalSelectListResponse.cs" />
+    <Compile Include="Responses\OperationalData\GetOperationDataResponse.cs" />
+    <Compile Include="Responses\OperationalData\GetOperationIdResponse.cs" />
     <Compile Include="Responses\OperationalData\SaveOperationalDataResponse.cs" />
     <Compile Include="Responses\OperationalData\UpdateOperationDataResponse.cs" />
     <Compile Include="Responses\OperationalData\ViewOperationDataConfigurationResponse.cs" />

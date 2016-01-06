@@ -46,9 +46,9 @@
                 "sAjaxSource": '@Url.Action("Grid", "EconomicSummary")',
                 "order": [[3, "asc"]],
                 "aoColumns": [
-                    { "mDataProp": "Name", "name": "Name" },
-                    { "mDataProp": "Scenarios", "name": "Scenarios" },
-                    { "mDataProp": "Desc", "name": "Desc" },
+                    { "mDataProp": "Name", "name": "Name", "className": "dt-body-left" },
+                    { "mDataProp": "Scenarios", "name": "Scenarios", "className": "dt-body-left" },
+                    { "mDataProp": "Desc", "name": "Desc", "className": "dt-body-left" },
                     {
                         "mDataProp": "IsActive", "name": "IsActive",
                         render: function (data, type, row) {

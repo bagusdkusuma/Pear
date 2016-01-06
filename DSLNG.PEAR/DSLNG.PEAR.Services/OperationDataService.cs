@@ -12,12 +12,13 @@ using System.Data.Entity;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Entities.EconomicModel;
 using System.Data.SqlClient;
+using DSLNG.PEAR.Services.Responses;
 
 namespace DSLNG.PEAR.Services
 {
     public class OperationDataService : BaseService, IOperationDataService
     {
-        public OperationDataService(IDataContext context) : base(context) {}
+        public OperationDataService(IDataContext context) : base(context) { }
 
 
 
@@ -183,7 +184,7 @@ namespace DSLNG.PEAR.Services
                     .Include(x => x.Kpi.Measurement)
                     .Where(x => x.IsActive).ToList();
                 }
-                
+
 
                 switch (periodeType)
                 {
@@ -377,6 +378,85 @@ namespace DSLNG.PEAR.Services
             //throw new NotImplementedException();
 
 
+        }
+
+
+
+        public GetOperationIdResponse GetOperationId(List<int> list_Kpi)
+        {
+            return new GetOperationIdResponse
+            {
+                OperationDatas = DataContext.KeyOperationDatas.Include(x => x.Kpi).Include(x => x.KeyOperationConfig).Include(x => x.Scenario).Where(x => list_Kpi.Contains(x.Kpi.Id)).ToList().MapTo<GetOperationIdResponse.OperationData>()
+            };
+        }
+
+
+        public BaseResponse BatchUpdateOperationDatas(BatchUpdateOperationDataRequest request)
+        {
+            var response = new BaseResponse();
+            try
+            {
+                int i = 0;
+                foreach (var item in request.BatchUpdateOperationDataItemRequest)
+                {
+                    var operationData = item.MapTo<KeyOperationData>();
+                    operationData.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == item.KpiId);
+                    operationData.Scenario = DataContext.Scenarios.FirstOrDefault(x => x.Id == item.ScenarioId);
+                    operationData.KeyOperationConfig = DataContext.KeyOperationConfigs.FirstOrDefault(x => x.Id == item.KeyOperationConfigId);
+                    var exist = DataContext.KeyOperationDatas.FirstOrDefault(x => x.Kpi.Id == item.KpiId && x.PeriodeType == item.PeriodeType && x.Periode == item.Periode && x.Value == item.Value && x.Remark == item.Remark && x.Scenario.Id == item.ScenarioId && x.KeyOperationConfig.Id == item.KeyOperationConfigId);
+                    //skip no change value
+                    if (exist != null)
+                    {
+                        continue;
+                    }
+                    var attachedEntity = DataContext.KeyOperationDatas.FirstOrDefault(x => x.Kpi.Id == item.KpiId && x.PeriodeType == item.PeriodeType && x.Periode == item.Periode && x.Scenario.Id == item.ScenarioId && x.KeyOperationConfig.Id == item.KeyOperationConfigId);
+                    if (attachedEntity != null)
+                    {
+                        operationData.Id = attachedEntity.Id;
+                    }
+                    //jika tidak ada perubahan di skip aja
+                    //if (existing.Value.Equals(item.Value) && existing.Periode.Equals(item.Periode) && existing.Kpi.Id.Equals(item.KpiId) && existing.PeriodeType.Equals(item.PeriodeType)) {
+                    //    break;
+                    //}
+                    if (operationData.Id != 0)
+                    {
+                        //var attachedEntity = DataContext.KpiAchievements.Find(item.Id);
+                        if (attachedEntity != null && DataContext.Entry(attachedEntity).State != EntityState.Detached)
+                        {
+                            DataContext.Entry(attachedEntity).State = EntityState.Detached;
+                        }
+                        DataContext.KeyOperationDatas.Attach(operationData);
+                        DataContext.Entry(operationData).State = EntityState.Modified;
+                    }
+                    else
+                    {
+                        operationData.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == item.KpiId);
+                        DataContext.KeyOperationDatas.Add(operationData);
+                    }
+                    i++;
+                }
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                if (i > 0)
+                {
+                    response.Message = string.Format("{0}  Operation Data items has been updated successfully", i.ToString());
+                }
+                else
+                {
+                    response.Message = "File Successfully Parsed, but no data changed!";
+                }
+
+
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                response.Message = invalidOperationException.Message;
+            }
+            catch (ArgumentNullException argumentNullException)
+            {
+                response.Message = argumentNullException.Message;
+            }
+            return response;
         }
     }
 }

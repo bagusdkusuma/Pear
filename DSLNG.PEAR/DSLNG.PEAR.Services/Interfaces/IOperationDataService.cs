@@ -1,4 +1,5 @@
 ﻿using DSLNG.PEAR.Services.Requests.OperationalData;
+using DSLNG.PEAR.Services.Responses;
 using DSLNG.PEAR.Services.Responses.OperationalData;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,10 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetOperationalDataDetailResponse GetOperationalDataDetail(GetOperationalDataDetailRequest request);
         GetOperationDataConfigurationResponse GetOperationDataConfiguration(GetOperationDataConfigurationRequest request);
         UpdateOperationDataResponse Update(UpdateOperationDataRequest request);
+        GetOperationIdResponse GetOperationId(List<int> list_Kpi);
+        BaseResponse BatchUpdateOperationDatas(BatchUpdateOperationDataRequest request);
+
+        
         //ViewOperationDataConfigurationResponse ViewOperationDataConfiguration(int scenarioId);
     }
 }

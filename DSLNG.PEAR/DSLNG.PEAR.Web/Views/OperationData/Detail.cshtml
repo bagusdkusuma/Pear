@@ -3,6 +3,91 @@
     ViewBag.Title = "Detail";
 }
 
+@section Scripts{
+    <script type="text/javascript">
+        var data = {};
+        data.configType = "Economic";
+        data.scenarioId = "@Model.ScenarioId";
+        var link = null;
+        $(document).ready(function () {
+
+            $('#div-proceed').hide();
+            $('.config-content').hide();
+            $('[data-toggle=tab]').click(function () {
+                var that = $(this);
+
+                var tabType = that.attr('data-tabtype');
+                if (tabType == 'download') {
+                    $.ajax({
+                        url: '@Url.Action("Download", "OperationData")',
+                        type: 'GET',
+                        data: data,
+                        beforeSend: function () {
+                            $('.ajax-loader2').show();
+                            $('.config-content').hide();
+                        }
+
+                    })
+                        .done(function (result) {
+                            $('.ajax-loader2').hide();
+                            $('.config-content').html(result);
+                            $('.config-content').show();
+                    });
+                } else {
+                    $.ajax({
+                        url: '@Url.Action("Upload", "OperationData")',
+                        type: 'GET',
+                        data: data,
+                        beforeSend: function () {
+                            $('.ajax-loader2').show();
+                            $('.config-content').hide();
+                        }
+
+                    })
+                        .done(function (result) {
+                            $('.ajax-loader2').hide();
+                            $('.config-content').html(result);
+                            $('.config-content').show();
+                        });
+                }
+            });
+        });
+
+
+        function OnFileUploadComplete(s, e) {
+            if (e.callbackData !== "") {
+                link = e.callbackData;
+                //console.log(link);
+                var callback = 'FileUploadComplete: ' + e.callbackData;
+                $('.notification').empty();
+                var message = '<div class="alert alert-success" role="alert">' + callback + '</div>';
+                $('.notification').append(message).fadeIn().delay(10000).fadeOut();
+                //alert('FileUploadComplete: ' + e.callbackData);
+                var btnpro = document.getElementById('btn-proceed');
+                btnpro.removeAttribute('disabled');
+                var link_text = document.getElementById('filename-text');
+                link_text.setAttribute('value', link);
+                //console.log(link_text);
+                //$('#div-proceed').show();
+                //proceed(e.callbackData);
+            }
+            else {
+                var btnpro = document.getElementById('btn-proceed');
+                btnpro.setAttribute('disabled', 'disabled');
+                $('.notification').empty();
+                var callback = 'The selected file was not uploaded.'
+                var message = '<div class="alert alert-danger" role="alert">' + callback + '</div>';
+                $('.notification').append(message).fadeIn().delay(10000).fadeOut();
+            }
+        }
+        function OnUploadTextChanged(s, e) {
+            uc.Upload();
+        }
+
+
+    </script>
+}
+
 <style>
     .nav-tabs > li > a {
         color: #ffffff;
@@ -16,10 +101,28 @@
     <div class="row">
         <div class="title_page" style="border: none!important;">
             <div class="row">
-                <div class="title">KPI Achievement</div>
+                <div class="title">Operation Data</div>
             </div>
         </div>
         <div class="notification"></div>
+    </div>
+
+    <ul class="nav nav-tabs">
+        <li role="presentation">
+            <a href="#download" aria-controls="home" role="tab" data-toggle="tab" data-tabtype="download">
+                <div>Download</div>
+            </a>
+        </li>
+        <li role="presentation">
+            <a href="#upload" aria-controls="home" role="tab" data-toggle="tab" data-tabtype="upload">
+                <div>Upload</div>
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active config-content" style="margin-left:30px">
+
+        </div>
     </div>
     
     <div class="col-md-12">

@@ -15,6 +15,14 @@ namespace DSLNG.PEAR.Services.Requests.OperationalData
         public double? Value { get; set; }
         public string Remark { get; set; }
         public DateTime Periode { get; set; }
-        public string PeriodeType { get; set; }
+        public DSLNG.PEAR.Data.Enums.PeriodeType PeriodeType { get; set; }
+    }
+
+    public class BatchUpdateOperationDataRequest {
+        public BatchUpdateOperationDataRequest()
+        {
+            BatchUpdateOperationDataItemRequest = new List<UpdateOperationDataRequest>();
+        }
+        public List<UpdateOperationDataRequest> BatchUpdateOperationDataItemRequest { get; set; }
     }
 }

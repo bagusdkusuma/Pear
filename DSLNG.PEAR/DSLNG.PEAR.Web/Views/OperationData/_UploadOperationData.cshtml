@@ -1,0 +1,62 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.OperationalData.OperationDataDetailViewModel
+<script type="text/javascript">
+    $('#btn-proceed').click(function () {
+        var link = document.getElementById('filename-text').value;
+        var formData = {
+            'filename': encodeURIComponent(link),
+            'scenarioId': "@Model.ScenarioId",
+            'configType' : "@Model.ConfigType"
+
+        };
+        $.ajax({
+            url: '@Url.Action("ProceedFile", "OperationData")',
+            type: 'POST',
+            data: formData,
+            beforeSend: function () {
+                console.log(formData);
+                $('.ajax-loader2').show();
+                $('.notification').empty();
+                $('.notification').hide();
+            }
+        }).done(function (result) {
+            $('.ajax-loader2').hide();
+            var alertType = result.isSuccess === true ? 'alert-success' : 'alert-danger';
+            if (result.isSuccess === true) {
+                //console.log(result.Message);
+                $('.notification').html('<div class="alert ' + alertType + '" role="alert">' + result.Message + ' </div>').fadeIn().delay(10000).fadeOut();
+                $(".nav-tabs .active").find('a').click();
+            } else {
+                $('.notification').html('<div class="alert ' + alertType + '" role="alert">' + result.Message + '</div>').fadeIn().delay(10000).fadeOut();
+            }
+
+            $('.notification').show();
+        });
+    });
+</script>
+<div style="overflow: auto">
+    <form class="form-inline" style="float: left">
+        <div class="form-group" id="div-proceed">
+            <input id="btn-proceed" class="btn btn-primary" value="Proceed" type="button" />
+        </div>
+        <div class="form-group">
+            <input type="text" hidden="hidden" value="" id="filename-text" />
+        </div>
+    </form>
+
+    @using (Html.BeginForm("Upload", "OperationData", new {configType = Model.ConfigType, scenarioId = Model.ScenarioId}, FormMethod.Post, new { @class = "form-inline" }))
+    {
+
+        @Html.DevExpress().UploadControl(settings =>
+        {
+            settings.Name = "uc";
+            settings.CallbackRouteValues = new {configType = Model.ConfigType, scenarioId = Model.ScenarioId, Controller = "OperationData", Action = "UploadControlCallbackAction" };
+            settings.ClientSideEvents.FileUploadComplete = "OnFileUploadComplete";
+            settings.ClientSideEvents.TextChanged = "function(s,e){uc.Upload();}";
+            settings.ShowProgressPanel = true;
+            settings.ValidationSettings.Assign(DSLNG.PEAR.Web.Extensions.ExcelUploadHelper.ValidationSettings);
+        }).GetHtml()
+    }
+    <div>
+        <img class="ajax-loader2" src="@Url.Content("~/content/img/ajax-loader1.gif")" style="display: none;width: 30px;height: 30px;" />
+    </div>
+</div>

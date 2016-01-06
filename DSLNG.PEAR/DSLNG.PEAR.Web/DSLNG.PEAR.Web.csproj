@@ -1066,6 +1066,7 @@
     <Content Include="Views\OperationData\DetailPartial\_Monthly.cshtml" />
     <Content Include="Views\OperationData\DetailPartial\_Yearly.cshtml" />
     <Content Include="Views\User\Create.cshtml" />
+    <Content Include="Views\OperationData\_UploadOperationData.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

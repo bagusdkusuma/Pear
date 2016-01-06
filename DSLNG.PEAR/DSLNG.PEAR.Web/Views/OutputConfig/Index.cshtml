@@ -36,12 +36,12 @@
                 "sAjaxSource": '@Url.Action("Grid", "OutputConfig")',
                 "order": [[3, "asc"]],
                 "aoColumns": [
-                    { "mDataProp": "Category", "name": "Category" },
-                    { "mDataProp": "Name", "name": "Name" },
+                    { "mDataProp": "Category", "name": "Category", "className": "dt-body-left" },
+                    { "mDataProp": "Name", "name": "Name", "className": "dt-body-left" },
                     { "mDataProp": "Measurement", "name": "Measurement" },
-                    { "mDataProp": "Formula", "name": "Formula" },
+                    { "mDataProp": "Formula", "name": "Formula", "className": "dt-body-left" },
                     { "mDataProp": "Order", "name": "Order" },
-                    { "mDataProp": "Remark", "name": "Remark", "sortable": false },
+                    { "mDataProp": "Remark", "name": "Remark", "sortable": false, "className": "dt-body-left" },
                     {
                         "mDataProp": "IsActive", "name": "IsActive",
                         render: function (data, type, row) {

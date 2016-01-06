@@ -48,11 +48,11 @@
                 "sAjaxSource": '@Url.Action("Grid", "AssumptionCategory")',
                 "order": [[3, "asc"]],
                 "aoColumns": [
-                    { "mDataProp": "Name", "name": "Name" },
+                    { "mDataProp": "Name", "name": "Name", "className": "dt-body-left" },
                     { "mDataProp": "Order", "name": "Order" },
-                    { "mDataProp": "Desc", "name": "Desc", "sortable": false },
+                    { "mDataProp": "Desc", "name": "Desc", "sortable": false, "className": "dt-body-left" },
                     {
-                        "mDataProp": "IsActive", "name": "IsActive",
+                        "mDataProp": "IsActive", "name": "IsActive", 
                         render: function (data, type, row) {
                             if (type === 'display') {
                                 return '<input type="checkbox" class="is-active">';
