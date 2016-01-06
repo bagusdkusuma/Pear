@@ -26,6 +26,7 @@ using DSLNG.PEAR.Web.ViewModels.Menu;
 using DSLNG.PEAR.Services.Requests.Level;
 using DSLNG.PEAR.Services.Requests.User;
 using DSLNG.PEAR.Services.Responses.User;
+using DSLNG.PEAR.Web.ViewModels.OperationConfig;
 using DSLNG.PEAR.Web.ViewModels.OperationData;
 using DSLNG.PEAR.Web.ViewModels.PmsConfig;
 using DSLNG.PEAR.Web.ViewModels.PmsConfigDetails;
@@ -574,6 +575,8 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<CalculateOutputResponse.OutputCategoryResponse, ScenarioResultViewModel.OutputCategoryViewModel>();
             Mapper.CreateMap<CalculateOutputResponse.KeyOutputResponse, ScenarioResultViewModel.KeyOutputViewModel>();
             Mapper.CreateMap<CalculateOutputResponse, ScenarioResultViewModel>();
+
+            Mapper.CreateMap<OperationConfigUpdateViewModel, UpdateOperationRequest>();
 
             base.Configure();
         }

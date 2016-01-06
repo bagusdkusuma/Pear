@@ -3,6 +3,7 @@
     ViewBag.Title = "Economic Summary";
     Layout = "~/Views/Shared/_Layout.cshtml";
     List<string> groupsAdded = new List<string>();
+    int no = 1;
 }
 
 <h2>Economic Summary</h2>
@@ -39,8 +40,8 @@
         @foreach (var keyoutput in @group.KeyOutputs)
         {
             <tr>
-                <td>1</td>
-                <td>@keyoutput.Name</td>
+                <td>@no</td>
+                <td class="text-align-left">@keyoutput.Name</td>
                 <td>@keyoutput.Measurement</td>
 
                 @foreach (var scenario in Model.Scenarios)
@@ -48,6 +49,7 @@
                     @GetValue(scenario.Id, keyoutput.Name, @group.Id);
                 }
             </tr>
+            no++;
         }
     </table>
     <hr />
@@ -65,8 +67,8 @@
         var outputResult = g.KeyOutputs.FirstOrDefault(x => x.Scenario.Id == scenarioId && x.Name == keyOutputName);
         if (outputResult != null && outputResult.OutputResult != null)
         {
-            <td>@outputResult.OutputResult.Actual</td>
-            <td>@outputResult.OutputResult.Forecast</td>
+            <td class="text-align-right">@outputResult.OutputResult.Actual</td>
+            <td class="text-align-right">@outputResult.OutputResult.Forecast</td>
         }
     }
 }

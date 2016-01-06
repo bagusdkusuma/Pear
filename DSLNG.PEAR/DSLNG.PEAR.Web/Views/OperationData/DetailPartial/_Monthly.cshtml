@@ -33,28 +33,14 @@
                         @{ var b = 0;}
                         @foreach (var operationData in kpi.OperationDatas)
                         {
-                            var remarkSign = "";
-                            if (!string.IsNullOrEmpty(operationData.Remark))
-                            {
-                                remarkSign = "remark_sign";
-                            }
-                            var idValue = "Kpis_" + a + "__OperationDatas_" + b + "__Value";
                             <th>
-                            <input type="text" data-toggle="popover" class="form-control-small value kpi-popover @remarkSign" id="@idValue" value="@operationData.Value" readonly="readonly">
-                            <input type="hidden" name="KpiId" class="kpiId" value="@kpi.Id" />
-                            <input type="hidden" name="HeaderPopover" class="header-popover" value="" />
-                            <input type="hidden" name="Id" class="form-control-small id" value="@operationData.Id">
-                            <input type="hidden" name="ScenarioId" class="form-control-small scenario-id" value="@Model.ScenarioId">
-                            <input type="hidden" name="KeyOperationConfigId" class="form-control-small key-operation-config-id" value="@operationData.KeyOperationConfigId">
-                            <input type="hidden" name="PeriodeType" class="periodeType" value="@DSLNG.PEAR.Data.Enums.PeriodeType.Monthly" />
-                            <input type="hidden" name="Remark" class="form-control-small remark" value="@operationData.Remark">
-                            <input type="hidden" name="Periode" class="form-control-small periode" value="@operationData.Periode">
-                        </th>
+                                @operationData.Value
+                            </th>
                             b++;
                         }
 
                     </tr>
-                    a++;
+                        a++;
                 }
             </tbody>
         </table>
