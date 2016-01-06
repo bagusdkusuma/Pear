@@ -40,6 +40,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Highlight
             public string SalesType { get; set; }
         }
         public class WeatherViewModel {
+            public int Id { get; set; }
             public string Value { get; set; }
             public string Text { get; set; }
             public string Temperature { get; set; }

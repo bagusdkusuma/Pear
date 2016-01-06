@@ -11,6 +11,7 @@ using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Web.Grid;
 using DSLNG.PEAR.Common.Contants;
+using System.Globalization;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -96,6 +97,63 @@ namespace DSLNG.PEAR.Web.Controllers
 
         [HttpPost]
         public ActionResult Create(WeatherViewModel viewModel) {
+            var request = viewModel.MapTo<SaveWeatherRequest>();
+            _weatherService.SaveWeather(request);
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Manage()
+        {
+            var viewModel = new WeatherViewModel();
+            var id = string.IsNullOrEmpty(Request.QueryString["WeatherId"]) ? 0 : int.Parse(Request.QueryString["WeatherId"]);
+            if (id != 0)
+            {
+                viewModel = _weatherService.GetWeather(new GetWeatherRequest { Id = id }).MapTo<WeatherViewModel>();
+            }
+            else {
+                viewModel.PeriodeType = string.IsNullOrEmpty(Request.QueryString["PeriodeType"]) ? "Daily"
+                    : Request.QueryString["PeriodeType"];
+                var periodeQS = !string.IsNullOrEmpty(Request.QueryString["Periode"]) ? Request.QueryString["Periode"] : null;
+                switch (viewModel.PeriodeType)
+                {
+                    case "Monthly":
+                        if (!string.IsNullOrEmpty(periodeQS))
+                        {
+                            viewModel.Date = DateTime.ParseExact("01/" + periodeQS, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        }
+
+                        break;
+                    case "Yearly":
+                        if (!string.IsNullOrEmpty(periodeQS))
+                        {
+                            viewModel.Date = DateTime.ParseExact("01/01/" + periodeQS, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        }
+
+                        break;
+                    default:
+                        if (!string.IsNullOrEmpty(periodeQS))
+                        {
+                            viewModel.Date = DateTime.ParseExact(periodeQS, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+                        }
+
+                        break;
+                }
+            }
+            foreach (var name in Enum.GetNames(typeof(PeriodeType)))
+            {
+                if (!name.Equals("Hourly") && !name.Equals("Weekly"))
+                {
+                    viewModel.PeriodeTypes.Add(new SelectListItem { Text = name, Value = name });
+                }
+            }
+            viewModel.Values = _selectService.GetSelect(new GetSelectRequest { Name = "weather-values" }).Options
+                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Text }).ToList();
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Manage(WeatherViewModel viewModel)
+        {
             var request = viewModel.MapTo<SaveWeatherRequest>();
             _weatherService.SaveWeather(request);
             return RedirectToAction("Index");
