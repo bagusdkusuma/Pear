@@ -52,7 +52,7 @@
                             </div>
                             <div class="col-md-4">
                                 <h4 style="margin-top: 22px">
-                                      @if (string.IsNullOrEmpty(Model.Weather.Text))
+                                      @if (string.IsNullOrEmpty(Model.Weather.Temperature))
                                     {
                                         <a href="@Url.Action("Manage","Weather",new {PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay})">Outside Temperature :</a>
                                     }
@@ -62,7 +62,15 @@
                                      <span class="weather-value">@Model.Weather.Temperature</span></h4>
                             </div>
                             <div class="col-md-4">
-                                <h4 style="margin-top: 19px">Alert Condition: <span class="display-image" style="max-width: 180px; height: 25px; display: inline-block; padding: 2.5px">
+                                <h4 style="margin-top: 19px">
+                                    @if (string.IsNullOrEmpty(Model.Alert.Message))
+                                    {
+                                        <a href="@Url.Action("Manage","Highlight",new {TypeId= Model.Alert.TypeId, PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay})">Alert Condition:</a>
+                                    }
+                                    else { 
+                                         <a href="@Url.Action("Manage","Highlight",new {HighlightId=Model.Weather.Id})">Alert Condition:</a>
+                                    }
+                                     <span class="display-image" style="max-width: 180px; height: 25px; display: inline-block; padding: 2.5px">
                                     <img src="~/Content/img/select/@Model.Alert.Message"  style="width:100%;height:100%;display:inline-block"/></span></h4>
                             </div>
                         </div>

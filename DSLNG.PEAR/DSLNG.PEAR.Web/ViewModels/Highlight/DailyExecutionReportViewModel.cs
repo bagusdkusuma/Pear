@@ -47,6 +47,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Highlight
         }
         public class AlertViewModel {
             public string Message { get; set; }
+            public int TypeId { get; set; }
         }
         public class HighlightGroupViewModel {
             public HighlightGroupViewModel() {

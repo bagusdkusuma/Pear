@@ -437,6 +437,9 @@ namespace DSLNG.PEAR.Web.Controllers
             //viewModel.Highlights = _highlightService.GetHighlights(new GetHighlightsRequest { Except = new string[1] { "Alert"}, Date = DateTime.Now.Date, IsActive = true }).Highlights.MapTo<DailyExecutionReportViewModel.HighlightViewModel>();
             //viewModel.PlantOperations = _highlightService.GetHighlights(new GetHighlightsRequest { Include = new string[4] { "Process Train", "Storage And Loading", "Utility", "Upstream" }, Date = DateTime.Now.Date, IsActive = true }).Highlights.MapTo<DailyExecutionReportViewModel.HighlightViewModel>();
             viewModel.Alert = _highlightService.GetHighlight(new GetHighlightRequest { Type = "Alert", Date = viewModel.Periode }).MapTo<DailyExecutionReportViewModel.AlertViewModel>();
+            if (viewModel.Alert.TypeId == 0) {
+                viewModel.Alert.TypeId = _selectService.GetSelect(new GetSelectRequest { Name = "Alert" }).Id;
+            }
             var highlightOrders = _highlightOrderService.GetHighlights(new GetHighlightOrdersRequest { Take = -1, SortingDictionary = new Dictionary<string, SortOrder> { { "Order", SortOrder.Ascending } } });
             foreach (var highlight in highlightOrders.HighlightOrders)
             {
