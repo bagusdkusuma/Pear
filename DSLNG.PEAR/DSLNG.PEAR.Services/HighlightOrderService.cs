@@ -16,7 +16,9 @@ namespace DSLNG.PEAR.Services
 {
     public class HighlightOrderService : BaseService, IHighlightOrderService
     {
-        public HighlightOrderService(IDataContext dataContext) :base(dataContext) { 
+        public HighlightOrderService(IDataContext dataContext)
+            : base(dataContext)
+        {
         }
 
         public GetHighlightOrdersResponse GetHighlights(GetHighlightOrdersRequest request)
@@ -41,6 +43,7 @@ namespace DSLNG.PEAR.Services
         {
             var exception = new string[] { "alert" };
             var data = DataContext.SelectOptions.Include(x => x.Group)
+                .Include(x => x.RoleGroups)
                 .Where(x => x.Select.Name == "highlight-types" && !exception.Contains(x.Value));
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             {
@@ -76,7 +79,7 @@ namespace DSLNG.PEAR.Services
         {
             try
             {
-                var selectOption = DataContext.SelectOptions.First(x => x.Id == request.Id);
+                var selectOption = DataContext.SelectOptions.Include(x => x.RoleGroups).First(x => x.Id == request.Id);
                 //DataContext.SelectOptions.Attach(selectOption);
                 if (request.Order.HasValue)
                 {
@@ -91,7 +94,9 @@ namespace DSLNG.PEAR.Services
                     DataContext.HighlightGroups.Attach(group);
                     selectOption.Group = group;
                 }
-               
+                if(request.RoleGroupIds.Count() > 0){
+                    selectOption.RoleGroups = DataContext.RoleGroups.Where(x => request.RoleGroupIds.Contains(x.Id)).ToList();
+                }
                 DataContext.SaveChanges();
                 return new SaveHighlightOrderResponse
                 {

@@ -154,6 +154,29 @@ namespace DSLNG.PEAR.Web.Controllers
             _vesselScheduleService.SaveVesselSchedule(req);
             return RedirectToAction("Index");
         }
+
+        // GET: /VesselSchedule/Edit/5
+        public ActionResult Manage(int id)
+        {
+            var vesselSchedule = _vesselScheduleService.GetVesselSchedule(new GetVesselScheduleRequest { Id = id });
+            var viewModel = vesselSchedule.MapTo<VesselScheduleViewModel>();
+            viewModel.SalesTypes = _selectService.GetSelect(new GetSelectRequest { Name = "vessel-schedule-sales-types" }).Options
+                .Select(x => new SelectListItem { Text = x.Text, Value = x.Value }).ToList();
+            return View(viewModel);
+        }
+
+        //
+        // POST: /VesselSchedule/Edit/5
+        [HttpPost]
+        public ActionResult Manage(VesselScheduleViewModel viewModel)
+        {
+            var req = viewModel.MapTo<SaveVesselScheduleRequest>();
+            if (viewModel.AsNew) {
+                req.Id = 0;
+            }
+            _vesselScheduleService.SaveVesselSchedule(req);
+            return RedirectToAction("Display", "Highlight");
+        }
         //
         // POST: /VesselSchedule/Delete/5
         [HttpPost]

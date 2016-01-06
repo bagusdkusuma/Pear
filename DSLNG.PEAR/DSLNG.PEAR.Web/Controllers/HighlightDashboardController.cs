@@ -17,9 +17,13 @@ namespace DSLNG.PEAR.Web.Controllers
     {
         public IHighlightOrderService _highlightOrderService;
         private IHighlightGroupService _highlightGroupService;
-        public HighlightDashboardController(IHighlightOrderService highlightOrderService, IHighlightGroupService highlightGroupService) {
+        private readonly IRoleGroupService _roleService;
+        public HighlightDashboardController(IHighlightOrderService highlightOrderService, 
+            IHighlightGroupService highlightGroupService,
+            IRoleGroupService roleGroupService) {
             _highlightOrderService = highlightOrderService;
             _highlightGroupService = highlightGroupService;
+            _roleService = roleGroupService;
         }
         public ActionResult Index()
         {
@@ -31,6 +35,16 @@ namespace DSLNG.PEAR.Web.Controllers
                 SortingDictionary = new Dictionary<string, SortOrder>{{"Order",SortOrder.Ascending}}
             }).HighlightGroups.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
             viewModel.Groups.Insert(0, new SelectListItem { Value = "0", Text = "Choose Group" });
+
+            viewModel.RoleGroupOptions = _roleService.GetRoleGroups(new Services.Requests.RoleGroup.GetRoleGroupsRequest
+            {
+                Take = -1,
+                SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+            }).RoleGroups.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }).ToList();
             return View(viewModel);
         }
 

@@ -1,0 +1,42 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.NLS.NLSViewModel
+
+@{
+    ViewBag.Title = "Manage";
+}
+
+<div class="nls-save">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="col-md-12">
+            <div class="title">Next Loading Schedule</div>
+            <div class="description_year">Manage</div>
+            <div>@Html.ValidationSummary(true)</div>
+            @Html.HiddenFor(x => x.Id)
+        </div>
+        <div class="col-md-12">
+            <div class="form-inline whitebox">
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.VesselScheduleId)
+                    @Html.DropDownListFor(model => model.VesselScheduleId, new List<SelectListItem> { new SelectListItem{ Value=Model.VesselScheduleId.ToString(), Text=Model.VesselName} }, new { @class = "form-control", data_url = Url.Action("VesselScheduleList"), style = "width:200px" })
+                    @Html.ValidationMessageFor(model => model.VesselScheduleId)
+                </div>
+                  <div class="form-group form-list">
+                    @Html.LabelFor(model => model.CreatedAtDisplay)
+                    @Html.TextBoxFor(model => model.CreatedAtDisplay, new { @class = "form-control datepicker" })
+                    @Html.ValidationMessageFor(model => model.CreatedAtDisplay)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.Remark)
+                    @Html.TextAreaFor(model => model.Remark,5,100, new { @class = "form-control highlight-message" })
+                    @Html.ValidationMessageFor(model => model.Remark)
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 artifact-designer-btns">
+            <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
+            <a onclick="location.reload();" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>
+            <a href="@Url.Action("Index")" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+        </div>
+    }
+</div>

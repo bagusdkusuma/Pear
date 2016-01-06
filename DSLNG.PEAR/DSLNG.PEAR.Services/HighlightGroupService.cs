@@ -35,7 +35,9 @@ namespace DSLNG.PEAR.Services
         }
         private IEnumerable<HighlightGroup> SortData(string search, IDictionary<string, System.Data.SqlClient.SortOrder> sortingDictionary, bool onlyIsActive, out int totalRecords)
         {
-            var data = DataContext.HighlightGroups.Include(x => x.Options).AsQueryable();
+            var data = DataContext.HighlightGroups.Include(x => x.Options)
+                .Include(x => x.Options.Select(y => y.RoleGroups))
+                .AsQueryable();
             if (onlyIsActive) {
                 data = data.Where(x => x.Options.Where(y => y.IsActive == true).Count() > 0);
             }

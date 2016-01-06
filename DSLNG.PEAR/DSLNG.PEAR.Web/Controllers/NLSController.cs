@@ -147,6 +147,42 @@ namespace DSLNG.PEAR.Web.Controllers
             return View("Edit", viewModel);
         }
 
+        //
+        // GET: /NLS/Edit/5
+        public ActionResult Manage()
+        {
+            var viewModel = new NLSViewModel();
+            var id = string.IsNullOrEmpty(Request.QueryString["nlsId"]) ? 0 : int.Parse(Request.QueryString["nlsId"]);
+            if (id != 0)
+            {
+                var nls = _nlsService.GetNLS(new GetNLSRequest { Id = id });
+                viewModel = nls.MapTo<NLSViewModel>();
+            }
+            else {
+                var vesselScheduleId = int.Parse(Request.QueryString["vsId"]);
+                viewModel.VesselScheduleId = vesselScheduleId;
+                viewModel.VesselName = _vesselScheduleService.GetVesselSchedule(new GetVesselScheduleRequest { Id = vesselScheduleId }).VesselName;
+            }
+            return View(viewModel);
+        }
+
+        //
+        // POST: /NLS/Edit/5
+        [HttpPost]
+        public ActionResult Manage(NLSViewModel viewModel)
+        {
+            var req = viewModel.MapTo<SaveNLSRequest>();
+            var response = _nlsService.SaveNLS(req);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            if (response.IsSuccess)
+            {
+                return RedirectToAction("Display", "Highlight");
+            }
+            return View("Manage", viewModel);
+        }
+
+
         [HttpPost]
         public ActionResult Delete(int id)
         {
@@ -165,6 +201,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult InVesselSchedule(int id)
         {
             var nlsList = _nlsService.GetNLSList(new GetNLSListRequest { VesselScheduleId = id });
+            ViewBag.VesselScheduleId = id;
             return PartialView("_RemarkList", nlsList.NLSList.MapTo<NLSViewModel>());
         }
 

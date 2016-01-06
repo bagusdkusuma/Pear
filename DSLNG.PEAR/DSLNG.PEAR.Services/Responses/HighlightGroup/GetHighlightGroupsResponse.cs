@@ -23,6 +23,7 @@ namespace DSLNG.PEAR.Services.Responses.HighlightGroup
             public int Order { get; set; }
             public string Value { get; set; }
             public bool IsActive { get; set; }
+            public int[] RoleGroupIds { get; set; }
         }
     }
 }

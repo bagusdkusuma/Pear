@@ -1,7 +1,7 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Weather.WeatherViewModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Manage";
 }
 
 <div class="highlight-save">
@@ -10,7 +10,7 @@
     @Html.AntiForgeryToken()
     <div class="col-md-12">
         <div class="title">Weather</div>
-        <div class="description_year">Edit</div>
+        <div class="description_year">Manage</div>
         <div>@Html.ValidationSummary(true)</div>
         @Html.HiddenFor(x => x.Id)
     </div>
@@ -41,7 +41,7 @@
     <div class="col-md-12 artifact-designer-btns">
         <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
         <a onclick="location.reload();" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>
-        <a href="@Url.Action("Index")" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+        <a href="@Url.Action("Display", "Highlight")" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
     </div>
 }
     </div>

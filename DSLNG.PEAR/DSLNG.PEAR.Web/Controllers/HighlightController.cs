@@ -189,8 +189,8 @@ namespace DSLNG.PEAR.Web.Controllers
             }
             viewModel.Types = _selectService.GetSelect(new GetSelectRequest { Name = "highlight-types" }).Options
                 .Select(x => new SelectListItem { Text = x.Text, Value = x.Id.ToString() }).ToList();
-            viewModel.AlertConditions = _selectService.GetSelect(new GetSelectRequest { Name = "alert-conditions" }).Options
-                .Select(x => new SelectListItem { Text = x.Text, Value = x.Value }).ToList();
+            //viewModel.AlertConditions = _selectService.GetSelect(new GetSelectRequest { Name = "alert-conditions" }).Options
+            //    .Select(x => new SelectListItem { Text = x.Text, Value = x.Value }).ToList();
 
             var TypeId = string.IsNullOrEmpty(Request.QueryString["TypeId"]) ? 0 : int.Parse(Request.QueryString["TypeId"]);
             var PeriodeType = string.IsNullOrEmpty(Request.QueryString["PeriodeType"]) ? "Daily"
@@ -279,6 +279,82 @@ namespace DSLNG.PEAR.Web.Controllers
             return RedirectToAction("Edit", new { id = viewModel.Id });
         }
 
+        // GET: /Highlight/Edit/5
+        public ActionResult Manage()
+        {
+            var viewModel = new HighlightViewModel();
+            var id = Request.QueryString.AllKeys.Contains("HighlightId") ? int.Parse(Request.QueryString["HighlightId"]) : 0;
+            if (id == 0)
+            {
+                var TypeId = string.IsNullOrEmpty(Request.QueryString["TypeId"]) ? 0 : int.Parse(Request.QueryString["TypeId"]);
+                var PeriodeType = string.IsNullOrEmpty(Request.QueryString["PeriodeType"]) ? "Daily"
+                    : Request.QueryString["PeriodeType"];
+                var periodeQS = !string.IsNullOrEmpty(Request.QueryString["Periode"]) ? Request.QueryString["Periode"] : null;
+                viewModel.TypeId = TypeId;
+                viewModel.PeriodeType = PeriodeType;
+                switch (PeriodeType)
+                {
+                    case "Monthly":
+                        viewModel.PeriodeType = PeriodeType;
+                        if (!string.IsNullOrEmpty(periodeQS))
+                        {
+                            viewModel.Date = DateTime.ParseExact("01/" + periodeQS, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        }
+
+                        break;
+                    case "Yearly":
+                        viewModel.PeriodeType = PeriodeType;
+                        if (!string.IsNullOrEmpty(periodeQS))
+                        {
+                            viewModel.Date = DateTime.ParseExact("01/01/" + periodeQS, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        }
+
+                        break;
+                    default:
+                        viewModel.PeriodeType = PeriodeType;
+                        if (!string.IsNullOrEmpty(periodeQS))
+                        {
+                            viewModel.Date = DateTime.ParseExact(periodeQS, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+                        }
+
+                        break;
+                }
+            }
+            else
+            {
+                ViewBag.TurnOffDevexpress = true;
+                viewModel = _highlightService.GetHighlight(new GetHighlightRequest { Id = id }).MapTo<HighlightViewModel>();
+            }
+            foreach (var name in Enum.GetNames(typeof(PeriodeType)))
+            {
+                if (!name.Equals("Hourly") && !name.Equals("Weekly"))
+                {
+                    viewModel.PeriodeTypes.Add(new SelectListItem { Text = name, Value = name });
+                }
+            }
+            viewModel.Types = _selectService.GetSelect(new GetSelectRequest { Name = "highlight-types" }).Options
+                .Select(x => new SelectListItem { Text = x.Text, Value = x.Id.ToString() }).ToList();
+            return View(viewModel);
+        }
+        // POST: /Highlight/Edit/5
+        [HttpPost]
+        public ActionResult Manage(HighlightViewModel viewModel)
+        {
+            var req = viewModel.MapTo<SaveHighlightRequest>();
+            if (viewModel.AsNew) {
+                req.Id = 0;
+            }
+            var resp = _highlightService.SaveHighlight(req);
+            TempData["IsSuccess"] = resp.IsSuccess;
+            TempData["Message"] = resp.Message;
+            if (resp.IsSuccess)
+            {
+                return RedirectToAction("Display");
+            }
+            return RedirectToAction("Manage", new { HighlightId = viewModel.Id });
+        }
+
+
         [HttpPost]
         public ActionResult Delete(int id)
         {
@@ -296,6 +372,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 Take = 20,
             });
             var viewModel = new DailyExecutionReportViewModel();
+            viewModel.CurrentUserRoleId = UserProfile().RoleId;
             var periodeTypeQS = !string.IsNullOrEmpty(Request.QueryString["PeriodeType"]) ? Request.QueryString["PeriodeType"].ToLower() : "daily";
             var periodeQS = !string.IsNullOrEmpty(Request.QueryString["Periode"]) ? Request.QueryString["Periode"] : null;
             switch (periodeTypeQS)
@@ -360,6 +437,9 @@ namespace DSLNG.PEAR.Web.Controllers
             //viewModel.Highlights = _highlightService.GetHighlights(new GetHighlightsRequest { Except = new string[1] { "Alert"}, Date = DateTime.Now.Date, IsActive = true }).Highlights.MapTo<DailyExecutionReportViewModel.HighlightViewModel>();
             //viewModel.PlantOperations = _highlightService.GetHighlights(new GetHighlightsRequest { Include = new string[4] { "Process Train", "Storage And Loading", "Utility", "Upstream" }, Date = DateTime.Now.Date, IsActive = true }).Highlights.MapTo<DailyExecutionReportViewModel.HighlightViewModel>();
             viewModel.Alert = _highlightService.GetHighlight(new GetHighlightRequest { Type = "Alert", Date = viewModel.Periode }).MapTo<DailyExecutionReportViewModel.AlertViewModel>();
+            if (viewModel.Alert.TypeId == 0) {
+                viewModel.Alert.TypeId = _selectService.GetSelect(new GetSelectRequest { Name = "Alert" }).Id;
+            }
             var highlightOrders = _highlightOrderService.GetHighlights(new GetHighlightOrdersRequest { Take = -1, SortingDictionary = new Dictionary<string, SortOrder> { { "Order", SortOrder.Ascending } } });
             foreach (var highlight in highlightOrders.HighlightOrders)
             {
