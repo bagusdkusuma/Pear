@@ -60,6 +60,7 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<KeyOperationGroup> KeyOperationGroups { get; set; }
         IDbSet<EconomicSummary> EconomicSummaries { get; set; }
         IDbSet<KeyOutputConfiguration> KeyOutputConfigs { get; set; }
+        IDbSet<StaticHighlightPrivilege> StaticHighlightPrivileges { get; set; }
         Database Database { get; }
         int SaveChanges();
         DbEntityEntry Entry(object entity);

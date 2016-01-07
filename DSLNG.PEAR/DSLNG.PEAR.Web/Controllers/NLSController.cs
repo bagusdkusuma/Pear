@@ -12,17 +12,20 @@ using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
 using System.Data.SqlClient;
 using DSLNG.PEAR.Web.Grid;
+using DSLNG.PEAR.Services.Requests.HighlightOrder;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
-    public class NLSController : Controller
+    public class NLSController : BaseController
     {
         private readonly INLSService _nlsService;
         private readonly IVesselScheduleService _vesselScheduleService;
-        public NLSController(INLSService nlsService, IVesselScheduleService vesselScheduleService)
+        private readonly IHighlightOrderService _highlightOrderService;
+        public NLSController(INLSService nlsService, IVesselScheduleService vesselScheduleService, IHighlightOrderService highlightOrderService)
         {
             _nlsService = nlsService;
             _vesselScheduleService = vesselScheduleService;
+            _highlightOrderService = highlightOrderService;
         }
 
         public ActionResult Index()
@@ -201,6 +204,8 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult InVesselSchedule(int id)
         {
             var nlsList = _nlsService.GetNLSList(new GetNLSListRequest { VesselScheduleId = id });
+            var staticHighlightResp = _highlightOrderService.GetStaticHighlights(new GetStaticHighlightOrdersRequest { Take = -1 });
+            ViewBag.IsAllowedToManage = staticHighlightResp.HighlightOrders.First(x => x.Name == "Vessel Schedule").RoleGroupIds.Contains(UserProfile().RoleId);
             ViewBag.VesselScheduleId = id;
             return PartialView("_RemarkList", nlsList.NLSList.MapTo<NLSViewModel>());
         }

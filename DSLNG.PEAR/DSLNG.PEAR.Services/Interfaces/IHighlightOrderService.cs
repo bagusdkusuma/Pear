@@ -8,6 +8,8 @@ namespace DSLNG.PEAR.Services.Interfaces
     public interface IHighlightOrderService
     {
         GetHighlightOrdersResponse GetHighlights(GetHighlightOrdersRequest request);
+        GetStaticHighlightOrdersResponse GetStaticHighlights(GetStaticHighlightOrdersRequest request);
         SaveHighlightOrderResponse SaveHighlight(SaveHighlightOrderRequest request);
+        SaveStaticHighlightOrderResponse SaveStaticHighlight(SaveStaticHighlightOrderRequest request);
     }
 }

@@ -18,9 +18,11 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Remark)
                 </th>
-                <th>
-                    Action
-                </th>
+                @if (ViewBag.IsAllowedToManage)
+                {
+                    <th>Action
+                    </th>
+                }
             </tr>
 
             @foreach (var item in Model)
@@ -32,13 +34,19 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Remark)
                     </td>
-                    <td>
-                        @Html.ActionLink("Edit","Manage",new{nlsId=item.Id})
-                    </td>
+                    @if (ViewBag.IsAllowedToManage)
+                    {
+                        <td>
+                            @Html.ActionLink("Edit", "Manage", new { nlsId = item.Id })
+                        </td>
+                    }
                 </tr>
             }
 
         </table>
     </div>
-      @Html.ActionLink("Add New", "Manage", new { vsId = ViewBag.VesselScheduleId }, new { @class="btn btn-primary" })
+    @if (ViewBag.IsAllowedToManage)
+    {
+        @Html.ActionLink("Add New", "Manage", new { vsId = ViewBag.VesselScheduleId }, new { @class = "btn btn-primary" })
+    }
 </div>

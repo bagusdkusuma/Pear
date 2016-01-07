@@ -508,6 +508,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<KeyOutputConfiguration, CalculateOutputResponse.KeyOutputResponse>()
                 .ForMember(x => x.Measurement, o => o.MapFrom(s => s.Measurement.Name));
 
+            Mapper.CreateMap<StaticHighlightPrivilege, GetStaticHighlightOrdersResponse.HighlightOrderResponse>()
+                .ForMember(x => x.RoleGroupIds, o => o.MapFrom(s => s.RoleGroups.Select(x => x.Id).ToArray()));
+
             base.Configure();
         }
 
