@@ -48,9 +48,9 @@
                 "sAjaxSource": '@Url.Action("Grid", "OutputCategory")',
                 "order": [[3, "asc"]],
                 "aoColumns": [
-                    { "mDataProp": "Name", "name": "Name" },
+                    { "mDataProp": "Name", "name": "Name", "className": "dt-body-left" },
                     { "mDataProp": "Order", "name": "Order" },
-                    { "mDataProp": "Remark", "name": "Remark", "sortable": false },
+                    { "mDataProp": "Remark", "name": "Remark", "sortable": false, "className": "dt-body-left" },
                     {
                         "mDataProp": "IsActive", "name": "IsActive",
                         render: function (data, type, row) {

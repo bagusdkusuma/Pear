@@ -14,12 +14,14 @@ namespace DSLNG.PEAR.Web.ViewModels.OperationData
             Kpis = new List<Kpi>();
         }
         public int ScenarioId { get; set; }
+        public string ConfigType { get; set; }
         public IList<SelectListItem> Scenarios { get; set; }
         public string PeriodeType { get; set; }
         public int GroupId { get; set; }
         public IList<Kpi> Kpis { get; set; }
         public IList<SelectListItem> Years { get; set; }
         public int Year { get; set; }
+        public string FileName { get; set; }
 
         public class Kpi
         {
@@ -43,6 +45,18 @@ namespace DSLNG.PEAR.Web.ViewModels.OperationData
             public DateTime Periode { get; set; }
             public int ScenarioId { get; set; }
             public int KeyOperationConfigId { get; set; }
+        }
+
+        public class Item
+        {
+            public int Id { get; set; }
+            public int KpiId { get; set; }
+            public int ScenarioId { get; set; }
+            public int OperationId { get; set; }
+            public DateTime Periode { get; set; }
+            public double? Value { get; set; }
+            public string Remark { get; set; }
+            public DSLNG.PEAR.Data.Enums.PeriodeType PeriodeType { get; set; }
         }
     }
 }

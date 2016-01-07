@@ -1066,6 +1066,7 @@
     <Content Include="Views\OperationData\DetailPartial\_Monthly.cshtml" />
     <Content Include="Views\OperationData\DetailPartial\_Yearly.cshtml" />
     <Content Include="Views\User\Create.cshtml" />
+    <Content Include="Views\OperationData\_UploadOperationData.cshtml" />
     <Content Include="Views\Highlight\Manage.cshtml" />
     <Content Include="Views\VesselSchedule\Manage.cshtml" />
     <Content Include="Views\NLS\Manage.cshtml" />

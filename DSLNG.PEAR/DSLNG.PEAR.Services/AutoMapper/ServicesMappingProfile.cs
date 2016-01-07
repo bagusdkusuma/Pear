@@ -507,6 +507,10 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.KeyOutputs, o => o.Ignore());
             Mapper.CreateMap<KeyOutputConfiguration, CalculateOutputResponse.KeyOutputResponse>()
                 .ForMember(x => x.Measurement, o => o.MapFrom(s => s.Measurement.Name));
+            Mapper.CreateMap<KeyOperationData, GetOperationIdResponse.OperationData>()
+                .ForMember(x => x.Kpi, o => o.MapFrom(s => s.Kpi.Id))
+                .ForMember(x => x.KeyOperationConfig, o => o.MapFrom(s => s.KeyOperationConfig.Id))
+                .ForMember(x => x.Scenario, o => o.MapFrom(s => s.Scenario.Id));
 
             Mapper.CreateMap<StaticHighlightPrivilege, GetStaticHighlightOrdersResponse.HighlightOrderResponse>()
                 .ForMember(x => x.RoleGroupIds, o => o.MapFrom(s => s.RoleGroups.Select(x => x.Id).ToArray()));
@@ -671,8 +675,13 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<KeyOperationData, GetOperationDataConfigurationResponse.OperationData>()
                   .ForMember(x => x.ScenarioId, y => y.MapFrom(z => z.Scenario.Id))
                   .ForMember(x => x.KeyOperationConfigId, y => y.MapFrom(z => z.KeyOperationConfig.Id));
+            //Mapper.CreateMap<UpdateOperationDataRequest, KeyOperationData>()
+            //      .ForMember(x => x.PeriodeType, y => y.MapFrom(z => (PeriodeType)Enum.Parse(typeof (PeriodeType), z.PeriodeType)));
             Mapper.CreateMap<UpdateOperationDataRequest, KeyOperationData>()
-                  .ForMember(x => x.PeriodeType, y => y.MapFrom(z => (PeriodeType)Enum.Parse(typeof (PeriodeType), z.PeriodeType)));
+                  .ForMember(x => x.PeriodeType, y => y.MapFrom(z => z.PeriodeType))
+                  .ForMember(x => x.Kpi, y => y.Ignore())
+                  .ForMember(x => x.Scenario, y => y.Ignore())
+                  .ForMember(x => x.KeyOperationConfig, y => y.Ignore());
         }
     }
 }
