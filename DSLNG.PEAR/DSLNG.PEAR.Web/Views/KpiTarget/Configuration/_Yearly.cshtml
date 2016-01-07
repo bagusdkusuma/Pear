@@ -1,6 +1,7 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.KpiTarget.ConfigurationKpiTargetsViewModel
 <script type="text/javascript">
     $(document).ready(function () {
+        $("#fixed-table").tableHeadFixer({ "left": 1 });
         $('#div-proceed').hide();
         $('#btn-proceed').click(function () {
             //window.location = '@Url.Action("ProcessFile", "File")' + '?filename=' + encodeURIComponent(link);
@@ -32,54 +33,54 @@
             });
         });
     });
-    var link = null;
-    function OnClick(s, e) {
-        uc.Upload();
-    }
-    function OnUploadTextChanged(s, e) {
-        uc.Upload();
-    }
-    function OnFileUploadComplete(s, e) {
-        if (e.callbackData !== "") {
-            link = e.callbackData;
-            var callback = 'FileUploadComplete: ' + e.callbackData;
-            $('.notification').empty();
-            var message = '<div class="alert alert-success" role="alert">' + callback + '</div>';
-            $('.notification').append(message).fadeIn().delay(10000).fadeOut();
-            //alert('FileUploadComplete: ' + e.callbackData);
-            $('#div-proceed').show();
-            //proceed(e.callbackData);
+        var link = null;
+        function OnClick(s, e) {
+            uc.Upload();
         }
-        else {
-            $('.notification').empty();
-            var callback = 'The selected file was not uploaded.'
-            var message = '<div class="alert alert-danger" role="alert">' + callback + '</div>';
-            $('.notification').append(message).fadeIn().delay(10000).fadeOut();
+        function OnUploadTextChanged(s, e) {
+            uc.Upload();
         }
-    }
-    function proceed(s) {
-        alert(s);
-        //$('#proceed').html('<a href="' + s + '">Process</a>');
-        //$('#proceed').show();
+        function OnFileUploadComplete(s, e) {
+            if (e.callbackData !== "") {
+                link = e.callbackData;
+                var callback = 'FileUploadComplete: ' + e.callbackData;
+                $('.notification').empty();
+                var message = '<div class="alert alert-success" role="alert">' + callback + '</div>';
+                $('.notification').append(message).fadeIn().delay(10000).fadeOut();
+                //alert('FileUploadComplete: ' + e.callbackData);
+                $('#div-proceed').show();
+                //proceed(e.callbackData);
+            }
+            else {
+                $('.notification').empty();
+                var callback = 'The selected file was not uploaded.'
+                var message = '<div class="alert alert-danger" role="alert">' + callback + '</div>';
+                $('.notification').append(message).fadeIn().delay(10000).fadeOut();
+            }
+        }
+        function proceed(s) {
+            alert(s);
+            //$('#proceed').html('<a href="' + s + '">Process</a>');
+            //$('#proceed').show();
 
 
-    }
+        }
 
 </script>
 <div class="notification"></div>
-<div style="overflow: auto">
-    <form class="form-inline" style="float: left">
-        <div class="form-group">
-            @Html.ActionLink("Download Template", "DownloadTemplate", new { filename = @Model.FileName }, new { @class = "btn btn-primary" })
-        </div>
-        <div class="form-group" id="div-proceed">
-            <input id="btn-proceed" class="btn btn-primary" value="Proceed" />
-        </div>
-    </form>
-    @using (Html.BeginForm("Upload", "File", new { configType = "KpiTarget" }, FormMethod.Post, new { @class = "form-inline" }))
-    {
 
-        @Html.DevExpress().UploadControl(settings =>
+<form class="form-inline" style="float: left">
+    <div class="form-group">
+        @Html.ActionLink("Download Template", "DownloadTemplate", new { filename = @Model.FileName }, new { @class = "btn btn-primary" })
+    </div>
+    <div class="form-group" id="div-proceed">
+        <input id="btn-proceed" class="btn btn-primary" value="Proceed" />
+    </div>
+</form>
+@using (Html.BeginForm("Upload", "File", new { configType = "KpiTarget" }, FormMethod.Post, new { @class = "form-inline" }))
+{
+
+    @Html.DevExpress().UploadControl(settings =>
         {
             settings.Name = "uc";
             settings.CallbackRouteValues = new { configType = "KpiTarget", Controller = "File", Action = "UploadControlCallbackAction" };
@@ -88,11 +89,13 @@
             settings.ShowProgressPanel = true;
             settings.ValidationSettings.Assign(DSLNG.PEAR.Web.Extensions.ExcelUploadHelper.ValidationSettings);
         }).GetHtml()
-    }
-    <table class="table table-hover table-transparent table-bordered">
-        <tbody>
-            <tr>
-                <th style="width: 30%;">KPI Name</th>
+}
+<div style="clear: both"></div>
+<div id="parent-fixed-table">
+    <table id="fixed-table" class="table table-hover table-transparent table-bordered">
+        <thead>
+            <tr style="background-color: #6aa89d">
+                <th style="width: 50px;">KPI Name</th>
                 <th style="width: 50px;">2015</th>
                 <th style="width: 50px;">2016</th>
                 <th style="width: 50px;">2017</th>
@@ -110,11 +113,14 @@
                 <th style="width: 50px;">2029</th>
                 <th style="width: 50px;">2030</th>
             </tr>
+        </thead>
+        <tbody>
+            
             @{ var a = 0;}
             @foreach (var kpi in Model.Kpis)
             {
                 <tr>
-                    <td style="text-align: left">@kpi.Name (@kpi.Measurement)</td>
+                    <td style="text-align: left; background: #6aa89d">@kpi.Name (@kpi.Measurement)</td>
                     @{ var b = 0;}
                     @foreach (var kpiTarget in kpi.KpiTargets)
                     {
@@ -136,7 +142,7 @@
                         b++;
                     }
                 </tr>
-                    a++;
+                a++;
             }
         </tbody>
     </table>
