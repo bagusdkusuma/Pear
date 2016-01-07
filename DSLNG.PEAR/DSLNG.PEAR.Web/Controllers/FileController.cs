@@ -337,7 +337,7 @@ namespace DSLNG.PEAR.Web.Controllers
                                     if (worksheet.Cells[0, j].Value.Type == CellValueType.DateTime)
                                     {
                                         periodData = DateTime.Parse(worksheet.Cells[0, j].Value.ToString());
-                                    }
+                                    //}
                                     if (worksheet.Cells[i, j].Value.Type == CellValueType.Numeric)
                                     {
                                         nilai = double.Parse(worksheet.Cells[i, j].Value.ToString());
@@ -368,6 +368,7 @@ namespace DSLNG.PEAR.Web.Controllers
                                         //        break;
                                         //}
                                     }
+                                }
                                 }
                             }
                         }
