@@ -2055,4 +2055,14 @@ a.see-more
     .scenario-template.original {
         display: none;
     }
+
+    #parent-fixed-table
+    {
+        height: 600px;
+    }
+
+    #fixed-table
+    {
+        width: 1800px !important;
+    }
     
