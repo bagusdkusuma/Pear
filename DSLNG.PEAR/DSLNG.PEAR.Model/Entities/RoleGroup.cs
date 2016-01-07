@@ -23,5 +23,6 @@ namespace DSLNG.PEAR.Data.Entities
         public string Code { get; set; }
         public ICollection<Menu> Menus { get; set; }
         public ICollection<SelectOption> SelectOptions { get; set; }
+        public ICollection<StaticHighlightPrivilege> StaticHighlightPrivileges { get; set; }
     }
 }

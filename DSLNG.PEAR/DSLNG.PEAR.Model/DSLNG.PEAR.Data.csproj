@@ -113,6 +113,7 @@
     <Compile Include="Entities\NextLoadingSchedule.cs" />
     <Compile Include="Entities\NLSHistory.cs" />
     <Compile Include="Entities\Periode.cs" />
+    <Compile Include="Entities\StaticHighlightPrivilege.cs" />
     <Compile Include="Entities\Vessel.cs" />
     <Compile Include="Entities\VesselSchedule.cs" />
     <Compile Include="Entities\Weather.cs" />

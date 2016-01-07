@@ -373,6 +373,10 @@ namespace DSLNG.PEAR.Web.Controllers
             });
             var viewModel = new DailyExecutionReportViewModel();
             viewModel.CurrentUserRoleId = UserProfile().RoleId;
+             var staticHighlightsResp = _highlightOrderService.GetStaticHighlights(new GetStaticHighlightOrdersRequest { Take = -1 });
+             viewModel.IsAuthorizedToManageAlert = staticHighlightsResp.HighlightOrders.First(x => x.Name == "Weather").RoleGroupIds.Contains(viewModel.CurrentUserRoleId);
+             viewModel.IsAuthorizedToManageVesselSchedule = staticHighlightsResp.HighlightOrders.First(x => x.Name == "Vessel Schedule").RoleGroupIds.Contains(viewModel.CurrentUserRoleId);
+             viewModel.IsAuthorizedToManageAlert = staticHighlightsResp.HighlightOrders.First(x => x.Name == "Alert").RoleGroupIds.Contains(viewModel.CurrentUserRoleId);
             var periodeTypeQS = !string.IsNullOrEmpty(Request.QueryString["PeriodeType"]) ? Request.QueryString["PeriodeType"].ToLower() : "daily";
             var periodeQS = !string.IsNullOrEmpty(Request.QueryString["Periode"]) ? Request.QueryString["Periode"] : null;
             switch (periodeTypeQS)

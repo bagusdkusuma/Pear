@@ -74,5 +74,11 @@ namespace DSLNG.PEAR.Web.Controllers
             var req = viewModel.MapTo<SaveHighlightOrderRequest>();
             return Json(_highlightOrderService.SaveHighlight(req));
         }
+        [HttpPost]
+        public JsonResult SaveStatic(HighlightOrderViewModel viewModel)
+        {
+            var req = viewModel.MapTo<SaveStaticHighlightOrderRequest>();
+            return Json(_highlightOrderService.SaveStaticHighlight(req));
+        }
 	}
 }

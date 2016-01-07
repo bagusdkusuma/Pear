@@ -40,35 +40,53 @@
                         <div class="row" style="margin-bottom: 40px">
                             <div class="col-md-4">
                                 <h4>
-                                    @if (string.IsNullOrEmpty(Model.Weather.Text))
+                                    @if(Model.IsAuthorizedToManageWeather){
+                                    if (string.IsNullOrEmpty(Model.Weather.Text))
                                     {
                                         <a href="@Url.Action("Manage","Weather",new {PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay})">Weather :</a>
                                     }
                                     else { 
                                          <a href="@Url.Action("Manage","Weather",new {WeatherId=Model.Weather.Id})">Weather :</a>
                                     }
+                                    }else{
+                                        <text>Weather :</text>
+                                    }
                                      <span class="weather-value">@Model.Weather.Text</span> <span class="display-image" style="width: 60px; height: 60px; display: inline-block; padding: 2.5px">
                                     <img src="~/Content/img/select/@Model.Weather.Value"  style="width:100%;height:100%;display:inline-block"/></span></h4>
                             </div>
                             <div class="col-md-4">
                                 <h4 style="margin-top: 22px">
-                                      @if (string.IsNullOrEmpty(Model.Weather.Temperature))
-                                    {
-                                        <a href="@Url.Action("Manage","Weather",new {PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay})">Outside Temperature :</a>
-                                    }
-                                    else { 
-                                         <a href="@Url.Action("Manage","Weather",new {WeatherId=Model.Weather.Id})">Outside Temperature:</a>
-                                    }
+
+                                      @if (Model.IsAuthorizedToManageWeather)
+                                      {
+                                          if (string.IsNullOrEmpty(Model.Weather.Temperature))
+                                          {
+                                        <a href="@Url.Action("Manage", "Weather", new { PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay })">Outside Temperature :</a>
+                                          }
+                                          else
+                                          { 
+                                         <a href="@Url.Action("Manage", "Weather", new { WeatherId = Model.Weather.Id })">Outside Temperature:</a>
+                                          }
+                                      }else{
+                                      <text>Outside Temperature :</text>
+                                      }
                                      <span class="weather-value">@Model.Weather.Temperature</span></h4>
                             </div>
                             <div class="col-md-4">
                                 <h4 style="margin-top: 19px">
-                                    @if (string.IsNullOrEmpty(Model.Alert.Message))
+                                    @if (Model.IsAuthorizedToManageAlert)
                                     {
-                                        <a href="@Url.Action("Manage","Highlight",new {TypeId= Model.Alert.TypeId, PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay})">Alert Condition:</a>
+                                        if (string.IsNullOrEmpty(Model.Alert.Message))
+                                        {
+                                        <a href="@Url.Action("Manage", "Highlight", new { TypeId = Model.Alert.TypeId, PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay })">Alert Condition:</a>
+                                        }
+                                        else
+                                        { 
+                                         <a href="@Url.Action("Manage", "Highlight", new { HighlightId = Model.Alert.Id })">Alert Condition:</a>
+                                        }
                                     }
-                                    else { 
-                                         <a href="@Url.Action("Manage","Highlight",new {HighlightId=Model.Weather.Id})">Alert Condition:</a>
+                                    else{
+                                         <text>Alert Condition :</text>
                                     }
                                      <span class="display-image" style="max-width: 180px; height: 25px; display: inline-block; padding: 2.5px">
                                     <img src="~/Content/img/select/@Model.Alert.Message"  style="width:100%;height:100%;display:inline-block"/></span></h4>
@@ -90,13 +108,21 @@
                                         @foreach (var nls in Model.NLSList)
                                         { 
                                             <tr>
-                                                <td><a href="/VesselSchedule/Manage/@nls.Id">@nls.VesselType - @nls.SalesType - @nls.Type</a></td>
+                                                <td>
+                                                     @if (Model.IsAuthorizedToManageVesselSchedule)
+                                    {
+                                                    <a href="/VesselSchedule/Manage/@nls.Id">@nls.VesselType - @nls.SalesType - @nls.Type</a>
+                                                     }else{
+                                                     <text>@nls.VesselType - @nls.SalesType - @nls.Type</text>
+                                                     }
+
+                                                </td>
                                                 <td>@nls.Vessel (@nls.Capacity @nls.Measurement)</td>
                                                 <td>@nls.Buyer</td>
                                                 <td>@nls.ETA.ToString("dd-MM-yyyy")</td>
                                                 <td>@nls.ETD.ToString("dd-MM-yyyy")</td>
                                                 <td>@nls.Cargo</td>
-                                                <td>@nls.RemarkDate.ToString("dd-MM-yyyy");@nls.Remark | @Html.ActionLink("See All", "InVesselSchedule", "NLS", new { id = nls.Id }, new { @class = "nls-see-all", data_toggle = "modal", data_target = "#modalDialog" })</td>
+                                                <td>@nls.RemarkDate.ToString("dd-MM-yyyy");@nls.Remark | @Html.ActionLink("See All", "InVesselSchedule", "NLS", new { id = nls.Id }, new { @class = "nls-see-all", data_permitted=@Model.IsAuthorizedToManageVesselSchedule, data_toggle = "modal", data_target = "#modalDialog" })</td>
                                             </tr>
                                         }
                                     </table>

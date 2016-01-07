@@ -512,6 +512,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.KeyOperationConfig, o => o.MapFrom(s => s.KeyOperationConfig.Id))
                 .ForMember(x => x.Scenario, o => o.MapFrom(s => s.Scenario.Id));
 
+            Mapper.CreateMap<StaticHighlightPrivilege, GetStaticHighlightOrdersResponse.HighlightOrderResponse>()
+                .ForMember(x => x.RoleGroupIds, o => o.MapFrom(s => s.RoleGroups.Select(x => x.Id).ToArray()));
+
             base.Configure();
         }
 

@@ -34,7 +34,17 @@ namespace DSLNG.PEAR.Services
 
             var response = new GetHighlightOrdersResponse();
             response.HighlightOrders = highlights.MapTo<GetHighlightOrdersResponse.HighlightOrderResponse>();
+            var staticHighlights = DataContext.StaticHighlightPrivileges.Include(x => x.RoleGroups).ToList();
+            foreach(var staticHighlight in staticHighlights){
+                var resp = new GetHighlightOrdersResponse.HighlightOrderResponse();
+                resp.Id = 1000 + staticHighlight.Id;
+                resp.Text = staticHighlight.Name;
+                resp.RoleGroupIds = staticHighlight.RoleGroups.Select(x => x.Id).ToArray();
+                resp.Value = "static";
+                response.HighlightOrders.Insert(0, resp);
+            }
             response.TotalRecords = totalRecords;
+            response.TotalRecords += staticHighlights.Count;
 
             return response;
         }
@@ -111,6 +121,48 @@ namespace DSLNG.PEAR.Services
                     Message = "An error occured, please contact the administrator for further information"
                 };
             }
+        }
+
+
+        public SaveStaticHighlightOrderResponse SaveStaticHighlight(SaveStaticHighlightOrderRequest request)
+        {
+            try
+            {
+                var staticHighlight = DataContext
+                    .StaticHighlightPrivileges
+                    .Include(x => x.RoleGroups)
+                    .First(x => x.Id == request.Id);
+                if (request.RoleGroupIds.Count() > 0) {
+                    staticHighlight.RoleGroups = DataContext
+                        .RoleGroups
+                        .Where(x => request.RoleGroupIds.Contains(x.Id))
+                        .ToList();
+                }
+                DataContext.SaveChanges();
+                return new SaveStaticHighlightOrderResponse
+                {
+                    IsSuccess = true,
+                    Message = "You have been successfully save highlight order"
+                };
+            }
+            catch (InvalidOperationException e) {
+                return new SaveStaticHighlightOrderResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occure, please contact the administrator for further information"
+                };
+            }
+        }
+
+
+        public GetStaticHighlightOrdersResponse GetStaticHighlights(GetStaticHighlightOrdersRequest request)
+        {
+            var query = DataContext.StaticHighlightPrivileges.Include(x => x.RoleGroups).AsQueryable();
+            return new GetStaticHighlightOrdersResponse
+            {
+                HighlightOrders = request.Take == -1? query.ToList().MapTo<GetStaticHighlightOrdersResponse.HighlightOrderResponse>() : query.Skip(request.Skip).Take(request.Take).ToList().MapTo<GetStaticHighlightOrdersResponse.HighlightOrderResponse>(),
+                TotalRecords = query.Count()
+            };
         }
     }
 }

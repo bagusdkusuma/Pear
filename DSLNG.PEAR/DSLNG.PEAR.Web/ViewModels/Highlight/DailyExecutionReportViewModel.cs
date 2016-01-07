@@ -46,6 +46,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Highlight
             public string Temperature { get; set; }
         }
         public class AlertViewModel {
+            public int Id { get; set; }
             public string Message { get; set; }
             public int TypeId { get; set; }
         }
@@ -93,6 +94,9 @@ namespace DSLNG.PEAR.Web.ViewModels.Highlight
             }
         }
         public int CurrentUserRoleId { get; set; }
-       
+
+        public bool IsAuthorizedToManageWeather { get; set; }
+        public bool IsAuthorizedToManageAlert { get; set; }
+        public bool IsAuthorizedToManageVesselSchedule { get; set; }
     }
 }
