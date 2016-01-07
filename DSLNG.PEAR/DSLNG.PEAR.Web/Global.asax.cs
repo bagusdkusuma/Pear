@@ -26,8 +26,8 @@ namespace DSLNG.PEAR.Web
         protected void Application_Start()
         {
             AutoMapperConfiguration.Configure();
-            Database.SetInitializer<DataContext>(new DataInitializer());
-            //Database.SetInitializer<DataContext>(null);
+            //Database.SetInitializer<DataContext>(new DataInitializer());
+            Database.SetInitializer<DataContext>(null);
             
             //StructureMap Container
             IContainer container = IoC.Initialize();
