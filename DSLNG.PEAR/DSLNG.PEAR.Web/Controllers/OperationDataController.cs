@@ -331,7 +331,7 @@ namespace DSLNG.PEAR.Web.Controllers
                                 }
                                 else if (j > 1)
                                 {
-                                    var operationId = OperationsId.OperationDatas.Where(x => x.Kpi.Equals(Kpi_Id)).Select(x => x.KeyOperationConfig).FirstOrDefault();
+                                    var operationId = OperationsId.OperationDatas.Where(x => x.Kpi == Kpi_Id).Select(x => x.KeyOperationConfig).FirstOrDefault();
 
                                     if (worksheet.Cells[0, j].Value.Type == CellValueType.DateTime)
                                     {
