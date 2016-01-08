@@ -2066,31 +2066,34 @@ a.see-more
         width: 400px !important;
     }
 
-      #table {
+       #table {
         /*font-size: 20px;*/
       }
-      #table thead tr {
+      .table thead tr {
           /*border: 1px solid red;*/
           display: table;
       }
-      #table thead, #table tbody, #table tr {
+      .table thead, .table tbody, .table tr {
         display: block;
         width: 100%;
         border-spacing: 0;
         border-collapse: collapse;
         min-height: 20px;
       }
-      #table tbody {
+      .table tbody {
         height: 210px;
         overflow-y: auto;
         overflow-x:hidden;
         position: relative;
       }
-      #table tbody td, #table thead th {
+      .table thead th {
         /*display: block;
         float: left;*/
         /*border: 1px solid black;*/
         width: 25%;
         box-sizing: border-box;
           
+      }      #table tbody td {
+          /*width: 15%;*/
+          /*width: 120px;*/
       }
