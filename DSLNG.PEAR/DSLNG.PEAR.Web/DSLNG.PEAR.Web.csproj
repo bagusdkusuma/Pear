@@ -413,8 +413,10 @@
     <Content Include="Scripts\calculator.standard.js" />
     <Content Include="Scripts\calculator.plant-availability.js" />
     <Content Include="Scripts\jquery.dataTables.min.js" />
+    <Content Include="Scripts\jquery.fixedheadertable.js" />
     <Content Include="Scripts\jquery.freezeheader.js" />
     <Content Include="Scripts\perfect-scrollbar.jquery.min.js" />
+    <Content Include="Scripts\tableHeadFixer.js" />
     <Content Include="Scripts\tank.js" />
     <Content Include="Scripts\exporting.js" />
     <Content Include="Scripts\globalize.cultures.js" />
@@ -1066,6 +1068,7 @@
     <Content Include="Views\OperationData\DetailPartial\_Monthly.cshtml" />
     <Content Include="Views\OperationData\DetailPartial\_Yearly.cshtml" />
     <Content Include="Views\User\Create.cshtml" />
+    <Content Include="Views\KpiAchievement\Test.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

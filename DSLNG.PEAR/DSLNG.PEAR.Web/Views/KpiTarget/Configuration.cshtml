@@ -136,6 +136,7 @@
             $(document).on('click', '.submit-popover', function () {
                 var that = $(this);
                 var value = $(this).parent().find('input[name="Value"]').val();
+                $(this).parent().find('input[name="Value"]').val();
                 var remark = $(this).parent().find('textarea').val();
                 var kpiTarget = $('.popover').parent();
 
@@ -144,7 +145,7 @@
                 var formData = {
                     'id': $(this).parent().find('input[name=Id]').val(),
                     'kpiId': $(this).parent().find('input[name=KpiId]').val(),
-                    'value': $(this).parent().find('input[name=Value]').val(),
+                    'value': $(this).parent().find('input[name=Value]').val().replace(/\s/g, '').replace(/,/g, "."),
                     'remark': $(this).parent().find('textarea').val(),
                     'periode': $(this).parent().find('input[name=Periode]').val(),
                     'periodeType': $(this).parent().find('input[name=PeriodeType]').val()
