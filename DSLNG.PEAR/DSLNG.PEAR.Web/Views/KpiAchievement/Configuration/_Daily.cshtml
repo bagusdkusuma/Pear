@@ -4,13 +4,14 @@
 }
 <script type="text/javascript">
     $(document).ready(function () {
+        $("#fixed-table").tableHeadFixer({ "left": 1 });
         $('#div-proceed').hide();
         $('#btn-proceed').click(function () {
             //window.location = '@Url.Action("ProceedFile", "KpiAchievement")' + '?filename=' + encodeURIComponent(link);
             var formData = {
                 'filename': encodeURIComponent(link)
             };
-            
+
             $.ajax({
                 url: '@Url.Action("ProceedFile", "KpiAchievement")',
                 type: 'POST',
@@ -21,17 +22,17 @@
                     $('.notification').hide();
                 }
             }).done(function (result) {
-                    $('.ajax-loader2').hide();
-                    var alertType = result.isSuccess === true ? 'alert-success' : 'alert-danger';
-                    if (result.isSuccess === true || result.message === null) {
-                        $('.notification').html('<div class="alert ' + alertType + '" role="alert">File Successfully Parsed : ' + link + ' </div>').fadeIn().delay(10000).fadeOut();
-                        $(".nav-tabs .active").find('a').click();
-                    } else {
-                        $('.notification').html('<div class="alert ' + alertType + '" role="alert">' + result.Message + '</div>').fadeIn().delay(10000).fadeOut();
-                    }
+                $('.ajax-loader2').hide();
+                var alertType = result.isSuccess === true ? 'alert-success' : 'alert-danger';
+                if (result.isSuccess === true || result.message === null) {
+                    $('.notification').html('<div class="alert ' + alertType + '" role="alert">File Successfully Parsed : ' + link + ' </div>').fadeIn().delay(10000).fadeOut();
+                    $(".nav-tabs .active").find('a').click();
+                } else {
+                    $('.notification').html('<div class="alert ' + alertType + '" role="alert">' + result.Message + '</div>').fadeIn().delay(10000).fadeOut();
+                }
 
-                    $('.notification').show();
-                });
+                $('.notification').show();
+            });
         });
     });
     var link = null;
@@ -69,45 +70,47 @@
 
 </script>
 <div class="notification"></div>
-<div style="overflow: auto">
-    <form class="form-inline" style="float: left">
-        <div class="form-group" style="padding-right: 30px; border-right: solid 1px #3f454f;">
-            <label class="labletop">Year :</label>
-            @Html.DropDownListFor(x => x.Year, Model.Years, new { @class = "form-control ddl-year" })
-        </div>
-        <div class="form-group" style="padding-right: 30px; border-right: solid 1px #3f454f;">
-            <label class="labletop">Month :</label>
-            @Html.DropDownListFor(x => x.Month, Model.Months, new { @class = "form-control ddl-month" })
-        </div>
-        <div class="form-group">
-            @Html.ActionLink("Download Template", "DownloadTemplate", new { filename = @Model.FileName }, new { @class = "btn btn-primary" })
-        </div>
-        <div class="form-group" id="div-proceed">
-            <input id="btn-proceed" class="btn btn-primary" value="Proceed" />
-        </div>
-    </form>
+<form class="form-inline" style="float: left">
+    <div class="form-group" style="padding-right: 30px; border-right: solid 1px #3f454f;">
+        <label class="labletop">Year :</label>
+        @Html.DropDownListFor(x => x.Year, Model.Years, new { @class = "form-control ddl-year" })
+    </div>
+    <div class="form-group" style="padding-right: 30px; border-right: solid 1px #3f454f;">
+        <label class="labletop">Month :</label>
+        @Html.DropDownListFor(x => x.Month, Model.Months, new { @class = "form-control ddl-month" })
+    </div>
+    <div class="form-group">
+        @Html.ActionLink("Download Template", "DownloadTemplate", new { filename = @Model.FileName }, new { @class = "btn btn-primary" })
+    </div>
+    <div class="form-group" id="div-proceed">
+        <input id="btn-proceed" class="btn btn-primary" value="Proceed" />
+    </div>
+</form>
 
-    @using (Html.BeginForm("UploadControlCallbackAction", "KpiAchievement", FormMethod.Post, new { @class = "form-inline" }))
-    {
-        Html.RenderPartial("UploadControlPartial");
+@using (Html.BeginForm("UploadControlCallbackAction", "KpiAchievement", FormMethod.Post, new { @class = "form-inline" }))
+{
+    Html.RenderPartial("UploadControlPartial");
 
-    }
-    @*<div id="proceed">Process</div>*@
-    <table class="table table-hover table-transparent table-bordered" style="table-layout: fixed">
-        <tbody>
-            <tr>
+}
+<div style="clear: both"></div>
+<div id="parent-fixed-table">
+    <table id="fixed-table" class="table table-hover table-transparent table-bordered" style="table-layout: fixed">
+        <thead>
+            <tr style="background-color: #6aa89d">
                 <th style="width: 165px;">KPI Name</th>
                 @for (int i = 1; i <= length; i++)
                 {
                     <th style="width: 52px;">@i</th>
                 }
             </tr>
+        </thead>
+        <tbody>
             @{ var a = 0;}
 
             @foreach (var kpi in Model.Kpis)
             {
                 <tr>
-                    <td style="text-align: left">@kpi.Name (@kpi.Measurement)</td>
+                    <td style="text-align: left;background-color: #6aa89d">@kpi.Name (@kpi.Measurement)</td>
                     @*<td>@kpi.Measurement</td>*@
                     @{ var b = 0;}
                     @foreach (var kpiAchievement in kpi.KpiAchievements)
@@ -130,12 +133,11 @@
                         b++;
                     }
                 </tr>
-                a++;
+                    a++;
             }
 
         </tbody>
     </table>
-
-
-
 </div>
+
+

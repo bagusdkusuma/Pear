@@ -4245,6 +4245,16 @@ Number.prototype.format = function (n, x) {
                         var exclude = excludeValue.clone(true);
                         paramsHolder.append(exclude.show());
                     }
+                    if (val == 'PAYBACK') {
+                        var operationStart = assumptionParam.clone(true);
+                        Pear.OutputConfig._autocomplete(operationStart.find('select'));
+                        operationStart.find('label').html('End');
+                        paramsHolder.append(end.show());
+                        var commercialDate = assumptionParam.clone(true);
+                        Pear.OutputConfig._autocomplete(end.find('select'));
+                        end.find('label').html('End');
+                        paramsHolder.append(end.show());
+                    }
                     var kpi = kpiParam.clone(true);
                     Pear.OutputConfig._autocomplete(kpi.find('select'));
                     paramsHolder.append(kpi.show());

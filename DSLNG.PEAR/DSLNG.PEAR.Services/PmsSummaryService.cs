@@ -142,112 +142,50 @@ namespace DSLNG.PEAR.Services
                             #endregion
 
                             #region Score
-
-                            //if (kpiData.ActualYtd.HasValue && kpiData.TargetYtd.HasValue)
-                            //{
-                                //var indexYtd = (kpiData.ActualYtd.Value / kpiData.TargetYtd.Value);
-
-                                switch (pmsConfigDetails.ScoringType)
-                                {
-                                    case ScoringType.Positive:
-                                        {
-                                            kpiData.Score = pmsConfigDetails.Weight * kpiData.IndexYearly;
-                                            var maxScore = pmsConfigDetails.Weight * 1.05;
-                                            if (kpiData.Score >= maxScore)
-                                                kpiData.Score = maxScore;
-                                            break;
-                                        }
-
-                                    case ScoringType.Negative:
-                                        {
-                                            if (kpiData.IndexYearly.Equals(0))
-                                            {
-                                                response.IsSuccess = false;
-                                                response.Message =
-                                                    string.Format(
-                                                        @"KPI {0} memiliki nilai index Yearly 0 dengan Nilai Scoring Type negative yang mengakibatkan terjadinya nilai infinity",
-                                                        pmsConfigDetails.Kpi.Name);
-                                                return response;
-                                            }
-
-                                            kpiData.Score = (kpiData.IndexYearly <= _maxNegativeScore)
-                                                                ? pmsConfigDetails.Weight * 1.05
-                                                                : pmsConfigDetails.Weight / kpiData.IndexYearly;
-                                            break;
-                                        }
-
-                                    case ScoringType.Boolean:
-                                        // tambahin operand pas target, i.e : > 60 , jadi target harus melebihi > 60 dan itu jadi 1, klo
-                                        // gak terpenuhi jadi false, 
-                                        // update : milih score indicator aja jadi radio, nanti targetnya bisa range kek x < 10
-
-                                        kpiData.Score = 0;
-                                        if (kpiAchievementYearly.Value.HasValue && !string.IsNullOrEmpty(pmsConfigDetails.Target))
-                                        {
-                                            Expression e = new Expression(pmsConfigDetails.Target.Replace("x", kpiAchievementYearly.Value.Value.ToString("f2", CultureInfo.InvariantCulture)));
-                                            bool isPassed = (bool)e.Evaluate();
-                                            if (isPassed)
-                                            {
-                                                kpiData.Score = kpiData.Weight;
-                                            }
-                                        }
-                                        /*var kpiAchievement =
-                                            pmsConfigDetails.Kpi.KpiAchievements.Where(x => x.Value.HasValue && x.Periode.Year == request.Year).ToList();
-                                        kpiData.Score = 0;
-                                        if (kpiAchievement.Count > 0)
-                                        {
-                                            foreach (var achievement in kpiAchievement)
-                                            {
-                                                if (achievement.Value.HasValue && !string.IsNullOrEmpty(pmsConfigDetails.Target))
-                                                {
-                                                    Expression e = new Expression(pmsConfigDetails.Target.Replace("x", achievement.Value.Value.ToString("f2", CultureInfo.InvariantCulture)));
-                                                    bool isPassed = (bool)e.Evaluate();
-                                                    if (isPassed)
-                                                    {
-                                                        kpiData.Score = kpiData.Weight;
-                                                        break;
-                                                    }    
-                                                }
-                                            }
-                                        }*/
-                                        /*bool isNull = kpiAchievement.Count == 0;
-                                        bool exceedValue = false;
-                                        foreach (var achievement in kpiAchievement)
-                                        {
-                                            if (pmsConfigDetails.Target.HasValue && achievement.Value > pmsConfigDetails.Target.Value)
-                                            {
-                                                exceedValue = true;
-                                                break;
-                                            }
-                                        }
-
-                                        if (!isNull)
-                                        {
-                                            kpiData.Score = exceedValue ? 0 : Double.Parse(kpiData.Weight.ToString());
-                                        }*/
-                                        /*bool isMoreThanZero = false;
-                                        var kpiAchievement =
-                                            pmsConfigDetails.Kpi.KpiAchievements.Where(x => x.Value.HasValue && x.Periode.Year == request.Year).ToList();
-                                        bool isNull = kpiAchievement.Count == 0;
-                                        foreach (var achievement in kpiAchievement)
-                                        {
-                                            if (achievement.Value > 0)
-                                            {
-                                                isMoreThanZero = true;
-                                                break;
-                                            }
-
-                                        }
-
-                                        if (!isNull)
-                                        {
-                                            kpiData.Score = isMoreThanZero ? 0 : Double.Parse(kpiData.Weight.ToString());
-                                        }*/
-
+                            
+                            switch (pmsConfigDetails.ScoringType)
+                            {
+                                case ScoringType.Positive:
+                                    {
+                                        kpiData.Score = pmsConfigDetails.Weight * kpiData.IndexYearly;
+                                        var maxScore = pmsConfigDetails.Weight * 1.05;
+                                        if (kpiData.Score >= maxScore)
+                                            kpiData.Score = maxScore;
                                         break;
-                                }
+                                    }
 
-                            //}
+                                case ScoringType.Negative:
+                                    {
+                                        if (kpiData.IndexYearly.Equals(0))
+                                        {
+                                            response.IsSuccess = false;
+                                            response.Message =
+                                                string.Format(
+                                                    @"KPI {0} memiliki nilai index Yearly 0 dengan Nilai Scoring Type negative yang mengakibatkan terjadinya nilai infinity",
+                                                    pmsConfigDetails.Kpi.Name);
+                                            return response;
+                                        }
+
+                                        kpiData.Score = (kpiData.IndexYearly <= _maxNegativeScore)
+                                                            ? pmsConfigDetails.Weight * 1.05
+                                                            : pmsConfigDetails.Weight / kpiData.IndexYearly;
+                                        break;
+                                    }
+
+                                case ScoringType.Boolean:
+                                    kpiData.Score = 0;
+                                    if (kpiAchievementYearly.Value.HasValue && !string.IsNullOrEmpty(pmsConfigDetails.Target) && pmsConfigDetails.Target.Contains("x"))
+                                    {
+                                        Expression e = new Expression(pmsConfigDetails.Target.Replace("x", kpiAchievementYearly.Value.Value.ToString("f2", CultureInfo.InvariantCulture)));
+                                        bool isPassed = (bool)e.Evaluate();
+                                        if (isPassed)
+                                        {
+                                            kpiData.Score = kpiData.Weight;
+                                        }
+                                    }
+
+                                    break;
+                            }
 
                             #endregion
 
@@ -630,7 +568,7 @@ namespace DSLNG.PEAR.Services
             {
                 existed.IsActive = false;
                 DataContext.PmsSummaries.Attach(existed);
-                DataContext.Entry(existed).State = EntityState.Modified;    
+                DataContext.Entry(existed).State = EntityState.Modified;
             }
 
             var pmsSummary = DataContext.PmsSummaries.Single(x => x.Id == id);
@@ -1072,7 +1010,7 @@ namespace DSLNG.PEAR.Services
 
             return response;
         }
-        
+
         public DeletePmsResponse DeletePmsSummary(int id)
         {
             var response = new DeletePmsResponse();
@@ -1161,14 +1099,14 @@ namespace DSLNG.PEAR.Services
                         new Expression(scoreIndicator.Expression.Replace("x",
                                                                          1.ToString("f2", CultureInfo.InvariantCulture)));
                     expression = scoreIndicator.Expression;
-                    bool evaluate = (bool) e.Evaluate();
+                    bool evaluate = (bool)e.Evaluate();
                     isValid = true;
                 }
                 catch (Exception exception)
                 {
                     return false;
                 }
-                
+
             }
 
             return isValid;
