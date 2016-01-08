@@ -177,9 +177,40 @@ namespace DSLNG.PEAR.Services
                                         }
 
                                     case ScoringType.Boolean:
-                                        var kpiAchievement =
+                                        // tambahin operand pas target, i.e : > 60 , jadi target harus melebihi > 60 dan itu jadi 1, klo
+                                        // gak terpenuhi jadi false, 
+                                        // update : milih score indicator aja jadi radio, nanti targetnya bisa range kek x < 10
+
+                                        kpiData.Score = 0;
+                                        if (kpiAchievementYearly.Value.HasValue && !string.IsNullOrEmpty(pmsConfigDetails.Target))
+                                        {
+                                            Expression e = new Expression(pmsConfigDetails.Target.Replace("x", kpiAchievementYearly.Value.Value.ToString("f2", CultureInfo.InvariantCulture)));
+                                            bool isPassed = (bool)e.Evaluate();
+                                            if (isPassed)
+                                            {
+                                                kpiData.Score = kpiData.Weight;
+                                            }
+                                        }
+                                        /*var kpiAchievement =
                                             pmsConfigDetails.Kpi.KpiAchievements.Where(x => x.Value.HasValue && x.Periode.Year == request.Year).ToList();
-                                        bool isNull = kpiAchievement.Count == 0;
+                                        kpiData.Score = 0;
+                                        if (kpiAchievement.Count > 0)
+                                        {
+                                            foreach (var achievement in kpiAchievement)
+                                            {
+                                                if (achievement.Value.HasValue && !string.IsNullOrEmpty(pmsConfigDetails.Target))
+                                                {
+                                                    Expression e = new Expression(pmsConfigDetails.Target.Replace("x", achievement.Value.Value.ToString("f2", CultureInfo.InvariantCulture)));
+                                                    bool isPassed = (bool)e.Evaluate();
+                                                    if (isPassed)
+                                                    {
+                                                        kpiData.Score = kpiData.Weight;
+                                                        break;
+                                                    }    
+                                                }
+                                            }
+                                        }*/
+                                        /*bool isNull = kpiAchievement.Count == 0;
                                         bool exceedValue = false;
                                         foreach (var achievement in kpiAchievement)
                                         {
@@ -193,7 +224,7 @@ namespace DSLNG.PEAR.Services
                                         if (!isNull)
                                         {
                                             kpiData.Score = exceedValue ? 0 : Double.Parse(kpiData.Weight.ToString());
-                                        }
+                                        }*/
                                         /*bool isMoreThanZero = false;
                                         var kpiAchievement =
                                             pmsConfigDetails.Kpi.KpiAchievements.Where(x => x.Value.HasValue && x.Periode.Year == request.Year).ToList();
