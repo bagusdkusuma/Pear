@@ -152,7 +152,9 @@ namespace DSLNG.PEAR.Services
             }
             else 
             {
-                var operationConfig = DataContext.KeyOperationConfigs.Single(x => x.Id == request.Id);
+                var operationConfig = DataContext.KeyOperationConfigs
+                    .Include(x => x.KeyOperationGroup)
+                    .Single(x => x.Id == request.Id);
                 if (request.IsActive.HasValue)
                 {
                     operationConfig.IsActive = request.IsActive.Value;
