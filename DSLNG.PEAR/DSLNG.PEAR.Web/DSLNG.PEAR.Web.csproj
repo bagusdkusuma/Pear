@@ -413,7 +413,6 @@
     <Content Include="Scripts\calculator.standard.js" />
     <Content Include="Scripts\calculator.plant-availability.js" />
     <Content Include="Scripts\jquery.dataTables.min.js" />
-    <Content Include="Scripts\jquery.fixedheadertable.js" />
     <Content Include="Scripts\jquery.freezeheader.js" />
     <Content Include="Scripts\perfect-scrollbar.jquery.min.js" />
     <Content Include="Scripts\tableHeadFixer.js" />
