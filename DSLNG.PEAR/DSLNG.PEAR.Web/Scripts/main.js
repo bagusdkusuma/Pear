@@ -2602,7 +2602,7 @@ Number.prototype.format = function (n, x) {
         //$table.attr('id', 'table');
         $table.addClass('tabular');
         $table.addClass('table-bordered');
-        $table.addClass('table');
+        $table.addClass('table2');
         $table.addClass(tableUniqueClass);
         
         var tHead = $('<thead>');
@@ -2649,7 +2649,7 @@ Number.prototype.format = function (n, x) {
         
         container.html(wrapper);
         
-        $('.table tbody').perfectScrollbar();
+        $('.table2 tbody').perfectScrollbar();
         
         for (var j = 1; j <= counter; j++) {
             var width = $('.' + tableUniqueClass + ' thead th:nth-child(' + j + ')').outerWidth();
