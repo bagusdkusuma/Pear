@@ -2582,7 +2582,7 @@ Number.prototype.format = function (n, x) {
         $('.form-measurement').css('display', 'none');
     };
     artifactDesigner._previewCallbacks.tabular = function (data, container) {
-        //console.log('writing table');
+        var tableUniqueClass = "table-" + Math.floor((Math.random() * 100) + 1);
         var wrapper = $('<div>');
         wrapper.addClass('tabular-wrapper');
         wrapper.append($('<h3>').html(data.Tabular.Title));
@@ -2596,31 +2596,40 @@ Number.prototype.format = function (n, x) {
         tableScrollContainer.css('overflow-y', 'auto');
 
         var panel = $('<div>');
-        panel.addClass('panel panel-default tabular-panel');
+        panel.addClass('panel panel-default tabular-panel ');
 
         var $table = $('<table>');
+        //$table.attr('id', 'table');
         $table.addClass('tabular');
         $table.addClass('table-bordered');
+        $table.addClass('table');
+        $table.addClass(tableUniqueClass);
+        
+        var tHead = $('<thead>');
         var rowHeader = $('<tr>');
         rowHeader.append($('<th>').html('KPI Name'));
-        //rowHeader.append($('<th>').html('Periode Type'));
         rowHeader.append($('<th>').html('Periode'));
+        var counter = 2;
+        
         if (data.Tabular.Actual) {
             rowHeader.append($('<th>').html('Actual'));
+            counter += 1;
         }
         if (data.Tabular.Target) {
             rowHeader.append($('<th>').html('Target'));
+            counter += 1;
         }
         if (data.Tabular.Remark) {
             rowHeader.append($('<th>').html('Remark'));
+            counter += 1;
         }
-        //rowHeader.append($('<th>').html('Measurement'));
-        $table.append(rowHeader);
+        
+        tHead.append(rowHeader);
+        $table.append(tHead);
         for (var i in data.Tabular.Rows) {
             var dataRow = data.Tabular.Rows[i];
             var row = $('<tr>');
             row.append($('<td class="tabular-kpi-name">').html(dataRow.KpiName + ' (' + dataRow.Measurement + ')'));
-            //row.append($('<td>').html(dataRow.PeriodeType));
             row.append($('<td class="tabular-actual">').html(dataRow.Periode));
             if (data.Tabular.Actual) {
                 row.append($('<td class="tabular-actual">').html(dataRow.Actual == null ? '-' : dataRow.Actual.format(2)));
@@ -2631,21 +2640,23 @@ Number.prototype.format = function (n, x) {
             if (data.Tabular.Remark) {
                 row.append($('<td>').html(dataRow.Remark));
             }
-            //row.append($('<td>').html(dataRow.Measurement));
             $table.append(row);
         }
-        //wrapper.append($table);
-        //container.css('height', 'auto');
-        //container.css('min-height', '350px');
-
-        //change from pak Marwan
+        
         tableScrollContainer.append(panel);
         panel.append($table);
         wrapper.append(tableScrollContainer);
-
-        //wrapper.append($table);
+        
         container.html(wrapper);
-        $('.perfect-scrollbar').perfectScrollbar();
+        
+        $('.table tbody').perfectScrollbar();
+        
+        for (var j = 1; j <= counter; j++) {
+            var width = $('.' + tableUniqueClass + ' thead th:nth-child(' + j + ')').outerWidth();
+            $('.' + tableUniqueClass + ' tbody td:nth-child(' + j + ')').outerWidth(width);
+        }
+
+        
     };
 
     //trafficlight
