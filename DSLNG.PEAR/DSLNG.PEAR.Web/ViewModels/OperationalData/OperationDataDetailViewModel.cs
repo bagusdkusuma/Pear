@@ -14,6 +14,7 @@ namespace DSLNG.PEAR.Web.ViewModels.OperationalData
 
         public IList<KeyOperationGroupViewModel> KeyOperationGroups { get; set; }
         public int ScenarioId { get; set; }
+        public string ConfigType { get; set; }
 
         public class KeyOperationGroupViewModel
         {

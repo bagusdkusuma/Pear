@@ -66,6 +66,7 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<EconomicSummary> EconomicSummaries { get; set; }
         public IDbSet<ResetPassword> ResetPasswords { get; set; }
         public IDbSet<KeyOutputConfiguration> KeyOutputConfigs { get; set; }
+        public IDbSet<StaticHighlightPrivilege> StaticHighlightPrivileges { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Kpi>()

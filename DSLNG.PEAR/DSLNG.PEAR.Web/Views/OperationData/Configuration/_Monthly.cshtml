@@ -1,13 +1,114 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.OperationData.OperationDataConfigurationViewModel
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#div-proceed').hide();
+        $('#btn-proceed').click(function () {
+            //window.location = '@Url.Action("ProceedFile", "OperationData")' + '?filename=' + encodeURIComponent(link);
+            var formData = {
+                'filename': encodeURIComponent(link),
+                'scenarioId': value.scenarioId,
+                'configType': value.configType
+
+            };
+            $.ajax({
+                url: '@Url.Action("ProceedFile", "OperationData")',
+                type: 'POST',
+                data: formData,
+                beforeSend: function () {
+                    console.log(formData);
+                    $('.ajax-loader2').show();
+                    $('.notification').empty();
+                    $('.notification').hide();
+                }
+            }).done(function (result) {
+                $('.ajax-loader2').hide();
+                var alertType = result.isSuccess === true ? 'alert-success' : 'alert-danger';
+                if (result.isSuccess === true || result.message === null) {
+                    $('.notification').html('<div class="alert ' + alertType + '" role="alert">File Successfully Parsed : ' + link + ' </div>').fadeIn().delay(10000).fadeOut();
+                    $(".nav-tabs .active").find('a').click();
+                } else {
+                    $('.notification').html('<div class="alert ' + alertType + '" role="alert">' + result.Message + '</div>').fadeIn().delay(10000).fadeOut();
+                }
+
+                $('.notification').show();
+            });
+        });
+    });
+    var link = null;
+    function OnClick(s, e) {
+        uc.Upload();
+    }
+    function OnUploadTextChanged(s, e) {
+        uc.Upload();
+    }
+    function OnFileUploadComplete(s, e) {
+        if (e.callbackData !== "") {
+            link = e.callbackData;
+            var callback = 'FileUploadComplete: ' + e.callbackData;
+            $('.notification').empty();
+            var message = '<div class="alert alert-success" role="alert">' + callback + '</div>';
+            $('.notification').append(message).fadeIn().delay(10000).fadeOut();
+            $('#div-proceed').show();
+
+        }
+        else {
+            $('.notification').empty();
+            var callback = 'The selected file was not uploaded.'
+            var message = '<div class="alert alert-danger" role="alert">' + callback + '</div>';
+            $('.notification').append(message).fadeIn().delay(1000).fadeOut();
+        }
+    }
+    function proceed(s) {
+        alert(s);
+    }
+
+    function getUrlVars() {
+        var vars = [], hash;
+        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for (var i = 0; i < hashes.length; i++) {
+            hash = hashes[i].split('=');
+            vars.push(hash[0]);
+            vars[hash[0]] = hash[1];
+        }
+        return vars;
+    }
+
+    var value = getUrlVars();
+    value.configType = "Economic";
+
+</script>
+
+
+
 <div role="tabpanel" class="tab-pane active" id="monthly">
 
     <div style="overflow: auto">
         <form class="form-inline" style="float: left">
-            <div class="form-group" style="padding-right: 30px;">
+            <div class="form-group" style="padding-right: 30px; border-right: solid 1px #3f454f;">
                 <label class="labletop">Year :</label>
                 @Html.DropDownListFor(x => x.Year, Model.Years, new { @class = "form-control ddl-year" })
             </div>
+            <div class="form-group">
+                @Html.ActionLink("Download Template", "DownloadTemplate", new { filename = @Model.FileName }, new { @class = "btn btn-primary" })
+            </div>
+            <div class="form-group" id="div-proceed">
+                <input id="btn-proceed" class="btn btn-primary" value="Proceed" />
+            </div>
         </form>
+       @using (Html.BeginForm("Upload", "OperationData", new { configType = Model.ConfigType, scenarioId = Model.ScenarioId }, FormMethod.Post, new { @class = "form-inline" }))
+       {
+
+            @Html.DevExpress().UploadControl(settings =>
+                {
+                    settings.Name = "uc";
+                    settings.CallbackRouteValues = new { configType = Model.ConfigType, scenarioId = Model.ScenarioId, Controller = "OperationData", Action = "UploadControlCallbackAction" };
+                    settings.ClientSideEvents.FileUploadComplete = "OnFileUploadComplete";
+                    settings.ClientSideEvents.TextChanged = "function(s,e){uc.Upload();}";
+                    settings.ShowProgressPanel = true;
+                    settings.ValidationSettings.Assign(DSLNG.PEAR.Web.Extensions.ExcelUploadHelper.ValidationSettings);
+                }).GetHtml()
+        }
         <table class="table table-hover table-transparent table-bordered">
             <tbody>
                 <tr>

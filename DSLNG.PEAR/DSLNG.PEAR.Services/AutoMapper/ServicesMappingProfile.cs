@@ -390,7 +390,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.Value, o => o.MapFrom(s => s.Value.Value))
                 .ForMember(x => x.Text, o => o.MapFrom(s => s.Value.Text));
             Mapper.CreateMap<SelectOption, GetHighlightOrdersResponse.HighlightOrderResponse>()
-                .ForMember(x => x.GroupId, o => o.MapFrom(x =>x.Group != null ?  x.Group.Id : 0));
+                .ForMember(x => x.GroupId, o => o.MapFrom(x => x.Group != null ? x.Group.Id : 0))
+                .ForMember(x => x.RoleGroupIds, o => o.MapFrom(s => s.RoleGroups.Select(x => x.Id).ToArray()));
             Mapper.CreateMap<KeyAssumptionCategory, GetAssumptionCategoriesResponse.AssumptionCategory>()
                 .ForMember(x => x.Assumptions, o =>
                     o.MapFrom(s => s.KeyAssumptions != null ?
@@ -476,7 +477,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.HighlightTypes, o => o.MapFrom(s => s.Options.OrderBy(x => x.Order).Where(x => x.IsActive == true).ToList()));
             Mapper.CreateMap<HighlightGroup, GetHighlightGroupResponse>();
             Mapper.CreateMap<SaveHighlightGroupRequest, HighlightGroup>();
-            Mapper.CreateMap<SelectOption, GetHighlightGroupsResponse.HighlightTypeResponse>();
+            Mapper.CreateMap<SelectOption, GetHighlightGroupsResponse.HighlightTypeResponse>()
+                .ForMember(x => x.RoleGroupIds, o => o.MapFrom(s => s.RoleGroups.Select(y => y.Id).ToArray()));
             Mapper.CreateMap<Highlight, GetDynamicHighlightsResponse.HighlightResponse>()
                 .ForMember(x => x.TypeId, o => o.MapFrom(s => s.HighlightType.Id));
 
@@ -505,6 +507,13 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.KeyOutputs, o => o.Ignore());
             Mapper.CreateMap<KeyOutputConfiguration, CalculateOutputResponse.KeyOutputResponse>()
                 .ForMember(x => x.Measurement, o => o.MapFrom(s => s.Measurement.Name));
+            Mapper.CreateMap<KeyOperationData, GetOperationIdResponse.OperationData>()
+                .ForMember(x => x.Kpi, o => o.MapFrom(s => s.Kpi.Id))
+                .ForMember(x => x.KeyOperationConfig, o => o.MapFrom(s => s.KeyOperationConfig.Id))
+                .ForMember(x => x.Scenario, o => o.MapFrom(s => s.Scenario.Id));
+
+            Mapper.CreateMap<StaticHighlightPrivilege, GetStaticHighlightOrdersResponse.HighlightOrderResponse>()
+                .ForMember(x => x.RoleGroupIds, o => o.MapFrom(s => s.RoleGroups.Select(x => x.Id).ToArray()));
 
             base.Configure();
         }
@@ -666,8 +675,13 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<KeyOperationData, GetOperationDataConfigurationResponse.OperationData>()
                   .ForMember(x => x.ScenarioId, y => y.MapFrom(z => z.Scenario.Id))
                   .ForMember(x => x.KeyOperationConfigId, y => y.MapFrom(z => z.KeyOperationConfig.Id));
+            //Mapper.CreateMap<UpdateOperationDataRequest, KeyOperationData>()
+            //      .ForMember(x => x.PeriodeType, y => y.MapFrom(z => (PeriodeType)Enum.Parse(typeof (PeriodeType), z.PeriodeType)));
             Mapper.CreateMap<UpdateOperationDataRequest, KeyOperationData>()
-                  .ForMember(x => x.PeriodeType, y => y.MapFrom(z => (PeriodeType)Enum.Parse(typeof (PeriodeType), z.PeriodeType)));
+                  .ForMember(x => x.PeriodeType, y => y.MapFrom(z => z.PeriodeType))
+                  .ForMember(x => x.Kpi, y => y.Ignore())
+                  .ForMember(x => x.Scenario, y => y.Ignore())
+                  .ForMember(x => x.KeyOperationConfig, y => y.Ignore());
         }
     }
 }

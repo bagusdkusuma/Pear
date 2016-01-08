@@ -2596,14 +2596,11 @@ Number.prototype.format = function (n, x) {
         tableScrollContainer.css('overflow-y', 'auto');
 
         var panel = $('<div>');
-        panel.attr('id', 'table');
         panel.addClass('panel panel-default tabular-panel');
 
         var $table = $('<table>');
-        $table.attr('id', 'table');
         $table.addClass('tabular');
         $table.addClass('table-bordered');
-        var tHead = $('<thead>');
         var rowHeader = $('<tr>');
         rowHeader.append($('<th>').html('KPI Name'));
         //rowHeader.append($('<th>').html('Periode Type'));
@@ -2618,8 +2615,7 @@ Number.prototype.format = function (n, x) {
             rowHeader.append($('<th>').html('Remark'));
         }
         //rowHeader.append($('<th>').html('Measurement'));
-        tHead.append(rowHeader);
-        $table.append(tHead);
+        $table.append(rowHeader);
         for (var i in data.Tabular.Rows) {
             var dataRow = data.Tabular.Rows[i];
             var row = $('<tr>');
@@ -2649,9 +2645,7 @@ Number.prototype.format = function (n, x) {
 
         //wrapper.append($table);
         container.html(wrapper);
-        //$('.perfect-scrollbar').perfectScrollbar();
-        //$('.fixed_headers').perfectScrollbar();
-        $('#table tbody').perfectScrollbar();
+        $('.perfect-scrollbar').perfectScrollbar();
     };
 
     //trafficlight
@@ -4250,6 +4244,16 @@ Number.prototype.format = function (n, x) {
                     if (val == 'MIN' || val == 'MINDATE') {
                         var exclude = excludeValue.clone(true);
                         paramsHolder.append(exclude.show());
+                    }
+                    if (val == 'PAYBACK') {
+                        var operationStart = assumptionParam.clone(true);
+                        Pear.OutputConfig._autocomplete(operationStart.find('select'));
+                        operationStart.find('label').html('End');
+                        paramsHolder.append(end.show());
+                        var commercialDate = assumptionParam.clone(true);
+                        Pear.OutputConfig._autocomplete(end.find('select'));
+                        end.find('label').html('End');
+                        paramsHolder.append(end.show());
                     }
                     var kpi = kpiParam.clone(true);
                     Pear.OutputConfig._autocomplete(kpi.find('select'));

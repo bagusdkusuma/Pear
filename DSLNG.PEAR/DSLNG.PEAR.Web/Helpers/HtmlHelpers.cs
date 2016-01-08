@@ -6,7 +6,8 @@ namespace DSLNG.PEAR.Web.Helpers
     public static class HtmlHelpers
     {
         public static MvcHtmlString LimitString(this HtmlHelper htmlHelper, string source, int length) {
-            if (source.Length > length) {
+            if (!string.IsNullOrEmpty(source) && source.Length > length)
+            {
                 var result = source.Substring(0, length);
                 result += "... <a class=\"see-more\" href=\"#\" data-toggle=\"modal\" data-target=\"#modalDialog\">See More</a>";
                 result += "<div style=\"display:none;color:#fff\" class=\"full-string\">";

@@ -18,6 +18,8 @@ namespace DSLNG.PEAR.Web.ViewModels.HighlightOrder
         public int? Order { get; set; }
         public int GroupId { get; set; }
         public IList<SelectListItem> Groups { get; set; }
+        public List<int> RoleGroupIds { get; set; }
+        public IList<SelectListItem> RoleGroupOptions { get; set; }
         public bool? IsActive { get; set; }
     }
 }

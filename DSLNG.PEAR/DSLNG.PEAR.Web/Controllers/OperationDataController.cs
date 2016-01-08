@@ -13,10 +13,17 @@ using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Web.Grid;
 using DSLNG.PEAR.Common.Contants;
+using DevExpress.Spreadsheet;
+using System.IO;
+using DSLNG.PEAR.Web.ViewModels.Config;
+using DSLNG.PEAR.Web.Extensions;
+using DSLNG.PEAR.Services.Responses;
+using DevExpress.Web;
+using System.Web.UI;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
-    public class OperationDataController : Controller
+    public class OperationDataController : BaseController
     {
         private readonly IOperationDataService _operationDataService;
         private readonly IDropdownService _dropdownService;
@@ -113,7 +120,8 @@ namespace DSLNG.PEAR.Web.Controllers
                 sEcho = gridParams.Echo + 1,
                 iTotalDisplayRecords = operational.TotalRecords,
                 iTotalRecords = operational.OperationalDatas.Count,
-                aaData = operational.OperationalDatas.Select(x => new {
+                aaData = operational.OperationalDatas.Select(x => new
+                {
                     x.Id,
                     x.KeyOperation,
                     x.Kpi,
@@ -121,7 +129,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     x.PeriodeType,
                     x.Remark,
                     x.Scenario,
-                    x.Value               
+                    x.Value
                 })
             };
 
@@ -131,7 +139,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Detail(int id)
         {
             var response =
-                _operationDataService.GetOperationalDataDetail(new GetOperationalDataDetailRequest() {Id = id});
+                _operationDataService.GetOperationalDataDetail(new GetOperationalDataDetailRequest() { Id = id });
             var viewModel = response.MapTo<OperationDataDetailViewModel>();
             viewModel.ScenarioId = id;
             return View(viewModel);
@@ -169,7 +177,7 @@ namespace DSLNG.PEAR.Web.Controllers
             return PartialView("DetailPartial/_" + viewModel.PeriodeType, viewModel);
         }
 
-        private OperationDataConfigurationViewModel ConfigurationViewModel(OperationDataParamConfigurationViewModel paramViewModel,  bool? isIncludeGroup)
+        private OperationDataConfigurationViewModel ConfigurationViewModel(OperationDataParamConfigurationViewModel paramViewModel, bool? isIncludeGroup)
         {
             PeriodeType pType = string.IsNullOrEmpty(paramViewModel.PeriodeType)
                                     ? PeriodeType.Yearly
@@ -183,7 +191,236 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.Years = _dropdownService.GetYearsForOperationData().MapTo<SelectListItem>();
             viewModel.PeriodeType = pType.ToString();
             viewModel.Year = request.Year;
+            viewModel.ConfigType = "Economic";
             return viewModel;
+        }
+
+
+        public ActionResult Upload(string configType, int scenarioId)
+        {
+            OperationDataDetailViewModel model = new OperationDataDetailViewModel();
+            model.ConfigType = configType;
+            model.ScenarioId = scenarioId;
+            return PartialView("_UploadOperationData", model);
+        }
+
+
+        public ActionResult UploadControlCallbackAction(string configType, int scenarioId)
+        {
+
+            string[] extension = { ".xls", ".xlsx", ".csv", };
+            var sourcePath = string.Format("{0}{1}/", TemplateDirectory, configType);
+            var targetPath = string.Format("{0}{1}/", UploadDirectory, configType);
+            ExcelUploadHelper.setPath(sourcePath, targetPath);
+            ExcelUploadHelper.setValidationSettings(extension, 20971520);
+            UploadControlExtension.GetUploadedFiles("uc", ExcelUploadHelper.ValidationSettings, ExcelUploadHelper.FileUploadComplete);
+            return null;
+        }
+
+        public class ReadExcelFileModel
+        {
+            public bool isSuccess { get; set; }
+            public string Message { get; set; }
+            public int Success { get; set; }
+            public int Skipped { get; set; }
+            public int Rejected { get; set; }
+
+        }
+
+        public JsonResult ProceedFile(string filename, int scenarioId, string configType)
+        {
+            var file = string.Format("{0}{1}/{2}", UploadDirectory, configType, filename);
+            var response = this._ReadExcelFile(file, scenarioId, configType);
+            return Json(new { isSuccess = response.IsSuccess, Message = response.Message });
+        }
+        private BaseResponse _ReadExcelFile(string filename, int scenarioId, string configType)
+        {
+            var response = new BaseResponse();
+            string periodType = string.Empty;
+            PeriodeType pType = PeriodeType.Yearly;
+            int tahun = DateTime.Now.Year, bulan = DateTime.Now.Month;
+            List<OperationDataConfigurationViewModel.Item> list_data = new List<OperationDataConfigurationViewModel.Item>();
+            if (filename != Path.GetFullPath(filename))
+            {
+                filename = Server.MapPath(filename);
+            }
+            /*
+             * cek file exist and return immediatelly if not exist
+             */
+            if (!System.IO.File.Exists(filename))
+            {
+                response.IsSuccess = false;
+                response.Message = "File Not Found";
+                return response;
+            }
+            Workbook workbook = new Workbook();
+            using (FileStream stream = new FileStream(filename, FileMode.Open))
+            {
+                workbook.LoadDocument(stream, DevExpress.Spreadsheet.DocumentFormat.OpenXml);
+                #region foreach
+                foreach (var worksheet in workbook.Worksheets)
+                {
+                    string[] name = worksheet.Name.Split('_');
+                    if (name[0] == "Daily" || name[0] == "Monthly" || name[0] == "Yearly")
+                    {
+                        periodType = name[0];
+                        pType = string.IsNullOrEmpty(periodType)
+                            ? PeriodeType.Yearly
+                            : (PeriodeType)Enum.Parse(typeof(PeriodeType), periodType);
+                        string period = name[name.Count() - 1];
+                        string[] periodes = null;
+                        //validate and switch value by periodType
+                        if (periodType != period && !string.IsNullOrEmpty(period))
+                        {
+                            switch (periodType)
+                            {
+                                case "Daily":
+                                    periodes = period.Split('-');
+                                    tahun = int.Parse(periodes[0]);
+                                    bulan = int.Parse(periodes[periodes.Count() - 1]);
+                                    break;
+                                case "Monthly":
+                                    tahun = int.Parse(period);
+                                    break;
+                                case "Yearly":
+                                default:
+                                    break;
+                            }
+                        }
+
+                        workbook.Worksheets.ActiveWorksheet = worksheet;
+                        //get row
+
+                        Range range = worksheet.GetUsedRange();
+                        int rows = range.RowCount;
+                        int column = range.ColumnCount - 2;
+                        int Kpi_Id = 0;
+                        DateTime periodData = new DateTime();
+                        double? nilai = null;
+                        List<int> list_Kpi = new List<int>();
+
+                        for (int i = 1; i < rows; i++)
+                        {
+                            for (int j = 0; j < column; j++)
+                            {
+                                if (j == 0)
+                                {
+                                    if (worksheet.Cells[i, j].Value.Type == CellValueType.Numeric)
+                                    {
+                                        int Kpis_Id = int.Parse(worksheet.Cells[i, j].Value.ToString());
+                                        list_Kpi.Add(Kpis_Id);
+                                    }
+                                }
+                            }
+                        }
+                        var OperationsId = _operationDataService.GetOperationId(list_Kpi);
+
+                        //get rows
+                        for (int i = 1; i < rows; i++)
+                        {
+                            for (int j = 0; j < column; j++)
+                            {
+                                if (j == 0)
+                                {
+                                    if (worksheet.Cells[i, j].Value.Type == CellValueType.Numeric)
+                                    {
+                                        Kpi_Id = int.Parse(worksheet.Cells[i, j].Value.ToString());                      
+
+                                    }
+
+                                }
+                                else if (j > 1)
+                                {
+                                    var operationId = OperationsId.OperationDatas.Where(x => x.Kpi == Kpi_Id).Select(x => x.KeyOperationConfig).FirstOrDefault();
+
+                                    if (worksheet.Cells[0, j].Value.Type == CellValueType.DateTime)
+                                    {
+                                        periodData = DateTime.Parse(worksheet.Cells[0, j].Value.ToString());
+                                    }
+                                    if (worksheet.Cells[i, j].Value.Type == CellValueType.Numeric)
+                                    {
+                                        nilai = double.Parse(worksheet.Cells[i, j].Value.ToString());
+                                    }
+                                    else
+                                    {
+                                        nilai = null;
+                                    }
+
+
+
+                                    if (nilai != null)
+                                    {
+                                        // try to cacth and update
+                                        var data = new OperationDataConfigurationViewModel.Item() { Value = nilai, KpiId = Kpi_Id, Periode = periodData, PeriodeType = pType, ScenarioId = scenarioId, OperationId = operationId };
+                                        list_data.Add(data);
+                                        //switch (configType)
+                                        //{
+                                        //    case "KpiTarget":
+                                        //        response = this._UpdateKpiTarget(data);
+                                        //        break;
+                                        //    case "KpiAchievement":
+                                        //        response = this._UpdateKpiAchievement(data);
+                                        //        break;
+                                        //    case "Economic":
+                                        //        response = this._UpdateEconomic(data);
+                                        //        break;
+                                        //    default:
+                                        //        response.IsSuccess = false;
+                                        //        response.Message = "No Table Selected";
+                                        //        break;
+                                        //}
+                                    }
+
+
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        response.IsSuccess = false;
+                        response.Message = "File Not Valid";
+                        break;
+                    }
+                    switch (configType)
+                    {
+                        //case "KpiTarget":
+                        //    response = this._UpdateKpiTarget(list_data);
+                        //    break;
+                        //case "KpiAchievement":
+                        //    response = this._UpdateKpiAchievement(list_data, pType.ToString(), tahun, bulan);
+                        //    break;
+                        case "Economic":
+                            response = this._UpdateEconomic(list_data);
+                            break;
+                        default:
+                            response.IsSuccess = false;
+                            response.Message = "No Table Selected";
+                            break;
+                    }
+                }
+                #endregion
+            }
+
+            //here to read excel fileController
+            return response;
+        }
+
+
+        private BaseResponse _UpdateEconomic(List<OperationDataConfigurationViewModel.Item> datas)
+        {
+            var response = new BaseResponse();
+            if (datas != null)
+            {
+                var batch = new BatchUpdateOperationDataRequest();
+                foreach (var data in datas)
+                {
+                    var prepare = new UpdateOperationDataRequest() { Id = data.Id, KpiId = data.KpiId, Periode = data.Periode, Value = data.Value, PeriodeType = data.PeriodeType, Remark = data.Remark, KeyOperationConfigId = data.OperationId, ScenarioId = data.ScenarioId };// data.MapTo<UpdateKpiAchievementItemRequest>();
+                    batch.BatchUpdateOperationDataItemRequest.Add(prepare);
+                }
+                response = _operationDataService.BatchUpdateOperationDatas(batch);
+            }
+            return response;
         }
     }
 }

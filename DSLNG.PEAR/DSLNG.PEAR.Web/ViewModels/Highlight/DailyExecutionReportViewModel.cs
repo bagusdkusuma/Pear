@@ -40,12 +40,15 @@ namespace DSLNG.PEAR.Web.ViewModels.Highlight
             public string SalesType { get; set; }
         }
         public class WeatherViewModel {
+            public int Id { get; set; }
             public string Value { get; set; }
             public string Text { get; set; }
             public string Temperature { get; set; }
         }
         public class AlertViewModel {
+            public int Id { get; set; }
             public string Message { get; set; }
+            public int TypeId { get; set; }
         }
         public class HighlightGroupViewModel {
             public HighlightGroupViewModel() {
@@ -63,6 +66,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Highlight
             public string Text { get; set; }
             public string Value { get; set; }
             public int Order { get; set; }
+            public int[] RoleGroupIds { get; set; }
         }
         public class HighlightViewModel {
             public int Id { get; set; }
@@ -89,5 +93,10 @@ namespace DSLNG.PEAR.Web.ViewModels.Highlight
                 }
             }
         }
+        public int CurrentUserRoleId { get; set; }
+
+        public bool IsAuthorizedToManageWeather { get; set; }
+        public bool IsAuthorizedToManageAlert { get; set; }
+        public bool IsAuthorizedToManageVesselSchedule { get; set; }
     }
 }

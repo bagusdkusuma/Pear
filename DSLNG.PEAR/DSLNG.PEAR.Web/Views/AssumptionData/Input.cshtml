@@ -11,6 +11,14 @@
         <div class="col-sm-12">
             <h3>@category.Name</h3>
         </div>
+        <div>
+            <table class="Forecast">
+                <tr>
+                    <th style="width: 535px; text-align:right;"><h4><label>Forecast</label></h4></th>
+                    <th style="width: 405px; text-align:right;"><h4><label>Current Overview</label></h4></th>
+                </tr>
+            </table>
+        </div>
     </div>
         foreach (var assumption in category.Assumptions.Where(x => x.IsActive).OrderBy(x => x.Order).ToList())
         {
@@ -26,11 +34,11 @@
                 @if (realValue != null)
                 {
                     @Html.Hidden("Id", realValue.Id)
-                    <label>Forecast</label><input type="text" class="control-form assumption-input" name="ForecastValue" value="@realValue.ForecastValue" />
+                    @*<label>Forecast</label>*@<input type="text" class="control-form assumption-input" name="ForecastValue" value="@realValue.ForecastValue" />
                 }
                 else
                 {
-                    <label>Forecast</label><input type="text" class="control-form assumption-input" name="ForecastValue" />
+                    @*<label>Forecast</label>*@<input type="text" class="control-form assumption-input" name="ForecastValue" />
                 }
                 <label>@assumption.Measurement</label>
             </form>
@@ -42,11 +50,11 @@
                 @if (realValue != null)
                 {
                     @Html.Hidden("Id", realValue.Id)
-                    <label>Actual</label><input type="text" class="control-form assumption-input" name="ActualValue" value="@realValue.ActualValue" />
+                    @*<label>Actual</label>*@<input type="text" class="control-form assumption-input" name="ActualValue" value="@realValue.ActualValue" />
                 }
                 else
                 {
-                    <label>Actual</label><input type="text" class="control-form assumption-input" name="ActualValue" />
+                    @*<label>Actual</label>*@<input type="text" class="control-form assumption-input" name="ActualValue" />
                 }
                 <label>@assumption.Measurement</label>
             </form>

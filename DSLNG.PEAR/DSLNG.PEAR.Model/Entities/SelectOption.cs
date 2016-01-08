@@ -13,6 +13,7 @@ namespace DSLNG.PEAR.Data.Entities
     {
         public SelectOption() {
             IsActive = true;
+            RoleGroups = new List<RoleGroup>();
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -22,6 +23,7 @@ namespace DSLNG.PEAR.Data.Entities
         public Select Select { get; set; }
         public HighlightGroup Group { get; set; }
         public int Order { get; set; }
+        public ICollection<RoleGroup> RoleGroups { get; set; }
         public bool IsActive { get; set; }
     }
 }

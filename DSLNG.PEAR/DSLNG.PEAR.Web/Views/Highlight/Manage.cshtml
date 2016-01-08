@@ -1,7 +1,7 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Highlight.HighlightViewModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Manage";
 }
 
 <div class="highlight-save">
@@ -10,12 +10,13 @@
         @Html.AntiForgeryToken()
         <div class="col-md-12">
             <div class="title">Highlight</div>
-            <div class="description_year">New</div>
+            <div class="description_year">Manage</div>
             <div>@Html.ValidationSummary(true)</div>
-            
+           
+            @Html.HiddenFor(x => x.Id)
         </div>
         <div class="col-md-12">
-            @Html.Partial("_MessageResponse")
+             @Html.Partial("_MessageResponse")
             <div class="form-inline whitebox">
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.PeriodeType)
@@ -40,30 +41,47 @@
                 <div class="message-holder">
                     <div class="form-group form-list message-text-area">
                         @Html.LabelFor(model => model.Message)
-                        @Html.TextAreaFor(model => model.Message, 5, 100, new { @class = "form-control highlight-message"})
+                        @Html.TextAreaFor(model => model.Message, 5, 100, new { @class = "form-control highlight-message" })
                         @Html.ValidationMessageFor(model => model.Message)
                     </div>
-                  @*  <div class="form-group form-list alert-condition-options">
-                         @Html.LabelFor(model => model.Message)
-                        @Html.DropDownListFor(model => model.Message, Model.AlertConditions ,new { @class = "form-control"})
+                    <div class="form-group form-list alert-condition-options">
+                        @Html.LabelFor(model => model.Message)
+                        @Html.DropDownListFor(model => model.Message, Model.AlertConditions, new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.Message)
-                    </div>*@
+                    </div>
                 </div>
                 <div class="form-group form-list" style="display:none" >
                     @Html.LabelFor(model => model.IsActive)
-                    @Html.CheckBoxFor(model => model.IsActive, new { @class = "form-control" })
+                    @Html.CheckBoxFor(model => model.IsActive, new { @class = "form-control"})
                     @Html.ValidationMessageFor(model => model.IsActive)
                 </div>
             </div>
         </div>
         <div class="col-md-12 artifact-designer-btns">
-            <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
+            <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span> Save</button>
+            <button type="button"  class="btn btn-primary btn-lg add-new-highlight"><span class="fa fa-file-o"></span> Add As New</button>
             <a onclick="location.reload();" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>
             <a href="@Url.Action("Display")" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
         </div>
     }
-</>
+</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.add-new-highlight').click(function (e) {
+                e.preventDefault();
+                var $form = $(this).closest('form');
+                var asNew = $('<input />');
+                asNew.attr('type', 'checkbox');
+                asNew.attr('name', 'AsNew');
+                asNew.val('True');
+                asNew.css({ display: 'none' });
+                asNew.prop('checked', true);
+                $form.prepend(asNew);
+                $form.submit();
+            });
+        });
+    </script>
 }

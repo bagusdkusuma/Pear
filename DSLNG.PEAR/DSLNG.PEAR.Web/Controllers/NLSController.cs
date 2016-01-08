@@ -12,17 +12,20 @@ using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
 using System.Data.SqlClient;
 using DSLNG.PEAR.Web.Grid;
+using DSLNG.PEAR.Services.Requests.HighlightOrder;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
-    public class NLSController : Controller
+    public class NLSController : BaseController
     {
         private readonly INLSService _nlsService;
         private readonly IVesselScheduleService _vesselScheduleService;
-        public NLSController(INLSService nlsService, IVesselScheduleService vesselScheduleService)
+        private readonly IHighlightOrderService _highlightOrderService;
+        public NLSController(INLSService nlsService, IVesselScheduleService vesselScheduleService, IHighlightOrderService highlightOrderService)
         {
             _nlsService = nlsService;
             _vesselScheduleService = vesselScheduleService;
+            _highlightOrderService = highlightOrderService;
         }
 
         public ActionResult Index()
@@ -147,6 +150,42 @@ namespace DSLNG.PEAR.Web.Controllers
             return View("Edit", viewModel);
         }
 
+        //
+        // GET: /NLS/Edit/5
+        public ActionResult Manage()
+        {
+            var viewModel = new NLSViewModel();
+            var id = string.IsNullOrEmpty(Request.QueryString["nlsId"]) ? 0 : int.Parse(Request.QueryString["nlsId"]);
+            if (id != 0)
+            {
+                var nls = _nlsService.GetNLS(new GetNLSRequest { Id = id });
+                viewModel = nls.MapTo<NLSViewModel>();
+            }
+            else {
+                var vesselScheduleId = int.Parse(Request.QueryString["vsId"]);
+                viewModel.VesselScheduleId = vesselScheduleId;
+                viewModel.VesselName = _vesselScheduleService.GetVesselSchedule(new GetVesselScheduleRequest { Id = vesselScheduleId }).VesselName;
+            }
+            return View(viewModel);
+        }
+
+        //
+        // POST: /NLS/Edit/5
+        [HttpPost]
+        public ActionResult Manage(NLSViewModel viewModel)
+        {
+            var req = viewModel.MapTo<SaveNLSRequest>();
+            var response = _nlsService.SaveNLS(req);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            if (response.IsSuccess)
+            {
+                return RedirectToAction("Display", "Highlight");
+            }
+            return View("Manage", viewModel);
+        }
+
+
         [HttpPost]
         public ActionResult Delete(int id)
         {
@@ -165,6 +204,9 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult InVesselSchedule(int id)
         {
             var nlsList = _nlsService.GetNLSList(new GetNLSListRequest { VesselScheduleId = id });
+            var staticHighlightResp = _highlightOrderService.GetStaticHighlights(new GetStaticHighlightOrdersRequest { Take = -1 });
+            ViewBag.IsAllowedToManage = staticHighlightResp.HighlightOrders.First(x => x.Name == "Vessel Schedule").RoleGroupIds.Contains(UserProfile().RoleId);
+            ViewBag.VesselScheduleId = id;
             return PartialView("_RemarkList", nlsList.NLSList.MapTo<NLSViewModel>());
         }
 

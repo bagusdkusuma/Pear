@@ -1,6 +1,6 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.OutputConfig.ScenarioResultViewModel
 @{
-    ViewBag.Title = "Key Otput Result";
+    ViewBag.Title = "Key Output Result";
 }
 
 <h2>Key Output For : @Model.ScenarioName</h2>
@@ -17,6 +17,14 @@
         <div class="col-sm-12">
             <h3>@category.Name</h3>
         </div>
+        <div>
+            <table class="Forecast">
+                <tr>
+                    <th style="width: 535px; text-align:right;"><h4><label>Forecast</label></h4></th>
+                    <th style="width: 405px; text-align:right;"><h4><label>Current Overview</label></h4></th>
+                </tr>
+            </table>
+        </div>
     </div>
         foreach (var output in category.KeyOutputs)
         {
@@ -26,10 +34,10 @@
             <label>@output.Name</label>
         </div>
         <div class="col-sm-4">
-           <label>Forecast</label><input type="text" class="control-form assumption-input" name="ForecastValue" value="@output.Forecast" /> <label>@output.Measurement</label>
+           @*<label>Forecast</label>*@<input type="text" class="control-form assumption-input" name="ForecastValue" value="@output.Forecast" /> <label>@output.Measurement</label>
         </div>
         <div class="col-sm-4">
-            <label>Actual</label><input type="text" class="control-form assumption-input" name="ForecastValue" value="@output.Actual" /> <label>@output.Measurement</label>
+            @*<label>Actual</label>*@<input type="text" class="control-form assumption-input" name="ForecastValue" value="@output.Actual" /> <label>@output.Measurement</label>
         </div>
         <div class="col-sm-4">
         </div>

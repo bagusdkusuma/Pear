@@ -524,6 +524,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetHighlightsResponse.HighlightResponse, DailyExecutionReportViewModel.HighlightViewModel>();
             Mapper.CreateMap<GetHighlightResponse, DailyExecutionReportViewModel.AlertViewModel>();
             Mapper.CreateMap<HighlightOrderViewModel, SaveHighlightOrderRequest>();
+            Mapper.CreateMap<HighlightOrderViewModel, SaveStaticHighlightOrderRequest>();
             Mapper.CreateMap<AssumptionCategoryViewModel, SaveAssumptionCategoryRequest>();
             Mapper.CreateMap<GetAssumptionCategoryResponse, AssumptionCategoryViewModel>();
 

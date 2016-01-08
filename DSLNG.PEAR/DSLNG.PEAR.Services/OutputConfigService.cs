@@ -329,16 +329,53 @@ namespace DSLNG.PEAR.Services
         {
             if (!string.IsNullOrEmpty(start) && !string.IsNullOrEmpty(end))
             {
-                var fullFormatStart = start.Length == 4 ? "01-01-" + start : "01-" + start;
-                var fullFormatEnd = end.Length == 4 ? "01-01-" + end : "01-" + end;
-                var startValid = DateTime.TryParseExact(fullFormatStart, "MM-dd-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out startDate);
-                var endValid = DateTime.TryParseExact(fullFormatEnd, "MM-dd-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out endDate);
+                var startValid = false;
+                if (start.Length == 4)
+                {
+                    startValid = DateTime.TryParseExact("01-01-" + start, "MM-dd-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out startDate);
+                }
+                else if (start.Length > 5 && start.Length <= 7)
+                {
+                    if (start.Length == 6)
+                    {
+                        startValid = DateTime.TryParseExact("01-0" + start, "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out startDate);
+                    }
+                    else
+                    {
+                        startValid = DateTime.TryParseExact("01-" + start, "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out startDate);
+                    }
+                }
+                else
+                {
+                    startValid = DateTime.TryParseExact(start, "d-M-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out startDate);
+                }
+                var endValid = false;
+                if (end.Length == 4)
+                {
+                    endValid = DateTime.TryParseExact("01-01-" + end, "MM-dd-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out endDate);
+                }
+                else if (end.Length > 5 && end.Length <= 7)
+                {
+                    if (end.Length == 6)
+                    {
+                        endValid = DateTime.TryParseExact("01-0" + end, "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out endDate);
+                    }
+                    else
+                    {
+                        endValid = DateTime.TryParseExact("01-" + end, "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out endDate);
+                    }
+                }
+                else
+                {
+                    endValid = DateTime.TryParseExact(end, "d-M-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out endDate);
+                }
                 return startValid && endValid;
             }
             startDate = DateTime.Now;
             endDate = DateTime.Now;
             return false;
         }
+
 
         private OutputResult Sum(KeyOutputConfiguration keyOutput, int scenarioId)
         {

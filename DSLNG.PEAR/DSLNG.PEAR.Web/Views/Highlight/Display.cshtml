@@ -39,14 +39,56 @@
                         </div>
                         <div class="row" style="margin-bottom: 40px">
                             <div class="col-md-4">
-                                <h4>Weather: <span class="weather-value">@Model.Weather.Text</span> <span class="display-image" style="width: 60px; height: 60px; display: inline-block; padding: 2.5px">
+                                <h4>
+                                    @if(Model.IsAuthorizedToManageWeather){
+                                    if (string.IsNullOrEmpty(Model.Weather.Text))
+                                    {
+                                        <a href="@Url.Action("Manage","Weather",new {PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay})">Weather :</a>
+                                    }
+                                    else { 
+                                         <a href="@Url.Action("Manage","Weather",new {WeatherId=Model.Weather.Id})">Weather :</a>
+                                    }
+                                    }else{
+                                        <text>Weather :</text>
+                                    }
+                                     <span class="weather-value">@Model.Weather.Text</span> <span class="display-image" style="width: 60px; height: 60px; display: inline-block; padding: 2.5px">
                                     <img src="~/Content/img/select/@Model.Weather.Value"  style="width:100%;height:100%;display:inline-block"/></span></h4>
                             </div>
                             <div class="col-md-4">
-                                <h4 style="margin-top:22px">Outside Temperature: <span class="weather-value">@Model.Weather.Temperature</span></h4>
+                                <h4 style="margin-top: 22px">
+
+                                      @if (Model.IsAuthorizedToManageWeather)
+                                      {
+                                          if (string.IsNullOrEmpty(Model.Weather.Temperature))
+                                          {
+                                        <a href="@Url.Action("Manage", "Weather", new { PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay })">Outside Temperature :</a>
+                                          }
+                                          else
+                                          { 
+                                         <a href="@Url.Action("Manage", "Weather", new { WeatherId = Model.Weather.Id })">Outside Temperature:</a>
+                                          }
+                                      }else{
+                                      <text>Outside Temperature :</text>
+                                      }
+                                     <span class="weather-value">@Model.Weather.Temperature</span></h4>
                             </div>
                             <div class="col-md-4">
-                                <h4 style="margin-top:19px">Alert Condition: <span class="display-image" style="max-width:180px; height: 25px; display: inline-block; padding: 2.5px">
+                                <h4 style="margin-top: 19px">
+                                    @if (Model.IsAuthorizedToManageAlert)
+                                    {
+                                        if (string.IsNullOrEmpty(Model.Alert.Message))
+                                        {
+                                        <a href="@Url.Action("Manage", "Highlight", new { TypeId = Model.Alert.TypeId, PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay })">Alert Condition:</a>
+                                        }
+                                        else
+                                        { 
+                                         <a href="@Url.Action("Manage", "Highlight", new { HighlightId = Model.Alert.Id })">Alert Condition:</a>
+                                        }
+                                    }
+                                    else{
+                                         <text>Alert Condition :</text>
+                                    }
+                                     <span class="display-image" style="max-width: 180px; height: 25px; display: inline-block; padding: 2.5px">
                                     <img src="~/Content/img/select/@Model.Alert.Message"  style="width:100%;height:100%;display:inline-block"/></span></h4>
                             </div>
                         </div>
@@ -66,13 +108,21 @@
                                         @foreach (var nls in Model.NLSList)
                                         { 
                                             <tr>
-                                                <td>@nls.VesselType - @nls.SalesType - @nls.Type</td>
+                                                <td>
+                                                     @if (Model.IsAuthorizedToManageVesselSchedule)
+                                    {
+                                                    <a href="/VesselSchedule/Manage/@nls.Id">@nls.VesselType - @nls.SalesType - @nls.Type</a>
+                                                     }else{
+                                                     <text>@nls.VesselType - @nls.SalesType - @nls.Type</text>
+                                                     }
+
+                                                </td>
                                                 <td>@nls.Vessel (@nls.Capacity @nls.Measurement)</td>
                                                 <td>@nls.Buyer</td>
                                                 <td>@nls.ETA.ToString("dd-MM-yyyy")</td>
                                                 <td>@nls.ETD.ToString("dd-MM-yyyy")</td>
                                                 <td>@nls.Cargo</td>
-                                                <td>@nls.RemarkDate.ToString("dd-MM-yyyy");@nls.Remark | @Html.ActionLink("See All", "InVesselSchedule", "NLS", new { id = nls.Id }, new { @class = "nls-see-all", data_toggle = "modal", data_target = "#modalDialog" })</td>
+                                                <td>@nls.RemarkDate.ToString("dd-MM-yyyy");@nls.Remark | @Html.ActionLink("See All", "InVesselSchedule", "NLS", new { id = nls.Id }, new { @class = "nls-see-all", data_permitted=@Model.IsAuthorizedToManageVesselSchedule, data_toggle = "modal", data_target = "#modalDialog" })</td>
                                             </tr>
                                         }
                                     </table>
@@ -82,7 +132,7 @@
                     }
                     else if (Model.PeriodeType == DSLNG.PEAR.Data.Enums.PeriodeType.Monthly)
                     {
-                         <div class="row" style="margin-bottom: 40px">
+                        <div class="row" style="margin-bottom: 40px">
                             <div class="col-sm-12">
                                 <form class="form-inline">
                                     <div class="form-group form-list">
@@ -92,7 +142,9 @@
                                 </form>
                             </div>
                         </div>
-                    }else{
+                    }
+                    else
+                    {
                         <div class="row" style="margin-bottom: 40px">
                             <div class="col-sm-12">
                                 <form class="form-inline">
@@ -125,35 +177,50 @@
                                             <tr>
                                                 <td @colspan>
                                                     @if (Model.HighlightGroupTemplates[i].HighlightTypes.Count > j)
-                                                    { 
-                                                        <h4 class="highlight-title" style="float: none; margin-top: 10px">@Model.HighlightGroupTemplates[i].HighlightTypes[j].Text</h4>
+                                                    {
+
                                                         if (currentGroup != null)
                                                         {
                                                             var currentHighlight = currentGroup.Highlights.FirstOrDefault(x => x.TypeId == Model.HighlightGroupTemplates[i].HighlightTypes[j].Id);
                                                             if (currentHighlight != null)
                                                             {
+                                                                if (Model.HighlightGroupTemplates[i].HighlightTypes[j].RoleGroupIds.Contains(Model.CurrentUserRoleId))
+                                                                {
+                                                        <h4 class="highlight-title" style="float: none; margin-top: 10px"><a class="manage-highlight" href="@Url.Action("Manage", "Highlight", new { HighlightId = currentHighlight.Id })">@Model.HighlightGroupTemplates[i].HighlightTypes[j].Text</a></h4>
+                                                                }
+                                                                else
+                                                                {
+                                                        <h4 class="highlight-title" style="float: none; margin-top: 10px">@Model.HighlightGroupTemplates[i].HighlightTypes[j].Text</h4>
+                                                                }
                                                         <p>@Html.LimitString(currentHighlight.Message, 350)</p>
-                                                            <a class="manage-highlight" href="@Url.Action("Edit", "Highlight", new{Id = currentHighlight.Id})">
-                                                                <span class="fa fa-pencil-square-o"></span>
-                                                                Manage
-                                                            </a>
+                                                           
                                                             }
                                                             else
                                                             {
+                                                                if (Model.HighlightGroupTemplates[i].HighlightTypes[j].RoleGroupIds.Contains(Model.CurrentUserRoleId))
+                                                                {
+                                                        <h4 class="highlight-title" style="float: none; margin-top: 10px"><a class="manage-highlight"  href="@Url.Action("Manage", "Highlight", new { TypeId = Model.HighlightGroupTemplates[i].HighlightTypes[j].Id, PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay })">@Model.HighlightGroupTemplates[i].HighlightTypes[j].Text</a></h4>
+                                                                }
+                                                                else
+                                                                {
+                                                        <h4 class="highlight-title" style="float: none; margin-top: 10px">@Model.HighlightGroupTemplates[i].HighlightTypes[j].Text</h4>
+                                                                }
                                                         <p>...</p>
-                                                        <a class="manage-highlight" href="@Url.Action("Create", "Highlight", new{TypeId = Model.HighlightGroupTemplates[i].HighlightTypes[j].Id, PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay })">
-                                                                <span class="fa fa-pencil-square-o"></span>
-                                                                Manage
-                                                            </a>
+                                                        
                                                             }
                                                         }
                                                         else
                                                         {
+                                                            if (Model.HighlightGroupTemplates[i].HighlightTypes[j].RoleGroupIds.Contains(Model.CurrentUserRoleId))
+                                                            {
+                                                        <h4 class="highlight-title" style="float: none; margin-top: 10px"><a class="manage-highlight"   href="@Url.Action("Manage", "Highlight", new { TypeId = Model.HighlightGroupTemplates[i].HighlightTypes[j].Id, PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay })">@Model.HighlightGroupTemplates[i].HighlightTypes[j].Text</a></h4>
+                                                            }
+                                                            else
+                                                            {
+                                                        <h4 class="highlight-title" style="float: none; margin-top: 10px">@Model.HighlightGroupTemplates[i].HighlightTypes[j].Text</h4>
+                                                            }
                                                         <p>...</p>
-                                                        <a class="manage-highlight" href="@Url.Action("Create", "Highlight", new{TypeId =  Model.HighlightGroupTemplates[i].HighlightTypes[j].Id, PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay})">
-                                                                <span class="fa fa-pencil-square-o"></span>
-                                                                Manage
-                                                            </a>
+                                                        
                                                         }
 
                                                     }
@@ -161,36 +228,49 @@
 
                                                 @if (Model.HighlightGroupTemplates[i].HighlightTypes.Count > j + 1)
                                                 {
-                                   
                                                     <td>
-                                                        <h4 class="highlight-title" style="float: none; margin-top: 10px">@Model.HighlightGroupTemplates[i].HighlightTypes[j + 1].Text</h4>
                                                         @if (currentGroup != null)
                                                         {
                                                             var nextHighlight = currentGroup.Highlights.FirstOrDefault(x => x.TypeId == Model.HighlightGroupTemplates[i].HighlightTypes[j + 1].Id);
                                                             if (nextHighlight != null)
                                                             {
+                                                                if (Model.HighlightGroupTemplates[i].HighlightTypes[j + 1].RoleGroupIds.Contains(Model.CurrentUserRoleId))
+                                                                {
+                                                            <h4 class="highlight-title" style="float: none; margin-top: 10px"><a class="manage-highlight" href="@Url.Action("Manage", "Highlight", new { HighlightId = nextHighlight.Id })">@Model.HighlightGroupTemplates[i].HighlightTypes[j + 1].Text</a></h4>
+                                                                }
+                                                                else
+                                                                {
+                                                            <h4 class="highlight-title" style="float: none; margin-top: 10px">@Model.HighlightGroupTemplates[i].HighlightTypes[j + 1].Text</h4>
+                                                                }
                                                             <p>@Html.LimitString(nextHighlight.Message, 350)</p>
-                                                            <a class="manage-highlight" href="@Url.Action("Edit", "Highlight", new{Id = nextHighlight.Id})">
-                                                                <span class="fa fa-pencil-square-o"></span>
-                                                                Manage
-                                                            </a>
+                                                           
                                                             }
                                                             else
                                                             {
+                                                                if (Model.HighlightGroupTemplates[i].HighlightTypes[j + 1].RoleGroupIds.Contains(Model.CurrentUserRoleId))
+                                                                {
+                                                            <h4 class="highlight-title" style="float: none; margin-top: 10px"><a class="manage-highlight"  href="@Url.Action("Manage", "Highlight", new { TypeId = Model.HighlightGroupTemplates[i].HighlightTypes[j + 1].Id, PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay })">@Model.HighlightGroupTemplates[i].HighlightTypes[j + 1].Text</a></h4>
+                                                                }
+                                                                else
+                                                                {
+                                                            <h4 class="highlight-title" style="float: none; margin-top: 10px">@Model.HighlightGroupTemplates[i].HighlightTypes[j + 1].Text</h4>
+                                                                }
                                                             <p>...</p>
-                                                             <a class="manage-highlight" href="@Url.Action("Create", "Highlight", new{TypeId = Model.HighlightGroupTemplates[i].HighlightTypes[j+1].Id,PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay })">
-                                                                <span class="fa fa-pencil-square-o"></span>
-                                                                Manage
-                                                            </a>
+                                                        
                                                             }
                                                         }
                                                         else
                                                         {
+                                                            if (Model.HighlightGroupTemplates[i].HighlightTypes[j + 1].RoleGroupIds.Contains(Model.CurrentUserRoleId))
+                                                            {
+                                                            <h4 class="highlight-title" style="float: none; margin-top: 10px"><a class="manage-highlight"   href="@Url.Action("Manage", "Highlight", new { TypeId = Model.HighlightGroupTemplates[i].HighlightTypes[j + 1].Id, PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay })">@Model.HighlightGroupTemplates[i].HighlightTypes[j + 1].Text</a></h4>
+                                                            }
+                                                            else
+                                                            {
+                                                            <h4 class="highlight-title" style="float: none; margin-top: 10px">@Model.HighlightGroupTemplates[i].HighlightTypes[j + 1].Text</h4>
+                                                            }
                                                             <p>...</p>
-                                                            <a class="manage-highlight" href="@Url.Action("Create", "Highlight", new{TypeId = Model.HighlightGroupTemplates[i].HighlightTypes[j+1].Id,PeriodeType = Model.PeriodeType, Periode = Model.PeriodeInDisplay })">
-                                                                <span class="fa fa-pencil-square-o"></span>
-                                                                Manage
-                                                            </a>
+                                                        
                                                         }
 
                                                     </td>

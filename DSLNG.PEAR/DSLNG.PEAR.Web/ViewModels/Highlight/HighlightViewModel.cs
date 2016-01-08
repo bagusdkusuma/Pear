@@ -17,6 +17,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Highlight
             AlertConditions = new List<SelectListItem>();
             IsActive = true;
         }
+        public bool AsNew { get; set; }
         public int Id { get; set; }
         [Display(Name = "Periode Type")]
         [Required]

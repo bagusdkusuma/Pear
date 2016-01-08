@@ -1,0 +1,93 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.VesselSchedule.VesselScheduleViewModel
+
+@{
+    ViewBag.Title = "Manage";
+}
+
+<div class="vessel-schedule-save">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="col-md-12">
+            <div class="title">Vessel Schedule</div>
+            <div class="description_year">Manage</div>
+            <div>@Html.ValidationSummary(true)</div>
+            @Html.HiddenFor(x => x.Id)
+        </div>
+        <div class="col-md-12">
+            <div class="form-inline whitebox">
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.VesselId)
+                    @Html.DropDownListFor(model => model.VesselId, new List<SelectListItem> { new SelectListItem { Value = Model.VesselId.ToString(), Text = Model.VesselName } }, new { @class = "form-control", data_url = Url.Action("VesselList"), style = "width:200px" })
+                    @Html.ValidationMessageFor(model => model.VesselId)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.ETA)
+                    @Html.TextBoxFor(model => model.ETA, new { @class = "form-control datepicker" })
+                    @Html.ValidationMessageFor(model => model.ETA)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.ETD)
+                    @Html.TextBoxFor(model => model.ETD, new { @class = "form-control datepicker" })
+                    @Html.ValidationMessageFor(model => model.ETD)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.BuyerId)
+                    @Html.DropDownListFor(model => model.BuyerId, new List<SelectListItem> { new SelectListItem { Value = Model.BuyerId.ToString(), Text = Model.BuyerName } }, new { @class = "form-control", data_url = Url.Action("BuyerList"), style = "width:200px" })
+                    @Html.ValidationMessageFor(model => model.BuyerId)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.Location)
+                    @Html.TextAreaFor(model => model.Location, 5, 50, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Location)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.SalesType)
+                    @Html.DropDownListFor(model => model.SalesType, Model.SalesTypes, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.SalesType)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.Type)
+                    @Html.DropDownListFor(model => model.Type, Model.Types, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Type)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.Cargo)
+                    @Html.TextBoxFor(model => model.Cargo, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Cargo)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.IsActive)
+                    @Html.CheckBoxFor(model => model.IsActive, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IsActive)
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 artifact-designer-btns">
+            <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
+            <button type="button" class="btn btn-primary btn-lg add-new-vs"><span class="fa fa-file-o"></span>Add As New</button>
+            <a onclick="location.reload();" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>
+            <a href="@Url.Action("Index")" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.add-new-vs').click(function (e) {
+                e.preventDefault();
+                var $form = $(this).closest('form');
+                var asNew = $('<input />');
+                asNew.attr('type', 'checkbox');
+                asNew.attr('name', 'AsNew');
+                asNew.val('True');
+                asNew.css({ display: 'none' });
+                asNew.prop('checked', true);
+                $form.prepend(asNew);
+                $form.submit();
+            });
+        });
+    </script>
+}
