@@ -2058,11 +2058,39 @@ a.see-more
 
     #parent-fixed-table
     {
-        height: 600px;
+        height: 100px;
     }
 
     #fixed-table
     {
-        width: 1291px !important;
+        width: 400px !important;
     }
-    
+
+      #table {
+        /*font-size: 20px;*/
+      }
+      #table thead tr {
+          /*border: 1px solid red;*/
+          display: table;
+      }
+      #table thead, #table tbody, #table tr {
+        display: block;
+        width: 100%;
+        border-spacing: 0;
+        border-collapse: collapse;
+        min-height: 20px;
+      }
+      #table tbody {
+        height: 210px;
+        overflow-y: auto;
+        overflow-x:hidden;
+        position: relative;
+      }
+      #table tbody td, #table thead th {
+        /*display: block;
+        float: left;*/
+        /*border: 1px solid black;*/
+        width: 25%;
+        box-sizing: border-box;
+          
+      }

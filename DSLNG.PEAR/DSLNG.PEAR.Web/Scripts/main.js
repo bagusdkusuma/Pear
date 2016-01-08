@@ -2596,11 +2596,14 @@ Number.prototype.format = function (n, x) {
         tableScrollContainer.css('overflow-y', 'auto');
 
         var panel = $('<div>');
+        panel.attr('id', 'table');
         panel.addClass('panel panel-default tabular-panel');
 
         var $table = $('<table>');
+        $table.attr('id', 'table');
         $table.addClass('tabular');
         $table.addClass('table-bordered');
+        var tHead = $('<thead>');
         var rowHeader = $('<tr>');
         rowHeader.append($('<th>').html('KPI Name'));
         //rowHeader.append($('<th>').html('Periode Type'));
@@ -2615,7 +2618,8 @@ Number.prototype.format = function (n, x) {
             rowHeader.append($('<th>').html('Remark'));
         }
         //rowHeader.append($('<th>').html('Measurement'));
-        $table.append(rowHeader);
+        tHead.append(rowHeader);
+        $table.append(tHead);
         for (var i in data.Tabular.Rows) {
             var dataRow = data.Tabular.Rows[i];
             var row = $('<tr>');
@@ -2645,7 +2649,9 @@ Number.prototype.format = function (n, x) {
 
         //wrapper.append($table);
         container.html(wrapper);
-        $('.perfect-scrollbar').perfectScrollbar();
+        //$('.perfect-scrollbar').perfectScrollbar();
+        //$('.fixed_headers').perfectScrollbar();
+        $('#table tbody').perfectScrollbar();
     };
 
     //trafficlight
