@@ -1072,7 +1072,6 @@
     <Content Include="Views\VesselSchedule\Manage.cshtml" />
     <Content Include="Views\NLS\Manage.cshtml" />
     <Content Include="Views\Weather\Manage.cshtml" />
-    <Content Include="Views\KpiAchievement\Test.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
