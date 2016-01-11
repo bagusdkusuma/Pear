@@ -2090,7 +2090,10 @@ a.see-more
         width: 25%;
         box-sizing: border-box;
           
-      }      #table tbody td {
+      }
+
+      #table tbody td {
           /*width: 15%;*/
           /*width: 120px;*/
-      }
+      }
+
