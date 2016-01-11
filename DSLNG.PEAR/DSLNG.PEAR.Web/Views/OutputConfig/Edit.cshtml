@@ -54,7 +54,7 @@
                                 @Html.Label("End")
                                         break;
                                     case 2:
-                                @Html.Label("Project Cost")
+                                @Html.Label("Commercial Date")
                                         break;
                                 }
                             }
@@ -74,27 +74,52 @@
                             @Html.ValidationMessageFor(model => model.ExcludeValue)
                         </div>
         }
-                   var j = 0;
-                   var className="form-group form-list";
-                   var kpiLength = Model.KpiIds.Count;
-                   foreach (var kpiId in Model.KpiIds)
-                    {
-                        if (j != 0) {
-                            className = "form-group form-list dynamic-kpi";
-                        }
+        var j = 0;
+        var className = "form-group form-list";
+        var kpiLength = Model.KpiIds.Count;
+        foreach (var kpiId in Model.KpiIds)
+        {
+            if (j != 0)
+            {
+                className = "form-group form-list dynamic-kpi";
+            }
                         <div class="@className">
-                            @Html.Label("KPI")
-                            @Html.DropDownListFor(m => kpiId, Model.Kpis.Where(x => x.Value == kpiId.ToString()).ToList(), new { @class = "form-control kpi-options", data_url = Url.Action("EconomicKpis"), style = "width:180px", Name = "KpiIds[]" })
-                            @if (Model.Formula == "NETBACKVALUE") { 
-                                <a class="btn btn-default remove-kpi" ><i class="fa fa-minus"></i></a>
+                            @if (Model.Formula == "PROFITINVESTMENTRATIO") {
+                                switch (j) { 
+                                    case 0 :
+                                        @Html.Label("Ultimate FCF - Project")
+                                        break;
+                                    case 1:
+                                        @Html.Label("Project Cost")
+                                        break;
+                                }
+                            }else{
+                                @Html.Label("KPI")
                             }
-                            @if (Model.Formula == "NETBACKVALUE" && j == kpiLength - 1) {
-                                <a class="btn btn-default add-kpi" ><i class="fa fa-plus"></i></a>
+                            
+                            @Html.DropDownListFor(m => kpiId, Model.Kpis.Where(x => x.Value == kpiId.ToString()).ToList(), new { @class = "form-control kpi-options", data_url = Url.Action("EconomicKpis"), style = "width:180px", Name = "KpiIds[]" })
+                            @if (Model.Formula == "NETBACKVALUE")
+                            { 
+                                <a class="btn btn-default remove-kpi"><i class="fa fa-minus"></i></a>
+                            }
+                            @if (Model.Formula == "NETBACKVALUE" && j == kpiLength - 1)
+                            {
+                                <a class="btn btn-default add-kpi"><i class="fa fa-plus"></i></a>
                             }
                         </div>
-                        j++;
+                            j++;
+        }
                     }
-                    }
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.ConversionType)
+                    @Html.DropDownListFor(model => model.ConversionType, Model.ConversionTypes, "Select Conversion Types", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ConversionType)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.ConversionValue)
+                    @Html.TextBoxFor(model => model.ConversionValue, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ConversionValue)
                 </div>
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.Order)
@@ -128,9 +153,9 @@
         @Html.DropDownList("KeyAssumptionIds[]", new List<SelectListItem> { }, new { @class = "form-control key-assumption-options", data_url = Url.Action("KeyAssumptions"), style = "width:180px" })
     </div>
     <div class="form-group form-list exclude-value" style="display: none">
-         @Html.LabelFor(model => model.ExcludeValue)
-                            @Html.TextBoxFor(model => model.ExcludeValue, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.ExcludeValue)
+        @Html.LabelFor(model => model.ExcludeValue)
+        @Html.TextBoxFor(model => model.ExcludeValue, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.ExcludeValue)
     </div>
 </div>
 @section Scripts {

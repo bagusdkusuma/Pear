@@ -9,6 +9,7 @@ namespace DSLNG.PEAR.Web.ViewModels.OutputConfig
     {
         public OutputConfigViewModel() {
             Formulas = new List<SelectListItem>();
+            ConversionTypes = new List<SelectListItem>();
         }
         public int Id { get; set; }
         [Required]
@@ -35,5 +36,8 @@ namespace DSLNG.PEAR.Web.ViewModels.OutputConfig
         public bool IsActive { get; set; }
         public IList<SelectListItem> Kpis { get; set; }
         public IList<SelectListItem> KeyAssumptions { get; set; }
+        public string ConversionType { get; set; }
+        public IList<SelectListItem> ConversionTypes { get; set; }
+        public double? ConversionValue { get; set; }
     }
 }

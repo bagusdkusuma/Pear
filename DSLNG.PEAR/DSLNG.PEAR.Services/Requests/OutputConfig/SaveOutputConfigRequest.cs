@@ -14,6 +14,8 @@ namespace DSLNG.PEAR.Services.Requests.OutputConfig
         public IList<int> KpiIds { get; set; }
         public IList<int> KeyAssumptionIds { get; set; }
         public double? ExcludeValue { get; set; }
+        public double? ConversionValue { get; set; }
+        public ConversionType? ConversionType { get; set; }
         public int Order { get; set; }
         public string Remark { get; set; }
         public bool IsActive { get; set; }

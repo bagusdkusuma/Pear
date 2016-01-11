@@ -118,6 +118,7 @@
     <Compile Include="Entities\VesselSchedule.cs" />
     <Compile Include="Entities\Weather.cs" />
     <Compile Include="Enums\ConfigType.cs" />
+    <Compile Include="Enums\ConversionType.cs" />
     <Compile Include="Enums\Formula.cs" />
     <Compile Include="Enums\PeriodeStart.cs" />
     <Compile Include="Enums\MonthPeriode.cs" />

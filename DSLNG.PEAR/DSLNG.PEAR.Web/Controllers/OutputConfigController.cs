@@ -56,6 +56,10 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 viewModel.Formulas.Add(new SelectListItem { Text = name, Value = name });
             }
+            foreach (var name in Enum.GetNames(typeof(ConversionType)))
+            {
+                viewModel.ConversionTypes.Add(new SelectListItem { Text = name, Value = name });
+            }
             viewModel.IsActive = true;
             return View(viewModel);
         }
@@ -89,6 +93,10 @@ namespace DSLNG.PEAR.Web.Controllers
             foreach (var name in Enum.GetNames(typeof(Formula)))
             {
                 viewModel.Formulas.Add(new SelectListItem { Text = name, Value = name });
+            }
+            foreach (var name in Enum.GetNames(typeof(ConversionType)))
+            {
+                viewModel.ConversionTypes.Add(new SelectListItem { Text = name, Value = name });
             }
             return View(viewModel);
         }
