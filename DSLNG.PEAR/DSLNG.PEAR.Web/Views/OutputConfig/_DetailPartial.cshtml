@@ -26,11 +26,11 @@
             <tr>
                 <td class="text-align-left">@output.Name (@output.Measurement)</td>
                 <td class="text-align-right">
-                    @output.Forecast
+                    @Html.ParseToDateOrNumber(output.Forecast)
 
                 </td>
                 <td class="text-align-right">
-                    @output.Actual
+                    @Html.ParseToDateOrNumber(output.Actual)
 
                 </td>
             </tr>

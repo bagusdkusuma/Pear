@@ -26,12 +26,12 @@
                 <td class="text-align-left">@assumption.Name (@assumption.Measurement)</td>
                 <td class="text-align-right">@if (realValue != null)
                                              {
-                                                 @realValue.ForecastValue
+                                                 @Html.ParseToDateOrNumber(realValue.ForecastValue)
                                              }
                 </td>
                 <td class="text-align-right">@if (realValue != null)
                                              {
-                                                 @realValue.ActualValue
+                                                 @Html.ParseToDateOrNumber(realValue.ActualValue)
                                              }
                 </td>
             </tr>
