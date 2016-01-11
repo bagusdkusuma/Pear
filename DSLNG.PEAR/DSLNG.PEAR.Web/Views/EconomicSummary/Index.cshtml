@@ -48,10 +48,9 @@
                 {
                     <td class="text-align-right">@GetValue(scenario.Id, keyoutput.Name, @group.Id, 0)</td>
                     <td class="text-align-right">@GetValue(scenario.Id, keyoutput.Name, @group.Id, 1)</td>
-                    @*@GetValue(scenario.Id, keyoutput.Name, @group.Id);*@
                 }
             </tr>
-            no++;
+                no++;
         }
     </table>
     <hr />
@@ -61,29 +60,24 @@
     }
 }
 
+
 @helper GetValue(int scenarioId, string keyOutputName, int groupId, int type)
 {
-    var groups = Model.Groups.Where(x => x.Id == groupId).ToList();
+        var groups = Model.Groups.Where(x => x.Id == groupId).ToList();
     foreach (var g in groups)
     {
+        
         var outputResult = g.KeyOutputs.FirstOrDefault(x => x.Scenario.Id == scenarioId && x.Name == keyOutputName);
         if (outputResult != null && outputResult.OutputResult != null)
         {
             if (type == 0)
             {
                 @Html.ParseToDateOrNumber(outputResult.OutputResult.Actual)
-            } else if (type == 1)
+            }
+            else if (type == 1)
             {
                 @Html.ParseToDateOrNumber(outputResult.OutputResult.Forecast)
             }
-            
-            @*<td class="text-align-right">@Html.ParseToNumber(outputResult.OutputResult.Actual)</td>
-            <td class="text-align-right">@Html.ParseToNumber(outputResult.OutputResult.Forecast)</td>*@
         }
-        @*else
-        {
-            <td class="text-align-right">a</td>
-            <td class="text-align-right">a</td>
-        }*@
     }
 }
