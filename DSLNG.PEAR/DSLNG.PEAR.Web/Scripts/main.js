@@ -4246,29 +4246,30 @@ Number.prototype.format = function (n, x) {
                     Pear.OutputConfig._autocomplete(end.find('select'));
                     end.find('label').html('End');
                     paramsHolder.append(end.show());
-                    if (val == "PROFITINVESTMENTRATIO") {
-                        var projectCost = assumptionParam.clone(true);
-                        Pear.OutputConfig._autocomplete(projectCost.find('select'));
-                        projectCost.find('label').html('Project Cost');
-                        paramsHolder.append(projectCost.show());
-                    }
                     if (val == 'MIN' || val == 'MINDATE') {
                         var exclude = excludeValue.clone(true);
                         paramsHolder.append(exclude.show());
                     }
                     if (val == 'PAYBACK') {
-                        var operationStart = assumptionParam.clone(true);
-                        Pear.OutputConfig._autocomplete(operationStart.find('select'));
-                        operationStart.find('label').html('End');
-                        paramsHolder.append(end.show());
+                        //var operationStart = assumptionParam.clone(true);
+                        //Pear.OutputConfig._autocomplete(operationStart.find('select'));
+                        //operationStart.find('label').html('Operation Start');
+                        //paramsHolder.append(operationStart.show());
                         var commercialDate = assumptionParam.clone(true);
-                        Pear.OutputConfig._autocomplete(end.find('select'));
-                        end.find('label').html('End');
-                        paramsHolder.append(end.show());
+                        Pear.OutputConfig._autocomplete(commercialDate.find('select'));
+                        commercialDate.find('label').html('Commercial Date');
+                        paramsHolder.append(commercialDate.show());
                     }
                     var kpi = kpiParam.clone(true);
                     Pear.OutputConfig._autocomplete(kpi.find('select'));
                     paramsHolder.append(kpi.show());
+                    if (val == "PROFITINVESTMENTRATIO") {
+                        kpi.find('label').html('Ultimate FCF - Project');
+                        var projectCost = kpiParam.clone(true);
+                        Pear.OutputConfig._autocomplete(projectCost.find('select'));
+                        projectCost.find('label').html('Project Cost');
+                        paramsHolder.append(projectCost.show());
+                    }
                     break;
                 case "COMPLETIONDATE":
                     var start = assumptionParam.clone(true);

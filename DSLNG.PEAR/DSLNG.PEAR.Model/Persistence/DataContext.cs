@@ -82,7 +82,10 @@ namespace DSLNG.PEAR.Data.Persistence
                 .HasMany(x => x.PmsConfigs)
                 .WithOptional(x => x.PmsSummary)
                 .WillCascadeOnDelete();
-
+            modelBuilder.Entity<KeyOutputConfiguration>()
+                .Property(x => x.ConversionType).IsOptional();
+            modelBuilder.Entity<KeyOutputConfiguration>()
+                .Property(x => x.ConversionValue).IsOptional();
             //modelBuilder.Entity<Menu>()
             //    .HasKey(x => x.Id)
             //    .HasOptional(x => x.Parent)
