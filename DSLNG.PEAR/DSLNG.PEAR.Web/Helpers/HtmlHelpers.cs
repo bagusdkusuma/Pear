@@ -47,9 +47,9 @@ namespace DSLNG.PEAR.Web.Helpers
                                                      DateTimeStyles.AllowWhiteSpaces, out resultDate);
                 }
             }
-            else if (val.Length <= 21 || val.Length <= 23)
+            else if (val.Length >= 20 && val.Length <= 22)
             {
-                isValid = DateTime.TryParseExact(val, "M/dd/yyyy hh:mm:ss tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out resultDate);
+                isValid = DateTime.TryParseExact(val, "M/d/yyyy hh:mm:ss tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out resultDate);
             }
             else
             {
