@@ -616,7 +616,7 @@ namespace DSLNG.PEAR.Services
                 var breakEventYear = startForecast.AddYears((int)Math.Floor(decimal.Parse(payback.Forecast)));
                 var month = Math.Round((decimal.Parse(payback.Forecast) - Math.Floor(decimal.Parse(payback.Forecast))) * 12,0);
                 breakEventYear = breakEventYear.AddMonths((int)month);
-                result.Actual = breakEventYear.ToString();
+                result.Forecast = breakEventYear.ToString();
             }
 
             DateTime startActual;
@@ -626,7 +626,7 @@ namespace DSLNG.PEAR.Services
                 var breakEventYear = startActual.AddYears((int)Math.Floor(decimal.Parse(payback.Actual)));
                 var month = Math.Round((decimal.Parse(payback.Actual) - Math.Floor(decimal.Parse(payback.Actual))) * 12, 0);
                 breakEventYear = breakEventYear.AddMonths((int)month);
-                result.Forecast = breakEventYear.ToString();
+                result.Actual = breakEventYear.ToString();
             }
             return result;
         }
