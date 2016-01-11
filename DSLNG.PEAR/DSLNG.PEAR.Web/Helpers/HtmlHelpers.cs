@@ -68,7 +68,8 @@ namespace DSLNG.PEAR.Web.Helpers
         {
             double x;
             bool isValidDouble = Double.TryParse(val, NumberStyles.AllowDecimalPoint, NumberFormatInfo.InvariantInfo, out x);
-            return isValidDouble ? x.ToString("#.000") : val;
+            //return isValidDouble ? Str x.ToString("0:0.###") : val;
+            return isValidDouble ? string.Format("{0:0.###}", x) : val;
         }
     }
 }
