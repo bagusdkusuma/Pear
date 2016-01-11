@@ -31,5 +31,7 @@ namespace DSLNG.PEAR.Data.Entities.EconomicModel
         public int Order { get; set; }
         public string Remark { get; set; }
         public bool IsActive { get; set; }
+        public double? ConversionValue { get; set; }
+        public ConversionType? ConversionType { get; set; }
     }
 }

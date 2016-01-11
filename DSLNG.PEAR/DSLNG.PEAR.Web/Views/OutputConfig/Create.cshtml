@@ -22,20 +22,30 @@
                 </div>
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.CategoryId)
-                    @Html.DropDownListFor(model => model.CategoryId, Model.OutputCategories,"Select Category", new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.CategoryId, Model.OutputCategories, "Select Category", new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.CategoryId)
                 </div>
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.MeasurementId)
-                    @Html.DropDownListFor(model => model.MeasurementId, Model.Measurements,"Select Measurement", new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.MeasurementId, Model.Measurements, "Select Measurement", new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.MeasurementId)
                 </div>
-                 <div class="form-group form-list">
+                <div class="form-group form-list">
                     @Html.LabelFor(model => model.Formula)
-                    @Html.DropDownListFor(model => model.Formula, Model.Formulas,"Select Formula", new { @class = "form-control output-formula" })
+                    @Html.DropDownListFor(model => model.Formula, Model.Formulas, "Select Formula", new { @class = "form-control output-formula" })
                     @Html.ValidationMessageFor(model => model.Formula)
                 </div>
                 <div class="params-holder"></div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.ConversionType)
+                    @Html.DropDownListFor(model => model.ConversionType, Model.ConversionTypes, "Select Conversion Types", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ConversionType)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.ConversionValue)
+                    @Html.TextBoxFor(model => model.ConversionValue, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ConversionValue)
+                </div>
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.Order)
                     @Html.TextBoxFor(model => model.Order, new { @class = "form-control" })
@@ -59,18 +69,18 @@
             <a href="/OutputConfig" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
         </div>
     }
-     <div class="form-group form-list kpi-param" style="display:none;">
+    <div class="form-group form-list kpi-param" style="display: none;">
         @Html.Label("KPI")
-        @Html.DropDownList("KpiIds[]", new List<SelectListItem> { }, new { @class = "form-control kpi-options", data_url=Url.Action("EconomicKpis"), style="width:180px" })
+        @Html.DropDownList("KpiIds[]", new List<SelectListItem> { }, new { @class = "form-control kpi-options", data_url = Url.Action("EconomicKpis"), style = "width:180px" })
     </div>
-    <div class="form-group form-list assumption-param" style="display:none">
+    <div class="form-group form-list assumption-param" style="display: none">
         @Html.Label("Key Assumption")
-        @Html.DropDownList("KeyAssumptionIds[]", new List<SelectListItem> { }, new { @class = "form-control key-assumption-options",data_url=Url.Action("KeyAssumptions"), style="width:180px" })
+        @Html.DropDownList("KeyAssumptionIds[]", new List<SelectListItem> { }, new { @class = "form-control key-assumption-options", data_url = Url.Action("KeyAssumptions"), style = "width:180px" })
     </div>
-    <div class="form-group form-list exclude-value" style="display:none">
+    <div class="form-group form-list exclude-value" style="display: none">
         @Html.LabelFor(model => model.ExcludeValue)
-                            @Html.TextBoxFor(model => model.ExcludeValue, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.ExcludeValue)
+        @Html.TextBoxFor(model => model.ExcludeValue, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.ExcludeValue)
     </div>
 </div>
 @section Scripts {
