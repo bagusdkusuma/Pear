@@ -126,7 +126,7 @@ namespace DSLNG.PEAR.Services
                     .Include(x => x.Kpi)
                     .Include(x => x.Kpi.Measurement)
                     .Include(x => x.KeyOperationGroup)
-                    .Where(x => x.IsActive)
+                    .Where(x => x.IsActive && x.KeyOperationGroup != null)
                     .AsEnumerable()
                     .OrderBy(x => x.KeyOperationGroup.Order).ThenBy(x => x.Order)
                     .GroupBy(x => x.KeyOperationGroup)
