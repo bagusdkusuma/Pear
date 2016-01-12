@@ -141,6 +141,12 @@ namespace DSLNG.PEAR.Services
                 operationConfig.IsActive = request.IsActive.HasValue && request.IsActive.Value;
                 operationConfig.Order = request.Order.HasValue ? request.Order.Value : 0;
                 operationConfig.Kpi = DataContext.Kpis.Single(x => x.Id == request.KpiId);
+                if (request.KeyOperationGroupId > 0)
+                {
+                    operationConfig.KeyOperationGroup =
+                        DataContext.KeyOperationGroups.Single(x => x.Id == request.KeyOperationGroupId);    
+                }
+                
                 DataContext.KeyOperationConfigs.Add(operationConfig);
                 DataContext.SaveChanges();
                 return new UpdateOperationResponse
