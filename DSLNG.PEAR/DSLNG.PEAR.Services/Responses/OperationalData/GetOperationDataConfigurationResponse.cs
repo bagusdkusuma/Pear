@@ -14,6 +14,7 @@ namespace DSLNG.PEAR.Services.Responses.OperationalData
 
         public IList<Kpi> Kpis { get; set; }
         public int GroupId { get; set; }
+        public string GroupName { get; set; }
         public int ScenarioId { get; set; }
 
         public class Kpi
@@ -28,6 +29,7 @@ namespace DSLNG.PEAR.Services.Responses.OperationalData
             public string PeriodeType { get; set; }
             public string MeasurementName { get; set; }
             public IList<OperationData> OperationDatas { get; set; }
+            public string GroupName { get; set; }
         }
 
         public class OperationData

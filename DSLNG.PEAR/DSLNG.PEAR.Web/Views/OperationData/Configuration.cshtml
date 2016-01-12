@@ -17,11 +17,11 @@
 <section>
     <div class="row">
         <div class="title_page" style="border: none!important;">
-            <div class="title" style="margin-right: 25px;">Key Operation Data</div>
+            <div class="title" style="margin-right: 25px;">Key Operation Data (@Model.GroupName)</div>
             <img class="ajax-loader2" src="@Url.Content("~/content/img/ajax-loader1.gif")" style="display: none;width: 30px;height: 30px;" />
             <div class="description_year"></div>
         </div>
-
+        
     </div>
     <ul class="nav nav-tabs">
         <li role="presentation" @(Model.PeriodeType == DSLNG.PEAR.Data.Enums.PeriodeType.Yearly.ToString() ? Html.Raw("class=active") : Html.Raw("")) >
@@ -58,6 +58,7 @@
         <button type="button" class="btn btn-primary cancel-popover">Cancel</button>
     </form>
 </div>
+
 @section Scripts
 {
     <script type="text/javascript">
