@@ -2615,23 +2615,35 @@ Number.prototype.format = function (n, x) {
         $table.addClass('table-bordered');
         $table.addClass('table2');
         $table.addClass(tableUniqueClass);
-        
+        var arrWidth = ['40%', '15%'];
         var tHead = $('<thead>');
         var rowHeader = $('<tr>');
-        rowHeader.append($('<th>').html('KPI Name'));
-        rowHeader.append($('<th>').html('Periode'));
+        rowHeader.append($('<th style="width:' + arrWidth[0] + '">').html('KPI Name'));
+        rowHeader.append($('<th style="width:' + arrWidth[1] + '">').html('Periode'));
         var counter = 2;
+        var additionalField = 0;
+        if (data.Tabular.Actual)
+            additionalField += 1;
+        
+        if (data.Tabular.Target)
+            additionalField += 1;
+        
+        if (data.Tabular.Remark)
+            additionalField += 1;
+
+        var thWidth = 50 / additionalField;
+        arrWidth.push(thWidth);
         
         if (data.Tabular.Actual) {
-            rowHeader.append($('<th>').html('Actual'));
+            rowHeader.append($('<th style="width:' + arrWidth[2] + '%">').html('Actual'));
             counter += 1;
         }
         if (data.Tabular.Target) {
-            rowHeader.append($('<th>').html('Target'));
+            rowHeader.append($('<th style="width:' + arrWidth[2] + '%">').html('Target'));
             counter += 1;
         }
         if (data.Tabular.Remark) {
-            rowHeader.append($('<th>').html('Remark'));
+            rowHeader.append($('<th style="width:' + arrWidth[2] + '%">').html('Remark'));
             counter += 1;
         }
         
@@ -2661,13 +2673,23 @@ Number.prototype.format = function (n, x) {
         container.html(wrapper);
         
         $('.table2 tbody').perfectScrollbar();
-        
-        for (var j = 1; j <= counter; j++) {
-            var width = $('.' + tableUniqueClass + ' thead th:nth-child(' + j + ')').outerWidth();
-            $('.' + tableUniqueClass + ' tbody td:nth-child(' + j + ')').outerWidth(width);
-        }
 
-        
+        var resizeTabular = function () {
+            for (var j = 1; j <= counter; j++) {
+                var width = $('.' + tableUniqueClass + ' thead th:nth-child(' + j + ')').outerWidth();
+                $('.' + tableUniqueClass + ' tbody td:nth-child(' + j + ')').outerWidth(width);
+            }
+        };
+
+        resizeTabular();
+
+        $('.left-content-toggle').click(function () {
+            setTimeout(function() {
+                resizeTabular();
+            }, 500);
+
+        });
+
     };
 
     //trafficlight

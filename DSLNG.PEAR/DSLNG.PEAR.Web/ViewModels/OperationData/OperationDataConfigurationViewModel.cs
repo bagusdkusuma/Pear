@@ -18,6 +18,7 @@ namespace DSLNG.PEAR.Web.ViewModels.OperationData
         public IList<SelectListItem> Scenarios { get; set; }
         public string PeriodeType { get; set; }
         public int GroupId { get; set; }
+        public string GroupName { get; set; }
         public IList<Kpi> Kpis { get; set; }
         public IList<SelectListItem> Years { get; set; }
         public int Year { get; set; }
@@ -35,6 +36,7 @@ namespace DSLNG.PEAR.Web.ViewModels.OperationData
             public string PeriodeType { get; set; }
             public string MeasurementName { get; set; }
             public IList<OperationData> OperationDatas { get; set; }
+            public string GroupName { get; set; }
         }
 
         public class OperationData

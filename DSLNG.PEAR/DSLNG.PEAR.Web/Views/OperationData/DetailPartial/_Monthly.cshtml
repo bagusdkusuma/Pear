@@ -12,6 +12,7 @@
             <tbody>
                 <tr>
                     <th style="width: 30%;">KPI Name</th>
+                    <th style="width: 15%;">Group</th>
                     <th style="width: 50px;">Jan</th>
                     <th style="width: 50px;">Feb</th>
                     <th style="width: 50px;">Mar</th>
@@ -25,11 +26,15 @@
                     <th style="width: 50px;">Nov</th>
                     <th style="width: 50px;">Dec</th>
                 </tr>
-                @{ var a = 0;}
+                @{ 
+                    var a = 0;
+                    int number = 1;
+                }
                 @foreach (var kpi in Model.Kpis)
                 {
                     <tr>
-                        <td style="text-align: left">@kpi.Name (@kpi.MeasurementName)</td>
+                        <td style="text-align: left">@(number++). @kpi.Name (@kpi.MeasurementName)</td>
+                        <td style="text-align: left">@kpi.GroupName</td>
                         @{ var b = 0;}
                         @foreach (var operationData in kpi.OperationDatas)
                         {

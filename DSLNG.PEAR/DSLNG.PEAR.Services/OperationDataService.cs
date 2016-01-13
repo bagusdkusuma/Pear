@@ -126,7 +126,7 @@ namespace DSLNG.PEAR.Services
                     .Include(x => x.Kpi)
                     .Include(x => x.Kpi.Measurement)
                     .Include(x => x.KeyOperationGroup)
-                    .Where(x => x.IsActive)
+                    .Where(x => x.IsActive && x.KeyOperationGroup != null)
                     .AsEnumerable()
                     .OrderBy(x => x.KeyOperationGroup.Order).ThenBy(x => x.Order)
                     .GroupBy(x => x.KeyOperationGroup)
@@ -166,6 +166,12 @@ namespace DSLNG.PEAR.Services
             var response = new GetOperationDataConfigurationResponse();
             response.GroupId = request.GroupId;
             response.ScenarioId = request.ScenarioId;
+            if (request.GroupId > 0)
+            {
+                response.GroupName =
+                DataContext.KeyOperationGroups.Single(x => x.Id == request.GroupId).Name;    
+            }
+            
             try
             {
                 var periodeType = request.PeriodeType;
@@ -182,6 +188,7 @@ namespace DSLNG.PEAR.Services
                     keyOperationConfigs = DataContext.KeyOperationConfigs
                     .Include(x => x.Kpi)
                     .Include(x => x.Kpi.Measurement)
+                    .Include(x => x.KeyOperationGroup)
                     .Where(x => x.IsActive).ToList();
                 }
 
@@ -199,6 +206,7 @@ namespace DSLNG.PEAR.Services
                         foreach (var keyOperationConfig in keyOperationConfigs)
                         {
                             var kpiDto = keyOperationConfig.Kpi.MapTo<GetOperationDataConfigurationResponse.Kpi>();
+                            kpiDto.GroupName = keyOperationConfig.KeyOperationGroup.Name;
                             foreach (var number in YearlyNumbersForOperationData)
                             {
                                 var operation = operationDataYearly.FirstOrDefault(x => x.Kpi.Id == keyOperationConfig.Kpi.Id && x.Periode.Year == number);
@@ -233,6 +241,7 @@ namespace DSLNG.PEAR.Services
                         foreach (var keyOperationConfig in keyOperationConfigs)
                         {
                             var kpiDto = keyOperationConfig.Kpi.MapTo<GetOperationDataConfigurationResponse.Kpi>();
+                            kpiDto.GroupName = keyOperationConfig.KeyOperationGroup.Name;
                             KeyOperationConfig config = keyOperationConfig;
                             var operationDatas = operationDataMonthly.Where(x => x.Kpi.Id == config.Kpi.Id).ToList();
                             for (int i = 1; i <= 12; i++)

@@ -47,9 +47,9 @@ namespace DSLNG.PEAR.Web.Helpers
                                                      DateTimeStyles.AllowWhiteSpaces, out resultDate);
                 }
             }
-            else if (val.Length == 21 || val.Length == 22)
+            else if (val.Length >= 20 && val.Length <= 22)
             {
-                isValid = DateTime.TryParseExact(val, "M/dd/yyyy hh:mm:ss tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out resultDate);
+                isValid = DateTime.TryParseExact(val, "M/d/yyyy hh:mm:ss tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out resultDate);
             }
             else
             {
@@ -67,8 +67,12 @@ namespace DSLNG.PEAR.Web.Helpers
         private static string ParseToNumber(string val)
         {
             double x;
-            bool isValidDouble = Double.TryParse(val, NumberStyles.AllowDecimalPoint, NumberFormatInfo.InvariantInfo, out x);
-            return isValidDouble ? x.ToString("#.000") : val;
+            var styles = NumberStyles.AllowParentheses | NumberStyles.AllowTrailingSign | NumberStyles.Float | NumberStyles.AllowDecimalPoint;
+            bool isValidDouble = Double.TryParse(val, styles, NumberFormatInfo.InvariantInfo, out x);
+            //return isValidDouble ? Str x.ToString("0:0.###") : val;
+            //return isValidDouble ? string.Format("{0:0,000.###}", x) : val;
+            return isValidDouble ? string.Format("{0:#,##0.###}", x) : val;
+            
         }
     }
 }

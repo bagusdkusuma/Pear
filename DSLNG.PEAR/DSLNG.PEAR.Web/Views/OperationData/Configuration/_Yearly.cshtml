@@ -35,47 +35,47 @@
             });
         });
     });
-    var link = null;
-    function OnClick(s, e) {
-        uc.Upload();
-    }
-    function OnUploadTextChanged(s, e) {
-        uc.Upload();
-    }
-    function OnFileUploadComplete(s, e) {
-        if (e.callbackData !== "") {
-            link = e.callbackData;
-            var callback = 'FileUploadComplete: ' + e.callbackData;
-            $('.notification').empty();
-            var message = '<div class="alert alert-success" role="alert">' + callback + '</div>';
-            $('.notification').append(message).fadeIn().delay(10000).fadeOut();
-            $('#div-proceed').show();
-
+        var link = null;
+        function OnClick(s, e) {
+            uc.Upload();
         }
-        else {
-            $('.notification').empty();
-            var callback = 'The selected file was not uploaded.'
-            var message = '<div class="alert alert-danger" role="alert">' + callback + '</div>';
-            $('.notification').append(message).fadeIn().delay(1000).fadeOut();
+        function OnUploadTextChanged(s, e) {
+            uc.Upload();
         }
-    }
-    function proceed(s) {
-        alert(s);
-    }
+        function OnFileUploadComplete(s, e) {
+            if (e.callbackData !== "") {
+                link = e.callbackData;
+                var callback = 'FileUploadComplete: ' + e.callbackData;
+                $('.notification').empty();
+                var message = '<div class="alert alert-success" role="alert">' + callback + '</div>';
+                $('.notification').append(message).fadeIn().delay(10000).fadeOut();
+                $('#div-proceed').show();
 
-    function getUrlVars() {
-        var vars = [], hash;
-        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-        for (var i = 0; i < hashes.length; i++) {
-            hash = hashes[i].split('=');
-            vars.push(hash[0]);
-            vars[hash[0]] = hash[1];
+            }
+            else {
+                $('.notification').empty();
+                var callback = 'The selected file was not uploaded.'
+                var message = '<div class="alert alert-danger" role="alert">' + callback + '</div>';
+                $('.notification').append(message).fadeIn().delay(1000).fadeOut();
+            }
         }
-        return vars;
-    }
+        function proceed(s) {
+            alert(s);
+        }
 
-    var value = getUrlVars();
-    value.configType = "Economic";
+        function getUrlVars() {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+
+        var value = getUrlVars();
+        value.configType = "Economic";
 
 </script>
 
@@ -127,11 +127,14 @@
                 <th style="width: 4%;">2029</th>
                 <th style="width: 4%;">2030</th>
             </tr>
-            @{ var a = 0;}
+            @{ 
+                var a = 0;
+                int number = 1;
+            }
             @foreach (var kpi in Model.Kpis)
             {
                 <tr>
-                    <td style="text-align: left">@kpi.Name (@kpi.MeasurementName)</td>
+                    <td style="text-align: left">@(number++). @kpi.Name (@kpi.MeasurementName)</td>
                     @{ var b = 0;}
                     @foreach (var operationData in kpi.OperationDatas)
                     {

@@ -116,11 +116,14 @@
         </thead>
         <tbody>
             
-            @{ var a = 0;}
+            @{
+                var a = 0;
+                int number = 1;
+            }
             @foreach (var kpi in Model.Kpis)
             {
                 <tr>
-                    <td style="text-align: left; background: #6aa89d">@kpi.Name (@kpi.Measurement)</td>
+                    <td style="text-align: left; background: #6aa89d">@string.Format("{0}.", number++) @kpi.Name (@kpi.Measurement)</td>
                     @{ var b = 0;}
                     @foreach (var kpiTarget in kpi.KpiTargets)
                     {
