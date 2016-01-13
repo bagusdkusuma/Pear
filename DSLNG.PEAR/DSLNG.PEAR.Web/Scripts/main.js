@@ -367,17 +367,17 @@ Number.prototype.format = function (n, x) {
                     case "speedometer":
                     case "traffic":
                     case "pie":
-                        toRemove.hourly = [];
-                        toRemove.daily = ['CurrentHour', 'CurrentWeek', 'CurrentYear', 'DTD', 'MTD', 'YTD', 'CurrentMonth', 'YTD', 'Interval', 'SpecificMonth', 'SpecificYear'];
-                        toRemove.weekly = [];
-                        toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'CurrentYear', 'YTD', 'Interval', 'SpecificDay', 'SpecificYear'];
-                        toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'Interval', 'SpecificDay', 'SpecificMonth'];
+                        toRemove.hourly = ['AllExistingYears'];
+                        toRemove.daily = ['CurrentHour', 'CurrentWeek', 'CurrentYear', 'DTD', 'MTD', 'YTD', 'CurrentMonth', 'YTD', 'Interval', 'SpecificMonth', 'SpecificYear','AllExistingYears'];
+                        toRemove.weekly = ['AllExistingYears'];
+                        toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'CurrentYear', 'YTD', 'Interval', 'SpecificDay', 'SpecificYear', 'AllExistingYears'];
+                        toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'Interval', 'SpecificDay', 'SpecificMonth', 'AllExistingYears'];
                         break;
                     default:
-                        toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
-                        toRemove.daily = ['CurrentHour', 'CurrentYear', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
-                        toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
-                        toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
+                        toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                        toRemove.daily = ['CurrentHour', 'CurrentYear', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                        toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                        toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
                         toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
                         break;
                 }
@@ -410,9 +410,20 @@ Number.prototype.format = function (n, x) {
             e.preventDefault();
             var $this = $(this);
             loadGraph($this.data('graph-url'), $this.val());
+            if ($this.val() === 'bar' && $('#bar-value-axis').val() === 'KpiEconomic') {
+                $('.netback-chart-opt').show();
+            } else {
+                $('.netback-chart-opt').hide();
+            }
             $('#PeriodeType').change();
         });
-
+        $(document).on('change', '#bar-value-axis', function (e) {
+            if ($('#graphic-type').val() === 'bar' && $(this).val() === 'KpiEconomic') {
+                $('.netback-chart-opt').show();
+            } else {
+                $('.netback-chart-opt').hide();
+            }
+        });
 
 
         var initialGraphicType = $('#graphic-type');

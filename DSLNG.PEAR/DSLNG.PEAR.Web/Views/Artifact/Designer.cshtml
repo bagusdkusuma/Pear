@@ -91,6 +91,11 @@
                                 @Html.DropDownListFor(model => model.ValueAxis, Model.ValueAxes, new { id = "bar-value-axis", @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.ValueAxis)
                             </div>
+                             <div class="form-group form-list netback-chart-opt">
+                                @Html.LabelFor(model => model.AsNetbackChart)
+                                @Html.CheckBoxFor(model => model.AsNetbackChart, new {@class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.AsNetbackChart)
+                            </div>
                         </div>
                         <div id="graphic-settings"></div>
                     </div>

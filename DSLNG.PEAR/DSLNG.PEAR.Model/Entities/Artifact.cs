@@ -35,6 +35,7 @@ namespace DSLNG.PEAR.Data.Entities
         public DateTime? End { get; set; }
         public PeriodeType PeriodeType { get; set; }
         public ValueAxis ValueAxis { get; set; }
+        public bool? AsNetbackChart { get; set; }
         public RangeFilter RangeFilter { get; set; }
         public Measurement Measurement { get; set; }
         public double? FractionScale { get; set; }

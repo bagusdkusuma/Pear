@@ -97,6 +97,8 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         [Display(Name = "Value Axis")]
         [Required]
         public string ValueAxis { get; set; }
+        
+        public bool AsNetbackChart { get; set; }
         public IList<SelectListItem> ValueAxes { get; set; }
         [Display(Name = "Is 3D")]
         public bool Is3D { get; set; }

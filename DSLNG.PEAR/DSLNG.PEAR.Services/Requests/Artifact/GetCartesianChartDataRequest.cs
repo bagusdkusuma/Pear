@@ -16,6 +16,7 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
         public PeriodeType PeriodeType { get; set; }
         public RangeFilter RangeFilter { get; set; }
         public ValueAxis ValueAxis { get; set; }
+        public bool AsNetbackChart { get; set; }
         //public double FractionScale { get; set; }
         //public double MaxValue { get; set; }
         public IList<SeriesRequest> Series { get; set; }

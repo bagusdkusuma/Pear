@@ -784,7 +784,8 @@ namespace DSLNG.PEAR.Services
                     }
                 }
             }
-            if (latestActual != null) {
+            if (latestActual != null)
+            {
                 switch (request.PeriodeType)
                 {
                     case PeriodeType.Hourly:
@@ -876,7 +877,7 @@ namespace DSLNG.PEAR.Services
             }
             else if (request.Series.Count > 1)
             {
-                if (request.Series.Where(x => x.Stacks.Count > 0).FirstOrDefault() != null || request.GraphicType == "baraccumulative" || request.GraphicType == "barachievement")
+                if (request.Series.Where(x => x.Stacks.Count > 0).FirstOrDefault() != null || request.GraphicType == "baraccumulative" || request.GraphicType == "barachievement" || request.AsNetbackChart)
                 {
                     seriesType = "multi-stacks-grouped";
                 }
@@ -899,7 +900,7 @@ namespace DSLNG.PEAR.Services
                     seriesResponse = this._getKpiActualSeries(request.Series, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes);
                     break;
                 case ValueAxis.KpiEconomic:
-                    seriesResponse = this._getKpiEconomicSeries(request.Series, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes);
+                    seriesResponse = this._getKpiEconomicSeries(request.Series, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes, false, request.AsNetbackChart);
                     break;
                 default:
                     var actualSeries = request.Series.Where(x => x.ValueAxis == ValueAxis.KpiActual).ToList();
@@ -908,7 +909,7 @@ namespace DSLNG.PEAR.Services
                     seriesType = "multi-stacks-grouped";
                     var series1 = this._getKpiTargetSeries(targetSeries, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes, true);
                     var series2 = this._getKpiActualSeries(actualSeries, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes, true);
-                    var series3 = this._getKpiEconomicSeries(economicSeries, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes, true);
+                    var series3 = this._getKpiEconomicSeries(economicSeries, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes, true, request.AsNetbackChart);
                     seriesResponse = series1.Concat(series2).Concat(series3).ToList();
                     break;
 
@@ -942,6 +943,32 @@ namespace DSLNG.PEAR.Services
                     }
                 }
 
+            }
+            if (request.AsNetbackChart)
+            {
+                response.Subtitle = newTimeInformation;
+                if (newDateTimePeriodes.Count > 0)
+                {
+                    switch (request.PeriodeType)
+                    {
+                        case PeriodeType.Hourly:
+                            response.Periodes = new List<string> { newDateTimePeriodes.First().ToString("hh tt", CultureInfo.InvariantCulture) + " - " + newDateTimePeriodes.Last().ToString("hh tt", CultureInfo.InvariantCulture) }.ToArray();
+                            //timeInformation = kpiActual.Periode.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
+                            break;
+                        case PeriodeType.Daily:
+                            response.Periodes = new List<string> { newDateTimePeriodes.First().ToString("dd", CultureInfo.InvariantCulture) + " - " + newDateTimePeriodes.Last().ToString("dd", CultureInfo.InvariantCulture) }.ToArray();
+                            //timeInformation = kpiActual.Periode.ToString("dd MMM yy", CultureInfo.InvariantCulture);
+                            break;
+                        case PeriodeType.Monthly:
+                            response.Periodes = new List<string> { newDateTimePeriodes.First().ToString("MMMM", CultureInfo.InvariantCulture) + " - " + newDateTimePeriodes.Last().ToString("MMMM", CultureInfo.InvariantCulture) }.ToArray();
+                            //timeInformation = kpiActual.Periode.ToString("MMM yy", CultureInfo.InvariantCulture);
+                            break;
+                        case PeriodeType.Yearly:
+                            response.Periodes = new List<string> { newDateTimePeriodes.First().ToString(DateFormat.Yearly, CultureInfo.InvariantCulture) + " - " + newDateTimePeriodes.Last().ToString(DateFormat.Yearly, CultureInfo.InvariantCulture) }.ToArray();
+                            //timeInformation = kpiActual.Periode.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
+                            break;
+                    }
+                }
             }
 
             response.SeriesType = seriesType;
@@ -1119,6 +1146,9 @@ namespace DSLNG.PEAR.Services
                             periodes.Add(DateTime.Now.Year.ToString());
                             dateTimePeriodes.Add(new DateTime(DateTime.Now.Year, 1, 1));
                             timeInformation = DateTime.Now.Year.ToString();
+                            break;
+                        case RangeFilter.AllExistingYears:
+                            timeInformation = "All Existing Years";
                             break;
                         default:
                             timeInformation = Start.Value.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture) + " - " + End.Value.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
@@ -1451,14 +1481,15 @@ namespace DSLNG.PEAR.Services
             return seriesResponse;
         }
 
-        private IList<GetCartesianChartDataResponse.SeriesResponse> _getKpiEconomicSeries(IList<GetCartesianChartDataRequest.SeriesRequest> configSeries, PeriodeType periodeType, IList<DateTime> dateTimePeriodes, string seriesType, RangeFilter rangeFilter, string graphicType, out string newTimeInformation, out IList<DateTime> newDatetimePeriodes, bool comparison = false)
+        private IList<GetCartesianChartDataResponse.SeriesResponse> _getKpiEconomicSeries(IList<GetCartesianChartDataRequest.SeriesRequest> configSeries, PeriodeType periodeType, IList<DateTime> dateTimePeriodes, string seriesType, RangeFilter rangeFilter, string graphicType, out string newTimeInformation, out IList<DateTime> newDatetimePeriodes, bool comparison = false, bool asNetbackChart = false)
         {
             var seriesResponse = new List<GetCartesianChartDataResponse.SeriesResponse>();
-            var start = dateTimePeriodes[0];
-            var end = dateTimePeriodes[dateTimePeriodes.Count - 1];
+            var start = rangeFilter == RangeFilter.AllExistingYears ? DateTime.Now : dateTimePeriodes[0];
+            var end = rangeFilter == RangeFilter.AllExistingYears ? DateTime.Now : dateTimePeriodes[dateTimePeriodes.Count - 1];
             var scenarioId = 0;
             var scenario = DataContext.Scenarios.FirstOrDefault(x => x.IsDashboard == true);
-            if (scenario != null) {
+            if (scenario != null)
+            {
                 scenarioId = scenario.Id;
             }
             newTimeInformation = null;
@@ -1468,9 +1499,19 @@ namespace DSLNG.PEAR.Services
 
                 if (series.Stacks.Count == 0)
                 {
-                    var kpiEconomics = DataContext.KeyOperationDatas.Where(x => x.PeriodeType == periodeType &&
-                      x.Periode >= start && x.Periode <= end && x.Kpi.Id == series.KpiId && x.Scenario.Id == scenarioId)
-                      .OrderBy(x => x.Periode).ToList();
+                    IList<KeyOperationData> kpiEconomics = new List<KeyOperationData>();
+                    if (rangeFilter == RangeFilter.AllExistingYears)
+                    {
+                        kpiEconomics = DataContext.KeyOperationDatas.Where(x => x.PeriodeType == periodeType &&
+                            x.Kpi.Id == series.KpiId && x.Scenario.Id == scenarioId)
+                    .OrderBy(x => x.Periode).ToList();
+                    }
+                    else
+                    {
+                        kpiEconomics = DataContext.KeyOperationDatas.Where(x => x.PeriodeType == periodeType &&
+                          x.Periode >= start && x.Periode <= end && x.Kpi.Id == series.KpiId && x.Scenario.Id == scenarioId)
+                          .OrderBy(x => x.Periode).ToList();
+                    }
 
                     if ((periodeType == PeriodeType.Hourly && rangeFilter == RangeFilter.CurrentHour) ||
                         (periodeType == PeriodeType.Daily && rangeFilter == RangeFilter.CurrentDay) ||
@@ -1512,7 +1553,42 @@ namespace DSLNG.PEAR.Services
                             Stack = series.Label,
                             Color = series.Color
                         };
-                        if (rangeFilter == RangeFilter.YTD || rangeFilter == RangeFilter.DTD || rangeFilter == RangeFilter.MTD)
+                        if (asNetbackChart)
+                        {
+                            var sumValue = kpiEconomics.Sum(x => x.Value);
+                            aSeries.BorderColor = "transparent";
+                            aSeries.Data.Add(sumValue);
+                            if (newTimeInformation == null && newDatetimePeriodes.Count == 0)
+                            {
+                                if (rangeFilter == RangeFilter.AllExistingYears)
+                                {
+                                    newTimeInformation = "2011 - 2030";
+                                    newDatetimePeriodes = new List<DateTime> { new DateTime(2011, 1, 1, 0, 0, 0), new DateTime(2030, 1, 1, 0, 0, 0) };
+                                }
+                                else
+                                {
+                                    switch (periodeType)
+                                    {
+                                        case PeriodeType.Hourly:
+                                            newTimeInformation = start.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture) + " - " + end.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
+                                            break;
+                                        case PeriodeType.Daily:
+                                            newTimeInformation = start.ToString("dd MMM yy", CultureInfo.InvariantCulture) + " - " + end.ToString("dd MMM yy", CultureInfo.InvariantCulture);
+                                            break;
+                                        case PeriodeType.Monthly:
+                                            newTimeInformation = start.ToString("MMM yy", CultureInfo.InvariantCulture) + " - " + end.ToString("MMM yy", CultureInfo.InvariantCulture);
+                                            break;
+                                        case PeriodeType.Yearly:
+                                            newTimeInformation = start.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture) + " - " + end.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
+                                            break;
+                                    }
+                                    dateTimePeriodes = new List<DateTime> { start, end };
+                                    newDatetimePeriodes = dateTimePeriodes;
+                                }
+                            }
+
+                        }
+                        else if (rangeFilter == RangeFilter.YTD || rangeFilter == RangeFilter.DTD || rangeFilter == RangeFilter.MTD)
                         {
 
                             foreach (var periode in dateTimePeriodes)
@@ -1528,6 +1604,7 @@ namespace DSLNG.PEAR.Services
                                     aSeries.Data.Add(economicValue.Value);
                                 }
                             }
+
                         }
                         else
                         {
@@ -1566,6 +1643,19 @@ namespace DSLNG.PEAR.Services
                             seriesResponse.Add(previousSeries);
                         }
                         seriesResponse.Add(aSeries);
+                        if (asNetbackChart && seriesResponse.Count > 1)
+                        {
+                            var invicibleSeries = new GetCartesianChartDataResponse.SeriesResponse
+                            {
+                                Name = "invisible_" + series.Label,
+                                Stack = series.Label,
+                                Color = "transparent",
+                                BorderColor = "transparent",
+                                ShowInLegend = false
+                            };
+                            invicibleSeries.Data.Add(seriesResponse[seriesResponse.Count - 2].Data[0] - seriesResponse[seriesResponse.Count - 1].Data[0]);
+                            seriesResponse.Add(invicibleSeries);
+                        }
                     }
                     else
                     {

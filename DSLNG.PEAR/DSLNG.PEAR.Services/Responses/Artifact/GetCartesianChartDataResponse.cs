@@ -21,11 +21,15 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
         {
             public SeriesResponse() {
                 Data = new List<double?>();
+                BorderColor = "#ffffff";
+                ShowInLegend = true;
             }
             public string Name { get; set; }
             public IList<double?> Data { get; set; }
             public string Stack { get; set; }
             public string Color { get; set; }
+            public string BorderColor { get; set; }
+            public bool ShowInLegend { get; set; }
         }
     }
 }
