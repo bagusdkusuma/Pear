@@ -110,6 +110,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 menus = _menuService.GetSiteMenus(new GetSiteMenusRequest() { IncludeChildren = true, RoleId = sessionData.RoleId });
                 menus.RootMenuIdActive = rootMenuActive.Id;
                 menus.SelectedMenu = rootMenuActive.SelectedMenu.MapTo<Services.Responses.Menu.GetSiteMenusResponse.Menu>();
+                menus.History = rootMenuActive.HistoryMenu;
             }
             
             

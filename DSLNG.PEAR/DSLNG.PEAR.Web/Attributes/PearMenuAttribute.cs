@@ -18,8 +18,10 @@ namespace DSLNG.PEAR.Web.Attributes
             var controller = filterContext.HttpContext.Request.RequestContext.RouteData.Values["Controller"].ToString();
             var action = filterContext.HttpContext.Request.RequestContext.RouteData.Values["Action"].ToString();
             var url = filterContext.HttpContext.Request.RawUrl;
-            var _menuService = ObjectFactory.Container.GetInstance<IMenuService>();
-            var rootMenuActive = _menuService.GetSiteMenuActive(new GetSiteMenuActiveRequest() { Action = action, Controller = controller, Url = url });
+            var menuService = ObjectFactory.Container.GetInstance<IMenuService>();
+            var urlHelperUrl = new UrlHelper(HttpContext.Current.Request.RequestContext);
+            string cleanUrl = urlHelperUrl.Action(action, controller, new {id = string.Empty});
+            var rootMenuActive = menuService.GetSiteMenuActive(new GetSiteMenuActiveRequest() { Action = action, Controller = controller, Url = url, CleanUrl = cleanUrl });
             filterContext.Controller.TempData.Add("RootMenuActive", rootMenuActive);
 
             base.OnActionExecuting(filterContext);

@@ -2092,8 +2092,7 @@ a.see-more
           
       }
 
-      #table tbody td {
-          /*width: 15%;*/
-          /*width: 120px;*/
+      .sub-nav > li.active > a {
+          color: red;
       }
 

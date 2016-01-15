@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+
+using System.Web.Http.Routing;
 
 namespace DSLNG.PEAR.Services.Requests.Menu
 {
@@ -10,7 +8,7 @@ namespace DSLNG.PEAR.Services.Requests.Menu
     {
         public string Controller { get; set; }
         public string Action { get; set; }
-
         public string Url { get; set; }
+        public string CleanUrl { get; set; }
     }
 }
