@@ -11,6 +11,7 @@ namespace DSLNG.PEAR.Services.Responses.Menu
         public IList<Menu> Menus { get; set; }
         public int RootMenuIdActive { get; set; }
         public Menu SelectedMenu { get; set; }
+        public IList<int> History { get; set; }
 
         public class Menu
         {

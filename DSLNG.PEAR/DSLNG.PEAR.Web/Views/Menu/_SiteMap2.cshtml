@@ -1,0 +1,73 @@
+﻿@model DSLNG.PEAR.Services.Responses.Menu.GetSiteMenusResponse
+@{
+    Layout = null;
+}
+
+@helper  ExtractMenu(IEnumerable<DSLNG.PEAR.Services.Responses.Menu.GetSiteMenusResponse.Menu> menus, int level)
+{
+    foreach (var menu in menus)
+    {
+        var isRootActive = false;
+        if (menu.ParentId == 0)
+        {
+            isRootActive = menu.Id == Model.RootMenuIdActive;
+        }
+        var rootClass = isRootActive ? "active" : "";
+        <li class="@rootClass">
+            <a href="@menu.Url" >
+                @if (!string.IsNullOrEmpty(menu.Icon))
+                {
+                    <img src="~/Content/img/@menu.Icon" />
+                    <span>@menu.Name</span>
+                }
+                else
+                {
+                    @menu.Name    
+                }
+            </a>
+            
+            @if (menu.Menus.Count > 0)
+            {
+                if (level == 0)
+                {
+                    ViewBag.MenuSubClass = "sub-nav";
+                }
+                else
+                {
+                    ViewBag.MenuSubClass = "sublevel";
+                }
+                
+                <ul class="@ViewBag.MenuSubClass @level">
+                    @ExtractMenu(menu.Menus, 1)
+                </ul>
+                
+            }
+        </li>
+    }
+}
+
+@*<h1>@Model.RootMenuIdActive</h1>
+<h1>@Model.SelectedMenu</h1>*@
+<ul class="main-nav">
+    @ExtractMenu(Model.Menus, 0)
+</ul>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('.sub-nav > li').click(function (e) {
+            if (!$(e.target).closest('.sublevel').length) {
+                var $this = $(this);
+                $this.find('ul').stop().slideToggle();
+                $this.find('.fa').toggleClass('fa-angle-down fa-angle-up');
+                $(this).parent().find('sub-nav > li.active').toggle();
+                $(this).toggleClass('active');
+            }
+        });
+
+        $('.main-nav > li').click(function () {
+            $('.main-nav > li.active').removeClass('active');
+            $(this).addClass('active');
+        });
+    })
+</script>
