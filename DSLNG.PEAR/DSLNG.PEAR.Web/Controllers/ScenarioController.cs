@@ -109,23 +109,27 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Detail(int id)
         {
+            return View(GetScenarioDetailViewModel(id));
+        }
+
+        public ActionResult Summary() 
+        {
+            var scenarioId = _scenarioService.GetActiveScenario();
+            if (scenarioId != 0)
+            {
+                return View("Detail", GetScenarioDetailViewModel(scenarioId));
+            }
+
+            return View("~/Views/Error/PageNotFound.cshtml");
+        }
+
+        private ScenarioDetailViewModel GetScenarioDetailViewModel(int id)
+        {
             var viewModel = new ScenarioDetailViewModel();
             var title = _scenarioService.GetScenario(new GetScenarioRequest { Id = id }).Name;
             viewModel.ScenarioId = id;
             ViewBag.Title = title;
-           
-            return View(viewModel);
-        }
-
-        public ActionResult Summary() {
-            var scenarioId = _scenarioService.GetActiveScenario();
-            if (scenarioId == 0)
-            {
-                return View("~/Views/Error/PageNotFound.cshtml");
-            }
-            else {
-                return RedirectToAction("Detail", new { id = scenarioId});
-            }
+            return viewModel;
         }
     }
 }
