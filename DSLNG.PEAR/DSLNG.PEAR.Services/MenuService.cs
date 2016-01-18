@@ -118,10 +118,11 @@ namespace DSLNG.PEAR.Services
             }
 
             IDictionary<int, int> dictionary = new Dictionary<int, int>();
+            
             var menus =
                 DataContext.Menus
                 .Include(x => x.Parent)
-                .Where(x => x.Url.Contains("/" + requestController + "/")).ToList();
+                .Where(x => x.Url.Contains(requestController)).ToList();
 
             foreach (var menu in menus)
             {
