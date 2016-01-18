@@ -42,7 +42,7 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
         public bool Remark { get; set; }
         public bool Is3D { get; set; }
         public bool ShowLegend { get; set; }
-
+        public bool AsNetbackChart { get; set; }
         public class SeriesRequest
         {
             public SeriesRequest()

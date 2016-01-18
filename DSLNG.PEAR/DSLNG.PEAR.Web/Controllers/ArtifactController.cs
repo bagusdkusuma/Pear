@@ -702,6 +702,7 @@ namespace DSLNG.PEAR.Web.Controllers
             rangeFilters.Add(new SelectListItem { Value = RangeFilter.SpecificDay.ToString(), Text = "SPECIFIC DAY" });
             rangeFilters.Add(new SelectListItem { Value = RangeFilter.SpecificMonth.ToString(), Text = "SPECIFIC MONTH" });
             rangeFilters.Add(new SelectListItem { Value = RangeFilter.SpecificYear.ToString(), Text = "SPECIFIC YEAR" });
+            rangeFilters.Add(new SelectListItem { Value = RangeFilter.AllExistingYears.ToString(), Text = "All Existing Years" });
         }
 
         public ActionResult View(int id)
@@ -849,15 +850,18 @@ namespace DSLNG.PEAR.Web.Controllers
                 default:
                     {
                         var chartData = _artifactServie.GetChartData(artifactResp.MapTo<GetCartesianChartDataRequest>());
-                        var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
+                        if (!artifactResp.AsNetbackChart)
                         {
-                            TimePeriodes = chartData.TimePeriodes,
-                            Type = "Overall",
-                            PeriodeType = artifactResp.PeriodeType
-                        });
+                            var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
+                            {
+                                TimePeriodes = chartData.TimePeriodes,
+                                Type = "Overall",
+                                PeriodeType = artifactResp.PeriodeType
+                            });
+                            previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
+                        }
                         previewViewModel.PeriodeType = artifactResp.PeriodeType.ToString();
                         previewViewModel.TimePeriodes = chartData.TimePeriodes;
-                        previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
                         previewViewModel.GraphicType = artifactResp.GraphicType;
                         previewViewModel.BarChart = new BarChartDataViewModel();
                         previewViewModel.BarChart.Title = artifactResp.HeaderTitle;
@@ -1041,15 +1045,18 @@ namespace DSLNG.PEAR.Web.Controllers
                         var cartesianRequest = viewModel.MapTo<GetCartesianChartDataRequest>();
                         viewModel.BarChart.MapPropertiesToInstance<GetCartesianChartDataRequest>(cartesianRequest);
                         var chartData = _artifactServie.GetChartData(cartesianRequest);
-                        var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
+                        if (!viewModel.AsNetbackChart)
                         {
-                            TimePeriodes = chartData.TimePeriodes,
-                            Type = "Overall",
-                            PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType)
-                        });
+                            var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
+                            {
+                                TimePeriodes = chartData.TimePeriodes,
+                                Type = "Overall",
+                                PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType)
+                            });
+                            previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
+                        }
                         previewViewModel.PeriodeType = viewModel.PeriodeType;
                         previewViewModel.TimePeriodes = chartData.TimePeriodes;
-                        previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
                         previewViewModel.GraphicType = viewModel.GraphicType;
                         previewViewModel.BarChart = new BarChartDataViewModel();
                         previewViewModel.BarChart.Title = viewModel.HeaderTitle;

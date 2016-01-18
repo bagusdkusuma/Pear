@@ -33,6 +33,7 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
         public int MeasurementId { get; set; }
         public double? FractionScale { get; set; }
         public double? MaxFractionScale { get; set; }
+        public bool AsNetbackChart { get; set; }
 
         public bool Actual { get; set; }
         public bool Target { get; set; }

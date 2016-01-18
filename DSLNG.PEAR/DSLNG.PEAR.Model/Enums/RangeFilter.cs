@@ -15,6 +15,7 @@ namespace DSLNG.PEAR.Data.Enums
         Interval,
         SpecificDay,
         SpecificMonth,
-        SpecificYear
+        SpecificYear,
+        AllExistingYears
     }
 }
