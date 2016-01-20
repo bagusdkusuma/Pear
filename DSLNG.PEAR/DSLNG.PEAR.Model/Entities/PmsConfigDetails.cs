@@ -27,6 +27,7 @@ namespace DSLNG.PEAR.Data.Entities
         //public ScoreIndicator ScoreIndicator { get; set; }
         //public ICollection<KpiTarget> KpiTargets { get; set; }
         //public ICollection<KpiAchievement> KpiAchievements { get; set; }
+        //test
         public TargetType TargetType { get; set; }
         public string Target { get; set; }
         public bool IsActive { get; set; }
