@@ -90,7 +90,7 @@
                 @Html.DropDownListFor(x => x.Year, Model.Years, new { @class = "form-control ddl-year" })
             </div>
             <div class="form-group">
-                @Html.ActionLink("Download Template", "DownloadTemplate", new { filename = @Model.FileName }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Download Template", "DownloadTemplate", new { groupId = Model.GroupId, scenarioId = Model.ScenarioId, periodeType = Model.PeriodeType, year = Model.Year }, new { @class = "btn btn-primary" })
             </div>
             <div class="form-group" id="div-proceed">
                 <input id="btn-proceed" class="btn btn-primary" value="Proceed" />
