@@ -2078,7 +2078,7 @@ a.see-more
         min-height: 20px;
       }
       .table2 tbody {
-        height: 210px;
+        max-height: 210px;
         overflow-y: auto;
         overflow-x:hidden;
         position: relative;
@@ -2098,3 +2098,10 @@ a.see-more
 .form-inline .form-group.netback-chart-opt {
     display:none;
 }
+
+/*#fixed-table {
+    border-top:none !important;
+}
+    #fixed-table > thead:first-child > tr:first-child > th {
+        border-top:1px solid #fff;
+    }*/

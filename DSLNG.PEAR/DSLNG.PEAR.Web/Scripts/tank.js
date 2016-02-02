@@ -1,13 +1,13 @@
 ﻿(function ($) {
-    $.fn.tank = function (options) {
+    $.fn.tank = function (options, dimension) {
         //console.log(options);
         var id = "tank_" + options.Id + Date.now();
         
         this.html('<svg class="svg" id="' + id + '" style="margin:auto;display:block"></svg>');
 
         var s = Snap('#' + id).attr({
-            width: 498,
-            height: 290
+            width: dimension.width - 40,
+            height: dimension.height - 40
         });;
 
         // variable Donggi
@@ -24,14 +24,14 @@
 
         // variable Tank Chart
 
-        var svgWidth = 498;
-        var svgHeight = 290;
+        var svgWidth = dimension.width - 40;
+        var svgHeight = dimension.height - 40;
 
         var percentFill = Math.round((volumeInventory / maxCapacity) * 100);
         var percentMin = Math.round((minCapacity / maxCapacity) * 100);
 
-        var tankHeight = 170;
-        var tankWidth = 140;
+        var tankHeight = svgHeight - 120;
+        var tankWidth = svgWidth * 27.5 / 100;
 
         // var marginSide = 166;
         var marginSide = (svgWidth - tankWidth) / 2;

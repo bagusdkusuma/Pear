@@ -2603,7 +2603,7 @@ Number.prototype.format = function (n, x) {
         tableScrollContainer.addClass('table-scrolling-container');
         tableScrollContainer.addClass('perfect-scrollbar');
         tableScrollContainer.css('width', '100%');
-        tableScrollContainer.css('height', '270px');
+        tableScrollContainer.css('max-height', '270px');
         tableScrollContainer.css('overflow-y', 'auto');
 
         var panel = $('<div>');
@@ -2751,8 +2751,10 @@ Number.prototype.format = function (n, x) {
         Pear.Artifact.Designer._kpiAutoComplete($('#graphic-settings'), false);
     };
     artifactDesigner._previewCallbacks.tank = function (data, container) {
-
-        container.tank(data.Tank);
+        container.tank(data.Tank, {
+            height: container.height(),
+            width: container.width()
+        });
         /*var containerHeight = container.height() - 50;
         var tankToTopHeight = 75;
         var tankHeight = containerHeight - tankToTopHeight;
@@ -3826,10 +3828,14 @@ Number.prototype.format = function (n, x) {
         addColumn();
     };
     templateEditor.ViewSetup = function () {
+        var wHeight = parseInt($(window).height());
+        var height = wHeight * 50 / 100;
         $('.artifact-holder').each(function (i, val) {
-
-            Pear.Loading.Show($(val));
             var $holder = $(val);
+            if (wHeight > 667) {
+                $holder.css('height', height + 'px');
+            }
+            Pear.Loading.Show($(val));
             var url = $holder.data('artifact-url');
             var callback = Pear.Artifact.Designer._previewCallbacks;
             $.ajax({
