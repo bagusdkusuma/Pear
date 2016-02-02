@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System.Drawing;
+using System.Text;
+using AutoMapper;
 using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Web.ViewModels.OperationData;
 using DevExpress.Web.Mvc;
@@ -177,25 +179,6 @@ namespace DSLNG.PEAR.Web.Controllers
             return PartialView("DetailPartial/_" + viewModel.PeriodeType, viewModel);
         }
 
-        private OperationDataConfigurationViewModel ConfigurationViewModel(OperationDataParamConfigurationViewModel paramViewModel, bool? isIncludeGroup)
-        {
-            PeriodeType pType = string.IsNullOrEmpty(paramViewModel.PeriodeType)
-                                    ? PeriodeType.Yearly
-                                    : (PeriodeType)Enum.Parse(typeof(PeriodeType), paramViewModel.PeriodeType);
-
-            var request = paramViewModel.MapTo<GetOperationDataConfigurationRequest>();
-            request.PeriodeType = pType;
-            request.IsPartial = isIncludeGroup.HasValue && isIncludeGroup.Value;
-            var response = _operationDataService.GetOperationDataConfiguration(request);
-            var viewModel = response.MapTo<OperationDataConfigurationViewModel>();
-            viewModel.Years = _dropdownService.GetYearsForOperationData().MapTo<SelectListItem>();
-            viewModel.PeriodeType = pType.ToString();
-            viewModel.Year = request.Year;
-            viewModel.ConfigType = "Economic";
-            return viewModel;
-        }
-
-
         public ActionResult Upload(string configType, int scenarioId)
         {
             OperationDataDetailViewModel model = new OperationDataDetailViewModel();
@@ -203,7 +186,6 @@ namespace DSLNG.PEAR.Web.Controllers
             model.ScenarioId = scenarioId;
             return PartialView("_UploadOperationData", model);
         }
-
 
         public ActionResult UploadControlCallbackAction(string configType, int scenarioId)
         {
@@ -217,22 +199,120 @@ namespace DSLNG.PEAR.Web.Controllers
             return null;
         }
 
-        public class ReadExcelFileModel
-        {
-            public bool isSuccess { get; set; }
-            public string Message { get; set; }
-            public int Success { get; set; }
-            public int Skipped { get; set; }
-            public int Rejected { get; set; }
-
-        }
-
         public JsonResult ProceedFile(string filename, int scenarioId, string configType)
         {
             var file = string.Format("{0}{1}/{2}", UploadDirectory, configType, filename);
             var response = this._ReadExcelFile(file, scenarioId, configType);
             return Json(new { isSuccess = response.IsSuccess, Message = response.Message });
         }
+
+        public ActionResult DownloadTemplate(OperationDataParamConfigurationViewModel viewModel)
+        {
+            var config = new OperationDataParamConfigurationViewModel();
+            var data = ConfigurationViewModel(viewModel, true);
+
+            var resultPath = Server.MapPath(string.Format("{0}{1}/", TemplateDirectory, ConfigType.OperationData));
+            if (!Directory.Exists(resultPath))
+            {
+                Directory.CreateDirectory(resultPath);
+            }
+
+            string workSheetName = new StringBuilder(viewModel.PeriodeType).ToString();
+            string dateFormat = string.Empty;
+            switch (viewModel.PeriodeType)
+            {
+
+                case "Yearly":
+                    dateFormat = "yyyy";
+                    break;
+                case "Monthly":
+                    dateFormat = "mmm-yy";
+                    workSheetName = string.Format("{0}_{1}", workSheetName, viewModel.Year);
+                    break;
+                default:
+                    dateFormat = "dd-mmm-yy";
+                    workSheetName = string.Format("{0}_{1}-{2}", workSheetName, viewModel.Year, viewModel.Month.ToString().PadLeft(2, '0'));
+                    break;
+            }
+
+            string guid = Guid.NewGuid().ToString();
+            string fileName = new StringBuilder(guid).Append(".xlsx").ToString();
+
+            IWorkbook workbook = new Workbook();
+            Worksheet worksheet = workbook.Worksheets[0];
+
+            worksheet.Name = workSheetName;
+            workbook.Worksheets.ActiveWorksheet = worksheet;
+            RowCollection rows = workbook.Worksheets[0].Rows;
+            ColumnCollection columns = workbook.Worksheets[0].Columns;
+
+            Row headerRow = rows[0];
+            headerRow.FillColor = Color.DarkGray;
+            headerRow.Alignment.Horizontal = SpreadsheetHorizontalAlignment.Center;
+            headerRow.Alignment.Vertical = SpreadsheetVerticalAlignment.Center;
+            Column kpiIdColumn = columns[0];
+            Column kpiNameColumn = columns[1];
+            kpiIdColumn.Visible = false;
+
+            headerRow.Worksheet.Cells[headerRow.Index, kpiIdColumn.Index].Value = "KPI ID";
+            headerRow.Worksheet.Cells[headerRow.Index, kpiNameColumn.Index].Value = "KPI Name";
+
+            int i = 1;
+            foreach (var kpi in data.Kpis)
+            {
+                int j = 2;
+                worksheet.Cells[i, kpiIdColumn.Index].Value = kpi.Id;
+                worksheet.Cells[i, kpiNameColumn.Index].Value = string.Format(@"{0} ({1})", kpi.Name, kpi.MeasurementName);
+
+                foreach (var operationData in kpi.OperationDatas.OrderBy(x => x.Periode))
+                {
+                    worksheet.Cells[headerRow.Index, j].Value = operationData.Periode;
+                    worksheet.Cells[headerRow.Index, j].NumberFormat = dateFormat;
+                    worksheet.Cells[headerRow.Index, j].AutoFitColumns();
+
+                    worksheet.Cells[i, j].Value = operationData.Value;
+                    worksheet.Cells[i, j].NumberFormat = "#,0.#0";
+                    worksheet.Columns[j].AutoFitColumns();
+                    j++;
+                }
+
+                Column totalValueColumn = worksheet.Columns[j];
+                if (i == headerRow.Index + 1)
+                {
+                    worksheet.Cells[headerRow.Index, totalValueColumn.Index].Value = "Average";
+                    worksheet.Cells[headerRow.Index, totalValueColumn.Index + 1].Value = "SUM";
+                    Range r1 = worksheet.Range.FromLTRB(kpiNameColumn.Index + 1, i, j - 1, i);
+                    worksheet.Cells[i, j].Formula = string.Format("=AVERAGE({0})", r1.GetReferenceA1());
+                    worksheet.Cells[i, j + 1].Formula = string.Format("=SUM({0})", r1.GetReferenceA1());
+                }
+                else
+                {
+                    // add formula
+                    Range r2 = worksheet.Range.FromLTRB(kpiNameColumn.Index + 1, i, j - 1, i);
+                    worksheet.Cells[i, j].Formula = string.Format("=AVERAGE({0})", r2.GetReferenceA1());
+                    worksheet.Cells[i, j + 1].Formula = string.Format("=SUM({0})", r2.GetReferenceA1());
+                }
+
+                i++;
+            }
+
+            kpiNameColumn.AutoFitColumns();
+            worksheet.FreezePanes(headerRow.Index, kpiNameColumn.Index);
+
+            string resultFilePath = string.Format("{0},{1}", resultPath, fileName);
+
+            using (FileStream stream = new FileStream(resultFilePath, FileMode.Create, FileAccess.ReadWrite))
+            {
+                workbook.SaveDocument(stream, DevExpress.Spreadsheet.DocumentFormat.Xlsx);
+                stream.Close();
+            }
+
+            string namafile = Path.GetFileName(resultFilePath);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(resultFilePath);
+            var response = new FileContentResult(fileBytes, "application/octet-stream") { FileDownloadName = namafile };
+            return response;
+        }
+
         private BaseResponse _ReadExcelFile(string filename, int scenarioId, string configType)
         {
             var response = new BaseResponse();
@@ -324,7 +404,7 @@ namespace DSLNG.PEAR.Web.Controllers
                                 {
                                     if (worksheet.Cells[i, j].Value.Type == CellValueType.Numeric)
                                     {
-                                        Kpi_Id = int.Parse(worksheet.Cells[i, j].Value.ToString());                      
+                                        Kpi_Id = int.Parse(worksheet.Cells[i, j].Value.ToString());
 
                                     }
 
@@ -406,7 +486,6 @@ namespace DSLNG.PEAR.Web.Controllers
             return response;
         }
 
-
         private BaseResponse _UpdateEconomic(List<OperationDataConfigurationViewModel.Item> datas)
         {
             var response = new BaseResponse();
@@ -422,5 +501,25 @@ namespace DSLNG.PEAR.Web.Controllers
             }
             return response;
         }
+
+        private OperationDataConfigurationViewModel ConfigurationViewModel(OperationDataParamConfigurationViewModel paramViewModel, bool? isIncludeGroup)
+        {
+            PeriodeType pType = string.IsNullOrEmpty(paramViewModel.PeriodeType)
+                                    ? PeriodeType.Yearly
+                                    : (PeriodeType)Enum.Parse(typeof(PeriodeType), paramViewModel.PeriodeType);
+
+            var request = paramViewModel.MapTo<GetOperationDataConfigurationRequest>();
+            request.PeriodeType = pType;
+            request.IsPartial = isIncludeGroup.HasValue && isIncludeGroup.Value;
+            var response = _operationDataService.GetOperationDataConfiguration(request);
+            var viewModel = response.MapTo<OperationDataConfigurationViewModel>();
+            viewModel.Years = _dropdownService.GetYearsForOperationData().MapTo<SelectListItem>();
+            viewModel.PeriodeType = pType.ToString();
+            viewModel.Year = request.Year;
+            viewModel.ConfigType = "Economic";
+            return viewModel;
+        }
     }
+
+
 }
