@@ -397,5 +397,12 @@ namespace DSLNG.PEAR.Web.Controllers
             Response.End();
             return View("Index");
         }
+
+        public ActionResult Detail(int id)
+        {
+            var response = _kpiService.GetKpiDetail(new GetKpiRequest { Id = id });
+            var viewModel = response.MapTo<DetailKpiViewModel>();
+            return View(viewModel);
+        }
     }
 }

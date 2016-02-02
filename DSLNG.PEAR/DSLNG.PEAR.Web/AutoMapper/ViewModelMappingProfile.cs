@@ -578,6 +578,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<CalculateOutputResponse, ScenarioResultViewModel>();
 
             Mapper.CreateMap<OperationConfigUpdateViewModel, UpdateOperationRequest>();
+            Mapper.CreateMap<GetKpiDetailResponse, DetailKpiViewModel>();
 
             base.Configure();
         }

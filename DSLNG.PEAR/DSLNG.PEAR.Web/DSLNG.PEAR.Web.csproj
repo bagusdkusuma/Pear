@@ -777,6 +777,7 @@
     <Compile Include="Grid\GridModelBinder.cs" />
     <Compile Include="Grid\GridParams.cs" />
     <Compile Include="ViewModels\HighlightGroup\HighlightGroupViewModel.cs" />
+    <Compile Include="ViewModels\Kpi\DetailKpiViewModel.cs" />
     <Compile Include="ViewModels\Kpi\UploadViewModel.cs" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
@@ -1073,6 +1074,7 @@
     <Content Include="Views\NLS\Manage.cshtml" />
     <Content Include="Views\Weather\Manage.cshtml" />
     <Content Include="Views\Menu\_SiteMap2.cshtml" />
+    <Content Include="Views\Kpi\Detail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

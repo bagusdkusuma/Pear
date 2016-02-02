@@ -1,0 +1,145 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Kpi.DetailKpiViewModel
+
+@{
+    ViewBag.Title = "Detail";
+}
+
+<h2>Detail</h2>
+
+<div style="color:#fff">
+    <h4>Detail</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pillar)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pillar)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Level)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Level)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RoleGroup)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RoleGroup)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Group)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Group)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsEconomic)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsEconomic)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Order)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Order)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.YtdFormula)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.YtdFormula)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Measurement)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Measurement)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Method)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Method)
+        </dd>
+
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.Remark)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Remark)
+        </dd>
+
+       
+        <dt>
+            @Html.DisplayNameFor(model => model.Icon)
+        </dt>
+
+        <dd>
+            @{
+                if (!string.IsNullOrEmpty(Model.Icon))
+                {
+                    <img src="@Url.Content("~/content/img/kpi/" + Model.Icon)"/>
+                }
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Update", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

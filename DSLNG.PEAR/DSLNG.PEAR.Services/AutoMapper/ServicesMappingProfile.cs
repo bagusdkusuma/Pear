@@ -515,6 +515,20 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<StaticHighlightPrivilege, GetStaticHighlightOrdersResponse.HighlightOrderResponse>()
                 .ForMember(x => x.RoleGroupIds, o => o.MapFrom(s => s.RoleGroups.Select(x => x.Id).ToArray()));
 
+            Mapper.CreateMap<Kpi, GetKpiDetailResponse>()
+                  .ForMember(x => x.Code, y => y.MapFrom(z => z.Code))
+                  .ForMember(x => x.Group, y => y.MapFrom(z => z.Group.Name))
+                  .ForMember(x => x.Measurement, y => y.MapFrom(z => z.Measurement.Name))
+                  .ForMember(x => x.Method, y => y.MapFrom(z => z.Method.Name))
+                  .ForMember(x => x.Periode, y => y.MapFrom(z => z.Period.ToString()))
+                  .ForMember(x => x.RoleGroup, y => y.MapFrom(z => z.RoleGroup.Name))
+                  .ForMember(x => x.Type, y => y.MapFrom(z => z.Type.Name))
+                  .ForMember(x => x.Pillar, y => y.MapFrom(z => z.Pillar.Name))
+                  .ForMember(x => x.IsActive, y => y.MapFrom(z => z.IsActive.ToString()))
+                  .ForMember(x => x.YtdFormula, y => y.MapFrom(z => z.YtdFormula.ToString()))
+                  .ForMember(x => x.Level, y => y.MapFrom(z => z.Level.Name.ToString()))
+                ;
+
             base.Configure();
         }
 
