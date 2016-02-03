@@ -171,7 +171,7 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             var request = viewModel.MapTo<UpdateOperationDataRequest>();
             var response = _operationDataService.Update(request);
-            return Json(new { Message = response.Message, isSuccess = response.IsSuccess });
+            return Json(new { Message = response.Message, isSuccess = response.IsSuccess, id = response.Id });
         }
 
         public ActionResult DetailPartial(OperationDataParamConfigurationViewModel paramViewModel)
@@ -233,7 +233,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult DownloadTemplate(OperationDataParamConfigurationViewModel viewModel)
         {
-           var data = ConfigurationViewModel(viewModel, true);
+           var data = ConfigurationViewModel(viewModel, false);
 
             return ConvertToExcelFile(viewModel, data);
         }

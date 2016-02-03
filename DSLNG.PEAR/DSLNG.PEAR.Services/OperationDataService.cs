@@ -294,6 +294,7 @@ namespace DSLNG.PEAR.Services
                 operationData.Scenario = DataContext.Scenarios.Single(x => x.Id == request.ScenarioId);
                 operationData.KeyOperationConfig = DataContext.KeyOperationConfigs.Single(x => x.Id == request.KeyOperationConfigId);
                 DataContext.SaveChanges();
+                response.Id = operationData.Id;
                 response.IsSuccess = true;
                 response.Message = "Key Operation Data has been updated successfully";
             }
