@@ -6,7 +6,7 @@
 @section Scripts{
     <script type="text/javascript">
         var data = {};
-        //data.configType = "Economic";
+        data.configType = "Economic";
         data.scenarioId = "@Model.ScenarioId";
         var link = null;
         $(document).ready(function () {
@@ -34,8 +34,10 @@
                             $('.config-content').show();
                     });
                 } else {
+                    data.scenarioId = @Model.ScenarioId
+                    data.configType = "Economic";
                     $.ajax({
-                        url: '@Url.Action("Upload", "File")',
+                        url: '@Url.Action("Upload", "OperationData")',
                         type: 'GET',
                         data: data,
                         beforeSend: function () {
