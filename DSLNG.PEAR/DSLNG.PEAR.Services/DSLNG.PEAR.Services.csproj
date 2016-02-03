@@ -95,6 +95,7 @@
     <Compile Include="Requests\OperationalData\GetOperationDataConfigurationRequest.cs" />
     <Compile Include="Requests\OperationalData\GetOperationDataRequestByValue.cs" />
     <Compile Include="Requests\OperationalData\UpdateOperationDataRequest.cs" />
+    <Compile Include="Requests\Operation\GetOperationsInRequest.cs" />
     <Compile Include="Requests\Operation\UpdateOperationRequest.cs" />
     <Compile Include="Requests\OutputConfig\DeleteOutputConfigRequest.cs" />
     <Compile Include="Requests\Template\DeleteTemplateRequest.cs" />
@@ -438,6 +439,7 @@
     <Compile Include="Responses\OperationGroup\SaveOperationGroupResponse.cs" />
     <Compile Include="Responses\Operation\DeleteOperationResponse.cs" />
     <Compile Include="Responses\Operation\GetOperationResponse.cs" />
+    <Compile Include="Responses\Operation\GetOperationsInResponse.cs" />
     <Compile Include="Responses\Operation\GetOperationsResponse.cs" />
     <Compile Include="Responses\Operation\OperationGroupsResponse.cs" />
     <Compile Include="Responses\Operation\SaveOperationResponse.cs" />

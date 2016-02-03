@@ -171,7 +171,7 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             var request = viewModel.MapTo<UpdateOperationDataRequest>();
             var response = _operationDataService.Update(request);
-            return Json(new { Message = response.Message, isSuccess = response.IsSuccess });
+            return Json(new { Message = response.Message, isSuccess = response.IsSuccess, id = response.Id });
         }
 
         public ActionResult DetailPartial(OperationDataParamConfigurationViewModel paramViewModel)
@@ -212,11 +212,53 @@ namespace DSLNG.PEAR.Web.Controllers
             return Json(new { isSuccess = response.IsSuccess, Message = response.Message });
         }
 
+        public ActionResult Download(int scenarioId)
+        {
+            var list = new List<SelectListItem>();
+            list.Add(new SelectListItem{Text = "Yearly", Value = "Yearly"});
+            list.Add(new SelectListItem { Text = "Monthly", Value = "Monthly" });
+            var model = new ConfigurationViewModel()
+                {
+                    PeriodeType = "Yearly",
+                    Year = DateTime.Now.Year,
+                    Month = DateTime.Now.Month,
+                    Years = _dropdownService.GetYears().MapTo<SelectListItem>(),
+                    Months = _dropdownService.GetMonths().MapTo<SelectListItem>(),
+                    PeriodeTypes = list
+                };
+
+            ViewBag.ScenarioId = scenarioId;
+            return PartialView("_Download", model);
+        }
+
         public ActionResult DownloadTemplate(OperationDataParamConfigurationViewModel viewModel)
         {
-            var config = new OperationDataParamConfigurationViewModel();
-            var data = ConfigurationViewModel(viewModel, true);
+           var data = ConfigurationViewModel(viewModel, false);
 
+            return ConvertToExcelFile(viewModel, data);
+        }
+
+        public ActionResult DownloadTemplateForAllGroup(OperationDataParamConfigurationViewModel paramViewModel)
+        {
+            PeriodeType pType = string.IsNullOrEmpty(paramViewModel.PeriodeType)
+                                   ? PeriodeType.Yearly
+                                   : (PeriodeType)Enum.Parse(typeof(PeriodeType), paramViewModel.PeriodeType);
+
+            var request = paramViewModel.MapTo<GetOperationDataConfigurationRequest>();
+            request.PeriodeType = pType;
+            request.IsPartial = false;
+            var response = _operationDataService.GetOperationDataConfigurationForAllGroup(request);
+            var viewModel = response.MapTo<OperationDataConfigurationViewModel>();
+            viewModel.Years = _dropdownService.GetYearsForOperationData().MapTo<SelectListItem>();
+            viewModel.PeriodeType = pType.ToString();
+            viewModel.Year = request.Year;
+            viewModel.ConfigType = "Economic";
+            return ConvertToExcelFile(paramViewModel, viewModel);
+        }
+
+        private ActionResult ConvertToExcelFile(OperationDataParamConfigurationViewModel viewModel,
+                                                OperationDataConfigurationViewModel data)
+        {
             var resultPath = Server.MapPath(string.Format("{0}{1}/", TemplateDirectory, ConfigType.OperationData));
             if (!Directory.Exists(resultPath))
             {
@@ -227,7 +269,6 @@ namespace DSLNG.PEAR.Web.Controllers
             string dateFormat = string.Empty;
             switch (viewModel.PeriodeType)
             {
-
                 case "Yearly":
                     dateFormat = "yyyy";
                     break;
@@ -237,7 +278,8 @@ namespace DSLNG.PEAR.Web.Controllers
                     break;
                 default:
                     dateFormat = "dd-mmm-yy";
-                    workSheetName = string.Format("{0}_{1}-{2}", workSheetName, viewModel.Year, viewModel.Month.ToString().PadLeft(2, '0'));
+                    workSheetName = string.Format("{0}_{1}-{2}", workSheetName, viewModel.Year,
+                                                  viewModel.Month.ToString().PadLeft(2, '0'));
                     break;
             }
 
@@ -315,7 +357,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
             string namafile = Path.GetFileName(resultFilePath);
             byte[] fileBytes = System.IO.File.ReadAllBytes(resultFilePath);
-            var response = new FileContentResult(fileBytes, "application/octet-stream") { FileDownloadName = namafile };
+            var response = new FileContentResult(fileBytes, "application/octet-stream") {FileDownloadName = namafile};
             return response;
         }
 

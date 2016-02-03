@@ -18,6 +18,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         DeleteOperationalDataResponse DeleteOperationalData(DeleteOperationalDataRequest request);
         GetOperationalDataDetailResponse GetOperationalDataDetail(GetOperationalDataDetailRequest request);
         GetOperationDataConfigurationResponse GetOperationDataConfiguration(GetOperationDataConfigurationRequest request);
+        GetOperationDataConfigurationResponse GetOperationDataConfigurationForAllGroup(GetOperationDataConfigurationRequest request);
         UpdateOperationDataResponse Update(UpdateOperationDataRequest request);
         GetOperationIdResponse GetOperationId(List<int> list_Kpi);
         BaseResponse BatchUpdateOperationDatas(BatchUpdateOperationDataRequest request);
