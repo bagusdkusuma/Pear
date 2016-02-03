@@ -4,9 +4,12 @@
     $(document).ready(function () {
         $('#div-proceed').hide();
         $('#btn-proceed').click(function () {
+            /*alert(link);
+            alert(encodeURIComponent(link));
+            return false;*/
             //window.location = '@Url.Action("ProceedFile", "OperationData")' + '?filename=' + encodeURIComponent(link);
             var formData = {
-                'filename': encodeURIComponent(link),
+                'filename': link,
                 'scenarioId': value.scenarioId,
                 'configType': value.configType
 
