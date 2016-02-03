@@ -252,5 +252,19 @@ namespace DSLNG.PEAR.Services
             }
             return operationConfigs;
         }
+
+
+        public GetOperationsInResponse GetOperationIn(GetOperationsInRequest request)
+        {
+            return new GetOperationsInResponse
+            {
+                KeyOperations = DataContext.KeyOperationConfigs.Include(x => x.Kpi).Where(x => request.KpiIds.Contains(x.Kpi.Id)).Select(
+                    x => new GetOperationsInResponse.KeyOperationResponse { 
+                        Id = x.Id,
+                        KpiId = x.Kpi.Id
+                    }
+                ).ToList()
+            };
+        }
     }
 }

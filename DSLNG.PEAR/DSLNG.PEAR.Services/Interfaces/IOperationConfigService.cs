@@ -16,5 +16,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetOperationResponse GetOperation(GetOperationRequest request);
         DeleteOperationResponse DeleteOperation(DeleteOperationRequest request);
         UpdateOperationResponse UpdateOperation(UpdateOperationRequest request);
+        GetOperationsInResponse GetOperationIn(GetOperationsInRequest request);
     }
 }
