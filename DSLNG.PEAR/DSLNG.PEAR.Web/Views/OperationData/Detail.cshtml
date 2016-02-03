@@ -6,7 +6,7 @@
 @section Scripts{
     <script type="text/javascript">
         var data = {};
-        data.configType = "Economic";
+        //data.configType = "Economic";
         data.scenarioId = "@Model.ScenarioId";
         var link = null;
         $(document).ready(function () {
@@ -19,9 +19,9 @@
                 var tabType = that.attr('data-tabtype');
                 if (tabType == 'download') {
                     $.ajax({
-                        url: '@Url.Action("Download", "OperationData")',
+                        url: '@Url.Action("Download", "OperationData", new {scenarioId = Model.ScenarioId})',
                         type: 'GET',
-                        data: data,
+                        //data: data,
                         beforeSend: function () {
                             $('.ajax-loader2').show();
                             $('.config-content').hide();
@@ -35,7 +35,7 @@
                     });
                 } else {
                     $.ajax({
-                        url: '@Url.Action("Upload", "OperationData")',
+                        url: '@Url.Action("Upload", "File")',
                         type: 'GET',
                         data: data,
                         beforeSend: function () {

@@ -461,5 +461,105 @@ namespace DSLNG.PEAR.Services
             }
             return response;
         }
+
+
+        public GetOperationDataConfigurationResponse GetOperationDataConfigurationForAllGroup(GetOperationDataConfigurationRequest request)
+        {
+            var response = new GetOperationDataConfigurationResponse();
+            response.GroupId = request.GroupId;
+            response.ScenarioId = request.ScenarioId;
+           
+            var periodeType = request.PeriodeType;
+            
+            List<KeyOperationConfig> keyOperationConfigs = DataContext.KeyOperationConfigs
+            .Include(x => x.Kpi)
+            .Include(x => x.Kpi.Measurement)
+            .Include(x => x.KeyOperationGroup)
+            .Where(x => x.IsActive && x.KeyOperationGroup != null).ToList();
+
+
+
+            switch (periodeType)
+            {
+                case PeriodeType.Yearly:
+                    var operationDataYearly =
+                        DataContext.KeyOperationDatas
+                        .Include(x => x.Kpi)
+                        .Include(x => x.Scenario)
+                        .Include(x => x.KeyOperationConfig)
+                        .Where(x => x.PeriodeType == PeriodeType.Yearly && x.Scenario.Id == request.ScenarioId).ToList();
+
+                    foreach (var keyOperationConfig in keyOperationConfigs)
+                    {
+                        var kpiDto = keyOperationConfig.Kpi.MapTo<GetOperationDataConfigurationResponse.Kpi>();
+                        kpiDto.GroupName = keyOperationConfig.KeyOperationGroup.Name;
+                        foreach (var number in YearlyNumbersForOperationData)
+                        {
+                            var operation = operationDataYearly.FirstOrDefault(x => x.Kpi.Id == keyOperationConfig.Kpi.Id && x.Periode.Year == number);
+
+                            if (operation != null)
+                            {
+                                var operationtDataDto =
+                                    operation.MapTo<GetOperationDataConfigurationResponse.OperationData>();
+                                operationtDataDto.ScenarioId = request.ScenarioId;
+                                operationtDataDto.KeyOperationConfigId = keyOperationConfig.Id;
+                                kpiDto.OperationDatas.Add(operationtDataDto);
+                            }
+                            else
+                            {
+                                var operationtDataDto = new GetOperationDataConfigurationResponse.OperationData();
+                                operationtDataDto.Periode = new DateTime(number, 1, 1);
+                                operationtDataDto.KeyOperationConfigId = keyOperationConfig.Id;
+                                kpiDto.OperationDatas.Add(operationtDataDto);
+                            }
+                        }
+
+                        response.Kpis.Add(kpiDto);
+                    }
+                    break;
+                case PeriodeType.Monthly:
+                    var operationDataMonthly = DataContext.KeyOperationDatas
+                                    .Include(x => x.Kpi)
+                                    .Include(x => x.Scenario)
+                                    .Include(x => x.KeyOperationConfig)
+                                    .Where(x => x.PeriodeType == PeriodeType.Monthly && x.Periode.Year == request.Year && x.Scenario.Id == request.ScenarioId).ToList();
+
+                    foreach (var keyOperationConfig in keyOperationConfigs)
+                    {
+                        var kpiDto = keyOperationConfig.Kpi.MapTo<GetOperationDataConfigurationResponse.Kpi>();
+                        kpiDto.GroupName = keyOperationConfig.KeyOperationGroup.Name;
+                        KeyOperationConfig config = keyOperationConfig;
+                        var operationDatas = operationDataMonthly.Where(x => x.Kpi.Id == config.Kpi.Id).ToList();
+                        for (int i = 1; i <= 12; i++)
+                        {
+                            var operationData = operationDatas.FirstOrDefault(x => x.Periode.Month == i);
+                            if (operationData != null)
+                            {
+                                var operationDataDto =
+                                    operationData.MapTo<GetOperationDataConfigurationResponse.OperationData>();
+                                operationDataDto.ScenarioId = request.ScenarioId;
+                                operationDataDto.KeyOperationConfigId = keyOperationConfig.Id;
+                                kpiDto.OperationDatas.Add(operationDataDto);
+                            }
+                            else
+                            {
+                                var operationDataDto = new GetOperationDataConfigurationResponse.OperationData();
+                                operationDataDto.Periode = new DateTime(request.Year, i, 1);
+                                operationDataDto.ScenarioId = request.ScenarioId;
+                                operationDataDto.KeyOperationConfigId = keyOperationConfig.Id;
+                                kpiDto.OperationDatas.Add(operationDataDto);
+                            }
+                        }
+                        response.Kpis.Add(kpiDto);
+                    }
+                    break;
+
+            }
+
+            response.IsSuccess = true;
+
+
+            return response;
+        }
     }
 }

@@ -1075,6 +1075,7 @@
     <Content Include="Views\Weather\Manage.cshtml" />
     <Content Include="Views\Menu\_SiteMap2.cshtml" />
     <Content Include="Views\Kpi\Detail.cshtml" />
+    <Content Include="Views\OperationData\_Download.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
