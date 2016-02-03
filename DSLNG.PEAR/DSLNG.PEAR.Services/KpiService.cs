@@ -63,32 +63,7 @@ namespace DSLNG.PEAR.Services
         {
             try
             {
-                var kpi = DataContext.Kpis
-                    .Include(x => x.Pillar)
-                    .Include(x => x.Level)
-                    .Include(x => x.RoleGroup)
-                    .Include(x => x.Group)
-                    .Include(x => x.Type)
-                    .Include(x => x.Measurement)
-                    .Include(x => x.Method)
-                    .Include(x => x.RelationModels)
-                    .Include("RelationModels.Kpi").First(x => x.Id == request.Id);
-
-                var relationModels = DataContext.KpiRelationModels.Include(x => x.Kpi).Include(x => x.KpiParent).Where(x => x.Kpi.Id == kpi.Id);
-                foreach (var item in relationModels)
-                {
-                    if (kpi.RelationModels.FirstOrDefault(x => x.Kpi.Id.Equals(item.KpiParent.Id)) == null)
-                    {
-                        kpi.RelationModels.Add(new Data.Entities.KpiRelationModel
-                        {
-                            Id = item.Id,
-                            Kpi = item.KpiParent,
-                            KpiParent = item.Kpi,
-                            Method = item.Method
-                        });    
-                    }
-                    
-                }
+                var kpi = GetSingleKpi(request);
                 var response = kpi.MapTo<GetKpiResponse>();
 
                 return response;
@@ -102,6 +77,57 @@ namespace DSLNG.PEAR.Services
                 };
             }
         }
+
+        public GetKpiDetailResponse GetKpiDetail(GetKpiRequest request)
+        {
+            try
+            {
+                var kpi = GetSingleKpi(request);
+                var response = kpi.MapTo<GetKpiDetailResponse>();
+
+                return response;
+            }
+            catch (System.InvalidOperationException x)
+            {
+                return new GetKpiDetailResponse
+                {
+                    IsSuccess = false,
+                    Message = x.Message
+                };
+            }
+        }
+
+        private Kpi GetSingleKpi(GetKpiRequest request)
+        {
+            var kpi = DataContext.Kpis
+                                 .Include(x => x.Pillar)
+                                 .Include(x => x.Level)
+                                 .Include(x => x.RoleGroup)
+                                 .Include(x => x.Group)
+                                 .Include(x => x.Type)
+                                 .Include(x => x.Measurement)
+                                 .Include(x => x.Method)
+                                 .Include(x => x.RelationModels)
+                                 .Include("RelationModels.Kpi").First(x => x.Id == request.Id);
+
+            var relationModels =
+                DataContext.KpiRelationModels.Include(x => x.Kpi).Include(x => x.KpiParent).Where(x => x.Kpi.Id == kpi.Id);
+            foreach (var item in relationModels)
+            {
+                if (kpi.RelationModels.FirstOrDefault(x => x.Kpi.Id.Equals(item.KpiParent.Id)) == null)
+                {
+                    kpi.RelationModels.Add(new Data.Entities.KpiRelationModel
+                        {
+                            Id = item.Id,
+                            Kpi = item.KpiParent,
+                            KpiParent = item.Kpi,
+                            Method = item.Method
+                        });
+                }
+            }
+            return kpi;
+        }
+
         public GetKpisResponse GetKpis(GetKpisRequest request)
         {
             int totalRecords;

@@ -43,7 +43,9 @@
                     {
                         "mDataProp": "Name", "name": "Name", "className": "text-align-left",
                         render: function (data, type, row) {
-                            return data + ' (' + row.Measurement.Name +')';
+                            console.log(row.Id);
+                            return "<a href='/Kpi/Detail/" + row.Id + "'>" + data + ' (' + row.Measurement.Name + ')' + "</a>";
+                            //return data + ' (' + row.Measurement.Name +')';
                         }
                     },
                     {
