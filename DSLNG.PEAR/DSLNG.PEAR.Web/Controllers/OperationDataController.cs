@@ -22,6 +22,7 @@ using DSLNG.PEAR.Web.Extensions;
 using DSLNG.PEAR.Services.Responses;
 using DevExpress.Web;
 using System.Web.UI;
+using DSLNG.PEAR.Services.Requests.Operation;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -29,10 +30,15 @@ namespace DSLNG.PEAR.Web.Controllers
     {
         private readonly IOperationDataService _operationDataService;
         private readonly IDropdownService _dropdownService;
-        public OperationDataController(IOperationDataService operationDataService, IDropdownService dropdownService)
+        private readonly IOperationConfigService _operationConfigService;
+
+        public OperationDataController(IOperationDataService operationDataService, 
+            IDropdownService dropdownService,
+            IOperationConfigService operationConfigService)
         {
             _operationDataService = operationDataService;
             _dropdownService = dropdownService;
+            _operationConfigService = operationConfigService;
         }
 
         public ActionResult Index()
@@ -393,7 +399,7 @@ namespace DSLNG.PEAR.Web.Controllers
                                 }
                             }
                         }
-                        var OperationsId = _operationDataService.GetOperationId(list_Kpi);
+                        var OperationsId = _operationConfigService.GetOperationIn(new GetOperationsInRequest { KpiIds = list_Kpi });
 
                         //get rows
                         for (int i = 1; i < rows; i++)
@@ -411,7 +417,11 @@ namespace DSLNG.PEAR.Web.Controllers
                                 }
                                 else if (j > 1)
                                 {
-                                    var operationId = OperationsId.OperationDatas.Where(x => x.Kpi == Kpi_Id).Select(x => x.KeyOperationConfig).FirstOrDefault();
+                                    var operationId = 0;
+                                    var operation = OperationsId.KeyOperations.FirstOrDefault(x => x.KpiId == Kpi_Id);
+                                    if (operation != null) {
+                                        operationId = operation.Id;
+                                    }
 
                                     if (worksheet.Cells[0, j].Value.Type == CellValueType.DateTime)
                                     {
