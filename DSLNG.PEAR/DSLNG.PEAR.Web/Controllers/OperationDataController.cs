@@ -283,8 +283,8 @@ namespace DSLNG.PEAR.Web.Controllers
                     break;
             }
 
-            string guid = Guid.NewGuid().ToString();
-            string fileName = new StringBuilder(guid).Append(".xlsx").ToString();
+           string fileName = string.Format(@"{0}.xlsx", DateTime.Now.ToString("yyyymmddMMss"));
+            /*string fileName = new StringBuilder(guid).Append(".xlsx").ToString();*/
 
             IWorkbook workbook = new Workbook();
             Worksheet worksheet = workbook.Worksheets[0];
@@ -357,7 +357,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
             string namafile = Path.GetFileName(resultFilePath);
             byte[] fileBytes = System.IO.File.ReadAllBytes(resultFilePath);
-            var response = new FileContentResult(fileBytes, "application/octet-stream") { FileDownloadName = namafile };
+            var response = new FileContentResult(fileBytes, "application/octet-stream") { FileDownloadName = fileName };
             return response;
         }
 
@@ -441,7 +441,7 @@ namespace DSLNG.PEAR.Web.Controllers
                                 }
                             }
                         }
-                        var OperationsId = _operationConfigService.GetOperationIn(new GetOperationsInRequest { KpiIds = list_Kpi });
+                        var operationsId = _operationConfigService.GetOperationIn(new GetOperationsInRequest { KpiIds = list_Kpi });
 
                         //get rows
                         for (int i = 1; i < rows; i++)
@@ -461,7 +461,7 @@ namespace DSLNG.PEAR.Web.Controllers
                                 else if (j > 1)
                                 {
                                     var operationId = 0;
-                                    var operation = OperationsId.KeyOperations.FirstOrDefault(x => x.KpiId == Kpi_Id);
+                                    var operation = operationsId.KeyOperations.FirstOrDefault(x => x.KpiId == Kpi_Id);
                                     if (operation != null)
                                     {
                                         operationId = operation.Id;

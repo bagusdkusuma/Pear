@@ -17,6 +17,7 @@
 
                 var tabType = that.attr('data-tabtype');
                 if (tabType == 'download') {
+                    data.configType = 'KpiAchievement';
                     $.ajax({
                         url: '@Url.Action("Download", "File")',
                         type: 'GET',
@@ -33,6 +34,7 @@
                             $('.config-content').show();
                     });
                 } else {
+                    data.configType = 'KpiAchievement';
                     $.ajax({
                         url: '@Url.Action("Upload", "File")',
                         type: 'GET',

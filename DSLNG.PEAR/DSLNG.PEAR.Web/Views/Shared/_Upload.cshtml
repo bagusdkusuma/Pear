@@ -3,7 +3,7 @@
     $('#btn-proceed').click(function () {
         var link = document.getElementById('filename-text').value;
         var formData = {
-            'filename': link,
+            'filename': encodeURIComponent(link),
             'configType': data.configType
 
         };
