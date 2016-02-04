@@ -244,7 +244,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         Range range = worksheet.GetUsedRange();
                         int rows = range.RowCount;
                         int column = range.ColumnCount - 2;
-                        int Kpi_Id = 0;
+                        int kpiId = 0;
                         DateTime periodData = new DateTime();
                         double? nilai = null;
                         for (int i = 1; i < rows; i++)
@@ -259,7 +259,7 @@ namespace DSLNG.PEAR.Web.Controllers
                                 {
                                     if (worksheet.Cells[i, j].Value.Type == CellValueType.Numeric)
                                     {
-                                        Kpi_Id = int.Parse(worksheet.Cells[i, j].Value.ToString());
+                                        kpiId = int.Parse(worksheet.Cells[i, j].Value.ToString());
                                     }
                                 }
                                 else if (j > 1)
@@ -297,10 +297,10 @@ namespace DSLNG.PEAR.Web.Controllers
                                     if (isValidKpi && (nilai != null || fromExistedToNull))
                                     {
                                         prepareDataContainer.Value = nilai;
-                                        prepareDataContainer.KpiId = Kpi_Id;
+                                        prepareDataContainer.KpiId = kpiId;
                                         prepareDataContainer.Periode = periodData;
                                         prepareDataContainer.PeriodeType = pType;
-                                        var oldKpiAchievement = _kpiAchievementService.GetKpiAchievementByValue(new GetKpiAchievementRequestByValue { Kpi_Id = Kpi_Id, periode = periodData, PeriodeType = periodType });
+                                        var oldKpiAchievement = _kpiAchievementService.GetKpiAchievementByValue(new GetKpiAchievementRequestByValue { Kpi_Id = kpiId, periode = periodData, PeriodeType = periodType });
                                         if (oldKpiAchievement.IsSuccess)
                                         {
                                             prepareDataContainer.Id = oldKpiAchievement.Id;
@@ -316,33 +316,11 @@ namespace DSLNG.PEAR.Web.Controllers
                                         {
                                             rejected++;
                                         }
-                                    }
-
-                                    //listPrev.Add(prepareDataContainer);
+                                    }                                  
                                 }
-
-
-
                             }
-
-
-
-
                         }
-                        //DataTable dataTable = worksheet.CreateDataTable(range, true);
-                        //for (int col = 0; col < range.ColumnCount; col++)
-                        //{
-                        //    //CellValueType cellType = range[0, col].Value.Type;
-                        //    for (int r = 1; r < range.RowCount; r++)
-                        //    {
-                        //        //if (cellType != range[r, col].Value.Type)
-                        //        //{
-                        //        //    dataTable.Columns[col].DataType = typeof(string);
-                        //        //    break;
-                        //        //}
-                        //    }
-                        //}
-
+                       
                         response.isSuccess = true;
                         response.Message = "Success :" + inserted + "\r\n";
                         response.Message += "Skipped :" + skipped + "\r\n";
@@ -354,13 +332,12 @@ namespace DSLNG.PEAR.Web.Controllers
                         response.Message = "File Not Valid";
                         break;
                     }
-
-
-
                 }
             }
+
             return response;
         }
+
         private string _ExportToExcel(ConfigurationKpiAchievementsViewModel viewModel)
         {
             string dateFormat = "dd-mmm-yy";
