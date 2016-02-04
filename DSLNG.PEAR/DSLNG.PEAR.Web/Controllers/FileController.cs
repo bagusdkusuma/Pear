@@ -114,12 +114,12 @@ namespace DSLNG.PEAR.Web.Controllers
                     workSheetName = string.Format("{0}_{1}-{2}", workSheetName, year, month.ToString().PadLeft(2, '0'));
                     break;
             }
-            string guid = Guid.NewGuid().ToString();
-            string fileName = new StringBuilder(guid).Append(".xlsx").ToString();
+
+            string fileName = string.Format(@"{0}.xlsx", DateTime.Now.ToString("yyyymmddMMss"));
 
             //using (FileStream stream = new FileStream(fileName,FileMode.Create,FileAccess.ReadWrite)
             //{
-                
+
             //}
             IWorkbook workbook = new Workbook();
             Worksheet worksheet = workbook.Worksheets[0];
@@ -162,7 +162,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             items.Add(item);
                         }
                         break;
-                    case"KpiAchievement":
+                    case "KpiAchievement":
                         foreach (var achieve in kpi.KpiAchievements)
                         {
                             var item = new ConfigurationViewModel.Item() { Id = achieve.Id, KpiId = achieve.Id, Periode = achieve.Periode, Remark = achieve.Remark, Value = achieve.Value, PeriodeType = pType };
@@ -208,7 +208,7 @@ namespace DSLNG.PEAR.Web.Controllers
             KpiNameColumn.AutoFitColumns();
             worksheet.FreezePanes(HeaderRow.Index, KpiNameColumn.Index);
 
-            string resultFilePath = string.Format("{0},{1}",resultPath,fileName);// System.Web.HttpContext.Current.Request.MapPath(resultPath + fileName);
+            string resultFilePath = string.Format("{0},{1}", resultPath, fileName);// System.Web.HttpContext.Current.Request.MapPath(resultPath + fileName);
             //System.Web.HttpContext.Current.Response.Clear();
             //System.Web.HttpContext.Current.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
             //System.Web.HttpContext.Current.Response.AddHeader("content-disposition", String.Format(@"attachment;filename={0}", fileName));
@@ -226,9 +226,9 @@ namespace DSLNG.PEAR.Web.Controllers
 
             string namafile = Path.GetFileName(resultFilePath);
             byte[] fileBytes = System.IO.File.ReadAllBytes(resultFilePath);
-            var response = new FileContentResult(fileBytes, "application/octet-stream") { FileDownloadName = namafile };
+            var response = new FileContentResult(fileBytes, "application/octet-stream") { FileDownloadName = fileName };
             return response;
-            
+
         }
 
         public ActionResult Upload(string configType)
@@ -264,7 +264,8 @@ namespace DSLNG.PEAR.Web.Controllers
             PeriodeType pType = PeriodeType.Yearly;
             int tahun = DateTime.Now.Year, bulan = DateTime.Now.Month;
             List<ConfigurationViewModel.Item> list_data = new List<ConfigurationViewModel.Item>();
-            if (filename != Path.GetFullPath(filename)) {
+            if (filename != Path.GetFullPath(filename))
+            {
                 filename = Server.MapPath(filename);
             }
             /*
@@ -320,12 +321,13 @@ namespace DSLNG.PEAR.Web.Controllers
                         int Kpi_Id = 0;
                         DateTime periodData = new DateTime();
                         double? nilai = null;
-                        
+
                         //get rows
                         for (int i = 1; i < rows; i++)
                         {
                             for (int j = 0; j < column; j++)
                             {
+                                bool fromExistedToNull = false;
                                 if (j == 0)
                                 {
                                     if (worksheet.Cells[i, j].Value.Type == CellValueType.Numeric)
@@ -333,42 +335,49 @@ namespace DSLNG.PEAR.Web.Controllers
                                         Kpi_Id = int.Parse(worksheet.Cells[i, j].Value.ToString());
                                     }
                                 }
-                                else if (j > 1) {
+                                else if (j > 1)
+                                {
                                     if (worksheet.Cells[0, j].Value.Type == CellValueType.DateTime)
                                     {
                                         periodData = DateTime.Parse(worksheet.Cells[0, j].Value.ToString());
-                                    //}
-                                    if (worksheet.Cells[i, j].Value.Type == CellValueType.Numeric)
-                                    {
-                                        nilai = double.Parse(worksheet.Cells[i, j].Value.ToString());
-                                    }
-                                    else
-                                    {
-                                        nilai = null;
-                                    }
-
-                                    if (nilai != null) {
-                                        // try to cacth and update
-                                        var data = new ConfigurationViewModel.Item() { Value = nilai, KpiId = Kpi_Id, Periode = periodData, PeriodeType = pType };
-                                        list_data.Add(data);
-                                        //switch (configType)
-                                        //{
-                                        //    case "KpiTarget":
-                                        //        response = this._UpdateKpiTarget(data);
-                                        //        break;
-                                        //    case "KpiAchievement":
-                                        //        response = this._UpdateKpiAchievement(data);
-                                        //        break;
-                                        //    case "Economic":
-                                        //        response = this._UpdateEconomic(data);
-                                        //        break;
-                                        //    default:
-                                        //        response.IsSuccess = false;
-                                        //        response.Message = "No Table Selected";
-                                        //        break;
                                         //}
+                                        if (worksheet.Cells[i, j].Value.Type == CellValueType.Numeric)
+                                        {
+                                            nilai = double.Parse(worksheet.Cells[i, j].Value.ToString());
+                                        }
+                                        else if (worksheet.Cells[i, j].Value.Type == CellValueType.Text)
+                                        {
+                                            fromExistedToNull = true;
+                                            nilai = null;
+                                        }
+                                        else
+                                        {
+                                            nilai = null;
+                                        }
+
+                                        if (nilai != null || fromExistedToNull)
+                                        {
+                                            // try to cacth and update
+                                            var data = new ConfigurationViewModel.Item() { Value = nilai, KpiId = Kpi_Id, Periode = periodData, PeriodeType = pType };
+                                            list_data.Add(data);
+                                            //switch (configType)
+                                            //{
+                                            //    case "KpiTarget":
+                                            //        response = this._UpdateKpiTarget(data);
+                                            //        break;
+                                            //    case "KpiAchievement":
+                                            //        response = this._UpdateKpiAchievement(data);
+                                            //        break;
+                                            //    case "Economic":
+                                            //        response = this._UpdateEconomic(data);
+                                            //        break;
+                                            //    default:
+                                            //        response.IsSuccess = false;
+                                            //        response.Message = "No Table Selected";
+                                            //        break;
+                                            //}
+                                        }
                                     }
-                                }
                                 }
                             }
                         }
@@ -398,7 +407,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 }
                 #endregion
             }
-            
+
             //here to read excel fileController
             return response;
         }
@@ -425,10 +434,10 @@ namespace DSLNG.PEAR.Web.Controllers
                 var batch = new BatchUpdateKpiAchievementRequest();
                 foreach (var data in datas)
                 {
-                    var prepare = new UpdateKpiAchievementItemRequest() { Id = data.Id, KpiId = data.KpiId, Periode = data.Periode, Value = data.Value, PeriodeType = data.PeriodeType, Remark = data.Remark};// data.MapTo<UpdateKpiAchievementItemRequest>();
+                    var prepare = new UpdateKpiAchievementItemRequest() { Id = data.Id, KpiId = data.KpiId, Periode = data.Periode, Value = data.Value, PeriodeType = data.PeriodeType, Remark = data.Remark };// data.MapTo<UpdateKpiAchievementItemRequest>();
                     batch.BatchUpdateKpiAchievementItemRequest.Add(prepare);
                 }
-                response = _kpiAchievementService.BatchUpdateKpiAchievements(batch);                
+                response = _kpiAchievementService.BatchUpdateKpiAchievements(batch);
             }
             return response;
         }
