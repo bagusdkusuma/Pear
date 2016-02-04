@@ -41,10 +41,11 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 response = _kpiAchievementService.GetAllKpiAchievements();
             }
-            else {
+            else
+            {
                 response = _kpiAchievementService.GetKpiAchievementsByRole(new GetKpiAchievementsConfigurationRequest { RoleGroupId = this.UserProfile().RoleId });
             }
-            
+
             if (response.IsSuccess)
             {
                 var viewModel = response.MapTo<IndexKpiAchievementViewModel>();
@@ -189,6 +190,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var response = this._ReadExcelFile(UploadDirectory + filename);
             return Json(new { isSuccess = response.isSuccess, Message = response.Message, Succeed = response.Success, skipped = response.Skipped, rejected = response.Rejected });
         }
+
         private ReadExcelFileModel _ReadExcelFile(string filename)
         {
             int inserted = 0;
@@ -250,6 +252,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             //get rows
                             for (int j = 0; j < column; j++)
                             {
+                                bool fromExistedToNull = false;
                                 var prepareDataContainer = new UpdateKpiAchievementsViewModel.KpiAchievementItem();
                                 //get rows header and period
                                 if (j == 0)
@@ -265,9 +268,15 @@ namespace DSLNG.PEAR.Web.Controllers
                                     {
                                         periodData = DateTime.Parse(worksheet.Cells[0, j].Value.ToString());
                                     }
+
                                     if (worksheet.Cells[i, j].Value.Type == CellValueType.Numeric)
                                     {
                                         nilai = double.Parse(worksheet.Cells[i, j].Value.ToString());
+                                    }
+                                    else if (worksheet.Cells[i, j].Value.Type == CellValueType.Text)
+                                    {
+                                        fromExistedToNull = true;
+                                        nilai = null;
                                     }
                                     else
                                     {
@@ -280,11 +289,12 @@ namespace DSLNG.PEAR.Web.Controllers
                                         skipped++;
                                         isValidKpi = _kpiService.IsValidKpi(new Services.Requests.Kpi.GetKpiByRole { RoleId = this.UserProfile().RoleId });
                                     }
-                                    else {
+                                    else
+                                    {
                                         isValidKpi = true;
                                     }
 
-                                    if (nilai != null && isValidKpi)
+                                    if (isValidKpi && (nilai != null || fromExistedToNull))
                                     {
                                         prepareDataContainer.Value = nilai;
                                         prepareDataContainer.KpiId = Kpi_Id;
@@ -297,15 +307,17 @@ namespace DSLNG.PEAR.Web.Controllers
                                         }
                                         var request = prepareDataContainer.MapTo<UpdateKpiAchievementItemRequest>();
                                         request.UserId = userId;
-                                        var insert =  _kpiAchievementService.UpdateKpiAchievementItem(request);
+                                        var insert = _kpiAchievementService.UpdateKpiAchievementItem(request);
                                         if (insert.IsSuccess)
                                         {
                                             inserted++;
                                         }
-                                        else {
+                                        else
+                                        {
                                             rejected++;
                                         }
                                     }
+
                                     //listPrev.Add(prepareDataContainer);
                                 }
 
@@ -332,9 +344,9 @@ namespace DSLNG.PEAR.Web.Controllers
                         //}
 
                         response.isSuccess = true;
-                        response.Message = "Success :" + inserted +"\r\n";
-                        response.Message += "Skipped :" + skipped +"\r\n";
-                        response.Message += "Rejected :" + rejected +"\r\n";
+                        response.Message = "Success :" + inserted + "\r\n";
+                        response.Message += "Skipped :" + skipped + "\r\n";
+                        response.Message += "Rejected :" + rejected + "\r\n";
                     }
                     else
                     {
@@ -368,7 +380,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     break;
             }
             string fileName = new StringBuilder(workSheetName).Append(".xls").ToString();
-            var path = System.Web.HttpContext.Current.Request.MapPath(TemplateDirectory+"/KpiAchievement/");
+            var path = System.Web.HttpContext.Current.Request.MapPath(TemplateDirectory + "/KpiAchievement/");
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);

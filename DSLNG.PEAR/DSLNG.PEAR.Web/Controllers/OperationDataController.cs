@@ -32,7 +32,7 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IDropdownService _dropdownService;
         private readonly IOperationConfigService _operationConfigService;
 
-        public OperationDataController(IOperationDataService operationDataService, 
+        public OperationDataController(IOperationDataService operationDataService,
             IDropdownService dropdownService,
             IOperationConfigService operationConfigService)
         {
@@ -215,7 +215,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Download(int scenarioId)
         {
             var list = new List<SelectListItem>();
-            list.Add(new SelectListItem{Text = "Yearly", Value = "Yearly"});
+            list.Add(new SelectListItem { Text = "Yearly", Value = "Yearly" });
             list.Add(new SelectListItem { Text = "Monthly", Value = "Monthly" });
             var model = new ConfigurationViewModel()
                 {
@@ -233,7 +233,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult DownloadTemplate(OperationDataParamConfigurationViewModel viewModel)
         {
-           var data = ConfigurationViewModel(viewModel, false);
+            var data = ConfigurationViewModel(viewModel, false);
 
             return ConvertToExcelFile(viewModel, data);
         }
@@ -357,7 +357,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
             string namafile = Path.GetFileName(resultFilePath);
             byte[] fileBytes = System.IO.File.ReadAllBytes(resultFilePath);
-            var response = new FileContentResult(fileBytes, "application/octet-stream") {FileDownloadName = namafile};
+            var response = new FileContentResult(fileBytes, "application/octet-stream") { FileDownloadName = namafile };
             return response;
         }
 
@@ -448,6 +448,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         {
                             for (int j = 0; j < column; j++)
                             {
+                                bool fromExistedToNull = false;
                                 if (j == 0)
                                 {
                                     if (worksheet.Cells[i, j].Value.Type == CellValueType.Numeric)
@@ -461,7 +462,8 @@ namespace DSLNG.PEAR.Web.Controllers
                                 {
                                     var operationId = 0;
                                     var operation = OperationsId.KeyOperations.FirstOrDefault(x => x.KpiId == Kpi_Id);
-                                    if (operation != null) {
+                                    if (operation != null)
+                                    {
                                         operationId = operation.Id;
                                     }
 
@@ -473,6 +475,11 @@ namespace DSLNG.PEAR.Web.Controllers
                                     {
                                         nilai = double.Parse(worksheet.Cells[i, j].Value.ToString());
                                     }
+                                    else if (worksheet.Cells[i, j].Value.Type == CellValueType.Text)
+                                    {
+                                        fromExistedToNull = true;
+                                        nilai = null;
+                                    }
                                     else
                                     {
                                         nilai = null;
@@ -480,7 +487,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
 
 
-                                    if (nilai != null)
+                                    if (nilai != null || fromExistedToNull)
                                     {
                                         // try to cacth and update
                                         var data = new OperationDataConfigurationViewModel.Item() { Value = nilai, KpiId = Kpi_Id, Periode = periodData, PeriodeType = pType, ScenarioId = scenarioId, OperationId = operationId };
