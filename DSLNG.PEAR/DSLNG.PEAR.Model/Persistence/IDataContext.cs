@@ -3,6 +3,7 @@ using System.Data.Entity.Infrastructure;
 using DSLNG.PEAR.Data.Entities;
 using Type = DSLNG.PEAR.Data.Entities.Type;
 using DSLNG.PEAR.Data.Entities.EconomicModel;
+using DSLNG.PEAR.Data.Entities.Blueprint;
 
 namespace DSLNG.PEAR.Data.Persistence
 {
@@ -61,6 +62,9 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<EconomicSummary> EconomicSummaries { get; set; }
         IDbSet<KeyOutputConfiguration> KeyOutputConfigs { get; set; }
         IDbSet<StaticHighlightPrivilege> StaticHighlightPrivileges { get; set; }
+        IDbSet<PlanningBlueprint> PlanningBlueprints { get; set; }
+        IDbSet<UltimateObjectivePoint> UltimateObjectivePoints { get; set; }
+        IDbSet<EnvironmentsScanning> EnvironmentsScannings { get; set; }
         Database Database { get; }
         int SaveChanges();
         DbEntityEntry Entry(object entity);

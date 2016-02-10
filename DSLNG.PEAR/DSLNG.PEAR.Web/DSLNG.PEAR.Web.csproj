@@ -760,6 +760,7 @@
     </Content>
     <Compile Include="Controllers\AssumptionDataController.cs" />
     <Compile Include="Controllers\EconomicSummaryController.cs" />
+    <Compile Include="Controllers\PlanningBlueprintController.cs" />
     <Compile Include="Scheduler\ScenarioScheduler.cs" />
     <Compile Include="ViewModels\EconomicSummary\EconomicSummaryReportViewModel.cs" />
     <Compile Include="Controllers\HighlightController.cs" />
@@ -1073,6 +1074,9 @@
     <Content Include="Views\NLS\Manage.cshtml" />
     <Content Include="Views\Weather\Manage.cshtml" />
     <Content Include="Views\Menu\_SiteMap2.cshtml" />
+    <Content Include="Views\PlanningBlueprint\Index.cshtml" />
+    <Content Include="Views\PlanningBlueprint\Create.cshtml" />
+    <Content Include="Views\PlanningBlueprint\EnvironmentsScanning.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -1242,6 +1246,8 @@
     <Compile Include="ViewModels\OutputCategory\OutputCategoryViewModel.cs" />
     <Compile Include="ViewModels\OutputConfig\OutputConfigViewModel.cs" />
     <Compile Include="ViewModels\OutputConfig\ScenarioResultViewModel.cs" />
+    <Compile Include="ViewModels\PlanningBlueprint\EnvironmentsScanningViewModel.cs" />
+    <Compile Include="ViewModels\PlanningBlueprint\PlanningBlueprintViewModel.cs" />
     <Compile Include="ViewModels\PmsConfigDetails\CreatePmsConfigDetailsViewModel.cs" />
     <Compile Include="ViewModels\PmsConfig\UpdatePmsConfigViewModel.cs" />
     <Compile Include="ViewModels\PmsConfig\CreatePmsConfigViewModel.cs" />

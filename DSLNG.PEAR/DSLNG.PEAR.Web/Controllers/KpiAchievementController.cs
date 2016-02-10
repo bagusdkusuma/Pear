@@ -197,6 +197,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var listPrev = new List<UpdateKpiAchievementsViewModel.KpiAchievementItem>();
             var response = new ReadExcelFileModel();
             var file = Server.MapPath(filename);
+            var userId = UserProfile().UserId;
             Workbook workbook = new Workbook();
             using (FileStream stream = new FileStream(file, FileMode.Open))
             {
@@ -295,6 +296,7 @@ namespace DSLNG.PEAR.Web.Controllers
                                             prepareDataContainer.Id = oldKpiAchievement.Id;
                                         }
                                         var request = prepareDataContainer.MapTo<UpdateKpiAchievementItemRequest>();
+                                        request.UserId = userId;
                                         var insert =  _kpiAchievementService.UpdateKpiAchievementItem(request);
                                         if (insert.IsSuccess)
                                         {

@@ -135,6 +135,8 @@ using DSLNG.PEAR.Services.Responses.HighlightGroup;
 using DSLNG.PEAR.Web.ViewModels.OutputConfig;
 using DSLNG.PEAR.Services.Requests.OutputConfig;
 using DSLNG.PEAR.Services.Responses.OutputConfig;
+using DSLNG.PEAR.Web.ViewModels.PlanningBlueprint;
+using DSLNG.PEAR.Services.Requests.PlanningBlueprint;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -578,6 +580,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<CalculateOutputResponse, ScenarioResultViewModel>();
 
             Mapper.CreateMap<OperationConfigUpdateViewModel, UpdateOperationRequest>();
+            Mapper.CreateMap<PlanningBlueprintViewModel, SavePlanningBlueprintRequest>();
 
             base.Configure();
         }

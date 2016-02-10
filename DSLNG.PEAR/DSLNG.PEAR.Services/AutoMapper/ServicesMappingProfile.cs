@@ -87,6 +87,9 @@ using OGetKpisResponse = DSLNG.PEAR.Services.Responses.OutputConfig.GetKpisRespo
 using GetKpisResponse = DSLNG.PEAR.Services.Responses.Kpi.GetKpisResponse;
 using DSLNG.PEAR.Services.Responses.OutputConfig;
 using DSLNG.PEAR.Services.Requests.OutputConfig;
+using DSLNG.PEAR.Services.Requests.PlanningBlueprint;
+using DSLNG.PEAR.Data.Entities.Blueprint;
+using DSLNG.PEAR.Services.Responses.PlanningBlueprint;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -514,6 +517,10 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
             Mapper.CreateMap<StaticHighlightPrivilege, GetStaticHighlightOrdersResponse.HighlightOrderResponse>()
                 .ForMember(x => x.RoleGroupIds, o => o.MapFrom(s => s.RoleGroups.Select(x => x.Id).ToArray()));
+
+            Mapper.CreateMap<SavePlanningBlueprintRequest, PlanningBlueprint>();
+            Mapper.CreateMap<PlanningBlueprint, GetPlanningBlueprintsResponse.PlanningBlueprint>();
+            Mapper.CreateMap<EnvironmentsScanning, GetPlanningBlueprintsResponse.EnvironmentsScanning>();
 
             base.Configure();
         }
