@@ -8,5 +8,6 @@ namespace DSLNG.PEAR.Services.Responses.OperationalData
 {
     public class UpdateOperationDataResponse : BaseResponse
     {
+        public int Id { get; set; }
     }
 }

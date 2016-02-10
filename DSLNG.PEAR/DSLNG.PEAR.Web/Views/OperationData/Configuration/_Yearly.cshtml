@@ -4,9 +4,12 @@
     $(document).ready(function () {
         $('#div-proceed').hide();
         $('#btn-proceed').click(function () {
+            /*alert(link);
+            alert(encodeURIComponent(link));
+            return false;*/
             //window.location = '@Url.Action("ProceedFile", "OperationData")' + '?filename=' + encodeURIComponent(link);
             var formData = {
-                'filename': encodeURIComponent(link),
+                'filename': link,
                 'scenarioId': value.scenarioId,
                 'configType': value.configType
 
@@ -82,7 +85,7 @@
 <div style="overflow: auto">
     <form class="form-inline" style="float: left">
         <div class="form-group">
-            @Html.ActionLink("Download Template", "DownloadTemplate", new { filename = @Model.FileName }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Download Template", "DownloadTemplate", new { groupId = Model.GroupId, scenarioId = Model.ScenarioId, periodeType = Model.PeriodeType }, new { @class = "btn btn-primary" })
         </div>
         <div class="form-group" id="div-proceed">
             <input id="btn-proceed" class="btn btn-primary" value="Proceed" />

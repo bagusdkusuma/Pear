@@ -157,7 +157,7 @@
                     url: '@Url.Action("Update")',
                     data: formData,
                     success: function (data) {
-                        $('.popover').parent().find('.id').attr('value', data.Id);
+                        that.closest('th').children('.id').val(data.id);
                         if (remark.length > 0) {
                             $('.popover').parent().find('.value').addClass('remark_sign');
                         }

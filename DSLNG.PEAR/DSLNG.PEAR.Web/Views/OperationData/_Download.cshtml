@@ -1,0 +1,92 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Config.ConfigurationViewModel
+
+<script type="text/javascript">
+    var data = {};
+    $(document).ready(function () {
+        $('#div-month, #div-year').hide();
+        //$('#div-year').attr("style", "padding-right: 30px; border-right: solid 1px #3f454f;");
+        $('#periodeType').change(function () {
+            var periode = $('#periodeType').val();
+            switch (periode) {
+                case 'Yearly':
+                    $('#div-month, #div-year').hide();
+                    break;
+                case 'Monthly':
+                    $('#div-month').hide();
+                    $('#div-year').show();
+                    $('#div-year').attr("style", "padding-right: 30px;");
+                    data.year = '@DateTime.Now.Year';
+                    break;
+                case 'Daily':
+                    $('#div-month, #div-year').show();
+                    data.year = '@DateTime.Now.Year';
+                    data.month = '@DateTime.Now.Month';
+                    $('#div-year').attr("style", "padding-right: 30px; border-right: solid 1px #3f454f;");
+                    break;
+                case 'Weekly':
+                    data.year = '@DateTime.Now.Year';
+                    data.month = '@DateTime.Now.Month';
+                    $('#div-month, #div-year').show();
+                    $('#div-year').attr("style", "padding-right: 30px; border-right: solid 1px #3f454f;");
+                    break;
+                case 'Hourly':
+                    data.year = '@DateTime.Now.Year';
+                    data.month = '@DateTime.Now.Month';
+                    $('#div-month, #div-year').show();
+                    $('#div-year').attr("style", "padding-right: 30px; border-right: solid 1px #3f454f;");
+                    break;
+                default:
+                    data.year = '@DateTime.Now.Year';
+                    data.month = '@DateTime.Now.Month';
+                    //$('#div-month, #div-year').show();
+                    //$('#div-year').attr("style", "padding-right: 30px; border-right: solid 1px #3f454f;");
+                    break;
+            }
+            data.periode = periode;
+        });
+        $('#month, #year').change(function () {
+            data.year = $('#year').val();
+            data.month = $('#month').val();
+        });
+        $('#btn-download').click(function () {
+            var configType = '@Model.ConfigType';
+            var periodeType = $('#periodeType').val();
+            var year = $('#year').val();
+            var month = $('#month').val();
+            $.ajax({
+                url: '@Url.Action("DownloadTemplate", "File")',
+                type: 'GET',
+                data: data,
+                beforeSend: function (result) {
+                    $('.ajax-loader2').show();
+                    //$('.config-content').hide();
+                }
+
+            })
+        });
+    });
+</script>
+<div class="notification"></div>
+<!---->
+<div>
+    @using (Html.BeginForm("DownloadTemplateForAllGroup", "OperationData", FormMethod.Post, new { @class = "form-inline", @style = "float: left" }))
+    {
+        <div class="form-group">
+            <label class="labletop">Periode Type :</label>
+            @Html.DropDownListFor(x => x.PeriodeType, Model.PeriodeTypes, new { @class = "form-control", id = "periodeType" })
+        </div>
+        <div class="form-group" id="div-year">
+            <label class="labletop">Year :</label>
+            @Html.DropDownListFor(x => x.Year, Model.Years, new { @class = "form-control ddl-year", id = "year" })
+        </div>
+        <div class="form-group" id="div-month">
+            <label class="labletop">Month :</label>
+            @Html.DropDownListFor(x => x.Month, Model.Months, new { @class = "form-control ddl-month", id = "month" })
+        </div>
+        <input type="hidden" value="@ViewBag.ScenarioId" name="scenarioId"/>
+        <div class="form-group">
+            <input type="submit" value="Download Template" class="btn btn-primary" />
+        </div>
+    }
+
+</div>

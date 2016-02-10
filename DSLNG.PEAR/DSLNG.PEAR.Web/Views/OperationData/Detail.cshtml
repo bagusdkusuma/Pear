@@ -19,9 +19,9 @@
                 var tabType = that.attr('data-tabtype');
                 if (tabType == 'download') {
                     $.ajax({
-                        url: '@Url.Action("Download", "OperationData")',
+                        url: '@Url.Action("Download", "OperationData", new {scenarioId = Model.ScenarioId})',
                         type: 'GET',
-                        data: data,
+                        //data: data,
                         beforeSend: function () {
                             $('.ajax-loader2').show();
                             $('.config-content').hide();
@@ -34,6 +34,8 @@
                             $('.config-content').show();
                     });
                 } else {
+                    data.scenarioId = @Model.ScenarioId
+                    data.configType = "Economic";
                     $.ajax({
                         url: '@Url.Action("Upload", "OperationData")',
                         type: 'GET',

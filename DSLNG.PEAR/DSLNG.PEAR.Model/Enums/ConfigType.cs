@@ -10,6 +10,7 @@ namespace DSLNG.PEAR.Data.Enums
     {
         KpiAchievement,
         KpiTarget,
-        Economic
+        Economic,
+        OperationData
     }
 }

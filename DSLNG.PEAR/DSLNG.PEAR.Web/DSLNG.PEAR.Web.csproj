@@ -778,6 +778,7 @@
     <Compile Include="Grid\GridModelBinder.cs" />
     <Compile Include="Grid\GridParams.cs" />
     <Compile Include="ViewModels\HighlightGroup\HighlightGroupViewModel.cs" />
+    <Compile Include="ViewModels\Kpi\DetailKpiViewModel.cs" />
     <Compile Include="ViewModels\Kpi\UploadViewModel.cs" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
@@ -1077,6 +1078,8 @@
     <Content Include="Views\PlanningBlueprint\Index.cshtml" />
     <Content Include="Views\PlanningBlueprint\Create.cshtml" />
     <Content Include="Views\PlanningBlueprint\EnvironmentsScanning.cshtml" />
+    <Content Include="Views\Kpi\Detail.cshtml" />
+    <Content Include="Views\OperationData\_Download.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
