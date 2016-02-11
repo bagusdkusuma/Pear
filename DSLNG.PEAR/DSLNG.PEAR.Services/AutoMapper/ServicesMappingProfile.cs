@@ -90,6 +90,8 @@ using DSLNG.PEAR.Services.Requests.OutputConfig;
 using DSLNG.PEAR.Services.Requests.PlanningBlueprint;
 using DSLNG.PEAR.Data.Entities.Blueprint;
 using DSLNG.PEAR.Services.Responses.PlanningBlueprint;
+using DSLNG.PEAR.Services.Responses.EnvironmentScanning;
+using DSLNG.PEAR.Services.Requests.EnvironmentScanning;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -533,6 +535,10 @@ namespace DSLNG.PEAR.Services.AutoMapper
                   .ForMember(x => x.YtdFormula, y => y.MapFrom(z => z.YtdFormula.ToString()))
                   .ForMember(x => x.Level, y => y.MapFrom(z => z.Level.Name.ToString()))
                 ;
+            Mapper.CreateMap<EnvironmentsScanning, GetEnvironmentsScanningResponse>();
+            Mapper.CreateMap<UltimateObjectivePoint, GetEnvironmentsScanningResponse.UltimateObjective>();
+            Mapper.CreateMap<EnvironmentalScanning, GetEnvironmentsScanningResponse.Environmental>();
+            Mapper.CreateMap<SaveEnvironmentScanningRequest, UltimateObjectivePoint>();
 
             base.Configure();
         }

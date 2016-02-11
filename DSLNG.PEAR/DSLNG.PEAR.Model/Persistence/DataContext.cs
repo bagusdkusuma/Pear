@@ -71,6 +71,7 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<PlanningBlueprint> PlanningBlueprints { get; set; }
         public IDbSet<UltimateObjectivePoint> UltimateObjectivePoints { get; set; }
         public IDbSet<EnvironmentsScanning> EnvironmentsScannings { get; set; }
+        public IDbSet<EnvironmentalScanning> EnvironmentalScannings { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Kpi>()
@@ -160,6 +161,30 @@ namespace DSLNG.PEAR.Data.Persistence
             modelBuilder.Entity<EnvironmentsScanning>()
                 .HasRequired(x => x.PlanningBlueprint)
                 .WithRequiredDependent(x => x.EnvironmentsScanning);
+
+
+
+            modelBuilder.Entity<EnvironmentalScanning>()
+                .HasOptional(x => x.Threat)
+                .WithMany(x => x.Threat)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<EnvironmentalScanning>()
+                .HasOptional(x => x.Opportunity)
+                .WithMany(x => x.Opportunity)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<EnvironmentalScanning>()
+                .HasOptional(x => x.Weakness)
+                .WithMany(x => x.Weakness)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<EnvironmentalScanning>()
+                .HasOptional(x => x.Strength)
+                .WithMany(x => x.Strength)
+                .WillCascadeOnDelete(false);
+
+
 
 
             base.OnModelCreating(modelBuilder);

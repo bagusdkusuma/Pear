@@ -15,5 +15,9 @@ namespace DSLNG.PEAR.Data.Entities.Blueprint
         public PlanningBlueprint PlanningBlueprint { get; set; }
         public bool IsApproved { get; set; }
         public bool IsLocked { get; set; }
+        public IList<EnvironmentalScanning> Threat { get; set; }
+        public IList<EnvironmentalScanning> Opportunity { get; set; }
+        public IList<EnvironmentalScanning> Weakness { get; set; }
+        public IList<EnvironmentalScanning> Strength { get; set; }
     }
 }

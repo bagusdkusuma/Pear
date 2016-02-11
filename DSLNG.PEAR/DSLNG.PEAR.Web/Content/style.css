@@ -2105,3 +2105,18 @@ a.see-more
     #fixed-table > thead:first-child > tr:first-child > th {
         border-top:1px solid #fff;
     }*/
+
+.row-style{
+    background-color: aqua;
+    border: 1px solid;
+    text-align: center;
+    width:auto;
+}
+
+.col-md-4-style{
+    background-color: #d9d9d9;
+}
+
+.style{
+    background-color: #e6e6e6;
+}

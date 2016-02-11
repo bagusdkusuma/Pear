@@ -137,7 +137,9 @@ using DSLNG.PEAR.Services.Requests.OutputConfig;
 using DSLNG.PEAR.Services.Responses.OutputConfig;
 using DSLNG.PEAR.Web.ViewModels.PlanningBlueprint;
 using DSLNG.PEAR.Services.Requests.PlanningBlueprint;
-
+using DSLNG.PEAR.Services.Responses.EnvironmentScanning;
+using DSLNG.PEAR.Web.ViewModels.EnvironmentScanning;
+using DSLNG.PEAR.Services.Requests.EnvironmentScanning;
 namespace DSLNG.PEAR.Web.AutoMapper
 {
     public class ViewModelMappingProfile : Profile
@@ -582,6 +584,12 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<OperationConfigUpdateViewModel, UpdateOperationRequest>();
             Mapper.CreateMap<PlanningBlueprintViewModel, SavePlanningBlueprintRequest>();
             Mapper.CreateMap<GetKpiDetailResponse, DetailKpiViewModel>();
+
+
+            Mapper.CreateMap<GetEnvironmentsScanningResponse, EnvironmentScanningViewModel>();
+            Mapper.CreateMap<GetEnvironmentsScanningResponse.UltimateObjective, EnvironmentScanningViewModel.UltimateObjective>();
+            Mapper.CreateMap<GetEnvironmentsScanningResponse.Environmental, EnvironmentScanningViewModel.Environmental>();
+            Mapper.CreateMap<EnvironmentScanningViewModel.CreateViewModel, SaveEnvironmentScanningRequest>();
 
             base.Configure();
         }

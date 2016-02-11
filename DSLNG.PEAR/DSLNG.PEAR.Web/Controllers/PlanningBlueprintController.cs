@@ -9,14 +9,19 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Services.Requests.EnvironmentScanning;
+using DSLNG.PEAR.Web.ViewModels.EnvironmentScanning;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
     public class PlanningBlueprintController : BaseController
     {
         private readonly IPlanningBlueprintService _planningBlueprintService;
-        public PlanningBlueprintController(IPlanningBlueprintService planningBlueprintService) {
+        private readonly IEnvironmentScanningService _environmentScanningService;
+        public PlanningBlueprintController(IPlanningBlueprintService planningBlueprintService, IEnvironmentScanningService environmentScanningService)
+        {
             _planningBlueprintService = planningBlueprintService;
+            _environmentScanningService = environmentScanningService;
         }
 
         public ActionResult Index()
@@ -60,9 +65,12 @@ namespace DSLNG.PEAR.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult EnvironmentsScanning(int id) {
-            return View(new EnvironmentsScanningViewModel());
+        public ActionResult EnvironmentsScanning(int id) 
+        {
+            var viewModel = _environmentScanningService.GetEnvironmentsScanning(new GetEnvironmentsScanningRequest { Id = id }).MapTo<EnvironmentScanningViewModel>();
+            return View(viewModel);
         }
+
 
 	}
 }
