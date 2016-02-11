@@ -8,15 +8,13 @@
             <tr>
                 <td rowspan="2" style="border-bottom: 1px solid #ffffff;">&nbsp;</td>
                 <td rowspan="2" style="border-bottom: 1px solid #ffffff;">Performance Indicator</td>
-                <td style="border-right: 1px solid #ffffff; border-left: 1px solid #ffffff">Actual / Target</td>
-                <td style="border-right: 1px solid #ffffff; border-left: 1px solid #ffffff">Actual / Target</td>
-                <td style="border-right: 1px solid #ffffff; border-left: 1px solid #ffffff">Actual / Target</td>
+                <td style="border-right: 1px solid #ffffff; border-left: 1px solid #ffffff" colspan="2">Actual / Target</td>
                 <td rowspan="2" style="border-bottom: 1px solid #ffffff;">Score / Weight</td>
             </tr>
             <tr>
                 <td style="border-bottom: 1px solid #ffffff; border-right: 1px solid #ffffff; border-left: 1px solid #ffffff">Monthly</td>
                 <td style="border-bottom: 1px solid #ffffff; border-right: 1px solid #ffffff; border-left: 1px solid #ffffff">Annualy</td>
-                <td style="border-bottom: 1px solid #ffffff; border-right: 1px solid #ffffff; border-left: 1px solid #ffffff">Year To Date</td>
+                @*<td style="border-bottom: 1px solid #ffffff; border-right: 1px solid #ffffff; border-left: 1px solid #ffffff">Year To Date</td>*@
             </tr>
             @{
                 List<string> existedPillars = new List<string>();
@@ -81,7 +79,7 @@
 
                     <td class="text-right">@NumberHelper.DoubleToDecimalFormat(item.ActualMonthly) / @NumberHelper.DoubleToDecimalFormat(item.TargetMonthly)</td>
                     <td class="text-right">@NumberHelper.DoubleToDecimalFormat(item.ActualYearly) / @NumberHelper.DoubleToDecimalFormat(item.TargetYearly)</td>
-                    <td class="text-right">@NumberHelper.DoubleToDecimalFormat(item.ActualYtd) / @NumberHelper.DoubleToDecimalFormat(item.TargetYtd)</td>
+                    @*<td class="text-right">@NumberHelper.DoubleToDecimalFormat(item.ActualYtd) / @NumberHelper.DoubleToDecimalFormat(item.TargetYtd)</td>*@
                     <td class="text-right">@NumberHelper.DoubleToDecimalFormat(item.Score) / @item.Weight</td>
                 </tr>
             
@@ -95,7 +93,7 @@
                         totalPillarScore += pScore;
                 <tr class="pillar-score" style="font-weight: bold">
                     <td>&nbsp;</td>
-                    <td colspan="4" class="text-left">
+                    <td colspan="3" class="text-left">
                         <span class="pillar-score-text">Score KPI In This Pillar (@pillarScore.ToString(FormatNumber.DecimalFormat))</span>
                     </td>
 
@@ -106,7 +104,7 @@
                     {
                 <tr style="font-weight: bold">
                     <td>&nbsp;</td>
-                    <td colspan="4" class="text-left">
+                    <td colspan="3" class="text-left">
                         <div id="totalScore" class="roundlight" data-total-score-color="@item.TotalScoreColor" style="background-color:@item.TotalScoreColor" data-poload="@scoreIndicatorPmsSummaryUrl"></div>
                         Total Score
                     </td>
