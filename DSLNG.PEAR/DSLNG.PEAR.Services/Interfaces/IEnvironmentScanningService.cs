@@ -14,6 +14,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         SaveEnvironmentScanningResponse SaveEnvironmentScanning(SaveEnvironmentScanningRequest request);
         DeleteEnvironmentScanningResponse DeleteEnvironmentScanning(DeleteEnvironmentScanningRequest request);
         DeleteEnvironmentScanningResponse DeleteEnvironmentalScanning(DeleteEnvironmentScanningRequest request);
+        SaveEnvironmentalScanningResponse SaveEnvironmentalScanning(SaveEnvironmentalScanningRequest request);
         
     }
 }

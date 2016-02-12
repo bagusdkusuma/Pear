@@ -7,7 +7,7 @@
 <div class="col-md-12">
     <div class="row row-style">Ultimate Objective</div>
     <div class="row">
-        <div class="col-md-4 col-md-4-style">
+        <div class="col-md-4">
             <h4>Pertama</h4>
             <button type="button" class="btn btn-lg btn-danger input-popover" data-es-id="@Model.Id" data-type="cp" data-toggle="popover" title="Construction Phase">Add</button>
             <ul class="cp-list">
@@ -19,9 +19,9 @@
             </ul>
             @Html.HiddenFor(model => model.Id)
         </div>
-        <div class="col-md-4 col-md-4-style">
+        <div class="col-md-4">
             <h4>Kedua</h4>
-            <button type="button" class="btn btn-lg btn-danger input-popover" data-es-id="@Model.Id" data-type="op" data-toggle="popover" title="Construction Phase">Add</button>
+            <button type="button" class="btn btn-lg btn-danger input-popover" data-es-id="@Model.Id" data-type="op" data-toggle="popover" title="Operation Phase">Add</button>
             <ul class="op-list">
                 @foreach (var item in Model.OperationPhase)
                 {
@@ -30,9 +30,9 @@
                 }
             </ul>
         </div>
-        <div class="col-md-4 col-md-4-style">
+        <div class="col-md-4">
             <h4>Ketiga</h4>
-            <button type="button" class="btn btn-lg btn-danger input-popover" data-es-id="@Model.Id" data-type="rp" data-toggle="popover" title="Construction Phase">Add</button>
+            <button type="button" class="btn btn-lg btn-danger input-popover" data-es-id="@Model.Id" data-type="rp" data-toggle="popover" title="Reinvent Phase">Add</button>
             <ul class="rp-list">
                 @foreach (var item in Model.ReinventPhase)
                 {
@@ -47,9 +47,10 @@
     @*Environmental Scanning*@
     <div class="row row-style">Environmental Scanning</div>
     <div class="row">
-        <div class="col-md-3 col-md-4-style">
+        <div class="col-md-3 popover-envi">
             <h4>Threat </h4>
-            <ul>
+            <button type="button" class="btn btn-lg btn-danger input-environmental" data-envi-id="@Model.Id" data-envi-type="th" data-toggle="popover" title="Threat">Add</button>
+            <ul class="th-list">
                 @{
                     foreach (var item in Model.Threat)
                     {
@@ -59,9 +60,10 @@
             </ul>
 
         </div>
-        <div class="col-md-3 col-md-4-style">
+        <div class="col-md-3 popover-envi">
             <h4>Opportunity</h4>
-            <ul>
+            <button type="button" class="btn btn-lg btn-danger input-environmental" data-envi-id="@Model.Id" data-envi-type="opp" data-toggle="popover" title="Threat">Add</button>
+            <ul class="opp-list">
                 @{
                     foreach (var item in Model.Opportunity)
                     {
@@ -70,9 +72,10 @@
                 }
             </ul>
         </div>
-        <div class="col-md-3 col-md-4-style">
+        <div class="col-md-3 popover-envi">
             <h4>Weakness</h4>
-            <ul>
+            <button type="button" class="btn btn-lg btn-danger input-environmental" data-envi-id="@Model.Id" data-envi-type="wk" data-toggle="popover" title="Threat">Add</button>
+            <ul class="wk-list">
                 @{
                     foreach (var item in Model.Strength)
                     {
@@ -81,9 +84,10 @@
                 }
             </ul>
         </div>
-        <div class="col-md-3 col-md-4-style">
+        <div class="col-md-3 popover-envi">
             <h4>Strength</h4>
-            <ul>
+            <button type="button" class="btn btn-lg btn-danger input-environmental" data-envi-id="@Model.Id" data-envi-type="st" data-toggle="popover" title="Threat">Add</button>
+            <ul class="st-list">
                 @{
                     foreach (var item in Model.Weakness)
                     {
@@ -110,10 +114,33 @@
     }
 </div>
 
+<div class="popover-environmental" style="display: none">
+
+    @using (Html.BeginForm("CreateEnvironmental", "EnvironmentScanning", FormMethod.Post, new { id = "form-input" }))
+    {
+        <label>Description</label>
+        <input type="text" name="enviId" hidden="hidden" />
+        <input type="text" name="enviType" hidden="hidden" />
+        <input type="text" name="Description" />
+        <input type="submit" value="submit" class="form-envi-submit" />
+    }
+</div>
+
 
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
+            $('.popover-envi').popover({
+                selector: '.input-environmental',
+                html: true,
+                title: function () {
+                    return 'test';
+                },
+                content: function () {
+                    return $('.popover-environmental').html();
+                }
+            });
+
             $('body').popover({
                 selector: '.input-popover',
                 html: true,
@@ -127,10 +154,6 @@
 
             var popOverElem;
             $(document).on('click', '.input-popover', function () {
-                //if (popOverElem !== undefined && $(this).attr('id') !== popOverElem.attr('id')) {
-                //    popOverElem.popover('hide');
-                //}
-                console.log('test');
                 var esId = $(this).data("es-id");
                 var type = $(this).data("type");
                 $('.popover').find('input[name="esId"]').attr('value', esId);
@@ -139,11 +162,19 @@
 
             });
 
+            $(document).on('click', '.input-environmental', function () {
+                var enviId = $(this).data("envi-id");
+                var enviType = $(this).data("envi-type");
+                $('.popover').find('input[name="enviId"]').attr('value', enviId);
+                $('.popover').find('input[name="enviType"]').attr('value', enviType);
+                popOverElem = $(this);
+
+            });
+
 
             $(document).on('click', '.form-es-submit', function (e) {
                 e.preventDefault();
                 var $that = $(this);
-                console.log(this);
                 $.ajax({
                     url: '@Url.Action("Create", "EnvironmentScanning")',
                     data: $that.closest('form').serialize(),
@@ -166,15 +197,40 @@
                         }
                     }
                 })
-
-
             });
+
+            $(document).on('click', '.form-envi-submit', function (e) {
+                e.preventDefault();
+                var $that = $(this);
+                $.ajax({
+                    url: '@Url.Action("CreateEnvironmental", "EnvironmentScanning")',
+                    data: $that.closest('form').serialize(),
+                    type: 'POST',
+                    success: function (data) {
+                        if (data.type == "th") {
+                            $('.th-list').append($('<li>' + data.description + '<button data-id="' + data.id + '" class="envi-remove-button">Remove</button></li>'));
+                            popOverElem.popover('hide');
+                        }
+                        else if (data.type == "opp") {
+                            $('.opp-list').append($('<li>' + data.description + '<button data-id="' + data.id + '" class="envi-remove-button">Remove</button></li>'));
+                            popOverElem.popover('hide');
+                        }
+                        else if (data.type == "wk") {
+                            $('.wk-list').append($('<li>' + data.description + '<button data-id="' + data.id + '" class="envi-remove-button">Remove</button></li>'));
+                            popOverElem.popover('hide');
+                        }
+                        else if (data.type == "st") {
+                            $('.st-list').append($('<li>' + data.description + '<button data-id="' + data.id + '" class="envi-remove-button">Remove</button></li>'));
+                            popOverElem.popover('hide');
+                        }
+                    }
+                })
+            });
+
 
             $(document).on('click', '.remove-button', function () {
                 var that = this;
-                console.log(that);
                 var id = $(that).data('id')
-                console.log(id);
                 $.ajax({
                     url: '@Url.Action("Delete", "EnvironmentScanning")',
                     data: { Id: id },
@@ -190,9 +246,7 @@
 
             $('ul').on('click', '.envi-remove-button', function () {
                 var that = this;
-                console.log(that);
                 var id = $(that).data('id')
-                console.log(id);
                 $.ajax({
                     url: '@Url.Action("DeleteEnvironmental", "EnvironmentScanning")',
                     data: { Id: id },

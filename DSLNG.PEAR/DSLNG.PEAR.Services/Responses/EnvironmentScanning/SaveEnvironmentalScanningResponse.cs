@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Responses.EnvironmentScanning
 {
-    public class SaveEnvironmentScanningResponse : BaseResponse
+    public class SaveEnvironmentalScanningResponse : BaseResponse
     {
         public int Id { get; set; }
         public string Description { get; set; }

@@ -46,7 +46,6 @@ namespace DSLNG.PEAR.Services
                     {
                         Id = Environmen.Id,
                         Description = Environmen.Description,
-                        Type = request.Type,
                         IsSuccess = true,
                         Message = "Environment has been saved succesfully!"
                     };
@@ -61,7 +60,6 @@ namespace DSLNG.PEAR.Services
                     {
                         Id = Environmen.Id,
                         Description = Environmen.Description,
-                        Type = request.Type,
                         IsSuccess = true,
                         Message = "Environment has been saved succesfully!"
                     };
@@ -76,7 +74,6 @@ namespace DSLNG.PEAR.Services
                     {
                         Id = Environmen.Id,
                         Description = Environmen.Description,
-                        Type = request.Type,
                         IsSuccess = true,
                         Message = "Environment has been saved succesfully!"
                     };
@@ -133,5 +130,91 @@ namespace DSLNG.PEAR.Services
                 Message = "Deleted has been succesfully"
             };
         }
+
+
+
+
+        public SaveEnvironmentalScanningResponse SaveEnvironmentalScanning(SaveEnvironmentalScanningRequest request)
+        {
+            if (request.Id == 0)
+            {
+                if (request.EnviType == "th")
+                {
+                    var Environmental = request.MapTo<EnvironmentalScanning>();
+                    Environmental.Threat = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EnviId).FirstOrDefault();
+                    DataContext.EnvironmentalScannings.Add(Environmental);
+                    DataContext.SaveChanges();
+                    return new SaveEnvironmentalScanningResponse
+                    {
+                        Id = Environmental.Id,
+                        Description = Environmental.Desc,
+                        IsSuccess = true,
+                        Message = "Environmental has been saved succesfully"
+                    };
+                }
+
+                else if (request.EnviType == "opp")
+                {
+                    var Environmental = request.MapTo<EnvironmentalScanning>();
+                    Environmental.Opportunity = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EnviId).FirstOrDefault();
+                    DataContext.EnvironmentalScannings.Add(Environmental);
+                    DataContext.SaveChanges();
+                    return new SaveEnvironmentalScanningResponse
+                    {
+                        Id = Environmental.Id,
+                        Description = Environmental.Desc,
+                        IsSuccess = true,
+                        Message = "Environmental has been saved succesfully"
+                    };
+                }
+
+                else if (request.EnviType == "wk")
+                {
+                    var Environmental = request.MapTo<EnvironmentalScanning>();
+                    Environmental.Weakness = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EnviId).FirstOrDefault();
+                    DataContext.EnvironmentalScannings.Add(Environmental);
+                    DataContext.SaveChanges();
+                    return new SaveEnvironmentalScanningResponse
+                    {
+                        Id = Environmental.Id,
+                        Description = Environmental.Desc,
+                        IsSuccess = true,
+                        Message = "Environmental has been saved succesfully"
+                    };
+                }
+
+                else if (request.EnviType == "st")
+                {
+                    var Environmental = request.MapTo<EnvironmentalScanning>();
+                    Environmental.Strength = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EnviId).FirstOrDefault();
+                    DataContext.EnvironmentalScannings.Add(Environmental);
+                    DataContext.SaveChanges();
+                    return new SaveEnvironmentalScanningResponse
+                    {
+                        Id = Environmental.Id,
+                        Description = Environmental.Desc,
+                        IsSuccess = true,
+                        Message = "Environmental has been saved succesfully"
+                    };
+                }
+                else
+                {
+                    return new SaveEnvironmentalScanningResponse
+                    {
+                        IsSuccess = false,
+                        Message = "invalid data!"
+                    };
+                }
+            }
+            else
+            {
+                return new SaveEnvironmentalScanningResponse
+                {
+                    IsSuccess = false,
+                    Message = "invalid data!"
+                };
+            }
+        }
+
     }
 }

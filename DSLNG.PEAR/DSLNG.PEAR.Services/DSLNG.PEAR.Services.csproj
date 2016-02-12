@@ -95,6 +95,7 @@
     <Compile Include="Requests\ConstantUsage\DeleteConstantUsageRequest.cs" />
     <Compile Include="Requests\EnvironmentScanning\DeleteEnvironmentScanningRequest.cs" />
     <Compile Include="Requests\EnvironmentScanning\GetEnvironmentsScanningRequest.cs" />
+    <Compile Include="Requests\EnvironmentScanning\SaveEnvironmentalScanningRequest.cs" />
     <Compile Include="Requests\EnvironmentScanning\SaveEnvironmentScanningRequest.cs" />
     <Compile Include="Requests\HighlightGroup\DeleteHighlightGroupRequest.cs" />
     <Compile Include="Requests\HighlightOrder\GetStaticHighlightOrdersRequest.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Responses\EconomicSummary\GetEconomicSummaryReportResponse.cs" />
     <Compile Include="Responses\EnvironmentScanning\DeleteEnvironmentScanningResponse.cs" />
     <Compile Include="Responses\EnvironmentScanning\GetEnvironmentsScanningResponse.cs" />
+    <Compile Include="Responses\EnvironmentScanning\SaveEnvironmentalScanningResponse.cs" />
     <Compile Include="Responses\EnvironmentScanning\SaveEnvironmentScanningResponse.cs" />
     <Compile Include="Responses\HighlightGroup\DeleteHighlightGroupResponse.cs" />
     <Compile Include="Responses\HighlightOrder\GetStaticHighlightOrdersResponse.cs" />

@@ -21,7 +21,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Create()
         {
-            return PartialView();
+            return View();
         }
 
         [HttpPost]
@@ -35,7 +35,7 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 id = response.Id,
                 description = response.Description,
-                type = response.Type
+                type = viewModel.Type
             };
             return Json(data, JsonRequestBehavior.AllowGet);
         }
@@ -56,6 +56,23 @@ namespace DSLNG.PEAR.Web.Controllers
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
             return Json(new { success = response.IsSuccess });
+        }
+
+
+        [HttpPost]
+        public ActionResult CreateEnvironmental(EnvironmentScanningViewModel.CreateEnvironmentalViewModel viewModel)
+        {
+            var request = viewModel.MapTo<SaveEnvironmentalScanningRequest>();
+            var response = _environmentScanningService.SaveEnvironmentalScanning(request);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            var data = new
+            {
+                id = response.Id,
+                description = response.Description,
+                type = viewModel.EnviType
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
         
 	}

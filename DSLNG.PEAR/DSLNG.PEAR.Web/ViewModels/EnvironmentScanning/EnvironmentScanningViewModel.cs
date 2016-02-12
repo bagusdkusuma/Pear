@@ -55,5 +55,13 @@ namespace DSLNG.PEAR.Web.ViewModels.EnvironmentScanning
         {
             public int Id { get; set; }
         }
+
+        public class CreateEnvironmentalViewModel
+        {
+            public int Id { get; set; }
+            public int EnviId { get; set; }
+            public string Description { get; set; }
+            public string EnviType { get; set; }
+        }
     }
 }

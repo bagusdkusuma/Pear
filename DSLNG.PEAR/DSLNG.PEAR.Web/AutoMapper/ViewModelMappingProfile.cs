@@ -590,6 +590,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetEnvironmentsScanningResponse.UltimateObjective, EnvironmentScanningViewModel.UltimateObjective>();
             Mapper.CreateMap<GetEnvironmentsScanningResponse.Environmental, EnvironmentScanningViewModel.Environmental>();
             Mapper.CreateMap<EnvironmentScanningViewModel.CreateViewModel, SaveEnvironmentScanningRequest>();
+            Mapper.CreateMap<EnvironmentScanningViewModel.CreateEnvironmentalViewModel, SaveEnvironmentalScanningRequest>();
 
             base.Configure();
         }
