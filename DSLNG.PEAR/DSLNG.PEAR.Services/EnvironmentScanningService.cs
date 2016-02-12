@@ -141,7 +141,7 @@ namespace DSLNG.PEAR.Services
                 if (request.EnviType == "th")
                 {
                     var Environmental = request.MapTo<EnvironmentalScanning>();
-                    Environmental.Threat = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EnviId).FirstOrDefault();
+                    Environmental.ThreatHost = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EnviId).FirstOrDefault();
                     DataContext.EnvironmentalScannings.Add(Environmental);
                     DataContext.SaveChanges();
                     return new SaveEnvironmentalScanningResponse
@@ -156,7 +156,7 @@ namespace DSLNG.PEAR.Services
                 else if (request.EnviType == "opp")
                 {
                     var Environmental = request.MapTo<EnvironmentalScanning>();
-                    Environmental.Opportunity = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EnviId).FirstOrDefault();
+                    Environmental.OpportunityHost = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EnviId).FirstOrDefault();
                     DataContext.EnvironmentalScannings.Add(Environmental);
                     DataContext.SaveChanges();
                     return new SaveEnvironmentalScanningResponse
@@ -171,7 +171,7 @@ namespace DSLNG.PEAR.Services
                 else if (request.EnviType == "wk")
                 {
                     var Environmental = request.MapTo<EnvironmentalScanning>();
-                    Environmental.Weakness = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EnviId).FirstOrDefault();
+                    Environmental.WeaknessHost = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EnviId).FirstOrDefault();
                     DataContext.EnvironmentalScannings.Add(Environmental);
                     DataContext.SaveChanges();
                     return new SaveEnvironmentalScanningResponse
@@ -186,7 +186,7 @@ namespace DSLNG.PEAR.Services
                 else if (request.EnviType == "st")
                 {
                     var Environmental = request.MapTo<EnvironmentalScanning>();
-                    Environmental.Strength = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EnviId).FirstOrDefault();
+                    Environmental.StrengthHost = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EnviId).FirstOrDefault();
                     DataContext.EnvironmentalScannings.Add(Environmental);
                     DataContext.SaveChanges();
                     return new SaveEnvironmentalScanningResponse
@@ -216,5 +216,15 @@ namespace DSLNG.PEAR.Services
             }
         }
 
+
+
+        //public SaveConstraintResponse SaveConstraint(SaveConstraintRequest request)
+        //{
+        //    if (request.Id == 0)
+        //    {
+        //        if(request.Type == "")
+        //        var constraint = request.MapTo<Constraint>();
+        //    }
+        //}
     }
 }

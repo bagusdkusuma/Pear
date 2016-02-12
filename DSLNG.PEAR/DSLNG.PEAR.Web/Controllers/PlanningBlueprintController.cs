@@ -68,9 +68,23 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult EnvironmentsScanning(int id) 
         {
             var viewModel = _environmentScanningService.GetEnvironmentsScanning(new GetEnvironmentsScanningRequest { Id = id }).MapTo<EnvironmentScanningViewModel>();
+            var ListType = new List<SelectListItem>();
+            var type1 = new SelectListItem() { Text="Internal", Value="Internal"};
+            ListType.Add(type1);
+            var type2 = new SelectListItem() { Text = "External", Value = "External" };
+            ListType.Add(type2);
+
+            var listCategory = new List<SelectListItem>();
+            var category1 = new SelectListItem() { Text = "Politic", Value = "Politic" };
+            listCategory.Add(category1);
+            var category2 = new SelectListItem() { Text = "Economic", Value = "Economic" };
+            listCategory.Add(category2);
+
+            viewModel.Types = ListType;
+            viewModel.Categories = listCategory;
+
             return View(viewModel);
         }
-
 
 	}
 }

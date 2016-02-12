@@ -12,9 +12,11 @@ namespace DSLNG.PEAR.Data.Entities.Blueprint
         [Key]
         public int Id { get; set; }
         public string Desc { get; set; }
-        public EnvironmentsScanning Threat { get; set; }
-        public EnvironmentsScanning Opportunity { get; set; }
-        public EnvironmentsScanning Weakness { get; set; }
-        public EnvironmentsScanning Strength { get; set; }
+        public EnvironmentsScanning ThreatHost { get; set; }
+        public EnvironmentsScanning OpportunityHost { get; set; }
+        public EnvironmentsScanning WeaknessHost { get; set; }
+        public EnvironmentsScanning StrengthHost { get; set; }
+        public IList<Constraint> Constraints { get; set; }
+
     }
 }

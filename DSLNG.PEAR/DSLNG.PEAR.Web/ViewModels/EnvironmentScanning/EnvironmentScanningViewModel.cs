@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace DSLNG.PEAR.Web.ViewModels.EnvironmentScanning
 {
@@ -16,6 +17,9 @@ namespace DSLNG.PEAR.Web.ViewModels.EnvironmentScanning
             Opportunity = new List<Environmental>();
             Weakness = new List<Environmental>();
             Strength = new List<Environmental>();
+            Relation = new List<Environmental>();
+            Types = new List<SelectListItem>();
+            Categories = new List<SelectListItem>();
         }
 
 
@@ -30,6 +34,15 @@ namespace DSLNG.PEAR.Web.ViewModels.EnvironmentScanning
         public IList<Environmental> Weakness { get; set; }
         public IList<Environmental> Strength { get; set; }
 
+
+
+        //for entry Constraint
+        public IList<Environmental> Relation { get; set; }
+        public string Definition { get; set; }
+        public string Type { get; set; }
+        public string Category { get; set; }
+        public List<SelectListItem> Types { get; set; }
+        public List<SelectListItem> Categories { get; set; }
 
         public class UltimateObjective
         {
@@ -63,5 +76,6 @@ namespace DSLNG.PEAR.Web.ViewModels.EnvironmentScanning
             public string Description { get; set; }
             public string EnviType { get; set; }
         }
+
     }
 }

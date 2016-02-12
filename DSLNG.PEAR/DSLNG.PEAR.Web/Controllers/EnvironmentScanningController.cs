@@ -74,6 +74,13 @@ namespace DSLNG.PEAR.Web.Controllers
             };
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+
+
+        //[HttpPost]
+        //public ActionResult CreateConstraint(EnvironmentScanningViewModel viewModel)
+        //{
+        //    var request = viewModel.MapTo
+        //}
         
 	}
 }

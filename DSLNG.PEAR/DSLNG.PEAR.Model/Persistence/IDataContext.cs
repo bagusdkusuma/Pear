@@ -66,6 +66,7 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<UltimateObjectivePoint> UltimateObjectivePoints { get; set; }
         IDbSet<EnvironmentsScanning> EnvironmentsScannings { get; set; }
         IDbSet<EnvironmentalScanning> EnvironmentalScannings { get; set; }
+        IDbSet<Constraint> Constraint { get; set; }
         Database Database { get; }
         int SaveChanges();
         DbEntityEntry Entry(object entity);

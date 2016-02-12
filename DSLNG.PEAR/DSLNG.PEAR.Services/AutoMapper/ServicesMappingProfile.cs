@@ -541,6 +541,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<SaveEnvironmentScanningRequest, UltimateObjectivePoint>();
             Mapper.CreateMap<SaveEnvironmentalScanningRequest, EnvironmentalScanning>()
                 .ForMember(x => x.Desc, y => y.MapFrom(z => z.Description));
+            Mapper.CreateMap<EnvironmentalScanning, GetConstraintResponse>();
 
             base.Configure();
         }
