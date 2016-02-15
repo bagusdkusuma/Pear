@@ -591,7 +591,8 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetEnvironmentsScanningResponse.Environmental, EnvironmentScanningViewModel.Environmental>();
             Mapper.CreateMap<EnvironmentScanningViewModel.CreateViewModel, SaveEnvironmentScanningRequest>();
             Mapper.CreateMap<EnvironmentScanningViewModel.CreateEnvironmentalViewModel, SaveEnvironmentalScanningRequest>();
-            Mapper.CreateMap<GetConstraintResponse, EnvironmentScanningViewModel>();
+            Mapper.CreateMap<GetEnvironmentsScanningResponse.Constraint, EnvironmentScanningViewModel.Constraint>();
+            Mapper.CreateMap<GetEnvironmentsScanningResponse.Challenge, EnvironmentScanningViewModel.Challenge>();
 
             base.Configure();
         }

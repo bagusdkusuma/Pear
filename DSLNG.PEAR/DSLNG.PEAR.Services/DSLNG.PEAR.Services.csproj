@@ -93,8 +93,9 @@
     <Compile Include="OperationDataService.cs" />
     <Compile Include="PlanningBlueprintService.cs" />
     <Compile Include="Requests\ConstantUsage\DeleteConstantUsageRequest.cs" />
+    <Compile Include="Requests\EnvironmentScanning\DeleteChallengeRequest.cs" />
+    <Compile Include="Requests\EnvironmentScanning\DeleteConstraintRequest.cs" />
     <Compile Include="Requests\EnvironmentScanning\DeleteEnvironmentScanningRequest.cs" />
-    <Compile Include="Requests\EnvironmentScanning\GetConstraintRequest.cs" />
     <Compile Include="Requests\EnvironmentScanning\GetEnvironmentsScanningRequest.cs" />
     <Compile Include="Requests\EnvironmentScanning\SaveConstraintRequest.cs" />
     <Compile Include="Requests\EnvironmentScanning\SaveEnvironmentalScanningRequest.cs" />
@@ -113,8 +114,9 @@
     <Compile Include="Requests\Template\DeleteTemplateRequest.cs" />
     <Compile Include="Responses\ConstantUsage\DeleteConstantUsageResponse.cs" />
     <Compile Include="Responses\EconomicSummary\GetEconomicSummaryReportResponse.cs" />
+    <Compile Include="Responses\EnvironmentScanning\DeleteChallengeResponse.cs" />
+    <Compile Include="Responses\EnvironmentScanning\DeleteConstraintResponse.cs" />
     <Compile Include="Responses\EnvironmentScanning\DeleteEnvironmentScanningResponse.cs" />
-    <Compile Include="Responses\EnvironmentScanning\GetConstraintResponse.cs" />
     <Compile Include="Responses\EnvironmentScanning\GetDropdownConstraintResponse.cs" />
     <Compile Include="Responses\EnvironmentScanning\GetEnvironmentsScanningResponse.cs" />
     <Compile Include="Responses\EnvironmentScanning\SaveConstraintResponse.cs" />

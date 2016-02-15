@@ -5,142 +5,248 @@
 }
 
 <div class="col-md-12">
-    <div class="row row-style">Ultimate Objective</div>
-    <div class="row">
-        <div class="col-md-4">
-            <h4>Ultimate Objective (Construction Phase)</h4>
-            <button type="button" class="btn btn-lg btn-danger input-popover" data-es-id="@Model.Id" data-type="cp" data-toggle="popover" title="Construction Phase">Add</button>
-            <ul class="cp-list">
-                @foreach (var item in Model.ConstructionPhase)
-                {
-                    <li>@item.Description <button data-id="@item.Id" class="remove-button">Remove</button></li>
+    @* Ultimate Objective *@
+    <div class="row row-uo border-style-1"><h4>Ultimate Objective</h4></div>
+    <div class="row row-margin-5">
+        <div class="col-md-4 border-style-1">
+            <div class="col-md-4-child">
+                <span>Ultimate Objective (Construction Phase)</span>
+                <button type="button" class="input-popover" data-es-id="@Model.Id" data-type="cp" data-toggle="popover" title="Construction Phase"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+            </div>
+            <div class="col-md-4-child-ul">
+                <ul class="cp-list">
+                    @foreach (var item in Model.ConstructionPhase)
+                    {
+                        <li>@item.Description <button data-id="@item.Id" class="remove-button">Remove</button></li>
 
-                }
-            </ul>
-            @Html.HiddenFor(model => model.Id)
+                    }
+                </ul>
+                @Html.HiddenFor(model => model.Id)
+            </div>
         </div>
-        <div class="col-md-4">
-            <h4>Ultimate Objective (Operation Phase)</h4>
-            <button type="button" class="btn btn-lg btn-danger input-popover" data-es-id="@Model.Id" data-type="op" data-toggle="popover" title="Operation Phase">Add</button>
-            <ul class="op-list">
-                @foreach (var item in Model.OperationPhase)
-                {
-                    <li>@item.Description <button data-id="@item.Id" class="remove-button">Remove</button></li>
+        <div class="col-md-4 border-style-1">
+            <div class="col-md-4-child">
+                <span>Ultimate Objective (Operation Phase)</span>
+                <button type="button" class="input-popover" data-es-id="@Model.Id" data-type="op" data-toggle="popover" title="Construction Phase"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+            </div>
+            <div class="col-md-4-child-ul">
+                <ul class="op-list">
+                    @foreach (var item in Model.OperationPhase)
+                    {
+                        <li>@item.Description <button data-id="@item.Id" class="remove-button">Remove</button></li>
 
-                }
-            </ul>
+                    }
+                </ul>
+                @Html.HiddenFor(model => model.Id)
+            </div>
         </div>
-        <div class="col-md-4">
-            <h4>Ultimate Objective (Decomm./Re-Invent Phase)</h4>
-            <button type="button" class="btn btn-lg btn-danger input-popover" data-es-id="@Model.Id" data-type="rp" data-toggle="popover" title="Reinvent Phase">Add</button>
-            <ul class="rp-list">
-                @foreach (var item in Model.ReinventPhase)
-                {
-                    <li>@item.Description <button data-id="@item.Id" class="remove-button">Remove</button></li>
+        <div class="col-md-4 border-style-1">
+            <div class="col-md-4-child">
+                <span>Ultimate Objective (Decomm.Re-Invent Phase)</span>
+                <button type="button" class="input-popover" data-es-id="@Model.Id" data-type="rp" data-toggle="popover" data-placement="left" title="Construction Phase"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+            </div>
+            <div class="col-md-4-child-ul">
+                <ul class="rp-list">
+                    @foreach (var item in Model.ReinventPhase)
+                    {
+                        <li>@item.Description <button data-id="@item.Id" class="remove-button">Remove</button></li>
 
-                }
-            </ul>
+                    }
+                </ul>
+                @Html.HiddenFor(model => model.Id)
+            </div>
         </div>
     </div>
 
 
     @*Environmental Scanning*@
-    <div class="row row-style">Environmental Scanning</div>
-    <div class="row">
-        <div class="col-md-3 popover-envi">
-            <h4>Threat </h4>
-            <button type="button" class="btn btn-lg btn-danger input-environmental" data-envi-id="@Model.Id" data-envi-type="th" data-toggle="popover" title="Threat">Add</button>
-            <ul class="th-list">
-                @{
-                    foreach (var item in Model.Threat)
-                    {
-                        <li>@item.Desc <button data-id="@item.Id" class="envi-remove-button">Remove</button></li>
+    <div class="row row-environmental margin-style-1"><h4>Environmental Scanning</h4></div>
+    <div class="row row-margin-5">
+        <div class="col-md-3 popover-envi border-style-1">
+            <div class="col-envi col-md-12" style="background-color: red">
+                <span>Threat</span>
+                <button type="button" class="input-environmental" data-envi-id="@Model.Id" data-envi-type="th" data-toggle="popover" title="Threat"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+            </div>
+            <div class="div-envi col-md-12">
+                <ul class="th-list">
+                    @{
+                        foreach (var item in Model.Threat)
+                        {
+                            <li>@item.Desc <button data-id="@item.Id" class="envi-remove-button"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></li>
+                        }
                     }
-                }
-            </ul>
-
+                </ul>
+            </div>
         </div>
-        <div class="col-md-3 popover-envi">
-            <h4>Opportunity</h4>
-            <button type="button" class="btn btn-lg btn-danger input-environmental" data-envi-id="@Model.Id" data-envi-type="opp" data-toggle="popover" title="Opportunity">Add</button>
-            <ul class="opp-list">
-                @{
-                    foreach (var item in Model.Opportunity)
-                    {
-                        <li>@item.Desc<button data-id="@item.Id" class="envi-remove-button">Remove</button> </li>
+        <div class="col-md-3 popover-envi border-style-1">
+            <div class="col-md-12 col-envi" style="background-color: #33ff33">
+                <span>Opportunity</span>
+                <button type="button" class="input-environmental" data-envi-id="@Model.Id" data-envi-type="opp" data-toggle="popover" title="Opportunity"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+            </div>
+            <div class="col-md-12">
+                <ul class="opp-list">
+                    @{
+                        foreach (var item in Model.Opportunity)
+                        {
+                            <li>@item.Desc <button data-id="@item.Id" class="envi-remove-button">Remove</button></li>
+                        }
                     }
-                }
-            </ul>
+                </ul>
+            </div>
         </div>
-        <div class="col-md-3 popover-envi">
-            <h4>Weakness</h4>
-            <button type="button" class="btn btn-lg btn-danger input-environmental" data-envi-id="@Model.Id" data-envi-type="wk" data-toggle="popover" title="Weakness">Add</button>
-            <ul class="wk-list">
-                @{
-                    foreach (var item in Model.Strength)
-                    {
-                        <li>@item.Desc <button data-id="@item.Id" class="envi-remove-button">Remove</button> </li>
+        <div class="col-md-3 popover-envi border-style-1">
+            <div class="col-md-12 col-envi" style="background-color: #e580ff">
+                <span>Weakness</span>
+                <button type="button" class="input-environmental" data-envi-id="@Model.Id" data-envi-type="wk" data-toggle="popover" title="Weakness"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+            </div>
+            <div class="col-md-12">
+                <ul class="wk-list">
+                    @{
+                        foreach (var item in Model.Weakness)
+                        {
+                            <li>@item.Desc <button data-id="@item.Id" class="envi-remove-button">Remove</button></li>
+                        }
                     }
-                }
-            </ul>
+                </ul>
+            </div>
         </div>
-        <div class="col-md-3 popover-envi">
-            <h4>Strength</h4>
-            <button type="button" class="btn btn-lg btn-danger input-environmental" data-envi-id="@Model.Id" data-envi-type="st" data-toggle="popover" title="Strength">Add</button>
-            <ul class="st-list">
-                @{
-                    foreach (var item in Model.Weakness)
-                    {
-                        <li>@item.Desc <button data-id="@item.Id" class="envi-remove-button">Remove</button></li>
+        <div class="col-md-3 popover-envi border-style-1">
+            <div class="col-md-12 col-envi" style="background-color: #3333ff">
+                <span>Strength</span>
+                <button type="button" class="input-environmental" data-envi-id="@Model.Id" data-envi-type="st" data-toggle="popover" data-placement="left" title="Strength"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+            </div>
+            <div class="col-md-12">
+                <ul class="st-list">
+                    @{
+                        foreach (var item in Model.Strength)
+                        {
+                            <li>@item.Desc <button data-id="@item.Id" class="envi-remove-button">Remove</button></li>
+                        }
                     }
-                }
-            </ul>
+                </ul>
+            </div>
         </div>
     </div>
 
     @* Constraints *@
+    <div class="row row-constraint margin-style-1 border-style-1" style="background-color:red">
+        <h4>
+            Constraint
+            <button type="button" class="btn-create-constraint" data-placement="left" data-toggle="popover" title="Constraint"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+        </h4>
+    </div>
+    <div class="row border-style-1 row-margin-5 row-table-constrain">
+        <table>
+            <tr>
+                <td class="td-entity">Relation</td>
+                <td class="td-definition">Definiton</td>
+                <td class="td-entity">Type</td>
+                <td class="td-entity">Category</td>
+            </tr>
+            @{foreach (var item in Model.Constrains)
+            {
+                <tr>
+                    <td class="td-entity">
+                        @foreach (var x in item.Relation)
+                        {@x.Desc }
+                </td>
+                <td class="td-definition">@item.Definition</td>
+                <td class="td-entity">@item.Type</td>
+                <td class="td-entity">@item.Category</td>
+            </tr>
+            }
 
-    <div class="row row-style">
-        Constraint
-        <button type="button" style="float:right;" class="CreateClass" data-toggle="modal" data-target="#myModal" data-id="@Model.Id">Add</button>
+            }
+        </table>
     </div>
 
 
+    @* Challenges *@
+    <div class="row row-challenges margin-style-1 border-style-1" style="background-color:#ffcc00">
+        <h4>
+            Challenges
+            <button type="button" class="btn-create-challenges" data-placement="left" data-toggle="popover" title="Challenges"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+        </h4>
+    </div>
+    <div class="row border-style-1 row-margin-5 row-table-constrain">
+        <table>
+            <tr>
+                <td class="td-entity">Relation</td>
+                <td class="td-definition">Definiton</td>
+                <td class="td-entity">Type</td>
+                <td class="td-entity">Category</td>
+            </tr>
+            @*@{foreach (var item in Model.Constrains)
+            {
+                <tr>
+                    <td class="td-entity">
+                        @foreach (var x in item.Relation)
+                        {@x.Desc }
+                    </td>
+                    <td class="td-definition">@item.Definition</td>
+                    <td class="td-entity">@item.Type</td>
+                    <td class="td-entity">@item.Category</td>
+                </tr>
+            }
+
+            }*@
+        </table>
+    </div>
 </div>
 
 
-@* Modal *@
-
+@* Modal for Checkbox*@
 <div class="modal fade" id="myModal">
     <div class="modal-dialog">
         <div class="modal-content">
 
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h3 class="modal-title">Input Data</h3>
+                <h3 class="modal-title">Select Relation</h3>
             </div>
 
             <div class="modal-body">
+                <h4>Threat</h4>
                 @using (Html.BeginForm())
                 {
-                    <div>
-                        @Html.LabelFor(model => model.Relation)
-                        <button type="button" class="btn-relation" data-toggle="popover" title="Relation">Select Relation</button>
-                    </div>
-                    <div>
-                        @Html.LabelFor(model => model.Definition)
-                        @Html.TextAreaFor(model => model.Definition)
-                    </div>
-                    <div>
-                        @Html.LabelFor(model => model.Type)
-                        @Html.DropDownListFor(model => model.Type, Model.Types);
-                    </div>
-                    <div>
-                        @Html.LabelFor(model => model.Category)
-                        @Html.DropDownListFor(model => model.Category, Model.Categories);
-                    </div>
-                }
 
+                }
+                <form>
+                    @{
+                        foreach (var item in Model.Threat)
+                        {
+                            <input type="checkbox" id="@item.Id" name="threat" />@item.Desc
+                        }
+                    }
+                </form>
+
+                <h4>Opportunity</h4>
+                <form>
+                    @{
+                        foreach (var item in Model.Opportunity)
+                        {
+                            <input type="checkbox" id="@item.Id" name="threat" />@item.Desc
+                        }
+                    }
+                </form>
+                <h4>Weakness</h4>
+                <form>
+                    @{
+                        foreach (var item in Model.Weakness)
+                        {
+                            <input type="checkbox" id="@item.Id" name="threat" />@item.Desc
+                        }
+                    }
+                </form>
+                <h4>Strength</h4>
+                <form>
+                    @{
+                        foreach (var item in Model.Strength)
+                        {
+                            <input type="checkbox" id="@item.Id" name="threat" />@item.Desc
+                        }
+                    }
+                </form>
 
             </div>
 
@@ -152,7 +258,7 @@
     </div>
 </div>
 
-
+@* Input Ultimate Objective *@
 <div class="popover-content" style="display: none">
 
     @using (Html.BeginForm("Create", "EnvironmentScanning", FormMethod.Post, new { id = "form-input" }))
@@ -165,6 +271,7 @@
     }
 </div>
 
+@* Input Environmental *@
 <div class="popover-environmental" style="display: none">
 
     @using (Html.BeginForm("CreateEnvironmental", "EnvironmentScanning", FormMethod.Post, new { id = "form-input" }))
@@ -177,48 +284,62 @@
     }
 </div>
 
-@* for checkbox Enviromental *@
-<div class="popover-relation" style="display: none; color:black;">
-    <h4>Threat</h4>
-    <form>
-        @{
-            foreach (var item in Model.Threat)
-            {
-                <input type="checkbox" id="@item.Id" name="threat" />@item.Desc
-            }
-        }
-    </form>
 
-    <h4>Opportunity</h4>
-    <form>
-        @{
-            foreach (var item in Model.Opportunity)
-            {
-                <input type="checkbox" id="@item.Id" name="threat" />@item.Desc
-            }
-        }
-    </form>
-    <h4>Weakness</h4>
-    <form>
-        @{
-            foreach (var item in Model.Weakness)
-            {
-                <input type="checkbox" id="@item.Id" name="threat" />@item.Desc
-            }
-        }
-    </form>
-    <h4>Strength</h4>
-    <form>
-        @{
-            foreach (var item in Model.Strength)
-            {
-                <input type="checkbox" id="@item.Id" name="threat" />@item.Desc
-            }
-        }
-    </form>
+@* Input Constraints *@
+<div class="input-constraint" style="display:none;">
+    @using (Html.BeginForm())
+    {
+        <div>
+            @Html.LabelFor(model => model.Relation)
+            <button type="button" class="btn-relation" data-toggle="modal" data-target="#myModal" title="Relation">Select Relation</button>
+        </div>
+        <div>
+            @Html.LabelFor(model => model.Definition)
+            @Html.TextAreaFor(model => model.Definition)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.Type)
+            @Html.DropDownListFor(model => model.Type, Model.Types);
+        </div>
+        <div>
+            @Html.LabelFor(model => model.Category)
+            @Html.DropDownListFor(model => model.Category, Model.Categories);
+        </div>
+
+        <div>
+            <input type="submit" name="submit" />
+        </div>
+
+    }
 </div>
 
+@* Input Challenges *@
+<div class="input-challenges" style="display:none;">
+    @using (Html.BeginForm())
+    {
+        <div>
+            @Html.LabelFor(model => model.Relation)
+            <button type="button" class="btn-relation" data-toggle="modal" data-target="#myModal" title="Relation">Select Relation</button>
+        </div>
+        <div>
+            @Html.LabelFor(model => model.Definition)
+            @Html.TextAreaFor(model => model.Definition)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.Type)
+            @Html.DropDownListFor(model => model.Type, Model.Types);
+        </div>
+        <div>
+            @Html.LabelFor(model => model.Category)
+            @Html.DropDownListFor(model => model.Category, Model.Categories);
+        </div>
 
+        <div>
+            <input type="submit" name="submit" />
+        </div>
+
+    }
+</div>
 
 
 
@@ -237,14 +358,25 @@
                 }
             });
 
-            $('.modal-body').popover({
-                selector: '.btn-relation',
+            $('.row-challenges').popover({
+                selector: '.btn-create-challenges',
                 html: true,
                 title: function () {
                     return 'Test';
                 },
                 content: function () {
-                    return $('.popover-relation').html();
+                    return $('.input-challenges').html();
+                }
+            });
+
+            $('.row-constraint').popover({
+                selector: '.btn-create-constraint',
+                html: true,
+                title: function () {
+                    return 'Test';
+                },
+                content: function () {
+                    return $('.input-constraint').html();
                 }
             });
 
@@ -372,7 +504,6 @@
                     }
                 })
             });
-
         })
     </script>
 }

@@ -19,5 +19,7 @@ namespace DSLNG.PEAR.Data.Entities.Blueprint
         public IList<EnvironmentalScanning> Opportunity { get; set; }
         public IList<EnvironmentalScanning> Weakness { get; set; }
         public IList<EnvironmentalScanning> Strength { get; set; }
+        public IList<Constraint> Constraints { get; set; }
+        public IList<Challenge> Challenges { get; set; }
     }
 }

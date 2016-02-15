@@ -20,6 +20,9 @@ namespace DSLNG.PEAR.Web.ViewModels.EnvironmentScanning
             Relation = new List<Environmental>();
             Types = new List<SelectListItem>();
             Categories = new List<SelectListItem>();
+            Constrains = new List<Constraint>();
+            Challenges = new List<Challenge>();
+            
         }
 
 
@@ -33,7 +36,8 @@ namespace DSLNG.PEAR.Web.ViewModels.EnvironmentScanning
         public IList<Environmental> Opportunity { get; set; }
         public IList<Environmental> Weakness { get; set; }
         public IList<Environmental> Strength { get; set; }
-
+        public IList<Constraint> Constrains { get; set; }
+        public IList<Challenge> Challenges { get; set; }
 
 
         //for entry Constraint
@@ -75,6 +79,24 @@ namespace DSLNG.PEAR.Web.ViewModels.EnvironmentScanning
             public int EnviId { get; set; }
             public string Description { get; set; }
             public string EnviType { get; set; }
+        }
+
+        public class Constraint
+        {
+            public int Id { get; set; }
+            public IList<Environmental> Relation { get; set; }
+            public string Definition { get; set; }
+            public string Type { get; set; }
+            public string Category { get; set; }
+        }
+
+        public class Challenge
+        {
+            public int Id { get; set; }
+            public IList<Environmental> Relation { get; set; }
+            public string Definition { get; set; }
+            public string Type { get; set; }
+            public string Category { get; set; }
         }
 
     }

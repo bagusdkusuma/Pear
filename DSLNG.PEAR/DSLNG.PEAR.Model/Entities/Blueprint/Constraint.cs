@@ -15,5 +15,6 @@ namespace DSLNG.PEAR.Data.Entities.Blueprint
         public string Definition { get; set; }
         public string Type { get; set; }
         public string Category { get; set; }
+        public EnvironmentsScanning EnvironmentScanning { get; set; }
     }
 }

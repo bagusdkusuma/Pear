@@ -28,6 +28,8 @@ namespace DSLNG.PEAR.Services
                 .Include(x => x.Opportunity)
                 .Include(x => x.Weakness)
                 .Include(x => x.Strength)
+                .Include(x => x.Constraints)
+                .Include(x => x.Challenges)
                 .FirstOrDefault().MapTo<GetEnvironmentsScanningResponse>();
         }
 
@@ -222,9 +224,43 @@ namespace DSLNG.PEAR.Services
         //{
         //    if (request.Id == 0)
         //    {
-        //        if(request.Type == "")
         //        var constraint = request.MapTo<Constraint>();
+        //        constraint.Relation = DataContext.EnvironmentalScannings.Where(x =>)
+
         //    }
         //}
+
+
+        public DeleteConstraintResponse DeleteConstraint(DeleteConstraintRequest request)
+        {
+            var constraint = new Constraint { Id = request.Id };
+            DataContext.Constraint.Attach(constraint);
+            DataContext.Constraint.Remove(constraint);
+            DataContext.SaveChanges();
+
+            return new DeleteConstraintResponse
+            {
+                IsSuccess = true,
+                Message = "Constraint has been Deleted Successfully"
+            };
+        }
+
+
+
+
+
+        public DeleteChallengeResponse DeleteChallenge(DeleteChallengeRequest request)
+        {
+            var challenge = new Challenge { Id = request.Id };
+            DataContext.Challenges.Attach(challenge);
+            DataContext.Challenges.Remove(challenge);
+            DataContext.SaveChanges();
+            return new DeleteChallengeResponse
+            {
+                IsSuccess = true,
+                Message = "Challenge has been Deleted Successfully"
+            };
+        }
+
     }
 }

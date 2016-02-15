@@ -18,6 +18,8 @@ namespace DSLNG.PEAR.Services.Responses.EnvironmentScanning
         public IList<Environmental> Opportunity { get; set; }
         public IList<Environmental> Weakness { get; set; }
         public IList<Environmental> Strength { get; set; }
+        public IList<Constraint> Constrains { get; set; }
+        public IList<Challenge> Challenges { get; set; }
 
 
         public class UltimateObjective
@@ -30,6 +32,24 @@ namespace DSLNG.PEAR.Services.Responses.EnvironmentScanning
         {
             public int Id { get; set; }
             public string Desc { get; set; }
+        }
+
+        public class Constraint
+        {
+            public int Id { get; set; }
+            public IList<Environmental> Relation { get; set; }
+            public string Definition { get; set; }
+            public string Type { get; set; }
+            public string Category { get; set; }
+        }
+
+        public class Challenge
+        {
+            public int Id { get; set; }
+            public IList<Environmental> Relation { get; set; }
+            public string Definition { get; set; }
+            public string Type { get; set; }
+            public string Category { get; set; }
         }
     }
 }

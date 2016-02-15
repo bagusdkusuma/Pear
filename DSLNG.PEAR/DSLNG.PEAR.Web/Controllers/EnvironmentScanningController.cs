@@ -82,5 +82,24 @@ namespace DSLNG.PEAR.Web.Controllers
         //    var request = viewModel.MapTo
         //}
         
+        [HttpPost]
+        public ActionResult DeleteConstraint(int id)
+        {
+            var response = _environmentScanningService.DeleteConstraint(new DeleteConstraintRequest { Id = id });
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            return Json(new { success = response.IsSuccess });
+        }
+
+
+
+        [HttpPost]
+        public ActionResult DeleteChallenge(int id)
+        {
+            var response = _environmentScanningService.DeleteChallenge(new DeleteChallengeRequest { Id = id });
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            return Json(new { success = response.IsSuccess });
+        }
 	}
 }

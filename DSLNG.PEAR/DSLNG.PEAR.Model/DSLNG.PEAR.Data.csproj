@@ -74,6 +74,7 @@
     <Compile Include="Entities\ArtifactStack.cs" />
     <Compile Include="Entities\ArtifactTank.cs" />
     <Compile Include="Entities\BaseEntity.cs" />
+    <Compile Include="Entities\Blueprint\Challenge.cs" />
     <Compile Include="Entities\Blueprint\Constraint.cs" />
     <Compile Include="Entities\Blueprint\EnvironmentalScanning.cs" />
     <Compile Include="Entities\Blueprint\EnvironmentsScanning.cs" />

@@ -73,6 +73,7 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<EnvironmentsScanning> EnvironmentsScannings { get; set; }
         public IDbSet<EnvironmentalScanning> EnvironmentalScannings { get; set; }
         public IDbSet<Constraint> Constraint { get; set; }
+        public IDbSet<Challenge> Challenges { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Kpi>()
