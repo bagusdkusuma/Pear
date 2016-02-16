@@ -90,6 +90,8 @@ using DSLNG.PEAR.Services.Requests.OutputConfig;
 using DSLNG.PEAR.Services.Requests.PlanningBlueprint;
 using DSLNG.PEAR.Data.Entities.Blueprint;
 using DSLNG.PEAR.Services.Responses.PlanningBlueprint;
+using DSLNG.PEAR.Services.Responses.BusinessPosture;
+using DSLNG.PEAR.Services.Requests.BusinessPosture;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -520,6 +522,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<SavePlanningBlueprintRequest, PlanningBlueprint>();
             Mapper.CreateMap<PlanningBlueprint, GetPlanningBlueprintsResponse.PlanningBlueprint>();
             Mapper.CreateMap<EnvironmentsScanning, GetPlanningBlueprintsResponse.EnvironmentsScanning>();
+            Mapper.CreateMap<BusinessPostureIdentification, GetPlanningBlueprintsResponse.BusinessPostureIdentification>();
             Mapper.CreateMap<Kpi, GetKpiDetailResponse>()
                   .ForMember(x => x.Code, y => y.MapFrom(z => z.Code))
                   .ForMember(x => x.Group, y => y.MapFrom(z => z.Group.Name))
@@ -533,6 +536,18 @@ namespace DSLNG.PEAR.Services.AutoMapper
                   .ForMember(x => x.YtdFormula, y => y.MapFrom(z => z.YtdFormula.ToString()))
                   .ForMember(x => x.Level, y => y.MapFrom(z => z.Level.Name.ToString()))
                 ;
+            Mapper.CreateMap<BusinessPostureIdentification, GetBusinessPostureResponse>();
+            Mapper.CreateMap<DesiredState, GetBusinessPostureResponse.DesiredState>();
+            Mapper.CreateMap<Posture, GetBusinessPostureResponse.Posture>();
+            Mapper.CreateMap<PostureChallenge, GetBusinessPostureResponse.PostureChallenge>()
+                .ForMember(x => x.HasRelation, o => o.MapFrom(x => x.DesiredStates.Count > 0));
+            Mapper.CreateMap<PostureConstraint, GetBusinessPostureResponse.PostureConstraint>()
+                .ForMember(x => x.HasRelation, o => o.MapFrom(x => x.DesiredStates.Count > 0));
+
+            Mapper.CreateMap<SaveDesiredStateRequest, DesiredState>();
+            Mapper.CreateMap<DesiredState, SaveDesiredStateResponse>();
+            Mapper.CreateMap<SavePostureChallengeRequest, PostureChallenge>();
+            Mapper.CreateMap<SavePostureConstraintRequest, PostureConstraint>();
 
             base.Configure();
         }

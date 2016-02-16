@@ -137,6 +137,9 @@ using DSLNG.PEAR.Services.Requests.OutputConfig;
 using DSLNG.PEAR.Services.Responses.OutputConfig;
 using DSLNG.PEAR.Web.ViewModels.PlanningBlueprint;
 using DSLNG.PEAR.Services.Requests.PlanningBlueprint;
+using DSLNG.PEAR.Services.Responses.BusinessPosture;
+using DSLNG.PEAR.Web.ViewModels.BusinessPosture;
+using DSLNG.PEAR.Services.Requests.BusinessPosture;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -582,6 +585,15 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<OperationConfigUpdateViewModel, UpdateOperationRequest>();
             Mapper.CreateMap<PlanningBlueprintViewModel, SavePlanningBlueprintRequest>();
             Mapper.CreateMap<GetKpiDetailResponse, DetailKpiViewModel>();
+
+            Mapper.CreateMap<GetBusinessPostureResponse, BusinessPostureViewModel>();
+            Mapper.CreateMap<GetBusinessPostureResponse.Posture, BusinessPostureViewModel.PostureViewModel>();
+            Mapper.CreateMap<GetBusinessPostureResponse.DesiredState, BusinessPostureViewModel.DesiredStateViewModel>();
+            Mapper.CreateMap<GetBusinessPostureResponse.PostureChallenge, BusinessPostureViewModel.PostureChallangeViewModel>();
+            Mapper.CreateMap<GetBusinessPostureResponse.PostureConstraint, BusinessPostureViewModel.PostureConstraintViewModel>();
+            Mapper.CreateMap<DesiredStateViewModel, SaveDesiredStateRequest>();
+            Mapper.CreateMap<PostureChallengeViewModel, SavePostureChallengeRequest>();
+            Mapper.CreateMap<PostureConstraintViewModel, SavePostureConstraintRequest>();
 
             base.Configure();
         }

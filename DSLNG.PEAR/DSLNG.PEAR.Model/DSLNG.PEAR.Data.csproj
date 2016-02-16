@@ -74,8 +74,13 @@
     <Compile Include="Entities\ArtifactStack.cs" />
     <Compile Include="Entities\ArtifactTank.cs" />
     <Compile Include="Entities\BaseEntity.cs" />
+    <Compile Include="Entities\Blueprint\BusinessPostureIdentification.cs" />
+    <Compile Include="Entities\Blueprint\DesiredState.cs" />
     <Compile Include="Entities\Blueprint\EnvironmentsScanning.cs" />
     <Compile Include="Entities\Blueprint\PlanningBlueprint.cs" />
+    <Compile Include="Entities\Blueprint\Posture.cs" />
+    <Compile Include="Entities\Blueprint\PostureChallenge.cs" />
+    <Compile Include="Entities\Blueprint\PostureConstraint.cs" />
     <Compile Include="Entities\Blueprint\UltimateObjectivePoint.cs" />
     <Compile Include="Entities\Buyer.cs" />
     <Compile Include="Entities\CalculatorConstant.cs" />
@@ -134,6 +139,7 @@
     <Compile Include="Entities\RoleGroup.cs" />
     <Compile Include="Entities\ScoreIndicator.cs" />
     <Compile Include="Enums\PmsSummaryScoringIndicatorType.cs" />
+    <Compile Include="Enums\PostureType.cs" />
     <Compile Include="Enums\RangeFilter.cs" />
     <Compile Include="Enums\ScoringType.cs" />
     <Compile Include="Enums\SelectType.cs" />

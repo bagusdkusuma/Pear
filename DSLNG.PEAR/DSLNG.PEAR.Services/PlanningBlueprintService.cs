@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using DSLNG.PEAR.Common.Extensions;
 using System.Data.Entity;
+using DSLNG.PEAR.Data.Enums;
 
 namespace DSLNG.PEAR.Services
 {
@@ -34,7 +35,7 @@ namespace DSLNG.PEAR.Services
         public IEnumerable<PlanningBlueprint> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
         {
             var data = DataContext.PlanningBlueprints.AsQueryable();
-            data = data.Include(x => x.EnvironmentsScanning);
+            data = data.Include(x => x.EnvironmentsScanning).Include(x => x.BusinessPostureIdentification);
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             {
                 data = data.Where(x => x.Title.Contains(search) || x.Description.Contains(search));
@@ -70,7 +71,15 @@ namespace DSLNG.PEAR.Services
                 {
                     var planningBluePrint = request.MapTo<PlanningBlueprint>();
                     var environmentsScanning = new EnvironmentsScanning();
+                    var businessPostureIdentification = new BusinessPostureIdentification();
+                    var constructionPosture = new Posture { Type = PostureType.Construction };
+                    var operationPosture = new Posture { Type = PostureType.Operation };
+                    var decommissioningPosture = new Posture { Type = PostureType.Decommissioning };
+                    businessPostureIdentification.Postures.Add(constructionPosture);
+                    businessPostureIdentification.Postures.Add(operationPosture);
+                    businessPostureIdentification.Postures.Add(decommissioningPosture);
                     planningBluePrint.EnvironmentsScanning = environmentsScanning;
+                    planningBluePrint.BusinessPostureIdentification = businessPostureIdentification;
                     DataContext.PlanningBlueprints.Add(planningBluePrint);
                 }
                 else

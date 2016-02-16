@@ -759,9 +759,13 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Compile Include="Controllers\AssumptionDataController.cs" />
+    <Compile Include="Controllers\BusinessPostureController.cs" />
     <Compile Include="Controllers\EconomicSummaryController.cs" />
     <Compile Include="Controllers\PlanningBlueprintController.cs" />
     <Compile Include="Scheduler\ScenarioScheduler.cs" />
+    <Compile Include="ViewModels\BusinessPosture\DesiredStateViewModel.cs" />
+    <Compile Include="ViewModels\BusinessPosture\PostureChallengeViewModel.cs" />
+    <Compile Include="ViewModels\BusinessPosture\PostureConstraintViewModel.cs" />
     <Compile Include="ViewModels\EconomicSummary\EconomicSummaryReportViewModel.cs" />
     <Compile Include="Controllers\HighlightController.cs" />
     <Compile Include="Controllers\HighlightGroupController.cs" />
@@ -1080,6 +1084,7 @@
     <Content Include="Views\PlanningBlueprint\EnvironmentsScanning.cshtml" />
     <Content Include="Views\Kpi\Detail.cshtml" />
     <Content Include="Views\OperationData\_Download.cshtml" />
+    <Content Include="Views\PlanningBlueprint\BusinessPostureIdentification.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -1249,6 +1254,7 @@
     <Compile Include="ViewModels\OutputCategory\OutputCategoryViewModel.cs" />
     <Compile Include="ViewModels\OutputConfig\OutputConfigViewModel.cs" />
     <Compile Include="ViewModels\OutputConfig\ScenarioResultViewModel.cs" />
+    <Compile Include="ViewModels\PlanningBlueprint\BusinessPostureViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\EnvironmentsScanningViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\PlanningBlueprintViewModel.cs" />
     <Compile Include="ViewModels\PmsConfigDetails\CreatePmsConfigDetailsViewModel.cs" />
@@ -1336,6 +1342,7 @@
     <Folder Include="Content\UploadedFiles\KpiAchievement\" />
     <Folder Include="Content\UploadedFiles\KpiTarget\" />
     <Folder Include="ViewModels\CorporatePortofolio\" />
+    <Folder Include="Views\BusinessPosture\" />
     <Folder Include="Views\Chart\" />
     <Folder Include="Views\CorporatePortofolio\" />
     <Folder Include="Views\Test\" />

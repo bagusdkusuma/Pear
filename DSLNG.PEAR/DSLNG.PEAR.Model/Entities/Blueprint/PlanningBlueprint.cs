@@ -11,7 +11,8 @@ namespace DSLNG.PEAR.Data.Entities.Blueprint
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public  EnvironmentsScanning EnvironmentsScanning { get; set; }
+        public EnvironmentsScanning EnvironmentsScanning { get; set; }
+        public BusinessPostureIdentification BusinessPostureIdentification { get; set; }
         public bool IsLocked { get; set; }
         public bool IsApproved { get; set; }
         public bool IsDeleted { get; set; }

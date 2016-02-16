@@ -1,0 +1,244 @@
+﻿using DSLNG.PEAR.Data.Persistence;
+using DSLNG.PEAR.Services.Interfaces;
+using DSLNG.PEAR.Services.Requests.BusinessPosture;
+using DSLNG.PEAR.Services.Responses.BusinessPosture;
+using System.Linq;
+using System.Data.Entity;
+using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Data.Entities.Blueprint;
+using System.Collections.Generic;
+
+namespace DSLNG.PEAR.Services
+{
+    public class BusinessPostureIdentificationService : BaseService, IBusinessPostureIdentificationService
+    {
+        public BusinessPostureIdentificationService(IDataContext dataContext):base(dataContext) { 
+        
+        }
+        public GetBusinessPostureResponse Get(GetBusinessPostureRequest request)
+        {
+            var response = DataContext.BusinessPostures.Include(x => x.Postures)
+                .Include(x => x.Postures.Select(y => y.DesiredStates))
+                .Include(x => x.Postures.Select(y => y.PostureChallenges))
+                .Include(x => x.Postures.Select(y => y.PostureConstraints))
+                .FirstOrDefault(x => x.Id == request.Id);
+            return response.MapTo<GetBusinessPostureResponse>();
+        }
+
+
+        public SaveDesiredStateResponse SaveDesiredState(SaveDesiredStateRequest request)
+        {
+            try
+            {
+               var desiredState = request.MapTo<DesiredState>();
+                
+                if (request.Id == 0)
+                {
+                    var posture = new Posture { Id = request.PostureId };
+                    DataContext.Postures.Attach(posture);
+                    desiredState.Posture = posture;
+                    DataContext.DesiredStates.Add(desiredState);
+                }
+                else
+                {
+                    desiredState = DataContext.DesiredStates.First(x => x.Id == request.Id);
+                    request.MapPropertiesToInstance<DesiredState>(desiredState);
+                }
+                DataContext.SaveChanges();
+                return new SaveDesiredStateResponse
+                {
+                    IsSuccess = true,
+                    Message = "The item has been saved successfully",
+                    Id = desiredState.Id,
+                    Description = desiredState.Description
+                };
+            }
+            catch {
+                return new SaveDesiredStateResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured, please contact the administrator for further information"
+                };
+            }
+        }
+
+
+        public DeleteDesiredStateResponse DeleteDesiredState(DeleteDesiredStateRequest request)
+        {
+            try
+            {
+                var desiredStae = new DesiredState { Id = request.Id };
+                DataContext.DesiredStates.Attach(desiredStae);
+                DataContext.DesiredStates.Remove(desiredStae);
+                DataContext.SaveChanges();
+                return new DeleteDesiredStateResponse
+                {
+                    IsSuccess = true,
+                    Message = "The item has been deleted successfully",
+                };
+            }
+            catch {
+                return new DeleteDesiredStateResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured, please contact the administrator for further information"
+                };
+            }
+        }
+
+
+        public SavePostureChallengeResponse SavePostureChallenge(SavePostureChallengeRequest request)
+        {
+            try
+            {
+                var postureChallenge = request.MapTo<PostureChallenge>();
+
+                if (request.Id == 0)
+                {
+                    var posture = new Posture { Id = request.PostureId };
+                    DataContext.Postures.Attach(posture);
+                    postureChallenge.Posture = posture;
+                    foreach (var id in request.RelationIds) {
+                        var desiredState = new DesiredState { Id = id };
+                        DataContext.DesiredStates.Attach(desiredState);
+                        postureChallenge.DesiredStates.Add(desiredState);
+                    }
+                    DataContext.PostureChalleges.Add(postureChallenge);
+                }
+                else
+                {
+                    postureChallenge = DataContext.PostureChalleges.Include(x => x.DesiredStates).First(x => x.Id == request.Id);
+                    request.MapPropertiesToInstance<PostureChallenge>(postureChallenge);
+                    postureChallenge.DesiredStates = new List<DesiredState>();
+                    foreach (var id in request.RelationIds)
+                    {
+                        var desiredState = new DesiredState { Id = id };
+                        DataContext.DesiredStates.Attach(desiredState);
+                        postureChallenge.DesiredStates.Add(desiredState);
+                    }
+                   
+                }
+                DataContext.SaveChanges();
+                return new SavePostureChallengeResponse
+                {
+                    IsSuccess = true,
+                    Message = "The item has been saved successfully",
+                    Id = postureChallenge.Id,
+                    Definition = postureChallenge.Definition,
+                    RelationIds = postureChallenge.DesiredStates.Select(x => x.Id).ToArray()
+                };
+            }
+            catch
+            {
+                return new SavePostureChallengeResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured, please contact the administrator for further information"
+                };
+            }
+        }
+
+
+        public DeletePostureChallengeResponse DeletePostureChallenge(DeletePostureChallengeRequest request)
+        {
+            try
+            {
+                var postureChallenge = new PostureChallenge { Id = request.Id };
+                DataContext.PostureChalleges.Attach(postureChallenge);
+                DataContext.PostureChalleges.Remove(postureChallenge);
+                DataContext.SaveChanges();
+                return new DeletePostureChallengeResponse
+                {
+                    IsSuccess = true,
+                    Message = "The item has been deleted successfully",
+                };
+            }
+            catch
+            {
+                return new DeletePostureChallengeResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured, please contact the administrator for further information"
+                };
+            }
+        }
+
+
+
+        public SavePostureConstraintResponse SavePostureConstraint(SavePostureConstraintRequest request)
+        {
+            try
+            {
+                var postureConstraint = request.MapTo<PostureConstraint>();
+
+                if (request.Id == 0)
+                {
+                    var posture = new Posture { Id = request.PostureId };
+                    DataContext.Postures.Attach(posture);
+                    postureConstraint.Posture = posture;
+                    foreach (var id in request.RelationIds)
+                    {
+                        var desiredState = new DesiredState { Id = id };
+                        DataContext.DesiredStates.Attach(desiredState);
+                        postureConstraint.DesiredStates.Add(desiredState);
+                    }
+                    DataContext.PostureConstraints.Add(postureConstraint);
+                }
+                else
+                {
+                    postureConstraint = DataContext.PostureConstraints.Include(x => x.DesiredStates).First(x => x.Id == request.Id);
+                    request.MapPropertiesToInstance<PostureConstraint>(postureConstraint);
+                    postureConstraint.DesiredStates = new List<DesiredState>();
+                    foreach (var id in request.RelationIds)
+                    {
+                        var desiredState = new DesiredState { Id = id };
+                        DataContext.DesiredStates.Attach(desiredState);
+                        postureConstraint.DesiredStates.Add(desiredState);
+                    }
+
+                }
+                DataContext.SaveChanges();
+                return new SavePostureConstraintResponse
+                {
+                    IsSuccess = true,
+                    Message = "The item has been saved successfully",
+                    Id = postureConstraint.Id,
+                    Definition = postureConstraint.Definition,
+                    RelationIds = postureConstraint.DesiredStates.Select(x => x.Id).ToArray()
+                };
+            }
+            catch
+            {
+                return new SavePostureConstraintResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured, please contact the administrator for further information"
+                };
+            }
+        }
+
+        public DeletePostureConstraintResponse DeletePostureConstraint(DeletePostureConstraintRequest request)
+        {
+            try
+            {
+                var postureConstraint = new PostureConstraint { Id = request.Id };
+                DataContext.PostureConstraints.Attach(postureConstraint);
+                DataContext.PostureConstraints.Remove(postureConstraint);
+                DataContext.SaveChanges();
+                return new DeletePostureConstraintResponse
+                {
+                    IsSuccess = true,
+                    Message = "The item has been deleted successfully",
+                };
+            }
+            catch
+            {
+                return new DeletePostureConstraintResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured, please contact the administrator for further information"
+                };
+            }
+        }
+    }
+}

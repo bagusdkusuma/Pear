@@ -71,6 +71,11 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<PlanningBlueprint> PlanningBlueprints { get; set; }
         public IDbSet<UltimateObjectivePoint> UltimateObjectivePoints { get; set; }
         public IDbSet<EnvironmentsScanning> EnvironmentsScannings { get; set; }
+        public IDbSet<BusinessPostureIdentification> BusinessPostures { get; set; }
+        public IDbSet<Posture> Postures { get; set; }
+        public IDbSet<DesiredState> DesiredStates { get; set; }
+        public IDbSet<PostureChallenge> PostureChalleges { get; set; }
+        public IDbSet<PostureConstraint> PostureConstraints { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Kpi>()
@@ -161,6 +166,9 @@ namespace DSLNG.PEAR.Data.Persistence
                 .HasRequired(x => x.PlanningBlueprint)
                 .WithRequiredDependent(x => x.EnvironmentsScanning);
 
+            modelBuilder.Entity<BusinessPostureIdentification>()
+                .HasRequired(x => x.PlanningBlueprint)
+                .WithRequiredDependent(x => x.BusinessPostureIdentification);
 
             base.OnModelCreating(modelBuilder);
         }

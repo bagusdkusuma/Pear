@@ -1,0 +1,384 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.PlanningBlueprint.BusinessPostureViewModel
+@using DSLNG.PEAR.Data.Enums
+@{
+    ViewBag.Title = "BusinessPostureIdentification";
+}
+
+<div class="business-posture">
+    <h2>Business Posture Identification</h2>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Business Posture Identification</h4>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 list-block">
+            <h4>Construction Posture</h4>
+            <div class="sub-group">
+                <h6>Desired States</h6>
+                <a href="#" data-toggle="popover" data-title="Add Desired State" data-posture-id="@Model.ConstructionPosture.Id" data-form-target="desired-state" class="popover-trigger"><i class="fa fa-plus"></i></a>
+            </div>
+            <ul class="list-result construction-desired-list">
+                @foreach (var item in Model.ConstructionPosture.DesiredStates)
+                { 
+                    <li data-id="@item.Id">@item.Description <a href="/BusinessPosture/DeleteDesiredState" class="remove-item"><i class="fa fa-minus"></i></a></li>
+                }
+            </ul>
+        </div>
+        <div class="col-md-4 list-block">
+            <h4>Operation Posture</h4>
+            <div class="sub-group">
+                <h6>Desired States</h6>
+                <a href="#" data-toggle="popover" data-title="Add Desired State" data-posture-id="@Model.OperationPosture.Id" data-form-target="desired-state" class="popover-trigger"><i class="fa fa-plus"></i></a>
+            </div>
+            <ul class="list-result operation-desired-list">
+                @foreach (var item in Model.OperationPosture.DesiredStates)
+                { 
+                    <li data-id="@item.Id">@item.Description<a href="/BusinessPosture/DeleteDesiredState" class="remove-item"><i class="fa fa-minus"></i></a></li>
+                }
+            </ul>
+        </div>
+        <div class="col-md-4 list-block">
+            <h4>Decommisssioning Posture</h4>
+            <div class="sub-group">
+                <h6>Desired States</h6>
+                <a href="#" data-toggle="popover" data-title="Add Desired State" data-posture-id="@Model.DecommissioningPosture.Id" data-form-target="desired-state" class="popover-trigger"><i class="fa fa-plus"></i></a>
+            </div>
+            <ul class="list-result decommissioning-desired-list">
+                @foreach (var item in Model.DecommissioningPosture.DesiredStates)
+                { 
+                    <li data-id="@item.Id">@item.Description<a href="/BusinessPosture/DeleteDesiredState" class="remove-item"><i class="fa fa-minus"></i></a></li>
+                }
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 list-block">
+            <div>
+                <div class="sub-group">
+                    <h6>Posture Challenge</h6>
+                    <a href="#" data-toggle="popover" data-posture-type="construction" data-title="Add Desired State" data-posture-id="@Model.ConstructionPosture.Id" data-form-target="posture-challenge" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                </div>
+            </div>
+            <table class="list-result">
+                <tr>
+                    <th>Relation</th>
+                    <th>Definition</th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model.ConstructionPosture.PostureChallenges)
+                { 
+                    <tr>
+                        <td>@item.HasRelation</td>
+                        <td>@item.Definition </td>
+                        <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureChallenge" class="remove-item"><i class="fa fa-minus"></i></a></td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div class="col-md-4 list-block">
+           <div>
+                <div class="sub-group">
+                    <h6>Posture Challenge</h6>
+                    <a href="#" data-toggle="popover" data-posture-type="operation" data-title="Add Desired State" data-posture-id="@Model.OperationPosture.Id" data-form-target="posture-challenge" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                </div>
+            </div>
+            <table class="list-result">
+                <tr>
+                    <th>Relation</th>
+                    <th>Definition</th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model.OperationPosture.PostureChallenges)
+                { 
+                    <tr>
+                        <td>@item.HasRelation</td>
+                        <td>@item.Definition </td>
+                        <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureChallenge" class="remove-item"><i class="fa fa-minus"></i></a></td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div class="col-md-4 list-block">
+             <div>
+                <div class="sub-group">
+                    <h6>Posture Challenge</h6>
+                    <a href="#" data-toggle="popover" data-posture-type="decommissioning" data-title="Add Desired State" data-posture-id="@Model.DecommissioningPosture.Id" data-form-target="posture-challenge" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                </div>
+            </div>
+            <table class="list-result">
+                <tr>
+                    <th>Relation</th>
+                    <th>Definition</th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model.DecommissioningPosture.PostureChallenges)
+                { 
+                    <tr>
+                        <td>@item.HasRelation</td>
+                        <td>@item.Definition </td>
+                        <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureChallenge" class="remove-item"><i class="fa fa-minus"></i></a></td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <div class="row">
+       <div class="col-md-4 list-block">
+            <div>
+                <div class="sub-group">
+                    <h6>Posture Constraint</h6>
+                    <a href="#" data-toggle="popover" data-posture-type="construction" data-title="Add Desired State" data-posture-id="@Model.ConstructionPosture.Id" data-form-target="posture-constraint" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                </div>
+            </div>
+            <table class="list-result">
+                <tr>
+                    <th>Relation</th>
+                    <th>Definition</th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model.ConstructionPosture.PostureConstraints)
+                { 
+                    <tr>
+                        <td>@item.HasRelation</td>
+                        <td>@item.Definition </td>
+                        <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureConstraint" class="remove-item"><i class="fa fa-minus"></i></a></td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div class="col-md-4 list-block">
+           <div>
+                <div class="sub-group">
+                    <h6>Posture Constraint</h6>
+                    <a href="#" data-toggle="popover" data-posture-type="operation" data-title="Add Desired State" data-posture-id="@Model.OperationPosture.Id" data-form-target="posture-constraint" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                </div>
+            </div>
+            <table class="list-result">
+                <tr>
+                    <th>Relation</th>
+                    <th>Definition</th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model.OperationPosture.PostureConstraints)
+                { 
+                    <tr>
+                        <td>@item.HasRelation</td>
+                        <td>@item.Definition </td>
+                        <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureConstraint" class="remove-item"><i class="fa fa-minus"></i></a></td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div class="col-md-4 list-block">
+             <div>
+                <div class="sub-group">
+                    <h6>Posture Constraint</h6>
+                    <a href="#" data-toggle="popover" data-posture-type="decommissioning" data-title="Add Desired State" data-posture-id="@Model.DecommissioningPosture.Id" data-form-target="posture-constraint" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                </div>
+            </div>
+            <table class="list-result">
+                <tr>
+                    <th>Relation</th>
+                    <th>Definition</th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model.DecommissioningPosture.PostureConstraints)
+                { 
+                    <tr>
+                        <td>@item.HasRelation</td>
+                        <td>@item.Definition </td>
+                        <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureConstraint" class="remove-item"><i class="fa fa-minus"></i></a></td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+<div class="desired-state-form popover-to-content">
+    <form action="/BusinessPosture/AddDesiredState">
+        <input type="hidden" name="PostureId" />
+        <div class="row">
+            <div class="col-md-12">
+                <label>Description</label>
+                <textarea name="Description" cols="25" rows="5"></textarea>
+            </div>
+            <div class="col-md-12">
+                <button type="button" class="btn btn-primary add-item">Add</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="posture-challenge-form popover-to-content">
+     <form action="/BusinessPosture/AddPostureChallenge">
+        <input type="hidden" name="PostureId" />
+         <div class="relation-ids-wrapper"></div>
+        <div class="row">
+             <div class="col-md-12">
+                <button type="button" class="btn btn-info choose-relation"  data-toggle = "modal", data-target = "#modalDialog" >Choose Desired States</button>
+            </div>
+            <div class="col-md-12">
+                <label>Definition</label>
+                <textarea name="Definition" cols="25" rows="5"></textarea>
+            </div>
+            <div class="col-md-12">
+                <button type="button" class="btn btn-primary add-item">Add</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="posture-constraint-form popover-to-content">
+     <form action="/BusinessPosture/AddPostureConstraint">
+        <input type="hidden" name="PostureId" />
+         <div class="relation-ids-wrapper"></div>
+        <div class="row">
+             <div class="col-md-12">
+                <button type="button" class="btn btn-info choose-relation"  data-toggle = "modal", data-target = "#modalDialog" >Choose Desired States</button>
+            </div>
+            <div class="col-md-12">
+                <label>Definition</label>
+                <textarea name="Definition" cols="25" rows="5"></textarea>
+            </div>
+            <div class="col-md-12">
+                <button type="button" class="btn btn-primary add-item">Add</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Modal -->
+<div class="modal fade bs-example-modal-lg" id="modalDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close finish-relation" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <div class="row modal-header-detail">
+                    <div class="title">Choose Relation</div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="relation-content"></div>
+                <button type="button" class="btn btn-primary finish-relation" data-dismiss="modal" aria-label="Close">Submit</button>
+            </div>
+        </div>
+    <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('body').popover({
+            selector: '.popover-trigger',
+            html: true,
+            placement : 'left',
+            title: function () {
+                return $(this).data('title');
+            },
+            content: function () {
+                return $('.' + $(this).data('form-target') + '-form').html();
+            }
+        });
+        $(document).on('click', '.add-item', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var $form = $this.closest('form');
+            var $listBlock = $this.closest('.list-block');
+            var $listResult = $listBlock.find('.list-result');
+            //insert type
+
+            $form.find('input[name="PostureId"]').val($listBlock.find('.popover-trigger').data('posture-id'));
+            $.post($form.prop('action'), $form.serialize(), function (data) {
+                if (data.IsSuccess) {
+                    var target = $listBlock.find('.popover-trigger').data('form-target');
+                    if (target == 'desired-state') {
+                        //desired-state
+                        $listResult.append('<li data-id="' + data.Id + '" >' + data.Description + '<a href="/BusinessPosture/DeleteDesiredState"  class="remove-item"><i class="fa fa-minus"></i></a></li>');
+                    } else {
+                        var $tr = $('<tr />');
+                        var $relationCol = $('<td />');
+                        $relationCol.html(data.RelationIds.length ? 'True' : 'False');
+                        $tr.append($relationCol);
+                        var $definitionCol = $('<td />');
+                        $definitionCol.html(data.Definition);
+                        $tr.append($definitionCol);
+                        var $removeBtn = $('<a />');
+                        $removeBtn.addClass('remove-item');
+                        if (target == 'posture-constraint') {
+                            $removeBtn.prop('href', '/BusinessPosture/DeletePostureConstraint');
+                        } else {
+                            $removeBtn.prop('href', '/BusinessPosture/DeletePostureChallenge');
+                        }
+                        $removeBtn.html('<i class="fa fa-minus"></i>');
+                        var $actionCol = $('<td />');
+                        $actionCol.attr('data-id', data.Id);
+                        $actionCol.append($removeBtn);
+                        $tr.append($actionCol);
+                        $listResult.append($tr);
+                    }
+                }
+                popOverElem.popover('hide');
+            });
+        });
+        $(document).on('click', '.remove-item', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var id = $this.parent().data('id');
+            $.post($this.prop('href'), 'Id=' + id, function (data) {
+                if (data.IsSuccess) {
+                    var target = $this.closest('.list-block').find('.popover-trigger').data('form-target');
+                    if (target == 'desired-state') {
+                        $this.parent().remove();
+                    } else {
+                        $this.closest('tr').remove();
+                    }
+                }
+            });
+        });
+        var popOverElem;
+        $(document).on('click', '.popover-trigger', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            //relation-progress
+            var blockType = $this.data('form-target');
+            if (blockType != 'desired-state') {
+                var postureType = $this.data('posture-type');
+                var desiredList = $('.list-result.' + postureType + '-desired-list').clone(true);
+                desiredList.removeClass('list-result');
+                desiredList.find('li').each(function (i, val) {
+                    var $item = $(val);
+                    $item.find('.remove-item').remove();
+                    var $checkbox = $('<input />');
+                    $checkbox.prop('type', 'checkbox');
+                    $checkbox.addClass('choose-this');
+                    $item.prepend($checkbox);
+                });
+                $('.relation-content').html(desiredList);
+            }
+            popOverElem = $this;
+        });
+
+        var modalLoadingHtml = $('.modal-loading').html();
+        $('#modalDialog').on('hidden.bs.modal', function (e) {
+            $(this).removeData('bs.modal');
+            $('#modalDialog').find('.modal-content').html(modalLoadingHtml);
+        });
+
+        $(document).on('click', '.finish-relation', function (e) {
+            //find relation ids wrapper and cleare it
+            var $wrapper = $('.relation-ids-wrapper');
+            $wrapper.html('');
+            $('input.choose-this:checked').each(function (i, val) {
+                var $hiddenId = $('<input />');
+                $hiddenId.prop('type', 'hidden');
+                $hiddenId.prop('name', 'RelationIds[]');
+                $hiddenId.val($(val).parent().data('id'));
+                $wrapper.append($hiddenId);
+            });
+        });
+    });
+</script>

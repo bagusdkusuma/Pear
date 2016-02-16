@@ -9,14 +9,18 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Services.Requests.BusinessPosture;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
     public class PlanningBlueprintController : BaseController
     {
         private readonly IPlanningBlueprintService _planningBlueprintService;
-        public PlanningBlueprintController(IPlanningBlueprintService planningBlueprintService) {
+        private readonly IBusinessPostureIdentificationService _businessPostureIdentification;
+        public PlanningBlueprintController(IPlanningBlueprintService planningBlueprintService,
+            IBusinessPostureIdentificationService businessPostureIdentification) {
             _planningBlueprintService = planningBlueprintService;
+            _businessPostureIdentification = businessPostureIdentification;
         }
 
         public ActionResult Index()
@@ -64,5 +68,9 @@ namespace DSLNG.PEAR.Web.Controllers
             return View(new EnvironmentsScanningViewModel());
         }
 
+        public ActionResult BusinessPostureIdentification(int id) {
+           
+            return View(_businessPostureIdentification.Get(new GetBusinessPostureRequest{Id = id}).MapTo<BusinessPostureViewModel>());
+        }
 	}
 }

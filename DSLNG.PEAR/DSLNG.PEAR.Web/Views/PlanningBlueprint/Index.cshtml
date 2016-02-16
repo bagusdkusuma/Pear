@@ -28,6 +28,7 @@
             <th>Title</th>
             <th>Description</th>
             <th>Environments Scanning</th>
+            <th>Business Posture Identification</th>
             <th>Is Approved</th>
             <th>Is Active</th>
             <th></th>
@@ -60,6 +61,17 @@
                              return  '@Html.ActionLink("Edit", "EnvironmentsScanning", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.EnvironmentsScanning.Id);
                         }
                      },
+                      {
+                          "orderable": false,
+                          "data": null,
+                          "defaultContent": '',
+                          "mRender": function (data, type, row) {
+                              if (row.BusinessPostureIdentification.IsLocked) {
+                                  return 'Locked';
+                              }
+                              return '@Html.ActionLink("Edit", "BusinessPostureIdentification", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.BusinessPostureIdentification.Id);
+                         }
+                      },
                     {
                         "mDataProp": "IsApproved", "name": "IsApproved", "render": function (data, type, row) {
                             var checked = '';
