@@ -1827,6 +1827,7 @@ a.see-more {
 
 .col-md-4-child {
     text-align: center;
+    height:26px;
 }
 .col-md-4-child button
 {
@@ -1871,7 +1872,6 @@ a.see-more {
 
 .col-envi {
     text-align: center;
-    color: white;
     padding: 0px;
 }
 .col-envi button{
@@ -1910,20 +1910,31 @@ a.see-more {
     border-bottom: 1px solid white;
 }
 
-.envi-remove-button{
+.remove-button,.envi-remove-button{
     float: right;
 }
 
-.div-envi{
-    padding: 0px;
-}
 
-.div-envi ul{
-    padding-left: 25px;
+.div-envi {
+    padding-right:0px;
 }
 
 .div-envi li{
     list-style-type : decimal;
 }
 
+.list-up {
+    list-style: decimal;
+}
 
+.color-white{
+    color:white;
+}
+
+.popover{
+    color: black;
+}
+
+.list-li{
+    height: 26px;
+}

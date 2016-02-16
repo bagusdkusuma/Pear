@@ -97,6 +97,7 @@
     <Compile Include="Requests\EnvironmentScanning\DeleteConstraintRequest.cs" />
     <Compile Include="Requests\EnvironmentScanning\DeleteEnvironmentScanningRequest.cs" />
     <Compile Include="Requests\EnvironmentScanning\GetEnvironmentsScanningRequest.cs" />
+    <Compile Include="Requests\EnvironmentScanning\SaveChallengeRequest.cs" />
     <Compile Include="Requests\EnvironmentScanning\SaveConstraintRequest.cs" />
     <Compile Include="Requests\EnvironmentScanning\SaveEnvironmentalScanningRequest.cs" />
     <Compile Include="Requests\EnvironmentScanning\SaveEnvironmentScanningRequest.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="Responses\EnvironmentScanning\DeleteEnvironmentScanningResponse.cs" />
     <Compile Include="Responses\EnvironmentScanning\GetDropdownConstraintResponse.cs" />
     <Compile Include="Responses\EnvironmentScanning\GetEnvironmentsScanningResponse.cs" />
+    <Compile Include="Responses\EnvironmentScanning\SaveChallengeResponse.cs" />
     <Compile Include="Responses\EnvironmentScanning\SaveConstraintResponse.cs" />
     <Compile Include="Responses\EnvironmentScanning\SaveEnvironmentalScanningResponse.cs" />
     <Compile Include="Responses\EnvironmentScanning\SaveEnvironmentScanningResponse.cs" />

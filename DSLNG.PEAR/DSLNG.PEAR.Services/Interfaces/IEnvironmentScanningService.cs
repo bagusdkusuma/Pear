@@ -17,6 +17,8 @@ namespace DSLNG.PEAR.Services.Interfaces
         SaveEnvironmentalScanningResponse SaveEnvironmentalScanning(SaveEnvironmentalScanningRequest request);
         DeleteConstraintResponse DeleteConstraint(DeleteConstraintRequest request);
         DeleteChallengeResponse DeleteChallenge(DeleteChallengeRequest request);
+        SaveConstraintResponse SaveConstraint(SaveConstraintRequest request);
+        SaveChallengeResponse SaveChallenge(SaveChallengeRequest request);
         
     }
 }

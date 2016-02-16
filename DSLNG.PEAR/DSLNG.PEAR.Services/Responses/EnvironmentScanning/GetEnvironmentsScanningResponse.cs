@@ -18,7 +18,7 @@ namespace DSLNG.PEAR.Services.Responses.EnvironmentScanning
         public IList<Environmental> Opportunity { get; set; }
         public IList<Environmental> Weakness { get; set; }
         public IList<Environmental> Strength { get; set; }
-        public IList<Constraint> Constrains { get; set; }
+        public IList<Constraint> Constraints { get; set; }
         public IList<Challenge> Challenges { get; set; }
 
 

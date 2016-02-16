@@ -543,6 +543,11 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.Desc, y => y.MapFrom(z => z.Description));
             Mapper.CreateMap<Constraint, GetEnvironmentsScanningResponse.Constraint>();
             Mapper.CreateMap<Challenge, GetEnvironmentsScanningResponse.Challenge>();
+            Mapper.CreateMap<SaveConstraintRequest, Constraint>();
+            Mapper.CreateMap<Constraint, SaveConstraintResponse>();
+            Mapper.CreateMap<SaveChallengeRequest, Challenge>();
+            Mapper.CreateMap<Challenge, SaveChallengeResponse>();
+
 
             base.Configure();
         }

@@ -75,13 +75,7 @@ namespace DSLNG.PEAR.Web.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
-
-        //[HttpPost]
-        //public ActionResult CreateConstraint(EnvironmentScanningViewModel viewModel)
-        //{
-        //    var request = viewModel.MapTo
-        //}
-        
+       
         [HttpPost]
         public ActionResult DeleteConstraint(int id)
         {
@@ -100,6 +94,41 @@ namespace DSLNG.PEAR.Web.Controllers
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
             return Json(new { success = response.IsSuccess });
+        }
+
+        [HttpPost]
+        public ActionResult CreateConstraint(EnvironmentScanningViewModel.Constraint viewModel)
+        {
+            var request = viewModel.MapTo<SaveConstraintRequest>();
+            var response = _environmentScanningService.SaveConstraint(request);
+            var data = new
+            {
+                id = response.Id,
+                type = response.Type,
+                category = response.Category,
+                definition = response.Definition
+            };
+
+            return Json(data, JsonRequestBehavior.AllowGet);
+
+        }
+
+
+        [HttpPost]
+        public ActionResult CreateChallenge(EnvironmentScanningViewModel.Challenge viewModel)
+        {
+            var request = viewModel.MapTo<SaveChallengeRequest>();
+            var response = _environmentScanningService.SaveChallenge(request);
+            var data = new
+            {
+                id = response.Id,
+                type = response.Type,
+                category = response.Category,
+                definition = response.Definition
+            };
+
+            return Json(data, JsonRequestBehavior.AllowGet);
+            
         }
 	}
 }

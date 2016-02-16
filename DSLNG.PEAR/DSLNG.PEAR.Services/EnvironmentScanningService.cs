@@ -218,19 +218,6 @@ namespace DSLNG.PEAR.Services
             }
         }
 
-
-
-        //public SaveConstraintResponse SaveConstraint(SaveConstraintRequest request)
-        //{
-        //    if (request.Id == 0)
-        //    {
-        //        var constraint = request.MapTo<Constraint>();
-        //        constraint.Relation = DataContext.EnvironmentalScannings.Where(x =>)
-
-        //    }
-        //}
-
-
         public DeleteConstraintResponse DeleteConstraint(DeleteConstraintRequest request)
         {
             var constraint = new Constraint { Id = request.Id };
@@ -246,9 +233,6 @@ namespace DSLNG.PEAR.Services
         }
 
 
-
-
-
         public DeleteChallengeResponse DeleteChallenge(DeleteChallengeRequest request)
         {
             var challenge = new Challenge { Id = request.Id };
@@ -262,5 +246,28 @@ namespace DSLNG.PEAR.Services
             };
         }
 
+
+
+        public SaveConstraintResponse SaveConstraint(SaveConstraintRequest request)
+        {
+            var constraint = request.MapTo<Constraint>();
+            constraint.EnvironmentScanning = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EnviId).FirstOrDefault();
+            DataContext.Constraint.Add(constraint);
+            DataContext.SaveChanges();
+
+            return DataContext.Constraint.Where(x => x.Id == constraint.Id).FirstOrDefault().MapTo<SaveConstraintResponse>();
+
+        }
+
+
+        public SaveChallengeResponse SaveChallenge(SaveChallengeRequest request)
+        {
+            var challenge = request.MapTo<Challenge>();
+            challenge.EnvironmentScanning = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EnviId).FirstOrDefault();
+            DataContext.Challenges.Add(challenge);
+            DataContext.SaveChanges();
+
+            return DataContext.Challenges.Where(x => x.Id == challenge.Id).FirstOrDefault().MapTo<SaveChallengeResponse>();
+        }
     }
 }
