@@ -70,7 +70,7 @@
                     @{
                         foreach (var item in Model.Threat)
                         {
-                            <li class="list-li">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>
+                            <li class="list-li" data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>
 
                         }
                     }
@@ -87,7 +87,7 @@
                     @{
                         foreach (var item in Model.Opportunity)
                         {
-                            <li class="list-li">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>
+                            <li class="list-li" data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>
                         }
                     }
                 </ul>
@@ -103,7 +103,7 @@
                     @{
                         foreach (var item in Model.Weakness)
                         {
-                            <li class="list-li">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>                            
+                            <li class="list-li" data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>                            
                         }
                     }
                 </ul>
@@ -119,7 +119,7 @@
                     @{
                         foreach (var item in Model.Strength)
                         {
-                            <li class="list-li">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>                          
+                            <li class="list-li" data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>                          
                         }
                     }
                 </ul>
@@ -205,53 +205,13 @@
             </div>
 
             <div class="modal-body">
-                <h4>Threat</h4>
-                @using (Html.BeginForm())
-                {
+                <div class="relation-contents"></div>
 
-                }
-                <form>
-                    @{
-                        foreach (var item in Model.Threat)
-                        {
-                            <input type="checkbox" id="@item.Id" name="threat" />@item.Desc
-                        }
-                    }
-                </form>
-
-                <h4>Opportunity</h4>
-                <form>
-                    @{
-                        foreach (var item in Model.Opportunity)
-                        {
-                            <input type="checkbox" id="@item.Id" name="threat" />@item.Desc
-                        }
-                    }
-                </form>
-                <h4>Weakness</h4>
-                <form>
-                    @{
-                        foreach (var item in Model.Weakness)
-                        {
-                            <input type="checkbox" id="@item.Id" name="threat" />@item.Desc
-                        }
-                    }
-                </form>
-                <h4>Strength</h4>
-                <form>
-                    @{
-                        foreach (var item in Model.Strength)
-                        {
-                            <input type="checkbox" id="@item.Id" name="threat" />@item.Desc
-                        }
-                    }
-                </form>
 
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Submit</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default btn-finish-relation" data-dismiss="modal">Submit</button>
             </div>
         </div>
     </div>
@@ -291,6 +251,7 @@
         <div>
             <button type="button" class="btn-relation" data-toggle="modal" data-target="#myModal" title="Relation">Select Relation</button>
         </div>
+        <div class="wrapper-relation"></div>
         <div>
             @Html.LabelFor(model => model.Definition)
             @Html.TextAreaFor(model => model.Definition)
@@ -564,10 +525,86 @@
                     type: 'POST',
                     success: function (data) {
                         $('.table-challenge').append('<tr><td class="td-entity">' + data.relation + '</td><td class="td-definition">' + data.definition + '<a href="#" data-id="' + data.id + '" class="challenge-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</td></tr>');
-                        //$('.table-challenge').append('<tr><td class="td-entity">' + data.relation + '</td><td class="td-definition">' + data.definition + '<button data-id="' + data.id + '" class="challenge-remove-button" style="float:right"><span class="glyphicon glyphicon-minus color-black" aria-hidden="true"></span></button>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</td></tr>');
                         popOverElem.popover('hide');
                     }
                 })
+            });
+
+
+            $(document).on('click', '.btn-create-constraint', function (e) {
+                e.preventDefault();
+                $('.relation-contents').html('');
+                var $that = this;
+                var thList = $('.th-list').clone(true);
+                var oppList = $('.opp-list').clone(true);
+                var wkList = $('.wk-list').clone(true);
+                var stList = $('.st-list').clone(true);
+                thList.removeClass('th-list');
+                oppList.removeClass('opp-list');
+                wkList.removeClass('wk-list');
+                stList.removeClass('st-list');
+
+                thList.find('li').each(function (i, val) {
+                    var $item = $(val);
+                    $item.find('.envi-remove-button').remove();
+                    var $checkbox = $('<input />');
+                    $checkbox.prop('type', 'checkbox');
+                    $checkbox.addClass('choose-list');
+                    $item.prepend($checkbox);
+                });
+                var threat = $('<h4 />');
+                threat.html('Threat');
+                $('.relation-contents').append(threat,thList);
+
+                oppList.find('li').each(function (i, val) {
+                    var $item = $(val);
+                    $item.find('.envi-remove-button').remove();
+                    var $checkbox = $('<input />');
+                    $checkbox.prop('type', 'checkbox');
+                    $checkbox.addClass('choose-list');
+                    $item.prepend($checkbox);
+                });
+                var opportunity = $('<h4 />');
+                opportunity.html('Opportunity');
+                $('.relation-contents').append(opportunity, oppList);
+
+                wkList.find('li').each(function (i, val) {
+                    var $item = $(val);
+                    $item.find('.envi-remove-button').remove();
+                    var $checkbox = $('<input />');
+                    $checkbox.prop('type', 'checkbox');
+                    $checkbox.addClass('choose-list');
+                    $item.prepend($checkbox);
+                });
+                var weakness = $('<h4 />');
+                weakness.html('Weakness');
+                $('.relation-contents').append(weakness, wkList);
+
+                stList.find('li').each(function (i, val) {
+                    var $item = $(val);
+                    $item.find('.envi-remove-button').remove();
+                    var $checkbox = $('<input />');
+                    $checkbox.prop('type', 'checkbox');
+                    $checkbox.addClass('choose-list');
+                    $item.prepend($checkbox);
+                });
+                var strength = $('<h4 />');
+                strength.html('Strength');
+                $('.relation-contents').append(strength,stList);
+
+                popOverElem = $this;
+            });
+
+            $(document).on('click', '.btn-finish-relation', function () {
+                var $wrapper = $('.wrapper-relation');
+                $wrapper.html('');
+                $('input.choose-list:checked').each(function (i, val) {
+                    var $hiddenId = $('<input />');
+                    $hiddenId.prop('type', 'hidden');
+                    $hiddenId.prop('name', 'RelationIds[]');
+                    $hiddenId.val($(val).parent().data('id'));
+                    $wrapper.append($hiddenId);
+                });
             });
 
         })
