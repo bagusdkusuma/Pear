@@ -1824,6 +1824,50 @@ a.see-more {
 .business-posture .popover {
     z-index:1040;
 }
+
+.business-posture .col-md-12 h4, .list-block h4{
+    padding : 10px 0px 10px 0px;
+}
+
+.list-block{
+    padding: 0px;
+    border: 1px solid white;
+}
+
+.list-block h4{
+    margin: 0px;
+    border-bottom: 1px solid white;
+    margin: 
+}
+
+.sub-group h6{
+    margin : 0px;
+}
+
+.list-result{
+    color:white;
+}
+
+.list-result li{
+    list-style: decimal;
+}
+
+.remove-item{
+    float: right;
+}
+
+.row-header{
+    padding: 0px;
+}
+
+.row-header h4{
+    margin-right: 0px;
+}
+
+/*.list-block{
+    padding : 0px;
+}*/
+
 /*#fixed-table {
     border-top:none !important;
 }
@@ -1847,7 +1891,7 @@ a.see-more {
     text-align: center;
     height:26px;
 }
-.col-md-4-child button
+.col-md-4-child a
 {
     float: right;
 }
@@ -1892,7 +1936,7 @@ a.see-more {
     text-align: center;
     padding: 0px;
 }
-.col-envi button{
+.col-envi a{
     float: right;
 }
 
@@ -1906,7 +1950,7 @@ a.see-more {
     padding-top: 10px;
 }
 
-.row-constraint button, .row-challenges button{
+.row-constraint a, .row-challenges a, .challenge-remove-button, .constraint-remove-button{
     float: right;
 }
 
