@@ -48,5 +48,6 @@ namespace DSLNG.PEAR.Web.ViewModels.PlanningBlueprint
             public IList<DescriptionViewModel> Weakness { get; set; }
             public IList<DescriptionViewModel> Strength { get; set; }
         }
+
     }
 }

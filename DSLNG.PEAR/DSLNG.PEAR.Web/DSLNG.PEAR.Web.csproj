@@ -761,6 +761,7 @@
     <Compile Include="Controllers\AssumptionDataController.cs" />
     <Compile Include="Controllers\BusinessPostureController.cs" />
     <Compile Include="Controllers\EconomicSummaryController.cs" />
+    <Compile Include="Controllers\EnvironmentScanningController.cs" />
     <Compile Include="Controllers\PlanningBlueprintController.cs" />
     <Compile Include="Scheduler\ScenarioScheduler.cs" />
     <Compile Include="ViewModels\BusinessPosture\DesiredStateViewModel.cs" />
@@ -781,6 +782,7 @@
     <Compile Include="ViewModels\EconomicSummary\EconomicSummaryViewModel.cs" />
     <Compile Include="Grid\GridModelBinder.cs" />
     <Compile Include="Grid\GridParams.cs" />
+    <Compile Include="ViewModels\EnvironmentScanning\EnvironmentScanningViewModel.cs" />
     <Compile Include="ViewModels\HighlightGroup\HighlightGroupViewModel.cs" />
     <Compile Include="ViewModels\Kpi\DetailKpiViewModel.cs" />
     <Compile Include="ViewModels\Kpi\UploadViewModel.cs" />

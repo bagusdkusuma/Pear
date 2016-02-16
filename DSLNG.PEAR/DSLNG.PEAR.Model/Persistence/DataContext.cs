@@ -76,6 +76,9 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<DesiredState> DesiredStates { get; set; }
         public IDbSet<PostureChallenge> PostureChalleges { get; set; }
         public IDbSet<PostureConstraint> PostureConstraints { get; set; }
+        public IDbSet<EnvironmentalScanning> EnvironmentalScannings { get; set; }
+        public IDbSet<Constraint> Constraint { get; set; }
+        public IDbSet<Challenge> Challenges { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Kpi>()
@@ -169,6 +172,28 @@ namespace DSLNG.PEAR.Data.Persistence
             modelBuilder.Entity<BusinessPostureIdentification>()
                 .HasRequired(x => x.PlanningBlueprint)
                 .WithRequiredDependent(x => x.BusinessPostureIdentification);
+
+
+            modelBuilder.Entity<EnvironmentalScanning>()
+                .HasOptional(x => x.ThreatHost)
+                .WithMany(x => x.Threat)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<EnvironmentalScanning>()
+                .HasOptional(x => x.OpportunityHost)
+                .WithMany(x => x.Opportunity)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<EnvironmentalScanning>()
+                .HasOptional(x => x.WeaknessHost)
+                .WithMany(x => x.Weakness)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<EnvironmentalScanning>()
+                .HasOptional(x => x.StrengthHost)
+                .WithMany(x => x.Strength)
+                .WillCascadeOnDelete(false);
+
 
             base.OnModelCreating(modelBuilder);
         }

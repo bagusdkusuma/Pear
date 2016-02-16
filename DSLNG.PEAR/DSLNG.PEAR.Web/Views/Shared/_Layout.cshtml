@@ -137,7 +137,7 @@
                 }
             });
             $('body').on('click', function (e) {
-                if ($(this).hasClass('modal-open')) return;
+                if($(this).hasClass('modal-open')) return;
                 $('[data-toggle="popover"]').each(function () {
                     //the 'is' for buttons that trigger popups
                     //the 'has' for icons within a button that triggers a popup

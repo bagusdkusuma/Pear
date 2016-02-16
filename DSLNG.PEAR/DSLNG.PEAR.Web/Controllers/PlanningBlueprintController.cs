@@ -10,17 +10,23 @@ using System.Web;
 using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Requests.BusinessPosture;
+using DSLNG.PEAR.Services.Requests.EnvironmentScanning;
+using DSLNG.PEAR.Web.ViewModels.EnvironmentScanning;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
     public class PlanningBlueprintController : BaseController
     {
         private readonly IPlanningBlueprintService _planningBlueprintService;
+         private readonly IEnvironmentScanningService _environmentScanningService;
         private readonly IBusinessPostureIdentificationService _businessPostureIdentification;
         public PlanningBlueprintController(IPlanningBlueprintService planningBlueprintService,
-            IBusinessPostureIdentificationService businessPostureIdentification) {
+            IBusinessPostureIdentificationService businessPostureIdentification,
+            IEnvironmentScanningService environmentScanningService)
+        {
             _planningBlueprintService = planningBlueprintService;
             _businessPostureIdentification = businessPostureIdentification;
+            _environmentScanningService = environmentScanningService;
         }
 
         public ActionResult Index()
@@ -64,8 +70,25 @@ namespace DSLNG.PEAR.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult EnvironmentsScanning(int id) {
-            return View(new EnvironmentsScanningViewModel());
+        public ActionResult EnvironmentsScanning(int id) 
+        {
+            var viewModel = _environmentScanningService.GetEnvironmentsScanning(new GetEnvironmentsScanningRequest { Id = id }).MapTo<EnvironmentScanningViewModel>();
+            var ListType = new List<SelectListItem>();
+            var type1 = new SelectListItem() { Text="Internal", Value="Internal"};
+            ListType.Add(type1);
+            var type2 = new SelectListItem() { Text = "External", Value = "External" };
+            ListType.Add(type2);
+
+            var listCategory = new List<SelectListItem>();
+            var category1 = new SelectListItem() { Text = "Politic", Value = "Politic" };
+            listCategory.Add(category1);
+            var category2 = new SelectListItem() { Text = "Economic", Value = "Economic" };
+            listCategory.Add(category2);
+
+            viewModel.Types = ListType;
+            viewModel.Categories = listCategory;
+
+            return View(viewModel);
         }
 
         public ActionResult BusinessPostureIdentification(int id) {

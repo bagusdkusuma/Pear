@@ -76,6 +76,9 @@
     <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="Entities\Blueprint\BusinessPostureIdentification.cs" />
     <Compile Include="Entities\Blueprint\DesiredState.cs" />
+    <Compile Include="Entities\Blueprint\Challenge.cs" />
+    <Compile Include="Entities\Blueprint\Constraint.cs" />
+    <Compile Include="Entities\Blueprint\EnvironmentalScanning.cs" />
     <Compile Include="Entities\Blueprint\EnvironmentsScanning.cs" />
     <Compile Include="Entities\Blueprint\PlanningBlueprint.cs" />
     <Compile Include="Entities\Blueprint\Posture.cs" />

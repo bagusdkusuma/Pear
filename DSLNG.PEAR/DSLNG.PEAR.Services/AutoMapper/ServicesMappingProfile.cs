@@ -92,6 +92,8 @@ using DSLNG.PEAR.Data.Entities.Blueprint;
 using DSLNG.PEAR.Services.Responses.PlanningBlueprint;
 using DSLNG.PEAR.Services.Responses.BusinessPosture;
 using DSLNG.PEAR.Services.Requests.BusinessPosture;
+using DSLNG.PEAR.Services.Responses.EnvironmentScanning;
+using DSLNG.PEAR.Services.Requests.EnvironmentScanning;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -548,6 +550,19 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<DesiredState, SaveDesiredStateResponse>();
             Mapper.CreateMap<SavePostureChallengeRequest, PostureChallenge>();
             Mapper.CreateMap<SavePostureConstraintRequest, PostureConstraint>();
+
+            Mapper.CreateMap<EnvironmentsScanning, GetEnvironmentsScanningResponse>();
+            Mapper.CreateMap<UltimateObjectivePoint, GetEnvironmentsScanningResponse.UltimateObjective>();
+            Mapper.CreateMap<EnvironmentalScanning, GetEnvironmentsScanningResponse.Environmental>();
+            Mapper.CreateMap<SaveEnvironmentScanningRequest, UltimateObjectivePoint>();
+            Mapper.CreateMap<SaveEnvironmentalScanningRequest, EnvironmentalScanning>()
+                .ForMember(x => x.Desc, y => y.MapFrom(z => z.Description));
+            Mapper.CreateMap<Constraint, GetEnvironmentsScanningResponse.Constraint>();
+            Mapper.CreateMap<Challenge, GetEnvironmentsScanningResponse.Challenge>();
+            Mapper.CreateMap<SaveConstraintRequest, Constraint>();
+            Mapper.CreateMap<Constraint, SaveConstraintResponse>();
+            Mapper.CreateMap<SaveChallengeRequest, Challenge>();
+            Mapper.CreateMap<Challenge, SaveChallengeResponse>();
 
             base.Configure();
         }

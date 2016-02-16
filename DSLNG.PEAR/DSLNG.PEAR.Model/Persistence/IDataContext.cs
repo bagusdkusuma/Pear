@@ -70,6 +70,9 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<DesiredState> DesiredStates { get; set; }
         IDbSet<PostureChallenge> PostureChalleges { get; set; }
         IDbSet<PostureConstraint> PostureConstraints { get; set; }
+        IDbSet<EnvironmentalScanning> EnvironmentalScannings { get; set; }
+        IDbSet<Constraint> Constraint { get; set; }
+        IDbSet<Challenge> Challenges { get; set; }
         Database Database { get; }
         int SaveChanges();
         DbEntityEntry Entry(object entity);

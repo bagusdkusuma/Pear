@@ -140,7 +140,9 @@ using DSLNG.PEAR.Services.Requests.PlanningBlueprint;
 using DSLNG.PEAR.Services.Responses.BusinessPosture;
 using DSLNG.PEAR.Web.ViewModels.BusinessPosture;
 using DSLNG.PEAR.Services.Requests.BusinessPosture;
-
+using DSLNG.PEAR.Services.Responses.EnvironmentScanning;
+using DSLNG.PEAR.Web.ViewModels.EnvironmentScanning;
+using DSLNG.PEAR.Services.Requests.EnvironmentScanning;
 namespace DSLNG.PEAR.Web.AutoMapper
 {
     public class ViewModelMappingProfile : Profile
@@ -594,6 +596,16 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<DesiredStateViewModel, SaveDesiredStateRequest>();
             Mapper.CreateMap<PostureChallengeViewModel, SavePostureChallengeRequest>();
             Mapper.CreateMap<PostureConstraintViewModel, SavePostureConstraintRequest>();
+
+            Mapper.CreateMap<GetEnvironmentsScanningResponse, EnvironmentScanningViewModel>();
+            Mapper.CreateMap<GetEnvironmentsScanningResponse.UltimateObjective, EnvironmentScanningViewModel.UltimateObjective>();
+            Mapper.CreateMap<GetEnvironmentsScanningResponse.Environmental, EnvironmentScanningViewModel.Environmental>();
+            Mapper.CreateMap<EnvironmentScanningViewModel.CreateViewModel, SaveEnvironmentScanningRequest>();
+            Mapper.CreateMap<EnvironmentScanningViewModel.CreateEnvironmentalViewModel, SaveEnvironmentalScanningRequest>();
+            Mapper.CreateMap<GetEnvironmentsScanningResponse.Constraint, EnvironmentScanningViewModel.Constraint>();
+            Mapper.CreateMap<GetEnvironmentsScanningResponse.Challenge, EnvironmentScanningViewModel.Challenge>();
+            Mapper.CreateMap<EnvironmentScanningViewModel.Constraint, SaveConstraintRequest>();
+            Mapper.CreateMap<EnvironmentScanningViewModel.Challenge, SaveChallengeRequest>();
 
             base.Configure();
         }
