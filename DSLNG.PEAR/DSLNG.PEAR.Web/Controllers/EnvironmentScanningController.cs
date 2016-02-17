@@ -107,7 +107,11 @@ namespace DSLNG.PEAR.Web.Controllers
                 type = response.Type,
                 category = response.Category,
                 definition = response.Definition,
-                relationids = response.RelationIds
+                relationids = response.RelationIds,
+                threatIds = response.ThreatIds,
+                opportunityIds = response.OpportunityIds,
+                weaknessIds = response.WeaknessIds,
+                strengthIds = response.StrengthIds
             };
 
             return Json(data, JsonRequestBehavior.AllowGet);

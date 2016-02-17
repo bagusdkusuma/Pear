@@ -272,6 +272,14 @@ namespace DSLNG.PEAR.Services
             DataContext.Constraint.Add(constraint);
             DataContext.SaveChanges();
 
+            var result = DataContext.Constraint
+                .Include(x => x.Relation)
+                .Include(x => x.Relation.Select(y => y.ThreatHost))
+                .Include(x => x.Relation.Select(y => y.OpportunityHost))
+                .Include(x => x.Relation.Select(y => y.WeaknessHost))
+                .Include(x => x.Relation.Select(y => y.StrengthHost))
+                .Where(x => x.Id == constraint.Id).FirstOrDefault();
+            
             return new SaveConstraintResponse
             {
                 IsSuccess = true,
@@ -280,7 +288,12 @@ namespace DSLNG.PEAR.Services
                 Definition = constraint.Definition,
                 Id = constraint.Id,
                 Type = constraint.Type,
-                RelationIds = constraint.Relation.Select(x => x.Id).ToArray()
+                RelationIds = constraint.Relation.Select(x => x.Id).ToArray(),
+                ThreatIds = result.Relation.Where(x => x.ThreatHost != null).Select(y => y.ThreatHost.Id).ToArray(),
+                OpportunityIds = result.Relation.Where(x => x.OpportunityHost != null).Select(y => y.OpportunityHost.Id).ToArray(),
+                WeaknessIds = result.Relation.Where(x => x.WeaknessHost != null).Select(y => y.WeaknessHost.Id).ToArray(),
+                StrengthIds = result.Relation.Where(x => x.StrengthHost != null).Select(y => y.StrengthHost.Id).ToArray(),
+
             };
 
         }

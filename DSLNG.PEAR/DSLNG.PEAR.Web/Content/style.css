@@ -1980,6 +1980,7 @@ a.see-more {
 
 .div-envi {
     padding-right:0px;
+    word-break: break-all;
 }
 
 .div-envi li{
@@ -1998,3 +1999,17 @@ a.see-more {
     color: black;
 }
 
+.voyage-plan{
+    color:white;
+}
+
+.voyage-plan h3{
+    font-size: 14px;
+}
+
+.voyage-plan h2{
+    font-size: 16px;
+    text-align: center;
+    text-decoration: underline;
+    font-weight: bold;
+}

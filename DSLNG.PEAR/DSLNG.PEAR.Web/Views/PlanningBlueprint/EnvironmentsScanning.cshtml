@@ -147,36 +147,24 @@
                 <tr>
                     <td class="td-entity">
                         @{
-                foreach (var id in item.ThreatIds)
+                if (item.ThreatIds.Count() > 0)
                 {
-                    if (id != null)
-                    {
-                        <span>T</span>
-                    }
+                    <span>T</span>
                 }
 
-                foreach (var id in item.OpportunityIds)
+                if (item.OpportunityIds.Count() > 0)
                 {
-                    if (id != null)
-                    {
-                        <span>O</span>
-                    }
+                    <span>O</span>
                 }
 
-                foreach (var id in item.WeaknessIds)
+                if (item.WeaknessIds.Count() > 0)
                 {
-                    if (id != null)
-                    {
-                        <span>W</span>
-                    }
+                    <span>W</span>
                 }
 
-                foreach (var id in item.StrengthIds)
+                if (item.StrengthIds.Count() > 0)
                 {
-                    if (id != null)
-                    {
-                        <span>S</span>
-                    }
+                    <span>S</span>
                 }
 
                         }
@@ -210,42 +198,7 @@
             @{foreach (var item in Model.Challenges)
             {
                 <tr>
-                    <td class="td-entity">
-                        @{
-                foreach (var id in item.ThreatIds)
-                {
-                    if (id != null)
-                    {
-                        <span>T</span>
-                    }
-                }
-
-                foreach (var id in item.OpportunityIds)
-                {
-                    if (id != null)
-                    {
-                        <span>O</span>
-                    }
-                }
-
-                foreach (var id in item.WeaknessIds)
-                {
-                    if (id != null)
-                    {
-                        <span>W</span>
-                    }
-                }
-
-                foreach (var id in item.StrengthIds)
-                {
-                    if (id != null)
-                    {
-                        <span>S</span>
-                    }
-                }
-
-                        }
-                    </td>
+                    <td class="td-entity"></td>
                     <td class="td-definition">@item.Definition <a href="#" data-id="@item.Id" class="challenge-remove-button"><i class="fa fa-minus"></i></a></td>
                     <td class="td-entity">@item.Type</td>
                     <td class="td-entity">@item.Category</td>
@@ -340,7 +293,7 @@
         <div class="wrapper-relation"></div>
         <div>
             @Html.LabelFor(model => model.Definition)
-            @Html.TextAreaFor(model => model.Definition, new {cols = "25", rows = "5" })
+            @Html.TextAreaFor(model => model.Definition, new { cols = "25", rows = "5" })
         </div>
         <div>
             @Html.LabelFor(model => model.Type)
@@ -597,8 +550,24 @@
                     data: $that.closest('form').serialize(),
                     type: 'POST',
                     success: function (data) {
-                        $('.table-constraint').append('<tr><td class="td-entity">' + data.relation + '</td><td class="td-definition">' + data.definition + '<a href="#" data-id="' + data.id + '" class="constraint-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</td></tr>');
+                        var relation = '';
+                        if (data.threatIds.length > 0)
+                        {
+                            relation = relation + 'T ' 
+                        }
+                        if (data.opportunityIds.length > 0) {
+                            relation = relation + 'O '
+                        }
+                        if (data.weaknessIds.length > 0) {
+                            relation = relation + 'W '
+                        }
+                        if (data.strengthIds.length > 0) {
+                            relation = relation + 'S '
+                        }
+                        
+                        $('.table-constraint').append('<tr><td class="td-entity">' + '<span>' + relation + '</span>' + '</td><td class="td-definition">' + data.definition + '<a href="#" data-id="' + data.id + '" class="constraint-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</td></tr>');
                         popOverElem.popover('hide');
+                        console.log(relation);
                     }
                 })
             });
@@ -770,7 +739,6 @@
                     console.log($wrapper);
                 });
             });
-
         });
     </script>
 }
