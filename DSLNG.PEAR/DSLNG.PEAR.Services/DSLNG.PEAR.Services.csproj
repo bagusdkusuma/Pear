@@ -496,6 +496,7 @@
     <Compile Include="Responses\OutputConfig\SaveOutputConfigResponse.cs" />
     <Compile Include="Responses\OutputConfig\GetOutputConfigsResponse.cs" />
     <Compile Include="Responses\PlanningBlueprint\GetPlanningBlueprintsResponse.cs" />
+    <Compile Include="Responses\PlanningBlueprint\GetVoyagePlanResponse.cs" />
     <Compile Include="Responses\PlanningBlueprint\SavePlanningBlueprintResponse.cs" />
     <Compile Include="Responses\PmsSummary\CreatePmsConfigDetailsResponse.cs" />
     <Compile Include="Responses\PmsSummary\CreatePmsConfigResponse.cs" />
