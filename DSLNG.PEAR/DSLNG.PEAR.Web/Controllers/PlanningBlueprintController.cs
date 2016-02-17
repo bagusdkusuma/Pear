@@ -18,7 +18,7 @@ namespace DSLNG.PEAR.Web.Controllers
     public class PlanningBlueprintController : BaseController
     {
         private readonly IPlanningBlueprintService _planningBlueprintService;
-         private readonly IEnvironmentScanningService _environmentScanningService;
+        private readonly IEnvironmentScanningService _environmentScanningService;
         private readonly IBusinessPostureIdentificationService _businessPostureIdentification;
         public PlanningBlueprintController(IPlanningBlueprintService planningBlueprintService,
             IBusinessPostureIdentificationService businessPostureIdentification,
@@ -70,11 +70,11 @@ namespace DSLNG.PEAR.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult EnvironmentsScanning(int id) 
+        public ActionResult EnvironmentsScanning(int id)
         {
             var viewModel = _environmentScanningService.GetEnvironmentsScanning(new GetEnvironmentsScanningRequest { Id = id }).MapTo<EnvironmentScanningViewModel>();
             var ListType = new List<SelectListItem>();
-            var type1 = new SelectListItem() { Text="Internal", Value="Internal"};
+            var type1 = new SelectListItem() { Text = "Internal", Value = "Internal" };
             ListType.Add(type1);
             var type2 = new SelectListItem() { Text = "External", Value = "External" };
             ListType.Add(type2);
@@ -91,9 +91,18 @@ namespace DSLNG.PEAR.Web.Controllers
             return View(viewModel);
         }
 
-        public ActionResult BusinessPostureIdentification(int id) {
-           
-            return View(_businessPostureIdentification.Get(new GetBusinessPostureRequest{Id = id}).MapTo<BusinessPostureViewModel>());
+        public ActionResult BusinessPostureIdentification(int id)
+        {
+
+            return View(_businessPostureIdentification.Get(new GetBusinessPostureRequest { Id = id }).MapTo<BusinessPostureViewModel>());
         }
-	}
+
+        public ActionResult VoyagePlan()
+        {
+            var resp = _planningBlueprintService.GetVoyagePlan();
+            if (resp != null)
+                return View(resp.MapTo<VoyagePlanViewModel>());
+            return View();
+        }
+    }
 }

@@ -1087,6 +1087,7 @@
     <Content Include="Views\Kpi\Detail.cshtml" />
     <Content Include="Views\OperationData\_Download.cshtml" />
     <Content Include="Views\PlanningBlueprint\BusinessPostureIdentification.cshtml" />
+    <Content Include="Views\PlanningBlueprint\VoyagePlan.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -1259,6 +1260,7 @@
     <Compile Include="ViewModels\PlanningBlueprint\BusinessPostureViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\EnvironmentsScanningViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\PlanningBlueprintViewModel.cs" />
+    <Compile Include="ViewModels\PlanningBlueprint\VoyagePlanViewModel.cs" />
     <Compile Include="ViewModels\PmsConfigDetails\CreatePmsConfigDetailsViewModel.cs" />
     <Compile Include="ViewModels\PmsConfig\UpdatePmsConfigViewModel.cs" />
     <Compile Include="ViewModels\PmsConfig\CreatePmsConfigViewModel.cs" />

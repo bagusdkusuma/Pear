@@ -568,6 +568,14 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<SaveChallengeRequest, Challenge>();
             Mapper.CreateMap<Challenge, SaveChallengeResponse>();
 
+            Mapper.CreateMap<UltimateObjectivePoint, GetVoyagePlanResponse.UltimateObjectivePoint>();
+            Mapper.CreateMap<Challenge, GetVoyagePlanResponse.Challenge>();
+            Mapper.CreateMap<Constraint, GetVoyagePlanResponse.Constraint>();
+            Mapper.CreateMap<Posture, GetVoyagePlanResponse.Posture>();
+            Mapper.CreateMap<DesiredState, GetVoyagePlanResponse.DesiredState>();
+            Mapper.CreateMap<PostureChallenge, GetVoyagePlanResponse.PostureChallenge>();
+            Mapper.CreateMap<PostureConstraint, GetVoyagePlanResponse.PostureConstraint>();
+
             base.Configure();
         }
 
