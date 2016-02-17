@@ -3,6 +3,7 @@ using DSLNG.PEAR.Data.Entities;
 using Type = DSLNG.PEAR.Data.Entities.Type;
 using DSLNG.PEAR.Data.Entities.EconomicModel;
 using System;
+using DSLNG.PEAR.Data.Entities.Blueprint;
 
 namespace DSLNG.PEAR.Data.Persistence
 {
@@ -67,6 +68,17 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<ResetPassword> ResetPasswords { get; set; }
         public IDbSet<KeyOutputConfiguration> KeyOutputConfigs { get; set; }
         public IDbSet<StaticHighlightPrivilege> StaticHighlightPrivileges { get; set; }
+        public IDbSet<PlanningBlueprint> PlanningBlueprints { get; set; }
+        public IDbSet<UltimateObjectivePoint> UltimateObjectivePoints { get; set; }
+        public IDbSet<EnvironmentsScanning> EnvironmentsScannings { get; set; }
+        public IDbSet<BusinessPostureIdentification> BusinessPostures { get; set; }
+        public IDbSet<Posture> Postures { get; set; }
+        public IDbSet<DesiredState> DesiredStates { get; set; }
+        public IDbSet<PostureChallenge> PostureChalleges { get; set; }
+        public IDbSet<PostureConstraint> PostureConstraints { get; set; }
+        public IDbSet<EnvironmentalScanning> EnvironmentalScannings { get; set; }
+        public IDbSet<Constraint> Constraint { get; set; }
+        public IDbSet<Challenge> Challenges { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Kpi>()
@@ -136,6 +148,52 @@ namespace DSLNG.PEAR.Data.Persistence
                 .HasMany(x => x.Options)
                 .WithRequired(x => x.Select)
                 .WillCascadeOnDelete();
+
+            modelBuilder.Entity<UltimateObjectivePoint>()
+                .HasOptional(x => x.ConstructionPhaseHost)
+                .WithMany(x => x.ConstructionPhase)
+                .WillCascadeOnDelete(false);
+
+
+            modelBuilder.Entity<UltimateObjectivePoint>()
+                .HasOptional(x => x.OperationPhaseHost)
+                .WithMany(x => x.OperationPhase)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<UltimateObjectivePoint>()
+                .HasOptional(x => x.ReinventPhaseHost)
+                .WithMany(x => x.ReinventPhase)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<EnvironmentsScanning>()
+                .HasRequired(x => x.PlanningBlueprint)
+                .WithRequiredDependent(x => x.EnvironmentsScanning);
+
+            modelBuilder.Entity<BusinessPostureIdentification>()
+                .HasRequired(x => x.PlanningBlueprint)
+                .WithRequiredDependent(x => x.BusinessPostureIdentification);
+
+
+            modelBuilder.Entity<EnvironmentalScanning>()
+                .HasOptional(x => x.ThreatHost)
+                .WithMany(x => x.Threat)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<EnvironmentalScanning>()
+                .HasOptional(x => x.OpportunityHost)
+                .WithMany(x => x.Opportunity)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<EnvironmentalScanning>()
+                .HasOptional(x => x.WeaknessHost)
+                .WithMany(x => x.Weakness)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<EnvironmentalScanning>()
+                .HasOptional(x => x.StrengthHost)
+                .WithMany(x => x.Strength)
+                .WillCascadeOnDelete(false);
+
 
             base.OnModelCreating(modelBuilder);
         }

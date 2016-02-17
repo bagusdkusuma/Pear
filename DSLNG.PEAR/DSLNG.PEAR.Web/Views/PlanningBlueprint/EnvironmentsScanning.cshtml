@@ -1,0 +1,612 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.EnvironmentScanning.EnvironmentScanningViewModel
+
+@{
+    ViewBag.Title = "EnvironmentsScanning";
+}
+
+<div class="col-md-12">
+    @* Ultimate Objective *@
+    <div class="row row-uo border-style-1"><h4>Ultimate Objective</h4></div>
+    <div class="row row-margin-5 color-white">
+        <div class="div-envi col-md-4 border-style-1">
+            <div class="col-md-4-child">
+                <span><b>Ultimate Objective (Construction Phase)</b></span>
+                <a href="#" class="input-popover" data-es-id="@Model.Id" data-type="cp" data-toggle="popover" data-placement="left" title="Construction Phase"><i class="fa fa-plus"></i></a>
+            </div>
+            <div class="div-envi">
+                <ul class="list-group cp-list">
+                    @foreach (var item in Model.ConstructionPhase)
+                    {
+                        <li class="list-li">@item.Description <a href="#" data-id="@item.Id" class="remove-button"><i class="fa fa-minus"></i></a></li>
+                    }
+                </ul>
+                @Html.HiddenFor(model => model.Id)
+            </div>
+        </div>
+        <div class="div-envi col-md-4 border-style-1">
+            <div class="col-md-4-child">
+                <span><b>Ultimate Objective (Operation Phase)</b></span>
+                <a href="#" class="input-popover" data-es-id="@Model.Id" data-type="op" data-toggle="popover" data-placement="left" title="Construction Phase"><i class="fa fa-plus"></i></a>
+            </div>
+            <div class="div-envi">
+                <ul class="list-group op-list">
+                    @foreach (var item in Model.OperationPhase)
+                    {
+                        <li class="list-li">@item.Description <a href="#" data-id="@item.Id" class="remove-button"><i class="fa fa-minus"></i></a></li>
+                    }
+                </ul>
+                @Html.HiddenFor(model => model.Id)
+            </div>
+        </div>
+        <div class="div-envi col-md-4 border-style-1">
+            <div class="col-md-4-child">
+                <span><b>Ultimate Objective (Decomm.Re-Invent Phase)</b></span>
+                <a href="#" class="input-popover" data-es-id="@Model.Id" data-type="rp" data-toggle="popover" data-placement="left" title="Reinvent Phase"><i class="fa fa-plus"></i></a>
+            </div>
+            <div class="div-envi">
+                <ul class="list-group rp-list">
+                    @foreach (var item in Model.ReinventPhase)
+                    {
+                        <li class="list-li">@item.Description <a href="#" data-id="@item.Id" class="remove-button"><i class="fa fa-minus"></i></a></li>
+
+                    }
+                </ul>
+                @Html.HiddenFor(model => model.Id)
+            </div>
+        </div>
+    </div>
+
+
+    @*Environmental Scanning*@
+    <div class="row row-environmental margin-style-1"><h4>Environmental Scanning</h4></div>
+    <div class="row row-margin-5 color-white">
+        <div class="col-md-3 popover-envi border-style-1">
+            <div class="col-md-12 col-envi" style="background-color: red">
+                <span><b>Threat</b></span>
+                <a href="#" class="input-environmental" data-envi-id="@Model.Id" data-envi-type="th" data-toggle="popover" data-placement="left" title="Threat"><i class="fa fa-plus"></i></a>
+            </div>
+            <div class="div-envi col-md-12">
+                <ul class="list-group th-list">
+                    @{
+                        foreach (var item in Model.Threat)
+                        {
+                            <li class="list-li" data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>
+
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-3 popover-envi border-style-1">
+            <div class="col-md-12 col-envi" style="background-color: #33ff33">
+                <span><b>Opportunity</b></span>
+                <a href="#" class="input-environmental" data-envi-id="@Model.Id" data-envi-type="opp" data-toggle="popover" data-placement="left" title="Opportunity"><i class="fa fa-plus"></i></a>
+            </div>
+            <div class="div-envi col-md-12">
+                <ul class="list-group opp-list">
+                    @{
+                        foreach (var item in Model.Opportunity)
+                        {
+                            <li class="list-li" data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-3 popover-envi border-style-1">
+            <div class="col-md-12 col-envi" style="background-color: #e580ff">
+                <span><b>Weakness</b></span>
+                <a href="#" class="input-environmental" data-envi-id="@Model.Id" data-envi-type="wk" data-toggle="popover" data-placement="left" title="Opportunity"><i class="fa fa-plus"></i></a>
+            </div>
+            <div class="div-envi col-md-12">
+                <ul class="list-group wk-list">
+                    @{
+                        foreach (var item in Model.Weakness)
+                        {
+                            <li class="list-li" data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>                            
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-3 popover-envi border-style-1">
+            <div class="col-md-12 col-envi" style="background-color: #3333ff">
+                <span><b>Strength</b></span>
+                <a href="#" class="input-environmental" data-envi-id="@Model.Id" data-envi-type="st" data-toggle="popover" data-placement="left" title="Opportunity"><i class="fa fa-plus"></i></a>
+            </div>
+            <div class="div-envi col-md-12">
+                <ul class="list-group st-list">
+                    @{
+                        foreach (var item in Model.Strength)
+                        {
+                            <li class="list-li" data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>                          
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    @* Constraints *@
+    <div class="row row-constraint margin-style-1 border-style-1" style="background-color: #cc0000">
+        <h4>
+            Constraint
+            <a href="#" class="btn-create-constraint" data-envi-id="@Model.Id" data-toggle="popover" data-placement="left" title="Constraint"><i class="fa fa-plus"></i></a>
+        </h4>
+    </div>
+    <div class="row row-margin-5 row-table-constrain">
+        <table class="table table-constraint border-style-1">
+            <tr>
+                <td class="td-entity"><b>Relation</b></td>
+                <td class="td-definition"><b>Definiton</b> </td>
+                <td class="td-entity"><b>Type</b></td>
+                <td class="td-entity"><b>Category</b></td>
+            </tr>
+            @{foreach (var item in Model.Constraints)
+            {
+                <tr>
+                    <td class="td-entity">
+                        @foreach (var desc in item.Relation)
+                        {@desc.Desc }
+                    </td>
+                    <td class="td-definition">@item.Definition <a href="#" data-id="@item.Id" class="constraint-remove-button"><i class="fa fa-minus"></i></a></td>
+                    <td class="td-entity">@item.Type</td>
+                    <td class="td-entity">@item.Category</td>
+                </tr>
+            }
+
+            }
+        </table>
+    </div>
+
+
+    @* Challenges *@
+    <div class="row row-challenges margin-style-1 border-style-1" style="background-color:#ffcc00">
+        <h4>
+            Challenges
+            <a href="#" class="btn-create-challenges" data-envi-id="@Model.Id" data-toggle="popover" data-placement="left" title="Challenges"><i class="fa fa-plus"></i></a>
+        </h4>
+    </div>
+    <div class="row row-margin-5 row-table-constrain">
+        <table class="table table-challenge border-style-1">
+            <tr>
+                <td class="td-entity"><b>Relation</b></td>
+                <td class="td-definition"><b>Definiton</b> </td>
+                <td class="td-entity"><b>Type</b></td>
+                <td class="td-entity"><b>Category</b></td>
+            </tr>
+            @{foreach (var item in Model.Challenges)
+            {
+                <tr>
+                    <td class="td-entity">
+                        @foreach (var x in item.Relation)
+                        {@x.Desc }
+                    </td>
+                    <td class="td-definition">@item.Definition <a href="#" data-id="@item.Id" class="challenge-remove-button"><i class="fa fa-minus"></i></a></td>
+                    <td class="td-entity">@item.Type</td>
+                    <td class="td-entity">@item.Category</td>
+                </tr>
+            }
+
+            }
+        </table>
+    </div>
+</div>
+
+
+@* Modal for Checkbox*@
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Select Relation</h3>
+            </div>
+
+            <div class="modal-body">
+                <div class="relation-contents"></div>
+
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-finish-relation" data-dismiss="modal">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Input Ultimate Objective *@
+<div class="popover-content" style="display: none">
+
+    @using (Html.BeginForm("Create", "EnvironmentScanning", FormMethod.Post, new { id = "form-input" }))
+    {
+        <label>Description</label>
+        <input type="text" name="esId" hidden="hidden" />
+        <input type="text" name="type" hidden="hidden" />
+        <input type="text" name="Description" />
+        <input type="submit" value="submit" class="form-es-submit" />
+    }
+</div>
+
+@* Input Environmental *@
+<div class="popover-environmental" style="display: none">
+
+    @using (Html.BeginForm("CreateEnvironmental", "EnvironmentScanning", FormMethod.Post, new { id = "form-input" }))
+    {
+        <label>Description</label>
+        <input type="text" name="enviId" hidden="hidden" />
+        <input type="text" name="enviType" hidden="hidden" />
+        <input type="text" name="Description" />
+        <input type="submit" value="submit" class="form-envi-submit" />
+    }
+</div>
+
+
+@* Input Constraints *@
+<div class="input-constraint" style="display:none; background-color:black;">
+    @using (Html.BeginForm("CreateConstraint", "EnvironmentScanning", FormMethod.Post, new { id = "form-constraint" }))
+    {
+        <div>
+            <button type="button" class="btn-relation" data-toggle="modal" data-target="#myModal" title="Relation">Select Relation</button>
+        </div>
+        <div class="wrapper-relation"></div>
+        <div>
+            @Html.LabelFor(model => model.Definition)
+            @Html.TextAreaFor(model => model.Definition)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.Type)
+            @Html.DropDownListFor(model => model.Type, Model.Types)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.Category)
+            @Html.DropDownListFor(model => model.Category, Model.Categories)
+        </div>
+
+        <div>
+            <input type="text" name="enviId" hidden="hidden" />
+            <input type="submit" name="submit" class="form-input-constraint" />
+        </div>
+
+    }
+</div>
+
+@* Input Challenges *@
+<div class="input-challenges" style="display:none;">
+    @using (Html.BeginForm("CreateChallenge", "EnvironmentScanning", FormMethod.Post))
+    {
+        <div>
+            <button type="button" class="btn-relation" data-toggle="modal" data-target="#myModal" title="Relation">Select Relation</button>
+        </div>
+        <div>
+            @Html.LabelFor(model => model.Definition)
+            @Html.TextAreaFor(model => model.Definition)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.Type)
+            @Html.DropDownListFor(model => model.Type, Model.Types)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.Category)
+            @Html.DropDownListFor(model => model.Category, Model.Categories)
+        </div>
+
+        <div>
+            <input type="text" name="enviId" hidden="hidden" />
+            <input type="submit" name="submit" class="form-input-challenge" />
+        </div>
+
+    }
+</div>
+
+
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.popover-envi').popover({
+                selector: '.input-environmental',
+                html: true,
+                title: function () {
+                    return 'test';
+                },
+                content: function () {
+                    return $('.popover-environmental').html();
+                }
+            });
+
+            $('.row-challenges').popover({
+                selector: '.btn-create-challenges',
+                html: true,
+                title: function () {
+                    return 'Test';
+                },
+                content: function () {
+                    return $('.input-challenges').html();
+                }
+            });
+
+            $('.row-constraint').popover({
+                selector: '.btn-create-constraint',
+                html: true,
+                title: function () {
+                    return 'Test';
+                },
+                content: function () {
+                    return $('.input-constraint').html();
+                }
+            });
+
+            $('body').popover({
+                selector: '.input-popover',
+                html: true,
+                title: function () {
+                    return 'Test';
+                },
+                content: function () {
+                    return $('.popover-content').html();
+                }
+            });
+
+            var popOverElem;
+            $(document).on('click', '.input-popover', function () {
+                var esId = $(this).data("es-id");
+                var type = $(this).data("type");
+                $('.popover').find('input[name="esId"]').attr('value', esId);
+                $('.popover').find('input[name="type"]').attr('value', type);
+                popOverElem = $(this);
+
+            });
+
+            $(document).on('click', '.input-environmental', function () {
+                var enviId = $(this).data("envi-id");
+                var enviType = $(this).data("envi-type");
+                $('.popover').find('input[name="enviId"]').attr('value', enviId);
+                $('.popover').find('input[name="enviType"]').attr('value', enviType);
+                popOverElem = $(this);
+
+            });
+
+            $(document).on('click', '.btn-create-constraint', function () {
+                var enviId = $(this).data("envi-id");
+                $('.popover').find('input[name="enviId"]').attr('value', enviId);
+                popOverElem = $(this);
+
+            });
+
+            $(document).on('click', '.btn-create-challenges', function () {
+                var enviId = $(this).data("envi-id");
+                $('.popover').find('input[name="enviId"]').attr('value', enviId);
+                popOverElem = $(this);
+
+            });
+
+            $(document).on('click', '.form-es-submit', function (e) {
+                e.preventDefault();
+                var $that = $(this);
+                $.ajax({
+                    url: '@Url.Action("Create", "EnvironmentScanning")',
+                    data: $that.closest('form').serialize(),
+                    type: 'POST',
+                    success: function (data) {
+                        if (data.type == "cp") {
+                            $('.cp-list').append($('<li class="list-li">'+data.description+'<a href="#" data-id="'+ data.id +'" class="remove-button"><i class="fa fa-minus"></i></a></li>'));
+                            popOverElem.popover('hide');
+                        }
+                        else if (data.type == "op") {
+                            $('.op-list').append($('<li class="list-li">' + data.description + '<a href="#" data-id="' + data.id + '" class="remove-button"><i class="fa fa-minus"></i></a></li>'));
+                            popOverElem.popover('hide');
+                        }
+                        else if (data.type == "rp") {
+                            $('.rp-list').append($('<li class="list-li">' + data.description + '<a href="#" data-id="' + data.id + '" class="remove-button"><i class="fa fa-minus"></i></a></li>'));
+                            popOverElem.popover('hide');
+                        }
+                    }
+                })
+            });
+
+            $(document).on('click', '.form-envi-submit', function (e) {
+                e.preventDefault();
+                var $that = $(this);
+                $.ajax({
+                    url: '@Url.Action("CreateEnvironmental", "EnvironmentScanning")',
+                    data: $that.closest('form').serialize(),
+                    type: 'POST',
+                    success: function (data) {
+                        if (data.type == "th") {
+                            $('.th-list').append($('<li class="list-li">' + data.description + '<a href="#" data-id="' + data.id + '" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>'));
+                            popOverElem.popover('hide');
+                        }
+                        else if (data.type == "opp") {
+                            $('.opp-list').append($('<li class="list-li">' + data.description + '<a href="#" data-id="' + data.id + '" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>'));
+                            popOverElem.popover('hide');
+                        }
+                        else if (data.type == "wk") {
+                            $('.wk-list').append($('<li class="list-li">' + data.description + '<a href="#" data-id="' + data.id + '" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>'));
+                            popOverElem.popover('hide');
+                        }
+                        else if (data.type == "st") {
+                            $('.st-list').append($('<li class="list-li">' + data.description + '<a href="#" data-id="' + data.id + '" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>'));
+                            popOverElem.popover('hide');
+                        }
+                    }
+                })
+            });
+
+
+            $(document).on('click', '.remove-button', function () {
+                var that = this;
+                var id = $(that).data('id')
+                $.ajax({
+                    url: '@Url.Action("Delete", "EnvironmentScanning")',
+                    data: { Id: id },
+                    type: 'Post',
+                    success: function (data) {
+                        if (data.success === true) {
+                            $(that).parent().remove();
+                        }
+
+                    }
+                })
+            });
+
+            $(document).on('click', '.envi-remove-button', function () {
+                var that = this;
+                var id = $(that).data('id')
+                $.ajax({
+                    url: '@Url.Action("DeleteEnvironmental", "EnvironmentScanning")',
+                    data: { Id: id },
+                    type: 'Post',
+                    success: function (data) {
+                        if (data.success === true) {
+                            $(that).parent().remove();
+                        }
+
+                    }
+                })
+            });
+
+            $(document).on('click', '.constraint-remove-button', function () {
+                var that = this;
+                var id = $(that).data('id')
+                $.ajax({
+                    url: '@Url.Action("DeleteConstraint", "EnvironmentScanning")',
+                    data: { Id: id },
+                    type: 'Post',
+                    success: function (data) {
+                        if (data.success === true) {
+                            $(that).closest('tr').remove();
+                        }
+
+                    }
+                })
+            });
+
+
+            $(document).on('click', '.challenge-remove-button', function () {
+                var that = this;
+                var id = $(that).data('id')
+                $.ajax({
+                    url: '@Url.Action("DeleteChallenge", "EnvironmentScanning")',
+                    data: { Id: id },
+                    type: 'Post',
+                    success: function (data) {
+                        if (data.success === true) {
+                            $(that).closest('tr').remove();
+                        }
+
+                    }
+                })
+            });
+
+
+            $(document).on('click', '.form-input-constraint', function (e) {
+                e.preventDefault();
+                var $that = $(this);
+                $.ajax({
+                    url: '@Url.Action("CreateConstraint", "EnvironmentScanning")',
+                    data: $that.closest('form').serialize(),
+                    type: 'POST',
+                    success: function (data) {
+                        $('.table-constraint').append('<tr><td class="td-entity">' + data.relation + '</td><td class="td-definition">' + data.definition + '<a href="#" data-id="' + data.id + '" class="constraint-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</td></tr>');
+                        popOverElem.popover('hide');
+                    }
+                })
+            });
+
+            $(document).on('click', '.form-input-challenge', function (e) {
+                e.preventDefault();
+                var $that = $(this);
+                $.ajax({
+                    url: '@Url.Action("CreateChallenge", "EnvironmentScanning")',
+                    data: $that.closest('form').serialize(),
+                    type: 'POST',
+                    success: function (data) {
+                        $('.table-challenge').append('<tr><td class="td-entity">' + data.relation + '</td><td class="td-definition">' + data.definition + '<a href="#" data-id="' + data.id + '" class="challenge-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</td></tr>');
+                        popOverElem.popover('hide');
+                    }
+                })
+            });
+
+
+            $(document).on('click', '.btn-create-constraint', function (e) {
+                e.preventDefault();
+                $('.relation-contents').html('');
+                var $that = this;
+                var thList = $('.th-list').clone(true);
+                var oppList = $('.opp-list').clone(true);
+                var wkList = $('.wk-list').clone(true);
+                var stList = $('.st-list').clone(true);
+                thList.removeClass('th-list');
+                oppList.removeClass('opp-list');
+                wkList.removeClass('wk-list');
+                stList.removeClass('st-list');
+
+                thList.find('li').each(function (i, val) {
+                    var $item = $(val);
+                    $item.find('.envi-remove-button').remove();
+                    var $checkbox = $('<input />');
+                    $checkbox.prop('type', 'checkbox');
+                    $checkbox.addClass('choose-list');
+                    $item.prepend($checkbox);
+                });
+                var threat = $('<h4 />');
+                threat.html('Threat');
+                $('.relation-contents').append(threat,thList);
+
+                oppList.find('li').each(function (i, val) {
+                    var $item = $(val);
+                    $item.find('.envi-remove-button').remove();
+                    var $checkbox = $('<input />');
+                    $checkbox.prop('type', 'checkbox');
+                    $checkbox.addClass('choose-list');
+                    $item.prepend($checkbox);
+                });
+                var opportunity = $('<h4 />');
+                opportunity.html('Opportunity');
+                $('.relation-contents').append(opportunity, oppList);
+
+                wkList.find('li').each(function (i, val) {
+                    var $item = $(val);
+                    $item.find('.envi-remove-button').remove();
+                    var $checkbox = $('<input />');
+                    $checkbox.prop('type', 'checkbox');
+                    $checkbox.addClass('choose-list');
+                    $item.prepend($checkbox);
+                });
+                var weakness = $('<h4 />');
+                weakness.html('Weakness');
+                $('.relation-contents').append(weakness, wkList);
+
+                stList.find('li').each(function (i, val) {
+                    var $item = $(val);
+                    $item.find('.envi-remove-button').remove();
+                    var $checkbox = $('<input />');
+                    $checkbox.prop('type', 'checkbox');
+                    $checkbox.addClass('choose-list');
+                    $item.prepend($checkbox);
+                });
+                var strength = $('<h4 />');
+                strength.html('Strength');
+                $('.relation-contents').append(strength,stList);
+
+                popOverElem = $this;
+            });
+
+            $(document).on('click', '.btn-finish-relation', function () {
+                var $wrapper = $('.wrapper-relation');
+                $wrapper.html('');
+                $('input.choose-list:checked').each(function (i, val) {
+                    var $hiddenId = $('<input />');
+                    $hiddenId.prop('type', 'hidden');
+                    $hiddenId.prop('name', 'RelationIds[]');
+                    $hiddenId.val($(val).parent().data('id'));
+                    $wrapper.append($hiddenId);
+                });
+            });
+
+        })
+    </script>
+}

@@ -87,6 +87,13 @@ using OGetKpisResponse = DSLNG.PEAR.Services.Responses.OutputConfig.GetKpisRespo
 using GetKpisResponse = DSLNG.PEAR.Services.Responses.Kpi.GetKpisResponse;
 using DSLNG.PEAR.Services.Responses.OutputConfig;
 using DSLNG.PEAR.Services.Requests.OutputConfig;
+using DSLNG.PEAR.Services.Requests.PlanningBlueprint;
+using DSLNG.PEAR.Data.Entities.Blueprint;
+using DSLNG.PEAR.Services.Responses.PlanningBlueprint;
+using DSLNG.PEAR.Services.Responses.BusinessPosture;
+using DSLNG.PEAR.Services.Requests.BusinessPosture;
+using DSLNG.PEAR.Services.Responses.EnvironmentScanning;
+using DSLNG.PEAR.Services.Requests.EnvironmentScanning;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -514,7 +521,10 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
             Mapper.CreateMap<StaticHighlightPrivilege, GetStaticHighlightOrdersResponse.HighlightOrderResponse>()
                 .ForMember(x => x.RoleGroupIds, o => o.MapFrom(s => s.RoleGroups.Select(x => x.Id).ToArray()));
-
+            Mapper.CreateMap<SavePlanningBlueprintRequest, PlanningBlueprint>();
+            Mapper.CreateMap<PlanningBlueprint, GetPlanningBlueprintsResponse.PlanningBlueprint>();
+            Mapper.CreateMap<EnvironmentsScanning, GetPlanningBlueprintsResponse.EnvironmentsScanning>();
+            Mapper.CreateMap<BusinessPostureIdentification, GetPlanningBlueprintsResponse.BusinessPostureIdentification>();
             Mapper.CreateMap<Kpi, GetKpiDetailResponse>()
                   .ForMember(x => x.Code, y => y.MapFrom(z => z.Code))
                   .ForMember(x => x.Group, y => y.MapFrom(z => z.Group.Name))
@@ -528,6 +538,31 @@ namespace DSLNG.PEAR.Services.AutoMapper
                   .ForMember(x => x.YtdFormula, y => y.MapFrom(z => z.YtdFormula.ToString()))
                   .ForMember(x => x.Level, y => y.MapFrom(z => z.Level.Name.ToString()))
                 ;
+            Mapper.CreateMap<BusinessPostureIdentification, GetBusinessPostureResponse>();
+            Mapper.CreateMap<DesiredState, GetBusinessPostureResponse.DesiredState>();
+            Mapper.CreateMap<Posture, GetBusinessPostureResponse.Posture>();
+            Mapper.CreateMap<PostureChallenge, GetBusinessPostureResponse.PostureChallenge>()
+                .ForMember(x => x.HasRelation, o => o.MapFrom(x => x.DesiredStates.Count > 0));
+            Mapper.CreateMap<PostureConstraint, GetBusinessPostureResponse.PostureConstraint>()
+                .ForMember(x => x.HasRelation, o => o.MapFrom(x => x.DesiredStates.Count > 0));
+
+            Mapper.CreateMap<SaveDesiredStateRequest, DesiredState>();
+            Mapper.CreateMap<DesiredState, SaveDesiredStateResponse>();
+            Mapper.CreateMap<SavePostureChallengeRequest, PostureChallenge>();
+            Mapper.CreateMap<SavePostureConstraintRequest, PostureConstraint>();
+
+            Mapper.CreateMap<EnvironmentsScanning, GetEnvironmentsScanningResponse>();
+            Mapper.CreateMap<UltimateObjectivePoint, GetEnvironmentsScanningResponse.UltimateObjective>();
+            Mapper.CreateMap<EnvironmentalScanning, GetEnvironmentsScanningResponse.Environmental>();
+            Mapper.CreateMap<SaveEnvironmentScanningRequest, UltimateObjectivePoint>();
+            Mapper.CreateMap<SaveEnvironmentalScanningRequest, EnvironmentalScanning>()
+                .ForMember(x => x.Desc, y => y.MapFrom(z => z.Description));
+            Mapper.CreateMap<Constraint, GetEnvironmentsScanningResponse.Constraint>();
+            Mapper.CreateMap<Challenge, GetEnvironmentsScanningResponse.Challenge>();
+            Mapper.CreateMap<SaveConstraintRequest, Constraint>();
+            Mapper.CreateMap<Constraint, SaveConstraintResponse>();
+            Mapper.CreateMap<SaveChallengeRequest, Challenge>();
+            Mapper.CreateMap<Challenge, SaveChallengeResponse>();
 
             base.Configure();
         }

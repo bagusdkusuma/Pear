@@ -135,7 +135,14 @@ using DSLNG.PEAR.Services.Responses.HighlightGroup;
 using DSLNG.PEAR.Web.ViewModels.OutputConfig;
 using DSLNG.PEAR.Services.Requests.OutputConfig;
 using DSLNG.PEAR.Services.Responses.OutputConfig;
-
+using DSLNG.PEAR.Web.ViewModels.PlanningBlueprint;
+using DSLNG.PEAR.Services.Requests.PlanningBlueprint;
+using DSLNG.PEAR.Services.Responses.BusinessPosture;
+using DSLNG.PEAR.Web.ViewModels.BusinessPosture;
+using DSLNG.PEAR.Services.Requests.BusinessPosture;
+using DSLNG.PEAR.Services.Responses.EnvironmentScanning;
+using DSLNG.PEAR.Web.ViewModels.EnvironmentScanning;
+using DSLNG.PEAR.Services.Requests.EnvironmentScanning;
 namespace DSLNG.PEAR.Web.AutoMapper
 {
     public class ViewModelMappingProfile : Profile
@@ -578,7 +585,27 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<CalculateOutputResponse, ScenarioResultViewModel>();
 
             Mapper.CreateMap<OperationConfigUpdateViewModel, UpdateOperationRequest>();
+            Mapper.CreateMap<PlanningBlueprintViewModel, SavePlanningBlueprintRequest>();
             Mapper.CreateMap<GetKpiDetailResponse, DetailKpiViewModel>();
+
+            Mapper.CreateMap<GetBusinessPostureResponse, BusinessPostureViewModel>();
+            Mapper.CreateMap<GetBusinessPostureResponse.Posture, BusinessPostureViewModel.PostureViewModel>();
+            Mapper.CreateMap<GetBusinessPostureResponse.DesiredState, BusinessPostureViewModel.DesiredStateViewModel>();
+            Mapper.CreateMap<GetBusinessPostureResponse.PostureChallenge, BusinessPostureViewModel.PostureChallangeViewModel>();
+            Mapper.CreateMap<GetBusinessPostureResponse.PostureConstraint, BusinessPostureViewModel.PostureConstraintViewModel>();
+            Mapper.CreateMap<DesiredStateViewModel, SaveDesiredStateRequest>();
+            Mapper.CreateMap<PostureChallengeViewModel, SavePostureChallengeRequest>();
+            Mapper.CreateMap<PostureConstraintViewModel, SavePostureConstraintRequest>();
+
+            Mapper.CreateMap<GetEnvironmentsScanningResponse, EnvironmentScanningViewModel>();
+            Mapper.CreateMap<GetEnvironmentsScanningResponse.UltimateObjective, EnvironmentScanningViewModel.UltimateObjective>();
+            Mapper.CreateMap<GetEnvironmentsScanningResponse.Environmental, EnvironmentScanningViewModel.Environmental>();
+            Mapper.CreateMap<EnvironmentScanningViewModel.CreateViewModel, SaveEnvironmentScanningRequest>();
+            Mapper.CreateMap<EnvironmentScanningViewModel.CreateEnvironmentalViewModel, SaveEnvironmentalScanningRequest>();
+            Mapper.CreateMap<GetEnvironmentsScanningResponse.Constraint, EnvironmentScanningViewModel.Constraint>();
+            Mapper.CreateMap<GetEnvironmentsScanningResponse.Challenge, EnvironmentScanningViewModel.Challenge>();
+            Mapper.CreateMap<EnvironmentScanningViewModel.Constraint, SaveConstraintRequest>();
+            Mapper.CreateMap<EnvironmentScanningViewModel.Challenge, SaveChallengeRequest>();
 
             base.Configure();
         }
