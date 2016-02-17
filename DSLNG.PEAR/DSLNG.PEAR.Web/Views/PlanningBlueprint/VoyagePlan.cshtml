@@ -1,0 +1,142 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.PlanningBlueprint.VoyagePlanViewModel
+
+@{
+    ViewBag.Title = "Voyage Plan";
+}
+
+<h2>Voyage Plan</h2>
+<div class="voyage-plan">
+    @if (Model != null)
+    {
+        <div class="row">
+            <div class="col-md-3">
+                <h3>Internall Challenges</h3>
+                <ul>
+                    @foreach (var item in Model.InternalChallenge)
+                    { 
+                        <li>@item.Definition</li>
+                    }
+                </ul>
+                <h3>External Challenges</h3>
+                <ul>
+                    @foreach (var item in Model.ExternalChallenge)
+                    { 
+                        <li>@item.Definition</li>
+                    }
+                </ul>
+            </div>
+            <div class="col-md-6"></div>
+            <div class="col-md-3">
+                <h3>Constraints</h3>
+                <ul>
+                    @foreach (var item in Model.Constraints)
+                    { 
+                        <li>@item.Definition</li>
+                    }
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <h2>CONSTRUCTION POSTURE</h2>
+                <h3>Ultimate Objective</h3>
+                <ul>
+                    @foreach (var item in Model.ConstructionPhase)
+                    { 
+                        <li>@item.Description</li>
+                    }
+                </ul>
+                <h3>Desired State</h3>
+                <ul>
+                    @foreach (var item in Model.ConstructionPosture.DesiredStates)
+                    { 
+                        <li>@item.Description</li>
+                    }
+                </ul>
+                <h3>Challenges</h3>
+                <ul>
+                    @foreach (var item in Model.ConstructionPosture.PostureChallenges)
+                    { 
+                        <li>@item.Definition</li>
+                    }
+                </ul>
+                <h3>Constraints</h3>
+                <ul>
+                    @foreach (var item in Model.ConstructionPosture.PostureConstraints)
+                    { 
+                        <li>@item.Definition</li>
+                    }
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h2>OPERATION POSTURE</h2>
+                <h3>Ultimate Objective</h3>
+                <ul>
+                    @foreach (var item in Model.OperationPhase)
+                    { 
+                        <li>@item.Description</li>
+                    }
+                </ul>
+                <h3>Desired State</h3>
+                <ul>
+                    @foreach (var item in Model.OperationPosture.DesiredStates)
+                    { 
+                        <li>@item.Description</li>
+                    }
+                </ul>
+                <h3>Challenges</h3>
+                <ul>
+                    @foreach (var item in Model.OperationPosture.PostureChallenges)
+                    { 
+                        <li>@item.Definition</li>
+                    }
+                </ul>
+                <h3>Constraints</h3>
+                <ul>
+                    @foreach (var item in Model.OperationPosture.PostureConstraints)
+                    { 
+                        <li>@item.Definition</li>
+                    }
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h2>DECOMMISSIONING POSTURE</h2>
+                <h3>Ultimate Objective</h3>
+                <ul>
+                    @foreach (var item in Model.ReinventPhase)
+                    { 
+                        <li>@item.Description</li>
+                    }
+                </ul>
+                <h3>Desired State</h3>
+                <ul>
+                    @foreach (var item in Model.DecommissioningPosture.DesiredStates)
+                    { 
+                        <li>@item.Description</li>
+                    }
+                </ul>
+                <h3>Challenges</h3>
+                <ul>
+                    @foreach (var item in Model.DecommissioningPosture.PostureChallenges)
+                    { 
+                        <li>@item.Definition</li>
+                    }
+                </ul>
+                <h3>Constraints</h3>
+                <ul>
+                    @foreach (var item in Model.DecommissioningPosture.PostureConstraints)
+                    { 
+                        <li>@item.Definition</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            <strong>Info!</strong> There is no approved Voyage Plan at this moment
+        </div>
+    }
+</div>

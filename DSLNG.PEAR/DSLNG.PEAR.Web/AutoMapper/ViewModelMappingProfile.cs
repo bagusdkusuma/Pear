@@ -143,6 +143,7 @@ using DSLNG.PEAR.Services.Requests.BusinessPosture;
 using DSLNG.PEAR.Services.Responses.EnvironmentScanning;
 using DSLNG.PEAR.Web.ViewModels.EnvironmentScanning;
 using DSLNG.PEAR.Services.Requests.EnvironmentScanning;
+using DSLNG.PEAR.Services.Responses.PlanningBlueprint;
 namespace DSLNG.PEAR.Web.AutoMapper
 {
     public class ViewModelMappingProfile : Profile
@@ -606,6 +607,15 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetEnvironmentsScanningResponse.Challenge, EnvironmentScanningViewModel.Challenge>();
             Mapper.CreateMap<EnvironmentScanningViewModel.Constraint, SaveConstraintRequest>();
             Mapper.CreateMap<EnvironmentScanningViewModel.Challenge, SaveChallengeRequest>();
+
+            Mapper.CreateMap<GetVoyagePlanResponse, VoyagePlanViewModel>();
+            Mapper.CreateMap<GetVoyagePlanResponse.UltimateObjectivePoint, VoyagePlanViewModel.UltimateObjectivePointViewModel>();
+            Mapper.CreateMap<GetVoyagePlanResponse.Challenge, VoyagePlanViewModel.ChallengeViewModel>();
+            Mapper.CreateMap<GetVoyagePlanResponse.Constraint, VoyagePlanViewModel.ConstraintViewModel>();
+            Mapper.CreateMap<GetVoyagePlanResponse.Posture, VoyagePlanViewModel.PostureViewModel>();
+            Mapper.CreateMap<GetVoyagePlanResponse.DesiredState, VoyagePlanViewModel.DesiredStateViewModel>();
+            Mapper.CreateMap<GetVoyagePlanResponse.PostureChallenge, VoyagePlanViewModel.PostureChallengeViewModel>();
+            Mapper.CreateMap<GetVoyagePlanResponse.PostureConstraint, VoyagePlanViewModel.PostureConstraintViewModel>();
 
             base.Configure();
         }

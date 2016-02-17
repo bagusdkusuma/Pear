@@ -102,5 +102,40 @@ namespace DSLNG.PEAR.Services
                 };
             }
         }
+
+
+        public GetVoyagePlanResponse GetVoyagePlan()
+        {
+            var planningBluePrint = DataContext.PlanningBlueprints
+                .Include(x => x.EnvironmentsScanning)
+                .Include(x => x.EnvironmentsScanning.ConstructionPhase)
+                .Include(x => x.EnvironmentsScanning.OperationPhase)
+                .Include(x => x.EnvironmentsScanning.ReinventPhase)
+                .Include(x => x.EnvironmentsScanning.Challenges)
+                .Include(x => x.EnvironmentsScanning.Constraints)
+                .Include(x => x.BusinessPostureIdentification)
+                .Include(x => x.BusinessPostureIdentification.Postures)
+                .Include(x => x.BusinessPostureIdentification.Postures.Select(y => y.DesiredStates))
+                .Include(x => x.BusinessPostureIdentification.Postures.Select(y => y.PostureChallenges))
+                .Include(x => x.BusinessPostureIdentification.Postures.Select(y => y.PostureConstraints))
+                .FirstOrDefault(x => x.IsActive && x.IsApproved);
+            if (planningBluePrint != null)
+            {
+                var response = new GetVoyagePlanResponse
+                {
+                    ConstructionPhase = planningBluePrint.EnvironmentsScanning.ConstructionPhase.MapTo<GetVoyagePlanResponse.UltimateObjectivePoint>(),
+                    OperationPhase = planningBluePrint.EnvironmentsScanning.OperationPhase.MapTo<GetVoyagePlanResponse.UltimateObjectivePoint>(),
+                    ReinventPhase = planningBluePrint.EnvironmentsScanning.ReinventPhase.MapTo<GetVoyagePlanResponse.UltimateObjectivePoint>(),
+                    InternalChallenge = planningBluePrint.EnvironmentsScanning.Challenges.Where(x => x.Type == "Internal").ToList().MapTo<GetVoyagePlanResponse.Challenge>(),
+                    ExternalChallenge = planningBluePrint.EnvironmentsScanning.Challenges.Where(x => x.Type == "External").ToList().MapTo<GetVoyagePlanResponse.Challenge>(),
+                    Constraints = planningBluePrint.EnvironmentsScanning.Constraints.MapTo<GetVoyagePlanResponse.Constraint>(),
+                    ConstructionPosture = planningBluePrint.BusinessPostureIdentification.Postures.First(x => x.Type == PostureType.Construction).MapTo<GetVoyagePlanResponse.Posture>(),
+                    OperationPosture = planningBluePrint.BusinessPostureIdentification.Postures.First(x => x.Type == PostureType.Operation).MapTo<GetVoyagePlanResponse.Posture>(),
+                    DecommissioningPosture = planningBluePrint.BusinessPostureIdentification.Postures.First(x => x.Type == PostureType.Decommissioning).MapTo<GetVoyagePlanResponse.Posture>(),
+                };
+                return response;
+            }
+            return null;
+        }
     }
 }
