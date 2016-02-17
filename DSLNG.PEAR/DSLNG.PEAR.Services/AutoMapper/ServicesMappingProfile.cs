@@ -557,7 +557,11 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<SaveEnvironmentScanningRequest, UltimateObjectivePoint>();
             Mapper.CreateMap<SaveEnvironmentalScanningRequest, EnvironmentalScanning>()
                 .ForMember(x => x.Desc, y => y.MapFrom(z => z.Description));
-            Mapper.CreateMap<Constraint, GetEnvironmentsScanningResponse.Constraint>();
+            Mapper.CreateMap<Constraint, GetEnvironmentsScanningResponse.Constraint>()
+                .ForMember(x => x.ThreatIds, y => y.MapFrom(z => z.Relation.Where(u => u.ThreatHost != null).Select(m => m.Id).ToArray()))
+                .ForMember(x => x.OpportunityIds, y => y.MapFrom(z => z.Relation.Where(u => u.OpportunityHost != null).Select(m => m.Id).ToArray()))
+                .ForMember(x => x.WeaknessIds, y => y.MapFrom(z => z.Relation.Where(u => u.WeaknessHost != null).Select(m => m.Id).ToArray()))
+                .ForMember(x => x.StrengthIds, y => y.MapFrom(z => z.Relation.Where(u => u.StrengthHost != null).Select(m => m.Id).ToArray()));
             Mapper.CreateMap<Challenge, GetEnvironmentsScanningResponse.Challenge>();
             Mapper.CreateMap<SaveConstraintRequest, Constraint>();
             Mapper.CreateMap<Constraint, SaveConstraintResponse>();

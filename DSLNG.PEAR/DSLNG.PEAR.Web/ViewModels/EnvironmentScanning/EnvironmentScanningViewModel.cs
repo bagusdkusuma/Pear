@@ -89,6 +89,12 @@ namespace DSLNG.PEAR.Web.ViewModels.EnvironmentScanning
             public string Type { get; set; }
             public string Category { get; set; }
             public int EnviId { get; set; }
+            public int[] RelationIds { get; set; }
+
+            public int[] ThreatIds { get; set; }
+            public int[] OpportunityIds { get; set; }
+            public int[] WeaknessIds { get; set; }
+            public int[] StrengthIds { get; set; }
         }
 
         public class Challenge
@@ -99,6 +105,13 @@ namespace DSLNG.PEAR.Web.ViewModels.EnvironmentScanning
             public string Type { get; set; }
             public string Category { get; set; }
             public int EnviId { get; set; }
+            public int[] RelationIds { get; set; }
+
+            public int[] ThreatIds { get; set; }
+            public int[] OpportunityIds { get; set; }
+            public int[] WeaknessIds { get; set; }
+            public int[] StrengthIds { get; set; }
+
         }
 
     }
