@@ -223,12 +223,12 @@ namespace DSLNG.PEAR.Services
 
         public IEnumerable<Dropdown> GetKpisForPmsConfigDetailsUpdate(int pmsConfigId, int id)
         {
-             var pmsConfig = DataContext.PmsConfigs.Include(x => x.Pillar)
-                                       .Include(x => x.PmsConfigDetailsList.Select(y => y.Kpi))
-                                       .Single(x => x.Id == pmsConfigId);
+            var pmsConfig = DataContext.PmsConfigs.Include(x => x.Pillar)
+                                      .Include(x => x.PmsConfigDetailsList.Select(y => y.Kpi))
+                                      .Single(x => x.Id == pmsConfigId);
             var kpiIds = pmsConfig.PmsConfigDetailsList.Where(x => x.Kpi.Id != id).Select(x => x.Kpi.Id);
 
-            return DataContext.Kpis.Where(x => x.Type.Code.ToLower() == Constants.Type.Corporate && x.Pillar.Id == pmsConfig.Pillar.Id 
+            return DataContext.Kpis.Where(x => x.Type.Code.ToLower() == Constants.Type.Corporate && x.Pillar.Id == pmsConfig.Pillar.Id
                 && !kpiIds.Contains(x.Id))
                 .Select(x => new Dropdown
                 {
@@ -242,6 +242,17 @@ namespace DSLNG.PEAR.Services
         {
             var config = Enum.GetValues(typeof(DSLNG.PEAR.Data.Enums.ConfigType)).Cast<DSLNG.PEAR.Data.Enums.ConfigType>();
             return config.Select(x => new Dropdown { Text = x.ToString(), Value = x.ToString() }).ToList();
+        }
+
+        public IEnumerable<Dropdown> GetDerItemTypes()
+        {
+            return new List<Dropdown>()
+                {
+                    new Dropdown {Text = "Highlight", Value = "highlight"},
+                    new Dropdown {Text = "Line", Value = "line"},
+                    new Dropdown {Text = "Text", Value = "text"},
+                    new Dropdown {Text = "Multi Axis", Value = "multiaxis"},
+                };
         }
     }
 }

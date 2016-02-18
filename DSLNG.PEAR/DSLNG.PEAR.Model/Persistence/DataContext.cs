@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using DSLNG.PEAR.Data.Entities;
+using DSLNG.PEAR.Data.Entities.Der;
 using Type = DSLNG.PEAR.Data.Entities.Type;
 using DSLNG.PEAR.Data.Entities.EconomicModel;
 using System;
@@ -67,6 +68,13 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<ResetPassword> ResetPasswords { get; set; }
         public IDbSet<KeyOutputConfiguration> KeyOutputConfigs { get; set; }
         public IDbSet<StaticHighlightPrivilege> StaticHighlightPrivileges { get; set; }
+        public IDbSet<Der> Ders { get; set; }
+        public IDbSet<DerItem> DerItems { get; set; }
+        public IDbSet<DerLayout> DerLayouts { get; set; }
+        public IDbSet<DerLayoutItem> DerLayoutItems { get; set; }
+        public IDbSet<DerArtifact> DerArtifacts { get; set; }
+        public IDbSet<DerArtifactSerie> DerArtifactSeries { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Kpi>()

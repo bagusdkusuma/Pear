@@ -46,8 +46,8 @@
             {
                 targetActualBand.Caption = "Actual / Target";
                 targetActualBand.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
-                /*targetActualBand.Columns.Add("TargetActualYearly", "Yearly");
-                targetActualBand.Columns.Add("TargetActualMonthly", "Monthly");*/
+                targetActualBand.Columns.Add("TargetActualYearly", "Yearly");
+                targetActualBand.Columns.Add("TargetActualMonthly", "Monthly");
                 GridViewColumn col = new MVCxGridViewColumn("TargetActualYearly");
                 col.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
                 col.Caption = "Yearly";
@@ -65,14 +65,14 @@
                 column.Visible = false;
             });
 
-            /*settings.Columns.AddBand(indexBand =>
+            settings.Columns.AddBand(indexBand =>
                 {
                     indexBand.Caption = "Index";
                     indexBand.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
                     indexBand.Columns.Add("IndexYearlyStr", "Yearly");
                     indexBand.Columns.Add("IndexMonthlyStr", "Monthly");
                     indexBand.Columns.Add("IndexYtdStr", "YTD");
-                });*/
+                });
 
             settings.Columns.Add(column =>
                 {

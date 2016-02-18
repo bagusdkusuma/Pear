@@ -1,0 +1,117 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.DerLayout.LayoutType.DerLayoutLineViewModel
+
+
+<div class="form-group row">
+    @Html.LabelFor(model => model.HeaderTitle, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(model => model.HeaderTitle)
+        @Html.ValidationMessageFor(model => model.HeaderTitle)
+    </div>
+</div>
+
+<div class="form-group row">
+    @Html.LabelFor(model => model.MeasurementId, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(model => model.MeasurementId, Model.Measurements, new { @class = "measurement" })
+        @Html.ValidationMessageFor(model => model.MeasurementId)
+    </div>
+</div>
+
+
+
+<div class="form-group row">
+    <label class="control-label col-md-2">Series</label>
+    <div class="col-md-10">
+        <input type="button" value="Add Series" class="btn btn-lightblue" id="add-series" />
+    </div>
+</div>
+<div id="hidden-fields">
+    @for (var i = 0; i < Model.LineChart.Series.Count; i++)
+    { 
+        <div class="series-template original whitebox">
+            <h2>Series</h2>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.LineChart.Series[i].Label)
+                        @Html.TextBoxFor(model => model.LineChart.Series[i].Label, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.LineChart.Series[i].Label)
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.LineChart.Series[i].Color)
+                        <div class="input-group colorpicker">
+                            @Html.TextBoxFor(model => model.LineChart.Series[i].Color, new { @class = "form-control" })
+                            <span class="input-group-addon"><i></i></span>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.LineChart.Series[i].Color)
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.LineChart.Series[i].KpiId)
+                        @Html.DropDownListFor(model => model.LineChart.Series[i].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
+                        @Html.ValidationMessageFor(model => model.LineChart.Series[i].KpiId)
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group value-axis form-list">
+                        @Html.LabelFor(model => Model.LineChart.Series[i].ValueAxis)
+                        @Html.DropDownListFor(model => model.LineChart.Series[i].ValueAxis, Model.LineChart.ValueAxes, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.LineChart.Series[i].ValueAxis)
+                    </div>
+                </div>
+            </div>
+            <input type="button" value="Remove" class="remove" />
+        </div>
+    }
+    <div class="col-md-12">
+        <div id="series-holder" class="form-inline graphic-properties">
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $('document').ready(function () {
+        var pear = window.Pear;
+        var callback = pear.Artifact.Designer._setupCallbacks;
+        callback['line']();
+        //callback.line();
+        console.log(callback);
+        //var seriesCount = context.find('.series-holder').find('.series-template').length + 1;
+        //$('#add-series').click(function (e) {
+        //$('.layout-type-area').append('<h1>test</h1>');
+        //alert('as');
+        /*e.preventDefault();
+            var seriesTemplate = context.find('.series-template.original').clone(true);
+            Pear.Artifact.Designer._colorPicker(seriesTemplate);
+            $('<input>').attr({
+                type: 'hidden',
+                id: 'foo',
+                name: prefix + '.Charts[' + chartPost + '].LineChart.Series.Index',
+                value: seriesCount
+            }).appendTo(seriesTemplate);
+            seriesTemplate.removeClass('original');
+            seriesTemplate.attr('data-series-pos', seriesCount);
+            if (seriesCount !== 0) {
+                var fields = ['Label', 'KpiId', 'ValueAxis', 'Color'];
+                for (var i in fields) {
+                    var field = fields[i];
+                    seriesTemplate.find('[id$=LineChart_Series_0__' + field + ']').attr('name', prefix + '.Charts[' + chartPost + '].LineChart.Series[' + seriesCount + '].' + field);
+                }
+            }
+            seriesTemplate.addClass(context.find('.value-axis-opt').val());
+            seriesTemplate.addClass(context.find('.multiaxis-graphic-type').val());
+            context.find('.series-holder').append(seriesTemplate);
+            if (prefix == "MultiaxisChart") {
+                Pear.Artifact.Designer._kpiAutoComplete(seriesTemplate, true, seriesTemplate.closest('.chart-template'));
+            } else {
+                Pear.Artifact.Designer._kpiAutoComplete(seriesTemplate);
+            }
+            seriesCount++;*/
+        //});
+    });
+
+</script>

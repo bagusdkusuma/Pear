@@ -1,0 +1,61 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.DerLayout.DerLayoutItemViewModel
+<h3>DER Layout Item Configuration</h3>
+
+@using (Html.BeginForm("SaveLayoutItem", "DerLayout", FormMethod.Post))
+{
+    @Html.HiddenFor(model => model.DerLayoutId)
+    @Html.AntiForgeryToken()
+    <div class="form-group row">
+        @Html.LabelFor(model => model.Column, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Column)
+            @Html.ValidationMessageFor(model => model.Column)
+        </div>
+    </div>
+
+    <div class="form-group row">
+        @Html.LabelFor(model => model.Row, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Row)
+            @Html.ValidationMessageFor(model => model.Row)
+        </div>
+    </div>
+
+    <div class="form-group row">
+        @Html.LabelFor(model => model.Type, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.Type, Model.Types, "Select Type", new { style = "color:#000", @class = "der-layout-type" })
+            @Html.ValidationMessageFor(model => model.Row)
+        </div>
+    </div>
+    <div class="form-group row layout-type-area" style="min-height: 50px; outline: 1px solid red; padding-left: 13px;"></div>
+    <div class="col-md-12 artifact-designer-btns">
+        <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
+        <button data-preview-url="@Url.Action("Preview", "Artifact")"  id="graphic-preview-btn" type="button" class="btn btn-primary btn-lg"><span class="fa fa-eye"></span>View</button>
+        <a onclick="location.reload();" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>
+        <a href="@Url.Action("Index", "Artifact")" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+    </div>
+}
+
+
+<div id="hidden-fields-holder" data-kpi-url="@Url.Action("KpiList", "Artifact")"></div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.der-layout-type').change(function () {
+            var that = $(this);
+            if (that.val().toLowerCase() === 'line') {
+                $.ajax({
+                    url: '@Url.Action("LayoutSetting", "DerLayout", new { type = "_type_" })'.replace('_type_', that.val()),
+                    success: function (data) {
+                        $('.layout-type-area').html(data);
+                    }
+                });
+            }
+        });
+
+
+    });
+</script>
+

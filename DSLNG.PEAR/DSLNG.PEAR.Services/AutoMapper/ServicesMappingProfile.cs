@@ -1,10 +1,14 @@
 ﻿using System;
 using AutoMapper;
 using DSLNG.PEAR.Data.Entities;
+using DSLNG.PEAR.Data.Entities.Der;
 using DSLNG.PEAR.Data.Enums;
+using DSLNG.PEAR.Services.Interfaces;
+using DSLNG.PEAR.Services.Requests.Der;
 using DSLNG.PEAR.Services.Requests.Measurement;
 using DSLNG.PEAR.Services.Requests.PmsSummary;
 using DSLNG.PEAR.Services.Requests.Select;
+using DSLNG.PEAR.Services.Responses.Der;
 using DSLNG.PEAR.Services.Responses.KpiAchievement;
 using DSLNG.PEAR.Services.Responses.Level;
 using DSLNG.PEAR.Services.Responses.Menu;
@@ -103,6 +107,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             ConfigureSelects();
             ConfigureKeyOperation();
             ConfigureEconomicSummary();
+            ConfigureDer();
 
             Mapper.CreateMap<Data.Entities.User, GetUsersResponse.User>();
             Mapper.CreateMap<GetUsersResponse.User, Data.Entities.User>();
@@ -443,7 +448,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.ForecastValue, o => o.Condition(s => !s.IsSourceValueNull));
             Mapper.CreateMap<KeyAssumptionData, GetAssumptionDataResponse>()
                 .ForMember(x => x.IdScenario, o => o.MapFrom(s => s.Scenario.Id))
-                .ForMember(x => x.IdConfig, o =>  o.MapFrom(s => s.KeyAssumptionConfig.Id));
+                .ForMember(x => x.IdConfig, o => o.MapFrom(s => s.KeyAssumptionConfig.Id));
 
             Mapper.CreateMap<KeyOperationConfig, GetOperationsResponse.Operation>()
                 //.ForMember(x => x.KeyOperationGroup, o => o.MapFrom(s => s.KeyOperationGroup.Name))
@@ -472,7 +477,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 //.ForMember(x => x.IdKeyOperation, o => o.MapFrom(s => s.KeyOperation.Id))
                 .ForMember(x => x.IdKPI, o => o.MapFrom(s => s.Kpi.Id));
 
-            
+
             Mapper.CreateMap<HighlightGroup, GetHighlightGroupsResponse.HighlightGroupResponse>()
                 .ForMember(x => x.HighlightTypes, o => o.MapFrom(s => s.Options.OrderBy(x => x.Order).Where(x => x.IsActive == true).ToList()));
             Mapper.CreateMap<HighlightGroup, GetHighlightGroupResponse>();
@@ -483,7 +488,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.TypeId, o => o.MapFrom(s => s.HighlightType.Id));
 
             Mapper.CreateMap<Kpi, OGetKpisResponse.Kpi>()
-                .ForMember(x => x.Name, o => o.MapFrom(s => s.Name + " (" + s.Measurement.Name + ")")); 
+                .ForMember(x => x.Name, o => o.MapFrom(s => s.Name + " (" + s.Measurement.Name + ")"));
             Mapper.CreateMap<KeyAssumptionConfig, GetKeyAssumptionsResponse.KeyAssumption>();
             Mapper.CreateMap<SaveOutputConfigRequest, KeyOutputConfiguration>()
                 .ForMember(x => x.KeyAssumptionIds, o => o.MapFrom(s => string.Join(",", s.KeyAssumptionIds)))
@@ -495,7 +500,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.KeyAssumptionIds, o => o.MapFrom(s => s.KeyAssumptionIds.Split(',').Select(m => int.Parse(m)).ToList()));
             Mapper.CreateMap<Kpi, GetOutputConfigResponse.Kpi>();
             Mapper.CreateMap<KeyAssumptionConfig, GetOutputConfigResponse.KeyAssumptionConfig>();
-           
+
             Mapper.CreateMap<KeyOutputConfiguration, GetOutputConfigsResponse.OutputConfig>()
                 .ForMember(x => x.Category, o => o.MapFrom(s => s.Category.Name))
                 .ForMember(x => x.Measurement, o => o.MapFrom(s => s.Measurement.Name));
@@ -557,7 +562,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Select, GetSelectResponse>();
             Mapper.CreateMap<SelectOption, GetSelectResponse.SelectOptionResponse>();
             Mapper.CreateMap<UpdateSelectRequest, Select>();
-                //.ForMember(x => x.Options, x => x.Ignore());
+            //.ForMember(x => x.Options, x => x.Ignore());
             Mapper.CreateMap<UpdateSelectRequest.SelectOption, SelectOption>();
         }
 
@@ -696,6 +701,37 @@ namespace DSLNG.PEAR.Services.AutoMapper
                   .ForMember(x => x.Kpi, y => y.Ignore())
                   .ForMember(x => x.Scenario, y => y.Ignore())
                   .ForMember(x => x.KeyOperationConfig, y => y.Ignore());
+        }
+
+        private void ConfigureDer()
+        {
+            Mapper.CreateMap<Der, GetDerResponse>();
+            Mapper.CreateMap<Der, GetActiveDerResponse>();
+            Mapper.CreateMap<DerItem, GetActiveDerResponse.DerItem>();
+            Mapper.CreateMap<DerItem, GetDerItemResponse>();
+            Mapper.CreateMap<GetDerItemRequest, GetDerItemResponse>();
+            Mapper.CreateMap<DerLayoutItem, GetDerLayoutitemResponse>()
+                  .ForMember(x => x.DerLayoutId, y => y.MapFrom(z => z.DerLayout.Id));
+
+            Mapper.CreateMap<DerLayout, GetDerLayoutResponse>();
+            Mapper.CreateMap<DerLayoutItem, GetDerLayoutResponse.DerLayoutItem>();
+            Mapper.CreateMap<DerArtifact, GetDerLayoutResponse.DerArtifact>()
+                .ForMember(x => x.MeasurementId, y => y.MapFrom(z => z.Measurement.Id))
+                .ForMember(x => x.MeasurementName, y => y.MapFrom(z => z.Measurement.Name));
+            Mapper.CreateMap<DerArtifactSerie, GetDerLayoutResponse.DerArtifactSerie>()
+                .ForMember(x => x.KpiId, y => y.MapFrom(z => z.Kpi.Id))
+                .ForMember(x => x.KpiName, y => y.MapFrom(z => z.Kpi.Name)); ;
+
+
+            Mapper.CreateMap<DerLayoutItem, GetDerLayoutitemResponse>();
+            Mapper.CreateMap<DerArtifact, GetDerLayoutitemResponse.DerArtifact>()
+            .ForMember(x => x.MeasurementId, y => y.MapFrom(z => z.Measurement.Id))
+            .ForMember(x => x.MeasurementName, y => y.MapFrom(z => z.Measurement.Name));
+            Mapper.CreateMap<DerArtifactSerie, GetDerLayoutitemResponse.DerArtifactSerie>()
+                .ForMember(x => x.KpiId, y => y.MapFrom(z => z.Kpi.Id))
+                .ForMember(x => x.KpiName, y => y.MapFrom(z => z.Kpi.Name)); ;
+
+
         }
     }
 }
