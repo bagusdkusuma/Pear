@@ -129,11 +129,22 @@ namespace DSLNG.PEAR.Web.Controllers
                 id = response.Id,
                 type = response.Type,
                 category = response.Category,
-                definition = response.Definition, 
+                definition = response.Definition,
+                threatIds = response.ThreatIds,
+                opportunityIds = response.OpportunityIds,
+                weaknessIds = response.WeaknessIds,
+                strengthIds = response.StrengthIds
             };
 
             return Json(data, JsonRequestBehavior.AllowGet);
             
         }
+
+        //[HttpPost]
+        //public PartialViewResult ShowConstraint(int id)
+        //{
+        //    var request = _environmentScanningService.GetConstraint(new GetConstraintRequest { Id = id });
+             
+        //}
 	}
 }

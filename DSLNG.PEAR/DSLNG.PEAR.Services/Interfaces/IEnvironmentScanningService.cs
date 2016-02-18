@@ -19,6 +19,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         DeleteChallengeResponse DeleteChallenge(DeleteChallengeRequest request);
         SaveConstraintResponse SaveConstraint(SaveConstraintRequest request);
         SaveChallengeResponse SaveChallenge(SaveChallengeRequest request);
+        GetConstraintResponse GetConstraint(GetConstraintRequest request);
         
     }
 }

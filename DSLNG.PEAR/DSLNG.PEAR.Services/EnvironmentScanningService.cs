@@ -312,16 +312,33 @@ namespace DSLNG.PEAR.Services
             DataContext.Challenges.Add(challenge);
             DataContext.SaveChanges();
 
+            var result = DataContext.Challenges.Where(x => x.Id == challenge.Id)
+                .Include(x => x.Relation)
+                .Include(x => x.Relation.Select(y => y.ThreatHost))
+                .Include(x => x.Relation.Select(y => y.OpportunityHost))
+                .Include(x => x.Relation.Select(y => y.WeaknessHost))
+                .Include(x => x.Relation.Select(y => y.StrengthHost)).FirstOrDefault();
+
             return new SaveChallengeResponse
             {
                 IsSuccess = true,
                 Message = "Challenge has been saved successfully",
-                Category = challenge.Category,
-                Definition = challenge.Definition,
-                Id = challenge.Id,
-                Type = challenge.Type,
-                RelationIds = challenge.Relation.Select(x => x.Id).ToArray()
+                Category = result.Category,
+                Definition = result.Definition,
+                Id = result.Id,
+                Type = result.Type,
+                RelationIds = result.Relation.Select(x => x.Id).ToArray(),
+                ThreatIds = result.Relation.Where(x => x.ThreatHost != null).Select(y => y.ThreatHost.Id).ToArray(),
+                OpportunityIds = result.Relation.Where(x => x.OpportunityHost != null).Select(y => y.OpportunityHost.Id).ToArray(),
+                WeaknessIds = result.Relation.Where(x => x.WeaknessHost != null).Select(y => y.WeaknessHost.Id).ToArray(),
+                StrengthIds = result.Relation.Where(x => x.StrengthHost != null).Select(y => y.StrengthHost.Id).ToArray(),
             };
+        }
+
+
+        public GetConstraintResponse GetConstraint(GetConstraintRequest request)
+        {
+            return DataContext.Constraint.Where(x => x.Id == request.Id).Include(x => x.EnvironmentScanning).FirstOrDefault().MapTo<GetConstraintResponse>();
         }
     }
 }
