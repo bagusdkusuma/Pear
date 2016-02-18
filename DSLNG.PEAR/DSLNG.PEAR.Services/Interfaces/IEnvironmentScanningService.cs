@@ -1,4 +1,5 @@
 ﻿using DSLNG.PEAR.Services.Requests.EnvironmentScanning;
+using DSLNG.PEAR.Services.Responses;
 using DSLNG.PEAR.Services.Responses.EnvironmentScanning;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         DeleteChallengeResponse DeleteChallenge(DeleteChallengeRequest request);
         SaveConstraintResponse SaveConstraint(SaveConstraintRequest request);
         SaveChallengeResponse SaveChallenge(SaveChallengeRequest request);
+        SubmitEnvironmentsScanningResponse SubmitEnvironmentsScanning(int id);
         
     }
 }

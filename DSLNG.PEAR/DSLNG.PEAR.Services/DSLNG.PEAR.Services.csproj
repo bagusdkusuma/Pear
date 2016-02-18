@@ -129,6 +129,7 @@
     <Compile Include="Responses\BusinessPosture\SaveDesiredStateResponse.cs" />
     <Compile Include="Responses\BusinessPosture\SavePostureChallengeResponse.cs" />
     <Compile Include="Responses\BusinessPosture\SavePostureConstraintResponse.cs" />
+    <Compile Include="Responses\BusinessPosture\SubmitBusinessPostureResponse.cs" />
     <Compile Include="Responses\ConstantUsage\DeleteConstantUsageResponse.cs" />
     <Compile Include="Responses\EconomicSummary\GetEconomicSummaryReportResponse.cs" />
     <Compile Include="Responses\EnvironmentScanning\DeleteChallengeResponse.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="Responses\EnvironmentScanning\SaveConstraintResponse.cs" />
     <Compile Include="Responses\EnvironmentScanning\SaveEnvironmentalScanningResponse.cs" />
     <Compile Include="Responses\EnvironmentScanning\SaveEnvironmentScanningResponse.cs" />
+    <Compile Include="Responses\EnvironmentScanning\SubmitEnvironmentsScanningResponse.cs" />
     <Compile Include="Responses\HighlightGroup\DeleteHighlightGroupResponse.cs" />
     <Compile Include="Responses\HighlightOrder\GetStaticHighlightOrdersResponse.cs" />
     <Compile Include="Responses\HighlightOrder\SaveStaticHighlightOrderResponse.cs" />
@@ -495,6 +497,7 @@
     <Compile Include="Responses\OutputConfig\GetOutputConfigResponse.cs" />
     <Compile Include="Responses\OutputConfig\SaveOutputConfigResponse.cs" />
     <Compile Include="Responses\OutputConfig\GetOutputConfigsResponse.cs" />
+    <Compile Include="Responses\PlanningBlueprint\ApproveVoyagePlanResponse.cs" />
     <Compile Include="Responses\PlanningBlueprint\GetPlanningBlueprintsResponse.cs" />
     <Compile Include="Responses\PlanningBlueprint\GetVoyagePlanResponse.cs" />
     <Compile Include="Responses\PlanningBlueprint\SavePlanningBlueprintResponse.cs" />

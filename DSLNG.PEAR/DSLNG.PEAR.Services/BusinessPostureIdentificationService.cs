@@ -18,6 +18,7 @@ namespace DSLNG.PEAR.Services
         public GetBusinessPostureResponse Get(GetBusinessPostureRequest request)
         {
             var response = DataContext.BusinessPostures.Include(x => x.Postures)
+                .Include(x => x.PlanningBlueprint)
                 .Include(x => x.Postures.Select(y => y.DesiredStates))
                 .Include(x => x.Postures.Select(y => y.PostureChallenges))
                 .Include(x => x.Postures.Select(y => y.PostureConstraints))
@@ -237,6 +238,29 @@ namespace DSLNG.PEAR.Services
                 {
                     IsSuccess = false,
                     Message = "An error occured, please contact the administrator for further information"
+                };
+            }
+        }
+
+
+        public SubmitBusinessPostureResponse SubmitBusinessPosture(int id)
+        {
+            try
+            {
+                var businessPosture = DataContext.BusinessPostures.First(x => x.Id == id);
+                businessPosture.IsLocked = true;
+                DataContext.SaveChanges();
+                return new SubmitBusinessPostureResponse
+                {
+                    IsSuccess = true,
+                    Message = "You have been sucessfully sabmit the item"
+                };
+            }
+            catch {
+                return new SubmitBusinessPostureResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured, please contact the adminstrator for further information"
                 };
             }
         }

@@ -6,6 +6,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PlanningBlueprint
     public class BusinessPostureViewModel
     {
         public int Id { get; set; }
+        public int PlanningBlueprintId { get; set; }
         public PostureViewModel ConstructionPosture { get; set; }
         public PostureViewModel OperationPosture { get; set; }
         public PostureViewModel DecommissioningPosture { get; set; }

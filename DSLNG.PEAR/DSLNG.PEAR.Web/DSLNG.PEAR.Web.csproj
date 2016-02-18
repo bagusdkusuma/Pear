@@ -1088,6 +1088,7 @@
     <Content Include="Views\OperationData\_Download.cshtml" />
     <Content Include="Views\PlanningBlueprint\BusinessPostureIdentification.cshtml" />
     <Content Include="Views\PlanningBlueprint\VoyagePlan.cshtml" />
+    <Content Include="Views\PlanningBlueprint\VoyagePlanApproval.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

@@ -6,6 +6,7 @@ namespace DSLNG.PEAR.Services.Responses.BusinessPosture
     public class GetBusinessPostureResponse
     {
         public int Id { get; set; }
+        public int PlanningBlueprintId { get; set; }
         public Posture ConstructionPosture { get; set; }
         public Posture OperationPosture { get; set; }
         public Posture DecommissioningPosture { get; set; }

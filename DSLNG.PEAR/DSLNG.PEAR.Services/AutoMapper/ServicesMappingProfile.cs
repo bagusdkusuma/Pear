@@ -538,7 +538,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
                   .ForMember(x => x.YtdFormula, y => y.MapFrom(z => z.YtdFormula.ToString()))
                   .ForMember(x => x.Level, y => y.MapFrom(z => z.Level.Name.ToString()))
                 ;
-            Mapper.CreateMap<BusinessPostureIdentification, GetBusinessPostureResponse>();
+            Mapper.CreateMap<BusinessPostureIdentification, GetBusinessPostureResponse>()
+                .ForMember(x => x.PlanningBlueprintId, o => o.MapFrom(s => s.PlanningBlueprint.Id));
             Mapper.CreateMap<DesiredState, GetBusinessPostureResponse.DesiredState>();
             Mapper.CreateMap<Posture, GetBusinessPostureResponse.Posture>();
             Mapper.CreateMap<PostureChallenge, GetBusinessPostureResponse.PostureChallenge>()
@@ -551,7 +552,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<SavePostureChallengeRequest, PostureChallenge>();
             Mapper.CreateMap<SavePostureConstraintRequest, PostureConstraint>();
 
-            Mapper.CreateMap<EnvironmentsScanning, GetEnvironmentsScanningResponse>();
+            Mapper.CreateMap<EnvironmentsScanning, GetEnvironmentsScanningResponse>()
+                .ForMember(x => x.BusinessPostureId, o => o.MapFrom(s => s.PlanningBlueprint.BusinessPostureIdentification.Id));
             Mapper.CreateMap<UltimateObjectivePoint, GetEnvironmentsScanningResponse.UltimateObjective>();
             Mapper.CreateMap<EnvironmentalScanning, GetEnvironmentsScanningResponse.Environmental>();
             Mapper.CreateMap<SaveEnvironmentScanningRequest, UltimateObjectivePoint>();

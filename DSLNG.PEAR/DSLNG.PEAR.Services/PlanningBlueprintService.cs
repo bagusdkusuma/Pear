@@ -137,5 +137,30 @@ namespace DSLNG.PEAR.Services
             }
             return null;
         }
+
+
+        public ApproveVoyagePlanResponse ApproveVoyagePlan(int id)
+        {
+            try
+            {
+                var planningDashboard = DataContext.PlanningBlueprints
+                    .First(x => x.Id == id);
+                planningDashboard.IsApproved = true;
+                DataContext.SaveChanges();
+                return new ApproveVoyagePlanResponse
+                {
+                    IsSuccess = true,
+                    Message = "The voyage plan has been approved",
+                    //BusinessPostureId = planningDashboard.BusinessPostureIdentification.Id
+                };
+            }
+            catch {
+                return new ApproveVoyagePlanResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured,please contact adminstrator for further information"
+                };
+            }
+        }
     }
 }

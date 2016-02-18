@@ -6,7 +6,9 @@
 
 <div class="col-md-12">
     @* Ultimate Objective *@
-    <div class="row row-uo border-style-1"><h4>Ultimate Objective</h4></div>
+    <div class="row row-uo border-style-1">
+        <h4>Ultimate Objective</h4>
+    </div>
     <div class="row row-margin-5 color-white">
         <div class="div-envi col-md-4 border-style-1">
             <div class="col-md-4-child">
@@ -58,7 +60,9 @@
 
 
     @*Environmental Scanning*@
-    <div class="row row-environmental margin-style-1"><h4>Environmental Scanning</h4></div>
+    <div class="row row-environmental margin-style-1">
+        <h4>Environmental Scanning</h4>
+    </div>
     <div class="row row-margin-5 color-white">
         <div class="col-md-3 popover-envi border-style-1">
             <div class="col-md-12 col-envi" style="background-color: red">
@@ -70,7 +74,7 @@
                     @{
                         foreach (var item in Model.Threat)
                         {
-                            <li class="list-li" data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>
+                        <li class="list-li" data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>
 
                         }
                     }
@@ -87,7 +91,7 @@
                     @{
                         foreach (var item in Model.Opportunity)
                         {
-                            <li class="list-li" data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>
+                        <li class="list-li" data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>
                         }
                     }
                 </ul>
@@ -103,7 +107,7 @@
                     @{
                         foreach (var item in Model.Weakness)
                         {
-                            <li class="list-li" data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>                            
+                        <li class="list-li" data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>                            
                         }
                     }
                 </ul>
@@ -119,7 +123,7 @@
                     @{
                         foreach (var item in Model.Strength)
                         {
-                            <li class="list-li" data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>                          
+                        <li class="list-li" data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>                          
                         }
                     }
                 </ul>
@@ -129,8 +133,7 @@
 
     @* Constraints *@
     <div class="row row-constraint margin-style-1 border-style-1" style="background-color: #cc0000">
-        <h4>
-            Constraint
+        <h4>Constraint
             <a href="#" class="btn-create-constraint" data-envi-id="@Model.Id" data-toggle="popover" data-placement="left" title="Constraint"><i class="fa fa-plus"></i></a>
         </h4>
     </div>
@@ -143,7 +146,7 @@
                 <td class="td-entity"><b>Category</b></td>
             </tr>
             @{foreach (var item in Model.Constraints)
-            {
+              {
                 <tr>
                     <td class="td-entity">
                         @foreach (var desc in item.Relation)
@@ -153,7 +156,7 @@
                     <td class="td-entity">@item.Type</td>
                     <td class="td-entity">@item.Category</td>
                 </tr>
-            }
+              }
 
             }
         </table>
@@ -161,9 +164,8 @@
 
 
     @* Challenges *@
-    <div class="row row-challenges margin-style-1 border-style-1" style="background-color:#ffcc00">
-        <h4>
-            Challenges
+    <div class="row row-challenges margin-style-1 border-style-1" style="background-color: #ffcc00">
+        <h4>Challenges
             <a href="#" class="btn-create-challenges" data-envi-id="@Model.Id" data-toggle="popover" data-placement="left" title="Challenges"><i class="fa fa-plus"></i></a>
         </h4>
     </div>
@@ -176,7 +178,7 @@
                 <td class="td-entity"><b>Category</b></td>
             </tr>
             @{foreach (var item in Model.Challenges)
-            {
+              {
                 <tr>
                     <td class="td-entity">
                         @foreach (var x in item.Relation)
@@ -186,10 +188,20 @@
                     <td class="td-entity">@item.Type</td>
                     <td class="td-entity">@item.Category</td>
                 </tr>
-            }
+              }
 
             }
         </table>
+    </div>
+    <div class="row">
+        <div class="col-md-12 artifact-designer-btns">
+            @using(Html.BeginForm("SubmitEnvironmentsScanning","PlanningBlueprint")){
+                @Html.Hidden("Id",Model.Id)
+                <a href="@Url.Action("Index", "PlanningBlueprint")" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+                <a href="@Url.Action("BusinessPostureIdentification", "PlanningBlueprint", new { Id = Model.BusinessPostureId })" class="btn btn-primary btn-lg"><span class="fa fa-arrow-right"></span>Business Posture Identification</a>
+                <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Submit</button>
+            }
+        </div>
     </div>
 </div>
 
@@ -245,7 +257,7 @@
 
 
 @* Input Constraints *@
-<div class="input-constraint" style="display:none; background-color:black;">
+<div class="input-constraint" style="display: none; background-color: black;">
     @using (Html.BeginForm("CreateConstraint", "EnvironmentScanning", FormMethod.Post, new { id = "form-constraint" }))
     {
         <div>
@@ -274,7 +286,7 @@
 </div>
 
 @* Input Challenges *@
-<div class="input-challenges" style="display:none;">
+<div class="input-challenges" style="display: none;">
     @using (Html.BeginForm("CreateChallenge", "EnvironmentScanning", FormMethod.Post))
     {
         <div>
@@ -392,7 +404,7 @@
                     type: 'POST',
                     success: function (data) {
                         if (data.type == "cp") {
-                            $('.cp-list').append($('<li class="list-li">'+data.description+'<a href="#" data-id="'+ data.id +'" class="remove-button"><i class="fa fa-minus"></i></a></li>'));
+                            $('.cp-list').append($('<li class="list-li">' + data.description + '<a href="#" data-id="' + data.id + '" class="remove-button"><i class="fa fa-minus"></i></a></li>'));
                             popOverElem.popover('hide');
                         }
                         else if (data.type == "op") {
@@ -554,7 +566,7 @@
                 });
                 var threat = $('<h4 />');
                 threat.html('Threat');
-                $('.relation-contents').append(threat,thList);
+                $('.relation-contents').append(threat, thList);
 
                 oppList.find('li').each(function (i, val) {
                     var $item = $(val);
@@ -590,7 +602,7 @@
                 });
                 var strength = $('<h4 />');
                 strength.html('Strength');
-                $('.relation-contents').append(strength,stList);
+                $('.relation-contents').append(strength, stList);
 
                 popOverElem = $this;
             });
