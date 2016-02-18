@@ -4,7 +4,7 @@
     ViewBag.Title = "EnvironmentsScanning";
 }
 
-<div class="col-md-12">
+<div class="col-md-12 environment-scanning">
     @* Ultimate Objective *@
     <div class="row row-uo border-style-1"><h4>Ultimate Objective</h4></div>
     <div class="row row-margin-5 color-white">
@@ -146,7 +146,7 @@
             {
                 <tr>
                     <td class="td-entity">
-                        <a href="#" data-toggle="modal" data-target="#envi-modal" data-id="@item.Id" class="btn-envi">
+                        <a href="#" data-toggle="modal" data-target="#envi-modal" data-id="@item.Id" class="btn-show-constraint">
                             @{
                 if (item.ThreatIds.Count() > 0)
                 {
@@ -202,7 +202,8 @@
             {
                 <tr>
                     <td class="td-entity">
-                        @{
+                        <a href="#" data-toggle="modal" data-target="#envi-modal" data-id="@item.Id" class="btn-show-challenge">
+                            @{
                 if (item.ThreatIds.Count() > 0)
                 {
                     <span>T</span>
@@ -223,7 +224,8 @@
                     <span>S</span>
                 }
 
-                        }
+                            }
+                        </a>
                     </td>
                     <td class="td-definition">@item.Definition <a href="#" data-id="@item.Id" class="challenge-remove-button"><i class="fa fa-minus"></i></a></td>
                     <td class="td-entity">@item.Type</td>
@@ -247,8 +249,7 @@
                 <h3 class="modal-title">Relation</h3>
             </div>
 
-            <div class="modal-body">
-             
+            <div class="modal-body modal-envi">
             </div>
 
             <div class="modal-footer">
@@ -267,7 +268,7 @@
                 <h3 class="modal-title">Select Relation</h3>
             </div>
 
-            <div class="modal-body">
+            <div class="modal-body color-white">
                 <div class="relation-contents"></div>
 
 
@@ -391,258 +392,256 @@
 
 @section Scripts{
     <script type="text/javascript">
-    $(document).ready(function () {
-        $('.popover-envi').popover({
-            selector: '.input-environmental',
-            html: true,
-            title: function () {
-                return 'test';
-            },
-            content: function () {
-                return $('.popover-environmental').html();
-            }
-        });
-
-        $('.row-challenges').popover({
-            selector: '.btn-create-challenges',
-            html: true,
-            title: function () {
-                return 'Test';
-            },
-            content: function () {
-                return $('.input-challenges').html();
-            }
-        });
-
-        $('.row-constraint').popover({
-            selector: '.btn-create-constraint',
-            html: true,
-            title: function () {
-                return 'Test';
-            },
-            content: function () {
-                return $('.input-constraint').html();
-            }
-        });
-
-        $('body').popover({
-            selector: '.input-popover',
-            html: true,
-            title: function () {
-                return 'Test';
-            },
-            content: function () {
-                return $('.popover-content').html();
-            }
-        });
-
-        var popOverElem;
-        $(document).on('click', '.input-popover', function () {
-            var esId = $(this).data("es-id");
-            var type = $(this).data("type");
-            $('.popover').find('input[name="esId"]').attr('value', esId);
-            $('.popover').find('input[name="type"]').attr('value', type);
-            popOverElem = $(this);
-
-        });
-
-        $(document).on('click', '.input-environmental', function () {
-            var enviId = $(this).data("envi-id");
-            var enviType = $(this).data("envi-type");
-            $('.popover').find('input[name="enviId"]').attr('value', enviId);
-            $('.popover').find('input[name="enviType"]').attr('value', enviType);
-            popOverElem = $(this);
-
-        });
-
-        $(document).on('click', '.btn-create-constraint', function () {
-            var enviId = $(this).data("envi-id");
-            $('.popover').find('input[name="enviId"]').attr('value', enviId);
-            popOverElem = $(this);
-
-        });
-
-        $(document).on('click', '.btn-create-challenges', function () {
-            var enviId = $(this).data("envi-id");
-            $('.popover').find('input[name="enviId"]').attr('value', enviId);
-            popOverElem = $(this);
-
-        });
-
-        $(document).on('click', '.form-es-submit', function (e) {
-            e.preventDefault();
-            var $that = $(this);
-            $.ajax({
-                url: '@Url.Action("Create", "EnvironmentScanning")',
-                data: $that.closest('form').serialize(),
-                type: 'POST',
-                success: function (data) {
-                    if (data.type == "cp") {
-                        $('.cp-list').append($('<li>' + data.description + '<a href="#" data-id="' + data.id + '" class="remove-button"><i class="fa fa-minus"></i></a></li>'));
-                        popOverElem.popover('hide');
-                    }
-                    else if (data.type == "op") {
-                        $('.op-list').append($('<li>' + data.description + '<a href="#" data-id="' + data.id + '" class="remove-button"><i class="fa fa-minus"></i></a></li>'));
-                        popOverElem.popover('hide');
-                    }
-                    else if (data.type == "rp") {
-                        $('.rp-list').append($('<li>' + data.description + '<a href="#" data-id="' + data.id + '" class="remove-button"><i class="fa fa-minus"></i></a></li>'));
-                        popOverElem.popover('hide');
-                    }
+        $(document).ready(function () {
+            $('.popover-envi').popover({
+                selector: '.input-environmental',
+                html: true,
+                title: function () {
+                    return 'test';
+                },
+                content: function () {
+                    return $('.popover-environmental').html();
                 }
-            })
-        });
+            });
 
-        $(document).on('click', '.form-envi-submit', function (e) {
-            e.preventDefault();
-            var $that = $(this);
-            $.ajax({
-                url: '@Url.Action("CreateEnvironmental", "EnvironmentScanning")',
-                data: $that.closest('form').serialize(),
-                type: 'POST',
-                success: function (data) {
-                    if (data.type == "th") {
-                        $('.th-list').append($('<li data-id="' + data.id + '">' + data.description + '<a href="#" data-id="' + data.id + '" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>'));
-                        popOverElem.popover('hide');
-                    }
-                    else if (data.type == "opp") {
-                        $('.opp-list').append($('<li data-id="' + data.id + '">' + data.description + '<a href="#" data-id="' + data.id + '" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>'));
-                        popOverElem.popover('hide');
-                    }
-                    else if (data.type == "wk") {
-                        $('.wk-list').append($('<li data-id="' + data.id + '">' + data.description + '<a href="#" data-id="' + data.id + '" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>'));
-                        popOverElem.popover('hide');
-                    }
-                    else if (data.type == "st") {
-                        $('.st-list').append($('<li data-id="' + data.id + '">' + data.description + '<a href="#" data-id="' + data.id + '" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>'));
-                        popOverElem.popover('hide');
-                    }
+            $('.row-challenges').popover({
+                selector: '.btn-create-challenges',
+                html: true,
+                title: function () {
+                    return 'Test';
+                },
+                content: function () {
+                    return $('.input-challenges').html();
                 }
-            })
-        });
+            });
 
-
-        $(document).on('click', '.remove-button', function () {
-            var that = this;
-            var id = $(that).data('id')
-            $.ajax({
-                url: '@Url.Action("Delete", "EnvironmentScanning")',
-                data: { Id: id },
-                type: 'Post',
-                success: function (data) {
-                    if (data.success === true) {
-                        $(that).parent().remove();
-                    }
-
+            $('.row-constraint').popover({
+                selector: '.btn-create-constraint',
+                html: true,
+                title: function () {
+                    return 'Test';
+                },
+                content: function () {
+                    return $('.input-constraint').html();
                 }
-            })
-        });
+            });
 
-        $(document).on('click', '.envi-remove-button', function () {
-            var that = this;
-            var id = $(that).data('id')
-            $.ajax({
-                url: '@Url.Action("DeleteEnvironmental", "EnvironmentScanning")',
-                data: { Id: id },
-                type: 'Post',
-                success: function (data) {
-                    if (data.success === true) {
-                        $(that).parent().remove();
-                    }
-
+            $('body').popover({
+                selector: '.input-popover',
+                html: true,
+                title: function () {
+                    return 'Test';
+                },
+                content: function () {
+                    return $('.popover-content').html();
                 }
-            })
-        });
+            });
 
-        $(document).on('click', '.constraint-remove-button', function () {
-            var that = this;
-            var id = $(that).data('id')
-            $.ajax({
-                url: '@Url.Action("DeleteConstraint", "EnvironmentScanning")',
-                data: { Id: id },
-                type: 'Post',
-                success: function (data) {
-                    if (data.success === true) {
-                        $(that).closest('tr').remove();
+            var popOverElem;
+            $(document).on('click', '.input-popover', function () {
+                var esId = $(this).data("es-id");
+                var type = $(this).data("type");
+                $('.popover').find('input[name="esId"]').attr('value', esId);
+                $('.popover').find('input[name="type"]').attr('value', type);
+                popOverElem = $(this);
+
+            });
+
+            $(document).on('click', '.input-environmental', function () {
+                var enviId = $(this).data("envi-id");
+                var enviType = $(this).data("envi-type");
+                $('.popover').find('input[name="enviId"]').attr('value', enviId);
+                $('.popover').find('input[name="enviType"]').attr('value', enviType);
+                popOverElem = $(this);
+
+            });
+
+            $(document).on('click', '.btn-create-constraint', function () {
+                var enviId = $(this).data("envi-id");
+                $('.popover').find('input[name="enviId"]').attr('value', enviId);
+                popOverElem = $(this);
+
+            });
+
+            $(document).on('click', '.btn-create-challenges', function () {
+                var enviId = $(this).data("envi-id");
+                $('.popover').find('input[name="enviId"]').attr('value', enviId);
+                popOverElem = $(this);
+
+            });
+
+            $(document).on('click', '.form-es-submit', function (e) {
+                e.preventDefault();
+                var $that = $(this);
+                $.ajax({
+                    url: '@Url.Action("Create", "EnvironmentScanning")',
+                    data: $that.closest('form').serialize(),
+                    type: 'POST',
+                    success: function (data) {
+                        if (data.type == "cp") {
+                            $('.cp-list').append($('<li>' + data.description + '<a href="#" data-id="' + data.id + '" class="remove-button"><i class="fa fa-minus"></i></a></li>'));
+                            popOverElem.popover('hide');
+                        }
+                        else if (data.type == "op") {
+                            $('.op-list').append($('<li>' + data.description + '<a href="#" data-id="' + data.id + '" class="remove-button"><i class="fa fa-minus"></i></a></li>'));
+                            popOverElem.popover('hide');
+                        }
+                        else if (data.type == "rp") {
+                            $('.rp-list').append($('<li>' + data.description + '<a href="#" data-id="' + data.id + '" class="remove-button"><i class="fa fa-minus"></i></a></li>'));
+                            popOverElem.popover('hide');
+                        }
                     }
+                })
+            });
 
-                }
-            })
-        });
-
-
-        $(document).on('click', '.challenge-remove-button', function () {
-            var that = this;
-            var id = $(that).data('id')
-            $.ajax({
-                url: '@Url.Action("DeleteChallenge", "EnvironmentScanning")',
-                data: { Id: id },
-                type: 'Post',
-                success: function (data) {
-                    if (data.success === true) {
-                        $(that).closest('tr').remove();
+            $(document).on('click', '.form-envi-submit', function (e) {
+                e.preventDefault();
+                var $that = $(this);
+                $.ajax({
+                    url: '@Url.Action("CreateEnvironmental", "EnvironmentScanning")',
+                    data: $that.closest('form').serialize(),
+                    type: 'POST',
+                    success: function (data) {
+                        if (data.type == "th") {
+                            $('.th-list').append($('<li data-id="' + data.id + '">' + data.description + '<a href="#" data-id="' + data.id + '" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>'));
+                            popOverElem.popover('hide');
+                        }
+                        else if (data.type == "opp") {
+                            $('.opp-list').append($('<li data-id="' + data.id + '">' + data.description + '<a href="#" data-id="' + data.id + '" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>'));
+                            popOverElem.popover('hide');
+                        }
+                        else if (data.type == "wk") {
+                            $('.wk-list').append($('<li data-id="' + data.id + '">' + data.description + '<a href="#" data-id="' + data.id + '" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>'));
+                            popOverElem.popover('hide');
+                        }
+                        else if (data.type == "st") {
+                            $('.st-list').append($('<li data-id="' + data.id + '">' + data.description + '<a href="#" data-id="' + data.id + '" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>'));
+                            popOverElem.popover('hide');
+                        }
                     }
-
-                }
-            })
-        });
+                })
+            });
 
 
-        $(document).on('click', '.form-input-constraint', function (e) {
-            e.preventDefault();
-            var $that = $(this);
-            $.ajax({
-                url: '@Url.Action("CreateConstraint", "EnvironmentScanning")',
-                data: $that.closest('form').serialize(),
-                type: 'POST',
-                success: function (data) {
-                    var relation = '';
-                    if (data.threatIds.length > 0) {
-                        relation = relation + 'T '
+            $(document).on('click', '.remove-button', function () {
+                var that = this;
+                var id = $(that).data('id')
+                $.ajax({
+                    url: '@Url.Action("Delete", "EnvironmentScanning")',
+                    data: { Id: id },
+                    type: 'Post',
+                    success: function (data) {
+                        if (data.success === true) {
+                            $(that).parent().remove();
+                        }
+
                     }
-                    if (data.opportunityIds.length > 0) {
-                        relation = relation + 'O '
-                    }
-                    if (data.weaknessIds.length > 0) {
-                        relation = relation + 'W '
-                    }
-                    if (data.strengthIds.length > 0) {
-                        relation = relation + 'S '
-                    }
+                })
+            });
 
-                    $('.table-constraint').append('<tr><td class="td-entity">' + '<span>' + relation + '</span>' + '</td><td class="td-definition">' + data.definition + '<a href="#" data-id="' + data.id + '" class="constraint-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</td></tr>');
-                    popOverElem.popover('hide');
-                    console.log(relation);
-                }
-            })
-        });
+            $(document).on('click', '.envi-remove-button', function () {
+                var that = this;
+                var id = $(that).data('id')
+                $.ajax({
+                    url: '@Url.Action("DeleteEnvironmental", "EnvironmentScanning")',
+                    data: { Id: id },
+                    type: 'Post',
+                    success: function (data) {
+                        if (data.success === true) {
+                            $(that).parent().remove();
+                        }
 
-        $(document).on('click', '.form-input-challenge', function (e) {
-            e.preventDefault();
-            var $that = $(this);
-            $.ajax({
-                url: '@Url.Action("CreateChallenge", "EnvironmentScanning")',
+                    }
+                })
+            });
+
+            $(document).on('click', '.constraint-remove-button', function () {
+                var that = this;
+                var id = $(that).data('id')
+                $.ajax({
+                    url: '@Url.Action("DeleteConstraint", "EnvironmentScanning")',
+                    data: { Id: id },
+                    type: 'Post',
+                    success: function (data) {
+                        if (data.success === true) {
+                            $(that).closest('tr').remove();
+                        }
+
+                    }
+                })
+            });
+
+
+            $(document).on('click', '.challenge-remove-button', function () {
+                var that = this;
+                var id = $(that).data('id')
+                $.ajax({
+                    url: '@Url.Action("DeleteChallenge", "EnvironmentScanning")',
+                    data: { Id: id },
+                    type: 'Post',
+                    success: function (data) {
+                        if (data.success === true) {
+                            $(that).closest('tr').remove();
+                        }
+
+                    }
+                })
+            });
+
+
+            $(document).on('click', '.form-input-constraint', function (e) {
+                e.preventDefault();
+                var $that = $(this);
+                $.ajax({
+                    url: '@Url.Action("CreateConstraint", "EnvironmentScanning")',
                     data: $that.closest('form').serialize(),
                     type: 'POST',
                     success: function (data) {
                         var relation = '';
-                        if (data.threatIds > 0) {
+                        if (data.threatIds.length > 0) {
                             relation = relation + 'T '
                         }
-                        if (data.opportunityIds > 0) {
+                        if (data.opportunityIds.length > 0) {
                             relation = relation + 'O '
                         }
-
-                        if (data.weaknessIds > 0) {
+                        if (data.weaknessIds.length > 0) {
                             relation = relation + 'W '
                         }
+                        if (data.strengthIds.length > 0) {
+                            relation = relation + 'S '
+                        }
 
-                        if (data.strengthIds > 0) {
+                        $('.table-constraint').append('<tr><td class="td-entity">' + '<a href="#" data-toggle="modal" data-target="#envi-modal" data-id="'+data.id+'" class="btn-show-constraint">' + '<span>' + relation + '</span>' + '</td><td class="td-definition">' + data.definition + '<a href="#" data-id="' + data.id + '" class="constraint-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
+                        popOverElem.popover('hide');
+                        console.log(relation);
+                    }
+                })
+            });
+
+            $(document).on('click', '.form-input-challenge', function (e) {
+                e.preventDefault();
+                var $that = $(this);
+                $.ajax({
+                    url: '@Url.Action("CreateChallenge", "EnvironmentScanning")',
+                    data: $that.closest('form').serialize(),
+                    type: 'POST',
+                    success: function (data) {
+                        var relation = '';
+                        if (data.threatIds.length > 0) {
+                            relation = relation + 'T '
+                        }
+                        if (data.opportunityIds.length > 0) {
+                            relation = relation + 'O '
+                        }
+                        if (data.weaknessIds.length > 0) {
+                            relation = relation + 'W '
+                        }
+                        if (data.strengthIds.length > 0) {
                             relation = relation + 'S '
                         }
 
 
-                        $('.table-challenge').append('<tr><td class="td-entity">' + '<span>' + relation + '</span>' + '</td><td class="td-definition">' + data.definition + '<a href="#" data-id="' + data.id + '" class="challenge-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</td></tr>');
+                        $('.table-challenge').append('<tr><td class="td-entity">' + ' <a href="#" data-toggle="modal" data-target="#envi-modal" data-id="'+data.id+'" class="btn-show-challenge">' + '<span>' + relation + '</span>' + '</td><td class="td-definition">' + data.definition + '<a href="#" data-id="' + data.id + '" class="challenge-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
                         popOverElem.popover('hide');
                     }
                 })
@@ -803,19 +802,34 @@
             });
 
 
-            $(document).on('click', '.btn-envi', function(){
-                var that = this;
-                var id = $(that).data('id');
+            $(document).on('click', '.btn-show-constraint', function () {
+                var $that = $(this);
+                var Id = ($that).data('id');
                 $.ajax({
-                    url: '@Url.Action("Delete", "EnvironmentScanning")',
-                    data: id,
-                    type: 'Post',
+                    url: '@Url.Action("ShowConstraint", "EnvironmentScanning")',
+                    data: { id: Id },
+                    type: 'POST',
+                    dataType: "html",
                     success: function (data) {
-
+                        $('.modal-envi').html(data);
                     }
-                })
                 });
             });
+
+            $(document).on('click', '.btn-show-challenge', function () {
+                var $that = $(this);
+                var Id = ($that).data('id');
+                $.ajax({
+                    url: '@Url.Action("ShowChallenge", "EnvironmentScanning")',
+                    data: { id: Id },
+                    type: 'POST',
+                    dataType: "html",
+                    success: function (data) {
+                        $('.modal-envi').html(data);
+                    }
+                });
+            });
+
         });
     </script>
 }

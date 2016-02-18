@@ -20,7 +20,9 @@ namespace DSLNG.PEAR.Services
             var response = DataContext.BusinessPostures.Include(x => x.Postures)
                 .Include(x => x.Postures.Select(y => y.DesiredStates))
                 .Include(x => x.Postures.Select(y => y.PostureChallenges))
+                .Include(x => x.Postures.Select(y => y.PostureChallenges.Select(z => z.DesiredStates)))
                 .Include(x => x.Postures.Select(y => y.PostureConstraints))
+                .Include(x => x.Postures.Select(y => y.PostureConstraints.Select(z => z.DesiredStates)))
                 .FirstOrDefault(x => x.Id == request.Id);
             return response.MapTo<GetBusinessPostureResponse>();
         }
@@ -239,6 +241,15 @@ namespace DSLNG.PEAR.Services
                     Message = "An error occured, please contact the administrator for further information"
                 };
             }
+        }
+
+
+        public GetPostureChallengeResponse GetPostureChallenge(GetPostureChallengeRequest request)
+        {
+            return DataContext.PostureChalleges.Where(x => x.Id == request.Id)
+                .Include(x => x.DesiredStates)
+                .Include(x => x.DesiredStates.Select(y => y.Posture))
+                .FirstOrDefault().MapTo<GetPostureChallengeResponse>();
         }
     }
 }

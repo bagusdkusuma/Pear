@@ -992,7 +992,7 @@ table.text-center th {
 }
 
 .ajax-loading-dialog {
-    //position: absolute;
+    /*//position: absolute;*/
     margin: auto;
     top: 0px;
     left: 0px;
@@ -1821,7 +1821,7 @@ a.see-more {
 .popover-to-content {
     display:none;
 }
-.business-posture .popover {
+.business-posture .popover, .environment-scanning {
     z-index:1040;
 }
 
@@ -1837,7 +1837,6 @@ a.see-more {
 .list-block h4{
     margin: 0px;
     border-bottom: 1px solid white;
-    margin: 
 }
 
 .sub-group h6{
@@ -2012,4 +2011,8 @@ a.see-more {
     text-align: center;
     text-decoration: underline;
     font-weight: bold;
+}
+
+.list-group{
+    list-style: none;
 }

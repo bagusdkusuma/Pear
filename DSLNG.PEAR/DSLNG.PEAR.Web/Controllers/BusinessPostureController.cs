@@ -52,5 +52,13 @@ namespace DSLNG.PEAR.Web.Controllers
             var request = new DeletePostureConstraintRequest { Id = id };
             return Json(_businessPostureService.DeletePostureConstraint(request));
         }
+
+        [HttpPost]
+        public PartialViewResult GetPostureChallenge(int id)
+        {
+            var viewModel = _businessPostureService.GetPostureChallenge(new GetPostureChallengeRequest { Id = id }).MapTo<PostureChalengeListViewModel>();
+
+            return PartialView("_showPostureChallenge", viewModel);
+        }
 	}
 }

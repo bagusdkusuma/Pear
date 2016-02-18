@@ -542,9 +542,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<DesiredState, GetBusinessPostureResponse.DesiredState>();
             Mapper.CreateMap<Posture, GetBusinessPostureResponse.Posture>();
             Mapper.CreateMap<PostureChallenge, GetBusinessPostureResponse.PostureChallenge>()
-                .ForMember(x => x.HasRelation, o => o.MapFrom(x => x.DesiredStates.Count > 0));
+                .ForMember(x => x.HasRelation, o => o.MapFrom(y => y.DesiredStates.Count > 0));
             Mapper.CreateMap<PostureConstraint, GetBusinessPostureResponse.PostureConstraint>()
-                .ForMember(x => x.HasRelation, o => o.MapFrom(x => x.DesiredStates.Count > 0));
+                .ForMember(x => x.HasRelation, o => o.MapFrom(y => y.DesiredStates.Count > 0));
 
             Mapper.CreateMap<SaveDesiredStateRequest, DesiredState>();
             Mapper.CreateMap<DesiredState, SaveDesiredStateResponse>();
@@ -558,15 +558,15 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<SaveEnvironmentalScanningRequest, EnvironmentalScanning>()
                 .ForMember(x => x.Desc, y => y.MapFrom(z => z.Description));
             Mapper.CreateMap<Constraint, GetEnvironmentsScanningResponse.Constraint>()
-                .ForMember(x => x.ThreatIds, y => y.MapFrom(z => z.Relation.Where(u => u.ThreatHost != null).Select(m => m.Id).ToArray()))
-                .ForMember(x => x.OpportunityIds, y => y.MapFrom(z => z.Relation.Where(u => u.OpportunityHost != null).Select(m => m.Id).ToArray()))
-                .ForMember(x => x.WeaknessIds, y => y.MapFrom(z => z.Relation.Where(u => u.WeaknessHost != null).Select(m => m.Id).ToArray()))
-                .ForMember(x => x.StrengthIds, y => y.MapFrom(z => z.Relation.Where(u => u.StrengthHost != null).Select(m => m.Id).ToArray()));
+                .ForMember(x => x.ThreatIds, y => y.MapFrom(z => z.Relations.Where(u => u.ThreatHost != null).Select(m => m.Id).ToArray()))
+                .ForMember(x => x.OpportunityIds, y => y.MapFrom(z => z.Relations.Where(u => u.OpportunityHost != null).Select(m => m.Id).ToArray()))
+                .ForMember(x => x.WeaknessIds, y => y.MapFrom(z => z.Relations.Where(u => u.WeaknessHost != null).Select(m => m.Id).ToArray()))
+                .ForMember(x => x.StrengthIds, y => y.MapFrom(z => z.Relations.Where(u => u.StrengthHost != null).Select(m => m.Id).ToArray()));
             Mapper.CreateMap<Challenge, GetEnvironmentsScanningResponse.Challenge>()
-                .ForMember(x => x.ThreatIds, y => y.MapFrom(z => z.Relation.Where(u => u.ThreatHost != null).Select(m => m.Id).ToArray()))
-                .ForMember(x => x.OpportunityIds, y => y.MapFrom(z => z.Relation.Where(u => u.OpportunityHost != null).Select(m => m.Id).ToArray()))
-                .ForMember(x => x.WeaknessIds, y => y.MapFrom(z => z.Relation.Where(u => u.WeaknessHost != null).Select(m => m.Id).ToArray()))
-                .ForMember(x => x.StrengthIds, y => y.MapFrom(z => z.Relation.Where(u => u.StrengthHost != null).Select(m => m.Id).ToArray()));
+                .ForMember(x => x.ThreatIds, y => y.MapFrom(z => z.Relations.Where(u => u.ThreatHost != null).Select(m => m.Id).ToArray()))
+                .ForMember(x => x.OpportunityIds, y => y.MapFrom(z => z.Relations.Where(u => u.OpportunityHost != null).Select(m => m.Id).ToArray()))
+                .ForMember(x => x.WeaknessIds, y => y.MapFrom(z => z.Relations.Where(u => u.WeaknessHost != null).Select(m => m.Id).ToArray()))
+                .ForMember(x => x.StrengthIds, y => y.MapFrom(z => z.Relations.Where(u => u.StrengthHost != null).Select(m => m.Id).ToArray()));
             Mapper.CreateMap<SaveConstraintRequest, Constraint>();
             Mapper.CreateMap<Constraint, SaveConstraintResponse>();
             Mapper.CreateMap<SaveChallengeRequest, Challenge>();
@@ -579,8 +579,22 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<DesiredState, GetVoyagePlanResponse.DesiredState>();
             Mapper.CreateMap<PostureChallenge, GetVoyagePlanResponse.PostureChallenge>();
             Mapper.CreateMap<PostureConstraint, GetVoyagePlanResponse.PostureConstraint>();
-            Mapper.CreateMap<Constraint, GetConstraintResponse>();
-            Mapper.CreateMap<EnvironmentalScanning, GetConstraintResponse.environment>();
+            Mapper.CreateMap<Constraint, GetConstraintResponse>()
+                .ForMember(x =>x.ThreatIds, y => y.MapFrom(z => z.Relations.Where(o =>o.ThreatHost != null)))
+                .ForMember(x => x.Opportunitys, y => y.MapFrom(z => z.Relations.Where(o => o.OpportunityHost != null)))
+                .ForMember(x => x.WeaknessIds, y => y.MapFrom(z => z.Relations.Where(o => o.WeaknessHost != null)))
+                .ForMember(x => x.StrengthIds, y => y.MapFrom(z => z.Relations.Where(o => o.StrengthHost != null)));
+            Mapper.CreateMap<EnvironmentalScanning, GetConstraintResponse.Environmental>();
+            Mapper.CreateMap<Challenge, GetChallengeResponse>()
+                .ForMember(x => x.ThreatIds, y => y.MapFrom(z => z.Relations.Where(o => o.ThreatHost != null)))
+                .ForMember(x => x.Opportunitys, y => y.MapFrom(z => z.Relations.Where(o => o.OpportunityHost != null)))
+                .ForMember(x => x.WeaknessIds, y => y.MapFrom(z => z.Relations.Where(o => o.WeaknessHost != null)))
+                .ForMember(x => x.StrengthIds, y => y.MapFrom(z => z.Relations.Where(o => o.StrengthHost != null)));
+            Mapper.CreateMap<EnvironmentalScanning, GetChallengeResponse.Environmental>();
+
+            Mapper.CreateMap<PostureChallenge, GetPostureChallengeResponse>()
+                .ForMember(x => x.DesiredStates, y => y.MapFrom(z => z.DesiredStates.Where(o => o.Posture != null)));
+            Mapper.CreateMap<DesiredState, GetPostureChallengeResponse.DesiredState>();
 
             base.Configure();
         }

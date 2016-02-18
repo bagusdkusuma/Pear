@@ -22,7 +22,7 @@
             </div>
             <ul class="list-result construction-desired-list">
                 @foreach (var item in Model.ConstructionPosture.DesiredStates)
-                { 
+                {
                     <li data-id="@item.Id">@item.Description <a href="/BusinessPosture/DeleteDesiredState" class="remove-item"><i class="fa fa-minus"></i></a></li>
                 }
             </ul>
@@ -35,7 +35,7 @@
             </div>
             <ul class="list-result operation-desired-list">
                 @foreach (var item in Model.OperationPosture.DesiredStates)
-                { 
+                {
                     <li data-id="@item.Id">@item.Description<a href="/BusinessPosture/DeleteDesiredState" class="remove-item"><i class="fa fa-minus"></i></a></li>
                 }
             </ul>
@@ -48,7 +48,7 @@
             </div>
             <ul class="list-result decommissioning-desired-list">
                 @foreach (var item in Model.DecommissioningPosture.DesiredStates)
-                { 
+                {
                     <li data-id="@item.Id">@item.Description<a href="/BusinessPosture/DeleteDesiredState" class="remove-item"><i class="fa fa-minus"></i></a></li>
                 }
             </ul>
@@ -70,9 +70,17 @@
                     <th style="width:30px;"></th>
                 </tr>
                 @foreach (var item in Model.ConstructionPosture.PostureChallenges)
-                { 
+                {
                     <tr>
-                        <td>@item.HasRelation</td>
+                        <td>
+                            <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" class="btn-posture-challenge">
+                                @if (item.HasRelation == true)
+                                {
+                                    <span>R</span>
+                                }
+                            </a>
+
+                        </td>
                         <td>@item.Definition </td>
                         <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureChallenge" class="remove-item"><i class="fa fa-minus"></i></a></td>
                     </tr>
@@ -80,22 +88,29 @@
             </table>
         </div>
         <div class="col-md-4 list-block">
-           <div>
+            <div>
                 <div class="sub-group">
                     <h6 style="background-color: #e6e600">Posture Challenge</h6>
                     <a href="#" data-toggle="popover" data-posture-type="operation" data-title="Add Desired State" data-posture-id="@Model.OperationPosture.Id" data-form-target="posture-challenge" class="popover-trigger"><i class="fa fa-plus"></i></a>
                 </div>
             </div>
-            <table class="table list-result" >
+            <table class="table list-result">
                 <tr>
                     <th style="width:70px;">Relation</th>
                     <th style="width:320px">Definition</th>
                     <th style="width:30px;"></th>
                 </tr>
                 @foreach (var item in Model.OperationPosture.PostureChallenges)
-                { 
+                {
                     <tr>
-                        <td>@item.HasRelation</td>
+                        <td>
+                            <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" class="btn-posture-challenge">
+                                @if (item.HasRelation == true)
+                                {
+                                    <span>R</span>
+                                }
+                            </a>
+                        </td>
                         <td>@item.Definition </td>
                         <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureChallenge" class="remove-item"><i class="fa fa-minus"></i></a></td>
                     </tr>
@@ -103,7 +118,7 @@
             </table>
         </div>
         <div class="col-md-4 list-block">
-             <div>
+            <div>
                 <div class="sub-group">
                     <h6 style="background-color: #e6e600">Posture Challenge</h6>
                     <a href="#" data-toggle="popover" data-posture-type="decommissioning" data-title="Add Desired State" data-posture-id="@Model.DecommissioningPosture.Id" data-form-target="posture-challenge" class="popover-trigger"><i class="fa fa-plus"></i></a>
@@ -116,9 +131,16 @@
                     <th style="width:30px;"></th>
                 </tr>
                 @foreach (var item in Model.DecommissioningPosture.PostureChallenges)
-                { 
+                {
                     <tr>
-                        <td>@item.HasRelation</td>
+                        <td>
+                            <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" class="btn-posture-challenge">
+                                @if (item.HasRelation == true)
+                                {
+                                    <span>R</span>
+                                }
+                            </a>
+                        </td>
                         <td>@item.Definition </td>
                         <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureChallenge" class="remove-item"><i class="fa fa-minus"></i></a></td>
                     </tr>
@@ -127,7 +149,7 @@
         </div>
     </div>
     <div class="row">
-       <div class="col-md-4 list-block">
+        <div class="col-md-4 list-block">
             <div>
                 <div class="sub-group">
                     <h6 style="background-color: #ff0000">Posture Constraint</h6>
@@ -141,9 +163,14 @@
                     <th style="width:30px;"></th>
                 </tr>
                 @foreach (var item in Model.ConstructionPosture.PostureConstraints)
-                { 
+                {
                     <tr>
-                        <td>@item.HasRelation</td>
+                        <td>
+                            @if (item.HasRelation == true)
+                            {
+                                <span>R</span>
+                            }
+                        </td>
                         <td>@item.Definition </td>
                         <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureConstraint" class="remove-item"><i class="fa fa-minus"></i></a></td>
                     </tr>
@@ -151,7 +178,7 @@
             </table>
         </div>
         <div class="col-md-4 list-block">
-           <div>
+            <div>
                 <div class="sub-group">
                     <h6 style="background-color: #ff0000">Posture Constraint</h6>
                     <a href="#" data-toggle="popover" data-posture-type="operation" data-title="Add Desired State" data-posture-id="@Model.OperationPosture.Id" data-form-target="posture-constraint" class="popover-trigger"><i class="fa fa-plus"></i></a>
@@ -164,9 +191,14 @@
                     <th style="width:30px;"></th>
                 </tr>
                 @foreach (var item in Model.OperationPosture.PostureConstraints)
-                { 
+                {
                     <tr>
-                        <td>@item.HasRelation</td>
+                        <td>
+                            @if (item.HasRelation == true)
+                            {
+                                <span>R</span>
+                            }
+                        </td>
                         <td>@item.Definition </td>
                         <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureConstraint" class="remove-item"><i class="fa fa-minus"></i></a></td>
                     </tr>
@@ -174,7 +206,7 @@
             </table>
         </div>
         <div class="col-md-4 list-block">
-             <div>
+            <div>
                 <div class="sub-group">
                     <h6 style="background-color: #ff0000">Posture Constraint</h6>
                     <a href="#" data-toggle="popover" data-posture-type="decommissioning" data-title="Add Desired State" data-posture-id="@Model.DecommissioningPosture.Id" data-form-target="posture-constraint" class="popover-trigger"><i class="fa fa-plus"></i></a>
@@ -187,9 +219,17 @@
                     <th style="width:30px;"></th>
                 </tr>
                 @foreach (var item in Model.DecommissioningPosture.PostureConstraints)
-                { 
+                {
                     <tr>
-                        <td>@item.HasRelation</td>
+                        <td>
+                            <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" class="btn-decom">
+                                @if (item.HasRelation == true)
+                                {
+                                    <span>R</span>
+                                }
+                            </a>
+
+                        </td>
                         <td>@item.Definition </td>
                         <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureConstraint" class="remove-item"><i class="fa fa-minus"></i></a></td>
                     </tr>
@@ -213,12 +253,12 @@
     </form>
 </div>
 <div class="posture-challenge-form popover-to-content">
-     <form action="/BusinessPosture/AddPostureChallenge">
+    <form action="/BusinessPosture/AddPostureChallenge">
         <input type="hidden" name="PostureId" />
-         <div class="relation-ids-wrapper"></div>
+        <div class="relation-ids-wrapper"></div>
         <div class="row">
-             <div class="col-md-12">
-                <button type="button" class="btn btn-info choose-relation"  data-toggle = "modal", data-target = "#modalDialog" >Choose Desired States</button>
+            <div class="col-md-12">
+                <button type="button" class="btn btn-info choose-relation" data-toggle="modal" data-target="#modalDialog">Choose Desired States</button>
             </div>
             <div class="col-md-12">
                 <label>Definition</label>
@@ -232,12 +272,12 @@
 </div>
 
 <div class="posture-constraint-form popover-to-content">
-     <form action="/BusinessPosture/AddPostureConstraint">
+    <form action="/BusinessPosture/AddPostureConstraint">
         <input type="hidden" name="PostureId" />
-         <div class="relation-ids-wrapper"></div>
+        <div class="relation-ids-wrapper"></div>
         <div class="row">
-             <div class="col-md-12">
-                <button type="button" class="btn btn-info choose-relation"  data-toggle = "modal", data-target = "#modalDialog" >Choose Desired States</button>
+            <div class="col-md-12">
+                <button type="button" class="btn btn-info choose-relation" data-toggle="modal" data-target="#modalDialog">Choose Desired States</button>
             </div>
             <div class="col-md-12">
                 <label>Definition</label>
@@ -265,17 +305,36 @@
                 <button type="button" class="btn btn-primary finish-relation" data-dismiss="modal" aria-label="Close">Submit</button>
             </div>
         </div>
-    <!-- /.modal-content -->
-</div>
-<!-- /.modal-dialog -->
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+@* Modal POsture *@
+<div class="modal fade" id="posture-modal" data-id="id">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close btn-finish-relation" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Relation</h3>
+            </div>
+
+            <div class="modal-body modal-posture">
+            </div>
+
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
     $(document).ready(function () {
         $('body').popover({
             selector: '.popover-trigger',
             html: true,
-            placement : 'left',
+            placement: 'left',
             title: function () {
                 return $(this).data('title');
             },
@@ -301,7 +360,7 @@
                     } else {
                         var $tr = $('<tr />');
                         var $relationCol = $('<td />');
-                        $relationCol.html(data.RelationIds.length ? 'True' : 'False');
+                        $relationCol.html(data.RelationIds.length ? 'R' : '');
                         $tr.append($relationCol);
                         var $definitionCol = $('<td />');
                         $definitionCol.html(data.Definition);
@@ -378,6 +437,22 @@
                 $hiddenId.prop('name', 'RelationIds[]');
                 $hiddenId.val($(val).parent().data('id'));
                 $wrapper.append($hiddenId);
+            });
+        });
+
+
+        $(document).on('click', '.btn-posture-challenge', function () {
+            var $that = $(this);
+            var Id = ($that).data('id');
+            console.log(Id);
+            $.ajax({
+                url: '@Url.Action("GetPostureChallenge", "BusinessPosture")',
+                data: { id: Id },
+                type: 'POST',
+                dataType: "html",
+                success: function (data) {
+                    $('.modal-posture').html(data);
+                }
             });
         });
     });
