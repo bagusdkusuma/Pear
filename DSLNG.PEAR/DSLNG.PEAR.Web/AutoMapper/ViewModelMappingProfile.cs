@@ -622,6 +622,8 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetChallengeResponse.Environmental, GetChallengeViewModel.Environmental>();
             Mapper.CreateMap<GetPostureChallengeResponse, PostureChalengeListViewModel>();
             Mapper.CreateMap<GetPostureChallengeResponse.DesiredState, PostureChalengeListViewModel.DesiredState>();
+            Mapper.CreateMap<GetPostureConstraintResponse, PostureConstraintListViewModel>();
+            Mapper.CreateMap<GetPostureConstraintResponse.DesiredState, PostureConstraintListViewModel.DesiredState>();
 
             base.Configure();
         }

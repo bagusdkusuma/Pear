@@ -251,5 +251,14 @@ namespace DSLNG.PEAR.Services
                 .Include(x => x.DesiredStates.Select(y => y.Posture))
                 .FirstOrDefault().MapTo<GetPostureChallengeResponse>();
         }
+
+
+        public GetPostureConstraintResponse GetPostureConstraint(GetPostureConstraintRequest requet)
+        {
+            return DataContext.PostureConstraints.Where(x => x.Id == requet.Id)
+                .Include(x => x.DesiredStates)
+                .Include(x => x.DesiredStates.Select(y => y.Posture))
+                .FirstOrDefault().MapTo<GetPostureConstraintResponse>();
+        }
     }
 }

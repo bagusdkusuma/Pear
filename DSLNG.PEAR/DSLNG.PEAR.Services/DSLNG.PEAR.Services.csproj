@@ -99,6 +99,7 @@
     <Compile Include="Requests\BusinessPosture\DeletePostureConstraintRequest.cs" />
     <Compile Include="Requests\BusinessPosture\GetBusinessPostureRequest.cs" />
     <Compile Include="Requests\BusinessPosture\GetPostureChallengeRequest.cs" />
+    <Compile Include="Requests\BusinessPosture\GetPostureConstraintRequest.cs" />
     <Compile Include="Requests\BusinessPosture\SaveDesiredStateRequest.cs" />
     <Compile Include="Requests\BusinessPosture\SavePostureChallengeRequest.cs" />
     <Compile Include="Requests\BusinessPosture\SavePostureConstraintRequest.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="Responses\BusinessPosture\DeleteDesiredStateResponse.cs" />
     <Compile Include="Responses\BusinessPosture\DeletePostureChallengeResponse.cs" />
     <Compile Include="Responses\BusinessPosture\DeletePostureConstraintResponse.cs" />
+    <Compile Include="Responses\BusinessPosture\GetPostureConstraintResponse.cs" />
     <Compile Include="Responses\BusinessPosture\GetBusinessPostureResponse.cs" />
     <Compile Include="Responses\BusinessPosture\GetPostureChallengeResponse.cs" />
     <Compile Include="Responses\BusinessPosture\SaveDesiredStateResponse.cs" />

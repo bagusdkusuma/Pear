@@ -13,8 +13,8 @@
                 <span><b>Ultimate Objective (Construction Phase)</b></span>
                 <a href="#" class="input-popover" data-es-id="@Model.Id" data-type="cp" data-toggle="popover" data-placement="left" title="Construction Phase"><i class="fa fa-plus"></i></a>
             </div>
-            <div class="div-envi">
-                <ul class="list-group cp-list">
+            <div>
+                <ul class="cp-list">
                     @foreach (var item in Model.ConstructionPhase)
                     {
                         <li>@item.Description <a href="#" data-id="@item.Id" class="remove-button"><i class="fa fa-minus"></i></a></li>
@@ -28,8 +28,8 @@
                 <span><b>Ultimate Objective (Operation Phase)</b></span>
                 <a href="#" class="input-popover" data-es-id="@Model.Id" data-type="op" data-toggle="popover" data-placement="left" title="Construction Phase"><i class="fa fa-plus"></i></a>
             </div>
-            <div class="div-envi">
-                <ul class="list-group op-list">
+            <div >
+                <ul class="op-list">
                     @foreach (var item in Model.OperationPhase)
                     {
                         <li>@item.Description <a href="#" data-id="@item.Id" class="remove-button"><i class="fa fa-minus"></i></a></li>
@@ -43,8 +43,8 @@
                 <span><b>Ultimate Objective (Decomm.Re-Invent Phase)</b></span>
                 <a href="#" class="input-popover" data-es-id="@Model.Id" data-type="rp" data-toggle="popover" data-placement="left" title="Reinvent Phase"><i class="fa fa-plus"></i></a>
             </div>
-            <div class="div-envi">
-                <ul class="list-group rp-list">
+            <div>
+                <ul class="rp-list">
                     @foreach (var item in Model.ReinventPhase)
                     {
                         <li>@item.Description <a href="#" data-id="@item.Id" class="remove-button"><i class="fa fa-minus"></i></a></li>
@@ -65,7 +65,7 @@
                 <span><b>Threat</b></span>
                 <a href="#" class="input-environmental" data-envi-id="@Model.Id" data-envi-type="th" data-toggle="popover" data-placement="left" title="Threat"><i class="fa fa-plus"></i></a>
             </div>
-            <div class="div-envi col-md-12">
+            <div class="col-md-12 div-row-child">
                 <ul class="list-group th-list">
                     @{
                         foreach (var item in Model.Threat)
@@ -82,7 +82,7 @@
                 <span><b>Opportunity</b></span>
                 <a href="#" class="input-environmental" data-envi-id="@Model.Id" data-envi-type="opp" data-toggle="popover" data-placement="left" title="Opportunity"><i class="fa fa-plus"></i></a>
             </div>
-            <div class="div-envi col-md-12">
+            <div class="col-md-12 div-row-child">
                 <ul class="list-group opp-list">
                     @{
                         foreach (var item in Model.Opportunity)
@@ -98,7 +98,7 @@
                 <span><b>Weakness</b></span>
                 <a href="#" class="input-environmental" data-envi-id="@Model.Id" data-envi-type="wk" data-toggle="popover" data-placement="left" title="Opportunity"><i class="fa fa-plus"></i></a>
             </div>
-            <div class="div-envi col-md-12">
+            <div class="col-md-12 div-row-child">
                 <ul class="list-group wk-list">
                     @{
                         foreach (var item in Model.Weakness)
@@ -114,7 +114,7 @@
                 <span><b>Strength</b></span>
                 <a href="#" class="input-environmental" data-envi-id="@Model.Id" data-envi-type="st" data-toggle="popover" data-placement="left" title="Opportunity"><i class="fa fa-plus"></i></a>
             </div>
-            <div class="div-envi col-md-12">
+            <div class="col-md-12 div-row-child">
                 <ul class="list-group st-list">
                     @{
                         foreach (var item in Model.Strength)
@@ -129,10 +129,9 @@
 
     @* Constraints *@
     <div class="row row-constraint margin-style-1 border-style-1" style="background-color: #cc0000">
-        <h4>
-            Constraint
-            <a href="#" class="btn-create-constraint" data-envi-id="@Model.Id" data-toggle="popover" data-placement="left" title="Constraint"><i class="fa fa-plus"></i></a>
-        </h4>
+        <h6>Constraint</h6>
+        <a href="#" class="btn-create-constraint" data-envi-id="@Model.Id" data-toggle="popover" data-placement="left" title="Constraint"><i class="fa fa-plus"></i></a>
+
     </div>
     <div class="row row-margin-5 row-table-constrain">
         <table class="table table-constraint border-style-1">
@@ -185,10 +184,8 @@
 
     @* Challenges *@
     <div class="row row-challenges margin-style-1 border-style-1" style="background-color:#ffcc00">
-        <h4>
-            Challenges
-            <a href="#" class="btn-create-challenges" data-envi-id="@Model.Id" data-toggle="popover" data-placement="left" title="Challenges"><i class="fa fa-plus"></i></a>
-        </h4>
+        <h6>Challenges</h6>
+        <a href="#" class="btn-create-challenges" data-envi-id="@Model.Id" data-toggle="popover" data-placement="left" title="Challenges"><i class="fa fa-plus"></i></a>
     </div>
     <div class="row row-margin-5 row-table-constrain">
         <table class="table table-challenge border-style-1">
@@ -291,7 +288,7 @@
                 <h3 class="modal-title">Select Relation</h3>
             </div>
 
-            <div class="modal-body">
+            <div class="modal-body color-white">
                 <div class="relation-challenges"></div>
 
             </div>
@@ -524,6 +521,7 @@
 
 
             $(document).on('click', '.remove-button', function () {
+                if (confirm("Are you sure want to delete this item?")) { 
                 var that = this;
                 var id = $(that).data('id')
                 $.ajax({
@@ -537,55 +535,62 @@
 
                     }
                 })
+                }
             });
 
             $(document).on('click', '.envi-remove-button', function () {
-                var that = this;
-                var id = $(that).data('id')
-                $.ajax({
-                    url: '@Url.Action("DeleteEnvironmental", "EnvironmentScanning")',
-                    data: { Id: id },
-                    type: 'Post',
-                    success: function (data) {
-                        if (data.success === true) {
-                            $(that).parent().remove();
-                        }
+                if (confirm("Are you sure want to delete this item?")) {
+                    var that = this;
+                    var id = $(that).data('id')
+                    $.ajax({
+                        url: '@Url.Action("DeleteEnvironmental", "EnvironmentScanning")',
+                        data: { Id: id },
+                        type: 'Post',
+                        success: function (data) {
+                            if (data.success === true) {
+                                $(that).parent().remove();
+                            }
 
-                    }
-                })
+                        }
+                    })
+                }
             });
 
             $(document).on('click', '.constraint-remove-button', function () {
-                var that = this;
-                var id = $(that).data('id')
-                $.ajax({
-                    url: '@Url.Action("DeleteConstraint", "EnvironmentScanning")',
-                    data: { Id: id },
-                    type: 'Post',
-                    success: function (data) {
-                        if (data.success === true) {
-                            $(that).closest('tr').remove();
-                        }
+                if (confirm("Are you sure want to delete this item?")) {
+                    var that = this;
+                    var id = $(that).data('id')
+                    $.ajax({
+                        url: '@Url.Action("DeleteConstraint", "EnvironmentScanning")',
+                        data: { Id: id },
+                        type: 'Post',
+                        success: function (data) {
+                            if (data.success === true) {
+                                $(that).closest('tr').remove();
+                            }
 
-                    }
-                })
+                        }
+                    })
+                }
             });
 
 
             $(document).on('click', '.challenge-remove-button', function () {
-                var that = this;
-                var id = $(that).data('id')
-                $.ajax({
-                    url: '@Url.Action("DeleteChallenge", "EnvironmentScanning")',
-                    data: { Id: id },
-                    type: 'Post',
-                    success: function (data) {
-                        if (data.success === true) {
-                            $(that).closest('tr').remove();
-                        }
+                if (confirm("Are you sure want to delete this item?")) {
+                    var that = this;
+                    var id = $(that).data('id')
+                    $.ajax({
+                        url: '@Url.Action("DeleteChallenge", "EnvironmentScanning")',
+                        data: { Id: id },
+                        type: 'Post',
+                        success: function (data) {
+                            if (data.success === true) {
+                                $(that).closest('tr').remove();
+                            }
 
-                    }
-                })
+                        }
+                    })
+                }
             });
 
 
@@ -656,10 +661,14 @@
                 var oppList = $('.opp-list').clone(true);
                 var wkList = $('.wk-list').clone(true);
                 var stList = $('.st-list').clone(true);
-                thList.removeClass('th-list');
-                oppList.removeClass('opp-list');
-                wkList.removeClass('wk-list');
-                stList.removeClass('st-list');
+                thList.removeClass('th-list list-group');
+                oppList.removeClass('opp-list list-group');
+                wkList.removeClass('wk-list list-group');
+                stList.removeClass('st-list list-group');
+                thList.addClass('list-checkbox');
+                oppList.addClass('list-checkbox');
+                wkList.addClass('list-checkbox');
+                stList.addClass('list-checkbox');
 
                 thList.find('li').each(function (i, val) {
                     var $item = $(val);
@@ -733,10 +742,14 @@
                 var oppList = $('.opp-list').clone(true);
                 var wkList = $('.wk-list').clone(true);
                 var stList = $('.st-list').clone(true);
-                thList.removeClass('th-list');
-                oppList.removeClass('opp-list');
-                wkList.removeClass('wk-list');
-                stList.removeClass('st-list');
+                thList.removeClass('th-list list-group');
+                oppList.removeClass('opp-list list-group');
+                wkList.removeClass('wk-list list-group');
+                stList.removeClass('st-list list-group');
+                thList.addClass('list-checkbox');
+                oppList.addClass('list-checkbox');
+                wkList.addClass('list-checkbox');
+                stList.addClass('list-checkbox');
 
                 thList.find('li').each(function (i, val) {
                     var $item = $(val);

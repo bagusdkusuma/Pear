@@ -596,6 +596,10 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.DesiredStates, y => y.MapFrom(z => z.DesiredStates.Where(o => o.Posture != null)));
             Mapper.CreateMap<DesiredState, GetPostureChallengeResponse.DesiredState>();
 
+            Mapper.CreateMap<PostureConstraint, GetPostureConstraintResponse>()
+                .ForMember(x => x.DesiredStates, y => y.MapFrom(z => z.DesiredStates.Where(o => o.Posture != null)));
+            Mapper.CreateMap<DesiredState, GetPostureConstraintResponse.DesiredState>();
+
             base.Configure();
         }
 

@@ -60,7 +60,7 @@
             <div>
                 <div class="sub-group">
                     <h6 style="background-color: #e6e600">Posture Challenge</h6>
-                    <a href="#" data-toggle="popover" data-posture-type="construction" data-title="Add Desired State" data-posture-id="@Model.ConstructionPosture.Id" data-form-target="posture-challenge" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                    <a href="#" data-toggle="popover" data-posture-type="construction" data-title="Add Desired State" data-posture="PostureChallenge" data-posture-id="@Model.ConstructionPosture.Id" data-form-target="posture-challenge" class="popover-trigger"><i class="fa fa-plus"></i></a>
                 </div>
             </div>
             <table class=" table list-result">
@@ -91,7 +91,7 @@
             <div>
                 <div class="sub-group">
                     <h6 style="background-color: #e6e600">Posture Challenge</h6>
-                    <a href="#" data-toggle="popover" data-posture-type="operation" data-title="Add Desired State" data-posture-id="@Model.OperationPosture.Id" data-form-target="posture-challenge" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                    <a href="#" data-toggle="popover" data-posture-type="operation" data-title="Add Desired State" data-posture="PostureChallenge" data-posture-id="@Model.OperationPosture.Id" data-form-target="posture-challenge" class="popover-trigger"><i class="fa fa-plus"></i></a>
                 </div>
             </div>
             <table class="table list-result">
@@ -121,7 +121,7 @@
             <div>
                 <div class="sub-group">
                     <h6 style="background-color: #e6e600">Posture Challenge</h6>
-                    <a href="#" data-toggle="popover" data-posture-type="decommissioning" data-title="Add Desired State" data-posture-id="@Model.DecommissioningPosture.Id" data-form-target="posture-challenge" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                    <a href="#" data-toggle="popover" data-posture-type="decommissioning" data-title="Add Desired State" data-posture="PostureChallenge" data-posture-id="@Model.DecommissioningPosture.Id" data-form-target="posture-challenge" class="popover-trigger"><i class="fa fa-plus"></i></a>
                 </div>
             </div>
             <table class="table list-result">
@@ -153,7 +153,7 @@
             <div>
                 <div class="sub-group">
                     <h6 style="background-color: #ff0000">Posture Constraint</h6>
-                    <a href="#" data-toggle="popover" data-posture-type="construction" data-title="Add Desired State" data-posture-id="@Model.ConstructionPosture.Id" data-form-target="posture-constraint" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                    <a href="#" data-toggle="popover" data-posture-type="construction" data-title="Add Desired State" data-posture="PostureConstraint"  data-posture-id="@Model.ConstructionPosture.Id" data-form-target="posture-constraint" class="popover-trigger"><i class="fa fa-plus"></i></a>
                 </div>
             </div>
             <table class="table list-result">
@@ -166,10 +166,13 @@
                 {
                     <tr>
                         <td>
-                            @if (item.HasRelation == true)
-                            {
-                                <span>R</span>
-                            }
+                            <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" class="btn-posture-constraint">
+                                @if (item.HasRelation == true)
+                                {
+                                    <span>R</span>
+                                }
+                            </a>
+
                         </td>
                         <td>@item.Definition </td>
                         <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureConstraint" class="remove-item"><i class="fa fa-minus"></i></a></td>
@@ -181,7 +184,7 @@
             <div>
                 <div class="sub-group">
                     <h6 style="background-color: #ff0000">Posture Constraint</h6>
-                    <a href="#" data-toggle="popover" data-posture-type="operation" data-title="Add Desired State" data-posture-id="@Model.OperationPosture.Id" data-form-target="posture-constraint" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                    <a href="#" data-toggle="popover" data-posture-type="operation" data-title="Add Desired State" data-posture="PostureConstraint" data-posture-id="@Model.OperationPosture.Id" data-form-target="posture-constraint" class="popover-trigger"><i class="fa fa-plus"></i></a>
                 </div>
             </div>
             <table class="table list-result">
@@ -194,10 +197,12 @@
                 {
                     <tr>
                         <td>
-                            @if (item.HasRelation == true)
-                            {
-                                <span>R</span>
-                            }
+                            <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" class="btn-posture-constraint">
+                                @if (item.HasRelation == true)
+                                {
+                                    <span>R</span>
+                                }
+                            </a>
                         </td>
                         <td>@item.Definition </td>
                         <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureConstraint" class="remove-item"><i class="fa fa-minus"></i></a></td>
@@ -209,7 +214,7 @@
             <div>
                 <div class="sub-group">
                     <h6 style="background-color: #ff0000">Posture Constraint</h6>
-                    <a href="#" data-toggle="popover" data-posture-type="decommissioning" data-title="Add Desired State" data-posture-id="@Model.DecommissioningPosture.Id" data-form-target="posture-constraint" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                    <a href="#" data-toggle="popover" data-posture-type="decommissioning" data-title="Add Desired State" data-posture="PostureConstraint" data-posture-id="@Model.DecommissioningPosture.Id" data-form-target="posture-constraint" class="popover-trigger"><i class="fa fa-plus"></i></a>
                 </div>
             </div>
             <table class="table list-result">
@@ -222,13 +227,12 @@
                 {
                     <tr>
                         <td>
-                            <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" class="btn-decom">
+                            <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" class="btn-posture-constraint">
                                 @if (item.HasRelation == true)
                                 {
                                     <span>R</span>
                                 }
                             </a>
-
                         </td>
                         <td>@item.Definition </td>
                         <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureConstraint" class="remove-item"><i class="fa fa-minus"></i></a></td>
@@ -255,6 +259,7 @@
 <div class="posture-challenge-form popover-to-content">
     <form action="/BusinessPosture/AddPostureChallenge">
         <input type="hidden" name="PostureId" />
+        <input type="hidden" name="PostureType" />
         <div class="relation-ids-wrapper"></div>
         <div class="row">
             <div class="col-md-12">
@@ -274,6 +279,7 @@
 <div class="posture-constraint-form popover-to-content">
     <form action="/BusinessPosture/AddPostureConstraint">
         <input type="hidden" name="PostureId" />
+        <input type="hidden" name="PostureType" />
         <div class="relation-ids-wrapper"></div>
         <div class="row">
             <div class="col-md-12">
@@ -310,7 +316,6 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
-
 @* Modal POsture *@
 <div class="modal fade" id="posture-modal" data-id="id">
     <div class="modal-dialog">
@@ -348,9 +353,9 @@
             var $form = $this.closest('form');
             var $listBlock = $this.closest('.list-block');
             var $listResult = $listBlock.find('.list-result');
-            //insert type
 
             $form.find('input[name="PostureId"]').val($listBlock.find('.popover-trigger').data('posture-id'));
+            $form.find('input[name="PostureType"]').val($listBlock.find('.popover-trigger').data('posture'));
             $.post($form.prop('action'), $form.serialize(), function (data) {
                 if (data.IsSuccess) {
                     var target = $listBlock.find('.popover-trigger').data('form-target');
@@ -360,7 +365,17 @@
                     } else {
                         var $tr = $('<tr />');
                         var $relationCol = $('<td />');
-                        $relationCol.html(data.RelationIds.length ? 'R' : '');
+                        var relationType = '';
+                        if (data.type == "PostureChallenge") {
+                            relationType = relationType + 'data-id="' + data.Id + '"' + ' ' + 'data-toggle="modal"' + ' ' + 'data-target="#posture-modal"' + ' ' + 'class="btn-posture-challenge"'
+                        }
+                        if (data.type == "PostureConstraint")
+                        {
+                            relationType = relationType + 'data-id="' + data.Id + '"' + 'data-toggle="modal"' + 'data-target="#posture-modal"' + 'class="btn-posture-constraint"'
+
+                        }
+
+                        $relationCol.html(data.RelationIds.length ? '<a href="#" ' + relationType + '><span>R</span></a>' : ' ');
                         $tr.append($relationCol);
                         var $definitionCol = $('<td />');
                         $definitionCol.html(data.Definition);
@@ -385,18 +400,20 @@
         });
         $(document).on('click', '.remove-item', function (e) {
             e.preventDefault();
-            var $this = $(this);
-            var id = $this.parent().data('id');
-            $.post($this.prop('href'), 'Id=' + id, function (data) {
-                if (data.IsSuccess) {
-                    var target = $this.closest('.list-block').find('.popover-trigger').data('form-target');
-                    if (target == 'desired-state') {
-                        $this.parent().remove();
-                    } else {
-                        $this.closest('tr').remove();
+            if (confirm("Are you sure want to delete this item?")) {
+                var $this = $(this);
+                var id = $this.parent().data('id');
+                $.post($this.prop('href'), 'Id=' + id, function (data) {
+                    if (data.IsSuccess) {
+                        var target = $this.closest('.list-block').find('.popover-trigger').data('form-target');
+                        if (target == 'desired-state') {
+                            $this.parent().remove();
+                        } else {
+                            $this.closest('tr').remove();
+                        }
                     }
-                }
-            });
+                });
+            }
         });
         var popOverElem;
         $(document).on('click', '.popover-trigger', function (e) {
@@ -447,6 +464,21 @@
             console.log(Id);
             $.ajax({
                 url: '@Url.Action("GetPostureChallenge", "BusinessPosture")',
+                data: { id: Id },
+                type: 'POST',
+                dataType: "html",
+                success: function (data) {
+                    $('.modal-posture').html(data);
+                }
+            });
+        });
+
+        $(document).on('click', '.btn-posture-constraint', function () {
+            var $that = $(this);
+            var Id = ($that).data('id');
+            console.log(Id);
+            $.ajax({
+                url: '@Url.Action("GetPostureConstraint", "BusinessPosture")',
                 data: { id: Id },
                 type: 'POST',
                 dataType: "html",

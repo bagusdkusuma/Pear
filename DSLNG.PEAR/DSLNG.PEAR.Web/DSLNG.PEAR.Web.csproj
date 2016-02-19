@@ -1091,6 +1091,7 @@
     <Content Include="Views\PlanningBlueprint\BusinessPostureIdentification.cshtml" />
     <Content Include="Views\PlanningBlueprint\VoyagePlan.cshtml" />
     <Content Include="Views\Shared\_showPostureChallenge.cshtml" />
+    <Content Include="Views\Shared\_showPostureConstraint.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
