@@ -339,9 +339,31 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "tabular":
                     {
                         viewModel.Tabular = artifact.MapPropertiesToInstance(new TabularViewModel());
+                        viewModel.Tabular.Rows = new List<TabularViewModel.RowViewModel>();
                         viewModel.Tabular.Rows.Insert(0, new TabularViewModel.RowViewModel());
                         this.SetPeriodeTypes(viewModel.Tabular.PeriodeTypes);
                         this.SetRangeFilters(viewModel.Tabular.RangeFilters);
+
+                        foreach (var row in artifact.Rows)
+                        {
+                            viewModel.Tabular.Rows.Add(new TabularViewModel.RowViewModel
+                                {
+                                    KpiId = row.KpiId,
+                                    KpiName = row.KpiName,
+                                    PeriodeType = row.PeriodeType.ToString(),
+                                    EndInDisplay = ParseDateToString(row.PeriodeType, row.End),
+                                    StartInDisplay = ParseDateToString(row.PeriodeType, row.Start),
+                                    RangeFilter = row.RangeFilter.ToString()
+                                });
+                        }
+                        /*foreach (var item in viewModel.Tabular.Rows)
+                        {
+                            if (item.Start.HasValue && item.End.HasValue)
+                            {
+                                item.StartInDisplay = ParseDateToString((PeriodeType)Enum.Parse(typeof(PeriodeType), item.PeriodeType), item.Start);
+                                item.EndInDisplay = ParseDateToString((PeriodeType)Enum.Parse(typeof(PeriodeType), item.PeriodeType), item.End);    
+                            }
+                        }*/
                     }
                     break;
                 case "pie":
@@ -966,7 +988,22 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "tabular":
                     {
                         var request = viewModel.MapTo<GetTabularDataRequest>();
-                        viewModel.Tabular.MapPropertiesToInstance<GetTabularDataRequest>(request);
+                        request.Rows = new List<GetTabularDataRequest.RowRequest>();
+                        foreach (var rowViewModel in viewModel.Tabular.Rows)
+                        {
+                            request.Rows.Add(new GetTabularDataRequest.RowRequest
+                                {
+                                    End = rowViewModel.EndAfterParsed,
+                                    KpiId = rowViewModel.KpiId,
+                                    PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), rowViewModel.PeriodeType),
+                                    KpiName = rowViewModel.KpiName,
+                                    RangeFilter = (RangeFilter)Enum.Parse(typeof(RangeFilter), rowViewModel.RangeFilter),
+                                    Start = rowViewModel.StartAfterParsed
+                                });
+                        }
+                        
+                        //viewModel.Tabular.MapPropertiesToInstance<GetTabularDataRequest>(request);
+                        
                         var chartData = _artifactServie.GetTabularData(request);
                         previewViewModel.GraphicType = viewModel.GraphicType;
                         previewViewModel.Tabular = new TabularDataViewModel();

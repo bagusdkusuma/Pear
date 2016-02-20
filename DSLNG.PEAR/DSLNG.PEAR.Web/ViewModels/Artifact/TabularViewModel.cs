@@ -88,6 +88,54 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
             public string StartInDisplay { get; set; }
             [Display(Name = "End")]
             public string EndInDisplay { get; set; }
+
+            public DateTime? StartAfterParsed
+            {
+                get
+                {
+                    if (string.IsNullOrEmpty(this.StartInDisplay))
+                    {
+                        return null;
+                    }
+                    if (this.PeriodeType == EPeriodeType.Monthly.ToString())
+                    {
+                        return DateTime.ParseExact("01/" + this.StartInDisplay, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    }
+                    if (this.PeriodeType == EPeriodeType.Yearly.ToString())
+                    {
+                        return DateTime.ParseExact("01/01/" + this.StartInDisplay, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    }
+                    if (this.PeriodeType == EPeriodeType.Daily.ToString() || this.PeriodeType == EPeriodeType.Weekly.ToString())
+                    {
+                        return DateTime.ParseExact(this.StartInDisplay, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+                    }
+                    return DateTime.ParseExact(this.StartInDisplay, "MM/dd/yyyy hh:mm tt", CultureInfo.InvariantCulture);
+                }
+            }
+            public DateTime? EndAfterParsed
+            {
+                get
+                {
+                    if (string.IsNullOrEmpty(this.EndInDisplay))
+                    {
+                        return null;
+                    }
+                    if (this.PeriodeType == EPeriodeType.Monthly.ToString())
+                    {
+                        return DateTime.ParseExact("01/" + this.EndInDisplay, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    }
+                    if (this.PeriodeType == EPeriodeType.Yearly.ToString())
+                    {
+                        return DateTime.ParseExact("01/01/" + this.EndInDisplay, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    }
+                    if (this.PeriodeType == EPeriodeType.Daily.ToString() || this.PeriodeType == EPeriodeType.Weekly.ToString())
+                    {
+                        return DateTime.ParseExact(this.EndInDisplay, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+                    }
+                    return DateTime.ParseExact(this.EndInDisplay, "MM/dd/yyyy hh:mm tt", CultureInfo.InvariantCulture);
+                }
+            }
+
         }
     }
 }
