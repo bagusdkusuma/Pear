@@ -317,7 +317,9 @@ Number.prototype.format = function (n, x) {
                 var $this = $(this);
                 var clearValue = $('.datepicker').each(function (i, val) {
                     $(val).val('');
-                    $(val).data("DateTimePicker").destroy();
+                    if ($(val).data("DateTimePicker") !== undefined) {
+                        $(val).data("DateTimePicker").destroy();
+                    }
                 });
                 switch ($this.val().toLowerCase().trim()) {
                     case 'hourly':
