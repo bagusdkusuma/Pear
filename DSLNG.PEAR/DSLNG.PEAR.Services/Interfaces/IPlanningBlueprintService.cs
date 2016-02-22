@@ -9,5 +9,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetPlanningBlueprintsResponse GetPlanningBlueprints(GetPlanningBlueprintsRequest request);
         SavePlanningBlueprintResponse SavePlanningBlueprint(SavePlanningBlueprintRequest request);
         GetVoyagePlanResponse GetVoyagePlan();
+        ApproveVoyagePlanResponse ApproveVoyagePlan(int id);
     }
 }

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Entities.Blueprint;
+using DSLNG.PEAR.Services.Responses;
 
 namespace DSLNG.PEAR.Services
 {
@@ -21,6 +22,8 @@ namespace DSLNG.PEAR.Services
         public GetEnvironmentsScanningResponse GetEnvironmentsScanning(GetEnvironmentsScanningRequest request)
         {
             return DataContext.EnvironmentsScannings.Where(x => x.Id == request.Id)
+                .Include(x => x.PlanningBlueprint)
+                .Include(x => x.PlanningBlueprint.BusinessPostureIdentification)
                 .Include(x => x.ConstructionPhase)
                 .Include(x => x.OperationPhase)
                 .Include(x => x.ReinventPhase)
@@ -357,6 +360,32 @@ namespace DSLNG.PEAR.Services
                 .Include(x => x.Relations.Select(y => y.WeaknessHost))
                 .Include(x => x.Relations.Select(y => y.StrengthHost))
                 .FirstOrDefault().MapTo<GetChallengeResponse>();
+        }
+
+
+        public SubmitEnvironmentsScanningResponse SubmitEnvironmentsScanning(int id)
+        {
+            try
+            {
+                var environmentsScanning = DataContext.EnvironmentsScannings.Include(x => x.PlanningBlueprint).First(x => x.Id == id);
+                environmentsScanning.IsLocked = true;
+                var businessPosture = DataContext.BusinessPostures.First(x => x.PlanningBlueprint.Id == environmentsScanning.PlanningBlueprint.Id);
+                businessPosture.IsLocked = false;
+                DataContext.SaveChanges();
+                return new SubmitEnvironmentsScanningResponse
+                {
+                    IsSuccess = true,
+                    Message = "Environments Scanning has been successfully submited",
+                    BusinessPostureId = businessPosture.Id
+                };
+            }
+            catch {
+                return new SubmitEnvironmentsScanningResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured, please contact adminstrator for further information"
+                };
+            }
         }
     }
 }

@@ -6,7 +6,9 @@
 
 <div class="col-md-12 environment-scanning">
     @* Ultimate Objective *@
-    <div class="row row-uo border-style-1"><h4>Ultimate Objective</h4></div>
+    <div class="row row-uo border-style-1">
+        <h4>Ultimate Objective</h4>
+    </div>
     <div class="row row-margin-5 color-white">
         <div class="div-envi col-md-4 border-style-1">
             <div class="col-md-4-child">
@@ -28,7 +30,7 @@
                 <span><b>Ultimate Objective (Operation Phase)</b></span>
                 <a href="#" class="input-popover" data-es-id="@Model.Id" data-type="op" data-toggle="popover" data-placement="left" title="Construction Phase"><i class="fa fa-plus"></i></a>
             </div>
-            <div >
+            <div>
                 <ul class="op-list">
                     @foreach (var item in Model.OperationPhase)
                     {
@@ -58,7 +60,9 @@
 
 
     @*Environmental Scanning*@
-    <div class="row row-environmental margin-style-1"><h4>Environmental Scanning</h4></div>
+    <div class="row row-environmental margin-style-1">
+        <h4>Environmental Scanning</h4>
+    </div>
     <div class="row row-margin-5 color-white">
         <div class="col-md-3 popover-envi border-style-1">
             <div class="col-md-12 col-envi" style="background-color: red">
@@ -70,8 +74,7 @@
                     @{
                         foreach (var item in Model.Threat)
                         {
-                            <li data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>
-
+                        <li data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>
                         }
                     }
                 </ul>
@@ -87,7 +90,7 @@
                     @{
                         foreach (var item in Model.Opportunity)
                         {
-                            <li data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>
+                        <li data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>
                         }
                     }
                 </ul>
@@ -103,7 +106,7 @@
                     @{
                         foreach (var item in Model.Weakness)
                         {
-                            <li data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>
+                        <li data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>
                         }
                     }
                 </ul>
@@ -119,7 +122,7 @@
                     @{
                         foreach (var item in Model.Strength)
                         {
-                            <li data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>
+                        <li data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>
                         }
                     }
                 </ul>
@@ -131,7 +134,6 @@
     <div class="row row-constraint margin-style-1 border-style-1" style="background-color: #cc0000">
         <h6>Constraint</h6>
         <a href="#" class="btn-create-constraint" data-envi-id="@Model.Id" data-toggle="popover" data-placement="left" title="Constraint"><i class="fa fa-plus"></i></a>
-
     </div>
     <div class="row row-margin-5 row-table-constrain">
         <table class="table table-constraint border-style-1">
@@ -142,30 +144,30 @@
                 <td class="td-entity"><b>Category</b></td>
             </tr>
             @{foreach (var item in Model.Constraints)
-            {
+              {
                 <tr>
                     <td class="td-entity">
                         <a href="#" data-toggle="modal" data-target="#envi-modal" data-id="@item.Id" class="btn-show-constraint">
                             @{
-                if (item.ThreatIds.Count() > 0)
-                {
-                    <span>T</span>
-                }
+                  if (item.ThreatIds.Count() > 0)
+                  {
+                                <span>T</span>
+                  }
 
-                if (item.OpportunityIds.Count() > 0)
-                {
-                    <span>O</span>
-                }
+                  if (item.OpportunityIds.Count() > 0)
+                  {
+                                <span>O</span>
+                  }
 
-                if (item.WeaknessIds.Count() > 0)
-                {
-                    <span>W</span>
-                }
+                  if (item.WeaknessIds.Count() > 0)
+                  {
+                                <span>W</span>
+                  }
 
-                if (item.StrengthIds.Count() > 0)
-                {
-                    <span>S</span>
-                }
+                  if (item.StrengthIds.Count() > 0)
+                  {
+                                <span>S</span>
+                  }
 
                             }
                         </a>
@@ -174,7 +176,7 @@
                     <td class="td-entity">@item.Type</td>
                     <td class="td-entity">@item.Category</td>
                 </tr>
-            }
+              }
 
             }
 
@@ -183,7 +185,7 @@
 
 
     @* Challenges *@
-    <div class="row row-challenges margin-style-1 border-style-1" style="background-color:#ffcc00">
+    <div class="row row-challenges margin-style-1 border-style-1" style="background-color: #ffcc00">
         <h6>Challenges</h6>
         <a href="#" class="btn-create-challenges" data-envi-id="@Model.Id" data-toggle="popover" data-placement="left" title="Challenges"><i class="fa fa-plus"></i></a>
     </div>
@@ -196,30 +198,30 @@
                 <td class="td-entity"><b>Category</b></td>
             </tr>
             @{foreach (var item in Model.Challenges)
-            {
+              {
                 <tr>
                     <td class="td-entity">
                         <a href="#" data-toggle="modal" data-target="#envi-modal" data-id="@item.Id" class="btn-show-challenge">
                             @{
-                if (item.ThreatIds.Count() > 0)
-                {
-                    <span>T</span>
-                }
+                  if (item.ThreatIds.Count() > 0)
+                  {
+                                <span>T</span>
+                  }
 
-                if (item.OpportunityIds.Count() > 0)
-                {
-                    <span>O</span>
-                }
+                  if (item.OpportunityIds.Count() > 0)
+                  {
+                                <span>O</span>
+                  }
 
-                if (item.WeaknessIds.Count() > 0)
-                {
-                    <span>W</span>
-                }
+                  if (item.WeaknessIds.Count() > 0)
+                  {
+                                <span>W</span>
+                  }
 
-                if (item.StrengthIds.Count() > 0)
-                {
-                    <span>S</span>
-                }
+                  if (item.StrengthIds.Count() > 0)
+                  {
+                                <span>S</span>
+                  }
 
                             }
                         </a>
@@ -228,10 +230,21 @@
                     <td class="td-entity">@item.Type</td>
                     <td class="td-entity">@item.Category</td>
                 </tr>
-            }
+              }
 
             }
         </table>
+    </div>
+    <div class="row">
+        <div class="col-md-12 artifact-designer-btns">
+            @using (Html.BeginForm("SubmitEnvironmentsScanning", "PlanningBlueprint"))
+            {
+                @Html.Hidden("Id", Model.Id)
+                <a href="@Url.Action("Index", "PlanningBlueprint")" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+                <a href="@Url.Action("BusinessPostureIdentification", "PlanningBlueprint", new { Id = Model.BusinessPostureId })" class="btn btn-primary btn-lg"><span class="fa fa-arrow-right"></span>Business Posture Identification</a>
+                <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Submit</button>
+            }
+        </div>
     </div>
 </div>
 
@@ -328,7 +341,7 @@
 
 
 @* Input Constraints *@
-<div class="input-constraint" style="display:none; background-color:black;">
+<div class="input-constraint" style="display: none; background-color: black;">
     @using (Html.BeginForm("CreateConstraint", "EnvironmentScanning", FormMethod.Post, new { id = "form-constraint" }))
     {
         <div>
@@ -357,7 +370,7 @@
 </div>
 
 @* Input Challenges *@
-<div class="input-challenges" style="display:none;">
+<div class="input-challenges" style="display: none;">
     @using (Html.BeginForm("CreateChallenge", "EnvironmentScanning", FormMethod.Post))
     {
         <div>
@@ -521,11 +534,11 @@
 
 
             $(document).on('click', '.remove-button', function () {
-                if (confirm("Are you sure want to delete this item?")) { 
-                var that = this;
-                var id = $(that).data('id')
-                $.ajax({
-                    url: '@Url.Action("Delete", "EnvironmentScanning")',
+                if (confirm("Are you sure want to delete this item?")) {
+                    var that = this;
+                    var id = $(that).data('id')
+                    $.ajax({
+                        url: '@Url.Action("Delete", "EnvironmentScanning")',
                     data: { Id: id },
                     type: 'Post',
                     success: function (data) {
@@ -616,7 +629,7 @@
                             relation = relation + 'S '
                         }
 
-                        $('.table-constraint').append('<tr><td class="td-entity">' + '<a href="#" data-toggle="modal" data-target="#envi-modal" data-id="'+data.id+'" class="btn-show-constraint">' + '<span>' + relation + '</span>' + '</td><td class="td-definition">' + data.definition + '<a href="#" data-id="' + data.id + '" class="constraint-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
+                        $('.table-constraint').append('<tr><td class="td-entity">' + '<a href="#" data-toggle="modal" data-target="#envi-modal" data-id="' + data.id + '" class="btn-show-constraint">' + '<span>' + relation + '</span>' + '</td><td class="td-definition">' + data.definition + '<a href="#" data-id="' + data.id + '" class="constraint-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
                         popOverElem.popover('hide');
                         console.log(relation);
                     }
@@ -646,7 +659,7 @@
                         }
 
 
-                        $('.table-challenge').append('<tr><td class="td-entity">' + ' <a href="#" data-toggle="modal" data-target="#envi-modal" data-id="'+data.id+'" class="btn-show-challenge">' + '<span>' + relation + '</span>' + '</td><td class="td-definition">' + data.definition + '<a href="#" data-id="' + data.id + '" class="challenge-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
+                        $('.table-challenge').append('<tr><td class="td-entity">' + ' <a href="#" data-toggle="modal" data-target="#envi-modal" data-id="' + data.id + '" class="btn-show-challenge">' + '<span>' + relation + '</span>' + '</td><td class="td-definition">' + data.definition + '<a href="#" data-id="' + data.id + '" class="challenge-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
                         popOverElem.popover('hide');
                     }
                 })
@@ -761,7 +774,7 @@
                 });
                 var threat = $('<h4 />');
                 threat.html('Threat');
-                $('.relation-challenges').append(threat, thList);
+                $('.relation-contents').append(threat, thList);
 
                 oppList.find('li').each(function (i, val) {
                     var $item = $(val);
@@ -842,7 +855,6 @@
                     }
                 });
             });
-
         });
     </script>
 }

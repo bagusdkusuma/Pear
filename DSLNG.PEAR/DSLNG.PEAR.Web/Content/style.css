@@ -2025,6 +2025,15 @@ a.see-more {
     font-weight: bold;
 }
 
+.midterm-phase-formulation h6,
+.midterm-phase-formulation h4{
+    float:none;
+    margin:0;
+}
+.formulation-stage-template,.formulation-stage-form, .definition-form {
+
+display:none;
+}
 
 .div-row-child{
     padding-right: 2px;

@@ -762,6 +762,7 @@
     <Compile Include="Controllers\BusinessPostureController.cs" />
     <Compile Include="Controllers\EconomicSummaryController.cs" />
     <Compile Include="Controllers\EnvironmentScanningController.cs" />
+    <Compile Include="Controllers\MidtermFormulationController.cs" />
     <Compile Include="Controllers\PlanningBlueprintController.cs" />
     <Compile Include="Scheduler\ScenarioScheduler.cs" />
     <Compile Include="ViewModels\BusinessPosture\DesiredStateViewModel.cs" />
@@ -1090,6 +1091,8 @@
     <Content Include="Views\OperationData\_Download.cshtml" />
     <Content Include="Views\PlanningBlueprint\BusinessPostureIdentification.cshtml" />
     <Content Include="Views\PlanningBlueprint\VoyagePlan.cshtml" />
+    <Content Include="Views\PlanningBlueprint\VoyagePlanApproval.cshtml" />
+    <Content Include="Views\PlanningBlueprint\MidtermPhaseFormulation.cshtml" />
     <Content Include="Views\Shared\_showPostureChallenge.cshtml" />
     <Content Include="Views\Shared\_showPostureConstraint.cshtml" />
     <None Include="Web.Debug.config">
@@ -1248,6 +1251,8 @@
     <Compile Include="ViewModels\KpiTarget\ConfigurationParamViewModel.cs" />
     <Compile Include="ViewModels\KpiTarget\IndexKpiTargetViewModel.cs" />
     <Compile Include="ViewModels\KpiTarget\UpdateKpiTargetViewModel.cs" />
+    <Compile Include="ViewModels\MidtermFormulation\MidtermPhaseStageViewModel.cs" />
+    <Compile Include="ViewModels\MidtermFormulation\MidtermStageDefinitionViewModel.cs" />
     <Compile Include="ViewModels\NLS\NLSViewModel.cs" />
     <Compile Include="ViewModels\OperationalData\OperationDataDetailViewModel.cs" />
     <Compile Include="ViewModels\OperationalData\OperationalDataViewModel.cs" />
@@ -1263,6 +1268,7 @@
     <Compile Include="ViewModels\OutputConfig\ScenarioResultViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\BusinessPostureViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\EnvironmentsScanningViewModel.cs" />
+    <Compile Include="ViewModels\PlanningBlueprint\MidtermFormulationViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\PlanningBlueprintViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\VoyagePlanViewModel.cs" />
     <Compile Include="ViewModels\PmsConfigDetails\CreatePmsConfigDetailsViewModel.cs" />
@@ -1353,6 +1359,7 @@
     <Folder Include="Views\BusinessPosture\" />
     <Folder Include="Views\Chart\" />
     <Folder Include="Views\CorporatePortofolio\" />
+    <Folder Include="Views\MidtermFormulation\" />
     <Folder Include="Views\Test\" />
     <Folder Include="Views\UnAuthorize\" />
   </ItemGroup>

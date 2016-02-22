@@ -144,6 +144,10 @@ using DSLNG.PEAR.Services.Responses.EnvironmentScanning;
 using DSLNG.PEAR.Web.ViewModels.EnvironmentScanning;
 using DSLNG.PEAR.Services.Requests.EnvironmentScanning;
 using DSLNG.PEAR.Services.Responses.PlanningBlueprint;
+using DSLNG.PEAR.Services.Responses.MidtermFormulation;
+using DSLNG.PEAR.Services.Requests.MidtermFormulation;
+using DSLNG.PEAR.Web.ViewModels.MidtermFormulation;
+using System.Globalization;
 namespace DSLNG.PEAR.Web.AutoMapper
 {
     public class ViewModelMappingProfile : Profile
@@ -625,6 +629,17 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetPostureConstraintResponse, PostureConstraintListViewModel>();
             Mapper.CreateMap<GetPostureConstraintResponse.DesiredState, PostureConstraintListViewModel.DesiredState>();
 
+            Mapper.CreateMap<GetMidtermFormulationResponse, MidtermFormulationViewModel>();
+            Mapper.CreateMap<GetMidtermFormulationResponse.Posture, MidtermFormulationViewModel.PostureViewModel>();
+            Mapper.CreateMap<GetMidtermFormulationResponse.DesiredState, MidtermFormulationViewModel.DesiredStateViewModel>();
+            Mapper.CreateMap<GetMidtermFormulationResponse.MidtermFormulationStage, MidtermFormulationViewModel.MidtermFormulationStageViewModel>();
+            Mapper.CreateMap<GetMidtermFormulationResponse.MidtermPhaseDescription, MidtermFormulationViewModel.MidtermPhaseDescriptionViewModel>();
+            Mapper.CreateMap<GetMidtermFormulationResponse.MidtermPhaseKeyDriver, MidtermFormulationViewModel.MidtermPhaseKeyDriverViewModel>();
+
+            Mapper.CreateMap<MidtermPhaseStageViewModel, AddStageRequest>()
+                .ForMember(d => d.StartDate, o => o.MapFrom(s => string.IsNullOrEmpty(s.StartDate) ? (DateTime?)null : DateTime.ParseExact("01/" + s.StartDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)))
+                .ForMember(d => d.EndDate, o => o.MapFrom(s => string.IsNullOrEmpty(s.StartDate) ? (DateTime?)null : DateTime.ParseExact("01/" + s.EndDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)));
+            Mapper.CreateMap<MidtermStageDefinitionViewModel, AddDefinitionRequest>();
             base.Configure();
         }
 

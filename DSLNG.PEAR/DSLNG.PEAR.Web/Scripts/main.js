@@ -2681,7 +2681,9 @@ Number.prototype.format = function (n, x) {
             }
         };
 
-        resizeTabular();
+        setTimeout(function () {
+            resizeTabular();
+        }, 500);
 
         $('.left-content-toggle').click(function () {
             setTimeout(function() {
