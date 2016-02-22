@@ -16,7 +16,7 @@
             <h6 style="background-color: #336600">Desired States</h6>
             <ol>
                 @foreach (var item in Model.ConstructionPosture.DesiredStates)
-                { 
+                {
                     <li>@item.Description</li>
                 }
             </ol>
@@ -26,7 +26,7 @@
             <h6 style="background-color: #336600">Desired States</h6>
             <ol>
                 @foreach (var item in Model.OperationPosture.DesiredStates)
-                { 
+                {
                     <li>@item.Description</li>
                 }
             </ol>
@@ -36,7 +36,7 @@
             <h6 style="background-color: #336600">Desired States</h6>
             <ol>
                 @foreach (var item in Model.DecommissioningPosture.DesiredStates)
-                { 
+                {
                     <li>@item.Description</li>
                 }
             </ol>
@@ -72,13 +72,13 @@
                         <li id="@desc.Id">@desc.Value <a class="remove-item" href="/MidtermFormulation/DeleteStageDesc"><i class="fa fa-minus"></i></a></li>
                     }
                 </ul>
-                <div class="defined-header key-driver">
+                <div class=" key-driver">
                     <div class="sub-title">
                         Key Driver
                     </div>
                     <a  data-toggle="popover" href="javascript:void(0)" class="add-definition" data-target="key-driver"><i class="fa fa-plus"></i></a>
                 </div>
-                <ul class="defined-list key-driver">
+                <ul class=" key-driver">
                     @foreach (var keyDriver in item.KeyDrivers)
                     { 
                         <li id="@keyDriver.Id">@keyDriver.Value <a class="remove-item" href="/MidtermFormulation/DeleteStageKey"><i class="fa fa-minus"></i></a></li>
@@ -161,7 +161,6 @@
         });
         $(document).on('click', '.add-midterm-stage', function (e) {
             e.preventDefault();
-            var $this = $(this);
             var $form = $(this).closest('form');
             var $trigger = $this.closest('.popover').prev('a');
             $.post($form.prop('action'), $form.serialize(), function (data) {
