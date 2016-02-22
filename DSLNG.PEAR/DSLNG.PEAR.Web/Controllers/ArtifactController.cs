@@ -988,7 +988,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "tabular":
                     {
                         var request = viewModel.MapTo<GetTabularDataRequest>();
-                        request.Rows = new List<GetTabularDataRequest.RowRequest>();
+                        /*request.Rows = new List<GetTabularDataRequest.RowRequest>();
                         foreach (var rowViewModel in viewModel.Tabular.Rows)
                         {
                             request.Rows.Add(new GetTabularDataRequest.RowRequest
@@ -1000,9 +1000,9 @@ namespace DSLNG.PEAR.Web.Controllers
                                     RangeFilter = (RangeFilter)Enum.Parse(typeof(RangeFilter), rowViewModel.RangeFilter),
                                     Start = rowViewModel.StartAfterParsed
                                 });
-                        }
+                        }*/
                         
-                        //viewModel.Tabular.MapPropertiesToInstance<GetTabularDataRequest>(request);
+                        viewModel.Tabular.MapPropertiesToInstance<GetTabularDataRequest>(request);
                         
                         var chartData = _artifactServie.GetTabularData(request);
                         previewViewModel.GraphicType = viewModel.GraphicType;

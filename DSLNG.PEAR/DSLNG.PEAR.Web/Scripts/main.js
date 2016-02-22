@@ -2506,11 +2506,11 @@ Number.prototype.format = function (n, x) {
             var toRemove = {};
 
             toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD'];
-            toRemove.daily = ['CurrentHour', 'CurrentWeek', 'CurrentYear', 'MTD', 'CurrentMonth', 'YTD', 'DTD', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+            toRemove.daily = ['CurrentHour', 'CurrentWeek', 'CurrentYear', 'MTD', 'CurrentMonth', 'YTD', 'DTD', 'SpecificMonth', 'SpecificYear', 'AllExistingYears', 'Interval'];
             ;//['CurrentHour', 'CurrentYear', 'DTD', 'YTD', 'SpecificMonth', 'SpecificYear'];
             toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD'];
-            toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificYear', 'AllExistingYears'];//['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'SpecificDay', 'SpecificYear'];
-            toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'AllExistingYears'];
+            toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificYear', 'AllExistingYears', 'Interval'];//['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'SpecificDay', 'SpecificYear'];
+            toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'AllExistingYears', 'Interval'];
             ;//['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth'];
             var originalClone = original.clone(true);
             originalClone.find('option').each(function (i, val) {
@@ -2519,15 +2519,33 @@ Number.prototype.format = function (n, x) {
                 }
             });
             context.find('.range-filter').replaceWith(originalClone);
+            debugger;
+            switch (context.find('.periode-type').val().toLowerCase().trim()) {
+                case 'daily':
+                    context.find('.datepicker').datetimepicker({
+                        format: "MM/DD/YYYY"
+                    });
+                    break;
+                case 'monthly':
+                    context.find('.datepicker').datetimepicker({
+                        format: "MM/YYYY"
+                    });
+                    break;
+                case 'yearly':
+                    context.find('.datepicker').datetimepicker({
+                        format: "YYYY"
+                    });
+                    break;
+            }
         };
 
-        //console.log(context.find('.periode-type').val());
         rangeFilterSetup(context.find('.periode-type').val().toLowerCase().trim());
         context.find('.periode-type').change(function (e) {
             e.preventDefault();
             var $this = $(this);
             rangeFilterSetup($this.val().toLowerCase().trim());
             context.find('#range-holder').removeAttr('class');
+            
         });
     };
     artifactDesigner._setupCallbacks.tabularrow.specificDate = function (context) {
@@ -2538,13 +2556,12 @@ Number.prototype.format = function (n, x) {
         });
     };
     artifactDesigner._setupCallbacks.tabularrow.rangeDatePicker = function (context) {
-        /*context.find('.datepicker').datetimepicker({
-            format: "MM/DD/YYYY"
-        });*/
+        
         context.find('.datepicker').change(function (e) {
             //console.log(this);
         });
         context.find('.periode-type').change(function (e) {
+            
             e.preventDefault();
             var $this = $(this);
             var clearValue = context.find('.datepicker').each(function (i, val) {
@@ -2622,49 +2639,6 @@ Number.prototype.format = function (n, x) {
                 artifactDesigner._setupCallbacks.tabularrow.specificDate(rowTemplate);
                 rowCount++;
             });
-        };
-        var rangeDatePicker = function (context) {
-            
-        };
-        var rangeControl = function (context) {
-            context.find('.range-filter').change(function (e) {
-                e.preventDefault();
-                var $this = $(this);
-                context.find('#range-holder').prop('class', $this.val().toLowerCase().trim());
-            });
-            var original = context.find('.range-filter').clone(true);
-            var rangeFilterSetup = function (periodeType) {
-                var toRemove = {};
-                
-                toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD'];
-                toRemove.daily = ['CurrentHour', 'CurrentWeek', 'CurrentYear', 'MTD', 'CurrentMonth', 'YTD', 'DTD', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
-                ;//['CurrentHour', 'CurrentYear', 'DTD', 'YTD', 'SpecificMonth', 'SpecificYear'];
-                toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD'];
-                toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificYear', 'AllExistingYears'];//['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'SpecificDay', 'SpecificYear'];
-                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'AllExistingYears'];
-                ;//['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth'];
-                var originalClone = original.clone(true);
-                originalClone.find('option').each(function (i, val) {
-                    if (toRemove[periodeType].indexOf(originalClone.find(val).val()) > -1) {
-                        originalClone.find(val).remove();
-                    }
-                });
-                context.find('.range-filter').replaceWith(originalClone);
-            };
-
-            //console.log(context.find('.periode-type').val());
-            rangeFilterSetup(context.find('.periode-type').val().toLowerCase().trim());
-            context.find('.periode-type').change(function (e) {
-                e.preventDefault();
-                var $this = $(this);
-                rangeFilterSetup($this.val().toLowerCase().trim());
-                context.find('#range-holder').removeAttr('class');
-            });
-
-        };
-        
-        var specificDate = function (context) {            
-            
         };
         
         addRow();
