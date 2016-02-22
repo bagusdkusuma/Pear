@@ -11,11 +11,11 @@ namespace DSLNG.PEAR.Data.Entities.Blueprint
     {
         public Challenge()
         {
-            Relation = new List<EnvironmentalScanning>();
+            Relations = new List<EnvironmentalScanning>();
         }
         [Key]
         public int Id { get; set; }
-        public IList<EnvironmentalScanning> Relation { get; set; }
+        public IList<EnvironmentalScanning> Relations { get; set; }
         public string Definition { get; set; }
         public string Type { get; set; }
         public string Category { get; set; }

@@ -32,17 +32,17 @@ namespace DSLNG.PEAR.Services
                 .Include(x => x.Weakness)
                 .Include(x => x.Strength)
                 .Include(x => x.Constraints)
-                .Include(x => x.Constraints.Select(y => y.Relation))
-                .Include(x => x.Constraints.Select(y => y.Relation.Select(z => z.ThreatHost)))
-                .Include(x => x.Constraints.Select(y => y.Relation.Select(z => z.OpportunityHost)))
-                .Include(x => x.Constraints.Select(y => y.Relation.Select(z => z.WeaknessHost)))
-                .Include(x => x.Constraints.Select(y => y.Relation.Select(z => z.StrengthHost)))
+                .Include(x => x.Constraints.Select(y => y.Relations))
+                .Include(x => x.Constraints.Select(y => y.Relations.Select(z => z.ThreatHost)))
+                .Include(x => x.Constraints.Select(y => y.Relations.Select(z => z.OpportunityHost)))
+                .Include(x => x.Constraints.Select(y => y.Relations.Select(z => z.WeaknessHost)))
+                .Include(x => x.Constraints.Select(y => y.Relations.Select(z => z.StrengthHost)))
                 .Include(x => x.Challenges)
-                .Include(x => x.Challenges.Select(y => y.Relation))
-                .Include(x => x.Challenges.Select(y => y.Relation.Select(z => z.ThreatHost)))
-                .Include(x => x.Challenges.Select(y => y.Relation.Select(z => z.OpportunityHost)))
-                .Include(x => x.Challenges.Select(y => y.Relation.Select(z => z.WeaknessHost)))
-                .Include(x => x.Challenges.Select(y => y.Relation.Select(z => z.StrengthHost)))
+                .Include(x => x.Challenges.Select(y => y.Relations))
+                .Include(x => x.Challenges.Select(y => y.Relations.Select(z => z.ThreatHost)))
+                .Include(x => x.Challenges.Select(y => y.Relations.Select(z => z.OpportunityHost)))
+                .Include(x => x.Challenges.Select(y => y.Relations.Select(z => z.WeaknessHost)))
+                .Include(x => x.Challenges.Select(y => y.Relations.Select(z => z.StrengthHost)))
                 .FirstOrDefault().MapTo<GetEnvironmentsScanningResponse>();
         }
 
@@ -269,18 +269,18 @@ namespace DSLNG.PEAR.Services
             {
                 var envistate = new EnvironmentalScanning { Id = id };
                 DataContext.EnvironmentalScannings.Attach(envistate);
-                constraint.Relation.Add(envistate);
+                constraint.Relations.Add(envistate);
             }
 
             DataContext.Constraint.Add(constraint);
             DataContext.SaveChanges();
 
             var result = DataContext.Constraint
-                .Include(x => x.Relation)
-                .Include(x => x.Relation.Select(y => y.ThreatHost))
-                .Include(x => x.Relation.Select(y => y.OpportunityHost))
-                .Include(x => x.Relation.Select(y => y.WeaknessHost))
-                .Include(x => x.Relation.Select(y => y.StrengthHost))
+                .Include(x => x.Relations)
+                .Include(x => x.Relations.Select(y => y.ThreatHost))
+                .Include(x => x.Relations.Select(y => y.OpportunityHost))
+                .Include(x => x.Relations.Select(y => y.WeaknessHost))
+                .Include(x => x.Relations.Select(y => y.StrengthHost))
                 .Where(x => x.Id == constraint.Id).FirstOrDefault();
             
             return new SaveConstraintResponse
@@ -291,11 +291,11 @@ namespace DSLNG.PEAR.Services
                 Definition = constraint.Definition,
                 Id = constraint.Id,
                 Type = constraint.Type,
-                RelationIds = constraint.Relation.Select(x => x.Id).ToArray(),
-                ThreatIds = result.Relation.Where(x => x.ThreatHost != null).Select(y => y.ThreatHost.Id).ToArray(),
-                OpportunityIds = result.Relation.Where(x => x.OpportunityHost != null).Select(y => y.OpportunityHost.Id).ToArray(),
-                WeaknessIds = result.Relation.Where(x => x.WeaknessHost != null).Select(y => y.WeaknessHost.Id).ToArray(),
-                StrengthIds = result.Relation.Where(x => x.StrengthHost != null).Select(y => y.StrengthHost.Id).ToArray(),
+                RelationIds = constraint.Relations.Select(x => x.Id).ToArray(),
+                ThreatIds = result.Relations.Where(x => x.ThreatHost != null).Select(y => y.ThreatHost.Id).ToArray(),
+                OpportunityIds = result.Relations.Where(x => x.OpportunityHost != null).Select(y => y.OpportunityHost.Id).ToArray(),
+                WeaknessIds = result.Relations.Where(x => x.WeaknessHost != null).Select(y => y.WeaknessHost.Id).ToArray(),
+                StrengthIds = result.Relations.Where(x => x.StrengthHost != null).Select(y => y.StrengthHost.Id).ToArray(),
 
             };
 
@@ -310,17 +310,17 @@ namespace DSLNG.PEAR.Services
             {
                 var envistate = new EnvironmentalScanning { Id = id };
                 DataContext.EnvironmentalScannings.Attach(envistate);
-                challenge.Relation.Add(envistate);
+                challenge.Relations.Add(envistate);
             }
             DataContext.Challenges.Add(challenge);
             DataContext.SaveChanges();
 
             var result = DataContext.Challenges.Where(x => x.Id == challenge.Id)
-                .Include(x => x.Relation)
-                .Include(x => x.Relation.Select(y => y.ThreatHost))
-                .Include(x => x.Relation.Select(y => y.OpportunityHost))
-                .Include(x => x.Relation.Select(y => y.WeaknessHost))
-                .Include(x => x.Relation.Select(y => y.StrengthHost)).FirstOrDefault();
+                .Include(x => x.Relations)
+                .Include(x => x.Relations.Select(y => y.ThreatHost))
+                .Include(x => x.Relations.Select(y => y.OpportunityHost))
+                .Include(x => x.Relations.Select(y => y.WeaknessHost))
+                .Include(x => x.Relations.Select(y => y.StrengthHost)).FirstOrDefault();
 
             return new SaveChallengeResponse
             {
@@ -330,18 +330,36 @@ namespace DSLNG.PEAR.Services
                 Definition = result.Definition,
                 Id = result.Id,
                 Type = result.Type,
-                RelationIds = result.Relation.Select(x => x.Id).ToArray(),
-                ThreatIds = result.Relation.Where(x => x.ThreatHost != null).Select(y => y.ThreatHost.Id).ToArray(),
-                OpportunityIds = result.Relation.Where(x => x.OpportunityHost != null).Select(y => y.OpportunityHost.Id).ToArray(),
-                WeaknessIds = result.Relation.Where(x => x.WeaknessHost != null).Select(y => y.WeaknessHost.Id).ToArray(),
-                StrengthIds = result.Relation.Where(x => x.StrengthHost != null).Select(y => y.StrengthHost.Id).ToArray(),
+                RelationIds = result.Relations.Select(x => x.Id).ToArray(),
+                ThreatIds = result.Relations.Where(x => x.ThreatHost != null).Select(y => y.ThreatHost.Id).ToArray(),
+                OpportunityIds = result.Relations.Where(x => x.OpportunityHost != null).Select(y => y.OpportunityHost.Id).ToArray(),
+                WeaknessIds = result.Relations.Where(x => x.WeaknessHost != null).Select(y => y.WeaknessHost.Id).ToArray(),
+                StrengthIds = result.Relations.Where(x => x.StrengthHost != null).Select(y => y.StrengthHost.Id).ToArray(),
             };
         }
 
 
         public GetConstraintResponse GetConstraint(GetConstraintRequest request)
         {
-            return DataContext.Constraint.Where(x => x.Id == request.Id).Include(x => x.EnvironmentScanning).FirstOrDefault().MapTo<GetConstraintResponse>();
+            return DataContext.Constraint.Where(x => x.Id == request.Id)
+                .Include(x => x.Relations)
+                .Include(x => x.Relations.Select(y => y.ThreatHost))
+                .Include(x => x.Relations.Select(y => y.OpportunityHost))
+                .Include(x => x.Relations.Select(y => y.WeaknessHost))
+                .Include(x => x.Relations.Select(y => y.StrengthHost))
+                .FirstOrDefault().MapTo<GetConstraintResponse>();
+        }
+
+
+        public GetChallengeResponse GetChallenge(GetChallengeRequest request)
+        {
+            return DataContext.Challenges.Where(x => x.Id == request.Id)
+                .Include(x => x.Relations)
+                .Include(x => x.Relations.Select(y => y.ThreatHost))
+                .Include(x => x.Relations.Select(y => y.OpportunityHost))
+                .Include(x => x.Relations.Select(y => y.WeaknessHost))
+                .Include(x => x.Relations.Select(y => y.StrengthHost))
+                .FirstOrDefault().MapTo<GetChallengeResponse>();
         }
 
 

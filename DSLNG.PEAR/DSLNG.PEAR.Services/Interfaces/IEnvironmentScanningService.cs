@@ -22,6 +22,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         SaveChallengeResponse SaveChallenge(SaveChallengeRequest request);
         SubmitEnvironmentsScanningResponse SubmitEnvironmentsScanning(int id);
         GetConstraintResponse GetConstraint(GetConstraintRequest request);
+        GetChallengeResponse GetChallenge(GetChallengeRequest request);
         
     }
 }

@@ -14,5 +14,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         SavePostureConstraintResponse SavePostureConstraint(SavePostureConstraintRequest request);
         DeletePostureConstraintResponse DeletePostureConstraint(DeletePostureConstraintRequest request);
         SubmitBusinessPostureResponse SubmitBusinessPosture(int id);
+        GetPostureChallengeResponse GetPostureChallenge(GetPostureChallengeRequest request);
+        GetPostureConstraintResponse GetPostureConstraint(GetPostureConstraintRequest requet);
     }
 }

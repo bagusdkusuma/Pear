@@ -140,11 +140,20 @@ namespace DSLNG.PEAR.Web.Controllers
             
         }
 
-        //[HttpPost]
-        //public PartialViewResult ShowConstraint(int id)
-        //{
-        //    var request = _environmentScanningService.GetConstraint(new GetConstraintRequest { Id = id });
-             
-        //}
+        [HttpPost]
+        public PartialViewResult ShowConstraint(int id)
+        {
+            var viewModel = _environmentScanningService.GetConstraint(new GetConstraintRequest { Id = id }).MapTo<GetConstraintViewModel>();
+
+            return PartialView("_showConstraint", viewModel);
+        }
+
+
+       [HttpPost]
+        public PartialViewResult ShowChallenge(int id)
+        {
+            var viewModel = _environmentScanningService.GetChallenge(new GetChallengeRequest { Id = id }).MapTo<GetChallengeViewModel>();
+            return PartialView("_showChallenge", viewModel);
+        }
 	}
 }

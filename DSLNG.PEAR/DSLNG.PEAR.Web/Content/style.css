@@ -992,7 +992,7 @@ table.text-center th {
 }
 
 .ajax-loading-dialog {
-    //position: absolute;
+    /*//position: absolute;*/
     margin: auto;
     top: 0px;
     left: 0px;
@@ -1821,7 +1821,7 @@ a.see-more {
 .popover-to-content {
     display:none;
 }
-.business-posture .popover {
+.business-posture .popover, .environment-scanning {
     z-index:1040;
 }
 
@@ -1837,7 +1837,6 @@ a.see-more {
 .list-block h4{
     margin: 0px;
     border-bottom: 1px solid white;
-    margin: 
 }
 
 .sub-group h6{
@@ -1934,7 +1933,7 @@ a.see-more {
 
 .col-envi {
     text-align: center;
-    padding: 0px;
+    padding: 4px 0px 4px 0px;
 }
 .col-envi a{
     float: right;
@@ -1944,15 +1943,19 @@ a.see-more {
     padding: 0px;
 }
 
-.row-constraint h4, .row-challenges h4 {
+
+.row-constraint h6, .row-challenges h6 {
+    height: 100%;
     text-align: center;
     margin: 0px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    /*padding-left: 528px;*/
+    width: 1059px;
+
 }
 
 .row-constraint a, .row-challenges a, .challenge-remove-button, .constraint-remove-button{
     float: right;
+    margin-top: 5px;
 }
 
 .td-entity {
@@ -1971,6 +1974,7 @@ a.see-more {
     color: white;
     border-right: 1px solid white;
     border-bottom: 1px solid white;
+    word-break: break-all;
 }
 
 .remove-button,.envi-remove-button{
@@ -1979,11 +1983,18 @@ a.see-more {
 
 
 .div-envi {
-    padding-right:0px;
+    padding-left: 0px;
+    padding-right:2px;
     word-break: break-all;
 }
 
-.div-envi li{
+
+.list-group{
+    list-style: none;
+    padding-left: 10px;
+
+}
+.list-group li{
     list-style-type : decimal;
 }
 
@@ -2022,4 +2033,24 @@ a.see-more {
 .formulation-stage-template,.formulation-stage-form, .definition-form {
 
 display:none;
+}
+
+.div-row-child{
+    padding-right: 2px;
+}
+
+.cp-list li, .op-list li, .rp-list li{
+    list-style:decimal;
+}
+
+.list-block, .div-row-child{
+    word-break: break-all;
+}
+
+.list-checkbox{
+    list-style: none;
+}
+
+li > input.choose-list{
+    margin-right: 5px;
 }

@@ -21,7 +21,9 @@ namespace DSLNG.PEAR.Services
                 .Include(x => x.PlanningBlueprint)
                 .Include(x => x.Postures.Select(y => y.DesiredStates))
                 .Include(x => x.Postures.Select(y => y.PostureChallenges))
+                .Include(x => x.Postures.Select(y => y.PostureChallenges.Select(z => z.DesiredStates)))
                 .Include(x => x.Postures.Select(y => y.PostureConstraints))
+                .Include(x => x.Postures.Select(y => y.PostureConstraints.Select(z => z.DesiredStates)))
                 .FirstOrDefault(x => x.Id == request.Id);
             return response.MapTo<GetBusinessPostureResponse>();
         }
@@ -242,7 +244,6 @@ namespace DSLNG.PEAR.Services
             }
         }
 
-
         public SubmitBusinessPostureResponse SubmitBusinessPosture(int id)
         {
             try
@@ -256,13 +257,30 @@ namespace DSLNG.PEAR.Services
                     Message = "You have been sucessfully sabmit the item"
                 };
             }
-            catch {
+            catch
+            {
                 return new SubmitBusinessPostureResponse
                 {
                     IsSuccess = false,
                     Message = "An error occured, please contact the adminstrator for further information"
                 };
             }
+        }
+         public GetPostureChallengeResponse GetPostureChallenge(GetPostureChallengeRequest request)
+        {
+            return DataContext.PostureChalleges.Where(x => x.Id == request.Id)
+                .Include(x => x.DesiredStates)
+                .Include(x => x.DesiredStates.Select(y => y.Posture))
+                .FirstOrDefault().MapTo<GetPostureChallengeResponse>();
+        }
+
+
+        public GetPostureConstraintResponse GetPostureConstraint(GetPostureConstraintRequest requet)
+        {
+            return DataContext.PostureConstraints.Where(x => x.Id == requet.Id)
+                .Include(x => x.DesiredStates)
+                .Include(x => x.DesiredStates.Select(y => y.Posture))
+                .FirstOrDefault().MapTo<GetPostureConstraintResponse>();
         }
     }
 }

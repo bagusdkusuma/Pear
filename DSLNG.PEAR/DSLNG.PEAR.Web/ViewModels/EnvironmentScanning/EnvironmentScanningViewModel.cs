@@ -113,7 +113,52 @@ namespace DSLNG.PEAR.Web.ViewModels.EnvironmentScanning
             public int[] WeaknessIds { get; set; }
             public int[] StrengthIds { get; set; }
 
+        }       
+
+    }
+
+
+    public class GetConstraintViewModel
+    {
+        public GetConstraintViewModel()
+        {
+            Relations = new List<Environmental>();
         }
 
+        public int Id { get; set; }
+        public List<Environmental> Relations { get; set; }
+        public List<Environmental> ThreatIds { get; set; }
+        public List<Environmental> Opportunitys { get; set; }
+        public List<Environmental> WeaknessIds { get; set; }
+        public List<Environmental> StrengthIds { get; set; }
+
+        public class Environmental
+        {
+            public int Id { get; set; }
+            public string Desc { get; set; }
+
+        }
+    }
+
+
+    public class GetChallengeViewModel
+    {
+        public GetChallengeViewModel()
+        {
+            Relations = new List<Environmental>();
+        }
+        public int Id { get; set; }
+        public List<Environmental> Relations { get; set; }
+        public List<Environmental> ThreatIds { get; set; }
+        public List<Environmental> Opportunitys { get; set; }
+        public List<Environmental> WeaknessIds { get; set; }
+        public List<Environmental> StrengthIds { get; set; }
+
+
+        public class Environmental
+        {
+            public int Id { get; set; }
+            public string Desc { get; set; }
+        }
     }
 }

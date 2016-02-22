@@ -100,6 +100,8 @@
     <Compile Include="Requests\BusinessPosture\DeletePostureChallengeRequest.cs" />
     <Compile Include="Requests\BusinessPosture\DeletePostureConstraintRequest.cs" />
     <Compile Include="Requests\BusinessPosture\GetBusinessPostureRequest.cs" />
+    <Compile Include="Requests\BusinessPosture\GetPostureChallengeRequest.cs" />
+    <Compile Include="Requests\BusinessPosture\GetPostureConstraintRequest.cs" />
     <Compile Include="Requests\BusinessPosture\SaveDesiredStateRequest.cs" />
     <Compile Include="Requests\BusinessPosture\SavePostureChallengeRequest.cs" />
     <Compile Include="Requests\BusinessPosture\SavePostureConstraintRequest.cs" />
@@ -107,6 +109,7 @@
     <Compile Include="Requests\EnvironmentScanning\DeleteChallengeRequest.cs" />
     <Compile Include="Requests\EnvironmentScanning\DeleteConstraintRequest.cs" />
     <Compile Include="Requests\EnvironmentScanning\DeleteEnvironmentScanningRequest.cs" />
+    <Compile Include="Requests\EnvironmentScanning\GetChallengeRequest.cs" />
     <Compile Include="Requests\EnvironmentScanning\GetConstraintRequest.cs" />
     <Compile Include="Requests\EnvironmentScanning\GetEnvironmentsScanningRequest.cs" />
     <Compile Include="Requests\EnvironmentScanning\SaveChallengeRequest.cs" />
@@ -130,7 +133,9 @@
     <Compile Include="Responses\BusinessPosture\DeleteDesiredStateResponse.cs" />
     <Compile Include="Responses\BusinessPosture\DeletePostureChallengeResponse.cs" />
     <Compile Include="Responses\BusinessPosture\DeletePostureConstraintResponse.cs" />
+    <Compile Include="Responses\BusinessPosture\GetPostureConstraintResponse.cs" />
     <Compile Include="Responses\BusinessPosture\GetBusinessPostureResponse.cs" />
+    <Compile Include="Responses\BusinessPosture\GetPostureChallengeResponse.cs" />
     <Compile Include="Responses\BusinessPosture\SaveDesiredStateResponse.cs" />
     <Compile Include="Responses\BusinessPosture\SavePostureChallengeResponse.cs" />
     <Compile Include="Responses\BusinessPosture\SavePostureConstraintResponse.cs" />
@@ -140,6 +145,7 @@
     <Compile Include="Responses\EnvironmentScanning\DeleteChallengeResponse.cs" />
     <Compile Include="Responses\EnvironmentScanning\DeleteConstraintResponse.cs" />
     <Compile Include="Responses\EnvironmentScanning\DeleteEnvironmentScanningResponse.cs" />
+    <Compile Include="Responses\EnvironmentScanning\GetChallengeResponse.cs" />
     <Compile Include="Responses\EnvironmentScanning\GetConstraintResponse.cs" />
     <Compile Include="Responses\EnvironmentScanning\GetDropdownConstraintResponse.cs" />
     <Compile Include="Responses\EnvironmentScanning\GetEnvironmentsScanningResponse.cs" />

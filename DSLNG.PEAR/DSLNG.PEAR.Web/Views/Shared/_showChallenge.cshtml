@@ -1,0 +1,43 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.EnvironmentScanning.GetChallengeViewModel
+
+<div class="color-white">
+    <h4>Threat</h4>
+    @{
+        <ul>
+            @foreach (var item in Model.ThreatIds)
+            {
+                <li>@item.Desc</li>
+            }
+        </ul>
+    }
+
+    <h4>Opportunity</h4>
+    @{
+        <ul>
+            @foreach (var item in Model.Opportunitys)
+            {
+                <li>@item.Desc</li>
+            }
+        </ul>
+    }
+
+    <h4>Weakness</h4>
+    @{
+        <ul>
+            @foreach (var item in Model.WeaknessIds)
+            {
+                <li>@item.Desc</li>
+            }
+        </ul>
+    }
+
+    <h4>Strength</h4>
+    @{
+        <ul>
+            @foreach (var item in Model.StrengthIds)
+            {
+                <li>@item.Desc</li>
+            }
+        </ul>
+    }
+</div>

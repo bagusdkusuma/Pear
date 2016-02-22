@@ -620,6 +620,14 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetVoyagePlanResponse.DesiredState, VoyagePlanViewModel.DesiredStateViewModel>();
             Mapper.CreateMap<GetVoyagePlanResponse.PostureChallenge, VoyagePlanViewModel.PostureChallengeViewModel>();
             Mapper.CreateMap<GetVoyagePlanResponse.PostureConstraint, VoyagePlanViewModel.PostureConstraintViewModel>();
+            Mapper.CreateMap<GetConstraintResponse, GetConstraintViewModel>();
+            Mapper.CreateMap<GetConstraintResponse.Environmental, GetConstraintViewModel.Environmental>();
+            Mapper.CreateMap<GetChallengeResponse, GetChallengeViewModel>();
+            Mapper.CreateMap<GetChallengeResponse.Environmental, GetChallengeViewModel.Environmental>();
+            Mapper.CreateMap<GetPostureChallengeResponse, PostureChalengeListViewModel>();
+            Mapper.CreateMap<GetPostureChallengeResponse.DesiredState, PostureChalengeListViewModel.DesiredState>();
+            Mapper.CreateMap<GetPostureConstraintResponse, PostureConstraintListViewModel>();
+            Mapper.CreateMap<GetPostureConstraintResponse.DesiredState, PostureConstraintListViewModel.DesiredState>();
 
             Mapper.CreateMap<GetMidtermFormulationResponse, MidtermFormulationViewModel>();
             Mapper.CreateMap<GetMidtermFormulationResponse.Posture, MidtermFormulationViewModel.PostureViewModel>();

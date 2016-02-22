@@ -980,6 +980,8 @@
     <Content Include="Views\AssumptionData\Input.cshtml" />
     <Content Include="Views\EconomicSummary\Config.cshtml" />
     <Content Include="Views\AssumptionData\_DetailPartial.cshtml" />
+    <Content Include="Views\Shared\_showConstraint.cshtml" />
+    <Content Include="Views\Shared\_showChallenge.cshtml" />
     <None Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\SpeedometerChart\_Edit.cshtml" />
     <Content Include="Views\Tabular\_Create.cshtml" />
@@ -1091,6 +1093,8 @@
     <Content Include="Views\PlanningBlueprint\VoyagePlan.cshtml" />
     <Content Include="Views\PlanningBlueprint\VoyagePlanApproval.cshtml" />
     <Content Include="Views\PlanningBlueprint\MidtermPhaseFormulation.cshtml" />
+    <Content Include="Views\Shared\_showPostureChallenge.cshtml" />
+    <Content Include="Views\Shared\_showPostureConstraint.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
