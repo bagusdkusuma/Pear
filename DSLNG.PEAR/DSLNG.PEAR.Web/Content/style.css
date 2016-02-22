@@ -2054,3 +2054,100 @@ display:none;
 li > input.choose-list{
     margin-right: 5px;
 }
+
+
+.midterm-phase-formulation h4, .midterm-phase-formulation h6
+{
+    text-align: center;
+    padding: 10px 0px 10px 0px;
+}
+
+.midterm-phase-formulation .col-md-12{
+    padding: 0px;
+}
+
+.midterm-phase-formulation .col-md-12 h4{
+    margin-bottom: 5px;
+}
+
+.midterm-phase-formulation .col-md-4{
+    padding: 0px;
+}
+
+
+.formulation-stages{
+    color: white;
+}
+
+.formulation-stage .title{
+    text-align: center;
+    float: none;
+}
+
+
+.formulation-stage{
+    padding: 0px;
+    border: 1px solid white;
+}
+
+.formulation-stage .date-range{
+    list-style: none;
+    padding: 0px;
+}
+
+.formulation-stage .date-range li{
+    display:inline-block;
+    border: 1px solid white;
+    float: left;
+    width: 50%;
+    text-align: center;
+}
+
+.formulation-stage .defined-header{
+    float: none;
+}
+
+.formulation-stage .defined-header{
+    margin-top:40px;
+    margin-left:0px;
+    text-align: left;
+    width: 100%;
+}
+
+.formulation-stage .defined-header a{
+    position: absolute;
+    top: 70px;
+    right: 0px;
+}
+
+.formulation-stage .defined-list{
+    float: none;
+    text-align: left;
+    width: 100%;
+    /*padding-left: 0px;*/
+    margin-left: 0px;
+
+}
+
+.formulation-stage .defined-list li{
+    list-style: decimal;
+}
+
+.formulation-stage .key-driver{
+    margin-top: 10px;
+}
+
+.formulation-stage .key-driver a{
+    position: relative;
+    float: right;
+}
+
+.formulation-stage .defined-list .key-driver{
+    margin-top: 40px;
+}
+
+.formulation-stage .key-driver{
+    margin-top: 20px;
+    list-style: decimal;
+}
+
