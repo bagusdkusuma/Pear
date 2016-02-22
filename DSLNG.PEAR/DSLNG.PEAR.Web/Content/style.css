@@ -1948,6 +1948,7 @@ a.see-more {
     text-align: center;
     margin: 0px;
     padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .row-constraint a, .row-challenges a, .challenge-remove-button, .constraint-remove-button{
@@ -1979,6 +1980,7 @@ a.see-more {
 
 .div-envi {
     padding-right:0px;
+    word-break: break-all;
 }
 
 .div-envi li{
@@ -1997,6 +1999,27 @@ a.see-more {
     color: black;
 }
 
-.list-li{
-    height: 26px;
+.voyage-plan{
+    color:white;
+}
+
+.voyage-plan h3{
+    font-size: 14px;
+}
+
+.voyage-plan h2{
+    font-size: 16px;
+    text-align: center;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.midterm-phase-formulation h6,
+.midterm-phase-formulation h4{
+    float:none;
+    margin:0;
+}
+.formulation-stage-template,.formulation-stage-form, .definition-form {
+
+display:none;
 }

@@ -42,6 +42,10 @@ namespace DSLNG.PEAR.Services.Responses.EnvironmentScanning
             public string Definition { get; set; }
             public string Type { get; set; }
             public string Category { get; set; }
+            public int[] ThreatIds { get; set; }
+            public int[] OpportunityIds { get; set; }
+            public int[] WeaknessIds { get; set; }
+            public int[] StrengthIds { get; set; }
         }
 
         public class Challenge
@@ -51,6 +55,10 @@ namespace DSLNG.PEAR.Services.Responses.EnvironmentScanning
             public string Definition { get; set; }
             public string Type { get; set; }
             public string Category { get; set; }
+            public int[] ThreatIds { get; set; }
+            public int[] OpportunityIds { get; set; }
+            public int[] WeaknessIds { get; set; }
+            public int[] StrengthIds { get; set; }
         }
     }
 }

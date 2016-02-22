@@ -861,7 +861,7 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-        public GetCartesianChartDataResponse GetChartData(GetCartesianChartDataRequest request)
+        public GetCartesianChartDataResponse GetChartData(GetCartesianChartDataRequest request, bool multiaxisAsOrigin = false)
         {
             var response = new GetCartesianChartDataResponse();
             IList<DateTime> dateTimePeriodes = new List<DateTime>();
@@ -889,6 +889,12 @@ namespace DSLNG.PEAR.Services
                     seriesType = "multi-stack";
                 }
             }
+
+            //workaround for bar multiaxis bug : multiple stacks
+            if (multiaxisAsOrigin = true && request.GraphicType == "bar" && seriesType == "multi-stack") {
+                seriesType = "multi-stacks-grouped";
+            }
+
             string newTimeInformation;
             IList<DateTime> newDateTimePeriodes;
             switch (request.ValueAxis)

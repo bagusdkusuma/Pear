@@ -91,7 +91,9 @@
     <Compile Include="HighlightService.cs" />
     <Compile Include="Interfaces\IBusinessPostureIdentificationService.cs" />
     <Compile Include="Interfaces\IEnvironmentScanningService.cs" />
+    <Compile Include="Interfaces\IMidtermFormulationService.cs" />
     <Compile Include="Interfaces\IPlanningBlueprintService.cs" />
+    <Compile Include="MidtermFormulationService.cs" />
     <Compile Include="OperationDataService.cs" />
     <Compile Include="PlanningBlueprintService.cs" />
     <Compile Include="Requests\BusinessPosture\DeleteDesiredStateRequest.cs" />
@@ -105,6 +107,7 @@
     <Compile Include="Requests\EnvironmentScanning\DeleteChallengeRequest.cs" />
     <Compile Include="Requests\EnvironmentScanning\DeleteConstraintRequest.cs" />
     <Compile Include="Requests\EnvironmentScanning\DeleteEnvironmentScanningRequest.cs" />
+    <Compile Include="Requests\EnvironmentScanning\GetConstraintRequest.cs" />
     <Compile Include="Requests\EnvironmentScanning\GetEnvironmentsScanningRequest.cs" />
     <Compile Include="Requests\EnvironmentScanning\SaveChallengeRequest.cs" />
     <Compile Include="Requests\EnvironmentScanning\SaveConstraintRequest.cs" />
@@ -113,6 +116,8 @@
     <Compile Include="Requests\HighlightGroup\DeleteHighlightGroupRequest.cs" />
     <Compile Include="Requests\HighlightOrder\GetStaticHighlightOrdersRequest.cs" />
     <Compile Include="Requests\HighlightOrder\SaveStaticHighlightOrderRequest.cs" />
+    <Compile Include="Requests\MidtermFormulation\AddDefinitionRequest.cs" />
+    <Compile Include="Requests\MidtermFormulation\AddStageRequest.cs" />
     <Compile Include="Requests\OperationalData\GetOperationDataConfigurationRequest.cs" />
     <Compile Include="Requests\OperationalData\GetOperationDataRequestByValue.cs" />
     <Compile Include="Requests\OperationalData\UpdateOperationDataRequest.cs" />
@@ -135,6 +140,7 @@
     <Compile Include="Responses\EnvironmentScanning\DeleteChallengeResponse.cs" />
     <Compile Include="Responses\EnvironmentScanning\DeleteConstraintResponse.cs" />
     <Compile Include="Responses\EnvironmentScanning\DeleteEnvironmentScanningResponse.cs" />
+    <Compile Include="Responses\EnvironmentScanning\GetConstraintResponse.cs" />
     <Compile Include="Responses\EnvironmentScanning\GetDropdownConstraintResponse.cs" />
     <Compile Include="Responses\EnvironmentScanning\GetEnvironmentsScanningResponse.cs" />
     <Compile Include="Responses\EnvironmentScanning\SaveChallengeResponse.cs" />
@@ -146,6 +152,9 @@
     <Compile Include="Responses\HighlightOrder\GetStaticHighlightOrdersResponse.cs" />
     <Compile Include="Responses\HighlightOrder\SaveStaticHighlightOrderResponse.cs" />
     <Compile Include="Responses\Kpi\GetKpiDetailResponse.cs" />
+    <Compile Include="Responses\MidtermFormulation\AddDefinitionResponse.cs" />
+    <Compile Include="Responses\MidtermFormulation\AddStageResponse.cs" />
+    <Compile Include="Responses\MidtermFormulation\GetMidtermFormulationResponse.cs" />
     <Compile Include="Responses\OperationalData\GetOperationDataConfigurationResponse.cs" />
     <Compile Include="Responses\OperationalData\GetOperationalDataDetailResponse.cs" />
     <Compile Include="Requests\OperationalData\GetOperationalDataDetailRequest.cs" />

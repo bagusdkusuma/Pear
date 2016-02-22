@@ -20,13 +20,16 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IPlanningBlueprintService _planningBlueprintService;
         private readonly IEnvironmentScanningService _environmentScanningService;
         private readonly IBusinessPostureIdentificationService _businessPostureIdentification;
+        private readonly IMidtermFormulationService _midtermFormulationService;
         public PlanningBlueprintController(IPlanningBlueprintService planningBlueprintService,
             IBusinessPostureIdentificationService businessPostureIdentification,
-            IEnvironmentScanningService environmentScanningService)
+            IEnvironmentScanningService environmentScanningService,
+            IMidtermFormulationService midtermFormulationService)
         {
             _planningBlueprintService = planningBlueprintService;
             _businessPostureIdentification = businessPostureIdentification;
             _environmentScanningService = environmentScanningService;
+            _midtermFormulationService = midtermFormulationService;
         }
 
         public ActionResult Index()
@@ -139,6 +142,10 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult VoyagePlanApproval() {
             return View();
+        }
+
+        public ActionResult MidtermPhaseFormulation(int id) {
+            return View(_midtermFormulationService.Get(id).MapTo<MidtermFormulationViewModel>());
         }
     }
 }

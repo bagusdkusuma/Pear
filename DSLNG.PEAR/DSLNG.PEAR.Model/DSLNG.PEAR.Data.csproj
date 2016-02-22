@@ -80,6 +80,13 @@
     <Compile Include="Entities\Blueprint\Constraint.cs" />
     <Compile Include="Entities\Blueprint\EnvironmentalScanning.cs" />
     <Compile Include="Entities\Blueprint\EnvironmentsScanning.cs" />
+    <Compile Include="Entities\Blueprint\MidtermPhaseDescription.cs" />
+    <Compile Include="Entities\Blueprint\MidtermPhaseFormulation.cs" />
+    <Compile Include="Entities\Blueprint\MidtermPhaseFormulationStage.cs" />
+    <Compile Include="Entities\Blueprint\MidtermPhaseKeyDriver.cs" />
+    <Compile Include="Entities\Blueprint\MidtermStrategyPlanning.cs" />
+    <Compile Include="Entities\Blueprint\MidtermStrategicPlanning.cs" />
+    <Compile Include="Entities\Blueprint\MidtermStrategicPlanningObjective.cs" />
     <Compile Include="Entities\Blueprint\PlanningBlueprint.cs" />
     <Compile Include="Entities\Blueprint\Posture.cs" />
     <Compile Include="Entities\Blueprint\PostureChallenge.cs" />

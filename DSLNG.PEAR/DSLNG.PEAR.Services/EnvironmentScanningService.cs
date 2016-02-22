@@ -32,7 +32,17 @@ namespace DSLNG.PEAR.Services
                 .Include(x => x.Weakness)
                 .Include(x => x.Strength)
                 .Include(x => x.Constraints)
+                .Include(x => x.Constraints.Select(y => y.Relation))
+                .Include(x => x.Constraints.Select(y => y.Relation.Select(z => z.ThreatHost)))
+                .Include(x => x.Constraints.Select(y => y.Relation.Select(z => z.OpportunityHost)))
+                .Include(x => x.Constraints.Select(y => y.Relation.Select(z => z.WeaknessHost)))
+                .Include(x => x.Constraints.Select(y => y.Relation.Select(z => z.StrengthHost)))
                 .Include(x => x.Challenges)
+                .Include(x => x.Challenges.Select(y => y.Relation))
+                .Include(x => x.Challenges.Select(y => y.Relation.Select(z => z.ThreatHost)))
+                .Include(x => x.Challenges.Select(y => y.Relation.Select(z => z.OpportunityHost)))
+                .Include(x => x.Challenges.Select(y => y.Relation.Select(z => z.WeaknessHost)))
+                .Include(x => x.Challenges.Select(y => y.Relation.Select(z => z.StrengthHost)))
                 .FirstOrDefault().MapTo<GetEnvironmentsScanningResponse>();
         }
 
@@ -255,10 +265,39 @@ namespace DSLNG.PEAR.Services
         {
             var constraint = request.MapTo<Constraint>();
             constraint.EnvironmentScanning = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EnviId).FirstOrDefault();
+            foreach (var id in request.RelationIds)
+            {
+                var envistate = new EnvironmentalScanning { Id = id };
+                DataContext.EnvironmentalScannings.Attach(envistate);
+                constraint.Relation.Add(envistate);
+            }
+
             DataContext.Constraint.Add(constraint);
             DataContext.SaveChanges();
 
-            return DataContext.Constraint.Where(x => x.Id == constraint.Id).FirstOrDefault().MapTo<SaveConstraintResponse>();
+            var result = DataContext.Constraint
+                .Include(x => x.Relation)
+                .Include(x => x.Relation.Select(y => y.ThreatHost))
+                .Include(x => x.Relation.Select(y => y.OpportunityHost))
+                .Include(x => x.Relation.Select(y => y.WeaknessHost))
+                .Include(x => x.Relation.Select(y => y.StrengthHost))
+                .Where(x => x.Id == constraint.Id).FirstOrDefault();
+            
+            return new SaveConstraintResponse
+            {
+                IsSuccess = true,
+                Message = "Constraint has been saved successfully",
+                Category = constraint.Category,
+                Definition = constraint.Definition,
+                Id = constraint.Id,
+                Type = constraint.Type,
+                RelationIds = constraint.Relation.Select(x => x.Id).ToArray(),
+                ThreatIds = result.Relation.Where(x => x.ThreatHost != null).Select(y => y.ThreatHost.Id).ToArray(),
+                OpportunityIds = result.Relation.Where(x => x.OpportunityHost != null).Select(y => y.OpportunityHost.Id).ToArray(),
+                WeaknessIds = result.Relation.Where(x => x.WeaknessHost != null).Select(y => y.WeaknessHost.Id).ToArray(),
+                StrengthIds = result.Relation.Where(x => x.StrengthHost != null).Select(y => y.StrengthHost.Id).ToArray(),
+
+            };
 
         }
 
@@ -267,10 +306,42 @@ namespace DSLNG.PEAR.Services
         {
             var challenge = request.MapTo<Challenge>();
             challenge.EnvironmentScanning = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EnviId).FirstOrDefault();
+            foreach(var id in request.RelationIds)
+            {
+                var envistate = new EnvironmentalScanning { Id = id };
+                DataContext.EnvironmentalScannings.Attach(envistate);
+                challenge.Relation.Add(envistate);
+            }
             DataContext.Challenges.Add(challenge);
             DataContext.SaveChanges();
 
-            return DataContext.Challenges.Where(x => x.Id == challenge.Id).FirstOrDefault().MapTo<SaveChallengeResponse>();
+            var result = DataContext.Challenges.Where(x => x.Id == challenge.Id)
+                .Include(x => x.Relation)
+                .Include(x => x.Relation.Select(y => y.ThreatHost))
+                .Include(x => x.Relation.Select(y => y.OpportunityHost))
+                .Include(x => x.Relation.Select(y => y.WeaknessHost))
+                .Include(x => x.Relation.Select(y => y.StrengthHost)).FirstOrDefault();
+
+            return new SaveChallengeResponse
+            {
+                IsSuccess = true,
+                Message = "Challenge has been saved successfully",
+                Category = result.Category,
+                Definition = result.Definition,
+                Id = result.Id,
+                Type = result.Type,
+                RelationIds = result.Relation.Select(x => x.Id).ToArray(),
+                ThreatIds = result.Relation.Where(x => x.ThreatHost != null).Select(y => y.ThreatHost.Id).ToArray(),
+                OpportunityIds = result.Relation.Where(x => x.OpportunityHost != null).Select(y => y.OpportunityHost.Id).ToArray(),
+                WeaknessIds = result.Relation.Where(x => x.WeaknessHost != null).Select(y => y.WeaknessHost.Id).ToArray(),
+                StrengthIds = result.Relation.Where(x => x.StrengthHost != null).Select(y => y.StrengthHost.Id).ToArray(),
+            };
+        }
+
+
+        public GetConstraintResponse GetConstraint(GetConstraintRequest request)
+        {
+            return DataContext.Constraint.Where(x => x.Id == request.Id).Include(x => x.EnvironmentScanning).FirstOrDefault().MapTo<GetConstraintResponse>();
         }
 
 

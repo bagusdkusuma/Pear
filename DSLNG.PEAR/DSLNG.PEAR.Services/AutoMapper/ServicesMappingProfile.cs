@@ -94,6 +94,8 @@ using DSLNG.PEAR.Services.Responses.BusinessPosture;
 using DSLNG.PEAR.Services.Requests.BusinessPosture;
 using DSLNG.PEAR.Services.Responses.EnvironmentScanning;
 using DSLNG.PEAR.Services.Requests.EnvironmentScanning;
+using DSLNG.PEAR.Services.Responses.MidtermFormulation;
+using DSLNG.PEAR.Services.Requests.MidtermFormulation;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -559,8 +561,16 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<SaveEnvironmentScanningRequest, UltimateObjectivePoint>();
             Mapper.CreateMap<SaveEnvironmentalScanningRequest, EnvironmentalScanning>()
                 .ForMember(x => x.Desc, y => y.MapFrom(z => z.Description));
-            Mapper.CreateMap<Constraint, GetEnvironmentsScanningResponse.Constraint>();
-            Mapper.CreateMap<Challenge, GetEnvironmentsScanningResponse.Challenge>();
+            Mapper.CreateMap<Constraint, GetEnvironmentsScanningResponse.Constraint>()
+                .ForMember(x => x.ThreatIds, y => y.MapFrom(z => z.Relation.Where(u => u.ThreatHost != null).Select(m => m.Id).ToArray()))
+                .ForMember(x => x.OpportunityIds, y => y.MapFrom(z => z.Relation.Where(u => u.OpportunityHost != null).Select(m => m.Id).ToArray()))
+                .ForMember(x => x.WeaknessIds, y => y.MapFrom(z => z.Relation.Where(u => u.WeaknessHost != null).Select(m => m.Id).ToArray()))
+                .ForMember(x => x.StrengthIds, y => y.MapFrom(z => z.Relation.Where(u => u.StrengthHost != null).Select(m => m.Id).ToArray()));
+            Mapper.CreateMap<Challenge, GetEnvironmentsScanningResponse.Challenge>()
+                .ForMember(x => x.ThreatIds, y => y.MapFrom(z => z.Relation.Where(u => u.ThreatHost != null).Select(m => m.Id).ToArray()))
+                .ForMember(x => x.OpportunityIds, y => y.MapFrom(z => z.Relation.Where(u => u.OpportunityHost != null).Select(m => m.Id).ToArray()))
+                .ForMember(x => x.WeaknessIds, y => y.MapFrom(z => z.Relation.Where(u => u.WeaknessHost != null).Select(m => m.Id).ToArray()))
+                .ForMember(x => x.StrengthIds, y => y.MapFrom(z => z.Relation.Where(u => u.StrengthHost != null).Select(m => m.Id).ToArray()));
             Mapper.CreateMap<SaveConstraintRequest, Constraint>();
             Mapper.CreateMap<Constraint, SaveConstraintResponse>();
             Mapper.CreateMap<SaveChallengeRequest, Challenge>();
@@ -573,6 +583,18 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<DesiredState, GetVoyagePlanResponse.DesiredState>();
             Mapper.CreateMap<PostureChallenge, GetVoyagePlanResponse.PostureChallenge>();
             Mapper.CreateMap<PostureConstraint, GetVoyagePlanResponse.PostureConstraint>();
+            Mapper.CreateMap<Constraint, GetConstraintResponse>();
+            Mapper.CreateMap<EnvironmentalScanning, GetConstraintResponse.environment>();
+
+            Mapper.CreateMap<Posture, GetMidtermFormulationResponse.Posture>();
+            Mapper.CreateMap<DesiredState, GetMidtermFormulationResponse.DesiredState>();
+            Mapper.CreateMap<MidtermPhaseFormulationStage, GetMidtermFormulationResponse.MidtermFormulationStage>();
+            Mapper.CreateMap<MidtermPhaseDescription, GetMidtermFormulationResponse.MidtermPhaseDescription>();
+            Mapper.CreateMap<MidtermPhaseKeyDriver, GetMidtermFormulationResponse.MidtermPhaseKeyDriver>();
+
+            Mapper.CreateMap<AddStageRequest, MidtermPhaseFormulationStage>();
+            Mapper.CreateMap<AddDefinitionRequest, MidtermPhaseDescription>();
+            Mapper.CreateMap<AddDefinitionRequest, MidtermPhaseKeyDriver>();
 
             base.Configure();
         }

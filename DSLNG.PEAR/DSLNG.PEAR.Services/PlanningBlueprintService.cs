@@ -72,6 +72,8 @@ namespace DSLNG.PEAR.Services
                     var planningBluePrint = request.MapTo<PlanningBlueprint>();
                     var environmentsScanning = new EnvironmentsScanning();
                     var businessPostureIdentification = new BusinessPostureIdentification();
+                    var midtermPhaseFormulation = new MidtermPhaseFormulation();
+                    var midtermStrategyPlanning = new MidtermStrategyPlanning();
                     var constructionPosture = new Posture { Type = PostureType.Construction };
                     var operationPosture = new Posture { Type = PostureType.Operation };
                     var decommissioningPosture = new Posture { Type = PostureType.Decommissioning };
@@ -80,6 +82,8 @@ namespace DSLNG.PEAR.Services
                     businessPostureIdentification.Postures.Add(decommissioningPosture);
                     planningBluePrint.EnvironmentsScanning = environmentsScanning;
                     planningBluePrint.BusinessPostureIdentification = businessPostureIdentification;
+                    planningBluePrint.MidtermPhaseFormulation = midtermPhaseFormulation;
+                    planningBluePrint.MidtermStragetyPlanning = midtermStrategyPlanning;
                     DataContext.PlanningBlueprints.Add(planningBluePrint);
                 }
                 else

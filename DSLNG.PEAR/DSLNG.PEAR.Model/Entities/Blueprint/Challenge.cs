@@ -9,6 +9,10 @@ namespace DSLNG.PEAR.Data.Entities.Blueprint
 {
     public class Challenge
     {
+        public Challenge()
+        {
+            Relation = new List<EnvironmentalScanning>();
+        }
         [Key]
         public int Id { get; set; }
         public IList<EnvironmentalScanning> Relation { get; set; }
