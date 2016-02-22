@@ -206,13 +206,13 @@ namespace DSLNG.PEAR.Data.Persistence
                 .WithMany(x => x.Strength)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<MidtermPhaseDescription>()
-                .HasRequired(x => x.Formulation)
-                .WithMany(x => x.Descriptions)
+            modelBuilder.Entity<MidtermPhaseFormulationStage>()
+                .HasMany(x => x.Descriptions)
+                .WithOptional(x => x.Formulation)
                 .WillCascadeOnDelete(true);
-            modelBuilder.Entity<MidtermPhaseKeyDriver>()
-                .HasRequired(x => x.Formulation)
-                .WithMany(x => x.KeyDrivers)
+            modelBuilder.Entity<MidtermPhaseFormulationStage>()
+                 .HasMany(x => x.KeyDrivers)
+                .WithOptional(x => x.Formulation)
                 .WillCascadeOnDelete(true);
 
             base.OnModelCreating(modelBuilder);

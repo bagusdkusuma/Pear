@@ -24,5 +24,19 @@ namespace DSLNG.PEAR.Web.Controllers
             var resp = _midtermFormulationService.AddDefinition(viewModel.MapTo<AddDefinitionRequest>());
             return Json(resp);
         }
+        [HttpPost]
+        public ActionResult DeleteStage(int id) {
+            return Json(_midtermFormulationService.DeleteStage(id));
+        }
+        [HttpPost]
+        public ActionResult DeleteStageDesc(int id)
+        {
+            return Json(_midtermFormulationService.DeleteStageDesc(id));
+        }
+        [HttpPost]
+        public ActionResult DeleteStageKey(int id)
+        {
+            return Json(_midtermFormulationService.DeleteStageKey(id));
+        }
 	}
 }

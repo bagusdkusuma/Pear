@@ -11,6 +11,7 @@ using DSLNG.PEAR.Data.Entities.Blueprint;
 using System.Globalization;
 using DSLNG.PEAR.Services.Requests.MidtermFormulation;
 using System;
+using DSLNG.PEAR.Services.Responses;
 
 namespace DSLNG.PEAR.Services
 {
@@ -145,6 +146,79 @@ namespace DSLNG.PEAR.Services
                     IsSuccess = false,
                     Message = "An error has been occured, please contact the administrator for further information"
                 };
+            }
+        }
+
+
+        public Responses.BaseResponse DeleteStage(int id)
+        {
+            try
+            {
+                var midtermStage = new MidtermPhaseFormulationStage { Id = id };
+                DataContext.MidtermPhaseFormulationStages.Attach(midtermStage);
+                DataContext.MidtermPhaseFormulationStages.Remove(midtermStage);
+                DataContext.SaveChanges();
+                return new BaseResponse
+                {
+                    IsSuccess = true,
+                    Message = "You have been successfully deleted the item"
+                };
+            }
+            catch {
+                return new BaseResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured, please contact administrator for further information"
+                };
+            }
+        }
+
+        public BaseResponse DeleteStageDesc(int id)
+        {
+            try
+            {
+                var stageDesc = new MidtermPhaseDescription { Id = id };
+                DataContext.MidtermPhaseDescriptions.Attach(stageDesc);
+                DataContext.MidtermPhaseDescriptions.Remove(stageDesc);
+                DataContext.SaveChanges();
+                return new BaseResponse
+                {
+                    IsSuccess = true,
+                    Message = "You have been successfully deleted the item"
+                };
+            }
+            catch {
+                return new BaseResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured, please contact administrator for further information"
+                };
+            
+            }
+        }
+
+        public BaseResponse DeleteStageKey(int id)
+        {
+            try
+            {
+                var stageKey = new MidtermPhaseKeyDriver { Id = id };
+                DataContext.MidtermPhaseKeyDrivers.Attach(stageKey);
+                DataContext.MidtermPhaseKeyDrivers.Remove(stageKey);
+                DataContext.SaveChanges();
+                return new BaseResponse
+                {
+                    IsSuccess = true,
+                    Message = "You have been successfully deleted the item"
+                };
+            }
+            catch
+            {
+                return new BaseResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured, please contact administrator for further information"
+                };
+
             }
         }
     }
