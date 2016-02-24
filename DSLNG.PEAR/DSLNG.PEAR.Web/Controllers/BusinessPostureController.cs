@@ -38,7 +38,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 Definition = response.Definition,
                 IsSuccess = response.IsSuccess,
                 Message = response.Message,
-                type = viewModel.PostureType
+                PostureType = viewModel.PostureType
             };
             return Json(data, JsonRequestBehavior.AllowGet);
         }
@@ -61,7 +61,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 Definition = response.Definition,
                 IsSuccess = response.IsSuccess,
                 Message = response.Message,
-                type = viewModel.PostureType
+                PostureType = viewModel.PostureType
             };
             return Json(data, JsonRequestBehavior.AllowGet);
         }

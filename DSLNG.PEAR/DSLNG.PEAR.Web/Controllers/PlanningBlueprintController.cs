@@ -108,8 +108,9 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult BusinessPostureIdentification(int id)
         {
+            var viewModel = _businessPostureIdentification.Get(new GetBusinessPostureRequest { Id = id }).MapTo<BusinessPostureViewModel>();
 
-            return View(_businessPostureIdentification.Get(new GetBusinessPostureRequest { Id = id }).MapTo<BusinessPostureViewModel>());
+            return View(viewModel);
         }
 
         [HttpPost]

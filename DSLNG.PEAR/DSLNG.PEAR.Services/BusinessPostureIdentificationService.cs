@@ -24,8 +24,17 @@ namespace DSLNG.PEAR.Services
                 .Include(x => x.Postures.Select(y => y.PostureChallenges.Select(z => z.DesiredStates)))
                 .Include(x => x.Postures.Select(y => y.PostureConstraints))
                 .Include(x => x.Postures.Select(y => y.PostureConstraints.Select(z => z.DesiredStates)))
-                .FirstOrDefault(x => x.Id == request.Id);
-            return response.MapTo<GetBusinessPostureResponse>();
+                .FirstOrDefault(x => x.Id == request.Id).MapTo<GetBusinessPostureResponse>();
+
+            response.EnvironmentScanningHost = DataContext.EnvironmentsScannings
+                .Include(x => x.PlanningBlueprint)
+                .Include(x => x.ConstructionPhase)
+                .Include(x => x.OperationPhase)
+                .Include(x => x.ReinventPhase)
+                .Include(x => x.Constraints)
+                .Include(x => x.Challenges)
+                .Where(x => x.PlanningBlueprint.Id == response.PlanningBlueprintId).FirstOrDefault().MapTo<GetBusinessPostureResponse.EnvironmentScanning>();
+            return response;
         }
 
 

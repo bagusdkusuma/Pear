@@ -4,6 +4,113 @@
     ViewBag.Title = "BusinessPostureIdentification";
 }
 
+@* Environtments Scanning *@
+<div class="col-md-12 environment-scanning">
+    <div class="row row-uo border-style-1">
+        <h4>Ultimate Objective</h4>
+    </div>
+    <div class="row row-margin-5 color-white">
+        <div class="div-envi col-md-4 border-style-1">
+            <div class="col-md-4-child">
+                <span><b>Ultimate Objective (Construction Phase)</b></span>
+            </div>
+            <div>
+                <ul class="cp-list">
+                    @foreach (var item in Model.EnvironmentScanningHost.ConstructionPhase)
+                    {
+                        <li>@item.Description</li>
+                    }
+                </ul>
+                @Html.HiddenFor(model => model.Id)
+            </div>
+        </div>
+        <div class="div-envi col-md-4 border-style-1">
+            <div class="col-md-4-child">
+                <span><b>Ultimate Objective (Operation Phase)</b></span>
+            </div>
+            <div>
+                <ul class="op-list">
+                    @foreach (var item in Model.EnvironmentScanningHost.OperationPhase)
+                    {
+                        <li>@item.Description </li>
+                    }
+                </ul>
+                @Html.HiddenFor(model => model.Id)
+            </div>
+        </div>
+        <div class="div-envi col-md-4 border-style-1">
+            <div class="col-md-4-child">
+                <span><b>Ultimate Objective (Decomm.Re-Invent Phase)</b></span>
+            </div>
+            <div>
+                <ul class="rp-list">
+                    @foreach (var item in Model.EnvironmentScanningHost.ReinventPhase)
+                    {
+                        <li>@item.Description</li>
+
+                    }
+                </ul>
+                @Html.HiddenFor(model => model.Id)
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row row-constraint margin-style-1 border-style-1" style="background-color: #cc0000">
+        <h6>Constraint</h6>
+    </div>
+    <div class="row row-margin-5 row-table-constrain">
+        <table class="table table-constraint border-style-1">
+            <tr>
+                <td class="td-definition"><b>Definiton</b> </td>
+                <td class="td-entity"><b>Type</b></td>
+                <td class="td-entity"><b>Category</b></td>
+            </tr>
+            @{foreach (var item in Model.EnvironmentScanningHost.Constraints)
+            {
+                <tr>
+                    <td class="td-definition">@item.Definition</td>
+                    <td class="td-entity">@item.Type</td>
+                    <td class="td-entity">@item.Category</td>
+                </tr>
+            }
+
+            }
+
+        </table>
+    </div>
+
+
+
+    <div class="row row-challenges margin-style-1 border-style-1" style="background-color: #ffcc00">
+        <h6>Challenges</h6>
+    </div>
+    <div class="row row-margin-5 row-table-constrain">
+        <table class="table table-challenge border-style-1">
+            <tr>
+
+                <td class="td-definition"><b>Definiton</b> </td>
+                <td class="td-entity"><b>Type</b></td>
+                <td class="td-entity"><b>Category</b></td>
+            </tr>
+            @{foreach (var item in Model.EnvironmentScanningHost.Challenges)
+            {
+                <tr>
+                    <td class="td-definition">@item.Definition </td>
+                    <td class="td-entity">@item.Type</td>
+                    <td class="td-entity">@item.Category</td>
+                </tr>
+            }
+
+            }
+        </table>
+    </div>
+</div>
+
+
+@* Business Posture *@
+
 <div class="business-posture">
     <h2>Business Posture Identification</h2>
 
@@ -73,7 +180,7 @@
                 {
                     <tr>
                         <td>
-                            <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" class="btn-posture-challenge">
+                            <a href="#" data-id="@item.Id" data-toggle="modal" data-ids="@item.RelationIdsString" data-type="construction" data-target="#posture-modal" class="btn-posture-challenge">
                                 @if (item.HasRelation == true)
                                 {
                                     <span>R</span>
@@ -104,7 +211,7 @@
                 {
                     <tr>
                         <td>
-                            <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" class="btn-posture-challenge">
+                            <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" data-ids="@item.RelationIdsString" data-type="operation" class="btn-posture-challenge">
                                 @if (item.HasRelation == true)
                                 {
                                     <span>R</span>
@@ -134,7 +241,7 @@
                 {
                     <tr>
                         <td>
-                            <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" class="btn-posture-challenge">
+                            <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" data-ids="@item.RelationIdsString" data-type="decommissioning" class="btn-posture-challenge">
                                 @if (item.HasRelation == true)
                                 {
                                     <span>R</span>
@@ -153,7 +260,7 @@
             <div>
                 <div class="sub-group">
                     <h6 style="background-color: #ff0000">Posture Constraint</h6>
-                    <a href="#" data-toggle="popover" data-posture-type="construction" data-title="Add Desired State" data-posture="PostureConstraint"  data-posture-id="@Model.ConstructionPosture.Id" data-form-target="posture-constraint" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                    <a href="#" data-toggle="popover" data-posture-type="construction" data-title="Add Desired State" data-posture="PostureConstraint" data-posture-id="@Model.ConstructionPosture.Id" data-form-target="posture-constraint" class="popover-trigger"><i class="fa fa-plus"></i></a>
                 </div>
             </div>
             <table class="table list-result">
@@ -166,7 +273,7 @@
                 {
                     <tr>
                         <td>
-                            <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" class="btn-posture-constraint">
+                            <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" data-ids="@item.RelationIdsString" data-type="construction" class="btn-posture-constraint">
                                 @if (item.HasRelation == true)
                                 {
                                     <span>R</span>
@@ -197,7 +304,7 @@
                 {
                     <tr>
                         <td>
-                            <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" class="btn-posture-constraint">
+                            <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" data-ids="@item.RelationIdsString" data-type="operation" class="btn-posture-constraint">
                                 @if (item.HasRelation == true)
                                 {
                                     <span>R</span>
@@ -227,7 +334,7 @@
                 {
                     <tr>
                         <td>
-                            <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" class="btn-posture-constraint">
+                            <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" data-ids="@item.RelationIdsString" data-type="decommissioning" class="btn-posture-constraint">
                                 @if (item.HasRelation == true)
                                 {
                                     <span>R</span>
@@ -243,15 +350,15 @@
     </div>
     <div class="row">
         <div class="col-md-12 artifact-designer-btns">
-             <a href="@Url.Action("Index", "PlanningBlueprint")" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
-            @using (Html.BeginForm("SubmitBusinessPosture", "PlanningBlueprint", FormMethod.Post, new { style="display:inline" }))
+            <a href="@Url.Action("Index", "PlanningBlueprint")" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+            @using (Html.BeginForm("SubmitBusinessPosture", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
             {
                 @Html.Hidden("Id", Model.Id)
                 <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Submit</button>
             }
-              @using (Html.BeginForm("ApproveVoyagePlan", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
-              {
-                @Html.Hidden("Id",Model.PlanningBlueprintId)
+            @using (Html.BeginForm("ApproveVoyagePlan", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
+            {
+                @Html.Hidden("Id", Model.PlanningBlueprintId)
                 <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Approve</button>
             }
         </div>
@@ -275,6 +382,7 @@
     <form action="/BusinessPosture/AddPostureChallenge">
         <input type="hidden" name="PostureId" />
         <input type="hidden" name="PostureType" />
+        <input type="hidden" name="Type" />
         <div class="relation-ids-wrapper"></div>
         <div class="row">
             <div class="col-md-12">
@@ -295,6 +403,7 @@
     <form action="/BusinessPosture/AddPostureConstraint">
         <input type="hidden" name="PostureId" />
         <input type="hidden" name="PostureType" />
+        <input type="hidden" name="Type" />
         <div class="relation-ids-wrapper"></div>
         <div class="row">
             <div class="col-md-12">
@@ -331,7 +440,7 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
-@* Modal POsture *@
+@* Modal Posture *@
 <div class="modal fade" id="posture-modal" data-id="id">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -371,6 +480,8 @@
 
             $form.find('input[name="PostureId"]').val($listBlock.find('.popover-trigger').data('posture-id'));
             $form.find('input[name="PostureType"]').val($listBlock.find('.popover-trigger').data('posture'));
+            var type = $listBlock.find('.popover-trigger').data('posture-type');
+
             $.post($form.prop('action'), $form.serialize(), function (data) {
                 if (data.IsSuccess) {
                     var target = $listBlock.find('.popover-trigger').data('form-target');
@@ -381,16 +492,14 @@
                         var $tr = $('<tr />');
                         var $relationCol = $('<td />');
                         var relationType = '';
-                        if (data.type == "PostureChallenge") {
-                            relationType = relationType + 'data-id="' + data.Id + '"' + ' ' + 'data-toggle="modal"' + ' ' + 'data-target="#posture-modal"' + ' ' + 'class="btn-posture-challenge"'
+                        if (data.PostureType == "PostureChallenge") {
+                            relationType = relationType + 'data-id="' + data.Id + '"' + 'data-toggle="modal"' + 'data-target="#posture-modal"' + 'data-ids="' + data.RelationIds + '"' + 'class="btn-posture-challenge"'
                         }
-                        if (data.type == "PostureConstraint")
-                        {
-                            relationType = relationType + 'data-id="' + data.Id + '"' + 'data-toggle="modal"' + 'data-target="#posture-modal"' + 'class="btn-posture-constraint"'
+                        if (data.PostureType == "PostureConstraint") {
+                            relationType = relationType + 'data-id="' + data.Id + '"' + 'data-toggle="modal"' + 'data-target="#posture-modal"' + 'data-ids="' + data.RelationIds + '"' + 'class="btn-posture-constraint"'
 
                         }
-
-                        $relationCol.html(data.RelationIds.length ? '<a href="#" ' + relationType + '><span>R</span></a>' : ' ');
+                        $relationCol.html(data.RelationIds.length ? '<a href="#" ' + relationType +'data-type="'+ type +'"'+'><span>R</span></a>' : ' ');
                         $tr.append($relationCol);
                         var $definitionCol = $('<td />');
                         $definitionCol.html(data.Definition);
@@ -476,7 +585,6 @@
         $(document).on('click', '.btn-posture-challenge', function () {
             var $that = $(this);
             var Id = ($that).data('id');
-            console.log(Id);
             $.ajax({
                 url: '@Url.Action("GetPostureChallenge", "BusinessPosture")',
                 data: { id: Id },
@@ -491,7 +599,6 @@
         $(document).on('click', '.btn-posture-constraint', function () {
             var $that = $(this);
             var Id = ($that).data('id');
-            console.log(Id);
             $.ajax({
                 url: '@Url.Action("GetPostureConstraint", "BusinessPosture")',
                 data: { id: Id },
@@ -502,5 +609,64 @@
                 }
             });
         });
+    });
+
+    $(document).on('mouseenter', '.btn-posture-challenge', function () {
+        var $that = $(this);
+        var $type = ($that).data('type');
+        var $ids = ($that).data('ids');
+        if (typeof $ids != 'string') {
+            $ids = [$ids];
+        } else {
+            $ids = $ids.split(',');
+            var iIds = [];
+            for (var i in $ids) {
+                iIds.push(parseInt($ids[i]));
+            }
+            $ids = iIds;
+        }
+        $('.' + $type + '-desired-list').children('li').each(function (i, val) {
+            var $li = $(val);
+            if($ids.indexOf(parseInt($li.data('id'))) > -1)
+            {
+                $li.addClass('highlight');
+            }
+        });
+    });
+
+    $(document).on('mouseleave', '.btn-posture-challenge', function () {
+        $('.highlight').each(function (i, val) {
+            $(val).removeClass('highlight');
+        })
+    });
+
+
+
+    $(document).on('mouseenter', '.btn-posture-constraint', function () {
+        var $that = $(this);
+        var $type = ($that).data('type');
+        var $ids = ($that).data('ids');
+        if (typeof $ids != 'string') {
+            $ids = [$ids];
+        } else {
+            $ids = $ids.split(',');
+            var iIds = [];
+            for (var i in $ids) {
+                iIds.push(parseInt($ids[i]));
+            }
+            $ids = iIds;
+        }
+        $('.' + $type + '-desired-list').children('li').each(function (i, val) {
+            var $li = $(val);
+            if ($ids.indexOf(parseInt($li.data('id'))) > -1) {
+                $li.addClass('highlight');
+            }
+        });
+    });
+
+    $(document).on('mouseleave', '.btn-posture-constraint', function () {
+        $('.highlight').each(function (i, val) {
+            $(val).removeClass('highlight');
+        })
     });
 </script>

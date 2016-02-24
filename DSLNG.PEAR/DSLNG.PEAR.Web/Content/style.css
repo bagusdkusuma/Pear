@@ -1806,6 +1806,10 @@ a.see-more {
     display: none;
 }
 
+/*.business-posture{
+    margin: 0px 60px 0px 60px;
+}*/
+
 .business-posture h4, .business-posture h6 {
     text-align:center;
     float:none;
@@ -2030,6 +2034,16 @@ a.see-more {
     float:none;
     margin:0;
 }
+.midterm-phase-formulation .row .col-md-12{
+    margin-top: 20px;
+}
+
+.midterm-phase-formulation .row .col-md-4{
+    border: 1px solid white;
+    color: white;
+}
+
+
 .formulation-stage-template,.formulation-stage-form, .definition-form {
 
 display:none;
@@ -2133,9 +2147,6 @@ li > input.choose-list{
     list-style: decimal;
 }
 
-.formulation-stage .key-driver{
-    margin-top: 10px;
-}
 
 .formulation-stage .key-driver a{
     position: relative;
@@ -2147,7 +2158,14 @@ li > input.choose-list{
 }
 
 .formulation-stage .key-driver{
-    margin-top: 20px;
+    /*margin-top: 20px;*/
     list-style: decimal;
 }
 
+.formulation-stage .key-driver .sub-title a{
+    float: right;
+}
+
+.business-posture .highlight {
+    color:red;
+}

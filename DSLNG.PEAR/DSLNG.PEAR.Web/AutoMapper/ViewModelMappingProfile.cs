@@ -601,6 +601,10 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<DesiredStateViewModel, SaveDesiredStateRequest>();
             Mapper.CreateMap<PostureChallengeViewModel, SavePostureChallengeRequest>();
             Mapper.CreateMap<PostureConstraintViewModel, SavePostureConstraintRequest>();
+            Mapper.CreateMap<GetBusinessPostureResponse.EnvironmentScanning, BusinessPostureViewModel.EnvironmentScanning>();
+            Mapper.CreateMap<GetBusinessPostureResponse.EnvironmentScanning.UltimateObjective, BusinessPostureViewModel.EnvironmentScanning.UltimateObjective>();
+            Mapper.CreateMap<GetBusinessPostureResponse.EnvironmentScanning.Constraint, BusinessPostureViewModel.EnvironmentScanning.Constraint>();
+            Mapper.CreateMap<GetBusinessPostureResponse.EnvironmentScanning.Challenge, BusinessPostureViewModel.EnvironmentScanning.Challenge>();
 
             Mapper.CreateMap<GetEnvironmentsScanningResponse, EnvironmentScanningViewModel>();
             Mapper.CreateMap<GetEnvironmentsScanningResponse.UltimateObjective, EnvironmentScanningViewModel.UltimateObjective>();
