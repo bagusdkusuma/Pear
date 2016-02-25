@@ -627,6 +627,7 @@
         }
         $('.' + $type + '-desired-list').children('li').each(function (i, val) {
             var $li = $(val);
+            console.log($li.data('id'));
             if($ids.indexOf(parseInt($li.data('id'))) > -1)
             {
                 $li.addClass('highlight');

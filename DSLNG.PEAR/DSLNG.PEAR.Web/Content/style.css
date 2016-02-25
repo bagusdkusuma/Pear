@@ -2166,6 +2166,6 @@ li > input.choose-list{
     float: right;
 }
 
-.business-posture .highlight {
+.business-posture .highlight, .environment-scanning .highlight {
     color:red;
 }

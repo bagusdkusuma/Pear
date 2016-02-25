@@ -35,7 +35,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PlanningBlueprint
             public bool HasRelation { get; set; }
             public int[] Ids { get; set; }
             public string RelationIdsString 
-            { 
+            {
                 get { return string.Join(",", this.Ids); } 
             }
         }

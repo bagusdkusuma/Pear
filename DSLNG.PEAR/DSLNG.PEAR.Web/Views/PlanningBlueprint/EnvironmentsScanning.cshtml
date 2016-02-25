@@ -74,7 +74,7 @@
                     @{
                         foreach (var item in Model.Threat)
                         {
-                        <li data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>
+                            <li data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>
                         }
                     }
                 </ul>
@@ -90,7 +90,7 @@
                     @{
                         foreach (var item in Model.Opportunity)
                         {
-                        <li data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>
+                            <li data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>
                         }
                     }
                 </ul>
@@ -106,7 +106,7 @@
                     @{
                         foreach (var item in Model.Weakness)
                         {
-                        <li data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>
+                            <li data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>
                         }
                     }
                 </ul>
@@ -122,7 +122,7 @@
                     @{
                         foreach (var item in Model.Strength)
                         {
-                        <li data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>
+                            <li data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>
                         }
                     }
                 </ul>
@@ -144,39 +144,39 @@
                 <td class="td-entity"><b>Category</b></td>
             </tr>
             @{foreach (var item in Model.Constraints)
-              {
+            {
                 <tr>
                     <td class="td-entity">
-                        <a href="#" data-toggle="modal" data-target="#envi-modal" data-id="@item.Id" class="btn-show-constraint">
-                            @{
-                  if (item.ThreatIds.Count() > 0)
-                  {
-                                <span>T</span>
-                  }
+                        @*<a href="#" data-toggle="modal" data-target="#envi-modal" data-id="@item.Id" data-th="@item.ThreatIdString" data-opp="@item.OpportunityIdString" data-wk="@item.WeaknessIdString" data-st="@item.StrengthIdString" class="btn-show-constraint">*@
+                        @{
+                if (item.ThreatIds.Count() > 0)
+                {
+                    <span><a href="#" data-th="@item.ThreatIdString" class="btn-show-constraint">T</a></span>
+                }
 
-                  if (item.OpportunityIds.Count() > 0)
-                  {
-                                <span>O</span>
-                  }
+                if (item.OpportunityIds.Count() > 0)
+                {
+                    <span><a href="#" data-opp="@item.OpportunityIdString" class="btn-show-constraint">O</a></span>
+                }
 
-                  if (item.WeaknessIds.Count() > 0)
-                  {
-                                <span>W</span>
-                  }
+                if (item.WeaknessIds.Count() > 0)
+                {
+                    <span><a href="#" data-wk="@item.WeaknessIdString" class="btn-show-constraint">W</a></span>
+                }
 
-                  if (item.StrengthIds.Count() > 0)
-                  {
-                                <span>S</span>
-                  }
+                if (item.StrengthIds.Count() > 0)
+                {
+                    <span><a href="#" data-st="@item.StrengthIdString" class="btn-show-constraint">S</a></span>
+                }
 
-                            }
-                        </a>
+                        }
+                        @*</a>*@
                     </td>
                     <td class="td-definition">@item.Definition <a href="#" data-id="@item.Id" class="constraint-remove-button"><i class="fa fa-minus"></i></a></td>
                     <td class="td-entity">@item.Type</td>
                     <td class="td-entity">@item.Category</td>
                 </tr>
-              }
+            }
 
             }
 
@@ -198,39 +198,39 @@
                 <td class="td-entity"><b>Category</b></td>
             </tr>
             @{foreach (var item in Model.Challenges)
-              {
+            {
                 <tr>
                     <td class="td-entity">
-                        <a href="#" data-toggle="modal" data-target="#envi-modal" data-id="@item.Id" class="btn-show-challenge">
+                        @*<a href="#" data-toggle="modal" data-target="#envi-modal" data-id="@item.Id" data-th="@item.ThreatIdString" data-opp="@item.OpportunityIdString" data-wk="@item.WeaknessIdString" data-st="@item.StrengthIdString" class="btn-show-challenge">*@
                             @{
-                  if (item.ThreatIds.Count() > 0)
-                  {
-                                <span>T</span>
-                  }
+                if (item.ThreatIds.Count() > 0)
+                {
+                    <span><a href="#" data-th="@item.ThreatIdString" class="btn-show-challenge">T</a></span>
+                }
 
-                  if (item.OpportunityIds.Count() > 0)
-                  {
-                                <span>O</span>
-                  }
+                if (item.OpportunityIds.Count() > 0)
+                {
+                    <span><a href="#" data-opp="@item.OpportunityIdString" class="btn-show-challenge">O</a></span>
+                }
 
-                  if (item.WeaknessIds.Count() > 0)
-                  {
-                                <span>W</span>
-                  }
+                if (item.WeaknessIds.Count() > 0)
+                {
+                    <span><a href="#" data-wk="@item.WeaknessIdString" class="btn-show-challenge">W</a></span>
+                }
 
-                  if (item.StrengthIds.Count() > 0)
-                  {
-                                <span>S</span>
-                  }
+                if (item.StrengthIds.Count() > 0)
+                {
+                    <span><a href="#" data-st="@item.StrengthIdString" class="btn-show-challenge">S</a></span>
+                }
 
                             }
-                        </a>
+                       @* </a>*@
                     </td>
                     <td class="td-definition">@item.Definition <a href="#" data-id="@item.Id" class="challenge-remove-button"><i class="fa fa-minus"></i></a></td>
                     <td class="td-entity">@item.Type</td>
                     <td class="td-entity">@item.Category</td>
                 </tr>
-              }
+            }
 
             }
         </table>
@@ -539,15 +539,15 @@
                     var id = $(that).data('id')
                     $.ajax({
                         url: '@Url.Action("Delete", "EnvironmentScanning")',
-                    data: { Id: id },
-                    type: 'Post',
-                    success: function (data) {
-                        if (data.success === true) {
-                            $(that).parent().remove();
-                        }
+                        data: { Id: id },
+                        type: 'Post',
+                        success: function (data) {
+                            if (data.success === true) {
+                                $(that).parent().remove();
+                            }
 
-                    }
-                })
+                        }
+                    })
                 }
             });
 
@@ -629,7 +629,12 @@
                             relation = relation + 'S '
                         }
 
-                        $('.table-constraint').append('<tr><td class="td-entity">' + '<a href="#" data-toggle="modal" data-target="#envi-modal" data-id="' + data.id + '" class="btn-show-constraint">' + '<span>' + relation + '</span>' + '</td><td class="td-definition">' + data.definition + '<a href="#" data-id="' + data.id + '" class="constraint-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
+                        var input = [];
+                        input = input + 'data-th="' + data.threatIds + '"' + 'data-opp="' + data.opportunityIds + '"' + 'data-wk="' + data.weaknessIds + '"' + 'data-st="' + data.strengthIds + '"'
+
+                        console.log(input);
+
+                        $('.table-constraint').append('<tr><td class="td-entity">' + '<a href="#" data-toggle="modal" ' + input + ' data-target="#envi-modal" data-id="' + data.id + '" class="btn-show-constraint">' + '<span>' + relation + '</span>' + '</td><td class="td-definition">' + data.definition + '<a href="#" data-id="' + data.id + '" class="constraint-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
                         popOverElem.popover('hide');
                         console.log(relation);
                     }
@@ -773,7 +778,7 @@
                 });
                 var threat = $('<h4 />');
                 threat.html('Threat');
-                $('.relation-contents').append(threat, thList);
+                $('.relation-challenges').append(threat, thList);
 
                 oppList.find('li').each(function (i, val) {
                     var $item = $(val);
@@ -854,6 +859,201 @@
                     }
                 });
             });
+
+
+            $(document).on('mouseenter', '.btn-show-constraint', function () {
+                var $that = $(this);
+                var $a = $that.closest('a');
+                var threatIds = ($a).data('th');
+                var opportunityIds = ($a).data('opp');
+                var weaknessIds = ($a).data('wk');
+                var strengthIds = ($a).data('st');
+
+
+                if (typeof threatIds != 'string') {
+                    threatIds = [threatIds];
+                }
+                else {
+                    threatIds = threatIds.split(',');
+                    var ithreatIds = [];
+                    for (var i in threatIds) {
+                        ithreatIds.push(parseInt(threatIds[i]));
+                    }
+                    threatIds = ithreatIds;
+                }
+
+                if (typeof opportunityIds != 'string') {
+                    opportunityIds = [opportunityIds];
+                }
+                else {
+                    opportunityIds = opportunityIds.split(',');
+                    var iopportunityIds = [];
+                    for (var i in opportunityIds) {
+                        iopportunityIds.push(parseInt(opportunityIds[i]));
+                    }
+                    opportunityIds = iopportunityIds;
+                }
+
+                if (typeof weaknessIds != 'string') {
+                    weaknessIds = [weaknessIds];
+                }
+                else {
+                    weaknessIds = weaknessIds.split(',');
+                    var iweaknessIds = [];
+                    for (var i in weaknessIds) {
+                        iweaknessIds.push(parseInt(weaknessIds[i]));
+                    }
+                    weaknessIds = iweaknessIds;
+                }
+
+                if (typeof strengthIds != 'string') {
+                    strengthIds = [strengthIds];
+                }
+                else {
+                    strengthIds = strengthIds.split(',');
+                    var istrengthIds = [];
+                    for (var i in strengthIds) {
+                        istrengthIds.push(parseInt(strengthIds[i]));
+                    }
+                    strengthIds = istrengthIds;
+                }
+
+                $('.th-list').children('li').each(function (i, val) {
+                    var $li = $(val);
+                    if(threatIds.indexOf($li.data('id')) > -1)
+                    {
+                        $li.addClass('highlight');
+                    }
+                });
+
+                $('.opp-list').children('li').each(function (i, val) {
+                    var $li = $(val);
+                    if (opportunityIds.indexOf($li.data('id')) > -1) {
+                        $li.addClass('highlight');
+                    }
+                });
+
+                $('.wk-list').children('li').each(function (i, val) {
+                    var $li = $(val);
+                    if (weaknessIds.indexOf($li.data('id')) > -1) {
+                        $li.addClass('highlight');
+                    }
+                });
+
+                $('.st-list').children('li').each(function (i, val) {
+                    var $li = $(val);
+                    if (strengthIds.indexOf($li.data('id')) > -1) {
+                        $li.addClass('highlight');
+                    }
+                });
+            });
+
+            $(document).on('mouseleave', '.btn-show-constraint', function () {
+                $('.highlight').each(function (i, val) {
+                    $(val).removeClass('highlight');
+                })
+            });
+
+
+            $(document).on('mouseenter', '.btn-show-challenge', function () {
+                var $that = $(this);
+                var $a = $that.closest('a');
+                var threatIds = ($a).data('th');
+                var opportunityIds = ($a).data('opp');
+                var weaknessIds = ($a).data('wk');
+                var strengthIds = ($a).data('st');
+
+
+                if (typeof threatIds != 'string') {
+                    threatIds = [threatIds];
+                }
+                else {
+                    threatIds = threatIds.split(',');
+                    var ithreatIds = [];
+                    for (var i in threatIds) {
+                        ithreatIds.push(parseInt(threatIds[i]));
+                    }
+                    threatIds = ithreatIds;
+                }
+
+                if (typeof opportunityIds != 'string') {
+                    opportunityIds = [opportunityIds];
+                }
+                else {
+                    opportunityIds = opportunityIds.split(',');
+                    var iopportunityIds = [];
+                    for (var i in opportunityIds) {
+                        iopportunityIds.push(parseInt(opportunityIds[i]));
+                    }
+                    opportunityIds = iopportunityIds;
+                }
+
+                if (typeof weaknessIds != 'string') {
+                    weaknessIds = [weaknessIds];
+                }
+                else {
+                    weaknessIds = weaknessIds.split(',');
+                    var iweaknessIds = [];
+                    for (var i in weaknessIds) {
+                        iweaknessIds.push(parseInt(weaknessIds[i]));
+                    }
+                    weaknessIds = iweaknessIds;
+                }
+
+                if (typeof strengthIds != 'string') {
+                    strengthIds = [strengthIds];
+                }
+                else {
+                    strengthIds = strengthIds.split(',');
+                    var istrengthIds = [];
+                    for (var i in strengthIds) {
+                        istrengthIds.push(parseInt(strengthIds[i]));
+                    }
+                    strengthIds = istrengthIds;
+                }
+
+                $('.th-list').children('li').each(function (i, val) {
+                    var $li = $(val);
+                    if (threatIds.indexOf($li.data('id')) > -1) {
+                        $li.addClass('highlight');
+                    }
+                });
+
+                $('.opp-list').children('li').each(function (i, val) {
+                    var $li = $(val);
+                    if (opportunityIds.indexOf($li.data('id')) > -1) {
+                        $li.addClass('highlight');
+                    }
+                });
+
+                $('.wk-list').children('li').each(function (i, val) {
+                    var $li = $(val);
+                    if (weaknessIds.indexOf($li.data('id')) > -1) {
+                        $li.addClass('highlight');
+                    }
+                });
+
+                $('.st-list').children('li').each(function (i, val) {
+                    var $li = $(val);
+                    if (strengthIds.indexOf($li.data('id')) > -1) {
+                        $li.addClass('highlight');
+                    }
+                });
+            });
+
+            $(document).on('mouseleave', '.btn-show-challenge', function () {
+                $('.highlight').each(function (i, val) {
+                    $(val).removeClass('highlight');
+                })
+            });
+
+
         });
+
+
+
+
+
+
     </script>
 }
