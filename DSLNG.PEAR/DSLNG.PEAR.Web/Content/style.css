@@ -992,7 +992,7 @@ table.text-center th {
 }
 
 .ajax-loading-dialog {
-    //position: absolute;
+    /*//position: absolute;*/
     margin: auto;
     top: 0px;
     left: 0px;
@@ -1806,6 +1806,10 @@ a.see-more {
     display: none;
 }
 
+/*.business-posture{
+    margin: 0px 60px 0px 60px;
+}*/
+
 .business-posture h4, .business-posture h6 {
     text-align:center;
     float:none;
@@ -1821,7 +1825,7 @@ a.see-more {
 .popover-to-content {
     display:none;
 }
-.business-posture .popover {
+.business-posture .popover, .environment-scanning {
     z-index:1040;
 }
 
@@ -1837,7 +1841,6 @@ a.see-more {
 .list-block h4{
     margin: 0px;
     border-bottom: 1px solid white;
-    margin: 
 }
 
 .sub-group h6{
@@ -1934,7 +1937,7 @@ a.see-more {
 
 .col-envi {
     text-align: center;
-    padding: 0px;
+    padding: 4px 0px 4px 0px;
 }
 .col-envi a{
     float: right;
@@ -1944,14 +1947,19 @@ a.see-more {
     padding: 0px;
 }
 
-.row-constraint h4, .row-challenges h4 {
+
+.row-constraint h6, .row-challenges h6 {
+    height: 100%;
     text-align: center;
     margin: 0px;
-    padding-top: 10px;
+    /*padding-left: 528px;*/
+    width: 1059px;
+
 }
 
 .row-constraint a, .row-challenges a, .challenge-remove-button, .constraint-remove-button{
     float: right;
+    margin-top: 5px;
 }
 
 .td-entity {
@@ -1970,6 +1978,7 @@ a.see-more {
     color: white;
     border-right: 1px solid white;
     border-bottom: 1px solid white;
+    word-break: break-all;
 }
 
 .remove-button,.envi-remove-button{
@@ -1978,10 +1987,18 @@ a.see-more {
 
 
 .div-envi {
-    padding-right:0px;
+    padding-left: 0px;
+    padding-right:2px;
+    word-break: break-all;
 }
 
-.div-envi li{
+
+.list-group{
+    list-style: none;
+    padding-left: 10px;
+
+}
+.list-group li{
     list-style-type : decimal;
 }
 
@@ -1997,6 +2014,179 @@ a.see-more {
     color: black;
 }
 
-.list-li{
-    height: 26px;
+.voyage-plan{
+    color:white;
+}
+
+.voyage-plan h3{
+    font-size: 14px;
+}
+
+.voyage-plan h2{
+    font-size: 16px;
+    text-align: center;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.midterm-phase-formulation h6,
+.midterm-phase-formulation h4{
+    float:none;
+    margin:0;
+}
+.midterm-phase-formulation .row .col-md-12{
+    margin-top: 20px;
+}
+
+.midterm-phase-formulation .row .col-md-4{
+    border: 1px solid white;
+    color: white;
+}
+
+
+.formulation-stage-template,.formulation-stage-form, .definition-form {
+
+display:none;
+}
+
+.div-row-child{
+    padding-right: 2px;
+}
+
+.cp-list li, .op-list li, .rp-list li{
+    list-style:decimal;
+}
+
+.list-block, .div-row-child{
+    word-break: break-all;
+}
+
+.list-checkbox{
+    list-style: none;
+}
+
+li > input.choose-list{
+    margin-right: 5px;
+}
+
+
+.midterm-phase-formulation h4, .midterm-phase-formulation h6
+{
+    text-align: center;
+    padding: 10px 0px 10px 0px;
+}
+
+.midterm-phase-formulation .col-md-12{
+    padding: 0px;
+}
+
+.midterm-phase-formulation .col-md-12 h4{
+    margin-bottom: 5px;
+}
+
+.midterm-phase-formulation .col-md-4{
+    padding: 0px;
+}
+
+
+.formulation-stages{
+    color: white;
+}
+
+.formulation-stage  {
+    margin-left: 10px;
+}
+
+.formulation-stage .title{
+    text-align: center;
+    float: none;
+}
+
+
+.formulation-stage{
+    padding: 0px;
+    border: 1px solid white;
+}
+
+.formulation-stage .date-range{
+    list-style: none;
+    padding: 0px;
+}
+
+.formulation-stage .date-range li{
+    display:inline-block;
+    border: 1px solid white;
+    float: left;
+    width: 50%;
+    text-align: center;
+}
+
+.formulation-stage .defined-header{
+    float: none;
+}
+
+.formulation-stage .defined-header{
+    margin-top:40px;
+    margin-left:0px;
+    text-align: left;
+    width: 100%;
+}
+
+.formulation-stage .defined-header a{
+    position: absolute;
+    top: 70px;
+    right: 0px;
+}
+
+.formulation-stage .defined-list{
+    float: none;
+    text-align: left;
+    width: 100%;
+    /*padding-left: 0px;*/
+    margin-left: 0px;
+
+}
+
+.formulation-stage .defined-list li{
+    list-style: decimal;
+}
+
+
+.formulation-stage .key-driver a{
+    position: relative;
+    float: right;
+}
+
+.formulation-stage .defined-list .key-driver{
+    margin-top: 40px;
+}
+
+.formulation-stage .key-driver{
+    /*margin-top: 20px;*/
+    list-style: decimal;
+}
+
+.in-planning .formulation-stage {
+    cursor:pointer;
+}
+.select2-dropdown {
+    z-index: 1062;
+}
+.midterm-planning-template,
+.kpi-form,
+.objective-form {
+    display:none;
+}
+.formulation-stage .key-driver .sub-title a{
+    position: relative;
+}
+
+.business-posture .highlight, .environment-scanning .highlight {
+    color:red;
+}
+.stage-selected {
+    background-color:green;
+}
+.strategic-planning-form {
+    display:none;
 }

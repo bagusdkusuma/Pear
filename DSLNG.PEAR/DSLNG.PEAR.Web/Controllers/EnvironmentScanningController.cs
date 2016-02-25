@@ -106,7 +106,12 @@ namespace DSLNG.PEAR.Web.Controllers
                 id = response.Id,
                 type = response.Type,
                 category = response.Category,
-                definition = response.Definition
+                definition = response.Definition,
+                relationids = response.RelationIds,
+                threatIds = response.ThreatIds,
+                opportunityIds = response.OpportunityIds,
+                weaknessIds = response.WeaknessIds,
+                strengthIds = response.StrengthIds
             };
 
             return Json(data, JsonRequestBehavior.AllowGet);
@@ -124,11 +129,31 @@ namespace DSLNG.PEAR.Web.Controllers
                 id = response.Id,
                 type = response.Type,
                 category = response.Category,
-                definition = response.Definition
+                definition = response.Definition,
+                threatIds = response.ThreatIds,
+                opportunityIds = response.OpportunityIds,
+                weaknessIds = response.WeaknessIds,
+                strengthIds = response.StrengthIds
             };
 
             return Json(data, JsonRequestBehavior.AllowGet);
             
+        }
+
+        [HttpPost]
+        public PartialViewResult ShowConstraint(int id)
+        {
+            var viewModel = _environmentScanningService.GetConstraint(new GetConstraintRequest { Id = id }).MapTo<GetConstraintViewModel>();
+
+            return PartialView("_showConstraint", viewModel);
+        }
+
+
+       [HttpPost]
+        public PartialViewResult ShowChallenge(int id)
+        {
+            var viewModel = _environmentScanningService.GetChallenge(new GetChallengeRequest { Id = id }).MapTo<GetChallengeViewModel>();
+            return PartialView("_showChallenge", viewModel);
         }
 	}
 }

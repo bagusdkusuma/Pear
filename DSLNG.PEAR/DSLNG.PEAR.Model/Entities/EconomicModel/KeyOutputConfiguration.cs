@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DSLNG.PEAR.Data.Enums;
+using DSLNG.PEAR.Data.Entities.Blueprint;
 
 namespace DSLNG.PEAR.Data.Entities.EconomicModel
 {
@@ -33,5 +34,6 @@ namespace DSLNG.PEAR.Data.Entities.EconomicModel
         public bool IsActive { get; set; }
         public double? ConversionValue { get; set; }
         public ConversionType? ConversionType { get; set; }
+        public IList<PlanningBlueprint> PlanningBlueprints { get; set; }
     }
 }

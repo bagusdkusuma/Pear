@@ -762,6 +762,8 @@
     <Compile Include="Controllers\BusinessPostureController.cs" />
     <Compile Include="Controllers\EconomicSummaryController.cs" />
     <Compile Include="Controllers\EnvironmentScanningController.cs" />
+    <Compile Include="Controllers\MidtermFormulationController.cs" />
+    <Compile Include="Controllers\MidtermStrategyPlanningController.cs" />
     <Compile Include="Controllers\PlanningBlueprintController.cs" />
     <Compile Include="Scheduler\ScenarioScheduler.cs" />
     <Compile Include="ViewModels\BusinessPosture\DesiredStateViewModel.cs" />
@@ -979,6 +981,8 @@
     <Content Include="Views\AssumptionData\Input.cshtml" />
     <Content Include="Views\EconomicSummary\Config.cshtml" />
     <Content Include="Views\AssumptionData\_DetailPartial.cshtml" />
+    <Content Include="Views\Shared\_showConstraint.cshtml" />
+    <Content Include="Views\Shared\_showChallenge.cshtml" />
     <None Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\SpeedometerChart\_Edit.cshtml" />
     <Content Include="Views\Tabular\_Create.cshtml" />
@@ -1088,6 +1092,11 @@
     <Content Include="Views\OperationData\_Download.cshtml" />
     <Content Include="Views\PlanningBlueprint\BusinessPostureIdentification.cshtml" />
     <Content Include="Views\PlanningBlueprint\VoyagePlan.cshtml" />
+    <Content Include="Views\PlanningBlueprint\VoyagePlanApproval.cshtml" />
+    <Content Include="Views\PlanningBlueprint\MidtermPhaseFormulation.cshtml" />
+    <Content Include="Views\Shared\_showPostureChallenge.cshtml" />
+    <Content Include="Views\Shared\_showPostureConstraint.cshtml" />
+    <Content Include="Views\PlanningBlueprint\MidtermStrategyPlanning.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -1244,6 +1253,11 @@
     <Compile Include="ViewModels\KpiTarget\ConfigurationParamViewModel.cs" />
     <Compile Include="ViewModels\KpiTarget\IndexKpiTargetViewModel.cs" />
     <Compile Include="ViewModels\KpiTarget\UpdateKpiTargetViewModel.cs" />
+    <Compile Include="ViewModels\MidtermFormulation\MidtermPhaseStageViewModel.cs" />
+    <Compile Include="ViewModels\MidtermFormulation\MidtermStageDefinitionViewModel.cs" />
+    <Compile Include="ViewModels\MidtermStrategyPlanning\AddPlanningKpiViewModel.cs" />
+    <Compile Include="ViewModels\MidtermStrategyPlanning\AddStrategyPlanningViewModel.cs" />
+    <Compile Include="ViewModels\MidtermStrategyPlanning\MidtermPlanningObjectiveViewModel.cs" />
     <Compile Include="ViewModels\NLS\NLSViewModel.cs" />
     <Compile Include="ViewModels\OperationalData\OperationDataDetailViewModel.cs" />
     <Compile Include="ViewModels\OperationalData\OperationalDataViewModel.cs" />
@@ -1259,6 +1273,7 @@
     <Compile Include="ViewModels\OutputConfig\ScenarioResultViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\BusinessPostureViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\EnvironmentsScanningViewModel.cs" />
+    <Compile Include="ViewModels\PlanningBlueprint\MidtermFormulationViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\PlanningBlueprintViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\VoyagePlanViewModel.cs" />
     <Compile Include="ViewModels\PmsConfigDetails\CreatePmsConfigDetailsViewModel.cs" />
@@ -1349,6 +1364,8 @@
     <Folder Include="Views\BusinessPosture\" />
     <Folder Include="Views\Chart\" />
     <Folder Include="Views\CorporatePortofolio\" />
+    <Folder Include="Views\MidtermFormulation\" />
+    <Folder Include="Views\MidtermStrategyPlanning\" />
     <Folder Include="Views\Test\" />
     <Folder Include="Views\UnAuthorize\" />
   </ItemGroup>

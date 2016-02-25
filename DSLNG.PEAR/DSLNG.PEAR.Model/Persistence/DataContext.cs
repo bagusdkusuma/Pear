@@ -79,6 +79,12 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<EnvironmentalScanning> EnvironmentalScannings { get; set; }
         public IDbSet<Constraint> Constraint { get; set; }
         public IDbSet<Challenge> Challenges { get; set; }
+        public IDbSet<MidtermPhaseFormulationStage> MidtermPhaseFormulationStages { get; set; }
+        public IDbSet<MidtermPhaseFormulation> MidtermPhaseFormulations { get; set; }
+        public IDbSet<MidtermPhaseDescription> MidtermPhaseDescriptions { get; set; }
+        public IDbSet<MidtermPhaseKeyDriver> MidtermPhaseKeyDrivers { get; set; }
+        public IDbSet<MidtermStrategicPlanning> MidtermStrategyPlannings { get; set; }
+        public IDbSet<MidtermStrategicPlanningObjective> MidtermStrategicPlanningObjectives { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Kpi>()
@@ -173,6 +179,14 @@ namespace DSLNG.PEAR.Data.Persistence
                 .HasRequired(x => x.PlanningBlueprint)
                 .WithRequiredDependent(x => x.BusinessPostureIdentification);
 
+            modelBuilder.Entity<MidtermPhaseFormulation>()
+               .HasRequired(x => x.PlanningBlueprint)
+               .WithRequiredDependent(x => x.MidtermPhaseFormulation);
+
+            modelBuilder.Entity<MidtermStrategyPlanning>()
+             .HasRequired(x => x.PlanningBlueprint)
+             .WithRequiredDependent(x => x.MidtermStragetyPlanning);
+
 
             modelBuilder.Entity<EnvironmentalScanning>()
                 .HasOptional(x => x.ThreatHost)
@@ -194,6 +208,22 @@ namespace DSLNG.PEAR.Data.Persistence
                 .WithMany(x => x.Strength)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<MidtermPhaseFormulationStage>()
+                .HasMany(x => x.Descriptions)
+                .WithOptional(x => x.Formulation)
+                .WillCascadeOnDelete(true);
+            modelBuilder.Entity<MidtermPhaseFormulationStage>()
+                 .HasMany(x => x.KeyDrivers)
+                .WithOptional(x => x.Formulation)
+                .WillCascadeOnDelete(true);
+            modelBuilder.Entity<MidtermPhaseFormulationStage>()
+                .HasMany(x => x.MidtermStrategicPlannings)
+               .WithOptional(x => x.Stage)
+               .WillCascadeOnDelete(true);
+            modelBuilder.Entity<MidtermStrategicPlanning>()
+              .HasMany(x => x.Objectives)
+              .WithOptional(x => x.MidtermStrategicPlanning)
+              .WillCascadeOnDelete(true);
 
             base.OnModelCreating(modelBuilder);
         }

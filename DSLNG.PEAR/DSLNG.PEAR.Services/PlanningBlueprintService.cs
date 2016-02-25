@@ -72,6 +72,8 @@ namespace DSLNG.PEAR.Services
                     var planningBluePrint = request.MapTo<PlanningBlueprint>();
                     var environmentsScanning = new EnvironmentsScanning();
                     var businessPostureIdentification = new BusinessPostureIdentification();
+                    var midtermPhaseFormulation = new MidtermPhaseFormulation();
+                    var midtermStrategyPlanning = new MidtermStrategyPlanning();
                     var constructionPosture = new Posture { Type = PostureType.Construction };
                     var operationPosture = new Posture { Type = PostureType.Operation };
                     var decommissioningPosture = new Posture { Type = PostureType.Decommissioning };
@@ -80,6 +82,8 @@ namespace DSLNG.PEAR.Services
                     businessPostureIdentification.Postures.Add(decommissioningPosture);
                     planningBluePrint.EnvironmentsScanning = environmentsScanning;
                     planningBluePrint.BusinessPostureIdentification = businessPostureIdentification;
+                    planningBluePrint.MidtermPhaseFormulation = midtermPhaseFormulation;
+                    planningBluePrint.MidtermStragetyPlanning = midtermStrategyPlanning;
                     DataContext.PlanningBlueprints.Add(planningBluePrint);
                 }
                 else
@@ -136,6 +140,31 @@ namespace DSLNG.PEAR.Services
                 return response;
             }
             return null;
+        }
+
+
+        public ApproveVoyagePlanResponse ApproveVoyagePlan(int id)
+        {
+            try
+            {
+                var planningDashboard = DataContext.PlanningBlueprints
+                    .First(x => x.Id == id);
+                planningDashboard.IsApproved = true;
+                DataContext.SaveChanges();
+                return new ApproveVoyagePlanResponse
+                {
+                    IsSuccess = true,
+                    Message = "The voyage plan has been approved",
+                    //BusinessPostureId = planningDashboard.BusinessPostureIdentification.Id
+                };
+            }
+            catch {
+                return new ApproveVoyagePlanResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured,please contact adminstrator for further information"
+                };
+            }
         }
     }
 }

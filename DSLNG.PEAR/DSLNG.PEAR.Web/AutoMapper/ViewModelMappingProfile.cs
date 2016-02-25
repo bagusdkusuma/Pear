@@ -144,6 +144,12 @@ using DSLNG.PEAR.Services.Responses.EnvironmentScanning;
 using DSLNG.PEAR.Web.ViewModels.EnvironmentScanning;
 using DSLNG.PEAR.Services.Requests.EnvironmentScanning;
 using DSLNG.PEAR.Services.Responses.PlanningBlueprint;
+using DSLNG.PEAR.Services.Responses.MidtermFormulation;
+using DSLNG.PEAR.Services.Requests.MidtermFormulation;
+using DSLNG.PEAR.Web.ViewModels.MidtermFormulation;
+using System.Globalization;
+using DSLNG.PEAR.Web.ViewModels.MidtermStrategyPlanning;
+using DSLNG.PEAR.Services.Requests.MidtermPlanning;
 namespace DSLNG.PEAR.Web.AutoMapper
 {
     public class ViewModelMappingProfile : Profile
@@ -597,6 +603,10 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<DesiredStateViewModel, SaveDesiredStateRequest>();
             Mapper.CreateMap<PostureChallengeViewModel, SavePostureChallengeRequest>();
             Mapper.CreateMap<PostureConstraintViewModel, SavePostureConstraintRequest>();
+            Mapper.CreateMap<GetBusinessPostureResponse.EnvironmentScanning, BusinessPostureViewModel.EnvironmentScanning>();
+            Mapper.CreateMap<GetBusinessPostureResponse.EnvironmentScanning.UltimateObjective, BusinessPostureViewModel.EnvironmentScanning.UltimateObjective>();
+            Mapper.CreateMap<GetBusinessPostureResponse.EnvironmentScanning.Constraint, BusinessPostureViewModel.EnvironmentScanning.Constraint>();
+            Mapper.CreateMap<GetBusinessPostureResponse.EnvironmentScanning.Challenge, BusinessPostureViewModel.EnvironmentScanning.Challenge>();
 
             Mapper.CreateMap<GetEnvironmentsScanningResponse, EnvironmentScanningViewModel>();
             Mapper.CreateMap<GetEnvironmentsScanningResponse.UltimateObjective, EnvironmentScanningViewModel.UltimateObjective>();
@@ -616,7 +626,30 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetVoyagePlanResponse.DesiredState, VoyagePlanViewModel.DesiredStateViewModel>();
             Mapper.CreateMap<GetVoyagePlanResponse.PostureChallenge, VoyagePlanViewModel.PostureChallengeViewModel>();
             Mapper.CreateMap<GetVoyagePlanResponse.PostureConstraint, VoyagePlanViewModel.PostureConstraintViewModel>();
+            Mapper.CreateMap<GetConstraintResponse, GetConstraintViewModel>();
+            Mapper.CreateMap<GetConstraintResponse.Environmental, GetConstraintViewModel.Environmental>();
+            Mapper.CreateMap<GetChallengeResponse, GetChallengeViewModel>();
+            Mapper.CreateMap<GetChallengeResponse.Environmental, GetChallengeViewModel.Environmental>();
+            Mapper.CreateMap<GetPostureChallengeResponse, PostureChalengeListViewModel>();
+            Mapper.CreateMap<GetPostureChallengeResponse.DesiredState, PostureChalengeListViewModel.DesiredState>();
+            Mapper.CreateMap<GetPostureConstraintResponse, PostureConstraintListViewModel>();
+            Mapper.CreateMap<GetPostureConstraintResponse.DesiredState, PostureConstraintListViewModel.DesiredState>();
 
+            Mapper.CreateMap<GetMidtermFormulationResponse, MidtermFormulationViewModel>();
+            Mapper.CreateMap<GetMidtermFormulationResponse.Posture, MidtermFormulationViewModel.PostureViewModel>();
+            Mapper.CreateMap<GetMidtermFormulationResponse.DesiredState, MidtermFormulationViewModel.DesiredStateViewModel>();
+            Mapper.CreateMap<GetMidtermFormulationResponse.MidtermFormulationStage, MidtermFormulationViewModel.MidtermFormulationStageViewModel>();
+            Mapper.CreateMap<GetMidtermFormulationResponse.MidtermPhaseDescription, MidtermFormulationViewModel.MidtermPhaseDescriptionViewModel>();
+            Mapper.CreateMap<GetMidtermFormulationResponse.MidtermPhaseKeyDriver, MidtermFormulationViewModel.MidtermPhaseKeyDriverViewModel>();
+
+            Mapper.CreateMap<MidtermPhaseStageViewModel, AddStageRequest>()
+                .ForMember(d => d.StartDate, o => o.MapFrom(s => string.IsNullOrEmpty(s.StartDate) ? (DateTime?)null : DateTime.ParseExact("01/" + s.StartDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)))
+                .ForMember(d => d.EndDate, o => o.MapFrom(s => string.IsNullOrEmpty(s.StartDate) ? (DateTime?)null : DateTime.ParseExact("01/" + s.EndDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)));
+            Mapper.CreateMap<MidtermStageDefinitionViewModel, AddDefinitionRequest>();
+
+            Mapper.CreateMap<AddMidtermPlanningViewModel, AddMidtermPlanningRequest>()
+               .ForMember(d => d.StartDate, o => o.MapFrom(s => string.IsNullOrEmpty(s.StartDate) ? (DateTime?)null : DateTime.ParseExact("01/" + s.StartDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)))
+               .ForMember(d => d.EndDate, o => o.MapFrom(s => string.IsNullOrEmpty(s.StartDate) ? (DateTime?)null : DateTime.ParseExact("01/" + s.EndDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)));
             base.Configure();
         }
 
@@ -698,6 +731,9 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetOperationalDataDetailResponse.KeyOperationConfig, OperationDataDetailViewModel.KeyOperationConfigViewModel>();
             Mapper.CreateMap<GetOperationalDataDetailResponse.KeyOperationGroup, OperationDataDetailViewModel.KeyOperationGroupViewModel>();
             Mapper.CreateMap<GetOperationalDataDetailResponse.Kpi, OperationDataDetailViewModel.KpiViewModel>();
+
+            Mapper.CreateMap<MidtermPlanningObjectiveViewModel, AddObjectiveRequest>();
+            Mapper.CreateMap<AddPlanningKpiViewModel, AddPlanningKpiRequest>();
         }
 
         private void ConfigureCorporatePortofolio()
