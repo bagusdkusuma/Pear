@@ -323,6 +323,7 @@
         <input type="text" name="type" hidden="hidden" />
         <textarea name="Description" cols="25" rows="5"></textarea>
         <button class="btn btn-primary form-es-submit">Add</button>
+        <button class="btn btn-primary cancel-popover">Cancel</button>
     }
 </div>
 
@@ -336,6 +337,7 @@
         <input type="text" name="enviType" hidden="hidden" />
         <textarea name="Description" cols="25" rows="5"></textarea>
         <button class="btn btn-primary form-envi-submit">Add</button>
+        <button class="btn btn-primary cancel-popover">Cancel</button>
     }
 </div>
 
@@ -364,6 +366,7 @@
         <div>
             <input type="text" name="enviId" hidden="hidden" />
             <button type="button" class="btn btn-primary form-input-constraint">Add</button>
+            <button class="btn btn-primary cancel-popover">Cancel</button>
         </div>
 
     }
@@ -393,6 +396,7 @@
         <div>
             <input type="text" name="enviId" hidden="hidden" />
             <button type="button" class="btn btn-primary form-input-challenge">Add</button>
+            <button class="btn btn-primary cancel-popover">Cancel</button>
         </div>
 
     }
@@ -445,6 +449,11 @@
                 content: function () {
                     return $('.popover-content').html();
                 }
+            });
+
+            $(document).on('click', '.cancel-popover', function (e) {
+                e.preventDefault();
+                $('.popover').popover('hide');
             });
 
             var popOverElem;
@@ -632,11 +641,9 @@
                         var input = [];
                         input = input + 'data-th="' + data.threatIds + '"' + 'data-opp="' + data.opportunityIds + '"' + 'data-wk="' + data.weaknessIds + '"' + 'data-st="' + data.strengthIds + '"'
 
-                        console.log(input);
 
                         $('.table-constraint').append('<tr><td class="td-entity">' + '<a href="#" data-toggle="modal" ' + input + ' data-target="#envi-modal" data-id="' + data.id + '" class="btn-show-constraint">' + '<span>' + relation + '</span>' + '</td><td class="td-definition">' + data.definition + '<a href="#" data-id="' + data.id + '" class="constraint-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
                         popOverElem.popover('hide');
-                        console.log(relation);
                     }
                 })
             });
@@ -747,7 +754,6 @@
                     $hiddenId.prop('name', 'RelationIds[]');
                     $hiddenId.val($(val).parent().data('id'));
                     $wrapper.append($hiddenId);
-                    console.log($wrapper);
                 });
             });
 
@@ -827,7 +833,6 @@
                     $hiddenId.prop('name', 'RelationIds[]');
                     $hiddenId.val($(val).parent().data('id'));
                     $wrapper.append($hiddenId);
-                    console.log($wrapper);
                 });
             });
 

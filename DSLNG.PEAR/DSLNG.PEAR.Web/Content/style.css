@@ -2093,6 +2093,10 @@ li > input.choose-list{
     color: white;
 }
 
+.formulation-stage  {
+    margin-left: 10px;
+}
+
 .formulation-stage .title{
     text-align: center;
     float: none;
@@ -2174,7 +2178,7 @@ li > input.choose-list{
     display:none;
 }
 .formulation-stage .key-driver .sub-title a{
-    float: right;
+    position: relative;
 }
 
 .business-posture .highlight, .environment-scanning .highlight {
