@@ -123,6 +123,7 @@
     <Compile Include="Requests\HighlightOrder\SaveStaticHighlightOrderRequest.cs" />
     <Compile Include="Requests\MidtermFormulation\AddDefinitionRequest.cs" />
     <Compile Include="Requests\MidtermFormulation\AddStageRequest.cs" />
+    <Compile Include="Requests\MidtermPlanning\AddMidtermPlanningRequest.cs" />
     <Compile Include="Requests\MidtermPlanning\AddObjectiveRequest.cs" />
     <Compile Include="Requests\MidtermPlanning\AddPlanningKpiRequest.cs" />
     <Compile Include="Requests\OperationalData\GetOperationDataConfigurationRequest.cs" />
@@ -165,6 +166,7 @@
     <Compile Include="Responses\MidtermFormulation\AddDefinitionResponse.cs" />
     <Compile Include="Responses\MidtermFormulation\AddStageResponse.cs" />
     <Compile Include="Responses\MidtermFormulation\GetMidtermFormulationResponse.cs" />
+    <Compile Include="Responses\MidtermPlanning\AddMidtermPlanningResponse.cs" />
     <Compile Include="Responses\MidtermPlanning\AddObjectiveResponse.cs" />
     <Compile Include="Responses\MidtermPlanning\AddPlanningKpiResponse.cs" />
     <Compile Include="Responses\MidtermPlanning\GetMidtermPlanningsResponse.cs" />

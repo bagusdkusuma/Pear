@@ -646,6 +646,10 @@ namespace DSLNG.PEAR.Web.AutoMapper
                 .ForMember(d => d.StartDate, o => o.MapFrom(s => string.IsNullOrEmpty(s.StartDate) ? (DateTime?)null : DateTime.ParseExact("01/" + s.StartDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)))
                 .ForMember(d => d.EndDate, o => o.MapFrom(s => string.IsNullOrEmpty(s.StartDate) ? (DateTime?)null : DateTime.ParseExact("01/" + s.EndDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)));
             Mapper.CreateMap<MidtermStageDefinitionViewModel, AddDefinitionRequest>();
+
+            Mapper.CreateMap<AddMidtermPlanningViewModel, AddMidtermPlanningRequest>()
+               .ForMember(d => d.StartDate, o => o.MapFrom(s => string.IsNullOrEmpty(s.StartDate) ? (DateTime?)null : DateTime.ParseExact("01/" + s.StartDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)))
+               .ForMember(d => d.EndDate, o => o.MapFrom(s => string.IsNullOrEmpty(s.StartDate) ? (DateTime?)null : DateTime.ParseExact("01/" + s.EndDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)));
             base.Configure();
         }
 

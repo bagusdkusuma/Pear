@@ -2180,3 +2180,9 @@ li > input.choose-list{
 .business-posture .highlight, .environment-scanning .highlight {
     color:red;
 }
+.stage-selected {
+    background-color:green;
+}
+.strategic-planning-form {
+    display:none;
+}

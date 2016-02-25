@@ -172,5 +172,86 @@ namespace DSLNG.PEAR.Services
             response.Measurement = kpi.Measurement.Name;
             return response;
         }
+
+
+        public BaseResponse Delete(int id)
+        {
+            try
+            {
+                var planning = new MidtermStrategicPlanning { Id = id };
+                DataContext.MidtermStrategyPlannings.Attach(planning);
+                DataContext.MidtermStrategyPlannings.Remove(planning);
+                DataContext.SaveChanges();
+                return new BaseResponse
+                {
+                    IsSuccess = true,
+                    Message = "You have been successfully delete the item"
+                };
+            }
+            catch
+            {
+                return new BaseResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured, please contact adminstrator for further information"
+                };
+            }
+        }
+
+        public BaseResponse DeleteKpi(int id, int midTermId)
+        {
+            try
+            {
+                var midtermPlanning = DataContext.MidtermStrategyPlannings
+                .Include(x => x.Kpis)
+                .Include(x => x.Kpis.Select(y => y.Measurement))
+                .First(x => x.Id == midTermId);
+                midtermPlanning.Kpis.Remove(midtermPlanning.Kpis.First(x => x.Id == id));
+                DataContext.SaveChanges();
+                return new BaseResponse
+                {
+                    IsSuccess = true,
+                    Message = "You have been successfully delete the item"
+                };
+            }
+            catch
+            {
+                return new BaseResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured, please contact adminstrator for further information"
+                };
+            }
+        }
+
+
+        public AddMidtermPlanningResponse Add(AddMidtermPlanningRequest request)
+        {
+            try
+            {
+                var midtermPlanning = request.MapTo<MidtermStrategicPlanning>();
+                var midtermStage = new MidtermPhaseFormulationStage { Id = request.MidtermStageId };
+                DataContext.MidtermPhaseFormulationStages.Attach(midtermStage);
+                midtermPlanning.Stage = midtermStage;
+                DataContext.MidtermStrategyPlannings.Add(midtermPlanning);
+                DataContext.SaveChanges();
+                return new AddMidtermPlanningResponse
+                {
+                    Id = midtermPlanning.Id,
+                    StartDate = midtermPlanning.StartDate,
+                    EndDate = midtermPlanning.EndDate,
+                    Title = midtermPlanning.Title,
+                    IsSuccess = true,
+                    Message = "You have been successfully add new item"
+                };
+            }
+            catch {
+                return new AddMidtermPlanningResponse
+                {
+                    IsSuccess = true,
+                    Message = "You have been successfully add new item"
+                };
+            }
+        }
     }
 }

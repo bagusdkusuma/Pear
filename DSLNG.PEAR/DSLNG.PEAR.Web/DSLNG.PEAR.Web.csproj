@@ -1256,6 +1256,7 @@
     <Compile Include="ViewModels\MidtermFormulation\MidtermPhaseStageViewModel.cs" />
     <Compile Include="ViewModels\MidtermFormulation\MidtermStageDefinitionViewModel.cs" />
     <Compile Include="ViewModels\MidtermStrategyPlanning\AddPlanningKpiViewModel.cs" />
+    <Compile Include="ViewModels\MidtermStrategyPlanning\AddStrategyPlanningViewModel.cs" />
     <Compile Include="ViewModels\MidtermStrategyPlanning\MidtermPlanningObjectiveViewModel.cs" />
     <Compile Include="ViewModels\NLS\NLSViewModel.cs" />
     <Compile Include="ViewModels\OperationalData\OperationDataDetailViewModel.cs" />

@@ -50,6 +50,7 @@
     <div class="row">
         <div class="col-md-12">
             <h4 style="background-color: #00bfff;">Midterm Strategic Planning
+                  <a class="add-strategic-planning"  data-toggle="popover" href="javascript:void(0)"><i class="fa fa-plus"></i></a>
             </h4>
         </div>
     </div>
@@ -102,6 +103,23 @@
         </form>
     </div>
     <div id="hidden-fields-holder" data-kpi-url="@Url.Action("KpiList", "Artifact")"></div>
+    <div class="strategic-planning-form">
+    <form action="/MidtermStrategyPlanning/Add">
+        <input type="hidden" name="MidtermStageId" />
+        <label>Title</label>
+        <input type="text" name="Title" />
+        <div style="position: relative">
+            <label>Start</label>
+
+            <input type="text" name="StartDate" class="monthpicker" />
+        </div>
+        <div style="position: relative">
+            <label>End</label>
+            <input type="text" name="EndDate" class="monthpicker" />
+        </div>
+        <input type="submit" class="btn btn-primary submit-midterm-planning" value="submit" />
+    </form>
+</div>
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -147,6 +165,7 @@
                     var $kpisHolder = $midtermPlanning.find('.kpis');
                     var kpi = data;
                     var $row = $('<tr />');
+                    $row.data('id', kpi.Id);
                     var $kpiCol = $('<td />');
                     var $targetCol = $('<td />');
                     var $actualCol = $('<td />');
@@ -166,6 +185,7 @@
         });
         $(document).on('click', '.remove-objective', function (e) {
             e.preventDefault();
+            if (!confirm("Are you sure want to delete this item?")) return;
             var $this = $(this);
             $.post($this.prop('href'), 'id=' + $this.parent().data('id'), function (data) {
                 if (data.IsSuccess) {
@@ -199,6 +219,7 @@
                     for (var j in mPlanning.Kpis) {
                         var kpi = mPlanning.Kpis[j];
                         var $row = $('<tr />');
+                        $row.data('id', kpi.Id);
                         var $kpiCol = $('<td />');
                         var $targetCol = $('<td />');
                         var $actualCol = $('<td />');
@@ -211,6 +232,72 @@
                         $kpisHolder.append($row);
                     }
                     $mPlanningsHolder.append($mpTemplate);
+                }
+            });
+        });
+        $(document).on('click', '.remove-midterm-planning', function (e) {
+            e.preventDefault();
+            if (!confirm("Are you sure want to delete this item?")) return;
+            var $this = $(this);
+            $.post($this.prop('href'), 'id=' + $this.closest('.midterm-planning').data('id'), function (data) {
+                if (data.IsSuccess) {
+                    $this.closest('.midterm-planning').remove();
+                }
+            });
+        });
+        $(document).on('click', '.remove-kpi', function (e) {
+            e.preventDefault();
+            if (!confirm("Are you sure want to delete this item?")) return;
+            var $this = $(this);
+            $.post($this.prop('href'), 'id=' + $this.closest('tr').data('id') + '&midTermId=' + $this.closest('.midterm-planning').data('id'), function (data) {
+                if (data.IsSuccess) {
+                    $this.closest('tr').remove();
+                }
+            });
+        });
+        $('.formulation-stages .formulation-stage').click(function (e) {
+            e.preventDefault();
+            $('.stage-selected').removeClass('stage-selected');
+            $(this).addClass('stage-selected');
+        });
+        $('.formulation-stages .formulation-stage:first-child').click();
+
+        $('.midterm-strategy-planning').popover({
+            selector: '.add-strategic-planning',
+            html: true,
+            placement: 'bottom',
+            content: function () {
+                return $('.strategic-planning-form').html();
+            }
+        });
+
+        $('.add-strategic-planning').on('shown.bs.popover', function () {
+            $('.popover .monthpicker').datetimepicker({
+                format: "MM/YYYY"
+            }).on('dp.change', function (e) {
+                if (e.oldDate == null || e.date.format("MM/YYYY") == e.oldDate.format("MM/YYYY")) {
+                    return;
+                }
+            });
+        });
+        $(document).on('click', '.submit-midterm-planning', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var midtermStageId = $('.stage-selected').data('id');
+            var $form = $this.closest('form');
+            $form.find('input[name="MidtermStageId"]').val(midtermStageId);
+            $.post($form.prop('action'), $form.serialize(), function (data) {
+                var mPlanning = data;
+                if (data.IsSuccess) {
+                    var $mpTemplate = $('.midterm-planning-template').clone(true);
+                    $mpTemplate.data('id', mPlanning.Id);
+                    $mpTemplate.removeClass('midterm-planning-template');
+                    $mpTemplate.addClass('midterm-planning');
+                    $mpTemplate.find('.header-title').html(mPlanning.Title);
+                    $mpTemplate.find('.start').html(moment(new Date(mPlanning.StartDate.match(/\d+/)[0] * 1)).format('MMM YYYY'));
+                    $mpTemplate.find('.end').html(moment(new Date(mPlanning.EndDate.match(/\d+/)[0] * 1)).format('MMM YYYY'));
+                    $('.midterm-plannings').append($mpTemplate);
+                    $('.add-strategic-planning').popover('hide');
                 }
             });
         });

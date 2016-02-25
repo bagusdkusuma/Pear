@@ -633,6 +633,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(d => d.Year, o => o.MapFrom(s => s.Periode.Year));
 
             Mapper.CreateMap<AddObjectiveRequest, MidtermStrategicPlanningObjective>();
+            Mapper.CreateMap<AddMidtermPlanningRequest, MidtermStrategicPlanning>();
 
             base.Configure();
         }

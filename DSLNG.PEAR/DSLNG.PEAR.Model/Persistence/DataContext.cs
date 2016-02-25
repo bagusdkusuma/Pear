@@ -216,6 +216,14 @@ namespace DSLNG.PEAR.Data.Persistence
                  .HasMany(x => x.KeyDrivers)
                 .WithOptional(x => x.Formulation)
                 .WillCascadeOnDelete(true);
+            modelBuilder.Entity<MidtermPhaseFormulationStage>()
+                .HasMany(x => x.MidtermStrategicPlannings)
+               .WithOptional(x => x.Stage)
+               .WillCascadeOnDelete(true);
+            modelBuilder.Entity<MidtermStrategicPlanning>()
+              .HasMany(x => x.Objectives)
+              .WithOptional(x => x.MidtermStrategicPlanning)
+              .WillCascadeOnDelete(true);
 
             base.OnModelCreating(modelBuilder);
         }

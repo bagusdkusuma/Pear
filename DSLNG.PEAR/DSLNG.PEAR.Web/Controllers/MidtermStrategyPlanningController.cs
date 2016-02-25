@@ -38,5 +38,22 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult AddKpi(AddPlanningKpiViewModel viewModel) {
             return Json(_midtermPlanningService.AddKpi(viewModel.MapTo<AddPlanningKpiRequest>()));
         }
+
+        [HttpPost]
+        public ActionResult Delete(int id) {
+            return Json(_midtermPlanningService.Delete(id));
+        }
+        
+        [HttpPost]
+        public ActionResult DeleteKpi(int id, int midTermId)
+        {
+            return Json(_midtermPlanningService.DeleteKpi(id, midTermId));
+        }
+
+        [HttpPost]
+        public ActionResult Add(AddMidtermPlanningViewModel viewModel)
+        {
+            return Json(_midtermPlanningService.Add(viewModel.MapTo<AddMidtermPlanningRequest>()));
+        }
 	}
 }
