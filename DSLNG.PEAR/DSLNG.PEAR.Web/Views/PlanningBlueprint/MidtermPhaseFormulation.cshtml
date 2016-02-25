@@ -161,6 +161,7 @@
         });
         $(document).on('click', '.add-midterm-stage', function (e) {
             e.preventDefault();
+            var $this = $(this);
             var $form = $(this).closest('form');
             var $trigger = $this.closest('.popover').prev('a');
             $.post($form.prop('action'), $form.serialize(), function (data) {

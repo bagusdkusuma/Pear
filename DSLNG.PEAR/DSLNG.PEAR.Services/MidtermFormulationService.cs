@@ -50,6 +50,17 @@ namespace DSLNG.PEAR.Services
                 var formulation = new MidtermPhaseFormulation { Id = request.MidtermFormulationId };
                 DataContext.MidtermPhaseFormulations.Attach(formulation);
                 stage.MidtermPhaseFormulation = formulation;
+                var interval = stage.EndDate.Value.Year - stage.StartDate.Value.Year + 1;
+                var startYear = stage.StartDate.Value.Year;
+                var endYear = stage.EndDate.Value.Year;
+                for (var i = 0; i < interval; i++) {
+                    var planning = new MidtermStrategicPlanning { 
+                        Title = "Annual Objective Planning",
+                        StartDate = i == 0? stage.StartDate : new DateTime(startYear + i, 1, 1),
+                        EndDate = i == interval - 1? stage.EndDate : new DateTime(startYear + i, 12, 1)
+                    };
+                    stage.MidtermStrategicPlannings.Add(planning);
+                }
                 DataContext.MidtermPhaseFormulationStages.Add(stage);
                 DataContext.SaveChanges();
                 return new AddStageResponse

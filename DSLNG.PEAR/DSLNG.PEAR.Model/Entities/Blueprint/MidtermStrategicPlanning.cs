@@ -13,7 +13,8 @@ namespace DSLNG.PEAR.Data.Entities.Blueprint
         public string Title { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
-        public IList<MidtermStrategicPlanningObjective> Objective { get; set; }
+        public IList<MidtermStrategicPlanningObjective> Objectives { get; set; }
         public IList<Kpi> Kpis { get; set; }
+        public MidtermPhaseFormulationStage Stage { get; set; }
     }
 }

@@ -148,6 +148,8 @@ using DSLNG.PEAR.Services.Responses.MidtermFormulation;
 using DSLNG.PEAR.Services.Requests.MidtermFormulation;
 using DSLNG.PEAR.Web.ViewModels.MidtermFormulation;
 using System.Globalization;
+using DSLNG.PEAR.Web.ViewModels.MidtermStrategyPlanning;
+using DSLNG.PEAR.Services.Requests.MidtermPlanning;
 namespace DSLNG.PEAR.Web.AutoMapper
 {
     public class ViewModelMappingProfile : Profile
@@ -721,6 +723,9 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetOperationalDataDetailResponse.KeyOperationConfig, OperationDataDetailViewModel.KeyOperationConfigViewModel>();
             Mapper.CreateMap<GetOperationalDataDetailResponse.KeyOperationGroup, OperationDataDetailViewModel.KeyOperationGroupViewModel>();
             Mapper.CreateMap<GetOperationalDataDetailResponse.Kpi, OperationDataDetailViewModel.KpiViewModel>();
+
+            Mapper.CreateMap<MidtermPlanningObjectiveViewModel, AddObjectiveRequest>();
+            Mapper.CreateMap<AddPlanningKpiViewModel, AddPlanningKpiRequest>();
         }
 
         private void ConfigureCorporatePortofolio()

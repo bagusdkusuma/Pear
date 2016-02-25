@@ -8,6 +8,9 @@ namespace DSLNG.PEAR.Data.Entities.Blueprint
 {
     public class MidtermPhaseFormulationStage
     {
+        public MidtermPhaseFormulationStage() {
+            MidtermStrategicPlannings = new List<MidtermStrategicPlanning>();
+        }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

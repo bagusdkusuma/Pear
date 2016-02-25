@@ -81,6 +81,7 @@ namespace DSLNG.PEAR.Web.DependencyResolution {
             For<IBusinessPostureIdentificationService>().Use<BusinessPostureIdentificationService>();
             For<IEnvironmentScanningService>().Use<EnvironmentScanningService>();
             For<IMidtermFormulationService>().Use<MidtermFormulationService>();
+            For<IMidtermPlanningService>().Use<MidtermPlanningService>();
         }
 
         #endregion

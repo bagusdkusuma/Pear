@@ -83,6 +83,8 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<MidtermPhaseFormulation> MidtermPhaseFormulations { get; set; }
         public IDbSet<MidtermPhaseDescription> MidtermPhaseDescriptions { get; set; }
         public IDbSet<MidtermPhaseKeyDriver> MidtermPhaseKeyDrivers { get; set; }
+        public IDbSet<MidtermStrategicPlanning> MidtermStrategyPlannings { get; set; }
+        public IDbSet<MidtermStrategicPlanningObjective> MidtermStrategicPlanningObjectives { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Kpi>()

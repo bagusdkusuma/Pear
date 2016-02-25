@@ -96,6 +96,8 @@ using DSLNG.PEAR.Services.Responses.EnvironmentScanning;
 using DSLNG.PEAR.Services.Requests.EnvironmentScanning;
 using DSLNG.PEAR.Services.Responses.MidtermFormulation;
 using DSLNG.PEAR.Services.Requests.MidtermFormulation;
+using DSLNG.PEAR.Services.Responses.MidtermPlanning;
+using DSLNG.PEAR.Services.Requests.MidtermPlanning;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -613,6 +615,16 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<AddStageRequest, MidtermPhaseFormulationStage>();
             Mapper.CreateMap<AddDefinitionRequest, MidtermPhaseDescription>();
             Mapper.CreateMap<AddDefinitionRequest, MidtermPhaseKeyDriver>();
+
+            Mapper.CreateMap<MidtermStrategicPlanning, GetMidtermPlanningsResponse.MidtermPlanning>();
+            Mapper.CreateMap<MidtermStrategicPlanningObjective, GetMidtermPlanningsResponse.MidtermPlanningObjective>();
+            Mapper.CreateMap<Kpi, GetMidtermPlanningsResponse.Kpi>()
+                .ForMember(d => d.Measurement, o => o.MapFrom(s => s.Measurement.Name));
+            Mapper.CreateMap<KpiAchievement, GetMidtermPlanningsResponse.KpiData>()
+                .ForMember(d => d.KpiId, o => o.MapFrom(s => s.Kpi.Id))
+                .ForMember(d => d.Year, o => o.MapFrom(s => s.Periode.Year));
+
+            Mapper.CreateMap<AddObjectiveRequest, MidtermStrategicPlanningObjective>();
 
             base.Configure();
         }

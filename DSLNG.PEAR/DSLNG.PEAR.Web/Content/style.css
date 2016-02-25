@@ -2151,3 +2151,14 @@ li > input.choose-list{
     list-style: decimal;
 }
 
+.in-planning .formulation-stage {
+    cursor:pointer;
+}
+.select2-dropdown {
+    z-index: 1062;
+}
+.midterm-planning-template,
+.kpi-form,
+.objective-form {
+    display:none;
+}

@@ -147,5 +147,9 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult MidtermPhaseFormulation(int id) {
             return View(_midtermFormulationService.Get(id).MapTo<MidtermFormulationViewModel>());
         }
+        //this id is id of midther phase formulation
+        public ActionResult MidtermStrategyPlanning(int id) {
+            return View(_midtermFormulationService.Get(id).MapTo<MidtermFormulationViewModel>());
+        }
     }
 }
