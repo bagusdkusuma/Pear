@@ -69,7 +69,7 @@
                 <ul class="defined-list description">
                     @foreach (var desc in item.Descriptions)
                     { 
-                        <li id="@desc.Id">@desc.Value <a class="remove-item" href="/MidtermFormulation/DeleteStageDesc"><i class="fa fa-minus"></i></a></li>
+                        <li data-id="@desc.Id">@desc.Value <a class="remove-item" href="/MidtermFormulation/DeleteStageDesc"><i class="fa fa-minus"></i></a></li>
                     }
                 </ul>
                 <div class="key-driver">
@@ -81,7 +81,7 @@
                 <ul class=" key-driver">
                     @foreach (var keyDriver in item.KeyDrivers)
                     { 
-                        <li id="@keyDriver.Id">@keyDriver.Value <a class="remove-item" href="/MidtermFormulation/DeleteStageKey"><i class="fa fa-minus"></i></a></li>
+                        <li data-id="@keyDriver.Id">@keyDriver.Value <a class="remove-item" href="/MidtermFormulation/DeleteStageKey"><i class="fa fa-minus"></i></a></li>
                     }
                 </ul>
             </div>
@@ -161,6 +161,7 @@
         });
         $(document).on('click', '.add-midterm-stage', function (e) {
             e.preventDefault();
+            var $this = $(this);
             var $form = $(this).closest('form');
             var $trigger = $this.closest('.popover').prev('a');
             $.post($form.prop('action'), $form.serialize(), function (data) {
@@ -178,10 +179,10 @@
                 }
             });
         });
-        $('.formulation-stage').popover({
+        $('.formulation-stages').popover({
             selector: '.add-definition',
             html: true,
-            placement: 'bottom',
+            placement: 'left',
             content: function () {
                 return $('.definition-form').html();
             }
@@ -204,6 +205,24 @@
                         $listResult.append('<li data-id="' + data.Id + '">' + data.Value + '<a class="remove-item" href="/MidtermFormulation/DeleteStageKey"><i class="fa fa-minus"></i></a>');
                     }
                     $trigger.popover('hide');
+                }
+            });
+        });
+        $(document).on('click', '.remove-item', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            if (!confirm("Are you sure to delte this item?")) {
+                return;
+            }
+            $.post($this.prop('href'), 'id=' + $this.parent().data('id'), function (data) {
+                if (data.IsSuccess) {
+                    var $parent = $this.parent();
+                    if ($parent.hasClass('title')) {
+                        $parent.closest('.formulation-stage').remove();
+                    } else {
+                        $parent.remove();
+                    }
+                    
                 }
             });
         });

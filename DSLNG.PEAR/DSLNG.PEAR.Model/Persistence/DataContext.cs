@@ -83,6 +83,8 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<MidtermPhaseFormulation> MidtermPhaseFormulations { get; set; }
         public IDbSet<MidtermPhaseDescription> MidtermPhaseDescriptions { get; set; }
         public IDbSet<MidtermPhaseKeyDriver> MidtermPhaseKeyDrivers { get; set; }
+        public IDbSet<MidtermStrategicPlanning> MidtermStrategyPlannings { get; set; }
+        public IDbSet<MidtermStrategicPlanningObjective> MidtermStrategicPlanningObjectives { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Kpi>()
@@ -206,13 +208,13 @@ namespace DSLNG.PEAR.Data.Persistence
                 .WithMany(x => x.Strength)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<MidtermPhaseDescription>()
-                .HasRequired(x => x.Formulation)
-                .WithMany(x => x.Descriptions)
+            modelBuilder.Entity<MidtermPhaseFormulationStage>()
+                .HasMany(x => x.Descriptions)
+                .WithOptional(x => x.Formulation)
                 .WillCascadeOnDelete(true);
-            modelBuilder.Entity<MidtermPhaseKeyDriver>()
-                .HasRequired(x => x.Formulation)
-                .WithMany(x => x.KeyDrivers)
+            modelBuilder.Entity<MidtermPhaseFormulationStage>()
+                 .HasMany(x => x.KeyDrivers)
+                .WithOptional(x => x.Formulation)
                 .WillCascadeOnDelete(true);
 
             base.OnModelCreating(modelBuilder);

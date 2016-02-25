@@ -92,8 +92,10 @@
     <Compile Include="Interfaces\IBusinessPostureIdentificationService.cs" />
     <Compile Include="Interfaces\IEnvironmentScanningService.cs" />
     <Compile Include="Interfaces\IMidtermFormulationService.cs" />
+    <Compile Include="Interfaces\IMidtermPlanningService.cs" />
     <Compile Include="Interfaces\IPlanningBlueprintService.cs" />
     <Compile Include="MidtermFormulationService.cs" />
+    <Compile Include="MidtermPlanningService.cs" />
     <Compile Include="OperationDataService.cs" />
     <Compile Include="PlanningBlueprintService.cs" />
     <Compile Include="Requests\BusinessPosture\DeleteDesiredStateRequest.cs" />
@@ -121,6 +123,8 @@
     <Compile Include="Requests\HighlightOrder\SaveStaticHighlightOrderRequest.cs" />
     <Compile Include="Requests\MidtermFormulation\AddDefinitionRequest.cs" />
     <Compile Include="Requests\MidtermFormulation\AddStageRequest.cs" />
+    <Compile Include="Requests\MidtermPlanning\AddObjectiveRequest.cs" />
+    <Compile Include="Requests\MidtermPlanning\AddPlanningKpiRequest.cs" />
     <Compile Include="Requests\OperationalData\GetOperationDataConfigurationRequest.cs" />
     <Compile Include="Requests\OperationalData\GetOperationDataRequestByValue.cs" />
     <Compile Include="Requests\OperationalData\UpdateOperationDataRequest.cs" />
@@ -161,6 +165,9 @@
     <Compile Include="Responses\MidtermFormulation\AddDefinitionResponse.cs" />
     <Compile Include="Responses\MidtermFormulation\AddStageResponse.cs" />
     <Compile Include="Responses\MidtermFormulation\GetMidtermFormulationResponse.cs" />
+    <Compile Include="Responses\MidtermPlanning\AddObjectiveResponse.cs" />
+    <Compile Include="Responses\MidtermPlanning\AddPlanningKpiResponse.cs" />
+    <Compile Include="Responses\MidtermPlanning\GetMidtermPlanningsResponse.cs" />
     <Compile Include="Responses\OperationalData\GetOperationDataConfigurationResponse.cs" />
     <Compile Include="Responses\OperationalData\GetOperationalDataDetailResponse.cs" />
     <Compile Include="Requests\OperationalData\GetOperationalDataDetailRequest.cs" />
