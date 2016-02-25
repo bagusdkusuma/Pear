@@ -248,7 +248,7 @@ namespace DSLNG.PEAR.Services
                     }
             }
 
-            SaveLayoutItemResponse response = new SaveLayoutItemResponse
+            var response = new SaveLayoutItemResponse
                 {
                     IsSuccess = baseResponse.IsSuccess,
                     Message = baseResponse.Message

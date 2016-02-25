@@ -133,7 +133,24 @@ namespace DSLNG.PEAR.Services
                 var kpi = DataContext.Kpis.Include(x => x.Measurement).Where(x => x.Id == row.KpiId).First();
                 IList<DateTime> dateTimePeriodes = new List<DateTime>();
                 string timeInformation;
-                this._getPeriodes(row.PeriodeType, row.RangeFilter, row.Start, row.End, out dateTimePeriodes, out timeInformation);
+                var oldRangeFilter = row.RangeFilter;
+                if (row.RangeFilter.Equals(RangeFilter.SpecificYear) || row.RangeFilter.Equals(RangeFilter.SpecificMonth) || row.RangeFilter.Equals(RangeFilter.SpecificDay))
+                {
+                    var timeValue = ChangeFromSpecificToInterval(row.Start, row.End, row.RangeFilter);
+                    row.Start = timeValue.Start;
+                    row.End = timeValue.End;
+                    row.RangeFilter = timeValue.RangeFilter;
+                }
+
+                this._getPeriodes(row.PeriodeType, row.RangeFilter, row.Start, row.End, out dateTimePeriodes,
+                                  out timeInformation);
+
+                if (oldRangeFilter.Equals(RangeFilter.SpecificYear) || oldRangeFilter.Equals(RangeFilter.SpecificMonth) || oldRangeFilter.Equals(RangeFilter.SpecificDay))
+                {
+                    timeInformation = ChangeTimeInformationFromSpecificToInterval(row.Start, row.End, oldRangeFilter);
+                }
+
+                //this._getPeriodes(row.PeriodeType, row.RangeFilter, row.Start, row.End, out dateTimePeriodes, out timeInformation);
                 var start = dateTimePeriodes[0];
                 var end = dateTimePeriodes[dateTimePeriodes.Count - 1];
                 var rowResponse = new GetTabularDataResponse.RowResponse();
@@ -258,8 +275,23 @@ namespace DSLNG.PEAR.Services
             var response = new GetPieDataResponse();
             IList<DateTime> dateTimePeriodes = new List<DateTime>();
             string timeInformation;
+            var oldRangeFilter = request.RangeFilter;
+            if (request.RangeFilter.Equals(RangeFilter.SpecificYear) || request.RangeFilter.Equals(RangeFilter.SpecificMonth) || request.RangeFilter.Equals(RangeFilter.SpecificDay))
+            {
+                var timeValue = ChangeFromSpecificToInterval(request.Start, request.End, request.RangeFilter);
+                request.Start = timeValue.Start;
+                request.End = timeValue.End;
+                request.RangeFilter = timeValue.RangeFilter;
+            }
+
             this._getPeriodes(request.PeriodeType, request.RangeFilter, request.Start, request.End, out dateTimePeriodes,
                               out timeInformation);
+
+            if (oldRangeFilter.Equals(RangeFilter.SpecificYear) || oldRangeFilter.Equals(RangeFilter.SpecificMonth) || oldRangeFilter.Equals(RangeFilter.SpecificDay))
+            {
+                timeInformation = ChangeTimeInformationFromSpecificToInterval(request.Start, request.End, oldRangeFilter);
+            }
+
             foreach (var series in request.Series)
             {
                 var kpi = DataContext.Kpis.Include(x => x.Measurement).First(x => x.Id == series.KpiId);
@@ -2921,6 +2953,59 @@ namespace DSLNG.PEAR.Services
                     Message = "An error has been occured please contact the administrator for further information"
                 };
             }
+        }
+
+        private DateTimeValue ChangeFromSpecificToInterval(/*GetPieDataRequest request,*/ DateTime? start, DateTime? end, RangeFilter rangeFilter)
+        {
+            if (start.HasValue && end.HasValue && rangeFilter.Equals(RangeFilter.SpecificYear))
+            {
+                rangeFilter = RangeFilter.Interval;
+                start = new DateTime(start.Value.Year, 1, 1);
+                end = new DateTime(end.Value.Year, 12, 31);
+            }
+            else if (start.HasValue && end.HasValue &&
+                     rangeFilter.Equals(RangeFilter.SpecificMonth))
+            {
+                rangeFilter = RangeFilter.Interval;
+                start = new DateTime(start.Value.Year, start.Value.Month, 1);
+                end = new DateTime(end.Value.Year, end.Value.Month,
+                                           DateTime.DaysInMonth(end.Value.Year, end.Value.Month));
+            }
+            else if (start.HasValue && end.HasValue &&
+                     rangeFilter.Equals(RangeFilter.SpecificDay))
+            {
+                rangeFilter = RangeFilter.Interval;
+                start = new DateTime(start.Value.Year, start.Value.Month, start.Value.Day);
+                end = new DateTime(start.Value.Year, start.Value.Month, start.Value.Day);
+            }
+
+            return new DateTimeValue {Start = start, End = end, RangeFilter = rangeFilter};
+        }
+
+        private string ChangeTimeInformationFromSpecificToInterval(DateTime? start, DateTime? end, RangeFilter rangeFilter)
+        {
+            string timeInformation = string.Empty;
+            if (start.HasValue && end.HasValue && rangeFilter.Equals(RangeFilter.SpecificYear))
+            {
+                timeInformation = start.Value.ToString("yyyy", CultureInfo.InvariantCulture);
+            }
+            else if (start.HasValue && end.HasValue && rangeFilter.Equals(RangeFilter.SpecificMonth))
+            {
+                timeInformation = start.Value.ToString("MMM yy", CultureInfo.InvariantCulture);
+            }
+            else if (start.HasValue && end.HasValue && rangeFilter.Equals(RangeFilter.SpecificDay))
+            {
+                timeInformation = start.Value.ToString("dd MMM yy", CultureInfo.InvariantCulture);
+            }
+
+            return timeInformation;
+        }
+
+        class DateTimeValue
+        {
+            public DateTime? Start { get; set; }
+            public DateTime? End { get; set; }
+            public RangeFilter RangeFilter { get; set; }
         }
     }
 }

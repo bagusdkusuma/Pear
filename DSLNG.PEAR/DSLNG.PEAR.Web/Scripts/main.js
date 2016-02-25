@@ -317,7 +317,9 @@ Number.prototype.format = function (n, x) {
                 var $this = $(this);
                 var clearValue = $('.datepicker').each(function (i, val) {
                     $(val).val('');
-                    $(val).data("DateTimePicker").destroy();
+                    if ($(val).data("DateTimePicker") !== undefined) {
+                        $(val).data("DateTimePicker").destroy();
+                    }
                 });
                 switch ($this.val().toLowerCase().trim()) {
                     case 'hourly':
@@ -1127,7 +1129,7 @@ Number.prototype.format = function (n, x) {
                 stackTemplate.remove();
                 Pear.Artifact.Designer._setupCallbacks.area();
                 break;
-            case 'tabular':
+            case 'tabular': 
                 var $hiddenFields = $('#hidden-fields');
                 $hiddenFields.find('.row-template:not(.original)').each(function (i, val) {
                     $this = $(val);
@@ -1143,11 +1145,31 @@ Number.prototype.format = function (n, x) {
                     var $this = $(val);
                     Pear.Artifact.Designer._kpiAutoComplete($this, false);
                     Pear.Artifact.Designer._colorPicker($this);
+                    if ($this.find('.range-filter').val().indexOf('Specific') > -1) {
+                        $this.find('#range-holder').attr('style','display:block !important');
+                        $this.find('.end-in-display').hide();
+                    } 
+                    if($this.find('.range-filter').val().indexOf('Interval') > -1) {
+                        $this.find('#range-holder').attr('style', 'display:block !important');
+                    }
+                    artifactDesigner._setupCallbacks.tabularrow.rangeDatePicker($this);
+                    artifactDesigner._setupCallbacks.tabularrow.rangeControl($this);
+                    artifactDesigner._setupCallbacks.tabularrow.specificDate($this);
+                    var periodeType = $this.find('.periode-type').val();
+                    /*if(periodeType === 'Monthly')
+                    {
+                        $this.find('.datepicker').datetimepicker({
+                            format: "MM/YYYY"
+                        });
+                    }*/
+
                 });
                 $hiddenFields.remove();
                 $('#general-graphic-settings').css('display', 'none');
                 $('.form-measurement').css('display', 'none');
+                
                 Pear.Artifact.Designer._setupCallbacks.tabular();
+                
 
                 break;
             case 'pie':
@@ -2472,6 +2494,114 @@ Number.prototype.format = function (n, x) {
     };
 
     //tabular
+    artifactDesigner._setupCallbacks.tabularrow = {};
+    artifactDesigner._setupCallbacks.tabularrow.rangeControl = function(context) {
+        context.find('.range-filter').change(function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            context.find('#range-holder').prop('class', $this.val().toLowerCase().trim());
+        });
+        var original = context.find('.range-filter').clone(true);
+        var rangeFilterSetup = function (periodeType) {
+            var toRemove = {};
+
+            toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD'];
+            toRemove.daily = ['CurrentHour', 'CurrentWeek', 'CurrentYear', 'MTD', 'CurrentMonth', 'YTD', 'DTD', 'SpecificMonth', 'SpecificYear', 'AllExistingYears', 'Interval'];
+            ;//['CurrentHour', 'CurrentYear', 'DTD', 'YTD', 'SpecificMonth', 'SpecificYear'];
+            toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD'];
+            toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificYear', 'AllExistingYears', 'Interval'];//['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'SpecificDay', 'SpecificYear'];
+            toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'AllExistingYears', 'Interval'];
+            ;//['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth'];
+            var originalClone = original.clone(true);
+            originalClone.find('option').each(function (i, val) {
+                if (toRemove[periodeType].indexOf(originalClone.find(val).val()) > -1) {
+                    originalClone.find(val).remove();
+                }
+            });
+            context.find('.range-filter').replaceWith(originalClone);
+            debugger;
+            switch (context.find('.periode-type').val().toLowerCase().trim()) {
+                case 'daily':
+                    context.find('.datepicker').datetimepicker({
+                        format: "MM/DD/YYYY"
+                    });
+                    break;
+                case 'monthly':
+                    context.find('.datepicker').datetimepicker({
+                        format: "MM/YYYY"
+                    });
+                    break;
+                case 'yearly':
+                    context.find('.datepicker').datetimepicker({
+                        format: "YYYY"
+                    });
+                    break;
+            }
+        };
+
+        rangeFilterSetup(context.find('.periode-type').val().toLowerCase().trim());
+        context.find('.periode-type').change(function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            rangeFilterSetup($this.val().toLowerCase().trim());
+            context.find('#range-holder').removeAttr('class');
+            
+        });
+    };
+    artifactDesigner._setupCallbacks.tabularrow.specificDate = function (context) {
+        $(".datepicker").on("dp.change", function (e) {
+            if (context.find('.range-filter').val().toLowerCase().indexOf('specific') > -1) {//&& e.target.class === 'start-in-display') {
+                context.find('.end-in-display').val(context.find('.start-in-display').val());
+            }
+        });
+    };
+    artifactDesigner._setupCallbacks.tabularrow.rangeDatePicker = function (context) {
+        
+        context.find('.datepicker').change(function (e) {
+            //console.log(this);
+        });
+        context.find('.periode-type').change(function (e) {
+            
+            e.preventDefault();
+            var $this = $(this);
+            var clearValue = context.find('.datepicker').each(function (i, val) {
+                $(val).val('');
+                if ($(val).data("DateTimePicker") != undefined) {
+                    $(val).data("DateTimePicker").destroy();
+                }
+                
+            });
+            switch ($this.val().toLowerCase().trim()) {
+                case 'hourly':
+                    context.find('.datepicker').datetimepicker({
+                        format: "MM/DD/YYYY hh:00 A"
+                    });
+                    break;
+                case 'daily':
+                    context.find('.datepicker').datetimepicker({
+                        format: "MM/DD/YYYY"
+                    });
+                    break;
+                case 'weekly':
+                    context.find('.datepicker').datetimepicker({
+                        format: "MM/DD/YYYY",
+                        daysOfWeekDisabled: [0, 2, 3, 4, 5, 6]
+                    });
+                    break;
+                case 'monthly':
+                    context.find('.datepicker').datetimepicker({
+                        format: "MM/YYYY"
+                    });
+                    break;
+                case 'yearly':
+                    context.find('.datepicker').datetimepicker({
+                        format: "YYYY"
+                    });
+                    break;
+                default:
+            }
+        });
+    };
     artifactDesigner._setupCallbacks.tabular = function () {
         var removeRow = function () {
             $('.row-template .remove').click(function (e) {
@@ -2504,89 +2634,13 @@ Number.prototype.format = function (n, x) {
                 //seriesTemplate.addClass($('#seriesType').val().toLowerCase());
                 //seriesTemplate.addClass($('#bar-value-axis').val());
                 $('#rows-holder').append(rowTemplate);
-                rangeDatePicker(rowTemplate);
-                rangeControl(rowTemplate);
+                artifactDesigner._setupCallbacks.tabularrow.rangeDatePicker(rowTemplate);
+                artifactDesigner._setupCallbacks.tabularrow.rangeControl(rowTemplate);
+                artifactDesigner._setupCallbacks.tabularrow.specificDate(rowTemplate);
                 rowCount++;
             });
         };
-        var rangeDatePicker = function (context) {
-            context.find('.datepicker').datetimepicker({
-                format: "MM/DD/YYYY hh:00 A"
-            });
-            context.find('.datepicker').change(function (e) {
-                //console.log(this);
-            });
-            context.find('.periode-type').change(function (e) {
-                e.preventDefault();
-                var $this = $(this);
-                var clearValue = context.find('.datepicker').each(function (i, val) {
-                    $(val).val('');
-                    $(val).data("DateTimePicker").destroy();
-                });
-                switch ($this.val().toLowerCase().trim()) {
-                    case 'hourly':
-                        context.find('.datepicker').datetimepicker({
-                            format: "MM/DD/YYYY hh:00 A"
-                        });
-                        break;
-                    case 'daily':
-                        context.find('.datepicker').datetimepicker({
-                            format: "MM/DD/YYYY"
-                        });
-                        break;
-                    case 'weekly':
-                        context.find('.datepicker').datetimepicker({
-                            format: "MM/DD/YYYY",
-                            daysOfWeekDisabled: [0, 2, 3, 4, 5, 6]
-                        });
-                        break;
-                    case 'monthly':
-                        context.find('.datepicker').datetimepicker({
-                            format: "MM/YYYY"
-                        });
-                        break;
-                    case 'yearly':
-                        context.find('.datepicker').datetimepicker({
-                            format: "YYYY"
-                        });
-                        break;
-                    default:
-                }
-            });
-        };
-        var rangeControl = function (context) {
-            context.find('.range-filter').change(function (e) {
-                e.preventDefault();
-                var $this = $(this);
-                context.find('#range-holder').prop('class', $this.val().toLowerCase().trim());
-            });
-            var original = context.find('.range-filter').clone(true);
-            var rangeFilterSetup = function (periodeType) {
-                var toRemove = {};
-                toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD'];
-                toRemove.daily = ['CurrentHour', 'CurrentYear', 'DTD', 'YTD'];
-                toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD'];
-                toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD'];
-                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD'];
-                var originalClone = original.clone(true);
-                originalClone.find('option').each(function (i, val) {
-                    if (toRemove[periodeType].indexOf(originalClone.find(val).val()) > -1) {
-                        originalClone.find(val).remove();
-                    }
-                });
-                context.find('.range-filter').replaceWith(originalClone);
-            };
-
-            //console.log(context.find('.periode-type').val());
-            rangeFilterSetup(context.find('.periode-type').val().toLowerCase().trim());
-            context.find('.periode-type').change(function (e) {
-                e.preventDefault();
-                var $this = $(this);
-                rangeFilterSetup($this.val().toLowerCase().trim());
-                context.find('#range-holder').removeAttr('class');
-            });
-
-        };
+        
         addRow();
         removeRow();
         $('#general-graphic-settings').css('display', 'none');
@@ -2681,7 +2735,9 @@ Number.prototype.format = function (n, x) {
             }
         };
 
-        resizeTabular();
+        setTimeout(function () {
+            resizeTabular();
+        }, 500);
 
         $('.left-content-toggle').click(function () {
             setTimeout(function() {

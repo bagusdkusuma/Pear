@@ -1,0 +1,126 @@
+﻿@{
+    ViewBag.Title = "Planning Blueprints";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Planning Blueprints</h2>
+@Html.Partial("_MessageResponse")
+<div class="add-button-wrapper">
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+</div>
+@*@Html.Action("IndexPartial")
+
+@section Scripts{
+    <script type="text/javascript">
+        var confirmDelete = function (id) {
+            if (confirm('Are you sure want to delete this item?')) {
+                var url = '@Url.Action("Delete", "AssumptionData")';
+                $('<form action="' + url + '" method="POST">' +
+                    '<input type="hidden" name="id" value="' + id + '">' +
+                    '</form>').submit();
+            }
+        };
+    </script>
+}*@
+
+<table id="planningBlueprints-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Environments Scanning</th>
+            <th>Business Posture Identification</th>
+            <th>Is Approved</th>
+            <th>Is Active</th>
+            <th></th>
+        </tr>
+    </thead>
+</table>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#planningBlueprints-table').DataTable({
+                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                "iDisplayLength": -1,
+                "bProcessing": true,
+                "bServerSide": true,
+                "sServerMethod": "POST",
+                "sAjaxSource": '@Url.Action("Grid", "PlanningBlueprint")',
+                "order": [[1, "asc"]],
+                "aoColumns": [
+                    { "mDataProp": "Title", "name": "Title", "className": "dt-body-left" },
+                    { "mDataProp": "Description", "name": "Description", "className": "dt-body-left" },
+                     {
+                         "orderable": false,
+                         "data": null,
+                         "defaultContent": '',
+                         "mRender": function (data, type, row) {
+                             if (row.EnvironmentsScanning.IsLocked) {
+                                 return 'Locked';
+                             }
+                             return  '@Html.ActionLink("Edit", "EnvironmentsScanning", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.EnvironmentsScanning.Id);
+                        }
+                     },
+                      {
+                          "orderable": false,
+                          "data": null,
+                          "defaultContent": '',
+                          "mRender": function (data, type, row) {
+                              if (row.BusinessPostureIdentification.IsLocked) {
+                                  return 'Locked';
+                              }
+                              return '@Html.ActionLink("Edit", "BusinessPostureIdentification", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.BusinessPostureIdentification.Id);
+                         }
+                      },
+                    {
+                        "mDataProp": "IsApproved", "name": "IsApproved", "render": function (data, type, row) {
+                            var checked = '';
+                            if (data) {
+                                checked = 'checked="checked"';
+                            }
+                            return '<input type="checkbox" class="editor-active" '+checked+' disabled="disabled">';
+                        },
+                    },
+                    {
+                        "mDataProp": "IsActive", "name": "IsActive", "render": function (data, type, row) {
+                            var checked = '';
+                            if (data) {
+                                checked = 'checked="checked"';
+                            }
+                            return '<input type="checkbox" class="editor-active" ' + checked + ' disabled="disabled">';
+                        },
+                    },
+                    {
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": '',
+                        "mRender": function (data, type, row) {
+                            var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
+                            var editLink = '@Html.ActionLink("Edit", "Edit", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', data.Id);
+                            return editLink + ' | ' + deleteLink;
+                        }
+                    }
+                ],
+                rowCallback: function (row, data) {
+                    // Set the checked state of the checkbox in the table
+                    //$('input.is-active', row).prop('checked', data.IsActive == 1);
+                }
+            });
+
+            $('#planningBlueprints-table').on('click', '.delete', function () {
+                var id = $(this).attr('data-id');
+                if (confirm('Are you sure want to delete this item?' + id)) {
+                    var url = '@Url.Action("Delete", "PlanningBlueprint")';
+                    var form = $('<form />');
+                    form.attr('action', url);
+                    form.attr('method', 'POST');
+                    form.html('<input type="hidden" name="id" value="' + id + '" />');
+                    $('body').append(form);
+                    form.submit();
+                }
+            });
+
+
+        });
+    </script>
+}

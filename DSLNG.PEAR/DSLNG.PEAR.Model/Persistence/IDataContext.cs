@@ -4,6 +4,7 @@ using DSLNG.PEAR.Data.Entities;
 using DSLNG.PEAR.Data.Entities.Der;
 using Type = DSLNG.PEAR.Data.Entities.Type;
 using DSLNG.PEAR.Data.Entities.EconomicModel;
+using DSLNG.PEAR.Data.Entities.Blueprint;
 
 namespace DSLNG.PEAR.Data.Persistence
 {
@@ -69,6 +70,17 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<DerArtifact> DerArtifacts { get; set; }
         IDbSet<DerArtifactChart> DerArtifactCharts { get; set; }
         IDbSet<DerArtifactSerie> DerArtifactSeries { get; set; }
+        IDbSet<PlanningBlueprint> PlanningBlueprints { get; set; }
+        IDbSet<UltimateObjectivePoint> UltimateObjectivePoints { get; set; }
+        IDbSet<EnvironmentsScanning> EnvironmentsScannings { get; set; }
+        IDbSet<BusinessPostureIdentification> BusinessPostures { get; set; }
+        IDbSet<Posture> Postures { get; set; }
+        IDbSet<DesiredState> DesiredStates { get; set; }
+        IDbSet<PostureChallenge> PostureChalleges { get; set; }
+        IDbSet<PostureConstraint> PostureConstraints { get; set; }
+        IDbSet<EnvironmentalScanning> EnvironmentalScannings { get; set; }
+        IDbSet<Constraint> Constraint { get; set; }
+        IDbSet<Challenge> Challenges { get; set; }
         Database Database { get; }
         int SaveChanges();
         DbEntityEntry Entry(object entity);
