@@ -21,5 +21,6 @@ namespace DSLNG.PEAR.Data.Entities.Der
         public string GraphicType { get; set; }
 
         public ICollection<DerArtifactSerie> Series { get; set; }
+        public ICollection<DerArtifactChart> Charts { get; set; } 
     }
 }

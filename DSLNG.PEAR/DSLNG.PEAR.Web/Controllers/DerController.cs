@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Services.Interfaces;
@@ -98,45 +99,89 @@ namespace DSLNG.PEAR.Web.Controllers
             switch (layout.Type.ToLowerInvariant())
             {
                 case "line":
-
-                    var request = new GetCartesianChartDataRequest();
-                    request.Start = date.AddDays(-7);
-                    request.End = date;
-                    //request.GraphicName = layout.Artifact.HeaderTitle;
-                    request.HeaderTitle = layout.Artifact.HeaderTitle;
-                    request.MeasurementId = layout.Artifact.MeasurementId;
-                    request.PeriodeType = PeriodeType.Daily;
-                    request.RangeFilter = RangeFilter.Interval;
-                    request.ValueAxis = ValueAxis.KpiActual;
-
-
-                    var series = layout.Artifact.Series.Select(x => new GetCartesianChartDataRequest.SeriesRequest
-                        {
-                            Color = x.Color,
-                            KpiId = x.KpiId,
-                            Label = x.Label
-                        }).ToList();
-                    request.Series = series;
-                    var chartData = _artifactService.GetChartData(request);
-
-                    var previewViewModel = new ArtifactPreviewViewModel();
-                    previewViewModel.PeriodeType = "Daily";
-                    previewViewModel.Highlights = new List<ArtifactPreviewViewModel.HighlightViewModel>();
-                    for (DateTime counter = request.Start.Value; counter <= request.End.Value; counter = counter.AddDays(1))
                     {
-                        previewViewModel.Highlights.Add(null);
-                    }
-                    previewViewModel.TimePeriodes = chartData.TimePeriodes;
-                    previewViewModel.GraphicType = layout.Type;
-                    previewViewModel.LineChart = new LineChartDataViewModel();
-                    previewViewModel.LineChart.Title = layout.Artifact.HeaderTitle;
-                    previewViewModel.LineChart.Subtitle = chartData.Subtitle;
-                    previewViewModel.LineChart.ValueAxisTitle = layout.Artifact.MeasurementName;
-                    previewViewModel.LineChart.Series = chartData.Series.MapTo<LineChartDataViewModel.SeriesViewModel>();
-                    previewViewModel.LineChart.Periodes = chartData.Periodes;
-                    return Json(previewViewModel, JsonRequestBehavior.AllowGet);
-                    break;
 
+                        var request = new GetCartesianChartDataRequest();
+                        request.Start = date.AddDays(-7);
+                        request.End = date;
+                        //request.GraphicName = layout.Artifact.HeaderTitle;
+                        request.HeaderTitle = layout.Artifact.HeaderTitle;
+                        request.MeasurementId = layout.Artifact.MeasurementId;
+                        request.PeriodeType = PeriodeType.Daily;
+                        request.RangeFilter = RangeFilter.Interval;
+                        request.ValueAxis = ValueAxis.KpiActual;
+
+
+                        var series = layout.Artifact.Series.Select(x => new GetCartesianChartDataRequest.SeriesRequest
+                            {
+                                Color = x.Color,
+                                KpiId = x.KpiId,
+                                Label = x.Label
+                            }).ToList();
+                        request.Series = series;
+                        var chartData = _artifactService.GetChartData(request);
+
+                        var previewViewModel = new ArtifactPreviewViewModel();
+                        previewViewModel.PeriodeType = "Daily";
+                        previewViewModel.Highlights = new List<ArtifactPreviewViewModel.HighlightViewModel>();
+                        for (DateTime counter = request.Start.Value;
+                             counter <= request.End.Value;
+                             counter = counter.AddDays(1))
+                        {
+                            previewViewModel.Highlights.Add(null);
+                        }
+                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
+                        previewViewModel.GraphicType = layout.Type;
+                        previewViewModel.LineChart = new LineChartDataViewModel();
+                        previewViewModel.LineChart.Title = layout.Artifact.HeaderTitle;
+                        previewViewModel.LineChart.Subtitle = chartData.Subtitle;
+                        previewViewModel.LineChart.ValueAxisTitle = layout.Artifact.MeasurementName;
+                        previewViewModel.LineChart.Series =
+                            chartData.Series.MapTo<LineChartDataViewModel.SeriesViewModel>();
+                        previewViewModel.LineChart.Periodes = chartData.Periodes;
+                        return Json(previewViewModel, JsonRequestBehavior.AllowGet);
+                    }
+
+                case "multiaxis":
+                    {
+                        var request = new GetMultiaxisChartDataRequest();
+                        request.PeriodeType = PeriodeType.Daily;
+                        request.RangeFilter = RangeFilter.Interval;
+                        request.Start = date.AddDays(-7);
+                        request.End = date;
+                        
+                        var previewViewModel = new ArtifactPreviewViewModel();
+
+                        request.Charts = layout.Artifact.Charts.MapTo<GetMultiaxisChartDataRequest.ChartRequest>();
+                        /*foreach (var chart in layout.Artifact.Charts)
+                        {
+                            request.Charts.Add(new GetMultiaxisChartDataRequest.ChartRequest{Series = })};
+                        }*/
+                        var chartData = _artifactService.GetMultiaxisChartData(request);
+                       
+                        /*var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
+                        {
+                            TimePeriodes = chartData.TimePeriodes,
+                            Type = "Overall",
+                            PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType)
+                        });*/
+                        previewViewModel.PeriodeType = "Daily";
+                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
+                        previewViewModel.Highlights = new List<ArtifactPreviewViewModel.HighlightViewModel>();
+                        for (DateTime counter = request.Start.Value;
+                             counter <= request.End.Value;
+                             counter = counter.AddDays(1))
+                        {
+                            previewViewModel.Highlights.Add(null);
+                        }
+                        //previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
+                        previewViewModel.GraphicType = layout.Type;
+                        previewViewModel.MultiaxisChart = new MultiaxisChartDataViewModel();
+                        chartData.MapPropertiesToInstance<MultiaxisChartDataViewModel>(previewViewModel.MultiaxisChart);
+                        previewViewModel.MultiaxisChart.Title = layout.Artifact.HeaderTitle;
+                        return Json(previewViewModel, JsonRequestBehavior.AllowGet);
+                    }
+                    
             }
             return Content("as");
         }

@@ -1,19 +1,19 @@
-﻿@model DSLNG.PEAR.Web.ViewModels.DerLayout.LayoutType.DerLayoutLineViewModel
+﻿@model DSLNG.PEAR.Web.ViewModels.DerLayout.DerLayoutItemViewModel
 
 
 <div class="form-group row">
-    @Html.LabelFor(model => model.HeaderTitle, new { @class = "control-label col-md-2" })
+    @Html.LabelFor(model => model.Artifact.HeaderTitle, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.TextBoxFor(model => model.HeaderTitle)
-        @Html.ValidationMessageFor(model => model.HeaderTitle)
+        @Html.TextBoxFor(model => model.Artifact.HeaderTitle)
+        @Html.ValidationMessageFor(model => model.Artifact.HeaderTitle)
     </div>
 </div>
 
 <div class="form-group row">
-    @Html.LabelFor(model => model.MeasurementId, new { @class = "control-label col-md-2" })
+    @Html.LabelFor(model => model.Artifact.MeasurementId, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.DropDownListFor(model => model.MeasurementId, Model.Measurements, new { @class = "measurement" })
-        @Html.ValidationMessageFor(model => model.MeasurementId)
+        @Html.DropDownListFor(model => model.Artifact.MeasurementId, Model.Artifact.Measurements, new { @class = "measurement" })
+        @Html.ValidationMessageFor(model => model.Artifact.MeasurementId)
     </div>
 </div>
 
@@ -72,46 +72,3 @@
     </div>
 </div>
 
-
-<script type="text/javascript">
-    $('document').ready(function () {
-        var pear = window.Pear;
-        var callback = pear.Artifact.Designer._setupCallbacks;
-        callback['line']();
-        //callback.line();
-        console.log(callback);
-        //var seriesCount = context.find('.series-holder').find('.series-template').length + 1;
-        //$('#add-series').click(function (e) {
-        //$('.layout-type-area').append('<h1>test</h1>');
-        //alert('as');
-        /*e.preventDefault();
-            var seriesTemplate = context.find('.series-template.original').clone(true);
-            Pear.Artifact.Designer._colorPicker(seriesTemplate);
-            $('<input>').attr({
-                type: 'hidden',
-                id: 'foo',
-                name: prefix + '.Charts[' + chartPost + '].LineChart.Series.Index',
-                value: seriesCount
-            }).appendTo(seriesTemplate);
-            seriesTemplate.removeClass('original');
-            seriesTemplate.attr('data-series-pos', seriesCount);
-            if (seriesCount !== 0) {
-                var fields = ['Label', 'KpiId', 'ValueAxis', 'Color'];
-                for (var i in fields) {
-                    var field = fields[i];
-                    seriesTemplate.find('[id$=LineChart_Series_0__' + field + ']').attr('name', prefix + '.Charts[' + chartPost + '].LineChart.Series[' + seriesCount + '].' + field);
-                }
-            }
-            seriesTemplate.addClass(context.find('.value-axis-opt').val());
-            seriesTemplate.addClass(context.find('.multiaxis-graphic-type').val());
-            context.find('.series-holder').append(seriesTemplate);
-            if (prefix == "MultiaxisChart") {
-                Pear.Artifact.Designer._kpiAutoComplete(seriesTemplate, true, seriesTemplate.closest('.chart-template'));
-            } else {
-                Pear.Artifact.Designer._kpiAutoComplete(seriesTemplate);
-            }
-            seriesCount++;*/
-        //});
-    });
-
-</script>

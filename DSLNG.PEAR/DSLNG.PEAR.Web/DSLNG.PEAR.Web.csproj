@@ -769,6 +769,7 @@
     <Compile Include="ViewModels\DerLayout\DerLayoutIndexViewModel.cs" />
     <Compile Include="ViewModels\DerLayout\DerLayoutItemViewModel.cs" />
     <Compile Include="ViewModels\DerLayout\DerLayoutViewModel.cs" />
+    <Compile Include="ViewModels\DerLayout\LayoutType\DerLayoutMultiAxisViewModel.cs" />
     <Compile Include="ViewModels\DerLayout\LayoutType\DerLayoutLineViewModel.cs" />
     <Compile Include="ViewModels\DerLayout\SaveLayoutItemViewModel.cs" />
     <Compile Include="ViewModels\Der\DerConfigViewModel.cs" />
@@ -998,6 +999,7 @@
     <Content Include="Views\DerLayout\LayoutType\_Line.cshtml" />
     <Content Include="Views\DerLayout\Config.cshtml" />
     <Content Include="Views\Der\Display.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_MultiAxis.cshtml" />
     <None Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\SpeedometerChart\_Edit.cshtml" />
     <Content Include="Views\Tabular\_Create.cshtml" />

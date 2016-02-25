@@ -73,6 +73,7 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<DerLayout> DerLayouts { get; set; }
         public IDbSet<DerLayoutItem> DerLayoutItems { get; set; }
         public IDbSet<DerArtifact> DerArtifacts { get; set; }
+        public IDbSet<DerArtifactChart> DerArtifactCharts { get; set; }
         public IDbSet<DerArtifactSerie> DerArtifactSeries { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

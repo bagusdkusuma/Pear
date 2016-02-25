@@ -5,9 +5,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Der;
 using DSLNG.PEAR.Services.Requests.Measurement;
+using DSLNG.PEAR.Services.Responses.Der;
 using DSLNG.PEAR.Web.ViewModels.Artifact;
 using DSLNG.PEAR.Web.ViewModels.DerLayout;
 using DSLNG.PEAR.Web.ViewModels.DerLayout.LayoutType;
@@ -31,16 +33,16 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             var viewModel = new DerLayoutIndexViewModel();
             var response = _derService.GetDerLayouts();
-            viewModel.DerLayouts = response.DerLayouts.Select(x => new DerLayoutViewModel() {Id = x.Id, IsActive = x.IsActive, Title = x.Title})
+            viewModel.DerLayouts = response.DerLayouts.Select(x => new DerLayoutViewModel() { Id = x.Id, IsActive = x.IsActive, Title = x.Title })
                     .ToList();
-           // viewModel.DerLayouts.Add(new DerLayoutViewModel{Id = 1, Title = "First Layout"});
+            // viewModel.DerLayouts.Add(new DerLayoutViewModel{Id = 1, Title = "First Layout"});
             return View(viewModel);
         }
 
         public ActionResult Create()
         {
             var viewModel = new CreateDerLayoutViewModel();
-           
+
             return View(viewModel);
         }
 
@@ -53,7 +55,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var response = _derService.CreateOrUpdateDerLayout(request);
             if (response.IsSuccess)
             {
-                return RedirectToAction("Index");    
+                return RedirectToAction("Index");
             }
 
             return View(viewModel);
@@ -87,7 +89,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 viewModel.Types = _dropdownService.GetDerItemTypes().MapTo<SelectListItem>();
                 return View("LayoutItem", viewModel);
             }
-            
+
             /*var viewModel = new DerCreateLayoutItemViewModel();
             viewModel.Types = _dropdownService.GetDerItemTypes().MapTo<SelectListItem>();
             viewModel.Row = vModel.Row;
@@ -101,54 +103,105 @@ namespace DSLNG.PEAR.Web.Controllers
             switch (type.ToLowerInvariant())
             {
                 case "line":
-                    var viewModel = new DerLayoutLineViewModel();
-                    viewModel.LineChart = new LineChartViewModel();
-                    var series = new LineChartViewModel.SeriesViewModel();
-                    viewModel.LineChart.Series.Add(series);
-                    viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
                     {
-                        Take = -1,
-                        SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
-                    }).Measurements
-                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
-                    return PartialView("LayoutType/_Line", viewModel);
-                default:
-                    break;
+                        /*var viewModel = new DerLayoutLineViewModel();
+                        viewModel.LineChart = new LineChartViewModel();
+                        var series = new LineChartViewModel.SeriesViewModel();
+                        viewModel.LineChart.Series.Add(series);
+                        viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
+                        {
+                            Take = -1,
+                            SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+                        }).Measurements
+                    .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+                        return PartialView("LayoutType/_Line", viewModel);*/
+
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.Artifact = new DerLayoutItemViewModel.DerLayoutItemArtifactViewModel();
+                        viewModel.Artifact.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
+                        {
+                            Take = -1,
+                            SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+                        }).Measurements
+                    .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+                        viewModel.LineChart = new LineChartViewModel();
+                        var series = new LineChartViewModel.SeriesViewModel();
+                        viewModel.LineChart.Series.Add(series);
+                        return PartialView("LayoutType/_Line", viewModel);
+                    }
+
+                case "multiaxis":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.Artifact = new DerLayoutItemViewModel.DerLayoutItemArtifactViewModel();
+                        viewModel.MultiaxisChart = new MultiaxisChartViewModel();
+                        var chart = new MultiaxisChartViewModel.ChartViewModel();
+                        viewModel.MultiaxisChart.Charts.Add(chart);
+                        viewModel.MultiaxisChart.GraphicTypes.Add(new SelectListItem { Value = "line", Text = "Line" });
+                        viewModel.MultiaxisChart.ValueAxes.Add(new SelectListItem { Value = ValueAxis.KpiActual.ToString(), Text = "Kpi Actual" });
+                        viewModel.MultiaxisChart.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
+                        {
+                            Take = -1,
+                            SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+                        }).Measurements
+             .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+                        return PartialView("LayoutType/_MultiAxis", viewModel);
+                    }
             }
 
             return Content("Error");
         }
 
         [HttpPost]
-        public ActionResult SaveLayoutItem(DerLayoutItemViewModel layoutItemViewModel, 
-            DerLayoutLineViewModel lineViewModel)
+        public ActionResult SaveLayoutItem(DerLayoutItemViewModel layoutItemViewModel/*,
+            DerLayoutLineViewModel lineViewModel, DerLayoutMultiAxisViewModel multiAxisViewModel*/)
         {
             var request = new SaveLayoutItemRequest();
+            var response = new SaveLayoutItemResponse();
             switch (layoutItemViewModel.Type.ToLowerInvariant())
             {
                 case "line":
-                    request.DerLayoutId = layoutItemViewModel.DerLayoutId;
-                    request.Column = layoutItemViewModel.Column;
-                    request.Row = layoutItemViewModel.Row;
-                    request.Type = layoutItemViewModel.Type;
-                    request.Artifact = new SaveLayoutItemRequest.LayoutItemArtifact();
-                    request.Artifact.HeaderTitle = lineViewModel.HeaderTitle;
-                    request.Artifact.MeasurementId = lineViewModel.MeasurementId;
-                    request.Artifact.LineChart = new SaveLayoutItemRequest.LayoutItemArtifactLine();
-                    foreach (var serie in lineViewModel.LineChart.Series)
                     {
-                        request.Artifact.LineChart.Series.Add(new SaveLayoutItemRequest.LayoutItemArtifactSeries()
+                        /*request.DerLayoutId = layoutItemViewModel.DerLayoutId;
+                        request.Column = layoutItemViewModel.Column;
+                        request.Row = layoutItemViewModel.Row;
+                        request.Type = layoutItemViewModel.Type;
+                        request.Artifact = new SaveLayoutItemRequest.LayoutItemArtifact();
+                        request.Artifact.HeaderTitle = layoutItemViewModel.Artifact.HeaderTitle;
+                        request.Artifact.MeasurementId = layoutItemViewModel.Artifact.MeasurementId;
+                        request.Artifact.LineChart = new SaveLayoutItemRequest.LayoutItemArtifactLine();
+                        foreach (var serie in layoutItemViewModel.LineChart.Series)
                         {
-                            Color = serie.Color,
-                            KpiId = serie.KpiId,
-                            Label = serie.Label
-                        });
-                        
+                            request.Artifact.LineChart.Series.Add(new SaveLayoutItemRequest.LayoutItemArtifactSerie()
+                            {
+                                Color = serie.Color,
+                                KpiId = serie.KpiId,
+                                Label = serie.Label
+                            });
+
+                        }*/
+
+                        request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
+                        request.Artifact = layoutItemViewModel.Artifact.MapTo<SaveLayoutItemRequest.LayoutItemArtifact>();
+                        request.Artifact.LineChart = layoutItemViewModel.LineChart.MapTo<SaveLayoutItemRequest.LayoutItemArtifactLine>();
+                        response = _derService.SaveLayoutItem(request);
+
+                        break;
                     }
-                    var response = _derService.SaveLayoutItem(request);
-                    break;
+                    
+                case "multiaxis":
+                    {
+                        request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
+                        request.Artifact = layoutItemViewModel.Artifact.MapTo<SaveLayoutItemRequest.LayoutItemArtifact>();
+                        request.Artifact.MultiAxis = layoutItemViewModel.MultiaxisChart.MapTo<SaveLayoutItemRequest.LayoutItemArtifactMultiAxis>();
+                        response = _derService.SaveLayoutItem(request);
+                        break;    
+                    }
+                    
+
             }
-            return Content("asas");
+
+            return Content(response.Message);
         }
-	}
+    }
 }

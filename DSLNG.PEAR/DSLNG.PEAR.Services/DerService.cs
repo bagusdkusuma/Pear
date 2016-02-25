@@ -211,6 +211,10 @@ namespace DSLNG.PEAR.Services
                     .Include(x => x.DerLayout.Items.Select(y => y.Artifact.Measurement))
                     .Include(x => x.DerLayout.Items.Select(y => y.Artifact.Series))
                     .Include(x => x.DerLayout.Items.Select(y => y.Artifact.Series.Select(z => z.Kpi)))
+                    .Include(x => x.DerLayout.Items.Select(y => y.Artifact.Charts))
+                    .Include(x => x.DerLayout.Items.Select(y => y.Artifact.Charts.Select(z => z.Series)))
+                    .Include(x => x.DerLayout.Items.Select(y => y.Artifact.Charts.Select(z => z.Series.Select(a => a.Kpi))))
+                    .Include(x => x.DerLayout.Items.Select(y => y.Artifact.Charts.Select(z => z.Measurement)))
                     .Single(x => x.Id == id);
 
                 response = derLayoutItem.MapTo<GetDerLayoutitemResponse>();
@@ -226,17 +230,29 @@ namespace DSLNG.PEAR.Services
 
         public SaveLayoutItemResponse SaveLayoutItem(SaveLayoutItemRequest request)
         {
-            var response = new SaveLayoutItemResponse();
+            var baseResponse = new BaseResponse();
             switch (request.Type.ToLowerInvariant())
             {
                 case "line":
-                    var baseResponse = SaveLineChart(request);
-                    
-                    //DataContext.DerLayouts
-                    //SaveLine();
-                    break;
+                    {
+                        baseResponse = SaveLineChart(request);
+
+                        //DataContext.DerLayouts
+                        //SaveLine();
+                        break;
+                    }
+                case "multiaxis":
+                    {
+                        baseResponse = SaveMultiAxis(request);
+                        break;
+                    }
             }
 
+            SaveLayoutItemResponse response = new SaveLayoutItemResponse
+                {
+                    IsSuccess = baseResponse.IsSuccess,
+                    Message = baseResponse.Message
+                };
             return response;
         }
 
@@ -287,6 +303,9 @@ namespace DSLNG.PEAR.Services
                 else
                 {
                     var derLayoutItem = new DerLayoutItem();
+                    var derLayout = new DerLayout {Id = request.DerLayoutId};
+                    DataContext.DerLayouts.Attach(derLayout);
+                    derLayoutItem.DerLayout = derLayout;
                     derLayoutItem.Column = request.Column;
                     derLayoutItem.Row = request.Row;
                     derLayoutItem.Type = request.Type;
@@ -311,6 +330,110 @@ namespace DSLNG.PEAR.Services
 
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
+            }
+            catch (Exception exception)
+            {
+                response.Message = exception.Message;
+            }
+
+            return response;
+        }
+
+        private BaseResponse SaveMultiAxis(SaveLayoutItemRequest request)
+        {
+            var response = new BaseResponse();
+            try
+            {
+                if (request.Id > 0)
+                {
+
+                }
+                else
+                {
+                    var derLayoutItem = request.MapTo<DerLayoutItem>();// new DerLayoutItem();
+                    var derLayout = new DerLayout { Id = request.DerLayoutId };
+                    DataContext.DerLayouts.Attach(derLayout);
+                    derLayoutItem.DerLayout = derLayout;
+                    //derLayoutItem.Column = request.Column;
+                    //derLayoutItem.Row = request.Row;
+                    //derLayoutItem.Type = request.Type;
+                    var derArtifact = request.MapTo<DerArtifact>();
+                    //derArtifact.GraphicType = request.Type;
+                    //derArtifact.HeaderTitle = request.Artifact.HeaderTitle;
+                    /*var measurement = new Measurement { Id = request.Artifact.MeasurementId };
+                    DataContext.Measurements.Attach(measurement);
+                    derArtifact.Measurement = measurement;*/
+
+                    derArtifact.Charts = new List<DerArtifactChart>();
+                    foreach (var item in request.Artifact.MultiAxis.Charts)
+                    {
+                        var chart = new DerArtifactChart();
+                        chart.FractionScale = item.FractionScale;
+                        chart.GraphicType = item.GraphicType;
+                        chart.IsOpposite = item.IsOpposite;
+                        chart.MaxFractionScale = item.MaxFractionScale;
+
+                        var measurement = new Measurement { Id = item.MeasurementId };
+                        if (DataContext.Measurements.Local.FirstOrDefault(x => x.Id == measurement.Id) == null)
+                        {
+                            DataContext.Measurements.Attach(measurement);
+                        }
+                        else
+                        {
+                            measurement = DataContext.Measurements.Local.FirstOrDefault(x => x.Id == measurement.Id);
+                        }
+
+                        
+                        DataContext.Measurements.Attach(measurement);
+                        chart.Measurement = measurement;
+
+                        foreach (var s in item.Series)
+                        {
+                            var serie = new DerArtifactSerie();
+                            var kpi = new Kpi {Id = s.KpiId};
+                            if (DataContext.Kpis.Local.FirstOrDefault(x => x.Id == kpi.Id) == null)
+                            {
+                                DataContext.Kpis.Attach(kpi);
+                            }
+                            else
+                            {
+                                kpi = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == kpi.Id);
+                            }
+                            serie.Kpi = kpi;
+                            serie.Color = s.Color;
+                            serie.Label = s.Label;
+                            serie.Artifact = derArtifact;
+                            chart.Series.Add(serie);
+                        }
+                        
+                        derArtifact.Charts.Add(chart);
+                    }
+
+                    derLayoutItem.Artifact = derArtifact;
+                    //DataContext.DerArtifacts.Add(derArtifact);
+                    DataContext.DerLayoutItems.Add(derLayoutItem);
+
+                    DataContext.SaveChanges();
+                    /*var charts = request.Artifact.MultiAxis.Charts.Select(x => new DerArtifactChart
+                        {
+                            FractionScale = x.FractionScale,
+                            GraphicType = x.GraphicType,
+                            IsOpposite = x.IsOpposite,
+                            MaxFractionScale = x.MaxFractionScale,
+                            Measurement = DataContext.Measurements.Single(x => x.)
+                        })*/
+                    /* var series = request.Artifact.LineChart.Series.Select(x => new DerArtifactSerie
+                    {
+                        Color = x.Color,
+                        Kpi = DataContext.Kpis.FirstOrDefault(y => y.Id == x.KpiId),
+                        Label = x.Label
+                    }).ToList();
+
+                    derArtifact.Series = series;
+                    DataContext.DerArtifacts.Add(derArtifact);
+                    derLayoutItem.Artifact = derArtifact;
+                    DataContext.DerLayoutItems.Add(derLayoutItem);*/
+                }
             }
             catch (Exception exception)
             {

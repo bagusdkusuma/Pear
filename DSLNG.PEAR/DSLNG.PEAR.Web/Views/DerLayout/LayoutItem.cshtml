@@ -41,21 +41,49 @@
 <div id="hidden-fields-holder" data-kpi-url="@Url.Action("KpiList", "Artifact")"></div>
 
 
+
 <script type="text/javascript">
     $(document).ready(function () {
         $('.der-layout-type').change(function () {
             var that = $(this);
-            if (that.val().toLowerCase() === 'line') {
-                $.ajax({
-                    url: '@Url.Action("LayoutSetting", "DerLayout", new { type = "_type_" })'.replace('_type_', that.val()),
-                    success: function (data) {
-                        $('.layout-type-area').html(data);
-                    }
-                });
+            var type = that.val().toLowerCase();
+            switch (type) {
+                case 'line':
+                    $.ajax({
+                        url: '@Url.Action("LayoutSetting", "DerLayout", new { type = "_type_" })'.replace('_type_', that.val()),
+                        success: function (data) {
+                            $('.layout-type-area').html(data);
+                            var pear = window.Pear;
+                            var callback = pear.Artifact.Designer._setupCallbacks;
+                            callback['line']();
+                        }
+                    });
+                    break;
+                case 'multiaxis':
+                    $.ajax({
+                        url: '@Url.Action("LayoutSetting", "DerLayout", new { type = "_type_" })'.replace('_type_', that.val()),
+                        success: function (data) {
+                            $('.layout-type-area').html(data);
+                            var $hiddenFields = $('#hidden-fields');
+                            $('#hidden-fields-holder').html($hiddenFields.html());
+                            $hiddenFields.remove();
+                            var pear = window.Pear;
+                            var callback = pear.Artifact.Designer._setupCallbacks;
+                            callback['multiaxis']();
+                            /*$('#graphic-settings').prev('.form-group').css('display', 'block');
+                            $('#general-graphic-settings').css('display', 'block');
+                            $('.form-measurement').css('display', 'block');
+                            $('.main-value-axis').css('display', 'block');
+                            if (['speedometer', 'trafficlight', 'tabular', 'tank', 'pie', 'multiaxis'].indexOf(type) > -1) {
+                                $('.scale').css('display', 'none');
+                            } else {
+                                $('.scale').css('display', 'block');
+                            }*/
+                        }
+                    });
+                    break;
             }
         });
-
-
     });
 </script>
 

@@ -827,15 +827,52 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetDerItemResponse, ManageDerItemViewModel>();
             Mapper.CreateMap<GetDerLayoutitemsResponse, DerLayoutConfigViewModel>();
             Mapper.CreateMap<GetDerLayoutitemsResponse.LayoutItem, DerLayoutConfigViewModel.LayoutItem>();
+            
             Mapper.CreateMap<DerLayoutItemViewModel, SaveLayoutItemRequest>();
             Mapper.CreateMap<DerLayoutLineViewModel, SaveLayoutItemRequest.LayoutItemArtifact>();
             Mapper.CreateMap<LineChartViewModel, SaveLayoutItemRequest.LayoutItemArtifactLine>();
-            Mapper.CreateMap<DerLayoutLineViewModel, SaveLayoutItemRequest.LayoutItemArtifactSeries>();
+            Mapper.CreateMap<DerLayoutLineViewModel, SaveLayoutItemRequest.LayoutItemArtifactSerie>();
 
             Mapper.CreateMap<GetDerLayoutResponse, DerDisplayViewModel >();
             Mapper.CreateMap<GetDerLayoutResponse.DerArtifact, DerDisplayViewModel.DerArtifact>();
             Mapper.CreateMap<GetDerLayoutResponse.DerArtifactSerie, DerDisplayViewModel.DerArtifactSerie>();
             Mapper.CreateMap<GetDerLayoutResponse.DerLayoutItem, DerDisplayViewModel.DerLayoutItem>();
+
+            //artifact DER
+            Mapper.CreateMap<DerLayoutItemViewModel, SaveLayoutItemRequest>();
+            Mapper.CreateMap<DerLayoutItemViewModel.DerLayoutItemArtifactViewModel, SaveLayoutItemRequest.LayoutItemArtifact>();
+            
+            //DER Line
+            Mapper.CreateMap<LineChartViewModel, SaveLayoutItemRequest.LayoutItemArtifactLine>();
+            Mapper.CreateMap<LineChartViewModel.SeriesViewModel, SaveLayoutItemRequest.LayoutItemArtifactSerie>();
+
+            //DER Multiaxis
+            Mapper.CreateMap<MultiaxisChartViewModel, SaveLayoutItemRequest.LayoutItemArtifactMultiAxis>();
+            Mapper.CreateMap<MultiaxisChartViewModel.ChartViewModel, SaveLayoutItemRequest.LayoutItemArtifactChart>()
+                .ForMember(x => x.Series, y => y.MapFrom(z => z.LineChart.Series));
+
+            Mapper.CreateMap<GetDerLayoutitemResponse, GetCartesianChartDataRequest>()
+                  .ForMember(x => x.GraphicType, y => y.MapFrom(z => z.Artifact.GraphicType))
+                  .ForMember(x => x.HeaderTitle, y => y.MapFrom(z => z.Artifact.HeaderTitle))
+                  .ForMember(x => x.MeasurementId, y => y.MapFrom(z => z.Artifact.MeasurementId))
+                  .ForMember(x => x.PeriodeType, y => y.MapFrom(z => DSLNG.PEAR.Data.Enums.PeriodeType.Daily))
+                  .ForMember(x => x.RangeFilter, y => y.MapFrom(z => DSLNG.PEAR.Data.Enums.RangeFilter.Interval))
+                  .ForMember(x => x.ValueAxis, y => y.MapFrom(z => DSLNG.PEAR.Data.Enums.ValueAxis.KpiActual));
+
+            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifactSerie, GetCartesianChartDataRequest.SeriesRequest>();
+            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifactChart, GetMultiaxisChartDataRequest.ChartRequest>();
+            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifactSerie, GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>();
+
+            Mapper.CreateMap<GetDerLayoutitemResponse, GetMultiaxisChartDataRequest>()
+                  .ForMember(x => x.PeriodeType, y => y.MapFrom(z => DSLNG.PEAR.Data.Enums.PeriodeType.Daily))
+                  .ForMember(x => x.RangeFilter, y => y.MapFrom(z => DSLNG.PEAR.Data.Enums.RangeFilter.Interval));
+
+            
+
+
+            /*Mapper.CreateMap<DerLayoutItemViewModel, SaveLayoutItemRequest>();
+            Mapper.CreateMap<DerLayoutLineViewModel, SaveLayoutItemRequest.LayoutItemArtifact>();
+            Mapper.CreateMap<LineChartViewModel, SaveLayoutItemRequest.LayoutItemArtifactLine>();*/
 
         }
 

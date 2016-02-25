@@ -67,6 +67,7 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<DerLayout> DerLayouts { get; set; }
         IDbSet<DerLayoutItem> DerLayoutItems { get; set; }
         IDbSet<DerArtifact> DerArtifacts { get; set; }
+        IDbSet<DerArtifactChart> DerArtifactCharts { get; set; }
         IDbSet<DerArtifactSerie> DerArtifactSeries { get; set; }
         Database Database { get; }
         int SaveChanges();
