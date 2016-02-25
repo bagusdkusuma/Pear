@@ -617,16 +617,16 @@
                     success: function (data) {
                         var relation = '';
                         if (data.threatIds.length > 0) {
-                            relation = relation + 'T '
+                            relation = relation + '<a href="#" data-th="' + data.threatIds + '" class="btn-show-constraint">T</a> '
                         }
                         if (data.opportunityIds.length > 0) {
-                            relation = relation + 'O '
+                            relation = relation + '<a href="#" data-opp="' + data.opportunityIds + '" class="btn-show-constraint">O</a> '
                         }
                         if (data.weaknessIds.length > 0) {
-                            relation = relation + 'W '
+                            relation = relation + '<a href="#" data-wk="' + data.weaknessIds + '" class="btn-show-constraint">W</a> '
                         }
                         if (data.strengthIds.length > 0) {
-                            relation = relation + 'S '
+                            relation = relation + '<a href="#" data-st="' + data.strengthIds + '" class="btn-show-constraint">S</a> '
                         }
 
                         var input = [];
@@ -651,16 +651,16 @@
                     success: function (data) {
                         var relation = '';
                         if (data.threatIds.length > 0) {
-                            relation = relation + 'T '
+                            relation = relation + '<a href="#" data-th="' + data.threatIds + '" class="btn-show-constraint">T</a> '
                         }
                         if (data.opportunityIds.length > 0) {
-                            relation = relation + 'O '
+                            relation = relation + '<a href="#" data-opp="' + data.opportunityIds + '" class="btn-show-constraint">O</a> '
                         }
                         if (data.weaknessIds.length > 0) {
-                            relation = relation + 'W '
+                            relation = relation + '<a href="#" data-wk="' + data.weaknessIds + '" class="btn-show-constraint">W</a> '
                         }
                         if (data.strengthIds.length > 0) {
-                            relation = relation + 'S '
+                            relation = relation + '<a href="#" data-st="' + data.strengthIds + '" class="btn-show-constraint">S</a> '
                         }
 
                         $('.table-challenge').append('<tr><td class="td-entity">' + ' <a href="#" data-toggle="modal" data-target="#envi-modal" data-id="' + data.id + '" class="btn-show-challenge">' + '<span>' + relation + '</span>' + '</td><td class="td-definition">' + data.definition + '<a href="#" data-id="' + data.id + '" class="challenge-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
