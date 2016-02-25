@@ -2169,3 +2169,7 @@ li > input.choose-list{
 .business-posture .highlight, .environment-scanning .highlight {
     color:red;
 }
+
+.choose-this{
+    list-style: none;
+}

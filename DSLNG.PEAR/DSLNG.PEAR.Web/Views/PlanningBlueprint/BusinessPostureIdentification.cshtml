@@ -374,6 +374,7 @@
             </div>
             <div class="col-md-12">
                 <button type="button" class="btn btn-primary add-item">Add</button>
+                <button type="button" class="btn btn-primary cancel-popover">Cancel</button>
             </div>
         </div>
     </form>
@@ -394,6 +395,7 @@
             </div>
             <div class="col-md-12">
                 <button type="button" class="btn btn-primary add-item">Add</button>
+                <button type="button" class="btn btn-primary cancel-popover">Cancel</button>
             </div>
         </div>
     </form>
@@ -415,6 +417,7 @@
             </div>
             <div class="col-md-12">
                 <button type="button" class="btn btn-primary add-item">Add</button>
+                <button type="button" class="btn btn-primary cancel-popover">Cancel</button>
             </div>
         </div>
     </form>
@@ -460,6 +463,12 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
+
+        $(document).on('click', '.cancel-popover', function (e) {
+            e.preventDefault();
+            $('.popover').popover('hide');
+        });
+
         $('body').popover({
             selector: '.popover-trigger',
             html: true,
@@ -627,7 +636,6 @@
         }
         $('.' + $type + '-desired-list').children('li').each(function (i, val) {
             var $li = $(val);
-            console.log($li.data('id'));
             if($ids.indexOf(parseInt($li.data('id'))) > -1)
             {
                 $li.addClass('highlight');
