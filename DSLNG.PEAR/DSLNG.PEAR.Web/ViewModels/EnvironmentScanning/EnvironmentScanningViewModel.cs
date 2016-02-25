@@ -96,6 +96,25 @@ namespace DSLNG.PEAR.Web.ViewModels.EnvironmentScanning
             public int[] OpportunityIds { get; set; }
             public int[] WeaknessIds { get; set; }
             public int[] StrengthIds { get; set; }
+
+            public string ThreatIdString
+            {
+                get { return string.Join(",", this.ThreatIds); }
+            }
+            public string OpportunityIdString
+            {
+                get { return string.Join(",", this.OpportunityIds); }
+            }
+            public string WeaknessIdString
+            {
+                get { return string.Join(",", this.WeaknessIds); }
+            }
+            public string StrengthIdString
+            {
+                get { return string.Join(",", this.StrengthIds); }
+            }
+
+               
         }
 
         public class Challenge
@@ -112,6 +131,24 @@ namespace DSLNG.PEAR.Web.ViewModels.EnvironmentScanning
             public int[] OpportunityIds { get; set; }
             public int[] WeaknessIds { get; set; }
             public int[] StrengthIds { get; set; }
+
+            public string ThreatIdString
+            {
+                get { return string.Join(",", this.ThreatIds); }
+            }
+            public string OpportunityIdString
+            {
+                get { return string.Join(",", this.OpportunityIds); }
+            }
+            public string WeaknessIdString
+            {
+                get { return string.Join(",", this.WeaknessIds); }
+            }
+            public string StrengthIdString
+            {
+                get { return string.Join(",", this.StrengthIds); }
+            }
+
 
         }       
 

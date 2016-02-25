@@ -287,15 +287,15 @@ namespace DSLNG.PEAR.Services
             {
                 IsSuccess = true,
                 Message = "Constraint has been saved successfully",
-                Category = constraint.Category,
-                Definition = constraint.Definition,
-                Id = constraint.Id,
-                Type = constraint.Type,
-                RelationIds = constraint.Relations.Select(x => x.Id).ToArray(),
-                ThreatIds = result.Relations.Where(x => x.ThreatHost != null).Select(y => y.ThreatHost.Id).ToArray(),
-                OpportunityIds = result.Relations.Where(x => x.OpportunityHost != null).Select(y => y.OpportunityHost.Id).ToArray(),
-                WeaknessIds = result.Relations.Where(x => x.WeaknessHost != null).Select(y => y.WeaknessHost.Id).ToArray(),
-                StrengthIds = result.Relations.Where(x => x.StrengthHost != null).Select(y => y.StrengthHost.Id).ToArray(),
+                Category = result.Category,
+                Definition = result.Definition,
+                Id = result.Id,
+                Type = result.Type,
+                RelationIds = result.Relations.Select(x => x.Id).ToArray(),
+                ThreatIds = result.Relations.Where(x => x.ThreatHost != null).Select(y => y.Id).ToArray(),
+                OpportunityIds = result.Relations.Where(x => x.OpportunityHost != null).Select(y => y.Id).ToArray(),
+                WeaknessIds = result.Relations.Where(x => x.WeaknessHost != null).Select(y => y.Id).ToArray(),
+                StrengthIds = result.Relations.Where(x => x.StrengthHost != null).Select(y => y.Id).ToArray(),
 
             };
 
@@ -331,10 +331,10 @@ namespace DSLNG.PEAR.Services
                 Id = result.Id,
                 Type = result.Type,
                 RelationIds = result.Relations.Select(x => x.Id).ToArray(),
-                ThreatIds = result.Relations.Where(x => x.ThreatHost != null).Select(y => y.ThreatHost.Id).ToArray(),
-                OpportunityIds = result.Relations.Where(x => x.OpportunityHost != null).Select(y => y.OpportunityHost.Id).ToArray(),
-                WeaknessIds = result.Relations.Where(x => x.WeaknessHost != null).Select(y => y.WeaknessHost.Id).ToArray(),
-                StrengthIds = result.Relations.Where(x => x.StrengthHost != null).Select(y => y.StrengthHost.Id).ToArray(),
+                ThreatIds = result.Relations.Where(x => x.ThreatHost != null).Select(y => y.Id).ToArray(),
+                OpportunityIds = result.Relations.Where(x => x.OpportunityHost != null).Select(y => y.Id).ToArray(),
+                WeaknessIds = result.Relations.Where(x => x.WeaknessHost != null).Select(y => y.Id).ToArray(),
+                StrengthIds = result.Relations.Where(x => x.StrengthHost != null).Select(y => y.Id).ToArray(),
             };
         }
 

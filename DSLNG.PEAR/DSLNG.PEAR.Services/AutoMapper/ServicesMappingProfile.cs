@@ -547,9 +547,17 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<DesiredState, GetBusinessPostureResponse.DesiredState>();
             Mapper.CreateMap<Posture, GetBusinessPostureResponse.Posture>();
             Mapper.CreateMap<PostureChallenge, GetBusinessPostureResponse.PostureChallenge>()
-                .ForMember(x => x.HasRelation, o => o.MapFrom(y => y.DesiredStates.Count > 0));
+                .ForMember(x => x.HasRelation, o => o.MapFrom(y => y.DesiredStates.Count > 0))
+                .ForMember(x => x.Ids, o => o.MapFrom(y => y.DesiredStates.Select(z => z.Id)));
             Mapper.CreateMap<PostureConstraint, GetBusinessPostureResponse.PostureConstraint>()
-                .ForMember(x => x.HasRelation, o => o.MapFrom(y => y.DesiredStates.Count > 0));
+                .ForMember(x => x.HasRelation, o => o.MapFrom(y => y.DesiredStates.Count > 0))
+                .ForMember(x => x.Ids, o => o.MapFrom(y => y.DesiredStates.Select(z => z.Id)));
+            Mapper.CreateMap<EnvironmentsScanning, GetBusinessPostureResponse.EnvironmentScanning>();
+            Mapper.CreateMap<UltimateObjectivePoint, GetBusinessPostureResponse.EnvironmentScanning.UltimateObjective>();
+            Mapper.CreateMap<Constraint, GetBusinessPostureResponse.EnvironmentScanning.Constraint>();
+            Mapper.CreateMap<Challenge, GetBusinessPostureResponse.EnvironmentScanning.Challenge>();
+            
+
 
             Mapper.CreateMap<SaveDesiredStateRequest, DesiredState>();
             Mapper.CreateMap<DesiredState, SaveDesiredStateResponse>();
