@@ -14,5 +14,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         BaseResponse DeleteObjective(int id);
         BaseResponse Delete(int id);
         BaseResponse DeleteKpi(int id, int midTermId);
+        SubmitMidtermPlanningResponse SubmitMidtermPlanning(int id);
     }
 }

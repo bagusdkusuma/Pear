@@ -77,7 +77,8 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<MidtermPhaseFormulation> MidtermPhaseFormulations { get; set; }
         IDbSet<MidtermPhaseDescription> MidtermPhaseDescriptions { get; set; }
         IDbSet<MidtermPhaseKeyDriver> MidtermPhaseKeyDrivers { get; set; }
-        IDbSet<MidtermStrategicPlanning> MidtermStrategyPlannings { get; set; }
+        IDbSet<MidtermStrategyPlanning> MidtermStrategyPlannings { get; set; }
+        IDbSet<MidtermStrategicPlanning> MidtermStrategicPlannings { get; set; }
         IDbSet<MidtermStrategicPlanningObjective> MidtermStrategicPlanningObjectives { get; set; }
         Database Database { get; }
         int SaveChanges();

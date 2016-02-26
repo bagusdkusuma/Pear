@@ -2034,6 +2034,9 @@ a.see-more {
     float:none;
     margin:0;
 }
+.midterm-phase-formulation .row{
+    padding-left: 10px;
+}
 .midterm-phase-formulation .row .col-md-12{
     margin-top: 20px;
 }
@@ -2094,7 +2097,9 @@ li > input.choose-list{
 }
 
 .formulation-stage  {
+    width: 24%;
     margin-left: 10px;
+    margin-bottom: 20px;
 }
 
 .formulation-stage .title{
@@ -2189,4 +2194,115 @@ li > input.choose-list{
 }
 .strategic-planning-form {
     display:none;
+}
+
+.midterm-plannings .midterm-planning .midterm-planning-header{
+    text-align: center;
+}
+
+.midterm-plannings .midterm-planning .midterm-planning-header a{
+    position: absolute;
+    right: 2px;
+    top: 4px;
+}
+
+.midterm-plannings .midterm-planning .midterm-planning-header h4{
+    margin: 5px 0px 5px 0px;
+}
+
+
+.midterm-plannings .midterm-planning{
+    border: 1px solid white;
+    width: 33%;
+    margin-right: 3px;
+    margin-bottom: 10px;
+}
+
+.midterm-plannings .midterm-planning ul{
+    padding: 0px;
+}
+
+.midterm-plannings .midterm-planning .objective-header{
+    margin-top: 26px;
+}
+
+.midterm-plannings .midterm-planning .objective-header h5{
+    margin: 0px;
+    font-size: 16px;
+    text-align: center;
+    background-color: orange;
+}
+
+.midterm-plannings .midterm-planning .objective-header a{
+    position: absolute;
+    right: 60px;
+    top: 50px;
+}
+
+.midterm-plannings .midterm-planning .objectives li{
+    width: 100%;
+    text-align: left;
+}
+
+.midterm-plannings .midterm-planning .objectives li a{
+    position: absolute;
+    right: 2px;
+}
+
+.midterm-plannings .midterm-planning ul li{
+    border: 1px solid white;
+    display:inline-block;
+    width: 50%;
+    float: left;
+    text-align: center;
+    color: white;
+    list-style: decimal;
+}
+
+.midterm-strategy-planning .row{
+    padding-left: 10px;
+}
+
+.midterm-strategy-planning .row .col-md-12{
+    padding: 0px;
+}
+
+.midterm-strategy-planning .row .col-md-12 h4{
+    text-align: center;
+    margin: 0px 0px 5px 0px;
+    padding: 10px 0px 10px 0px;
+}
+
+.midterm-strategy-planning .row .col-md-4 {
+    padding: 0px;
+}
+
+
+.midterm-plannings .midterm-planning table{
+    width: 100%;
+    color: white;
+
+}
+.midterm-plannings .midterm-planning table th{
+    background-color: orange;
+        border: 1px solid white;
+}
+
+.midterm-plannings .midterm-planning table th a{
+    position: relative;
+    left: 80px;
+}
+
+.midterm-plannings .midterm-planning table td{
+    border: 1px solid white;
+    text-align: center;
+}
+
+    .midterm-plannings .midterm-planning  table th:first-child a {
+        position:absolute;
+        right:5px;
+    }
+.midterm-plannings .midterm-planning table.kpis th:first-child {
+     padding-right:20px;
+    position:relative;
 }

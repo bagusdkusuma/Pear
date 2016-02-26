@@ -259,6 +259,7 @@ namespace DSLNG.PEAR.Services
             {
                 var businessPosture = DataContext.BusinessPostures.First(x => x.Id == id);
                 businessPosture.IsLocked = true;
+                businessPosture.IsBeingReviewed = true;
                 DataContext.SaveChanges();
                 return new SubmitBusinessPostureResponse
                 {

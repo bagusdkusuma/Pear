@@ -22,7 +22,7 @@ namespace DSLNG.PEAR.Services
 
         public GetMidtermPlanningsResponse GetByStageId(int id)
         {
-            var midtermPlannings = DataContext.MidtermStrategyPlannings
+            var midtermPlannings = DataContext.MidtermStrategicPlannings
                 .Include(x => x.Objectives)
                 .Include(x => x.Kpis)
                 .Include(x => x.Kpis.Select(y => y.Measurement))
@@ -89,7 +89,7 @@ namespace DSLNG.PEAR.Services
             {
                 var objective = request.MapTo<MidtermStrategicPlanningObjective>();
                 var midtermPlanning = new MidtermStrategicPlanning { Id = request.MidtermPlanningId };
-                DataContext.MidtermStrategyPlannings.Attach(midtermPlanning);
+                DataContext.MidtermStrategicPlannings.Attach(midtermPlanning);
                 objective.MidtermStrategicPlanning = midtermPlanning;
                 DataContext.MidtermStrategicPlanningObjectives.Add(objective);
                 DataContext.SaveChanges();
@@ -136,7 +136,7 @@ namespace DSLNG.PEAR.Services
         public AddPlanningKpiResponse AddKpi(AddPlanningKpiRequest request)
         {
             var response = new AddPlanningKpiResponse();
-            var midtermPlanning = DataContext.MidtermStrategyPlannings
+            var midtermPlanning = DataContext.MidtermStrategicPlannings
                 .Include(x => x.Kpis)
                 .Include(x => x.Kpis.Select(y => y.Measurement))
                 .First(x => x.Id == request.MidtermPlanningId);
@@ -179,8 +179,8 @@ namespace DSLNG.PEAR.Services
             try
             {
                 var planning = new MidtermStrategicPlanning { Id = id };
-                DataContext.MidtermStrategyPlannings.Attach(planning);
-                DataContext.MidtermStrategyPlannings.Remove(planning);
+                DataContext.MidtermStrategicPlannings.Attach(planning);
+                DataContext.MidtermStrategicPlannings.Remove(planning);
                 DataContext.SaveChanges();
                 return new BaseResponse
                 {
@@ -202,7 +202,7 @@ namespace DSLNG.PEAR.Services
         {
             try
             {
-                var midtermPlanning = DataContext.MidtermStrategyPlannings
+                var midtermPlanning = DataContext.MidtermStrategicPlannings
                 .Include(x => x.Kpis)
                 .Include(x => x.Kpis.Select(y => y.Measurement))
                 .First(x => x.Id == midTermId);
@@ -233,7 +233,7 @@ namespace DSLNG.PEAR.Services
                 var midtermStage = new MidtermPhaseFormulationStage { Id = request.MidtermStageId };
                 DataContext.MidtermPhaseFormulationStages.Attach(midtermStage);
                 midtermPlanning.Stage = midtermStage;
-                DataContext.MidtermStrategyPlannings.Add(midtermPlanning);
+                DataContext.MidtermStrategicPlannings.Add(midtermPlanning);
                 DataContext.SaveChanges();
                 return new AddMidtermPlanningResponse
                 {
@@ -250,6 +250,31 @@ namespace DSLNG.PEAR.Services
                 {
                     IsSuccess = true,
                     Message = "You have been successfully add new item"
+                };
+            }
+        }
+
+
+        public SubmitMidtermPlanningResponse SubmitMidtermPlanning(int id)
+        {
+            try
+            {
+                var midtermPlanning = DataContext.MidtermStrategyPlannings.First(x => x.Id == id);
+                midtermPlanning.IsLocked = true;
+                midtermPlanning.IsBeingReviewed = true;
+                DataContext.SaveChanges();
+                return new SubmitMidtermPlanningResponse
+                {
+                    IsSuccess = true,
+                    Message = "You have been sucessfully sabmit the item"
+                };
+            }
+            catch
+            {
+                return new SubmitMidtermPlanningResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured, please contact the adminstrator for further information"
                 };
             }
         }

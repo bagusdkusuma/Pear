@@ -13,7 +13,6 @@ namespace DSLNG.PEAR.Data.Entities.Blueprint
         public IList<UltimateObjectivePoint> OperationPhase { get; set; }
         public IList<UltimateObjectivePoint> ReinventPhase { get; set; }
         public PlanningBlueprint PlanningBlueprint { get; set; }
-        public bool IsApproved { get; set; }
         public bool IsLocked { get; set; }
         public IList<EnvironmentalScanning> Threat { get; set; }
         public IList<EnvironmentalScanning> Opportunity { get; set; }

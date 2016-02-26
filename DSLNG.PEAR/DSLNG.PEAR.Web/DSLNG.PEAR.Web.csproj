@@ -1092,7 +1092,7 @@
     <Content Include="Views\OperationData\_Download.cshtml" />
     <Content Include="Views\PlanningBlueprint\BusinessPostureIdentification.cshtml" />
     <Content Include="Views\PlanningBlueprint\VoyagePlan.cshtml" />
-    <Content Include="Views\PlanningBlueprint\VoyagePlanApproval.cshtml" />
+    <Content Include="Views\PlanningBlueprint\Approval.cshtml" />
     <Content Include="Views\PlanningBlueprint\MidtermPhaseFormulation.cshtml" />
     <Content Include="Views\Shared\_showPostureChallenge.cshtml" />
     <Content Include="Views\Shared\_showPostureConstraint.cshtml" />

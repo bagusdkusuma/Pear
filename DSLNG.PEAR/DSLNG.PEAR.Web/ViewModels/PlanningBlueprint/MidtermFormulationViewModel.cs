@@ -7,6 +7,12 @@ namespace DSLNG.PEAR.Web.ViewModels.PlanningBlueprint
     {
         public int Id { get; set; }
         public bool IsLocked { get; set; }
+
+        public bool IsReviewer { get; set; }
+
+        public bool IsDashboard { get; set; }
+        public bool IsDashboardExist { get; set; }
+
         public PostureViewModel ConstructionPosture { get; set; }
         public PostureViewModel OperationPosture { get; set; }
         public PostureViewModel DecommissioningPosture { get; set; }
