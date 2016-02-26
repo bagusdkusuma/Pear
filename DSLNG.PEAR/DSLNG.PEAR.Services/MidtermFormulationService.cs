@@ -232,5 +232,32 @@ namespace DSLNG.PEAR.Services
 
             }
         }
+
+
+        public SubmitMidtermFormulationResponse SubmitMidtermFormulation(int id)
+        {
+            try
+            {
+                var midtermFormulation = DataContext.MidtermPhaseFormulations.Include(x => x.PlanningBlueprint).First(x => x.Id == id);
+                midtermFormulation.IsLocked = true;
+                var midtermPlanning = DataContext.MidtermStrategyPlannings.First(x => x.PlanningBlueprint.Id == midtermFormulation.PlanningBlueprint.Id);
+                midtermPlanning.IsLocked = false;
+                DataContext.SaveChanges();
+                return new SubmitMidtermFormulationResponse
+                {
+                    IsSuccess = true,
+                    Message = "Midterm Formulation has been successfully submited",
+                    MidtermStrategyPlanningId = midtermPlanning.Id
+                };
+            }
+            catch
+            {
+                return new SubmitMidtermFormulationResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured, please contact adminstrator for further information"
+                };
+            }
+        }
     }
 }

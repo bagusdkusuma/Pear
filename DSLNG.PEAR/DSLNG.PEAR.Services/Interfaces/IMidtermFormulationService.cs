@@ -14,5 +14,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         BaseResponse DeleteStage(int id);
         BaseResponse DeleteStageDesc(int id);
         BaseResponse DeleteStageKey(int id);
+        SubmitMidtermFormulationResponse SubmitMidtermFormulation(int id);
     }
 }

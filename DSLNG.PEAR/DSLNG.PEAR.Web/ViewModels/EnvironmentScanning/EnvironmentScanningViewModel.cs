@@ -25,6 +25,8 @@ namespace DSLNG.PEAR.Web.ViewModels.EnvironmentScanning
             
         }
 
+        //provoser or reviewer
+        public bool IsReviewer { get; set; }
 
         public int Id { get; set; }
         public int BusinessPostureId { get; set; }

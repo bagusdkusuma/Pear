@@ -50,17 +50,43 @@
     <div class="row">
         <div class="col-md-12">
             <h4 style="background-color: #00bfff;">Midterm Strategic Planning
+                @if(!Model.IsReviewer){
                   <a class="add-strategic-planning"  data-toggle="popover" href="javascript:void(0)"><i class="fa fa-plus"></i></a>
+                }
             </h4>
         </div>
     </div>
     <div class="row midterm-plannings">
     </div>
+     <div class="row">
+        <div class="col-md-12 artifact-designer-btns">
+            @if(!Model.IsReviewer){
+            <a href="@Url.Action("Index", "PlanningBlueprint")" class="btn btn-primary btn-lg"><span class="fa fa-arrow-left"></span>Back To List</a>
+            }else{
+                <a href="@Url.Action("MPFReview", "PlanningBlueprint", new { id = Model.Id})" class="btn btn-primary btn-lg"><span class="fa fa-arrow-left"></span>Back</a>
+            }
+            @if(!Model.IsReviewer){
+            using (Html.BeginForm("SubmitMidtermPlanning", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
+            {
+                @Html.Hidden("Id", Model.Id)
+                <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Submit</button>
+            }
+            }else{
+            using (Html.BeginForm("ApproveMidtermStrategy", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
+            {
+                @Html.Hidden("Id", Model.Id)
+                <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Approve</button>
+            }
+            }
+        </div>
+    </div>
 
     <div class="midterm-planning-template col-md-4">
         <div class="midterm-planning-header">
         <h4 class="header-title"></h4>
+              @if(!Model.IsReviewer){
             <a href="/MidtermStrategyPlanning/Delete" class="remove-midterm-planning"><i class="fa fa-minus"></i></a>
+              }
             </div>
         <ul class="range">
             <li class="start"></li>
@@ -68,13 +94,15 @@
         </ul>
         <div class="objective-header">
             <h5 class="objective-title">Objective</h5>
+              @if(!Model.IsReviewer){
             <a data-toggle="popover" href="javascript:void(0)" class="add-objective"><i class="fa fa-plus"></i></a>
+              }
         </div>
         <ul class="objectives">
         </ul>
         <table class="kpis">
             <tr>
-                <th>Kpi <a data-toggle="popover" href="javascript:void(0)" class="add-kpi"><i class="fa fa-plus"></i></a> </th>
+                <th>Kpi   @if(!Model.IsReviewer){<a data-toggle="popover" href="javascript:void(0)" class="add-kpi"><i class="fa fa-plus"></i></a>} </th>
                 <th>Target</th>
                 <th>Economic</th>
             </tr>
@@ -208,7 +236,11 @@
                     var $objectivesHolder = $mpTemplate.find('.objectives');
                     for (var j in mPlanning.Objectives) {
                         var objective = mPlanning.Objectives[j];
-                        $objectivesHolder.append('<li data-id="' + objective.Id + '">' + objective.Value + '<a  href="/MidtermStrategyPlanning/DeleteObjective" class="remove-objective"><i class="fa fa-minus"></i></a></li>');
+                          @if(!Model.IsReviewer){
+                        <text>$objectivesHolder.append('<li data-id="' + objective.Id + '">' + objective.Value + '<a  href="/MidtermStrategyPlanning/DeleteObjective" class="remove-objective"><i class="fa fa-minus"></i></a></li>');</text>
+                          }else{
+                          <text>$objectivesHolder.append('<li data-id="' + objective.Id + '">' + objective.Value +'</li>');</text>
+                          }
                     }
                     var $kpisHolder = $mpTemplate.find('.kpis');
                     console.log(mPlanning.Kpis);
@@ -219,7 +251,11 @@
                         var $kpiCol = $('<td />');
                         var $targetCol = $('<td />');
                         var $actualCol = $('<td />');
-                        $kpiCol.html(kpi.Name + ' (' + kpi.Measurement + ') <a href="/MidtermStrategyPlanning/DeleteKpi" class="remove-kpi"><i class="fa fa-minus"></i></a>');
+                        @if(!Model.IsReviewer){
+                        <text>$kpiCol.html(kpi.Name + ' (' + kpi.Measurement + ') <a href="/MidtermStrategyPlanning/DeleteKpi" class="remove-kpi"><i class="fa fa-minus"></i></a>');</text>
+                        }else{
+                        <text>$kpiCol.html(kpi.Name + ' (' + kpi.Measurement + ')');</text>
+                        }
                         $targetCol.html(kpi.Target);
                         $actualCol.html(kpi.Actual);
                         $row.append($kpiCol);

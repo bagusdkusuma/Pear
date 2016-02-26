@@ -9,6 +9,7 @@ namespace DSLNG.PEAR.Data.Entities.Blueprint
         public int Id { get; set; }
         public PlanningBlueprint PlanningBlueprint { get; set; }
         public bool IsLocked { get; set; }
+        public bool IsBeingReviewed { get; set; }
         public bool IsApproved { get; set; }
     }
 }

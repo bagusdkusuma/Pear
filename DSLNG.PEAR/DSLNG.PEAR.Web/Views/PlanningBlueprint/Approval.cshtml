@@ -10,9 +10,9 @@
         <tr>
             <th>Title</th>
             <th>Description</th>
-            <th>Is Approved</th>
+            <th>Voyage Planning</th>
+            <th>Midterm Phase Strategy</th>
             <th>Is Active</th>
-            <th></th>
         </tr>
     </thead>
 </table>
@@ -26,7 +26,7 @@
                 "bProcessing": true,
                 "bServerSide": true,
                 "sServerMethod": "POST",
-               @* "ajax": {
+                @* "ajax": {
                     "url": '@Url.Action("Grid", "PlanningBlueprint")',
                     //"data": function ( d ) {
                     //    d.Filter = "Approved";
@@ -40,14 +40,34 @@
                     { "mDataProp": "Title", "name": "Title", "className": "dt-body-left" },
                     { "mDataProp": "Description", "name": "Description", "className": "dt-body-left" },
                     {
-                        "mDataProp": "IsApproved", "name": "IsApproved", "render": function (data, type, row) {
-                            var checked = '';
-                            if (data) {
-                                checked = 'checked="checked"';
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": '',
+                        "mRender": function (data, type, row) {
+                            if (row.BusinessPostureIdentification.IsBeingReviewed) {
+                                return '@Html.ActionLink("Review", "ESReview", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.BusinessPostureIdentification.Id);
+                            } else if (row.BusinessPostureIdentification.IsApproved) {
+                                return "Approved";
+                            }else{
+                                return "On Progress";
                             }
-                            return '<input type="checkbox" class="editor-active" '+checked+' disabled="disabled">';
-                        },
+                        }
                     },
+                     {
+                         "orderable": false,
+                         "data": null,
+                         "defaultContent": '',
+                         "mRender": function (data, type, row) {
+                             if (row.MidtermStragetyPlanning.IsBeingReviewed) {
+                                 return '@Html.ActionLink("Review", "MPFReview", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.MidtermStragetyPlanning.Id);
+                             }
+                             else if (row.MidtermStragetyPlanning.IsApproved) {
+                                 return "Approved";
+                             }else{
+                                return 'On Progress';
+                             }
+                          }
+                     },
                     {
                         "mDataProp": "IsActive", "name": "IsActive", "render": function (data, type, row) {
                             var checked = '';
@@ -56,15 +76,6 @@
                             }
                             return '<input type="checkbox" class="editor-active" ' + checked + ' disabled="disabled">';
                         },
-                    },
-                    {
-                        "orderable": false,
-                        "data": null,
-                        "defaultContent": '',
-                        "mRender": function (data, type, row) {
-                            var reviewLink = '@Html.ActionLink("Review", "EnvironmentsScanning", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', data.EnvironmentsScanning.Id);
-                            return reviewLink;
-                        }
                     }
                 ],
                 rowCallback: function (row, data) {

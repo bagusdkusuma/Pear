@@ -1,6 +1,7 @@
 ﻿
 
 using DSLNG.PEAR.Services.Requests.PlanningBlueprint;
+using DSLNG.PEAR.Services.Responses.MidtermFormulation;
 using DSLNG.PEAR.Services.Responses.PlanningBlueprint;
 namespace DSLNG.PEAR.Services.Interfaces
 {
@@ -10,5 +11,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         SavePlanningBlueprintResponse SavePlanningBlueprint(SavePlanningBlueprintRequest request);
         GetVoyagePlanResponse GetVoyagePlan();
         ApproveVoyagePlanResponse ApproveVoyagePlan(int id);
+        ApproveMidtermStrategyResponse ApproveMidtermStrategy(int id);
+        GetMidtermFormulationResponse GetMidtermStrategy();
     }
 }

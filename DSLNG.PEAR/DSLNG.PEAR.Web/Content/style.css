@@ -2297,3 +2297,12 @@ li > input.choose-list{
     border: 1px solid white;
     text-align: center;
 }
+
+    .midterm-plannings .midterm-planning  table th:first-child a {
+        position:absolute;
+        right:5px;
+    }
+.midterm-plannings .midterm-planning table.kpis th:first-child {
+     padding-right:20px;
+    position:relative;
+}

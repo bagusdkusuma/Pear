@@ -13,13 +13,15 @@
         <div class="div-envi col-md-4 border-style-1">
             <div class="col-md-4-child">
                 <span><b>Ultimate Objective (Construction Phase)</b></span>
-                <a href="#" class="input-popover" data-es-id="@Model.Id" data-type="cp" data-toggle="popover" data-placement="left" title="Construction Phase"><i class="fa fa-plus"></i></a>
+                @if(!Model.IsReviewer){
+                    <a href="#" class="input-popover" data-es-id="@Model.Id" data-type="cp" data-toggle="popover" data-placement="left" title="Construction Phase"><i class="fa fa-plus"></i></a>
+                }
             </div>
             <div>
                 <ul class="cp-list">
                     @foreach (var item in Model.ConstructionPhase)
                     {
-                        <li>@item.Description <a href="#" data-id="@item.Id" class="remove-button"><i class="fa fa-minus"></i></a></li>
+                        <li>@item.Description @if(!Model.IsReviewer){<a href="#" data-id="@item.Id" class="remove-button"><i class="fa fa-minus"></i></a>}</li>
                     }
                 </ul>
                 @Html.HiddenFor(model => model.Id)
@@ -28,13 +30,15 @@
         <div class="div-envi col-md-4 border-style-1">
             <div class="col-md-4-child">
                 <span><b>Ultimate Objective (Operation Phase)</b></span>
+                @if(!Model.IsReviewer){
                 <a href="#" class="input-popover" data-es-id="@Model.Id" data-type="op" data-toggle="popover" data-placement="left" title="Construction Phase"><i class="fa fa-plus"></i></a>
+                }
             </div>
             <div>
                 <ul class="op-list">
                     @foreach (var item in Model.OperationPhase)
                     {
-                        <li>@item.Description <a href="#" data-id="@item.Id" class="remove-button"><i class="fa fa-minus"></i></a></li>
+                        <li>@item.Description @if(!Model.IsReviewer){<a href="#" data-id="@item.Id" class="remove-button"><i class="fa fa-minus"></i></a>}</li>
                     }
                 </ul>
                 @Html.HiddenFor(model => model.Id)
@@ -43,13 +47,15 @@
         <div class="div-envi col-md-4 border-style-1">
             <div class="col-md-4-child">
                 <span><b>Ultimate Objective (Decomm.Re-Invent Phase)</b></span>
+                @if(!Model.IsReviewer){
                 <a href="#" class="input-popover" data-es-id="@Model.Id" data-type="rp" data-toggle="popover" data-placement="left" title="Reinvent Phase"><i class="fa fa-plus"></i></a>
+                }
             </div>
             <div>
                 <ul class="rp-list">
                     @foreach (var item in Model.ReinventPhase)
                     {
-                        <li>@item.Description <a href="#" data-id="@item.Id" class="remove-button"><i class="fa fa-minus"></i></a></li>
+                        <li>@item.Description @if(!Model.IsReviewer){<a href="#" data-id="@item.Id" class="remove-button"><i class="fa fa-minus"></i></a>}</li>
 
                     }
                 </ul>
@@ -67,14 +73,16 @@
         <div class="col-md-3 popover-envi border-style-1">
             <div class="col-md-12 col-envi" style="background-color: red">
                 <span><b>Threat</b></span>
+                @if(!Model.IsReviewer){
                 <a href="#" class="input-environmental" data-envi-id="@Model.Id" data-envi-type="th" data-toggle="popover" data-placement="left" title="Threat"><i class="fa fa-plus"></i></a>
+                }
             </div>
             <div class="col-md-12 div-row-child">
                 <ul class="list-group th-list">
                     @{
                         foreach (var item in Model.Threat)
                         {
-                            <li data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>
+                            <li data-id="@item.Id">@item.Desc @if(!Model.IsReviewer){<a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a>}</li>
                         }
                     }
                 </ul>
@@ -83,14 +91,16 @@
         <div class="col-md-3 popover-envi border-style-1">
             <div class="col-md-12 col-envi" style="background-color: #33ff33">
                 <span><b>Opportunity</b></span>
+                @if(!Model.IsReviewer){
                 <a href="#" class="input-environmental" data-envi-id="@Model.Id" data-envi-type="opp" data-toggle="popover" data-placement="left" title="Opportunity"><i class="fa fa-plus"></i></a>
+                }
             </div>
             <div class="col-md-12 div-row-child">
                 <ul class="list-group opp-list">
                     @{
                         foreach (var item in Model.Opportunity)
                         {
-                            <li data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>
+                            <li data-id="@item.Id">@item.Desc @if(!Model.IsReviewer){<a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a>}</li>
                         }
                     }
                 </ul>
@@ -99,14 +109,16 @@
         <div class="col-md-3 popover-envi border-style-1">
             <div class="col-md-12 col-envi" style="background-color: #e580ff">
                 <span><b>Weakness</b></span>
+                @if(!Model.IsReviewer){
                 <a href="#" class="input-environmental" data-envi-id="@Model.Id" data-envi-type="wk" data-toggle="popover" data-placement="left" title="Opportunity"><i class="fa fa-plus"></i></a>
+                }
             </div>
             <div class="col-md-12 div-row-child">
                 <ul class="list-group wk-list">
                     @{
                         foreach (var item in Model.Weakness)
                         {
-                            <li data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>
+                            <li data-id="@item.Id">@item.Desc @if(!Model.IsReviewer){<a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a>}</li>
                         }
                     }
                 </ul>
@@ -115,14 +127,16 @@
         <div class="col-md-3 popover-envi border-style-1">
             <div class="col-md-12 col-envi" style="background-color: #3333ff">
                 <span><b>Strength</b></span>
+                @if(!Model.IsReviewer){
                 <a href="#" class="input-environmental" data-envi-id="@Model.Id" data-envi-type="st" data-toggle="popover" data-placement="left" title="Opportunity"><i class="fa fa-plus"></i></a>
+                }
             </div>
             <div class="col-md-12 div-row-child">
                 <ul class="list-group st-list">
                     @{
                         foreach (var item in Model.Strength)
                         {
-                            <li data-id="@item.Id">@item.Desc <a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>
+                            <li data-id="@item.Id">@item.Desc @if(!Model.IsReviewer){<a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a>}</li>
                         }
                     }
                 </ul>
@@ -133,7 +147,9 @@
     @* Constraints *@
     <div class="row row-constraint margin-style-1 border-style-1" style="background-color: #cc0000">
         <h6>Constraint</h6>
+        @if(!Model.IsReviewer){
         <a href="#" class="btn-create-constraint" data-envi-id="@Model.Id" data-toggle="popover" data-placement="left" title="Constraint"><i class="fa fa-plus"></i></a>
+        }
     </div>
     <div class="row row-margin-5 row-table-constrain">
         <table class="table table-constraint border-style-1">
@@ -172,7 +188,7 @@
                         }
                         @*</a>*@
                     </td>
-                    <td class="td-definition">@item.Definition <a href="#" data-id="@item.Id" class="constraint-remove-button"><i class="fa fa-minus"></i></a></td>
+                    <td class="td-definition">@item.Definition @if(!Model.IsReviewer){<a href="#" data-id="@item.Id" class="constraint-remove-button"><i class="fa fa-minus"></i></a>}</td>
                     <td class="td-entity">@item.Type</td>
                     <td class="td-entity">@item.Category</td>
                 </tr>
@@ -187,7 +203,9 @@
     @* Challenges *@
     <div class="row row-challenges margin-style-1 border-style-1" style="background-color: #ffcc00">
         <h6>Challenges</h6>
+          @if(!Model.IsReviewer){
         <a href="#" class="btn-create-challenges" data-envi-id="@Model.Id" data-toggle="popover" data-placement="left" title="Challenges"><i class="fa fa-plus"></i></a>
+          }
     </div>
     <div class="row row-margin-5 row-table-constrain">
         <table class="table table-challenge border-style-1">
@@ -226,7 +244,7 @@
                             }
                        @* </a>*@
                     </td>
-                    <td class="td-definition">@item.Definition <a href="#" data-id="@item.Id" class="challenge-remove-button"><i class="fa fa-minus"></i></a></td>
+                    <td class="td-definition">@item.Definition   @if(!Model.IsReviewer){<a href="#" data-id="@item.Id" class="challenge-remove-button"><i class="fa fa-minus"></i></a>}</td>
                     <td class="td-entity">@item.Type</td>
                     <td class="td-entity">@item.Category</td>
                 </tr>
@@ -240,9 +258,16 @@
             @using (Html.BeginForm("SubmitEnvironmentsScanning", "PlanningBlueprint"))
             {
                 @Html.Hidden("Id", Model.Id)
-                <a href="@Url.Action("Index", "PlanningBlueprint")" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
-                <a href="@Url.Action("BusinessPostureIdentification", "PlanningBlueprint", new { Id = Model.BusinessPostureId })" class="btn btn-primary btn-lg"><span class="fa fa-arrow-right"></span>Business Posture Identification</a>
-                <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Submit</button>
+                 if(!Model.IsReviewer){
+                <a href="@Url.Action("Index", "PlanningBlueprint")" class="btn btn-primary btn-lg"><span class="fa fa-arrow-left"></span>Back</a>
+            }else{
+                  <a href="@Url.Action("Approval", "PlanningBlueprint")" class="btn btn-primary btn-lg"><span class="fa fa-arrow-left"></span>Back</a>
+                 }
+                  if(!Model.IsReviewer){
+                <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-arrow-right"></span>Business Posture Identification</button>
+                  }else{
+                   <a href="@Url.Action("BPReview", "PlanningBlueprint", new { Id = Model.BusinessPostureId })" class="btn btn-primary btn-lg"><span class="fa fa-arrow-right"></span>Business Posture Identification</a>
+                  }
             }
         </div>
     </div>

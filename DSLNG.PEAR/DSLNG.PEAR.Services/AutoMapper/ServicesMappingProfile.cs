@@ -529,6 +529,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<PlanningBlueprint, GetPlanningBlueprintsResponse.PlanningBlueprint>();
             Mapper.CreateMap<EnvironmentsScanning, GetPlanningBlueprintsResponse.EnvironmentsScanning>();
             Mapper.CreateMap<BusinessPostureIdentification, GetPlanningBlueprintsResponse.BusinessPostureIdentification>();
+            Mapper.CreateMap<MidtermPhaseFormulation, GetPlanningBlueprintsResponse.MidtermPhaseFormulation>();
+            Mapper.CreateMap<MidtermStrategyPlanning, GetPlanningBlueprintsResponse.MidtermStragetyPlanning>();
             Mapper.CreateMap<Kpi, GetKpiDetailResponse>()
                   .ForMember(x => x.Code, y => y.MapFrom(z => z.Code))
                   .ForMember(x => x.Group, y => y.MapFrom(z => z.Group.Name))

@@ -125,12 +125,14 @@
             <h4 style="background-color: #009933">Construction Posture</h4>
             <div class="sub-group">
                 <h6 style="background-color: #336600">Desired States</h6>
+                @if(!Model.IsReviewer){
                 <a href="#" data-toggle="popover" data-title="Add Desired State" data-posture-id="@Model.ConstructionPosture.Id" data-form-target="desired-state" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                }
             </div>
             <ul class="list-result construction-desired-list">
                 @foreach (var item in Model.ConstructionPosture.DesiredStates)
                 {
-                    <li data-id="@item.Id">@item.Description <a href="/BusinessPosture/DeleteDesiredState" class="remove-item"><i class="fa fa-minus"></i></a></li>
+                    <li data-id="@item.Id">@item.Description   @if(!Model.IsReviewer){<a href="/BusinessPosture/DeleteDesiredState" class="remove-item"><i class="fa fa-minus"></i></a>}</li>
                 }
             </ul>
         </div>
@@ -138,12 +140,13 @@
             <h4 style="background-color: #009933">Operation Posture</h4>
             <div class="sub-group">
                 <h6 style="background-color: #336600">Desired States</h6>
-                <a href="#" data-toggle="popover" data-title="Add Desired State" data-posture-id="@Model.OperationPosture.Id" data-form-target="desired-state" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                  @if(!Model.IsReviewer){<a href="#" data-toggle="popover" data-title="Add Desired State" data-posture-id="@Model.OperationPosture.Id" data-form-target="desired-state" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                  }
             </div>
             <ul class="list-result operation-desired-list">
                 @foreach (var item in Model.OperationPosture.DesiredStates)
                 {
-                    <li data-id="@item.Id">@item.Description<a href="/BusinessPosture/DeleteDesiredState" class="remove-item"><i class="fa fa-minus"></i></a></li>
+                    <li data-id="@item.Id">@item.Description @if(!Model.IsReviewer){<a href="/BusinessPosture/DeleteDesiredState" class="remove-item"><i class="fa fa-minus"></i></a>}</li>
                 }
             </ul>
         </div>
@@ -151,12 +154,14 @@
             <h4 style="background-color: #009933">Decommisssioning Posture</h4>
             <div class="sub-group">
                 <h6 style="background-color: #336600">Desired States</h6>
+                @if(!Model.IsReviewer){
                 <a href="#" data-toggle="popover" data-title="Add Desired State" data-posture-id="@Model.DecommissioningPosture.Id" data-form-target="desired-state" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                }
             </div>
             <ul class="list-result decommissioning-desired-list">
                 @foreach (var item in Model.DecommissioningPosture.DesiredStates)
                 {
-                    <li data-id="@item.Id">@item.Description<a href="/BusinessPosture/DeleteDesiredState" class="remove-item"><i class="fa fa-minus"></i></a></li>
+                    <li data-id="@item.Id">@item.Description @if(!Model.IsReviewer){<a href="/BusinessPosture/DeleteDesiredState" class="remove-item"><i class="fa fa-minus"></i></a>}</li>
                 }
             </ul>
         </div>
@@ -167,14 +172,18 @@
             <div>
                 <div class="sub-group">
                     <h6 style="background-color: #e6e600">Posture Challenge</h6>
+                    @if(!Model.IsReviewer){
                     <a href="#" data-toggle="popover" data-posture-type="construction" data-title="Add Desired State" data-posture="PostureChallenge" data-posture-id="@Model.ConstructionPosture.Id" data-form-target="posture-challenge" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                    }
                 </div>
             </div>
             <table class=" table list-result">
                 <tr>
                     <th style="width:70px;">Relation</th>
                     <th style="width:320px">Definition</th>
+                    @if(!Model.IsReviewer){
                     <th style="width:30px;"></th>
+                    }
                 </tr>
                 @foreach (var item in Model.ConstructionPosture.PostureChallenges)
                 {
@@ -189,7 +198,9 @@
 
                         </td>
                         <td>@item.Definition </td>
+                        @if(!Model.IsReviewer){
                         <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureChallenge" class="remove-item"><i class="fa fa-minus"></i></a></td>
+                        }
                     </tr>
                 }
             </table>
@@ -198,14 +209,18 @@
             <div>
                 <div class="sub-group">
                     <h6 style="background-color: #e6e600">Posture Challenge</h6>
+                    @if(!Model.IsReviewer){
                     <a href="#" data-toggle="popover" data-posture-type="operation" data-title="Add Desired State" data-posture="PostureChallenge" data-posture-id="@Model.OperationPosture.Id" data-form-target="posture-challenge" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                    }
                 </div>
             </div>
             <table class="table list-result">
                 <tr>
                     <th style="width:70px;">Relation</th>
                     <th style="width:320px">Definition</th>
+                    @if(!Model.IsReviewer){
                     <th style="width:30px;"></th>
+                    }
                 </tr>
                 @foreach (var item in Model.OperationPosture.PostureChallenges)
                 {
@@ -219,7 +234,9 @@
                             </a>
                         </td>
                         <td>@item.Definition </td>
+                        @if(!Model.IsReviewer){
                         <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureChallenge" class="remove-item"><i class="fa fa-minus"></i></a></td>
+                        }
                     </tr>
                 }
             </table>
@@ -228,14 +245,18 @@
             <div>
                 <div class="sub-group">
                     <h6 style="background-color: #e6e600">Posture Challenge</h6>
+                    @if(!Model.IsReviewer){
                     <a href="#" data-toggle="popover" data-posture-type="decommissioning" data-title="Add Desired State" data-posture="PostureChallenge" data-posture-id="@Model.DecommissioningPosture.Id" data-form-target="posture-challenge" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                    }
                 </div>
             </div>
             <table class="table list-result">
                 <tr>
                     <th style="width:70px;">Relation</th>
                     <th style="width:320px">Definition</th>
+                    @if(!Model.IsReviewer){
                     <th style="width:30px;"></th>
+                    }
                 </tr>
                 @foreach (var item in Model.DecommissioningPosture.PostureChallenges)
                 {
@@ -249,7 +270,9 @@
                             </a>
                         </td>
                         <td>@item.Definition </td>
+                        @if(!Model.IsReviewer){
                         <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureChallenge" class="remove-item"><i class="fa fa-minus"></i></a></td>
+                        }
                     </tr>
                 }
             </table>
@@ -260,14 +283,18 @@
             <div>
                 <div class="sub-group">
                     <h6 style="background-color: #ff0000">Posture Constraint</h6>
+                    @if(!Model.IsReviewer){
                     <a href="#" data-toggle="popover" data-posture-type="construction" data-title="Add Desired State" data-posture="PostureConstraint" data-posture-id="@Model.ConstructionPosture.Id" data-form-target="posture-constraint" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                    }
                 </div>
             </div>
             <table class="table list-result">
                 <tr>
                     <th style="width:70px;">Relation</th>
                     <th style="width:320px">Definition</th>
+                    @if(!Model.IsReviewer){
                     <th style="width:30px;"></th>
+                    }
                 </tr>
                 @foreach (var item in Model.ConstructionPosture.PostureConstraints)
                 {
@@ -282,7 +309,9 @@
 
                         </td>
                         <td>@item.Definition </td>
+                        @if(!Model.IsReviewer){
                         <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureConstraint" class="remove-item"><i class="fa fa-minus"></i></a></td>
+                        }
                     </tr>
                 }
             </table>
@@ -291,14 +320,18 @@
             <div>
                 <div class="sub-group">
                     <h6 style="background-color: #ff0000">Posture Constraint</h6>
+                    @if(!Model.IsReviewer){
                     <a href="#" data-toggle="popover" data-posture-type="operation" data-title="Add Desired State" data-posture="PostureConstraint" data-posture-id="@Model.OperationPosture.Id" data-form-target="posture-constraint" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                    }
                 </div>
             </div>
             <table class="table list-result">
                 <tr>
                     <th style="width:70px;">Relation</th>
                     <th style="width:320px">Definition</th>
+                    @if(!Model.IsReviewer){
                     <th style="width:30px;"></th>
+                    }
                 </tr>
                 @foreach (var item in Model.OperationPosture.PostureConstraints)
                 {
@@ -312,7 +345,9 @@
                             </a>
                         </td>
                         <td>@item.Definition </td>
+                        @if(!Model.IsReviewer){
                         <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureConstraint" class="remove-item"><i class="fa fa-minus"></i></a></td>
+                        }
                     </tr>
                 }
             </table>
@@ -321,14 +356,18 @@
             <div>
                 <div class="sub-group">
                     <h6 style="background-color: #ff0000">Posture Constraint</h6>
+                    @if(!Model.IsReviewer){
                     <a href="#" data-toggle="popover" data-posture-type="decommissioning" data-title="Add Desired State" data-posture="PostureConstraint" data-posture-id="@Model.DecommissioningPosture.Id" data-form-target="posture-constraint" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                    }
                 </div>
             </div>
             <table class="table list-result">
                 <tr>
                     <th style="width:70px;">Relation</th>
                     <th style="width:320px">Definition</th>
+                    @if(!Model.IsReviewer){
                     <th style="width:30px;"></th>
+                    }
                 </tr>
                 @foreach (var item in Model.DecommissioningPosture.PostureConstraints)
                 {
@@ -342,7 +381,9 @@
                             </a>
                         </td>
                         <td>@item.Definition </td>
+                        @if(!Model.IsReviewer){
                         <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureConstraint" class="remove-item"><i class="fa fa-minus"></i></a></td>
+                        }
                     </tr>
                 }
             </table>
@@ -350,16 +391,23 @@
     </div>
     <div class="row">
         <div class="col-md-12 artifact-designer-btns">
-            <a href="@Url.Action("Index", "PlanningBlueprint")" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
-            @using (Html.BeginForm("SubmitBusinessPosture", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
+            @if(!Model.IsReviewer){
+            <a href="@Url.Action("Index", "PlanningBlueprint")" class="btn btn-primary btn-lg"><span class="fa fa-arrow-left"></span>Back To List</a>
+            }else{
+                <a href="@Url.Action("ESReview", "PlanningBlueprint", new { id = Model.PlanningBlueprintId})" class="btn btn-primary btn-lg"><span class="fa fa-arrow-left"></span>Back</a>
+            }
+            @if(!Model.IsReviewer){
+            using (Html.BeginForm("SubmitBusinessPosture", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
             {
                 @Html.Hidden("Id", Model.Id)
                 <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Submit</button>
             }
-            @using (Html.BeginForm("ApproveVoyagePlan", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
+            }else{
+            using (Html.BeginForm("ApproveVoyagePlan", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
             {
                 @Html.Hidden("Id", Model.PlanningBlueprintId)
                 <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Approve</button>
+            }
             }
         </div>
     </div>
