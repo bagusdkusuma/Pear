@@ -781,8 +781,21 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<SaveLayoutItemRequest, DerArtifact>()
                 .ForMember(x => x.GraphicType, y => y.MapFrom(z => z.Type))
                 .ForMember(x => x.HeaderTitle, y => y.MapFrom(z => z.Artifact.HeaderTitle));
-            
-            
+            Mapper.CreateMap<SaveLayoutItemRequest.LayoutItemArtifact, DerArtifact>();
+
+
+            Mapper.CreateMap<SaveLayoutItemRequest.LayoutItemArtifactChart, DerArtifactChart>()
+                .ForMember(x => x.Series, y => y.Ignore());
+            Mapper.CreateMap<SaveLayoutItemRequest.LayoutItemArtifactSerie, DerArtifactSerie>();
+
+            //tank
+            Mapper.CreateMap<SaveLayoutItemRequest.LayoutItemArtifactTank, DerArtifactTank>();
+            Mapper.CreateMap<DerArtifactTank, GetDerLayoutitemResponse.DerArtifactTank>()
+                .ForMember(x => x.VolumeInventoryId, o => o.MapFrom(s => s.VolumeInventory.Id))
+               .ForMember(x => x.VolumeInventory, o => o.MapFrom(s => s.VolumeInventory.Name + " (" + s.VolumeInventory.Measurement.Name + ")"))
+               .ForMember(x => x.DaysToTankTopId, o => o.MapFrom(s => s.DaysToTankTop.Id))
+               .ForMember(x => x.DaysToTankTop, o => o.MapFrom(s => s.DaysToTankTop.Name + " (" + s.DaysToTankTop.Measurement.Name + ")")); ;
+
 
             /*Mapper.CreateMap<SaveLayoutItemRequest.LayoutItemArtifact, DerArtifact>()
                   .ForMember(x => x.HeaderTitle, y => y.MapFrom(z => z.HeaderTitle));*/

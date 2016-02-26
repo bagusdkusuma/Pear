@@ -20,8 +20,13 @@ namespace DSLNG.PEAR.Services.Requests.Der
         {
             public string HeaderTitle { get; set; }
             public int MeasurementId { get; set; }
+            public bool Is3D { get; set; }
+            public bool ShowLegend { get; set; }
+            
             public LayoutItemArtifactLine LineChart { get; set; }
             public LayoutItemArtifactMultiAxis MultiAxis { get; set; }
+            public LayoutItemArtifactPie Pie { get; set; }
+            public LayoutItemArtifactTank Tank { get; set; }
         }
 
         public class LayoutItemArtifactLine
@@ -44,6 +49,16 @@ namespace DSLNG.PEAR.Services.Requests.Der
             public IList<LayoutItemArtifactChart> Charts { get; set; }
         }
 
+        public class LayoutItemArtifactPie
+        {
+            public LayoutItemArtifactPie()
+            {
+                Series = new List<LayoutItemArtifactSerie>();
+            }
+            
+            public IList<LayoutItemArtifactSerie> Series { get; set; }
+        }
+
         public class LayoutItemArtifactChart
         {
             public int MeasurementId { get; set; }
@@ -62,6 +77,20 @@ namespace DSLNG.PEAR.Services.Requests.Der
             public int KpiId { get; set; }
             public string Label { get; set; }
             public string Color { get; set; }
+        }
+
+        public class LayoutItemArtifactTank
+        {
+            public int Id { get; set; }
+            public int VolumeInventoryId { get; set; }
+            public string VolumeInventory { get; set; }
+            public int DaysToTankTopId { get; set; }
+            public string DaysToTankTop { get; set; }
+            public string DaysToTankTopTitle { get; set; }
+            public double MinCapacity { get; set; }
+            public double MaxCapacity { get; set; }
+            public string Color { get; set; }
+            public bool ShowLine { get; set; }
         }
 
     }

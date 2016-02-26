@@ -21,9 +21,12 @@ namespace DSLNG.PEAR.Services.Responses.Der
             public int MeasurementId { get; set; }
             public string MeasurementName { get; set; }
             public string GraphicType { get; set; }
+            public bool Is3D { get; set; }
+            public bool ShowLegend { get; set; }
 
             public IList<DerArtifactSerie> Series { get; set; }
             public IList<DerArtifactChart> Charts { get; set; }
+            public DerArtifactTank Tank { get; set; }
         }
 
         public class DerArtifactSerie
@@ -47,6 +50,20 @@ namespace DSLNG.PEAR.Services.Responses.Der
             public double? FractionScale { get; set; }
             public double? MaxFractionScale { get; set; }
             public bool IsOpposite { get; set; }
+        }
+
+        public class DerArtifactTank
+        {
+            public int Id { get; set; }
+            public int VolumeInventoryId { get; set; }
+            public string VolumeInventory { get; set; }
+            public int DaysToTankTopId { get; set; }
+            public string DaysToTankTop { get; set; }
+            public string DaysToTankTopTitle { get; set; }
+            public double MinCapacity { get; set; }
+            public double MaxCapacity { get; set; }
+            public string Color { get; set; }
+            public bool ShowLine { get; set; }
         }
     }
 }

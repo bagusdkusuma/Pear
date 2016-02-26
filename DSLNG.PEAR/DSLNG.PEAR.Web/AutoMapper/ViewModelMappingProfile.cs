@@ -906,7 +906,13 @@ namespace DSLNG.PEAR.Web.AutoMapper
                   .ForMember(x => x.RangeFilter, y => y.MapFrom(z => DSLNG.PEAR.Data.Enums.RangeFilter.Interval));
 
             
+            //DER Pie
+            Mapper.CreateMap<PieViewModel, SaveLayoutItemRequest.LayoutItemArtifactPie>();
+            Mapper.CreateMap<PieViewModel.SeriesViewModel, SaveLayoutItemRequest.LayoutItemArtifactSerie>();
 
+            //DER Tank
+            Mapper.CreateMap<TankViewModel, SaveLayoutItemRequest.LayoutItemArtifactTank>();
+            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifactTank, GetTankDataRequest.TankRequest>();
 
             /*Mapper.CreateMap<DerLayoutItemViewModel, SaveLayoutItemRequest>();
             Mapper.CreateMap<DerLayoutLineViewModel, SaveLayoutItemRequest.LayoutItemArtifact>();

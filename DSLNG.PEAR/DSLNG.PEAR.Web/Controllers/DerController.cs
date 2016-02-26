@@ -104,13 +104,11 @@ namespace DSLNG.PEAR.Web.Controllers
                         var request = new GetCartesianChartDataRequest();
                         request.Start = date.AddDays(-7);
                         request.End = date;
-                        //request.GraphicName = layout.Artifact.HeaderTitle;
                         request.HeaderTitle = layout.Artifact.HeaderTitle;
                         request.MeasurementId = layout.Artifact.MeasurementId;
                         request.PeriodeType = PeriodeType.Daily;
                         request.RangeFilter = RangeFilter.Interval;
                         request.ValueAxis = ValueAxis.KpiActual;
-
 
                         var series = layout.Artifact.Series.Select(x => new GetCartesianChartDataRequest.SeriesRequest
                             {
@@ -153,18 +151,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         var previewViewModel = new ArtifactPreviewViewModel();
 
                         request.Charts = layout.Artifact.Charts.MapTo<GetMultiaxisChartDataRequest.ChartRequest>();
-                        /*foreach (var chart in layout.Artifact.Charts)
-                        {
-                            request.Charts.Add(new GetMultiaxisChartDataRequest.ChartRequest{Series = })};
-                        }*/
                         var chartData = _artifactService.GetMultiaxisChartData(request);
-                       
-                        /*var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
-                        {
-                            TimePeriodes = chartData.TimePeriodes,
-                            Type = "Overall",
-                            PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType)
-                        });*/
                         previewViewModel.PeriodeType = "Daily";
                         previewViewModel.TimePeriodes = chartData.TimePeriodes;
                         previewViewModel.Highlights = new List<ArtifactPreviewViewModel.HighlightViewModel>();
@@ -174,11 +161,71 @@ namespace DSLNG.PEAR.Web.Controllers
                         {
                             previewViewModel.Highlights.Add(null);
                         }
-                        //previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
                         previewViewModel.GraphicType = layout.Type;
                         previewViewModel.MultiaxisChart = new MultiaxisChartDataViewModel();
                         chartData.MapPropertiesToInstance<MultiaxisChartDataViewModel>(previewViewModel.MultiaxisChart);
                         previewViewModel.MultiaxisChart.Title = layout.Artifact.HeaderTitle;
+                        return Json(previewViewModel, JsonRequestBehavior.AllowGet);
+                    }
+
+                case "pie":
+                    {
+                        var request = new GetPieDataRequest();
+                        request.PeriodeType = PeriodeType.Daily;
+                        request.RangeFilter = RangeFilter.Interval;
+                        request.Start = date.AddDays(-7);
+                        request.End = date;
+                        request.HeaderTitle = layout.Artifact.HeaderTitle;
+                        
+                        request.ValueAxis = ValueAxis.KpiActual;
+
+                        var series = layout.Artifact.Series.Select(x => new GetPieDataRequest.SeriesRequest
+                        {
+                            Color = x.Color,
+                            KpiId = x.KpiId,
+                            Label = x.Label
+                        }).ToList();
+                        request.Series = series;
+                        var chartData = _artifactService.GetPieData(request);
+
+                        var previewViewModel = new ArtifactPreviewViewModel();
+                        previewViewModel.PeriodeType = "Daily";
+                        previewViewModel.Highlights = new List<ArtifactPreviewViewModel.HighlightViewModel>();
+                        for (DateTime counter = request.Start.Value;
+                             counter <= request.End.Value;
+                             counter = counter.AddDays(1))
+                        {
+                            previewViewModel.Highlights.Add(null);
+                        }
+                        
+                        previewViewModel.GraphicType = layout.Type;
+                        previewViewModel.Pie = chartData.MapTo<PieDataViewModel>();
+                        previewViewModel.Pie.Is3D = layout.Artifact.Is3D;
+                        previewViewModel.Pie.ShowLegend = layout.Artifact.ShowLegend;
+                        previewViewModel.Pie.Title = layout.Artifact.HeaderTitle;
+                        previewViewModel.Pie.Subtitle = chartData.Subtitle;
+                        previewViewModel.Pie.SeriesResponses =
+                            chartData.SeriesResponses.MapTo<PieDataViewModel.SeriesResponse>();
+                        
+                        return Json(previewViewModel, JsonRequestBehavior.AllowGet);
+                    }
+
+                case "tank":
+                    {
+                        var request = new GetTankDataRequest();
+                        request.PeriodeType = PeriodeType.Daily;
+                        request.RangeFilter = RangeFilter.Interval;
+                        request.Start = date.AddDays(-7);
+                        request.End = date;
+                        request.Tank = layout.Artifact.Tank.MapTo<GetTankDataRequest.TankRequest>();
+                        var previewViewModel = new ArtifactPreviewViewModel();
+                        var chartData = _artifactService.GetTankData(request);
+                        previewViewModel.GraphicType = layout.Artifact.GraphicType;
+                        previewViewModel.Tank = new TankDataViewModel();
+                        chartData.MapPropertiesToInstance<TankDataViewModel>(previewViewModel.Tank);
+                        previewViewModel.Tank.Title = layout.Artifact.HeaderTitle;
+                        previewViewModel.Tank.Subtitle = chartData.Subtitle;
+                        previewViewModel.Tank.Id = layout.Artifact.Tank.Id;
                         return Json(previewViewModel, JsonRequestBehavior.AllowGet);
                     }
                     

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -14,13 +15,18 @@ namespace DSLNG.PEAR.Data.Entities.Der
         [Key]
         public int Id { get; set; }
 
-        [Required]
         public string HeaderTitle { get; set; }
         public Measurement Measurement { get; set; }
         [Required]
         public string GraphicType { get; set; }
 
+        [DefaultValue("false")]
+        public bool Is3D { get; set; }
+        [DefaultValue("true")]
+        public bool ShowLegend { get; set; }
+
         public ICollection<DerArtifactSerie> Series { get; set; }
-        public ICollection<DerArtifactChart> Charts { get; set; } 
+        public ICollection<DerArtifactChart> Charts { get; set; }
+        public DerArtifactTank Tank { get; set; }
     }
 }

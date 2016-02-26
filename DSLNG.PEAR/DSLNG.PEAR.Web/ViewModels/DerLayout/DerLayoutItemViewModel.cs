@@ -21,6 +21,8 @@ namespace DSLNG.PEAR.Web.ViewModels.DerLayout
         public DerLayoutItemArtifactViewModel Artifact { get; set; }
         public LineChartViewModel LineChart { get; set; }
         public MultiaxisChartViewModel MultiaxisChart { get; set; }
+        public PieViewModel Pie { get; set; }
+        public TankViewModel Tank { get; set; }
 
         //public DerLayoutLineViewModel Artifact { get; set; }
 
@@ -39,6 +41,9 @@ namespace DSLNG.PEAR.Web.ViewModels.DerLayout
             [Display(Name = "Measurement")]
             public int MeasurementId { get; set; }
             public IList<SelectListItem> Measurements { get; set; }
+
+            public bool Is3D { get; set; }
+            public bool ShowLegend { get; set; }
         }
     }
 }

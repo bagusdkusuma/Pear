@@ -104,18 +104,6 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 case "line":
                     {
-                        /*var viewModel = new DerLayoutLineViewModel();
-                        viewModel.LineChart = new LineChartViewModel();
-                        var series = new LineChartViewModel.SeriesViewModel();
-                        viewModel.LineChart.Series.Add(series);
-                        viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
-                        {
-                            Take = -1,
-                            SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
-                        }).Measurements
-                    .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
-                        return PartialView("LayoutType/_Line", viewModel);*/
-
                         var viewModel = new DerLayoutItemViewModel();
                         viewModel.Artifact = new DerLayoutItemViewModel.DerLayoutItemArtifactViewModel();
                         viewModel.Artifact.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
@@ -147,6 +135,37 @@ namespace DSLNG.PEAR.Web.Controllers
              .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
                         return PartialView("LayoutType/_MultiAxis", viewModel);
                     }
+                case "pie":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.Artifact = new DerLayoutItemViewModel.DerLayoutItemArtifactViewModel();
+                        viewModel.Artifact.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
+                        {
+                            Take = -1,
+                            SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+                        }).Measurements.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+                        viewModel.Pie = new PieViewModel();
+                        var series = new PieViewModel.SeriesViewModel();
+                        viewModel.Pie.Series.Add(series);
+                        return PartialView("LayoutType/_Pie", viewModel);
+                    }
+                case "tank":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.Artifact = new DerLayoutItemViewModel.DerLayoutItemArtifactViewModel();
+                        viewModel.Tank = new TankViewModel();
+                        return PartialView("LayoutType/_Tank", viewModel);
+                        /*viewModel.Artifact.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
+                        {
+                            Take = -1,
+                            SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+                        }).Measurements.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+                        viewModel.Pie = new PieViewModel();
+                        var series = new PieViewModel.SeriesViewModel();
+                        viewModel.Pie.Series.Add(series);
+                        return PartialView("LayoutType/_Pie", viewModel);*/
+                    }
+                    break;
             }
 
             return Content("Error");
@@ -197,7 +216,22 @@ namespace DSLNG.PEAR.Web.Controllers
                         response = _derService.SaveLayoutItem(request);
                         break;    
                     }
-                    
+                case "pie":
+                    {
+                        request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
+                        request.Artifact = layoutItemViewModel.Artifact.MapTo<SaveLayoutItemRequest.LayoutItemArtifact>();
+                        request.Artifact.Pie = layoutItemViewModel.Pie.MapTo<SaveLayoutItemRequest.LayoutItemArtifactPie>();
+                        response = _derService.SaveLayoutItem(request);
+                        break;
+                    }
+                case "tank":
+                    {
+                        request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
+                        request.Artifact = layoutItemViewModel.Artifact.MapTo<SaveLayoutItemRequest.LayoutItemArtifact>();
+                        request.Artifact.Tank = layoutItemViewModel.Tank.MapTo<SaveLayoutItemRequest.LayoutItemArtifactTank>();
+                        response = _derService.SaveLayoutItem(request);
+                        break;
+                    }
 
             }
 

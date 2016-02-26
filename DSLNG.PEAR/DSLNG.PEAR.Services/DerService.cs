@@ -193,7 +193,7 @@ namespace DSLNG.PEAR.Services
                     });
                 }
             }
-           
+
             return response;
 
 
@@ -204,7 +204,7 @@ namespace DSLNG.PEAR.Services
             var response = new GetDerLayoutitemResponse();
             try
             {
-                var derLayoutItem = DataContext.DerLayoutItems
+                /*var derLayoutItem = DataContext.DerLayoutItems
                     .Include(x => x.DerLayout)
                     .Include(x => x.DerLayout.Items)
                     .Include(x => x.DerLayout.Items.Select(y => y.Artifact))
@@ -215,6 +215,31 @@ namespace DSLNG.PEAR.Services
                     .Include(x => x.DerLayout.Items.Select(y => y.Artifact.Charts.Select(z => z.Series)))
                     .Include(x => x.DerLayout.Items.Select(y => y.Artifact.Charts.Select(z => z.Series.Select(a => a.Kpi))))
                     .Include(x => x.DerLayout.Items.Select(y => y.Artifact.Charts.Select(z => z.Measurement)))
+                    .Include(x => x.Artifact.Tank)
+                    .Include(x => x.Artifact.Tank.VolumeInventory)
+                    .Include(x => x.Artifact.Tank.DaysToTankTop)
+                    .Single(x => x.Id == id);*/
+
+                var d = DataContext.DerLayoutItems
+                    .Include(x => x.Artifact)
+                    .Include(x => x.Artifact.Tank)
+                    .Include(x => x.Artifact.Tank.VolumeInventory)
+                    .Include(x => x.Artifact.Tank.DaysToTankTop)
+                    .Single(x => x.Id == id);
+
+                var derLayoutItem = DataContext
+                    .DerLayoutItems
+                    .Include(x => x.DerLayout)
+                    .Include(x => x.Artifact)
+                    .Include(x => x.Artifact.Series)
+                    .Include(x => x.Artifact.Series.Select(y => y.Kpi))
+                    .Include(x => x.Artifact.Charts)
+                    .Include(x => x.Artifact.Charts.Select(y => y.Series))
+                    .Include(x => x.Artifact.Charts.Select(y => y.Series.Select(z => z.Kpi)))
+                    .Include(x => x.Artifact.Tank)
+                    .Include(x => x.Artifact.Tank.VolumeInventory)
+                    .Include(x => x.Artifact.Tank.DaysToTankTop)
+                    .Include(x => x.Artifact.Measurement)
                     .Single(x => x.Id == id);
 
                 response = derLayoutItem.MapTo<GetDerLayoutitemResponse>();
@@ -244,6 +269,16 @@ namespace DSLNG.PEAR.Services
                 case "multiaxis":
                     {
                         baseResponse = SaveMultiAxis(request);
+                        break;
+                    }
+                case "pie":
+                    {
+                        baseResponse = SavePie(request);
+                        break;
+                    }
+                case "tank":
+                    {
+                        baseResponse = SaveTank(request);
                         break;
                     }
             }
@@ -303,7 +338,7 @@ namespace DSLNG.PEAR.Services
                 else
                 {
                     var derLayoutItem = new DerLayoutItem();
-                    var derLayout = new DerLayout {Id = request.DerLayoutId};
+                    var derLayout = new DerLayout { Id = request.DerLayoutId };
                     DataContext.DerLayouts.Attach(derLayout);
                     derLayoutItem.DerLayout = derLayout;
                     derLayoutItem.Column = request.Column;
@@ -367,11 +402,7 @@ namespace DSLNG.PEAR.Services
                     derArtifact.Charts = new List<DerArtifactChart>();
                     foreach (var item in request.Artifact.MultiAxis.Charts)
                     {
-                        var chart = new DerArtifactChart();
-                        chart.FractionScale = item.FractionScale;
-                        chart.GraphicType = item.GraphicType;
-                        chart.IsOpposite = item.IsOpposite;
-                        chart.MaxFractionScale = item.MaxFractionScale;
+                        var chart = item.MapTo<DerArtifactChart>();
 
                         var measurement = new Measurement { Id = item.MeasurementId };
                         if (DataContext.Measurements.Local.FirstOrDefault(x => x.Id == measurement.Id) == null)
@@ -383,14 +414,13 @@ namespace DSLNG.PEAR.Services
                             measurement = DataContext.Measurements.Local.FirstOrDefault(x => x.Id == measurement.Id);
                         }
 
-                        
                         DataContext.Measurements.Attach(measurement);
                         chart.Measurement = measurement;
 
                         foreach (var s in item.Series)
                         {
-                            var serie = new DerArtifactSerie();
-                            var kpi = new Kpi {Id = s.KpiId};
+                            var serie = s.MapTo<DerArtifactSerie>();
+                            var kpi = new Kpi { Id = s.KpiId };
                             if (DataContext.Kpis.Local.FirstOrDefault(x => x.Id == kpi.Id) == null)
                             {
                                 DataContext.Kpis.Attach(kpi);
@@ -400,12 +430,10 @@ namespace DSLNG.PEAR.Services
                                 kpi = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == kpi.Id);
                             }
                             serie.Kpi = kpi;
-                            serie.Color = s.Color;
-                            serie.Label = s.Label;
                             serie.Artifact = derArtifact;
                             chart.Series.Add(serie);
                         }
-                        
+
                         derArtifact.Charts.Add(chart);
                     }
 
@@ -442,5 +470,115 @@ namespace DSLNG.PEAR.Services
 
             return response;
         }
+
+        private BaseResponse SavePie(SaveLayoutItemRequest request)
+        {
+            var response = new BaseResponse();
+            try
+            {
+                if (request.Id > 0)
+                {
+
+                }
+                else
+                {
+                    var derLayoutItem = new DerLayoutItem();
+                    var derLayout = new DerLayout { Id = request.DerLayoutId };
+                    DataContext.DerLayouts.Attach(derLayout);
+                    derLayoutItem.DerLayout = derLayout;
+                    derLayoutItem.Column = request.Column;
+                    derLayoutItem.Row = request.Row;
+                    derLayoutItem.Type = request.Type;
+                    var derArtifact = request.MapTo<DerArtifact>();
+                    derArtifact.ShowLegend = request.Artifact.ShowLegend;
+                    derArtifact.Is3D = request.Artifact.Is3D;
+                    derArtifact.Charts = new List<DerArtifactChart>();
+
+                    var measurement = new Measurement { Id = request.Artifact.MeasurementId };
+                    DataContext.Measurements.Attach(measurement);
+                    derArtifact.Measurement = measurement;
+                    var series = request.Artifact.Pie.Series.Select(x => new DerArtifactSerie
+                    {
+                        Color = x.Color,
+                        Kpi = DataContext.Kpis.FirstOrDefault(y => y.Id == x.KpiId)
+                    }).ToList();
+
+                    derArtifact.Series = series;
+                    DataContext.DerArtifacts.Add(derArtifact);
+                    derLayoutItem.Artifact = derArtifact;
+                    DataContext.DerLayoutItems.Add(derLayoutItem);
+                }
+
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+            }
+            catch (Exception exception)
+            {
+                response.Message = exception.Message;
+            }
+
+            return response;
+        }
+
+        private BaseResponse SaveTank(SaveLayoutItemRequest request)
+        {
+            var response = new BaseResponse();
+            try
+            {
+                if (request.Id > 0)
+                {
+
+                }
+                else
+                {
+                    var derLayoutItem = new DerLayoutItem();
+                    var derLayout = new DerLayout { Id = request.DerLayoutId };
+                    DataContext.DerLayouts.Attach(derLayout);
+                    derLayoutItem.DerLayout = derLayout;
+                    derLayoutItem.Column = request.Column;
+                    derLayoutItem.Row = request.Row;
+                    derLayoutItem.Type = request.Type;
+                    var derArtifact = request.MapTo<DerArtifact>();
+                    derLayoutItem.Artifact = derArtifact;
+                    derLayoutItem.Artifact.Tank = request.Artifact.Tank.MapTo<DerArtifactTank>();
+                    var volumeInventory = new Kpi { Id = request.Artifact.Tank.VolumeInventoryId };
+                    if (DataContext.Kpis.Local.FirstOrDefault(x => x.Id == volumeInventory.Id) == null)
+                    {
+                        DataContext.Kpis.Attach(volumeInventory);
+                    }
+                    else
+                    {
+                        volumeInventory = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == request.Artifact.Tank.VolumeInventoryId);
+                    }
+
+                    var daysToTankTop = new Kpi { Id = request.Artifact.Tank.DaysToTankTopId };
+                    if (DataContext.Kpis.Local.FirstOrDefault(x => x.Id == daysToTankTop.Id) == null)
+                    {
+                        DataContext.Kpis.Attach(daysToTankTop);
+                    }
+                    else
+                    {
+                        daysToTankTop = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == request.Artifact.Tank.DaysToTankTopId);
+                    }
+
+                    derLayoutItem.Artifact.Tank.VolumeInventory = volumeInventory;
+                    derLayoutItem.Artifact.Tank.DaysToTankTop = daysToTankTop;
+                    DataContext.DerArtifacts.Add(derArtifact);
+                    
+                    DataContext.DerLayoutItems.Add(derLayoutItem);
+                }
+
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+            }
+            catch (Exception exception)
+            {
+                response.Message = exception.Message;
+            }
+
+            return response;
+        }
+
+        
     }
 }

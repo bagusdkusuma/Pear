@@ -69,6 +69,7 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<ResetPassword> ResetPasswords { get; set; }
         public IDbSet<KeyOutputConfiguration> KeyOutputConfigs { get; set; }
         public IDbSet<StaticHighlightPrivilege> StaticHighlightPrivileges { get; set; }
+        public IDbSet<DerArtifactTank> DerArtifactTanks { get; set; }
         public IDbSet<PlanningBlueprint> PlanningBlueprints { get; set; }
         public IDbSet<UltimateObjectivePoint> UltimateObjectivePoints { get; set; }
         public IDbSet<EnvironmentsScanning> EnvironmentsScannings { get; set; }

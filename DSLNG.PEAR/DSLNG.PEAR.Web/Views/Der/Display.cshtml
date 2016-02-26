@@ -12,14 +12,36 @@
 </div>
 <table style="border: 1px solid red">
     <tr>
+        <td style="min-width: 25%; border:1px solid blue">@{
+                var row0Col0 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 0);
+                if (row0Col0 != null)
+                {
+@*<div class="whitebox artifact-holder @row0Col0.Type-holder" style="height:350px;" data-artifact-url="@Url.Action("View", "Artifact", new { id = col.ArtifactId })">
+                    </div>   *@
+            
+                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col0.Id })" class="layout-item" style="min-height:400px;min-width: 500px;"></div>
+                }
+            }</td>
         <td>@{
-            var row0Col0 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 0);
-            if (row0Col0 != null)
+                var row0Col1 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 1);
+                if (row0Col1 != null)
+                {
+@*<div class="whitebox artifact-holder @row0Col0.Type-holder" style="height:350px;" data-artifact-url="@Url.Action("View", "Artifact", new { id = col.ArtifactId })">
+                    </div>   *@
+            
+                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col1.Id })" class="layout-item" style="min-height:400px;min-width: 500px;"></div>
+                }
+             
+                
+            }</td>
+        <td>@{
+            var row0Col2 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 2);
+            if (row0Col2 != null)
             {
 @*<div class="whitebox artifact-holder @row0Col0.Type-holder" style="height:350px;" data-artifact-url="@Url.Action("View", "Artifact", new { id = col.ArtifactId })">
                     </div>   *@
             
-            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col0.Id })" class="layout-item"></div>
+            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col2.Id })" class="layout-item" style="min-height:400px;min-width: 500px;"></div>
             }
              
                 
@@ -46,7 +68,7 @@
                         var r = { "GraphicType": "line", "FractionScale": null, "MaxFractionScale": null, "PeriodeType": "Daily", "TimePeriodes": ["\/Date(1455177600000)\/", "\/Date(1455264000000)\/", "\/Date(1455350400000)\/", "\/Date(1455436800000)\/", "\/Date(1455523200000)\/", "\/Date(1455609600000)\/", "\/Date(1455696000000)\/", "\/Date(1455782400000)\/"], "Highlights": null, "AreaChart": null, "BarChart": null, "LineChart": { "SeriesType": null, "Title": "test", "Subtitle": "11 Feb 16 - 18 Feb 16", "Periodes": ["11 Feb", "12 Feb", "13 Feb", "14 Feb", "15 Feb", "16 Feb", "17 Feb", "18 Feb"], "ValueAxisTitle": "%", "Series": [{ "name": "test", "data": [null, null, null, null, null, null, null, null], "color": "#68aad9" }, { "name": "a", "data": [null, null, null, null, null, null, null, null], "color": "#a1b3bf" }] }, "SpeedometerChart": null, "TrafficLightChart": null, "Tabular": null, "Tank": null, "MultiaxisChart": null, "Pie": null, "ComboChart": null }
                         var m = { "GraphicType": "multiaxis", "FractionScale": null, "MaxFractionScale": null, "PeriodeType": "Monthly", "TimePeriodes": ["\/Date(1435734000000)\/", "\/Date(1438412400000)\/", "\/Date(1441090800000)\/", "\/Date(1443682800000)\/", "\/Date(1446361200000)\/", "\/Date(1448956800000)\/", "\/Date(1451635200000)\/", "\/Date(1454313600000)\/"], "Highlights": [null, null, null, null, null, null, null, null], "AreaChart": null, "BarChart": null, "LineChart": null, "SpeedometerChart": null, "TrafficLightChart": null, "Tabular": null, "Tank": null, "MultiaxisChart": { "Title": "Monthly CDS Production Performance", "Subtitle": "Jul 15 - Feb 16", "Periodes": ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb"], "Charts": [{ "ValueAxisTitle": null, "Measurement": "bbl", "GraphicType": "bar", "ValueAxisColor": null, "IsOpposite": false, "SeriesType": "single-stack", "Series": [{ "name": "CDS Production(bbl)", "data": [25838.43, 7146.51, 42873.69, 44083.22227, 60046.99466, 62175.38093, 62115.25809, 39319.83424], "stack": null, "color": "#bab98d" }], "FractionScale": null, "MaxFractionScale": null }, { "ValueAxisTitle": null, "Measurement": "tonnes", "GraphicType": "bar", "ValueAxisColor": null, "IsOpposite": true, "SeriesType": "single-stack", "Series": [{ "name": "CDS Production(tonnes)", "data": [2646, 759.31, 4198.38, 3799.961, 6125, 6342.08, 6336.219, 4001.15], "stack": null, "color": "#0db898" }], "FractionScale": null, "MaxFractionScale": null }] }, "Pie": null, "ComboChart": null };
                         var callback = window.Pear.Artifact.Designer._previewCallbacks;
-                        callback[data.GraphicType](data, $('.layout-item'));
+                        callback[data.GraphicType](data, that);
                     }
                 });
             });
