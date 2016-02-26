@@ -4,6 +4,7 @@
     ViewBag.Title = "BusinessPostureIdentification";
 }
 
+@Html.Partial("_MessageResponse")
 @* Environtments Scanning *@
 <div class="col-md-12 environment-scanning">
     <div class="row row-uo border-style-1">
@@ -577,6 +578,7 @@
                     }
                 }
                 popOverElem.popover('hide');
+                $('.relation-ids-wrapper').html('');
             });
         });
         $(document).on('click', '.remove-item', function (e) {

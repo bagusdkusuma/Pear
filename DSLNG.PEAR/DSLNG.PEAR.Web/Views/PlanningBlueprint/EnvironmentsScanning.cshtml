@@ -4,6 +4,7 @@
     ViewBag.Title = "EnvironmentsScanning";
 }
 
+@Html.Partial("_MessageResponse")
 <div class="col-md-12 environment-scanning">
     @* Ultimate Objective *@
     <div class="row row-uo border-style-1">
@@ -399,7 +400,7 @@
 
 @* Input Challenges *@
 <div class="input-challenges" style="display: none;">
-    @using (Html.BeginForm("CreateChallenge", "EnvironmentScanning", FormMethod.Post))
+    @using (Html.BeginForm("CreateChallenge", "EnvironmentScanning", FormMethod.Post, new { id = "form-challenge" }))
     {
         <div>
             <button type="button" class="btn btn-primary btn-challenge" data-toggle="modal" data-target="#challengeModal" title="Relation">Select Relation</button>
@@ -669,6 +670,8 @@
 
                         $('.table-constraint').append('<tr><td class="td-entity">' + '<a href="#" data-toggle="modal" ' + input + ' data-target="#envi-modal" data-id="' + data.id + '" class="btn-show-constraint">' + '<span>' + relation + '</span>' + '</td><td class="td-definition">' + data.definition + '<a href="#" data-id="' + data.id + '" class="constraint-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
                         popOverElem.popover('hide');
+
+                        $('.wrapper-relation').html('');
                     }
                 })
             });
@@ -697,6 +700,8 @@
 
                         $('.table-challenge').append('<tr><td class="td-entity">' + ' <a href="#" data-toggle="modal" data-target="#envi-modal" data-id="' + data.id + '" class="btn-show-challenge">' + '<span>' + relation + '</span>' + '</td><td class="td-definition">' + data.definition + '<a href="#" data-id="' + data.id + '" class="challenge-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
                         popOverElem.popover('hide');
+
+                        $('.wrapper-challenge').html('');
                     }
                 })
             });

@@ -2097,7 +2097,6 @@ li > input.choose-list{
 }
 
 .formulation-stage  {
-    width: 24%;
     margin-left: 10px;
     margin-bottom: 20px;
 }
@@ -2213,9 +2212,9 @@ li > input.choose-list{
 
 .midterm-plannings .midterm-planning{
     border: 1px solid white;
-    width: 33%;
-    margin-right: 3px;
+    /*margin-right: 3px;*/
     margin-bottom: 10px;
+    /*margin-right: 5px;*/
 }
 
 .midterm-plannings .midterm-planning ul{
@@ -2291,6 +2290,18 @@ li > input.choose-list{
 .midterm-plannings .midterm-planning table th a{
     position: relative;
     left: 80px;
+}
+
+.midterm-plannings .midterm-planning table th:first-child, .midterm-plannings .midterm-planning table td:first-child{
+    width: 50%;
+}
+
+.midterm-plannings .midterm-planning table th:nth-child(2), .midterm-plannings .midterm-planning table td:nth-child(2){
+    width: 25%;
+}
+
+.midterm-plannings .midterm-planning table th:last-child, .midterm-plannings .midterm-planning table td:last-child{
+    width: 25%;
 }
 
 .midterm-plannings .midterm-planning table td{
