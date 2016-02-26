@@ -96,7 +96,7 @@ else
                            {<a data-toggle="popover" href="javascript:void(0)" class="add-definition" data-target="key-driver"><i class="fa fa-plus"></i></a>}
                         </div>
                     </div>
-                    <ul class=" key-driver">
+                    <ul class="defined-list key-driver">
                         @foreach (var keyDriver in item.KeyDrivers)
                         { 
                             <li data-id="@keyDriver.Id">@keyDriver.Value    @if (!Model.IsReviewer)
@@ -151,11 +151,11 @@ else
     </div>
     <ul class="defined-list description">
     </ul>
-    <div class="defined-header key-driver">
+    <div class="key-driver">
         <div class="sub-title">
             Key Driver
+            <a data-toggle="popover" href="javascript:void(0)" class="add-definition" data-target="key-driver"><i class="fa fa-plus"></i></a>
         </div>
-        <a data-toggle="popover" href="javascript:void(0)" class="add-definition" data-target="key-driver"><i class="fa fa-plus"></i></a>
     </div>
     <ul class="defined-list key-driver">
     </ul>
