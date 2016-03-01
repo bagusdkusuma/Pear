@@ -178,7 +178,7 @@ Number.prototype.format = function (n, x) {
 
     //helper
     artifactDesigner._formatKpi = function (kpi) {
-        console.log(kpi);
+        //console.log(kpi);
         if (kpi.loading) return kpi.text;
         return '<div class="clearfix"><div class="col-sm-12">' + kpi.Name + '</div></div>';
     };
@@ -1372,6 +1372,7 @@ Number.prototype.format = function (n, x) {
             tooltip: {
                 formatter: function () {
                     var tooltip = '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
+                    var totalInProcess = 0;
                     for (var i in this.points) {
                         tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>';
 
@@ -1379,12 +1380,26 @@ Number.prototype.format = function (n, x) {
                         var next = (parseInt(i) + 1);
                         var nextExist = typeof this.points[next] !== 'undefined';
                         var prevExist = typeof this.points[prev] !== 'undefined';
-                        if (typeof this.points[i].total !== 'undefined') {
-                            if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
-                                (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
-                                tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br>';
+
+                        if (typeof this.points[i].series.stackKey !== 'undefined') {
+                            //total in process
+                            if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                totalInProcess += this.points[i].y;
+                            }
+
+                            if ((nextExist && prevExist && this.points[next].series.stackKey != this.points[i].series.stackKey && this.points[prev].series.stackKey == this.points[i].series.stackKey) ||
+                                (!nextExist && prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                tooltip += '<strong>Total: ' + totalInProcess.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
+                                totalInProcess = 0;
                             }
                         }
+
+                        //if (typeof this.points[i].total !== 'undefined') {
+                        //    if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
+                        //        (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
+                        //        tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br>';
+                        //    }
+                        //}
                         if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
                             tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
                             tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
@@ -1494,6 +1509,7 @@ Number.prototype.format = function (n, x) {
             tooltip: {
                 formatter: function () {
                     var tooltip = '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
+                    var totalInProcess = 0;
                     for (var i in this.points) {
                         tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>';
 
@@ -1501,12 +1517,26 @@ Number.prototype.format = function (n, x) {
                         var next = (parseInt(i) + 1);
                         var nextExist = typeof this.points[next] !== 'undefined';
                         var prevExist = typeof this.points[prev] !== 'undefined';
-                        if (typeof this.points[i].total !== 'undefined') {
-                            if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
-                                (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
-                                tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br>';
+
+                        if (typeof this.points[i].series.stackKey !== 'undefined') {
+                            //total in process
+                            if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                totalInProcess += this.points[i].y;
+                            }
+
+                            if ((nextExist && prevExist && this.points[next].series.stackKey != this.points[i].series.stackKey && this.points[prev].series.stackKey == this.points[i].series.stackKey) ||
+                                (!nextExist && prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                tooltip += '<strong>Total: ' + totalInProcess.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
+                                totalInProcess = 0;
                             }
                         }
+
+                        //if (typeof this.points[i].total !== 'undefined') {
+                        //    if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
+                        //        (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
+                        //        tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br>';
+                        //    }
+                        //}
                         if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
                             tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
                             tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
@@ -1615,6 +1645,7 @@ Number.prototype.format = function (n, x) {
             tooltip: {
                 formatter: function () {
                     var tooltip = '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
+                    var totalInProcess = 0;
                     for (var i in this.points) {
                         tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>';
 
@@ -1622,12 +1653,26 @@ Number.prototype.format = function (n, x) {
                         var next = (parseInt(i) + 1);
                         var nextExist = typeof this.points[next] !== 'undefined';
                         var prevExist = typeof this.points[prev] !== 'undefined';
-                        if (typeof this.points[i].total !== 'undefined') {
-                            if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
-                                (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
-                                tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br>';
+
+                        if (typeof this.points[i].series.stackKey !== 'undefined') {
+                            //total in process
+                            if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                totalInProcess += this.points[i].y;
+                            }
+
+                            if ((nextExist && prevExist && this.points[next].series.stackKey != this.points[i].series.stackKey && this.points[prev].series.stackKey == this.points[i].series.stackKey) ||
+                                (!nextExist && prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                tooltip += '<strong>Total: ' + totalInProcess.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
+                                totalInProcess = 0;
                             }
                         }
+
+                        //if (typeof this.points[i].total !== 'undefined') {
+                        //    if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
+                        //        (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
+                        //        tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br>';
+                        //    }
+                        //}
                         if (!nextExist && data.Highlights !== null && data.Highlights[this.points[i].point.index] != null) {
                             tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
                             tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
@@ -1823,6 +1868,7 @@ Number.prototype.format = function (n, x) {
             tooltip: {
                 formatter: function () {
                     var tooltip = '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
+                    var totalInProcess = 0;
                     for (var i in this.points) {
                         tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.LineChart.ValueAxisTitle + '<br/>';
 
@@ -1830,12 +1876,26 @@ Number.prototype.format = function (n, x) {
                         var next = (parseInt(i) + 1);
                         var nextExist = typeof this.points[next] !== 'undefined';
                         var prevExist = typeof this.points[prev] !== 'undefined';
-                        if (typeof this.points[i].total !== 'undefined') {
-                            if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
-                                (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
-                                tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.LineChart.ValueAxisTitle + '<br>';
+
+                        //total in process
+                        if (typeof this.points[i].series.stackKey !== 'undefined') {
+                            if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                totalInProcess += this.points[i].y;
+                            }
+
+                            if ((nextExist && prevExist && this.points[next].series.stackKey != this.points[i].series.stackKey && this.points[prev].series.stackKey == this.points[i].series.stackKey) ||
+                                (!nextExist && prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                tooltip += '<strong>Total: ' + totalInProcess.format(2) + ' ' + data.LineChart.ValueAxisTitle + '</strong><br>';
+                                totalInProcess = 0;
                             }
                         }
+
+                        //if (typeof this.points[i].total !== 'undefined') {
+                        //    if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
+                        //        (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
+                        //        tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.LineChart.ValueAxisTitle + '<br>';
+                        //    }
+                        //}
                         if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
                             tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
                             tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
@@ -2015,6 +2075,7 @@ Number.prototype.format = function (n, x) {
             tooltip: {
                 formatter: function () {
                     var tooltip = '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
+                    var totalInProcess = 0;
                     for (var i in this.points) {
                         tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.AreaChart.ValueAxisTitle + '<br/>';
 
@@ -2022,12 +2083,26 @@ Number.prototype.format = function (n, x) {
                         var next = (parseInt(i) + 1);
                         var nextExist = typeof this.points[next] !== 'undefined';
                         var prevExist = typeof this.points[prev] !== 'undefined';
-                        if (typeof this.points[i].total !== 'undefined') {
-                            if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
-                                (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
-                                tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.AreaChart.ValueAxisTitle + '<br>';
+
+                        //total in process
+                        if (typeof this.points[i].series.stackKey !== 'undefined') {
+                            if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                totalInProcess += this.points[i].y;
+                            }
+
+                            if ((nextExist && prevExist && this.points[next].series.stackKey != this.points[i].series.stackKey && this.points[prev].series.stackKey == this.points[i].series.stackKey) ||
+                                (!nextExist && prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                tooltip += '<strong>Total: ' + totalInProcess.format(2) + ' ' + data.AreaChart.ValueAxisTitle + '</strong><br>';
+                                totalInProcess = 0;
                             }
                         }
+
+                        //if (typeof this.points[i].total !== 'undefined') {
+                        //    if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
+                        //        (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
+                        //        tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.AreaChart.ValueAxisTitle + '<br>';
+                        //    }
+                        //}
                         if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
                             tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
                             tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
@@ -2163,6 +2238,7 @@ Number.prototype.format = function (n, x) {
             tooltip: {
                 formatter: function () {
                     var tooltip = '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
+                    var totalInProcess = 0;
                     for (var i in this.points) {
                         tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.AreaChart.ValueAxisTitle + '<br/>';
 
@@ -2170,12 +2246,26 @@ Number.prototype.format = function (n, x) {
                         var next = (parseInt(i) + 1);
                         var nextExist = typeof this.points[next] !== 'undefined';
                         var prevExist = typeof this.points[prev] !== 'undefined';
-                        if (typeof this.points[i].total !== 'undefined') {
-                            if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
-                                (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
-                                tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.AreaChart.ValueAxisTitle + '<br>';
+
+                        //total in process
+                        if (typeof this.points[i].series.stackKey !== 'undefined') {
+                            if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                totalInProcess += this.points[i].y;
+                            }
+
+                            if ((nextExist && prevExist && this.points[next].series.stackKey != this.points[i].series.stackKey && this.points[prev].series.stackKey == this.points[i].series.stackKey) ||
+                                (!nextExist && prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                tooltip += '<strong>Total: ' + totalInProcess.format(2) + ' ' + data.AreaChart.ValueAxisTitle + '</strong><br>';
+                                totalInProcess = 0;
                             }
                         }
+
+                        //if (typeof this.points[i].total !== 'undefined') {
+                        //    if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
+                        //        (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
+                        //        tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.AreaChart.ValueAxisTitle + '<br>';
+                        //    }
+                        //}
                         if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
                             tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
                             tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
@@ -3263,6 +3353,8 @@ Number.prototype.format = function (n, x) {
             tooltip: {
                 formatter: function () {
                     var tooltip = '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
+                    //console.log(this.points);
+                    var totalInProcess = 0;
                     for (var i in this.points) {
                         tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + this.points[i].series.options.tooltip.valueSuffix + '<br/>';
 
@@ -3270,12 +3362,26 @@ Number.prototype.format = function (n, x) {
                         var next = (parseInt(i) + 1);
                         var nextExist = typeof this.points[next] !== 'undefined';
                         var prevExist = typeof this.points[prev] !== 'undefined';
-                        if (typeof this.points[i].total !== 'undefined') {
-                            if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
-                                (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
-                                tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + this.points[i].series.options.tooltip.valueSuffix + '<br>';
+                        
+                        //total in process
+                        if (typeof this.points[i].series.stackKey !== 'undefined') {
+                            if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                totalInProcess += this.points[i].y;
+                            }
+
+                            if ((nextExist && prevExist && this.points[next].series.stackKey != this.points[i].series.stackKey && this.points[prev].series.stackKey == this.points[i].series.stackKey) ||
+                                (!nextExist && prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                tooltip += '<strong>Total: ' + totalInProcess.format(2) + ' ' + this.points[i].series.options.tooltip.valueSuffix + '</strong><br>';
+                                totalInProcess = 0;
                             }
                         }
+
+                        //if (typeof this.points[i].total !== 'undefined') {
+                        //    if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
+                        //        (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
+                        //        tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + this.points[i].series.options.tooltip.valueSuffix + '<br>';
+                        //    }
+                        //}
                         if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
                             tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
                             tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
@@ -3505,6 +3611,7 @@ Number.prototype.format = function (n, x) {
             tooltip: {
                 formatter: function () {
                     var tooltip = '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
+                    var totalInProcess = 0;
                     for (var i in this.points) {
                         tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + this.points[i].series.options.tooltip.valueSuffix + '<br/>';
 
@@ -3512,10 +3619,24 @@ Number.prototype.format = function (n, x) {
                         var next = (parseInt(i) + 1);
                         var nextExist = typeof this.points[next] !== 'undefined';
                         var prevExist = typeof this.points[prev] !== 'undefined';
-                        if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
-                            (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
-                            tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + this.points[i].series.options.tooltip.valueSuffix + '<br>';
+
+                        //total in process
+                        if (typeof this.points[i].series.stackKey !== 'undefined') {
+                            if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                totalInProcess += this.points[i].y;
+                            }
+
+                            if ((nextExist && prevExist && this.points[next].series.stackKey != this.points[i].series.stackKey && this.points[prev].series.stackKey == this.points[i].series.stackKey) ||
+                                (!nextExist && prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                tooltip += '<strong>Total: ' + totalInProcess.format(2) + ' ' + this.points[i].series.options.tooltip.valueSuffix + '</strong><br>';
+                                totalInProcess = 0;
+                            }
                         }
+
+                        //if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
+                        //    (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
+                        //    tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + this.points[i].series.options.tooltip.valueSuffix + '<br>';
+                        //}
                         if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
                             tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
                             tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
@@ -4051,11 +4172,11 @@ Number.prototype.format = function (n, x) {
         });
         var $messageHolder = $('.message-holder');
         var $messageHolderClone = $messageHolder.clone(true);
-        console.log($messageHolderClone);
+        //console.log($messageHolderClone);
         $messageHolder.html('');
         var onceChanged = false;
         $('#TypeId').change(function (e) {
-            console.log($(this).val());
+            //console.log($(this).val());
             e.preventDefault();
             var $this = $(this);
             $('#Title').val($this.find('option:selected').text());
@@ -4373,7 +4494,7 @@ Number.prototype.format = function (n, x) {
                     };
                 },
                 processResults: function (data, page) {
-                    console.log(data);
+                    //console.log(data);
                     return data;
                 },
                 cache: true
@@ -4472,7 +4593,7 @@ Number.prototype.format = function (n, x) {
                     };
                 },
                 processResults: function (data, page) {
-                    console.log(data);
+                    //console.log(data);
                     return data;
                 },
                 cache: true
