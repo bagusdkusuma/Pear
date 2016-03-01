@@ -2317,3 +2317,7 @@ li > input.choose-list{
      padding-right:20px;
     position:relative;
 }
+
+.pop-information .row .table-info tr td{
+    display: block;
+}

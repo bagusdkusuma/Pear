@@ -98,6 +98,12 @@ using DSLNG.PEAR.Services.Responses.MidtermFormulation;
 using DSLNG.PEAR.Services.Requests.MidtermFormulation;
 using DSLNG.PEAR.Services.Responses.MidtermPlanning;
 using DSLNG.PEAR.Services.Requests.MidtermPlanning;
+using DSLNG.PEAR.Data.Entities.Pop;
+using DSLNG.PEAR.Services.Responses.PopDashboard;
+using DSLNG.PEAR.Services.Requests.PopDashboard;
+using DSLNG.PEAR.Services.Requests.PopInformation;
+using DSLNG.PEAR.Services.Responses.PopInformation;
+using PopInformationType = DSLNG.PEAR.Data.Enums.PopInformationType;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -637,6 +643,12 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<AddObjectiveRequest, MidtermStrategicPlanningObjective>();
             Mapper.CreateMap<AddMidtermPlanningRequest, MidtermStrategicPlanning>();
 
+
+            Mapper.CreateMap<PopDashboard, GetPopDashboardsResponse.PopDashboard>();
+            Mapper.CreateMap<SavePopDashboardRequest, PopDashboard>();
+            Mapper.CreateMap<PopDashboard, GetPopDashboardResponse>();
+            Mapper.CreateMap<PopInformation, GetPopDashboardResponse.PopInformation>();
+            Mapper.CreateMap<SavePopInformationRequest, PopInformation>();
             base.Configure();
         }
 

@@ -150,6 +150,11 @@ using DSLNG.PEAR.Web.ViewModels.MidtermFormulation;
 using System.Globalization;
 using DSLNG.PEAR.Web.ViewModels.MidtermStrategyPlanning;
 using DSLNG.PEAR.Services.Requests.MidtermPlanning;
+using DSLNG.PEAR.Web.ViewModels.PopDashboard;
+using DSLNG.PEAR.Services.Requests.PopDashboard;
+using DSLNG.PEAR.Services.Responses.PopDashboard;
+using DSLNG.PEAR.Services.Responses.PopInformation;
+using DSLNG.PEAR.Services.Requests.PopInformation;
 namespace DSLNG.PEAR.Web.AutoMapper
 {
     public class ViewModelMappingProfile : Profile
@@ -650,6 +655,11 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<AddMidtermPlanningViewModel, AddMidtermPlanningRequest>()
                .ForMember(d => d.StartDate, o => o.MapFrom(s => string.IsNullOrEmpty(s.StartDate) ? (DateTime?)null : DateTime.ParseExact("01/" + s.StartDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)))
                .ForMember(d => d.EndDate, o => o.MapFrom(s => string.IsNullOrEmpty(s.StartDate) ? (DateTime?)null : DateTime.ParseExact("01/" + s.EndDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)));
+
+            Mapper.CreateMap<SavePopDashboardViewModel, SavePopDashboardRequest>();
+            Mapper.CreateMap<GetPopDashboardResponse, GetPopDashboardViewModel>();
+            Mapper.CreateMap<GetPopDashboardResponse.PopInformation, GetPopDashboardViewModel.PopInformation>();
+            Mapper.CreateMap<SavePopInformationViewModel, SavePopInformationRequest>();
             base.Configure();
         }
 

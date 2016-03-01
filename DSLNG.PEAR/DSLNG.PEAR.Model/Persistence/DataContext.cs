@@ -4,6 +4,7 @@ using Type = DSLNG.PEAR.Data.Entities.Type;
 using DSLNG.PEAR.Data.Entities.EconomicModel;
 using System;
 using DSLNG.PEAR.Data.Entities.Blueprint;
+using DSLNG.PEAR.Data.Entities.Pop;
 
 namespace DSLNG.PEAR.Data.Persistence
 {
@@ -86,6 +87,9 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<MidtermStrategyPlanning> MidtermStrategyPlannings { get; set; }
         public IDbSet<MidtermStrategicPlanning> MidtermStrategicPlannings { get; set; }
         public IDbSet<MidtermStrategicPlanningObjective> MidtermStrategicPlanningObjectives { get; set; }
+        public IDbSet<PopDashboard> PopDashboards { get; set; }
+        public IDbSet<PopInformation> PopInformations { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Kpi>()
