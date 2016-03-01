@@ -8,6 +8,9 @@ namespace DSLNG.PEAR.Data.Entities.Blueprint
 {
     public class PlanningBlueprint
     {
+        public PlanningBlueprint() {
+            KeyOutput = new List<KeyOutputConfiguration>();
+        }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

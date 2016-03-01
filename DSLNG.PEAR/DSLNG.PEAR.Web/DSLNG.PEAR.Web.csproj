@@ -1097,6 +1097,8 @@
     <Content Include="Views\Shared\_showPostureChallenge.cshtml" />
     <Content Include="Views\Shared\_showPostureConstraint.cshtml" />
     <Content Include="Views\PlanningBlueprint\MidtermStrategyPlanning.cshtml" />
+    <Content Include="Views\PlanningBlueprint\GetEconomicIndicators.cshtml" />
+    <Content Include="Views\PlanningBlueprint\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -1272,6 +1274,7 @@
     <Compile Include="ViewModels\OutputConfig\OutputConfigViewModel.cs" />
     <Compile Include="ViewModels\OutputConfig\ScenarioResultViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\BusinessPostureViewModel.cs" />
+    <Compile Include="ViewModels\PlanningBlueprint\EconomicIndicatorsViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\EnvironmentsScanningViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\MidtermFormulationViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\PlanningBlueprintViewModel.cs" />

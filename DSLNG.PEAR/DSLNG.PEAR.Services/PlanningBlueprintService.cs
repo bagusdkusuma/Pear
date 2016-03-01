@@ -11,12 +11,18 @@ using DSLNG.PEAR.Common.Extensions;
 using System.Data.Entity;
 using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Services.Responses.MidtermFormulation;
+using DSLNG.PEAR.Data.Entities.EconomicModel;
+using DSLNG.PEAR.Common.Helpers;
+using DSLNG.PEAR.Services.Responses.OutputConfig;
+using DSLNG.PEAR.Services.Requests.OutputConfig;
 
 namespace DSLNG.PEAR.Services
 {
     public class PlanningBlueprintService : BaseService,IPlanningBlueprintService
     {
-        public PlanningBlueprintService(IDataContext dataContext) : base(dataContext) { 
+        private readonly IOutputConfigService _outputConfigService;
+        public PlanningBlueprintService(IDataContext dataContext, IOutputConfigService outputConfigService) : base(dataContext) {
+            _outputConfigService = outputConfigService;
         }
         public GetPlanningBlueprintsResponse GetPlanningBlueprints(GetPlanningBlueprintsRequest request)
         {
@@ -88,11 +94,28 @@ namespace DSLNG.PEAR.Services
                     planningBluePrint.BusinessPostureIdentification = businessPostureIdentification;
                     planningBluePrint.MidtermPhaseFormulation = midtermPhaseFormulation;
                     planningBluePrint.MidtermStragetyPlanning = midtermStrategyPlanning;
+                    foreach (var keyOutputId in request.KeyOutputIds) {
+                        var keyOutputConfig = new KeyOutputConfiguration { Id = keyOutputId };
+                        DataContext.KeyOutputConfigs.Attach(keyOutputConfig);
+                        planningBluePrint.KeyOutput.Add(keyOutputConfig);
+                    }
                     DataContext.PlanningBlueprints.Add(planningBluePrint);
                 }
                 else
                 {
-                    var planningBlueprint = DataContext.PlanningBlueprints.First(x => x.Id == request.Id);
+                    var planningBlueprint = DataContext.PlanningBlueprints
+                        .Include(x => x.KeyOutput).First(x => x.Id == request.Id);
+                    planningBlueprint.KeyOutput = new List<KeyOutputConfiguration>();
+                    foreach (var keyOutputId in request.KeyOutputIds)
+                    {
+                        var keyOutputConfig = DataContext.KeyOutputConfigs.Local.FirstOrDefault(x => x.Id == keyOutputId);
+                        if (keyOutputConfig == null)
+                        {
+                            keyOutputConfig = new KeyOutputConfiguration{Id = keyOutputId};
+                            DataContext.KeyOutputConfigs.Attach(keyOutputConfig);
+                        }
+                        planningBlueprint.KeyOutput.Add(keyOutputConfig);
+                    }
                     request.MapPropertiesToInstance<PlanningBlueprint>(planningBlueprint);
                 }
                 DataContext.SaveChanges();
@@ -115,6 +138,7 @@ namespace DSLNG.PEAR.Services
         public GetVoyagePlanResponse GetVoyagePlan()
         {
             var planningBluePrint = DataContext.PlanningBlueprints
+                .Include(x => x.KeyOutput)
                 .Include(x => x.EnvironmentsScanning)
                 .Include(x => x.EnvironmentsScanning.ConstructionPhase)
                 .Include(x => x.EnvironmentsScanning.OperationPhase)
@@ -126,6 +150,7 @@ namespace DSLNG.PEAR.Services
                 .Include(x => x.BusinessPostureIdentification.Postures.Select(y => y.DesiredStates))
                 .Include(x => x.BusinessPostureIdentification.Postures.Select(y => y.PostureChallenges))
                 .Include(x => x.BusinessPostureIdentification.Postures.Select(y => y.PostureConstraints))
+                .OrderByDescending(x => x.Id)
                 .FirstOrDefault(x => x.IsActive && x.BusinessPostureIdentification.IsApproved);
             if (planningBluePrint != null)
             {
@@ -141,6 +166,14 @@ namespace DSLNG.PEAR.Services
                     OperationPosture = planningBluePrint.BusinessPostureIdentification.Postures.First(x => x.Type == PostureType.Operation).MapTo<GetVoyagePlanResponse.Posture>(),
                     DecommissioningPosture = planningBluePrint.BusinessPostureIdentification.Postures.First(x => x.Type == PostureType.Decommissioning).MapTo<GetVoyagePlanResponse.Posture>(),
                 };
+                var scenario = DataContext.Scenarios.OrderByDescending(x => x.Id).FirstOrDefault(x => x.IsActive && x.IsDashboard);
+                if (scenario != null)
+                {
+                    var outputCategories = _outputConfigService.CalculateOputput(new CalculateOutputRequest{ScenarioId = scenario.Id});
+                    var keyOutputs = outputCategories.OutputCategories.SelectMany(x => x.KeyOutputs).ToList();
+                    var planningIndicatorIds = planningBluePrint.KeyOutput.Select(x => x.Id).ToArray();
+                    response.EconomicIndicators = keyOutputs.Where(x => planningIndicatorIds.Contains(x.Id)).ToList().MapTo<GetVoyagePlanResponse.KeyOutputResponse>();
+                }
                 return response;
             }
             return null;
@@ -226,6 +259,12 @@ namespace DSLNG.PEAR.Services
                 };
             }
             return null;
+        }
+
+
+        public GetPlanningBlueprintResponse GetPlanningBlueprint(int id)
+        {
+            return DataContext.PlanningBlueprints.Include(x => x.KeyOutput).FirstOrDefault(x => x.Id == id).MapTo<GetPlanningBlueprintResponse>();
         }
     }
 }

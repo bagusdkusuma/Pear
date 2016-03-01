@@ -2317,3 +2317,6 @@ li > input.choose-list{
      padding-right:20px;
     position:relative;
 }
+.modal-loading.loaded .ajax-loading-dialog {
+    display:none;
+}

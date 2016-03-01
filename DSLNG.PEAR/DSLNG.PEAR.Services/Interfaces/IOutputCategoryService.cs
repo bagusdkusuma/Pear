@@ -14,6 +14,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         SaveOutputCategoryRespone SaveOutputCategory(SaveOutputCategoryRequest request);
         GetOutputCategoryResponse GetOutputCategory(GetOutputCategoryRequest request);
         DeleteOutputCategoryResponse DeleteOutputCategory(DeleteOutputCategoryRequest request);
-        GetActiveOutputCategoriesResponse GetActiveOutputCategories();
+        GetActiveOutputCategoriesResponse GetActiveOutputCategories(bool withDeepRelations = true);
     }
 }

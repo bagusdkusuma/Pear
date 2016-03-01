@@ -527,6 +527,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.RoleGroupIds, o => o.MapFrom(s => s.RoleGroups.Select(x => x.Id).ToArray()));
             Mapper.CreateMap<SavePlanningBlueprintRequest, PlanningBlueprint>();
             Mapper.CreateMap<PlanningBlueprint, GetPlanningBlueprintsResponse.PlanningBlueprint>();
+            Mapper.CreateMap<PlanningBlueprint, GetPlanningBlueprintResponse>()
+                .ForMember(x => x.KeyOutputs, o => o.MapFrom(s => s.KeyOutput));
+            Mapper.CreateMap<KeyOutputConfiguration, GetPlanningBlueprintResponse.KeyOutputResponse>();
             Mapper.CreateMap<EnvironmentsScanning, GetPlanningBlueprintsResponse.EnvironmentsScanning>();
             Mapper.CreateMap<BusinessPostureIdentification, GetPlanningBlueprintsResponse.BusinessPostureIdentification>();
             Mapper.CreateMap<MidtermPhaseFormulation, GetPlanningBlueprintsResponse.MidtermPhaseFormulation>();
@@ -595,6 +598,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<DesiredState, GetVoyagePlanResponse.DesiredState>();
             Mapper.CreateMap<PostureChallenge, GetVoyagePlanResponse.PostureChallenge>();
             Mapper.CreateMap<PostureConstraint, GetVoyagePlanResponse.PostureConstraint>();
+            Mapper.CreateMap<CalculateOutputResponse.KeyOutputResponse, GetVoyagePlanResponse.KeyOutputResponse>();
             Mapper.CreateMap<Constraint, GetConstraintResponse>()
                 .ForMember(x =>x.ThreatIds, y => y.MapFrom(z => z.Relations.Where(o =>o.ThreatHost != null)))
                 .ForMember(x => x.Opportunitys, y => y.MapFrom(z => z.Relations.Where(o => o.OpportunityHost != null)))
@@ -636,6 +640,14 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
             Mapper.CreateMap<AddObjectiveRequest, MidtermStrategicPlanningObjective>();
             Mapper.CreateMap<AddMidtermPlanningRequest, MidtermStrategicPlanning>();
+
+            Mapper.CreateMap<KeyOutputCategory, GetActiveOutputCategoriesResponse.OutputCategoryResponse>()
+                .ForMember(x => x.KeyOutputs, o => o.MapFrom(s => 
+                    s.KeyOutputs.Where(x => x.IsActive).MapTo<GetActiveOutputCategoriesResponse.KeyOutputResponse>()));
+            Mapper.CreateMap<KeyOutputConfiguration, GetActiveOutputCategoriesResponse.KeyOutputResponse>()
+                .ForMember(x => x.KeyAssumptions, o => o.Ignore())
+                .ForMember(x => x.Kpis, o => o.Ignore())
+                .ForMember(x => x.Measurement, o => o.Ignore());
 
             base.Configure();
         }

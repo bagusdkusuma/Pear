@@ -14,6 +14,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PlanningBlueprint
         public IList<ChallengeViewModel> InternalChallenge { get; set; }
         public IList<ChallengeViewModel> ExternalChallenge { get; set; }
         public IList<ConstraintViewModel> Constraints { get; set; }
+        public IList<KeyOutputViewModel> EconomicIndicators { get; set; }
 
         public class ChallengeViewModel
         {
@@ -56,6 +57,15 @@ namespace DSLNG.PEAR.Web.ViewModels.PlanningBlueprint
         {
             public int Id { get; set; }
             public string Description { get; set; }
+        }
+        public class KeyOutputViewModel
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public string Actual { get; set; }
+            public string Forecast { get; set; }
+            public int Order { get; set; }
+            public string Measurement { get; set; }
         }
     }
 }

@@ -525,6 +525,7 @@
     <Compile Include="Responses\OutputConfig\GetOutputConfigsResponse.cs" />
     <Compile Include="Responses\PlanningBlueprint\ApproveMidtermStrategyResponse.cs" />
     <Compile Include="Responses\PlanningBlueprint\ApproveVoyagePlanResponse.cs" />
+    <Compile Include="Responses\PlanningBlueprint\GetPlanningBlueprintResponse.cs" />
     <Compile Include="Responses\PlanningBlueprint\GetPlanningBlueprintsResponse.cs" />
     <Compile Include="Responses\PlanningBlueprint\GetVoyagePlanResponse.cs" />
     <Compile Include="Responses\PlanningBlueprint\SavePlanningBlueprintResponse.cs" />
