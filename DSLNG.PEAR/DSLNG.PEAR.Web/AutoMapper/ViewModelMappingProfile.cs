@@ -879,8 +879,6 @@ namespace DSLNG.PEAR.Web.AutoMapper
             //artifact DER
             Mapper.CreateMap<DerLayoutItemViewModel, SaveLayoutItemRequest>();
             Mapper.CreateMap<DerLayoutItemViewModel.DerLayoutItemArtifactViewModel, SaveLayoutItemRequest.LayoutItemArtifact>();
-            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifact, LineChartViewModel>();
-            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifactSerie, LineChartViewModel.SeriesViewModel>();
             Mapper.CreateMap<GetDerLayoutitemResponse, DerLayoutItemViewModel>();
             Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifact, DerLayoutItemViewModel.DerLayoutItemArtifactViewModel>();
             //Mapper.CreateMap<GetDerLayoutitemRespons.e.DerArtifactChart, LineChartViewModel.SeriesViewModel>();
@@ -888,7 +886,9 @@ namespace DSLNG.PEAR.Web.AutoMapper
             //DER Line
             Mapper.CreateMap<LineChartViewModel, SaveLayoutItemRequest.LayoutItemArtifactLine>();
             Mapper.CreateMap<LineChartViewModel.SeriesViewModel, SaveLayoutItemRequest.LayoutItemArtifactSerie>();
-            
+            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifact, LineChartViewModel>();
+            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifactSerie, LineChartViewModel.SeriesViewModel>();
+
             //DER Multiaxis
             Mapper.CreateMap<MultiaxisChartViewModel, SaveLayoutItemRequest.LayoutItemArtifactMultiAxis>();
             Mapper.CreateMap<MultiaxisChartViewModel.ChartViewModel, SaveLayoutItemRequest.LayoutItemArtifactChart>()
@@ -914,6 +914,8 @@ namespace DSLNG.PEAR.Web.AutoMapper
             //DER Pie
             Mapper.CreateMap<PieViewModel, SaveLayoutItemRequest.LayoutItemArtifactPie>();
             Mapper.CreateMap<PieViewModel.SeriesViewModel, SaveLayoutItemRequest.LayoutItemArtifactSerie>();
+            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifact, PieViewModel>();
+            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifactSerie, PieViewModel.SeriesViewModel>();
 
             //DER Tank
             Mapper.CreateMap<TankViewModel, SaveLayoutItemRequest.LayoutItemArtifactTank>();

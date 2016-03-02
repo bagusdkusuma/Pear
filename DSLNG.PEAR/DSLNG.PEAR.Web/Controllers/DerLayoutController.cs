@@ -86,24 +86,41 @@ namespace DSLNG.PEAR.Web.Controllers
                 switch (response.Type.ToLowerInvariant())
                 {
                     case "line":
-                        var lineChart = new LineChartViewModel();
-                        editViewModel.LineChart = response.Artifact.MapPropertiesToInstance<LineChartViewModel>(lineChart);
-                        var series = new LineChartViewModel.SeriesViewModel();
-                        editViewModel.LineChart.Series.Insert(0, series);
-                        editViewModel.Artifact.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
                         {
-                            Take = -1,
-                            SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
-                        }).Measurements
-                        .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
-                        break;
+                            var lineChart = new LineChartViewModel();
+                            editViewModel.LineChart = response.Artifact.MapPropertiesToInstance<LineChartViewModel>(lineChart);
+                            var series = new LineChartViewModel.SeriesViewModel();
+                            editViewModel.LineChart.Series.Insert(0, series);
+                            editViewModel.Artifact.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
+                            {
+                                Take = -1,
+                                SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+                            }).Measurements
+                            .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+                            break;
+                        }
+
+                    case "pie":
+                        {
+                            var pie = new PieViewModel();
+                            editViewModel.Pie = response.Artifact.MapPropertiesToInstance<PieViewModel>(pie);
+                            var series = new PieViewModel.SeriesViewModel();
+                            editViewModel.Pie.Series.Insert(0, series);
+                            editViewModel.Artifact.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
+                            {
+                                Take = -1,
+                                SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+                            }).Measurements
+                            .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+                            break;
+                        }
+                        
                 }
 
                 return View("EditLayoutItem", editViewModel);
             }
             else
             {
-                //var viewModel = new DerCreateLayoutItemViewModel();
                 viewModel.Types = _dropdownService.GetDerItemTypes().MapTo<SelectListItem>();
                 return View("LayoutItem", viewModel);
             }
@@ -275,6 +292,9 @@ namespace DSLNG.PEAR.Web.Controllers
                     }
 
             }
+
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
 
             return RedirectToAction("Config", new { id = layoutItemViewModel.DerLayoutId });
         }

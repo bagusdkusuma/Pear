@@ -23,6 +23,9 @@
         case "line":
             Html.RenderPartial("~/Views/DerLayout/LayoutType/_Line.Edit.cshtml", Model);
             break;
+        case "pie":
+            Html.RenderPartial("~/Views/DerLayout/LayoutType/_Pie.Edit.cshtml", Model);
+            break;
     }
         }
     </div>
@@ -122,9 +125,30 @@
                         window.Pear.Artifact.Designer._kpiAutoComplete($this);
                         window.Pear.Artifact.Designer._colorPicker($this);
                     });
-                    console.log($hiddenFields.html());
                     $hiddenFields.remove();
                     window.Pear.Artifact.Designer._setupCallbacks.line();
+                    break;
+                }
+            case "pie":
+                {
+                    var $hiddenFields = $('#hidden-fields');
+                    $hiddenFields.find('.series-template:not(.original)').each(function (i, val) {
+                        $this = $(val);
+                        $this.addClass($('#graphic-type').val());
+                    });
+                    var seriesTemplate = $hiddenFields.find('.series-template.original');
+                    var seriesTemplateClone = seriesTemplate.clone(true);
+                    seriesTemplateClone.children('input:first-child').remove();
+                    $('#hidden-fields-holder').html(seriesTemplateClone);
+                    seriesTemplate.remove();
+                    $('#series-holder').append($hiddenFields.html());
+                    $('#series-holder').find('.series-template').each(function (i, val) {
+                        var $this = $(val);
+                        window.Pear.Artifact.Designer._kpiAutoComplete($this);
+                        window.Pear.Artifact.Designer._colorPicker($this);
+                    });
+                    $hiddenFields.remove();
+                    window.Pear.Artifact.Designer._setupCallbacks.pie();
                     break;
                 }
         }
