@@ -8,7 +8,9 @@ using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Der;
+using DSLNG.PEAR.Services.Requests.Highlight;
 using DSLNG.PEAR.Services.Requests.Measurement;
+using DSLNG.PEAR.Services.Requests.Select;
 using DSLNG.PEAR.Services.Responses.Der;
 using DSLNG.PEAR.Web.ViewModels.Artifact;
 using DSLNG.PEAR.Web.ViewModels.DerLayout;
@@ -21,12 +23,16 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IDropdownService _dropdownService;
         private readonly IDerService _derService;
         private readonly IMeasurementService _measurementService;
+        private readonly IHighlightService _highlightService;
+        private readonly ISelectService _selectService;
 
-        public DerLayoutController(IDropdownService dropdownService, IDerService derService, IMeasurementService measurementService)
+        public DerLayoutController(IDropdownService dropdownService, IDerService derService, IMeasurementService measurementService, IHighlightService highlightService, ISelectService selectService)
         {
             _dropdownService = dropdownService;
             _derService = derService;
             _measurementService = measurementService;
+            _highlightService = highlightService;
+            _selectService = selectService;
         }
 
         public ActionResult Index()
@@ -74,14 +80,26 @@ namespace DSLNG.PEAR.Web.Controllers
             if (viewModel.Id > 0)
             {
                 var response = _derService.GetDerLayoutItem(viewModel.Id);
-
+                var editViewModel = response.MapTo<DerLayoutItemViewModel>();
+                editViewModel.Types = _dropdownService.GetDerItemTypes().MapTo<SelectListItem>();
+                editViewModel.Type = response.Type;
                 switch (response.Type.ToLowerInvariant())
                 {
                     case "line":
-                        //viewModel.LineChart = new LineChartViewModel();
+                        var lineChart = new LineChartViewModel();
+                        editViewModel.LineChart = response.Artifact.MapPropertiesToInstance<LineChartViewModel>(lineChart);
+                        var series = new LineChartViewModel.SeriesViewModel();
+                        editViewModel.LineChart.Series.Insert(0, series);
+                        editViewModel.Artifact.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
+                        {
+                            Take = -1,
+                            SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+                        }).Measurements
+                        .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
                         break;
                 }
-                return View("LayoutItem", viewModel);
+
+                return View("EditLayoutItem", editViewModel);
             }
             else
             {
@@ -155,25 +173,31 @@ namespace DSLNG.PEAR.Web.Controllers
                         viewModel.Artifact = new DerLayoutItemViewModel.DerLayoutItemArtifactViewModel();
                         viewModel.Tank = new TankViewModel();
                         return PartialView("LayoutType/_Tank", viewModel);
-                        /*viewModel.Artifact.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
-                        {
-                            Take = -1,
-                            SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
-                        }).Measurements.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
-                        viewModel.Pie = new PieViewModel();
-                        var series = new PieViewModel.SeriesViewModel();
-                        viewModel.Pie.Series.Add(series);
-                        return PartialView("LayoutType/_Pie", viewModel);*/
                     }
-                    break;
+
+                case "highlight":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        var result = _selectService.GetHighlightTypesDropdown();
+                        viewModel.Highlights =
+                            result.Select(x => new SelectListItem() { Text = x.Text, Value = x.Value }).ToList();
+                        return PartialView("LayoutType/_Highlight", viewModel);
+                    }
+                case "alert":
+                case "weather":
+                case "wave":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.Type = type;
+                        return PartialView("LayoutType/_StaticHighlight", viewModel);
+                    }
             }
 
             return Content("Error");
         }
 
         [HttpPost]
-        public ActionResult SaveLayoutItem(DerLayoutItemViewModel layoutItemViewModel/*,
-            DerLayoutLineViewModel lineViewModel, DerLayoutMultiAxisViewModel multiAxisViewModel*/)
+        public ActionResult SaveLayoutItem(DerLayoutItemViewModel layoutItemViewModel)
         {
             var request = new SaveLayoutItemRequest();
             var response = new SaveLayoutItemResponse();
@@ -207,14 +231,14 @@ namespace DSLNG.PEAR.Web.Controllers
 
                         break;
                     }
-                    
+
                 case "multiaxis":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.Artifact = layoutItemViewModel.Artifact.MapTo<SaveLayoutItemRequest.LayoutItemArtifact>();
                         request.Artifact.MultiAxis = layoutItemViewModel.MultiaxisChart.MapTo<SaveLayoutItemRequest.LayoutItemArtifactMultiAxis>();
                         response = _derService.SaveLayoutItem(request);
-                        break;    
+                        break;
                     }
                 case "pie":
                     {
@@ -232,10 +256,27 @@ namespace DSLNG.PEAR.Web.Controllers
                         response = _derService.SaveLayoutItem(request);
                         break;
                     }
+                case "highlight":
+                    {
+                        request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
+                        request.Highlight = new SaveLayoutItemRequest.LayoutItemHighlight();
+                        request.Highlight.SelectOptionId = layoutItemViewModel.HighlightId;
+                        response = _derService.SaveLayoutItem(request);
+                        break;
+                    }
+                case "alert":
+                case "weather":
+                case "wave":
+                    {
+                        request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
+                        request.Type = layoutItemViewModel.Type;
+                        response = _derService.SaveLayoutItem(request);
+                        break;
+                    }
 
             }
 
-            return Content(response.Message);
+            return RedirectToAction("Config", new { id = layoutItemViewModel.DerLayoutId });
         }
     }
 }

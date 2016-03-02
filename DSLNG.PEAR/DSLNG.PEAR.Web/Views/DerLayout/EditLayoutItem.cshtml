@@ -3,11 +3,12 @@
 
 @using (Html.BeginForm("SaveLayoutItem", "DerLayout", FormMethod.Post))
 {
+    @Html.HiddenFor(model => model.Id)
     @Html.HiddenFor(model => model.DerLayoutId)
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.Column)
     @Html.HiddenFor(model => model.Row)
-
+    <input id="OldType" name="OldType" type="hidden" value="@Model.Type">
     <div class="form-group row">
         @Html.LabelFor(model => model.Type, new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -15,7 +16,26 @@
             @Html.ValidationMessageFor(model => model.Row)
         </div>
     </div>
-    <div class="form-group row layout-type-area" style="min-height: 50px;padding-left: 13px;"></div>
+    <div class="form-group row layout-type-area" style="min-height: 50px; padding-left: 13px;">
+        @{
+    switch (Model.Type.ToLowerInvariant())
+    {
+        case "line":
+            Html.RenderPartial("~/Views/DerLayout/LayoutType/_Line.Edit.cshtml", Model);
+            break;
+    }
+        }
+    </div>
+    <div class="col-md-12">
+        <div id="series-holder" class="form-inline graphic-properties">
+        </div>
+        <div id="plot-bands-holder" class="form-inline graphic-properties">
+        </div>
+        <div id="charts-holder" class="form-inline graphic-properties">
+        </div>
+        <div id="rows-holder" class="form-inline graphic-properties">
+        </div>
+    </div>
     <div class="col-md-12 artifact-designer-btns">
         <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
         <button data-preview-url="@Url.Action("Preview", "Artifact")"  id="graphic-preview-btn" type="button" class="btn btn-primary btn-lg"><span class="fa fa-eye"></span>View</button>
@@ -31,6 +51,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+
         $('.der-layout-type').change(function () {
             var that = $(this);
             var type = that.val().toLowerCase();
@@ -78,6 +99,35 @@
                     break;
             }
         });
+
+
+        switch ($('.der-layout-type').val()) {
+            case "line":
+                {
+                    var $hiddenFields = $('#hidden-fields');
+                    $hiddenFields.find('.series-template:not(.original)').each(function (i, val) {
+                        $this = $(val);
+                        $this.addClass('singlestack');
+                        $this.addClass($('#bar-value-axis').val());
+                        $this.addClass($('#graphic-type').val());
+                    });
+                    var seriesTemplate = $hiddenFields.find('.series-template.original');
+                    var seriesTemplateClone = seriesTemplate.clone(true);
+                    seriesTemplateClone.children('input:first-child').remove();
+                    $('#hidden-fields-holder').html(seriesTemplateClone);
+                    seriesTemplate.remove();
+                    $('#series-holder').append($hiddenFields.html());
+                    $('#series-holder').find('.series-template').each(function (i, val) {
+                        var $this = $(val);
+                        window.Pear.Artifact.Designer._kpiAutoComplete($this);
+                        window.Pear.Artifact.Designer._colorPicker($this);
+                    });
+                    console.log($hiddenFields.html());
+                    $hiddenFields.remove();
+                    window.Pear.Artifact.Designer._setupCallbacks.line();
+                    break;
+                }
+        }
     });
 </script>
 

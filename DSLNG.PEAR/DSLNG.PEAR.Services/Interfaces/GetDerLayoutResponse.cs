@@ -24,10 +24,10 @@ namespace DSLNG.PEAR.Services.Interfaces
             public string Type { get; set; }
             public int Column { get; set; }
             public int Row { get; set; }
-            public DerArtifact Artifact { get; set; }
+            //public DerArtifact Artifact { get; set; }
         }
         
-        public class DerArtifact
+        /*public class DerArtifact
         {
             public int Id { get; set; }
             public string HeaderTitle { get; set; }
@@ -45,6 +45,6 @@ namespace DSLNG.PEAR.Services.Interfaces
             public int KpiId { get; set; }
             public string KpiName { get; set; }
             public string Color { get; set; }
-        }
+        }*/
     }
 }

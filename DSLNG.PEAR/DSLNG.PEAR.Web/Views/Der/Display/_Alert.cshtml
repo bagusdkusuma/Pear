@@ -1,0 +1,19 @@
+﻿@model DSLNG.PEAR.Services.Responses.Highlight.GetHighlightResponse
+@{
+    ViewBag.Title = "_Alert";
+}
+
+<table>
+    <tr>
+        <td>Alert Condition</td>
+    </tr>
+    @if (!string.IsNullOrEmpty(Model.Message))
+    {
+        <tr>
+            <td>
+                <img src="@Url.Content("~/content/img/select/" + Model.Message)" height="50" width="50"/></td>
+        </tr>    
+    }
+
+</table>
+

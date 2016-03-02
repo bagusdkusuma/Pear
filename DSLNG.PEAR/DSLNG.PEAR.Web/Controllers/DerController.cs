@@ -9,6 +9,8 @@ using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Artifact;
 using DSLNG.PEAR.Services.Requests.Der;
+using DSLNG.PEAR.Services.Requests.Highlight;
+using DSLNG.PEAR.Services.Requests.Weather;
 using DSLNG.PEAR.Web.ViewModels.Artifact;
 using DSLNG.PEAR.Web.ViewModels.Der;
 
@@ -19,12 +21,16 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IDerService _derService;
         private readonly IDropdownService _dropdownService;
         private readonly IArtifactService _artifactService;
+        private readonly IHighlightService _highlightService;
+        private readonly IWeatherService _weatherService;
 
-        public DerController(IDerService derService, IDropdownService dropdownService, IArtifactService artifactService)
+        public DerController(IDerService derService, IDropdownService dropdownService, IArtifactService artifactService, IHighlightService highlightService, IWeatherService weatherService)
         {
             _derService = derService;
             _dropdownService = dropdownService;
             _artifactService = artifactService;
+            _highlightService = highlightService;
+            _weatherService = weatherService;
         }
 
         public ActionResult Index()
@@ -227,6 +233,42 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.Tank.Subtitle = chartData.Subtitle;
                         previewViewModel.Tank.Id = layout.Artifact.Tank.Id;
                         return Json(previewViewModel, JsonRequestBehavior.AllowGet);
+                    }
+
+                case "highlight":
+                    {
+                        var highlight =
+                            _highlightService.GetHighlightByPeriode(new GetHighlightRequest
+                                {
+                                    Date = date,
+                                    HighlightTypeId = layout.Highlight.SelectOptionId
+                                });
+
+                        var json = new {type = "highlight", highlight = highlight};
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+                case "weather":
+                    {
+                        var weather = _weatherService.GetWeather(new GetWeatherRequest
+                            {
+                                Date = date,
+                                ByDate = true
+                            });
+
+                        var view = RenderPartialViewToString("Display/_Weather", weather);
+                        var json = new { type = "weather", view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+                case "alert":
+                    {
+                        var alert = _highlightService.GetHighlightByPeriode(new GetHighlightRequest
+                            {
+                                Type = "Alert",
+                                Date = date
+                            });
+                        var view = RenderPartialViewToString("Display/_Alert", alert);
+                        var json = new { type = "alert", view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
                     }
                     
             }

@@ -9,6 +9,7 @@ namespace DSLNG.PEAR.Services.Responses.Der
         public int Row { get; set; }
         public int DerLayoutId { get; set; }
         public DerArtifact Artifact { get; set; }
+        public DerHighlight Highlight { get; set; }
 
         public class DerArtifact
         {
@@ -64,6 +65,12 @@ namespace DSLNG.PEAR.Services.Responses.Der
             public double MaxCapacity { get; set; }
             public string Color { get; set; }
             public bool ShowLine { get; set; }
+        }
+
+        public class DerHighlight
+        {
+            public int Id { get; set; }
+            public int SelectOptionId { get; set; }
         }
     }
 }

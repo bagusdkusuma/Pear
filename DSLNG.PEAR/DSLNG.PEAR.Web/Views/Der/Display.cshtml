@@ -7,45 +7,72 @@
 <h2>Display 02/18/2016</h2>
 <div class="form-group form-list">
     <label for="StartInDisplay">Start</label>
-    <input class="datepicker form-control valid" data-provide="datepicker" id="currentDate" name="currentDate" type="text" value="">
+    <input id="currentDate" class="form-control datepicker" type="text" value="@Model.Today">
     <span class="field-validation-valid" data-valmsg-for="StartInDisplay" data-valmsg-replace="true"></span>
 </div>
-<table style="border: 1px solid red">
+<table>
     <tr>
-        <td style="min-width: 25%; border:1px solid blue">@{
-                var row0Col0 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 0);
-                if (row0Col0 != null)
-                {
-@*<div class="whitebox artifact-holder @row0Col0.Type-holder" style="height:350px;" data-artifact-url="@Url.Action("View", "Artifact", new { id = col.ArtifactId })">
-                    </div>   *@
-            
-                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col0.Id })" class="layout-item" style="min-height:400px;min-width: 500px;"></div>
-                }
-            }</td>
         <td>@{
-                var row0Col1 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 1);
-                if (row0Col1 != null)
-                {
-@*<div class="whitebox artifact-holder @row0Col0.Type-holder" style="height:350px;" data-artifact-url="@Url.Action("View", "Artifact", new { id = col.ArtifactId })">
-                    </div>   *@
-            
-                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col1.Id })" class="layout-item" style="min-height:400px;min-width: 500px;"></div>
-                }
-             
-                
-            }</td>
-        <td>@{
-            var row0Col2 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 2);
-            if (row0Col2 != null)
+            var row0Col0 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 0);
+            if (row0Col0 != null)
             {
-@*<div class="whitebox artifact-holder @row0Col0.Type-holder" style="height:350px;" data-artifact-url="@Url.Action("View", "Artifact", new { id = col.ArtifactId })">
-                    </div>   *@
-            
-            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col2.Id })" class="layout-item" style="min-height:400px;min-width: 500px;"></div>
+            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col0.Id })" class="layout-item" style="min-height:400px;min-width: 500px;"></div>
+            }
+        }</td>
+        <td>@{
+            var row0Col1 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 1);
+            if (row0Col1 != null)
+            {
+            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col1.Id })" class="layout-item" style="min-height:400px;min-width: 500px;"></div>
             }
              
                 
         }</td>
+        <td>@{
+            var row0Col2 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 2);
+            if (row0Col2 != null)
+            {
+            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col2.Id })" class="layout-item" style="min-height:400px;min-width: 500px;"></div>
+            }
+        }</td>
+        <td>
+            @{
+                var row0Col3 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 3);
+                if (row0Col3 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col3.Id })" class="layout-item" style="min-height:400px;min-width: 500px;"></div>
+                }
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @{
+                var row1Col0 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 0);
+                if (row1Col0 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col0.Id })" class="layout-item" style="min-height:400px;min-width: 500px;"></div>
+                }
+            }
+        </td>
+        <td>@{
+            var row1Col1 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 1);
+            if (row1Col1 != null)
+            {
+            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col1.Id })" class="layout-item" style="min-height:400px;min-width: 500px;"></div>
+            }
+             
+                
+        }</td>
+        <td> @{
+            var row1Col2 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 2);
+            if (row1Col2 != null)
+            {
+            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col2.Id })" class="layout-item" style="min-height:400px;min-width: 500px;"></div>
+            }
+             
+        }</td>
+        <td></td>
     </tr>
 </table>
 <p>
@@ -63,17 +90,21 @@
                     url: that.attr('data-url'),
                     data: { currentDate: currentDate },
                     success: function (data) {
-                        console.log(data);
-                        var result = { "GraphicType": "line", "FractionScale": 0, "MaxFractionScale": 0, "PeriodeType": "Daily", "TimePeriodes": ["\/Date(1435734000000)\/", "\/Date(1435820400000)\/", "\/Date(1435906800000)\/", "\/Date(1435993200000)\/", "\/Date(1436079600000)\/", "\/Date(1436166000000)\/", "\/Date(1436252400000)\/", "\/Date(1436338800000)\/", "\/Date(1436425200000)\/", "\/Date(1436511600000)\/", "\/Date(1436598000000)\/", "\/Date(1436684400000)\/", "\/Date(1436770800000)\/", "\/Date(1436857200000)\/", "\/Date(1436943600000)\/", "\/Date(1437030000000)\/", "\/Date(1437116400000)\/", "\/Date(1437202800000)\/", "\/Date(1437289200000)\/", "\/Date(1437375600000)\/", "\/Date(1437462000000)\/", "\/Date(1437548400000)\/", "\/Date(1437634800000)\/", "\/Date(1437721200000)\/", "\/Date(1437807600000)\/", "\/Date(1437894000000)\/", "\/Date(1437980400000)\/", "\/Date(1438066800000)\/", "\/Date(1438153200000)\/", "\/Date(1438239600000)\/", "\/Date(1438326000000)\/", "\/Date(1438412400000)\/", "\/Date(1438498800000)\/", "\/Date(1438585200000)\/", "\/Date(1438671600000)\/", "\/Date(1438758000000)\/", "\/Date(1438844400000)\/", "\/Date(1438930800000)\/", "\/Date(1439017200000)\/", "\/Date(1439103600000)\/", "\/Date(1439190000000)\/", "\/Date(1439276400000)\/", "\/Date(1439362800000)\/", "\/Date(1439449200000)\/", "\/Date(1439535600000)\/", "\/Date(1439622000000)\/", "\/Date(1439708400000)\/", "\/Date(1439794800000)\/", "\/Date(1439881200000)\/", "\/Date(1439967600000)\/", "\/Date(1440054000000)\/", "\/Date(1440140400000)\/", "\/Date(1440226800000)\/", "\/Date(1440313200000)\/", "\/Date(1440399600000)\/", "\/Date(1440486000000)\/", "\/Date(1440572400000)\/", "\/Date(1440658800000)\/", "\/Date(1440745200000)\/", "\/Date(1440831600000)\/", "\/Date(1440918000000)\/", "\/Date(1441004400000)\/", "\/Date(1441090800000)\/", "\/Date(1441177200000)\/", "\/Date(1441263600000)\/", "\/Date(1441350000000)\/", "\/Date(1441436400000)\/", "\/Date(1441522800000)\/", "\/Date(1441609200000)\/", "\/Date(1441695600000)\/", "\/Date(1441782000000)\/", "\/Date(1441868400000)\/", "\/Date(1441954800000)\/", "\/Date(1442041200000)\/", "\/Date(1442127600000)\/", "\/Date(1442214000000)\/", "\/Date(1442300400000)\/", "\/Date(1442386800000)\/", "\/Date(1442473200000)\/", "\/Date(1442559600000)\/", "\/Date(1442646000000)\/", "\/Date(1442732400000)\/", "\/Date(1442818800000)\/", "\/Date(1442905200000)\/", "\/Date(1442991600000)\/", "\/Date(1443078000000)\/", "\/Date(1443164400000)\/", "\/Date(1443250800000)\/", "\/Date(1443337200000)\/", "\/Date(1443423600000)\/", "\/Date(1443510000000)\/", "\/Date(1443596400000)\/", "\/Date(1443682800000)\/", "\/Date(1443769200000)\/", "\/Date(1443855600000)\/", "\/Date(1443942000000)\/", "\/Date(1444028400000)\/", "\/Date(1444114800000)\/", "\/Date(1444201200000)\/", "\/Date(1444287600000)\/", "\/Date(1444374000000)\/", "\/Date(1444460400000)\/", "\/Date(1444546800000)\/", "\/Date(1444633200000)\/", "\/Date(1444719600000)\/", "\/Date(1444806000000)\/", "\/Date(1444892400000)\/", "\/Date(1444978800000)\/", "\/Date(1445065200000)\/", "\/Date(1445151600000)\/", "\/Date(1445238000000)\/", "\/Date(1445324400000)\/", "\/Date(1445410800000)\/", "\/Date(1445497200000)\/", "\/Date(1445583600000)\/", "\/Date(1445670000000)\/", "\/Date(1445756400000)\/", "\/Date(1445842800000)\/", "\/Date(1445929200000)\/", "\/Date(1446015600000)\/", "\/Date(1446102000000)\/", "\/Date(1446188400000)\/", "\/Date(1446274800000)\/", "\/Date(1446361200000)\/", "\/Date(1446451200000)\/", "\/Date(1446537600000)\/", "\/Date(1446624000000)\/", "\/Date(1446710400000)\/", "\/Date(1446796800000)\/", "\/Date(1446883200000)\/", "\/Date(1446969600000)\/", "\/Date(1447056000000)\/", "\/Date(1447142400000)\/", "\/Date(1447228800000)\/", "\/Date(1447315200000)\/", "\/Date(1447401600000)\/", "\/Date(1447488000000)\/", "\/Date(1447574400000)\/", "\/Date(1447660800000)\/", "\/Date(1447747200000)\/", "\/Date(1447833600000)\/", "\/Date(1447920000000)\/", "\/Date(1448006400000)\/", "\/Date(1448092800000)\/", "\/Date(1448179200000)\/", "\/Date(1448265600000)\/", "\/Date(1448352000000)\/", "\/Date(1448438400000)\/", "\/Date(1448524800000)\/", "\/Date(1448611200000)\/", "\/Date(1448697600000)\/", "\/Date(1448784000000)\/", "\/Date(1448870400000)\/", "\/Date(1448956800000)\/", "\/Date(1449043200000)\/", "\/Date(1449129600000)\/", "\/Date(1449216000000)\/", "\/Date(1449302400000)\/", "\/Date(1449388800000)\/", "\/Date(1449475200000)\/", "\/Date(1449561600000)\/", "\/Date(1449648000000)\/", "\/Date(1449734400000)\/", "\/Date(1449820800000)\/", "\/Date(1449907200000)\/", "\/Date(1449993600000)\/", "\/Date(1450080000000)\/", "\/Date(1450166400000)\/", "\/Date(1450252800000)\/", "\/Date(1450339200000)\/", "\/Date(1450425600000)\/", "\/Date(1450512000000)\/", "\/Date(1450598400000)\/", "\/Date(1450684800000)\/", "\/Date(1450771200000)\/", "\/Date(1450857600000)\/", "\/Date(1450944000000)\/", "\/Date(1451030400000)\/", "\/Date(1451116800000)\/", "\/Date(1451203200000)\/", "\/Date(1451289600000)\/", "\/Date(1451376000000)\/", "\/Date(1451462400000)\/", "\/Date(1451548800000)\/", "\/Date(1451635200000)\/", "\/Date(1451721600000)\/", "\/Date(1451808000000)\/", "\/Date(1451894400000)\/", "\/Date(1451980800000)\/", "\/Date(1452067200000)\/", "\/Date(1452153600000)\/", "\/Date(1452240000000)\/", "\/Date(1452326400000)\/", "\/Date(1452412800000)\/", "\/Date(1452499200000)\/", "\/Date(1452585600000)\/", "\/Date(1452672000000)\/", "\/Date(1452758400000)\/", "\/Date(1452844800000)\/", "\/Date(1452931200000)\/", "\/Date(1453017600000)\/", "\/Date(1453104000000)\/", "\/Date(1453190400000)\/", "\/Date(1453276800000)\/", "\/Date(1453363200000)\/", "\/Date(1453449600000)\/", "\/Date(1453536000000)\/", "\/Date(1453622400000)\/", "\/Date(1453708800000)\/", "\/Date(1453795200000)\/", "\/Date(1453881600000)\/", "\/Date(1453968000000)\/", "\/Date(1454054400000)\/", "\/Date(1454140800000)\/", "\/Date(1454227200000)\/", "\/Date(1454313600000)\/", "\/Date(1454400000000)\/", "\/Date(1454486400000)\/", "\/Date(1454572800000)\/", "\/Date(1454659200000)\/", "\/Date(1454745600000)\/", "\/Date(1454832000000)\/", "\/Date(1454918400000)\/", "\/Date(1455004800000)\/", "\/Date(1455091200000)\/", "\/Date(1455177600000)\/", "\/Date(1455264000000)\/", "\/Date(1455350400000)\/", "\/Date(1455436800000)\/", "\/Date(1455523200000)\/", "\/Date(1455609600000)\/", "\/Date(1455696000000)\/", "\/Date(1455782400000)\/", "\/Date(1455868800000)\/", "\/Date(1455955200000)\/", "\/Date(1456041600000)\/", "\/Date(1456128000000)\/", "\/Date(1456214400000)\/", "\/Date(1456300800000)\/", "\/Date(1456387200000)\/", "\/Date(1456473600000)\/", "\/Date(1456560000000)\/", "\/Date(1456646400000)\/", "\/Date(1456732800000)\/"], "Highlights": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "AreaChart": null, "BarChart": null, "LineChart": { "SeriesType": null, "Title": "Brent \u0026 Naptha Price Daily Trend", "Subtitle": "01 Jul 15 - 29 Feb 16", "Periodes": ["01 Jul", "02 Jul", "03 Jul", "04 Jul", "05 Jul", "06 Jul", "07 Jul", "08 Jul", "09 Jul", "10 Jul", "11 Jul", "12 Jul", "13 Jul", "14 Jul", "15 Jul", "16 Jul", "17 Jul", "18 Jul", "19 Jul", "20 Jul", "21 Jul", "22 Jul", "23 Jul", "24 Jul", "25 Jul", "26 Jul", "27 Jul", "28 Jul", "29 Jul", "30 Jul", "31 Jul", "01 Aug", "02 Aug", "03 Aug", "04 Aug", "05 Aug", "06 Aug", "07 Aug", "08 Aug", "09 Aug", "10 Aug", "11 Aug", "12 Aug", "13 Aug", "14 Aug", "15 Aug", "16 Aug", "17 Aug", "18 Aug", "19 Aug", "20 Aug", "21 Aug", "22 Aug", "23 Aug", "24 Aug", "25 Aug", "26 Aug", "27 Aug", "28 Aug", "29 Aug", "30 Aug", "31 Aug", "01 Sep", "02 Sep", "03 Sep", "04 Sep", "05 Sep", "06 Sep", "07 Sep", "08 Sep", "09 Sep", "10 Sep", "11 Sep", "12 Sep", "13 Sep", "14 Sep", "15 Sep", "16 Sep", "17 Sep", "18 Sep", "19 Sep", "20 Sep", "21 Sep", "22 Sep", "23 Sep", "24 Sep", "25 Sep", "26 Sep", "27 Sep", "28 Sep", "29 Sep", "30 Sep", "01 Oct", "02 Oct", "03 Oct", "04 Oct", "05 Oct", "06 Oct", "07 Oct", "08 Oct", "09 Oct", "10 Oct", "11 Oct", "12 Oct", "13 Oct", "14 Oct", "15 Oct", "16 Oct", "17 Oct", "18 Oct", "19 Oct", "20 Oct", "21 Oct", "22 Oct", "23 Oct", "24 Oct", "25 Oct", "26 Oct", "27 Oct", "28 Oct", "29 Oct", "30 Oct", "31 Oct", "01 Nov", "02 Nov", "03 Nov", "04 Nov", "05 Nov", "06 Nov", "07 Nov", "08 Nov", "09 Nov", "10 Nov", "11 Nov", "12 Nov", "13 Nov", "14 Nov", "15 Nov", "16 Nov", "17 Nov", "18 Nov", "19 Nov", "20 Nov", "21 Nov", "22 Nov", "23 Nov", "24 Nov", "25 Nov", "26 Nov", "27 Nov", "28 Nov", "29 Nov", "30 Nov", "01 Dec", "02 Dec", "03 Dec", "04 Dec", "05 Dec", "06 Dec", "07 Dec", "08 Dec", "09 Dec", "10 Dec", "11 Dec", "12 Dec", "13 Dec", "14 Dec", "15 Dec", "16 Dec", "17 Dec", "18 Dec", "19 Dec", "20 Dec", "21 Dec", "22 Dec", "23 Dec", "24 Dec", "25 Dec", "26 Dec", "27 Dec", "28 Dec", "29 Dec", "30 Dec", "31 Dec", "01 Jan", "02 Jan", "03 Jan", "04 Jan", "05 Jan", "06 Jan", "07 Jan", "08 Jan", "09 Jan", "10 Jan", "11 Jan", "12 Jan", "13 Jan", "14 Jan", "15 Jan", "16 Jan", "17 Jan", "18 Jan", "19 Jan", "20 Jan", "21 Jan", "22 Jan", "23 Jan", "24 Jan", "25 Jan", "26 Jan", "27 Jan", "28 Jan", "29 Jan", "30 Jan", "31 Jan", "01 Feb", "02 Feb", "03 Feb", "04 Feb", "05 Feb", "06 Feb", "07 Feb", "08 Feb", "09 Feb", "10 Feb", "11 Feb", "12 Feb", "13 Feb", "14 Feb", "15 Feb", "16 Feb", "17 Feb", "18 Feb", "19 Feb", "20 Feb", "21 Feb", "22 Feb", "23 Feb", "24 Feb", "25 Feb", "26 Feb", "27 Feb", "28 Feb", "29 Feb"], "ValueAxisTitle": "USD/bbl", "Series": [{ "name": "Brent", "data": [62.02, 62.28, 60.32, 60.32, 59.5, 57.14, 57.25, 57.05, 58.61, 58.78, 58.78, 57.8, 57.49, 58.7, 57.47, 56.95, 57.1, 57.1, 57.1, 56.53, 57.04, 56.13, 55.56, 54.62, 54.62, 54.62, 53.47, 52.98, 53.38, 53.31, 51.85, 51.85, 52.21, 49.9, 50.15, 49.59, 49.52, 48.61, 48.61, 48.35, 50.41, 49.18, 49.66, 49.22, 49.19, 49.19, 48.64, 48.57, 48.65, 47.16, 46.25, 45.46, 45.46, 45.21, 42.45, 43.5, 43.64, 47.56, 49.93, 49.93, 49.6, 53.12, 49.56, 50.5, 50.71, 49.61, 46.33, 49.17, 47.76, 49.3, 47.44, 48.75, 48.18, 48.14, 48.22, 46.48, 48.12, 49.98, 49.35, 47.47, 47.47, 47.47, 48.72, 49.18, 47.8, 48.33, 48.34, 48.6, 48.33, 47.4, 47.94, 47.94, 47.69, 48.13, 48.13, 47.88, 49.4, 52.2, 52.2, 53.3, 52.43, 52.65, 52.65, 49.86, 49.22, 49.01, 50.33, 50.5, 50.5, 50.5, 48.86, 48.52, 47.89, 48.2, 48.08, 47.99, 47.99, 47.43, 47.03, 49.12, 48.57, 49.51, 49.56, 49.56, 48.77, 50.43, 48.58, 48.12, 47.69, 47.42, 47.42, 47.3, 47.05, 45.9, 44.04, 43.6, 43.6, 44.47, 44.56, 43.95, 44.28, 44.29, 44.44, 44.44, 44.46, 45.16, 45.94, 46.18, 45.62, 44.87, 44.86, 44.84, 44.6, 44.28, 44.61, 43.97, 43.21, 43, 43, 40.69, 40.58, 40.29, 39.55, 37.92, 37.93, 37.93, 37.75, 38.26, 37.57, 36.95, 36.68, 36.88, 36.88, 36.2, 36.38, 37.89, 37.93, 37.93, 37.93, 37.93, 36.6, 37.78, 36.65, 37.6, 37.6, 37.28, 37.28, 37.22, 36.42, 34.44, 33.75, 33.55, 33.55, 33.55, 31.33, 30.78, 30.26, 31, 29.25, 28.94, 28.94, 28.78, 28.72, 27.78, 29.85, 32.16, 32.16, 32.16, 30.02, 30.92, 32.91, 34.49, 34.73, 34.73, 34.73, 34.12, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "color": "#62eb28" }, { "name": "Naptha", "data": [57.29, 58.1, 58.1, 58.1, 58.1, 53.79, 53.84, 53.66, 54.28, 54.28, 54.28, 54.23, 53.79, 53.7, 53.3, 53.72, 53.72, 53.72, 53.72, 54.02, 53.99, 53.54, 53.36, 53.36, 53.36, 53.26, 53.14, 53.01, 53.08, 53.15, 53.15, 53.15, 50.29, 50.29, 50.29, 50.29, 50.29, 50.29, 50.29, 47.51, 47.51, 47.51, 47.51, 47.51, 47.51, 47.51, 47.8, 47.8, 47.8, 47.8, 47.8, 47.8, 47.8, 46.2, 46.2, 46.2, 46.2, 46.2, 46.2, 46.2, 45.82, 45.82, 46.33, 46.33, 46.33, 46.33, 56.17, 46.21, 46.21, 46.21, 46.21, 46.21, 46.21, 46.21, 46.06, 46.06, 46.06, 46.06, 46.06, 46.06, 46.06, 46.25, 46.25, 46.25, 46.25, 46.25, 46.25, 46.25, 46.82, 46.82, 46.82, 46.82, 46.14, 46.99, 46.99, 47.33, 48.46, 50.56, 50.56, 51.05, 50.67, 50.67, 50.67, 49.28, 49.31, 49.57, 49.38, 49.38, 49.38, 49.38, 48.86, 48.87, 48.59, 48.58, 48.81, 48.81, 48.8, 48.8, 48.67, 48.93, 48.92, 48.92, 47.58, 50.12, 50.12, 50.12, 50.1, 50.1, 50.11, 49.7, 49.7, 49.51, 49.51, 49.51, 49.51, 49.51, 49.51, 47.78, 47.78, 47.78, 47.78, 47.78, 47.78, 47.78, 48.54, 48.54, 48.54, 48.55, 48.55, 48.55, 48.55, 48.93, 48.93, 49.17, 49.17, 49.17, 49.17, 49.17, 47.286, 47.286, 47.286, 47.286, 47.286, 47.286, 47.286, 46.42, 46.42, 46.42, 46.42, 46.42, 46.42, 46.42, 45.98, 45.98, 45.98, 45.98, 45.98, 45.98, 45.98, 45.91, 45.91, 45.91, 45.91, 45.91, 45.05, 45.05, 44.48, 44.48, 44.48, 44.48, 44.48, 44.48, 44.48, 44.48, 40.22, 40.22, 40.22, 40.22, 40.22, 40.22, 40.22, 36.58, 36.58, 36.58, 36.58, 36.58, 36.58, 36.58, 37.23, 37.23, 37.23, 37.23, 37.23, 37.23, 37.07, 37.07, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "color": "#19e3bb" }] }, "SpeedometerChart": null, "TrafficLightChart": null, "Tabular": null, "Tank": null, "MultiaxisChart": null, "Pie": null, "ComboChart": null };
-                        var r = { "GraphicType": "line", "FractionScale": null, "MaxFractionScale": null, "PeriodeType": "Daily", "TimePeriodes": ["\/Date(1455177600000)\/", "\/Date(1455264000000)\/", "\/Date(1455350400000)\/", "\/Date(1455436800000)\/", "\/Date(1455523200000)\/", "\/Date(1455609600000)\/", "\/Date(1455696000000)\/", "\/Date(1455782400000)\/"], "Highlights": null, "AreaChart": null, "BarChart": null, "LineChart": { "SeriesType": null, "Title": "test", "Subtitle": "11 Feb 16 - 18 Feb 16", "Periodes": ["11 Feb", "12 Feb", "13 Feb", "14 Feb", "15 Feb", "16 Feb", "17 Feb", "18 Feb"], "ValueAxisTitle": "%", "Series": [{ "name": "test", "data": [null, null, null, null, null, null, null, null], "color": "#68aad9" }, { "name": "a", "data": [null, null, null, null, null, null, null, null], "color": "#a1b3bf" }] }, "SpeedometerChart": null, "TrafficLightChart": null, "Tabular": null, "Tank": null, "MultiaxisChart": null, "Pie": null, "ComboChart": null }
-                        var m = { "GraphicType": "multiaxis", "FractionScale": null, "MaxFractionScale": null, "PeriodeType": "Monthly", "TimePeriodes": ["\/Date(1435734000000)\/", "\/Date(1438412400000)\/", "\/Date(1441090800000)\/", "\/Date(1443682800000)\/", "\/Date(1446361200000)\/", "\/Date(1448956800000)\/", "\/Date(1451635200000)\/", "\/Date(1454313600000)\/"], "Highlights": [null, null, null, null, null, null, null, null], "AreaChart": null, "BarChart": null, "LineChart": null, "SpeedometerChart": null, "TrafficLightChart": null, "Tabular": null, "Tank": null, "MultiaxisChart": { "Title": "Monthly CDS Production Performance", "Subtitle": "Jul 15 - Feb 16", "Periodes": ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb"], "Charts": [{ "ValueAxisTitle": null, "Measurement": "bbl", "GraphicType": "bar", "ValueAxisColor": null, "IsOpposite": false, "SeriesType": "single-stack", "Series": [{ "name": "CDS Production(bbl)", "data": [25838.43, 7146.51, 42873.69, 44083.22227, 60046.99466, 62175.38093, 62115.25809, 39319.83424], "stack": null, "color": "#bab98d" }], "FractionScale": null, "MaxFractionScale": null }, { "ValueAxisTitle": null, "Measurement": "tonnes", "GraphicType": "bar", "ValueAxisColor": null, "IsOpposite": true, "SeriesType": "single-stack", "Series": [{ "name": "CDS Production(tonnes)", "data": [2646, 759.31, 4198.38, 3799.961, 6125, 6342.08, 6336.219, 4001.15], "stack": null, "color": "#0db898" }], "FractionScale": null, "MaxFractionScale": null }] }, "Pie": null, "ComboChart": null };
-                        var callback = window.Pear.Artifact.Designer._previewCallbacks;
-                        callback[data.GraphicType](data, that);
+                        if (data.GraphicType !== undefined) {
+                            var callback = window.Pear.Artifact.Designer._previewCallbacks;
+                            callback[data.GraphicType](data, that);
+                        } else if (data.Type === "highlight") {
+                            that.html(data.highlight.Message);
+                        } else if (data.type === "weather" || data.type === "alert") {                            
+                            that.html(data.view);
+                        }
+                        
                     }
                 });
             });
         }
         $('#currentDate').change(function () {
+            alert('sin');
             reloadView();
         });
 

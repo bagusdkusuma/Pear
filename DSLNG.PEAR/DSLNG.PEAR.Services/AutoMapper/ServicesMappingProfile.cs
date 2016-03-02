@@ -758,12 +758,13 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
             Mapper.CreateMap<DerLayout, GetDerLayoutResponse>();
             Mapper.CreateMap<DerLayoutItem, GetDerLayoutResponse.DerLayoutItem>();
-            Mapper.CreateMap<DerArtifact, GetDerLayoutResponse.DerArtifact>()
+            /*Mapper.CreateMap<DerArtifact, GetDerLayoutResponse.DerArtifact>()
                 .ForMember(x => x.MeasurementId, y => y.MapFrom(z => z.Measurement.Id))
                 .ForMember(x => x.MeasurementName, y => y.MapFrom(z => z.Measurement.Name));
             Mapper.CreateMap<DerArtifactSerie, GetDerLayoutResponse.DerArtifactSerie>()
                 .ForMember(x => x.KpiId, y => y.MapFrom(z => z.Kpi.Id))
-                .ForMember(x => x.KpiName, y => y.MapFrom(z => z.Kpi.Name)); ;
+                .ForMember(x => x.KpiName, y => y.MapFrom(z => z.Kpi.Name)); */
+            
 
 
             Mapper.CreateMap<DerLayoutItem, GetDerLayoutitemResponse>();
@@ -796,6 +797,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
                .ForMember(x => x.DaysToTankTopId, o => o.MapFrom(s => s.DaysToTankTop.Id))
                .ForMember(x => x.DaysToTankTop, o => o.MapFrom(s => s.DaysToTankTop.Name + " (" + s.DaysToTankTop.Measurement.Name + ")")); ;
 
+            //highlight
+            Mapper.CreateMap<DerHighlight, GetDerLayoutitemResponse.DerHighlight>()
+                  .ForMember(x => x.SelectOptionId, y => y.MapFrom(z => z.SelectOption.Id));
 
             /*Mapper.CreateMap<SaveLayoutItemRequest.LayoutItemArtifact, DerArtifact>()
                   .ForMember(x => x.HeaderTitle, y => y.MapFrom(z => z.HeaderTitle));*/

@@ -47,7 +47,7 @@ namespace DSLNG.PEAR.Services
             else
             {
                 var query = DataContext.Highlights.Include(x => x.HighlightType).AsQueryable();
-                if (request.PeriodeType == request.PeriodeType)
+                if (request.PeriodeType == request.PeriodeType) // WTF????
                 {
                     query = query.Where(x => x.PeriodeType == request.PeriodeType);
                 }
@@ -58,6 +58,34 @@ namespace DSLNG.PEAR.Services
                 };
             }
         }
+
+        public GetHighlightResponse GetHighlightByPeriode(GetHighlightRequest request)
+        {
+            var data = DataContext.Highlights
+                                  .Include(x => x.HighlightType)
+                                  .Where(x => x.PeriodeType == PeriodeType.Daily)
+                                  .Where(x => x.Date == request.Date)
+                                  .AsQueryable();
+
+            if (request.HighlightTypeId > 0)
+            {
+                data = data.Where(x => x.HighlightType.Id == request.HighlightTypeId);
+            } 
+
+            if (!string.IsNullOrEmpty(request.Type))
+            {
+                data = data.Where(x => x.Type == request.Type);
+            }
+
+            var result = data.FirstOrDefault();
+            if (result != null)
+            {
+                return result.MapTo<GetHighlightResponse>();
+            }
+
+            return new GetHighlightResponse();
+        }
+
         public SaveHighlightResponse SaveHighlight(SaveHighlightRequest request)
         {
             try

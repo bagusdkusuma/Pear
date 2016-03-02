@@ -872,18 +872,23 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<DerLayoutLineViewModel, SaveLayoutItemRequest.LayoutItemArtifactSerie>();
 
             Mapper.CreateMap<GetDerLayoutResponse, DerDisplayViewModel >();
-            Mapper.CreateMap<GetDerLayoutResponse.DerArtifact, DerDisplayViewModel.DerArtifact>();
-            Mapper.CreateMap<GetDerLayoutResponse.DerArtifactSerie, DerDisplayViewModel.DerArtifactSerie>();
+            /*Mapper.CreateMap<GetDerLayoutResponse.DerArtifact, DerDisplayViewModel.DerArtifact>();
+            Mapper.CreateMap<GetDerLayoutResponse.DerArtifactSerie, DerDisplayViewModel.DerArtifactSerie>();*/
             Mapper.CreateMap<GetDerLayoutResponse.DerLayoutItem, DerDisplayViewModel.DerLayoutItem>();
 
             //artifact DER
             Mapper.CreateMap<DerLayoutItemViewModel, SaveLayoutItemRequest>();
             Mapper.CreateMap<DerLayoutItemViewModel.DerLayoutItemArtifactViewModel, SaveLayoutItemRequest.LayoutItemArtifact>();
-            
+            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifact, LineChartViewModel>();
+            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifactSerie, LineChartViewModel.SeriesViewModel>();
+            Mapper.CreateMap<GetDerLayoutitemResponse, DerLayoutItemViewModel>();
+            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifact, DerLayoutItemViewModel.DerLayoutItemArtifactViewModel>();
+            //Mapper.CreateMap<GetDerLayoutitemRespons.e.DerArtifactChart, LineChartViewModel.SeriesViewModel>();
+
             //DER Line
             Mapper.CreateMap<LineChartViewModel, SaveLayoutItemRequest.LayoutItemArtifactLine>();
             Mapper.CreateMap<LineChartViewModel.SeriesViewModel, SaveLayoutItemRequest.LayoutItemArtifactSerie>();
-
+            
             //DER Multiaxis
             Mapper.CreateMap<MultiaxisChartViewModel, SaveLayoutItemRequest.LayoutItemArtifactMultiAxis>();
             Mapper.CreateMap<MultiaxisChartViewModel.ChartViewModel, SaveLayoutItemRequest.LayoutItemArtifactChart>()

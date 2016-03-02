@@ -10,14 +10,22 @@ namespace DSLNG.PEAR.Services.Requests.Der
     {
         public int Id { get; set; }
         public string Type { get; set; }
+        public string OldType { get; set; }
         public int Row { get; set; }
         public int Column { get; set; }
         public int DerLayoutId { get; set; }
-
+        public LayoutItemHighlight Highlight { get; set; }
         public LayoutItemArtifact Artifact { get; set; }
+        //public string StaticHighlight { get; set; }
+
+        public class LayoutItemHighlight
+        {
+            public int SelectOptionId { get; set; }
+        }
 
         public class LayoutItemArtifact
         {
+            public int Id { get; set; }
             public string HeaderTitle { get; set; }
             public int MeasurementId { get; set; }
             public bool Is3D { get; set; }

@@ -15,6 +15,12 @@ namespace DSLNG.PEAR.Web.ViewModels.Der
         public int Id { get; set; }
         public string Title { get; set; }
         public bool IsActive { get; set; }
+
+        public string Today
+        {
+            get { return DateTime.Now.ToShortDateString(); }
+        }
+
         public IList<DerLayoutItem> Items { get; set; }
 
         public class DerLayoutItem

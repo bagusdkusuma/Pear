@@ -254,6 +254,9 @@ namespace DSLNG.PEAR.Services
                     new Dropdown {Text = "Multi Axis", Value = "multiaxis"},
                     new Dropdown {Text = "Pie", Value = "pie"},
                     new Dropdown {Text = "Tank", Value = "tank"},
+                    new Dropdown {Text = "Weather", Value = "weather"},
+                    new Dropdown {Text = "Alert", Value = "alert"},
+                    new Dropdown {Text = "Wave", Value = "wave"},
                 };
         }
     }

@@ -16,5 +16,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetSelectResponse GetSelect(GetSelectRequest request);
         GetSelectsResponse GetSelects(GetSelectsRequest request);
         GetSelectsResponse GetSelectsForGrid(GetSelectsRequest request);
+        IList<Dropdown> GetHighlightTypesDropdown();
     }
 }

@@ -95,6 +95,8 @@
     <Compile Include="Entities\Der\DerArtifactChart.cs" />
     <Compile Include="Entities\Der\DerArtifactSerie.cs" />
     <Compile Include="Entities\Der\DerArtifactTank.cs" />
+    <Compile Include="Entities\Der\DerStaticHighlight.cs" />
+    <Compile Include="Entities\Der\DerHighlight.cs" />
     <Compile Include="Entities\Der\DerItem.cs" />
     <Compile Include="Entities\Der\DerLayout.cs" />
     <Compile Include="Entities\Der\DerLayoutItem.cs" />
@@ -137,6 +139,7 @@
     <Compile Include="Entities\StaticHighlightPrivilege.cs" />
     <Compile Include="Entities\Vessel.cs" />
     <Compile Include="Entities\VesselSchedule.cs" />
+    <Compile Include="Entities\Wave.cs" />
     <Compile Include="Entities\Weather.cs" />
     <Compile Include="Enums\ConfigType.cs" />
     <Compile Include="Enums\ConversionType.cs" />

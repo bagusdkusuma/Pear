@@ -81,6 +81,8 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<EnvironmentalScanning> EnvironmentalScannings { get; set; }
         public IDbSet<Constraint> Constraint { get; set; }
         public IDbSet<Challenge> Challenges { get; set; }
+        public IDbSet<DerHighlight> DerHighlights { get; set; }
+        public IDbSet<DerStaticHighlight> DerStaticHighlights { get; set; }
         public IDbSet<Der> Ders { get; set; }
         public IDbSet<DerItem> DerItems { get; set; }
         public IDbSet<DerLayout> DerLayouts { get; set; }
@@ -88,6 +90,7 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<DerArtifact> DerArtifacts { get; set; }
         public IDbSet<DerArtifactChart> DerArtifactCharts { get; set; }
         public IDbSet<DerArtifactSerie> DerArtifactSeries { get; set; }
+        public IDbSet<Wave> Waves { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -204,6 +207,30 @@ namespace DSLNG.PEAR.Data.Persistence
                 .WithMany(x => x.Strength)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<DerLayoutItem>()
+               .HasOptional(x => x.Artifact)
+               .WithOptionalDependent()
+               .WillCascadeOnDelete();
+
+            modelBuilder.Entity<DerLayoutItem>()
+               .HasOptional(x => x.Highlight)
+               .WithOptionalDependent()
+               .WillCascadeOnDelete();
+
+            modelBuilder.Entity<DerLayoutItem>()
+               .HasOptional(x => x.StaticHighlight)
+               .WithOptionalDependent()
+               .WillCascadeOnDelete();
+
+            modelBuilder.Entity<DerArtifact>()
+                .HasMany(x => x.Charts)
+                .WithOptional()
+                .WillCascadeOnDelete();
+
+            modelBuilder.Entity<DerArtifact>()
+                .HasMany(x => x.Series)
+                .WithOptional()
+                .WillCascadeOnDelete();
 
             base.OnModelCreating(modelBuilder);
         }

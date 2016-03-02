@@ -8,5 +8,6 @@ namespace DSLNG.PEAR.Services.Requests.Highlight
         public int Id { get; set; }
         public string Type { get; set; }
         public DateTime? Date { get; set; }
+        public int HighlightTypeId { get; set; }
     }
 }

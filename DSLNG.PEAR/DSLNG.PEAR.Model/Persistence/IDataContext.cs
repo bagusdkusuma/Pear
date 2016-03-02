@@ -82,6 +82,9 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<EnvironmentalScanning> EnvironmentalScannings { get; set; }
         IDbSet<Constraint> Constraint { get; set; }
         IDbSet<Challenge> Challenges { get; set; }
+        IDbSet<DerHighlight> DerHighlights { get; set; }
+        IDbSet<DerStaticHighlight> DerStaticHighlights { get; set; }
+        IDbSet<Wave> Waves { get; set; }
         Database Database { get; }
         int SaveChanges();
         DbEntityEntry Entry(object entity);

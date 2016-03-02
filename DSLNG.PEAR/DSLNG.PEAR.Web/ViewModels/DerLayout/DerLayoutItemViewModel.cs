@@ -15,6 +15,7 @@ namespace DSLNG.PEAR.Web.ViewModels.DerLayout
         public int Row { get; set; }
         public int Column { get; set; }
         public string Type { get; set; }
+        public string OldType { get; set; }
         public int DerLayoutId { get; set; }
         public IList<SelectListItem> Types { get; set; }
 
@@ -23,6 +24,12 @@ namespace DSLNG.PEAR.Web.ViewModels.DerLayout
         public MultiaxisChartViewModel MultiaxisChart { get; set; }
         public PieViewModel Pie { get; set; }
         public TankViewModel Tank { get; set; }
+
+        [Display(Name = "Highlight")]
+        public int HighlightId { get; set; }
+        public IList<SelectListItem> Highlights { get; set; }
+
+        //public string StaticHighlight { get; set; }
 
         //public DerLayoutLineViewModel Artifact { get; set; }
 
@@ -36,6 +43,7 @@ namespace DSLNG.PEAR.Web.ViewModels.DerLayout
 
         public class DerLayoutItemArtifactViewModel
         {
+            public int Id { get; set; }
             [Display(Name = "Header Title")]
             public string HeaderTitle { get; set; }
             [Display(Name = "Measurement")]
