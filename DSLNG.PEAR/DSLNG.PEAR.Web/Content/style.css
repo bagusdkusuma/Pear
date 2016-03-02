@@ -1888,7 +1888,11 @@ a.see-more {
     text-align: center;
     padding-top: 10px;
 }
-
+.row-uo,
+ .row-environmental {
+    background-color:rgba(0,176,240,1);
+    border:none;
+}
 
 .col-md-4-child {
     text-align: center;
@@ -1906,10 +1910,10 @@ a.see-more {
 
 .row-margin-5 {
     margin-top: 5px;
+    /*border:1px solid #ddd;*/
 }
-
 .border-style-1 {
-    border: 1px solid white;
+    /*border: 1px solid white;*/
 }
 
 .margin-style-1 {
@@ -1921,9 +1925,6 @@ a.see-more {
 
 
 
-.row-environmental {
-    border: 1px solid white;
-}
 
     .row-environmental h4 {
         text-align: center;
@@ -1953,7 +1954,7 @@ a.see-more {
     text-align: center;
     margin: 0px;
     /*padding-left: 528px;*/
-    width: 1059px;
+    width:100%;
 
 }
 
@@ -1995,7 +1996,7 @@ a.see-more {
 
 .list-group{
     list-style: none;
-    padding-left: 10px;
+    padding-left: 20px;
 
 }
 .list-group li{
@@ -2320,3 +2321,54 @@ li > input.choose-list{
 .modal-loading.loaded .ajax-loading-dialog {
     display:none;
 }
+.environment-scanning ul {
+    padding-left:20px;
+    text-align:justify;
+    padding-right:20px;
+}
+.environment-scanning ul li {
+    position:relative;
+}
+    .environment-scanning ul li .remove-button,
+        .environment-scanning ul li .envi-remove-button {
+        position:absolute;
+        top:0;
+        right:-25px;
+    }
+.environment-scanning table th {
+    position:relative;
+}
+    .environment-scanning table th a {
+        position:absolute;
+        right:0;
+    }
+.r-threat,
+.r-opportunity,
+.r-weakness,
+.r-strength {
+    display: inline-block;
+    width: 17px;
+    height: 17px;
+    background-color: red;
+    border-radius: 10px;
+    line-height: 1.4;
+}
+.r-opportunity {
+     background-color: lime;
+}
+.r-weakness {
+     background-color: lavender;
+}
+.r-strength {
+     background-color: blue;
+}
+.td-definition {
+    position:relative;
+    padding-right:25px !important;
+}
+    .td-definition .constraint-remove-button,
+    .td-definition .challenge-remove-button {
+        position:absolute;
+        right:0;
+        top:0;
+    }

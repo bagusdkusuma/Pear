@@ -7,62 +7,65 @@
 @Html.Partial("_MessageResponse")
 <div class="col-md-12 environment-scanning">
     @* Ultimate Objective *@
-    <div class="row row-uo border-style-1">
+    <div class="row row-uo">
         <h4>Ultimate Objective</h4>
     </div>
     <div class="row row-margin-5 color-white">
-        <div class="div-envi col-md-4 border-style-1">
-            <div class="col-md-4-child">
-                <span><b>Ultimate Objective (Construction Phase)</b></span>
-                @if(!Model.IsReviewer){
-                    <a href="#" class="input-popover" data-es-id="@Model.Id" data-type="cp" data-toggle="popover" data-placement="left" title="Construction Phase"><i class="fa fa-plus"></i></a>
-                }
-            </div>
-            <div>
-                <ul class="cp-list">
-                    @foreach (var item in Model.ConstructionPhase)
+        <table class="table-bordered table">
+            <tr>
+                <th style="width:33.33%">Ultimate Objective (Construction Phase)
+                    @if (!Model.IsReviewer)
                     {
-                        <li>@item.Description @if(!Model.IsReviewer){<a href="#" data-id="@item.Id" class="remove-button"><i class="fa fa-minus"></i></a>}</li>
+                        <a href="#" class="input-popover" data-es-id="@Model.Id" data-type="cp" data-toggle="popover" data-placement="left" title="Construction Phase"><i class="fa fa-plus"></i></a>
                     }
-                </ul>
-                @Html.HiddenFor(model => model.Id)
-            </div>
-        </div>
-        <div class="div-envi col-md-4 border-style-1">
-            <div class="col-md-4-child">
-                <span><b>Ultimate Objective (Operation Phase)</b></span>
-                @if(!Model.IsReviewer){
-                <a href="#" class="input-popover" data-es-id="@Model.Id" data-type="op" data-toggle="popover" data-placement="left" title="Construction Phase"><i class="fa fa-plus"></i></a>
-                }
-            </div>
-            <div>
-                <ul class="op-list">
-                    @foreach (var item in Model.OperationPhase)
+                </th>
+                <th style="width:33.33%">Ultimate Objective (Operation Phase)
+                     @if (!Model.IsReviewer)
+                     {
+                         <a href="#" class="input-popover" data-es-id="@Model.Id" data-type="op" data-toggle="popover" data-placement="left" title="Construction Phase"><i class="fa fa-plus"></i></a>
+                     }
+                </th>
+                <th style="width:33.33%">Ultimate Objective (Decomm.Re-Invent Phase)
+                    @if (!Model.IsReviewer)
                     {
-                        <li>@item.Description @if(!Model.IsReviewer){<a href="#" data-id="@item.Id" class="remove-button"><i class="fa fa-minus"></i></a>}</li>
+                        <a href="#" class="input-popover" data-es-id="@Model.Id" data-type="rp" data-toggle="popover" data-placement="left" title="Reinvent Phase"><i class="fa fa-plus"></i></a>
                     }
-                </ul>
-                @Html.HiddenFor(model => model.Id)
-            </div>
-        </div>
-        <div class="div-envi col-md-4 border-style-1">
-            <div class="col-md-4-child">
-                <span><b>Ultimate Objective (Decomm.Re-Invent Phase)</b></span>
-                @if(!Model.IsReviewer){
-                <a href="#" class="input-popover" data-es-id="@Model.Id" data-type="rp" data-toggle="popover" data-placement="left" title="Reinvent Phase"><i class="fa fa-plus"></i></a>
-                }
-            </div>
-            <div>
-                <ul class="rp-list">
-                    @foreach (var item in Model.ReinventPhase)
-                    {
-                        <li>@item.Description @if(!Model.IsReviewer){<a href="#" data-id="@item.Id" class="remove-button"><i class="fa fa-minus"></i></a>}</li>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <ul class="cp-list">
+                        @foreach (var item in Model.ConstructionPhase)
+                        {
+                            <li>@item.Description @if (!Model.IsReviewer)
+                                                  {<a href="#" data-id="@item.Id" class="remove-button"><i class="fa fa-minus"></i></a>}</li>
+                        }
+                    </ul>
+                    @Html.HiddenFor(model => model.Id)
+                </td>
+                <td>
+                    <ul class="op-list">
+                        @foreach (var item in Model.OperationPhase)
+                        {
+                            <li>@item.Description @if (!Model.IsReviewer)
+                                                  {<a href="#" data-id="@item.Id" class="remove-button"><i class="fa fa-minus"></i></a>}</li>
+                        }
+                    </ul>
+                    @Html.HiddenFor(model => model.Id)
+                </td>
+                <td>
+                    <ul class="rp-list">
+                        @foreach (var item in Model.ReinventPhase)
+                        {
+                            <li>@item.Description @if (!Model.IsReviewer)
+                                                  {<a href="#" data-id="@item.Id" class="remove-button"><i class="fa fa-minus"></i></a>}</li>
 
-                    }
-                </ul>
-                @Html.HiddenFor(model => model.Id)
-            </div>
-        </div>
+                        }
+                    </ul>
+                    @Html.HiddenFor(model => model.Id)
+                </td>
+            </tr>
+        </table>
     </div>
 
 
@@ -71,89 +74,92 @@
         <h4>Environmental Scanning</h4>
     </div>
     <div class="row row-margin-5 color-white">
-        <div class="col-md-3 popover-envi border-style-1">
-            <div class="col-md-12 col-envi" style="background-color: red">
-                <span><b>Threat</b></span>
-                @if(!Model.IsReviewer){
-                <a href="#" class="input-environmental" data-envi-id="@Model.Id" data-envi-type="th" data-toggle="popover" data-placement="left" title="Threat"><i class="fa fa-plus"></i></a>
+        <table class="table table-bordered popover-envi">
+            <tr>
+                <th style="width:25%;background-color:red">Threat
+                     @if (!Model.IsReviewer)
+                {
+                    <a href="#" class="input-environmental" data-envi-id="@Model.Id" data-envi-type="th" data-toggle="popover" data-placement="left" title="Threat"><i class="fa fa-plus"></i></a>
                 }
-            </div>
-            <div class="col-md-12 div-row-child">
-                <ul class="list-group th-list">
+                </th>
+                <th style="width:25%;background-color:lime">Opportunity
+                    @if (!Model.IsReviewer)
+                {
+                    <a href="#" class="input-environmental" data-envi-id="@Model.Id" data-envi-type="opp" data-toggle="popover" data-placement="left" title="Opportunity"><i class="fa fa-plus"></i></a>
+                }
+                </th>
+                <th style="width:25%;background-color:lavender">Weakness
+                    @if (!Model.IsReviewer)
+                {
+                    <a href="#" class="input-environmental" data-envi-id="@Model.Id" data-envi-type="wk" data-toggle="popover" data-placement="left" title="Opportunity"><i class="fa fa-plus"></i></a>
+                }
+                </th>
+                <th style="width:25%;background-color:blue">Strength
+                    @if (!Model.IsReviewer)
+                {
+                    <a href="#" class="input-environmental" data-envi-id="@Model.Id" data-envi-type="st" data-toggle="popover" data-placement="left" title="Opportunity"><i class="fa fa-plus"></i></a>
+                }
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <ul class="list-group th-list">
                     @{
                         foreach (var item in Model.Threat)
                         {
-                            <li data-id="@item.Id">@item.Desc @if(!Model.IsReviewer){<a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a>}</li>
+                        <li data-id="@item.Id">@item.Desc @if (!Model.IsReviewer)
+                                                          {<a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a>}</li>
                         }
                     }
                 </ul>
-            </div>
-        </div>
-        <div class="col-md-3 popover-envi border-style-1">
-            <div class="col-md-12 col-envi" style="background-color: #33ff33">
-                <span><b>Opportunity</b></span>
-                @if(!Model.IsReviewer){
-                <a href="#" class="input-environmental" data-envi-id="@Model.Id" data-envi-type="opp" data-toggle="popover" data-placement="left" title="Opportunity"><i class="fa fa-plus"></i></a>
-                }
-            </div>
-            <div class="col-md-12 div-row-child">
-                <ul class="list-group opp-list">
+                </td>
+                <td>
+                    <ul class="list-group opp-list">
                     @{
                         foreach (var item in Model.Opportunity)
                         {
-                            <li data-id="@item.Id">@item.Desc @if(!Model.IsReviewer){<a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a>}</li>
+                        <li data-id="@item.Id">@item.Desc @if (!Model.IsReviewer)
+                                                          {<a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a>}</li>
                         }
                     }
                 </ul>
-            </div>
-        </div>
-        <div class="col-md-3 popover-envi border-style-1">
-            <div class="col-md-12 col-envi" style="background-color: #e580ff">
-                <span><b>Weakness</b></span>
-                @if(!Model.IsReviewer){
-                <a href="#" class="input-environmental" data-envi-id="@Model.Id" data-envi-type="wk" data-toggle="popover" data-placement="left" title="Opportunity"><i class="fa fa-plus"></i></a>
-                }
-            </div>
-            <div class="col-md-12 div-row-child">
-                <ul class="list-group wk-list">
+                </td>
+                <td>
+                     <ul class="list-group wk-list">
                     @{
                         foreach (var item in Model.Weakness)
                         {
-                            <li data-id="@item.Id">@item.Desc @if(!Model.IsReviewer){<a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a>}</li>
+                        <li data-id="@item.Id">@item.Desc @if (!Model.IsReviewer)
+                                                          {<a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a>}</li>
                         }
                     }
                 </ul>
-            </div>
-        </div>
-        <div class="col-md-3 popover-envi border-style-1">
-            <div class="col-md-12 col-envi" style="background-color: #3333ff">
-                <span><b>Strength</b></span>
-                @if(!Model.IsReviewer){
-                <a href="#" class="input-environmental" data-envi-id="@Model.Id" data-envi-type="st" data-toggle="popover" data-placement="left" title="Opportunity"><i class="fa fa-plus"></i></a>
-                }
-            </div>
-            <div class="col-md-12 div-row-child">
-                <ul class="list-group st-list">
+                </td>
+                <td>
+                     <ul class="list-group st-list">
                     @{
                         foreach (var item in Model.Strength)
                         {
-                            <li data-id="@item.Id">@item.Desc @if(!Model.IsReviewer){<a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a>}</li>
+                        <li data-id="@item.Id">@item.Desc @if (!Model.IsReviewer)
+                                                          {<a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a>}</li>
                         }
                     }
                 </ul>
-            </div>
-        </div>
+                </td>
+            </tr>
+        </table>
     </div>
 
     @* Constraints *@
-    <div class="row row-constraint margin-style-1 border-style-1" style="background-color: #cc0000">
+    <div class="row row-constraint margin-style-1 border-style-1" style="background-color:darkred;position:relative;padding:6px">
         <h6>Constraint</h6>
-        @if(!Model.IsReviewer){
-        <a href="#" class="btn-create-constraint" data-envi-id="@Model.Id" data-toggle="popover" data-placement="left" title="Constraint"><i class="fa fa-plus"></i></a>
+        @if (!Model.IsReviewer)
+        {
+            <a href="#" style="float:none;position:absolute;right:0;top:6px;" class="btn-create-constraint" data-envi-id="@Model.Id" data-toggle="popover" data-placement="left" title="Constraint"><i class="fa fa-plus"></i></a>
         }
     </div>
     <div class="row row-margin-5 row-table-constrain">
-        <table class="table table-constraint border-style-1">
+        <table class="table table-constraint table-bordered">
             <tr>
                 <td class="td-entity"><b>Relation</b></td>
                 <td class="td-definition"><b>Definiton</b> </td>
@@ -161,39 +167,40 @@
                 <td class="td-entity"><b>Category</b></td>
             </tr>
             @{foreach (var item in Model.Constraints)
-            {
+              {
                 <tr>
                     <td class="td-entity">
                         @*<a href="#" data-toggle="modal" data-target="#envi-modal" data-id="@item.Id" data-th="@item.ThreatIdString" data-opp="@item.OpportunityIdString" data-wk="@item.WeaknessIdString" data-st="@item.StrengthIdString" class="btn-show-constraint">*@
                         @{
-                if (item.ThreatIds.Count() > 0)
-                {
-                    <span><a href="#" data-th="@item.ThreatIdString" class="btn-show-constraint">T</a></span>
-                }
+                  if (item.ThreatIds.Count() > 0)
+                  {
+                            <span><a href="#" data-th="@item.ThreatIdString" class="btn-show-constraint r-threat">T</a></span>
+                  }
 
-                if (item.OpportunityIds.Count() > 0)
-                {
-                    <span><a href="#" data-opp="@item.OpportunityIdString" class="btn-show-constraint">O</a></span>
-                }
+                  if (item.OpportunityIds.Count() > 0)
+                  {
+                            <span><a href="#"  data-opp="@item.OpportunityIdString" class="btn-show-constraint r-opportunity">O</a></span>
+                  }
 
-                if (item.WeaknessIds.Count() > 0)
-                {
-                    <span><a href="#" data-wk="@item.WeaknessIdString" class="btn-show-constraint">W</a></span>
-                }
+                  if (item.WeaknessIds.Count() > 0)
+                  {
+                            <span><a href="#"  data-wk="@item.WeaknessIdString" class="btn-show-constraint r-weakness">W</a></span>
+                  }
 
-                if (item.StrengthIds.Count() > 0)
-                {
-                    <span><a href="#" data-st="@item.StrengthIdString" class="btn-show-constraint">S</a></span>
-                }
+                  if (item.StrengthIds.Count() > 0)
+                  {
+                            <span><a href="#" data-st="@item.StrengthIdString" class="btn-show-constraint r-strength">S</a></span>
+                  }
 
                         }
                         @*</a>*@
                     </td>
-                    <td class="td-definition">@item.Definition @if(!Model.IsReviewer){<a href="#" data-id="@item.Id" class="constraint-remove-button"><i class="fa fa-minus"></i></a>}</td>
+                    <td class="td-definition" style="text-align:left">@item.Definition @if (!Model.IsReviewer)
+                                                               {<a href="#" data-id="@item.Id" class="constraint-remove-button"><i class="fa fa-minus"></i></a>}</td>
                     <td class="td-entity">@item.Type</td>
                     <td class="td-entity">@item.Category</td>
                 </tr>
-            }
+              }
 
             }
 
@@ -202,14 +209,15 @@
 
 
     @* Challenges *@
-    <div class="row row-challenges margin-style-1 border-style-1" style="background-color: #ffcc00">
+    <div class="row row-challenges margin-style-1 border-style-1" style="background-color: gold;position:relative;padding:6px;">
         <h6>Challenges</h6>
-          @if(!Model.IsReviewer){
-        <a href="#" class="btn-create-challenges" data-envi-id="@Model.Id" data-toggle="popover" data-placement="left" title="Challenges"><i class="fa fa-plus"></i></a>
-          }
+        @if (!Model.IsReviewer)
+        {
+            <a href="#" style="float:none;position:absolute;right:0;top:6px;" class="btn-create-challenges" data-envi-id="@Model.Id" data-toggle="popover" data-placement="left" title="Challenges"><i class="fa fa-plus"></i></a>
+        }
     </div>
     <div class="row row-margin-5 row-table-constrain">
-        <table class="table table-challenge border-style-1">
+        <table class="table table-challenge table-bordered">
             <tr>
                 <td class="td-entity"><b>Relation</b></td>
                 <td class="td-definition"><b>Definiton</b> </td>
@@ -217,39 +225,40 @@
                 <td class="td-entity"><b>Category</b></td>
             </tr>
             @{foreach (var item in Model.Challenges)
-            {
+              {
                 <tr>
                     <td class="td-entity">
                         @*<a href="#" data-toggle="modal" data-target="#envi-modal" data-id="@item.Id" data-th="@item.ThreatIdString" data-opp="@item.OpportunityIdString" data-wk="@item.WeaknessIdString" data-st="@item.StrengthIdString" class="btn-show-challenge">*@
-                            @{
-                if (item.ThreatIds.Count() > 0)
-                {
-                    <span><a href="#" data-th="@item.ThreatIdString" class="btn-show-challenge">T</a></span>
-                }
+                        @{
+                  if (item.ThreatIds.Count() > 0)
+                  {
+                            <span><a href="#" data-th="@item.ThreatIdString" class="btn-show-challenge r-threat">T</a></span>
+                  }
 
-                if (item.OpportunityIds.Count() > 0)
-                {
-                    <span><a href="#" data-opp="@item.OpportunityIdString" class="btn-show-challenge">O</a></span>
-                }
+                  if (item.OpportunityIds.Count() > 0)
+                  {
+                            <span><a href="#"  data-opp="@item.OpportunityIdString" class="btn-show-challenge r-oppurtinity">O</a></span>
+                  }
 
-                if (item.WeaknessIds.Count() > 0)
-                {
-                    <span><a href="#" data-wk="@item.WeaknessIdString" class="btn-show-challenge">W</a></span>
-                }
+                  if (item.WeaknessIds.Count() > 0)
+                  {
+                            <span><a href="#"  data-wk="@item.WeaknessIdString" class="btn-show-challenge r-weakness">W</a></span>
+                  }
 
-                if (item.StrengthIds.Count() > 0)
-                {
-                    <span><a href="#" data-st="@item.StrengthIdString" class="btn-show-challenge">S</a></span>
-                }
+                  if (item.StrengthIds.Count() > 0)
+                  {
+                            <span><a href="#"  data-st="@item.StrengthIdString" class="btn-show-challenge r-strength">S</a></span>
+                  }
 
-                            }
-                       @* </a>*@
+                        }
+                        @* </a>*@
                     </td>
-                    <td class="td-definition">@item.Definition   @if(!Model.IsReviewer){<a href="#" data-id="@item.Id" class="challenge-remove-button"><i class="fa fa-minus"></i></a>}</td>
+                    <td class="td-definition" style="text-align:left">@item.Definition   @if (!Model.IsReviewer)
+                                                                 {<a href="#" data-id="@item.Id" class="challenge-remove-button"><i class="fa fa-minus"></i></a>}</td>
                     <td class="td-entity">@item.Type</td>
                     <td class="td-entity">@item.Category</td>
                 </tr>
-            }
+              }
 
             }
         </table>
@@ -259,16 +268,22 @@
             @using (Html.BeginForm("SubmitEnvironmentsScanning", "PlanningBlueprint"))
             {
                 @Html.Hidden("Id", Model.Id)
-                 if(!Model.IsReviewer){
+                if (!Model.IsReviewer)
+                {
                 <a href="@Url.Action("Index", "PlanningBlueprint")" class="btn btn-primary btn-lg"><span class="fa fa-arrow-left"></span>Back</a>
-            }else{
-                  <a href="@Url.Action("Approval", "PlanningBlueprint")" class="btn btn-primary btn-lg"><span class="fa fa-arrow-left"></span>Back</a>
-                 }
-                  if(!Model.IsReviewer){
+                }
+                else
+                {
+                <a href="@Url.Action("Approval", "PlanningBlueprint")" class="btn btn-primary btn-lg"><span class="fa fa-arrow-left"></span>Back</a>
+                }
+                if (!Model.IsReviewer)
+                {
                 <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-arrow-right"></span>Business Posture Identification</button>
-                  }else{
-                   <a href="@Url.Action("BPReview", "PlanningBlueprint", new { Id = Model.BusinessPostureId })" class="btn btn-primary btn-lg"><span class="fa fa-arrow-right"></span>Business Posture Identification</a>
-                  }
+                }
+                else
+                {
+                <a href="@Url.Action("BPReview", "PlanningBlueprint", new { Id = Model.BusinessPostureId })" class="btn btn-primary btn-lg"><span class="fa fa-arrow-right"></span>Business Posture Identification</a>
+                }
             }
         </div>
     </div>
@@ -436,9 +451,6 @@
             $('.popover-envi').popover({
                 selector: '.input-environmental',
                 html: true,
-                title: function () {
-                    return 'test';
-                },
                 content: function () {
                     return $('.popover-environmental').html();
                 }
@@ -447,9 +459,6 @@
             $('.row-challenges').popover({
                 selector: '.btn-create-challenges',
                 html: true,
-                title: function () {
-                    return 'Test';
-                },
                 content: function () {
                     return $('.input-challenges').html();
                 }
@@ -458,9 +467,6 @@
             $('.row-constraint').popover({
                 selector: '.btn-create-constraint',
                 html: true,
-                title: function () {
-                    return 'Test';
-                },
                 content: function () {
                     return $('.input-constraint').html();
                 }
@@ -469,9 +475,6 @@
             $('body').popover({
                 selector: '.input-popover',
                 html: true,
-                title: function () {
-                    return 'Test';
-                },
                 content: function () {
                     return $('.popover-content').html();
                 }
@@ -483,7 +486,8 @@
             });
 
             var popOverElem;
-            $(document).on('click', '.input-popover', function () {
+            $(document).on('click', '.input-popover', function (e) {
+                e.preventDefault();
                 var esId = $(this).data("es-id");
                 var type = $(this).data("type");
                 $('.popover').find('input[name="esId"]').attr('value', esId);
@@ -492,7 +496,8 @@
 
             });
 
-            $(document).on('click', '.input-environmental', function () {
+            $(document).on('click', '.input-environmental', function (e) {
+                e.preventDefault();
                 var enviId = $(this).data("envi-id");
                 var enviType = $(this).data("envi-type");
                 $('.popover').find('input[name="enviId"]').attr('value', enviId);
@@ -501,14 +506,16 @@
 
             });
 
-            $(document).on('click', '.btn-create-constraint', function () {
+            $(document).on('click', '.btn-create-constraint', function (e) {
+                e.preventDefault();
                 var enviId = $(this).data("envi-id");
                 $('.popover').find('input[name="enviId"]').attr('value', enviId);
                 popOverElem = $(this);
 
             });
 
-            $(document).on('click', '.btn-create-challenges', function () {
+            $(document).on('click', '.btn-create-challenges', function (e) {
+                e.preventDefault();
                 var enviId = $(this).data("envi-id");
                 $('.popover').find('input[name="enviId"]').attr('value', enviId);
                 popOverElem = $(this);
@@ -568,7 +575,8 @@
             });
 
 
-            $(document).on('click', '.remove-button', function () {
+            $(document).on('click', '.remove-button', function (e) {
+                e.preventDefault();
                 if (confirm("Are you sure want to delete this item?")) {
                     var that = this;
                     var id = $(that).data('id')
@@ -586,7 +594,8 @@
                 }
             });
 
-            $(document).on('click', '.envi-remove-button', function () {
+            $(document).on('click', '.envi-remove-button', function (e) {
+                e.preventDefault();
                 if (confirm("Are you sure want to delete this item?")) {
                     var that = this;
                     var id = $(that).data('id')
@@ -604,7 +613,8 @@
                 }
             });
 
-            $(document).on('click', '.constraint-remove-button', function () {
+            $(document).on('click', '.constraint-remove-button', function (e) {
+                e.preventDefault();
                 if (confirm("Are you sure want to delete this item?")) {
                     var that = this;
                     var id = $(that).data('id')
@@ -623,7 +633,8 @@
             });
 
 
-            $(document).on('click', '.challenge-remove-button', function () {
+            $(document).on('click', '.challenge-remove-button', function (e) {
+                e.preventDefault();
                 if (confirm("Are you sure want to delete this item?")) {
                     var that = this;
                     var id = $(that).data('id')
@@ -652,16 +663,16 @@
                     success: function (data) {
                         var relation = '';
                         if (data.threatIds.length > 0) {
-                            relation = relation + '<a href="#" data-th="' + data.threatIds + '" class="btn-show-constraint">T</a> '
+                            relation = relation + '<a href="#"  data-th="' + data.threatIds + '" class="btn-show-constraint r-threat">T</a> '
                         }
                         if (data.opportunityIds.length > 0) {
-                            relation = relation + '<a href="#" data-opp="' + data.opportunityIds + '" class="btn-show-constraint">O</a> '
+                            relation = relation + '<a href="#" data-opp="' + data.opportunityIds + '" class="btn-show-constraint r-opportunity">O</a> '
                         }
                         if (data.weaknessIds.length > 0) {
-                            relation = relation + '<a href="#" data-wk="' + data.weaknessIds + '" class="btn-show-constraint">W</a> '
+                            relation = relation + '<a href="#"  data-wk="' + data.weaknessIds + '" class="btn-show-constraint r-weakness">W</a> '
                         }
                         if (data.strengthIds.length > 0) {
-                            relation = relation + '<a href="#" data-st="' + data.strengthIds + '" class="btn-show-constraint">S</a> '
+                            relation = relation + '<a href="#"  data-st="' + data.strengthIds + '" class="btn-show-constraint r-strength">S</a> '
                         }
 
                         var input = [];
@@ -686,16 +697,16 @@
                     success: function (data) {
                         var relation = '';
                         if (data.threatIds.length > 0) {
-                            relation = relation + '<a href="#" data-th="' + data.threatIds + '" class="btn-show-constraint">T</a> '
+                            relation = relation + '<a href="#"  data-th="' + data.threatIds + '" class="btn-show-constraint r-threat">T</a> '
                         }
                         if (data.opportunityIds.length > 0) {
-                            relation = relation + '<a href="#" data-opp="' + data.opportunityIds + '" class="btn-show-constraint">O</a> '
+                            relation = relation + '<a href="#"  data-opp="' + data.opportunityIds + '" class="btn-show-constraint r-opportunity">O</a> '
                         }
                         if (data.weaknessIds.length > 0) {
-                            relation = relation + '<a href="#" data-wk="' + data.weaknessIds + '" class="btn-show-constraint">W</a> '
+                            relation = relation + '<a href="#"  data-wk="' + data.weaknessIds + '" class="btn-show-constraint r-weakness">W</a> '
                         }
                         if (data.strengthIds.length > 0) {
-                            relation = relation + '<a href="#" data-st="' + data.strengthIds + '" class="btn-show-constraint">S</a> '
+                            relation = relation + '<a href="#"  data-st="' + data.strengthIds + '" class="btn-show-constraint r-strength">S</a> '
                         }
 
                         $('.table-challenge').append('<tr><td class="td-entity">' + ' <a href="#" data-toggle="modal" data-target="#envi-modal" data-id="' + data.id + '" class="btn-show-challenge">' + '<span>' + relation + '</span>' + '</td><td class="td-definition">' + data.definition + '<a href="#" data-id="' + data.id + '" class="challenge-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
@@ -775,7 +786,8 @@
                 //popOverElem = $this;
             });
 
-            $(document).on('click', '.btn-finish-relation', function () {
+            $(document).on('click', '.btn-finish-relation', function (e) {
+                e.preventDefault();
                 var $wrapper = $('.wrapper-relation');
                 $wrapper.html('');
                 $('input.choose-list:checked').each(function (i, val) {
@@ -854,7 +866,8 @@
 
             });
 
-            $(document).on('click', '.btn-finish-challenge', function () {
+            $(document).on('click', '.btn-finish-challenge', function (e) {
+                e.preventDefault();
                 var $wrapper = $('.wrapper-challenge');
                 $wrapper.html('');
                 $('input.choose-list:checked').each(function (i, val) {
@@ -867,7 +880,8 @@
             });
 
 
-            $(document).on('click', '.btn-show-constraint', function () {
+            $(document).on('click', '.btn-show-constraint', function (e) {
+                e.preventDefault();
                 var $that = $(this);
                 var Id = ($that).data('id');
                 $.ajax({
@@ -881,7 +895,8 @@
                 });
             });
 
-            $(document).on('click', '.btn-show-challenge', function () {
+            $(document).on('click', '.btn-show-challenge', function (e) {
+                e.preventDefault();
                 var $that = $(this);
                 var Id = ($that).data('id');
                 $.ajax({
@@ -896,101 +911,8 @@
             });
 
 
-            $(document).on('mouseenter', '.btn-show-constraint', function () {
-                var $that = $(this);
-                var $a = $that.closest('a');
-                var threatIds = ($a).data('th');
-                var opportunityIds = ($a).data('opp');
-                var weaknessIds = ($a).data('wk');
-                var strengthIds = ($a).data('st');
-
-
-                if (typeof threatIds != 'string') {
-                    threatIds = [threatIds];
-                }
-                else {
-                    threatIds = threatIds.split(',');
-                    var ithreatIds = [];
-                    for (var i in threatIds) {
-                        ithreatIds.push(parseInt(threatIds[i]));
-                    }
-                    threatIds = ithreatIds;
-                }
-
-                if (typeof opportunityIds != 'string') {
-                    opportunityIds = [opportunityIds];
-                }
-                else {
-                    opportunityIds = opportunityIds.split(',');
-                    var iopportunityIds = [];
-                    for (var i in opportunityIds) {
-                        iopportunityIds.push(parseInt(opportunityIds[i]));
-                    }
-                    opportunityIds = iopportunityIds;
-                }
-
-                if (typeof weaknessIds != 'string') {
-                    weaknessIds = [weaknessIds];
-                }
-                else {
-                    weaknessIds = weaknessIds.split(',');
-                    var iweaknessIds = [];
-                    for (var i in weaknessIds) {
-                        iweaknessIds.push(parseInt(weaknessIds[i]));
-                    }
-                    weaknessIds = iweaknessIds;
-                }
-
-                if (typeof strengthIds != 'string') {
-                    strengthIds = [strengthIds];
-                }
-                else {
-                    strengthIds = strengthIds.split(',');
-                    var istrengthIds = [];
-                    for (var i in strengthIds) {
-                        istrengthIds.push(parseInt(strengthIds[i]));
-                    }
-                    strengthIds = istrengthIds;
-                }
-
-                $('.th-list').children('li').each(function (i, val) {
-                    var $li = $(val);
-                    if(threatIds.indexOf($li.data('id')) > -1)
-                    {
-                        $li.addClass('highlight');
-                    }
-                });
-
-                $('.opp-list').children('li').each(function (i, val) {
-                    var $li = $(val);
-                    if (opportunityIds.indexOf($li.data('id')) > -1) {
-                        $li.addClass('highlight');
-                    }
-                });
-
-                $('.wk-list').children('li').each(function (i, val) {
-                    var $li = $(val);
-                    if (weaknessIds.indexOf($li.data('id')) > -1) {
-                        $li.addClass('highlight');
-                    }
-                });
-
-                $('.st-list').children('li').each(function (i, val) {
-                    var $li = $(val);
-                    if (strengthIds.indexOf($li.data('id')) > -1) {
-                        $li.addClass('highlight');
-                    }
-                });
-            });
-
-            $(document).on('mouseleave', '.btn-show-constraint', function () {
-                $('.highlight').each(function (i, val) {
-                    $(val).removeClass('highlight');
-                })
-            });
-
-
-            $(document).on('mouseenter', '.btn-show-challenge', function () {
+            $(document).on('mouseenter', '.btn-show-constraint', function (e) {
+                e.preventDefault();
                 var $that = $(this);
                 var $a = $that.closest('a');
                 var threatIds = ($a).data('th');
@@ -1076,7 +998,103 @@
                 });
             });
 
-            $(document).on('mouseleave', '.btn-show-challenge', function () {
+            $(document).on('mouseleave', '.btn-show-constraint', function (e) {
+                e.preventDefault();
+                $('.highlight').each(function (i, val) {
+                    $(val).removeClass('highlight');
+                })
+            });
+
+
+            $(document).on('mouseenter', '.btn-show-challenge', function (e) {
+                e.preventDefault();
+                var $that = $(this);
+                var $a = $that.closest('a');
+                var threatIds = ($a).data('th');
+                var opportunityIds = ($a).data('opp');
+                var weaknessIds = ($a).data('wk');
+                var strengthIds = ($a).data('st');
+
+
+                if (typeof threatIds != 'string') {
+                    threatIds = [threatIds];
+                }
+                else {
+                    threatIds = threatIds.split(',');
+                    var ithreatIds = [];
+                    for (var i in threatIds) {
+                        ithreatIds.push(parseInt(threatIds[i]));
+                    }
+                    threatIds = ithreatIds;
+                }
+
+                if (typeof opportunityIds != 'string') {
+                    opportunityIds = [opportunityIds];
+                }
+                else {
+                    opportunityIds = opportunityIds.split(',');
+                    var iopportunityIds = [];
+                    for (var i in opportunityIds) {
+                        iopportunityIds.push(parseInt(opportunityIds[i]));
+                    }
+                    opportunityIds = iopportunityIds;
+                }
+
+                if (typeof weaknessIds != 'string') {
+                    weaknessIds = [weaknessIds];
+                }
+                else {
+                    weaknessIds = weaknessIds.split(',');
+                    var iweaknessIds = [];
+                    for (var i in weaknessIds) {
+                        iweaknessIds.push(parseInt(weaknessIds[i]));
+                    }
+                    weaknessIds = iweaknessIds;
+                }
+
+                if (typeof strengthIds != 'string') {
+                    strengthIds = [strengthIds];
+                }
+                else {
+                    strengthIds = strengthIds.split(',');
+                    var istrengthIds = [];
+                    for (var i in strengthIds) {
+                        istrengthIds.push(parseInt(strengthIds[i]));
+                    }
+                    strengthIds = istrengthIds;
+                }
+
+                $('.th-list').children('li').each(function (i, val) {
+                    var $li = $(val);
+                    if (threatIds.indexOf($li.data('id')) > -1) {
+                        $li.addClass('highlight');
+                    }
+                });
+
+                $('.opp-list').children('li').each(function (i, val) {
+                    var $li = $(val);
+                    if (opportunityIds.indexOf($li.data('id')) > -1) {
+                        $li.addClass('highlight');
+                    }
+                });
+
+                $('.wk-list').children('li').each(function (i, val) {
+                    var $li = $(val);
+                    if (weaknessIds.indexOf($li.data('id')) > -1) {
+                        $li.addClass('highlight');
+                    }
+                });
+
+                $('.st-list').children('li').each(function (i, val) {
+                    var $li = $(val);
+                    if (strengthIds.indexOf($li.data('id')) > -1) {
+                        $li.addClass('highlight');
+                    }
+                });
+            });
+
+            $(document).on('mouseleave', '.btn-show-challenge', function (e) {
+                e.preventDefault();
                 $('.highlight').each(function (i, val) {
                     $(val).removeClass('highlight');
                 })
