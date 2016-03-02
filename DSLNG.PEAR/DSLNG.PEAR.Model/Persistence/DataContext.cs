@@ -232,6 +232,11 @@ namespace DSLNG.PEAR.Data.Persistence
                 .WithOptional()
                 .WillCascadeOnDelete();
 
+            modelBuilder.Entity<DerArtifact>()
+                .HasOptional(x => x.Tank)
+                .WithOptionalDependent()
+                .WillCascadeOnDelete();
+
             base.OnModelCreating(modelBuilder);
         }
         //public DbEntries 

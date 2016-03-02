@@ -1016,6 +1016,7 @@
     <Content Include="Views\DerLayout\EditLayoutItem.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_Line.Edit.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_Pie.Edit.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_Tank.Edit.cshtml" />
     <None Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\SpeedometerChart\_Edit.cshtml" />
     <Content Include="Views\Tabular\_Create.cshtml" />

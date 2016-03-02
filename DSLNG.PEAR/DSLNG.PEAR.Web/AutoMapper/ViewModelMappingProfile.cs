@@ -920,6 +920,8 @@ namespace DSLNG.PEAR.Web.AutoMapper
             //DER Tank
             Mapper.CreateMap<TankViewModel, SaveLayoutItemRequest.LayoutItemArtifactTank>();
             Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifactTank, GetTankDataRequest.TankRequest>();
+            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifactTank, TankViewModel>();
+            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifact, TankViewModel>();
 
             /*Mapper.CreateMap<DerLayoutItemViewModel, SaveLayoutItemRequest>();
             Mapper.CreateMap<DerLayoutLineViewModel, SaveLayoutItemRequest.LayoutItemArtifact>();

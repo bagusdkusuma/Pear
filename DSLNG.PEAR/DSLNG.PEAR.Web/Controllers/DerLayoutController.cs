@@ -114,6 +114,13 @@ namespace DSLNG.PEAR.Web.Controllers
                             .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
                             break;
                         }
+
+                    case "tank":
+                        {
+                            var tank = new TankViewModel();
+                            editViewModel.Tank = response.Artifact.Tank.MapPropertiesToInstance<TankViewModel>(tank);
+                            break;
+                        }
                         
                 }
 

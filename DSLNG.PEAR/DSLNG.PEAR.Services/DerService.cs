@@ -218,6 +218,8 @@ namespace DSLNG.PEAR.Services
                     .Include(x => x.Artifact.Tank)
                     .Include(x => x.Artifact.Tank.VolumeInventory)
                     .Include(x => x.Artifact.Tank.DaysToTankTop)
+                    .Include(x => x.Artifact.Tank.VolumeInventory.Measurement)
+                    .Include(x => x.Artifact.Tank.DaysToTankTop.Measurement)
                     .Include(x => x.Highlight)
                     .Include(x => x.Highlight.SelectOption)
                     .Single(x => x.Id == id);
@@ -258,7 +260,7 @@ namespace DSLNG.PEAR.Services
                     }
                 case "tank":
                     {
-                        baseResponse = SaveTank(request);
+                        baseResponse = request.Id > 0 ? UpdateTank(request) : SaveTank(request);
                         break;
                     }
                 case "highlight":
@@ -282,7 +284,7 @@ namespace DSLNG.PEAR.Services
                 };
             return response;
         }
-        
+
         public GetDerLayoutResponse GetDerLayout(int id)
         {
             var response = new GetDerLayoutResponse();
@@ -339,7 +341,7 @@ namespace DSLNG.PEAR.Services
                 var measurement = new Measurement { Id = request.Artifact.MeasurementId };
                 DataContext.Measurements.Attach(measurement);
                 derArtifact.Measurement = measurement;
-                
+
                 var series = request.Artifact.LineChart.Series.Select(x => new DerArtifactSerie
                     {
                         Color = x.Color,
@@ -431,25 +433,6 @@ namespace DSLNG.PEAR.Services
             }
 
             return response;
-        }
-
-
-        private void DeleteLayoutItem(SaveLayoutItemRequest request)
-        {
-            switch (request.OldType)
-            {
-                case "line":
-                    var artifact = DataContext.DerArtifacts
-                        .Include(x => x.Measurement)
-                        .Include(x => x.Series)
-                        .Include(x => x.Charts)
-                        .Single(x => x.Id == request.Artifact.Id);
-
-                    DataContext.DerArtifacts.Remove(artifact);
-                    //DataContext.SaveChanges();
-
-                    break;
-            }
         }
 
         private BaseResponse SaveMultiAxis(SaveLayoutItemRequest request)
@@ -667,48 +650,113 @@ namespace DSLNG.PEAR.Services
             var response = new BaseResponse();
             try
             {
-                if (request.Id > 0)
-                {
 
+                var derLayoutItem = new DerLayoutItem();
+                var derLayout = new DerLayout { Id = request.DerLayoutId };
+                DataContext.DerLayouts.Attach(derLayout);
+                derLayoutItem.DerLayout = derLayout;
+                derLayoutItem.Column = request.Column;
+                derLayoutItem.Row = request.Row;
+                derLayoutItem.Type = request.Type;
+                var derArtifact = request.MapTo<DerArtifact>();
+                derLayoutItem.Artifact = derArtifact;
+                derLayoutItem.Artifact.Tank = request.Artifact.Tank.MapTo<DerArtifactTank>();
+                var volumeInventory = new Kpi { Id = request.Artifact.Tank.VolumeInventoryId };
+                if (DataContext.Kpis.Local.FirstOrDefault(x => x.Id == volumeInventory.Id) == null)
+                {
+                    DataContext.Kpis.Attach(volumeInventory);
                 }
                 else
                 {
-                    var derLayoutItem = new DerLayoutItem();
-                    var derLayout = new DerLayout { Id = request.DerLayoutId };
-                    DataContext.DerLayouts.Attach(derLayout);
-                    derLayoutItem.DerLayout = derLayout;
-                    derLayoutItem.Column = request.Column;
-                    derLayoutItem.Row = request.Row;
-                    derLayoutItem.Type = request.Type;
-                    var derArtifact = request.MapTo<DerArtifact>();
-                    derLayoutItem.Artifact = derArtifact;
-                    derLayoutItem.Artifact.Tank = request.Artifact.Tank.MapTo<DerArtifactTank>();
-                    var volumeInventory = new Kpi { Id = request.Artifact.Tank.VolumeInventoryId };
-                    if (DataContext.Kpis.Local.FirstOrDefault(x => x.Id == volumeInventory.Id) == null)
-                    {
-                        DataContext.Kpis.Attach(volumeInventory);
-                    }
-                    else
-                    {
-                        volumeInventory = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == request.Artifact.Tank.VolumeInventoryId);
-                    }
-
-                    var daysToTankTop = new Kpi { Id = request.Artifact.Tank.DaysToTankTopId };
-                    if (DataContext.Kpis.Local.FirstOrDefault(x => x.Id == daysToTankTop.Id) == null)
-                    {
-                        DataContext.Kpis.Attach(daysToTankTop);
-                    }
-                    else
-                    {
-                        daysToTankTop = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == request.Artifact.Tank.DaysToTankTopId);
-                    }
-
-                    derLayoutItem.Artifact.Tank.VolumeInventory = volumeInventory;
-                    derLayoutItem.Artifact.Tank.DaysToTankTop = daysToTankTop;
-                    DataContext.DerArtifacts.Add(derArtifact);
-
-                    DataContext.DerLayoutItems.Add(derLayoutItem);
+                    volumeInventory = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == request.Artifact.Tank.VolumeInventoryId);
                 }
+
+                var daysToTankTop = new Kpi { Id = request.Artifact.Tank.DaysToTankTopId };
+                if (DataContext.Kpis.Local.FirstOrDefault(x => x.Id == daysToTankTop.Id) == null)
+                {
+                    DataContext.Kpis.Attach(daysToTankTop);
+                }
+                else
+                {
+                    daysToTankTop = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == request.Artifact.Tank.DaysToTankTopId);
+                }
+
+                derLayoutItem.Artifact.Tank.VolumeInventory = volumeInventory;
+                derLayoutItem.Artifact.Tank.DaysToTankTop = daysToTankTop;
+                DataContext.DerArtifacts.Add(derArtifact);
+
+                DataContext.DerLayoutItems.Add(derLayoutItem);
+
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+            }
+            catch (Exception exception)
+            {
+                response.Message = exception.Message;
+            }
+
+            return response;
+        }
+
+        private BaseResponse UpdateTank(SaveLayoutItemRequest request)
+        {
+            var response = new BaseResponse();
+
+            try
+            {
+                var derLayoutItem = DataContext.DerLayoutItems
+                    .Include(x => x.Artifact)
+                    .Include(x => x.Artifact.Tank)
+                    .Single(x => x.Id == request.Id);
+
+                var derLayout = new DerLayout { Id = request.DerLayoutId };
+                DataContext.DerLayouts.Attach(derLayout);
+                derLayoutItem.DerLayout = derLayout;
+                derLayoutItem.Column = request.Column;
+                derLayoutItem.Row = request.Row;
+                derLayoutItem.Type = request.Type;
+                var derArtifact = new DerArtifact();//request.MapTo<DerArtifact>();
+                derArtifact.HeaderTitle = request.Artifact.HeaderTitle;
+                derArtifact.GraphicType = request.Type;
+                derLayoutItem.Artifact = derArtifact;
+                derLayoutItem.Artifact.Tank = request.Artifact.Tank.MapTo<DerArtifactTank>();
+
+                var volumeInventory = new Kpi { Id = request.Artifact.Tank.VolumeInventoryId };
+                if (DataContext.Kpis.Local.FirstOrDefault(x => x.Id == volumeInventory.Id) == null)
+                {
+                    DataContext.Kpis.Attach(volumeInventory);
+                }
+                else
+                {
+                    volumeInventory = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == request.Artifact.Tank.VolumeInventoryId);
+                }
+
+                var daysToTankTop = new Kpi { Id = request.Artifact.Tank.DaysToTankTopId };
+                if (DataContext.Kpis.Local.FirstOrDefault(x => x.Id == daysToTankTop.Id) == null)
+                {
+                    DataContext.Kpis.Attach(daysToTankTop);
+                }
+                else
+                {
+                    daysToTankTop = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == request.Artifact.Tank.DaysToTankTopId);
+                }
+
+                derLayoutItem.Artifact.Tank.VolumeInventory = volumeInventory;
+                derLayoutItem.Artifact.Tank.DaysToTankTop = daysToTankTop;
+                DataContext.DerArtifacts.Add(derArtifact);
+                DataContext.DerLayoutItems.Add(derLayoutItem);
+
+                var oldArtifact = new DerArtifact { Id = request.Artifact.Id };
+                if (DataContext.DerArtifacts.Local.FirstOrDefault(x => x.Id == oldArtifact.Id) == null)
+                {
+                    DataContext.DerArtifacts.Attach(oldArtifact);
+                }
+                else
+                {
+                    oldArtifact = DataContext.DerArtifacts.Local.FirstOrDefault(x => x.Id == oldArtifact.Id);
+                }
+
+                DataContext.DerArtifacts.Remove(oldArtifact);
 
                 DataContext.SaveChanges();
                 response.IsSuccess = true;

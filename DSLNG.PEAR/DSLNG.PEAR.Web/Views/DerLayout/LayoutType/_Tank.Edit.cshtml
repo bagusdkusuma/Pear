@@ -1,5 +1,5 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.DerLayout.DerLayoutItemViewModel
-@Html.HiddenFor(x=> x.Tank.Id)
+@Html.HiddenFor(x => x.Artifact.Id)
 <div id="graphic-settings">
     <div class="form-group row">
         @Html.LabelFor(model => model.Artifact.HeaderTitle, new { @class = "control-label col-md-2" })
@@ -35,30 +35,30 @@
     <div class="form-group row">
         @Html.LabelFor(model => model.Tank.DaysToTankTopId, new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.Tank.DaysToTankTopId, new List<SelectListItem>(), new { @class = "kpi-list  form-control", style = "width:180px" })
+            @Html.DropDownListFor(model => model.Tank.DaysToTankTopId, new List<SelectListItem> { new SelectListItem { Value = Model.Tank.DaysToTankTopId.ToString(), Text = Model.Tank.DaysToTankTop } }, new { @class = "kpi-list  form-control", style = "width:180px" })
             @Html.ValidationMessageFor(model => model.Tank.DaysToTankTopId)
         </div>
     </div>
 
     <div class="form-group row">
-        @Html.LabelFor(model => model.Tank.VolumeInventoryId, new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Tank.VolumeInventoryId, new { @class = "control-label col-md-2" }) @Model.Tank.VolumeInventoryId.ToString() @Model.Tank.VolumeInventory
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.Tank.VolumeInventoryId, new List<SelectListItem>(),  new { @class = "kpi-list  form-control", style = "width:180px" })
+            @Html.DropDownListFor(model => model.Tank.VolumeInventoryId, new List<SelectListItem>{new SelectListItem { Value = Model.Tank.VolumeInventoryId.ToString(), Text = Model.Tank.VolumeInventory }}, new { @class = "kpi-list  form-control", style = "width:180px" })
             @Html.ValidationMessageFor(model => model.Tank.VolumeInventoryId)
         </div>
     </div>
 
     <div class="form-group form-list">
-        @Html.LabelFor(model => model.Tank.Color, new { @class = "control-label col-md-2", style="padding-left: 0;"  })
-        <div class="input-group colorpicker" style="width: 203px;padding-left: 5px;">
+        @Html.LabelFor(model => model.Tank.Color, new { @class = "control-label col-md-2", style = "padding-left: 0;" })
+        <div class="input-group colorpicker" style="width: 203px; padding-left: 5px;">
             @Html.TextBoxFor(model => model.Tank.Color, new { @class = "form-control" })
             <span class="input-group-addon"><i></i></span>
         </div>
         @Html.ValidationMessageFor(model => model.Tank.Color)
     </div>
-    
+
     <div class="form-group row">
-        @Html.LabelFor(model => model.Tank.ShowLine, new { @class = "control-label col-md-2"})
+        @Html.LabelFor(model => model.Tank.ShowLine, new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.CheckBoxFor(model => model.Tank.ShowLine)
             @Html.ValidationMessageFor(model => model.Tank.ShowLine)

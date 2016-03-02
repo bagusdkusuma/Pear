@@ -26,6 +26,9 @@
         case "pie":
             Html.RenderPartial("~/Views/DerLayout/LayoutType/_Pie.Edit.cshtml", Model);
             break;
+        case "tank":
+            Html.RenderPartial("~/Views/DerLayout/LayoutType/_Tank.Edit.cshtml", Model);
+            break;
     }
         }
     </div>
@@ -149,6 +152,13 @@
                     });
                     $hiddenFields.remove();
                     window.Pear.Artifact.Designer._setupCallbacks.pie();
+                    break;
+                }
+            case "tank":
+                {
+                    $('.main-value-axis').css('display', 'none');
+                    $('.form-measurement').css('display', 'none');
+                    Pear.Artifact.Designer._setupCallbacks.tank();
                     break;
                 }
         }
