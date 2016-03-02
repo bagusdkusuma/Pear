@@ -89,6 +89,7 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<MidtermStrategicPlanningObjective> MidtermStrategicPlanningObjectives { get; set; }
         public IDbSet<PopDashboard> PopDashboards { get; set; }
         public IDbSet<PopInformation> PopInformations { get; set; }
+        public IDbSet<Signature> Signatures { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

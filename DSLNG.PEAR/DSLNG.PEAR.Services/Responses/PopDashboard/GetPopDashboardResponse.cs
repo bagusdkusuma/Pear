@@ -15,6 +15,7 @@ namespace DSLNG.PEAR.Services.Responses.PopDashboard
         public string Subtitle { get; set; }
         public bool IsActive { get; set; }
         public IList<PopInformation> PopInformations { get; set; }
+        public IList<Signature> Signatures { get; set; }
 
         public class PopInformation
         {
@@ -22,6 +23,15 @@ namespace DSLNG.PEAR.Services.Responses.PopDashboard
             public PopInformationType Type { get; set; }
             public string Title { get; set; }
             public string Value { get; set; }
+        }
+        
+
+        public class Signature
+        {
+            public int Id {get; set;}
+            public int UserId { get; set; }
+            public string User { get; set; }
+            public SignatureType Type {get; set;}
         }
     }
 }

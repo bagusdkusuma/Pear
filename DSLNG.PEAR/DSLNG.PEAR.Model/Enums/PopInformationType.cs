@@ -19,7 +19,8 @@ namespace DSLNG.PEAR.Data.Enums
         StructureAdvisor,
         Scope,
         ResourcesNonFinancial,
-        ResourcesRemark
+        ResourcesRemark,
+        ResourcesRemark2
 
 
     }

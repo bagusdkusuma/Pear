@@ -107,7 +107,7 @@
         <div class="col-md-7 border-style-1">
             <div class="info">
                 <div class="subinfo">
-                    <table class="table-info-2" border="1">
+                    <table class="table table-info-2" border="1">
                         <tr>
                             <th rowspan="2" class="SupporttingDataNeeded">
                                 <h4>SUPPORTING DATA NEEDED</h4>
@@ -223,9 +223,10 @@
                         <tr>
                             <th colspan="5"><h4>Resources</h4></th>
                         </tr>
+
                         <tr>
                             <td><h6>Financial</h6></td>
-                            <td class="ResourcesNonFinancial-info">
+                            <td class="ResourcesNonFinancial">
                                 <h6>Non Financial</h6>
                                 @if (Model.PopInformations.FirstOrDefault(x => x.Type == DSLNG.PEAR.Data.Enums.PopInformationType.ResourcesNonFinancial) == null)
                                 {
@@ -235,12 +236,8 @@
                                 {
                                     <a href="#" data-dashboard-id="@Model.Id" data-type="ResourcesNonFinancial" class="edit-link"><i class="fa fa-edit"></i></a>
                                 }
-                                @foreach (var item in Model.PopInformations.Where(x => x.Type == DSLNG.PEAR.Data.Enums.PopInformationType.ResourcesNonFinancial))
-                                {
-                                    <span data-id="@item.Id" data-type="10" data-value="@item.Value">@item.Value</span>
-                                }
                             </td>
-                            <td class="ResourcesRemark-info">
+                            <td class="ResourcesRemark">
                                 <h6>Remark</h6>
                                 @if (Model.PopInformations.FirstOrDefault(x => x.Type == DSLNG.PEAR.Data.Enums.PopInformationType.ResourcesRemark) == null)
                                 {
@@ -250,9 +247,207 @@
                                 {
                                     <a href="#" data-dashboard-id="@Model.Id" data-type="ResourcesRemark" class="edit-link"><i class="fa fa-edit"></i></a>
                                 }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="ResourcesFinancial-info">
+                                Financial di skip dulu
+                            </td>
+                            <td class="ResourcesNonFinancial-info">
+                                @foreach (var item in Model.PopInformations.Where(x => x.Type == DSLNG.PEAR.Data.Enums.PopInformationType.ResourcesNonFinancial))
+                                {
+                                    <span data-id="@item.Id" data-type="10" data-value="@item.Value">@item.Value</span>
+                                }
+                            </td>
+                            <td class="ResourcesRemark-info">
                                 @foreach (var item in Model.PopInformations.Where(x => x.Type == DSLNG.PEAR.Data.Enums.PopInformationType.ResourcesRemark))
                                 {
                                     <span data-id="@item.Id" data-type="11" data-value="@item.Value">@item.Value</span>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="requestby">
+                                <h6>Request by</h6>
+                                @if (Model.Signatures.FirstOrDefault(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.requestby) == null)
+                                {
+                                    <a href="#" class="add-signature" data-dashboard-id="@Model.Id" data-type-signature="0"><i class="fa fa-plus"></i></a>
+                                }
+                                else
+                                {
+                                    <a href="#" data-dashboard-id="@Model.Id" data-type="requestby" class="edit-signature"><i class="fa fa-edit"></i></a>
+                                }
+                            </td>
+                            <td class="checkedby">
+                                <h6>Checked by</h6>
+                                @if (Model.Signatures.FirstOrDefault(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.checkedby) == null)
+                                {
+                                    <a href="#" class="add-signature" data-dashboard-id="@Model.Id" data-type-signature="1"><i class="fa fa-plus"></i></a>
+                                }
+                                else
+                                {
+                                    <a href="#" data-dashboard-id="@Model.Id" data-type="checkedby" class="edit-signature"><i class="fa fa-edit"></i></a>
+                                }
+                            </td>
+                            <td class="ResourcesRemark2">
+                                <h6>Remark</h6>
+                                @if (Model.PopInformations.FirstOrDefault(x => x.Type == DSLNG.PEAR.Data.Enums.PopInformationType.ResourcesRemark2) == null)
+                                {
+                                    <a href="#" data-toggle="popover" data-placement="right" data-type="12" data-dashboard-id="@Model.Id" data-id="0" class="add-item"><i class="fa fa-plus"></i></a>
+                                }
+                                else
+                                {
+                                    <a href="#" data-dashboard-id="@Model.Id" data-type="ResourcesRemark2" class="edit-link"><i class="fa fa-edit"></i></a>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="requestby-info">
+                                @foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.requestby))
+                                {
+                                    <span data-id="@item.Id" data-type="0" data-userid="@item.UserId">@item.User</span>
+                                }
+                            </td>
+                            <td class="checkedby-info">
+                                @foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.checkedby))
+                                {
+                                    <span data-id="@item.Id" data-type="1" data-userid="@item.UserId">@item.User</span>
+                                }
+                            </td>
+                            <td rowspan="2" class="ResourcesRemark2-info">
+                                @foreach (var item in Model.PopInformations.Where(x => x.Type == DSLNG.PEAR.Data.Enums.PopInformationType.ResourcesRemark2))
+                                {
+                                    <span data-id="@item.Id" data-type="11" data-value="@item.Value">@item.Value</span>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Performance Monitoring Analyst</td>
+                            <td>Economic and Planning  Specialist</td>
+                        </tr>
+                        <tr>
+                            <th colspan="7"><h6>APPROVAL</h6></th>
+                        </tr>
+                        <tr>
+                            <td class="cpd">
+                                <h6>CPD</h6>
+                                @if (Model.Signatures.FirstOrDefault(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.cpd) == null)
+                                {
+                                    <a href="#" class="add-signature" data-dashboard-id="@Model.Id" data-type-signature="2"><i class="fa fa-plus"></i></a>
+                                }
+                                else
+                                {
+                                    <a href="#" data-dashboard-id="@Model.Id" data-type="cpd" class="edit-signature"><i class="fa fa-edit"></i></a>
+                                }
+                            </td>
+                            <td class="fd">
+                                <h6>FD</h6>
+                                @if (Model.Signatures.FirstOrDefault(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.fd) == null)
+                                {
+                                    <a href="#" class="add-signature" data-dashboard-id="@Model.Id" data-type-signature="3"><i class="fa fa-plus"></i></a>
+                                }
+                                else
+                                {
+                                    <a href="#" data-dashboard-id="@Model.Id" data-type="fd" class="edit-signature"><i class="fa fa-edit"></i></a>
+                                }
+                            </td>
+                            <td class="pd">
+                                <h6>PD</h6>
+                                @if (Model.Signatures.FirstOrDefault(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.pd) == null)
+                                {
+                                    <a href="#" class="add-signature" data-dashboard-id="@Model.Id" data-type-signature="4"><i class="fa fa-plus"></i></a>
+                                }
+                                else
+                                {
+                                    <a href="#" data-dashboard-id="@Model.Id" data-type="pd" class="edit-signature"><i class="fa fa-edit"></i></a>
+                                }
+                            </td>
+                            <td class="od">
+                                <h6>OD</h6>
+                                @if (Model.Signatures.FirstOrDefault(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.od) == null)
+                                {
+                                    <a href="#" class="add-signature" data-dashboard-id="@Model.Id" data-type-signature="5"><i class="fa fa-plus"></i></a>
+                                }
+                                else
+                                {
+                                    <a href="#" data-dashboard-id="@Model.Id" data-type="od" class="edit-signature"><i class="fa fa-edit"></i></a>
+                                }
+                            </td>
+                            <td class="td">
+                                <h6>TD</h6>
+                                @if (Model.Signatures.FirstOrDefault(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.td) == null)
+                                {
+                                    <a href="#" class="add-signature" data-dashboard-id="@Model.Id" data-type-signature="6"><i class="fa fa-plus"></i></a>
+                                }
+                                else
+                                {
+                                    <a href="#" data-dashboard-id="@Model.Id" data-type="td" class="edit-signature"><i class="fa fa-edit"></i></a>
+                                }
+                            </td>
+                            <td class="cad">
+                                <h6>CAD</h6>
+                                @if (Model.Signatures.FirstOrDefault(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.cad) == null)
+                                {
+                                    <a href="#" class="add-signature" data-dashboard-id="@Model.Id" data-type-signature="7"><i class="fa fa-plus"></i></a>
+                                }
+                                else
+                                {
+                                    <a href="#" data-dashboard-id="@Model.Id" data-type="cad" class="edit-signature"><i class="fa fa-edit"></i></a>
+                                }
+                            </td>
+                            <td class="cd">
+                                <h6>CD</h6>
+                                @if (Model.Signatures.FirstOrDefault(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.cd) == null)
+                                {
+                                    <a href="#" class="add-signature" data-dashboard-id="@Model.Id" data-type-signature="8" data-placement="left"><i class="fa fa-plus"></i></a>
+                                }
+                                else
+                                {
+                                    <a href="#" data-dashboard-id="@Model.Id" data-type="cd" class="edit-signature" data-placement="left"><i class="fa fa-edit"></i></a>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="cpd-info">
+                                @foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.cpd))
+                                {
+                                    <span data-id="@item.Id" data-type="2" data-userid="@item.UserId">@item.User</span>
+                                }
+                            </td>
+                            <td class="fd-info">
+                                @foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.fd))
+                                {
+                                    <span data-id="@item.Id" data-type="3" data-userid="@item.UserId">@item.User</span>
+                                }
+                            </td>
+                            <td class="pd-info">
+                                @foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.pd))
+                                {
+                                    <span data-id="@item.Id" data-type="4" data-userid="@item.UserId">@item.User</span>
+                                }
+                            </td>
+                            <td class="od-info">
+                                @foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.od))
+                                {
+                                    <span data-id="@item.Id" data-type="5" data-userid="@item.UserId">@item.User</span>
+                                }
+                            </td>
+                            <td class="td-info">
+                                @foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.td))
+                                {
+                                    <span data-id="@item.Id" data-type="6" data-userid="@item.UserId">@item.User</span>
+                                }
+                            </td>
+                            <td class="cad-info">
+                                @foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.cad))
+                                {
+                                    <span data-id="@item.Id" data-type="7" data-userid="@item.UserId">@item.User</span>
+                                }
+                            </td>
+                            <td class="cd-info">
+                                @foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.cd))
+                                {
+                                    <span data-id="@item.Id" data-type="8" data-userid="@item.UserId">@item.User</span>
                                 }
                             </td>
                         </tr>
@@ -267,8 +462,7 @@
 
 @* Modal create *@
 <div class="form-information" style="display: none;">
-    @using (Html.BeginForm("Create", "PopInformation", FormMethod.Post))
-    {
+    <form>
         <div>
             <input type="hidden" name="id" />
             <input type="hidden" name="dashboardId" />
@@ -283,13 +477,12 @@
             @*<button class="btn btn-primary cancel-popover">Cancel</button>*@
         </div>
 
-    }
+    </form>
 </div>
 
 @*Modal Edit  *@
 <div class="form-edit-information" style="display: none;">
-    @using (Html.BeginForm("Create", "PopInformation", FormMethod.Post))
-    {
+    <form>
         <div>
             <input type="hidden" name="id" />
             <input type="hidden" name="dashboardId" />
@@ -303,8 +496,37 @@
             <button type="button" class="btn btn-primary edit-information">Edit</button>
             @*<button class="btn btn-primary cancel-popover">Cancel</button>*@
         </div>
+    </form>
+</div>
 
-    }
+@* add signature *@
+<div class="form-add-signature" style="display: none;">
+    <form>
+        <div>
+            <input type="hidden" name="dashboardId" />
+            <input type="hidden" name="typeSignature" />
+            @Html.DropDownListFor(model => model.UserId, Model.Users)
+        </div>
+        <div>
+            <button type="button" class="btn btn-primary input-signature">Add</button>
+            @*<button class="btn btn-primary cancel-popover">Cancel</button>*@
+        </div>
+    </form>
+</div>
+
+<div class="form-edit-signature" style="display: none;">
+    <form>
+        <div>
+            <input type="hidden" name="dashboardId" />
+            <input type="hidden" name="typeSignature" />
+            <input type="hidden" name="id" />
+            @Html.DropDownListFor(model => model.UserId, Model.Users)
+        </div>
+        <div>
+            <button type="button" class="btn btn-primary btn-edit-signature">Edit</button>
+            @*<button class="btn btn-primary cancel-popover">Cancel</button>*@
+        </div>
+    </form>
 </div>
 
 
@@ -322,6 +544,7 @@
                 popOverElem = $(this);
 
             });
+
 
             $('body').popover({
                 selector: '.add-item',
@@ -344,6 +567,44 @@
                 }
             });
 
+            $('td').popover({
+                selector: '.add-signature',
+                html: true,
+                title: function () {
+                    return 'Test';
+                },
+                content: function () {
+                    return $('.form-add-signature').html();
+                }
+            });
+
+            $(document).on('click', '.add-signature', function () {
+                var $that = $(this);
+                var $dashboardId = $that.data('dashboard-id');
+                var $type = $that.data('type-signature');
+                $('.popover').find('input[name="dashboardId"]').attr('value', $dashboardId);
+                $('.popover').find('input[name="typeSignature"]').attr('value', $type);
+                popOverElem = $(this);
+            });
+
+
+            $(document).on('click', '.input-signature', function (e) {
+                e.preventDefault();
+                var $that = $(this);
+                $.ajax({
+                    url: '@Url.Action("Create", "Signature")',
+                    data: $that.closest('form').serialize(),
+                    type: 'POST',
+                    success: function (data) {
+                        $('.' + data.type + '-info').append('<span data-id="' + data.id + '" data-type="' + data.typeInt + '" data-userid="' + data.userId + '">' + data.username + '</span>');
+                        popOverElem.popover('hide');
+                        $('.' + data.type).find('a').remove();
+                        $('.' + data.type).append('<a href="#" data-dashboard-id="@Model.Id" data-type="' + data.type + '" class="edit-signature"><i class="fa fa-edit"></i></a>')
+                    }
+                });
+            });
+
+
             $(document).on('click', '.input-information', function (e) {
                 e.preventDefault();
                 var $that = $(this);
@@ -358,7 +619,7 @@
                             $('.' + data.type).find('td').find('a').remove();
                             $('.' + data.type).find('td').append('<a href="#" data-dashboard-id="@Model.Id" data-type="' + data.type + '" class="edit-link"><i class="fa fa-edit"></i></a>');
                         }
-                        else if (data.typeInt == 4 || data.typeInt == 5 || data.typeInt == 6 || data.typeInt == 7 || data.typeInt == 8) {
+                        else if (data.typeInt == 4 || data.typeInt == 5 || data.typeInt == 6 || data.typeInt == 7 || data.typeInt == 8 || data.typeInt == 12) {
                             $('.' + data.type + '-info').append('<span data-id="' + data.id + '" data-type="' + data.typeInt + '" data-value="' + data.value + '">' + data.value + '</span>');
                             popOverElem.popover('hide');
                             $('.' + data.type).find('a').remove();
@@ -369,8 +630,8 @@
                             $('.' + data.type + '-info').append('<span data-id="' + data.id + '" data-type="' + data.typeInt + '" data-value="' + data.value + '">' + data.value + '</span>');
                             popOverElem.popover('hide');
 
-                            $('.' + data.type + '-info').find('a').remove();
-                            $('.' + data.type + '-info').append('<a href="#" data-dashboard-id="@Model.Id" data-type="' + data.type + '" class="edit-link"><i class="fa fa-edit"></i></a>');
+                            $('.' + data.type).find('a').remove();
+                            $('.' + data.type).append('<a href="#" data-dashboard-id="@Model.Id" data-type="' + data.type + '" class="edit-link"><i class="fa fa-edit"></i></a>');
 
                         }
                     }
@@ -390,7 +651,7 @@
                             $('.' + data.type + '-info').append('<td data-id="' + data.id + '" data-type="' + data.typeInt + '" data-value="' + data.value + '">' + data.value + '</td>');
                             popOverElem.popover('hide');
                         }
-                        else if (data.typeInt == 4 || data.typeInt == 5 || data.typeInt == 6 || data.typeInt == 7 || data.typeInt == 8) {
+                        else if (data.typeInt == 4 || data.typeInt == 5 || data.typeInt == 6 || data.typeInt == 7 || data.typeInt == 8 || data.typeInt == 12) {
                             $('.' + data.type + '-info').find('span').remove();
                             $('.' + data.type + '-info').append('<span data-id="' + data.id + '" data-type="' + data.typeInt + '" data-value="' + data.value + '">' + data.value + '</span>');
                             popOverElem.popover('hide');
@@ -423,7 +684,6 @@
                 var type2 = $span.data('type');
                 var value2 = $span.data('value');
 
-
                 $('.popover').find('input[name="id"]').attr('value', id);
                 $('.popover').find('input[name="dashboardId"]').attr('value', dashboardId);
                 $('.popover').find('input[name="type"]').attr('value', type);
@@ -433,11 +693,58 @@
                 $('.popover').find('input[name="dashboardId"]').attr('value', dashboardId);
                 $('.popover').find('input[name="type"]').attr('value', type2);
                 $('.popover').find('input[name="value"]').attr('value', value2);
-
-
-
                 popOverElem = $(this);
             });
+
+            $('table').popover({
+                selector: '.edit-signature',
+                html: true,
+                title: function () {
+                    return 'Test';
+                },
+                content: function () {
+                    return $('.form-edit-signature').html();
+                }
+            });
+
+            $(document).on('click', '.edit-signature', function () {
+                var $that = $(this);
+                var type = $that.data('type');
+                $table = $that.closest('table');
+                $td = $table.find('.' + type + '-info').find('span');
+
+                var id = $td.data('id')
+                var type = $td.data('type');
+                var userid = $td.data('userid');
+                var dashboardId = $that.data('dashboard-id');
+
+                $('.popover').find('input[name="id"]').attr('value', id);
+                $('.popover').find('input[name="dashboardId"]').attr('value', dashboardId);
+                $('.popover').find('select[name="UserId"]').find('option[value="' + userid + '"]').attr('selected', 'selected');
+                $('.popover').find('input[name="typeSignature"]').attr('value', type);
+                popOverElem = $(this);
+            });
+
+
+
+            $(document).on('click', '.btn-edit-signature', function (e) {
+                e.preventDefault();
+                var $that = $(this);
+                $.ajax({
+                    url: '@Url.Action("Edit", "Signature")',
+                    data: $that.closest('form').serialize(),
+                    type: 'POST',
+                    success: function (data) {
+                        $('.' + data.type + '-info').find('span').remove();
+                        $('.' + data.type + '-info').append('<span data-id="' + data.id + '" data-type="' + data.typeInt + '" data-userid="' + data.userId + '">' + data.username + '</span>');
+                        popOverElem.popover('hide');
+
+                    }
+                });
+            });
+
+
+
         });
     </script>
 }

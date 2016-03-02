@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace DSLNG.PEAR.Web.ViewModels.PopDashboard
 {
@@ -43,6 +44,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PopDashboard
         public GetPopDashboardViewModel()
         {
             PopInformations = new List<PopInformation>();
+            Signatures = new List<SignatureViewModel>();
         }
         public int Id { get; set; }
         public string Title { get; set; }
@@ -50,6 +52,11 @@ namespace DSLNG.PEAR.Web.ViewModels.PopDashboard
         public string Subtitle { get; set; }
         public bool IsActive { get; set; }
         public IList<PopInformation> PopInformations { get; set; }
+        public IList<SignatureViewModel> Signatures { get; set; }
+        public List<SelectListItem> Users { get; set; }
+        public int UserId { get; set; }
+        public int DashboardId { get; set; }
+        public int TypeSignature { get; set; }
 
         public class PopInformation
         {

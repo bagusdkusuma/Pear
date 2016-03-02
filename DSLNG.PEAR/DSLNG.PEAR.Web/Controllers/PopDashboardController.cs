@@ -17,10 +17,12 @@ namespace DSLNG.PEAR.Web.Controllers
     {
         private readonly IPopDashboardService _popDashboardService;
         private readonly IPopInformationService _popInformationService;
-        public PopDashboardController(IPopDashboardService popDashboardService, IPopInformationService popInformationService)
+        private readonly IDropdownService _dropdownService;
+        public PopDashboardController(IPopDashboardService popDashboardService, IPopInformationService popInformationService, IDropdownService dropdownService)
         {
             _popDashboardService = popDashboardService;
             _popInformationService = popInformationService;
+            _dropdownService = dropdownService;
         }
 
         public ActionResult Index()
@@ -75,6 +77,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult PopInformation(int id)
         {
             var viewModel = _popDashboardService.GetPopDashboard(new GetPopDashboardRequest { Id = id }).MapTo<GetPopDashboardViewModel>();
+            viewModel.Users = _dropdownService.GetUsers().MapTo<SelectListItem>();
             return View(viewModel);
         }
     }

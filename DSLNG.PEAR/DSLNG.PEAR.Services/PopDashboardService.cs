@@ -40,7 +40,7 @@ namespace DSLNG.PEAR.Services
 
         public IEnumerable<PopDashboard> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
         {
-            var data = DataContext.PopDashboards.Include(x => x.PopInformations).AsQueryable();
+            var data = DataContext.PopDashboards.Include(x => x.PopInformations).Include(x => x.Signatures).AsQueryable();
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             {
                 data = data.Where(x => x.Number.Contains(search) || x.Subtitle.Contains(search) || x.Title.Contains(search));
@@ -100,7 +100,10 @@ namespace DSLNG.PEAR.Services
         public GetPopDashboardResponse GetPopDashboard(GetPopDashboardRequest request)
         {
             return DataContext.PopDashboards.Where(x => x.Id == request.Id)
-                .Include(x => x.PopInformations).FirstOrDefault().MapTo<GetPopDashboardResponse>();
+                .Include(x => x.PopInformations)
+                .Include(x => x.Signatures)
+                .Include(x => x.Signatures.Select(y => y.User))
+                .FirstOrDefault().MapTo<GetPopDashboardResponse>();
         }
     }
 }

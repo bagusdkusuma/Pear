@@ -104,6 +104,7 @@ using DSLNG.PEAR.Services.Requests.PopDashboard;
 using DSLNG.PEAR.Services.Requests.PopInformation;
 using DSLNG.PEAR.Services.Responses.PopInformation;
 using PopInformationType = DSLNG.PEAR.Data.Enums.PopInformationType;
+using DSLNG.PEAR.Services.Requests.Signature;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -648,7 +649,12 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<SavePopDashboardRequest, PopDashboard>();
             Mapper.CreateMap<PopDashboard, GetPopDashboardResponse>();
             Mapper.CreateMap<PopInformation, GetPopDashboardResponse.PopInformation>();
+            Mapper.CreateMap<Signature, GetPopDashboardResponse.Signature>()
+                .ForMember(x => x.User, o => o.MapFrom(y => y.User.Username))
+                .ForMember(x => x.UserId, o => o.MapFrom(y => y.User.Id));
             Mapper.CreateMap<SavePopInformationRequest, PopInformation>();
+            Mapper.CreateMap<SaveSignatureRequest, DSLNG.PEAR.Data.Entities.Pop.Signature>()
+                .ForMember(x => x.Type, o => o.MapFrom(y => y.TypeSignature));
             base.Configure();
         }
 

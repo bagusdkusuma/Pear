@@ -767,6 +767,7 @@
     <Compile Include="Controllers\PlanningBlueprintController.cs" />
     <Compile Include="Controllers\PopDashboardController.cs" />
     <Compile Include="Controllers\PopInformationController.cs" />
+    <Compile Include="Controllers\SignatureController.cs" />
     <Compile Include="Scheduler\ScenarioScheduler.cs" />
     <Compile Include="ViewModels\BusinessPosture\DesiredStateViewModel.cs" />
     <Compile Include="ViewModels\BusinessPosture\PostureChallengeViewModel.cs" />
@@ -1331,6 +1332,7 @@
     <Compile Include="ViewModels\PmsSummary\UpdatePmsSummaryViewModel.cs" />
     <Compile Include="ViewModels\PopDashboard\PopDashboardViewModel.cs" />
     <Compile Include="ViewModels\PopDashboard\PopInformationViewModel.cs" />
+    <Compile Include="ViewModels\PopDashboard\SignatureViewModel.cs" />
     <Compile Include="ViewModels\RoleGroup\CreateRoleGroupViewModel.cs" />
     <Compile Include="ViewModels\RoleGroup\IndexRoleGroupViewModel.cs" />
     <Compile Include="ViewModels\RoleGroup\RoleGroupViewModel.cs" />
@@ -1373,7 +1375,7 @@
     <Folder Include="Views\CorporatePortofolio\" />
     <Folder Include="Views\MidtermFormulation\" />
     <Folder Include="Views\MidtermStrategyPlanning\" />
-    <Folder Include="Views\PopInformation\" />
+    <Folder Include="Views\Signature\" />
     <Folder Include="Views\Test\" />
     <Folder Include="Views\UnAuthorize\" />
   </ItemGroup>

@@ -84,6 +84,7 @@ namespace DSLNG.PEAR.Web.DependencyResolution {
             For<IMidtermPlanningService>().Use<MidtermPlanningService>();
             For<IPopDashboardService>().Use<PopDashboardService>();
             For<IPopInformationService>().Use<PopInformationService>();
+            For<ISignatureService>().Use<SignatureService>();
         }
 
         #endregion
