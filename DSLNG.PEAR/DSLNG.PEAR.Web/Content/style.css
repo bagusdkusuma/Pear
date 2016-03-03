@@ -2499,6 +2499,7 @@ table.list-result{
     border-top: 1px solid #ddd;
     margin-top: -1px;
     margin-bottom:-1px;
+    background-color:orange;
 }
 .midterm-plannings .midterm-planning ul.objectives {
     padding-left:25px;
