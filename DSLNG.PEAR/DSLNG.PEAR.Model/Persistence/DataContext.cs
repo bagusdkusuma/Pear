@@ -88,6 +88,7 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<DerLayout> DerLayouts { get; set; }
         public IDbSet<DerLayoutItem> DerLayoutItems { get; set; }
         public IDbSet<DerArtifact> DerArtifacts { get; set; }
+        public IDbSet<DerKpiInformation> DerTables { get; set; }
         public IDbSet<DerArtifactChart> DerArtifactCharts { get; set; }
         public IDbSet<DerArtifactSerie> DerArtifactSeries { get; set; }
         public IDbSet<Wave> Waves { get; set; }
@@ -221,6 +222,11 @@ namespace DSLNG.PEAR.Data.Persistence
                .HasOptional(x => x.StaticHighlight)
                .WithOptionalDependent()
                .WillCascadeOnDelete();
+
+            modelBuilder.Entity<DerLayoutItem>()
+              .HasOptional(x => x.Table)
+              .WithOptionalDependent()
+              .WillCascadeOnDelete();
 
             modelBuilder.Entity<DerArtifact>()
                 .HasMany(x => x.Charts)

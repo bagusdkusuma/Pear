@@ -100,6 +100,7 @@
     <Compile Include="Entities\Der\DerItem.cs" />
     <Compile Include="Entities\Der\DerLayout.cs" />
     <Compile Include="Entities\Der\DerLayoutItem.cs" />
+    <Compile Include="Entities\Der\DerKpiInformation.cs" />
     <Compile Include="Entities\Der\LayoutConfiguration.cs" />
     <Compile Include="Entities\Der\LayoutConfigurationItem.cs" />
     <Compile Include="Entities\EconomicModel\EconomicSummary.cs" />

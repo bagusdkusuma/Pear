@@ -20,5 +20,6 @@ namespace DSLNG.PEAR.Data.Entities.Der
         public DerArtifact Artifact { get; set; }
         public DerHighlight Highlight { get; set; }
         public DerStaticHighlight StaticHighlight { get; set; }
+        public ICollection<DerKpiInformation> Table { get; set; } 
     }
 }

@@ -126,13 +126,8 @@ namespace DSLNG.PEAR.Web.Controllers
                         {
                             var multiaxisChart = new MultiaxisChartViewModel();
                             editViewModel.MultiaxisChart = response.Artifact.MapPropertiesToInstance<MultiaxisChartViewModel>(multiaxisChart);
-                            //this.SetValueAxes(viewModel.MultiaxisChart.ValueAxes);
-                            /*multiaxisChart.GraphicTypes.Add(new SelectListItem { Value = "bar", Text = "Bar" });
-                            multiaxisChart.GraphicTypes.Add(new SelectListItem { Value = "baraccumulative", Text = "Bar Accumulative" });
-                            multiaxisChart.GraphicTypes.Add(new SelectListItem { Value = "barachievement", Text = "Bar Achievement" });*/
                             multiaxisChart.GraphicTypes.Add(new SelectListItem { Value = "line", Text = "Line" });
                             multiaxisChart.ValueAxes.Add(new SelectListItem { Value = ValueAxis.KpiActual.ToString(), Text = "Kpi Actual" });
-                            //multiaxisChart.GraphicTypes.Add(new SelectListItem { Value = "area", Text = "Area" });
                             multiaxisChart.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
                             {
                                 Take = -1,
@@ -148,7 +143,6 @@ namespace DSLNG.PEAR.Web.Controllers
                                         {
                                             chartViewModel.LineChart = chartRes.MapTo<LineChartViewModel>();
                                             chartViewModel.LineChart.ValueAxes.Add(new SelectListItem { Value = ValueAxis.KpiActual.ToString(), Text = "Kpi Actual" });
-                                            //this.SetValueAxes(chartViewModel.LineChart.ValueAxes);
                                             var series = new LineChartViewModel.SeriesViewModel();
                                             chartViewModel.LineChart.Series.Insert(0, series);
                                         }
@@ -158,21 +152,12 @@ namespace DSLNG.PEAR.Web.Controllers
                             }
                             var chart = new MultiaxisChartViewModel.ChartViewModel();
                             editViewModel.MultiaxisChart.Charts.Insert(0, chart);
-                            /*var viewModel = new DerLayoutItemViewModel();
-                            viewModel.Artifact = new DerLayoutItemViewModel.DerLayoutItemArtifactViewModel();
-                            viewModel.MultiaxisChart = new MultiaxisChartViewModel();
-                            var chart = new MultiaxisChartViewModel.ChartViewModel();
-                            viewModel.MultiaxisChart.Charts.Add(chart);
-                            viewModel.MultiaxisChart.GraphicTypes.Add(new SelectListItem { Value = "line", Text = "Line" });
-                            viewModel.MultiaxisChart.ValueAxes.Add(new SelectListItem { Value = ValueAxis.KpiActual.ToString(), Text = "Kpi Actual" });
-                            viewModel.MultiaxisChart.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
-                            {
-                                Take = -1,
-                                SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
-                            }).Measurements.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
-                            
-                            return PartialView("LayoutType/_MultiAxis", viewModel);*/
 
+                            break;
+                        }
+
+                    case "avg-ytd-key-statistic":
+                        {
                             break;
                         }
                         
@@ -261,6 +246,12 @@ namespace DSLNG.PEAR.Web.Controllers
                         var viewModel = new DerLayoutItemViewModel();
                         viewModel.Type = type;
                         return PartialView("LayoutType/_StaticHighlight", viewModel);
+                    }
+
+                case "avg-ytd-key-statistic":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        return PartialView("LayoutType/_AvgYtdKeyStatistic", viewModel);
                     }
             }
 
