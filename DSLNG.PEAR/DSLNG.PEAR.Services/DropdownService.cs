@@ -244,6 +244,16 @@ namespace DSLNG.PEAR.Services
             return config.Select(x => new Dropdown { Text = x.ToString(), Value = x.ToString() }).ToList();
         }
 
+
+        public IEnumerable<Dropdown> GetUsers()
+        {
+            return DataContext.Users.Select(x => new Dropdown
+            {
+                Text = x.Username,
+                Value = x.Id.ToString()
+            }).ToList();
+        }
+
         public IEnumerable<Dropdown> GetDerItemTypes()
         {
             return new List<Dropdown>()

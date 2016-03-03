@@ -29,9 +29,11 @@
             <th>Description</th>
             <th>Environments Scanning</th>
             <th>Business Posture Identification</th>
+            <th>Mid Term Phase Formulation</th>
+            <th>Mid Term Strategy Planning</th>
             <th>Is Approved</th>
             <th>Is Active</th>
-            <th></th>
+            <th>Action</th>
         </tr>
     </thead>
 </table>
@@ -55,8 +57,12 @@
                          "data": null,
                          "defaultContent": '',
                          "mRender": function (data, type, row) {
-                             if (row.EnvironmentsScanning.IsLocked) {
-                                 return 'Locked';
+                             if (row.BusinessPostureIdentification.IsApproved) {
+                                 return 'Approved';
+                             }else if (row.BusinessPostureIdentification.IsBeingReviewed) {
+                                 return 'Being Reviewed';
+                             } else if (row.EnvironmentsScanning.IsLocked) {
+                                 return 'Ready';
                              }
                              return  '@Html.ActionLink("Edit", "EnvironmentsScanning", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.EnvironmentsScanning.Id);
                         }
@@ -66,11 +72,47 @@
                           "data": null,
                           "defaultContent": '',
                           "mRender": function (data, type, row) {
-                              if (row.BusinessPostureIdentification.IsLocked) {
+                              if (row.BusinessPostureIdentification.IsApproved) {
+                                  return 'Approved';
+                              } else if (row.BusinessPostureIdentification.IsBeingReviewed) {
+                                  return 'Being Reviewed';
+                              } else if (row.BusinessPostureIdentification.IsLocked) {
                                   return 'Locked';
                               }
                               return '@Html.ActionLink("Edit", "BusinessPostureIdentification", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.BusinessPostureIdentification.Id);
                          }
+                      },
+                      {
+                          "orderable": false,
+                          "data": null,
+                          "defaultContent": '',
+                          "mRender": function (data, type, row) {
+                              if (row.MidtermStragetyPlanning.IsApproved) {
+                                  return 'Approved';
+                              } else if (row.MidtermStragetyPlanning.IsBeingReviewed) {
+                                  return 'Being Reviewed';
+                              } else if (row.MidtermPhaseFormulation.IsLocked && !row.MidtermStragetyPlanning.IsLocked) {
+                                return 'Ready'
+                              } else if (row.MidtermPhaseFormulation.IsLocked) {
+                                  return 'Locked';
+                              }
+                              return '@Html.ActionLink("Edit", "MidtermPhaseFormulation", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.MidtermPhaseFormulation.Id);
+                          }
+                      },
+                      {
+                          "orderable": false,
+                          "data": null,
+                          "defaultContent": '',
+                          "mRender": function (data, type, row) {
+                              if (row.MidtermStragetyPlanning.IsApproved) {
+                                  return 'Approved';
+                              } else if (row.MidtermStragetyPlanning.IsBeingReviewed) {
+                                  return 'Being Reviewed';
+                              } else if (row.MidtermStragetyPlanning.IsLocked) {
+                                  return 'Locked';
+                              }
+                              return '@Html.ActionLink("Edit", "MidtermStrategyPlanning", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.MidtermStragetyPlanning.Id);
+                          }
                       },
                     {
                         "mDataProp": "IsApproved", "name": "IsApproved", "render": function (data, type, row) {
@@ -97,7 +139,7 @@
                         "mRender": function (data, type, row) {
                             var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
                             var editLink = '@Html.ActionLink("Edit", "Edit", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', data.Id);
-                            return editLink + ' | ' + deleteLink;
+                            return editLink;
                         }
                     }
                 ],

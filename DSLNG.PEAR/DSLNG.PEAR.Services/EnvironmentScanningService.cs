@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Entities.Blueprint;
+using DSLNG.PEAR.Services.Responses;
 
 namespace DSLNG.PEAR.Services
 {
@@ -21,6 +22,8 @@ namespace DSLNG.PEAR.Services
         public GetEnvironmentsScanningResponse GetEnvironmentsScanning(GetEnvironmentsScanningRequest request)
         {
             return DataContext.EnvironmentsScannings.Where(x => x.Id == request.Id)
+                .Include(x => x.PlanningBlueprint)
+                .Include(x => x.PlanningBlueprint.BusinessPostureIdentification)
                 .Include(x => x.ConstructionPhase)
                 .Include(x => x.OperationPhase)
                 .Include(x => x.ReinventPhase)
@@ -29,7 +32,17 @@ namespace DSLNG.PEAR.Services
                 .Include(x => x.Weakness)
                 .Include(x => x.Strength)
                 .Include(x => x.Constraints)
+                .Include(x => x.Constraints.Select(y => y.Relations))
+                .Include(x => x.Constraints.Select(y => y.Relations.Select(z => z.ThreatHost)))
+                .Include(x => x.Constraints.Select(y => y.Relations.Select(z => z.OpportunityHost)))
+                .Include(x => x.Constraints.Select(y => y.Relations.Select(z => z.WeaknessHost)))
+                .Include(x => x.Constraints.Select(y => y.Relations.Select(z => z.StrengthHost)))
                 .Include(x => x.Challenges)
+                .Include(x => x.Challenges.Select(y => y.Relations))
+                .Include(x => x.Challenges.Select(y => y.Relations.Select(z => z.ThreatHost)))
+                .Include(x => x.Challenges.Select(y => y.Relations.Select(z => z.OpportunityHost)))
+                .Include(x => x.Challenges.Select(y => y.Relations.Select(z => z.WeaknessHost)))
+                .Include(x => x.Challenges.Select(y => y.Relations.Select(z => z.StrengthHost)))
                 .FirstOrDefault().MapTo<GetEnvironmentsScanningResponse>();
         }
 
@@ -252,10 +265,39 @@ namespace DSLNG.PEAR.Services
         {
             var constraint = request.MapTo<Constraint>();
             constraint.EnvironmentScanning = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EnviId).FirstOrDefault();
+            foreach (var id in request.RelationIds)
+            {
+                var envistate = new EnvironmentalScanning { Id = id };
+                DataContext.EnvironmentalScannings.Attach(envistate);
+                constraint.Relations.Add(envistate);
+            }
+
             DataContext.Constraint.Add(constraint);
             DataContext.SaveChanges();
 
-            return DataContext.Constraint.Where(x => x.Id == constraint.Id).FirstOrDefault().MapTo<SaveConstraintResponse>();
+            var result = DataContext.Constraint
+                .Include(x => x.Relations)
+                .Include(x => x.Relations.Select(y => y.ThreatHost))
+                .Include(x => x.Relations.Select(y => y.OpportunityHost))
+                .Include(x => x.Relations.Select(y => y.WeaknessHost))
+                .Include(x => x.Relations.Select(y => y.StrengthHost))
+                .Where(x => x.Id == constraint.Id).FirstOrDefault();
+            
+            return new SaveConstraintResponse
+            {
+                IsSuccess = true,
+                Message = "Constraint has been saved successfully",
+                Category = result.Category,
+                Definition = result.Definition,
+                Id = result.Id,
+                Type = result.Type,
+                RelationIds = result.Relations.Select(x => x.Id).ToArray(),
+                ThreatIds = result.Relations.Where(x => x.ThreatHost != null).Select(y => y.Id).ToArray(),
+                OpportunityIds = result.Relations.Where(x => x.OpportunityHost != null).Select(y => y.Id).ToArray(),
+                WeaknessIds = result.Relations.Where(x => x.WeaknessHost != null).Select(y => y.Id).ToArray(),
+                StrengthIds = result.Relations.Where(x => x.StrengthHost != null).Select(y => y.Id).ToArray(),
+
+            };
 
         }
 
@@ -264,10 +306,86 @@ namespace DSLNG.PEAR.Services
         {
             var challenge = request.MapTo<Challenge>();
             challenge.EnvironmentScanning = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EnviId).FirstOrDefault();
+            foreach(var id in request.RelationIds)
+            {
+                var envistate = new EnvironmentalScanning { Id = id };
+                DataContext.EnvironmentalScannings.Attach(envistate);
+                challenge.Relations.Add(envistate);
+            }
             DataContext.Challenges.Add(challenge);
             DataContext.SaveChanges();
 
-            return DataContext.Challenges.Where(x => x.Id == challenge.Id).FirstOrDefault().MapTo<SaveChallengeResponse>();
+            var result = DataContext.Challenges.Where(x => x.Id == challenge.Id)
+                .Include(x => x.Relations)
+                .Include(x => x.Relations.Select(y => y.ThreatHost))
+                .Include(x => x.Relations.Select(y => y.OpportunityHost))
+                .Include(x => x.Relations.Select(y => y.WeaknessHost))
+                .Include(x => x.Relations.Select(y => y.StrengthHost)).FirstOrDefault();
+
+            return new SaveChallengeResponse
+            {
+                IsSuccess = true,
+                Message = "Challenge has been saved successfully",
+                Category = result.Category,
+                Definition = result.Definition,
+                Id = result.Id,
+                Type = result.Type,
+                RelationIds = result.Relations.Select(x => x.Id).ToArray(),
+                ThreatIds = result.Relations.Where(x => x.ThreatHost != null).Select(y => y.Id).ToArray(),
+                OpportunityIds = result.Relations.Where(x => x.OpportunityHost != null).Select(y => y.Id).ToArray(),
+                WeaknessIds = result.Relations.Where(x => x.WeaknessHost != null).Select(y => y.Id).ToArray(),
+                StrengthIds = result.Relations.Where(x => x.StrengthHost != null).Select(y => y.Id).ToArray(),
+            };
+        }
+
+
+        public GetConstraintResponse GetConstraint(GetConstraintRequest request)
+        {
+            return DataContext.Constraint.Where(x => x.Id == request.Id)
+                .Include(x => x.Relations)
+                .Include(x => x.Relations.Select(y => y.ThreatHost))
+                .Include(x => x.Relations.Select(y => y.OpportunityHost))
+                .Include(x => x.Relations.Select(y => y.WeaknessHost))
+                .Include(x => x.Relations.Select(y => y.StrengthHost))
+                .FirstOrDefault().MapTo<GetConstraintResponse>();
+        }
+
+
+        public GetChallengeResponse GetChallenge(GetChallengeRequest request)
+        {
+            return DataContext.Challenges.Where(x => x.Id == request.Id)
+                .Include(x => x.Relations)
+                .Include(x => x.Relations.Select(y => y.ThreatHost))
+                .Include(x => x.Relations.Select(y => y.OpportunityHost))
+                .Include(x => x.Relations.Select(y => y.WeaknessHost))
+                .Include(x => x.Relations.Select(y => y.StrengthHost))
+                .FirstOrDefault().MapTo<GetChallengeResponse>();
+        }
+
+
+        public SubmitEnvironmentsScanningResponse SubmitEnvironmentsScanning(int id)
+        {
+            try
+            {
+                var environmentsScanning = DataContext.EnvironmentsScannings.Include(x => x.PlanningBlueprint).First(x => x.Id == id);
+                environmentsScanning.IsLocked = true;
+                var businessPosture = DataContext.BusinessPostures.First(x => x.PlanningBlueprint.Id == environmentsScanning.PlanningBlueprint.Id);
+                businessPosture.IsLocked = false;
+                DataContext.SaveChanges();
+                return new SubmitEnvironmentsScanningResponse
+                {
+                    IsSuccess = true,
+                    Message = "Environments Scanning has been successfully submited",
+                    BusinessPostureId = businessPosture.Id
+                };
+            }
+            catch {
+                return new SubmitEnvironmentsScanningResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured, please contact adminstrator for further information"
+                };
+            }
         }
     }
 }

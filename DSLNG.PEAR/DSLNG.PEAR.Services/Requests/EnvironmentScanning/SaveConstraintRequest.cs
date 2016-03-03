@@ -12,13 +12,7 @@ namespace DSLNG.PEAR.Services.Requests.EnvironmentScanning
         public string Definition { get; set; }
         public string Type { get; set; }
         public string Category { get; set; }
-        public IList<Relation> Relations { get; set; }
         public int EnviId { get; set; }
-
-        public class Relation
-        {
-            public int Id { get; set; }
-            public string Desc { get; set; }
-        }
+        public int[] RelationIds { get; set; }
     }
 }

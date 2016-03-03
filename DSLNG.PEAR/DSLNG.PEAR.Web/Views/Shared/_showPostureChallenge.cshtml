@@ -1,0 +1,8 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.BusinessPosture.PostureChalengeListViewModel
+
+<ul class="color-white">
+    @foreach(var item in Model.DesiredStates)
+    {
+        <li>@item.Description</li>
+    }
+</ul>

@@ -98,6 +98,17 @@ using DSLNG.PEAR.Services.Responses.BusinessPosture;
 using DSLNG.PEAR.Services.Requests.BusinessPosture;
 using DSLNG.PEAR.Services.Responses.EnvironmentScanning;
 using DSLNG.PEAR.Services.Requests.EnvironmentScanning;
+using DSLNG.PEAR.Services.Responses.MidtermFormulation;
+using DSLNG.PEAR.Services.Requests.MidtermFormulation;
+using DSLNG.PEAR.Services.Responses.MidtermPlanning;
+using DSLNG.PEAR.Services.Requests.MidtermPlanning;
+using DSLNG.PEAR.Data.Entities.Pop;
+using DSLNG.PEAR.Services.Responses.PopDashboard;
+using DSLNG.PEAR.Services.Requests.PopDashboard;
+using DSLNG.PEAR.Services.Requests.PopInformation;
+using DSLNG.PEAR.Services.Responses.PopInformation;
+using PopInformationType = DSLNG.PEAR.Data.Enums.PopInformationType;
+using DSLNG.PEAR.Services.Requests.Signature;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -528,8 +539,13 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.RoleGroupIds, o => o.MapFrom(s => s.RoleGroups.Select(x => x.Id).ToArray()));
             Mapper.CreateMap<SavePlanningBlueprintRequest, PlanningBlueprint>();
             Mapper.CreateMap<PlanningBlueprint, GetPlanningBlueprintsResponse.PlanningBlueprint>();
+            Mapper.CreateMap<PlanningBlueprint, GetPlanningBlueprintResponse>()
+                .ForMember(x => x.KeyOutputs, o => o.MapFrom(s => s.KeyOutput));
+            Mapper.CreateMap<KeyOutputConfiguration, GetPlanningBlueprintResponse.KeyOutputResponse>();
             Mapper.CreateMap<EnvironmentsScanning, GetPlanningBlueprintsResponse.EnvironmentsScanning>();
             Mapper.CreateMap<BusinessPostureIdentification, GetPlanningBlueprintsResponse.BusinessPostureIdentification>();
+            Mapper.CreateMap<MidtermPhaseFormulation, GetPlanningBlueprintsResponse.MidtermPhaseFormulation>();
+            Mapper.CreateMap<MidtermStrategyPlanning, GetPlanningBlueprintsResponse.MidtermStragetyPlanning>();
             Mapper.CreateMap<Kpi, GetKpiDetailResponse>()
                   .ForMember(x => x.Code, y => y.MapFrom(z => z.Code))
                   .ForMember(x => x.Group, y => y.MapFrom(z => z.Group.Name))
@@ -543,27 +559,45 @@ namespace DSLNG.PEAR.Services.AutoMapper
                   .ForMember(x => x.YtdFormula, y => y.MapFrom(z => z.YtdFormula.ToString()))
                   .ForMember(x => x.Level, y => y.MapFrom(z => z.Level.Name.ToString()))
                 ;
-            Mapper.CreateMap<BusinessPostureIdentification, GetBusinessPostureResponse>();
+            Mapper.CreateMap<BusinessPostureIdentification, GetBusinessPostureResponse>()
+                .ForMember(x => x.PlanningBlueprintId, o => o.MapFrom(s => s.PlanningBlueprint.Id));
             Mapper.CreateMap<DesiredState, GetBusinessPostureResponse.DesiredState>();
             Mapper.CreateMap<Posture, GetBusinessPostureResponse.Posture>();
             Mapper.CreateMap<PostureChallenge, GetBusinessPostureResponse.PostureChallenge>()
-                .ForMember(x => x.HasRelation, o => o.MapFrom(x => x.DesiredStates.Count > 0));
+                .ForMember(x => x.HasRelation, o => o.MapFrom(y => y.DesiredStates.Count > 0))
+                .ForMember(x => x.Ids, o => o.MapFrom(y => y.DesiredStates.Select(z => z.Id)));
             Mapper.CreateMap<PostureConstraint, GetBusinessPostureResponse.PostureConstraint>()
-                .ForMember(x => x.HasRelation, o => o.MapFrom(x => x.DesiredStates.Count > 0));
+                .ForMember(x => x.HasRelation, o => o.MapFrom(y => y.DesiredStates.Count > 0))
+                .ForMember(x => x.Ids, o => o.MapFrom(y => y.DesiredStates.Select(z => z.Id)));
+            Mapper.CreateMap<EnvironmentsScanning, GetBusinessPostureResponse.EnvironmentScanning>();
+            Mapper.CreateMap<UltimateObjectivePoint, GetBusinessPostureResponse.EnvironmentScanning.UltimateObjective>();
+            Mapper.CreateMap<Constraint, GetBusinessPostureResponse.EnvironmentScanning.Constraint>();
+            Mapper.CreateMap<Challenge, GetBusinessPostureResponse.EnvironmentScanning.Challenge>();
+            
+
 
             Mapper.CreateMap<SaveDesiredStateRequest, DesiredState>();
             Mapper.CreateMap<DesiredState, SaveDesiredStateResponse>();
             Mapper.CreateMap<SavePostureChallengeRequest, PostureChallenge>();
             Mapper.CreateMap<SavePostureConstraintRequest, PostureConstraint>();
 
-            Mapper.CreateMap<EnvironmentsScanning, GetEnvironmentsScanningResponse>();
+            Mapper.CreateMap<EnvironmentsScanning, GetEnvironmentsScanningResponse>()
+                .ForMember(x => x.BusinessPostureId, o => o.MapFrom(s => s.PlanningBlueprint.BusinessPostureIdentification.Id));
             Mapper.CreateMap<UltimateObjectivePoint, GetEnvironmentsScanningResponse.UltimateObjective>();
             Mapper.CreateMap<EnvironmentalScanning, GetEnvironmentsScanningResponse.Environmental>();
             Mapper.CreateMap<SaveEnvironmentScanningRequest, UltimateObjectivePoint>();
             Mapper.CreateMap<SaveEnvironmentalScanningRequest, EnvironmentalScanning>()
                 .ForMember(x => x.Desc, y => y.MapFrom(z => z.Description));
-            Mapper.CreateMap<Constraint, GetEnvironmentsScanningResponse.Constraint>();
-            Mapper.CreateMap<Challenge, GetEnvironmentsScanningResponse.Challenge>();
+            Mapper.CreateMap<Constraint, GetEnvironmentsScanningResponse.Constraint>()
+                .ForMember(x => x.ThreatIds, y => y.MapFrom(z => z.Relations.Where(u => u.ThreatHost != null).Select(m => m.Id).ToArray()))
+                .ForMember(x => x.OpportunityIds, y => y.MapFrom(z => z.Relations.Where(u => u.OpportunityHost != null).Select(m => m.Id).ToArray()))
+                .ForMember(x => x.WeaknessIds, y => y.MapFrom(z => z.Relations.Where(u => u.WeaknessHost != null).Select(m => m.Id).ToArray()))
+                .ForMember(x => x.StrengthIds, y => y.MapFrom(z => z.Relations.Where(u => u.StrengthHost != null).Select(m => m.Id).ToArray()));
+            Mapper.CreateMap<Challenge, GetEnvironmentsScanningResponse.Challenge>()
+                .ForMember(x => x.ThreatIds, y => y.MapFrom(z => z.Relations.Where(u => u.ThreatHost != null).Select(m => m.Id).ToArray()))
+                .ForMember(x => x.OpportunityIds, y => y.MapFrom(z => z.Relations.Where(u => u.OpportunityHost != null).Select(m => m.Id).ToArray()))
+                .ForMember(x => x.WeaknessIds, y => y.MapFrom(z => z.Relations.Where(u => u.WeaknessHost != null).Select(m => m.Id).ToArray()))
+                .ForMember(x => x.StrengthIds, y => y.MapFrom(z => z.Relations.Where(u => u.StrengthHost != null).Select(m => m.Id).ToArray()));
             Mapper.CreateMap<SaveConstraintRequest, Constraint>();
             Mapper.CreateMap<Constraint, SaveConstraintResponse>();
             Mapper.CreateMap<SaveChallengeRequest, Challenge>();
@@ -576,7 +610,68 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<DesiredState, GetVoyagePlanResponse.DesiredState>();
             Mapper.CreateMap<PostureChallenge, GetVoyagePlanResponse.PostureChallenge>();
             Mapper.CreateMap<PostureConstraint, GetVoyagePlanResponse.PostureConstraint>();
+            Mapper.CreateMap<CalculateOutputResponse.KeyOutputResponse, GetVoyagePlanResponse.KeyOutputResponse>();
+            Mapper.CreateMap<Constraint, GetConstraintResponse>()
+                .ForMember(x =>x.ThreatIds, y => y.MapFrom(z => z.Relations.Where(o =>o.ThreatHost != null)))
+                .ForMember(x => x.Opportunitys, y => y.MapFrom(z => z.Relations.Where(o => o.OpportunityHost != null)))
+                .ForMember(x => x.WeaknessIds, y => y.MapFrom(z => z.Relations.Where(o => o.WeaknessHost != null)))
+                .ForMember(x => x.StrengthIds, y => y.MapFrom(z => z.Relations.Where(o => o.StrengthHost != null)));
+            Mapper.CreateMap<EnvironmentalScanning, GetConstraintResponse.Environmental>();
+            Mapper.CreateMap<Challenge, GetChallengeResponse>()
+                .ForMember(x => x.ThreatIds, y => y.MapFrom(z => z.Relations.Where(o => o.ThreatHost != null)))
+                .ForMember(x => x.Opportunitys, y => y.MapFrom(z => z.Relations.Where(o => o.OpportunityHost != null)))
+                .ForMember(x => x.WeaknessIds, y => y.MapFrom(z => z.Relations.Where(o => o.WeaknessHost != null)))
+                .ForMember(x => x.StrengthIds, y => y.MapFrom(z => z.Relations.Where(o => o.StrengthHost != null)));
+            Mapper.CreateMap<EnvironmentalScanning, GetChallengeResponse.Environmental>();
 
+            Mapper.CreateMap<PostureChallenge, GetPostureChallengeResponse>()
+                .ForMember(x => x.DesiredStates, y => y.MapFrom(z => z.DesiredStates.Where(o => o.Posture != null)));
+            Mapper.CreateMap<DesiredState, GetPostureChallengeResponse.DesiredState>();
+
+            Mapper.CreateMap<PostureConstraint, GetPostureConstraintResponse>()
+                .ForMember(x => x.DesiredStates, y => y.MapFrom(z => z.DesiredStates.Where(o => o.Posture != null)));
+            Mapper.CreateMap<DesiredState, GetPostureConstraintResponse.DesiredState>();
+
+            Mapper.CreateMap<Posture, GetMidtermFormulationResponse.Posture>();
+            Mapper.CreateMap<DesiredState, GetMidtermFormulationResponse.DesiredState>();
+            Mapper.CreateMap<MidtermPhaseFormulationStage, GetMidtermFormulationResponse.MidtermFormulationStage>();
+            Mapper.CreateMap<MidtermPhaseDescription, GetMidtermFormulationResponse.MidtermPhaseDescription>();
+            Mapper.CreateMap<MidtermPhaseKeyDriver, GetMidtermFormulationResponse.MidtermPhaseKeyDriver>();
+
+            Mapper.CreateMap<AddStageRequest, MidtermPhaseFormulationStage>();
+            Mapper.CreateMap<AddDefinitionRequest, MidtermPhaseDescription>();
+            Mapper.CreateMap<AddDefinitionRequest, MidtermPhaseKeyDriver>();
+
+            Mapper.CreateMap<MidtermStrategicPlanning, GetMidtermPlanningsResponse.MidtermPlanning>();
+            Mapper.CreateMap<MidtermStrategicPlanningObjective, GetMidtermPlanningsResponse.MidtermPlanningObjective>();
+            Mapper.CreateMap<Kpi, GetMidtermPlanningsResponse.Kpi>()
+                .ForMember(d => d.Measurement, o => o.MapFrom(s => s.Measurement.Name));
+            Mapper.CreateMap<KpiAchievement, GetMidtermPlanningsResponse.KpiData>()
+                .ForMember(d => d.KpiId, o => o.MapFrom(s => s.Kpi.Id))
+                .ForMember(d => d.Year, o => o.MapFrom(s => s.Periode.Year));
+
+            Mapper.CreateMap<AddObjectiveRequest, MidtermStrategicPlanningObjective>();
+            Mapper.CreateMap<AddMidtermPlanningRequest, MidtermStrategicPlanning>();
+
+            Mapper.CreateMap<KeyOutputCategory, GetActiveOutputCategoriesResponse.OutputCategoryResponse>()
+                .ForMember(x => x.KeyOutputs, o => o.MapFrom(s => 
+                    s.KeyOutputs.Where(x => x.IsActive).MapTo<GetActiveOutputCategoriesResponse.KeyOutputResponse>()));
+            Mapper.CreateMap<KeyOutputConfiguration, GetActiveOutputCategoriesResponse.KeyOutputResponse>()
+                .ForMember(x => x.KeyAssumptions, o => o.Ignore())
+                .ForMember(x => x.Kpis, o => o.Ignore())
+                .ForMember(x => x.Measurement, o => o.Ignore());
+
+
+            Mapper.CreateMap<PopDashboard, GetPopDashboardsResponse.PopDashboard>();
+            Mapper.CreateMap<SavePopDashboardRequest, PopDashboard>();
+            Mapper.CreateMap<PopDashboard, GetPopDashboardResponse>();
+            Mapper.CreateMap<PopInformation, GetPopDashboardResponse.PopInformation>();
+            Mapper.CreateMap<Signature, GetPopDashboardResponse.Signature>()
+                .ForMember(x => x.User, o => o.MapFrom(y => y.User.Username))
+                .ForMember(x => x.UserId, o => o.MapFrom(y => y.User.Id));
+            Mapper.CreateMap<SavePopInformationRequest, PopInformation>();
+            Mapper.CreateMap<SaveSignatureRequest, DSLNG.PEAR.Data.Entities.Pop.Signature>()
+                .ForMember(x => x.Type, o => o.MapFrom(y => y.TypeSignature));
             base.Configure();
         }
 
