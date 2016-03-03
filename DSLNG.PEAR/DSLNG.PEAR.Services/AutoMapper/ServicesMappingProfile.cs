@@ -98,6 +98,13 @@ using DSLNG.PEAR.Services.Responses.MidtermFormulation;
 using DSLNG.PEAR.Services.Requests.MidtermFormulation;
 using DSLNG.PEAR.Services.Responses.MidtermPlanning;
 using DSLNG.PEAR.Services.Requests.MidtermPlanning;
+using DSLNG.PEAR.Data.Entities.Pop;
+using DSLNG.PEAR.Services.Responses.PopDashboard;
+using DSLNG.PEAR.Services.Requests.PopDashboard;
+using DSLNG.PEAR.Services.Requests.PopInformation;
+using DSLNG.PEAR.Services.Responses.PopInformation;
+using PopInformationType = DSLNG.PEAR.Data.Enums.PopInformationType;
+using DSLNG.PEAR.Services.Requests.Signature;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -527,6 +534,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.RoleGroupIds, o => o.MapFrom(s => s.RoleGroups.Select(x => x.Id).ToArray()));
             Mapper.CreateMap<SavePlanningBlueprintRequest, PlanningBlueprint>();
             Mapper.CreateMap<PlanningBlueprint, GetPlanningBlueprintsResponse.PlanningBlueprint>();
+            Mapper.CreateMap<PlanningBlueprint, GetPlanningBlueprintResponse>()
+                .ForMember(x => x.KeyOutputs, o => o.MapFrom(s => s.KeyOutput));
+            Mapper.CreateMap<KeyOutputConfiguration, GetPlanningBlueprintResponse.KeyOutputResponse>();
             Mapper.CreateMap<EnvironmentsScanning, GetPlanningBlueprintsResponse.EnvironmentsScanning>();
             Mapper.CreateMap<BusinessPostureIdentification, GetPlanningBlueprintsResponse.BusinessPostureIdentification>();
             Mapper.CreateMap<MidtermPhaseFormulation, GetPlanningBlueprintsResponse.MidtermPhaseFormulation>();
@@ -595,6 +605,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<DesiredState, GetVoyagePlanResponse.DesiredState>();
             Mapper.CreateMap<PostureChallenge, GetVoyagePlanResponse.PostureChallenge>();
             Mapper.CreateMap<PostureConstraint, GetVoyagePlanResponse.PostureConstraint>();
+            Mapper.CreateMap<CalculateOutputResponse.KeyOutputResponse, GetVoyagePlanResponse.KeyOutputResponse>();
             Mapper.CreateMap<Constraint, GetConstraintResponse>()
                 .ForMember(x =>x.ThreatIds, y => y.MapFrom(z => z.Relations.Where(o =>o.ThreatHost != null)))
                 .ForMember(x => x.Opportunitys, y => y.MapFrom(z => z.Relations.Where(o => o.OpportunityHost != null)))
@@ -637,6 +648,25 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<AddObjectiveRequest, MidtermStrategicPlanningObjective>();
             Mapper.CreateMap<AddMidtermPlanningRequest, MidtermStrategicPlanning>();
 
+            Mapper.CreateMap<KeyOutputCategory, GetActiveOutputCategoriesResponse.OutputCategoryResponse>()
+                .ForMember(x => x.KeyOutputs, o => o.MapFrom(s => 
+                    s.KeyOutputs.Where(x => x.IsActive).MapTo<GetActiveOutputCategoriesResponse.KeyOutputResponse>()));
+            Mapper.CreateMap<KeyOutputConfiguration, GetActiveOutputCategoriesResponse.KeyOutputResponse>()
+                .ForMember(x => x.KeyAssumptions, o => o.Ignore())
+                .ForMember(x => x.Kpis, o => o.Ignore())
+                .ForMember(x => x.Measurement, o => o.Ignore());
+
+
+            Mapper.CreateMap<PopDashboard, GetPopDashboardsResponse.PopDashboard>();
+            Mapper.CreateMap<SavePopDashboardRequest, PopDashboard>();
+            Mapper.CreateMap<PopDashboard, GetPopDashboardResponse>();
+            Mapper.CreateMap<PopInformation, GetPopDashboardResponse.PopInformation>();
+            Mapper.CreateMap<Signature, GetPopDashboardResponse.Signature>()
+                .ForMember(x => x.User, o => o.MapFrom(y => y.User.Username))
+                .ForMember(x => x.UserId, o => o.MapFrom(y => y.User.Id));
+            Mapper.CreateMap<SavePopInformationRequest, PopInformation>();
+            Mapper.CreateMap<SaveSignatureRequest, DSLNG.PEAR.Data.Entities.Pop.Signature>()
+                .ForMember(x => x.Type, o => o.MapFrom(y => y.TypeSignature));
             base.Configure();
         }
 

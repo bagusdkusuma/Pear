@@ -150,6 +150,12 @@ using DSLNG.PEAR.Web.ViewModels.MidtermFormulation;
 using System.Globalization;
 using DSLNG.PEAR.Web.ViewModels.MidtermStrategyPlanning;
 using DSLNG.PEAR.Services.Requests.MidtermPlanning;
+using DSLNG.PEAR.Web.ViewModels.PopDashboard;
+using DSLNG.PEAR.Services.Requests.PopDashboard;
+using DSLNG.PEAR.Services.Responses.PopDashboard;
+using DSLNG.PEAR.Services.Responses.PopInformation;
+using DSLNG.PEAR.Services.Requests.PopInformation;
+using DSLNG.PEAR.Services.Requests.Signature;
 namespace DSLNG.PEAR.Web.AutoMapper
 {
     public class ViewModelMappingProfile : Profile
@@ -593,6 +599,8 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<OperationConfigUpdateViewModel, UpdateOperationRequest>();
             Mapper.CreateMap<PlanningBlueprintViewModel, SavePlanningBlueprintRequest>();
+            Mapper.CreateMap<GetPlanningBlueprintResponse, PlanningBlueprintViewModel>();
+            Mapper.CreateMap<GetPlanningBlueprintResponse.KeyOutputResponse, PlanningBlueprintViewModel.KeyOutputViewModel>();
             Mapper.CreateMap<GetKpiDetailResponse, DetailKpiViewModel>();
 
             Mapper.CreateMap<GetBusinessPostureResponse, BusinessPostureViewModel>();
@@ -626,6 +634,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetVoyagePlanResponse.DesiredState, VoyagePlanViewModel.DesiredStateViewModel>();
             Mapper.CreateMap<GetVoyagePlanResponse.PostureChallenge, VoyagePlanViewModel.PostureChallengeViewModel>();
             Mapper.CreateMap<GetVoyagePlanResponse.PostureConstraint, VoyagePlanViewModel.PostureConstraintViewModel>();
+            Mapper.CreateMap<GetVoyagePlanResponse.KeyOutputResponse, VoyagePlanViewModel.KeyOutputViewModel>();
             Mapper.CreateMap<GetConstraintResponse, GetConstraintViewModel>();
             Mapper.CreateMap<GetConstraintResponse.Environmental, GetConstraintViewModel.Environmental>();
             Mapper.CreateMap<GetChallengeResponse, GetChallengeViewModel>();
@@ -650,6 +659,16 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<AddMidtermPlanningViewModel, AddMidtermPlanningRequest>()
                .ForMember(d => d.StartDate, o => o.MapFrom(s => string.IsNullOrEmpty(s.StartDate) ? (DateTime?)null : DateTime.ParseExact("01/" + s.StartDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)))
                .ForMember(d => d.EndDate, o => o.MapFrom(s => string.IsNullOrEmpty(s.StartDate) ? (DateTime?)null : DateTime.ParseExact("01/" + s.EndDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)));
+
+            Mapper.CreateMap<GetActiveOutputCategoriesResponse, EconomicIndicatorsViewModel>();
+            Mapper.CreateMap<GetActiveOutputCategoriesResponse.OutputCategoryResponse, EconomicIndicatorsViewModel.OutputCategoryViewModel>();
+            Mapper.CreateMap<GetActiveOutputCategoriesResponse.KeyOutputResponse, EconomicIndicatorsViewModel.KeyOutputViewModel>();
+            Mapper.CreateMap<SavePopDashboardViewModel, SavePopDashboardRequest>();
+            Mapper.CreateMap<GetPopDashboardResponse, GetPopDashboardViewModel>();
+            Mapper.CreateMap<GetPopDashboardResponse.PopInformation, GetPopDashboardViewModel.PopInformation>();
+            Mapper.CreateMap<GetPopDashboardResponse.Signature, SignatureViewModel>();
+            Mapper.CreateMap<SavePopInformationViewModel, SavePopInformationRequest>();
+            Mapper.CreateMap<GetPopDashboardViewModel, SaveSignatureRequest>();
             base.Configure();
         }
 

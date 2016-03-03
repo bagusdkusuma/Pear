@@ -22,18 +22,21 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IBusinessPostureIdentificationService _businessPostureIdentification;
         private readonly IMidtermFormulationService _midtermFormulationService;
         private readonly IMidtermPlanningService _midtermPlanningService;
+        private readonly IOutputCategoryService _outputCategoryService;
 
         public PlanningBlueprintController(IPlanningBlueprintService planningBlueprintService,
             IBusinessPostureIdentificationService businessPostureIdentification,
             IEnvironmentScanningService environmentScanningService,
             IMidtermFormulationService midtermFormulationService,
-            IMidtermPlanningService midtermPlanningService)
+            IMidtermPlanningService midtermPlanningService,
+            IOutputCategoryService outputCategoryService)
         {
             _planningBlueprintService = planningBlueprintService;
             _businessPostureIdentification = businessPostureIdentification;
             _environmentScanningService = environmentScanningService;
             _midtermFormulationService = midtermFormulationService;
             _midtermPlanningService = midtermPlanningService;
+            _outputCategoryService = outputCategoryService;
         }
 
         public ActionResult Index()
@@ -70,6 +73,19 @@ namespace DSLNG.PEAR.Web.Controllers
         [HttpPost]
         public ActionResult Create(PlanningBlueprintViewModel viewModel)
         {
+            var request = viewModel.MapTo<SavePlanningBlueprintRequest>();
+            var response = _planningBlueprintService.SavePlanningBlueprint(request);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Edit(int id) {
+            return View(_planningBlueprintService.GetPlanningBlueprint(id).MapTo<PlanningBlueprintViewModel>());
+        }
+
+        [HttpPost]
+        public ActionResult Edit(PlanningBlueprintViewModel viewModel) {
             var request = viewModel.MapTo<SavePlanningBlueprintRequest>();
             var response = _planningBlueprintService.SavePlanningBlueprint(request);
             TempData["IsSuccess"] = response.IsSuccess;
@@ -256,6 +272,11 @@ namespace DSLNG.PEAR.Web.Controllers
                 return View("MidtermPhaseFormulation", viewModel);
             }
         }
-        
+
+        public ActionResult GetEconomicIndicators() {
+            var viewModel = _outputCategoryService.GetActiveOutputCategories(false).MapTo<EconomicIndicatorsViewModel>();
+            return View(viewModel);
+        }
+
     }
 }

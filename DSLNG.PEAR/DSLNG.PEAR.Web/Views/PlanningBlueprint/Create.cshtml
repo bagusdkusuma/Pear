@@ -8,8 +8,7 @@
     {
         @Html.AntiForgeryToken()
         <div class="col-md-12">
-            <div class="title">Planning Buleprint</div>
-            <div class="description_year">New</div>
+            <div class="title">Planning Blueprint</div>
             <div>@Html.ValidationSummary(true)</div>
         </div>
         <div class="col-md-12">
@@ -24,6 +23,13 @@
                     @Html.TextAreaFor(model => model.Description, 5, 100, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Description)
                 </div>
+
+                <div class="form-group form-list">
+                    <label>Economic Indicators</label>
+                    <input type="button" data-toggle="modal" id="test"  data-target="#economic-indicator-modal" class="btn btn-default" value="Choose Economic Indicators" />
+                       
+                </div>
+                 <ul class="economic-indicators-holder" style="padding-left: 200px;color:#fff"></ul>
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.IsActive)
                     @Html.CheckBoxFor(model => model.IsActive, new { @class = "form-control" })
@@ -39,3 +45,43 @@
         </div>
     }
     </div>
+<div class="modal fade" id="economic-indicator-modal" data-id="id">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close btn-finish-relation" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Economic Indicator</h3>
+            </div>
+
+            <div class="modal-body modal-loading">
+                 <div class="economic-indicators"></div>
+                 <img src="@Url.Content("~/Content/img/ajax-loader2.gif")" class="ajax-loading-dialog" style="position: absolute"></img>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var $economicHolder = $('.economic-indicators-holder');
+        $('#economic-indicator-modal').on('show.bs.modal', function () {
+            var $this = $(this);
+            if (!$this.find('.indicator-group').length) {
+                $.get('/planningblueprint/geteconomicindicators', function (data) {
+                    $this.find('.modal-loading').addClass('loaded');
+                    $this.find('.economic-indicators').html(data);
+                });
+            }
+        });
+        $('#economic-indicator-modal').on('hidden.bs.modal', function () {
+            var $this = $(this);
+            //$this.find('.modal-loading').removeClass('loaded');
+            $economicHolder.html('');
+            $this.find('input[name="checkthis"]:checked').each(function (i, val) {
+                var $liClone = $(val).closest('li').clone();
+                $liClone.find('input[type="checkbox"]').prop('type', 'hidden').prop('name', 'KeyOutputIds[]');
+                $economicHolder.append($liClone);
+            });
+        });
+    });
+</script>

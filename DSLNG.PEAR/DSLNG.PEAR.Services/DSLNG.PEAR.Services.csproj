@@ -94,10 +94,15 @@
     <Compile Include="Interfaces\IMidtermFormulationService.cs" />
     <Compile Include="Interfaces\IMidtermPlanningService.cs" />
     <Compile Include="Interfaces\IPlanningBlueprintService.cs" />
+    <Compile Include="Interfaces\IPopDashboardService.cs" />
+    <Compile Include="Interfaces\IPopInformationService.cs" />
+    <Compile Include="Interfaces\ISignatureService.cs" />
     <Compile Include="MidtermFormulationService.cs" />
     <Compile Include="MidtermPlanningService.cs" />
     <Compile Include="OperationDataService.cs" />
     <Compile Include="PlanningBlueprintService.cs" />
+    <Compile Include="PopDashboardService.cs" />
+    <Compile Include="PopInformationService.cs" />
     <Compile Include="Requests\BusinessPosture\DeleteDesiredStateRequest.cs" />
     <Compile Include="Requests\BusinessPosture\DeletePostureChallengeRequest.cs" />
     <Compile Include="Requests\BusinessPosture\DeletePostureConstraintRequest.cs" />
@@ -134,6 +139,12 @@
     <Compile Include="Requests\OutputConfig\DeleteOutputConfigRequest.cs" />
     <Compile Include="Requests\PlanningBlueprint\GetPlanningBlueprintsRequest.cs" />
     <Compile Include="Requests\PlanningBlueprint\SavePlanningBlueprintRequest.cs" />
+    <Compile Include="Requests\PopDashboard\GetPopDashboardRequest.cs" />
+    <Compile Include="Requests\PopDashboard\GetPopDashboardsRequest.cs" />
+    <Compile Include="Requests\PopDashboard\SavePopDashboardRequest.cs" />
+    <Compile Include="Requests\PopInformation\GetPopInformationRequest.cs" />
+    <Compile Include="Requests\PopInformation\SavePopInformationRequest.cs" />
+    <Compile Include="Requests\Signature\SaveSignatureRequest.cs" />
     <Compile Include="Requests\Template\DeleteTemplateRequest.cs" />
     <Compile Include="Responses\BusinessPosture\DeleteDesiredStateResponse.cs" />
     <Compile Include="Responses\BusinessPosture\DeletePostureChallengeResponse.cs" />
@@ -525,6 +536,7 @@
     <Compile Include="Responses\OutputConfig\GetOutputConfigsResponse.cs" />
     <Compile Include="Responses\PlanningBlueprint\ApproveMidtermStrategyResponse.cs" />
     <Compile Include="Responses\PlanningBlueprint\ApproveVoyagePlanResponse.cs" />
+    <Compile Include="Responses\PlanningBlueprint\GetPlanningBlueprintResponse.cs" />
     <Compile Include="Responses\PlanningBlueprint\GetPlanningBlueprintsResponse.cs" />
     <Compile Include="Responses\PlanningBlueprint\GetVoyagePlanResponse.cs" />
     <Compile Include="Responses\PlanningBlueprint\SavePlanningBlueprintResponse.cs" />
@@ -619,6 +631,12 @@
     <Compile Include="Responses\PmsSummary\UpdatePmsConfigResponse.cs" />
     <Compile Include="Requests\PmsSummary\UpdatePmsSummaryRequest.cs" />
     <Compile Include="Responses\PmsSummary\UpdatePmsSummaryResponse.cs" />
+    <Compile Include="Responses\PopDashboard\GetPopDashboardResponse.cs" />
+    <Compile Include="Responses\PopDashboard\GetPopDashboardsResponse.cs" />
+    <Compile Include="Responses\PopDashboard\GetUsersDropdownResponse.cs" />
+    <Compile Include="Responses\PopDashboard\SavePopDashboardResponse.cs" />
+    <Compile Include="Responses\PopInformation\GetPopInformationResponse.cs" />
+    <Compile Include="Responses\PopInformation\SavePopInformationResponse.cs" />
     <Compile Include="Responses\RoleGroup\CreateRoleGroupResponse.cs" />
     <Compile Include="Responses\RoleGroup\DeleteRoleGroupResponse.cs" />
     <Compile Include="Responses\RoleGroup\Level.cs" />
@@ -632,6 +650,7 @@
     <Compile Include="Responses\Select\GetSelectResponse.cs" />
     <Compile Include="Responses\Select\GetSelectsResponse.cs" />
     <Compile Include="Responses\Select\UpdateSelectResponse.cs" />
+    <Compile Include="Responses\Signature\SaveSignatureResponse.cs" />
     <Compile Include="Responses\Template\CreateTemplateResponse.cs" />
     <Compile Include="Responses\Template\DeleteTemplateResponse.cs" />
     <Compile Include="Responses\Template\GetTemplateResponse.cs" />
@@ -675,6 +694,7 @@
     <Compile Include="RoleGroupService.cs" />
     <Compile Include="ScenarioService.cs" />
     <Compile Include="SelectService.cs" />
+    <Compile Include="SignatureService.cs" />
     <Compile Include="TemplateService.cs" />
     <Compile Include="TypeService.cs" />
     <Compile Include="UserService.cs" />

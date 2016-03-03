@@ -3,49 +3,67 @@
     ViewBag.Title = "Mid Term Strategy Planning";
 }
 <h2>Midterm Strategy Planning</h2>
-<div class="midterm-phase-formulation in-planning">
-    <div class="row">
-        <div class="col-md-12">
-            <h4 style="background-color: #00bfff;">Mid Term Phase Formulation
-            </h4>
-        </div>
-    </div>
-    <div class="row formulation-stages">
-        @foreach (var item in Model.MidtermFormulationStages)
-        { 
-            <div data-relation-source="/MidtermStrategyPlanning/GetByStageId/@item.Id" data-id="@item.Id" class="formulation-stage col-md-3">
-                <div data-id="@item.Id" class="title">@item.Title
-                </div>
-                <ul class="date-range">
-                    <li><span class="start">@item.StartDate.Value.ToString("MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)</span></li>
-                    <li><span class="end">@item.EndDate.Value.ToString("MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)</span></li>
-                </ul>
-                <div class="defined-header description">
-                    <div class="sub-title">
-                        Description
-                    </div>
-                </div>
-                <ul class="defined-list description">
-                    @foreach (var desc in item.Descriptions)
-                    { 
-                        <li data-id="@desc.Id">@desc.Value</li>
-                    }
-                </ul>
-                <div class=" key-driver">
-                    <div class="sub-title">
-                        Key Driver
-                    </div>
-                </div>
-                <ul class=" key-driver">
-                    @foreach (var keyDriver in item.KeyDrivers)
-                    { 
-                        <li data-id="@keyDriver.Id">@keyDriver.Value</li>
-                    }
-                </ul>
+ <div class="midterm-phase-formulation in-planning">
+        <div class="row">
+            <div class="col-md-12">
+                <h4 style="background-color: #00bfff;">Mid Term Phase Formulation 
+                </h4>
             </div>
+        </div>
+        @{var count = Model.MidtermFormulationStages.Count;
+          <div class="row">
+        <table class="formulation-stages-table">
+            <tr>
+                <th style="width:25%">&nbsp;</th>
+                <th style="width:25%">&nbsp;</th>
+                <th style="width:25%">&nbsp;</th>
+                <th style="width:25%">&nbsp;</th>
+            </tr>
+        @for (var i =0; i< count; i+= 4) { 
+            <tr class="formulation-stages">
+                @for (var j = i; j<i+4; j++){
+                    if (j >= count) { break; }
+                    var item = Model.MidtermFormulationStages[j];
+                    <td data-relation-source="/MidtermStrategyPlanning/GetByStageId/@item.Id" data-id="@item.Id" class="formulation-stage">
+                        <div>
+                          <div data-id="@item.Id" class="title">@item.Title
+                    </div>
+                    <ul class="date-range">
+                        <li><span class="start">@item.StartDate.Value.ToString("MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)</span></li>
+                        <li><span class="end">@item.StartDate.Value.ToString("MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)</span></li>
+                    </ul>
+                    <div class="clear"></div>
+                    <div class="defined-header description">
+                        <div class="sub-title">
+                            Description
+                        </div>
+                    </div>
+                    <ul class="defined-list description">
+                        @foreach (var desc in item.Descriptions)
+                        { 
+                            <li data-id="@desc.Id">@desc.Value</li>
+                        }
+                    </ul>
+                    <div class="defined-header key-driver">
+                        <div class="sub-title">
+                            Key Driver
+                        </div>
+                    </div>
+                    <ul class="defined-list key-driver">
+                        @foreach (var keyDriver in item.KeyDrivers)
+                        { 
+                            <li data-id="@keyDriver.Id">@keyDriver.Value</li>
+                        }
+                    </ul>
+                            </div>
+                    </td>    
+                }
+            </tr>
         }
-    </div>
-</div>
+        </table>
+              </div>
+        }
+     </div>
 <div class="midterm-strategy-planning">
     <div class="row">
         <div class="col-md-12">
@@ -56,8 +74,16 @@
             </h4>
         </div>
     </div>
-    <div class="row midterm-plannings">
-    </div>
+    <div class="row">
+    <table class="midterm-plannings-table">
+        <tr>
+            <th style="width:33.33%">&nbsp;</th>
+            <th style="width:33.33%">&nbsp;</th>
+            <th style="width:33.33%">&nbsp;</th>
+        </tr>
+        <tr class="midterm-plannings"></tr>
+    </table>
+        </div>
      <div class="row">
         <div class="col-md-12 artifact-designer-btns">
             @if(!Model.IsReviewer){
@@ -81,7 +107,8 @@
         </div>
     </div>
 
-    <div class="midterm-planning-template col-md-4">
+    <table><tr>
+    <td class="midterm-planning-template">
         <div class="midterm-planning-header">
         <h4 class="header-title"></h4>
               @if(!Model.IsReviewer){
@@ -92,6 +119,7 @@
             <li class="start"></li>
             <li class="end"></li>
         </ul>
+        <div class="clear"></div>
         <div class="objective-header">
             <h5 class="objective-title">Objective</h5>
               @if(!Model.IsReviewer){
@@ -107,7 +135,8 @@
                 <th>Economic</th>
             </tr>
         </table>
-    </div>
+    </td>
+        </tr></table>
     <div class="objective-form">
         <form action="/MidtermStrategyPlanning/AddObjective">
             <input type="hidden" name="MidtermPlanningId" />
@@ -222,7 +251,7 @@
             var $this = $(this);
             $.get($this.data('relation-source'), function (data) {
                 var mPlannings = data.MidtermPlannings;
-                var $mPlanningsHolder = $('.midterm-plannings');
+                var $mPlanningsHolder = $('.midterm-plannings:last-child');
                 $mPlanningsHolder.html('');
                 for (var i in mPlannings) {
                     var mPlanning = mPlannings[i];
@@ -263,7 +292,15 @@
                         $row.append($actualCol);
                         $kpisHolder.append($row);
                     }
-                    $mPlanningsHolder.append($mpTemplate);
+                    if ($mPlanningsHolder.children('td').length == 3) {
+                        var $newHolder = $('<tr />');
+                        $newHolder.addClass('midterm-plannings');
+                        $newHolder.append($mpTemplate);
+                        $mPlanningsHolder.parent().append($newHolder);
+                    } else {
+                        $mPlanningsHolder.append($mpTemplate);
+                    }
+                    $mPlanningsHolder = $('.midterm-plannings:last-child');
                 }
             });
         });
@@ -292,7 +329,7 @@
             $('.stage-selected').removeClass('stage-selected');
             $(this).addClass('stage-selected');
         });
-        $('.formulation-stages .formulation-stage:first-child').click();
+        $('.formulation-stages-table tr:first-child + tr .formulation-stage:first-child').click();
 
         $('.midterm-strategy-planning').popover({
             selector: '.add-strategic-planning',
@@ -328,7 +365,15 @@
                     $mpTemplate.find('.header-title').html(mPlanning.Title);
                     $mpTemplate.find('.start').html(moment(new Date(mPlanning.StartDate.match(/\d+/)[0] * 1)).format('MMM YYYY'));
                     $mpTemplate.find('.end').html(moment(new Date(mPlanning.EndDate.match(/\d+/)[0] * 1)).format('MMM YYYY'));
-                    $('.midterm-plannings').append($mpTemplate);
+                    var $mPlanningsHolder = $('.midterm-plannings:last-child');
+                    if ($mPlanningsHolder.children('td').length == 3) {
+                        var $newHolder = $('<tr />');
+                        $newHolder.addClass('midterm-plannings');
+                        $newHolder.append($mpTemplate);
+                        $mPlanningsHolder.parent().append($newHolder);
+                    } else {
+                        $mPlanningsHolder.append($mpTemplate);
+                    }
                     $('.add-strategic-planning').popover('hide');
                 }
             });

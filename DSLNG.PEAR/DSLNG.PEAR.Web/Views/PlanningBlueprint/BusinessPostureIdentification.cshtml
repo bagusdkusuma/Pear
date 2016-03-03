@@ -4,77 +4,72 @@
     ViewBag.Title = "BusinessPostureIdentification";
 }
 
+@Html.Partial("_MessageResponse")
 @* Environtments Scanning *@
 <div class="col-md-12 environment-scanning">
-    <div class="row row-uo border-style-1">
+    <div class="row row-uo">
         <h4>Ultimate Objective</h4>
     </div>
     <div class="row row-margin-5 color-white">
-        <div class="div-envi col-md-4 border-style-1">
-            <div class="col-md-4-child">
-                <span><b>Ultimate Objective (Construction Phase)</b></span>
-            </div>
-            <div>
-                <ul class="cp-list">
-                    @foreach (var item in Model.EnvironmentScanningHost.ConstructionPhase)
-                    {
-                        <li>@item.Description</li>
-                    }
-                </ul>
-                @Html.HiddenFor(model => model.Id)
-            </div>
-        </div>
-        <div class="div-envi col-md-4 border-style-1">
-            <div class="col-md-4-child">
-                <span><b>Ultimate Objective (Operation Phase)</b></span>
-            </div>
-            <div>
-                <ul class="op-list">
-                    @foreach (var item in Model.EnvironmentScanningHost.OperationPhase)
-                    {
-                        <li>@item.Description </li>
-                    }
-                </ul>
-                @Html.HiddenFor(model => model.Id)
-            </div>
-        </div>
-        <div class="div-envi col-md-4 border-style-1">
-            <div class="col-md-4-child">
-                <span><b>Ultimate Objective (Decomm.Re-Invent Phase)</b></span>
-            </div>
-            <div>
-                <ul class="rp-list">
-                    @foreach (var item in Model.EnvironmentScanningHost.ReinventPhase)
-                    {
-                        <li>@item.Description</li>
+        <table class="table-bordered table">
+            <tr>
+                <th style="width: 33.33%">Ultimate Objective (Construction Phase)
+                </th>
+                <th style="width: 33.33%">Ultimate Objective (Operation Phase)
+                </th>
+                <th style="width: 33.33%">Ultimate Objective (Decomm.Re-Invent Phase)
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <ul class="cp-list">
+                        @foreach (var item in Model.EnvironmentScanningHost.ConstructionPhase)
+                        {
+                            <li>@item.Description</li>
+                        }
+                    </ul>
+                </td>
+                <td>
+                    <ul class="op-list">
+                        @foreach (var item in Model.EnvironmentScanningHost.OperationPhase)
+                        {
+                            <li>@item.Description</li>
+                        }
+                    </ul>
+                </td>
+                <td>
+                    <ul class="rp-list">
+                        @foreach (var item in Model.EnvironmentScanningHost.ReinventPhase)
+                        {
+                            <li>@item.Description</li>
 
-                    }
-                </ul>
-                @Html.HiddenFor(model => model.Id)
-            </div>
-        </div>
+                        }
+                    </ul>
+                </td>
+            </tr>
+        </table>
     </div>
 
 
 
-    <div class="row row-constraint margin-style-1 border-style-1" style="background-color: #cc0000">
+    <div class="row row-constraint margin-style-1 border-style-1" style="background-color: darkred; position: relative; padding: 6px">
         <h6>Constraint</h6>
     </div>
     <div class="row row-margin-5 row-table-constrain">
-        <table class="table table-constraint border-style-1">
+        <table class="table table-constraint table table-bordered">
             <tr>
                 <td class="td-definition"><b>Definiton</b> </td>
                 <td class="td-entity"><b>Type</b></td>
                 <td class="td-entity"><b>Category</b></td>
             </tr>
             @{foreach (var item in Model.EnvironmentScanningHost.Constraints)
-            {
+              {
                 <tr>
-                    <td class="td-definition">@item.Definition</td>
+                    <td class="td-definition" style="text-align: left">@item.Definition</td>
                     <td class="td-entity">@item.Type</td>
                     <td class="td-entity">@item.Category</td>
                 </tr>
-            }
+              }
 
             }
 
@@ -83,11 +78,11 @@
 
 
 
-    <div class="row row-challenges margin-style-1 border-style-1" style="background-color: #ffcc00">
+    <div class="row row-challenges margin-style-1 border-style-1" style="background-color: gold; position: relative; padding: 6px">
         <h6>Challenges</h6>
     </div>
     <div class="row row-margin-5 row-table-constrain">
-        <table class="table table-challenge border-style-1">
+        <table class="table table-challenge table table-bordered">
             <tr>
 
                 <td class="td-definition"><b>Definiton</b> </td>
@@ -95,13 +90,13 @@
                 <td class="td-entity"><b>Category</b></td>
             </tr>
             @{foreach (var item in Model.EnvironmentScanningHost.Challenges)
-            {
+              {
                 <tr>
-                    <td class="td-definition">@item.Definition </td>
+                    <td class="td-definition" style="text-align: left">@item.Definition </td>
                     <td class="td-entity">@item.Type</td>
                     <td class="td-entity">@item.Category</td>
                 </tr>
-            }
+              }
 
             }
         </table>
@@ -115,111 +110,131 @@
     <h2>Business Posture Identification</h2>
 
     <div class="row">
-        <div class="col-md-12 row-header">
-            <h4 style="background-color: #00bfff;">Business Posture Identification</h4>
+        <div class="col-md-12">
+            <h4 style="background-color: rgba(0,176,240,1); width: 100%">Business Posture Identification</h4>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-4 list-block">
-            <h4 style="background-color: #009933">Construction Posture</h4>
-            <div class="sub-group">
-                <h6 style="background-color: #336600">Desired States</h6>
-                @if(!Model.IsReviewer){
-                <a href="#" data-toggle="popover" data-title="Add Desired State" data-posture-id="@Model.ConstructionPosture.Id" data-form-target="desired-state" class="popover-trigger"><i class="fa fa-plus"></i></a>
-                }
-            </div>
-            <ul class="list-result construction-desired-list">
-                @foreach (var item in Model.ConstructionPosture.DesiredStates)
-                {
-                    <li data-id="@item.Id">@item.Description   @if(!Model.IsReviewer){<a href="/BusinessPosture/DeleteDesiredState" class="remove-item"><i class="fa fa-minus"></i></a>}</li>
-                }
-            </ul>
-        </div>
-        <div class="col-md-4 list-block">
-            <h4 style="background-color: #009933">Operation Posture</h4>
-            <div class="sub-group">
-                <h6 style="background-color: #336600">Desired States</h6>
-                  @if(!Model.IsReviewer){<a href="#" data-toggle="popover" data-title="Add Desired State" data-posture-id="@Model.OperationPosture.Id" data-form-target="desired-state" class="popover-trigger"><i class="fa fa-plus"></i></a>
-                  }
-            </div>
-            <ul class="list-result operation-desired-list">
-                @foreach (var item in Model.OperationPosture.DesiredStates)
-                {
-                    <li data-id="@item.Id">@item.Description @if(!Model.IsReviewer){<a href="/BusinessPosture/DeleteDesiredState" class="remove-item"><i class="fa fa-minus"></i></a>}</li>
-                }
-            </ul>
-        </div>
-        <div class="col-md-4 list-block">
-            <h4 style="background-color: #009933">Decommisssioning Posture</h4>
-            <div class="sub-group">
-                <h6 style="background-color: #336600">Desired States</h6>
-                @if(!Model.IsReviewer){
-                <a href="#" data-toggle="popover" data-title="Add Desired State" data-posture-id="@Model.DecommissioningPosture.Id" data-form-target="desired-state" class="popover-trigger"><i class="fa fa-plus"></i></a>
-                }
-            </div>
-            <ul class="list-result decommissioning-desired-list">
-                @foreach (var item in Model.DecommissioningPosture.DesiredStates)
-                {
-                    <li data-id="@item.Id">@item.Description @if(!Model.IsReviewer){<a href="/BusinessPosture/DeleteDesiredState" class="remove-item"><i class="fa fa-minus"></i></a>}</li>
-                }
-            </ul>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-4 list-block">
-            <div>
-                <div class="sub-group">
-                    <h6 style="background-color: #e6e600">Posture Challenge</h6>
-                    @if(!Model.IsReviewer){
-                    <a href="#" data-toggle="popover" data-posture-type="construction" data-title="Add Desired State" data-posture="PostureChallenge" data-posture-id="@Model.ConstructionPosture.Id" data-form-target="posture-challenge" class="popover-trigger"><i class="fa fa-plus"></i></a>
-                    }
-                </div>
-            </div>
-            <table class=" table list-result">
+        <div class="col-md-12">
+            <table class="table-bordered table-desired-states">
                 <tr>
-                    <th style="width:70px;">Relation</th>
-                    <th style="width:320px">Definition</th>
-                    @if(!Model.IsReviewer){
-                    <th style="width:30px;"></th>
-                    }
+                    <td class="list-block" style="width: 33.33%">
+                        <h4 style="background-color: #009933">Construction Posture</h4>
+                        <div class="sub-group">
+                            <h6 style="background-color: #336600">Desired States</h6>
+                            @if (!Model.IsReviewer)
+                            {
+                                <a href="#" data-toggle="popover" data-title="Add Desired State" data-posture-id="@Model.ConstructionPosture.Id" data-form-target="desired-state" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                            }
+                        </div>
+                        <ul class="list-result construction-desired-list">
+                            @foreach (var item in Model.ConstructionPosture.DesiredStates)
+                            {
+                                <li data-id="@item.Id">@item.Description   @if (!Model.IsReviewer)
+                                                                           {<a href="/BusinessPosture/DeleteDesiredState" class="remove-item"><i class="fa fa-minus"></i></a>}</li>
+                            }
+                        </ul>
+                    </td>
+                    <td class="list-block" style="width: 33.33%">
+                        <h4 style="background-color: #009933">Operation Posture</h4>
+                        <div class="sub-group">
+                            <h6 style="background-color: #336600">Desired States</h6>
+                            @if (!Model.IsReviewer)
+                            {<a href="#" data-toggle="popover" data-title="Add Desired State" data-posture-id="@Model.OperationPosture.Id" data-form-target="desired-state" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                            }
+                        </div>
+                        <ul class="list-result operation-desired-list">
+                            @foreach (var item in Model.OperationPosture.DesiredStates)
+                            {
+                                <li data-id="@item.Id">@item.Description @if (!Model.IsReviewer)
+                                                                         {<a href="/BusinessPosture/DeleteDesiredState" class="remove-item"><i class="fa fa-minus"></i></a>}</li>
+                            }
+                        </ul>
+                    </td>
+                    <td class="list-block" style="width: 33.33%">
+                        <h4 style="background-color: #009933">Decommisssioning Posture</h4>
+                        <div class="sub-group">
+                            <h6 style="background-color: #336600">Desired States</h6>
+                            @if (!Model.IsReviewer)
+                            {
+                                <a href="#" data-toggle="popover" data-title="Add Desired State" data-posture-id="@Model.DecommissioningPosture.Id" data-form-target="desired-state" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                            }
+                        </div>
+                        <ul class="list-result decommissioning-desired-list">
+                            @foreach (var item in Model.DecommissioningPosture.DesiredStates)
+                            {
+                                <li data-id="@item.Id">@item.Description @if (!Model.IsReviewer)
+                                                                         {<a href="/BusinessPosture/DeleteDesiredState" class="remove-item"><i class="fa fa-minus"></i></a>}</li>
+                            }
+                        </ul>
+                    </td>
                 </tr>
-                @foreach (var item in Model.ConstructionPosture.PostureChallenges)
-                {
-                    <tr>
-                        <td>
-                            <a href="#" data-id="@item.Id" data-toggle="modal" data-ids="@item.RelationIdsString" data-type="construction" data-target="#posture-modal" class="btn-posture-challenge">
-                                @if (item.HasRelation == true)
-                                {
-                                    <span>R</span>
-                                }
-                            </a>
-
-                        </td>
-                        <td>@item.Definition </td>
-                        @if(!Model.IsReviewer){
-                        <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureChallenge" class="remove-item"><i class="fa fa-minus"></i></a></td>
-                        }
-                    </tr>
-                }
             </table>
         </div>
-        <div class="col-md-4 list-block">
-            <div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table-bordered table-posture-challenge">
+                <tr>
+                    <td class="list-block" style="width: 33.33%">
+                        <div>
+                            <div class="sub-group">
+                                <h6 style="background-color: #e6e600">Posture Challenge</h6>
+                                @if (!Model.IsReviewer)
+                                {
+                                    <a href="#" data-toggle="popover" data-posture-type="construction" data-title="Add Desired State" data-posture="PostureChallenge" data-posture-id="@Model.ConstructionPosture.Id" data-form-target="posture-challenge" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                                }
+                            </div>
+                        </div>
+                        <table class=" table list-result">
+                            <tr>
+                                <th style="width: 74px;">Relation</th>
+                                <th style="width: 320px">Definition</th>
+                                @if (!Model.IsReviewer)
+                                {
+                                    <th style="width: 30px;"></th>
+                                }
+                            </tr>
+                            @foreach (var item in Model.ConstructionPosture.PostureChallenges)
+                            {
+                                <tr>
+                                    <td>
+                                        <a href="#" data-id="@item.Id" data-toggle="modal" data-ids="@item.RelationIdsString" data-type="construction" data-target="#posture-modal" class="btn-posture-challenge">
+                                            @if (item.HasRelation == true)
+                                            {
+                                                <span>R</span>
+                                            }
+                                        </a>
+
+                                    </td>
+                                    <td style="text-align:left">@item.Definition </td>
+                                    @if (!Model.IsReviewer)
+                                    {
+                                        <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureChallenge" class="remove-item"><i class="fa fa-minus"></i></a></td>
+                                    }
+                                </tr>
+                            }
+                        </table>
+                    </td>
+                    <td class="list-block" style="width: 33.33%">
+                          <div>
                 <div class="sub-group">
                     <h6 style="background-color: #e6e600">Posture Challenge</h6>
-                    @if(!Model.IsReviewer){
-                    <a href="#" data-toggle="popover" data-posture-type="operation" data-title="Add Desired State" data-posture="PostureChallenge" data-posture-id="@Model.OperationPosture.Id" data-form-target="posture-challenge" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                    @if (!Model.IsReviewer)
+                    {
+                        <a href="#" data-toggle="popover" data-posture-type="operation" data-title="Add Desired State" data-posture="PostureChallenge" data-posture-id="@Model.OperationPosture.Id" data-form-target="posture-challenge" class="popover-trigger"><i class="fa fa-plus"></i></a>
                     }
                 </div>
             </div>
             <table class="table list-result">
                 <tr>
-                    <th style="width:70px;">Relation</th>
-                    <th style="width:320px">Definition</th>
-                    @if(!Model.IsReviewer){
-                    <th style="width:30px;"></th>
+                    <th style="width: 74px;">Relation</th>
+                    <th style="width: 320px">Definition</th>
+                    @if (!Model.IsReviewer)
+                    {
+                        <th style="width: 30px;"></th>
                     }
                 </tr>
                 @foreach (var item in Model.OperationPosture.PostureChallenges)
@@ -234,28 +249,31 @@
                             </a>
                         </td>
                         <td>@item.Definition </td>
-                        @if(!Model.IsReviewer){
-                        <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureChallenge" class="remove-item"><i class="fa fa-minus"></i></a></td>
+                        @if (!Model.IsReviewer)
+                        {
+                            <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureChallenge" class="remove-item"><i class="fa fa-minus"></i></a></td>
                         }
                     </tr>
                 }
             </table>
-        </div>
-        <div class="col-md-4 list-block">
-            <div>
+                    </td>
+                    <td class="list-block" style="width: 33.33%">
+                         <div>
                 <div class="sub-group">
                     <h6 style="background-color: #e6e600">Posture Challenge</h6>
-                    @if(!Model.IsReviewer){
-                    <a href="#" data-toggle="popover" data-posture-type="decommissioning" data-title="Add Desired State" data-posture="PostureChallenge" data-posture-id="@Model.DecommissioningPosture.Id" data-form-target="posture-challenge" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                    @if (!Model.IsReviewer)
+                    {
+                        <a href="#" data-toggle="popover" data-posture-type="decommissioning" data-title="Add Desired State" data-posture="PostureChallenge" data-posture-id="@Model.DecommissioningPosture.Id" data-form-target="posture-challenge" class="popover-trigger"><i class="fa fa-plus"></i></a>
                     }
                 </div>
             </div>
             <table class="table list-result">
                 <tr>
-                    <th style="width:70px;">Relation</th>
-                    <th style="width:320px">Definition</th>
-                    @if(!Model.IsReviewer){
-                    <th style="width:30px;"></th>
+                    <th style="width: 74px;">Relation</th>
+                    <th style="width: 320px">Definition</th>
+                    @if (!Model.IsReviewer)
+                    {
+                        <th style="width: 30px;"></th>
                     }
                 </tr>
                 @foreach (var item in Model.DecommissioningPosture.PostureChallenges)
@@ -270,30 +288,39 @@
                             </a>
                         </td>
                         <td>@item.Definition </td>
-                        @if(!Model.IsReviewer){
-                        <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureChallenge" class="remove-item"><i class="fa fa-minus"></i></a></td>
+                        @if (!Model.IsReviewer)
+                        {
+                            <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureChallenge" class="remove-item"><i class="fa fa-minus"></i></a></td>
                         }
                     </tr>
                 }
             </table>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4 list-block">
-            <div>
+        <div class="col-md-12">
+            <table class="table-bordered table-posture-constraint">
+                <tr>
+                    <td class="list-block" style="width:33.33%">
+                                <div>
                 <div class="sub-group">
                     <h6 style="background-color: #ff0000">Posture Constraint</h6>
-                    @if(!Model.IsReviewer){
-                    <a href="#" data-toggle="popover" data-posture-type="construction" data-title="Add Desired State" data-posture="PostureConstraint" data-posture-id="@Model.ConstructionPosture.Id" data-form-target="posture-constraint" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                    @if (!Model.IsReviewer)
+                    {
+                        <a href="#" data-toggle="popover" data-posture-type="construction" data-title="Add Desired State" data-posture="PostureConstraint" data-posture-id="@Model.ConstructionPosture.Id" data-form-target="posture-constraint" class="popover-trigger"><i class="fa fa-plus"></i></a>
                     }
                 </div>
             </div>
             <table class="table list-result">
                 <tr>
-                    <th style="width:70px;">Relation</th>
-                    <th style="width:320px">Definition</th>
-                    @if(!Model.IsReviewer){
-                    <th style="width:30px;"></th>
+                    <th style="width: 74px;">Relation</th>
+                    <th style="width: 320px">Definition</th>
+                    @if (!Model.IsReviewer)
+                    {
+                        <th style="width: 30px;"></th>
                     }
                 </tr>
                 @foreach (var item in Model.ConstructionPosture.PostureConstraints)
@@ -308,29 +335,32 @@
                             </a>
 
                         </td>
-                        <td>@item.Definition </td>
-                        @if(!Model.IsReviewer){
-                        <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureConstraint" class="remove-item"><i class="fa fa-minus"></i></a></td>
+                        <td style="text-align:left;">@item.Definition </td>
+                        @if (!Model.IsReviewer)
+                        {
+                            <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureConstraint" class="remove-item"><i class="fa fa-minus"></i></a></td>
                         }
                     </tr>
                 }
             </table>
-        </div>
-        <div class="col-md-4 list-block">
-            <div>
+                    </td>
+                    <td class="list-block" style="width:33.33%">
+                         <div>
                 <div class="sub-group">
                     <h6 style="background-color: #ff0000">Posture Constraint</h6>
-                    @if(!Model.IsReviewer){
-                    <a href="#" data-toggle="popover" data-posture-type="operation" data-title="Add Desired State" data-posture="PostureConstraint" data-posture-id="@Model.OperationPosture.Id" data-form-target="posture-constraint" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                    @if (!Model.IsReviewer)
+                    {
+                        <a href="#" data-toggle="popover" data-posture-type="operation" data-title="Add Desired State" data-posture="PostureConstraint" data-posture-id="@Model.OperationPosture.Id" data-form-target="posture-constraint" class="popover-trigger"><i class="fa fa-plus"></i></a>
                     }
                 </div>
             </div>
             <table class="table list-result">
                 <tr>
-                    <th style="width:70px;">Relation</th>
-                    <th style="width:320px">Definition</th>
-                    @if(!Model.IsReviewer){
-                    <th style="width:30px;"></th>
+                    <th style="width: 74px;">Relation</th>
+                    <th style="width: 320px">Definition</th>
+                    @if (!Model.IsReviewer)
+                    {
+                        <th style="width: 30px;"></th>
                     }
                 </tr>
                 @foreach (var item in Model.OperationPosture.PostureConstraints)
@@ -345,28 +375,31 @@
                             </a>
                         </td>
                         <td>@item.Definition </td>
-                        @if(!Model.IsReviewer){
-                        <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureConstraint" class="remove-item"><i class="fa fa-minus"></i></a></td>
+                        @if (!Model.IsReviewer)
+                        {
+                            <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureConstraint" class="remove-item"><i class="fa fa-minus"></i></a></td>
                         }
                     </tr>
                 }
             </table>
-        </div>
-        <div class="col-md-4 list-block">
-            <div>
+                    </td>
+                    <td class="list-block" style="width:33.33%">
+                            <div>
                 <div class="sub-group">
                     <h6 style="background-color: #ff0000">Posture Constraint</h6>
-                    @if(!Model.IsReviewer){
-                    <a href="#" data-toggle="popover" data-posture-type="decommissioning" data-title="Add Desired State" data-posture="PostureConstraint" data-posture-id="@Model.DecommissioningPosture.Id" data-form-target="posture-constraint" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                    @if (!Model.IsReviewer)
+                    {
+                        <a href="#" data-toggle="popover" data-posture-type="decommissioning" data-title="Add Desired State" data-posture="PostureConstraint" data-posture-id="@Model.DecommissioningPosture.Id" data-form-target="posture-constraint" class="popover-trigger"><i class="fa fa-plus"></i></a>
                     }
                 </div>
             </div>
             <table class="table list-result">
                 <tr>
-                    <th style="width:70px;">Relation</th>
-                    <th style="width:320px">Definition</th>
-                    @if(!Model.IsReviewer){
-                    <th style="width:30px;"></th>
+                    <th style="width: 74px;">Relation</th>
+                    <th style="width: 320px">Definition</th>
+                    @if (!Model.IsReviewer)
+                    {
+                        <th style="width: 30px;"></th>
                     }
                 </tr>
                 @foreach (var item in Model.DecommissioningPosture.PostureConstraints)
@@ -381,33 +414,43 @@
                             </a>
                         </td>
                         <td>@item.Definition </td>
-                        @if(!Model.IsReviewer){
-                        <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureConstraint" class="remove-item"><i class="fa fa-minus"></i></a></td>
+                        @if (!Model.IsReviewer)
+                        {
+                            <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureConstraint" class="remove-item"><i class="fa fa-minus"></i></a></td>
                         }
                     </tr>
                 }
+            </table>
+                    </td>
+                </tr>
             </table>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12 artifact-designer-btns">
-            @if(!Model.IsReviewer){
-            <a href="@Url.Action("Index", "PlanningBlueprint")" class="btn btn-primary btn-lg"><span class="fa fa-arrow-left"></span>Back To List</a>
-            }else{
-                <a href="@Url.Action("ESReview", "PlanningBlueprint", new { id = Model.PlanningBlueprintId})" class="btn btn-primary btn-lg"><span class="fa fa-arrow-left"></span>Back</a>
-            }
-            @if(!Model.IsReviewer){
-            using (Html.BeginForm("SubmitBusinessPosture", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
+            @if (!Model.IsReviewer)
             {
+                <a href="@Url.Action("Index", "PlanningBlueprint")" class="btn btn-primary btn-lg"><span class="fa fa-arrow-left"></span>Back To List</a>
+            }
+            else
+            {
+                <a href="@Url.Action("ESReview", "PlanningBlueprint", new { id = Model.PlanningBlueprintId })" class="btn btn-primary btn-lg"><span class="fa fa-arrow-left"></span>Back</a>
+            }
+            @if (!Model.IsReviewer)
+            {
+                using (Html.BeginForm("SubmitBusinessPosture", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
+                {
                 @Html.Hidden("Id", Model.Id)
                 <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Submit</button>
+                }
             }
-            }else{
-            using (Html.BeginForm("ApproveVoyagePlan", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
+            else
             {
+                using (Html.BeginForm("ApproveVoyagePlan", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
+                {
                 @Html.Hidden("Id", Model.PlanningBlueprintId)
                 <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Approve</button>
-            }
+                }
             }
         </div>
     </div>
@@ -556,7 +599,7 @@
                             relationType = relationType + 'data-id="' + data.Id + '"' + 'data-toggle="modal"' + 'data-target="#posture-modal"' + 'data-ids="' + data.RelationIds + '"' + 'class="btn-posture-constraint"'
 
                         }
-                        $relationCol.html(data.RelationIds.length ? '<a href="#" ' + relationType +'data-type="'+ type +'"'+'><span>R</span></a>' : ' ');
+                        $relationCol.html(data.RelationIds.length ? '<a href="#" ' + relationType + 'data-type="' + type + '"' + '><span>R</span></a>' : ' ');
                         $tr.append($relationCol);
                         var $definitionCol = $('<td />');
                         $definitionCol.html(data.Definition);
@@ -577,6 +620,7 @@
                     }
                 }
                 popOverElem.popover('hide');
+                $('.relation-ids-wrapper').html('');
             });
         });
         $(document).on('click', '.remove-item', function (e) {
@@ -684,8 +728,7 @@
         }
         $('.' + $type + '-desired-list').children('li').each(function (i, val) {
             var $li = $(val);
-            if($ids.indexOf(parseInt($li.data('id'))) > -1)
-            {
+            if ($ids.indexOf(parseInt($li.data('id'))) > -1) {
                 $li.addClass('highlight');
             }
         });

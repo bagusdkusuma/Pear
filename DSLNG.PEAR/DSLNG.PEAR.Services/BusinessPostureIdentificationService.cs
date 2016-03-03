@@ -264,7 +264,7 @@ namespace DSLNG.PEAR.Services
                 return new SubmitBusinessPostureResponse
                 {
                     IsSuccess = true,
-                    Message = "You have been sucessfully sabmit the item"
+                    Message = "You have been sucessfully submit the item"
                 };
             }
             catch

@@ -944,10 +944,10 @@ namespace DSLNG.PEAR.Services
                     var actualSeries = request.Series.Where(x => x.ValueAxis == ValueAxis.KpiActual).ToList();
                     var targetSeries = request.Series.Where(x => x.ValueAxis == ValueAxis.KpiTarget).ToList();
                     var economicSeries = request.Series.Where(x => x.ValueAxis == ValueAxis.KpiEconomic).ToList();
-                    seriesType = "multi-stacks-grouped";
-                    var series1 = this._getKpiTargetSeries(targetSeries, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes, true);
-                    var series2 = this._getKpiActualSeries(actualSeries, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes, true);
-                    var series3 = this._getKpiEconomicSeries(economicSeries, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes, true, request.AsNetbackChart);
+                    //seriesType = "multi-stacks-grouped";
+                    var series1 = this._getKpiTargetSeries(targetSeries, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes, false);
+                    var series2 = this._getKpiActualSeries(actualSeries, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes, false);
+                    var series3 = this._getKpiEconomicSeries(economicSeries, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes, false, request.AsNetbackChart);
                     seriesResponse = series1.Concat(series2).Concat(series3).ToList();
                     break;
 

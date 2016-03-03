@@ -8,6 +8,7 @@ namespace DSLNG.PEAR.Services.Interfaces
     public interface IPlanningBlueprintService
     {
         GetPlanningBlueprintsResponse GetPlanningBlueprints(GetPlanningBlueprintsRequest request);
+        GetPlanningBlueprintResponse GetPlanningBlueprint(int id);
         SavePlanningBlueprintResponse SavePlanningBlueprint(SavePlanningBlueprintRequest request);
         GetVoyagePlanResponse GetVoyagePlan();
         ApproveVoyagePlanResponse ApproveVoyagePlan(int id);
