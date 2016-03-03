@@ -8,7 +8,7 @@ namespace DSLNG.PEAR.Services.Interfaces
     public interface IArtifactService
     {
         //GetSeriesResponse GetSeries(GetSeriesRequest request);
-        GetCartesianChartDataResponse GetChartData(GetCartesianChartDataRequest request);
+        GetCartesianChartDataResponse GetChartData(GetCartesianChartDataRequest request, bool multiaxisAsOrigin = false);
         GetSpeedometerChartDataResponse GetSpeedometerChartData(GetSpeedometerChartDataRequest request);
         GetTrafficLightChartDataResponse GetTrafficLightChartData(GetTrafficLightChartDataRequest request);
         CreateArtifactResponse Create(CreateArtifactRequest request);

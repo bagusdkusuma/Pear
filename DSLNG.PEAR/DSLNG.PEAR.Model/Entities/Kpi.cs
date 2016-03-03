@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Data.Entities.EconomicModel;
+using DSLNG.PEAR.Data.Entities.Blueprint;
 
 namespace DSLNG.PEAR.Data.Entities
 {
@@ -48,5 +49,6 @@ namespace DSLNG.PEAR.Data.Entities
         public string Color { get; set; }
         public bool IsActive { get; set; }
         public ICollection<KeyOutputConfiguration> KeyOutputConfigurations { get; set; }
+        public IList<MidtermStrategicPlanning> MidtermStrategicPlannings { get; set; }
     }
 }

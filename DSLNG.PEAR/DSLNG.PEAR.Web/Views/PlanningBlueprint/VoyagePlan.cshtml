@@ -25,7 +25,29 @@
                     }
                 </ul>
             </div>
-            <div class="col-md-6"></div>
+            <div class="col-md-6">
+                @if (Model.EconomicIndicators.Count > 0)
+                {
+                    <table class="table table-bordered table-responsive" style="width:100%">
+                        <tr>
+                            <th>Critical Success Factor</th>
+                            <th>CurrentOverview</th>
+                            <th>Economic</th>
+                        </tr>
+                        @foreach (var indicator in Model.EconomicIndicators) { 
+                            <tr>
+                                <td style="text-align:left">@indicator.Name</td>
+                                <td style="text-align:right">@Html.ParseToDateOrNumber(indicator.Actual)</td>
+                                <td style="text-align:right">@Html.ParseToDateOrNumber(indicator.Forecast)</td>
+                            </tr>
+                        }
+                    </table>
+                }
+                else
+                {
+                    <p>Belum Ada Data</p>
+                }
+            </div>
             <div class="col-md-3">
                 <h3>Constraints</h3>
                 <ul>
@@ -38,7 +60,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 construction-posture">
                 <h2>CONSTRUCTION POSTURE</h2>
                 <h3>Ultimate Objective</h3>
                 <ul>
@@ -69,7 +91,7 @@
                     }
                 </ul>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 operation-posture">
                 <h2>OPERATION POSTURE</h2>
                 <h3>Ultimate Objective</h3>
                 <ul>
@@ -100,7 +122,7 @@
                     }
                 </ul>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 decom-posture">
                 <h2>DECOMMISSIONING POSTURE</h2>
                 <h3>Ultimate Objective</h3>
                 <ul>

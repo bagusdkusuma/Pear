@@ -5,6 +5,7 @@ using DSLNG.PEAR.Data.Entities.Der;
 using Type = DSLNG.PEAR.Data.Entities.Type;
 using DSLNG.PEAR.Data.Entities.EconomicModel;
 using DSLNG.PEAR.Data.Entities.Blueprint;
+using DSLNG.PEAR.Data.Entities.Pop;
 
 namespace DSLNG.PEAR.Data.Persistence
 {
@@ -68,6 +69,7 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<DerLayout> DerLayouts { get; set; }
         IDbSet<DerLayoutItem> DerLayoutItems { get; set; }
         IDbSet<DerArtifact> DerArtifacts { get; set; }
+        IDbSet<DerKpiInformation> DerTables { get; set; }
         IDbSet<DerArtifactChart> DerArtifactCharts { get; set; }
         IDbSet<DerArtifactSerie> DerArtifactSeries { get; set; }
         IDbSet<DerArtifactTank> DerArtifactTanks { get; set; }
@@ -82,6 +84,16 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<EnvironmentalScanning> EnvironmentalScannings { get; set; }
         IDbSet<Constraint> Constraint { get; set; }
         IDbSet<Challenge> Challenges { get; set; }
+        IDbSet<MidtermPhaseFormulationStage> MidtermPhaseFormulationStages { get; set; }
+        IDbSet<MidtermPhaseFormulation> MidtermPhaseFormulations { get; set; }
+        IDbSet<MidtermPhaseDescription> MidtermPhaseDescriptions { get; set; }
+        IDbSet<MidtermPhaseKeyDriver> MidtermPhaseKeyDrivers { get; set; }
+        IDbSet<MidtermStrategyPlanning> MidtermStrategyPlannings { get; set; }
+        IDbSet<MidtermStrategicPlanning> MidtermStrategicPlannings { get; set; }
+        IDbSet<MidtermStrategicPlanningObjective> MidtermStrategicPlanningObjectives { get; set; }
+        IDbSet<PopDashboard> PopDashboards { get; set; }
+        IDbSet<PopInformation> PopInformations { get; set; }
+        IDbSet<Signature> Signatures { get; set; }
         IDbSet<DerHighlight> DerHighlights { get; set; }
         IDbSet<DerStaticHighlight> DerStaticHighlights { get; set; }
         IDbSet<Wave> Waves { get; set; }

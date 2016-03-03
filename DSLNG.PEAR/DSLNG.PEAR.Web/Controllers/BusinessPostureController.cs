@@ -30,7 +30,17 @@ namespace DSLNG.PEAR.Web.Controllers
         [HttpPost]
         public ActionResult AddPostureChallenge(PostureChallengeViewModel viewModel) {
             var request = viewModel.MapTo<SavePostureChallengeRequest>();
-            return Json(_businessPostureService.SavePostureChallenge(request));
+            var response = _businessPostureService.SavePostureChallenge(request);
+            var data = new
+            {
+                Id = response.Id,
+                RelationIds = response.RelationIds,
+                Definition = response.Definition,
+                IsSuccess = response.IsSuccess,
+                Message = response.Message,
+                PostureType = viewModel.PostureType
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -43,7 +53,17 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult AddPostureConstraint(PostureConstraintViewModel viewModel)
         {
             var request = viewModel.MapTo<SavePostureConstraintRequest>();
-            return Json(_businessPostureService.SavePostureConstraint(request));
+            var response = _businessPostureService.SavePostureConstraint(request);
+            var data = new
+            {
+                Id = response.Id,
+                RelationIds = response.RelationIds,
+                Definition = response.Definition,
+                IsSuccess = response.IsSuccess,
+                Message = response.Message,
+                PostureType = viewModel.PostureType
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -51,6 +71,21 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             var request = new DeletePostureConstraintRequest { Id = id };
             return Json(_businessPostureService.DeletePostureConstraint(request));
+        }
+
+        [HttpPost]
+        public PartialViewResult GetPostureChallenge(int id)
+        {
+            var viewModel = _businessPostureService.GetPostureChallenge(new GetPostureChallengeRequest { Id = id }).MapTo<PostureChalengeListViewModel>();
+
+            return PartialView("_showPostureChallenge", viewModel);
+        }
+
+        [HttpPost]
+        public PartialViewResult GetPostureConstraint(int id)
+        {
+            var viewModel = _businessPostureService.GetPostureConstraint(new GetPostureConstraintRequest { Id = id }).MapTo<PostureConstraintListViewModel>();
+            return PartialView("_showPostureConstraint", viewModel);
         }
 	}
 }

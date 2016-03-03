@@ -244,19 +244,29 @@ namespace DSLNG.PEAR.Services
             return config.Select(x => new Dropdown { Text = x.ToString(), Value = x.ToString() }).ToList();
         }
 
+
+        public IEnumerable<Dropdown> GetUsers()
+        {
+            return DataContext.Users.Select(x => new Dropdown
+            {
+                Text = x.Username,
+                Value = x.Id.ToString()
+            }).ToList();
+        }
+
         public IEnumerable<Dropdown> GetDerItemTypes()
         {
             return new List<Dropdown>()
                 {
                     new Dropdown {Text = "Highlight", Value = "highlight"},
                     new Dropdown {Text = "Line", Value = "line"},
-                    new Dropdown {Text = "Text", Value = "text"},
                     new Dropdown {Text = "Multi Axis", Value = "multiaxis"},
                     new Dropdown {Text = "Pie", Value = "pie"},
                     new Dropdown {Text = "Tank", Value = "tank"},
                     new Dropdown {Text = "Weather", Value = "weather"},
                     new Dropdown {Text = "Alert", Value = "alert"},
                     new Dropdown {Text = "Wave", Value = "wave"},
+                    new Dropdown {Text = "Avg Ytd-Key Statistic", Value = "avg-ytd-key-statistic"},
                 };
         }
     }

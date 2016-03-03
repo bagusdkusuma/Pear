@@ -140,17 +140,22 @@ namespace DSLNG.PEAR.Services
         }
 
 
-        public GetActiveOutputCategoriesResponse GetActiveOutputCategories()
+        public GetActiveOutputCategoriesResponse GetActiveOutputCategories(bool withDeepRelations = true)
         {
+            var query = DataContext.KeyOutputCategories
+                 .Include(x => x.KeyOutputs);
+
+            if(withDeepRelations){
+                query = query.Include(x => x.KeyOutputs.Select(y => y.Measurement))
+                 .Include(x => x.KeyOutputs.Select(y => y.Kpis))
+                 .Include(x => x.KeyOutputs.Select(y => y.KeyAssumptions));
+            }
+
             return new GetActiveOutputCategoriesResponse
             {
 
-                OutputCategories = DataContext.KeyOutputCategories
-                 .Include(x => x.KeyOutputs)
-                 .Include(x => x.KeyOutputs.Select(y => y.Measurement))
-                 .Include(x => x.KeyOutputs.Select(y => y.Kpis))
-                 .Include(x => x.KeyOutputs.Select(y => y.KeyAssumptions))
-                 .Where(x => x.IsActive == true).MapTo<GetActiveOutputCategoriesResponse.OutputCategoryResponse>()
+                OutputCategories = query.Where(x => x.IsActive == true && x.KeyOutputs.Any(y => y.IsActive))
+                .MapTo<GetActiveOutputCategoriesResponse.OutputCategoryResponse>()
             };
         }
     }

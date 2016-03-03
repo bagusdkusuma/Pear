@@ -5,6 +5,7 @@ using Type = DSLNG.PEAR.Data.Entities.Type;
 using DSLNG.PEAR.Data.Entities.EconomicModel;
 using System;
 using DSLNG.PEAR.Data.Entities.Blueprint;
+using DSLNG.PEAR.Data.Entities.Pop;
 
 namespace DSLNG.PEAR.Data.Persistence
 {
@@ -88,9 +89,21 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<DerLayout> DerLayouts { get; set; }
         public IDbSet<DerLayoutItem> DerLayoutItems { get; set; }
         public IDbSet<DerArtifact> DerArtifacts { get; set; }
+        public IDbSet<DerKpiInformation> DerTables { get; set; }
         public IDbSet<DerArtifactChart> DerArtifactCharts { get; set; }
         public IDbSet<DerArtifactSerie> DerArtifactSeries { get; set; }
         public IDbSet<Wave> Waves { get; set; }
+
+        public IDbSet<MidtermPhaseFormulationStage> MidtermPhaseFormulationStages { get; set; }
+        public IDbSet<MidtermPhaseFormulation> MidtermPhaseFormulations { get; set; }
+        public IDbSet<MidtermPhaseDescription> MidtermPhaseDescriptions { get; set; }
+        public IDbSet<MidtermPhaseKeyDriver> MidtermPhaseKeyDrivers { get; set; }
+        public IDbSet<MidtermStrategyPlanning> MidtermStrategyPlannings { get; set; }
+        public IDbSet<MidtermStrategicPlanning> MidtermStrategicPlannings { get; set; }
+        public IDbSet<MidtermStrategicPlanningObjective> MidtermStrategicPlanningObjectives { get; set; }
+        public IDbSet<PopDashboard> PopDashboards { get; set; }
+        public IDbSet<PopInformation> PopInformations { get; set; }
+        public IDbSet<Signature> Signatures { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -186,6 +199,14 @@ namespace DSLNG.PEAR.Data.Persistence
                 .HasRequired(x => x.PlanningBlueprint)
                 .WithRequiredDependent(x => x.BusinessPostureIdentification);
 
+            modelBuilder.Entity<MidtermPhaseFormulation>()
+               .HasRequired(x => x.PlanningBlueprint)
+               .WithRequiredDependent(x => x.MidtermPhaseFormulation);
+
+            modelBuilder.Entity<MidtermStrategyPlanning>()
+             .HasRequired(x => x.PlanningBlueprint)
+             .WithRequiredDependent(x => x.MidtermStragetyPlanning);
+
 
             modelBuilder.Entity<EnvironmentalScanning>()
                 .HasOptional(x => x.ThreatHost)
@@ -207,6 +228,22 @@ namespace DSLNG.PEAR.Data.Persistence
                 .WithMany(x => x.Strength)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<MidtermPhaseFormulationStage>()
+                .HasMany(x => x.Descriptions)
+                .WithOptional(x => x.Formulation)
+                .WillCascadeOnDelete(true);
+            modelBuilder.Entity<MidtermPhaseFormulationStage>()
+                 .HasMany(x => x.KeyDrivers)
+                .WithOptional(x => x.Formulation)
+                .WillCascadeOnDelete(true);
+            modelBuilder.Entity<MidtermPhaseFormulationStage>()
+                .HasMany(x => x.MidtermStrategicPlannings)
+               .WithOptional(x => x.Stage)
+               .WillCascadeOnDelete(true);
+            modelBuilder.Entity<MidtermStrategicPlanning>()
+              .HasMany(x => x.Objectives)
+              .WithOptional(x => x.MidtermStrategicPlanning)
+              .WillCascadeOnDelete(true);
             modelBuilder.Entity<DerLayoutItem>()
                .HasOptional(x => x.Artifact)
                .WithOptionalDependent()
@@ -222,6 +259,11 @@ namespace DSLNG.PEAR.Data.Persistence
                .WithOptionalDependent()
                .WillCascadeOnDelete();
 
+            modelBuilder.Entity<DerLayoutItem>()
+              .HasOptional(x => x.Table)
+              .WithOptionalDependent()
+              .WillCascadeOnDelete();
+
             modelBuilder.Entity<DerArtifact>()
                 .HasMany(x => x.Charts)
                 .WithOptional()
@@ -230,6 +272,11 @@ namespace DSLNG.PEAR.Data.Persistence
             modelBuilder.Entity<DerArtifact>()
                 .HasMany(x => x.Series)
                 .WithOptional()
+                .WillCascadeOnDelete();
+
+            modelBuilder.Entity<DerArtifact>()
+                .HasOptional(x => x.Tank)
+                .WithOptionalDependent()
                 .WillCascadeOnDelete();
 
             base.OnModelCreating(modelBuilder);

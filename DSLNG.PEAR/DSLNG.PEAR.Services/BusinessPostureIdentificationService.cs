@@ -18,11 +18,23 @@ namespace DSLNG.PEAR.Services
         public GetBusinessPostureResponse Get(GetBusinessPostureRequest request)
         {
             var response = DataContext.BusinessPostures.Include(x => x.Postures)
+                .Include(x => x.PlanningBlueprint)
                 .Include(x => x.Postures.Select(y => y.DesiredStates))
                 .Include(x => x.Postures.Select(y => y.PostureChallenges))
+                .Include(x => x.Postures.Select(y => y.PostureChallenges.Select(z => z.DesiredStates)))
                 .Include(x => x.Postures.Select(y => y.PostureConstraints))
-                .FirstOrDefault(x => x.Id == request.Id);
-            return response.MapTo<GetBusinessPostureResponse>();
+                .Include(x => x.Postures.Select(y => y.PostureConstraints.Select(z => z.DesiredStates)))
+                .FirstOrDefault(x => x.Id == request.Id).MapTo<GetBusinessPostureResponse>();
+
+            response.EnvironmentScanningHost = DataContext.EnvironmentsScannings
+                .Include(x => x.PlanningBlueprint)
+                .Include(x => x.ConstructionPhase)
+                .Include(x => x.OperationPhase)
+                .Include(x => x.ReinventPhase)
+                .Include(x => x.Constraints)
+                .Include(x => x.Challenges)
+                .Where(x => x.PlanningBlueprint.Id == response.PlanningBlueprintId).FirstOrDefault().MapTo<GetBusinessPostureResponse.EnvironmentScanning>();
+            return response;
         }
 
 
@@ -239,6 +251,46 @@ namespace DSLNG.PEAR.Services
                     Message = "An error occured, please contact the administrator for further information"
                 };
             }
+        }
+
+        public SubmitBusinessPostureResponse SubmitBusinessPosture(int id)
+        {
+            try
+            {
+                var businessPosture = DataContext.BusinessPostures.First(x => x.Id == id);
+                businessPosture.IsLocked = true;
+                businessPosture.IsBeingReviewed = true;
+                DataContext.SaveChanges();
+                return new SubmitBusinessPostureResponse
+                {
+                    IsSuccess = true,
+                    Message = "You have been sucessfully submit the item"
+                };
+            }
+            catch
+            {
+                return new SubmitBusinessPostureResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured, please contact the adminstrator for further information"
+                };
+            }
+        }
+         public GetPostureChallengeResponse GetPostureChallenge(GetPostureChallengeRequest request)
+        {
+            return DataContext.PostureChalleges.Where(x => x.Id == request.Id)
+                .Include(x => x.DesiredStates)
+                .Include(x => x.DesiredStates.Select(y => y.Posture))
+                .FirstOrDefault().MapTo<GetPostureChallengeResponse>();
+        }
+
+
+        public GetPostureConstraintResponse GetPostureConstraint(GetPostureConstraintRequest requet)
+        {
+            return DataContext.PostureConstraints.Where(x => x.Id == requet.Id)
+                .Include(x => x.DesiredStates)
+                .Include(x => x.DesiredStates.Select(y => y.Posture))
+                .FirstOrDefault().MapTo<GetPostureConstraintResponse>();
         }
     }
 }

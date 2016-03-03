@@ -1,5 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System;
+using System.Collections.Generic;
+using DSLNG.PEAR.Data.Entities.Pop;
 
 namespace DSLNG.PEAR.Data.Entities
 {
@@ -14,6 +17,7 @@ namespace DSLNG.PEAR.Data.Entities
         public string Username { get; set; }
         public string Password { get; set; }
         public string PasswordSalt { get; set; }
+        public string FullName { get; set; }
 
         [MaxLength(100)]
         [Index(IsUnique = true)]
@@ -26,5 +30,7 @@ namespace DSLNG.PEAR.Data.Entities
         
         public string ChangeModel { get; set; }
         public bool IsSuperAdmin { get; set; }
+
+        public IList<Signature> Signatures { get; set; }
     }
 }

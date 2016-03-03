@@ -29,17 +29,20 @@ namespace DSLNG.PEAR.Web.ViewModels.DerLayout
         public int HighlightId { get; set; }
         public IList<SelectListItem> Highlights { get; set; }
 
-        //public string StaticHighlight { get; set; }
+        public IList<DerKpiInformationViewModel> KpiInformations { get; set; }
 
-        //public DerLayoutLineViewModel Artifact { get; set; }
+        public class DerKpiInformationViewModel
+        {
+            public int Position { get; set; }
+            public IEnumerable<Kpi> Kpis { get; set; }
 
-        /* public DerLayoutArtifactViewModel Line { get; set; }
-         public int MeasurementId { get; set; }
+            public class Kpi
+            {
+                
+            }
 
-         public LineChartViewModel LineChart { get; set; }*/
 
-        //public DerLayoutLineViewModel Line { get; set; }
-        //public LineChartViewModel LineChart { get; set; }
+        }
 
         public class DerLayoutItemArtifactViewModel
         {

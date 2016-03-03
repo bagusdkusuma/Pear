@@ -1,4 +1,5 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.DerLayout.DerLayoutItemViewModel
+@Html.HiddenFor(x=> x.Tank.Id)
 <div id="graphic-settings">
     <div class="form-group row">
         @Html.LabelFor(model => model.Artifact.HeaderTitle, new { @class = "control-label col-md-2" })

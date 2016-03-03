@@ -14,6 +14,8 @@ namespace DSLNG.PEAR.Data.Entities.Blueprint
         [Key]
         public int Id { get; set; }
         public bool IsLocked { get; set; }
+        public bool IsBeingReviewed { get; set; }
+        public bool IsApproved { get; set; }
         public PlanningBlueprint PlanningBlueprint { get; set; }
         public IList<Posture> Postures { get; set; }
 

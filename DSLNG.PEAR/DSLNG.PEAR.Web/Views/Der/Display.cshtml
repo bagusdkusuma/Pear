@@ -1902,7 +1902,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         function reloadView() {
-            var currentDate = $('#currentDate').val();
+            var currentDate = '02/18/2016';// $('#currentDate').val();
             $('.layout-item').each(function () {
                 var that = $(this);
                 $.ajax({
@@ -1922,8 +1922,9 @@
                 });
             });
         }
+
+        reloadView();
         $('#currentDate').change(function () {
-            alert('sin');
             reloadView();
         });
 

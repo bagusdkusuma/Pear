@@ -12,7 +12,8 @@ namespace DSLNG.PEAR.Services.Responses.PlanningBlueprint
         public IList<UltimateObjectivePoint> ReinventPhase { get; set; }
         public IList<Challenge> InternalChallenge { get; set; }
         public IList<Challenge>  ExternalChallenge { get; set; }
-        public IList<Constraint> Constraints { get; set; } 
+        public IList<Constraint> Constraints { get; set; }
+        public IList<KeyOutputResponse> EconomicIndicators { get; set; }
 
         public class Challenge{
             public int Id { get; set; }
@@ -48,6 +49,15 @@ namespace DSLNG.PEAR.Services.Responses.PlanningBlueprint
         public class UltimateObjectivePoint {
             public int Id { get; set; }
             public string Description { get; set; }
+        }
+        public class KeyOutputResponse
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public string Actual { get; set; }
+            public string Forecast { get; set; }
+            public int Order { get; set; }
+            public string Measurement { get; set; }
         }
     }
 }

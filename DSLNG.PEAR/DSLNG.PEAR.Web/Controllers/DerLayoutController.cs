@@ -86,34 +86,90 @@ namespace DSLNG.PEAR.Web.Controllers
                 switch (response.Type.ToLowerInvariant())
                 {
                     case "line":
-                        var lineChart = new LineChartViewModel();
-                        editViewModel.LineChart = response.Artifact.MapPropertiesToInstance<LineChartViewModel>(lineChart);
-                        var series = new LineChartViewModel.SeriesViewModel();
-                        editViewModel.LineChart.Series.Insert(0, series);
-                        editViewModel.Artifact.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
                         {
-                            Take = -1,
-                            SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
-                        }).Measurements
-                        .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
-                        break;
+                            var lineChart = new LineChartViewModel();
+                            editViewModel.LineChart = response.Artifact.MapPropertiesToInstance<LineChartViewModel>(lineChart);
+                            var series = new LineChartViewModel.SeriesViewModel();
+                            editViewModel.LineChart.Series.Insert(0, series);
+                            editViewModel.Artifact.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
+                            {
+                                Take = -1,
+                                SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+                            }).Measurements
+                            .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+                            break;
+                        }
+
+                    case "pie":
+                        {
+                            var pie = new PieViewModel();
+                            editViewModel.Pie = response.Artifact.MapPropertiesToInstance<PieViewModel>(pie);
+                            var series = new PieViewModel.SeriesViewModel();
+                            editViewModel.Pie.Series.Insert(0, series);
+                            editViewModel.Artifact.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
+                            {
+                                Take = -1,
+                                SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+                            }).Measurements
+                            .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+                            break;
+                        }
+
+                    case "tank":
+                        {
+                            var tank = new TankViewModel();
+                            editViewModel.Tank = response.Artifact.Tank.MapPropertiesToInstance<TankViewModel>(tank);
+                            break;
+                        }
+
+                    case "multiaxis":
+                        {
+                            var multiaxisChart = new MultiaxisChartViewModel();
+                            editViewModel.MultiaxisChart = response.Artifact.MapPropertiesToInstance<MultiaxisChartViewModel>(multiaxisChart);
+                            multiaxisChart.GraphicTypes.Add(new SelectListItem { Value = "line", Text = "Line" });
+                            multiaxisChart.ValueAxes.Add(new SelectListItem { Value = ValueAxis.KpiActual.ToString(), Text = "Kpi Actual" });
+                            multiaxisChart.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
+                            {
+                                Take = -1,
+                                SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+                            }).Measurements
+                  .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+                            foreach (var chartRes in response.Artifact.Charts)
+                            {
+                                var chartViewModel = chartRes.MapTo<MultiaxisChartViewModel.ChartViewModel>();
+                                switch (chartViewModel.GraphicType)
+                                {
+                                    case "line":
+                                        {
+                                            chartViewModel.LineChart = chartRes.MapTo<LineChartViewModel>();
+                                            chartViewModel.LineChart.ValueAxes.Add(new SelectListItem { Value = ValueAxis.KpiActual.ToString(), Text = "Kpi Actual" });
+                                            var series = new LineChartViewModel.SeriesViewModel();
+                                            chartViewModel.LineChart.Series.Insert(0, series);
+                                        }
+                                        break;
+                                }
+                                multiaxisChart.Charts.Add(chartViewModel);
+                            }
+                            var chart = new MultiaxisChartViewModel.ChartViewModel();
+                            editViewModel.MultiaxisChart.Charts.Insert(0, chart);
+
+                            break;
+                        }
+
+                    case "avg-ytd-key-statistic":
+                        {
+                            break;
+                        }
+                        
                 }
 
                 return View("EditLayoutItem", editViewModel);
             }
             else
             {
-                //var viewModel = new DerCreateLayoutItemViewModel();
                 viewModel.Types = _dropdownService.GetDerItemTypes().MapTo<SelectListItem>();
                 return View("LayoutItem", viewModel);
             }
-
-            /*var viewModel = new DerCreateLayoutItemViewModel();
-            viewModel.Types = _dropdownService.GetDerItemTypes().MapTo<SelectListItem>();
-            viewModel.Row = vModel.Row;
-            viewModel.Column = vModel.Column;
-            viewModel.DerLayoutId = vModel.DerLayoutId;
-            return PartialView("_ModalLayoutItem", viewModel);*/
         }
 
         public ActionResult LayoutSetting(string type)
@@ -190,6 +246,12 @@ namespace DSLNG.PEAR.Web.Controllers
                         var viewModel = new DerLayoutItemViewModel();
                         viewModel.Type = type;
                         return PartialView("LayoutType/_StaticHighlight", viewModel);
+                    }
+
+                case "avg-ytd-key-statistic":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        return PartialView("LayoutType/_AvgYtdKeyStatistic", viewModel);
                     }
             }
 
@@ -275,6 +337,9 @@ namespace DSLNG.PEAR.Web.Controllers
                     }
 
             }
+
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
 
             return RedirectToAction("Config", new { id = layoutItemViewModel.DerLayoutId });
         }
