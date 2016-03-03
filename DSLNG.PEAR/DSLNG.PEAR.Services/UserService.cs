@@ -94,6 +94,8 @@ namespace DSLNG.PEAR.Services
                 //var user = request.MapTo<User>();
                 var user = DataContext.Users.Include(u => u.Role).First(x => x.Id == request.Id).MapTo<User>();
                 user.Role = DataContext.RoleGroups.First(x => x.Id == request.RoleId);
+                user.FullName = request.FullName;
+                user.SignatureImage = request.SignatureImage;
                 user.Username = request.Username;
                 user.IsActive = request.IsActive;
                 user.ChangeModel = request.ChangeModel;

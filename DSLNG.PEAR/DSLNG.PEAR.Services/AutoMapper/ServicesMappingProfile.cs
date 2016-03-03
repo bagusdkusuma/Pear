@@ -663,7 +663,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<PopInformation, GetPopDashboardResponse.PopInformation>();
             Mapper.CreateMap<Signature, GetPopDashboardResponse.Signature>()
                 .ForMember(x => x.User, o => o.MapFrom(y => y.User.Username))
-                .ForMember(x => x.UserId, o => o.MapFrom(y => y.User.Id));
+                .ForMember(x => x.UserId, o => o.MapFrom(y => y.User.Id))
+                .ForMember(x => x.SignatureImage, o => o.MapFrom(y => y.User.SignatureImage));
             Mapper.CreateMap<SavePopInformationRequest, PopInformation>();
             Mapper.CreateMap<SaveSignatureRequest, DSLNG.PEAR.Data.Entities.Pop.Signature>()
                 .ForMember(x => x.Type, o => o.MapFrom(y => y.TypeSignature));
