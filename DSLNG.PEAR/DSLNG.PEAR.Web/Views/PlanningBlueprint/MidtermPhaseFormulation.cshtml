@@ -82,6 +82,9 @@ else
                 <th style="width:25%">&nbsp;</th>
                 <th style="width:25%">&nbsp;</th>
             </tr>
+            @if (count == 0) { 
+              <tr class="formulation-stages"></tr>
+            }
         @for (var i =0; i< count; i+= 4) { 
             <tr class="formulation-stages">
                 @for (var j = i; j<i+4; j++){
