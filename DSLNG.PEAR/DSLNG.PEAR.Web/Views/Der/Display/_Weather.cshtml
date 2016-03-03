@@ -1,0 +1,19 @@
+﻿@model DSLNG.PEAR.Services.Responses.Weather.GetWeatherResponse
+@if (Model.ValueId > 0)
+{
+    <table>
+        <tbody>
+            <tr>
+                <td>Weather</td>
+                <td>@Model.Value
+                    <img height="60" width="60" src="@Url.Content("/content/img/select/" + Model.Value)">
+                </td>
+            </tr>
+            <tr>
+                <td>Outside Temperature</td>
+                <td>@Model.Temperature</td>
+            </tr>
+        </tbody>
+    </table>
+}
+

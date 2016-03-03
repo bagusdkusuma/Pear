@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using DSLNG.PEAR.Data.Entities;
+using DSLNG.PEAR.Data.Entities.Der;
 using Type = DSLNG.PEAR.Data.Entities.Type;
 using DSLNG.PEAR.Data.Entities.EconomicModel;
 using System;
@@ -69,6 +70,7 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<ResetPassword> ResetPasswords { get; set; }
         public IDbSet<KeyOutputConfiguration> KeyOutputConfigs { get; set; }
         public IDbSet<StaticHighlightPrivilege> StaticHighlightPrivileges { get; set; }
+        public IDbSet<DerArtifactTank> DerArtifactTanks { get; set; }
         public IDbSet<PlanningBlueprint> PlanningBlueprints { get; set; }
         public IDbSet<UltimateObjectivePoint> UltimateObjectivePoints { get; set; }
         public IDbSet<EnvironmentsScanning> EnvironmentsScannings { get; set; }
@@ -80,6 +82,18 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<EnvironmentalScanning> EnvironmentalScannings { get; set; }
         public IDbSet<Constraint> Constraint { get; set; }
         public IDbSet<Challenge> Challenges { get; set; }
+        public IDbSet<DerHighlight> DerHighlights { get; set; }
+        public IDbSet<DerStaticHighlight> DerStaticHighlights { get; set; }
+        public IDbSet<Der> Ders { get; set; }
+        public IDbSet<DerItem> DerItems { get; set; }
+        public IDbSet<DerLayout> DerLayouts { get; set; }
+        public IDbSet<DerLayoutItem> DerLayoutItems { get; set; }
+        public IDbSet<DerArtifact> DerArtifacts { get; set; }
+        public IDbSet<DerKpiInformation> DerTables { get; set; }
+        public IDbSet<DerArtifactChart> DerArtifactCharts { get; set; }
+        public IDbSet<DerArtifactSerie> DerArtifactSeries { get; set; }
+        public IDbSet<Wave> Waves { get; set; }
+
         public IDbSet<MidtermPhaseFormulationStage> MidtermPhaseFormulationStages { get; set; }
         public IDbSet<MidtermPhaseFormulation> MidtermPhaseFormulations { get; set; }
         public IDbSet<MidtermPhaseDescription> MidtermPhaseDescriptions { get; set; }
@@ -230,6 +244,40 @@ namespace DSLNG.PEAR.Data.Persistence
               .HasMany(x => x.Objectives)
               .WithOptional(x => x.MidtermStrategicPlanning)
               .WillCascadeOnDelete(true);
+            modelBuilder.Entity<DerLayoutItem>()
+               .HasOptional(x => x.Artifact)
+               .WithOptionalDependent()
+               .WillCascadeOnDelete();
+
+            modelBuilder.Entity<DerLayoutItem>()
+               .HasOptional(x => x.Highlight)
+               .WithOptionalDependent()
+               .WillCascadeOnDelete();
+
+            modelBuilder.Entity<DerLayoutItem>()
+               .HasOptional(x => x.StaticHighlight)
+               .WithOptionalDependent()
+               .WillCascadeOnDelete();
+
+            modelBuilder.Entity<DerLayoutItem>()
+              .HasOptional(x => x.Table)
+              .WithOptionalDependent()
+              .WillCascadeOnDelete();
+
+            modelBuilder.Entity<DerArtifact>()
+                .HasMany(x => x.Charts)
+                .WithOptional()
+                .WillCascadeOnDelete();
+
+            modelBuilder.Entity<DerArtifact>()
+                .HasMany(x => x.Series)
+                .WithOptional()
+                .WillCascadeOnDelete();
+
+            modelBuilder.Entity<DerArtifact>()
+                .HasOptional(x => x.Tank)
+                .WithOptionalDependent()
+                .WillCascadeOnDelete();
 
             base.OnModelCreating(modelBuilder);
         }

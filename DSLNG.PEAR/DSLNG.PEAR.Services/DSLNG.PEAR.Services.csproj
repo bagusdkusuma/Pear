@@ -82,6 +82,7 @@
     <Compile Include="Constants\Type.cs" />
     <Compile Include="ConstantUsageService.cs" />
     <Compile Include="ConversionService.cs" />
+    <Compile Include="DerService.cs" />
     <Compile Include="DropdownService.cs" />
     <Compile Include="EconomicSummaryService.cs" />
     <Compile Include="EnvironmentScanningService.cs" />
@@ -89,6 +90,18 @@
     <Compile Include="HighlightGroupService.cs" />
     <Compile Include="HighlightOrderService.cs" />
     <Compile Include="HighlightService.cs" />
+    <Compile Include="Interfaces\GetDerLayoutResponse.cs" />
+    <Compile Include="Requests\Der\SaveLayoutItemRequest.cs" />
+    <Compile Include="Responses\Der\SaveLayoutItemResponse.cs" />
+    <Compile Include="Responses\Der\GetDerLayoutitemResponse.cs" />
+    <Compile Include="Responses\Der\GetDerLayoutitemsResponse.cs" />
+    <Compile Include="Responses\Der\GetDerLayoutsResponse.cs" />
+    <Compile Include="Requests\Der\CreateOrUpdateDerLayoutRequest.cs" />
+    <Compile Include="Responses\Der\CreateOrUpdateDerLayoutResponse.cs" />
+    <Compile Include="Requests\Der\GetDerItemRequest.cs" />
+    <Compile Include="Responses\Der\GetActiveDerResponse.cs" />
+    <Compile Include="Responses\Der\CreateOrUpdateResponse.cs" />
+    <Compile Include="Interfaces\IDerService.cs" />
     <Compile Include="Interfaces\IBusinessPostureIdentificationService.cs" />
     <Compile Include="Interfaces\IEnvironmentScanningService.cs" />
     <Compile Include="Interfaces\IMidtermFormulationService.cs" />
@@ -123,6 +136,7 @@
     <Compile Include="Requests\EnvironmentScanning\SaveConstraintRequest.cs" />
     <Compile Include="Requests\EnvironmentScanning\SaveEnvironmentalScanningRequest.cs" />
     <Compile Include="Requests\EnvironmentScanning\SaveEnvironmentScanningRequest.cs" />
+    <Compile Include="Requests\Der\CreateOrUpdateDerRequest.cs" />
     <Compile Include="Requests\HighlightGroup\DeleteHighlightGroupRequest.cs" />
     <Compile Include="Requests\HighlightOrder\GetStaticHighlightOrdersRequest.cs" />
     <Compile Include="Requests\HighlightOrder\SaveStaticHighlightOrderRequest.cs" />
@@ -157,6 +171,9 @@
     <Compile Include="Responses\BusinessPosture\SavePostureConstraintResponse.cs" />
     <Compile Include="Responses\BusinessPosture\SubmitBusinessPostureResponse.cs" />
     <Compile Include="Responses\ConstantUsage\DeleteConstantUsageResponse.cs" />
+    <Compile Include="Responses\Der\GetDerItemResponse.cs" />
+    <Compile Include="Responses\Der\GetDerResponse.cs" />
+    <Compile Include="Responses\Der\GetDersResponse.cs" />
     <Compile Include="Responses\EconomicSummary\GetEconomicSummaryReportResponse.cs" />
     <Compile Include="Responses\EnvironmentScanning\DeleteChallengeResponse.cs" />
     <Compile Include="Responses\EnvironmentScanning\DeleteConstraintResponse.cs" />
@@ -692,6 +709,7 @@
     <Compile Include="Responses\Weather\GetWeathersResponse.cs" />
     <Compile Include="Responses\Weather\SaveWeatherResponse.cs" />
     <Compile Include="RoleGroupService.cs" />
+    <Compile Include="RowAndColumns.cs" />
     <Compile Include="ScenarioService.cs" />
     <Compile Include="SelectService.cs" />
     <Compile Include="SignatureService.cs" />

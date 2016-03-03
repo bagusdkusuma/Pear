@@ -32,6 +32,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         IEnumerable<Dropdown> GetUsers();
 
         IEnumerable<Dropdown> GetConfigTypes();
+        IEnumerable<Dropdown> GetDerItemTypes();
     }
 
     public class Dropdown

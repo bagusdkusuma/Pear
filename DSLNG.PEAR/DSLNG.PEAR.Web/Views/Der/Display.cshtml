@@ -1,0 +1,114 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.DerDisplayViewModel
+
+@{
+    ViewBag.Title = "Display";
+}
+
+<h2>Display 02/18/2016</h2>
+<div class="form-group form-list">
+    <label for="StartInDisplay">Start</label>
+    <input id="currentDate" class="form-control datepicker" type="text" value="@Model.Today">
+    <span class="field-validation-valid" data-valmsg-for="StartInDisplay" data-valmsg-replace="true"></span>
+</div>
+<table>
+    <tr>
+        <td>@{
+            var row0Col0 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 0);
+            if (row0Col0 != null)
+            {
+            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col0.Id })" class="layout-item" style="min-height:400px;min-width: 500px;"></div>
+            }
+        }</td>
+        <td>@{
+            var row0Col1 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 1);
+            if (row0Col1 != null)
+            {
+            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col1.Id })" class="layout-item" style="min-height:400px;min-width: 500px;"></div>
+            }
+             
+                
+        }</td>
+        <td>@{
+            var row0Col2 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 2);
+            if (row0Col2 != null)
+            {
+            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col2.Id })" class="layout-item" style="min-height:400px;min-width: 500px;"></div>
+            }
+        }</td>
+        <td>
+            @{
+                var row0Col3 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 3);
+                if (row0Col3 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col3.Id })" class="layout-item" style="min-height:400px;min-width: 500px;"></div>
+                }
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @{
+                var row1Col0 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 0);
+                if (row1Col0 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col0.Id })" class="layout-item" style="min-height:400px;min-width: 500px;"></div>
+                }
+            }
+        </td>
+        <td>@{
+            var row1Col1 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 1);
+            if (row1Col1 != null)
+            {
+            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col1.Id })" class="layout-item" style="min-height:400px;min-width: 500px;"></div>
+            }
+             
+                
+        }</td>
+        <td> @{
+            var row1Col2 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 2);
+            if (row1Col2 != null)
+            {
+            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col2.Id })" class="layout-item" style="min-height:400px;min-width: 500px;"></div>
+            }
+             
+        }</td>
+        <td></td>
+    </tr>
+</table>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        function reloadView() {
+            var currentDate = '02/18/2016';// $('#currentDate').val();
+            $('.layout-item').each(function () {
+                var that = $(this);
+                $.ajax({
+                    url: that.attr('data-url'),
+                    data: { currentDate: currentDate },
+                    success: function (data) {
+                        if (data.GraphicType !== undefined) {
+                            var callback = window.Pear.Artifact.Designer._previewCallbacks;
+                            callback[data.GraphicType](data, that);
+                        } else if (data.Type === "highlight") {
+                            that.html(data.highlight.Message);
+                        } else if (data.type === "weather" || data.type === "alert") {                            
+                            that.html(data.view);
+                        }
+                        
+                    }
+                });
+            });
+        }
+
+        reloadView();
+        $('#currentDate').change(function () {
+            reloadView();
+        });
+
+
+    });
+</script>

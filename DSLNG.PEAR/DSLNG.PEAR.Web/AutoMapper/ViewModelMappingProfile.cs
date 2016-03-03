@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using AutoMapper;
 using DSLNG.PEAR.Services.Common.PmsSummary;
 using DSLNG.PEAR.Services.Interfaces;
+using DSLNG.PEAR.Services.Requests.Der;
 using DSLNG.PEAR.Services.Requests.KpiAchievement;
 using DSLNG.PEAR.Services.Requests.Measurement;
 using DSLNG.PEAR.Services.Requests.PmsSummary;
@@ -16,6 +17,9 @@ using DSLNG.PEAR.Services.Requests.Kpi;
 using DSLNG.PEAR.Services.Responses.Select;
 using DSLNG.PEAR.Web.ViewModels.Common;
 using DSLNG.PEAR.Web.ViewModels.Common.PmsSummary;
+using DSLNG.PEAR.Web.ViewModels.Der;
+using DSLNG.PEAR.Web.ViewModels.DerLayout;
+using DSLNG.PEAR.Web.ViewModels.DerLayout.LayoutType;
 using DSLNG.PEAR.Web.ViewModels.Kpi;
 using DSLNG.PEAR.Services.Responses.Menu;
 using DSLNG.PEAR.Services.Requests.Menu;
@@ -156,6 +160,8 @@ using DSLNG.PEAR.Services.Responses.PopDashboard;
 using DSLNG.PEAR.Services.Responses.PopInformation;
 using DSLNG.PEAR.Services.Requests.PopInformation;
 using DSLNG.PEAR.Services.Requests.Signature;
+using DSLNG.PEAR.Services.Responses.Der;
+
 namespace DSLNG.PEAR.Web.AutoMapper
 {
     public class ViewModelMappingProfile : Profile
@@ -170,6 +176,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             ConfigureSelect();
             ConfigureOperationData();
             ConfigureEconomicSummary();
+            ConfigureDerViewModel();
 
             Mapper.CreateMap<Dropdown, SelectListItem>();
             Mapper.CreateMap<SearchKpiViewModel, GetKpiToSeriesRequest>();
@@ -671,7 +678,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetPopDashboardViewModel, SaveSignatureRequest>();
             base.Configure();
         }
-
+        
         private void ConfigureEconomicSummary()
         {
             Mapper.CreateMap<EconomicSummaryCreateViewModel, SaveEconomicSummaryRequest>();
@@ -902,6 +909,87 @@ namespace DSLNG.PEAR.Web.AutoMapper
                 .ForMember(x => x.PeriodeType, o => o.MapFrom(x => (DSLNG.PEAR.Data.Enums.PeriodeType)x.PeriodeType));
 
         }
+
+        private void ConfigureDerViewModel()
+        {
+            Mapper.CreateMap<GetDerResponse, DerViewModel>();
+            Mapper.CreateMap<DerViewModel, CreateOrUpdateDerRequest>();
+            Mapper.CreateMap<GetActiveDerResponse, DerIndexViewModel>();
+            Mapper.CreateMap<GetActiveDerResponse.DerItem, DerIndexViewModel.DerItem>();
+            Mapper.CreateMap<ManageDerItemViewModel, GetDerItemRequest>();
+            Mapper.CreateMap<GetDerItemResponse, ManageDerItemViewModel>();
+            Mapper.CreateMap<GetDerLayoutitemsResponse, DerLayoutConfigViewModel>();
+            Mapper.CreateMap<GetDerLayoutitemsResponse.LayoutItem, DerLayoutConfigViewModel.LayoutItem>();
+            
+            Mapper.CreateMap<DerLayoutItemViewModel, SaveLayoutItemRequest>();
+            Mapper.CreateMap<DerLayoutLineViewModel, SaveLayoutItemRequest.LayoutItemArtifact>();
+            Mapper.CreateMap<LineChartViewModel, SaveLayoutItemRequest.LayoutItemArtifactLine>();
+            Mapper.CreateMap<DerLayoutLineViewModel, SaveLayoutItemRequest.LayoutItemArtifactSerie>();
+
+            Mapper.CreateMap<GetDerLayoutResponse, DerDisplayViewModel >();
+            /*Mapper.CreateMap<GetDerLayoutResponse.DerArtifact, DerDisplayViewModel.DerArtifact>();
+            Mapper.CreateMap<GetDerLayoutResponse.DerArtifactSerie, DerDisplayViewModel.DerArtifactSerie>();*/
+            Mapper.CreateMap<GetDerLayoutResponse.DerLayoutItem, DerDisplayViewModel.DerLayoutItem>();
+
+            //artifact DER
+            Mapper.CreateMap<DerLayoutItemViewModel, SaveLayoutItemRequest>();
+            Mapper.CreateMap<DerLayoutItemViewModel.DerLayoutItemArtifactViewModel, SaveLayoutItemRequest.LayoutItemArtifact>();
+            Mapper.CreateMap<GetDerLayoutitemResponse, DerLayoutItemViewModel>();
+            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifact, DerLayoutItemViewModel.DerLayoutItemArtifactViewModel>();
+            //Mapper.CreateMap<GetDerLayoutitemRespons.e.DerArtifactChart, LineChartViewModel.SeriesViewModel>();
+
+            //DER Line
+            Mapper.CreateMap<LineChartViewModel, SaveLayoutItemRequest.LayoutItemArtifactLine>();
+            Mapper.CreateMap<LineChartViewModel.SeriesViewModel, SaveLayoutItemRequest.LayoutItemArtifactSerie>();
+            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifact, LineChartViewModel>();
+            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifactSerie, LineChartViewModel.SeriesViewModel>();
+
+            //DER Multiaxis
+            Mapper.CreateMap<MultiaxisChartViewModel, SaveLayoutItemRequest.LayoutItemArtifactMultiAxis>();
+            Mapper.CreateMap<MultiaxisChartViewModel.ChartViewModel, SaveLayoutItemRequest.LayoutItemArtifactChart>()
+                .ForMember(x => x.Series, y => y.MapFrom(z => z.LineChart.Series));
+            Mapper.CreateMap<GetDerLayoutitemResponse, MultiaxisChartViewModel>();
+            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifactChart, MultiaxisChartViewModel.ChartViewModel>();
+            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifact, MultiaxisChartViewModel>()
+                .ForMember(x => x.Charts, o => o.Ignore());
+            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifactChart, LineChartViewModel>();
+            //Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifactSerie, MultiaxisChartViewModel.ChartViewModel>();
+
+            Mapper.CreateMap<GetDerLayoutitemResponse, GetCartesianChartDataRequest>()
+                  .ForMember(x => x.GraphicType, y => y.MapFrom(z => z.Artifact.GraphicType))
+                  .ForMember(x => x.HeaderTitle, y => y.MapFrom(z => z.Artifact.HeaderTitle))
+                  .ForMember(x => x.MeasurementId, y => y.MapFrom(z => z.Artifact.MeasurementId))
+                  .ForMember(x => x.PeriodeType, y => y.MapFrom(z => DSLNG.PEAR.Data.Enums.PeriodeType.Daily))
+                  .ForMember(x => x.RangeFilter, y => y.MapFrom(z => DSLNG.PEAR.Data.Enums.RangeFilter.Interval))
+                  .ForMember(x => x.ValueAxis, y => y.MapFrom(z => DSLNG.PEAR.Data.Enums.ValueAxis.KpiActual));
+
+            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifactSerie, GetCartesianChartDataRequest.SeriesRequest>();
+            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifactChart, GetMultiaxisChartDataRequest.ChartRequest>();
+            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifactSerie, GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>();
+
+            Mapper.CreateMap<GetDerLayoutitemResponse, GetMultiaxisChartDataRequest>()
+                  .ForMember(x => x.PeriodeType, y => y.MapFrom(z => DSLNG.PEAR.Data.Enums.PeriodeType.Daily))
+                  .ForMember(x => x.RangeFilter, y => y.MapFrom(z => DSLNG.PEAR.Data.Enums.RangeFilter.Interval));
+
+            
+            //DER Pie
+            Mapper.CreateMap<PieViewModel, SaveLayoutItemRequest.LayoutItemArtifactPie>();
+            Mapper.CreateMap<PieViewModel.SeriesViewModel, SaveLayoutItemRequest.LayoutItemArtifactSerie>();
+            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifact, PieViewModel>();
+            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifactSerie, PieViewModel.SeriesViewModel>();
+
+            //DER Tank
+            Mapper.CreateMap<TankViewModel, SaveLayoutItemRequest.LayoutItemArtifactTank>();
+            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifactTank, GetTankDataRequest.TankRequest>();
+            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifactTank, TankViewModel>();
+            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifact, TankViewModel>();
+
+            /*Mapper.CreateMap<DerLayoutItemViewModel, SaveLayoutItemRequest>();
+            Mapper.CreateMap<DerLayoutLineViewModel, SaveLayoutItemRequest.LayoutItemArtifact>();
+            Mapper.CreateMap<LineChartViewModel, SaveLayoutItemRequest.LayoutItemArtifactLine>();*/
+
+        }
+
     }
 
     public class MultiaxisSeriesValueResolver : ValueResolver<MultiaxisChartViewModel.ChartViewModel, IList<GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>>

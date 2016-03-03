@@ -1,0 +1,81 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.DerConfigViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+@Html.Partial("_MessageResponse")
+
+<div class="title_page" style="border: none!important;">
+    <div class="row">
+        <div class="title">Daily Execute Report Configuration</div>
+    </div>
+    <div class="row">
+        <a href="@Url.Action("Create")" class="text-button" data-toggle="modal" data-target="#modalDialog">
+            <span class="fa fa-plus-circle"></span>
+            Add DER
+        </a>
+    </div>
+</div>
+
+<table class="table table-transparent table-bordered table-responsive table-hover">
+    <tbody>
+        <tr>
+            <th>No</th>
+            <th>Title</th>
+            <th>Is Active</th>
+            <th>Action</th>
+        </tr>
+        @{
+            int i = 0;
+        }
+        @foreach (var item in Model.Ders)
+        {
+            i++;
+            <tr data-toggle="modal">
+                <td>@i</td>
+                <td>@item.Title</td>
+                
+                <td><input type="checkbox" checked="@item.IsActive" data-id="@item.Id" data-is-active="@item.IsActive" class="is-active"/></td>
+                <td class="text-button">
+                    <a href="@Url.Action("Update", "PmsSummary", new { id = item.Id }, null)" data-toggle="modal" data-target="#modalDialog"><span class="fa fa-pencil-square-o"></span>Edit</a>
+                    <a href='javascript:;' onclick='confirmDelete(@item.Id)'><span class="fa fa-trash-o"></span>Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@*@Html.Partial("_Modal")
+@Html.Partial("_ModalScoreIndicator")
+
+@section Scripts{
+    <script type="text/javascript">
+        var confirmDelete = function (id, controller) {
+            if (confirm('Are you sure want to delete this item?')) {
+                var url = '@Url.Action("Delete", "PmsSummary")';
+                $('<form action="' + url + '" method="POST">' +
+                    '<input type="hidden" name="id" value="' + id + '">' +
+                    '</form>').submit();
+            }
+        };
+
+        $(document).ready(function() {
+            $('.is-active').change(function() {
+                var id = $(this).data('id');
+                var isActive = $(this).is(':checked');
+                console.log({ id: id, isActive: isActive });
+                $.ajax({
+                    url: '@Url.Action("UpdateStatus", "PmsSummary")',
+                    data: { id: id, isActive: isActive },
+                    method: "POST",
+                    success:function(data) {
+                        console.log(data);
+                        location.reload();
+                    }
+                });
+            });
+        });
+    </script>
+}*@
+
+

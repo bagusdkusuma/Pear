@@ -1,0 +1,83 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.DerLayout.DerLayoutItemViewModel
+<h3>DER Layout Item Configuration</h3>
+
+@using (Html.BeginForm("SaveLayoutItem", "DerLayout", FormMethod.Post))
+{
+    @Html.HiddenFor(model => model.DerLayoutId)
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Column)
+    @Html.HiddenFor(model => model.Row)
+
+    <div class="form-group row">
+        @Html.LabelFor(model => model.Type, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.Type, Model.Types, "Select Type", new { style = "color:#000", @class = "der-layout-type" })
+            @Html.ValidationMessageFor(model => model.Row)
+        </div>
+    </div>
+    <div class="form-group row layout-type-area" style="min-height: 50px;padding-left: 13px;"></div>
+    <div class="col-md-12 artifact-designer-btns">
+        <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
+        <button data-preview-url="@Url.Action("Preview", "Artifact")"  id="graphic-preview-btn" type="button" class="btn btn-primary btn-lg"><span class="fa fa-eye"></span>View</button>
+        <a onclick="location.reload();" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>
+        <a href="@Url.Action("Index", "Artifact")" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+    </div>
+}
+
+
+<div id="hidden-fields-holder" data-kpi-url="@Url.Action("KpiList", "Artifact")"></div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.der-layout-type').change(function () {
+            var that = $(this);
+            var type = that.val().toLowerCase();
+            switch (type) {
+                case 'multiaxis':
+                    $.ajax({
+                        url: '@Url.Action("LayoutSetting", "DerLayout", new { type = "_type_" })'.replace('_type_', that.val()),
+                        success: function (data) {
+                            $('.layout-type-area').html(data);
+                            var $hiddenFields = $('#hidden-fields');
+                            $('#hidden-fields-holder').html($hiddenFields.html());
+                            $hiddenFields.remove();
+                            var pear = window.Pear;
+                            var callback = pear.Artifact.Designer._setupCallbacks;
+                            callback['multiaxis']();
+                        }
+                    });
+                    break;
+                case 'highlight':
+                    {
+                        $.ajax({
+                            url: '@Url.Action("LayoutSetting", "DerLayout", new { type = "_type_" })'.replace('_type_', that.val()),
+                            success: function (data) {
+                                $('.layout-type-area').html(data);
+                                /*$('#highlight-type').html('');
+                                $.each(data, function(id, option) {
+                                    $('#highlight-type').append($('<option></option>').val(option.id).html(option.name));
+                                });
+                                $('.highlight-type-area').show();*/
+                            }
+                        });
+                        break;
+                    }
+                default:
+                    $.ajax({
+                        url: '@Url.Action("LayoutSetting", "DerLayout", new { type = "_type_" })'.replace('_type_', that.val()),
+                        success: function (data) {
+                            $('.layout-type-area').html(data);
+                            var pear = window.Pear;
+                            var callback = pear.Artifact.Designer._setupCallbacks;
+                            console.log(callback);
+                            callback[that.val()]();
+                        }
+                    });
+                    break;
+            }
+        });
+    });
+</script>
+
