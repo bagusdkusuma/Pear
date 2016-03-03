@@ -1831,6 +1831,7 @@ a.see-more {
 
 .business-posture .col-md-12 h4, .list-block h4{
     padding : 10px 0px 10px 0px;
+    width:100%;
 }
 
 .list-block{
@@ -2035,9 +2036,6 @@ a.see-more {
     float:none;
     margin:0;
 }
-.midterm-phase-formulation .row{
-    padding-left: 10px;
-}
 .midterm-phase-formulation .row .col-md-12{
     margin-top: 20px;
 }
@@ -2080,9 +2078,6 @@ li > input.choose-list{
     padding: 10px 0px 10px 0px;
 }
 
-.midterm-phase-formulation .col-md-12{
-    padding: 0px;
-}
 
 .midterm-phase-formulation .col-md-12 h4{
     margin-bottom: 5px;
@@ -2097,10 +2092,7 @@ li > input.choose-list{
     color: white;
 }
 
-.formulation-stage  {
-    margin-left: 10px;
-    margin-bottom: 20px;
-}
+
 
 .formulation-stage .title{
     text-align: center;
@@ -2108,10 +2100,7 @@ li > input.choose-list{
 }
 
 
-.formulation-stage{
-    padding: 0px;
-    border: 1px solid white;
-}
+
 
 .formulation-stage .date-range{
     list-style: none;
@@ -2131,15 +2120,20 @@ li > input.choose-list{
 }
 
 .formulation-stage .defined-header{
-    margin-top:40px;
-    margin-left:0px;
+    padding:5px;
+    margin:0;
     text-align: left;
     width: 100%;
+    border-bottom:1px solid #ddd;
+    position:relative;
+    border-top: 1px solid #ddd;
+    margin-top: -1px;
+    margin-bottom:-1px;
 }
 
 .formulation-stage .defined-header a{
     position: absolute;
-    top: 70px;
+    top: 5px;
     right: 0px;
 }
 
@@ -2149,18 +2143,28 @@ li > input.choose-list{
     width: 100%;
     /*padding-left: 0px;*/
     margin-left: 0px;
+    margin:0;
+    padding-left:25px;
 
 }
-
+    .formulation-stage .defined-list li:first-child {
+        margin-top:5px;
+    }
+    .formulation-stage .defined-list li:last-child {
+        margin-bottom:5px;
+    }
 .formulation-stage .defined-list li{
     list-style: decimal;
+    padding-right:20px;
+    position:relative;
 }
+    .formulation-stage .defined-list li .remove-item {
+        float:none;
+        position:absolute;
+        top:0px;
+        right:0;
+    }
 
-
-.formulation-stage .key-driver a{
-    position: relative;
-    float: right;
-}
 
 .formulation-stage .defined-list .key-driver{
     margin-top: 40px;
@@ -2181,9 +2185,6 @@ li > input.choose-list{
 .kpi-form,
 .objective-form {
     display:none;
-}
-.formulation-stage .key-driver .sub-title a{
-    position: relative;
 }
 
 .business-posture .highlight, .environment-scanning .highlight {
@@ -2424,4 +2425,48 @@ table.list-result tr td:last-child {
 table.list-result{
     border-bottom:none;
     margin-bottom:-1px;
+}
+
+.formulation-stages-table {
+    width:100%;
+    border-collapse:separate;
+    border-spacing:15px;
+    margin-top:-45px;
+}
+    .formulation-stages-table tr td {
+        vertical-align:top;
+        border: 1px solid #ddd;
+    }
+.formulation-stage {
+    width:25%;
+    color:#fff;
+}
+    .formulation-stage .title {
+        font-size:16px;
+        position:relative;
+        background-color:rgb(79,129,189);
+        margin-bottom:0;
+        padding:5px;
+    }
+        .formulation-stage .title a {
+            position:absolute;
+            right:0;
+        }
+    .formulation-stage .date-range {
+        float:left;
+        width:100%;
+        margin:0;
+    }
+.formulation-stage .date-range li {
+    padding:5px;
+}
+    .formulation-stage .date-range li:first-child {
+        border-left:none;
+        border-right:none;
+    }
+    .formulation-stage .date-range li:last-child {
+        border-right:none;
+    }
+.clear {
+    clear:both;
 }
