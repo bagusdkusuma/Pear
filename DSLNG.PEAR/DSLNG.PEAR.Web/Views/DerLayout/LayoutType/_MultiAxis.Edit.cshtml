@@ -1,0 +1,120 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.DerLayout.DerLayoutItemViewModel
+@Html.HiddenFor(model => model.Artifact.Id)
+<div class="form-group row">
+    @Html.LabelFor(model => model.Artifact.HeaderTitle, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(model => model.Artifact.HeaderTitle)
+        @Html.ValidationMessageFor(model => model.Artifact.HeaderTitle)
+    </div>
+</div>
+
+<div class="form-group row">
+    <label class="control-label col-md-2">Series</label>
+    <div class="col-md-10">
+        <input type="button" value="Add Charts" class="btn btn-lightblue" id="add-chart" />
+    </div>
+</div>
+@*<div class="form-group form-list">
+    <label>&nbsp;</label>
+    @#1#Html.DropDownListFor(model => model.GraphicType, Model.MultiaxisChart.GraphicTypes, new { id = "multiaxis-graphic-type", @class = "form-control" })#1#
+    <input type="button" value="Add Charts" class="btn btn-lightblue" id="add-chart" />
+</div>*@
+
+<div id="hidden-fields">
+    @for (var i = 0; i < Model.MultiaxisChart.Charts.Count; i++)
+    {
+        var original = i == 0 ? "original" : "";
+        var dataChartPos = original == "" ? "data-chart-pos=" + i : "";
+        <div class="chart-template @original whitebox" @dataChartPos>
+            <input type="hidden" name="MultiaxisChart.Charts.Index" value="@i" />
+            <h2>Charts</h2>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.MultiaxisChart.Charts[i].GraphicType)
+                        @Html.DropDownListFor(model => model.MultiaxisChart.Charts[i].GraphicType, Model.MultiaxisChart.GraphicTypes, new { @class = "form-control multiaxis-graphic-type", data_graph_url = Url.Action("MultiaxisSettings", "Artifact") })
+                        @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].GraphicType)
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.MultiaxisChart.Charts[i].MeasurementId)
+                        @*@Html.DropDownListFor(model => model.MultiaxisChart.Charts[i].MeasurementId, Model.MultiaxisChart.Measurements, new { @class = "form-control measurement" })*@
+                        @Html.DropDownListFor(model => model.MultiaxisChart.Charts[i].MeasurementId, new SelectList(Model.MultiaxisChart.Measurements, "Value", "Text", Model.MultiaxisChart.Charts[i].MeasurementId), new { @class = "form-control measurement" })
+                        @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].MeasurementId)
+                    </div>
+                </div>
+                <div class="col-sm-6  value-axis-holder">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.MultiaxisChart.Charts[i].ValueAxis)
+                        @Html.DropDownListFor(model => model.MultiaxisChart.Charts[i].ValueAxis, Model.MultiaxisChart.ValueAxes, new { @class = "form-control value-axis-opt" })
+                        @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].ValueAxis)
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.MultiaxisChart.Charts[i].ValueAxisTitle)
+                        @Html.TextBoxFor(model => model.MultiaxisChart.Charts[i].ValueAxisTitle, new {@class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].ValueAxisTitle)
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.MultiaxisChart.Charts[i].FractionScale)
+                        @Html.TextBoxFor(model => model.MultiaxisChart.Charts[i].FractionScale, new {@class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].FractionScale)
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.MultiaxisChart.Charts[i].MaxFractionScale)
+                        @Html.TextBoxFor(model => model.MultiaxisChart.Charts[i].MaxFractionScale, new {@class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].MaxFractionScale)
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.MultiaxisChart.Charts[i].ValueAxisColor)
+                        <div class="input-group colorpicker">
+                            @Html.TextBoxFor(model => model.MultiaxisChart.Charts[i].ValueAxisColor, new { @class = "form-control" })
+                            <span class="input-group-addon"><i></i></span>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].ValueAxisColor)
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.MultiaxisChart.Charts[i].IsOpposite)
+                        @Html.CheckBoxFor(model => model.MultiaxisChart.Charts[i].IsOpposite, new {@class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].IsOpposite)
+                    </div>
+                </div>
+                <div class="col-sm-6 chart-settings">
+                                 @{
+                                     if (i != 0)
+                                     {
+                                         switch (Model.MultiaxisChart.Charts[i].GraphicType)
+                                         {
+                                             case "line":
+                                                 Html.RenderPartial("~/Views/MultiaxisChart/_LineChartEdit.cshtml", Model.MultiaxisChart.Charts[i].LineChart, new ViewDataDictionary {{"ChartIndex", i}});
+                                                 break;
+                                         }
+                                     }
+                                 }
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-inline graphic-properties series-holder">
+                    </div>
+                </div>
+            </div>
+            <input type="button" value="Remove" class="remove" />
+            <div class="hidden-fields-holder"></div>
+        </div>
+    }
+</div>
+
+<div id="charts-holder" class="form-inline graphic-properties"></div>
+
+

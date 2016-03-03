@@ -29,6 +29,9 @@
         case "tank":
             Html.RenderPartial("~/Views/DerLayout/LayoutType/_Tank.Edit.cshtml", Model);
             break;
+        case "multiaxis":
+            Html.RenderPartial("~/Views/DerLayout/LayoutType/_Multiaxis.Edit.cshtml", Model);
+            break;
     }
         }
     </div>
@@ -158,7 +161,53 @@
                 {
                     $('.main-value-axis').css('display', 'none');
                     $('.form-measurement').css('display', 'none');
-                    Pear.Artifact.Designer._setupCallbacks.tank();
+                    window.Pear.Artifact.Designer._setupCallbacks.tank();
+                    break;
+                }
+            case "multiaxis":
+                {
+                    var $hiddenFields = $('#hidden-fields');
+                    var chartTemplate = $hiddenFields.find('.chart-template.original');
+                    var chartTemplateClone = chartTemplate.clone(true);
+                    chartTemplateClone.children('input:first-child').remove();
+                    $('#hidden-fields-holder').html(chartTemplateClone);
+                    chartTemplate.remove();
+                    $('#charts-holder').append($hiddenFields.html());
+                    $('#charts-holder').find('.chart-template').each(function (i, val) {
+                        var $thisTemplate = $(val);
+                        window.Pear.Artifact.Designer._colorPicker($thisTemplate.find('.value-axis-color'));
+                        $thisTemplate.find('.multiaxis-graphic-type').change(function (e) {
+                            e.preventDefault();
+                            var $this = $(this);
+                            window.Pear.Artifact.Designer.Multiaxis._loadGraph($this.data('graph-url'), $this.val(), $thisTemplate);
+                        });
+                        switch ($thisTemplate.find('.multiaxis-graphic-type').val()) {
+                            case 'line':
+                                var $hiddenFields = $thisTemplate.find('.hidden-fields');
+                                $hiddenFields.find('.series-template:not(.original)').each(function (i, val) {
+                                    $this = $(val);
+                                    $this.addClass('singlestack');
+                                    $this.addClass($thisTemplate.find('.value-axis-opt').val());
+                                    $this.addClass($thisTemplate.find('.multiaxis-graphic-type').val());
+                                });
+                                var seriesTemplate = $hiddenFields.find('.series-template.original');
+                                var seriesTemplateClone = seriesTemplate.clone(true);
+                                seriesTemplateClone.children('input:first-child').remove();
+                                $thisTemplate.find('.hidden-fields-holder').html(seriesTemplateClone);
+                                seriesTemplate.remove();
+                                $thisTemplate.find('.series-holder').append($hiddenFields.html());
+                                $thisTemplate.find('.series-holder').find('.series-template').each(function (i, val) {
+                                    var $this = $(val);
+                                    window.Pear.Artifact.Designer._kpiAutoComplete($this, true, $this.closest('.chart-template'));
+                                    window.Pear.Artifact.Designer._colorPicker($this);
+                                });
+                                $hiddenFields.remove();
+                                window.Pear.Artifact.Designer.Multiaxis._setupCallbacks.line($thisTemplate);
+                                break;                            
+                        }
+                    });
+                    $hiddenFields.remove();
+                    window.Pear.Artifact.Designer._setupCallbacks.multiaxis();
                     break;
                 }
         }

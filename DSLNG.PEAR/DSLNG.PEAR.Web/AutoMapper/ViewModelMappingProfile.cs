@@ -893,6 +893,12 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<MultiaxisChartViewModel, SaveLayoutItemRequest.LayoutItemArtifactMultiAxis>();
             Mapper.CreateMap<MultiaxisChartViewModel.ChartViewModel, SaveLayoutItemRequest.LayoutItemArtifactChart>()
                 .ForMember(x => x.Series, y => y.MapFrom(z => z.LineChart.Series));
+            Mapper.CreateMap<GetDerLayoutitemResponse, MultiaxisChartViewModel>();
+            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifactChart, MultiaxisChartViewModel.ChartViewModel>();
+            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifact, MultiaxisChartViewModel>()
+                .ForMember(x => x.Charts, o => o.Ignore());
+            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifactChart, LineChartViewModel>();
+            //Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifactSerie, MultiaxisChartViewModel.ChartViewModel>();
 
             Mapper.CreateMap<GetDerLayoutitemResponse, GetCartesianChartDataRequest>()
                   .ForMember(x => x.GraphicType, y => y.MapFrom(z => z.Artifact.GraphicType))
