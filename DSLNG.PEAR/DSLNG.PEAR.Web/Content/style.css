@@ -2556,6 +2556,10 @@ table.kpis {
     display:block;
 }
 .formulation-stages:last-child .formulation-stage:last-child .title .remove-item {
-    display:block;
-    top:5px;
+    display: block;
+    top: 5px;
+}
+
+.pop-information .row .table-info tr td{
+    display: block;
 }

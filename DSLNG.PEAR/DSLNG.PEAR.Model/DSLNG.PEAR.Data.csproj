@@ -102,6 +102,9 @@
     <Compile Include="Entities\EconomicModel\KeyOperationConfig.cs" />
     <Compile Include="Entities\EconomicModel\Scenario.cs" />
     <Compile Include="Entities\HighlightGroup.cs" />
+    <Compile Include="Entities\Pop\PopDashboard.cs" />
+    <Compile Include="Entities\Pop\PopInformation.cs" />
+    <Compile Include="Entities\Pop\Signature.cs" />
     <Compile Include="Entities\ResetPassword.cs" />
     <Compile Include="Entities\Select.cs" />
     <Compile Include="Entities\SelectOption.cs" />
@@ -149,11 +152,13 @@
     <Compile Include="Entities\RoleGroup.cs" />
     <Compile Include="Entities\ScoreIndicator.cs" />
     <Compile Include="Enums\PmsSummaryScoringIndicatorType.cs" />
+    <Compile Include="Enums\PopInformationType.cs" />
     <Compile Include="Enums\PostureType.cs" />
     <Compile Include="Enums\RangeFilter.cs" />
     <Compile Include="Enums\ScoringType.cs" />
     <Compile Include="Enums\SelectType.cs" />
     <Compile Include="Enums\SeriesType.cs" />
+    <Compile Include="Enums\SignatureType.cs" />
     <Compile Include="Enums\TargetType.cs" />
     <Compile Include="Entities\Type.cs" />
     <Compile Include="Entities\User.cs" />

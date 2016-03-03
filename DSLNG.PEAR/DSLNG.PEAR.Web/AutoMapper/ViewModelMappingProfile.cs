@@ -150,6 +150,12 @@ using DSLNG.PEAR.Web.ViewModels.MidtermFormulation;
 using System.Globalization;
 using DSLNG.PEAR.Web.ViewModels.MidtermStrategyPlanning;
 using DSLNG.PEAR.Services.Requests.MidtermPlanning;
+using DSLNG.PEAR.Web.ViewModels.PopDashboard;
+using DSLNG.PEAR.Services.Requests.PopDashboard;
+using DSLNG.PEAR.Services.Responses.PopDashboard;
+using DSLNG.PEAR.Services.Responses.PopInformation;
+using DSLNG.PEAR.Services.Requests.PopInformation;
+using DSLNG.PEAR.Services.Requests.Signature;
 namespace DSLNG.PEAR.Web.AutoMapper
 {
     public class ViewModelMappingProfile : Profile
@@ -657,7 +663,12 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetActiveOutputCategoriesResponse, EconomicIndicatorsViewModel>();
             Mapper.CreateMap<GetActiveOutputCategoriesResponse.OutputCategoryResponse, EconomicIndicatorsViewModel.OutputCategoryViewModel>();
             Mapper.CreateMap<GetActiveOutputCategoriesResponse.KeyOutputResponse, EconomicIndicatorsViewModel.KeyOutputViewModel>();
-
+            Mapper.CreateMap<SavePopDashboardViewModel, SavePopDashboardRequest>();
+            Mapper.CreateMap<GetPopDashboardResponse, GetPopDashboardViewModel>();
+            Mapper.CreateMap<GetPopDashboardResponse.PopInformation, GetPopDashboardViewModel.PopInformation>();
+            Mapper.CreateMap<GetPopDashboardResponse.Signature, SignatureViewModel>();
+            Mapper.CreateMap<SavePopInformationViewModel, SavePopInformationRequest>();
+            Mapper.CreateMap<GetPopDashboardViewModel, SaveSignatureRequest>();
             base.Configure();
         }
 
