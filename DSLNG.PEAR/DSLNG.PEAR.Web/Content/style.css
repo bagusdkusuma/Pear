@@ -2671,6 +2671,7 @@ table.kpis {
     border: solid 1px black;
     font-size: 13px;
     text-align: center;
+    margin: 0 0 1px;
 }
 
 .der-title-underline {
@@ -2684,3 +2685,109 @@ table.kpis {
 .der-table td, .der-row th {
     padding: 0 2px;
 }
+
+.der-bg-green-1{
+    background-color:#00ff00;
+    text-align:center;
+    font-size: 22px
+}
+
+.der-bg-green-2{
+    background-color:#009933
+}
+
+.der-bg-green-3{
+    text-align:center;
+    background-color:rgb(196,215,155);
+}
+
+.der-bg-blue-1{
+    text-align:center;
+    font-weight:bold;
+    background-color:rgb(183,222,232)
+}
+
+.der-bg-blue-2{
+    text-align:center;
+    background-color:rgb(184,204,228)
+}
+
+.der-bg-blue-3{
+    font-weight:bold;
+    text-align:center;
+    background-color:rgb(146,205,220)
+}
+
+.der-bg-blue-4{
+    font-weight:bold;
+    text-align:center;
+    background-color:rgb(220,230,241)
+}
+
+.der-bg-blue-5{
+    font-weight:bold;
+    text-align:center;
+    background-color:rgb(102,255,255)
+}
+
+.der-bg-blue-6{
+    font-weight:bold;
+    text-align:center;
+    background-color:rgb(83,141,213)
+}
+
+.der-bg-blue-7{
+    font-weight:bold;
+    text-align:center;
+    background-color:rgb(218,238,243)
+}
+
+.der-bg-blue-8{
+    font-weight:bold;
+    text-align:center;
+    background-color:rgb(149,179,215)
+}
+
+.der-bg-red{
+    background-color:red
+}
+
+.der-bg-yellow{
+    background-color:yellow
+}
+
+.der-bg-purple{
+    font-weight:bold;
+    text-align:center;
+    background-color:rgb(204,192,218)
+}
+
+.der-bg-gray-1{
+    background-color:rgb(166,166,166)
+}
+
+.der-bg-gray-2{
+    background-color:rgb(192,192,192)
+}
+
+der-bg-brown{
+    font-weight:bold;
+    text-align:center;
+    background-color:rgb(148,138,84)
+}
+
+der-bg-orange-1{
+    font-weight:bold;
+    text-align:center;
+    background-color:rgb(250,191,43)
+}
+
+der-bg-orange-2{
+    font-weight:bold;
+    text-align:center;
+    background-color:rgb(226,107,10)
+}
+
+/*.der-dummy {
+    display: none !important;
+}*/
