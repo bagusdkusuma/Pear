@@ -2770,22 +2770,48 @@ table.kpis {
     background-color:rgb(192,192,192)
 }
 
-der-bg-brown{
+.der-bg-brown{
     font-weight:bold;
     text-align:center;
     background-color:rgb(148,138,84)
 }
 
-der-bg-orange-1{
+.der-bg-orange-1{
     font-weight:bold;
     text-align:center;
     background-color:rgb(250,191,43)
 }
 
-der-bg-orange-2{
+.der-bg-orange-2{
     font-weight:bold;
     text-align:center;
     background-color:rgb(226,107,10)
+}
+
+.daily-highlight .der-daily-highlight{
+    height:66px;
+    overflow:hidden
+}
+
+.security-remark .der-daily-highlight{
+    height:47px;
+    overflow:hidden
+}
+
+.der-qhsse-row-1{
+    height:62px
+}
+
+.der-safety-table{
+    height:417px
+}
+
+.der-qhsee-qhse{
+    height:200px
+}
+
+.der-qhsee-weekly-alarm{
+    height:217px
 }
 
 /*.der-dummy {

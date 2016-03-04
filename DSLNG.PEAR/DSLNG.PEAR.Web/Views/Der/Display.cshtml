@@ -25,7 +25,7 @@
                 }
             }
         </div>
-        <div class="col-md-6 no-padding">
+        <div class="col-md-6 no-padding daily-highlight">
             @{
                 var row0Col1 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 1);
                 if (row0Col1 != null)
@@ -76,7 +76,7 @@
     <div class="row der-row">
         <p class="der-table-title">QHSSE & PROCESS SAFETY MANAGEMENT</p>
         <div class="col-md-5 no-padding">
-            <table class="der-table der-dummy">
+            <table class="der-table der-dummy der-qhsse-row-1">
                 <tr>
                     <td style="font-weight: bold">Days Without DAFWC:</td>
                     <td>600 Days</td>
@@ -105,7 +105,7 @@
             }
         </div>
         <div class="col-md-4 no-padding">
-            <table class="der-table der-dummy">
+            <table class="der-table der-dummy der-qhsse-row-1">
                 <tr>
                     <td>Tide/Wave at Jetty:</td>
                     <td style="text-align: center">asfasf</td>
@@ -136,7 +136,7 @@
             }
         </div>
         <div class="col-md-3 no-padding">
-            <table class="der-table der-dummy" style="min-height: 81px; margin: 0">
+            <table class="der-table der-dummy der-qhsee-qhse" style="margin: 0">
                 <thead>
                     <tr>
                         <th colspan="2" class="der-bg-blue-1">QHSE & PSM Remark</th>
@@ -148,7 +148,7 @@
                     </tr>
                 </tbody>
             </table>
-            <table class="der-table der-dummy">
+            <table class="der-table der-dummy der-qhsee-weekly-alarm">
                 <thead>
                     <tr>
                         <th colspan="2" class="der-bg-blue-1">WEEKLY ALARM MANAGEMENT SYSTEM (28 Dec-4 Jan)</th>
@@ -174,7 +174,7 @@
             </table>
         </div>
         <div class="col-md-4 no-padding">
-            <p class="der-bg-blue-1" style="border:1px solid black;text-align:center">PROCESS UPSET / ANOMALY  / CONDITION</p>
+            <p class="der-bg-blue-1" style="border:1px solid black;text-align:center;margin:0 0 1px">PROCESS UPSET / ANOMALY  / CONDITION</p>
             <div class="row der-row" style="margin-left:0">
                 <div class="col-md-6 no-padding">
                     <table class="der-table der-dummy" style="min-height: 400px">
@@ -222,7 +222,7 @@
     </div>*@
 </div>
 <div class="row der-row">
-    <div class="col-md-6 no-padding">
+    <div class="col-md-6 no-padding security-remark">
         @{
             var row4Col0 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 0);
             if (row4Col0 != null)
@@ -526,7 +526,7 @@
     <div class="col-md-4 no-padding">
         <table class="der-table der-dummy all-border">
             <thead>
-                <tr>
+                <tr style="height:61px">
                     <th class="der-bg-blue-1">
                         TOTAL FEED GAS
                     </th>
@@ -592,7 +592,7 @@
         <table class="der-table der-dummy all-border">
             <thead>
                 <tr>
-                    <th class="der-bg-blue-7">Description</th>
+                    <th class="der-bg-blue-7" style="width:12%">Description</th>
                     <th class="der-bg-blue-7">Plant Availability (hour-daily)</th>
                     <th class="der-bg-blue-7">
                         Plant Thermal Efficiency
@@ -603,7 +603,7 @@
                     <th class="der-bg-blue-7">
                         Act Feed/ Max.Cap (Plant intake Utilization)
                     </th>
-                    <th class="der-bg-blue-5">
+                    <th class="der-bg-blue-5" style="width:15%">
                         Refrigerant Prod (C2&C3)
                     </th>
                     <th class="der-bg-blue-3">
@@ -699,7 +699,7 @@
     <div class="col-md-6" style="padding: 0px 0px">
         <table class="der-table der-dummy all-border">
             <thead>
-                <tr>
+                <tr style="height:31px">
                     <th class="der-bg-blue-1">PRODUCTION</th>
                     <th colspan="3" class="der-bg-blue-1">LNG</th>
                     <th colspan="3" class="der-bg-blue-8">
@@ -870,7 +870,7 @@
         <table class="der-table der-dummy all-border">
             <thead>
                 <tr>
-                    <th class="der-bg-blue-3">
+                    <th class="der-bg-blue-3" style="width:12%">
                         LNG LOADED
                     </th>
                     <th class="der-bg-blue-3">
@@ -889,7 +889,7 @@
                         Planned Cargoes
                         (ADP 2016)
                     </th>
-                    <th class="der-bg-blue-7">
+                    <th class="der-bg-blue-7" style="width:9%">
                         Remarks
                     </th>
                 </tr>
@@ -1559,7 +1559,7 @@
         <table class="der-table der-dummy all-border">
             <thead>
                 <tr>
-                    <th colspan="3">DSLNG Indicative Commercial Price (JCC based)-USD/mmbtu</th>
+                    <th colspan="3" style="height:32px">DSLNG Indicative Commercial Price (JCC based)-USD/mmbtu</th>
                 </tr>
             </thead>
             <tbody>
@@ -1603,20 +1603,20 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>
+                    <td style="width:33%">
                         Dubai Crude
                         (DME OQD FUT)
                     </td>
                     <td>
                         0.00
                     </td>
-                    <td>
+                    <td style="width:30%">
                         26.28 USD/bbl
                     </td>
                     <td>
                         0
                     </td>
-                    <td>
+                    <td style="width:30%">
                         USD/SDR 0.7251
                     </td>
                 </tr>
