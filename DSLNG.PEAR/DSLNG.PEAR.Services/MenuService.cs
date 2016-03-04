@@ -104,7 +104,18 @@ namespace DSLNG.PEAR.Services
             string requestId = string.Empty;
             if (requestUrl.Length > 0)
             {
-                requestController = requestUrl[0];
+                string ctrl = string.Empty;
+                if (requestUrl[0].Contains("?"))
+                {
+                    var ctrls = requestUrl[0].Split('?');
+                    if (ctrls.Length > 0)
+                    {
+                        ctrl = ctrls[0];
+                    }
+                }
+
+                
+                requestController = string.IsNullOrEmpty(ctrl) ? requestUrl[0] : ctrl;
             }
 
             if (requestUrl.Length > 1)

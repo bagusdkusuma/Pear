@@ -98,6 +98,19 @@
     <Compile Include="Entities\ConstantUsage.cs" />
     <Compile Include="Entities\Conversion.cs" />
     <Compile Include="Entities\DashboardTemplate.cs" />
+    <Compile Include="Entities\Der\Der.cs" />
+    <Compile Include="Entities\Der\DerArtifact.cs" />
+    <Compile Include="Entities\Der\DerArtifactChart.cs" />
+    <Compile Include="Entities\Der\DerArtifactSerie.cs" />
+    <Compile Include="Entities\Der\DerArtifactTank.cs" />
+    <Compile Include="Entities\Der\DerStaticHighlight.cs" />
+    <Compile Include="Entities\Der\DerHighlight.cs" />
+    <Compile Include="Entities\Der\DerItem.cs" />
+    <Compile Include="Entities\Der\DerLayout.cs" />
+    <Compile Include="Entities\Der\DerLayoutItem.cs" />
+    <Compile Include="Entities\Der\DerKpiInformation.cs" />
+    <Compile Include="Entities\Der\LayoutConfiguration.cs" />
+    <Compile Include="Entities\Der\LayoutConfigurationItem.cs" />
     <Compile Include="Entities\EconomicModel\EconomicSummary.cs" />
     <Compile Include="Entities\EconomicModel\KeyAssumptionData.cs" />
     <Compile Include="Entities\EconomicModel\KeyOperationConfig.cs" />
@@ -138,6 +151,7 @@
     <Compile Include="Entities\StaticHighlightPrivilege.cs" />
     <Compile Include="Entities\Vessel.cs" />
     <Compile Include="Entities\VesselSchedule.cs" />
+    <Compile Include="Entities\Wave.cs" />
     <Compile Include="Entities\Weather.cs" />
     <Compile Include="Enums\ConfigType.cs" />
     <Compile Include="Enums\ConversionType.cs" />

@@ -1,6 +1,7 @@
 ﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using DSLNG.PEAR.Data.Entities;
+using DSLNG.PEAR.Data.Entities.Der;
 using Type = DSLNG.PEAR.Data.Entities.Type;
 using DSLNG.PEAR.Data.Entities.EconomicModel;
 using DSLNG.PEAR.Data.Entities.Blueprint;
@@ -63,6 +64,15 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<EconomicSummary> EconomicSummaries { get; set; }
         IDbSet<KeyOutputConfiguration> KeyOutputConfigs { get; set; }
         IDbSet<StaticHighlightPrivilege> StaticHighlightPrivileges { get; set; }
+        IDbSet<Der> Ders { get; set; }
+        IDbSet<DerItem> DerItems { get; set; }
+        IDbSet<DerLayout> DerLayouts { get; set; }
+        IDbSet<DerLayoutItem> DerLayoutItems { get; set; }
+        IDbSet<DerArtifact> DerArtifacts { get; set; }
+        IDbSet<DerKpiInformation> DerTables { get; set; }
+        IDbSet<DerArtifactChart> DerArtifactCharts { get; set; }
+        IDbSet<DerArtifactSerie> DerArtifactSeries { get; set; }
+        IDbSet<DerArtifactTank> DerArtifactTanks { get; set; }
         IDbSet<PlanningBlueprint> PlanningBlueprints { get; set; }
         IDbSet<UltimateObjectivePoint> UltimateObjectivePoints { get; set; }
         IDbSet<EnvironmentsScanning> EnvironmentsScannings { get; set; }
@@ -85,6 +95,9 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<PopInformation> PopInformations { get; set; }
         IDbSet<Signature> Signatures { get; set; }
         IDbSet<ESCategory> ESCategories { get; set; }
+        IDbSet<DerHighlight> DerHighlights { get; set; }
+        IDbSet<DerStaticHighlight> DerStaticHighlights { get; set; }
+        IDbSet<Wave> Waves { get; set; }
         Database Database { get; }
         int SaveChanges();
         DbEntityEntry Entry(object entity);

@@ -278,7 +278,7 @@
                 }
                 if (!Model.IsReviewer)
                 {
-                <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-arrow-right"></span>Business Posture Identification</button>
+                <button type="submit" class="btn btn-primary btn-lg submit-all-es"><span class="fa fa-arrow-right"></span>Business Posture Identification</button>
                 }
                 else
                 {
@@ -362,9 +362,11 @@
         <label>Description</label>
         <input type="text" name="esId" hidden="hidden" />
         <input type="text" name="type" hidden="hidden" />
-        <textarea name="Description" cols="25" rows="5"></textarea>
+        <textarea name="Description" cols="25" rows="5" required="required"></textarea>
+        <div>
         <button class="btn btn-primary form-es-submit">Add</button>
         <button class="btn btn-primary cancel-popover">Cancel</button>
+        </div>
     }
 </div>
 
@@ -376,9 +378,11 @@
         <label>Description</label>
         <input type="text" name="enviId" hidden="hidden" />
         <input type="text" name="enviType" hidden="hidden" />
-        <textarea name="Description" cols="25" rows="5"></textarea>
+        <textarea name="Description" cols="25" rows="5" required="required"></textarea>
+        <div>
         <button class="btn btn-primary form-envi-submit">Add</button>
         <button class="btn btn-primary cancel-popover">Cancel</button>
+        </div>
     }
 </div>
 
@@ -393,11 +397,11 @@
         <div class="wrapper-relation"></div>
         <div>
             @Html.LabelFor(model => model.Definition)
-            @Html.TextAreaFor(model => model.Definition, new { cols = "25", rows = "5" })
+            @Html.TextAreaFor(model => model.Definition, new { cols = "25", rows = "5", required="required" })
         </div>
         <div>
             @Html.LabelFor(model => model.Type)
-            @Html.DropDownListFor(model => model.Type, Model.Types)
+            @Html.DropDownListFor(model => model.Type, Model.Types, new { required="required"})
         </div>
         <div>
             @Html.LabelFor(model => model.Category)
@@ -423,11 +427,11 @@
         <div class="wrapper-challenge"></div>
         <div>
             @Html.LabelFor(model => model.Definition)
-            @Html.TextAreaFor(model => model.Definition, new { cols = "25", rows = "5" })
+            @Html.TextAreaFor(model => model.Definition, new { cols = "25", rows = "5", required = "required" })
         </div>
         <div>
             @Html.LabelFor(model => model.Type)
-            @Html.DropDownListFor(model => model.Type, Model.Types)
+            @Html.DropDownListFor(model => model.Type, Model.Types, new {required = "required" })
         </div>
         <div>
             @Html.LabelFor(model => model.Category)
@@ -525,6 +529,8 @@
             $(document).on('click', '.form-es-submit', function (e) {
                 e.preventDefault();
                 var $that = $(this);
+                var $form = $that.closest('form');
+                if (!$form.valid()) return;
                 $.ajax({
                     url: '@Url.Action("Create", "EnvironmentScanning")',
                     data: $that.closest('form').serialize(),
@@ -549,6 +555,8 @@
             $(document).on('click', '.form-envi-submit', function (e) {
                 e.preventDefault();
                 var $that = $(this);
+                var $form = $that.closest('form');
+                if (!$form.valid()) return;
                 $.ajax({
                     url: '@Url.Action("CreateEnvironmental", "EnvironmentScanning")',
                     data: $that.closest('form').serialize(),
@@ -656,7 +664,8 @@
             $(document).on('click', '.form-input-constraint', function (e) {
                 e.preventDefault();
                 var $that = $(this);
-                console.log($that.closest('form'))
+                var $form = $that.closest('form');
+                if (!$form.valid()) return;
                 $.ajax({
                     url: '@Url.Action("CreateConstraint", "EnvironmentScanning")',
                     data: $that.closest('form').serialize(),
@@ -691,7 +700,8 @@
             $(document).on('click', '.form-input-challenge', function (e) {
                 e.preventDefault();
                 var $that = $(this);
-                console.log($that.closest('form'))
+                var $form = $that.closest('form');
+                if (!$form.valid()) return;
                 $.ajax({
                     url: '@Url.Action("CreateChallenge", "EnvironmentScanning")',
                     data: $that.closest('form').serialize(),
@@ -1102,6 +1112,27 @@
                 })
             });
 
+            $(document).on('click', '.submit-all-es', function (e) {
+                e.preventDefault();
+                var uocpLength = $('.cp-list').children('li').length;
+                var uoopLength = $('.op-list').children('li').length;
+                var uorpLength = $('.rp-list').children('li').length;
+                var threatLength = $('.th-list').children('li').length;
+                var opportunityLength = $('.opp-list').children('li').length;
+                var weaknessLength = $('.wk-list').children('li').length;
+                var strengthLength = $('.st-list').children('li').length;
+                var constraints = $('.table-constraint tr').length; //should be greater than 1
+                var challenges = $('.table-challenge tr').length; //should be greater than 1
+                if (!uocpLength || !uoopLength || !uorpLength || !threatLength ||
+                    !opportunityLength || !weaknessLength || !strengthLength ||
+                    constraints == 1 || challenges == 1) {
+                    if (window.confirm("One of block informations leave empty! Once you go through it you can't revise it. Are you sure want to go to next step?")) {
+                        $(this).closest('form').submit();
+                    }
+                } else {
+                    $(this).closest('form').submit();
+                }
+            });
 
         });
 

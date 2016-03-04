@@ -55,5 +55,9 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             return Json(_midtermPlanningService.Add(viewModel.MapTo<AddMidtermPlanningRequest>()));
         }
+
+        public ActionResult IsValid(int id) {
+            return Json(new { IsValid = _midtermPlanningService.IsValid(id) }, JsonRequestBehavior.AllowGet);
+        }
 	}
 }

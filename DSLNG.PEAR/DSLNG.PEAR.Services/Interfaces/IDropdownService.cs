@@ -34,6 +34,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         IEnumerable<Dropdown> GetESChallengeCategories();
 
         IEnumerable<Dropdown> GetConfigTypes();
+        IEnumerable<Dropdown> GetDerItemTypes();
     }
 
     public class Dropdown

@@ -1,0 +1,62 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.DerIndexViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<table class="der">
+    <tr>
+        <td colspan="8">
+            @{
+                var row1Col1 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 1 && x.Type == "Text");
+                if (row1Col1 != null)
+                {
+                @Html.Raw(row1Col1.Text)
+                }  
+            }
+
+        </td>
+        <td colspan="4">LOGO
+        </td>
+    </tr>
+    <tr>
+        <td colspan="6">Avg YTD-Key Statistics (compare to prior day)
+        </td>
+        <td colspan="6">Normal Operation, MCHE rundown at 102% of capacity. 
+        </td>
+    </tr>
+    <tr class="template-view">
+        <td colspan="3" style="width: 25%">
+            @{
+                var row3Col1 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 1 && x.Type == "Artifact");
+                if (row3Col1 != null)
+                {
+                <div class="whitebox artifact-holder" style="height:350px;" data-artifact-url="@Url.Action("View", "Artifact", new { id = row3Col1.ComponentId })">
+                </div>
+                }  
+            }
+
+            <a data-target="#modalDialogManageItem" data-toggle="modal" href="@Url.Action("ManageItem", "Der", new { row = 3, col = 1 })"><span class="fa fa-table"></span>Manage</a>
+
+        </td>
+        <td colspan="3" style="width: 25%">
+            <div class="whitebox artifact-holder" style="height:350px;" data-artifact-url="@Url.Action("View", "Artifact", new { id = 32 })">
+            </div>
+
+        </td>
+        <td colspan="3" style="width: 25%">
+            <div class="whitebox artifact-holder" style="height:350px;" data-artifact-url="@Url.Action("View", "Artifact", new { id = 32 })">
+            </div>
+
+        </td>
+        <td colspan="3" style="width: 25%">
+            <div class="whitebox artifact-holder" style="height:350px;" data-artifact-url="@Url.Action("View", "Artifact", new { id = 32 })">
+            </div>
+
+        </td>
+    </tr>
+</table>
+
+@Html.Partial("_DialogManageItem")

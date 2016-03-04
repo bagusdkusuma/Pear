@@ -223,12 +223,12 @@ namespace DSLNG.PEAR.Services
 
         public IEnumerable<Dropdown> GetKpisForPmsConfigDetailsUpdate(int pmsConfigId, int id)
         {
-             var pmsConfig = DataContext.PmsConfigs.Include(x => x.Pillar)
-                                       .Include(x => x.PmsConfigDetailsList.Select(y => y.Kpi))
-                                       .Single(x => x.Id == pmsConfigId);
+            var pmsConfig = DataContext.PmsConfigs.Include(x => x.Pillar)
+                                      .Include(x => x.PmsConfigDetailsList.Select(y => y.Kpi))
+                                      .Single(x => x.Id == pmsConfigId);
             var kpiIds = pmsConfig.PmsConfigDetailsList.Where(x => x.Kpi.Id != id).Select(x => x.Kpi.Id);
 
-            return DataContext.Kpis.Where(x => x.Type.Code.ToLower() == Constants.Type.Corporate && x.Pillar.Id == pmsConfig.Pillar.Id 
+            return DataContext.Kpis.Where(x => x.Type.Code.ToLower() == Constants.Type.Corporate && x.Pillar.Id == pmsConfig.Pillar.Id
                 && !kpiIds.Contains(x.Id))
                 .Select(x => new Dropdown
                 {
@@ -254,6 +254,7 @@ namespace DSLNG.PEAR.Services
             }).ToList();
         }
 
+<<<<<<< HEAD
 
         public IEnumerable<Dropdown> GetESConstraintCategories()
         {
@@ -271,6 +272,22 @@ namespace DSLNG.PEAR.Services
                     Text = x.Name,
                     Value = x.Id.ToString()
                 }).ToList();
+=======
+        public IEnumerable<Dropdown> GetDerItemTypes()
+        {
+            return new List<Dropdown>()
+                {
+                    new Dropdown {Text = "Highlight", Value = "highlight"},
+                    new Dropdown {Text = "Line", Value = "line"},
+                    new Dropdown {Text = "Multi Axis", Value = "multiaxis"},
+                    new Dropdown {Text = "Pie", Value = "pie"},
+                    new Dropdown {Text = "Tank", Value = "tank"},
+                    new Dropdown {Text = "Weather", Value = "weather"},
+                    new Dropdown {Text = "Alert", Value = "alert"},
+                    new Dropdown {Text = "Wave", Value = "wave"},
+                    new Dropdown {Text = "Avg Ytd-Key Statistic", Value = "avg-ytd-key-statistic"},
+                };
+>>>>>>> 057a48ced538524a38a606244f3ad1b46ff5c535
         }
     }
 }

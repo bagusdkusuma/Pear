@@ -29,8 +29,8 @@
                           <div data-id="@item.Id" class="title">@item.Title
                     </div>
                     <ul class="date-range">
-                        <li><span class="start">@item.StartDate.Value.ToString("MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)</span></li>
-                        <li><span class="end">@item.StartDate.Value.ToString("MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)</span></li>
+                        <li><span class="start">@item.StartDate.Value.ToString("MMM yyyy", System.Globalization.CultureInfo.InvariantCulture)</span></li>
+                        <li><span class="end">@item.StartDate.Value.ToString("MMM yyyy", System.Globalization.CultureInfo.InvariantCulture)</span></li>
                     </ul>
                     <div class="clear"></div>
                     <div class="defined-header description">
@@ -95,7 +95,7 @@
             using (Html.BeginForm("SubmitMidtermPlanning", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
             {
                 @Html.Hidden("Id", Model.Id)
-                <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Submit</button>
+                <button type="submit" class="btn btn-primary btn-lg submit-al-mp"><span class="fa fa-floppy-o"></span>Submit</button>
             }
             }else{
             using (Html.BeginForm("ApproveMidtermStrategy", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
@@ -159,16 +159,16 @@
     <div class="strategic-planning-form">
     <form action="/MidtermStrategyPlanning/Add">
         <input type="hidden" name="MidtermStageId" />
-        <label>Title</label>
-        <input type="text" name="Title" />
+        <label style="width:50px">Title</label>
+        <input type="text" name="Title" required="required" />
         <div style="position: relative">
-            <label>Start</label>
+            <label style="width:50px">Start</label>
 
-            <input type="text" name="StartDate" class="monthpicker" />
+            <input type="text" name="StartDate" class="monthpicker" required="required" />
         </div>
         <div style="position: relative">
-            <label>End</label>
-            <input type="text" name="EndDate" class="monthpicker" />
+            <label style="width:50px">End</label>
+            <input type="text" name="EndDate" class="monthpicker" required="required" />
         </div>
         <input type="submit" class="btn btn-primary submit-midterm-planning" value="submit" />
     </form>
@@ -221,13 +221,13 @@
                     $row.data('id', kpi.Id);
                     var $kpiCol = $('<td />');
                     var $targetCol = $('<td />');
-                    var $actualCol = $('<td />');
+                    var $economicCol = $('<td />');
                     $kpiCol.html(kpi.Name + ' (' + kpi.Measurement + ') <a href="/MidtermStrategyPlanning/DeleteKpi" class="remove-kpi"><i class="fa fa-minus"></i></a>');
                     $targetCol.html(kpi.Target);
-                    $actualCol.html(kpi.Actual);
+                    $economicCol.html(kpi.Economic);
                     $row.append($kpiCol);
                     $row.append($targetCol);
-                    $row.append($actualCol);
+                    $row.append($economicCol);
                     $kpisHolder.append($row);
                     $midtermPlanning.find('.add-kpi').popover('hide');
                 
@@ -272,24 +272,24 @@
                           }
                     }
                     var $kpisHolder = $mpTemplate.find('.kpis');
-                    console.log(mPlanning.Kpis);
-                    for (var j in mPlanning.Kpis) {
-                        var kpi = mPlanning.Kpis[j];
+                    for (var j in mPlanning.KpiDatas) {
+                        var kpiData = mPlanning.KpiDatas[j];
+                        var kpi = kpiData.Kpi;
                         var $row = $('<tr />');
                         $row.data('id', kpi.Id);
                         var $kpiCol = $('<td />');
                         var $targetCol = $('<td />');
-                        var $actualCol = $('<td />');
+                        var $economicCol = $('<td />');
                         @if(!Model.IsReviewer){
                         <text>$kpiCol.html(kpi.Name + ' (' + kpi.Measurement + ') <a href="/MidtermStrategyPlanning/DeleteKpi" class="remove-kpi"><i class="fa fa-minus"></i></a>');</text>
                         }else{
                         <text>$kpiCol.html(kpi.Name + ' (' + kpi.Measurement + ')');</text>
                         }
-                        $targetCol.html(kpi.Target);
-                        $actualCol.html(kpi.Actual);
+                        $targetCol.html(kpiData.Target);
+                        $economicCol.html(kpiData.Economic);
                         $row.append($kpiCol);
                         $row.append($targetCol);
-                        $row.append($actualCol);
+                        $row.append($economicCol);
                         $kpisHolder.append($row);
                     }
                     if ($mPlanningsHolder.children('td').length == 3) {
@@ -310,7 +310,11 @@
             var $this = $(this);
             $.post($this.prop('href'), 'id=' + $this.closest('.midterm-planning').data('id'), function (data) {
                 if (data.IsSuccess) {
-                    $this.closest('.midterm-planning').remove();
+                    if ($this.closest('tr').children('td').length == 1 && $this.closest('table tbody').children('tr').length > 2) {
+                        $this.closest('tr').remove();
+                    } else {
+                        $this.closest('.midterm-planning').remove();
+                    }
                 }
             });
         });
@@ -349,12 +353,64 @@
                 }
             });
         });
+
+
+        $(document).on('click', '.submit-al-mp', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            //var valid = $('.midterm-plannings-table .midterm-planning').length;
+            //$('.midterm-plannings-table .objectives').each(function (i, val) {
+            //    valid = $(val).children('li').length && valid;
+            //});
+            //$('.midterm-plannings-table .kpis').each(function (i, val) {
+            //    valid = $(val).find('tr').length > 1 && valid;
+            //});
+            $.get('/MidtermStrategyPlanning/IsValid/@Model.Id', function (data) {
+                var valid = data.IsValid;
+                if (!valid) {
+                    if (window.confirm("One of block informations leave empty! Once you go through it you can't revise it. Are you sure want to go to next step?")) {
+                        $this.closest('form').submit();
+                    }
+                } else {
+                    $this.closest('form').submit();
+                }
+            });
+           
+        });
+
         $(document).on('click', '.submit-midterm-planning', function (e) {
             e.preventDefault();
             var $this = $(this);
             var midtermStageId = $('.stage-selected').data('id');
             var $form = $this.closest('form');
             $form.find('input[name="MidtermStageId"]').val(midtermStageId);
+
+            var months = {
+                Jan: 1, Feb: 1, Mar: 3, Apr: 4, May: 5, Jun: 6,
+                Jul: 7, Aug: 8, Sep: 9, Oct: 10, Nov: 11, Dec: 12
+            };
+
+            if (!$form.valid()) return;
+
+            var startDate = $form.find('input[name="StartDate"]').val();
+            var endDate = $form.find('input[name="EndDate"]').val();
+
+            var mStartDate = moment('01/' + startDate, "DD/MM/YYYY");
+            var mEndDate = moment('01/' + endDate, "DD/MM/YYYY");
+
+            if (!moment('01/' + startDate, "DD/MM/YYYY", true).isValid() || !moment('01/' + endDate, "DD/MM/YYYY", true).isValid()) {
+                return alert("Date format is not valid!");
+            }
+
+            if (mEndDate.isBefore(mStartDate)) {
+                return alert("End Date can't be earlier than Start Date!");
+            }
+            if ($('.midterm-plannings:last-child .midterm-planning:last-child').length) {
+                var latestDate = moment('01 ' + $('.midterm-plannings:last-child .midterm-planning:last-child .end').html().trim(), "DD MMM YYYY");
+                if (mStartDate.isBefore(latestDate)) {
+                    return alert("Start Date should not be earlier than latest phase!");
+                }
+            }
             $.post($form.prop('action'), $form.serialize(), function (data) {
                 var mPlanning = data;
                 if (data.IsSuccess) {

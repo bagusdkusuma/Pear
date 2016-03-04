@@ -69,8 +69,8 @@ namespace DSLNG.PEAR.Services
                     Message = "You have been successfully add new stage",
                     Id = stage.Id,
                     Title = stage.Title,
-                    Start = request.StartDate.HasValue ? request.StartDate.Value.ToString("MM/yyyy", CultureInfo.InvariantCulture) : "",
-                    End = request.EndDate.HasValue? request.EndDate.Value.ToString("MM/yyyy", CultureInfo.InvariantCulture) : ""
+                    Start = request.StartDate.HasValue ? request.StartDate.Value.ToString("MMM yyyy", CultureInfo.InvariantCulture) : "",
+                    End = request.EndDate.HasValue? request.EndDate.Value.ToString("MMM yyyy", CultureInfo.InvariantCulture) : ""
                 };
             }
             catch {

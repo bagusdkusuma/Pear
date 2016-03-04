@@ -1,4 +1,5 @@
 ﻿
+using DSLNG.PEAR.Data.Enums;
 using System;
 using System.Collections.Generic;
 namespace DSLNG.PEAR.Services.Responses.MidtermPlanning
@@ -19,6 +20,7 @@ namespace DSLNG.PEAR.Services.Responses.MidtermPlanning
             {
                 Objectives = new List<MidtermPlanningObjective>();
                 Kpis = new List<Kpi>();
+                KpiDatas = new List<KpiData>();
             }
             public int Id { get; set; }
             public string Title { get; set; }
@@ -26,6 +28,7 @@ namespace DSLNG.PEAR.Services.Responses.MidtermPlanning
             public DateTime? EndDate { get; set; }
             public IList<MidtermPlanningObjective> Objectives { get; set; }
             public IList<Kpi> Kpis { get; set; }
+            public IList<KpiData> KpiDatas { get; set; }
         }
         public class MidtermPlanningObjective
         {
@@ -37,13 +40,14 @@ namespace DSLNG.PEAR.Services.Responses.MidtermPlanning
             public int Id { get; set; }
             public string Name {get; set; }
             public string Measurement { get; set; }
-            public double? Target { get; set; }
-            public double? Actual { get; set; }
+            public YtdFormula YtdFormula { get; set; }
+            //public double? Target { get; set; }
+            //public double? Economic { get; set; }
         }
         public class KpiData {
-            public int KpiId { get; set; }
-            public double Value { get; set; }
-            public int Year { get; set; }
+            public Kpi Kpi { get; set; }
+            public double? Target { get; set; }
+            public double? Economic { get; set; }
         }
     }
 }

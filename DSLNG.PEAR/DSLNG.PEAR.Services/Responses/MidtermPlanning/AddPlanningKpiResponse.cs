@@ -7,7 +7,7 @@ namespace DSLNG.PEAR.Services.Responses.MidtermPlanning
         public int Id { get; set; }
         public string Name { get; set; }
         public string Measurement { get; set; }
-        public double Target { get; set; }
-        public double Actual { get; set; }
+        public double? Target { get; set; }
+        public double? Economic { get; set; }
     }
 }

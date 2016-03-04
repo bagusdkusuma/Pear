@@ -264,5 +264,13 @@ namespace DSLNG.PEAR.Services
                 Selects = data.ToList().MapTo<GetSelectsResponse.Select>()
             };
         }
+
+        public IList<Dropdown> GetHighlightTypesDropdown()
+        {
+            var dropdowns =
+                DataContext.SelectOptions.Where(x => x.Group != null && x.IsActive && x.Select.Name == "highlight-types")
+                           .ToList();
+            return dropdowns.Select(x => new Dropdown() {Text = x.Text, Value = x.Id.ToString()}).ToList();
+        }  
     }
 }
