@@ -984,6 +984,9 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifactTank, TankViewModel>();
             Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifact, TankViewModel>();
 
+            //Der KpiInformations
+            Mapper.CreateMap<DerLayoutItemViewModel.DerKpiInformationViewModel, SaveLayoutItemRequest.DerKpiInformationRequest>();
+
             /*Mapper.CreateMap<DerLayoutItemViewModel, SaveLayoutItemRequest>();
             Mapper.CreateMap<DerLayoutLineViewModel, SaveLayoutItemRequest.LayoutItemArtifact>();
             Mapper.CreateMap<LineChartViewModel, SaveLayoutItemRequest.LayoutItemArtifactLine>();*/

@@ -97,6 +97,8 @@
                             that.html(data.highlight.Message);
                         } else if (data.type === "weather" || data.type === "alert") {                            
                             that.html(data.view);
+                        } else if (data.type === "avg-ytd-key-statistic") {
+                            that.html(data.view);
                         }
                         
                     }

@@ -8,6 +8,11 @@ namespace DSLNG.PEAR.Services.Requests.Der
 {
     public class SaveLayoutItemRequest
     {
+        public SaveLayoutItemRequest()
+        {
+            KpiInformations = new List<DerKpiInformationRequest>();
+        }
+
         public int Id { get; set; }
         public string Type { get; set; }
         public string OldType { get; set; }
@@ -16,7 +21,6 @@ namespace DSLNG.PEAR.Services.Requests.Der
         public int DerLayoutId { get; set; }
         public LayoutItemHighlight Highlight { get; set; }
         public LayoutItemArtifact Artifact { get; set; }
-        //public string StaticHighlight { get; set; }
 
         public class LayoutItemHighlight
         {
@@ -101,5 +105,13 @@ namespace DSLNG.PEAR.Services.Requests.Der
             public bool ShowLine { get; set; }
         }
 
+        public IList<DerKpiInformationRequest> KpiInformations { get; set; }
+
+        public class DerKpiInformationRequest
+        {
+            public int Position { get; set; }
+            public int KpiId { get; set; }
+            public string KpiName { get; set; }
+        }
     }
 }

@@ -1,0 +1,22 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayAvgYtdKeyStatisticViewModel
+
+<table style="border: 1px solid #ffffff">
+    @{
+        
+        <tr>
+            @for (var i = 1; i <= 6; i++)
+            {
+                <td>@Model.AvgYtdKeyStatistics.Single(x => x.Position == i).KpiName</td>
+            }
+        </tr>
+        
+        <tr>
+            @for (var i = 1; i <= 6; i++)
+            {
+                <td>@Model.AvgYtdKeyStatistics.Single(x => x.Position == i).Value</td>
+            }
+        </tr>
+    }
+</table>
+
+

@@ -393,7 +393,7 @@ namespace DSLNG.PEAR.Services
             response.PeriodeType = periodeType;
             try
             {
-                var kpiAchievement = DataContext.KpiAchievements.Include(x => x.Kpi).Single(x => x.Kpi.Id == request.Kpi_Id && x.PeriodeType == periodeType && x.Periode == request.periode);
+                var kpiAchievement = DataContext.KpiAchievements.Include(x => x.Kpi).Single(x => x.Kpi.Id == request.KpiId && x.PeriodeType == periodeType && x.Periode == request.Periode);
                 response = kpiAchievement.MapTo<GetKpiAchievementResponse>();
                 response.IsSuccess = true;
             }
@@ -506,6 +506,49 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
+        public GetKpiAchievementResponse GetKpiAchievement(int kpiId, DateTime date, RangeFilter rangeFilter)
+        {
+            var response = new GetKpiAchievementResponse();
+            try
+            {
+                switch (rangeFilter)
+                {
+                    case RangeFilter.YTD:
+                        {
+                            var kpi = DataContext.Kpis
+                                .Include(x => x.Measurement)
+                                .Single(x => x.Id == kpiId);
+                            
+                            var kpiAchievement = DataContext.KpiAchievements.Include(x => x.Kpi).Where(x => x.Kpi.Id == kpiId && x.PeriodeType == PeriodeType.Monthly && x.Value.HasValue &&
+                                (x.Periode.Month >= 1 && x.Periode.Month <= date.Month && x.Periode.Year == date.Year)).Average(x => x.Value);
+
+                            var kpiResponse = new GetKpiAchievementResponse.KpiResponse
+                                {
+                                    Id = kpi.Id,
+                                    Measurement = kpi.Measurement.Name,
+                                    Name = kpi.Name,
+                                    Remark = kpi.Remark,
+                                };
+
+                            return new GetKpiAchievementResponse
+                                {
+                                    Value = kpiAchievement,
+                                    Kpi = kpiResponse,
+                                    IsSuccess = true
+                                };
+                        }
+                }
+
+            }
+            catch (Exception exception)
+            {
+                response.Message = exception.Message;
+            }
+
+
+            return response;
+        }
+
 
         public AllKpiAchievementsResponse GetKpiAchievementsByRole(GetKpiAchievementsConfigurationRequest request)
         {
@@ -516,7 +559,7 @@ namespace DSLNG.PEAR.Services
                     .Include(x => x.Measurement)
                     .Include(x => x.Type)
                     .Include(x => x.RoleGroup)
-                    .Where(x=>x.RoleGroup.Id == request.RoleGroupId)
+                    .Where(x => x.RoleGroup.Id == request.RoleGroupId)
                     .AsEnumerable()
                     .OrderBy(x => x.Order)
                     .GroupBy(x => x.RoleGroup).ToDictionary(x => x.Key);

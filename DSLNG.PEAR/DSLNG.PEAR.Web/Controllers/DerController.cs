@@ -10,9 +10,12 @@ using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Artifact;
 using DSLNG.PEAR.Services.Requests.Der;
 using DSLNG.PEAR.Services.Requests.Highlight;
+using DSLNG.PEAR.Services.Requests.KpiAchievement;
 using DSLNG.PEAR.Services.Requests.Weather;
+using DSLNG.PEAR.Services.Responses.Der;
 using DSLNG.PEAR.Web.ViewModels.Artifact;
 using DSLNG.PEAR.Web.ViewModels.Der;
+using DSLNG.PEAR.Web.ViewModels.Der.Display;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -23,14 +26,16 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IArtifactService _artifactService;
         private readonly IHighlightService _highlightService;
         private readonly IWeatherService _weatherService;
+        private readonly IKpiAchievementService _kpiAchievementService;
 
-        public DerController(IDerService derService, IDropdownService dropdownService, IArtifactService artifactService, IHighlightService highlightService, IWeatherService weatherService)
+        public DerController(IDerService derService, IDropdownService dropdownService, IArtifactService artifactService, IHighlightService highlightService, IWeatherService weatherService, IKpiAchievementService kpiAchievementService)
         {
             _derService = derService;
             _dropdownService = dropdownService;
             _artifactService = artifactService;
             _highlightService = highlightService;
             _weatherService = weatherService;
+            _kpiAchievementService = kpiAchievementService;
         }
 
         public ActionResult Index()
@@ -104,6 +109,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var layout = _derService.GetDerLayoutItem(id);
             switch (layout.Type.ToLowerInvariant())
             {
+                #region switch
                 case "line":
                     {
 
@@ -153,7 +159,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         request.RangeFilter = RangeFilter.Interval;
                         request.Start = date.AddDays(-7);
                         request.End = date;
-                        
+
                         var previewViewModel = new ArtifactPreviewViewModel();
 
                         request.Charts = layout.Artifact.Charts.MapTo<GetMultiaxisChartDataRequest.ChartRequest>();
@@ -182,7 +188,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         request.Start = date.AddDays(-7);
                         request.End = date;
                         request.HeaderTitle = layout.Artifact.HeaderTitle;
-                        
+
                         request.ValueAxis = ValueAxis.KpiActual;
 
                         var series = layout.Artifact.Series.Select(x => new GetPieDataRequest.SeriesRequest
@@ -203,7 +209,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         {
                             previewViewModel.Highlights.Add(null);
                         }
-                        
+
                         previewViewModel.GraphicType = layout.Type;
                         previewViewModel.Pie = chartData.MapTo<PieDataViewModel>();
                         previewViewModel.Pie.Is3D = layout.Artifact.Is3D;
@@ -212,7 +218,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.Pie.Subtitle = chartData.Subtitle;
                         previewViewModel.Pie.SeriesResponses =
                             chartData.SeriesResponses.MapTo<PieDataViewModel.SeriesResponse>();
-                        
+
                         return Json(previewViewModel, JsonRequestBehavior.AllowGet);
                     }
 
@@ -244,7 +250,7 @@ namespace DSLNG.PEAR.Web.Controllers
                                     HighlightTypeId = layout.Highlight.SelectOptionId
                                 });
 
-                        var json = new {type = "highlight", highlight = highlight};
+                        var json = new { type = "highlight", highlight = highlight };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
                 case "weather":
@@ -270,7 +276,34 @@ namespace DSLNG.PEAR.Web.Controllers
                         var json = new { type = "alert", view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
-                    
+                #endregion
+
+                case "avg-ytd-key-statistic":
+                    {
+                        var viewModel = new DisplayAvgYtdKeyStatisticViewModel();
+
+                        for (int i = 1; i <= 6; i++)
+                        {
+                            var avgYtdKeyStatisticViewModel = new DisplayAvgYtdKeyStatisticViewModel.AvgYtdKeyStatisticViewModel();
+                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
+                                       new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
+
+                            avgYtdKeyStatisticViewModel.Position = item.Position;
+                            if (item.Kpi != null)
+                            {
+                                var actual = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.YTD);
+                                avgYtdKeyStatisticViewModel.KpiName = item.Kpi.Name;
+                                avgYtdKeyStatisticViewModel.Value = actual.Value.ToString();
+                            }
+
+                            viewModel.AvgYtdKeyStatistics.Add(avgYtdKeyStatisticViewModel);
+                        }
+
+                        var view = RenderPartialViewToString("Display/_AvgYtdKeyStatistic", viewModel);
+                        var json = new { type = "avg-ytd-key-statistic", view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+
             }
             return Content("as");
         }

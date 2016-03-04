@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
@@ -222,8 +223,10 @@ namespace DSLNG.PEAR.Services
                     .Include(x => x.Artifact.Tank.DaysToTankTop.Measurement)
                     .Include(x => x.Highlight)
                     .Include(x => x.Highlight.SelectOption)
+                    .Include(x => x.KpiInformations)
+                    .Include(x => x.KpiInformations.Select(y => y.Kpi))
                     .Single(x => x.Id == id);
-
+                
                 response = derLayoutItem.MapTo<GetDerLayoutitemResponse>();
                 response.IsSuccess = true;
             }
@@ -243,9 +246,6 @@ namespace DSLNG.PEAR.Services
                 case "line":
                     {
                         baseResponse = request.Id > 0 ? UpdateLineChart(request) : SaveLineChart(request);
-
-                        //DataContext.DerLayouts
-                        //SaveLine();
                         break;
                     }
                 case "multiaxis":
@@ -273,6 +273,11 @@ namespace DSLNG.PEAR.Services
                 case "wave":
                     {
                         baseResponse = SaveDynamicHighlight(request);
+                        break;
+                    }
+                case "avg-ytd-key-statistic":
+                    {
+                        baseResponse = SaveKpiInformations(request);
                         break;
                     }
             }
@@ -538,7 +543,7 @@ namespace DSLNG.PEAR.Services
                    .Include(x => x.Artifact.Series)
                    .Single(x => x.Id == request.Id);
 
-                var derLayout = new DerLayout {Id = request.DerLayoutId};
+                var derLayout = new DerLayout { Id = request.DerLayoutId };
                 DataContext.DerLayouts.Attach(derLayout);
                 derLayoutItem.DerLayout = derLayout;
                 derLayoutItem.Column = request.Column;
@@ -556,7 +561,7 @@ namespace DSLNG.PEAR.Services
                 {
                     var chart = item.MapTo<DerArtifactChart>();
 
-                    var measurement = new Measurement {Id = item.MeasurementId};
+                    var measurement = new Measurement { Id = item.MeasurementId };
                     if (DataContext.Measurements.Local.FirstOrDefault(x => x.Id == measurement.Id) == null)
                     {
                         DataContext.Measurements.Attach(measurement);
@@ -572,7 +577,7 @@ namespace DSLNG.PEAR.Services
                     foreach (var s in item.Series)
                     {
                         var serie = s.MapTo<DerArtifactSerie>();
-                        var kpi = new Kpi {Id = s.KpiId};
+                        var kpi = new Kpi { Id = s.KpiId };
                         if (DataContext.Kpis.Local.FirstOrDefault(x => x.Id == kpi.Id) == null)
                         {
                             DataContext.Kpis.Attach(kpi);
@@ -918,6 +923,50 @@ namespace DSLNG.PEAR.Services
                     DataContext.DerStaticHighlights.Add(derDynamicHighlight);
                     DataContext.DerLayoutItems.Add(derLayoutItem);
                 }
+
+                DataContext.SaveChanges();
+            }
+            catch (Exception exception)
+            {
+                response.Message = exception.Message;
+            }
+
+            return response;
+        }
+
+        private BaseResponse SaveKpiInformations(SaveLayoutItemRequest request)
+        {
+            var response = new GetDerLayoutResponse();
+            try
+            {
+
+                var derLayoutItem = new DerLayoutItem();
+                var derLayout = new DerLayout { Id = request.DerLayoutId };
+                DataContext.DerLayouts.Attach(derLayout);
+                derLayoutItem.DerLayout = derLayout;
+                derLayoutItem.Column = request.Column;
+                derLayoutItem.Row = request.Row;
+                derLayoutItem.Type = request.Type;
+                var kpiInformations = new List<DerKpiInformation>();
+                foreach (var item in request.KpiInformations)
+                {
+                    if (item.KpiId > 0)
+                    {
+                        var kpi = new Kpi {Id = item.KpiId};
+                        if (DataContext.Kpis.Local.FirstOrDefault(x => x.Id == kpi.Id) == null)
+                        {
+                            DataContext.Kpis.Attach(kpi);
+                        }
+                        else
+                        {
+                            kpi = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == request.Artifact.Tank.VolumeInventoryId);
+                        }
+                        kpiInformations.Add(new DerKpiInformation { Kpi = kpi, Position = item.Position });
+                    }
+                }
+
+                derLayoutItem.KpiInformations = kpiInformations;
+                DataContext.DerLayoutItems.Add(derLayoutItem);
 
                 DataContext.SaveChanges();
             }

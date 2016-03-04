@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -10,6 +11,11 @@ namespace DSLNG.PEAR.Data.Entities.Der
 {
     public class DerLayoutItem
     {
+        public DerLayoutItem()
+        {
+            KpiInformations = new Collection<DerKpiInformation>();
+        }
+
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int Id { get; set; }
@@ -20,6 +26,6 @@ namespace DSLNG.PEAR.Data.Entities.Der
         public DerArtifact Artifact { get; set; }
         public DerHighlight Highlight { get; set; }
         public DerStaticHighlight StaticHighlight { get; set; }
-        public ICollection<DerKpiInformation> Table { get; set; } 
+        public ICollection<DerKpiInformation> KpiInformations { get; set; } 
     }
 }

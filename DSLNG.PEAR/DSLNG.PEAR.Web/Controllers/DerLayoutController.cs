@@ -251,6 +251,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "avg-ytd-key-statistic":
                     {
                         var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations();
                         return PartialView("LayoutType/_AvgYtdKeyStatistic", viewModel);
                     }
             }
@@ -261,31 +262,13 @@ namespace DSLNG.PEAR.Web.Controllers
         [HttpPost]
         public ActionResult SaveLayoutItem(DerLayoutItemViewModel layoutItemViewModel)
         {
+            var req = Request;
             var request = new SaveLayoutItemRequest();
             var response = new SaveLayoutItemResponse();
             switch (layoutItemViewModel.Type.ToLowerInvariant())
             {
                 case "line":
                     {
-                        /*request.DerLayoutId = layoutItemViewModel.DerLayoutId;
-                        request.Column = layoutItemViewModel.Column;
-                        request.Row = layoutItemViewModel.Row;
-                        request.Type = layoutItemViewModel.Type;
-                        request.Artifact = new SaveLayoutItemRequest.LayoutItemArtifact();
-                        request.Artifact.HeaderTitle = layoutItemViewModel.Artifact.HeaderTitle;
-                        request.Artifact.MeasurementId = layoutItemViewModel.Artifact.MeasurementId;
-                        request.Artifact.LineChart = new SaveLayoutItemRequest.LayoutItemArtifactLine();
-                        foreach (var serie in layoutItemViewModel.LineChart.Series)
-                        {
-                            request.Artifact.LineChart.Series.Add(new SaveLayoutItemRequest.LayoutItemArtifactSerie()
-                            {
-                                Color = serie.Color,
-                                KpiId = serie.KpiId,
-                                Label = serie.Label
-                            });
-
-                        }*/
-
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.Artifact = layoutItemViewModel.Artifact.MapTo<SaveLayoutItemRequest.LayoutItemArtifact>();
                         request.Artifact.LineChart = layoutItemViewModel.LineChart.MapTo<SaveLayoutItemRequest.LayoutItemArtifactLine>();
@@ -335,6 +318,14 @@ namespace DSLNG.PEAR.Web.Controllers
                         response = _derService.SaveLayoutItem(request);
                         break;
                     }
+                case "avg-ytd-key-statistic":
+                    {
+                        request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
+                        request.KpiInformations =
+                            layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
+                        response = _derService.SaveLayoutItem(request);
+                        break;
+                    }
 
             }
 
@@ -342,6 +333,17 @@ namespace DSLNG.PEAR.Web.Controllers
             TempData["Message"] = response.Message;
 
             return RedirectToAction("Config", new { id = layoutItemViewModel.DerLayoutId });
+        }
+
+        private IList<DerLayoutItemViewModel.DerKpiInformationViewModel> GetKpiInformations()
+        {
+            var list = new List<DerLayoutItemViewModel.DerKpiInformationViewModel>();
+            for (int i = 1; i <= 6; i++)
+            {
+                list.Add(new DerLayoutItemViewModel.DerKpiInformationViewModel { Position = i });
+            }
+
+            return list;
         }
     }
 }

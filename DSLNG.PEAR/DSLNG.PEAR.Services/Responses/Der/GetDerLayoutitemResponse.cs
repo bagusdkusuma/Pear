@@ -3,6 +3,11 @@ namespace DSLNG.PEAR.Services.Responses.Der
 {
     public class GetDerLayoutitemResponse : BaseResponse
     {
+        public GetDerLayoutitemResponse()
+        {
+            KpiInformations = new List<KpiInformationResponse>();
+        }
+
         public int Id { get; set; }
         public string Type { get; set; }
         public int Column { get; set; }
@@ -10,6 +15,7 @@ namespace DSLNG.PEAR.Services.Responses.Der
         public int DerLayoutId { get; set; }
         public DerArtifact Artifact { get; set; }
         public DerHighlight Highlight { get; set; }
+        public IList<KpiInformationResponse> KpiInformations { get; set; }
 
         public class DerArtifact
         {
@@ -71,6 +77,19 @@ namespace DSLNG.PEAR.Services.Responses.Der
         {
             public int Id { get; set; }
             public int SelectOptionId { get; set; }
+        }
+
+        public class KpiInformationResponse
+        {
+            public int Id { get; set; }
+            public KpiResponse Kpi { get; set; }
+            public int Position { get; set; }
+
+            public class KpiResponse 
+            {
+                public int Id { get; set; }
+                public string Name { get; set; }
+            }
         }
     }
 }

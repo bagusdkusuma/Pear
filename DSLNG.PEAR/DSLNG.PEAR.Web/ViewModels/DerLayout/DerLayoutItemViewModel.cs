@@ -11,6 +11,11 @@ namespace DSLNG.PEAR.Web.ViewModels.DerLayout
 {
     public class DerLayoutItemViewModel
     {
+        public DerLayoutItemViewModel()
+        {
+            KpiInformations = new List<DerKpiInformationViewModel>();    
+        }
+
         public int Id { get; set; }
         public int Row { get; set; }
         public int Column { get; set; }
@@ -34,14 +39,8 @@ namespace DSLNG.PEAR.Web.ViewModels.DerLayout
         public class DerKpiInformationViewModel
         {
             public int Position { get; set; }
-            public IEnumerable<Kpi> Kpis { get; set; }
-
-            public class Kpi
-            {
-                
-            }
-
-
+            public int KpiId { get; set; }
+            public string KpiName { get; set; }
         }
 
         public class DerLayoutItemArtifactViewModel
