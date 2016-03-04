@@ -778,7 +778,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
             Mapper.CreateMap<KpiTarget, GetKpiTargetsConfigurationResponse.KpiTarget>();
             Mapper.CreateMap<KpiTarget, GetKpiTargetItemResponse>();
-            Mapper.CreateMap<Kpi, GetKpiTargetItemResponse.Kpi>();
+            Mapper.CreateMap<Kpi, GetKpiTargetItemResponse.KpiResponse>();
             Mapper.CreateMap<SaveKpiTargetRequest, KpiTarget>();
         }
 

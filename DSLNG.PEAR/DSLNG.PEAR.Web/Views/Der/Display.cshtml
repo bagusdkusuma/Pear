@@ -5,59 +5,7 @@
 }
 
 <style>
-    .der-row {
-        font-size: 11px;
-    }
-
-    .no-padding {
-        padding: 0px 0px;
-    }
-
-    .all-border tr, .all-border td, .all-border th {
-        border: 1px solid black;
-    }
-
-    .der-table {
-        border: solid 1px black;
-        background-color: white;
-        width: 100%;
-        color: black;
-        border-collapse: collapse;
-        margin-bottom: 2px;
-    }
-
-        .der-table th {
-            color: black;
-        }
-
-    .der-table-title {
-        text-align: center;
-        background-color: rgb(141,180,226);
-        border: solid 1px black;
-        font-weight: bold;
-        font-size: 13px;
-        margin: 0 0 1px;
-    }
-
-    .der-table-subtitle1 {
-        background-color: rgb(146,205,220);
-        font-weight: bold;
-        border: solid 1px black;
-        font-size: 13px;
-        text-align: center;
-    }
-
-    .der-title-underline {
-        font-weight: bold;
-        font-size: 13px;
-        text-decoration: underline;
-        text-align: left;
-        background-color: white;
-    }
-
-    .der-table td, .der-row th {
-        padding: 0 2px;
-    }
+   
 </style>
 
 <h2>Display 02/18/2016</h2>
@@ -68,43 +16,8 @@
 </div>
 <div class="container-fluid">
     <div class="row der-row">
-        <div class="col-md-12 no-padding">
-            <table class="der-table" style="text-align:center">
-                <tr>
-                    <th colspan="6" class="der-table-subtitle1" style="width:50%">Avg YTD-Key Statistics</th>
-                    <th colspan="6" class="der-title-underline" style="width:50%">Daily Highlight :</th>
-                </tr>
-                <tr style="font-weight:bold">
-                    <td>Feed Gas</td>
-                    <td>MICHE Rundown</td>
-                    <td>LNG Prod</td>
-                    <td>CDS Prod</td>
-                    <td>Fuel Gas</td>
-                    <td>Loss</td>
-                    <td colspan="6" rowspan="3" style="font-weight:normal;text-align:left;border-left:solid 1px black">Feed gas rate was maintained at 335MMscfd (fluctuated). MCHE rundown at 99.54% of capacity. LNG Maleo sailed off to Oita terminal.</td>
-                </tr>
-                <tr style="text-decoration:underline">
-                    <td>307 mmscfd</td>
-                    <td>5.989 ton/d</td>
-                    <td>5.521 ton/d</td>
-                    <td>1.991 bcpd</td>
-                    <td>679 ton/d</td>
-                    <td>314 ton/d</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>0</td>
-                </tr>
-            </table>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">
-            @{
+        <div class="col-md-6 no-padding">
+             @{
                 var row0Col0 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 0);
                 if (row0Col0 != null)
                 {
@@ -112,7 +25,7 @@
                 }
             }
         </div>
-        <div class="col-md-3">
+        <div class="col-md-6 no-padding">
             @{
                 var row0Col1 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 1);
                 if (row0Col1 != null)
@@ -121,21 +34,41 @@
                 }
             }
         </div>
+    </div>
+    <div class="row der-row">
         <div class="col-md-3">
             @{
-                var row0Col2 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 2);
-                if (row0Col2 != null)
+                var row1Col0 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 0);
+                if (row1Col0 != null)
                 {
-                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col2.Id })" class="layout-item"></div>
+                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col0.Id })" class="layout-item"></div>
                 }
             }
         </div>
         <div class="col-md-3">
             @{
-                var row0Col3 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 3);
-                if (row0Col3 != null)
+                var row1Col1 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 1);
+                if (row1Col1 != null)
                 {
-                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col3.Id })" class="layout-item"></div>
+                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col1.Id })" class="layout-item"></div>
+                }
+            }
+        </div>
+        <div class="col-md-3">
+            @{
+                var row1Col2 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 2);
+                if (row1Col2 != null)
+                {
+                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col2.Id })" class="layout-item"></div>
+                }
+            }
+        </div>
+        <div class="col-md-3">
+            @{
+                var row1Col3 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 3);
+                if (row1Col3 != null)
+                {
+                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col3.Id })" class="layout-item"></div>
                 }
             }
         </div>
@@ -163,22 +96,13 @@
             </table>
         </div>
         <div class="col-md-3 no-padding">
-            <table class="der-table">
-                <tr>
-                    <td style="font-weight:bold">Weather</td>
-                    <td rowspan="3">asfasf</td>
-                    <td style="text-align:right">Cloudy</td>
-                    <td rowspan="3">asdfas</td>
-                </tr>
-                <tr>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td style="font-weight:bold">Outside Temperature</td>
-                    <td style="text-align:right">25-32 C</td>
-                </tr>
-            </table>
+            @{
+                var row2Col1 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 1);
+                if (row2Col1 != null)
+                {
+                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row2Col1.Id })" class="layout-item"></div>
+                }
+            }
         </div>
         <div class="col-md-4 no-padding">
             <table class="der-table">
@@ -203,92 +127,13 @@
     </div>
     <div class="row der-row">
         <div class="col-md-5 no-padding">
-            <table class="der-table all-border" style="text-align:center">
-                <thead>
-                    <tr>
-                        <th style="background-color:rgb(183,222,232)">KPI</th>
-                        <th style="background-color:rgb(184,204,228)">ACT 24H</th>
-                        <th style="background-color:rgb(184,204,228)">MTD</th>
-                        <th style="background-color:rgb(184,204,228)">YTD</th>
-                        <th style="background-color:rgb(184,204,228)">Annual-Target</th>
-                        <th style="background-color:rgb(184,204,228)">ITD</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style="text-align:left">asfasf</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td style="text-align:right">0</td>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:left">daf</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td style="text-align:right">0</td>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:left">fasdf</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td style="text-align:right">0</td>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:left">gsdds</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td style="text-align:right">0</td>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:left">eatgfds</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td style="text-align:right">0</td>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:left">afasd</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td style="text-align:right">0</td>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:left">agdssfda</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td style="text-align:right">0</td>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:left">sfdsaf</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td style="text-align:right">0</td>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:left">fsafsadf</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td style="text-align:right">0</td>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr>
-                </tbody>
-            </table>
+            @{
+                var row3Col0 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 0);
+                if (row3Col0 != null)
+                {
+                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row3Col0.Id })" class="layout-item"></div>
+                }
+            }
         </div>
         <div class="col-md-3 no-padding">
             <table class="der-table" style="min-height:81px;margin:0">
@@ -344,18 +189,13 @@
     </div>
     <div class="row der-row">
         <div class="col-md-6 no-padding">
-            <table class="der-table" style="min-height:47px">
-                <thead>
-                    <tr>
-                        <th class="der-title-underline">SECURITY REMARKS</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Plant and surrounding are condusive (calm and secure)</td>
-                    </tr>
-                </tbody>
-            </table>
+             @{
+                var row4Col0 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 0);
+                if (row4Col0 != null)
+                {
+                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row4Col0.Id })" class="layout-item"></div>
+                }
+            }
         </div>
         <div class="col-md-2 no-padding">
             <table class="der-table">
@@ -1859,41 +1699,6 @@
         </div>
     </div>
 </div>
-<table style="border: 1px solid red">
-    <tr>
-        <td>
-            @{
-                var row1Col0 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 0);
-                if (row1Col0 != null)
-                {
-                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col0.Id })" class="layout-item" style="min-height:400px;min-width: 500px;"></div>
-                }
-            }
-        </td>
-        <td>
-            @{
-                var row1Col1 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 1);
-                if (row1Col1 != null)
-                {
-                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col1.Id })" class="layout-item" style="min-height:400px;min-width: 500px;"></div>
-                }
-
-
-            }
-        </td>
-        <td>
-            @{
-                var row1Col2 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 2);
-                if (row1Col2 != null)
-                {
-                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col2.Id })" class="layout-item" style="min-height:400px;min-width: 500px;"></div>
-                }
-
-            }
-        </td>
-        <td></td>
-    </tr>
-</table>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
@@ -1902,29 +1707,28 @@
 <script type="text/javascript">
     $(document).ready(function () {
         function reloadView() {
-            var currentDate = '02/18/2016';// $('#currentDate').val();
+            var currentDate = $('#currentDate').val();
             $('.layout-item').each(function () {
                 var that = $(this);
                 $.ajax({
                     url: that.attr('data-url'),
                     data: { currentDate: currentDate },
                     success: function (data) {
+                        
                         if (data.GraphicType !== undefined) {
                             var callback = window.Pear.Artifact.Designer._previewCallbacks;
                             callback[data.GraphicType](data, that);
-                        } else if (data.Type === "highlight") {
-                            that.html(data.highlight.Message);
-                        } else if (data.type === "weather" || data.type === "alert") {
+                        } else if (data.type === "highlight" || data.type === "weather" ||
+                            data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety-table") {
                             that.html(data.view);
-                        } else if (data.type === "avg-ytd-key-statistic") {
-                            that.html(data.view);
-                        }
+                        } 
 
                     }
                 });
             });
         }
 
+        $('#currentDate').val('02/18/2016');
         reloadView();
         $('#currentDate').change(function () {
             reloadView();

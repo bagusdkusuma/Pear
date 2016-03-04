@@ -860,7 +860,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<ConfigurationViewModel.Economic, ConfigurationViewModel.Item>();
 
             Mapper.CreateMap<UpdateKpiTargetViewModel.KpiTargetItem, ConfigurationViewModel.Item>();
-            Mapper.CreateMap<GetKpiTargetItemResponse.Kpi, ConfigurationViewModel.Kpi>();
+            Mapper.CreateMap<GetKpiTargetItemResponse.KpiResponse, ConfigurationViewModel.Kpi>();
             Mapper.CreateMap<GetKpiTargetItemResponse, ConfigurationViewModel.KpiTarget>();
             Mapper.CreateMap<GetKpiTargetItemResponse, ConfigurationViewModel.Item>();
 

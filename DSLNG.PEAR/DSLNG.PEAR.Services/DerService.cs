@@ -276,6 +276,7 @@ namespace DSLNG.PEAR.Services
                         break;
                     }
                 case "avg-ytd-key-statistic":
+                case "safety-table":
                     {
                         baseResponse = SaveKpiInformations(request);
                         break;
@@ -503,6 +504,8 @@ namespace DSLNG.PEAR.Services
                 DataContext.DerLayoutItems.Add(derLayoutItem);
 
                 DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = "Multiaxis has been configured";
                 /*var charts = request.Artifact.MultiAxis.Charts.Select(x => new DerArtifactChart
                     {
                         FractionScale = x.FractionScale,
@@ -969,6 +972,8 @@ namespace DSLNG.PEAR.Services
                 DataContext.DerLayoutItems.Add(derLayoutItem);
 
                 DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = "Changes has been saved";
             }
             catch (Exception exception)
             {

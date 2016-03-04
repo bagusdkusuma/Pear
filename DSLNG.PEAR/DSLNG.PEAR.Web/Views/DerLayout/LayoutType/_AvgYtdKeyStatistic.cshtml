@@ -1,77 +1,23 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.DerLayout.DerLayoutItemViewModel
 
 <table style="border: 1px solid #ffffff">
-    @*<tr>
-        @{
-            var pos1 = Model.KpiInformations.FirstOrDefault(x => x.Position == 1);
-            if (pos1 != null)
-            {
-                <td>
-                    @Html.DropDownListFor(model => pos1.Kpi.Id, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
-                </td>
-            }
-            
-            var pos2 = Model.KpiInformations.FirstOrDefault(x => x.Position == 2);
-            if (pos2 != null)
-            {
-                <td>
-                    @Html.DropDownListFor(model => pos2.Kpi.Id, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
-                </td>
-            }
-            
-            var pos3 = Model.KpiInformations.FirstOrDefault(x => x.Position == 3);
-            if (pos3 != null)
-            {
-                <td>
-                    @Html.DropDownListFor(model => pos3.Kpi.Id, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
-                </td>
-            }
-            
-            var pos4 = Model.KpiInformations.FirstOrDefault(x => x.Position == 4);
-            if (pos4 != null)
-            {
-                <td>
-                    @Html.DropDownListFor(model => pos4.Kpi.Id, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
-                </td>
-            }
-            
-            var pos5 = Model.KpiInformations.FirstOrDefault(x => x.Position == 5);
-            if (pos5 != null)
-            {
-                <td>
-                    @Html.DropDownListFor(model => pos5.Kpi.Id, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
-                </td>
-            }
-            
-            var pos6 = Model.KpiInformations.FirstOrDefault(x => x.Position == 6);
-            if (pos6 != null)
-            {
-                <td>
-                    @Html.DropDownListFor(model => pos6.Kpi.Id, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
-                </td>
-            }
-        }
-    </tr>*@
     <tr>
-        @*@Html.TextBoxFor(model => model.KpiInformations[i-1].KpiId)*@
         @{
             var a = 0;
             for (int i = 1; i <= 6; i++)
             {
-                
+
                 var posIndex = Model.KpiInformations.FirstOrDefault(x => x.Position == i);
                 if (posIndex != null)
                 {
-                    <td>
-                        @Html.DropDownListFor(model => model.KpiInformations[i-1].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
-                        @Html.TextBoxFor(model => model.KpiInformations[i-1].Position)
-                        <input type="text" name="KpiInformations.Index" value="@a" />
-                    </td>
+            <td>
+                @Html.DropDownListFor(model => model.KpiInformations[i - 1].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
+                @Html.HiddenFor(model => model.KpiInformations[i - 1].Position)
+                <input type="hidden" name="KpiInformations.Index" value="@a" />
+            </td>
                 }
                 a++;
             }
-            
-            @*<input type="text" name="KpiInformations.Index" value="@a" />*@
         }
     </tr>
 </table>

@@ -21,6 +21,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetKpiAchievementResponse GetKpiAchievementByValue(GetKpiAchievementRequestByValue request);
         BaseResponse BatchUpdateKpiAchievements(BatchUpdateKpiAchievementRequest request);
         GetKpiAchievementResponse GetKpiAchievement(int kpiId, DateTime date, RangeFilter rangeFilter);
+        GetKpiAchievementResponse GetKpiAchievement(int kpiId, DateTime date, RangeFilter rangeFilter, YtdFormula ytdFormula);
     }
 
 }

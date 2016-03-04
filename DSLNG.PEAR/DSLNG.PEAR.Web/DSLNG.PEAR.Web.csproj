@@ -787,6 +787,7 @@
     <Compile Include="ViewModels\Der\DerDisplayIndexViewModel.cs" />
     <Compile Include="ViewModels\Der\DerIndexViewModel.cs" />
     <Compile Include="ViewModels\Der\DerViewModel.cs" />
+    <Compile Include="ViewModels\Der\Display\DisplaySafetyTableViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayAvgYtdKeyStatisticViewModel.cs" />
     <Compile Include="ViewModels\Der\ManageDerItemViewModel.cs" />
     <Compile Include="ViewModels\EconomicSummary\EconomicSummaryReportViewModel.cs" />
@@ -1028,6 +1029,9 @@
     <Content Include="Views\DerLayout\LayoutType\_MultiAxis.Edit.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_AvgYtdKeyStatistic.cshtml" />
     <Content Include="Views\Der\Display\_AvgYtdKeyStatistic.cshtml" />
+    <Content Include="Views\Der\Display\_Highlight.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_SafetyTable.cshtml" />
+    <Content Include="Views\Der\Display\_SafetyTable.cshtml" />
     <None Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\SpeedometerChart\_Edit.cshtml" />
     <Content Include="Views\Tabular\_Create.cshtml" />

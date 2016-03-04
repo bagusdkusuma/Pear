@@ -1811,62 +1811,66 @@ a.see-more {
 }*/
 
 .business-posture h4, .business-posture h6 {
-    text-align:center;
-    float:none;
+    text-align: center;
+    float: none;
 }
+
 .business-posture .sub-group {
-    position:relative;
+    position: relative;
 }
+
 .business-posture a.popover-trigger {
-    position:absolute;
-    right:0;
-        top: 4px;
+    position: absolute;
+    right: 0;
+    top: 4px;
 }
+
 .popover-to-content {
-    display:none;
+    display: none;
 }
+
 .business-posture .popover, .environment-scanning {
-    z-index:1040;
+    z-index: 1040;
 }
 
-.business-posture .col-md-12 h4, .list-block h4{
-    padding : 10px 0px 10px 0px;
-    width:100%;
+.business-posture .col-md-12 h4, .list-block h4 {
+    padding: 10px 0px 10px 0px;
+    width: 100%;
 }
 
-.list-block{
+.list-block {
     padding: 0px;
     border: 1px solid white;
 }
 
-.list-block h4{
+    .list-block h4 {
+        margin: 0px;
+        border-bottom: 1px solid white;
+    }
+
+.sub-group h6 {
     margin: 0px;
-    border-bottom: 1px solid white;
 }
 
-.sub-group h6{
-    margin : 0px;
+.list-result {
+    color: white;
 }
 
-.list-result{
-    color:white;
-}
+    .list-result li {
+        list-style: decimal;
+    }
 
-.list-result li{
-    list-style: decimal;
-}
-
-.remove-item{
+.remove-item {
     float: right;
 }
 
-.row-header{
+.row-header {
     padding: 0px;
 }
 
-.row-header h4{
-    margin-right: 0px;
-}
+    .row-header h4 {
+        margin-right: 0px;
+    }
 
 /*.list-block{
     padding : 0px;
@@ -1889,20 +1893,21 @@ a.see-more {
     text-align: center;
     padding-top: 10px;
 }
+
 .row-uo,
- .row-environmental {
-    background-color:rgba(0,176,240,1);
-    border:none;
+.row-environmental {
+    background-color: rgba(0,176,240,1);
+    border: none;
 }
 
 .col-md-4-child {
     text-align: center;
-    height:26px;
+    height: 26px;
 }
-.col-md-4-child a
-{
-    float: right;
-}
+
+    .col-md-4-child a {
+        float: right;
+    }
 
 
 
@@ -1913,6 +1918,7 @@ a.see-more {
     margin-top: 5px;
     /*border:1px solid #ddd;*/
 }
+
 .border-style-1 {
     /*border: 1px solid white;*/
 }
@@ -1927,10 +1933,10 @@ a.see-more {
 
 
 
-    .row-environmental h4 {
-        text-align: center;
-        padding-top: 10px;
-    }
+.row-environmental h4 {
+    text-align: center;
+    padding-top: 10px;
+}
 
 .row-environmental-child {
     border: 1px solid white;
@@ -1941,9 +1947,10 @@ a.see-more {
     text-align: center;
     padding: 4px 0px 4px 0px;
 }
-.col-envi a{
-    float: right;
-}
+
+    .col-envi a {
+        float: right;
+    }
 
 .popover-envi {
     padding: 0px;
@@ -1955,11 +1962,10 @@ a.see-more {
     text-align: center;
     margin: 0px;
     /*padding-left: 528px;*/
-    width:100%;
-
+    width: 100%;
 }
 
-.row-constraint a, .row-challenges a, .challenge-remove-button, .constraint-remove-button{
+.row-constraint a, .row-challenges a, .challenge-remove-button, .constraint-remove-button {
     float: right;
     margin-top: 5px;
 }
@@ -1983,118 +1989,117 @@ a.see-more {
     word-break: break-all;
 }
 
-.remove-button,.envi-remove-button{
+.remove-button, .envi-remove-button {
     float: right;
 }
 
 
 .div-envi {
     padding-left: 0px;
-    padding-right:2px;
+    padding-right: 2px;
     word-break: break-all;
 }
 
 
-.list-group{
+.list-group {
     list-style: none;
     padding-left: 20px;
+}
 
-}
-.list-group li{
-    list-style-type : decimal;
-}
+    .list-group li {
+        list-style-type: decimal;
+    }
 
 .list-up {
     list-style: decimal;
 }
 
-.color-white{
-    color:white;
+.color-white {
+    color: white;
 }
 
-.popover{
+.popover {
     color: black;
 }
 
-.voyage-plan{
-    color:white;
+.voyage-plan {
+    color: white;
 }
 
-.voyage-plan h3{
-    font-size: 14px;
-}
+    .voyage-plan h3 {
+        font-size: 14px;
+    }
 
-.voyage-plan h2{
-    font-size: 16px;
-    text-align: center;
-    text-decoration: underline;
-    font-weight: bold;
-}
+    .voyage-plan h2 {
+        font-size: 16px;
+        text-align: center;
+        text-decoration: underline;
+        font-weight: bold;
+    }
 
 .midterm-phase-formulation h6,
-.midterm-phase-formulation h4{
-    float:none;
-    margin:0;
+.midterm-phase-formulation h4 {
+    float: none;
+    margin: 0;
 }
-.midterm-phase-formulation .row .col-md-12{
+
+.midterm-phase-formulation .row .col-md-12 {
     margin-top: 20px;
 }
 
-.midterm-phase-formulation .row .col-md-4{
+.midterm-phase-formulation .row .col-md-4 {
     border: 1px solid white;
     color: white;
 }
 
 
-.formulation-stage-template,.formulation-stage-form, .definition-form {
-
-display:none;
+.formulation-stage-template, .formulation-stage-form, .definition-form {
+    display: none;
 }
 
-.div-row-child{
+.div-row-child {
     padding-right: 2px;
 }
 
-.cp-list li, .op-list li, .rp-list li{
-    list-style:decimal;
+.cp-list li, .op-list li, .rp-list li {
+    list-style: decimal;
 }
 
-.list-block, .div-row-child{
+.list-block, .div-row-child {
     word-break: break-all;
 }
 
-.list-checkbox{
+.list-checkbox {
     list-style: none;
 }
 
-li > input.choose-list{
+li > input.choose-list {
     margin-right: 5px;
 }
 
 
-.midterm-phase-formulation h4, .midterm-phase-formulation h6
-{
+.midterm-phase-formulation h4, .midterm-phase-formulation h6 {
     text-align: center;
     padding: 10px 0px 10px 0px;
 }
 
 
-.midterm-phase-formulation .col-md-12 h4{
+.midterm-phase-formulation .col-md-12 h4 {
     margin-bottom: 5px;
 }
 
-.midterm-phase-formulation .col-md-4{
+.midterm-phase-formulation .col-md-4 {
     padding: 0px;
 }
 
 
-.formulation-stages{
+.formulation-stages {
     color: white;
 }
 
 
 
-.formulation-stage .title{
+.formulation-stage .title {
     text-align: center;
     float: none;
 }
@@ -2102,155 +2107,162 @@ li > input.choose-list{
 
 
 
-.formulation-stage .date-range{
+.formulation-stage .date-range {
     list-style: none;
     padding: 0px;
 }
 
-.formulation-stage .date-range li{
-    display:inline-block;
-    border: 1px solid white;
-    float: left;
-    width: 50%;
-    text-align: center;
-}
+    .formulation-stage .date-range li {
+        display: inline-block;
+        border: 1px solid white;
+        float: left;
+        width: 50%;
+        text-align: center;
+    }
 
-.formulation-stage .defined-header{
+.formulation-stage .defined-header {
     float: none;
 }
 
-.formulation-stage .defined-header{
-    padding:5px;
-    margin:0;
+.formulation-stage .defined-header {
+    padding: 5px;
+    margin: 0;
     text-align: left;
     width: 100%;
-    border-bottom:1px solid #ddd;
-    position:relative;
+    border-bottom: 1px solid #ddd;
+    position: relative;
     border-top: 1px solid #ddd;
     margin-top: -1px;
-    margin-bottom:-1px;
+    margin-bottom: -1px;
 }
 
-.formulation-stage .defined-header a{
-    position: absolute;
-    top: 5px;
-    right: 0px;
-}
+    .formulation-stage .defined-header a {
+        position: absolute;
+        top: 5px;
+        right: 0px;
+    }
 
-.formulation-stage .defined-list{
+.formulation-stage .defined-list {
     float: none;
     text-align: left;
     width: 100%;
     /*padding-left: 0px;*/
     margin-left: 0px;
-    margin:0;
-    padding-left:25px;
-
+    margin: 0;
+    padding-left: 25px;
 }
+
     .formulation-stage .defined-list li:first-child {
-        margin-top:5px;
+        margin-top: 5px;
     }
+
     .formulation-stage .defined-list li:last-child {
-        margin-bottom:5px;
-    }
-.formulation-stage .defined-list li{
-    list-style: decimal;
-    padding-right:20px;
-    position:relative;
-}
-    .formulation-stage .defined-list li .remove-item {
-        float:none;
-        position:absolute;
-        top:0px;
-        right:0;
+        margin-bottom: 5px;
     }
 
+    .formulation-stage .defined-list li {
+        list-style: decimal;
+        padding-right: 20px;
+        position: relative;
+    }
 
-.formulation-stage .defined-list .key-driver{
-    margin-top: 40px;
-}
+        .formulation-stage .defined-list li .remove-item {
+            float: none;
+            position: absolute;
+            top: 0px;
+            right: 0;
+        }
 
-.formulation-stage .key-driver{
+
+    .formulation-stage .defined-list .key-driver {
+        margin-top: 40px;
+    }
+
+.formulation-stage .key-driver {
     /*margin-top: 20px;*/
     list-style: decimal;
 }
 
 .in-planning .formulation-stage {
-    cursor:pointer;
+    cursor: pointer;
 }
+
 .select2-dropdown {
     z-index: 1062;
 }
+
 .midterm-planning-template,
 .kpi-form,
 .objective-form {
-    display:none;
+    display: none;
 }
 
 .business-posture .highlight, .environment-scanning .highlight {
-    color:red;
-}
-.stage-selected {
-    background-color:#4f81bd;
-}
-.strategic-planning-form {
-    display:none;
+    color: red;
 }
 
-.midterm-plannings .midterm-planning .midterm-planning-header{
+.stage-selected {
+    background-color: #4f81bd;
+}
+
+.strategic-planning-form {
+    display: none;
+}
+
+.midterm-plannings .midterm-planning .midterm-planning-header {
     text-align: center;
 }
 
-.midterm-plannings .midterm-planning .midterm-planning-header a{
-    position: absolute;
-    right: 2px;
-    top: 4px;
-}
+    .midterm-plannings .midterm-planning .midterm-planning-header a {
+        position: absolute;
+        right: 2px;
+        top: 4px;
+    }
 
 
-.midterm-plannings .midterm-planning{
+.midterm-plannings .midterm-planning {
     border: 1px solid white;
     /*margin-right: 3px;*/
     margin-bottom: 10px;
     /*margin-right: 5px;*/
 }
 
-.midterm-plannings .midterm-planning ul.objectives{
-    padding-left: 0px;
-}
+    .midterm-plannings .midterm-planning ul.objectives {
+        padding-left: 0px;
+    }
 
-.midterm-plannings .midterm-planning .objective-header h5{
-    margin: 0px;
-    font-size: 16px;
-    text-align: center;
-}
+    .midterm-plannings .midterm-planning .objective-header h5 {
+        margin: 0px;
+        font-size: 16px;
+        text-align: center;
+    }
 
-.midterm-plannings .midterm-planning .objective-header a{
-    position: absolute;
-    right: 60px;
-    top: 5px;
-}
+    .midterm-plannings .midterm-planning .objective-header a {
+        position: absolute;
+        right: 60px;
+        top: 5px;
+    }
 
-.midterm-plannings .midterm-planning .objectives li{
-    width: 100%;
-    text-align: left;
-}
+    .midterm-plannings .midterm-planning .objectives li {
+        width: 100%;
+        text-align: left;
+    }
 
-.midterm-plannings .midterm-planning .objectives li a{
-    position: absolute;
-    right: 2px;
-}
+        .midterm-plannings .midterm-planning .objectives li a {
+            position: absolute;
+            right: 2px;
+        }
 
-.midterm-plannings .midterm-planning ul.range li{
-    border: 1px solid white;
-    display:inline-block;
-    width: 50%;
-    float: left;
-    text-align: center;
-    color: white;
-}
+    .midterm-plannings .midterm-planning ul.range li {
+        border: 1px solid white;
+        display: inline-block;
+        width: 50%;
+        float: left;
+        text-align: center;
+        color: white;
+    }
 
-.midterm-strategy-planning .row .col-md-12 h4{
+.midterm-strategy-planning .row .col-md-12 h4 {
     text-align: center;
     margin: 0px 0px 5px 0px;
     padding: 10px 0px 10px 0px;
@@ -2261,71 +2273,79 @@ li > input.choose-list{
 }
 
 
-.midterm-plannings .midterm-planning table{
+.midterm-plannings .midterm-planning table {
     width: 100%;
     color: white;
-
 }
-.midterm-plannings .midterm-planning table th{
-    background-color: orange;
+
+    .midterm-plannings .midterm-planning table th {
+        background-color: orange;
         border: 1px solid white;
-}
-
-.midterm-plannings .midterm-planning table th a{
-    position: relative;
-    left: 80px;
-}
-
-.midterm-plannings .midterm-planning table th:first-child, .midterm-plannings .midterm-planning table td:first-child{
-    width: 50%;
-}
-
-.midterm-plannings .midterm-planning table th:nth-child(2), .midterm-plannings .midterm-planning table td:nth-child(2){
-    width: 25%;
-}
-
-.midterm-plannings .midterm-planning table th:last-child, .midterm-plannings .midterm-planning table td:last-child{
-    width: 25%;
-}
-
-.midterm-plannings .midterm-planning table td{
-    border: 1px solid white;
-    text-align: center;
-}
-
-    .midterm-plannings .midterm-planning  table th:first-child a {
-        position:absolute;
-        right:5px;
     }
-.midterm-plannings .midterm-planning table.kpis th:first-child {
-     padding-right:20px;
-    position:relative;
-}
+
+        .midterm-plannings .midterm-planning table th a {
+            position: relative;
+            left: 80px;
+        }
+
+        .midterm-plannings .midterm-planning table th:first-child, .midterm-plannings .midterm-planning table td:first-child {
+            width: 50%;
+        }
+
+        .midterm-plannings .midterm-planning table th:nth-child(2), .midterm-plannings .midterm-planning table td:nth-child(2) {
+            width: 25%;
+        }
+
+        .midterm-plannings .midterm-planning table th:last-child, .midterm-plannings .midterm-planning table td:last-child {
+            width: 25%;
+        }
+
+    .midterm-plannings .midterm-planning table td {
+        border: 1px solid white;
+        text-align: center;
+    }
+
+    .midterm-plannings .midterm-planning table th:first-child a {
+        position: absolute;
+        right: 5px;
+    }
+
+    .midterm-plannings .midterm-planning table.kpis th:first-child {
+        padding-right: 20px;
+        position: relative;
+    }
+
 .modal-loading.loaded .ajax-loading-dialog {
-    display:none;
+    display: none;
 }
+
 .environment-scanning ul,
 .business-posture ul {
-    padding-left:20px;
-    text-align:justify;
-    padding-right:20px;
+    padding-left: 20px;
+    text-align: justify;
+    padding-right: 20px;
 }
-.environment-scanning ul li {
-    position:relative;
-}
-    .environment-scanning ul li .remove-button,
+
+    .environment-scanning ul li {
+        position: relative;
+    }
+
+        .environment-scanning ul li .remove-button,
         .environment-scanning ul li .envi-remove-button {
-        position:absolute;
-        top:0;
-        right:-25px;
-    }
+            position: absolute;
+            top: 0;
+            right: -25px;
+        }
+
 .environment-scanning table th {
-    position:relative;
+    position: relative;
 }
+
     .environment-scanning table th a {
-        position:absolute;
-        right:0;
+        position: absolute;
+        right: 0;
     }
+
 .r-threat,
 .r-opportunity,
 .r-weakness,
@@ -2337,229 +2357,330 @@ li > input.choose-list{
     border-radius: 10px;
     line-height: 1.4;
 }
+
 .r-opportunity {
-     background-color: lime;
+    background-color: lime;
 }
+
 .r-weakness {
-     background-color: lavender;
+    background-color: lavender;
 }
+
 .r-strength {
-     background-color: blue;
+    background-color: blue;
 }
+
 .td-definition {
-    position:relative;
-    padding-right:25px !important;
+    position: relative;
+    padding-right: 25px !important;
 }
+
     .td-definition .constraint-remove-button,
     .td-definition .challenge-remove-button {
-        position:absolute;
-        right:0;
-        top:0;
+        position: absolute;
+        right: 0;
+        top: 0;
     }
+
 .table-desired-states {
-    width:100%;
+    width: 100%;
 }
+
 .business-posture td {
-    vertical-align:top;
+    vertical-align: top;
 }
+
 .business-posture ul {
-    padding:5px 25px;
+    padding: 5px 25px;
 }
-    .business-posture ul li{
-        position:relative;
+
+    .business-posture ul li {
+        position: relative;
     }
+
 .business-posture .table-desired-states .remove-item {
-    position:absolute;
-    right:-25px;
-    top:0;
+    position: absolute;
+    right: -25px;
+    top: 0;
 }
+
 .table-posture-constraint,
-.table-posture-constraint tbody>tr>td,
+.table-posture-constraint tbody > tr > td,
 .table-posture-challenge,
-.table-posture-challenge tbody>tr>td{
-    border-top:none;
+.table-posture-challenge tbody > tr > td {
+    border-top: none;
 }
+
 table.list-result {
-    margin:0;
+    margin: 0;
 }
-table.list-result tr th,
-table.list-result tr td {
-    border: 1px solid #ddd;
-    border-right:none;
-}
-table.list-result tr th:first-child,
-table.list-result tr td:first-child {
-    border-left:none;
-}
-    table.list-result tr td:first-child span{
-        display:inline-block;
-        width:17px;
-        height:17px;
-        border-radius:10px;
-        background-color:blue;
-        line-height:1.4;
+
+    table.list-result tr th,
+    table.list-result tr td {
+        border: 1px solid #ddd;
+        border-right: none;
     }
-table.list-result tr th:last-child,
-table.list-result tr td:last-child {
-    border-right:none;
-    border-left:none;
-}
-table.list-result{
-    border-bottom:none;
-    margin-bottom:-1px;
+
+        table.list-result tr th:first-child,
+        table.list-result tr td:first-child {
+            border-left: none;
+        }
+
+            table.list-result tr td:first-child span {
+                display: inline-block;
+                width: 17px;
+                height: 17px;
+                border-radius: 10px;
+                background-color: blue;
+                line-height: 1.4;
+            }
+
+        table.list-result tr th:last-child,
+        table.list-result tr td:last-child {
+            border-right: none;
+            border-left: none;
+        }
+
+table.list-result {
+    border-bottom: none;
+    margin-bottom: -1px;
 }
 
 .formulation-stages-table,
 .midterm-plannings-table {
-    width:100%;
-    border-collapse:separate;
-    border-spacing:15px;
-    margin-top:-45px;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 15px;
+    margin-top: -45px;
 }
+
     .formulation-stages-table tr td,
     .midterm-plannings-table tr td {
-        vertical-align:top;
+        vertical-align: top;
         border: 1px solid #ddd;
     }
+
 .formulation-stage {
-    width:25%;
-    color:#fff;
+    width: 25%;
+    color: #fff;
 }
+
     .formulation-stage .title {
-        font-size:16px;
-        position:relative;
-        background-color:rgb(79,129,189);
-        margin-bottom:0;
-        padding:5px;
+        font-size: 16px;
+        position: relative;
+        background-color: rgb(79,129,189);
+        margin-bottom: 0;
+        padding: 5px;
     }
+
         .formulation-stage .title a {
-            position:absolute;
-            right:0;
+            position: absolute;
+            right: 0;
         }
+
     .formulation-stage .date-range {
-        float:left;
-        width:100%;
-        margin:0;
+        float: left;
+        width: 100%;
+        margin: 0;
     }
-.formulation-stage .date-range li {
-    padding:5px;
-}
-    .formulation-stage .date-range li:first-child {
-        border-left:none;
-        border-right:none;
-    }
-    .formulation-stage .date-range li:last-child {
-        border-right:none;
-    }
+
+        .formulation-stage .date-range li {
+            padding: 5px;
+        }
+
+            .formulation-stage .date-range li:first-child {
+                border-left: none;
+                border-right: none;
+            }
+
+            .formulation-stage .date-range li:last-child {
+                border-right: none;
+            }
+
 .clear {
-    clear:both;
+    clear: both;
 }
 
 .midterm-planning .midterm-planning-header {
-        font-size:16px;
-        position:relative;
-        background-color:rgb(79,129,189);
-        margin-bottom:0;
-        padding:5px;
-    }
+    font-size: 16px;
+    position: relative;
+    background-color: rgb(79,129,189);
+    margin-bottom: 0;
+    padding: 5px;
+}
+
     .midterm-planning .midterm-planning-header h4 {
-        font-size:16px;
-        margin:0;
-    }
-        .midterm-planning .midterm-planning-header a {
-            position:absolute;
-            right:0;
-        }
-    .midterm-planning .range {
-        float:left;
-        width:100%;
-        margin:0;
-        padding:0;
-    }
-.midterm-planning .range li {
-    padding:5px;
-}
-    .midterm-plannings .midterm-planning ul.range li:first-child {
-        border-left:none;
-        border-right:none;
-    }
-    .midterm-plannings .midterm-planning ul.range li:last-child {
-        border-right:none;
-    }
-.clear {
-    clear:both;
-}
-.midterm-planning .objective-header {
-     padding:5px;
-    margin:0;
-    text-align: left;
-    width: 100%;
-    border-bottom:1px solid #ddd;
-    position:relative;
-    border-top: 1px solid #ddd;
-    margin-top: -1px;
-    margin-bottom:-1px;
-    background-color:orange;
-}
-.midterm-plannings .midterm-planning ul.objectives {
-    padding-left:25px;
-    margin:0;
-}
-.midterm-plannings .midterm-planning ul.objectives li {
-    color:#fff;
-    list-style:decimal;
-    padding-right:25px;
-    position:relative;
-}
-    .midterm-plannings .midterm-planning ul.objectives li .remove-objective {
-        position:absolute;
-        right:0;
-        top:0;
-    }
-    .midterm-plannings .midterm-planning ul.objectives li:first-child {
-        margin-top:5px;
-    }
-    .midterm-plannings .midterm-planning ul.objectives li:last-child {
-        margin-bottom:5px;
+        font-size: 16px;
+        margin: 0;
     }
 
-table.kpis {
-    margin-bottom:-1px;
+    .midterm-planning .midterm-planning-header a {
+        position: absolute;
+        right: 0;
+    }
+
+.midterm-planning .range {
+    float: left;
+    width: 100%;
+    margin: 0;
+    padding: 0;
 }
+
+    .midterm-planning .range li {
+        padding: 5px;
+    }
+
+.midterm-plannings .midterm-planning ul.range li:first-child {
+    border-left: none;
+    border-right: none;
+}
+
+.midterm-plannings .midterm-planning ul.range li:last-child {
+    border-right: none;
+}
+
+.clear {
+    clear: both;
+}
+
+.midterm-planning .objective-header {
+    padding: 5px;
+    margin: 0;
+    text-align: left;
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    position: relative;
+    border-top: 1px solid #ddd;
+    margin-top: -1px;
+    margin-bottom: -1px;
+    background-color: orange;
+}
+
+.midterm-plannings .midterm-planning ul.objectives {
+    padding-left: 25px;
+    margin: 0;
+}
+
+    .midterm-plannings .midterm-planning ul.objectives li {
+        color: #fff;
+        list-style: decimal;
+        padding-right: 25px;
+        position: relative;
+    }
+
+        .midterm-plannings .midterm-planning ul.objectives li .remove-objective {
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+        .midterm-plannings .midterm-planning ul.objectives li:first-child {
+            margin-top: 5px;
+        }
+
+        .midterm-plannings .midterm-planning ul.objectives li:last-child {
+            margin-bottom: 5px;
+        }
+
+table.kpis {
+    margin-bottom: -1px;
+}
+
     table.kpis tr td,
     table.kpis tr th {
-        padding:5px;
+        padding: 5px;
     }
-    table.kpis tr td:first-child,
-    table.kpis tr th:first-child {
-        border-left:none;
-    }
-    table.kpis tr td:last-child,
-    table.kpis tr th:last-child {
-        border-right:none;
-    }
+
+        table.kpis tr td:first-child,
+        table.kpis tr th:first-child {
+            border-left: none;
+        }
+
+        table.kpis tr td:last-child,
+        table.kpis tr th:last-child {
+            border-right: none;
+        }
+
     table.kpis td:first-child {
-        text-align:left;
-        position:relative;
-        padding-right:25px;
+        text-align: left;
+        position: relative;
+        padding-right: 25px;
     }
+
     table.kpis td .remove-kpi {
-        position:absolute;
-        top:5px;
-        right:0;
+        position: absolute;
+        top: 5px;
+        right: 0;
     }
+
 .remove-midterm-planning,
 .formulation-stages .formulation-stage .title .remove-item {
-    display:none;
+    display: none;
 }
+
 .midterm-plannings:last-child .midterm-planning:last-child .remove-midterm-planning {
-    display:block;
+    display: block;
 }
+
 .formulation-stages:last-child .formulation-stage:last-child .title .remove-item {
     display: block;
     top: 5px;
 }
 
-.pop-information .row .table-info tr td{
+.pop-information .row .table-info tr td {
     display: block;
+}
+
+.der-row {
+    font-size: 11px;
+}
+
+.no-padding {
+    padding: 0px 0px;
+}
+
+.all-border tr, .all-border td, .all-border th {
+    border: 1px solid black;
+}
+
+.der-table {
+    border: solid 1px black;
+    background-color: white;
+    width: 100%;
+    color: black;
+    border-collapse: collapse;
+    margin-bottom: 2px;
+}
+
+    .der-table th {
+        color: black;
+    }
+
+.der-table-title {
+    text-align: center;
+    background-color: rgb(141,180,226);
+    border: solid 1px black;
+    font-weight: bold;
+    font-size: 13px;
+    margin: 0 0 1px;
+}
+
+.der-table-subtitle1 {
+    background-color: rgb(146,205,220);
+    font-weight: bold;
+    border: solid 1px black;
+    font-size: 13px;
+    text-align: center;
+}
+
+.der-title-underline {
+    font-weight: bold;
+    font-size: 13px;
+    text-decoration: underline;
+    text-align: left;
+    background-color: white;
+}
+
+.der-table td, .der-row th {
+    padding: 0 2px;
 }

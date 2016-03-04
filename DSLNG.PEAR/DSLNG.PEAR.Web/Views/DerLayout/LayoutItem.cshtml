@@ -65,6 +65,7 @@
                         break;
                     }
                 case 'avg-ytd-key-statistic':
+                case 'safety-table':
                     {
                         $.ajax({
                             url: '@Url.Action("LayoutSetting", "DerLayout", new { type = "_type_" })'.replace('_type_', that.val()),

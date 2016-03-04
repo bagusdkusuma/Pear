@@ -1,0 +1,30 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplaySafetyTableViewModel
+
+<table class="der-table all-border" style="text-align: center">
+    <thead>
+        <tr>
+            <th style="background-color: rgb(183,222,232)">KPI</th>
+            <th style="background-color: rgb(184,204,228)">ACT 24H</th>
+            <th style="background-color: rgb(184,204,228)">MTD</th>
+            <th style="background-color: rgb(184,204,228)">YTD</th>
+            <th style="background-color: rgb(184,204,228)">Annual-Target</th>
+            <th style="background-color: rgb(184,204,228)">ITD</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var item in Model.SafetyTableViewModels.OrderBy(x => x.Position))
+            {
+            <tr>
+                <td style="text-align: left">@item.KpiName</td>
+                <td>@item.CurrentDay</td>
+                <td>@item.Mtd</td>
+                <td style="text-align: right">@item.Ytd</td>
+                <td>@item.AnnualTarget</td>
+                <td>@item.Itd</td>
+            </tr>
+            }
+        }
+    </tbody>
+</table>
+
