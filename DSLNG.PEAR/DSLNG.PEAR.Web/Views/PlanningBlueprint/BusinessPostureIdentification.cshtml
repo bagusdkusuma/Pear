@@ -441,7 +441,7 @@
                 using (Html.BeginForm("SubmitBusinessPosture", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
                 {
                 @Html.Hidden("Id", Model.Id)
-                <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Submit</button>
+                <button type="submit" class="btn btn-primary btn-lg submit-all-bp"><span class="fa fa-floppy-o"></span>Submit</button>
                 }
             }
             else
@@ -461,7 +461,7 @@
         <div class="row">
             <div class="col-md-12">
                 <label>Description</label>
-                <textarea name="Description" cols="25" rows="5"></textarea>
+                <textarea name="Description" cols="25" rows="5" required="required"></textarea>
             </div>
             <div class="col-md-12">
                 <button type="button" class="btn btn-primary add-item">Add</button>
@@ -482,7 +482,7 @@
             </div>
             <div class="col-md-12">
                 <label>Definition</label>
-                <textarea name="Definition" cols="25" rows="5"></textarea>
+                <textarea name="Definition" cols="25" rows="5" required="required"></textarea>
             </div>
             <div class="col-md-12">
                 <button type="button" class="btn btn-primary add-item">Add</button>
@@ -504,7 +504,7 @@
             </div>
             <div class="col-md-12">
                 <label>Definition</label>
-                <textarea name="Definition" cols="25" rows="5"></textarea>
+                <textarea name="Definition" cols="25" rows="5" required="required"></textarea>
             </div>
             <div class="col-md-12">
                 <button type="button" class="btn btn-primary add-item">Add</button>
@@ -581,6 +581,8 @@
             $form.find('input[name="PostureId"]').val($listBlock.find('.popover-trigger').data('posture-id'));
             $form.find('input[name="PostureType"]').val($listBlock.find('.popover-trigger').data('posture'));
             var type = $listBlock.find('.popover-trigger').data('posture-type');
+
+            if (!$form.valid()) { return; }
 
             $.post($form.prop('action'), $form.serialize(), function (data) {
                 if (data.IsSuccess) {
@@ -709,6 +711,23 @@
                     $('.modal-posture').html(data);
                 }
             });
+        });
+        $(document).on('click', '.submit-all-bp', function (e) {
+            e.preventDefault();
+            var valid = true;
+            $('ul.list-result').each(function (i, val) {
+                valid = valid && $(val).children('li').length;
+            });
+            $('table.list-result').each(function (i, val) {
+                valid = valid && $(val).find('tr').length > 1;
+            });
+            if (!valid) {
+                if (window.confirm("One of block informations leave empty! Once you go through it you can't revise it. Are you sure want to go to next step?")) {
+                    $(this).closest('form').submit();
+                }
+            } else {
+                $(this).closest('form').submit();
+            }
         });
     });
 

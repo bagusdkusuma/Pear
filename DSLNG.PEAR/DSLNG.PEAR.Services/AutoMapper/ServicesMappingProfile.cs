@@ -646,9 +646,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<MidtermStrategicPlanningObjective, GetMidtermPlanningsResponse.MidtermPlanningObjective>();
             Mapper.CreateMap<Kpi, GetMidtermPlanningsResponse.Kpi>()
                 .ForMember(d => d.Measurement, o => o.MapFrom(s => s.Measurement.Name));
-            Mapper.CreateMap<KpiAchievement, GetMidtermPlanningsResponse.KpiData>()
-                .ForMember(d => d.KpiId, o => o.MapFrom(s => s.Kpi.Id))
-                .ForMember(d => d.Year, o => o.MapFrom(s => s.Periode.Year));
+            //Mapper.CreateMap<KpiAchievement, GetMidtermPlanningsResponse.KpiData>()
+            //    .ForMember(d => d.KpiId, o => o.MapFrom(s => s.Kpi.Id))
+            //    .ForMember(d => d.Year, o => o.MapFrom(s => s.Periode.Year));
 
             Mapper.CreateMap<AddObjectiveRequest, MidtermStrategicPlanningObjective>();
             Mapper.CreateMap<AddMidtermPlanningRequest, MidtermStrategicPlanning>();
