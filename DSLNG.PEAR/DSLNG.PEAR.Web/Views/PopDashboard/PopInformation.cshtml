@@ -474,7 +474,7 @@
         </div>
         <div>
             <button type="button" class="btn btn-primary input-information">Add</button>
-            @*<button class="btn btn-primary cancel-popover">Cancel</button>*@
+            <button class="btn btn-primary cancel-popover">Cancel</button>
         </div>
 
     </form>
@@ -494,7 +494,7 @@
         </div>
         <div>
             <button type="button" class="btn btn-primary edit-information">Edit</button>
-            @*<button class="btn btn-primary cancel-popover">Cancel</button>*@
+            <button class="btn btn-primary cancel-popover">Cancel</button>
         </div>
     </form>
 </div>
@@ -509,7 +509,7 @@
         </div>
         <div>
             <button type="button" class="btn btn-primary input-signature">Add</button>
-            @*<button class="btn btn-primary cancel-popover">Cancel</button>*@
+            <button class="btn btn-primary cancel-popover">Cancel</button>
         </div>
     </form>
 </div>
@@ -524,7 +524,7 @@
         </div>
         <div>
             <button type="button" class="btn btn-primary btn-edit-signature">Edit</button>
-            @*<button class="btn btn-primary cancel-popover">Cancel</button>*@
+            <button class="btn btn-primary cancel-popover">Cancel</button>
         </div>
     </form>
 </div>
@@ -741,6 +741,11 @@
 
                     }
                 });
+            });
+
+            $(document).on('click', '.cancel-popover', function (e) {
+                e.preventDefault();
+                $('.popover').popover('hide');
             });
 
 
