@@ -602,6 +602,10 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetPlanningBlueprintResponse, PlanningBlueprintViewModel>();
             Mapper.CreateMap<GetPlanningBlueprintResponse.KeyOutputResponse, PlanningBlueprintViewModel.KeyOutputViewModel>();
             Mapper.CreateMap<GetKpiDetailResponse, DetailKpiViewModel>();
+            Mapper.CreateMap<SaveESCategoryViewModel, SaveESCategoryRequest>();
+            Mapper.CreateMap<GetESCategoryResponse, GetESCategoryViewModel>();
+            Mapper.CreateMap<GetESCategoryViewModel, SaveESCategoryRequest>();
+
 
             Mapper.CreateMap<GetBusinessPostureResponse, BusinessPostureViewModel>();
             Mapper.CreateMap<GetBusinessPostureResponse.Posture, BusinessPostureViewModel.PostureViewModel>();

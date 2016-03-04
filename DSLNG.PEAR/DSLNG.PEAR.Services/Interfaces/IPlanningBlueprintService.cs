@@ -14,5 +14,9 @@ namespace DSLNG.PEAR.Services.Interfaces
         ApproveVoyagePlanResponse ApproveVoyagePlan(int id);
         ApproveMidtermStrategyResponse ApproveMidtermStrategy(int id);
         GetMidtermFormulationResponse GetMidtermStrategy();
+        GetESCategoriesResponse GetESCategories(GetESCategoriesRequest request);
+        SaveESCategoryResponse SaveESCategory(SaveESCategoryRequest request);
+        GetESCategoryResponse GetESCategory(GetESCategoryRequest request);
+        DeleteESCategoryResponse DeleteESCategory(DeleteESCategoryRequest request);
     }
 }

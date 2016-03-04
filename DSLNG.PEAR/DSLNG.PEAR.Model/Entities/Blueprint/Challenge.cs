@@ -18,7 +18,7 @@ namespace DSLNG.PEAR.Data.Entities.Blueprint
         public IList<EnvironmentalScanning> Relations { get; set; }
         public string Definition { get; set; }
         public string Type { get; set; }
-        public string Category { get; set; }
+        public ESCategory ESCategory { get; set; }
         public EnvironmentsScanning EnvironmentScanning { get; set; }
     }
 }

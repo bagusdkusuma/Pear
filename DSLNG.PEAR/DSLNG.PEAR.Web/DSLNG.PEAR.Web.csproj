@@ -1105,6 +1105,9 @@
     <Content Include="Views\PopDashboard\Index.cshtml" />
     <Content Include="Views\PopDashboard\Create.cshtml" />
     <Content Include="Views\PopDashboard\PopInformation.cshtml" />
+    <Content Include="Views\PlanningBlueprint\ESCategory.cshtml" />
+    <Content Include="Views\PlanningBlueprint\CreateESCategory.cshtml" />
+    <Content Include="Views\PlanningBlueprint\EditESCategory.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -1282,6 +1285,7 @@
     <Compile Include="ViewModels\PlanningBlueprint\BusinessPostureViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\EconomicIndicatorsViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\EnvironmentsScanningViewModel.cs" />
+    <Compile Include="ViewModels\PlanningBlueprint\ESCategoryViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\MidtermFormulationViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\PlanningBlueprintViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\VoyagePlanViewModel.cs" />

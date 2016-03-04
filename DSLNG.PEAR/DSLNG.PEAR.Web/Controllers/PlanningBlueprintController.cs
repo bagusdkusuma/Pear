@@ -12,6 +12,7 @@ using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Requests.BusinessPosture;
 using DSLNG.PEAR.Services.Requests.EnvironmentScanning;
 using DSLNG.PEAR.Web.ViewModels.EnvironmentScanning;
+using DSLNG.PEAR.Data.Enums;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -23,13 +24,15 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IMidtermFormulationService _midtermFormulationService;
         private readonly IMidtermPlanningService _midtermPlanningService;
         private readonly IOutputCategoryService _outputCategoryService;
+        private readonly IDropdownService _dropdownService;
 
         public PlanningBlueprintController(IPlanningBlueprintService planningBlueprintService,
             IBusinessPostureIdentificationService businessPostureIdentification,
             IEnvironmentScanningService environmentScanningService,
             IMidtermFormulationService midtermFormulationService,
             IMidtermPlanningService midtermPlanningService,
-            IOutputCategoryService outputCategoryService)
+            IOutputCategoryService outputCategoryService,
+            IDropdownService dropdownService)
         {
             _planningBlueprintService = planningBlueprintService;
             _businessPostureIdentification = businessPostureIdentification;
@@ -37,6 +40,7 @@ namespace DSLNG.PEAR.Web.Controllers
             _midtermFormulationService = midtermFormulationService;
             _midtermPlanningService = midtermPlanningService;
             _outputCategoryService = outputCategoryService;
+            _dropdownService = dropdownService;
         }
 
         public ActionResult Index()
@@ -96,23 +100,15 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult EnvironmentsScanning(int id)
         {
             var viewModel = _environmentScanningService.GetEnvironmentsScanning(new GetEnvironmentsScanningRequest { Id = id }).MapTo<EnvironmentScanningViewModel>();
-                //if (viewModel.IsLocked) {
-                //    return RedirectToAction("Index");
-                //}
             var ListType = new List<SelectListItem>();
             var type1 = new SelectListItem() { Text = "Internal", Value = "Internal" };
             ListType.Add(type1);
             var type2 = new SelectListItem() { Text = "External", Value = "External" };
             ListType.Add(type2);
 
-            var listCategory = new List<SelectListItem>();
-            var category1 = new SelectListItem() { Text = "Politic", Value = "Politic" };
-            listCategory.Add(category1);
-            var category2 = new SelectListItem() { Text = "Economic", Value = "Economic" };
-            listCategory.Add(category2);
-
             viewModel.Types = ListType;
-            viewModel.Categories = listCategory;
+            viewModel.ConstraintCategories = _dropdownService.GetESConstraintCategories().MapTo<SelectListItem>();
+            viewModel.ChallengeCategories = _dropdownService.GetESChallengeCategories().MapTo<SelectListItem>();
 
             return View(viewModel);
         }
@@ -129,14 +125,9 @@ namespace DSLNG.PEAR.Web.Controllers
             var type2 = new SelectListItem() { Text = "External", Value = "External" };
             ListType.Add(type2);
 
-            var listCategory = new List<SelectListItem>();
-            var category1 = new SelectListItem() { Text = "Politic", Value = "Politic" };
-            listCategory.Add(category1);
-            var category2 = new SelectListItem() { Text = "Economic", Value = "Economic" };
-            listCategory.Add(category2);
-
             viewModel.Types = ListType;
-            viewModel.Categories = listCategory;
+            viewModel.ConstraintCategories = _dropdownService.GetESConstraintCategories().MapTo<SelectListItem>();
+            viewModel.ChallengeCategories = _dropdownService.GetESChallengeCategories().MapTo<SelectListItem>();
 
             return View("EnvironmentsScanning",viewModel);
         }
@@ -277,6 +268,92 @@ namespace DSLNG.PEAR.Web.Controllers
             var viewModel = _outputCategoryService.GetActiveOutputCategories(false).MapTo<EconomicIndicatorsViewModel>();
             return View(viewModel);
         }
+        public ActionResult ESCategory()
+        {
+            return View();
+        }
 
+        public ActionResult GridESCategory(GridParams gridParams)
+        {
+            var esCategory = _planningBlueprintService.GetESCategories(new GetESCategoriesRequest
+            {
+                Skip = gridParams.DisplayStart,
+                Take = gridParams.DisplayLength,
+                Search = gridParams.Search,
+                SortingDictionary = gridParams.SortingDictionary
+            });
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = esCategory.TotalRecords,
+                iTotalRecords = esCategory.ESCategories.Count,
+                aaData = esCategory.ESCategories.Select(x => new
+                {
+                    x.Id,
+                    x.IsActive,
+                    x.Name,
+                    Type = x.Type.ToString()
+                })
+            };
+
+            return Json(data, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public ActionResult CreateESCategory()
+        {
+            var viewModel = new SaveESCategoryViewModel();
+            viewModel.Types = Enum.GetValues(typeof(EnvirontmentType)).Cast<EnvirontmentType>()
+                .Select(x => new SelectListItem
+                {
+                    Text = x.ToString(),
+                    Value = ((int)x).ToString()
+                }).ToList();
+
+            return View(viewModel);
+        }
+
+
+        [HttpPost]
+        public ActionResult CreateESCategory(SaveESCategoryViewModel viewModel)
+        {
+            var request = viewModel.MapTo<SaveESCategoryRequest>();
+            var response = _planningBlueprintService.SaveESCategory(request);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            return RedirectToAction("ESCategory");
+        }
+
+        public ActionResult EditESCategory(int id)
+        {
+            var viewModel = _planningBlueprintService.GetESCategory(new GetESCategoryRequest { Id = id }).MapTo<GetESCategoryViewModel>();
+            viewModel.Types = Enum.GetValues(typeof(EnvirontmentType)).Cast<EnvirontmentType>()
+                .Select(x => new SelectListItem
+                {
+                    Text = x.ToString(),
+                    Value = ((int)x).ToString()
+                }).ToList();
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult EditESCategory(GetESCategoryViewModel viewModel)
+        {
+            var request = viewModel.MapTo<SaveESCategoryRequest>();
+            var response = _planningBlueprintService.SaveESCategory(request);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            return RedirectToAction("ESCategory");
+
+        }
+
+        [HttpPost]
+        public ActionResult DeleteESCategory(int id)
+        {
+            var response = _planningBlueprintService.DeleteESCategory(new DeleteESCategoryRequest { Id = id });
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            return RedirectToAction("ESCategory");
+        }
     }
 }

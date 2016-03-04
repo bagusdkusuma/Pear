@@ -30,6 +30,8 @@ namespace DSLNG.PEAR.Services.Interfaces
         IEnumerable<Dropdown> GetPeriodeTypesForKpiTargetAndAchievement();
         IEnumerable<Dropdown> GetKpisForPmsConfigDetailsUpdate(int pmsConfigId, int id);
         IEnumerable<Dropdown> GetUsers();
+        IEnumerable<Dropdown> GetESConstraintCategories();
+        IEnumerable<Dropdown> GetESChallengeCategories();
 
         IEnumerable<Dropdown> GetConfigTypes();
     }

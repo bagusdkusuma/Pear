@@ -84,6 +84,7 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<PopDashboard> PopDashboards { get; set; }
         IDbSet<PopInformation> PopInformations { get; set; }
         IDbSet<Signature> Signatures { get; set; }
+        IDbSet<ESCategory> ESCategories { get; set; }
         Database Database { get; }
         int SaveChanges();
         DbEntityEntry Entry(object entity);

@@ -266,5 +266,100 @@ namespace DSLNG.PEAR.Services
         {
             return DataContext.PlanningBlueprints.Include(x => x.KeyOutput).FirstOrDefault(x => x.Id == id).MapTo<GetPlanningBlueprintResponse>();
         }
+
+
+        public GetESCategoriesResponse GetESCategories(GetESCategoriesRequest request)
+        {
+            int totalRecords;
+            var data = SortESCategory(request.Search, request.SortingDictionary, out totalRecords);
+            if (request.Take != -1)
+            {
+                data = data.Skip(request.Skip).Take(request.Take);
+            }
+
+            return new GetESCategoriesResponse
+            {
+                TotalRecords = totalRecords,
+                ESCategories = data.ToList().MapTo<GetESCategoriesResponse.ESCategory>()
+            };
+
+        }
+
+        public IEnumerable<ESCategory> SortESCategory(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        {
+            var data = DataContext.ESCategories.AsQueryable();
+            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            {
+                data = data.Where(x => x.Name.Contains(search));
+            }
+
+            foreach (var sortOrder in sortingDictionary)
+            {
+                switch (sortOrder.Key)
+                {
+                    case "Name":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Name)
+                            : data.OrderByDescending(x => x.Name);
+                        break;
+                    case "Type":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Type)
+                            : data.OrderByDescending(x => x.Type);
+                        break;
+                }
+            }
+
+            TotalRecords = data.Count();
+            return data;
+        }
+
+
+        public SaveESCategoryResponse SaveESCategory(SaveESCategoryRequest request)
+        {
+            var esCategory = request.MapTo<ESCategory>();
+            if (request.Id == 0)
+            {
+                DataContext.ESCategories.Add(esCategory);
+            }
+            else
+            {
+                esCategory = DataContext.ESCategories.FirstOrDefault(x => x.Id == request.Id);
+                request.MapPropertiesToInstance<ESCategory>(esCategory);
+            }
+
+            DataContext.SaveChanges();
+
+            return new SaveESCategoryResponse
+            {
+                Id = esCategory.Id,
+                Name = esCategory.Name,
+                IsSuccess = true,
+                Message = "ESCategory has been saved successfully"
+            };
+        }
+
+
+
+
+        public GetESCategoryResponse GetESCategory(GetESCategoryRequest request)
+        {
+            return DataContext.ESCategories.FirstOrDefault(x => x.Id == request.Id).MapTo<GetESCategoryResponse>();
+        }
+
+
+        public DeleteESCategoryResponse DeleteESCategory(DeleteESCategoryRequest request)
+        {
+            var escategory = DataContext.ESCategories.FirstOrDefault(x => x.Id == request.Id);
+            DataContext.ESCategories.Attach(escategory);
+            DataContext.ESCategories.Remove(escategory);
+            DataContext.SaveChanges();
+
+            return new DeleteESCategoryResponse
+            {
+                IsSuccess = true,
+                Message = "ESCategory has been Deleted"
+            };
+        }
     }
 }

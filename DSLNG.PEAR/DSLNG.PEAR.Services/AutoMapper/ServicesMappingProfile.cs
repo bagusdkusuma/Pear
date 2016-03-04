@@ -556,6 +556,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 ;
             Mapper.CreateMap<BusinessPostureIdentification, GetBusinessPostureResponse>()
                 .ForMember(x => x.PlanningBlueprintId, o => o.MapFrom(s => s.PlanningBlueprint.Id));
+            Mapper.CreateMap<ESCategory, GetESCategoriesResponse.ESCategory>();
             Mapper.CreateMap<DesiredState, GetBusinessPostureResponse.DesiredState>();
             Mapper.CreateMap<Posture, GetBusinessPostureResponse.Posture>();
             Mapper.CreateMap<PostureChallenge, GetBusinessPostureResponse.PostureChallenge>()
@@ -587,16 +588,20 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.ThreatIds, y => y.MapFrom(z => z.Relations.Where(u => u.ThreatHost != null).Select(m => m.Id).ToArray()))
                 .ForMember(x => x.OpportunityIds, y => y.MapFrom(z => z.Relations.Where(u => u.OpportunityHost != null).Select(m => m.Id).ToArray()))
                 .ForMember(x => x.WeaknessIds, y => y.MapFrom(z => z.Relations.Where(u => u.WeaknessHost != null).Select(m => m.Id).ToArray()))
-                .ForMember(x => x.StrengthIds, y => y.MapFrom(z => z.Relations.Where(u => u.StrengthHost != null).Select(m => m.Id).ToArray()));
+                .ForMember(x => x.StrengthIds, y => y.MapFrom(z => z.Relations.Where(u => u.StrengthHost != null).Select(m => m.Id).ToArray()))
+                .ForMember(x => x.Category, o => o.MapFrom(y => y.ESCategory.Name));
             Mapper.CreateMap<Challenge, GetEnvironmentsScanningResponse.Challenge>()
                 .ForMember(x => x.ThreatIds, y => y.MapFrom(z => z.Relations.Where(u => u.ThreatHost != null).Select(m => m.Id).ToArray()))
                 .ForMember(x => x.OpportunityIds, y => y.MapFrom(z => z.Relations.Where(u => u.OpportunityHost != null).Select(m => m.Id).ToArray()))
                 .ForMember(x => x.WeaknessIds, y => y.MapFrom(z => z.Relations.Where(u => u.WeaknessHost != null).Select(m => m.Id).ToArray()))
-                .ForMember(x => x.StrengthIds, y => y.MapFrom(z => z.Relations.Where(u => u.StrengthHost != null).Select(m => m.Id).ToArray()));
+                .ForMember(x => x.StrengthIds, y => y.MapFrom(z => z.Relations.Where(u => u.StrengthHost != null).Select(m => m.Id).ToArray()))
+                .ForMember(x => x.Category, o => o.MapFrom(y => y.ESCategory.Name));
             Mapper.CreateMap<SaveConstraintRequest, Constraint>();
             Mapper.CreateMap<Constraint, SaveConstraintResponse>();
             Mapper.CreateMap<SaveChallengeRequest, Challenge>();
             Mapper.CreateMap<Challenge, SaveChallengeResponse>();
+            Mapper.CreateMap<SaveESCategoryRequest, ESCategory>();
+            Mapper.CreateMap<ESCategory, GetESCategoryResponse>();
 
             Mapper.CreateMap<UltimateObjectivePoint, GetVoyagePlanResponse.UltimateObjectivePoint>();
             Mapper.CreateMap<Challenge, GetVoyagePlanResponse.Challenge>();

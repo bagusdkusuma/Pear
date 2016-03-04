@@ -11,7 +11,7 @@ namespace DSLNG.PEAR.Services.Requests.EnvironmentScanning
         public int Id { get; set; }
         public string Definition { get; set; }
         public string Type { get; set; }
-        public string Category { get; set; }
+        public int Category { get; set; }
         public int EnviId { get; set; }
         public int[] RelationIds { get; set; }
     }

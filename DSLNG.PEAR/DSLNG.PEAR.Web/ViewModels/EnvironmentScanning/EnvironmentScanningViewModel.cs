@@ -19,7 +19,8 @@ namespace DSLNG.PEAR.Web.ViewModels.EnvironmentScanning
             Strength = new List<Environmental>();
             Relation = new List<Environmental>();
             Types = new List<SelectListItem>();
-            Categories = new List<SelectListItem>();
+            ConstraintCategories = new List<SelectListItem>();
+            ChallengeCategories = new List<SelectListItem>();
             Constraints = new List<Constraint>();
             Challenges = new List<Challenge>();
             
@@ -43,13 +44,15 @@ namespace DSLNG.PEAR.Web.ViewModels.EnvironmentScanning
         public IList<Challenge> Challenges { get; set; }
 
 
-        //for entry Constraint
+        //for entry Constraint / challenge
         public IList<Environmental> Relation { get; set; }
         public string Definition { get; set; }
         public string Type { get; set; }
-        public string Category { get; set; }
+        public int Category { get; set; }
         public List<SelectListItem> Types { get; set; }
-        public List<SelectListItem> Categories { get; set; }
+        public List<SelectListItem> ConstraintCategories { get; set; }
+        public List<SelectListItem> ChallengeCategories { get; set; }
+
 
         public class UltimateObjective
         {

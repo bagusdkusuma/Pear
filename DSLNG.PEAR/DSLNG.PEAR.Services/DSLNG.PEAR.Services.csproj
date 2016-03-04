@@ -137,7 +137,11 @@
     <Compile Include="Requests\Operation\GetOperationsInRequest.cs" />
     <Compile Include="Requests\Operation\UpdateOperationRequest.cs" />
     <Compile Include="Requests\OutputConfig\DeleteOutputConfigRequest.cs" />
+    <Compile Include="Requests\PlanningBlueprint\DeleteESCategoryRequest.cs" />
+    <Compile Include="Requests\PlanningBlueprint\GetESCategoriesRequest.cs" />
+    <Compile Include="Requests\PlanningBlueprint\GetESCategoryRequest.cs" />
     <Compile Include="Requests\PlanningBlueprint\GetPlanningBlueprintsRequest.cs" />
+    <Compile Include="Requests\PlanningBlueprint\SaveESCategoryRequest.cs" />
     <Compile Include="Requests\PlanningBlueprint\SavePlanningBlueprintRequest.cs" />
     <Compile Include="Requests\PopDashboard\GetPopDashboardRequest.cs" />
     <Compile Include="Requests\PopDashboard\GetPopDashboardsRequest.cs" />
@@ -536,9 +540,13 @@
     <Compile Include="Responses\OutputConfig\GetOutputConfigsResponse.cs" />
     <Compile Include="Responses\PlanningBlueprint\ApproveMidtermStrategyResponse.cs" />
     <Compile Include="Responses\PlanningBlueprint\ApproveVoyagePlanResponse.cs" />
+    <Compile Include="Responses\PlanningBlueprint\DeleteESCategoryResponse.cs" />
+    <Compile Include="Responses\PlanningBlueprint\GetESCategoriesResponse.cs" />
+    <Compile Include="Responses\PlanningBlueprint\GetESCategoryResponse.cs" />
     <Compile Include="Responses\PlanningBlueprint\GetPlanningBlueprintResponse.cs" />
     <Compile Include="Responses\PlanningBlueprint\GetPlanningBlueprintsResponse.cs" />
     <Compile Include="Responses\PlanningBlueprint\GetVoyagePlanResponse.cs" />
+    <Compile Include="Responses\PlanningBlueprint\SaveESCategoryResponse.cs" />
     <Compile Include="Responses\PlanningBlueprint\SavePlanningBlueprintResponse.cs" />
     <Compile Include="Responses\PmsSummary\CreatePmsConfigDetailsResponse.cs" />
     <Compile Include="Responses\PmsSummary\CreatePmsConfigResponse.cs" />

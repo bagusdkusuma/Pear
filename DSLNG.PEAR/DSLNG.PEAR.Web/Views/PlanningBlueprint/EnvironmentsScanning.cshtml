@@ -237,7 +237,7 @@
 
                   if (item.OpportunityIds.Count() > 0)
                   {
-                            <span><a href="#"  data-opp="@item.OpportunityIdString" class="btn-show-challenge r-oppurtinity">O</a></span>
+                            <span><a href="#" data-opp="@item.OpportunityIdString" class="btn-show-challenge  r-opportunity">O</a></span>
                   }
 
                   if (item.WeaknessIds.Count() > 0)
@@ -401,7 +401,7 @@
         </div>
         <div>
             @Html.LabelFor(model => model.Category)
-            @Html.DropDownListFor(model => model.Category, Model.Categories)
+            @Html.DropDownListFor(model => model.Category, Model.ConstraintCategories)
         </div>
 
         <div>
@@ -431,7 +431,7 @@
         </div>
         <div>
             @Html.LabelFor(model => model.Category)
-            @Html.DropDownListFor(model => model.Category, Model.Categories)
+            @Html.DropDownListFor(model => model.Category, Model.ChallengeCategories)
         </div>
 
         <div>
@@ -656,6 +656,7 @@
             $(document).on('click', '.form-input-constraint', function (e) {
                 e.preventDefault();
                 var $that = $(this);
+                console.log($that.closest('form'))
                 $.ajax({
                     url: '@Url.Action("CreateConstraint", "EnvironmentScanning")',
                     data: $that.closest('form').serialize(),
@@ -679,7 +680,7 @@
                         input = input + 'data-th="' + data.threatIds + '"' + 'data-opp="' + data.opportunityIds + '"' + 'data-wk="' + data.weaknessIds + '"' + 'data-st="' + data.strengthIds + '"'
 
 
-                        $('.table-constraint').append('<tr><td class="td-entity">' + '<a href="#" data-toggle="modal" ' + input + ' data-target="#envi-modal" data-id="' + data.id + '" class="btn-show-constraint">' + '<span>' + relation + '</span>' + '</td><td class="td-definition">' + data.definition + '<a href="#" data-id="' + data.id + '" class="constraint-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
+                        $('.table-constraint').append('<tr><td class="td-entity">' + '<a href="#" data-toggle="modal" ' + input + ' data-target="#envi-modal" data-id="' + data.id + '" class="btn-show-constraint">' + '<span>' + relation + '</span>' + '</td><td class="td-definition" style="text-align:left">' + data.definition + '<a href="#" data-id="' + data.id + '" class="constraint-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
                         popOverElem.popover('hide');
 
                         $('.wrapper-relation').html('');
@@ -690,6 +691,7 @@
             $(document).on('click', '.form-input-challenge', function (e) {
                 e.preventDefault();
                 var $that = $(this);
+                console.log($that.closest('form'))
                 $.ajax({
                     url: '@Url.Action("CreateChallenge", "EnvironmentScanning")',
                     data: $that.closest('form').serialize(),
@@ -709,7 +711,7 @@
                             relation = relation + '<a href="#"  data-st="' + data.strengthIds + '" class="btn-show-constraint r-strength">S</a> '
                         }
 
-                        $('.table-challenge').append('<tr><td class="td-entity">' + ' <a href="#" data-toggle="modal" data-target="#envi-modal" data-id="' + data.id + '" class="btn-show-challenge">' + '<span>' + relation + '</span>' + '</td><td class="td-definition">' + data.definition + '<a href="#" data-id="' + data.id + '" class="challenge-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
+                        $('.table-challenge').append('<tr><td class="td-entity">' + ' <a href="#" data-toggle="modal" data-target="#envi-modal" data-id="' + data.id + '" class="btn-show-challenge">' + '<span>' + relation + '</span>' + '</td><td class="td-definition" style="text-align:left">' + data.definition + '<a href="#" data-id="' + data.id + '" class="challenge-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
                         popOverElem.popover('hide');
 
                         $('.wrapper-challenge').html('');
@@ -769,7 +771,7 @@
                 });
                 var weakness = $('<h4 />');
                 weakness.html('Weakness');
-                $('.relation-contents').append(weakness, wkList);
+
 
                 stList.find('li').each(function (i, val) {
                     var $item = $(val);
