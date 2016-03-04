@@ -20,6 +20,22 @@
             }
         }
     </tr>
+
+    <tr>
+        @{
+            for (int j = 1; j <= 6; j++)
+            {
+
+                var posIndex = Model.KpiInformations.FirstOrDefault(x => x.Position == j);
+                if (posIndex != null)
+                {
+            <td>
+                Is Original Data @Html.EditorFor(model => model.KpiInformations[j - 1].IsOriginalData)
+            </td>
+                }
+            }
+        }
+    </tr>
 </table>
 
 

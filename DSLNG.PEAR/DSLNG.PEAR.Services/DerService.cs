@@ -964,7 +964,7 @@ namespace DSLNG.PEAR.Services
                         {
                             kpi = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == request.Artifact.Tank.VolumeInventoryId);
                         }
-                        kpiInformations.Add(new DerKpiInformation { Kpi = kpi, Position = item.Position });
+                        kpiInformations.Add(new DerKpiInformation { Kpi = kpi, Position = item.Position, IsOriginalData = item.IsOriginalData});
                     }
                 }
 

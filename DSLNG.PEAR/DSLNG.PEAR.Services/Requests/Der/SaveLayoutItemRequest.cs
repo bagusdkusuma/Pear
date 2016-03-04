@@ -112,6 +112,7 @@ namespace DSLNG.PEAR.Services.Requests.Der
             public int Position { get; set; }
             public int KpiId { get; set; }
             public string KpiName { get; set; }
+            public bool IsOriginalData { get; set; }
         }
     }
 }
