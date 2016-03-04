@@ -1408,6 +1408,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\img\signature\" />
+    <Folder Include="Content\signature\" />
     <Folder Include="Content\TemplateFiles\KpiAchievement\" />
     <Folder Include="Content\TemplateFiles\KpiTarget\" />
     <Folder Include="Content\UploadedFiles\KpiAchievement\" />

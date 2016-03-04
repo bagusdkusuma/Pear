@@ -32,5 +32,7 @@ namespace DSLNG.PEAR.Web.ViewModels.User
         public string ChangeModel { get; set; }
         [Display(Name="User Is Superadmin")]
         public bool IsSuperAdmin { get; set; }
+        public string FullName { get; set; }
+        public string SignatureImage { get; set; }
     }
 }

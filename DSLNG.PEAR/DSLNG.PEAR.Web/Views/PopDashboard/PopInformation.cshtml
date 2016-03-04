@@ -305,13 +305,13 @@
                             <td class="requestby-info">
                                 @foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.requestby))
                                 {
-                                    <span data-id="@item.Id" data-type="0" data-userid="@item.UserId">@item.User</span>
+                                    <span data-id="@item.Id" data-type="0" data-userid="@item.UserId"><img src="@item.SignatureImage"/></span>
                                 }
                             </td>
                             <td class="checkedby-info">
                                 @foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.checkedby))
                                 {
-                                    <span data-id="@item.Id" data-type="1" data-userid="@item.UserId">@item.User</span>
+                                    <span data-id="@item.Id" data-type="1" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
                                 }
                             </td>
                             <td rowspan="2" class="ResourcesRemark2-info">
@@ -411,43 +411,43 @@
                             <td class="cpd-info">
                                 @foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.cpd))
                                 {
-                                    <span data-id="@item.Id" data-type="2" data-userid="@item.UserId">@item.User</span>
+                                    <span data-id="@item.Id" data-type="2" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
                                 }
                             </td>
                             <td class="fd-info">
                                 @foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.fd))
                                 {
-                                    <span data-id="@item.Id" data-type="3" data-userid="@item.UserId">@item.User</span>
+                                    <span data-id="@item.Id" data-type="3" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
                                 }
                             </td>
                             <td class="pd-info">
                                 @foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.pd))
                                 {
-                                    <span data-id="@item.Id" data-type="4" data-userid="@item.UserId">@item.User</span>
+                                    <span data-id="@item.Id" data-type="4" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
                                 }
                             </td>
                             <td class="od-info">
                                 @foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.od))
                                 {
-                                    <span data-id="@item.Id" data-type="5" data-userid="@item.UserId">@item.User</span>
+                                    <span data-id="@item.Id" data-type="5" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
                                 }
                             </td>
                             <td class="td-info">
                                 @foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.td))
                                 {
-                                    <span data-id="@item.Id" data-type="6" data-userid="@item.UserId">@item.User</span>
+                                    <span data-id="@item.Id" data-type="6" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
                                 }
                             </td>
                             <td class="cad-info">
                                 @foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.cad))
                                 {
-                                    <span data-id="@item.Id" data-type="7" data-userid="@item.UserId">@item.User</span>
+                                    <span data-id="@item.Id" data-type="7" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
                                 }
                             </td>
                             <td class="cd-info">
                                 @foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.cd))
                                 {
-                                    <span data-id="@item.Id" data-type="8" data-userid="@item.UserId">@item.User</span>
+                                    <span data-id="@item.Id" data-type="8" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
                                 }
                             </td>
                         </tr>
@@ -596,7 +596,7 @@
                     data: $that.closest('form').serialize(),
                     type: 'POST',
                     success: function (data) {
-                        $('.' + data.type + '-info').append('<span data-id="' + data.id + '" data-type="' + data.typeInt + '" data-userid="' + data.userId + '">' + data.username + '</span>');
+                        $('.' + data.type + '-info').append('<span data-id="' + data.id + '" data-type="' + data.typeInt + '" data-userid="' + data.userId + '">' + '<img src="' + data.signatureImage + '">' + '</span>');
                         popOverElem.popover('hide');
                         $('.' + data.type).find('a').remove();
                         $('.' + data.type).append('<a href="#" data-dashboard-id="@Model.Id" data-type="' + data.type + '" class="edit-signature"><i class="fa fa-edit"></i></a>')
@@ -736,7 +736,7 @@
                     type: 'POST',
                     success: function (data) {
                         $('.' + data.type + '-info').find('span').remove();
-                        $('.' + data.type + '-info').append('<span data-id="' + data.id + '" data-type="' + data.typeInt + '" data-userid="' + data.userId + '">' + data.username + '</span>');
+                        $('.' + data.type + '-info').append('<span data-id="' + data.id + '" data-type="' + data.typeInt + '" data-userid="' + data.userId + '">' + '<img src="' + data.signatureImage + '">' + '</span>');
                         popOverElem.popover('hide');
 
                     }

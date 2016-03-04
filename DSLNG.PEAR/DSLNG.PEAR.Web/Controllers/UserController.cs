@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DSLNG.PEAR.Web.Attributes;
 using System.Data.SqlClient;
+using System.IO;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -37,7 +38,8 @@ namespace DSLNG.PEAR.Web.Controllers
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
 
-            if (response.IsSuccess){
+            if (response.IsSuccess)
+            {
                 //save user id and rolegroup to session
 
                 return RedirectToAction("Index");
@@ -45,7 +47,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
             return View("Login", viewModel);
         }
-        
+
         public ActionResult Index()
         {
             return View();
@@ -145,15 +147,16 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public UpdateUserViewModel UpdateViewModel(UpdateUserViewModel viewModel)
         {
-            viewModel.RoleGroupList = _roleGroupService.GetRoleGroups(new Services.Requests.RoleGroup.GetRoleGroupsRequest { 
-                    Take = -1,
-                    SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending} }
-                })
+            viewModel.RoleGroupList = _roleGroupService.GetRoleGroups(new Services.Requests.RoleGroup.GetRoleGroupsRequest
+            {
+                Take = -1,
+                SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+            })
                 .RoleGroups.Select(x => new SelectListItem
                 {
                     Text = x.Name,
                     Value = x.Id.ToString(),
-                    Selected = viewModel.RoleId==x.Id ? true : false
+                    Selected = viewModel.RoleId == x.Id ? true : false
                 }).ToList();
 
             return viewModel;
@@ -172,6 +175,22 @@ namespace DSLNG.PEAR.Web.Controllers
         [HttpPost]
         public ActionResult Update(UpdateUserViewModel viewModel)
         {
+              if (Request.Files.Count > 0)
+            {
+                var file = Request.Files[0];
+
+                if (file != null && file.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(file.FileName);
+
+                    var path = Path.Combine(Server.MapPath("~/Content/signature/"), fileName);
+                    var url = "/Content/signature/" + fileName;
+
+                    file.SaveAs(path);
+                    viewModel.SignatureImage = url;
+                }
+            }
+
             var request = viewModel.MapTo<UpdateUserRequest>();
             var response = _userService.Update(request);
             TempData["IsSuccess"] = response.IsSuccess;
@@ -213,6 +232,6 @@ namespace DSLNG.PEAR.Web.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
 
         }
-        
-	}
+
+    }
 }
