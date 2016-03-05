@@ -2788,6 +2788,32 @@ table.kpis {
     background-color:rgb(226,107,10)
 }
 
-.der-dummy {
-    display: none !important;
+.daily-highlight .der-daily-highlight{
+    height:66px;
+    overflow:hidden
 }
+
+.security-remark .der-daily-highlight{
+    height:47px;
+    overflow:hidden
+}
+
+.der-qhsse-row-1{
+    height:62px
+}
+
+.der-safety-table{
+    height:417px
+}
+
+.der-qhsee-qhse{
+    height:200px
+}
+
+.der-qhsee-weekly-alarm{
+    height:217px
+}
+
+/*.der-dummy {
+    display: none !important;
+}*/
