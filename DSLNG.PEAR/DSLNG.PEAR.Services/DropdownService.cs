@@ -267,7 +267,7 @@ namespace DSLNG.PEAR.Services
                     new Dropdown {Text = "Alert", Value = "alert"},
                     new Dropdown {Text = "Wave", Value = "wave"},
                     new Dropdown {Text = "Avg Ytd-Key Statistic", Value = "avg-ytd-key-statistic"},
-                    new Dropdown {Text = "Safety Table", Value = "safety-table"},
+                    new Dropdown {Text = "Security Incident Type", Value = "security-incident"},
                 };
         }
     }

@@ -56,5 +56,6 @@ namespace DSLNG.PEAR.Web.ViewModels.DerLayout
             public bool Is3D { get; set; }
             public bool ShowLegend { get; set; }
         }
+
     }
 }

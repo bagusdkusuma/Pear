@@ -260,11 +260,18 @@ namespace DSLNG.PEAR.Web.Controllers
                         viewModel.KpiInformations = GetSafetyTableKpiInformations();
                         return PartialView("LayoutType/_SafetyTable", viewModel);
                     }
+                case "security-incident":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(6);
+                        return PartialView("LayoutType/_SecurityIncident", viewModel);
+
+                    }
             }
 
             return Content("Error");
         }
-
+        
         [HttpPost]
         public ActionResult SaveLayoutItem(DerLayoutItemViewModel layoutItemViewModel)
         {
@@ -370,5 +377,17 @@ namespace DSLNG.PEAR.Web.Controllers
 
             return list;
         }
+
+        private IList<DerLayoutItemViewModel.DerKpiInformationViewModel> GetKpiInformations(int numberOfKpi)
+        {
+            var list = new List<DerLayoutItemViewModel.DerKpiInformationViewModel>();
+            for (int i = 1; i <= numberOfKpi; i++)
+            {
+                list.Add(new DerLayoutItemViewModel.DerKpiInformationViewModel { Position = i });
+            }
+
+            return list;
+        }
+
     }
 }
