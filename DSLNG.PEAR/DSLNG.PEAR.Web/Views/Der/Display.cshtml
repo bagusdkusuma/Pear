@@ -136,18 +136,13 @@
             }
         </div>
         <div class="col-md-3 no-padding">
-            <table class="der-table der-dummy der-qhsee-qhse" style="margin: 0">
-                <thead>
-                    <tr>
-                        <th colspan="2" class="der-bg-blue-1">QHSE & PSM Remark</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td colspan="2" rowspan="4" style="text-align: center">Nothing Concern</td>
-                    </tr>
-                </tbody>
-            </table>
+             @{
+                var row3Col1 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 1);
+                if (row3Col1 != null)
+                {
+                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row3Col1.Id })" class="layout-item"></div>
+                }
+            }
             <table class="der-table der-dummy der-qhsee-weekly-alarm">
                 <thead>
                     <tr>
