@@ -255,7 +255,6 @@ namespace DSLNG.PEAR.Services
         }
 
 
-
         public IEnumerable<Dropdown> GetESConstraintCategories()
         {
             return DataContext.ESCategories.Where(x => x.Type == EnvirontmentType.constraint).Select(x => new Dropdown
@@ -273,6 +272,7 @@ namespace DSLNG.PEAR.Services
                     Value = x.Id.ToString()
                 }).ToList();
         }
+
         public IEnumerable<Dropdown> GetDerItemTypes()
         {
             return new List<Dropdown>()
