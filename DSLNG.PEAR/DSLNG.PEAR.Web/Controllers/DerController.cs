@@ -309,7 +309,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
 
-                case "safety-table":
+                case "safety":
                     {
                         var viewModel = new DisplaySafetyTableViewModel();
 
@@ -342,6 +342,33 @@ namespace DSLNG.PEAR.Web.Controllers
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
+
+                case "security":
+                    {
+                        var viewModel = new DisplaySecurityViewModel();
+
+                        for (int i = 1; i <= 6; i++)
+                        {
+                            var securityViewModel = new DisplaySecurityViewModel.SecurityViewModel();
+                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
+                                       new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
+
+                            securityViewModel.Position = item.Position;
+                            if (item.Kpi != null)
+                            {
+                                var actual = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.CurrentDay);
+                                securityViewModel.KpiName = item.Kpi.Name;
+                                securityViewModel.Value = actual.Value.HasValue ? actual.Value.ToString() : "n/a";
+                            }
+
+                            viewModel.SecurityViewModels.Add(securityViewModel);
+                        }
+
+                        var view = RenderPartialViewToString("Display/_Security", viewModel);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+
 
             }
             return Content("as");

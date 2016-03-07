@@ -226,38 +226,14 @@
             }
         }
     </div>
-    <div class="col-md-2 no-padding">
-        <table class="der-table der-dummy">
-            <tr>
-                <td rowspan="3" class="der-bg-blue-1" style="text-align:left">Security Incident Type (Act 24H)</td>
-                <td class="der-bg-blue-7" style="text-align:right">0</td>
-                <td style="width: 50%" class="der-bg-blue-7" style="text-align:left">Mass Gathering</td>
-            </tr>
-            <tr>
-                <td class="der-bg-blue-7">0</td>
-                <td class="der-bg-blue-7">Mass Gathering</td>
-            </tr>
-            <tr>
-                <td class="der-bg-blue-7">0</td>
-                <td class="der-bg-blue-7">Mass Gathering</td>
-            </tr>
-        </table>
-    </div>
-    <div class="col-md-2 no-padding">
-        <table class="der-table der-dummy">
-            <tr>
-                <td class="der-bg-blue-7">0</td>
-                <td class="der-bg-blue-7">Theft/Criminal</td>
-            </tr>
-            <tr>
-                <td class="der-bg-blue-7">0</td>
-                <td class="der-bg-blue-7">Theft/Criminal</td>
-            </tr>
-            <tr>
-                <td class="der-bg-blue-7">0</td>
-                <td class="der-bg-blue-7">Theft/Criminal</td>
-            </tr>
-        </table>
+    <div class="col-md-4 no-padding">
+        @{
+            var row4Col1 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 1);
+            if (row4Col1 != null)
+            {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row4Col1.Id })" class="layout-item"></div>
+            }
+        }
     </div>
     <div class="col-md-2 no-padding">
         @{
@@ -1748,7 +1724,8 @@
                             var callback = window.Pear.Artifact.Designer._previewCallbacks;
                             callback[data.GraphicType](data, that);
                         } else if (data.type === "highlight" || data.type === "weather" ||
-                            data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety-table") {
+                            data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
+                        data.type === "security") {
                             that.html(data.view);
                         }
 

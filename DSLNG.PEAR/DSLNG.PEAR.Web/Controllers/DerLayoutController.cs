@@ -254,18 +254,23 @@ namespace DSLNG.PEAR.Web.Controllers
                         viewModel.KpiInformations = GetAvgYytdKeyStatisticKpiInformations();
                         return PartialView("LayoutType/_AvgYtdKeyStatistic", viewModel);
                     }
-                case "safety-table":
+                case "safety":
                     {
                         var viewModel = new DerLayoutItemViewModel();
                         viewModel.KpiInformations = GetSafetyTableKpiInformations();
                         return PartialView("LayoutType/_SafetyTable", viewModel);
                     }
-                case "security-incident":
+                case "security":
                     {
                         var viewModel = new DerLayoutItemViewModel();
                         viewModel.KpiInformations = GetKpiInformations(6);
-                        return PartialView("LayoutType/_SecurityIncident", viewModel);
-
+                        return PartialView("LayoutType/_Security", viewModel);
+                    }
+                case "lng-and-cds":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(3);
+                        return PartialView("LayoutType/_LngAndCds", viewModel);
                     }
             }
 
@@ -339,7 +344,9 @@ namespace DSLNG.PEAR.Web.Controllers
                         response = _derService.SaveLayoutItem(request);
                         break;
                     }
-                case "safety-table":
+                case "safety":
+                case "lng-and-css":
+                case "security":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.KpiInformations =

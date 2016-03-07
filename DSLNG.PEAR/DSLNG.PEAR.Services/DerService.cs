@@ -276,7 +276,9 @@ namespace DSLNG.PEAR.Services
                         break;
                     }
                 case "avg-ytd-key-statistic":
-                case "safety-table":
+                case "safety":
+                case "lng-and-cds":
+                case "security":
                     {
                         baseResponse = SaveKpiInformations(request);
                         break;
@@ -962,7 +964,7 @@ namespace DSLNG.PEAR.Services
                         }
                         else
                         {
-                            kpi = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == request.Artifact.Tank.VolumeInventoryId);
+                            kpi = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == kpi.Id);
                         }
                         kpiInformations.Add(new DerKpiInformation { Kpi = kpi, Position = item.Position, IsOriginalData = item.IsOriginalData});
                     }
