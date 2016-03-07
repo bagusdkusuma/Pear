@@ -237,7 +237,7 @@
 
                   if (item.OpportunityIds.Count() > 0)
                   {
-                            <span><a href="#"  data-opp="@item.OpportunityIdString" class="btn-show-challenge r-opportunity">O</a></span>
+                            <span><a href="#" data-opp="@item.OpportunityIdString" class="btn-show-challenge  r-opportunity">O</a></span>
                   }
 
                   if (item.WeaknessIds.Count() > 0)
@@ -405,7 +405,7 @@
         </div>
         <div>
             @Html.LabelFor(model => model.Category)
-            @Html.DropDownListFor(model => model.Category, Model.Categories, new { required = "required" })
+            @Html.DropDownListFor(model => model.Category, Model.ConstraintCategories)
         </div>
 
         <div>
@@ -435,7 +435,7 @@
         </div>
         <div>
             @Html.LabelFor(model => model.Category)
-            @Html.DropDownListFor(model => model.Category, Model.Categories, new {required = "required" })
+            @Html.DropDownListFor(model => model.Category, Model.ChallengeCategories)
         </div>
 
         <div>
@@ -781,7 +781,7 @@
                 });
                 var weakness = $('<h4 />');
                 weakness.html('Weakness');
-                $('.relation-contents').append(weakness, wkList);
+
 
                 stList.find('li').each(function (i, val) {
                     var $item = $(val);

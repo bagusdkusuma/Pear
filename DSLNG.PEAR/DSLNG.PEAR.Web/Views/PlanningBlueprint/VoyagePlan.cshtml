@@ -9,7 +9,10 @@
     @if (Model != null)
     {
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-sm-12">
+            <div class="economic-indicators-wrapper">
+                <div class="left-side">
+                     <div class="internal-challenges">
                 <h3>Internall Challenges</h3>
                 <ul>
                     @foreach (var item in Model.InternalChallenge)
@@ -25,10 +28,11 @@
                     }
                 </ul>
             </div>
-            <div class="col-md-6">
-                @if (Model.EconomicIndicators.Count > 0)
+                </div>
+                <div class="center-side">
+                      @if (Model.EconomicIndicators.Count > 0)
                 {
-                    <table class="table table-bordered table-responsive" style="width:100%">
+                    <table class="table table-bordered table-responsive economic-table" style="width:100%">
                         <tr>
                             <th>Critical Success Factor</th>
                             <th>CurrentOverview</th>
@@ -47,15 +51,18 @@
                 {
                     <p>Belum Ada Data</p>
                 }
-            </div>
-            <div class="col-md-3">
-                <h3>Constraints</h3>
+                </div>
+                <div class="right-side">
+                       <h3>Constraints</h3>
                 <ul>
                     @foreach (var item in Model.Constraints)
                     { 
                         <li>@item.Definition</li>
                     }
                 </ul>
+                </div>
+                <img src="/Content/img/voyageChartTransparent.png" />
+            </div>
             </div>
         </div>
 

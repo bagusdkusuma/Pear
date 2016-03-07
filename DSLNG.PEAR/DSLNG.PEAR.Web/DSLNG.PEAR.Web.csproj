@@ -344,6 +344,7 @@
     <Content Include="Content\img\setting.png" />
     <Content Include="Content\img\throbber.gif" />
     <Content Include="Content\img\tick.png" />
+    <Content Include="Content\img\voyageChartTransparent.png" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery-ui.min.css" />
     <Content Include="Content\login.css" />
@@ -1149,6 +1150,9 @@
     <Content Include="Views\PopDashboard\Create.cshtml" />
     <Content Include="Views\PopDashboard\PopInformation.cshtml" />
     <Content Include="Views\PlanningBlueprint\AnnualBusinessPlan.cshtml" />
+    <Content Include="Views\PlanningBlueprint\ESCategory.cshtml" />
+    <Content Include="Views\PlanningBlueprint\CreateESCategory.cshtml" />
+    <Content Include="Views\PlanningBlueprint\EditESCategory.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -1328,6 +1332,7 @@
     <Compile Include="ViewModels\PlanningBlueprint\EnvironmentsScanningViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\KpiEconomicInputViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\KpiTargetInputViewModel.cs" />
+    <Compile Include="ViewModels\PlanningBlueprint\ESCategoryViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\MidtermFormulationViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\PlanningBlueprintViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\VoyagePlanViewModel.cs" />

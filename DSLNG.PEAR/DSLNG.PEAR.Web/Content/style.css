@@ -2576,3 +2576,60 @@ table.kpis {
 .midterm-planning.template {
     display:none;
 }
+.economic-indicators-wrapper {
+    position:relative;
+    margin-bottom:40px;
+}
+    .economic-indicators-wrapper .left-side {
+        position:absolute;
+        top:10%;
+        left:11%;
+        width: 14%;
+    }
+    .economic-indicators-wrapper .center-side {
+        position:absolute;
+        top: 20%;
+        left: 41%;
+         width: 32%;
+    }
+      .economic-indicators-wrapper .right-side {
+        position:absolute;
+        top: 10%;
+        right: 4%;
+        width: 14%;
+    }
+.economic-indicators-wrapper img {
+    width:100%;
+    height:100%;
+}
+.economic-indicators-wrapper h3{
+color: #3498db;
+    font-weight: bold;
+}
+    .economic-indicators-wrapper li {
+        font-size: 10px;
+    }
+.voyage-plan h3 {
+    font-size: 14px;
+}
+.voyage-plan .row:first-child {
+       margin-left: -7%;
+    margin-right: -5%;
+}
+.economic-indicators-wrapper .economic-table > tbody > tr > th {
+    color:#fff;
+    background-color:#004071;
+}
+.economic-indicators-wrapper .economic-table > tbody > tr > td {
+    color:#444;
+}
+.economic-indicators-wrapper .economic-table>tbody>tr>th,
+.economic-indicators-wrapper .economic-table>tbody>tr>td {
+    border-color:#444;
+}
+.voyage-plan {
+    padding-bottom:75px;
+}
+.economic-indicators-wrapper .economic-table {
+    font-size:10px;
+}

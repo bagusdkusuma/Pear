@@ -20,5 +20,9 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetMidtermFormulationResponse GetMidtermStrategy();
         BaseResponse KpiTargetInput(KpiTargetInputRequest request);
         BaseResponse KpiEconomicInput(KpiEconomicInputRequest request);
+        GetESCategoriesResponse GetESCategories(GetESCategoriesRequest request);
+        SaveESCategoryResponse SaveESCategory(SaveESCategoryRequest request);
+        GetESCategoryResponse GetESCategory(GetESCategoryRequest request);
+        DeleteESCategoryResponse DeleteESCategory(DeleteESCategoryRequest request);
     }
 }

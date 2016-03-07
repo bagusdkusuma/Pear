@@ -43,6 +43,8 @@ namespace DSLNG.PEAR.Services
                 .Include(x => x.Challenges.Select(y => y.Relations.Select(z => z.OpportunityHost)))
                 .Include(x => x.Challenges.Select(y => y.Relations.Select(z => z.WeaknessHost)))
                 .Include(x => x.Challenges.Select(y => y.Relations.Select(z => z.StrengthHost)))
+                .Include(x => x.Constraints.Select(y => y.ESCategory))
+                .Include(x => x.Challenges.Select(y => y.ESCategory))
                 .FirstOrDefault().MapTo<GetEnvironmentsScanningResponse>();
         }
 
@@ -265,6 +267,7 @@ namespace DSLNG.PEAR.Services
         {
             var constraint = request.MapTo<Constraint>();
             constraint.EnvironmentScanning = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EnviId).FirstOrDefault();
+            constraint.ESCategory = DataContext.ESCategories.FirstOrDefault(x => x.Id == request.Category);
             foreach (var id in request.RelationIds)
             {
                  var envistate = DataContext.EnvironmentalScannings.Local.FirstOrDefault(x => x.Id == id);
@@ -281,6 +284,7 @@ namespace DSLNG.PEAR.Services
 
             var result = DataContext.Constraint
                 .Include(x => x.Relations)
+                .Include(x => x.ESCategory)
                 .Include(x => x.Relations.Select(y => y.ThreatHost))
                 .Include(x => x.Relations.Select(y => y.OpportunityHost))
                 .Include(x => x.Relations.Select(y => y.WeaknessHost))
@@ -291,7 +295,7 @@ namespace DSLNG.PEAR.Services
             {
                 IsSuccess = true,
                 Message = "Constraint has been saved successfully",
-                Category = result.Category,
+                Category = result.ESCategory.Name,
                 Definition = result.Definition,
                 Id = result.Id,
                 Type = result.Type,
@@ -310,6 +314,7 @@ namespace DSLNG.PEAR.Services
         {
             var challenge = request.MapTo<Challenge>();
             challenge.EnvironmentScanning = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EnviId).FirstOrDefault();
+            challenge.ESCategory = DataContext.ESCategories.FirstOrDefault(x => x.Id == request.Category);
             foreach(var id in request.RelationIds)
             {
                 var envistate = DataContext.EnvironmentalScannings.Local.FirstOrDefault(x => x.Id == id);
@@ -334,7 +339,7 @@ namespace DSLNG.PEAR.Services
             {
                 IsSuccess = true,
                 Message = "Challenge has been saved successfully",
-                Category = result.Category,
+                Category = result.ESCategory.Name,
                 Definition = result.Definition,
                 Id = result.Id,
                 Type = result.Type,
