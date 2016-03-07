@@ -1,0 +1,32 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplaySecurityViewModel
+<table class="der-table">
+    <tr>
+        <td rowspan="3" class="der-bg-blue-1" style="text-align: left">Security Incident Type (Act 24H)</td>
+        <td class="der-bg-blue-7" style="text-align: right">@Model.SecurityViewModels.First(x => x.Position == 1).Value
+        </td>
+        <td style="width: 50%" class="der-bg-blue-7" style="text-align: left">@Model.SecurityViewModels.First(x => x.Position == 1).KpiName</td>
+    </tr>
+    <tr>
+        <td class="der-bg-blue-7">@Model.SecurityViewModels.First(x => x.Position == 2).Value</td>
+        <td class="der-bg-blue-7">@Model.SecurityViewModels.First(x => x.Position == 2).KpiName</td>
+    </tr>
+    <tr>
+        <td class="der-bg-blue-7">@Model.SecurityViewModels.First(x => x.Position == 3).Value</td>
+        <td class="der-bg-blue-7">@Model.SecurityViewModels.First(x => x.Position == 3).KpiName</td>
+    </tr>
+</table>
+
+<table class="der-table der-dummy">
+    <tr>
+        <td class="der-bg-blue-7">@Model.SecurityViewModels.First(x => x.Position == 4).Value</td>
+        <td class="der-bg-blue-7">@Model.SecurityViewModels.First(x => x.Position == 4).KpiName</td>
+    </tr>
+    <tr>
+        <td class="der-bg-blue-7">@Model.SecurityViewModels.First(x => x.Position == 5).Value</td>
+        <td class="der-bg-blue-7">@Model.SecurityViewModels.First(x => x.Position == 5).KpiName</td>
+    </tr>
+    <tr>
+        <td class="der-bg-blue-7">@Model.SecurityViewModels.First(x => x.Position == 6).Value</td>
+        <td class="der-bg-blue-7">@Model.SecurityViewModels.First(x => x.Position == 6).KpiName</td>
+    </tr>
+</table>

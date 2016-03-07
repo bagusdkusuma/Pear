@@ -1,4 +1,6 @@
-﻿using DSLNG.PEAR.Services.Requests.KpiTarget;
+﻿using System;
+using DSLNG.PEAR.Data.Enums;
+using DSLNG.PEAR.Services.Requests.KpiTarget;
 using DSLNG.PEAR.Services.Responses;
 using DSLNG.PEAR.Services.Responses.KpiTarget;
 
@@ -20,5 +22,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         AllKpiTargetsResponse GetAllKpiTargets();
 
         BaseResponse BatchUpdateKpiTargetss(BatchUpdateTargetRequest request);
+
+        GetKpiTargetItemResponse GetKpiTarget(int kpiId, DateTime date, RangeFilter rangeFilter);
     }
 }

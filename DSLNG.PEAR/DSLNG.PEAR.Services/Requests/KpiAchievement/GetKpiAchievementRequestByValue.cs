@@ -8,8 +8,8 @@ namespace DSLNG.PEAR.Services.Requests.KpiAchievement
 {
     public class GetKpiAchievementRequestByValue
     {
-        public int Kpi_Id { get; set; }
+        public int KpiId { get; set; }
         public string PeriodeType { get; set; }
-        public DateTime periode { get; set; }
+        public DateTime Periode { get; set; }
     }
 }

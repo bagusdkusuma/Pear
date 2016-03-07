@@ -875,7 +875,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<ConfigurationViewModel.Economic, ConfigurationViewModel.Item>();
 
             Mapper.CreateMap<UpdateKpiTargetViewModel.KpiTargetItem, ConfigurationViewModel.Item>();
-            Mapper.CreateMap<GetKpiTargetItemResponse.Kpi, ConfigurationViewModel.Kpi>();
+            Mapper.CreateMap<GetKpiTargetItemResponse.KpiResponse, ConfigurationViewModel.Kpi>();
             Mapper.CreateMap<GetKpiTargetItemResponse, ConfigurationViewModel.KpiTarget>();
             Mapper.CreateMap<GetKpiTargetItemResponse, ConfigurationViewModel.Item>();
 
@@ -998,6 +998,9 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifactTank, GetTankDataRequest.TankRequest>();
             Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifactTank, TankViewModel>();
             Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifact, TankViewModel>();
+
+            //Der KpiInformations
+            Mapper.CreateMap<DerLayoutItemViewModel.DerKpiInformationViewModel, SaveLayoutItemRequest.DerKpiInformationRequest>();
 
             /*Mapper.CreateMap<DerLayoutItemViewModel, SaveLayoutItemRequest>();
             Mapper.CreateMap<DerLayoutLineViewModel, SaveLayoutItemRequest.LayoutItemArtifact>();

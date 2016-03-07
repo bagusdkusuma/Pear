@@ -261,8 +261,8 @@ namespace DSLNG.PEAR.Data.Persistence
                .WillCascadeOnDelete();
 
             modelBuilder.Entity<DerLayoutItem>()
-              .HasOptional(x => x.Table)
-              .WithOptionalDependent()
+              .HasMany(x => x.KpiInformations)
+              .WithOptional()
               .WillCascadeOnDelete();
 
             modelBuilder.Entity<DerArtifact>()

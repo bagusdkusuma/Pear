@@ -1,19 +1,15 @@
 ﻿@model DSLNG.PEAR.Services.Responses.Highlight.GetHighlightResponse
-@{
-    ViewBag.Title = "_Alert";
-}
 
-<table>
+<table class="der-table" style="min-height: 47px">
     <tr>
-        <td>Alert Condition</td>
+        <td class="der-bg-blue-1">Alert Condition</td>
     </tr>
     @if (!string.IsNullOrEmpty(Model.Message))
     {
         <tr>
-            <td>
+            <td rowspan="2" class="der-bg-green-1">
                 <img src="@Url.Content("~/content/img/select/" + Model.Message)" height="50" width="50"/></td>
-        </tr>    
+        </tr>
     }
-
 </table>
 

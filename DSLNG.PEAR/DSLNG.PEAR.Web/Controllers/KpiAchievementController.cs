@@ -300,7 +300,7 @@ namespace DSLNG.PEAR.Web.Controllers
                                         prepareDataContainer.KpiId = kpiId;
                                         prepareDataContainer.Periode = periodData;
                                         prepareDataContainer.PeriodeType = pType;
-                                        var oldKpiAchievement = _kpiAchievementService.GetKpiAchievementByValue(new GetKpiAchievementRequestByValue { Kpi_Id = kpiId, periode = periodData, PeriodeType = periodType });
+                                        var oldKpiAchievement = _kpiAchievementService.GetKpiAchievementByValue(new GetKpiAchievementRequestByValue { KpiId = kpiId, Periode = periodData, PeriodeType = periodType });
                                         if (oldKpiAchievement.IsSuccess)
                                         {
                                             prepareDataContainer.Id = oldKpiAchievement.Id;

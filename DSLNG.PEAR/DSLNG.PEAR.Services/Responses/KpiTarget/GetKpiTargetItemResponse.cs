@@ -10,7 +10,7 @@ namespace DSLNG.PEAR.Services.Responses.KpiTarget
     public class GetKpiTargetItemResponse : BaseResponse
     {
         public int Id { get; set; }
-        public Kpi kpi { get; set; }
+        public KpiResponse Kpi { get; set; }
         public double? Value { get; set; }
         public DateTime Periode { get; set; }
         public PeriodeType PeriodeType { get; set; }
@@ -18,9 +18,8 @@ namespace DSLNG.PEAR.Services.Responses.KpiTarget
 
         public bool IsActive { get; set; }
 
-        public class Kpi
+        public class KpiResponse
         {
-
             public int Id { get; set; }
             public string Name { get; set; }
             public string Measurement { get; set; }

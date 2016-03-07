@@ -66,7 +66,6 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-
         public GetKpiTargetsResponse GetKpiTargets(GetKpiTargetsRequest request)
         {
             var kpis = new List<KpiTarget>();
@@ -266,7 +265,6 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-
         public UpdateKpiTargetItemResponse UpdateKpiTargetItem(UpdateKpiTargetItemRequest request)
         {
             var response = new UpdateKpiTargetItemResponse();
@@ -459,7 +457,6 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-
         public GetKpiTargetItemResponse GetKpiTargetByValue(GetKpiTargetRequestByValue request)
         {
             var response = new GetKpiTargetItemResponse();
@@ -518,7 +515,6 @@ namespace DSLNG.PEAR.Services
             }
             return response;
         }
-
 
         public BaseResponse BatchUpdateKpiTargetss(BatchUpdateTargetRequest request)
         {
@@ -582,6 +578,48 @@ namespace DSLNG.PEAR.Services
             {
                 response.Message = argumentNullException.Message;
             }
+            return response;
+        }
+
+        public GetKpiTargetItemResponse GetKpiTarget(int kpiId, DateTime date, RangeFilter rangeFilter)
+        {
+            var response = new GetKpiTargetItemResponse();
+            try
+            {
+                switch (rangeFilter)
+                {
+                    case RangeFilter.CurrentYear:
+                        {
+                            var kpi = DataContext.Kpis
+                                .Include(x => x.Measurement)
+                                .Single(x => x.Id == kpiId);
+                            var data = DataContext.KpiAchievements.Include(x => x.Kpi).FirstOrDefault(x => x.Kpi.Id == kpiId && x.PeriodeType == PeriodeType.Yearly && x.Periode.Year == date.Year);
+                            var kpiResponse = new GetKpiTargetItemResponse.KpiResponse
+                            {
+                                Id = kpi.Id,
+                                Measurement = kpi.Measurement.Name,
+                                Name = kpi.Name,
+                                Remark = kpi.Remark,
+                            };
+
+                            return new GetKpiTargetItemResponse
+                            {
+                                Value = (data != null) ? data.Value : null,
+                                Kpi = kpiResponse,
+                                IsSuccess = true
+                            };
+
+                        }
+
+                }
+
+            }
+            catch (Exception exception)
+            {
+                response.Message = exception.Message;
+            }
+
+
             return response;
         }
     }
