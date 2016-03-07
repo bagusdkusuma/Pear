@@ -471,7 +471,7 @@
             });
         });
 
-        $(document).on('click', '.target, .economic', function (e) {
+        $(document).on('click', '.target', function (e) {
             e.preventDefault();
             var $this = $(this);
             if ($this.find('input').length) return;
@@ -491,7 +491,7 @@
             $this.append($input);
             $input.focus();
         });
-        $(document).on('change', '.target-input,.economic-input', function (e) {
+        $(document).on('change', '.target-input', function (e) {
             e.preventDefault();
             var $this = $(this);
             var $midtermPlanning = $this.closest('.midterm-planning');
@@ -518,7 +518,7 @@
                 data: input
             });
         });
-        $(document).on('focusout', '.target-input,.economic-input', function (e) {
+        $(document).on('focusout', '.target-input', function (e) {
             e.preventDefault();
             var $this = $(this);
             var $td = $this.closest('td');

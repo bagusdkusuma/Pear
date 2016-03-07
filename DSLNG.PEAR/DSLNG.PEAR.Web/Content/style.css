@@ -2563,8 +2563,7 @@ table.kpis {
 .pop-information .row .table-info tr td{
     display: block;
 }
-.kpis .target,
-.kpis .economic {
+.kpis .target{
     cursor:pointer;
 }
 .annual-business-plan .formulation-stage {

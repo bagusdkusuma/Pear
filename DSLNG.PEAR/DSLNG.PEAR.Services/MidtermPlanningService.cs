@@ -47,8 +47,8 @@ namespace DSLNG.PEAR.Services
                     foreach (var kpi in midtermPlanning.Kpis) {
                         var kpiData = new GetMidtermPlanningsResponse.KpiData { Kpi = kpi };
                         //user yearly
-                        if (midtermPlanning.StartDate.Value.Month == 1 && midtermPlanning.EndDate.Value.Month == 12)
-                        {
+                        //if (midtermPlanning.StartDate.Value.Month == 1 && midtermPlanning.EndDate.Value.Month == 12)
+                        //{
                             var sTargets = targets.Where(x => x.Kpi.Id == kpi.Id &&
                                 x.Periode.Year == midtermPlanning.StartDate.Value.Year &&
                                 x.PeriodeType == PeriodeType.Yearly).Select(x => x.Value).ToList();
@@ -60,20 +60,20 @@ namespace DSLNG.PEAR.Services
                             {
                                 kpiData.Target = sTargets.Count() > 0 ? sTargets.Average() : null;
                             }
-                        }
-                        else {
-                            var sTargets = targets.Where(x => x.Kpi.Id == kpi.Id &&
-                               x.Periode >= midtermPlanning.StartDate && x.Periode <= midtermPlanning.EndDate &&
-                               x.PeriodeType == PeriodeType.Monthly).Select(x => x.Value).ToList();
-                            if (kpi.YtdFormula == YtdFormula.Sum)
-                            {
-                                kpiData.Target = sTargets.Count() > 0? sTargets.Sum():null;
-                            }
-                            else
-                            {
-                                kpiData.Target = sTargets.Count() > 0? sTargets.Average() : null;
-                            }
-                        }
+                        //}
+                        //else {
+                        //    var sTargets = targets.Where(x => x.Kpi.Id == kpi.Id &&
+                        //       x.Periode >= midtermPlanning.StartDate && x.Periode <= midtermPlanning.EndDate &&
+                        //       x.PeriodeType == PeriodeType.Monthly).Select(x => x.Value).ToList();
+                        //    if (kpi.YtdFormula == YtdFormula.Sum)
+                        //    {
+                        //        kpiData.Target = sTargets.Count() > 0? sTargets.Sum():null;
+                        //    }
+                        //    else
+                        //    {
+                        //        kpiData.Target = sTargets.Count() > 0? sTargets.Average() : null;
+                        //    }
+                        //}
                         midtermPlanning.KpiDatas.Add(kpiData);
                     }
                 }
@@ -92,8 +92,8 @@ namespace DSLNG.PEAR.Services
                     {
                         var kpiData = midtermPlanning.KpiDatas.First(x => x.Kpi.Id == kpi.Id);
                         //user yearly
-                        if (midtermPlanning.StartDate.Value.Month == 1 && midtermPlanning.EndDate.Value.Month == 12)
-                        {
+                        //if (midtermPlanning.StartDate.Value.Month == 1 && midtermPlanning.EndDate.Value.Month == 12)
+                        //{
                             var sEconomics = economics.Where(x => x.Kpi.Id == kpi.Id &&
                                 x.Periode.Year == midtermPlanning.StartDate.Value.Year &&
                                 x.PeriodeType == PeriodeType.Yearly).Select(x => x.Value).ToList();
@@ -105,21 +105,21 @@ namespace DSLNG.PEAR.Services
                             {
                                 kpiData.Economic = sEconomics.Count() > 0 ? sEconomics.Average() : null;
                             }
-                        }
-                        else
-                        {
-                            var sEconomics = economics.Where(x => x.Kpi.Id == kpi.Id &&
-                               x.Periode >= midtermPlanning.StartDate && x.Periode <= midtermPlanning.EndDate &&
-                               x.PeriodeType == PeriodeType.Monthly).Select(x => x.Value).ToList();
-                            if (kpi.YtdFormula == YtdFormula.Sum)
-                            {
-                                kpiData.Economic = sEconomics.Count() > 0 ? sEconomics.Sum() : null;
-                            }
-                            else
-                            {
-                                kpiData.Economic = sEconomics.Count() > 0 ? sEconomics.Average() : null;
-                            }
-                        }
+                        //}
+                        //else
+                        //{
+                        //    var sEconomics = economics.Where(x => x.Kpi.Id == kpi.Id &&
+                        //       x.Periode >= midtermPlanning.StartDate && x.Periode <= midtermPlanning.EndDate &&
+                        //       x.PeriodeType == PeriodeType.Monthly).Select(x => x.Value).ToList();
+                        //    if (kpi.YtdFormula == YtdFormula.Sum)
+                        //    {
+                        //        kpiData.Economic = sEconomics.Count() > 0 ? sEconomics.Sum() : null;
+                        //    }
+                        //    else
+                        //    {
+                        //        kpiData.Economic = sEconomics.Count() > 0 ? sEconomics.Average() : null;
+                        //    }
+                        //}
                     }
                 }
 
@@ -279,8 +279,8 @@ namespace DSLNG.PEAR.Services
             midtermPlanning.Kpis.Add(kpi);
             DataContext.SaveChanges();
             var activeScenario = DataContext.Scenarios.FirstOrDefault(x => x.IsActive && x.IsDashboard);
-            if (midtermPlanning.StartDate.Value.Month == 1 && midtermPlanning.EndDate.Value.Month == 12)
-            {
+            //if (midtermPlanning.StartDate.Value.Month == 1 && midtermPlanning.EndDate.Value.Month == 12)
+            //{
                 var target = DataContext.KpiTargets.Where(x => x.Kpi.Id == kpi.Id && x.PeriodeType == PeriodeType.Yearly
                     && x.Periode.Year == midtermPlanning.StartDate.Value.Year).Select(x => x.Value).FirstOrDefault();
                 if (target.HasValue) response.Target = target.Value;
@@ -289,38 +289,38 @@ namespace DSLNG.PEAR.Services
                   && x.Periode.Year == midtermPlanning.StartDate.Value.Year && x.Scenario.Id == activeScenario.Id).Select(x => x.Value).FirstOrDefault();
                 if (economic.HasValue) response.Economic = economic.Value;
                 }
-            }
-            else {
-                var qTarget = DataContext.KpiTargets.Where(x => x.Kpi.Id == kpi.Id & x.PeriodeType == PeriodeType.Monthly
-                    && x.Periode >= midtermPlanning.StartDate && x.Periode <= midtermPlanning.EndDate ).Select(x => x.Value);
-                if (activeScenario != null)
-                {
-                    var qEconomic = DataContext.KeyOperationDatas.Where(x => x.Kpi.Id == kpi.Id & x.PeriodeType == PeriodeType.Monthly
-                        && x.Periode >= midtermPlanning.StartDate && x.Periode <= midtermPlanning.EndDate  && x.Scenario.Id == activeScenario.Id).Select(x => x.Value);
-                    if (qEconomic.Count() > 0)
-                    {
-                        if (kpi.YtdFormula == YtdFormula.Sum)
-                        {
-                            response.Economic = qEconomic.Sum(x => x.Value);
-                        }
-                        else
-                        {
-                            response.Economic = qEconomic.Average(x => x.Value);
-                        }
-                    }
-                }
-                if (qTarget.Count() > 0)
-                {
-                    if (kpi.YtdFormula == YtdFormula.Sum)
-                    {
-                        response.Target = qTarget.Sum(x => x.Value);
-                    }
-                    else
-                    {
-                        response.Target = qTarget.Average(x => x.Value);
-                    }
-                }
-            }
+            //}
+            //else {
+            //    var qTarget = DataContext.KpiTargets.Where(x => x.Kpi.Id == kpi.Id & x.PeriodeType == PeriodeType.Monthly
+            //        && x.Periode >= midtermPlanning.StartDate && x.Periode <= midtermPlanning.EndDate ).Select(x => x.Value);
+            //    if (activeScenario != null)
+            //    {
+            //        var qEconomic = DataContext.KeyOperationDatas.Where(x => x.Kpi.Id == kpi.Id & x.PeriodeType == PeriodeType.Monthly
+            //            && x.Periode >= midtermPlanning.StartDate && x.Periode <= midtermPlanning.EndDate  && x.Scenario.Id == activeScenario.Id).Select(x => x.Value);
+            //        if (qEconomic.Count() > 0)
+            //        {
+            //            if (kpi.YtdFormula == YtdFormula.Sum)
+            //            {
+            //                response.Economic = qEconomic.Sum(x => x.Value);
+            //            }
+            //            else
+            //            {
+            //                response.Economic = qEconomic.Average(x => x.Value);
+            //            }
+            //        }
+            //    }
+            //    if (qTarget.Count() > 0)
+            //    {
+            //        if (kpi.YtdFormula == YtdFormula.Sum)
+            //        {
+            //            response.Target = qTarget.Sum(x => x.Value);
+            //        }
+            //        else
+            //        {
+            //            response.Target = qTarget.Average(x => x.Value);
+            //        }
+            //    }
+            //}
             response.Id = kpi.Id;
             response.Name = kpi.Name;
             response.Measurement = kpi.Measurement.Name;
