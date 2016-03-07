@@ -184,6 +184,16 @@ namespace DSLNG.PEAR.Web.Controllers
             return Redirect(Request.UrlReferrer.AbsoluteUri);
         }
 
+        public ActionResult RejectVoyagePlan(RejectVoyagePlanViewModel viewModel) {
+            var resp = _planningBlueprintService.RejectVoyagePlan(viewModel.MapTo<RejectVoyagePlanRequest>());
+            if (resp.IsSuccess)
+            {
+                return RedirectToAction("Approval");
+            }
+            return Redirect(Request.UrlReferrer.AbsoluteUri);
+        }
+
+
         public ActionResult VoyagePlan()
         {
             var resp = _planningBlueprintService.GetVoyagePlan();
@@ -250,6 +260,17 @@ namespace DSLNG.PEAR.Web.Controllers
             return Redirect(Request.UrlReferrer.AbsoluteUri);
         }
 
+        [HttpPost]
+        public ActionResult RejectMidtermStrategy(RejectMidtermStrategyViewModel viewModel)
+        {
+            var resp = _planningBlueprintService.RejectMidtermStrategy(viewModel.MapTo<RejectMidtermStrategyRequest>());
+            if (resp.IsSuccess)
+            {
+                return RedirectToAction("Approval");
+            }
+            return Redirect(Request.UrlReferrer.AbsoluteUri);
+        }
+
         public ActionResult MidtermStrategy()
         {
             var resp = _planningBlueprintService.GetMidtermStrategy();
@@ -276,6 +297,24 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult GetEconomicIndicators() {
             var viewModel = _outputCategoryService.GetActiveOutputCategories(false).MapTo<EconomicIndicatorsViewModel>();
             return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult KpiTargetInput(KpiTargetInputViewModel model) {
+            return Json(_planningBlueprintService.KpiTargetInput(model.MapTo<KpiTargetInputRequest>()));
+        }
+
+        [HttpPost]
+        public ActionResult KpiEconomicInput(KpiEconomicInputViewModel model)
+        {
+            return Json(_planningBlueprintService.KpiEconomicInput(model.MapTo<KpiEconomicInputRequest>()));
+        }
+
+        public ActionResult AnnualBusinessPlan() {
+            var viewModel = new AnnualBusinessPlanViewModel();
+            viewModel.PlanningBlueprints = _planningBlueprintService.GetPlanningBlueprints().PlanningBlueprints.Select(x => new SelectListItem{Value = x.Id.ToString(), Text = x.Title}).ToList();
+            return View(viewModel);
+            //throw new NotImplementedException();
         }
 
     }

@@ -92,6 +92,10 @@
     <Compile Include="HighlightService.cs" />
     <Compile Include="Interfaces\GetDerLayoutResponse.cs" />
     <Compile Include="Requests\Der\SaveLayoutItemRequest.cs" />
+    <Compile Include="Requests\PlanningBlueprint\KpiEconomicInputRequest.cs" />
+    <Compile Include="Requests\PlanningBlueprint\KpiTargetInputRequest.cs" />
+    <Compile Include="Requests\PlanningBlueprint\RejectMidtermStrategyRequest.cs" />
+    <Compile Include="Requests\PlanningBlueprint\RejectVoyagePlanRequest.cs" />
     <Compile Include="Responses\Der\SaveLayoutItemResponse.cs" />
     <Compile Include="Responses\Der\GetDerLayoutitemResponse.cs" />
     <Compile Include="Responses\Der\GetDerLayoutitemsResponse.cs" />

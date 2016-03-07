@@ -676,6 +676,17 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetPopDashboardResponse.Signature, SignatureViewModel>();
             Mapper.CreateMap<SavePopInformationViewModel, SavePopInformationRequest>();
             Mapper.CreateMap<GetPopDashboardViewModel, SaveSignatureRequest>();
+
+            Mapper.CreateMap<KpiTargetInputViewModel, KpiTargetInputRequest>()
+                .ForMember(d => d.Start, o => o.MapFrom(s => DateTime.ParseExact(s.Start, "dd/MM/yyyy", CultureInfo.InvariantCulture)))
+                .ForMember(d => d.End, o => o.MapFrom(s => DateTime.ParseExact(s.End, "dd/MM/yyyy", CultureInfo.InvariantCulture)));
+
+            Mapper.CreateMap<KpiEconomicInputViewModel, KpiEconomicInputRequest>()
+            .ForMember(d => d.Start, o => o.MapFrom(s => DateTime.ParseExact(s.Start, "dd/MM/yyyy", CultureInfo.InvariantCulture)))
+            .ForMember(d => d.End, o => o.MapFrom(s => DateTime.ParseExact(s.End, "dd/MM/yyyy", CultureInfo.InvariantCulture)));
+
+            Mapper.CreateMap<RejectVoyagePlanViewModel, RejectVoyagePlanRequest>();
+            Mapper.CreateMap<RejectMidtermStrategyViewModel, RejectMidtermStrategyRequest>();
             base.Configure();
         }
         

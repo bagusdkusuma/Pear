@@ -10,8 +10,10 @@
         <tr>
             <th>Title</th>
             <th>Description</th>
-            <th>Voyage Planning</th>
+            <th>Voyage Plan</th>
+            <th>Voyage Plan Notes</th>
             <th>Midterm Phase Strategy</th>
+             <th>Midterm Phase Strategy Notes</th>
             <th>Is Active</th>
         </tr>
     </thead>
@@ -46,11 +48,21 @@
                         "mRender": function (data, type, row) {
                             if (row.BusinessPostureIdentification.IsBeingReviewed) {
                                 return '@Html.ActionLink("Review", "ESReview", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.BusinessPostureIdentification.Id);
+                            } else if (row.BusinessPostureIdentification.IsRejected) {
+                                return "Rejected";
                             } else if (row.BusinessPostureIdentification.IsApproved) {
                                 return "Approved";
                             }else{
                                 return "On Progress";
                             }
+                        }
+                    },
+                    {
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": '',
+                        "mRender": function (data, type, row) {
+                            return row.BusinessPostureIdentification.Notes;
                         }
                     },
                      {
@@ -60,6 +72,8 @@
                          "mRender": function (data, type, row) {
                              if (row.MidtermStragetyPlanning.IsBeingReviewed) {
                                  return '@Html.ActionLink("Review", "MPFReview", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.MidtermStragetyPlanning.Id);
+                             } else if (row.MidtermStragetyPlanning.IsRejected) {
+                                 return "Rejected";
                              }
                              else if (row.MidtermStragetyPlanning.IsApproved) {
                                  return "Approved";
@@ -68,6 +82,14 @@
                              }
                           }
                      },
+                      {
+                          "orderable": false,
+                          "data": null,
+                          "defaultContent": '',
+                          "mRender": function (data, type, row) {
+                              return row.MidtermStragetyPlanning.Notes;
+                          }
+                      },
                     {
                         "mDataProp": "IsActive", "name": "IsActive", "render": function (data, type, row) {
                             var checked = '';

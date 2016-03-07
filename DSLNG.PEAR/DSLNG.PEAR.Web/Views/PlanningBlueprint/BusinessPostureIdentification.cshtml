@@ -446,6 +446,7 @@
             }
             else
             {
+                <button type="button" data-toggle="modal" data-target="#reject-modal" class="btn btn-primary btn-lg btn-reject"><span class="fa fa-remove"></span> Reject</button>
                 using (Html.BeginForm("ApproveVoyagePlan", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
                 {
                 @Html.Hidden("Id", Model.PlanningBlueprintId)
@@ -549,6 +550,28 @@
 
             <div class="modal-footer">
             </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="reject-modal" data-id="id">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+             @using (Html.BeginForm("RejectVoyagePlan", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
+                {
+            <div class="modal-header">
+                <button type="button" class="close btn-finish-relation" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Notes</h3>
+            </div>
+            <div class="modal-body">
+                @Html.Hidden("PlanningBlueprintId", Model.PlanningBlueprintId)
+                <textarea rows="5" style="width:100%" name="Notes"></textarea>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-primary" value="Submit" />
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+            </div>
+             }
         </div>
     </div>
 </div>
@@ -728,6 +751,10 @@
             } else {
                 $(this).closest('form').submit();
             }
+        });
+        $(document).on('click', '.submit-reject', function (e) {
+            //e.preventDefault();
+
         });
     });
 

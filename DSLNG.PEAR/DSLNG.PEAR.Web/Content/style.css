@@ -2563,3 +2563,17 @@ table.kpis {
 .pop-information .row .table-info tr td{
     display: block;
 }
+.kpis .target,
+.kpis .economic {
+    cursor:pointer;
+}
+.annual-business-plan .formulation-stage {
+    width:100%;
+    border:1px solid #ddd;
+}
+    .formulation-stage.template {
+        display:none;
+    }
+.midterm-planning.template {
+    display:none;
+}

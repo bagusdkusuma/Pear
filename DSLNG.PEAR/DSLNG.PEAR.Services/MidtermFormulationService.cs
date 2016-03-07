@@ -259,5 +259,18 @@ namespace DSLNG.PEAR.Services
                 };
             }
         }
+
+
+        public GetMidtermFormulationResponse GetStagesByPbId(int id)
+        {
+            return new GetMidtermFormulationResponse
+            {
+                MidtermFormulationStages = DataContext.MidtermPhaseFormulationStages
+                .Include(x => x.Descriptions)
+                .Include(x => x.KeyDrivers)
+                .Where(x => x.MidtermPhaseFormulation.PlanningBlueprint.Id == id)
+                .ToList().MapTo<GetMidtermFormulationResponse.MidtermFormulationStage>()
+            };
+        }
     }
 }

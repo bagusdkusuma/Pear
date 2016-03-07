@@ -29,9 +29,10 @@
             <th>Description</th>
             <th>Environments Scanning</th>
             <th>Business Posture Identification</th>
+            <th>Notes</th>
             <th>Mid Term Phase Formulation</th>
             <th>Mid Term Strategy Planning</th>
-            <th>Is Approved</th>
+            <th>Notes</th>
             <th>Is Active</th>
             <th>Action</th>
         </tr>
@@ -57,6 +58,10 @@
                          "data": null,
                          "defaultContent": '',
                          "mRender": function (data, type, row) {
+                             if (row.BusinessPostureIdentification.IsRejected) {
+                                 return 'Rejected';
+                             }
+                             else
                              if (row.BusinessPostureIdentification.IsApproved) {
                                  return 'Approved';
                              }else if (row.BusinessPostureIdentification.IsBeingReviewed) {
@@ -72,7 +77,10 @@
                           "data": null,
                           "defaultContent": '',
                           "mRender": function (data, type, row) {
-                              if (row.BusinessPostureIdentification.IsApproved) {
+                              if (row.BusinessPostureIdentification.IsRejected) {
+                                  return 'Rejected';
+                              }
+                              else if (row.BusinessPostureIdentification.IsApproved) {
                                   return 'Approved';
                               } else if (row.BusinessPostureIdentification.IsBeingReviewed) {
                                   return 'Being Reviewed';
@@ -87,6 +95,17 @@
                           "data": null,
                           "defaultContent": '',
                           "mRender": function (data, type, row) {
+                              return row.BusinessPostureIdentification.Notes;
+                          }
+                      },
+                      {
+                          "orderable": false,
+                          "data": null,
+                          "defaultContent": '',
+                          "mRender": function (data, type, row) {
+                              if (row.MidtermStragetyPlanning.IsRejected) {
+                                  return 'Rejected';
+                              } else
                               if (row.MidtermStragetyPlanning.IsApproved) {
                                   return 'Approved';
                               } else if (row.MidtermStragetyPlanning.IsBeingReviewed) {
@@ -104,6 +123,9 @@
                           "data": null,
                           "defaultContent": '',
                           "mRender": function (data, type, row) {
+                              if (row.MidtermStragetyPlanning.IsRejected) {
+                                  return 'Rejected';
+                              }else
                               if (row.MidtermStragetyPlanning.IsApproved) {
                                   return 'Approved';
                               } else if (row.MidtermStragetyPlanning.IsBeingReviewed) {
@@ -114,15 +136,14 @@
                               return '@Html.ActionLink("Edit", "MidtermStrategyPlanning", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.MidtermStragetyPlanning.Id);
                           }
                       },
-                    {
-                        "mDataProp": "IsApproved", "name": "IsApproved", "render": function (data, type, row) {
-                            var checked = '';
-                            if (data) {
-                                checked = 'checked="checked"';
-                            }
-                            return '<input type="checkbox" class="editor-active" '+checked+' disabled="disabled">';
-                        },
-                    },
+                      {
+                          "orderable": false,
+                          "data": null,
+                          "defaultContent": '',
+                          "mRender": function (data, type, row) {
+                              return row.MidtermStragetyPlanning.Notes;
+                          }
+                      },
                     {
                         "mDataProp": "IsActive", "name": "IsActive", "render": function (data, type, row) {
                             var checked = '';

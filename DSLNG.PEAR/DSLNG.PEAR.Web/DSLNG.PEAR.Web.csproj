@@ -807,6 +807,9 @@
     <Compile Include="ViewModels\HighlightGroup\HighlightGroupViewModel.cs" />
     <Compile Include="ViewModels\Kpi\DetailKpiViewModel.cs" />
     <Compile Include="ViewModels\Kpi\UploadViewModel.cs" />
+    <Compile Include="ViewModels\PlanningBlueprint\AnnualBusinessPlanViewModel.cs" />
+    <Compile Include="ViewModels\PlanningBlueprint\RejectMidtermStrategyViewModel.cs" />
+    <Compile Include="ViewModels\PlanningBlueprint\RejectVoyagePlanViewModel.cs" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Boolean.cshtml" />
@@ -1145,6 +1148,7 @@
     <Content Include="Views\PopDashboard\Index.cshtml" />
     <Content Include="Views\PopDashboard\Create.cshtml" />
     <Content Include="Views\PopDashboard\PopInformation.cshtml" />
+    <Content Include="Views\PlanningBlueprint\AnnualBusinessPlan.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -1322,6 +1326,8 @@
     <Compile Include="ViewModels\PlanningBlueprint\BusinessPostureViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\EconomicIndicatorsViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\EnvironmentsScanningViewModel.cs" />
+    <Compile Include="ViewModels\PlanningBlueprint\KpiEconomicInputViewModel.cs" />
+    <Compile Include="ViewModels\PlanningBlueprint\KpiTargetInputViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\MidtermFormulationViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\PlanningBlueprintViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\VoyagePlanViewModel.cs" />

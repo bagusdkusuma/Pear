@@ -11,5 +11,7 @@ namespace DSLNG.PEAR.Data.Entities.Blueprint
         public bool IsLocked { get; set; }
         public bool IsBeingReviewed { get; set; }
         public bool IsApproved { get; set; }
+        public bool IsRejected { get; set; }
+        public string Notes { get; set; }
     }
 }
