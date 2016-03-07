@@ -12,6 +12,7 @@ namespace DSLNG.PEAR.Services.Responses.Signature
         public int Id { get; set; }
         public int UserId { get; set; }
         public string Username { get; set; }
+        public string SignatureImage { get; set; }
         public SignatureType TypeSignature { get; set; }
     }
 }

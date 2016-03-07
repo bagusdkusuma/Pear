@@ -344,6 +344,7 @@
     <Content Include="Content\img\setting.png" />
     <Content Include="Content\img\throbber.gif" />
     <Content Include="Content\img\tick.png" />
+    <Content Include="Content\img\voyageChartTransparent.png" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery-ui.min.css" />
     <Content Include="Content\login.css" />
@@ -807,6 +808,9 @@
     <Compile Include="ViewModels\HighlightGroup\HighlightGroupViewModel.cs" />
     <Compile Include="ViewModels\Kpi\DetailKpiViewModel.cs" />
     <Compile Include="ViewModels\Kpi\UploadViewModel.cs" />
+    <Compile Include="ViewModels\PlanningBlueprint\AnnualBusinessPlanViewModel.cs" />
+    <Compile Include="ViewModels\PlanningBlueprint\RejectMidtermStrategyViewModel.cs" />
+    <Compile Include="ViewModels\PlanningBlueprint\RejectVoyagePlanViewModel.cs" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Boolean.cshtml" />
@@ -1145,6 +1149,10 @@
     <Content Include="Views\PopDashboard\Index.cshtml" />
     <Content Include="Views\PopDashboard\Create.cshtml" />
     <Content Include="Views\PopDashboard\PopInformation.cshtml" />
+    <Content Include="Views\PlanningBlueprint\AnnualBusinessPlan.cshtml" />
+    <Content Include="Views\PlanningBlueprint\ESCategory.cshtml" />
+    <Content Include="Views\PlanningBlueprint\CreateESCategory.cshtml" />
+    <Content Include="Views\PlanningBlueprint\EditESCategory.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -1322,6 +1330,9 @@
     <Compile Include="ViewModels\PlanningBlueprint\BusinessPostureViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\EconomicIndicatorsViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\EnvironmentsScanningViewModel.cs" />
+    <Compile Include="ViewModels\PlanningBlueprint\KpiEconomicInputViewModel.cs" />
+    <Compile Include="ViewModels\PlanningBlueprint\KpiTargetInputViewModel.cs" />
+    <Compile Include="ViewModels\PlanningBlueprint\ESCategoryViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\MidtermFormulationViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\PlanningBlueprintViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\VoyagePlanViewModel.cs" />
@@ -1408,6 +1419,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\img\signature\" />
+    <Folder Include="Content\signature\" />
     <Folder Include="Content\TemplateFiles\KpiAchievement\" />
     <Folder Include="Content\TemplateFiles\KpiTarget\" />
     <Folder Include="Content\UploadedFiles\KpiAchievement\" />

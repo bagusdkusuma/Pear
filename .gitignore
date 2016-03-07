@@ -199,3 +199,4 @@ FakesAssemblies/
 /DSLNG.PEAR/DSLNG.PEAR.Web/App_Data/dslng_pear.sdf
 Web.config
 /DSLNG.PEAR/DSLNG.PEAR.Web/Web.config
+DSLNG.PEAR/DSLNG.PEAR.Web/Content/TemplateFiles/*

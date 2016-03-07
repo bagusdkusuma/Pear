@@ -2560,6 +2560,145 @@ table.kpis {
     top: 5px;
 }
 
-.pop-information .row .table-info tr td{
+
+
+
+.pop-information .pop-title h4{
+    text-align: right;
+}
+
+.pop-information .col-md-4 {
+    word-break: break-all;
+    padding-right: 0px;
+}
+
+.pop-information .col-md-4 .info{
+
+}
+
+.pop-information .col-md-4 .info .table-info{
+    border: 1px solid white;
+    color:white;
+}
+
+.pop-information .col-md-4 .info .table-info tr h4{
+    margin: 0px;
+    text-align: center;
+    padding: 5px 0px 5px 0px;
+    font-size: 14px;
+}
+.pop-information .col-md-4 .info .table-info tr td{
     display: block;
+    text-align:left;
+}
+.kpis .target{
+    cursor:pointer;
+}
+.annual-business-plan .formulation-stage {
+    width:100%;
+    border:1px solid #ddd;
+}
+    .formulation-stage.template {
+        display:none;
+    }
+.midterm-planning.template {
+    display:none;
+}
+.economic-indicators-wrapper {
+    position:relative;
+    margin-bottom:40px;
+}
+    .economic-indicators-wrapper .left-side {
+        position:absolute;
+        top:10%;
+        left:11%;
+        width: 14%;
+    }
+    .economic-indicators-wrapper .center-side {
+        position:absolute;
+        top: 20%;
+        left: 41%;
+         width: 32%;
+    }
+      .economic-indicators-wrapper .right-side {
+        position:absolute;
+        top: 10%;
+        right: 4%;
+        width: 14%;
+    }
+.economic-indicators-wrapper img {
+    width:100%;
+    height:100%;
+}
+.economic-indicators-wrapper h3{
+color: #3498db;
+    font-weight: bold;
+}
+    .economic-indicators-wrapper li {
+        font-size: 10px;
+    }
+.voyage-plan h3 {
+    font-size: 14px;
+}
+.voyage-plan .row:first-child {
+       margin-left: -7%;
+    margin-right: -5%;
+}
+.economic-indicators-wrapper .economic-table > tbody > tr > th {
+    color:#fff;
+    background-color:#004071;
+}
+.economic-indicators-wrapper .economic-table > tbody > tr > td {
+    color:#444;
+}
+.economic-indicators-wrapper .economic-table>tbody>tr>th,
+.economic-indicators-wrapper .economic-table>tbody>tr>td {
+    border-color:#444;
+}
+.voyage-plan {
+    padding-bottom:75px;
+}
+.economic-indicators-wrapper .economic-table {
+    font-size:10px;
+}
+
+
+.pop-information .col-md-4 .info .table-info .DashboardObjective a{
+    position: absolute;
+    right: 0px;
+    top: 8px;
+}
+
+.pop-information .col-md-4 .info .table-info .KeyPerformanceMeasure a, .pop-information .col-md-4 .info .table-info .Benefits a, .pop-information .col-md-4 .info .table-info .PotentialProblemRisk a{
+    position: relative;
+    right: -330px;
+    top: -20px;
+}
+
+
+
+.pop-information .col-md-8 {
+    border: 1px solid white;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.pop-information .col-md-8 .info{
+    color: white;
+}
+
+.pop-information .col-md-8 .info .table-info-2{
+    border: 1px solid white;
+}
+
+.pop-information .col-md-8 .info .table-info-2 tr td{
+    text-align: left;
+}
+
+.table-info-2 .scope td
+{
+    text-align: center;
+}
+.notes-value {
+    display:none;
 }

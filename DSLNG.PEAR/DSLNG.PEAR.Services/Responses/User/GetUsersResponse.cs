@@ -21,6 +21,8 @@ namespace DSLNG.PEAR.Services.Responses.User
             ////public int RoleId { get; set; }
             public string RoleName { get; set; }
             public bool IsSuperAdmin { get; set; }
+            public string FullName { get; set; }
+            public string SignatureImage { get; set; }
             
         }
 

@@ -1,0 +1,307 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.PlanningBlueprint.AnnualBusinessPlanViewModel
+@{
+    ViewBag.Title = "Annual Business Plan";
+}
+<div class="annual-business-plan">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Annual Business Plan</h2>
+            <div class="form-group form-list">
+                @Html.LabelFor(model => model.PlanningBlueprintId)
+                @Html.DropDownListFor(model => model.PlanningBlueprintId, Model.PlanningBlueprints, "Select Planning Blueprint", new { @class = "form-control", id = "pb-selector", })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 stage">
+        </div>
+        <div class="col-md-6 annual-planning">
+        </div>
+    </div>
+</div>
+<div class="formulation-stage template">
+    <div>
+        <div class="title">
+        </div>
+        <ul class="date-range">
+            <li><span class="start"></span></li>
+            <li><span class="end"></span></li>
+        </ul>
+        <div class="clear"></div>
+        <div class="defined-header description">
+            <div class="sub-title">
+                Description
+            </div>
+        </div>
+        <ul class="defined-list description">
+        </ul>
+        <div class="defined-header key-driver">
+            <div class="sub-title">
+                Key Driver
+            </div>
+        </div>
+        <ul class="defined-list key-driver">
+        </ul>
+    </div>
+</div>
+ <div class="midterm-planning template">
+        <div class="midterm-planning-header">
+        <h4 class="header-title"></h4>
+            </div>
+        <ul class="range">
+            <li class="start"></li>
+            <li class="end"></li>
+        </ul>
+        <div class="clear"></div>
+        <div class="objective-header">
+            <h5 class="objective-title">Objective</h5>
+            <a data-toggle="popover" href="javascript:void(0)" class="add-objective"><i class="fa fa-plus"></i></a>
+           </div>
+        <ul class="objectives">
+        </ul>
+        <table class="kpis">
+            <tr>
+                <th>Kpi <a data-toggle="popover" href="javascript:void(0)" class="add-kpi"><i class="fa fa-plus"></i></a></th>
+                <th>Target</th>
+                <th>Economic</th>
+            </tr>
+        </table>
+    </div>
+ <div class="objective-form">
+        <form action="/MidtermStrategyPlanning/AddObjective">
+            <input type="hidden" name="MidtermPlanningId" />
+            <label>Objective</label>
+            <textarea name="Value" cols="25" rows="5"></textarea>
+            <input type="submit" class="btn btn-primary submit-objective" value="submit" />
+        </form>
+    </div>
+    <div class="kpi-form">
+        <form action="/MidtermStrategyPlanning/AddKpi">
+            <input type="hidden" name="MidtermPlanningId" />
+            <div>
+                <label>Pilih Kpi</label>
+            </div>
+            <select name="KpiId" class="kpi-list" style="width: 180px"></select>
+            <input type="submit" class="btn btn-primary submit-kpi" value="submit" />
+        </form>
+    </div>
+    <div id="hidden-fields-holder" data-kpi-url="@Url.Action("KpiList", "Artifact")"></div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var currentStages;
+        var currentBusiness;
+        $(document).on('change', '#pb-selector', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            $.get('/MidtermFormulation/GetStagesByPbId/' + $this.val(), function (data) {
+                console.log(data);
+                $('.stage').html('');
+                currentStages = data.MidtermFormulationStages;
+                var $formGroup = $('<div />');
+                $formGroup.addClass('form-group form-list');
+                var $label = $('<label />');
+                $label.html('Midterm Phase Formulation');
+                var $select = $('<select />');
+                $select.addClass('stage-selector form-control');
+                $select.append($('<option />').html('Select Midterm Phase Formulation'));
+                for (var i in currentStages) {
+                    var $option = $('<option />');
+                    $option.prop('value', currentStages[i].Id);
+                    $option.html(currentStages[i].Title + ' ' + moment(new Date(currentStages[i].StartDate.match(/\d+/)[0] * 1)).format('MMM YYYY') +
+                        '-' + moment(new Date(currentStages[i].EndDate.match(/\d+/)[0] * 1)).format('MMM YYYY'));
+                    $select.append($option);
+                }
+                $formGroup.append($label);
+                $formGroup.append($select);
+                var $stageDisplay = $('<div />');
+                $stageDisplay.addClass('stage-display');
+                $('.stage').append($formGroup);
+                $('.stage').append($stageDisplay);
+            });
+        });
+        $(document).on('change', '.stage-selector', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var stage;
+            for (var i in currentStages) {
+                if (parseInt(currentStages[i].Id) == parseInt($this.val())) {
+                    stage = currentStages[i];
+                    break;
+                }
+            }
+            var $stage = $('.formulation-stage.template').clone(true);
+            $stage.removeClass('template');
+            $stage.find('.title').html(stage.Title);
+            $stage.find('.start').html(moment(new Date(stage.StartDate.match(/\d+/)[0] * 1)).format('MMM YYYY'));
+            $stage.find('.end').html(moment(new Date(stage.EndDate.match(/\d+/)[0] * 1)).format('MMM YYYY'));
+            var $descHolder = $stage.find('.defined-list.description');
+            for (var i in stage.Descriptions) {
+                var $li = $('<li />');
+                $li.html(stage.Descriptions[i].Value);
+                $descHolder.append($li);
+            }
+            var $keyHolder = $stage.find('.defined-list.key-driver');
+            for (var i in stage.KeyDrivers) {
+                var $li = $('<li />');
+                $li.html(stage.KeyDrivers[i].Value);
+                $keyHolder.append($li);
+            }
+            $('.stage-display').html($stage);
+            $.get('/MidtermStrategyPlanning/GetByStageId/' + $this.val(), function (data) {
+                currentBusiness = data;
+                console.log(data);
+                $('.annual-planning').html('');
+                var $formGroup = $('<div />');
+                $formGroup.addClass('form-group form-list');
+                var $label = $('<label />');
+                $label.html('Annual Business Planning');
+                var $select = $('<select />');
+                $select.addClass('annual-planning-selector form-control');
+                $select.append($('<option />').html('Select Annual Business Plan'));
+                for (var i in currentBusiness.MidtermPlannings) {
+                    var midtermPlanning = currentBusiness.MidtermPlannings[i];
+                    var $option = $('<option />');
+                    $option.prop('value', midtermPlanning.Id);
+                    $option.html(midtermPlanning.Title + ' ' + moment(new Date(midtermPlanning.StartDate.match(/\d+/)[0] * 1)).format('MMM YYYY') +
+                        '-' + moment(new Date(midtermPlanning.EndDate.match(/\d+/)[0] * 1)).format('MMM YYYY'));
+                    $select.append($option);
+                }
+                $formGroup.append($label);
+                $formGroup.append($select);
+                var $planningDisplay = $('<div />');
+                $planningDisplay.addClass('midterm-plannings');
+                $('.annual-planning').append($formGroup);
+                $('.annual-planning').append($planningDisplay);
+                $('.midterm-plannings').popover({
+                    selector: '.add-kpi',
+                    html: true,
+                    placement: 'left',
+                    content: function () {
+                        return $('.kpi-form').html();
+                    }
+                });
+            });
+        });
+
+        $(document).on('change', '.annual-planning-selector', function (e) {
+            e.preventDefault();
+            console.log('mari');
+            var $this = $(this);
+            var mPlanning;
+            for (var i in currentBusiness.MidtermPlannings) {
+                if (parseInt($this.val()) == parseInt(currentBusiness.MidtermPlannings[i].Id)) {
+                    mPlanning = currentBusiness.MidtermPlannings[i];
+                    break;
+                }
+            }
+            console.log(mPlanning);
+            var $mpTemplate = $('.midterm-planning.template').clone(true);
+            $mpTemplate.data('id', mPlanning.Id);
+            $mpTemplate.removeClass('template');
+            $mpTemplate.find('.header-title').html(mPlanning.Title);
+            $mpTemplate.find('.start').html(moment(new Date(mPlanning.StartDate.match(/\d+/)[0] * 1)).format('MMM YYYY'));
+            $mpTemplate.find('.end').html(moment(new Date(mPlanning.EndDate.match(/\d+/)[0] * 1)).format('MMM YYYY'));
+            var $objectivesHolder = $mpTemplate.find('.objectives');
+            for (var j in mPlanning.Objectives) {
+                var objective = mPlanning.Objectives[j];
+                $objectivesHolder.append('<li data-id="' + objective.Id + '">' + objective.Value + '<a  href="/MidtermStrategyPlanning/DeleteObjective" class="remove-objective"><i class="fa fa-minus"></i></a></li>');
+            }
+            var $kpisHolder = $mpTemplate.find('.kpis');
+            for (var j in mPlanning.KpiDatas) {
+                var kpiData = mPlanning.KpiDatas[j];
+                var kpi = kpiData.Kpi;
+                var $row = $('<tr />');
+                $row.attr('data-id', kpi.Id);
+                var $kpiCol = $('<td />');
+                var $targetCol = $('<td />');
+                $targetCol.addClass('target');
+                var $economicCol = $('<td />');
+                $economicCol.addClass('economic');
+                $kpiCol.html(kpi.Name + ' (' + kpi.Measurement + ') <a href="/MidtermStrategyPlanning/DeleteKpi" class="remove-kpi"><i class="fa fa-minus"></i></a>');
+                $targetCol.html(kpiData.Target);
+                $economicCol.html(kpiData.Economic);
+                $row.append($kpiCol);
+                $row.append($targetCol);
+                $row.append($economicCol);
+                $kpisHolder.append($row);
+            }
+            console.log($mpTemplate.html());
+            $('.midterm-plannings').html($mpTemplate);
+        });
+        
+        $(document).on('click', '.submit-kpi', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var $midtermPlanning = $this.closest('.midterm-planning');
+            var midtermPlanningId = $midtermPlanning.data('id');
+            var $form = $this.closest('form');
+            $form.find('input[name="MidtermPlanningId"]').val(midtermPlanningId);
+            $.post($form.prop('action'), $form.serialize(), function (data) {
+                //add row to kpi
+                var $kpisHolder = $midtermPlanning.find('.kpis');
+                var kpi = data;
+                var $row = $('<tr />');
+                $row.attr('data-id', kpi.Id);
+                var $kpiCol = $('<td />');
+                var $targetCol = $('<td />');
+                $targetCol.addClass('target');
+                var $economicCol = $('<td />');
+                $economicCol.addClass('economic');
+                $kpiCol.html(kpi.Name + ' (' + kpi.Measurement + ') <a href="/MidtermStrategyPlanning/DeleteKpi" class="remove-kpi"><i class="fa fa-minus"></i></a>');
+                $targetCol.html(kpi.Target);
+                $economicCol.html(kpi.Economic);
+                $row.append($kpiCol);
+                $row.append($targetCol);
+                $row.append($economicCol);
+                $kpisHolder.append($row);
+                $midtermPlanning.find('.add-kpi').popover('hide');
+
+            });
+        });
+        $('.add-kpi').on('shown.bs.popover', function () {
+            Pear.Artifact.Designer._kpiAutoComplete($('.popover'), false);
+        });
+        $(document).on('click', '.remove-kpi', function (e) {
+            e.preventDefault();
+            if (!confirm("Are you sure want to delete this item?")) return;
+            var $this = $(this);
+            $.post($this.prop('href'), 'id=' + $this.closest('tr').data('id') + '&midTermId=' + $this.closest('.midterm-planning').data('id'), function (data) {
+                if (data.IsSuccess) {
+                    $this.closest('tr').remove();
+                }
+            });
+        });
+        $('body').popover({
+            selector: '.add-objective',
+            html: true,
+            placement: 'left',
+            content: function () {
+                return $('.objective-form').html();
+            }
+        });
+        $(document).on('click', '.submit-objective', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var $midtermPlanning = $this.closest('.midterm-planning');
+            var midtermPlanningId = $midtermPlanning.data('id');
+            var $form = $this.closest('form');
+            $form.find('input[name="MidtermPlanningId"]').val(midtermPlanningId);
+            $.post($form.prop('action'), $form.serialize(), function (data) {
+                if (data.IsSuccess) {
+                    $midtermPlanning.find('.objectives').append('<li data-id="' + data.Id + '">' + data.Value + '<a href="/MidtermStrategyPlanning/DeleteObjective" class="remove-objective"><i class="fa fa-minus"></i></a>');
+                    $midtermPlanning.find('.add-objective').popover('hide');
+                }
+            });
+        });
+        $(document).on('click', '.remove-objective', function (e) {
+            e.preventDefault();
+            if (!confirm("Are you sure want to delete this item?")) return;
+            var $this = $(this);
+            $.post($this.prop('href'), 'id=' + $this.parent().data('id'), function (data) {
+                if (data.IsSuccess) {
+                    $this.parent().remove();
+                }
+            });
+        });
+    });
+</script>

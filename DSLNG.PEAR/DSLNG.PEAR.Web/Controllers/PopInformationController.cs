@@ -23,8 +23,6 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             var request = viewModel.MapTo<SavePopInformationRequest>();
             var response = _popInformationService.SavePopInformation(request);
-            TempData["IsSuccess"] = response.IsSuccess;
-            TempData["Message"] = response.Message;
             var data = new
             {
                 id = response.Id,
@@ -41,8 +39,6 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             var request = viewModel.MapTo<SavePopInformationRequest>();
             var response = _popInformationService.SavePopInformation(request);
-            TempData["IsSuccess"] = response.IsSuccess;
-            TempData["Message"] = response.Message;
             var data = new
             {
                 id = response.Id,

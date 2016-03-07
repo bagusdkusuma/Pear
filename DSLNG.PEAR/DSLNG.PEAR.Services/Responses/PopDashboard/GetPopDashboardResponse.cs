@@ -32,6 +32,7 @@ namespace DSLNG.PEAR.Services.Responses.PopDashboard
             public int UserId { get; set; }
             public string User { get; set; }
             public SignatureType Type {get; set;}
+            public string SignatureImage { get; set; }
         }
     }
 }

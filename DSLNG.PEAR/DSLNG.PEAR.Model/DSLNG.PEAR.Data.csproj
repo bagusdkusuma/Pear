@@ -80,6 +80,7 @@
     <Compile Include="Entities\Blueprint\Constraint.cs" />
     <Compile Include="Entities\Blueprint\EnvironmentalScanning.cs" />
     <Compile Include="Entities\Blueprint\EnvironmentsScanning.cs" />
+    <Compile Include="Entities\Blueprint\ESCategory.cs" />
     <Compile Include="Entities\Blueprint\MidtermPhaseDescription.cs" />
     <Compile Include="Entities\Blueprint\MidtermPhaseFormulation.cs" />
     <Compile Include="Entities\Blueprint\MidtermPhaseFormulationStage.cs" />
@@ -154,6 +155,7 @@
     <Compile Include="Entities\Weather.cs" />
     <Compile Include="Enums\ConfigType.cs" />
     <Compile Include="Enums\ConversionType.cs" />
+    <Compile Include="Enums\EnvirontmentType.cs" />
     <Compile Include="Enums\Formula.cs" />
     <Compile Include="Enums\PeriodeStart.cs" />
     <Compile Include="Enums\MonthPeriode.cs" />

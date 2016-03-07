@@ -31,7 +31,8 @@ namespace DSLNG.PEAR.Web.Controllers
                 userId = response.UserId,
                 username = response.Username,
                 type = response.TypeSignature.ToString(),
-                typeInt = response.TypeSignature
+                typeInt = response.TypeSignature,
+                signatureImage = response.SignatureImage
             };
 
             return Json(data, JsonRequestBehavior.AllowGet);
@@ -48,7 +49,8 @@ namespace DSLNG.PEAR.Web.Controllers
                 userId = response.UserId,
                 username = response.Username,
                 type = response.TypeSignature.ToString(),
-                typeInt = response.TypeSignature
+                typeInt = response.TypeSignature,
+                signatureImage = response.SignatureImage
             };
 
             return Json(data, JsonRequestBehavior.AllowGet);

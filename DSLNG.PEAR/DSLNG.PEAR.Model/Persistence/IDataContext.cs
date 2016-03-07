@@ -94,6 +94,7 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<PopDashboard> PopDashboards { get; set; }
         IDbSet<PopInformation> PopInformations { get; set; }
         IDbSet<Signature> Signatures { get; set; }
+        IDbSet<ESCategory> ESCategories { get; set; }
         IDbSet<DerHighlight> DerHighlights { get; set; }
         IDbSet<DerStaticHighlight> DerStaticHighlights { get; set; }
         IDbSet<Wave> Waves { get; set; }

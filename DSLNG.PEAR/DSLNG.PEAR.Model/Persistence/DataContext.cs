@@ -104,6 +104,7 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<PopDashboard> PopDashboards { get; set; }
         public IDbSet<PopInformation> PopInformations { get; set; }
         public IDbSet<Signature> Signatures { get; set; }
+        public IDbSet<ESCategory> ESCategories { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
