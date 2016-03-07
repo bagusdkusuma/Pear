@@ -561,6 +561,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 ;
             Mapper.CreateMap<BusinessPostureIdentification, GetBusinessPostureResponse>()
                 .ForMember(x => x.PlanningBlueprintId, o => o.MapFrom(s => s.PlanningBlueprint.Id));
+            Mapper.CreateMap<ESCategory, GetESCategoriesResponse.ESCategory>();
             Mapper.CreateMap<DesiredState, GetBusinessPostureResponse.DesiredState>();
             Mapper.CreateMap<Posture, GetBusinessPostureResponse.Posture>();
             Mapper.CreateMap<PostureChallenge, GetBusinessPostureResponse.PostureChallenge>()
@@ -592,16 +593,20 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.ThreatIds, y => y.MapFrom(z => z.Relations.Where(u => u.ThreatHost != null).Select(m => m.Id).ToArray()))
                 .ForMember(x => x.OpportunityIds, y => y.MapFrom(z => z.Relations.Where(u => u.OpportunityHost != null).Select(m => m.Id).ToArray()))
                 .ForMember(x => x.WeaknessIds, y => y.MapFrom(z => z.Relations.Where(u => u.WeaknessHost != null).Select(m => m.Id).ToArray()))
-                .ForMember(x => x.StrengthIds, y => y.MapFrom(z => z.Relations.Where(u => u.StrengthHost != null).Select(m => m.Id).ToArray()));
+                .ForMember(x => x.StrengthIds, y => y.MapFrom(z => z.Relations.Where(u => u.StrengthHost != null).Select(m => m.Id).ToArray()))
+                .ForMember(x => x.Category, o => o.MapFrom(y => y.ESCategory.Name));
             Mapper.CreateMap<Challenge, GetEnvironmentsScanningResponse.Challenge>()
                 .ForMember(x => x.ThreatIds, y => y.MapFrom(z => z.Relations.Where(u => u.ThreatHost != null).Select(m => m.Id).ToArray()))
                 .ForMember(x => x.OpportunityIds, y => y.MapFrom(z => z.Relations.Where(u => u.OpportunityHost != null).Select(m => m.Id).ToArray()))
                 .ForMember(x => x.WeaknessIds, y => y.MapFrom(z => z.Relations.Where(u => u.WeaknessHost != null).Select(m => m.Id).ToArray()))
-                .ForMember(x => x.StrengthIds, y => y.MapFrom(z => z.Relations.Where(u => u.StrengthHost != null).Select(m => m.Id).ToArray()));
+                .ForMember(x => x.StrengthIds, y => y.MapFrom(z => z.Relations.Where(u => u.StrengthHost != null).Select(m => m.Id).ToArray()))
+                .ForMember(x => x.Category, o => o.MapFrom(y => y.ESCategory.Name));
             Mapper.CreateMap<SaveConstraintRequest, Constraint>();
             Mapper.CreateMap<Constraint, SaveConstraintResponse>();
             Mapper.CreateMap<SaveChallengeRequest, Challenge>();
             Mapper.CreateMap<Challenge, SaveChallengeResponse>();
+            Mapper.CreateMap<SaveESCategoryRequest, ESCategory>();
+            Mapper.CreateMap<ESCategory, GetESCategoryResponse>();
 
             Mapper.CreateMap<UltimateObjectivePoint, GetVoyagePlanResponse.UltimateObjectivePoint>();
             Mapper.CreateMap<Challenge, GetVoyagePlanResponse.Challenge>();
@@ -646,9 +651,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<MidtermStrategicPlanningObjective, GetMidtermPlanningsResponse.MidtermPlanningObjective>();
             Mapper.CreateMap<Kpi, GetMidtermPlanningsResponse.Kpi>()
                 .ForMember(d => d.Measurement, o => o.MapFrom(s => s.Measurement.Name));
-            Mapper.CreateMap<KpiAchievement, GetMidtermPlanningsResponse.KpiData>()
-                .ForMember(d => d.KpiId, o => o.MapFrom(s => s.Kpi.Id))
-                .ForMember(d => d.Year, o => o.MapFrom(s => s.Periode.Year));
+            //Mapper.CreateMap<KpiAchievement, GetMidtermPlanningsResponse.KpiData>()
+            //    .ForMember(d => d.KpiId, o => o.MapFrom(s => s.Kpi.Id))
+            //    .ForMember(d => d.Year, o => o.MapFrom(s => s.Periode.Year));
 
             Mapper.CreateMap<AddObjectiveRequest, MidtermStrategicPlanningObjective>();
             Mapper.CreateMap<AddMidtermPlanningRequest, MidtermStrategicPlanning>();
@@ -668,7 +673,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<PopInformation, GetPopDashboardResponse.PopInformation>();
             Mapper.CreateMap<Signature, GetPopDashboardResponse.Signature>()
                 .ForMember(x => x.User, o => o.MapFrom(y => y.User.Username))
-                .ForMember(x => x.UserId, o => o.MapFrom(y => y.User.Id));
+                .ForMember(x => x.UserId, o => o.MapFrom(y => y.User.Id))
+                .ForMember(x => x.SignatureImage, o => o.MapFrom(y => y.User.SignatureImage));
             Mapper.CreateMap<SavePopInformationRequest, PopInformation>();
             Mapper.CreateMap<SaveSignatureRequest, DSLNG.PEAR.Data.Entities.Pop.Signature>()
                 .ForMember(x => x.Type, o => o.MapFrom(y => y.TypeSignature));

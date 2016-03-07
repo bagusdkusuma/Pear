@@ -41,7 +41,8 @@ namespace DSLNG.PEAR.Services
                 Id = signature.Id,
                 UserId = signature.User.Id,
                 Username = signature.User.Username,
-                TypeSignature = signature.Type
+                TypeSignature = signature.Type,
+                SignatureImage = signature.User.SignatureImage
             };
         }
     }

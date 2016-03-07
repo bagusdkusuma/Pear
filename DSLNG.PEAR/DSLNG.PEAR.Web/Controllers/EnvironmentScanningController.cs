@@ -29,8 +29,6 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             var request = viewModel.MapTo<SaveEnvironmentScanningRequest>();
             var response = _environmentScanningService.SaveEnvironmentScanning(request);
-            TempData["IsSuccess"] = response.IsSuccess;
-            TempData["Message"] = response.Message;
             var data = new
             {
                 id = response.Id,
@@ -44,8 +42,6 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Delete(EnvironmentScanningViewModel.DeleteViewModel viewModel)
         {
             var response = _environmentScanningService.DeleteEnvironmentScanning(new DeleteEnvironmentScanningRequest { Id = viewModel.Id });
-            TempData["IsSuccess"] = response.IsSuccess;
-            TempData["Message"] = response.Message;
             return Json(new { success = response.IsSuccess });
         }
 
@@ -53,8 +49,6 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult DeleteEnvironmental(EnvironmentScanningViewModel.DeleteViewModel viewModel)
         {
             var response = _environmentScanningService.DeleteEnvironmentalScanning(new DeleteEnvironmentScanningRequest { Id = viewModel.Id });
-            TempData["IsSuccess"] = response.IsSuccess;
-            TempData["Message"] = response.Message;
             return Json(new { success = response.IsSuccess });
         }
 
@@ -64,8 +58,6 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             var request = viewModel.MapTo<SaveEnvironmentalScanningRequest>();
             var response = _environmentScanningService.SaveEnvironmentalScanning(request);
-            TempData["IsSuccess"] = response.IsSuccess;
-            TempData["Message"] = response.Message;
             var data = new
             {
                 id = response.Id,
@@ -80,8 +72,6 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult DeleteConstraint(int id)
         {
             var response = _environmentScanningService.DeleteConstraint(new DeleteConstraintRequest { Id = id });
-            TempData["IsSuccess"] = response.IsSuccess;
-            TempData["Message"] = response.Message;
             return Json(new { success = response.IsSuccess });
         }
 
@@ -91,8 +81,6 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult DeleteChallenge(int id)
         {
             var response = _environmentScanningService.DeleteChallenge(new DeleteChallengeRequest { Id = id });
-            TempData["IsSuccess"] = response.IsSuccess;
-            TempData["Message"] = response.Message;
             return Json(new { success = response.IsSuccess });
         }
 

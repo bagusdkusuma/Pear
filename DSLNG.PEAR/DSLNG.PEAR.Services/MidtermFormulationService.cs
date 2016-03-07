@@ -69,8 +69,8 @@ namespace DSLNG.PEAR.Services
                     Message = "You have been successfully add new stage",
                     Id = stage.Id,
                     Title = stage.Title,
-                    Start = request.StartDate.HasValue ? request.StartDate.Value.ToString("MM/yyyy", CultureInfo.InvariantCulture) : "",
-                    End = request.EndDate.HasValue? request.EndDate.Value.ToString("MM/yyyy", CultureInfo.InvariantCulture) : ""
+                    Start = request.StartDate.HasValue ? request.StartDate.Value.ToString("MMM yyyy", CultureInfo.InvariantCulture) : "",
+                    End = request.EndDate.HasValue? request.EndDate.Value.ToString("MMM yyyy", CultureInfo.InvariantCulture) : ""
                 };
             }
             catch {
@@ -258,6 +258,19 @@ namespace DSLNG.PEAR.Services
                     Message = "An error occured, please contact adminstrator for further information"
                 };
             }
+        }
+
+
+        public GetMidtermFormulationResponse GetStagesByPbId(int id)
+        {
+            return new GetMidtermFormulationResponse
+            {
+                MidtermFormulationStages = DataContext.MidtermPhaseFormulationStages
+                .Include(x => x.Descriptions)
+                .Include(x => x.KeyDrivers)
+                .Where(x => x.MidtermPhaseFormulation.PlanningBlueprint.Id == id)
+                .ToList().MapTo<GetMidtermFormulationResponse.MidtermFormulationStage>()
+            };
         }
     }
 }

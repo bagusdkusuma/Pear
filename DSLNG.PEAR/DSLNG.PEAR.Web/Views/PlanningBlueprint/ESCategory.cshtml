@@ -1,0 +1,79 @@
+﻿@{
+    ViewBag.Title = "ESCategory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Planning Blueprints</h2>
+@Html.Partial("_MessageResponse")
+<div class="add-button-wrapper">
+    @Html.ActionLink("Create New", "CreateESCategory", null, new { @class = "btn btn-primary" })
+</div>
+
+<table id="escategory-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>IsActive</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+</table>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#escategory-table').DataTable({
+                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                "iDisplayLength": -1,
+                "bProcessing": true,
+                "bServerSide": true,
+                "sServerMethod": "POST",
+                "sAjaxSource": '@Url.Action("GridESCategory", "PlanningBlueprint")',
+                "order": [[1, "asc"]],
+                "aoColumns": [
+                    { "mDataProp": "Name", "name": "Name", "className": "dt-body-left" },
+                    { "mDataProp": "Type", "name": "Type", "className": "dt-body-left" },
+                    {
+                        "mDataProp": "IsActive", "name": "IsActive", "render": function (data, type, row) {
+                            var checked = '';
+                            if (data) {
+                                checked = 'checked="checked"';
+                            }
+                            return '<input type="checkbox" class="editor-active" ' + checked + ' disabled="disabled">';
+                        },
+                    },
+                    {
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": '',
+                        "mRender": function (data, type, row) {
+                            var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
+                            var editLink = '@Html.ActionLink("Edit", "EditESCategory", "PlanningBlueprint", new { id = "_id_" }, null)'.replace('_id_', data.Id);
+                            return editLink + ' | ' + deleteLink;
+                        }
+                    }
+                ],
+                rowCallback: function (row, data) {
+                    // Set the checked state of the checkbox in the table
+                    //$('input.is-active', row).prop('checked', data.IsActive == 1);
+                }
+
+            });
+
+            $('#escategory-table').on('click', '.delete', function () {
+                var id = $(this).attr('data-id');
+                if (confirm('Are you sure want to delete this item?' + id)) {
+                    var url = '@Url.Action("DeleteESCategory", "PlanningBlueprint")';
+                    var form = $('<form />');
+                    form.attr('action', url);
+                    form.attr('method', 'POST');
+                    form.html('<input type="hidden" name="id" value="' + id + '" />');
+                    $('body').append(form);
+                    form.submit();
+                }
+            });
+
+
+        });
+    </script>
+}

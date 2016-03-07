@@ -29,18 +29,38 @@
             <th>Description</th>
             <th>Environments Scanning</th>
             <th>Business Posture Identification</th>
+            <th>Notes</th>
             <th>Mid Term Phase Formulation</th>
             <th>Mid Term Strategy Planning</th>
-            <th>Is Approved</th>
+            <th>Notes</th>
             <th>Is Active</th>
             <th>Action</th>
         </tr>
     </thead>
 </table>
+<div class="modal fade" id="notes-modal" data-id="id">
+    <div class="modal-dialog">
 
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close btn-finish-relation" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Notes</h3>
+            </div>
+            <div class="modal-body" style="color:#fff">
+            </div>
+             <div class="modal-footer" style="border-top:none">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 @section Scripts{
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
+            $(document).on('click','.show-notes', function (e) {
+                var $this = $(this);
+                $('#notes-modal .modal-body').html($this.parent().find('.notes-value').html());
+            })
             $('#planningBlueprints-table').DataTable({
                 "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
                 "iDisplayLength": -1,
@@ -57,6 +77,10 @@
                          "data": null,
                          "defaultContent": '',
                          "mRender": function (data, type, row) {
+                             if (row.BusinessPostureIdentification.IsRejected) {
+                                 return 'Rejected';
+                             }
+                             else
                              if (row.BusinessPostureIdentification.IsApproved) {
                                  return 'Approved';
                              }else if (row.BusinessPostureIdentification.IsBeingReviewed) {
@@ -72,7 +96,10 @@
                           "data": null,
                           "defaultContent": '',
                           "mRender": function (data, type, row) {
-                              if (row.BusinessPostureIdentification.IsApproved) {
+                              if (row.BusinessPostureIdentification.IsRejected) {
+                                  return 'Rejected';
+                              }
+                              else if (row.BusinessPostureIdentification.IsApproved) {
                                   return 'Approved';
                               } else if (row.BusinessPostureIdentification.IsBeingReviewed) {
                                   return 'Being Reviewed';
@@ -87,6 +114,21 @@
                           "data": null,
                           "defaultContent": '',
                           "mRender": function (data, type, row) {
+                              if (row.BusinessPostureIdentification.IsRejected) {
+                                  return '<a href="#" class="show-notes" data-toggle="modal" data-target="#notes-modal">View</a>' +
+                                      '<div class="notes-value">' + row.BusinessPostureIdentification.Notes + '</div>';
+                              }
+                              return '';
+                          }
+                      },
+                      {
+                          "orderable": false,
+                          "data": null,
+                          "defaultContent": '',
+                          "mRender": function (data, type, row) {
+                              if (row.MidtermStragetyPlanning.IsRejected) {
+                                  return 'Rejected';
+                              } else
                               if (row.MidtermStragetyPlanning.IsApproved) {
                                   return 'Approved';
                               } else if (row.MidtermStragetyPlanning.IsBeingReviewed) {
@@ -104,6 +146,9 @@
                           "data": null,
                           "defaultContent": '',
                           "mRender": function (data, type, row) {
+                              if (row.MidtermStragetyPlanning.IsRejected) {
+                                  return 'Rejected';
+                              }else
                               if (row.MidtermStragetyPlanning.IsApproved) {
                                   return 'Approved';
                               } else if (row.MidtermStragetyPlanning.IsBeingReviewed) {
@@ -114,15 +159,18 @@
                               return '@Html.ActionLink("Edit", "MidtermStrategyPlanning", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.MidtermStragetyPlanning.Id);
                           }
                       },
-                    {
-                        "mDataProp": "IsApproved", "name": "IsApproved", "render": function (data, type, row) {
-                            var checked = '';
-                            if (data) {
-                                checked = 'checked="checked"';
-                            }
-                            return '<input type="checkbox" class="editor-active" '+checked+' disabled="disabled">';
-                        },
-                    },
+                      {
+                          "orderable": false,
+                          "data": null,
+                          "defaultContent": '',
+                          "mRender": function (data, type, row) {
+                              if (row.MidtermStragetyPlanning.IsRejected) {
+                                  return '<a href="#" class="show-notes" data-toggle="modal" data-target="#notes-modal">View</a>' +
+                                      '<div class="notes-value">' + row.MidtermStragetyPlanning.Notes + '</div>';
+                              }
+                              return '';
+                          }
+                      },
                     {
                         "mDataProp": "IsActive", "name": "IsActive", "render": function (data, type, row) {
                             var checked = '';

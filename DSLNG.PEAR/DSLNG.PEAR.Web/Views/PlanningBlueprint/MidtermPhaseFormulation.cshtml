@@ -99,8 +99,8 @@ else
                         }
                     </div>
                     <ul class="date-range">
-                        <li><span class="start">@item.StartDate.Value.ToString("MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)</span></li>
-                        <li><span class="end">@item.StartDate.Value.ToString("MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)</span></li>
+                        <li><span class="start">@item.StartDate.Value.ToString("MMM yyyy", System.Globalization.CultureInfo.InvariantCulture)</span></li>
+                        <li><span class="end">@item.EndDate.Value.ToString("MMM yyyy", System.Globalization.CultureInfo.InvariantCulture)</span></li>
                     </ul>
                     <div class="clear"></div>
                     <div class="defined-header description">
@@ -205,7 +205,7 @@ else
                         }
                         if (!Model.IsReviewer)
                         {
-                        <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-arrow-right"></span>Mid Term Strategy Planning</button>
+                        <button type="submit" class="btn btn-primary btn-lg submit-al-mf"><span class="fa fa-arrow-right"></span>Mid Term Strategy Planning</button>
                         }
                         else
                         {
@@ -248,16 +248,15 @@ else
 <div class="formulation-stage-form">
     <form action="/MidtermFormulation/AddStage">
         <input type="hidden" name="MidtermFormulationId" value="@Model.Id" />
-        <label>Title</label>
-        <input type="text" name="Title" />
+        <label style="width:50px">Title</label>
+        <input type="text" name="Title" required="required"/>
         <div style="position: relative">
-            <label>Start</label>
-
-            <input type="text" name="StartDate" class="monthpicker" />
+            <label style="width:50px">Start</label>
+            <input type="text" name="StartDate" class="monthpicker" required="required" />
         </div>
         <div style="position: relative">
-            <label>End</label>
-            <input type="text" name="EndDate" class="monthpicker" />
+            <label style="width:50px">End</label>
+            <input type="text" name="EndDate" class="monthpicker" required="required" />
         </div>
         <input type="submit" class="btn btn-primary add-midterm-stage" value="submit" />
     </form>
@@ -295,6 +294,36 @@ else
             var $this = $(this);
             var $form = $(this).closest('form');
             var $trigger = $this.closest('.popover').prev('a');
+
+            var months = {
+                Jan: 1, Feb: 1, Mar: 3, Apr: 4, May: 5, Jun: 6,
+                Jul: 7, Aug: 8, Sep: 9, Oct: 10, Nov: 11, Dec: 12
+            };
+
+            if (!$form.valid()) return;
+            
+            var startDate = $form.find('input[name="StartDate"]').val();
+            var endDate = $form.find('input[name="EndDate"]').val();
+            console.log(startDate);
+            console.log(endDate);
+
+            var mStartDate = moment('01/' + startDate, "DD/MM/YYYY");
+            var mEndDate = moment('01/' + endDate, "DD/MM/YYYY");
+
+            if (!moment('01/' + startDate, "DD/MM/YYYY", true).isValid() || !moment('01/' + endDate, "DD/MM/YYYY", true).isValid()) {
+                return alert("Date format is not valid!");
+            }
+            
+            if (mEndDate.isBefore(mStartDate)) {
+                return alert("End Date can't be earlier than Start Date!");
+            }
+            if ($('.formulation-stages:last-child .formulation-stage:last-child').length) {
+                var latestDate = moment('01 ' + $('.formulation-stages:last-child .formulation-stage:last-child .end').html().trim(), "DD MMM YYYY");
+                if (mStartDate.isBefore(latestDate)) {
+                    return alert("Start Date should not be earlier than latest phase!");
+                }
+            }
+
             $.post($form.prop('action'), $form.serialize(), function (data) {
                 if (data.IsSuccess) {
                     var $stageTemplate = $('.formulation-stage-template').clone(true);
@@ -360,7 +389,11 @@ else
                 if (data.IsSuccess) {
                     var $parent = $this.parent();
                     if ($parent.hasClass('title')) {
-                        $parent.closest('.formulation-stage').remove();
+                        if ($parent.closest('tr').children('td').length == 1 && $parent.closest('table').find('tr').length > 2) {
+                            $parent.closest('tr').remove();
+                        } else {
+                            $parent.closest('.formulation-stage').remove();
+                        }
                     } else {
                         $parent.remove();
                     }
@@ -368,6 +401,24 @@ else
                 }
             });
         });
+
+        $(document).on('click', '.submit-al-mf', function (e) {
+            e.preventDefault();
+            var valid = $('.formulation-stages-table .formulation-stage').length;
+            console.log(valid);
+            $('.formulation-stages-table .defined-list').each(function (i, val) {
+                valid = $(val).children('li').length && valid;
+                console.log(valid);
+            });
+            if (!valid) {
+                if (window.confirm("One of block informations leave empty! Once you go through it you can't revise it. Are you sure want to go to next step?")) {
+                    $(this).closest('form').submit();
+                }
+            } else {
+                $(this).closest('form').submit();
+            }
+        });
+
         //var popOverElem;
         //$(document).on('click', '.add-definition,.add-formulation-stage', function () {
         //    popOverElem = $(this);
