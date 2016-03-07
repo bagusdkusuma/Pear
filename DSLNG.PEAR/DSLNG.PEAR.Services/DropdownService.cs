@@ -254,7 +254,6 @@ namespace DSLNG.PEAR.Services
             }).ToList();
         }
 
-<<<<<<< HEAD
 
         public IEnumerable<Dropdown> GetESConstraintCategories()
         {
@@ -272,7 +271,8 @@ namespace DSLNG.PEAR.Services
                     Text = x.Name,
                     Value = x.Id.ToString()
                 }).ToList();
-=======
+        }
+
         public IEnumerable<Dropdown> GetDerItemTypes()
         {
             return new List<Dropdown>()
@@ -287,7 +287,6 @@ namespace DSLNG.PEAR.Services
                     new Dropdown {Text = "Wave", Value = "wave"},
                     new Dropdown {Text = "Avg Ytd-Key Statistic", Value = "avg-ytd-key-statistic"},
                 };
->>>>>>> 057a48ced538524a38a606244f3ad1b46ff5c535
         }
     }
 }

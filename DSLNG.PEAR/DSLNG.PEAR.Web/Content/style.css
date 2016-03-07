@@ -2560,6 +2560,72 @@ table.kpis {
     top: 5px;
 }
 
-.pop-information .row .table-info tr td{
-    display: block;
+
+
+
+.pop-information .pop-title h4{
+    text-align: right;
 }
+
+.pop-information .col-md-4 {
+    word-break: break-all;
+    padding-right: 0px;
+}
+
+.pop-information .col-md-4 .info{
+
+}
+
+.pop-information .col-md-4 .info .table-info{
+    border: 1px solid white;
+    color:white;
+}
+
+.pop-information .col-md-4 .info .table-info tr h4{
+    margin: 0px;
+    text-align: center;
+    padding: 5px 0px 5px 0px;
+    font-size: 14px;
+}
+.pop-information .col-md-4 .info .table-info tr td{
+    display: block;
+    text-align:left;
+}
+
+.pop-information .col-md-4 .info .table-info .DashboardObjective a{
+    position: absolute;
+    right: 0px;
+    top: 8px;
+}
+
+.pop-information .col-md-4 .info .table-info .KeyPerformanceMeasure a, .pop-information .col-md-4 .info .table-info .Benefits a, .pop-information .col-md-4 .info .table-info .PotentialProblemRisk a{
+    position: relative;
+    right: -330px;
+    top: -20px;
+}
+
+
+
+.pop-information .col-md-8 {
+    border: 1px solid white;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.pop-information .col-md-8 .info{
+    color: white;
+}
+
+.pop-information .col-md-8 .info .table-info-2{
+    border: 1px solid white;
+}
+
+.pop-information .col-md-8 .info .table-info-2 tr td{
+    text-align: left;
+}
+
+.table-info-2 .scope td
+{
+    text-align: center;
+}
+
