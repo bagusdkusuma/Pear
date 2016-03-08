@@ -40,8 +40,9 @@ namespace DSLNG.PEAR.Services
                 var end = midtermPlannings.Last().EndDate;
 
                 var targets = DataContext.KpiTargets.Where(x => kpiIds.Contains(x.Kpi.Id) &&
-                    (PeriodeType.Yearly == x.PeriodeType || PeriodeType.Monthly == x.PeriodeType) &&
-                    x.Periode >= start && x.Periode <= end && x.Value.HasValue).ToList();
+                    PeriodeType.Yearly == x.PeriodeType && 
+                    x.Periode.Year >= start.Value.Year && x.Periode.Year<= end.Value.Year
+                    && x.Value.HasValue).ToList();
 
                 foreach (var midtermPlanning in midtermPlannings) {
                     foreach (var kpi in midtermPlanning.Kpis) {

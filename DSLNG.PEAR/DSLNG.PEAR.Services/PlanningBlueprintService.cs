@@ -296,7 +296,7 @@ namespace DSLNG.PEAR.Services
                     {
                         Value = request.Value,
                         PeriodeType = PeriodeType.Yearly,
-                        Periode = request.Start,
+                        Periode = new DateTime(request.Start.Year,1,1),
                         Kpi = kpi
                     };
                     DataContext.KpiTargets.Add(newYearlyTarget);
