@@ -2307,7 +2307,8 @@ li > input.choose-list {
 
     .midterm-plannings .midterm-planning table th:first-child a {
         position: absolute;
-        right: 5px;
+        right: 0px;
+        left: auto;
     }
 
     .midterm-plannings .midterm-planning table.kpis th:first-child {
