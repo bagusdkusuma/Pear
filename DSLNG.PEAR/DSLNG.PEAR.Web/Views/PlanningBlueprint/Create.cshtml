@@ -21,7 +21,9 @@
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.Description)
                     @Html.TextAreaFor(model => model.Description, 5, 100, new { @class = "form-control" })
+                    <div style="margin-left:180px">
                     @Html.ValidationMessageFor(model => model.Description)
+                        </div>
                 </div>
 
                 <div class="form-group form-list">
@@ -39,7 +41,7 @@
             </div>
         </div>
         <div class="col-md-12 artifact-designer-btns">
-            <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
+            <button type="submit" class="btn btn-primary btn-lg submit-pb"><span class="fa fa-floppy-o"></span>Save</button>
             <a onclick="location.reload();" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>
             <a href="/PlanningBlueprint" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
         </div>
@@ -82,6 +84,19 @@
                 $liClone.find('input[type="checkbox"]').prop('type', 'hidden').prop('name', 'KeyOutputIds[]');
                 $economicHolder.append($liClone);
             });
+        });
+        $(document).on('click', '.submit-pb', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var $form = $this.closest('form');
+            if (!$form.valid()) return;
+            if (!$form.find('input[name="KeyOutputIds[]"]').length) {
+                if (confirm("You have not selected any economic indicators, Are you sure want to continue?")) {
+                    $form.submit();
+                }
+            } else {
+                $form.submit();
+            }
         });
     });
 </script>
