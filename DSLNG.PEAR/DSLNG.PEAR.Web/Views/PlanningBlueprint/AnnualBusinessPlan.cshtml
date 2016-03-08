@@ -303,5 +303,58 @@
                 }
             });
         });
+        $(document).on('click', '.target', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            if ($this.find('input').length) return;
+
+            var val = $this.html();
+            $this.html('');
+            var $input = $('<input />');
+            $input.prop('type', 'number');
+            $input.prop('name', 'Value');
+            $input.css({ width: '100%', color: '#000' });
+            if ($this.hasClass('target')) {
+                $input.addClass('target-input');
+            } else {
+                $input.addClass('economic-input');
+            }
+            $input.val(val);
+            $this.append($input);
+            $input.focus();
+        });
+        $(document).on('change', '.target-input', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var $midtermPlanning = $this.closest('.midterm-planning');
+            var start = moment('01 ' + $midtermPlanning.find('.start').html().trim(), 'DD MMM YYYY');
+            var end = moment('01 ' + $midtermPlanning.find('.end').html().trim(), 'DD MMM YYYY');
+
+            var url = '/PlanningBlueprint/KpiTargetInput';
+            if ($this.hasClass('economic-input')) {
+                url = '/PlanningBlueprint/KpiEconomicInput';
+            }
+            var input = {
+                Value: $this.val(),
+                KpiId: $this.closest('tr').data('id'),
+                Start: start.format('DD/MM/YYYY'),
+                End: end.format('DD/MM/YYYY')
+            };
+            $.ajax({
+                url: url,
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                },
+                data: input
+            });
+        });
+        $(document).on('focusout', '.target-input', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var $td = $this.closest('td');
+            $td.html($this.val());
+        });
     });
 </script>
