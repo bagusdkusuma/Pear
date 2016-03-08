@@ -278,6 +278,12 @@
             e.preventDefault();
             var $this = $(this);
             $.get($this.data('relation-source'), function (data) {
+                $('.midterm-plannings-table .midterm-plannings').each(function (i, val) {
+                    $(val).remove();
+                });
+                var $newHolder = $('<tr />');
+                $newHolder.addClass('midterm-plannings');
+                $('.midterm-plannings-table').append($newHolder);
                 var mPlannings = data.MidtermPlannings;
                 var $mPlanningsHolder = $('.midterm-plannings:last-child');
                 $mPlanningsHolder.html('');
