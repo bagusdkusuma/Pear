@@ -680,6 +680,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<SavePopInformationRequest, PopInformation>();
             Mapper.CreateMap<SaveSignatureRequest, DSLNG.PEAR.Data.Entities.Pop.Signature>()
                 .ForMember(x => x.Type, o => o.MapFrom(y => y.TypeSignature));
+
+
+            Mapper.CreateMap<ApproveSignatureRequest, Signature>();
             base.Configure();
         }
 

@@ -11,5 +11,6 @@ namespace DSLNG.PEAR.Services.Interfaces
     public interface ISignatureService
     {
         SaveSignatureResponse SaveSignature(SaveSignatureRequest request);
+        ApproveSignatureResponse ApproveSignature(ApproveSignatureRequest request);
     }
 }

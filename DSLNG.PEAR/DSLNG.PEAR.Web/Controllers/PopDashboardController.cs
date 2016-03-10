@@ -80,5 +80,12 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.Users = _dropdownService.GetUsers().MapTo<SelectListItem>();
             return View(viewModel);
         }
+
+        public ActionResult Approval(int id)
+        {
+            var viewModel = _popDashboardService.GetPopDashboard(new GetPopDashboardRequest { Id = id }).MapTo<GetPopDashboardViewModel>();
+            viewModel.Users = _dropdownService.GetUsers().MapTo<SelectListItem>();
+            return View(viewModel);
+        }
     }
 }
