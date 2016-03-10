@@ -344,6 +344,7 @@
     <Content Include="Content\img\setting.png" />
     <Content Include="Content\img\throbber.gif" />
     <Content Include="Content\img\tick.png" />
+    <Content Include="Content\img\voyageChartTransparent.png" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery-ui.min.css" />
     <Content Include="Content\login.css" />
@@ -787,6 +788,9 @@
     <Compile Include="ViewModels\Der\DerDisplayIndexViewModel.cs" />
     <Compile Include="ViewModels\Der\DerIndexViewModel.cs" />
     <Compile Include="ViewModels\Der\DerViewModel.cs" />
+    <Compile Include="ViewModels\Der\Display\DisplaySecurityViewModel.cs" />
+    <Compile Include="ViewModels\Der\Display\DisplaySafetyTableViewModel.cs" />
+    <Compile Include="ViewModels\Der\Display\DisplayAvgYtdKeyStatisticViewModel.cs" />
     <Compile Include="ViewModels\Der\ManageDerItemViewModel.cs" />
     <Compile Include="ViewModels\EconomicSummary\EconomicSummaryReportViewModel.cs" />
     <Compile Include="Controllers\HighlightController.cs" />
@@ -807,6 +811,9 @@
     <Compile Include="ViewModels\HighlightGroup\HighlightGroupViewModel.cs" />
     <Compile Include="ViewModels\Kpi\DetailKpiViewModel.cs" />
     <Compile Include="ViewModels\Kpi\UploadViewModel.cs" />
+    <Compile Include="ViewModels\PlanningBlueprint\AnnualBusinessPlanViewModel.cs" />
+    <Compile Include="ViewModels\PlanningBlueprint\RejectMidtermStrategyViewModel.cs" />
+    <Compile Include="ViewModels\PlanningBlueprint\RejectVoyagePlanViewModel.cs" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Boolean.cshtml" />
@@ -1026,6 +1033,13 @@
     <Content Include="Views\DerLayout\LayoutType\_Tank.Edit.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_MultiAxis.Edit.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_AvgYtdKeyStatistic.cshtml" />
+    <Content Include="Views\Der\Display\_AvgYtdKeyStatistic.cshtml" />
+    <Content Include="Views\Der\Display\_Highlight.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_SafetyTable.cshtml" />
+    <Content Include="Views\Der\Display\_SafetyTable.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_LngAndCds.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_Security.cshtml" />
+    <Content Include="Views\Der\Display\_Security.cshtml" />
     <None Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\SpeedometerChart\_Edit.cshtml" />
     <Content Include="Views\Tabular\_Create.cshtml" />
@@ -1145,6 +1159,7 @@
     <Content Include="Views\PopDashboard\Index.cshtml" />
     <Content Include="Views\PopDashboard\Create.cshtml" />
     <Content Include="Views\PopDashboard\PopInformation.cshtml" />
+    <Content Include="Views\PlanningBlueprint\AnnualBusinessPlan.cshtml" />
     <Content Include="Views\PlanningBlueprint\ESCategory.cshtml" />
     <Content Include="Views\PlanningBlueprint\CreateESCategory.cshtml" />
     <Content Include="Views\PlanningBlueprint\EditESCategory.cshtml" />
@@ -1326,6 +1341,8 @@
     <Compile Include="ViewModels\PlanningBlueprint\BusinessPostureViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\EconomicIndicatorsViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\EnvironmentsScanningViewModel.cs" />
+    <Compile Include="ViewModels\PlanningBlueprint\KpiEconomicInputViewModel.cs" />
+    <Compile Include="ViewModels\PlanningBlueprint\KpiTargetInputViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\ESCategoryViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\MidtermFormulationViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\PlanningBlueprintViewModel.cs" />

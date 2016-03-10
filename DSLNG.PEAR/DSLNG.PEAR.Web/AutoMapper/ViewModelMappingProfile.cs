@@ -681,7 +681,20 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<SavePopInformationViewModel, SavePopInformationRequest>();
             Mapper.CreateMap<GetPopDashboardViewModel, SaveSignatureRequest>();
 
+
             Mapper.CreateMap<SaveApprovalViewModel, ApproveSignatureRequest>();
+
+
+            Mapper.CreateMap<KpiTargetInputViewModel, KpiTargetInputRequest>()
+                .ForMember(d => d.Start, o => o.MapFrom(s => DateTime.ParseExact(s.Start, "dd/MM/yyyy", CultureInfo.InvariantCulture)))
+                .ForMember(d => d.End, o => o.MapFrom(s => DateTime.ParseExact(s.End, "dd/MM/yyyy", CultureInfo.InvariantCulture)));
+
+            Mapper.CreateMap<KpiEconomicInputViewModel, KpiEconomicInputRequest>()
+            .ForMember(d => d.Start, o => o.MapFrom(s => DateTime.ParseExact(s.Start, "dd/MM/yyyy", CultureInfo.InvariantCulture)))
+            .ForMember(d => d.End, o => o.MapFrom(s => DateTime.ParseExact(s.End, "dd/MM/yyyy", CultureInfo.InvariantCulture)));
+
+            Mapper.CreateMap<RejectVoyagePlanViewModel, RejectVoyagePlanRequest>();
+            Mapper.CreateMap<RejectMidtermStrategyViewModel, RejectMidtermStrategyRequest>();
 
             base.Configure();
         }
@@ -867,7 +880,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<ConfigurationViewModel.Economic, ConfigurationViewModel.Item>();
 
             Mapper.CreateMap<UpdateKpiTargetViewModel.KpiTargetItem, ConfigurationViewModel.Item>();
-            Mapper.CreateMap<GetKpiTargetItemResponse.Kpi, ConfigurationViewModel.Kpi>();
+            Mapper.CreateMap<GetKpiTargetItemResponse.KpiResponse, ConfigurationViewModel.Kpi>();
             Mapper.CreateMap<GetKpiTargetItemResponse, ConfigurationViewModel.KpiTarget>();
             Mapper.CreateMap<GetKpiTargetItemResponse, ConfigurationViewModel.Item>();
 
@@ -990,6 +1003,9 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifactTank, GetTankDataRequest.TankRequest>();
             Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifactTank, TankViewModel>();
             Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifact, TankViewModel>();
+
+            //Der KpiInformations
+            Mapper.CreateMap<DerLayoutItemViewModel.DerKpiInformationViewModel, SaveLayoutItemRequest.DerKpiInformationRequest>();
 
             /*Mapper.CreateMap<DerLayoutItemViewModel, SaveLayoutItemRequest>();
             Mapper.CreateMap<DerLayoutLineViewModel, SaveLayoutItemRequest.LayoutItemArtifact>();

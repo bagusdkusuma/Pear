@@ -9,6 +9,7 @@ namespace DSLNG.PEAR.Services.Interfaces
     public interface IMidtermFormulationService
     {
         GetMidtermFormulationResponse Get(int id);
+        GetMidtermFormulationResponse GetStagesByPbId(int id);
         AddStageResponse AddStage(AddStageRequest request);
         AddDefinitionResponse AddDefinition(AddDefinitionRequest request);
         BaseResponse DeleteStage(int id);

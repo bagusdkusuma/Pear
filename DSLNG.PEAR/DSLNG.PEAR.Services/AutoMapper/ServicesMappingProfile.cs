@@ -572,8 +572,10 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.Ids, o => o.MapFrom(y => y.DesiredStates.Select(z => z.Id)));
             Mapper.CreateMap<EnvironmentsScanning, GetBusinessPostureResponse.EnvironmentScanning>();
             Mapper.CreateMap<UltimateObjectivePoint, GetBusinessPostureResponse.EnvironmentScanning.UltimateObjective>();
-            Mapper.CreateMap<Constraint, GetBusinessPostureResponse.EnvironmentScanning.Constraint>();
-            Mapper.CreateMap<Challenge, GetBusinessPostureResponse.EnvironmentScanning.Challenge>();
+            Mapper.CreateMap<Constraint, GetBusinessPostureResponse.EnvironmentScanning.Constraint>()
+                .ForMember(x => x.Category, o => o.MapFrom(s => s.ESCategory.Name));
+            Mapper.CreateMap<Challenge, GetBusinessPostureResponse.EnvironmentScanning.Challenge>()
+                .ForMember(x => x.Category, o => o.MapFrom(s => s.ESCategory.Name));
             
 
 
@@ -787,7 +789,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
             Mapper.CreateMap<KpiTarget, GetKpiTargetsConfigurationResponse.KpiTarget>();
             Mapper.CreateMap<KpiTarget, GetKpiTargetItemResponse>();
-            Mapper.CreateMap<Kpi, GetKpiTargetItemResponse.Kpi>();
+            Mapper.CreateMap<Kpi, GetKpiTargetItemResponse.KpiResponse>();
             Mapper.CreateMap<SaveKpiTargetRequest, KpiTarget>();
         }
 
@@ -828,7 +830,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
             Mapper.CreateMap<KpiAchievement, GetKpiAchievementsConfigurationResponse.KpiAchievement>();
             Mapper.CreateMap<KpiAchievement, GetKpiAchievementResponse>();
-            Mapper.CreateMap<Kpi, GetKpiAchievementResponse.Kpi>();
+            Mapper.CreateMap<Kpi, GetKpiAchievementResponse.KpiResponse>();
 
             Mapper.CreateMap<KpiAchievement, GetAchievementsResponse>();
             Mapper.CreateMap<Kpi, GetAchievementsResponse>();
@@ -862,14 +864,6 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
             Mapper.CreateMap<DerLayout, GetDerLayoutResponse>();
             Mapper.CreateMap<DerLayoutItem, GetDerLayoutResponse.DerLayoutItem>();
-            /*Mapper.CreateMap<DerArtifact, GetDerLayoutResponse.DerArtifact>()
-                .ForMember(x => x.MeasurementId, y => y.MapFrom(z => z.Measurement.Id))
-                .ForMember(x => x.MeasurementName, y => y.MapFrom(z => z.Measurement.Name));
-            Mapper.CreateMap<DerArtifactSerie, GetDerLayoutResponse.DerArtifactSerie>()
-                .ForMember(x => x.KpiId, y => y.MapFrom(z => z.Kpi.Id))
-                .ForMember(x => x.KpiName, y => y.MapFrom(z => z.Kpi.Name)); */
-            
-
 
             Mapper.CreateMap<DerLayoutItem, GetDerLayoutitemResponse>();
             Mapper.CreateMap<DerArtifact, GetDerLayoutitemResponse.DerArtifact>()
@@ -888,7 +882,6 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.HeaderTitle, y => y.MapFrom(z => z.Artifact.HeaderTitle));
             Mapper.CreateMap<SaveLayoutItemRequest.LayoutItemArtifact, DerArtifact>();
 
-
             Mapper.CreateMap<SaveLayoutItemRequest.LayoutItemArtifactChart, DerArtifactChart>()
                 .ForMember(x => x.Series, y => y.Ignore());
             Mapper.CreateMap<SaveLayoutItemRequest.LayoutItemArtifactSerie, DerArtifactSerie>();
@@ -905,10 +898,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<DerHighlight, GetDerLayoutitemResponse.DerHighlight>()
                   .ForMember(x => x.SelectOptionId, y => y.MapFrom(z => z.SelectOption.Id));
 
-            /*Mapper.CreateMap<SaveLayoutItemRequest.LayoutItemArtifact, DerArtifact>()
-                  .ForMember(x => x.HeaderTitle, y => y.MapFrom(z => z.HeaderTitle));*/
-
-
+            Mapper.CreateMap<DerKpiInformation, GetDerLayoutitemResponse.KpiInformationResponse>();
+            Mapper.CreateMap<Kpi, GetDerLayoutitemResponse.KpiInformationResponse.KpiResponse>();
         }
     }
 }

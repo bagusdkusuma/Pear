@@ -15,13 +15,18 @@ using DSLNG.PEAR.Data.Entities.EconomicModel;
 using DSLNG.PEAR.Common.Helpers;
 using DSLNG.PEAR.Services.Responses.OutputConfig;
 using DSLNG.PEAR.Services.Requests.OutputConfig;
+using DSLNG.PEAR.Services.Responses;
+using DSLNG.PEAR.Data.Entities;
+using System;
 
 namespace DSLNG.PEAR.Services
 {
-    public class PlanningBlueprintService : BaseService,IPlanningBlueprintService
+    public class PlanningBlueprintService : BaseService, IPlanningBlueprintService
     {
         private readonly IOutputConfigService _outputConfigService;
-        public PlanningBlueprintService(IDataContext dataContext, IOutputConfigService outputConfigService) : base(dataContext) {
+        public PlanningBlueprintService(IDataContext dataContext, IOutputConfigService outputConfigService)
+            : base(dataContext)
+        {
             _outputConfigService = outputConfigService;
         }
         public GetPlanningBlueprintsResponse GetPlanningBlueprints(GetPlanningBlueprintsRequest request)
@@ -50,7 +55,7 @@ namespace DSLNG.PEAR.Services
             {
                 data = data.Where(x => x.Title.Contains(search) || x.Description.Contains(search));
             }
-           
+
             foreach (var sortOrder in sortingDictionary)
             {
                 switch (sortOrder.Key)
@@ -94,7 +99,8 @@ namespace DSLNG.PEAR.Services
                     planningBluePrint.BusinessPostureIdentification = businessPostureIdentification;
                     planningBluePrint.MidtermPhaseFormulation = midtermPhaseFormulation;
                     planningBluePrint.MidtermStragetyPlanning = midtermStrategyPlanning;
-                    foreach (var keyOutputId in request.KeyOutputIds) {
+                    foreach (var keyOutputId in request.KeyOutputIds)
+                    {
                         var keyOutputConfig = new KeyOutputConfiguration { Id = keyOutputId };
                         DataContext.KeyOutputConfigs.Attach(keyOutputConfig);
                         planningBluePrint.KeyOutput.Add(keyOutputConfig);
@@ -111,7 +117,7 @@ namespace DSLNG.PEAR.Services
                         var keyOutputConfig = DataContext.KeyOutputConfigs.Local.FirstOrDefault(x => x.Id == keyOutputId);
                         if (keyOutputConfig == null)
                         {
-                            keyOutputConfig = new KeyOutputConfiguration{Id = keyOutputId};
+                            keyOutputConfig = new KeyOutputConfiguration { Id = keyOutputId };
                             DataContext.KeyOutputConfigs.Attach(keyOutputConfig);
                         }
                         planningBlueprint.KeyOutput.Add(keyOutputConfig);
@@ -125,7 +131,8 @@ namespace DSLNG.PEAR.Services
                     Message = "The item has been successfully saved"
                 };
             }
-            catch {
+            catch
+            {
                 return new SavePlanningBlueprintResponse
                 {
                     IsSuccess = false,
@@ -169,7 +176,7 @@ namespace DSLNG.PEAR.Services
                 var scenario = DataContext.Scenarios.OrderByDescending(x => x.Id).FirstOrDefault(x => x.IsActive && x.IsDashboard);
                 if (scenario != null)
                 {
-                    var outputCategories = _outputConfigService.CalculateOputput(new CalculateOutputRequest{ScenarioId = scenario.Id});
+                    var outputCategories = _outputConfigService.CalculateOputput(new CalculateOutputRequest { ScenarioId = scenario.Id });
                     var keyOutputs = outputCategories.OutputCategories.SelectMany(x => x.KeyOutputs).ToList();
                     var planningIndicatorIds = planningBluePrint.KeyOutput.Select(x => x.Id).ToArray();
                     response.EconomicIndicators = keyOutputs.Where(x => planningIndicatorIds.Contains(x.Id)).ToList().MapTo<GetVoyagePlanResponse.KeyOutputResponse>();
@@ -198,7 +205,8 @@ namespace DSLNG.PEAR.Services
                     //BusinessPostureId = planningDashboard.BusinessPostureIdentification.Id
                 };
             }
-            catch {
+            catch
+            {
                 return new ApproveVoyagePlanResponse
                 {
                     IsSuccess = false,
@@ -268,6 +276,219 @@ namespace DSLNG.PEAR.Services
         }
 
 
+        public BaseResponse KpiTargetInput(KpiTargetInputRequest request)
+        {
+            try
+            {
+                //yearly
+                var year = request.Start.Year;
+                var yearlyTarget = DataContext.KpiTargets.FirstOrDefault(x => x.Kpi.Id == request.KpiId && x.PeriodeType == PeriodeType.Yearly
+                    && x.Periode.Year == year);
+                var kpi = new Kpi { Id = request.KpiId };
+                DataContext.Kpis.Attach(kpi);
+                if (yearlyTarget != null)
+                {
+                    yearlyTarget.Value = request.Value;
+                }
+                else
+                {
+                    var newYearlyTarget = new KpiTarget
+                    {
+                        Value = request.Value,
+                        PeriodeType = PeriodeType.Yearly,
+                        Periode = new DateTime(request.Start.Year,1,1),
+                        Kpi = kpi
+                    };
+                    DataContext.KpiTargets.Add(newYearlyTarget);
+                }
+
+                //monthly
+                //var monthlyTargets = DataContext.KpiTargets.Where(x => x.Kpi.Id == request.KpiId
+                //    && x.PeriodeType == PeriodeType.Monthly
+                //    && x.Periode >= request.Start && x.Periode <= request.End).ToList();
+
+                //for (var i = request.Start.Month; i <= request.End.Month; i++)
+                //{
+                //    var monthlyTarget = monthlyTargets.FirstOrDefault(x => x.Periode.Month == i);
+                //    if (monthlyTarget != null)
+                //    {
+                //        monthlyTarget.Value = request.Value;
+                //    }
+                //    else
+                //    {
+                //        var newMonthlyTarget = new KpiTarget
+                //        {
+                //            Periode = new DateTime(year, i, 1),
+                //            PeriodeType = PeriodeType.Monthly,
+                //            Value = request.Value,
+                //            Kpi = kpi
+                //        };
+                //        DataContext.KpiTargets.Add(newMonthlyTarget);
+                //    }
+                //}
+
+                DataContext.SaveChanges();
+                return new BaseResponse
+                {
+                    IsSuccess = true,
+                    Message = "Kpi Valu has been saved successfully"
+                };
+            }
+            catch
+            {
+                return new BaseResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured, please contact adminstrator for further information"
+                };
+            }
+        }
+
+
+        public BaseResponse KpiEconomicInput(KpiEconomicInputRequest request)
+        {
+            try
+            {
+                var scenario = DataContext.Scenarios.FirstOrDefault(x => x.IsActive && x.IsDashboard);
+                if (scenario == null)
+                {
+                    return new BaseResponse {
+                           IsSuccess = false,
+                           Message = "An error occured, please contact adminstrator for further information"
+                       };
+                }
+
+                //yearly
+                var year = request.Start.Year;
+                var yarlyEconomic = DataContext.KeyOperationDatas.FirstOrDefault(x => x.Kpi.Id == request.KpiId && x.PeriodeType == PeriodeType.Yearly
+                    && x.Periode.Year == year && x.Scenario.Id == scenario.Id);
+                var kpi = new Kpi { Id = request.KpiId };
+                DataContext.Kpis.Attach(kpi);
+                if (yarlyEconomic != null)
+                {
+                    yarlyEconomic.Value = request.Value;
+                }
+                else
+                {
+                    var newYearlyEconomic = new KeyOperationData
+                    {
+                        Value = request.Value,
+                        PeriodeType = PeriodeType.Yearly,
+                        Periode = request.Start,
+                        Kpi = kpi,
+                        Scenario = scenario
+                    };
+                    DataContext.KeyOperationDatas.Add(newYearlyEconomic);
+                }
+
+                //monthly
+                //var monthlyEconomics = DataContext.KeyOperationDatas.Where(x => x.Kpi.Id == request.KpiId
+                //    && x.PeriodeType == PeriodeType.Monthly
+                //    && x.Periode >= request.Start && x.Periode <= request.End
+                //    && x.Scenario.Id == scenario.Id).ToList();
+
+                //for (var i = request.Start.Month; i <= request.End.Month; i++)
+                //{
+                //    var monthlyEconomic = monthlyEconomics.FirstOrDefault(x => x.Periode.Month == i);
+                //    if (monthlyEconomic != null)
+                //    {
+                //        monthlyEconomic.Value = request.Value;
+                //    }
+                //    else
+                //    {
+                //        var newMonthlyEconomic = new KeyOperationData
+                //        {
+                //            Periode = new DateTime(year, i, 1),
+                //            PeriodeType = PeriodeType.Monthly,
+                //            Value = request.Value,
+                //            Kpi = kpi,
+                //            Scenario = scenario
+                //        };
+                //        DataContext.KeyOperationDatas.Add(newMonthlyEconomic);
+                //    }
+                //}
+
+                DataContext.SaveChanges();
+                return new BaseResponse
+                {
+                    IsSuccess = true,
+                    Message = "Kpi Valu has been saved successfully"
+                };
+            }
+            catch
+            {
+                return new BaseResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured, please contact adminstrator for further information"
+                };
+            }
+        }
+
+
+        public BaseResponse RejectVoyagePlan(RejectVoyagePlanRequest request)
+        {
+            try
+            {
+                var businessPosture = DataContext.BusinessPostures
+                    .First(x => x.PlanningBlueprint.Id == request.PlanningBlueprintId);
+                businessPosture.IsRejected = true;
+                businessPosture.Notes = request.Notes;
+                businessPosture.IsBeingReviewed = false;
+                DataContext.SaveChanges();
+                return new BaseResponse
+                {
+                    IsSuccess = true,
+                    Message = "The voyage plan has been rejected"
+                };
+            }
+            catch
+            {
+                return new BaseResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured,please contact adminstrator for further information"
+                };
+            }
+        }
+
+
+        public BaseResponse RejectMidtermStrategy(RejectMidtermStrategyRequest request)
+        {
+            try
+            {
+                var midtermPlanning = DataContext.MidtermStrategyPlannings
+                    .First(x => x.PlanningBlueprint.Id == request.PlanningBlueprintId);
+                midtermPlanning.IsRejected = true;
+                midtermPlanning.Notes = request.Notes;
+                midtermPlanning.IsBeingReviewed = false;
+                DataContext.SaveChanges();
+                return new BaseResponse
+                {
+                    IsSuccess = true,
+                    Message = "The midterm strategy has been approved",
+                    //BusinessPostureId = planningDashboard.BusinessPostureIdentification.Id
+                };
+            }
+            catch
+            {
+                return new BaseResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured,please contact adminstrator for further information"
+                };
+            }
+        }
+
+
+        public GetPlanningBlueprintsResponse GetPlanningBlueprints()
+        {
+            return new GetPlanningBlueprintsResponse
+            {
+
+                PlanningBlueprints = DataContext.PlanningBlueprints.Where(x => x.IsActive).ToList().MapTo<GetPlanningBlueprintsResponse.PlanningBlueprint>()
+            };
+        }
         public GetESCategoriesResponse GetESCategories(GetESCategoriesRequest request)
         {
             int totalRecords;

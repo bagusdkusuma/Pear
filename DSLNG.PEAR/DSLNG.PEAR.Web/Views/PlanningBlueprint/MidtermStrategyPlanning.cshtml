@@ -30,7 +30,7 @@
                     </div>
                     <ul class="date-range">
                         <li><span class="start">@item.StartDate.Value.ToString("MMM yyyy", System.Globalization.CultureInfo.InvariantCulture)</span></li>
-                        <li><span class="end">@item.StartDate.Value.ToString("MMM yyyy", System.Globalization.CultureInfo.InvariantCulture)</span></li>
+                        <li><span class="end">@item.EndDate.Value.ToString("MMM yyyy", System.Globalization.CultureInfo.InvariantCulture)</span></li>
                     </ul>
                     <div class="clear"></div>
                     <div class="defined-header description">
@@ -98,11 +98,12 @@
                 <button type="submit" class="btn btn-primary btn-lg submit-al-mp"><span class="fa fa-floppy-o"></span>Submit</button>
             }
             }else{
-            using (Html.BeginForm("ApproveMidtermStrategy", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
-            {
+                <button type="button" class="btn btn-primary btn-lg btn-reject" data-toggle="modal" data-target="#reject-modal"><span class="fa fa-remove"></span>Reject</button>
+                using (Html.BeginForm("ApproveMidtermStrategy", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
+                {
                 @Html.Hidden("Id", Model.Id)
                 <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Approve</button>
-            }
+                }
             }
         </div>
     </div>
@@ -111,7 +112,8 @@
     <td class="midterm-planning-template">
         <div class="midterm-planning-header">
         <h4 class="header-title"></h4>
-              @if(!Model.IsReviewer){
+              @if (!Model.IsReviewer)
+              {
             <a href="/MidtermStrategyPlanning/Delete" class="remove-midterm-planning"><i class="fa fa-minus"></i></a>
               }
             </div>
@@ -122,7 +124,8 @@
         <div class="clear"></div>
         <div class="objective-header">
             <h5 class="objective-title">Objective</h5>
-              @if(!Model.IsReviewer){
+              @if (!Model.IsReviewer)
+              {
             <a data-toggle="popover" href="javascript:void(0)" class="add-objective"><i class="fa fa-plus"></i></a>
               }
         </div>
@@ -130,7 +133,8 @@
         </ul>
         <table class="kpis">
             <tr>
-                <th>Kpi   @if(!Model.IsReviewer){<a data-toggle="popover" href="javascript:void(0)" class="add-kpi"><i class="fa fa-plus"></i></a>} </th>
+                <th>Kpi   @if (!Model.IsReviewer)
+                          {<a data-toggle="popover" href="javascript:void(0)" class="add-kpi"><i class="fa fa-plus"></i></a>} </th>
                 <th>Target</th>
                 <th>Economic</th>
             </tr>
@@ -174,6 +178,28 @@
     </form>
 </div>
 </div>
+<div class="modal fade" id="reject-modal" data-id="id">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+             @using (Html.BeginForm("RejectMidtermStrategy", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
+                {
+            <div class="modal-header">
+                <button type="button" class="close btn-finish-relation" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Notes</h3>
+            </div>
+            <div class="modal-body">
+                @Html.Hidden("PlanningBlueprintId", Model.Id)
+                <textarea rows="5" style="width:100%" name="Notes"></textarea>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-primary" value="Submit" />
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+            </div>
+             }
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
     $(document).ready(function () {
         $('body').popover({
@@ -198,7 +224,7 @@
                 }
             });
         });
-        $('.midterm-plannings').popover({
+        $('.midterm-plannings-table').popover({
             selector: '.add-kpi',
             html: true,
             placement: 'left',
@@ -218,10 +244,12 @@
                     var $kpisHolder = $midtermPlanning.find('.kpis');
                     var kpi = data;
                     var $row = $('<tr />');
-                    $row.data('id', kpi.Id);
+                    $row.attr('data-id', kpi.Id);
                     var $kpiCol = $('<td />');
                     var $targetCol = $('<td />');
+                    $targetCol.addClass('target');
                     var $economicCol = $('<td />');
+                    $economicCol.addClass('economic');
                     $kpiCol.html(kpi.Name + ' (' + kpi.Measurement + ') <a href="/MidtermStrategyPlanning/DeleteKpi" class="remove-kpi"><i class="fa fa-minus"></i></a>');
                     $targetCol.html(kpi.Target);
                     $economicCol.html(kpi.Economic);
@@ -250,6 +278,12 @@
             e.preventDefault();
             var $this = $(this);
             $.get($this.data('relation-source'), function (data) {
+                $('.midterm-plannings-table .midterm-plannings').each(function (i, val) {
+                    $(val).remove();
+                });
+                var $newHolder = $('<tr />');
+                $newHolder.addClass('midterm-plannings');
+                $('.midterm-plannings-table').append($newHolder);
                 var mPlannings = data.MidtermPlannings;
                 var $mPlanningsHolder = $('.midterm-plannings:last-child');
                 $mPlanningsHolder.html('');
@@ -265,9 +299,12 @@
                     var $objectivesHolder = $mpTemplate.find('.objectives');
                     for (var j in mPlanning.Objectives) {
                         var objective = mPlanning.Objectives[j];
-                          @if(!Model.IsReviewer){
+                          @if (!Model.IsReviewer)
+                          {
                         <text>$objectivesHolder.append('<li data-id="' + objective.Id + '">' + objective.Value + '<a  href="/MidtermStrategyPlanning/DeleteObjective" class="remove-objective"><i class="fa fa-minus"></i></a></li>');</text>
-                          }else{
+                          }
+                          else
+                          {
                           <text>$objectivesHolder.append('<li data-id="' + objective.Id + '">' + objective.Value +'</li>');</text>
                           }
                     }
@@ -276,13 +313,18 @@
                         var kpiData = mPlanning.KpiDatas[j];
                         var kpi = kpiData.Kpi;
                         var $row = $('<tr />');
-                        $row.data('id', kpi.Id);
+                        $row.attr('data-id', kpi.Id);
                         var $kpiCol = $('<td />');
                         var $targetCol = $('<td />');
+                        $targetCol.addClass('target');
                         var $economicCol = $('<td />');
-                        @if(!Model.IsReviewer){
+                        $economicCol.addClass('economic');
+                        @if (!Model.IsReviewer)
+                        {
                         <text>$kpiCol.html(kpi.Name + ' (' + kpi.Measurement + ') <a href="/MidtermStrategyPlanning/DeleteKpi" class="remove-kpi"><i class="fa fa-minus"></i></a>');</text>
-                        }else{
+                        }
+                        else
+                        {
                         <text>$kpiCol.html(kpi.Name + ' (' + kpi.Measurement + ')');</text>
                         }
                         $targetCol.html(kpiData.Target);
@@ -433,6 +475,60 @@
                     $('.add-strategic-planning').popover('hide');
                 }
             });
+        });
+
+        $(document).on('click', '.target', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            if ($this.find('input').length) return;
+
+            var val = $this.html();
+            $this.html('');
+            var $input = $('<input />');
+            $input.prop('type', 'number');
+            $input.prop('name', 'Value');
+            $input.css({ width: '100%',color:'#000' });
+            if ($this.hasClass('target')) {
+                $input.addClass('target-input');
+            } else {
+                $input.addClass('economic-input');
+            }
+            $input.val(val);
+            $this.append($input);
+            $input.focus();
+        });
+        $(document).on('change', '.target-input', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var $midtermPlanning = $this.closest('.midterm-planning');
+            var start = moment('01 ' + $midtermPlanning.find('.start').html().trim(), 'DD MMM YYYY');
+            var end = moment('01 ' + $midtermPlanning.find('.end').html().trim(), 'DD MMM YYYY');
+
+            var url = '/PlanningBlueprint/KpiTargetInput';
+            if ($this.hasClass('economic-input')) {
+                url = '/PlanningBlueprint/KpiEconomicInput';
+            }
+            var input = {
+                Value: $this.val(),
+                KpiId: $this.closest('tr').data('id'),
+                Start: start.format('DD/MM/YYYY'),
+                End : end.format('DD/MM/YYYY')
+            };
+            $.ajax({
+                url: url,
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                },
+                data: input
+            });
+        });
+        $(document).on('focusout', '.target-input', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var $td = $this.closest('td');
+            $td.html($this.val());
         });
     });
 </script>

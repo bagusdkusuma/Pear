@@ -10,9 +10,12 @@ using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Artifact;
 using DSLNG.PEAR.Services.Requests.Der;
 using DSLNG.PEAR.Services.Requests.Highlight;
+using DSLNG.PEAR.Services.Requests.KpiAchievement;
 using DSLNG.PEAR.Services.Requests.Weather;
+using DSLNG.PEAR.Services.Responses.Der;
 using DSLNG.PEAR.Web.ViewModels.Artifact;
 using DSLNG.PEAR.Web.ViewModels.Der;
+using DSLNG.PEAR.Web.ViewModels.Der.Display;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -23,14 +26,18 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IArtifactService _artifactService;
         private readonly IHighlightService _highlightService;
         private readonly IWeatherService _weatherService;
+        private readonly IKpiAchievementService _kpiAchievementService;
+        private readonly IKpiTargetService _kpiTargetService;
 
-        public DerController(IDerService derService, IDropdownService dropdownService, IArtifactService artifactService, IHighlightService highlightService, IWeatherService weatherService)
+        public DerController(IDerService derService, IDropdownService dropdownService, IArtifactService artifactService, IHighlightService highlightService, IWeatherService weatherService, IKpiAchievementService kpiAchievementService, IKpiTargetService kpiTargetService)
         {
             _derService = derService;
             _dropdownService = dropdownService;
             _artifactService = artifactService;
             _highlightService = highlightService;
             _weatherService = weatherService;
+            _kpiAchievementService = kpiAchievementService;
+            _kpiTargetService = kpiTargetService;
         }
 
         public ActionResult Index()
@@ -104,6 +111,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var layout = _derService.GetDerLayoutItem(id);
             switch (layout.Type.ToLowerInvariant())
             {
+                #region line
                 case "line":
                     {
 
@@ -145,7 +153,8 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.LineChart.Periodes = chartData.Periodes;
                         return Json(previewViewModel, JsonRequestBehavior.AllowGet);
                     }
-
+                #endregion
+                #region multiaxis
                 case "multiaxis":
                     {
                         var request = new GetMultiaxisChartDataRequest();
@@ -153,7 +162,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         request.RangeFilter = RangeFilter.Interval;
                         request.Start = date.AddDays(-7);
                         request.End = date;
-                        
+
                         var previewViewModel = new ArtifactPreviewViewModel();
 
                         request.Charts = layout.Artifact.Charts.MapTo<GetMultiaxisChartDataRequest.ChartRequest>();
@@ -173,7 +182,8 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.MultiaxisChart.Title = layout.Artifact.HeaderTitle;
                         return Json(previewViewModel, JsonRequestBehavior.AllowGet);
                     }
-
+                #endregion
+                #region pie
                 case "pie":
                     {
                         var request = new GetPieDataRequest();
@@ -182,7 +192,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         request.Start = date.AddDays(-7);
                         request.End = date;
                         request.HeaderTitle = layout.Artifact.HeaderTitle;
-                        
+
                         request.ValueAxis = ValueAxis.KpiActual;
 
                         var series = layout.Artifact.Series.Select(x => new GetPieDataRequest.SeriesRequest
@@ -203,7 +213,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         {
                             previewViewModel.Highlights.Add(null);
                         }
-                        
+
                         previewViewModel.GraphicType = layout.Type;
                         previewViewModel.Pie = chartData.MapTo<PieDataViewModel>();
                         previewViewModel.Pie.Is3D = layout.Artifact.Is3D;
@@ -212,10 +222,11 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.Pie.Subtitle = chartData.Subtitle;
                         previewViewModel.Pie.SeriesResponses =
                             chartData.SeriesResponses.MapTo<PieDataViewModel.SeriesResponse>();
-                        
+
                         return Json(previewViewModel, JsonRequestBehavior.AllowGet);
                     }
-
+                #endregion
+                #region tank
                 case "tank":
                     {
                         var request = new GetTankDataRequest();
@@ -234,6 +245,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.Tank.Id = layout.Artifact.Tank.Id;
                         return Json(previewViewModel, JsonRequestBehavior.AllowGet);
                     }
+                #endregion
 
                 case "highlight":
                     {
@@ -243,8 +255,8 @@ namespace DSLNG.PEAR.Web.Controllers
                                     Date = date,
                                     HighlightTypeId = layout.Highlight.SelectOptionId
                                 });
-
-                        var json = new {type = "highlight", highlight = highlight};
+                        var view = RenderPartialViewToString("Display/_Highlight", highlight);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
                 case "weather":
@@ -256,7 +268,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             });
 
                         var view = RenderPartialViewToString("Display/_Weather", weather);
-                        var json = new { type = "weather", view };
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
                 case "alert":
@@ -267,12 +279,104 @@ namespace DSLNG.PEAR.Web.Controllers
                                 Date = date
                             });
                         var view = RenderPartialViewToString("Display/_Alert", alert);
-                        var json = new { type = "alert", view };
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
-                    
+
+                case "avg-ytd-key-statistic":
+                    {
+                        var viewModel = new DisplayAvgYtdKeyStatisticViewModel();
+
+                        for (int i = 1; i <= 6; i++)
+                        {
+                            var avgYtdKeyStatisticViewModel = new DisplayAvgYtdKeyStatisticViewModel.AvgYtdKeyStatisticViewModel();
+                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
+                                       new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
+
+                            avgYtdKeyStatisticViewModel.Position = item.Position;
+                            if (item.Kpi != null)
+                            {
+                                var actual = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.YTD, YtdFormula.Average);
+                                avgYtdKeyStatisticViewModel.KpiName = item.Kpi.Name;
+                                avgYtdKeyStatisticViewModel.Value = actual.Value.HasValue ? actual.Value.ToString() : "n/a";
+                            }
+
+                            viewModel.AvgYtdKeyStatistics.Add(avgYtdKeyStatisticViewModel);
+                        }
+
+                        var view = RenderPartialViewToString("Display/_AvgYtdKeyStatistic", viewModel);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+
+                case "safety":
+                    {
+                        var viewModel = new DisplaySafetyTableViewModel();
+
+                        for (int i = 1; i <= 9; i++)
+                        {
+                            var safetyTableViewModel = new DisplaySafetyTableViewModel.SafetyTableViewModel();
+                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
+                                       new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
+
+                            safetyTableViewModel.Position = item.Position;
+                            if (item.Kpi != null)
+                            {
+                                var currentDay = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.CurrentDay);
+                                var mtd = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.MTD);
+                                var ytd = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.YTD);
+                                var targetYearly = _kpiTargetService.GetKpiTarget(item.Kpi.Id, date, RangeFilter.CurrentYear);
+                                var itd = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.AllExistingYears);
+                                safetyTableViewModel.KpiName = item.Kpi.Name;
+                                safetyTableViewModel.CurrentDay = GetDoubleToString(currentDay.Value);
+                                safetyTableViewModel.Mtd = GetDoubleToString(mtd.Value);
+                                safetyTableViewModel.Ytd = GetDoubleToString(ytd.Value);
+                                safetyTableViewModel.AnnualTarget = GetDoubleToString(targetYearly.Value);
+                                safetyTableViewModel.Itd = GetDoubleToString(itd.Value);
+                            }
+
+                            viewModel.SafetyTableViewModels.Add(safetyTableViewModel);
+                        }
+
+                        var view = RenderPartialViewToString("Display/_SafetyTable", viewModel);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+
+                case "security":
+                    {
+                        var viewModel = new DisplaySecurityViewModel();
+
+                        for (int i = 1; i <= 6; i++)
+                        {
+                            var securityViewModel = new DisplaySecurityViewModel.SecurityViewModel();
+                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
+                                       new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
+
+                            securityViewModel.Position = item.Position;
+                            if (item.Kpi != null)
+                            {
+                                var actual = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.CurrentDay);
+                                securityViewModel.KpiName = item.Kpi.Name;
+                                securityViewModel.Value = actual.Value.HasValue ? actual.Value.ToString() : "n/a";
+                            }
+
+                            viewModel.SecurityViewModels.Add(securityViewModel);
+                        }
+
+                        var view = RenderPartialViewToString("Display/_Security", viewModel);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+
+
             }
             return Content("as");
+        }
+
+        private string GetDoubleToString(double? val)
+        {
+            return val.HasValue ? val.Value.ToString() : "n/a";
         }
     }
 }

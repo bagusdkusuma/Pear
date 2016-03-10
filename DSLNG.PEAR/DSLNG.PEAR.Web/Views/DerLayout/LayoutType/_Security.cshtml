@@ -1,0 +1,16 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.DerLayout.DerLayoutItemViewModel
+<table class="der-table">
+    @{
+        var a = 0;
+        for (int i = 1; i <= Model.KpiInformations.Count; i++)
+        {
+            <th class="der-bg-blue-3">
+                @Html.DropDownListFor(model => model.KpiInformations[i - 1].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
+                @Html.HiddenFor(model => model.KpiInformations[i - 1].Position)
+                <input type="hidden" name="KpiInformations.Index" value="@a" />
+                @Html.EditorFor(model => model.KpiInformations[i - 1].IsOriginalData)  Is  Original Data? 
+            </th>
+            a++;
+        }
+    }
+</table>

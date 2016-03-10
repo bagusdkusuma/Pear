@@ -1,19 +1,22 @@
 ﻿@model DSLNG.PEAR.Services.Responses.Weather.GetWeatherResponse
 @if (Model.ValueId > 0)
 {
-    <table>
-        <tbody>
-            <tr>
-                <td>Weather</td>
-                <td>@Model.Value
-                    <img height="60" width="60" src="@Url.Content("/content/img/select/" + Model.Value)">
-                </td>
-            </tr>
-            <tr>
-                <td>Outside Temperature</td>
-                <td>@Model.Temperature</td>
-            </tr>
-        </tbody>
+    <table class="der-table">
+        <tr>
+            <td style="font-weight: bold">Weather</td>
+            <td rowspan="3">[[logo temperature]]</td>
+            <td style="text-align: right">@Model.Text</td>
+            <td rowspan="3">
+                <img height="60" width="60" src="@Url.Content("/content/img/select/" + Model.Value)"></td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td style="font-weight: bold">Outside Temperature</td>
+            <td style="text-align: right">@Model.Temperature</td>
+        </tr>
     </table>
 }
 

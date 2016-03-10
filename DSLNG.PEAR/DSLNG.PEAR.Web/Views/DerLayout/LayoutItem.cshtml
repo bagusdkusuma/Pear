@@ -64,6 +64,21 @@
                         });
                         break;
                     }
+                case 'avg-ytd-key-statistic':
+                case 'safety-table':
+                case 'lng-and-cds':
+                case 'security':
+                    {
+                        $.ajax({
+                            url: '@Url.Action("LayoutSetting", "DerLayout", new { type = "_type_" })'.replace('_type_', that.val()),
+                             success: function (data) {
+                                 $('.layout-type-area').html(data);
+                                 window.Pear.Artifact.Designer._kpiAutoComplete($('.layout-type-area'));
+                             }
+                         });
+                        
+                        break;
+                    }
                 default:
                     $.ajax({
                         url: '@Url.Action("LayoutSetting", "DerLayout", new { type = "_type_" })'.replace('_type_', that.val()),
@@ -71,7 +86,6 @@
                             $('.layout-type-area').html(data);
                             var pear = window.Pear;
                             var callback = pear.Artifact.Designer._setupCallbacks;
-                            console.log(callback);
                             callback[that.val()]();
                         }
                     });

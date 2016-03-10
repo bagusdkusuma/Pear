@@ -32,7 +32,8 @@ namespace DSLNG.PEAR.Services
                 .Include(x => x.OperationPhase)
                 .Include(x => x.ReinventPhase)
                 .Include(x => x.Constraints)
-                .Include(x => x.Challenges)
+                .Include(x => x.Constraints.Select(y => y.ESCategory))
+                .Include(x => x.Challenges.Select(y => y.ESCategory))
                 .Where(x => x.PlanningBlueprint.Id == response.PlanningBlueprintId).FirstOrDefault().MapTo<GetBusinessPostureResponse.EnvironmentScanning>();
             return response;
         }

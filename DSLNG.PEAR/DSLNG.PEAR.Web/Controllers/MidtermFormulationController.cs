@@ -38,5 +38,9 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             return Json(_midtermFormulationService.DeleteStageKey(id));
         }
+
+        public ActionResult GetStagesByPbId(int id) {
+            return Json(_midtermFormulationService.GetStagesByPbId(id), JsonRequestBehavior.AllowGet);
+        }
 	}
 }

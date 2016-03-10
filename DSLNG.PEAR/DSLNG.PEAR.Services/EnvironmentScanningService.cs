@@ -270,8 +270,12 @@ namespace DSLNG.PEAR.Services
             constraint.ESCategory = DataContext.ESCategories.FirstOrDefault(x => x.Id == request.Category);
             foreach (var id in request.RelationIds)
             {
-                var envistate = new EnvironmentalScanning { Id = id };
-                DataContext.EnvironmentalScannings.Attach(envistate);
+                 var envistate = DataContext.EnvironmentalScannings.Local.FirstOrDefault(x => x.Id == id);
+                 if (envistate == null)
+                 {
+                     envistate = new EnvironmentalScanning { Id = id };
+                     DataContext.EnvironmentalScannings.Attach(envistate);
+                 }
                 constraint.Relations.Add(envistate);
             }
 
@@ -313,8 +317,12 @@ namespace DSLNG.PEAR.Services
             challenge.ESCategory = DataContext.ESCategories.FirstOrDefault(x => x.Id == request.Category);
             foreach(var id in request.RelationIds)
             {
-                var envistate = new EnvironmentalScanning { Id = id };
-                DataContext.EnvironmentalScannings.Attach(envistate);
+                var envistate = DataContext.EnvironmentalScannings.Local.FirstOrDefault(x => x.Id == id);
+                if (envistate == null)
+                {
+                    envistate = new EnvironmentalScanning { Id = id };
+                    DataContext.EnvironmentalScannings.Attach(envistate);
+                }
                 challenge.Relations.Add(envistate);
             }
             DataContext.Challenges.Add(challenge);
