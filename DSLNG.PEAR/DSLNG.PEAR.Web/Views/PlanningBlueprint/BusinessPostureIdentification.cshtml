@@ -131,8 +131,12 @@
                         <ul class="list-result construction-desired-list">
                             @foreach (var item in Model.ConstructionPosture.DesiredStates)
                             {
-                                <li data-id="@item.Id">@item.Description   @if (!Model.IsReviewer)
-                                                                           {<a href="/BusinessPosture/DeleteDesiredState" class="remove-item"><i class="fa fa-minus"></i></a>}</li>
+                                <li data-id="@item.Id">
+                                    <span data-toggle="popover" data-form-target="desired-state" class="popover-edit-trigger">@item.Description</span>
+                                    @if (!Model.IsReviewer){
+                                     <a href="/BusinessPosture/DeleteDesiredState" class="remove-item"><i class="fa fa-minus"></i></a>
+                                    }
+                                </li>
                             }
                         </ul>
                     </td>
@@ -147,8 +151,11 @@
                         <ul class="list-result operation-desired-list">
                             @foreach (var item in Model.OperationPosture.DesiredStates)
                             {
-                                <li data-id="@item.Id">@item.Description @if (!Model.IsReviewer)
-                                                                         {<a href="/BusinessPosture/DeleteDesiredState" class="remove-item"><i class="fa fa-minus"></i></a>}</li>
+                                <li data-id="@item.Id">
+                                    <span data-toggle="popover" data-form-target="desired-state" class="popover-edit-trigger">@item.Description</span>
+                                    @if (!Model.IsReviewer){
+                                    <a href="/BusinessPosture/DeleteDesiredState" class="remove-item"><i class="fa fa-minus"></i></a>
+                                    }</li>
                             }
                         </ul>
                     </td>
@@ -164,8 +171,11 @@
                         <ul class="list-result decommissioning-desired-list">
                             @foreach (var item in Model.DecommissioningPosture.DesiredStates)
                             {
-                                <li data-id="@item.Id">@item.Description @if (!Model.IsReviewer)
-                                                                         {<a href="/BusinessPosture/DeleteDesiredState" class="remove-item"><i class="fa fa-minus"></i></a>}</li>
+                                <li data-id="@item.Id">
+                                     <span data-toggle="popover" data-form-target="desired-state" class="popover-edit-trigger">@item.Description</span>
+                                    @if (!Model.IsReviewer){
+                                         <a href="/BusinessPosture/DeleteDesiredState" class="remove-item"><i class="fa fa-minus"></i></a>
+                                    }</li>
                             }
                         </ul>
                     </td>
@@ -199,7 +209,7 @@
                             </tr>
                             @foreach (var item in Model.ConstructionPosture.PostureChallenges)
                             {
-                                <tr>
+                                <tr data-id="@item.Id">
                                     <td>
                                         <a href="#" data-id="@item.Id" data-toggle="modal" data-ids="@item.RelationIdsString" data-type="construction" data-target="#posture-modal" class="btn-posture-challenge">
                                             @if (item.HasRelation == true)
@@ -209,7 +219,7 @@
                                         </a>
 
                                     </td>
-                                    <td style="text-align:left">@item.Definition </td>
+                                    <td style="text-align:left"><span data-toggle="popover" class="popover-edit-trigger" data-form-target="posture-challenge">@item.Definition</span></td>
                                     @if (!Model.IsReviewer)
                                     {
                                         <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureChallenge" class="remove-item"><i class="fa fa-minus"></i></a></td>
@@ -239,7 +249,7 @@
                 </tr>
                 @foreach (var item in Model.OperationPosture.PostureChallenges)
                 {
-                    <tr>
+                    <tr data-id="@item.Id">
                         <td>
                             <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" data-ids="@item.RelationIdsString" data-type="operation" class="btn-posture-challenge">
                                 @if (item.HasRelation == true)
@@ -248,7 +258,7 @@
                                 }
                             </a>
                         </td>
-                        <td>@item.Definition </td>
+                        <td style="text-align:left"><span data-toggle="popover" class="popover-edit-trigger" data-form-target="posture-challenge">@item.Definition</span></td>
                         @if (!Model.IsReviewer)
                         {
                             <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureChallenge" class="remove-item"><i class="fa fa-minus"></i></a></td>
@@ -278,7 +288,7 @@
                 </tr>
                 @foreach (var item in Model.DecommissioningPosture.PostureChallenges)
                 {
-                    <tr>
+                    <tr data-id="@item.Id">
                         <td>
                             <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" data-ids="@item.RelationIdsString" data-type="decommissioning" class="btn-posture-challenge">
                                 @if (item.HasRelation == true)
@@ -287,7 +297,7 @@
                                 }
                             </a>
                         </td>
-                        <td>@item.Definition </td>
+                        <td style="text-align:left"><span data-toggle="popover" class="popover-edit-trigger" data-form-target="posture-challenge">@item.Definition</span></td>
                         @if (!Model.IsReviewer)
                         {
                             <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureChallenge" class="remove-item"><i class="fa fa-minus"></i></a></td>
@@ -325,7 +335,7 @@
                 </tr>
                 @foreach (var item in Model.ConstructionPosture.PostureConstraints)
                 {
-                    <tr>
+                    <tr data-id="@item.Id">
                         <td>
                             <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" data-ids="@item.RelationIdsString" data-type="construction" class="btn-posture-constraint">
                                 @if (item.HasRelation == true)
@@ -335,7 +345,7 @@
                             </a>
 
                         </td>
-                        <td style="text-align:left;">@item.Definition </td>
+                        <td style="text-align:left"><span  data-toggle="popover" class="popover-edit-trigger" data-form-target="posture-constraint">@item.Definition</span></td>
                         @if (!Model.IsReviewer)
                         {
                             <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureConstraint" class="remove-item"><i class="fa fa-minus"></i></a></td>
@@ -365,7 +375,7 @@
                 </tr>
                 @foreach (var item in Model.OperationPosture.PostureConstraints)
                 {
-                    <tr>
+                    <tr data-id="@item.Id">
                         <td>
                             <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" data-ids="@item.RelationIdsString" data-type="operation" class="btn-posture-constraint">
                                 @if (item.HasRelation == true)
@@ -374,7 +384,7 @@
                                 }
                             </a>
                         </td>
-                        <td>@item.Definition </td>
+                        <td style="text-align:left"><span  data-toggle="popover" class="popover-edit-trigger" data-form-target="posture-constraint">@item.Definition</span></td>
                         @if (!Model.IsReviewer)
                         {
                             <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureConstraint" class="remove-item"><i class="fa fa-minus"></i></a></td>
@@ -404,7 +414,7 @@
                 </tr>
                 @foreach (var item in Model.DecommissioningPosture.PostureConstraints)
                 {
-                    <tr>
+                    <tr data-id="@item.Id">
                         <td>
                             <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" data-ids="@item.RelationIdsString" data-type="decommissioning" class="btn-posture-constraint">
                                 @if (item.HasRelation == true)
@@ -413,7 +423,7 @@
                                 }
                             </a>
                         </td>
-                        <td>@item.Definition </td>
+                        <td style="text-align:left"><span  data-toggle="popover" class="popover-edit-trigger" data-form-target="posture-constraint">@item.Definition</span></td>
                         @if (!Model.IsReviewer)
                         {
                             <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureConstraint" class="remove-item"><i class="fa fa-minus"></i></a></td>
@@ -458,6 +468,7 @@
 </div>
 <div class="desired-state-form popover-to-content">
     <form action="/BusinessPosture/AddDesiredState">
+        <input type="hidden" name="Id" />
         <input type="hidden" name="PostureId" />
         <div class="row">
             <div class="col-md-12">
@@ -473,6 +484,7 @@
 </div>
 <div class="posture-challenge-form popover-to-content">
     <form action="/BusinessPosture/AddPostureChallenge">
+        <input type="hidden" name="Id" />
         <input type="hidden" name="PostureId" />
         <input type="hidden" name="PostureType" />
         <input type="hidden" name="Type" />
@@ -495,6 +507,7 @@
 
 <div class="posture-constraint-form popover-to-content">
     <form action="/BusinessPosture/AddPostureConstraint">
+        <input type="hidden" name="Id" />
         <input type="hidden" name="PostureId" />
         <input type="hidden" name="PostureType" />
         <input type="hidden" name="Type" />
@@ -594,6 +607,66 @@
                 return $('.' + $(this).data('form-target') + '-form').html();
             }
         });
+        $('.list-result').popover({
+            selector: '.popover-edit-trigger',
+            html: true,
+            placement: 'top',
+            title: function () {
+                return $(this).data('title');
+            },
+            content: function () {
+                var $this = $(this);
+                var formTarget = $this.data('form-target');
+                var $form = $('.' + formTarget + '-form').clone(true);
+                var $listBlock = $this.closest('.list-block');
+                $form.find('input[name="PostureId"]').val($listBlock.find('.popover-trigger').data('posture-id'));
+                if (formTarget == 'desired-state') {
+                    $form.find('input[name="Id"]').val($this.closest('li').data('id'));
+                } else {
+                    $form.find('input[name="Id"]').val($this.closest('tr').data('id'));
+                }
+                $form.find('textarea').html($this.html().replace(/<[^>]*>/g, ""));
+
+                //challenge or constraint
+                $form.find('input[name="PostureType"]').val($listBlock.find('.popover-trigger').data('posture'));
+                var type = $listBlock.find('.popover-trigger').data('posture-type');
+
+                $form.find('.add-item').removeClass('add-item').addClass('edit-item').html('Save');
+                return $form.html();
+            }
+        });
+        $(document).on('click', '.edit-item', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var $form = $this.closest('form');
+            var $trigger = $this.closest('.popover').prev();
+            var $listBlock = $this.closest('.list-block');
+            var type = $listBlock.find('.popover-trigger').data('posture-type');
+            $.post($form.prop('action'), $form.serialize(), function (data) {
+                if (data.IsSuccess) {
+                    var target = $listBlock.find('.popover-trigger').data('form-target');
+                    if (target == 'desired-state') {
+                        $trigger.html(data.Description);
+                    } else {
+                        var $row = $trigger.closest('tr');
+                        var $relationLink = $row.children('td:first-child');
+                        $relationLink.html('');
+                        var relationType = '';
+                        if (data.PostureType == "PostureChallenge") {
+                            relationType = relationType + 'data-id="' + data.Id + '"' + 'data-toggle="modal"' + 'data-target="#posture-modal"' + 'data-ids="' + data.RelationIds + '"' + 'class="btn-posture-challenge"'
+                        }
+                        if (data.PostureType == "PostureConstraint") {
+                            relationType = relationType + 'data-id="' + data.Id + '"' + 'data-toggle="modal"' + 'data-target="#posture-modal"' + 'data-ids="' + data.RelationIds + '"' + 'class="btn-posture-constraint"'
+
+                        }
+                        $relationLink.html(data.RelationIds.length ? '<a href="#" ' + relationType + 'data-type="' + type + '"' + '><span>R</span></a>' : ' ');
+                        $trigger.html(data.Definition);
+                    }
+                }
+                $('.relation-ids-wrapper').html('');
+                popOverElem.popover('hide');
+            });
+        });
         $(document).on('click', '.add-item', function (e) {
             e.preventDefault();
             var $this = $(this);
@@ -612,9 +685,10 @@
                     var target = $listBlock.find('.popover-trigger').data('form-target');
                     if (target == 'desired-state') {
                         //desired-state
-                        $listResult.append('<li data-id="' + data.Id + '" >' + data.Description + '<a href="/BusinessPosture/DeleteDesiredState"  class="remove-item"><i class="fa fa-minus"></i></a></li>');
+                        $listResult.append('<li data-id="' + data.Id + '" ><span data-toggle="popover" data-form-target="desired-state" class="popover-edit-trigger">' + data.Description + '</span><a href="/BusinessPosture/DeleteDesiredState"  class="remove-item"><i class="fa fa-minus"></i></a></li>');
                     } else {
                         var $tr = $('<tr />');
+                        $tr.attr('data-id', data.Id);
                         var $relationCol = $('<td />');
                         var relationType = '';
                         if (data.PostureType == "PostureChallenge") {
@@ -627,7 +701,8 @@
                         $relationCol.html(data.RelationIds.length ? '<a href="#" ' + relationType + 'data-type="' + type + '"' + '><span>R</span></a>' : ' ');
                         $tr.append($relationCol);
                         var $definitionCol = $('<td />');
-                        $definitionCol.html(data.Definition);
+                        $definitionCol.css({ 'text-align': 'left' });
+                        $definitionCol.html('<span data-toggle="popover" class="popover-edit-trigger" data-form-target="'+target+'">' + data.Definition + '</span>');
                         $tr.append($definitionCol);
                         var $removeBtn = $('<a />');
                         $removeBtn.addClass('remove-item');
@@ -666,6 +741,55 @@
             }
         });
         var popOverElem;
+        $(document).on('click', '.popover-edit-trigger', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var $listBlock = $this.closest('.list-block');
+            var $addTrigger = $listBlock.find('.popover-trigger');
+            var $row = $this.closest('tr');
+            var sRelationids = $row.children('td:first-child').find('a').data('ids');
+            var relationIds = [];
+            if (sRelationids != '') {
+                if (typeof sRelationids === 'string') {
+                    relationIds = sRelationids.split(',');
+                } else {
+                    relationIds = [parseInt(sRelationids)];
+                }
+            }
+            var $wrapper = $('.relation-ids-wrapper');
+            $wrapper.html('');
+            relationIds.forEach(function(id){
+                var $hiddenId = $('<input />');
+                $hiddenId.prop('type', 'hidden');
+                $hiddenId.prop('name', 'RelationIds[]');
+                $hiddenId.val(id);
+                $wrapper.append($hiddenId);
+            });
+            //relation
+            var blockType = $this.data('form-target');
+            if (blockType != 'desired-state') {
+                var postureType = $addTrigger.data('posture-type');
+                var desiredList = $('.list-result.' + postureType + '-desired-list').clone(true);
+                desiredList.removeClass('list-result');
+                desiredList.find('li').each(function (i, val) {
+                    var $item = $(val);
+                    var content = $item.find('span').html();
+                    $item.find('.remove-item').remove();
+                    $item.html('');
+                    $item.html(content);
+                    var $checkbox = $('<input />');
+                    $checkbox.prop('type', 'checkbox');
+                    $checkbox.addClass('choose-this');
+                    if (relationIds.indexOf(parseInt($item.data('id'))) > -1) {
+                        $checkbox.prop('checked', true);
+                    }
+                    $item.prepend($checkbox);
+                });
+                $('.relation-content').html(desiredList);
+            }
+
+            popOverElem = $this;
+        });
         $(document).on('click', '.popover-trigger', function (e) {
             e.preventDefault();
             var $this = $(this);
