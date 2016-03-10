@@ -1148,6 +1148,7 @@
     <Content Include="Views\PlanningBlueprint\ESCategory.cshtml" />
     <Content Include="Views\PlanningBlueprint\CreateESCategory.cshtml" />
     <Content Include="Views\PlanningBlueprint\EditESCategory.cshtml" />
+    <Content Include="Views\PopDashboard\Approval.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -1377,6 +1378,7 @@
     <Compile Include="ViewModels\PmsSummary\PmsSummaryIndexViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\PmsSummaryViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\UpdatePmsSummaryViewModel.cs" />
+    <Compile Include="ViewModels\PopDashboard\ApprovalViewModel.cs" />
     <Compile Include="ViewModels\PopDashboard\PopDashboardViewModel.cs" />
     <Compile Include="ViewModels\PopDashboard\PopInformationViewModel.cs" />
     <Compile Include="ViewModels\PopDashboard\SignatureViewModel.cs" />

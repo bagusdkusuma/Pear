@@ -680,6 +680,9 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetPopDashboardResponse.Signature, SignatureViewModel>();
             Mapper.CreateMap<SavePopInformationViewModel, SavePopInformationRequest>();
             Mapper.CreateMap<GetPopDashboardViewModel, SaveSignatureRequest>();
+
+            Mapper.CreateMap<SaveApprovalViewModel, ApproveSignatureRequest>();
+
             base.Configure();
         }
         
