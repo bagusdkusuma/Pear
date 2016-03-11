@@ -35,6 +35,7 @@ namespace DSLNG.PEAR.Services.Responses.PopDashboard
             public string SignatureImage { get; set; }
             public bool IsApprove { get; set; }
             public bool IsReject { get; set; }
+            public string Note { get; set; }
         }
     }
 }

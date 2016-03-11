@@ -15,6 +15,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PopDashboard
         public string SignatureImage { get; set; }
         public bool IsApprove { get; set; }
         public bool IsReject { get; set; }
+        public string Note { get; set; }
     }
 
     public class SaveApprovalViewModel
@@ -25,5 +26,6 @@ namespace DSLNG.PEAR.Web.ViewModels.PopDashboard
         public SignatureType Type { get; set; }
         public bool IsApprove { get; set; }
         public bool IsReject { get; set; }
+        public string Note { get; set; }
     }
 }

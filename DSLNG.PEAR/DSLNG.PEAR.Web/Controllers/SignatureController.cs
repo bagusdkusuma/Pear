@@ -68,7 +68,8 @@ namespace DSLNG.PEAR.Web.Controllers
                 type = response.Type.ToString(),
                 signatureImage = response.SignatureImage,
                 approve = response.Approve,
-                reject = response.Reject
+                reject = response.Reject,
+                note = response.Note
             };
 
             return Json(data, JsonRequestBehavior.AllowGet);

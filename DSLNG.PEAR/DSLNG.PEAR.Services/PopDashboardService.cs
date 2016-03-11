@@ -77,14 +77,15 @@ namespace DSLNG.PEAR.Services
 
         public SavePopDashboardResponse SavePopDashboard(SavePopDashboardRequest request)
         {
+            var popDashboard = request.MapTo<PopDashboard>();
             if (request.Id == 0)
             {
-                var popDashboard = request.MapTo<PopDashboard>();
                 DataContext.PopDashboards.Add(popDashboard);
             }
             else
             {
-
+                popDashboard = DataContext.PopDashboards.FirstOrDefault(x => x.Id == request.Id);
+                request.MapPropertiesToInstance<PopDashboard>(popDashboard);
             }
 
             DataContext.SaveChanges();

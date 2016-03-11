@@ -1,7 +1,7 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.PopDashboard.GetPopDashboardViewModel
 
 @{
-    ViewBag.Title = "PopInformation";
+    ViewBag.Title = "Approval";
 }
 
 <div class="pop-information">
@@ -175,7 +175,7 @@
                             }
                             else
                             {
-                                <a href="#" data-dashboard-id="@Model.Id" data-type="requestby" class="edit-signature"><i class="fa fa-edit"></i></a>
+                                <a href="#" data-dashboard-id="@Model.Id" data-type="0" data-id="@Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.requestby).Select(x => x.Id).FirstOrDefault()" data-userid="@Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.requestby).Select(x => x.UserId).FirstOrDefault()" class="edit-signature"><i class="fa fa-edit"></i></a>
                             }
                         </td>
                         <td class="checkedby" colspan="3">
@@ -186,7 +186,7 @@
                             }
                             else
                             {
-                                <a href="#" data-dashboard-id="@Model.Id" data-type="checkedby" class="edit-signature"><i class="fa fa-edit"></i></a>
+                                <a href="#" data-dashboard-id="@Model.Id" data-type="0" data-id="@Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.checkedby).Select(x => x.Id).FirstOrDefault()" data-userid="@Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.checkedby).Select(x => x.UserId).FirstOrDefault()" class="edit-signature"><i class="fa fa-edit"></i></a>
                             }
                         </td>
                         <td class="ResourcesRemark2">
@@ -196,33 +196,44 @@
                     <tr>
                         <td class="requestby-info" colspan="3">
                             @{
+                                foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.requestby).ToList())
+                                {
+                                    if (item.Id != null && item.IsApprove == false && item.IsReject == false)
+                                    {
+                                        <a href="#" class="btn btn-primary approve" data-approve="True" data-reject="False" data-id="@item.Id" data-userid="@item.UserId" data-dashboardid="@Model.Id" data-type="@item.Type">Approve</a>
+                                        <a href="#" class="btn btn-primary reject" data-approve="False" data-reject="True" data-id="@item.Id" data-userid="@item.UserId" data-dashboardid="@Model.Id" data-type="@item.Type" data-toggle="modal" data-target="#modalReject">Reject</a>
 
-                                var Id = Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.requestby).Select(x => x.Id).FirstOrDefault();
-                                var IsApprove = Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.requestby).Select(x => x.IsApprove).FirstOrDefault();
-                                var IsReject = Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.requestby).Select(x => x.IsReject).FirstOrDefault();
-                                var UserId = Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.requestby).Select(x => x.UserId).FirstOrDefault();
-                                var Type = Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.requestby).Select(x => x.Type).FirstOrDefault();
-                                var SignatureImage = Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.requestby).Select(x => x.SignatureImage).FirstOrDefault();
-                                if (Id == 0 && IsApprove == false && IsReject == false)
-                                {
-
-                                }
-                                else if (Id != null && IsApprove == false && IsReject == false)
-                                {
-                                    <a href="#" class="btn btn-primary approve" data-approve="True" data-reject="False" data-id="@Id" data-userid="@UserId" data-dashboardid="@Model.Id" data-type="@Type">Approve</a>
-                                    <a href="#" class="btn btn-primary reject" data-approve="False" data-reject="True" data-id="@Id" data-userid="@UserId" data-dashboardid="@Model.Id" data-type="@Type" data-toggle="modal" data-target="#modalReject">Reject</a>
-                                }
-                                else if (Id != null && IsApprove == true && IsReject == false)
-                                {
-                                    <span data-id="@Id" data-type="0" data-userid="@UserId"><img src="@SignatureImage" /></span>
+                                    }
+                                    else if (item.Id != null && item.IsApprove == true && item.IsReject == false)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
+                                    }
+                                    else if (item.Id != null && item.IsApprove == false && item.IsReject == true)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId">Rejected</span><a href="#" data-toggle="modal" data-target="#nodeReject" data-note="@item.Note" class="note-reject"><i class="fa fa-comment"></i></a>
+                                    }
                                 }
                             }
-
                         </td>
                         <td class="checkedby-info" colspan="3">
-                            @foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.checkedby))
-                            {
-                                <span data-id="@item.Id" data-type="1" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
+                            @{
+                                foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.checkedby).ToList())
+                                {
+                                    if (item.Id != null && item.IsApprove == false && item.IsReject == false)
+                                    {
+                                        <a href="#" class="btn btn-primary approve" data-approve="True" data-reject="False" data-id="@item.Id" data-userid="@item.UserId" data-dashboardid="@Model.Id" data-type="@item.Type">Approve</a>
+                                        <a href="#" class="btn btn-primary reject" data-approve="False" data-reject="True" data-id="@item.Id" data-userid="@item.UserId" data-dashboardid="@Model.Id" data-type="@item.Type" data-toggle="modal" data-target="#modalReject">Reject</a>
+
+                                    }
+                                    else if (item.Id != null && item.IsApprove == true && item.IsReject == false)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
+                                    }
+                                    else if (item.Id != null && item.IsApprove == false && item.IsReject == true)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId">Rejected</span><a href="#" data-toggle="modal" data-target="#nodeReject" data-note="@item.Note" class="note-reject"><i class="fa fa-comment"></i></a>
+                                    }
+                                }
                             }
                         </td>
                         <td rowspan="2" class="ResourcesRemark2-info">
@@ -248,7 +259,7 @@
                             }
                             else
                             {
-                                <a href="#" data-dashboard-id="@Model.Id" data-type="cpd" class="edit-signature"><i class="fa fa-edit"></i></a>
+                                <a href="#" data-dashboard-id="@Model.Id" data-type="2" data-id="@Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.cpd).Select(x => x.Id).FirstOrDefault()" data-userid="@Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.cpd).Select(x => x.UserId).FirstOrDefault()" class="edit-signature"><i class="fa fa-edit"></i></a>
                             }
                         </td>
                         <td class="fd">
@@ -259,7 +270,7 @@
                             }
                             else
                             {
-                                <a href="#" data-dashboard-id="@Model.Id" data-type="fd" class="edit-signature"><i class="fa fa-edit"></i></a>
+                                <a href="#" data-dashboard-id="@Model.Id" data-type="3" data-id="@Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.fd).Select(x => x.Id).FirstOrDefault()" data-userid="@Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.fd).Select(x => x.UserId).FirstOrDefault()" class="edit-signature"><i class="fa fa-edit"></i></a>
                             }
                         </td>
                         <td class="pd">
@@ -270,7 +281,7 @@
                             }
                             else
                             {
-                                <a href="#" data-dashboard-id="@Model.Id" data-type="pd" class="edit-signature"><i class="fa fa-edit"></i></a>
+                                <a href="#" data-dashboard-id="@Model.Id" data-type="4" data-id="@Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.pd).Select(x => x.Id).FirstOrDefault()" data-userid="@Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.pd).Select(x => x.UserId).FirstOrDefault()" class="edit-signature"><i class="fa fa-edit"></i></a>
                             }
                         </td>
                         <td class="od">
@@ -281,7 +292,7 @@
                             }
                             else
                             {
-                                <a href="#" data-dashboard-id="@Model.Id" data-type="od" class="edit-signature"><i class="fa fa-edit"></i></a>
+                                <a href="#" data-dashboard-id="@Model.Id" data-type="5" data-id="@Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.od).Select(x => x.Id).FirstOrDefault()" data-userid="@Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.od).Select(x => x.UserId).FirstOrDefault()" class="edit-signature"><i class="fa fa-edit"></i></a>
                             }
                         </td>
                         <td class="td">
@@ -292,7 +303,7 @@
                             }
                             else
                             {
-                                <a href="#" data-dashboard-id="@Model.Id" data-type="td" class="edit-signature"><i class="fa fa-edit"></i></a>
+                                <a href="#" data-dashboard-id="@Model.Id" data-type="6" data-id="@Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.td).Select(x => x.Id).FirstOrDefault()" data-userid="@Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.td).Select(x => x.UserId).FirstOrDefault()" class="edit-signature"><i class="fa fa-edit"></i></a>
                             }
                         </td>
                         <td class="cad">
@@ -303,7 +314,7 @@
                             }
                             else
                             {
-                                <a href="#" data-dashboard-id="@Model.Id" data-type="cad" class="edit-signature"><i class="fa fa-edit"></i></a>
+                                <a href="#" data-dashboard-id="@Model.Id" data-type="7" data-id="@Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.cad).Select(x => x.Id).FirstOrDefault()" data-userid="@Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.cad).Select(x => x.UserId).FirstOrDefault()" class="edit-signature"><i class="fa fa-edit"></i></a>
                             }
                         </td>
                         <td class="cd">
@@ -314,51 +325,156 @@
                             }
                             else
                             {
-                                <a href="#" data-dashboard-id="@Model.Id" data-type="cd" class="edit-signature" data-placement="left"><i class="fa fa-edit"></i></a>
+                                <a href="#" data-dashboard-id="@Model.Id" data-type="8" data-id="@Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.cd).Select(x => x.Id).FirstOrDefault()" data-userid="@Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.cd).Select(x => x.UserId).FirstOrDefault()" class="edit-signature"><i class="fa fa-edit"></i></a>
                             }
                         </td>
                     </tr>
                     <tr>
                         <td class="cpd-info">
-                            @foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.cpd))
-                            {
-                                <span data-id="@item.Id" data-type="2" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
+                            @{
+                                foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.cpd).ToList())
+                                {
+                                    if (item.Id != null && item.IsApprove == false && item.IsReject == false)
+                                    {
+                                        <a href="#" class="btn btn-primary approve" data-approve="True" data-reject="False" data-id="@item.Id" data-userid="@item.UserId" data-dashboardid="@Model.Id" data-type="@item.Type">Approve</a>
+                                        <a href="#" class="btn btn-primary reject" data-approve="False" data-reject="True" data-id="@item.Id" data-userid="@item.UserId" data-dashboardid="@Model.Id" data-type="@item.Type" data-toggle="modal" data-target="#modalReject">Reject</a>
+
+                                    }
+                                    else if (item.Id != null && item.IsApprove == true && item.IsReject == false)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
+                                    }
+                                    else if (item.Id != null && item.IsApprove == false && item.IsReject == true)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId">Rejected</span><a href="#" data-toggle="modal" data-target="#nodeReject" data-note="@item.Note" class="note-reject"><i class="fa fa-comment"></i></a>
+                                    }
+                                }
                             }
                         </td>
                         <td class="fd-info">
-                            @foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.fd))
-                            {
-                                <span data-id="@item.Id" data-type="3" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
+                            @{
+                                foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.fd).ToList())
+                                {
+                                    if (item.Id != null && item.IsApprove == false && item.IsReject == false)
+                                    {
+                                        <a href="#" class="btn btn-primary approve" data-approve="True" data-reject="False" data-id="@item.Id" data-userid="@item.UserId" data-dashboardid="@Model.Id" data-type="@item.Type">Approve</a>
+                                        <a href="#" class="btn btn-primary reject" data-approve="False" data-reject="True" data-id="@item.Id" data-userid="@item.UserId" data-dashboardid="@Model.Id" data-type="@item.Type" data-toggle="modal" data-target="#modalReject">Reject</a>
+
+                                    }
+                                    else if (item.Id != null && item.IsApprove == true && item.IsReject == false)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
+                                    }
+                                    else if (item.Id != null && item.IsApprove == false && item.IsReject == true)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId">Rejected</span><a href="#" data-toggle="modal" data-target="#nodeReject" data-note="@item.Note" class="note-reject"><i class="fa fa-comment"></i></a>
+                                    }
+                                }
                             }
                         </td>
                         <td class="pd-info">
-                            @foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.pd))
-                            {
-                                <span data-id="@item.Id" data-type="4" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
+                            @{
+                                foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.pd).ToList())
+                                {
+                                    if (item.Id != null && item.IsApprove == false && item.IsReject == false)
+                                    {
+                                        <a href="#" class="btn btn-primary approve" data-approve="True" data-reject="False" data-id="@item.Id" data-userid="@item.UserId" data-dashboardid="@Model.Id" data-type="@item.Type">Approve</a>
+                                        <a href="#" class="btn btn-primary reject" data-approve="False" data-reject="True" data-id="@item.Id" data-userid="@item.UserId" data-dashboardid="@Model.Id" data-type="@item.Type" data-toggle="modal" data-target="#modalReject">Reject</a>
+
+                                    }
+                                    else if (item.Id != null && item.IsApprove == true && item.IsReject == false)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
+                                    }
+                                    else if (item.Id != null && item.IsApprove == false && item.IsReject == true)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId">Rejected</span><a href="#" data-toggle="modal" data-target="#nodeReject" data-note="@item.Note" class="note-reject"><i class="fa fa-comment"></i></a>
+                                    }
+                                }
                             }
                         </td>
                         <td class="od-info">
-                            @foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.od))
-                            {
-                                <span data-id="@item.Id" data-type="5" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
+                            @{
+                                foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.od).ToList())
+                                {
+                                    if (item.Id != null && item.IsApprove == false && item.IsReject == false)
+                                    {
+                                        <a href="#" class="btn btn-primary approve" data-approve="True" data-reject="False" data-id="@item.Id" data-userid="@item.UserId" data-dashboardid="@Model.Id" data-type="@item.Type">Approve</a>
+                                        <a href="#" class="btn btn-primary reject" data-approve="False" data-reject="True" data-id="@item.Id" data-userid="@item.UserId" data-dashboardid="@Model.Id" data-type="@item.Type" data-toggle="modal" data-target="#modalReject">Reject</a>
+
+                                    }
+                                    else if (item.Id != null && item.IsApprove == true && item.IsReject == false)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
+                                    }
+                                    else if (item.Id != null && item.IsApprove == false && item.IsReject == true)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId">Rejected</span><a href="#" data-toggle="modal" data-target="#nodeReject" data-note="@item.Note" class="note-reject"><i class="fa fa-comment"></i></a>
+                                    }
+                                }
                             }
                         </td>
                         <td class="td-info">
-                            @foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.td))
-                            {
-                                <span data-id="@item.Id" data-type="6" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
+                            @{
+                                foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.td).ToList())
+                                {
+                                    if (item.Id != null && item.IsApprove == false && item.IsReject == false)
+                                    {
+                                        <a href="#" class="btn btn-primary approve" data-approve="True" data-reject="False" data-id="@item.Id" data-userid="@item.UserId" data-dashboardid="@Model.Id" data-type="@item.Type">Approve</a>
+                                        <a href="#" class="btn btn-primary reject" data-approve="False" data-reject="True" data-id="@item.Id" data-userid="@item.UserId" data-dashboardid="@Model.Id" data-type="@item.Type" data-toggle="modal" data-target="#modalReject">Reject</a>
+
+                                    }
+                                    else if (item.Id != null && item.IsApprove == true && item.IsReject == false)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
+                                    }
+                                    else if (item.Id != null && item.IsApprove == false && item.IsReject == true)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId">Rejected</span><a href="#" data-toggle="modal" data-target="#nodeReject" data-note="@item.Note" class="note-reject"><i class="fa fa-comment"></i></a>
+                                    }
+                                }
                             }
                         </td>
                         <td class="cad-info">
-                            @foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.cad))
-                            {
-                                <span data-id="@item.Id" data-type="7" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
+                            @{
+                                foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.cad).ToList())
+                                {
+                                    if (item.Id != null && item.IsApprove == false && item.IsReject == false)
+                                    {
+                                        <a href="#" class="btn btn-primary approve" data-approve="True" data-reject="False" data-id="@item.Id" data-userid="@item.UserId" data-dashboardid="@Model.Id" data-type="@item.Type">Approve</a>
+                                        <a href="#" class="btn btn-primary reject" data-approve="False" data-reject="True" data-id="@item.Id" data-userid="@item.UserId" data-dashboardid="@Model.Id" data-type="@item.Type" data-toggle="modal" data-target="#modalReject">Reject</a>
+
+                                    }
+                                    else if (item.Id != null && item.IsApprove == true && item.IsReject == false)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
+                                    }
+                                    else if (item.Id != null && item.IsApprove == false && item.IsReject == true)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId">Rejected</span><a href="#" data-toggle="modal" data-target="#nodeReject" data-note="@item.Note" class="note-reject"><i class="fa fa-comment"></i></a>
+                                    }
+                                }
                             }
                         </td>
                         <td class="cd-info">
-                            @foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.cd))
-                            {
-                                <span data-id="@item.Id" data-type="8" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
+                            @{
+                                foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.cd).ToList())
+                                {
+                                    if (item.Id != null && item.IsApprove == false && item.IsReject == false)
+                                    {
+                                        <a href="#" class="btn btn-primary approve" data-approve="True" data-reject="False" data-id="@item.Id" data-userid="@item.UserId" data-dashboardid="@Model.Id" data-type="@item.Type">Approve</a>
+                                        <a href="#" class="btn btn-primary reject" data-approve="False" data-reject="True" data-id="@item.Id" data-userid="@item.UserId" data-dashboardid="@Model.Id" data-type="@item.Type" data-toggle="modal" data-target="#modalReject">Reject</a>
+
+                                    }
+                                    else if (item.Id != null && item.IsApprove == true && item.IsReject == false)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
+                                    }
+                                    else if (item.Id != null && item.IsApprove == false && item.IsReject == true)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId">Rejected</span><a href="#" data-toggle="modal" data-target="#nodeReject" data-note="@item.Note" class="note-reject"><i class="fa fa-comment"></i></a>
+                                    }
+                                }
                             }
                         </td>
                     </tr>
@@ -403,24 +519,37 @@
 <div class="modal fade" id="modalReject">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-body form-reject">
-                <form action="/Signature/Approval" class="doremi">
-                    <input type="hidden" name="Id" id="input-id"/>
+            <div class="modal-body form-reject" style="color:white">
+                @using (Html.BeginForm("Approval", "Signature", FormMethod.Post, new { id = "input-rejected" }))
+                {
+
+                    <input type="hidden" name="Id" id="input-id" />
                     <input type="hidden" name="UserId" />
                     <input type="hidden" name="DashboardId" />
                     <input type="hidden" name="Type" />
                     <input type="hidden" name="IsApprove" />
                     <input type="hidden" name="IsReject" />
                     <label>Note</label>
-                    <textarea name="Note" cols="25" rows="5" required="required"></textarea>
-                </form>
+                    <textarea name="Note" cols="25" rows="5" required="required" style="color:black"></textarea>
+
+                    <div class="modal-footer">
+                        <input type="submit" name="submit" class="btn btn-primary" />
+                    </div>
+                }
+
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Submit</button>
-            </div>
+
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="nodeReject">
+    <div class="modal-dialog">
+        <div class="modal-content modal-node" style="color:white">
+        </div>
+    </div>
+</div>
+
 
 
 @section Scripts{
@@ -455,13 +584,12 @@
                     data: $that.closest('form').serialize(),
                     type: 'POST',
                     success: function (data) {
-                        $('.' + data.type + '-info').append('<span data-id="' + data.id + '" data-type="' + data.typeInt + '" data-userid="' + data.userId + '">' + '<img src="' + data.signatureImage + '">' + '</span>');
                         popOverElem.popover('hide');
                         $('.' + data.type).find('a').remove();
-                        $('.' + data.type).append('<a href="#" data-dashboard-id="@Model.Id" data-type="' + data.type + '" class="edit-signature"><i class="fa fa-edit"></i></a>')
+                        $('.' + data.type).append('<a href="#" data-id="' + data.id + '" data-dashboard-id="@Model.Id" data-type="' + data.typeInt + '" data-typeInt="' + data.typeInt + '" data-userid="' + data.userId + '" class="edit-signature"><i class="fa fa-edit"></i></a>')
+
                         $('.' + data.type + '-info').html('');
-                        $('.' + data.type + '-info').append('<a href="#" class="btn btn-primary approve" data-approve="True" data-reject="False" data-id="' + data.id + '" data-userid="' + data.userId + '" data-dashboardid="' +@Model.Id +'" data-type="' + data.type + '">Approve</a> <a class="btn btn-primary reject" data-approve="False" data-reject="True" data-id="' + data.id + '" data-userid="' + data.userId + '" data-dashboardid="' +@Model.Id +'" data-type="' + data.type + '">Reject</a>');
-                        popOverElem.popover('hide');
+                        $('.' + data.type + '-info').append('<a href="#" class="btn btn-primary approve" data-approve="True" data-reject="False" data-id="' + data.id + '" data-userid="' + data.userId + '" data-dashboardid="' +@Model.Id +'" data-type="' + data.type + '">Approve</a> <a class="btn btn-primary reject" data-approve="False" data-reject="True" data-id="' + data.id + '" data-userid="' + data.userId + '" data-dashboardid="' +@Model.Id +'" data-type="' + data.type + '" data-toggle="modal" data-target="#modalReject">Reject</a>');
                     }
                 });
             });
@@ -480,24 +608,17 @@
 
             $(document).on('click', '.edit-signature', function () {
                 var $that = $(this);
+                var id = $that.data('id')
                 var type = $that.data('type');
-                $table = $that.closest('table');
-                $td = $table.find('.' + type + '-info').find('span');
-
-
-                var id = $td.data('id')
-                var type = $td.data('type');
-                var userid = $td.data('userid');
+                var userid = $that.data('userid');
                 var dashboardId = $that.data('dashboard-id');
-                console.log(id)
-                console.log(type);
-                console.log(userid);
-                console.log(dashboardId);
 
                 $('.popover').find('input[name="id"]').attr('value', id);
                 $('.popover').find('input[name="dashboardId"]').attr('value', dashboardId);
                 $('.popover').find('select[name="UserId"]').find('option[value="' + userid + '"]').attr('selected', 'selected');
                 $('.popover').find('input[name="typeSignature"]').attr('value', type);
+
+
                 popOverElem = $(this);
             });
 
@@ -511,12 +632,12 @@
                     data: $that.closest('form').serialize(),
                     type: 'POST',
                     success: function (data) {
-                        //$('.' + data.type + '-info').find('span').remove();
-                        //$('.' + data.type + '-info').append('<span data-id="' + data.id + '" data-type="' + data.typeInt + '" data-userid="' + data.userId + '">' + '<img src="' + data.signatureImage + '">' + '</span>');
-                        //popOverElem.popover('hide');
-                        $('.' + data.type + '-info').html('');
-                        $('.' + data.type + '-info').append('<a href="#" class="btn btn-primary approve" data-approve="True" data-reject="False" data-id="' + data.id + '" data-userid="' + data.userId + '" data-dashboardid="' +@Model.Id +'" data-type="' + data.type + '" data-toggle="modal" data-target="#modalReject">Approve</a> <a class="btn btn-primary reject" >Reject</a>');
                         popOverElem.popover('hide');
+                        $('.' + data.type).find('a').remove();
+                        $('.' + data.type).append('<a href="#" data-id="' + data.id + '" data-dashboard-id="@Model.Id" data-type="' + data.typeInt + '" data-typeInt="' + data.typeInt + '" data-userid="' + data.userId + '" class="edit-signature"><i class="fa fa-edit"></i></a>')
+
+                        $('.' + data.type + '-info').html('');
+                        $('.' + data.type + '-info').append('<a href="#" class="btn btn-primary approve" data-approve="True" data-reject="False" data-id="' + data.id + '" data-userid="' + data.userId + '" data-dashboardid="' +@Model.Id +'" data-type="' + data.type + '" >Approve</a> <a class="btn btn-primary reject" data-approve="False" data-reject="True" data-id="' + data.id + '" data-userid="' + data.userId + '" data-dashboardid="' +@Model.Id +'" data-type="' + data.type + '" data-toggle="modal" data-target="#modalReject">Reject</a>');
                     }
                 });
             });
@@ -542,7 +663,7 @@
                     data: datas,
                     type: 'POST',
                     success: function (data) {
-                        $('.' + data.type + '-info').find('a').remove();
+                        $('.' + data.type + '-info').html('')
                         $('.' + data.type + '-info').append('<img src="' + data.signatureImage + '" />');
                     }
                 });
@@ -550,13 +671,16 @@
 
             $(document).on('click', '.reject', function () {
                 $that = $(this);
-                
                 var id = $that.data('id');
                 var dashboardId = $that.data('dashboardid');
                 var userId = $that.data('userid');
                 var type = $that.data('type');
                 var approve = $that.data('approve');
                 var reject = $that.data('reject');
+                //delete for fresh column
+                $('.form-reject').find('textarea[name="Note"]').remove();
+                $('<textarea name="Note" cols="25" rows="5" required="required" style="color:black"></textarea>').insertBefore('.modal-footer');
+
                 $('.form-reject').find('input[name="Id"]').attr('value', id);
                 $('.form-reject').find('input[name="UserId"]').attr('value', userId);
                 $('.form-reject').find('input[name="DashboardId"]').attr('value', dashboardId);
@@ -566,6 +690,27 @@
             });
 
 
+            $(document).on('submit', '#input-rejected', function (e) {
+                e.preventDefault();
+                $that = $(this);
+                $.ajax({
+                    url: '@Url.Action("Approve", "Signature")',
+                    data: $that.closest('form').serialize(),
+                    type: 'POST',
+                    success: function (data) {
+                        $('.' + data.type + '-info').html('');
+                        $('.' + data.type + '-info').append('<span>Rejected</span><a href="#" data-note="' + data.note + '" data-toggle="modal" data-target="#nodeReject" class="note-reject"><i class="fa fa-comment"></i></a>');
+                        $('#modalReject').modal('hide');
+                    }
+                });
+            });
+
+
+            $(document).on('click', '.note-reject', function () {
+                $that = $(this);
+                $('.modal-node').html('');
+                $('.modal-node').append('<span>' + $that.data('note') + '</span>')
+            });
 
 
         });
