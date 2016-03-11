@@ -2404,7 +2404,10 @@ li > input.choose-list {
     right: -25px;
     top: 0;
 }
-
+.table-posture-challenge,
+.table-posture-constraint {
+    width:100%;
+}
 .table-posture-constraint,
 .table-posture-constraint tbody > tr > td,
 .table-posture-challenge,
@@ -2956,4 +2959,8 @@ color: #3498db;
 }
 .notes-value {
     display:none;
+}
+span.popover-edit-trigger {
+    display:inline-block;
+    width:100%;
 }
