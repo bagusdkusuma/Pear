@@ -143,14 +143,16 @@
         </tr></table>
     <div class="objective-form">
         <form action="/MidtermStrategyPlanning/AddObjective">
+            <input type="hidden" name="Id" />
             <input type="hidden" name="MidtermPlanningId" />
             <label>Objective</label>
-            <textarea name="Value" cols="25" rows="5"></textarea>
+            <textarea name="Value" cols="25" rows="5" required="required"></textarea>
             <input type="submit" class="btn btn-primary submit-objective" value="submit" />
         </form>
     </div>
     <div class="kpi-form">
         <form action="/MidtermStrategyPlanning/AddKpi">
+            <input type="hidden" name="OldKpiId" />
             <input type="hidden" name="MidtermPlanningId" />
             <div>
                 <label>Pilih Kpi</label>
@@ -210,6 +212,56 @@
                 return $('.objective-form').html();
             }
         });
+        $('.objectives, .kpis').popover({
+            selector: '.popover-edit-trigger',
+            html: true,
+            placement: 'top',
+            content: function () {
+                var $this = $(this);
+                var target = $this.data('target-form');
+                var $form = $('.'+target+'-form').clone();
+                var $midtermPlanning = $this.closest('.midterm-planning');
+                var midtermPlanningId = $midtermPlanning.data('id');
+                $form.find('input[name="MidtermPlanningId"]').val(midtermPlanningId);
+                if (target == 'objective') {
+                    $form.find('input[name="Id"]').val($this.closest('li').data('id'));
+                } else {
+                    var $opt = $('<option />');
+                    $form.find('input[name="OldKpiId"]').val($this.closest('tr').data('id'));
+                    $opt.attr('value', $this.closest('tr').data('id'));
+                    $opt.html($this.html());
+                    $opt.attr('selected', 'selected');
+                    $form.find('select[name="KpiId"]').append($opt);
+                    //Pear.Artifact.Designer._kpiAutoComplete($form, false);
+                }
+                $form.find('textarea').html($this.html());
+                $form.find('.submit-'+target).removeClass('submit-'+target).addClass('edit-'+ target);
+                return $form.html();
+            }
+        });
+        $(document).on('click', '.edit-kpi', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var $form = $this.closest('form');
+            var $trigger = $this.closest('.popover').prev();
+            $.post($form.prop('action'), $form.serialize(), function (data) {
+                $trigger.html(data.Name + ' (' + data.Measurement + ')');
+                $trigger.closest('tr').data('id', data.Id);
+                $trigger.popover('hide');
+            });
+        });
+        $(document).on('click', '.edit-objective', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var $form = $this.closest('form');
+            var $trigger = $this.closest('.popover').prev();
+            $.post($form.prop('action'), $form.serialize(), function (data) {
+                if (data.IsSuccess) {
+                    $trigger.html(data.Value);
+                    $trigger.popover('hide');
+                }
+            });
+        });
         $(document).on('click', '.submit-objective', function (e) {
             e.preventDefault();
             var $this = $(this);
@@ -219,7 +271,8 @@
             $form.find('input[name="MidtermPlanningId"]').val(midtermPlanningId);
             $.post($form.prop('action'), $form.serialize(), function (data) {
                 if (data.IsSuccess) {
-                    $midtermPlanning.find('.objectives').append('<li data-id="' + data.Id + '">' + data.Value + '<a href="/MidtermStrategyPlanning/DeleteObjective" class="remove-objective"><i class="fa fa-minus"></i></a>');
+                    $midtermPlanning.find('.objectives').append('<li data-id="' + data.Id +
+                        '"><span class="popover-edit-trigger" data-toggle="popover" data-target-form="objective">' + data.Value + '</span><a href="/MidtermStrategyPlanning/DeleteObjective" class="remove-objective"><i class="fa fa-minus"></i></a>');
                     $midtermPlanning.find('.add-objective').popover('hide');
                 }
             });
@@ -250,7 +303,8 @@
                     $targetCol.addClass('target');
                     var $economicCol = $('<td />');
                     $economicCol.addClass('economic');
-                    $kpiCol.html(kpi.Name + ' (' + kpi.Measurement + ') <a href="/MidtermStrategyPlanning/DeleteKpi" class="remove-kpi"><i class="fa fa-minus"></i></a>');
+                    $kpiCol.html('<span class="popover-edit-trigger" data-target-form="kpi" data-toggle="popover">' +
+                        kpi.Name + ' (' + kpi.Measurement + ')</span> <a href="/MidtermStrategyPlanning/DeleteKpi" class="remove-kpi"><i class="fa fa-minus"></i></a>');
                     $targetCol.html(kpi.Target);
                     $economicCol.html(kpi.Economic);
                     $row.append($kpiCol);
@@ -260,6 +314,10 @@
                     $midtermPlanning.find('.add-kpi').popover('hide');
                 
             });
+        });
+        $(document).on('shown.bs.popover','.popover-edit-trigger', function () {
+            //console.log('eee');
+            Pear.Artifact.Designer._kpiAutoComplete($('.popover'), false);
         });
         $('.add-kpi').on('shown.bs.popover', function () {
             Pear.Artifact.Designer._kpiAutoComplete($('.popover'), false);
@@ -301,7 +359,7 @@
                         var objective = mPlanning.Objectives[j];
                           @if (!Model.IsReviewer)
                           {
-                        <text>$objectivesHolder.append('<li data-id="' + objective.Id + '">' + objective.Value + '<a  href="/MidtermStrategyPlanning/DeleteObjective" class="remove-objective"><i class="fa fa-minus"></i></a></li>');</text>
+                        <text>$objectivesHolder.append('<li data-id="' + objective.Id + '"><span class="popover-edit-trigger" data-target-form="objective" data-toggle="popover">' + objective.Value + '</span><a  href="/MidtermStrategyPlanning/DeleteObjective" class="remove-objective"><i class="fa fa-minus"></i></a></li>');</text>
                           }
                           else
                           {
@@ -321,7 +379,8 @@
                         $economicCol.addClass('economic');
                         @if (!Model.IsReviewer)
                         {
-                        <text>$kpiCol.html(kpi.Name + ' (' + kpi.Measurement + ') <a href="/MidtermStrategyPlanning/DeleteKpi" class="remove-kpi"><i class="fa fa-minus"></i></a>');</text>
+                        <text>$kpiCol.html('<span class="popover-edit-trigger" data-target-form="kpi" data-toggle="popover">' +
+                            kpi.Name + ' (' + kpi.Measurement + ')</span> <a href="/MidtermStrategyPlanning/DeleteKpi" class="remove-kpi"><i class="fa fa-minus"></i></a>');</text>
                         }
                         else
                         {

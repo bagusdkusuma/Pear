@@ -9,5 +9,6 @@ namespace DSLNG.PEAR.Web.ViewModels.MidtermStrategyPlanning
     {
         public int MidtermPlanningId { get; set; }
         public int KpiId { get; set; }
+        public int OldKpiId { get; set; }
     }
 }

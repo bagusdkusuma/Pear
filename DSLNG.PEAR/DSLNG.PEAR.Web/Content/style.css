@@ -2965,4 +2965,5 @@ color: #3498db;
 span.popover-edit-trigger {
     display:inline-block;
     width:100%;
+    vertical-align: top
 }
