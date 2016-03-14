@@ -2466,7 +2466,7 @@ table.list-result {
             vertical-align:top;
         }
 
-            table.list-result tr td:first-child span {
+            table.list-result tr td:first-child > span {
                 display: inline-block;
                 width: 17px;
                 height: 17px;

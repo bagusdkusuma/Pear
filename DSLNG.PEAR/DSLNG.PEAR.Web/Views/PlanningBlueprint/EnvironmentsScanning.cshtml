@@ -11,21 +11,24 @@
         <h4>Ultimate Objective</h4>
     </div>
     <div class="row row-margin-5 color-white">
-        <table class="table-bordered table">
+        <table class="table-bordered table list-result">
             <tr>
-                <th style="width:33.33%">Ultimate Objective (Construction Phase)
+                <th style="width:33.33%">
+                    Ultimate Objective (Construction Phase)
                     @if (!Model.IsReviewer)
                     {
                         <a href="#" class="input-popover" data-es-id="@Model.Id" data-type="cp" data-toggle="popover" data-placement="left" title="Construction Phase"><i class="fa fa-plus"></i></a>
                     }
                 </th>
-                <th style="width:33.33%">Ultimate Objective (Operation Phase)
-                     @if (!Model.IsReviewer)
-                     {
-                         <a href="#" class="input-popover" data-es-id="@Model.Id" data-type="op" data-toggle="popover" data-placement="left" title="Construction Phase"><i class="fa fa-plus"></i></a>
-                     }
+                <th style="width:33.33%">
+                    Ultimate Objective (Operation Phase)
+                    @if (!Model.IsReviewer)
+                    {
+                        <a href="#" class="input-popover" data-es-id="@Model.Id" data-type="op" data-toggle="popover" data-placement="left" title="Construction Phase"><i class="fa fa-plus"></i></a>
+                    }
                 </th>
-                <th style="width:33.33%">Ultimate Objective (Decomm.Re-Invent Phase)
+                <th style="width:33.33%">
+                    Ultimate Objective (Decomm.Re-Invent Phase)
                     @if (!Model.IsReviewer)
                     {
                         <a href="#" class="input-popover" data-es-id="@Model.Id" data-type="rp" data-toggle="popover" data-placement="left" title="Reinvent Phase"><i class="fa fa-plus"></i></a>
@@ -37,8 +40,11 @@
                     <ul class="cp-list">
                         @foreach (var item in Model.ConstructionPhase)
                         {
-                            <li>@item.Description @if (!Model.IsReviewer)
-                                                  {<a href="#" data-id="@item.Id" class="remove-button"><i class="fa fa-minus"></i></a>}</li>
+                            <li>
+                                <span class="popover-edit-trigger" data-toggle="popover" data-form-target="objective" data-id="@item.Id" data-es-id="@Model.Id" data-type="cp" data-placement="left">@item.Description</span>
+                                @if (!Model.IsReviewer)
+                                {<a href="#" data-id="@item.Id" class="remove-button"><i class="fa fa-minus"></i></a>}
+                            </li>
                         }
                     </ul>
                     @Html.HiddenFor(model => model.Id)
@@ -47,8 +53,11 @@
                     <ul class="op-list">
                         @foreach (var item in Model.OperationPhase)
                         {
-                            <li>@item.Description @if (!Model.IsReviewer)
-                                                  {<a href="#" data-id="@item.Id" class="remove-button"><i class="fa fa-minus"></i></a>}</li>
+                            <li>
+                                <span class="popover-edit-trigger" data-toggle="popover" data-form-target="objective" data-id="@item.Id" data-es-id="@Model.Id" data-type="op" data-placement="left">@item.Description</span>
+                                @if (!Model.IsReviewer)
+                                {<a href="#" data-id="@item.Id" class="remove-button"><i class="fa fa-minus"></i></a>}
+                            </li>
                         }
                     </ul>
                     @Html.HiddenFor(model => model.Id)
@@ -57,8 +66,11 @@
                     <ul class="rp-list">
                         @foreach (var item in Model.ReinventPhase)
                         {
-                            <li>@item.Description @if (!Model.IsReviewer)
-                                                  {<a href="#" data-id="@item.Id" class="remove-button"><i class="fa fa-minus"></i></a>}</li>
+                            <li>
+                                <span class="popover-edit-trigger" data-toggle="popover" data-form-target="objective" data-id="@item.Id" data-es-id="@Model.Id" data-type="rp" data-placement="left">@item.Description</span>
+                                @if (!Model.IsReviewer)
+                                {<a href="#" data-id="@item.Id" class="remove-button"><i class="fa fa-minus"></i></a>}
+                            </li>
 
                         }
                     </ul>
@@ -76,75 +88,91 @@
     <div class="row row-margin-5 color-white">
         <table class="table table-bordered popover-envi">
             <tr>
-                <th style="width:25%;background-color:red">Threat
-                     @if (!Model.IsReviewer)
-                {
-                    <a href="#" class="input-environmental" data-envi-id="@Model.Id" data-envi-type="th" data-toggle="popover" data-placement="left" title="Threat"><i class="fa fa-plus"></i></a>
-                }
-                </th>
-                <th style="width:25%;background-color:lime">Opportunity
+                <th style="width:25%;background-color:red">
+                    Threat
                     @if (!Model.IsReviewer)
-                {
-                    <a href="#" class="input-environmental" data-envi-id="@Model.Id" data-envi-type="opp" data-toggle="popover" data-placement="left" title="Opportunity"><i class="fa fa-plus"></i></a>
-                }
+                    {
+                        <a href="#" class="input-environmental" data-envi-id="@Model.Id" data-envi-type="th" data-toggle="popover" data-placement="left" title="Threat"><i class="fa fa-plus"></i></a>
+                    }
                 </th>
-                <th style="width:25%;background-color:lavender">Weakness
+                <th style="width:25%;background-color:lime">
+                    Opportunity
                     @if (!Model.IsReviewer)
-                {
-                    <a href="#" class="input-environmental" data-envi-id="@Model.Id" data-envi-type="wk" data-toggle="popover" data-placement="left" title="Opportunity"><i class="fa fa-plus"></i></a>
-                }
+                    {
+                        <a href="#" class="input-environmental" data-envi-id="@Model.Id" data-envi-type="opp" data-toggle="popover" data-placement="left" title="Opportunity"><i class="fa fa-plus"></i></a>
+                    }
                 </th>
-                <th style="width:25%;background-color:blue">Strength
+                <th style="width:25%;background-color:lavender">
+                    Weakness
                     @if (!Model.IsReviewer)
-                {
-                    <a href="#" class="input-environmental" data-envi-id="@Model.Id" data-envi-type="st" data-toggle="popover" data-placement="left" title="Opportunity"><i class="fa fa-plus"></i></a>
-                }
+                    {
+                        <a href="#" class="input-environmental" data-envi-id="@Model.Id" data-envi-type="wk" data-toggle="popover" data-placement="left" title="Opportunity"><i class="fa fa-plus"></i></a>
+                    }
+                </th>
+                <th style="width:25%;background-color:blue">
+                    Strength
+                    @if (!Model.IsReviewer)
+                    {
+                        <a href="#" class="input-environmental" data-envi-id="@Model.Id" data-envi-type="st" data-toggle="popover" data-placement="left" title="Opportunity"><i class="fa fa-plus"></i></a>
+                    }
                 </th>
             </tr>
             <tr>
                 <td>
-                    <ul class="list-group th-list">
-                    @{
-                        foreach (var item in Model.Threat)
-                        {
-                        <li data-id="@item.Id">@item.Desc @if (!Model.IsReviewer)
-                                                          {<a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a>}</li>
+                    <ul class="list-group th-list list-result">
+                        @{
+                            foreach (var item in Model.Threat)
+                            {
+                                <li data-id="@item.Id">
+                                    <span class="popover-edit-trigger" data-toggle="popover" data-form-target="environmental" data-id="@item.Id" data-es-id="@Model.Id" data-type="th">@item.Desc</span>
+                                    @if (!Model.IsReviewer)
+                                    {<a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a>}
+                                </li>
+                            }
                         }
-                    }
-                </ul>
+                    </ul>
                 </td>
                 <td>
-                    <ul class="list-group opp-list">
-                    @{
-                        foreach (var item in Model.Opportunity)
-                        {
-                        <li data-id="@item.Id">@item.Desc @if (!Model.IsReviewer)
-                                                          {<a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a>}</li>
+                    <ul class="list-group opp-list list-result">
+                        @{
+                            foreach (var item in Model.Opportunity)
+                            {
+                                <li data-id="@item.Id">
+                                    <span class="popover-edit-trigger" data-toggle="popover" data-form-target="environmental" data-id="@item.Id" data-es-id="@Model.Id" data-type="opp">@item.Desc</span>
+                                    @if (!Model.IsReviewer)
+                                    {<a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a>}
+                                </li>
+                            }
                         }
-                    }
-                </ul>
+                    </ul>
                 </td>
                 <td>
-                     <ul class="list-group wk-list">
-                    @{
-                        foreach (var item in Model.Weakness)
-                        {
-                        <li data-id="@item.Id">@item.Desc @if (!Model.IsReviewer)
-                                                          {<a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a>}</li>
+                    <ul class="list-group wk-list list-result">
+                        @{
+                            foreach (var item in Model.Weakness)
+                            {
+                                <li data-id="@item.Id">
+                                    <span class="popover-edit-trigger" data-toggle="popover" data-form-target="environmental" data-id="@item.Id" data-es-id="@Model.Id" data-type="wk">@item.Desc</span>
+                                    @if (!Model.IsReviewer)
+                                    {<a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a>}
+                                </li>
+                            }
                         }
-                    }
-                </ul>
+                    </ul>
                 </td>
                 <td>
-                     <ul class="list-group st-list">
-                    @{
-                        foreach (var item in Model.Strength)
-                        {
-                        <li data-id="@item.Id">@item.Desc @if (!Model.IsReviewer)
-                                                          {<a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a>}</li>
+                    <ul class="list-group st-list list-result">
+                        @{
+                            foreach (var item in Model.Strength)
+                            {
+                                <li data-id="@item.Id">
+                                    <span class="popover-edit-trigger" data-toggle="popover" data-form-target="environmental" data-id="@item.Id" data-es-id="@Model.Id" data-type="st">@item.Desc</span>
+                                    @if (!Model.IsReviewer)
+                                    {<a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a>}
+                                </li>
+                            }
                         }
-                    }
-                </ul>
+                    </ul>
                 </td>
             </tr>
         </table>
@@ -159,7 +187,7 @@
         }
     </div>
     <div class="row row-margin-5 row-table-constrain">
-        <table class="table table-constraint table-bordered">
+        <table class="table table-constraint table-bordered list-result">
             <tr>
                 <td class="td-entity"><b>Relation</b></td>
                 <td class="td-definition"><b>Definiton</b> </td>
@@ -167,40 +195,41 @@
                 <td class="td-entity"><b>Category</b></td>
             </tr>
             @{foreach (var item in Model.Constraints)
-              {
+            {
                 <tr>
                     <td class="td-entity">
-                        @*<a href="#" data-toggle="modal" data-target="#envi-modal" data-id="@item.Id" data-th="@item.ThreatIdString" data-opp="@item.OpportunityIdString" data-wk="@item.WeaknessIdString" data-st="@item.StrengthIdString" class="btn-show-constraint">*@
                         @{
-                  if (item.ThreatIds.Count() > 0)
-                  {
-                            <span><a href="#" data-th="@item.ThreatIdString" class="btn-show-constraint r-threat">T</a></span>
-                  }
+                if (item.ThreatIds.Count() > 0)
+                {
+                    <span><a href="#" data-th="@item.ThreatIdString" class="btn-show-constraint r-threat">T</a></span>
+                }
 
-                  if (item.OpportunityIds.Count() > 0)
-                  {
-                            <span><a href="#"  data-opp="@item.OpportunityIdString" class="btn-show-constraint r-opportunity">O</a></span>
-                  }
+                if (item.OpportunityIds.Count() > 0)
+                {
+                    <span><a href="#" data-opp="@item.OpportunityIdString" class="btn-show-constraint r-opportunity">O</a></span>
+                }
 
-                  if (item.WeaknessIds.Count() > 0)
-                  {
-                            <span><a href="#"  data-wk="@item.WeaknessIdString" class="btn-show-constraint r-weakness">W</a></span>
-                  }
+                if (item.WeaknessIds.Count() > 0)
+                {
+                    <span><a href="#" data-wk="@item.WeaknessIdString" class="btn-show-constraint r-weakness">W</a></span>
+                }
 
-                  if (item.StrengthIds.Count() > 0)
-                  {
-                            <span><a href="#" data-st="@item.StrengthIdString" class="btn-show-constraint r-strength">S</a></span>
-                  }
+                if (item.StrengthIds.Count() > 0)
+                {
+                    <span><a href="#" data-st="@item.StrengthIdString" class="btn-show-constraint r-strength">S</a></span>
+                }
 
                         }
-                        @*</a>*@
                     </td>
-                    <td class="td-definition" style="text-align:left">@item.Definition @if (!Model.IsReviewer)
-                                                               {<a href="#" data-id="@item.Id" class="constraint-remove-button"><i class="fa fa-minus"></i></a>}</td>
+                    <td class="td-definition" style="text-align:left">
+                        <span class="popover-edit-trigger" data-toggle="popover" data-form-target="constraint" data-id="@item.Id" data-es-id="@Model.Id" data-type="@item.Type" data-category="@item.CategoryId" data-ids="@item.RelationIdsString">@item.Definition</span>
+                        @if (!Model.IsReviewer)
+                        {<a href="#" data-id="@item.Id" class="constraint-remove-button"><i class="fa fa-minus"></i></a>}
+                    </td>
                     <td class="td-entity">@item.Type</td>
                     <td class="td-entity">@item.Category</td>
                 </tr>
-              }
+            }
 
             }
 
@@ -225,40 +254,40 @@
                 <td class="td-entity"><b>Category</b></td>
             </tr>
             @{foreach (var item in Model.Challenges)
-              {
+            {
                 <tr>
                     <td class="td-entity">
-                        @*<a href="#" data-toggle="modal" data-target="#envi-modal" data-id="@item.Id" data-th="@item.ThreatIdString" data-opp="@item.OpportunityIdString" data-wk="@item.WeaknessIdString" data-st="@item.StrengthIdString" class="btn-show-challenge">*@
                         @{
-                  if (item.ThreatIds.Count() > 0)
-                  {
-                            <span><a href="#" data-th="@item.ThreatIdString" class="btn-show-challenge r-threat">T</a></span>
-                  }
+                if (item.ThreatIds.Count() > 0)
+                {
+                    <span><a href="#" data-th="@item.ThreatIdString" class="btn-show-challenge r-threat">T</a></span>
+                }
 
-                  if (item.OpportunityIds.Count() > 0)
-                  {
-                            <span><a href="#" data-opp="@item.OpportunityIdString" class="btn-show-challenge  r-opportunity">O</a></span>
-                  }
+                if (item.OpportunityIds.Count() > 0)
+                {
+                    <span><a href="#" data-opp="@item.OpportunityIdString" class="btn-show-challenge  r-opportunity">O</a></span>
+                }
 
-                  if (item.WeaknessIds.Count() > 0)
-                  {
-                            <span><a href="#"  data-wk="@item.WeaknessIdString" class="btn-show-challenge r-weakness">W</a></span>
-                  }
+                if (item.WeaknessIds.Count() > 0)
+                {
+                    <span><a href="#" data-wk="@item.WeaknessIdString" class="btn-show-challenge r-weakness">W</a></span>
+                }
 
-                  if (item.StrengthIds.Count() > 0)
-                  {
-                            <span><a href="#"  data-st="@item.StrengthIdString" class="btn-show-challenge r-strength">S</a></span>
-                  }
+                if (item.StrengthIds.Count() > 0)
+                {
+                    <span><a href="#" data-st="@item.StrengthIdString" class="btn-show-challenge r-strength">S</a></span>
+                }
 
                         }
-                        @* </a>*@
                     </td>
-                    <td class="td-definition" style="text-align:left">@item.Definition   @if (!Model.IsReviewer)
-                                                                 {<a href="#" data-id="@item.Id" class="challenge-remove-button"><i class="fa fa-minus"></i></a>}</td>
+                    <td class="td-definition" style="text-align:left">
+                        @item.Definition   @if (!Model.IsReviewer)
+                        {<a href="#" data-id="@item.Id" class="challenge-remove-button"><i class="fa fa-minus"></i></a>}
+                    </td>
                     <td class="td-entity">@item.Type</td>
                     <td class="td-entity">@item.Category</td>
                 </tr>
-              }
+            }
 
             }
         </table>
@@ -270,19 +299,19 @@
                 @Html.Hidden("Id", Model.Id)
                 if (!Model.IsReviewer)
                 {
-                <a href="@Url.Action("Index", "PlanningBlueprint")" class="btn btn-primary btn-lg"><span class="fa fa-arrow-left"></span>Back</a>
+                    <a href="@Url.Action("Index", "PlanningBlueprint")" class="btn btn-primary btn-lg"><span class="fa fa-arrow-left"></span>Back</a>
                 }
                 else
                 {
-                <a href="@Url.Action("Approval", "PlanningBlueprint")" class="btn btn-primary btn-lg"><span class="fa fa-arrow-left"></span>Back</a>
+                    <a href="@Url.Action("Approval", "PlanningBlueprint")" class="btn btn-primary btn-lg"><span class="fa fa-arrow-left"></span>Back</a>
                 }
                 if (!Model.IsReviewer)
                 {
-                <button type="submit" class="btn btn-primary btn-lg submit-all-es"><span class="fa fa-arrow-right"></span>Business Posture Identification</button>
+                    <button type="submit" class="btn btn-primary btn-lg submit-all-es"><span class="fa fa-arrow-right"></span>Business Posture Identification</button>
                 }
                 else
                 {
-                <a href="@Url.Action("BPReview", "PlanningBlueprint", new { Id = Model.BusinessPostureId })" class="btn btn-primary btn-lg"><span class="fa fa-arrow-right"></span>Business Posture Identification</a>
+                    <a href="@Url.Action("BPReview", "PlanningBlueprint", new { Id = Model.BusinessPostureId })" class="btn btn-primary btn-lg"><span class="fa fa-arrow-right"></span>Business Posture Identification</a>
                 }
             }
         </div>
@@ -355,40 +384,42 @@
 </div>
 
 @* Input Ultimate Objective *@
-<div class="popover-content" style="display: none">
+<div class="objective-content" style="display: none">
 
     @using (Html.BeginForm("Create", "EnvironmentScanning", FormMethod.Post, new { id = "form-input" }))
     {
         <label>Description</label>
+        <input type="hidden" name="id" />
         <input type="text" name="esId" hidden="hidden" />
         <input type="text" name="type" hidden="hidden" />
         <textarea name="Description" cols="25" rows="5" required="required"></textarea>
         <div>
-        <button class="btn btn-primary form-es-submit">Add</button>
-        <button class="btn btn-primary cancel-popover">Cancel</button>
+            <button class="btn btn-primary form-es-submit">Add</button>
+            <button class="btn btn-primary cancel-popover">Cancel</button>
         </div>
     }
 </div>
 
 @* Input Environmental *@
-<div class="popover-environmental" style="display: none">
+<div class="environmental-content" style="display: none">
 
     @using (Html.BeginForm("CreateEnvironmental", "EnvironmentScanning", FormMethod.Post, new { id = "form-input" }))
     {
         <label>Description</label>
-        <input type="text" name="enviId" hidden="hidden" />
-        <input type="text" name="enviType" hidden="hidden" />
+        <input type="text" name="esId" hidden="hidden" />
+        <input type="text" name="type" hidden="hidden" />
+        <input type="hidden" name="id" />
         <textarea name="Description" cols="25" rows="5" required="required"></textarea>
         <div>
-        <button class="btn btn-primary form-envi-submit">Add</button>
-        <button class="btn btn-primary cancel-popover">Cancel</button>
+            <button class="btn btn-primary form-envi-submit">Add</button>
+            <button class="btn btn-primary cancel-popover">Cancel</button>
         </div>
     }
 </div>
 
 
 @* Input Constraints *@
-<div class="input-constraint" style="display: none; background-color: black;">
+<div class="constraint-content" style="display: none; background-color: black;">
     @using (Html.BeginForm("CreateConstraint", "EnvironmentScanning", FormMethod.Post, new { id = "form-constraint" }))
     {
         <div>
@@ -397,16 +428,18 @@
         <div class="wrapper-relation"></div>
         <div>
             @Html.LabelFor(model => model.Definition)
-            @Html.TextAreaFor(model => model.Definition, new { cols = "25", rows = "5", required="required" })
+            @Html.TextAreaFor(model => model.Definition, new { cols = "25", rows = "5", required = "required" })
         </div>
         <div>
             @Html.LabelFor(model => model.Type)
-            @Html.DropDownListFor(model => model.Type, Model.Types, new { required="required"})
+            @Html.DropDownListFor(model => model.Type, Model.Types, new { required = "required" })
         </div>
         <div>
             @Html.LabelFor(model => model.Category)
             @Html.DropDownListFor(model => model.Category, Model.ConstraintCategories)
         </div>
+        <input type="hidden" name="id" />
+        <input type="hidden" name="enviId" />
 
         <div>
             <input type="text" name="enviId" hidden="hidden" />
@@ -431,7 +464,7 @@
         </div>
         <div>
             @Html.LabelFor(model => model.Type)
-            @Html.DropDownListFor(model => model.Type, Model.Types, new {required = "required" })
+            @Html.DropDownListFor(model => model.Type, Model.Types, new { required = "required" })
         </div>
         <div>
             @Html.LabelFor(model => model.Category)
@@ -451,37 +484,109 @@
 
 @section Scripts{
     <script type="text/javascript">
-        $(document).ready(function () {
-            $('.popover-envi').popover({
-                selector: '.input-environmental',
-                html: true,
-                content: function () {
-                    return $('.popover-environmental').html();
-                }
-            });
+    $(document).ready(function () {
+        $('.popover-envi').popover({
+            selector: '.input-environmental',
+            html: true,
+            content: function () {
+                return $('.environmental-content').html();
+            }
+        });
 
-            $('.row-challenges').popover({
-                selector: '.btn-create-challenges',
-                html: true,
-                content: function () {
-                    return $('.input-challenges').html();
-                }
-            });
+        $('.row-challenges').popover({
+            selector: '.btn-create-challenges',
+            html: true,
+            content: function () {
+                return $('.input-challenges').html();
+            }
+        });
 
-            $('.row-constraint').popover({
-                selector: '.btn-create-constraint',
-                html: true,
-                content: function () {
-                    return $('.input-constraint').html();
-                }
-            });
+        $('.row-constraint').popover({
+            selector: '.btn-create-constraint',
+            html: true,
+            content: function () {
+                return $('.constraint-content').html();
+            }
+        });
 
-            $('body').popover({
-                selector: '.input-popover',
-                html: true,
-                content: function () {
-                    return $('.popover-content').html();
+        $('body').popover({
+            selector: '.input-popover',
+            html: true,
+            placement: 'left',
+            content: function () {
+                return $('.objective-content').html();
+            }
+        });
+
+        $('.list-result').popover({
+            selector: '.popover-edit-trigger',
+            html: true,
+            content: function () {
+                var $this = $(this);
+                var formTarget = $this.data('form-target');
+                var $form = $('.' + formTarget + '-content');
+                var id = $this.data('id');
+                var esId = $this.data('es-id');
+                var type = $this.data('type');
+                var category = $this.data('category');
+
+
+                if (formTarget == 'objective' || formTarget == 'environmental')
+                {
+                    $form.find('input[name="esId"]').attr('value', esId);
+                    $form.find('input[name="type"]').attr('value', type);
+                    $form.find('input[name="id"]').attr('value', id);
+                    $form.find('textarea').html($this.html().replace(/<[^>]*>/g, ""));
+                    $form.find('.form-es-submit').removeClass('form-es-submit').addClass('edit-item').html('Save');
+                    $form.find('.form-envi-submit').removeClass('form-envi-submit').addClass('edit-envi').html('Save');
                 }
+                else {
+                    $form.find('input[name="id"]').attr('value', id);
+                    $form.find('input[name="enviId"]').attr('value', esId);
+                    $form.find('textarea').html($this.html().replace(/<[^>]*>/g, ""));
+                    $form.find('select[name="Type"]').find('option[value="' + type + '"]').attr('selected', 'selected');
+                    $form.find('select[name="Category"]').find('option[value="' + category + '"]').attr('selected', 'selected');
+                }
+                return $($form).html();
+            }
+        });
+
+
+        $(document).on('click', '.edit-item', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var $trigger = $this.closest('.popover').prev();
+            console.log($trigger);
+            $.ajax({
+                url: '@Url.Action("Create", "EnvironmentScanning")',
+                    data: $this.closest('form').serialize(),
+                    type: 'POST',
+                    success: function (data) {
+                        $trigger.html(data.description)
+                        $trigger.popover('hide');
+                    }
+                })
+        });
+
+        $(document).on('click', '.popover-edit-trigger', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+        });
+
+            $(document).on('click', '.edit-envi', function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var $trigger = $this.closest('.popover').prev();
+                console.log($trigger);
+                $.ajax({
+                    url: '@Url.Action("CreateEnvironmental", "EnvironmentScanning")',
+                    data: $this.closest('form').serialize(),
+                    type: 'POST',
+                    success: function (data) {
+                        $trigger.html(data.description)
+                        $trigger.popover('hide');
+                    }
+                })
             });
 
             $(document).on('click', '.cancel-popover', function (e) {
@@ -504,10 +609,11 @@
                 e.preventDefault();
                 var enviId = $(this).data("envi-id");
                 var enviType = $(this).data("envi-type");
-                $('.popover').find('input[name="enviId"]').attr('value', enviId);
-                $('.popover').find('input[name="enviType"]').attr('value', enviType);
+                $('.popover').find('input[name="esId"]').attr('value', enviId);
+                $('.popover').find('input[name="type"]').attr('value', enviType);
                 popOverElem = $(this);
-
+                console.log(enviId);
+                console.log(enviType);
             });
 
             $(document).on('click', '.btn-create-constraint', function (e) {
@@ -533,610 +639,703 @@
                 if (!$form.valid()) return;
                 $.ajax({
                     url: '@Url.Action("Create", "EnvironmentScanning")',
-                    data: $that.closest('form').serialize(),
-                    type: 'POST',
-                    success: function (data) {
-                        if (data.type == "cp") {
-                            $('.cp-list').append($('<li>' + data.description + '<a href="#" data-id="' + data.id + '" class="remove-button"><i class="fa fa-minus"></i></a></li>'));
-                            popOverElem.popover('hide');
-                        }
-                        else if (data.type == "op") {
-                            $('.op-list').append($('<li>' + data.description + '<a href="#" data-id="' + data.id + '" class="remove-button"><i class="fa fa-minus"></i></a></li>'));
-                            popOverElem.popover('hide');
-                        }
-                        else if (data.type == "rp") {
-                            $('.rp-list').append($('<li>' + data.description + '<a href="#" data-id="' + data.id + '" class="remove-button"><i class="fa fa-minus"></i></a></li>'));
-                            popOverElem.popover('hide');
-                        }
-                    }
-                })
-            });
-
-            $(document).on('click', '.form-envi-submit', function (e) {
-                e.preventDefault();
-                var $that = $(this);
-                var $form = $that.closest('form');
-                if (!$form.valid()) return;
-                $.ajax({
-                    url: '@Url.Action("CreateEnvironmental", "EnvironmentScanning")',
-                    data: $that.closest('form').serialize(),
-                    type: 'POST',
-                    success: function (data) {
-                        if (data.type == "th") {
-                            $('.th-list').append($('<li data-id="' + data.id + '">' + data.description + '<a href="#" data-id="' + data.id + '" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>'));
-                            popOverElem.popover('hide');
-                        }
-                        else if (data.type == "opp") {
-                            $('.opp-list').append($('<li data-id="' + data.id + '">' + data.description + '<a href="#" data-id="' + data.id + '" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>'));
-                            popOverElem.popover('hide');
-                        }
-                        else if (data.type == "wk") {
-                            $('.wk-list').append($('<li data-id="' + data.id + '">' + data.description + '<a href="#" data-id="' + data.id + '" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>'));
-                            popOverElem.popover('hide');
-                        }
-                        else if (data.type == "st") {
-                            $('.st-list').append($('<li data-id="' + data.id + '">' + data.description + '<a href="#" data-id="' + data.id + '" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>'));
-                            popOverElem.popover('hide');
-                        }
-                    }
-                })
-            });
-
-
-            $(document).on('click', '.remove-button', function (e) {
-                e.preventDefault();
-                if (confirm("Are you sure want to delete this item?")) {
-                    var that = this;
-                    var id = $(that).data('id')
-                    $.ajax({
-                        url: '@Url.Action("Delete", "EnvironmentScanning")',
-                        data: { Id: id },
-                        type: 'Post',
-                        success: function (data) {
-                            if (data.success === true) {
-                                $(that).parent().remove();
-                            }
-
-                        }
-                    })
-                }
-            });
-
-            $(document).on('click', '.envi-remove-button', function (e) {
-                e.preventDefault();
-                if (confirm("Are you sure want to delete this item?")) {
-                    var that = this;
-                    var id = $(that).data('id')
-                    $.ajax({
-                        url: '@Url.Action("DeleteEnvironmental", "EnvironmentScanning")',
-                        data: { Id: id },
-                        type: 'Post',
-                        success: function (data) {
-                            if (data.success === true) {
-                                $(that).parent().remove();
-                            }
-
-                        }
-                    })
-                }
-            });
-
-            $(document).on('click', '.constraint-remove-button', function (e) {
-                e.preventDefault();
-                if (confirm("Are you sure want to delete this item?")) {
-                    var that = this;
-                    var id = $(that).data('id')
-                    $.ajax({
-                        url: '@Url.Action("DeleteConstraint", "EnvironmentScanning")',
-                        data: { Id: id },
-                        type: 'Post',
-                        success: function (data) {
-                            if (data.success === true) {
-                                $(that).closest('tr').remove();
-                            }
-
-                        }
-                    })
-                }
-            });
-
-
-            $(document).on('click', '.challenge-remove-button', function (e) {
-                e.preventDefault();
-                if (confirm("Are you sure want to delete this item?")) {
-                    var that = this;
-                    var id = $(that).data('id')
-                    $.ajax({
-                        url: '@Url.Action("DeleteChallenge", "EnvironmentScanning")',
-                        data: { Id: id },
-                        type: 'Post',
-                        success: function (data) {
-                            if (data.success === true) {
-                                $(that).closest('tr').remove();
-                            }
-
-                        }
-                    })
-                }
-            });
-
-
-            $(document).on('click', '.form-input-constraint', function (e) {
-                e.preventDefault();
-                var $that = $(this);
-                var $form = $that.closest('form');
-                if (!$form.valid()) return;
-                $.ajax({
-                    url: '@Url.Action("CreateConstraint", "EnvironmentScanning")',
-                    data: $that.closest('form').serialize(),
-                    type: 'POST',
-                    success: function (data) {
-                        var relation = '';
-                        if (data.threatIds.length > 0) {
-                            relation = relation + '<a href="#"  data-th="' + data.threatIds + '" class="btn-show-constraint r-threat">T</a> '
-                        }
-                        if (data.opportunityIds.length > 0) {
-                            relation = relation + '<a href="#" data-opp="' + data.opportunityIds + '" class="btn-show-constraint r-opportunity">O</a> '
-                        }
-                        if (data.weaknessIds.length > 0) {
-                            relation = relation + '<a href="#"  data-wk="' + data.weaknessIds + '" class="btn-show-constraint r-weakness">W</a> '
-                        }
-                        if (data.strengthIds.length > 0) {
-                            relation = relation + '<a href="#"  data-st="' + data.strengthIds + '" class="btn-show-constraint r-strength">S</a> '
-                        }
-
-                        var input = [];
-                        input = input + 'data-th="' + data.threatIds + '"' + 'data-opp="' + data.opportunityIds + '"' + 'data-wk="' + data.weaknessIds + '"' + 'data-st="' + data.strengthIds + '"'
-
-
-                        $('.table-constraint').append('<tr><td class="td-entity">' + '<a href="#" data-toggle="modal" ' + input + ' data-target="#envi-modal" data-id="' + data.id + '" class="btn-show-constraint">' + '<span>' + relation + '</span>' + '</td><td class="td-definition" style="text-align:left">' + data.definition + '<a href="#" data-id="' + data.id + '" class="constraint-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
+                data: $that.closest('form').serialize(),
+                type: 'POST',
+                success: function (data) {
+                    if (data.type == "cp") {
+                        $('.cp-list').append($('<li>' + data.description + '<a href="#" data-id="' + data.id + '" class="remove-button"><i class="fa fa-minus"></i></a></li>'));
                         popOverElem.popover('hide');
-
-                        $('.relation-contents').html('');
-                        $('.wrapper-relation').html('');
                     }
-                })
-            });
-
-            $(document).on('click', '.form-input-challenge', function (e) {
-                e.preventDefault();
-                var $that = $(this);
-                var $form = $that.closest('form');
-                if (!$form.valid()) return;
-                $.ajax({
-                    url: '@Url.Action("CreateChallenge", "EnvironmentScanning")',
-                    data: $that.closest('form').serialize(),
-                    type: 'POST',
-                    success: function (data) {
-                        var relation = '';
-                        if (data.threatIds.length > 0) {
-                            relation = relation + '<a href="#"  data-th="' + data.threatIds + '" class="btn-show-constraint r-threat">T</a> '
-                        }
-                        if (data.opportunityIds.length > 0) {
-                            relation = relation + '<a href="#"  data-opp="' + data.opportunityIds + '" class="btn-show-constraint r-opportunity">O</a> '
-                        }
-                        if (data.weaknessIds.length > 0) {
-                            relation = relation + '<a href="#"  data-wk="' + data.weaknessIds + '" class="btn-show-constraint r-weakness">W</a> '
-                        }
-                        if (data.strengthIds.length > 0) {
-                            relation = relation + '<a href="#"  data-st="' + data.strengthIds + '" class="btn-show-constraint r-strength">S</a> '
-                        }
-
-                        $('.table-challenge').append('<tr><td class="td-entity">' + ' <a href="#" data-toggle="modal" data-target="#envi-modal" data-id="' + data.id + '" class="btn-show-challenge">' + '<span>' + relation + '</span>' + '</td><td class="td-definition" style="text-align:left">' + data.definition + '<a href="#" data-id="' + data.id + '" class="challenge-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
+                    else if (data.type == "op") {
+                        $('.op-list').append($('<li>' + data.description + '<a href="#" data-id="' + data.id + '" class="remove-button"><i class="fa fa-minus"></i></a></li>'));
                         popOverElem.popover('hide');
-
-                        $('.relation-challenges').html('');
-                        $('.wrapper-challenge').html('');
                     }
-                })
-            });
+                    else if (data.type == "rp") {
+                        $('.rp-list').append($('<li>' + data.description + '<a href="#" data-id="' + data.id + '" class="remove-button"><i class="fa fa-minus"></i></a></li>'));
+                        popOverElem.popover('hide');
+                    }
+                }
+            })
+        });
+
+        $(document).on('click', '.form-envi-submit', function (e) {
+            e.preventDefault();
+            var $that = $(this);
+            var $form = $that.closest('form');
+            if (!$form.valid()) return;
+            $.ajax({
+                url: '@Url.Action("CreateEnvironmental", "EnvironmentScanning")',
+                data: $that.closest('form').serialize(),
+                type: 'POST',
+                success: function (data) {
+                    if (data.type == "th") {
+                        $('.th-list').append($('<li data-id="' + data.id + '">' + data.description + '<a href="#" data-id="' + data.id + '" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>'));
+                        popOverElem.popover('hide');
+                    }
+                    else if (data.type == "opp") {
+                        $('.opp-list').append($('<li data-id="' + data.id + '">' + data.description + '<a href="#" data-id="' + data.id + '" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>'));
+                        popOverElem.popover('hide');
+                    }
+                    else if (data.type == "wk") {
+                        $('.wk-list').append($('<li data-id="' + data.id + '">' + data.description + '<a href="#" data-id="' + data.id + '" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>'));
+                        popOverElem.popover('hide');
+                    }
+                    else if (data.type == "st") {
+                        $('.st-list').append($('<li data-id="' + data.id + '">' + data.description + '<a href="#" data-id="' + data.id + '" class="envi-remove-button"><i class="fa fa-minus"></i></a></li>'));
+                        popOverElem.popover('hide');
+                    }
+                }
+            })
+        });
 
 
-            $(document).on('click', '.btn-create-constraint', function (e) {
-                e.preventDefault();
-                $('.relation-contents').html('');
-                var $that = this;
-                var thList = $('.th-list').clone(true);
-                var oppList = $('.opp-list').clone(true);
-                var wkList = $('.wk-list').clone(true);
-                var stList = $('.st-list').clone(true);
-                thList.removeClass('th-list list-group');
-                oppList.removeClass('opp-list list-group');
-                wkList.removeClass('wk-list list-group');
-                stList.removeClass('st-list list-group');
-                thList.addClass('list-checkbox');
-                oppList.addClass('list-checkbox');
-                wkList.addClass('list-checkbox');
-                stList.addClass('list-checkbox');
-
-                thList.find('li').each(function (i, val) {
-                    var $item = $(val);
-                    $item.find('.envi-remove-button').remove();
-                    var $checkbox = $('<input />');
-                    $checkbox.prop('type', 'checkbox');
-                    $checkbox.addClass('choose-list');
-                    $item.prepend($checkbox);
-                });
-                var threat = $('<h4 />');
-                threat.html('Threat');
-                $('.relation-contents').append(threat, thList);
-
-                oppList.find('li').each(function (i, val) {
-                    var $item = $(val);
-                    $item.find('.envi-remove-button').remove();
-                    var $checkbox = $('<input />');
-                    $checkbox.prop('type', 'checkbox');
-                    $checkbox.addClass('choose-list');
-                    $item.prepend($checkbox);
-                });
-                var opportunity = $('<h4 />');
-                opportunity.html('Opportunity');
-                $('.relation-contents').append(opportunity, oppList);
-
-                wkList.find('li').each(function (i, val) {
-                    var $item = $(val);
-                    $item.find('.envi-remove-button').remove();
-                    var $checkbox = $('<input />');
-                    $checkbox.prop('type', 'checkbox');
-                    $checkbox.addClass('choose-list');
-                    $item.prepend($checkbox);
-                });
-                var weakness = $('<h4 />');
-                weakness.html('Weakness');
-                $('.relation-contents').append(weakness, wkList);
-
-                stList.find('li').each(function (i, val) {
-                    var $item = $(val);
-                    $item.find('.envi-remove-button').remove();
-                    var $checkbox = $('<input />');
-                    $checkbox.prop('type', 'checkbox');
-                    $checkbox.addClass('choose-list');
-                    $item.prepend($checkbox);
-                });
-                var strength = $('<h4 />');
-                strength.html('Strength');
-                $('.relation-contents').append(strength, stList);
-
-                //popOverElem = $this;
-            });
-
-            $(document).on('click', '.btn-finish-relation', function (e) {
-                e.preventDefault();
-                var $wrapper = $('.wrapper-relation');
-                $wrapper.html('');
-                $('input.choose-list:checked').each(function (i, val) {
-                    var $hiddenId = $('<input />');
-                    $hiddenId.prop('type', 'hidden');
-                    $hiddenId.prop('name', 'RelationIds[]');
-                    $hiddenId.val($(val).parent().data('id'));
-                    $wrapper.append($hiddenId);
-                });
-            });
-
-            $(document).on('click', '.btn-create-challenges', function (e) {
-                e.preventDefault();
-                $('.relation-challenges').html('');
-                var $that = this;
-                var thList = $('.th-list').clone(true);
-                var oppList = $('.opp-list').clone(true);
-                var wkList = $('.wk-list').clone(true);
-                var stList = $('.st-list').clone(true);
-                thList.removeClass('th-list list-group');
-                oppList.removeClass('opp-list list-group');
-                wkList.removeClass('wk-list list-group');
-                stList.removeClass('st-list list-group');
-                thList.addClass('list-checkbox');
-                oppList.addClass('list-checkbox');
-                wkList.addClass('list-checkbox');
-                stList.addClass('list-checkbox');
-
-                thList.find('li').each(function (i, val) {
-                    var $item = $(val);
-                    $item.find('.envi-remove-button').remove();
-                    var $checkbox = $('<input />');
-                    $checkbox.prop('type', 'checkbox');
-                    $checkbox.addClass('choose-list');
-                    $item.prepend($checkbox);
-                });
-                var threat = $('<h4 />');
-                threat.html('Threat');
-                $('.relation-challenges').append(threat, thList);
-
-                oppList.find('li').each(function (i, val) {
-                    var $item = $(val);
-                    $item.find('.envi-remove-button').remove();
-                    var $checkbox = $('<input />');
-                    $checkbox.prop('type', 'checkbox');
-                    $checkbox.addClass('choose-list');
-                    $item.prepend($checkbox);
-                });
-                var opportunity = $('<h4 />');
-                opportunity.html('Opportunity');
-                $('.relation-challenges').append(opportunity, oppList);
-
-                wkList.find('li').each(function (i, val) {
-                    var $item = $(val);
-                    $item.find('.envi-remove-button').remove();
-                    var $checkbox = $('<input />');
-                    $checkbox.prop('type', 'checkbox');
-                    $checkbox.addClass('choose-list');
-                    $item.prepend($checkbox);
-                });
-                var weakness = $('<h4 />');
-                weakness.html('Weakness');
-                $('.relation-challenges').append(weakness, wkList);
-
-                stList.find('li').each(function (i, val) {
-                    var $item = $(val);
-                    $item.find('.envi-remove-button').remove();
-                    var $checkbox = $('<input />');
-                    $checkbox.prop('type', 'checkbox');
-                    $checkbox.addClass('choose-list');
-                    $item.prepend($checkbox);
-                });
-                var strength = $('<h4 />');
-                strength.html('Strength');
-                $('.relation-challenges').append(strength, stList);
-
-            });
-
-            $(document).on('click', '.btn-finish-challenge', function (e) {
-                e.preventDefault();
-                var $wrapper = $('.wrapper-challenge');
-                $wrapper.html('');
-                $('input.choose-list:checked').each(function (i, val) {
-                    var $hiddenId = $('<input />');
-                    $hiddenId.prop('type', 'hidden');
-                    $hiddenId.prop('name', 'RelationIds[]');
-                    $hiddenId.val($(val).parent().data('id'));
-                    $wrapper.append($hiddenId);
-                });
-            });
-
-
-            $(document).on('click', '.btn-show-constraint', function (e) {
-                e.preventDefault();
-                var $that = $(this);
-                var Id = ($that).data('id');
+        $(document).on('click', '.remove-button', function (e) {
+            e.preventDefault();
+            if (confirm("Are you sure want to delete this item?")) {
+                var that = this;
+                var id = $(that).data('id')
                 $.ajax({
-                    url: '@Url.Action("ShowConstraint", "EnvironmentScanning")',
-                    data: { id: Id },
-                    type: 'POST',
-                    dataType: "html",
+                    url: '@Url.Action("Delete", "EnvironmentScanning")',
+                    data: { Id: id },
+                    type: 'Post',
                     success: function (data) {
-                        $('.modal-envi').html(data);
-                    }
-                });
-            });
+                        if (data.success === true) {
+                            $(that).parent().remove();
+                        }
 
-            $(document).on('click', '.btn-show-challenge', function (e) {
-                e.preventDefault();
-                var $that = $(this);
-                var Id = ($that).data('id');
+                    }
+                })
+            }
+        });
+
+        $(document).on('click', '.envi-remove-button', function (e) {
+            e.preventDefault();
+            if (confirm("Are you sure want to delete this item?")) {
+                var that = this;
+                var id = $(that).data('id')
                 $.ajax({
-                    url: '@Url.Action("ShowChallenge", "EnvironmentScanning")',
-                    data: { id: Id },
-                    type: 'POST',
-                    dataType: "html",
+                    url: '@Url.Action("DeleteEnvironmental", "EnvironmentScanning")',
+                    data: { Id: id },
+                    type: 'Post',
                     success: function (data) {
-                        $('.modal-envi').html(data);
+                        if (data.success === true) {
+                            $(that).parent().remove();
+                        }
+
                     }
-                });
-            });
-
-
-            $(document).on('mouseenter', '.btn-show-constraint', function (e) {
-                e.preventDefault();
-                var $that = $(this);
-                var $a = $that.closest('a');
-                var threatIds = ($a).data('th');
-                var opportunityIds = ($a).data('opp');
-                var weaknessIds = ($a).data('wk');
-                var strengthIds = ($a).data('st');
-
-
-                if (typeof threatIds != 'string') {
-                    threatIds = [threatIds];
-                }
-                else {
-                    threatIds = threatIds.split(',');
-                    var ithreatIds = [];
-                    for (var i in threatIds) {
-                        ithreatIds.push(parseInt(threatIds[i]));
-                    }
-                    threatIds = ithreatIds;
-                }
-
-                if (typeof opportunityIds != 'string') {
-                    opportunityIds = [opportunityIds];
-                }
-                else {
-                    opportunityIds = opportunityIds.split(',');
-                    var iopportunityIds = [];
-                    for (var i in opportunityIds) {
-                        iopportunityIds.push(parseInt(opportunityIds[i]));
-                    }
-                    opportunityIds = iopportunityIds;
-                }
-
-                if (typeof weaknessIds != 'string') {
-                    weaknessIds = [weaknessIds];
-                }
-                else {
-                    weaknessIds = weaknessIds.split(',');
-                    var iweaknessIds = [];
-                    for (var i in weaknessIds) {
-                        iweaknessIds.push(parseInt(weaknessIds[i]));
-                    }
-                    weaknessIds = iweaknessIds;
-                }
-
-                if (typeof strengthIds != 'string') {
-                    strengthIds = [strengthIds];
-                }
-                else {
-                    strengthIds = strengthIds.split(',');
-                    var istrengthIds = [];
-                    for (var i in strengthIds) {
-                        istrengthIds.push(parseInt(strengthIds[i]));
-                    }
-                    strengthIds = istrengthIds;
-                }
-
-                $('.th-list').children('li').each(function (i, val) {
-                    var $li = $(val);
-                    if (threatIds.indexOf($li.data('id')) > -1) {
-                        $li.addClass('highlight');
-                    }
-                });
-
-                $('.opp-list').children('li').each(function (i, val) {
-                    var $li = $(val);
-                    if (opportunityIds.indexOf($li.data('id')) > -1) {
-                        $li.addClass('highlight');
-                    }
-                });
-
-                $('.wk-list').children('li').each(function (i, val) {
-                    var $li = $(val);
-                    if (weaknessIds.indexOf($li.data('id')) > -1) {
-                        $li.addClass('highlight');
-                    }
-                });
-
-                $('.st-list').children('li').each(function (i, val) {
-                    var $li = $(val);
-                    if (strengthIds.indexOf($li.data('id')) > -1) {
-                        $li.addClass('highlight');
-                    }
-                });
-            });
-
-            $(document).on('mouseleave', '.btn-show-constraint', function (e) {
-                e.preventDefault();
-                $('.highlight').each(function (i, val) {
-                    $(val).removeClass('highlight');
                 })
-            });
+            }
+        });
 
+        $(document).on('click', '.constraint-remove-button', function (e) {
+            e.preventDefault();
+            if (confirm("Are you sure want to delete this item?")) {
+                var that = this;
+                var id = $(that).data('id')
+                $.ajax({
+                    url: '@Url.Action("DeleteConstraint", "EnvironmentScanning")',
+                    data: { Id: id },
+                    type: 'Post',
+                    success: function (data) {
+                        if (data.success === true) {
+                            $(that).closest('tr').remove();
+                        }
 
-            $(document).on('mouseenter', '.btn-show-challenge', function (e) {
-                e.preventDefault();
-                var $that = $(this);
-                var $a = $that.closest('a');
-                var threatIds = ($a).data('th');
-                var opportunityIds = ($a).data('opp');
-                var weaknessIds = ($a).data('wk');
-                var strengthIds = ($a).data('st');
-
-
-                if (typeof threatIds != 'string') {
-                    threatIds = [threatIds];
-                }
-                else {
-                    threatIds = threatIds.split(',');
-                    var ithreatIds = [];
-                    for (var i in threatIds) {
-                        ithreatIds.push(parseInt(threatIds[i]));
                     }
-                    threatIds = ithreatIds;
-                }
-
-                if (typeof opportunityIds != 'string') {
-                    opportunityIds = [opportunityIds];
-                }
-                else {
-                    opportunityIds = opportunityIds.split(',');
-                    var iopportunityIds = [];
-                    for (var i in opportunityIds) {
-                        iopportunityIds.push(parseInt(opportunityIds[i]));
-                    }
-                    opportunityIds = iopportunityIds;
-                }
-
-                if (typeof weaknessIds != 'string') {
-                    weaknessIds = [weaknessIds];
-                }
-                else {
-                    weaknessIds = weaknessIds.split(',');
-                    var iweaknessIds = [];
-                    for (var i in weaknessIds) {
-                        iweaknessIds.push(parseInt(weaknessIds[i]));
-                    }
-                    weaknessIds = iweaknessIds;
-                }
-
-                if (typeof strengthIds != 'string') {
-                    strengthIds = [strengthIds];
-                }
-                else {
-                    strengthIds = strengthIds.split(',');
-                    var istrengthIds = [];
-                    for (var i in strengthIds) {
-                        istrengthIds.push(parseInt(strengthIds[i]));
-                    }
-                    strengthIds = istrengthIds;
-                }
-
-                $('.th-list').children('li').each(function (i, val) {
-                    var $li = $(val);
-                    if (threatIds.indexOf($li.data('id')) > -1) {
-                        $li.addClass('highlight');
-                    }
-                });
-
-                $('.opp-list').children('li').each(function (i, val) {
-                    var $li = $(val);
-                    if (opportunityIds.indexOf($li.data('id')) > -1) {
-                        $li.addClass('highlight');
-                    }
-                });
-
-                $('.wk-list').children('li').each(function (i, val) {
-                    var $li = $(val);
-                    if (weaknessIds.indexOf($li.data('id')) > -1) {
-                        $li.addClass('highlight');
-                    }
-                });
-
-                $('.st-list').children('li').each(function (i, val) {
-                    var $li = $(val);
-                    if (strengthIds.indexOf($li.data('id')) > -1) {
-                        $li.addClass('highlight');
-                    }
-                });
-            });
-
-            $(document).on('mouseleave', '.btn-show-challenge', function (e) {
-                e.preventDefault();
-                $('.highlight').each(function (i, val) {
-                    $(val).removeClass('highlight');
                 })
-            });
+            }
+        });
 
-            $(document).on('click', '.submit-all-es', function (e) {
-                e.preventDefault();
-                var uocpLength = $('.cp-list').children('li').length;
-                var uoopLength = $('.op-list').children('li').length;
-                var uorpLength = $('.rp-list').children('li').length;
-                var threatLength = $('.th-list').children('li').length;
-                var opportunityLength = $('.opp-list').children('li').length;
-                var weaknessLength = $('.wk-list').children('li').length;
-                var strengthLength = $('.st-list').children('li').length;
-                var constraints = $('.table-constraint tr').length; //should be greater than 1
-                var challenges = $('.table-challenge tr').length; //should be greater than 1
-                if (!uocpLength || !uoopLength || !uorpLength || !threatLength ||
-                    !opportunityLength || !weaknessLength || !strengthLength ||
-                    constraints == 1 || challenges == 1) {
-                    if (window.confirm("One of block informations leave empty! Once you go through it you can't revise it. Are you sure want to go to next step?")) {
-                        $(this).closest('form').submit();
+
+        $(document).on('click', '.challenge-remove-button', function (e) {
+            e.preventDefault();
+            if (confirm("Are you sure want to delete this item?")) {
+                var that = this;
+                var id = $(that).data('id')
+                $.ajax({
+                    url: '@Url.Action("DeleteChallenge", "EnvironmentScanning")',
+                    data: { Id: id },
+                    type: 'Post',
+                    success: function (data) {
+                        if (data.success === true) {
+                            $(that).closest('tr').remove();
+                        }
+
+                    }
+                })
+            }
+        });
+
+
+        $(document).on('click', '.form-input-constraint', function (e) {
+            e.preventDefault();
+            var $that = $(this);
+            var $form = $that.closest('form');
+            if (!$form.valid()) return;
+            $.ajax({
+                url: '@Url.Action("CreateConstraint", "EnvironmentScanning")',
+                data: $that.closest('form').serialize(),
+                type: 'POST',
+                success: function (data) {
+                    var relation = '';
+                    if (data.threatIds.length > 0) {
+                        relation = relation + '<a href="#"  data-th="' + data.threatIds + '" class="btn-show-constraint r-threat">T</a> '
+                    }
+                    if (data.opportunityIds.length > 0) {
+                        relation = relation + '<a href="#" data-opp="' + data.opportunityIds + '" class="btn-show-constraint r-opportunity">O</a> '
+                    }
+                    if (data.weaknessIds.length > 0) {
+                        relation = relation + '<a href="#"  data-wk="' + data.weaknessIds + '" class="btn-show-constraint r-weakness">W</a> '
+                    }
+                    if (data.strengthIds.length > 0) {
+                        relation = relation + '<a href="#"  data-st="' + data.strengthIds + '" class="btn-show-constraint r-strength">S</a> '
+                    }
+
+                    var input = [];
+                    input = input + 'data-th="' + data.threatIds + '"' + 'data-opp="' + data.opportunityIds + '"' + 'data-wk="' + data.weaknessIds + '"' + 'data-st="' + data.strengthIds + '"'
+
+
+                    $('.table-constraint').append('<tr><td class="td-entity">' + '<a href="#" data-toggle="modal" ' + input + ' data-target="#envi-modal" data-id="' + data.id + '" class="btn-show-constraint">' + '<span>' + relation + '</span>' + '</td><td class="td-definition" style="text-align:left">' + data.definition + '<a href="#" data-id="' + data.id + '" class="constraint-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
+                    popOverElem.popover('hide');
+
+                    $('.relation-contents').html('');
+                    $('.wrapper-relation').html('');
+                }
+            })
+        });
+
+        $(document).on('click', '.form-input-challenge', function (e) {
+            e.preventDefault();
+            var $that = $(this);
+            var $form = $that.closest('form');
+            if (!$form.valid()) return;
+            $.ajax({
+                url: '@Url.Action("CreateChallenge", "EnvironmentScanning")',
+                data: $that.closest('form').serialize(),
+                type: 'POST',
+                success: function (data) {
+                    var relation = '';
+                    if (data.threatIds.length > 0) {
+                        relation = relation + '<a href="#"  data-th="' + data.threatIds + '" class="btn-show-constraint r-threat">T</a> '
+                    }
+                    if (data.opportunityIds.length > 0) {
+                        relation = relation + '<a href="#"  data-opp="' + data.opportunityIds + '" class="btn-show-constraint r-opportunity">O</a> '
+                    }
+                    if (data.weaknessIds.length > 0) {
+                        relation = relation + '<a href="#"  data-wk="' + data.weaknessIds + '" class="btn-show-constraint r-weakness">W</a> '
+                    }
+                    if (data.strengthIds.length > 0) {
+                        relation = relation + '<a href="#"  data-st="' + data.strengthIds + '" class="btn-show-constraint r-strength">S</a> '
+                    }
+
+                    $('.table-challenge').append('<tr><td class="td-entity">' + ' <a href="#" data-toggle="modal" data-target="#envi-modal" data-id="' + data.id + '" class="btn-show-challenge">' + '<span>' + relation + '</span>' + '</td><td class="td-definition" style="text-align:left">' + data.definition + '<a href="#" data-id="' + data.id + '" class="challenge-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
+                    popOverElem.popover('hide');
+
+                    $('.relation-challenges').html('');
+                    $('.wrapper-challenge').html('');
+                }
+            })
+        });
+
+
+        $(document).on('click', '.btn-create-constraint', function (e) {
+            e.preventDefault();
+            $('.relation-contents').html('');
+            var $that = this;
+            var thList = $('.th-list').clone(true);
+            var oppList = $('.opp-list').clone(true);
+            var wkList = $('.wk-list').clone(true);
+            var stList = $('.st-list').clone(true);
+            thList.removeClass('th-list list-group');
+            oppList.removeClass('opp-list list-group');
+            wkList.removeClass('wk-list list-group');
+            stList.removeClass('st-list list-group');
+            thList.addClass('list-checkbox');
+            oppList.addClass('list-checkbox');
+            wkList.addClass('list-checkbox');
+            stList.addClass('list-checkbox');
+
+            thList.find('li').each(function (i, val) {
+                var $item = $(val);
+                $item.find('.envi-remove-button').remove();
+                var $checkbox = $('<input />');
+                $checkbox.prop('type', 'checkbox');
+                $checkbox.addClass('choose-list');
+                $item.prepend($checkbox);
+            });
+            var threat = $('<h4 />');
+            threat.html('Threat');
+            $('.relation-contents').append(threat, thList);
+
+            oppList.find('li').each(function (i, val) {
+                var $item = $(val);
+                $item.find('.envi-remove-button').remove();
+                var $checkbox = $('<input />');
+                $checkbox.prop('type', 'checkbox');
+                $checkbox.addClass('choose-list');
+                $item.prepend($checkbox);
+            });
+            var opportunity = $('<h4 />');
+            opportunity.html('Opportunity');
+            $('.relation-contents').append(opportunity, oppList);
+
+            wkList.find('li').each(function (i, val) {
+                var $item = $(val);
+                $item.find('.envi-remove-button').remove();
+                var $checkbox = $('<input />');
+                $checkbox.prop('type', 'checkbox');
+                $checkbox.addClass('choose-list');
+                $item.prepend($checkbox);
+            });
+            var weakness = $('<h4 />');
+            weakness.html('Weakness');
+            $('.relation-contents').append(weakness, wkList);
+
+            stList.find('li').each(function (i, val) {
+                var $item = $(val);
+                $item.find('.envi-remove-button').remove();
+                var $checkbox = $('<input />');
+                $checkbox.prop('type', 'checkbox');
+                $checkbox.addClass('choose-list');
+                $item.prepend($checkbox);
+            });
+            var strength = $('<h4 />');
+            strength.html('Strength');
+            $('.relation-contents').append(strength, stList);
+
+            //popOverElem = $this;
+        });
+
+        $(document).on('click', '.popover-edit-trigger', function (e) {
+            e.preventDefault();
+            $('.relation-contents').html('');
+            var $that = $(this);
+            var thList = $('.th-list').clone(true);
+            var oppList = $('.opp-list').clone(true);
+            var wkList = $('.wk-list').clone(true);
+            var stList = $('.st-list').clone(true);
+            thList.removeClass('th-list list-group');
+            oppList.removeClass('opp-list list-group');
+            wkList.removeClass('wk-list list-group');
+            stList.removeClass('st-list list-group');
+            thList.addClass('list-checkbox');
+            oppList.addClass('list-checkbox');
+            wkList.addClass('list-checkbox');
+            stList.addClass('list-checkbox');
+
+            var sRelationids = $that.data('ids');
+            var relationIds = [];
+            if (sRelationids != '') {
+                if (typeof sRelationids === 'string') {
+                    var rInStrings = sRelationids.split(',');
+                    for(var i in rInStrings){
+                        relationIds.push(parseInt(i));
                     }
                 } else {
-                    $(this).closest('form').submit();
+                    relationIds = [parseInt(sRelationids)];
+                }
+            }
+            thList.find('li').each(function (i, val) {
+                var $item = $(val);
+                $item.find('.envi-remove-button').remove();
+                var $checkbox = $('<input />');
+                $checkbox.prop('type', 'checkbox');
+                $checkbox.addClass('choose-list');
+                if (relationIds.indexOf(parseInt($item.data('id'))) > -1) {
+                    $checkbox.prop('checked', true);
+                }
+                $item.prepend($checkbox);
+            });
+            var threat = $('<h4 />');
+            threat.html('Threat');
+            $('.relation-contents').append(threat, thList);
+
+            oppList.find('li').each(function (i, val) {
+                var $item = $(val);
+                $item.find('.envi-remove-button').remove();
+                var $checkbox = $('<input />');
+                $checkbox.prop('type', 'checkbox');
+                $checkbox.addClass('choose-list');
+                if (relationIds.indexOf(parseInt($item.data('id'))) > -1) {
+                    $checkbox.prop('checked', true);
+                }
+                $item.prepend($checkbox);
+            });
+            var opportunity = $('<h4 />');
+            opportunity.html('Opportunity');
+            $('.relation-contents').append(opportunity, oppList);
+
+            wkList.find('li').each(function (i, val) {
+                var $item = $(val);
+                $item.find('.envi-remove-button').remove();
+                var $checkbox = $('<input />');
+                $checkbox.prop('type', 'checkbox');
+                $checkbox.addClass('choose-list');
+                if (relationIds.indexOf(parseInt($item.data('id'))) > -1) {
+                    $checkbox.prop('checked', true);
+                }
+                $item.prepend($checkbox);
+            });
+            var weakness = $('<h4 />');
+            weakness.html('Weakness');
+            $('.relation-contents').append(weakness, wkList);
+
+            stList.find('li').each(function (i, val) {
+                var $item = $(val);
+                $item.find('.envi-remove-button').remove();
+                var $checkbox = $('<input />');
+                $checkbox.prop('type', 'checkbox');
+                $checkbox.addClass('choose-list');
+                if (relationIds.indexOf(parseInt($item.data('id'))) > -1) {
+                    $checkbox.prop('checked', true);
+                }
+                $item.prepend($checkbox);
+            });
+            var strength = $('<h4 />');
+            strength.html('Strength');
+            $('.relation-contents').append(strength, stList);
+
+        });
+
+
+
+        $(document).on('click', '.btn-finish-relation', function (e) {
+            e.preventDefault();
+            var $wrapper = $('.wrapper-relation');
+            $wrapper.html('');
+            $('input.choose-list:checked').each(function (i, val) {
+                var $hiddenId = $('<input />');
+                $hiddenId.prop('type', 'hidden');
+                $hiddenId.prop('name', 'RelationIds[]');
+                $hiddenId.val($(val).parent().data('id'));
+                $wrapper.append($hiddenId);
+            });
+        });
+
+        $(document).on('click', '.btn-create-challenges', function (e) {
+            e.preventDefault();
+            $('.relation-challenges').html('');
+            var $that = this;
+            var thList = $('.th-list').clone(true);
+            var oppList = $('.opp-list').clone(true);
+            var wkList = $('.wk-list').clone(true);
+            var stList = $('.st-list').clone(true);
+            thList.removeClass('th-list list-group');
+            oppList.removeClass('opp-list list-group');
+            wkList.removeClass('wk-list list-group');
+            stList.removeClass('st-list list-group');
+            thList.addClass('list-checkbox');
+            oppList.addClass('list-checkbox');
+            wkList.addClass('list-checkbox');
+            stList.addClass('list-checkbox');
+
+            thList.find('li').each(function (i, val) {
+                var $item = $(val);
+                $item.find('.envi-remove-button').remove();
+                var $checkbox = $('<input />');
+                $checkbox.prop('type', 'checkbox');
+                $checkbox.addClass('choose-list');
+                $item.prepend($checkbox);
+            });
+            var threat = $('<h4 />');
+            threat.html('Threat');
+            $('.relation-challenges').append(threat, thList);
+
+            oppList.find('li').each(function (i, val) {
+                var $item = $(val);
+                $item.find('.envi-remove-button').remove();
+                var $checkbox = $('<input />');
+                $checkbox.prop('type', 'checkbox');
+                $checkbox.addClass('choose-list');
+                $item.prepend($checkbox);
+            });
+            var opportunity = $('<h4 />');
+            opportunity.html('Opportunity');
+            $('.relation-challenges').append(opportunity, oppList);
+
+            wkList.find('li').each(function (i, val) {
+                var $item = $(val);
+                $item.find('.envi-remove-button').remove();
+                var $checkbox = $('<input />');
+                $checkbox.prop('type', 'checkbox');
+                $checkbox.addClass('choose-list');
+                $item.prepend($checkbox);
+            });
+            var weakness = $('<h4 />');
+            weakness.html('Weakness');
+            $('.relation-challenges').append(weakness, wkList);
+
+            stList.find('li').each(function (i, val) {
+                var $item = $(val);
+                $item.find('.envi-remove-button').remove();
+                var $checkbox = $('<input />');
+                $checkbox.prop('type', 'checkbox');
+                $checkbox.addClass('choose-list');
+                $item.prepend($checkbox);
+            });
+            var strength = $('<h4 />');
+            strength.html('Strength');
+            $('.relation-challenges').append(strength, stList);
+
+        });
+
+        $(document).on('click', '.btn-finish-challenge', function (e) {
+            e.preventDefault();
+            var $wrapper = $('.wrapper-challenge');
+            $wrapper.html('');
+            $('input.choose-list:checked').each(function (i, val) {
+                var $hiddenId = $('<input />');
+                $hiddenId.prop('type', 'hidden');
+                $hiddenId.prop('name', 'RelationIds[]');
+                $hiddenId.val($(val).parent().data('id'));
+                $wrapper.append($hiddenId);
+            });
+        });
+
+
+        $(document).on('click', '.btn-show-constraint', function (e) {
+            e.preventDefault();
+            var $that = $(this);
+            var Id = ($that).data('id');
+            $.ajax({
+                url: '@Url.Action("ShowConstraint", "EnvironmentScanning")',
+                data: { id: Id },
+                type: 'POST',
+                dataType: "html",
+                success: function (data) {
+                    $('.modal-envi').html(data);
+                }
+            });
+        });
+
+        $(document).on('click', '.btn-show-challenge', function (e) {
+            e.preventDefault();
+            var $that = $(this);
+            var Id = ($that).data('id');
+            $.ajax({
+                url: '@Url.Action("ShowChallenge", "EnvironmentScanning")',
+                data: { id: Id },
+                type: 'POST',
+                dataType: "html",
+                success: function (data) {
+                    $('.modal-envi').html(data);
+                }
+            });
+        });
+
+
+        $(document).on('mouseenter', '.btn-show-constraint', function (e) {
+            e.preventDefault();
+            var $that = $(this);
+            var $a = $that.closest('a');
+            var threatIds = ($a).data('th');
+            var opportunityIds = ($a).data('opp');
+            var weaknessIds = ($a).data('wk');
+            var strengthIds = ($a).data('st');
+
+
+            if (typeof threatIds != 'string') {
+                threatIds = [threatIds];
+            }
+            else {
+                threatIds = threatIds.split(',');
+                var ithreatIds = [];
+                for (var i in threatIds) {
+                    ithreatIds.push(parseInt(threatIds[i]));
+                }
+                threatIds = ithreatIds;
+            }
+
+            if (typeof opportunityIds != 'string') {
+                opportunityIds = [opportunityIds];
+            }
+            else {
+                opportunityIds = opportunityIds.split(',');
+                var iopportunityIds = [];
+                for (var i in opportunityIds) {
+                    iopportunityIds.push(parseInt(opportunityIds[i]));
+                }
+                opportunityIds = iopportunityIds;
+            }
+
+            if (typeof weaknessIds != 'string') {
+                weaknessIds = [weaknessIds];
+            }
+            else {
+                weaknessIds = weaknessIds.split(',');
+                var iweaknessIds = [];
+                for (var i in weaknessIds) {
+                    iweaknessIds.push(parseInt(weaknessIds[i]));
+                }
+                weaknessIds = iweaknessIds;
+            }
+
+            if (typeof strengthIds != 'string') {
+                strengthIds = [strengthIds];
+            }
+            else {
+                strengthIds = strengthIds.split(',');
+                var istrengthIds = [];
+                for (var i in strengthIds) {
+                    istrengthIds.push(parseInt(strengthIds[i]));
+                }
+                strengthIds = istrengthIds;
+            }
+
+            $('.th-list').children('li').each(function (i, val) {
+                var $li = $(val);
+                if (threatIds.indexOf($li.data('id')) > -1) {
+                    $li.addClass('highlight');
                 }
             });
 
+            $('.opp-list').children('li').each(function (i, val) {
+                var $li = $(val);
+                if (opportunityIds.indexOf($li.data('id')) > -1) {
+                    $li.addClass('highlight');
+                }
+            });
+
+            $('.wk-list').children('li').each(function (i, val) {
+                var $li = $(val);
+                if (weaknessIds.indexOf($li.data('id')) > -1) {
+                    $li.addClass('highlight');
+                }
+            });
+
+            $('.st-list').children('li').each(function (i, val) {
+                var $li = $(val);
+                if (strengthIds.indexOf($li.data('id')) > -1) {
+                    $li.addClass('highlight');
+                }
+            });
         });
+
+        $(document).on('mouseleave', '.btn-show-constraint', function (e) {
+            e.preventDefault();
+            $('.highlight').each(function (i, val) {
+                $(val).removeClass('highlight');
+            })
+        });
+
+
+        $(document).on('mouseenter', '.btn-show-challenge', function (e) {
+            e.preventDefault();
+            var $that = $(this);
+            var $a = $that.closest('a');
+            var threatIds = ($a).data('th');
+            var opportunityIds = ($a).data('opp');
+            var weaknessIds = ($a).data('wk');
+            var strengthIds = ($a).data('st');
+
+
+            if (typeof threatIds != 'string') {
+                threatIds = [threatIds];
+            }
+            else {
+                threatIds = threatIds.split(',');
+                var ithreatIds = [];
+                for (var i in threatIds) {
+                    ithreatIds.push(parseInt(threatIds[i]));
+                }
+                threatIds = ithreatIds;
+            }
+
+            if (typeof opportunityIds != 'string') {
+                opportunityIds = [opportunityIds];
+            }
+            else {
+                opportunityIds = opportunityIds.split(',');
+                var iopportunityIds = [];
+                for (var i in opportunityIds) {
+                    iopportunityIds.push(parseInt(opportunityIds[i]));
+                }
+                opportunityIds = iopportunityIds;
+            }
+
+            if (typeof weaknessIds != 'string') {
+                weaknessIds = [weaknessIds];
+            }
+            else {
+                weaknessIds = weaknessIds.split(',');
+                var iweaknessIds = [];
+                for (var i in weaknessIds) {
+                    iweaknessIds.push(parseInt(weaknessIds[i]));
+                }
+                weaknessIds = iweaknessIds;
+            }
+
+            if (typeof strengthIds != 'string') {
+                strengthIds = [strengthIds];
+            }
+            else {
+                strengthIds = strengthIds.split(',');
+                var istrengthIds = [];
+                for (var i in strengthIds) {
+                    istrengthIds.push(parseInt(strengthIds[i]));
+                }
+                strengthIds = istrengthIds;
+            }
+
+            $('.th-list').children('li').each(function (i, val) {
+                var $li = $(val);
+                if (threatIds.indexOf($li.data('id')) > -1) {
+                    $li.addClass('highlight');
+                }
+            });
+
+            $('.opp-list').children('li').each(function (i, val) {
+                var $li = $(val);
+                if (opportunityIds.indexOf($li.data('id')) > -1) {
+                    $li.addClass('highlight');
+                }
+            });
+
+            $('.wk-list').children('li').each(function (i, val) {
+                var $li = $(val);
+                if (weaknessIds.indexOf($li.data('id')) > -1) {
+                    $li.addClass('highlight');
+                }
+            });
+
+            $('.st-list').children('li').each(function (i, val) {
+                var $li = $(val);
+                if (strengthIds.indexOf($li.data('id')) > -1) {
+                    $li.addClass('highlight');
+                }
+            });
+        });
+
+        $(document).on('mouseleave', '.btn-show-challenge', function (e) {
+            e.preventDefault();
+            $('.highlight').each(function (i, val) {
+                $(val).removeClass('highlight');
+            })
+        });
+
+        $(document).on('click', '.submit-all-es', function (e) {
+            e.preventDefault();
+            var uocpLength = $('.cp-list').children('li').length;
+            var uoopLength = $('.op-list').children('li').length;
+            var uorpLength = $('.rp-list').children('li').length;
+            var threatLength = $('.th-list').children('li').length;
+            var opportunityLength = $('.opp-list').children('li').length;
+            var weaknessLength = $('.wk-list').children('li').length;
+            var strengthLength = $('.st-list').children('li').length;
+            var constraints = $('.table-constraint tr').length; //should be greater than 1
+            var challenges = $('.table-challenge tr').length; //should be greater than 1
+            if (!uocpLength || !uoopLength || !uorpLength || !threatLength ||
+                !opportunityLength || !weaknessLength || !strengthLength ||
+                constraints == 1 || challenges == 1) {
+                if (window.confirm("One of block informations leave empty! Once you go through it you can't revise it. Are you sure want to go to next step?")) {
+                    $(this).closest('form').submit();
+                }
+            } else {
+                $(this).closest('form').submit();
+            }
+        });
+
+    });
 
 
 

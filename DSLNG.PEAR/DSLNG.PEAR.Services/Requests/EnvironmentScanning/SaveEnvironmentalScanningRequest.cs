@@ -9,8 +9,8 @@ namespace DSLNG.PEAR.Services.Requests.EnvironmentScanning
     public class SaveEnvironmentalScanningRequest
     {
         public int Id { get; set; }
-        public int EnviId { get; set; }
+        public int Esid { get; set; }
         public string Description { get; set; }
-        public string EnviType { get; set; }
+        public string Type { get; set; }
     }
 }
