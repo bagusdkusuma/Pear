@@ -625,7 +625,7 @@
                 } else {
                     $form.find('input[name="Id"]').val($this.closest('tr').data('id'));
                 }
-                $form.find('textarea').html($this.html().replace(/<[^>]*>/g, ""));
+                $form.find('textarea').html($this.html().trim().replace(/<[^>]*>/g, ""));
 
                 //challenge or constraint
                 $form.find('input[name="PostureType"]').val($listBlock.find('.popover-trigger').data('posture'));

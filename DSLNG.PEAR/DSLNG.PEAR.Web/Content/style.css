@@ -2430,7 +2430,7 @@ table.list-result {
             border-left: none;
         }
 
-            table.list-result tr td:first-child span {
+            table.list-result tr td:first-child > span {
                 display: inline-block;
                 width: 17px;
                 height: 17px;

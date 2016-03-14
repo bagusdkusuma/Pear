@@ -62,7 +62,7 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 id = response.Id,
                 description = response.Description,
-                type = viewModel.EnviType
+                type = viewModel.Type
             };
             return Json(data, JsonRequestBehavior.AllowGet);
         }

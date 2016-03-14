@@ -596,7 +596,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.OpportunityIds, y => y.MapFrom(z => z.Relations.Where(u => u.OpportunityHost != null).Select(m => m.Id).ToArray()))
                 .ForMember(x => x.WeaknessIds, y => y.MapFrom(z => z.Relations.Where(u => u.WeaknessHost != null).Select(m => m.Id).ToArray()))
                 .ForMember(x => x.StrengthIds, y => y.MapFrom(z => z.Relations.Where(u => u.StrengthHost != null).Select(m => m.Id).ToArray()))
-                .ForMember(x => x.Category, o => o.MapFrom(y => y.ESCategory.Name));
+                .ForMember(x => x.RelationIds, y => y.MapFrom(z => z.Relations.Select(m => m.Id).ToArray()))
+                .ForMember(x => x.Category, o => o.MapFrom(y => y.ESCategory.Name))
+                .ForMember(x => x.CategoryId, o => o.MapFrom(y => y.ESCategory.Id));
             Mapper.CreateMap<Challenge, GetEnvironmentsScanningResponse.Challenge>()
                 .ForMember(x => x.ThreatIds, y => y.MapFrom(z => z.Relations.Where(u => u.ThreatHost != null).Select(m => m.Id).ToArray()))
                 .ForMember(x => x.OpportunityIds, y => y.MapFrom(z => z.Relations.Where(u => u.OpportunityHost != null).Select(m => m.Id).ToArray()))
@@ -604,7 +606,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.StrengthIds, y => y.MapFrom(z => z.Relations.Where(u => u.StrengthHost != null).Select(m => m.Id).ToArray()))
                 .ForMember(x => x.Category, o => o.MapFrom(y => y.ESCategory.Name));
             Mapper.CreateMap<SaveConstraintRequest, Constraint>();
-            Mapper.CreateMap<Constraint, SaveConstraintResponse>();
+            Mapper.CreateMap<Constraint, SaveConstraintResponse>()
+                .ForMember(x => x.CategoryId, o => o.MapFrom(y => y.ESCategory.Id));
             Mapper.CreateMap<SaveChallengeRequest, Challenge>();
             Mapper.CreateMap<Challenge, SaveChallengeResponse>();
             Mapper.CreateMap<SaveESCategoryRequest, ESCategory>();
