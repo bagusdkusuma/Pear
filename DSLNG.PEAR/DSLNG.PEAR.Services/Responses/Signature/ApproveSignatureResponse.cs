@@ -7,14 +7,15 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Responses.Signature
 {
-    public class SaveSignatureResponse
+    public class ApproveSignatureResponse : BaseResponse
     {
         public int Id { get; set; }
+        public int DashboardId { get; set; }
         public int UserId { get; set; }
-        public string Username { get; set; }
+        public SignatureType Type { get; set; }
+        public bool Approve { get; set; }
+        public bool Reject { get; set; }
         public string SignatureImage { get; set; }
-        public SignatureType TypeSignature { get; set; }
-        public bool IsApprove { get; set; }
-        public bool IsReject { get; set; }
+        public string Note { get; set; }
     }
 }

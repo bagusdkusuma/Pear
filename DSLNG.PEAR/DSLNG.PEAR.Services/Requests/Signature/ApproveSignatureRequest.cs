@@ -1,18 +1,17 @@
-﻿using DSLNG.PEAR.Data.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DSLNG.PEAR.Data.Entities.Pop
+namespace DSLNG.PEAR.Services.Requests.Signature
 {
-    public class Signature
+    public class ApproveSignatureRequest
     {
         public int Id { get; set; }
-        public PopDashboard PopDashboard { get; set; }
-        public User User { get; set; }
-        public SignatureType Type { get; set; }
+        public int DashboardId { get; set; }
+        public int UserId { get; set; }
+        public int Type { get; set; }
         public bool IsApprove { get; set; }
         public bool IsReject { get; set; }
         public string Note { get; set; }

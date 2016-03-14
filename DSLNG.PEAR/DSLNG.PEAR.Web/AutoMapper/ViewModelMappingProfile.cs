@@ -681,6 +681,10 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<SavePopInformationViewModel, SavePopInformationRequest>();
             Mapper.CreateMap<GetPopDashboardViewModel, SaveSignatureRequest>();
 
+
+            Mapper.CreateMap<SaveApprovalViewModel, ApproveSignatureRequest>();
+
+
             Mapper.CreateMap<KpiTargetInputViewModel, KpiTargetInputRequest>()
                 .ForMember(d => d.Start, o => o.MapFrom(s => DateTime.ParseExact(s.Start, "dd/MM/yyyy", CultureInfo.InvariantCulture)))
                 .ForMember(d => d.End, o => o.MapFrom(s => DateTime.ParseExact(s.End, "dd/MM/yyyy", CultureInfo.InvariantCulture)));
@@ -691,6 +695,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<RejectVoyagePlanViewModel, RejectVoyagePlanRequest>();
             Mapper.CreateMap<RejectMidtermStrategyViewModel, RejectMidtermStrategyRequest>();
+
             base.Configure();
         }
         

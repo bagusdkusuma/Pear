@@ -13,5 +13,7 @@ namespace DSLNG.PEAR.Services.Requests.Signature
         public int DashboardId { get; set; }
         public string Username { get; set; }
         public int TypeSignature { get; set; }
+        public bool IsApprove { get; set; }
+        public bool IsReject { get; set; }
     }
 }

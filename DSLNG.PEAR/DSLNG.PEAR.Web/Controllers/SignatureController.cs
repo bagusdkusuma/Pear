@@ -55,5 +55,24 @@ namespace DSLNG.PEAR.Web.Controllers
 
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public ActionResult Approve(SaveApprovalViewModel viewModel)
+        {
+            var request = viewModel.MapTo<ApproveSignatureRequest>();
+            var response = _signatureService.ApproveSignature(request);
+            var data = new
+            {
+                id = response.Id,
+                userId = response.UserId,
+                type = response.Type.ToString(),
+                signatureImage = response.SignatureImage,
+                approve = response.Approve,
+                reject = response.Reject,
+                note = response.Note
+            };
+
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
 	}
 }

@@ -92,6 +92,7 @@
     <Compile Include="HighlightService.cs" />
     <Compile Include="Interfaces\GetDerLayoutResponse.cs" />
     <Compile Include="Requests\Der\SaveLayoutItemRequest.cs" />
+    <Compile Include="Requests\Signature\ApproveSignatureRequest.cs" />
     <Compile Include="Requests\PlanningBlueprint\KpiEconomicInputRequest.cs" />
     <Compile Include="Requests\PlanningBlueprint\KpiTargetInputRequest.cs" />
     <Compile Include="Requests\PlanningBlueprint\RejectMidtermStrategyRequest.cs" />
@@ -679,6 +680,7 @@
     <Compile Include="Responses\Select\GetSelectResponse.cs" />
     <Compile Include="Responses\Select\GetSelectsResponse.cs" />
     <Compile Include="Responses\Select\UpdateSelectResponse.cs" />
+    <Compile Include="Responses\Signature\ApproveSignatureResponse.cs" />
     <Compile Include="Responses\Signature\SaveSignatureResponse.cs" />
     <Compile Include="Responses\Template\CreateTemplateResponse.cs" />
     <Compile Include="Responses\Template\DeleteTemplateResponse.cs" />
