@@ -124,7 +124,7 @@
                             foreach (var item in Model.Threat)
                             {
                                 <li data-id="@item.Id">
-                                    <span class="popover-edit-trigger" data-toggle="popover" data-form-target="environmental" data-id="@item.Id" data-es-id="@Model.Id" data-type="th">@item.Desc</span>
+                                    <span class="popover-edit-trigger" data-toggle="popover" data-placement="bottom" data-form-target="environmental" data-id="@item.Id" data-es-id="@Model.Id" data-type="th">@item.Desc</span>
                                     @if (!Model.IsReviewer)
                                     {<a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a>}
                                 </li>
@@ -138,7 +138,7 @@
                             foreach (var item in Model.Opportunity)
                             {
                                 <li data-id="@item.Id">
-                                    <span class="popover-edit-trigger" data-toggle="popover" data-form-target="environmental" data-id="@item.Id" data-es-id="@Model.Id" data-type="opp">@item.Desc</span>
+                                    <span class="popover-edit-trigger" data-toggle="popover" data-placement="bottom" data-form-target="environmental" data-id="@item.Id" data-es-id="@Model.Id" data-type="opp">@item.Desc</span>
                                     @if (!Model.IsReviewer)
                                     {<a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a>}
                                 </li>
@@ -152,7 +152,7 @@
                             foreach (var item in Model.Weakness)
                             {
                                 <li data-id="@item.Id">
-                                    <span class="popover-edit-trigger" data-toggle="popover" data-form-target="environmental" data-id="@item.Id" data-es-id="@Model.Id" data-type="wk">@item.Desc</span>
+                                    <span class="popover-edit-trigger" data-toggle="popover" data-placement="bottom" data-form-target="environmental" data-id="@item.Id" data-es-id="@Model.Id" data-type="wk">@item.Desc</span>
                                     @if (!Model.IsReviewer)
                                     {<a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a>}
                                 </li>
@@ -166,7 +166,7 @@
                             foreach (var item in Model.Strength)
                             {
                                 <li data-id="@item.Id">
-                                    <span class="popover-edit-trigger" data-toggle="popover" data-form-target="environmental" data-id="@item.Id" data-es-id="@Model.Id" data-type="st">@item.Desc</span>
+                                    <span class="popover-edit-trigger" data-toggle="popover" data-placement="bottom" data-form-target="environmental" data-id="@item.Id" data-es-id="@Model.Id" data-type="st">@item.Desc</span>
                                     @if (!Model.IsReviewer)
                                     {<a href="#" data-id="@item.Id" class="envi-remove-button"><i class="fa fa-minus"></i></a>}
                                 </li>
@@ -222,7 +222,7 @@
                         }
                     </td>
                     <td class="td-definition" style="text-align:left">
-                        <span class="popover-edit-trigger" data-toggle="popover" data-form-target="constraint" data-id="@item.Id" data-es-id="@Model.Id" data-type="@item.Type" data-category="@item.CategoryId" data-ids="@item.RelationIdsString">@item.Definition</span>
+                        <span class="popover-edit-trigger" data-toggle="popover" data-placement="bottom" data-form-target="constraint" data-id="@item.Id" data-es-id="@Model.Id" data-type="@item.Type" data-category="@item.CategoryId" data-ids="@item.RelationIdsString">@item.Definition</span>
                         @if (!Model.IsReviewer)
                         {<a href="#" data-id="@item.Id" class="constraint-remove-button"><i class="fa fa-minus"></i></a>}
                     </td>
@@ -281,7 +281,7 @@
                         }
                     </td>
                     <td class="td-definition" style="text-align:left">
-                        <span class="popover-edit-trigger" data-toggle="popover" data-form-target="challenge" data-id="@item.Id" data-es-id="@Model.Id" data-type="@item.Type" data-category="@item.CategoryId" data-ids="@item.RelationIdsString">@item.Definition</span>
+                        <span class="popover-edit-trigger" data-toggle="popover" data-placement="top" data-form-target="challenge" data-id="@item.Id" data-es-id="@Model.Id" data-type="@item.Type" data-category="@item.CategoryId" data-ids="@item.RelationIdsString">@item.Definition</span>
                         @if (!Model.IsReviewer)
                         {<a href="#" data-id="@item.Id" class="challenge-remove-button"><i class="fa fa-minus"></i></a>}
                     </td>
@@ -547,7 +547,9 @@
                         $form.find('textarea').html($this.html().replace(/<[^>]*>/g, ""));
                         $form.find('select[name="Type"]').find('option[value="' + type + '"]').attr('selected', 'selected');
                         $form.find('select[name="Category"]').find('option[value="' + category + '"]').attr('selected', 'selected');
-                        
+                        $form.find('.form-input-constraint').removeClass('form-input-constraint').addClass('edit-constraint').html('Save');
+                        $form.find('.form-input-challenge').removeClass('form-input-challenge').addClass('edit-challenge').html('Save');
+
                         var formclone = '';
                         if (formTarget == 'constraint')
                         {
@@ -557,7 +559,6 @@
                         {
                             formclone = '.relation-challenges'
                         }
-                        console.log(formclone);
 
                             $(formclone).html('');
                             var $that = $(this);
@@ -909,13 +910,53 @@
                         if (data.strengthIds.length > 0) {
                             relation = relation + '<a href="#"  data-st="' + data.strengthIds + '" class="btn-show-constraint r-strength">S</a> '
                         }
+                        var input = [];
+                        input = input + 'data-th="' + data.threatIds + '"' + 'data-opp="' + data.opportunityIds + '"' + 'data-wk="' + data.weaknessIds + '"' + 'data-st="' + data.strengthIds + '"'
+
+                        var span = '<span class="popover-edit-trigger" data-toggle="popover" data-placement="bottom" data-pl data-form-target="constraint" data-id="' + data.id + '" data-es-id="@Model.Id" data-type="' + data.type + '" data-category="' + data.categoryId + '" data-ids="' + data.relationids + '">' + data.definition + '</span>'
+
+                        $('.table-constraint').append('<tr><td class="td-entity">' + '<a href="#" data-toggle="modal" ' + input + ' data-target="#envi-modal" data-id="' + data.id + '" class="btn-show-constraint">' + '<span>' + relation + '</span>' + '</td><td class="td-definition" style="text-align:left">' + span + '<a href="#" data-id="' + data.id + '" class="constraint-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
+                        popOverElem.popover('hide');
+
+                        $('.relation-contents').html('');
+                        $('.wrapper-relation').html('');
+                    }
+                })
+            });
+
+            $(document).on('click', '.edit-constraint', function (e) {
+                e.preventDefault();
+                var $that = $(this);
+                var $form = $that.closest('form');
+                var $trigger = $that.closest('.popover').prev();
+                if (!$form.valid()) return;
+                $.ajax({
+                    url: '@Url.Action("CreateConstraint", "EnvironmentScanning")',
+                    data: $that.closest('form').serialize(),
+                    type: 'POST',
+                    success: function (data) {
+                        var relation = '';
+                        if (data.threatIds.length > 0) {
+                            relation = relation + '<a href="#"  data-th="' + data.threatIds + '" class="btn-show-constraint r-threat">T</a> '
+                        }
+                        if (data.opportunityIds.length > 0) {
+                            relation = relation + '<a href="#" data-opp="' + data.opportunityIds + '" class="btn-show-constraint r-opportunity">O</a> '
+                        }
+                        if (data.weaknessIds.length > 0) {
+                            relation = relation + '<a href="#"  data-wk="' + data.weaknessIds + '" class="btn-show-constraint r-weakness">W</a> '
+                        }
+                        if (data.strengthIds.length > 0) {
+                            relation = relation + '<a href="#"  data-st="' + data.strengthIds + '" class="btn-show-constraint r-strength">S</a> '
+                        }
 
                         var input = [];
                         input = input + 'data-th="' + data.threatIds + '"' + 'data-opp="' + data.opportunityIds + '"' + 'data-wk="' + data.weaknessIds + '"' + 'data-st="' + data.strengthIds + '"'
 
-
-                        $('.table-constraint').append('<tr><td class="td-entity">' + '<a href="#" data-toggle="modal" ' + input + ' data-target="#envi-modal" data-id="' + data.id + '" class="btn-show-constraint">' + '<span>' + relation + '</span>' + '</td><td class="td-definition" style="text-align:left">' + data.definition + '<a href="#" data-id="' + data.id + '" class="constraint-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
-                        //popOverElem.popover('hide');
+                        var $trigger = $that.closest('.popover').prev();
+                        $row = $trigger.closest('tr');
+                        $row.remove();
+                        var span = '<span class="popover-edit-trigger" data-toggle="popover" data-placement="bottom" data-form-target="constraint" data-id="' + data.id + '" data-es-id="@Model.Id" data-type="' + data.type + '" data-category="' + data.categoryId + '" data-ids="' + data.relationids + '">' + data.definition + '</span>'
+                        $('.table-constraint').append('<tr><td class="td-entity">' + '<a href="#" data-toggle="modal" ' + input + ' data-target="#envi-modal" data-id="' + data.id + '" class="btn-show-constraint">' + '<span>' + relation + '</span>' + '</td><td class="td-definition" style="text-align:left">' + span + '<a href="#" data-id="' + data.id + '" class="constraint-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
 
                         $('.relation-contents').html('');
                         $('.wrapper-relation').html('');
@@ -946,8 +987,48 @@
                         if (data.strengthIds.length > 0) {
                             relation = relation + '<a href="#"  data-st="' + data.strengthIds + '" class="btn-show-constraint r-strength">S</a> '
                         }
+                        var span = '<span class="popover-edit-trigger" data-toggle="popover" data-placement="top" data-form-target="challenge" data-id="' + data.id + '" data-es-id="@Model.Id" data-type="' + data.type + '" data-category="' + data.categoryId + '" data-ids="' + data.relationids + '">' + data.definition + '</span>'
 
-                        $('.table-challenge').append('<tr><td class="td-entity">' + ' <a href="#" data-toggle="modal" data-target="#envi-modal" data-id="' + data.id + '" class="btn-show-challenge">' + '<span>' + relation + '</span>' + '</td><td class="td-definition" style="text-align:left">' + data.definition + '<a href="#" data-id="' + data.id + '" class="challenge-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
+                        $('.table-challenge').append('<tr><td class="td-entity">' + ' <a href="#" data-toggle="modal" data-target="#envi-modal" data-id="' + data.id + '" class="btn-show-challenge">' + '<span>' + relation + '</span>' + '</td><td class="td-definition" style="text-align:left">' + span + '<a href="#" data-id="' + data.id + '" class="challenge-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
+                        popOverElem.popover('hide');
+
+                        $('.relation-challenges').html('');
+                        $('.wrapper-challenge').html('');
+                    }
+                })
+            });
+
+            $(document).on('click', '.edit-challenge', function (e) {
+                e.preventDefault();
+                var $that = $(this);
+                var $form = $that.closest('form');
+                var $trigger = $that.closest('.popover').prev();
+                if (!$form.valid()) return;
+                $.ajax({
+                    url: '@Url.Action("CreateChallenge", "EnvironmentScanning")',
+                    data: $that.closest('form').serialize(),
+                    type: 'POST',
+                    success: function (data) {
+                        var relation = '';
+                        if (data.threatIds.length > 0) {
+                            relation = relation + '<a href="#"  data-th="' + data.threatIds + '" class="btn-show-constraint r-threat">T</a> '
+                        }
+                        if (data.opportunityIds.length > 0) {
+                            relation = relation + '<a href="#"  data-opp="' + data.opportunityIds + '" class="btn-show-constraint r-opportunity">O</a> '
+                        }
+                        if (data.weaknessIds.length > 0) {
+                            relation = relation + '<a href="#"  data-wk="' + data.weaknessIds + '" class="btn-show-constraint r-weakness">W</a> '
+                        }
+                        if (data.strengthIds.length > 0) {
+                            relation = relation + '<a href="#"  data-st="' + data.strengthIds + '" class="btn-show-constraint r-strength">S</a> '
+                        }
+
+                        var $trigger = $that.closest('.popover').prev();
+                        $row = $trigger.closest('tr');
+                        $row.remove();
+                        var span = '<span class="popover-edit-trigger" data-toggle="popover" data-placement="top" data-form-target="challenge" data-id="' + data.id + '" data-es-id="@Model.Id" data-type="' + data.type + '" data-category="' + data.categoryId + '" data-ids="' + data.relationids + '">' + data.definition + '</span>'
+
+                        $('.table-challenge').append('<tr><td class="td-entity">' + ' <a href="#" data-toggle="modal" data-target="#envi-modal" data-id="' + data.id + '" class="btn-show-challenge">' + '<span>' + relation + '</span>' + '</td><td class="td-definition" style="text-align:left">' + span + '<a href="#" data-id="' + data.id + '" class="challenge-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
                         //popOverElem.popover('hide');
 
                         $('.relation-challenges').html('');
@@ -955,6 +1036,7 @@
                     }
                 })
             });
+
 
 
             $(document).on('click', '.btn-create-constraint', function (e) {
