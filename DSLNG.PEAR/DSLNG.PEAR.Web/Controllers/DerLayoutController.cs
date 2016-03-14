@@ -155,14 +155,18 @@ namespace DSLNG.PEAR.Web.Controllers
 
                             break;
                         }
-
                     case "avg-ytd-key-statistic":
                         {
                             break;
                         }
-                        
+                    case "highlight":
+                        {
+                            var result = _selectService.GetHighlightTypesDropdown();
+                            editViewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                            editViewModel.HighlightId = response.Highlight.SelectOptionId;
+                            break;
+                        }
                 }
-
                 return View("EditLayoutItem", editViewModel);
             }
             else
@@ -236,7 +240,14 @@ namespace DSLNG.PEAR.Web.Controllers
                         var viewModel = new DerLayoutItemViewModel();
                         var result = _selectService.GetHighlightTypesDropdown();
                         viewModel.Highlights =
-                            result.Select(x => new SelectListItem() { Text = x.Text, Value = x.Value }).ToList();
+                            result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                        //foreach(var item in result)
+                        //{
+                        //    var sl = new SelectListItem();
+                        //    sl.Text = item.Text;
+                        //    sl.Value = item.Value;
+                        //    viewModel.Highlights.Add(sl);
+                        //}
                         return PartialView("LayoutType/_Highlight", viewModel);
                     }
                 case "alert":
@@ -276,7 +287,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
             return Content("Error");
         }
-        
+
         [HttpPost]
         public ActionResult SaveLayoutItem(DerLayoutItemViewModel layoutItemViewModel)
         {

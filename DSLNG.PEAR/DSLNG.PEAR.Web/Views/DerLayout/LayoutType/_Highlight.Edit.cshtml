@@ -1,0 +1,10 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.DerLayout.DerLayoutItemViewModel
+
+<div class="form-group row">
+    @Html.LabelFor(model => model.HighlightId, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(model => model.HighlightId, Model.Highlights, "Select Highlight", null)
+        @Html.ValidationMessageFor(model => model.HighlightId)
+    </div>
+</div>
+
