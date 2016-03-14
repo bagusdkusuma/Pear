@@ -611,7 +611,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Constraint, SaveConstraintResponse>()
                 .ForMember(x => x.CategoryId, o => o.MapFrom(y => y.ESCategory.Id));
             Mapper.CreateMap<SaveChallengeRequest, Challenge>();
-            Mapper.CreateMap<Challenge, SaveChallengeResponse>();
+            Mapper.CreateMap<Challenge, SaveChallengeResponse>()
+                .ForMember(x => x.CategoryId, o => o.MapFrom(y => y.ESCategory.Id));
             Mapper.CreateMap<SaveESCategoryRequest, ESCategory>();
             Mapper.CreateMap<ESCategory, GetESCategoryResponse>();
 

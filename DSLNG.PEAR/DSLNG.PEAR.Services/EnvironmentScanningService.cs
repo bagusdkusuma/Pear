@@ -360,7 +360,12 @@ namespace DSLNG.PEAR.Services
             }
 
             DataContext.SaveChanges();
-            var result = constraint;
+            var result = DataContext.Constraint.Where(x => x.Id == constraint.Id)
+                .Include(x => x.Relations)
+                .Include(x => x.Relations.Select(y => y.ThreatHost))
+                .Include(x => x.Relations.Select(y => y.OpportunityHost))
+                .Include(x => x.Relations.Select(y => y.WeaknessHost))
+                .Include(x => x.Relations.Select(y => y.StrengthHost)).FirstOrDefault();
 
             return new SaveConstraintResponse
             {
@@ -375,6 +380,7 @@ namespace DSLNG.PEAR.Services
                 OpportunityIds = result.Relations.Where(x => x.OpportunityHost != null).Select(y => y.Id).ToArray(),
                 WeaknessIds = result.Relations.Where(x => x.WeaknessHost != null).Select(y => y.Id).ToArray(),
                 StrengthIds = result.Relations.Where(x => x.StrengthHost != null).Select(y => y.Id).ToArray(),
+                CategoryId = result.ESCategory.Id
 
             };
 
@@ -432,14 +438,14 @@ namespace DSLNG.PEAR.Services
            
             DataContext.SaveChanges();
 
-            //var result = DataContext.Challenges.Where(x => x.Id == challenge.Id)
-            //    .Include(x => x.Relations)
-            //    .Include(x => x.Relations.Select(y => y.ThreatHost))
-            //    .Include(x => x.Relations.Select(y => y.OpportunityHost))
-            //    .Include(x => x.Relations.Select(y => y.WeaknessHost))
-            //    .Include(x => x.Relations.Select(y => y.StrengthHost)).FirstOrDefault();
+            var result = DataContext.Challenges.Where(x => x.Id == challenge.Id)
+                .Include(x => x.Relations)
+                .Include(x => x.ESCategory)
+                .Include(x => x.Relations.Select(y => y.ThreatHost))
+                .Include(x => x.Relations.Select(y => y.OpportunityHost))
+                .Include(x => x.Relations.Select(y => y.WeaknessHost))
+                .Include(x => x.Relations.Select(y => y.StrengthHost)).FirstOrDefault();
 
-            var result = challenge;
 
             return new SaveChallengeResponse
             {
@@ -454,6 +460,7 @@ namespace DSLNG.PEAR.Services
                 OpportunityIds = result.Relations.Where(x => x.OpportunityHost != null).Select(y => y.Id).ToArray(),
                 WeaknessIds = result.Relations.Where(x => x.WeaknessHost != null).Select(y => y.Id).ToArray(),
                 StrengthIds = result.Relations.Where(x => x.StrengthHost != null).Select(y => y.Id).ToArray(),
+                CategoryId = result.ESCategory.Id
             };
         }
 
