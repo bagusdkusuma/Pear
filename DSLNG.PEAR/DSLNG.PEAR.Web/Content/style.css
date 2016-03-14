@@ -2454,8 +2454,8 @@ table.list-result {
     margin: 0;
 }
 
-    table.list-result tr th,
-    table.list-result tr td {
+    .business-posture table.list-result tr th,
+    .business-posture table.list-result tr td {
         border: 1px solid #ddd;
         border-right: none;
     }
@@ -2466,7 +2466,7 @@ table.list-result {
             vertical-align:top;
         }
 
-            table.list-result tr td:first-child > span {
+            table.list-result tr td:first-child > a > span {
                 display: inline-block;
                 width: 17px;
                 height: 17px;
@@ -3003,4 +3003,8 @@ span.popover-edit-trigger {
     vertical-align: top;
     word-break:normal;
         text-align: justify;
+}
+table.list-result tbody > tr > td,
+table.popover-envi tbody > tr > td {
+    vertical-align:top;
 }
