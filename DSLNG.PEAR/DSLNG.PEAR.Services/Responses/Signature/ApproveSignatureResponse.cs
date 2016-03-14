@@ -16,5 +16,6 @@ namespace DSLNG.PEAR.Services.Responses.Signature
         public bool Approve { get; set; }
         public bool Reject { get; set; }
         public string SignatureImage { get; set; }
+        public string Note { get; set; }
     }
 }

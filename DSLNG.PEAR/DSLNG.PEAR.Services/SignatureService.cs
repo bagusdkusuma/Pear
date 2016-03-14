@@ -67,7 +67,8 @@ namespace DSLNG.PEAR.Services
                 Type = signature.Type,
                 Approve = signature.IsApprove,
                 Reject = signature.IsReject,
-                SignatureImage = signature.User.SignatureImage
+                SignatureImage = signature.User.SignatureImage,
+                Note = signature.Note
             };
         }
     }

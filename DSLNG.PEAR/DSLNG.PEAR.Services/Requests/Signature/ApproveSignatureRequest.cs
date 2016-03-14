@@ -14,5 +14,6 @@ namespace DSLNG.PEAR.Services.Requests.Signature
         public int Type { get; set; }
         public bool IsApprove { get; set; }
         public bool IsReject { get; set; }
+        public string Note { get; set; }
     }
 }

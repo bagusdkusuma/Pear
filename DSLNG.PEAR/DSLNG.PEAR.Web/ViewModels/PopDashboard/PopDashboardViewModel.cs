@@ -45,6 +45,8 @@ namespace DSLNG.PEAR.Web.ViewModels.PopDashboard
         {
             PopInformations = new List<PopInformation>();
             Signatures = new List<SignatureViewModel>();
+            IsApprove = false;
+            IsReject = false;
         }
         public int Id { get; set; }
         public string Title { get; set; }
@@ -57,6 +59,8 @@ namespace DSLNG.PEAR.Web.ViewModels.PopDashboard
         public int UserId { get; set; }
         public int DashboardId { get; set; }
         public int TypeSignature { get; set; }
+        public bool IsApprove { get; set; }
+        public bool IsReject { get; set; }
 
         public class PopInformation
         {
