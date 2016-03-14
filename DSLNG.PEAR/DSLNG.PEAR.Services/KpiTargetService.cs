@@ -581,6 +581,7 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
+        
         public GetKpiTargetItemResponse GetKpiTarget(int kpiId, DateTime date, RangeFilter rangeFilter)
         {
             var response = new GetKpiTargetItemResponse();
@@ -588,12 +589,40 @@ namespace DSLNG.PEAR.Services
             {
                 switch (rangeFilter)
                 {
-                    case RangeFilter.CurrentYear:
+                    case RangeFilter.CurrentDay:
+                    case RangeFilter.MTD:
+                    case RangeFilter.YTD:
+                    case RangeFilter.AllExistingYears:
                         {
                             var kpi = DataContext.Kpis
                                 .Include(x => x.Measurement)
                                 .Single(x => x.Id == kpiId);
-                            var data = DataContext.KpiAchievements.Include(x => x.Kpi).FirstOrDefault(x => x.Kpi.Id == kpiId && x.PeriodeType == PeriodeType.Yearly && x.Periode.Year == date.Year);
+
+                            return GetKpiTarget(kpi.Id, date, rangeFilter, kpi.YtdFormula);
+                        }
+                }
+
+            }
+            catch (Exception exception)
+            {
+                response.Message = exception.Message;
+            }
+
+
+            return response;
+        }
+
+        public GetKpiTargetItemResponse GetKpiTarget(int kpiId, DateTime date, RangeFilter rangeFilter, YtdFormula ytdFormula)
+        {
+            var response = new GetKpiTargetItemResponse();
+            try
+            {
+                switch (rangeFilter)
+                {
+                    case RangeFilter.CurrentDay:
+                        {
+                            var kpi = DataContext.Kpis.Include(x => x.Measurement).Single(x => x.Id == kpiId);
+                            var data = DataContext.KpiTargets.Include(x => x.Kpi).FirstOrDefault(x => x.Kpi.Id == kpiId && x.PeriodeType == PeriodeType.Daily && x.Periode == date);
                             var kpiResponse = new GetKpiTargetItemResponse.KpiResponse
                             {
                                 Id = kpi.Id,
@@ -608,9 +637,76 @@ namespace DSLNG.PEAR.Services
                                 Kpi = kpiResponse,
                                 IsSuccess = true
                             };
-
                         }
 
+                    case RangeFilter.MTD:
+                        {
+                            var kpi = DataContext.Kpis.Include(x => x.Measurement).Single(x => x.Id == kpiId);
+                            var data = DataContext.KpiTargets.Include(x => x.Kpi)
+                                .Where(x => x.Kpi.Id == kpiId && x.PeriodeType == PeriodeType.Daily &&
+                                    (x.Periode.Day >= 1 && x.Periode.Day <= date.Day && x.Periode.Month == date.Month && x.Periode.Year == date.Year)).AsQueryable();
+                            double? kpiAchievement = ytdFormula == YtdFormula.Average ? data.Average(x => x.Value) : data.Sum(x => x.Value);
+                            var kpiResponse = new GetKpiTargetItemResponse.KpiResponse
+                            {
+                                Id = kpi.Id,
+                                Measurement = kpi.Measurement.Name,
+                                Name = kpi.Name,
+                                Remark = kpi.Remark,
+                            };
+
+                            return new GetKpiTargetItemResponse
+                            {
+                                Value = kpiAchievement,
+                                Kpi = kpiResponse,
+                                IsSuccess = true
+                            };
+                        }
+
+                    case RangeFilter.YTD:
+                        {
+                            var kpi = DataContext.Kpis.Include(x => x.Measurement).Single(x => x.Id == kpiId);
+                            var data = DataContext.KpiTargets.Include(x => x.Kpi)
+                                    .Where(x => x.Kpi.Id == kpiId && x.PeriodeType == PeriodeType.Monthly && x.Value.HasValue &&
+                                    (x.Periode.Month >= 1 && x.Periode.Month <= date.Month && x.Periode.Year == date.Year)).AsQueryable();
+                            double? kpiAchievement = ytdFormula == YtdFormula.Average ? data.Average(x => x.Value) : data.Sum(x => x.Value);
+                            var kpiResponse = new GetKpiTargetItemResponse.KpiResponse
+                            {
+                                Id = kpi.Id,
+                                Measurement = kpi.Measurement.Name,
+                                Name = kpi.Name,
+                                Remark = kpi.Remark,
+                            };
+
+                            return new GetKpiTargetItemResponse
+                            {
+                                Value = kpiAchievement,
+                                Kpi = kpiResponse,
+                                IsSuccess = true
+                            };
+                        }
+
+                    case RangeFilter.AllExistingYears:
+                        {
+                            var kpi = DataContext.Kpis.Include(x => x.Measurement).Single(x => x.Id == kpiId);
+                            var data = DataContext.KpiTargets.Include(x => x.Kpi)
+                                    .Where(x => x.Kpi.Id == kpiId && x.PeriodeType == PeriodeType.Yearly && x.Value.HasValue &&
+                                    (x.Periode.Year >= 2011 && x.Periode.Year <= date.Year)).AsQueryable();
+                            double? kpiAchievement = ytdFormula == YtdFormula.Average ? data.Average(x => x.Value) : data.Sum(x => x.Value);
+                            var kpiResponse = new GetKpiTargetItemResponse.KpiResponse
+                            {
+                                Id = kpi.Id,
+                                Measurement = kpi.Measurement.Name,
+                                Name = kpi.Name,
+                                Remark = kpi.Remark,
+                            };
+
+                            return new GetKpiTargetItemResponse
+                            {
+                                Value = kpiAchievement,
+                                Kpi = kpiResponse,
+                                IsSuccess = true
+                            };
+                        }
                 }
 
             }
@@ -622,5 +718,6 @@ namespace DSLNG.PEAR.Services
 
             return response;
         }
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -16,6 +17,7 @@ using DSLNG.PEAR.Services.Responses.Der;
 using DSLNG.PEAR.Web.ViewModels.Artifact;
 using DSLNG.PEAR.Web.ViewModels.Der;
 using DSLNG.PEAR.Web.ViewModels.Der.Display;
+using DSLNG.PEAR.Web.Extensions;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -246,7 +248,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         return Json(previewViewModel, JsonRequestBehavior.AllowGet);
                     }
                 #endregion
-
+                #region highlight
                 case "highlight":
                     {
                         var highlight =
@@ -259,6 +261,8 @@ namespace DSLNG.PEAR.Web.Controllers
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
+                #endregion
+                #region weather
                 case "weather":
                     {
                         var weather = _weatherService.GetWeather(new GetWeatherRequest
@@ -271,6 +275,8 @@ namespace DSLNG.PEAR.Web.Controllers
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
+                #endregion
+                #region alert
                 case "alert":
                     {
                         var alert = _highlightService.GetHighlightByPeriode(new GetHighlightRequest
@@ -282,7 +288,8 @@ namespace DSLNG.PEAR.Web.Controllers
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
-
+                #endregion
+                #region avg ytd key statistic
                 case "avg-ytd-key-statistic":
                     {
                         var viewModel = new DisplayAvgYtdKeyStatisticViewModel();
@@ -298,7 +305,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             {
                                 var actual = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.YTD, YtdFormula.Average);
                                 avgYtdKeyStatisticViewModel.KpiName = item.Kpi.Name;
-                                avgYtdKeyStatisticViewModel.Value = actual.Value.HasValue ? actual.Value.ToString() : "n/a";
+                                avgYtdKeyStatisticViewModel.Ytd = actual.Value.HasValue ? actual.Value.ToString() : "n/a";
                             }
 
                             viewModel.AvgYtdKeyStatistics.Add(avgYtdKeyStatisticViewModel);
@@ -308,7 +315,8 @@ namespace DSLNG.PEAR.Web.Controllers
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
-
+                #endregion
+                #region safety
                 case "safety":
                     {
                         var viewModel = new DisplaySafetyTableViewModel();
@@ -342,7 +350,8 @@ namespace DSLNG.PEAR.Web.Controllers
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
-
+                #endregion
+                #region security
                 case "security":
                     {
                         var viewModel = new DisplaySecurityViewModel();
@@ -368,15 +377,157 @@ namespace DSLNG.PEAR.Web.Controllers
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
+                #endregion
+                #region lng and cds
+                case "lng-and-cds":
+                    {
+                        var viewModel = new DisplayLngAndCdsViewModel();
+                        bool isPlannedCargoes = false;
+                        for (int i = 1; i <= 12; i++)
+                        {
+                            var lngAndCdsViewModel = new DisplayLngAndCdsViewModel.LngAndCdsViewModel();
+                            if (i <= 4 || i >= 9)
+                            {
+                                var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
+                                           new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
+
+                                lngAndCdsViewModel.Position = item.Position;
+                                if (item.Kpi != null)
+                                {
+                                    lngAndCdsViewModel.KpiName = item.Kpi.Name;
+                                    var actualMtd = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.MTD);
+                                    lngAndCdsViewModel.ActualMtd = actualMtd.Value.ToStringFromNullableDouble("n/a");
+                                    var targetMtd = _kpiTargetService.GetKpiTarget(item.Kpi.Id, date, RangeFilter.MTD);
+                                    lngAndCdsViewModel.TargetYtd = targetMtd.Value.ToStringFromNullableDouble("n/a");
+                                    var actualYtd = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.YTD);
+                                    lngAndCdsViewModel.ActualYtd = actualYtd.Value.ToStringFromNullableDouble("n/a");
+                                    var targetYtd = _kpiTargetService.GetKpiTarget(item.Kpi.Id, date, RangeFilter.MTD);
+                                    lngAndCdsViewModel.TargetYtd = targetYtd.Value.ToStringFromNullableDouble("n/a");
+                                }
 
 
+                            }
+                            else
+                            {
+                                if (!isPlannedCargoes)
+                                {
+                                    var mtdList = new List<string>();
+                                    var ytdList = new List<string>();
+
+                                    var list = layout.KpiInformations.Where(x => x.Position == 5).ToList();
+                                    foreach (var item in list)
+                                    {
+                                        string mtd, ytd = string.Empty;
+                                        if (item.Kpi != null)
+                                        {
+                                            var actualMtd = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.MTD);
+                                            var targetMtd = _kpiTargetService.GetKpiTarget(item.Kpi.Id, date, RangeFilter.MTD);
+                                            var actualYtd = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.MTD);
+                                            var targetYtd = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.MTD);
+                                            mtd = string.Format(@"{0}/{1} {2}", actualMtd.Value.ToStringFromNullableDouble("-"), targetMtd.Value.ToStringFromNullableDouble("-"), item.Kpi.Name);
+                                            ytd = string.Format(@"{0}/{1} {2}", actualYtd.Value.ToStringFromNullableDouble("-"), targetYtd.Value.ToStringFromNullableDouble("-"), item.Kpi.Name);
+                                            mtdList.Add(mtd);
+                                            ytdList.Add(ytd);
+                                        }
+                                    }
+
+                                    lngAndCdsViewModel.KpiName = "Planned Cargoes";
+                                    lngAndCdsViewModel.ActualMtd = string.Join(",", mtdList);
+                                    lngAndCdsViewModel.ActualMtd = string.Join(",", ytdList);
+                                    lngAndCdsViewModel.Position = 5;
+                                    isPlannedCargoes = true;
+                                }
+                            }
+
+                            viewModel.DisplayLngAndCds.Add(lngAndCdsViewModel);
+                        }
+
+                        var view = RenderPartialViewToString("Display/_LngAndCds", viewModel);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+                #endregion
+                #region dafwc
+                case "dafwc":
+                    {
+                        var viewModel = new DisplayDafwcViewModel();
+
+                        var response = _derService.GetDafwcData(id, date);
+                        viewModel.DaysWithoutDafwc = response.DaysWithoutDafwc;
+                        viewModel.DaysWithoutLopc = response.DaysWithoutLopc;
+                        viewModel.DaysWithoutDafwcSince = response.DaysWithoutDafwcSince;
+                        viewModel.DaysWithoutLopcSince = response.DaysWithoutLopcSince;
+                        var view = RenderPartialViewToString("Display/_Dafwc", viewModel);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+                #endregion
+                #region job pmts
+                case "job-pmts":
+                    {
+                        var viewModel = new DisplayJobPmtsViewModel();
+
+                        for (int i = 0; i <= 2; i++)
+                        {
+                            var jobPmtsViewModel = new DisplayJobPmtsViewModel.JobPmtsViewModel();
+                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
+                                       new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
+
+                            jobPmtsViewModel.Position = item.Position;
+                            if (item.Kpi != null)
+                            {
+                                var actualDaily = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.CurrentDay);
+                                jobPmtsViewModel.KpiName = item.Kpi.Name;
+                                jobPmtsViewModel.ActualDaily = actualDaily.Value.HasValue ? actualDaily.Value.ToString() : "n/a";
+
+                                var actualMtd = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.MTD);
+                                jobPmtsViewModel.KpiName = item.Kpi.Name;
+                                jobPmtsViewModel.ActualMtd = actualMtd.Value.HasValue ? actualMtd.Value.ToString() : "n/a";
+
+                                var actualYtd = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.MTD);
+                                jobPmtsViewModel.KpiName = item.Kpi.Name;
+                                jobPmtsViewModel.ActualYtd = actualYtd.Value.HasValue ? actualYtd.Value.ToString() : "n/a";
+                            }
+
+                            viewModel.JobPmtsViewModels.Add(jobPmtsViewModel);
+                        }
+
+                        var view = RenderPartialViewToString("Display/_JobPmts", viewModel);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+                #endregion
             }
-            return Content("as");
+            return Content("Switch case does not matching");
+        }
+
+        public ActionResult OriginalData(int id, string currentDate)
+        {
+            DateTime date;
+            bool isDate = DateTime.TryParse(currentDate, out date);
+            if (!isDate)
+            {
+                return base.ErrorPage("Original Data should have date parameter");
+            }
+            var response = _derService.GetOriginalData(id, date);
+            var viewModel = response.MapTo<DisplayOriginalDataViewModel>();
+            viewModel.Id = id;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult OriginalData(DisplayOriginalDataViewModel viewModel)
+        {
+            var request = viewModel.MapTo<SaveOriginalDataRequest>();
+            var response = _derService.SaveOriginalData(request);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            return RedirectToAction("OriginalData", new {id = viewModel.Id, currentDate = viewModel.CurrentDate});
         }
 
         private string GetDoubleToString(double? val)
         {
-            return val.HasValue ? val.Value.ToString() : "n/a";
+            return val.HasValue ? val.Value.ToString(CultureInfo.InvariantCulture) : "n/a";
         }
     }
 }

@@ -1,0 +1,19 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayDafwcViewModel
+<table class="der-table der-qhsse-row-1">
+    <tr>
+        <td style="font-weight: bold">Days Without DAFWC:</td>
+        <td>@Model.DaysWithoutDafwc</td>
+        <td style="text-align: right">since:</td>
+        <td style="text-align: right; background-color: yellow">@Model.DaysWithoutDafwcSince</td>
+    </tr>
+    <tr>
+        <td style="font-weight: bold">Days Without LOPC(tier 1 & 2):</td>
+        <td>@Model.DaysWithoutLopc</td>
+        <td style="text-align: right">since:</td>
+        <td style="text-align: right; background-color: yellow">@Model.DaysWithoutLopcSince</td>
+    </tr>
+    <tr>
+        <td colspan="3" style="font-weight: bold">Safe Man-hours since Last DAFWC<span style="font-weight: normal">(as of 20 Jan 2016):</span></td>
+        <td style="text-align: right">15742853 hours</td>
+    </tr>
+</table>
