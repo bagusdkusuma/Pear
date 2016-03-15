@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using AutoMapper;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Entities;
 using DSLNG.PEAR.Data.Entities.Der;
+using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Der;
@@ -226,7 +228,7 @@ namespace DSLNG.PEAR.Services
                     .Include(x => x.KpiInformations)
                     .Include(x => x.KpiInformations.Select(y => y.Kpi))
                     .Single(x => x.Id == id);
-                
+
                 response = derLayoutItem.MapTo<GetDerLayoutitemResponse>();
                 response.IsSuccess = true;
             }
@@ -283,6 +285,11 @@ namespace DSLNG.PEAR.Services
                         baseResponse = SaveKpiInformations(request);
                         break;
                     }
+                case "dafwc":
+                    {
+                        baseResponse = SaveDafwc(request);
+                        break;
+                    }
             }
 
             var response = new SaveLayoutItemResponse
@@ -329,6 +336,157 @@ namespace DSLNG.PEAR.Services
 
             return response;
         }
+
+        public GetOriginalDataResponse GetOriginalData(int layoutId, DateTime date)
+        {
+            var response = new GetOriginalDataResponse();
+            try
+            {
+                var der = DataContext.DerLayouts.Include(x => x.Items)
+                    .Single(x => x.Id == layoutId);
+
+                foreach (var item in der.Items)
+                {
+                    switch (item.Type)
+                    {
+                        case "dafwc":
+                            {
+                                DerLayoutItem item1 = item;
+                                var list = DataContext.DerOriginalDatas
+                                           .Include(x => x.LayoutItem)
+                                           .Where(x => x.LayoutItem.Id == item1.Id && x.Periode.Day == date.Day && x.Periode.Month == date.Month &&
+                                               x.Periode.Year == date.Year).ToList();
+
+                                for (int i = 0; i <= 1; i++)
+                                {
+                                    var datum = (list.ElementAtOrDefault(i) != null)
+                                                    ? list[i].MapTo<GetOriginalDataResponse.OriginalDataResponse>()
+                                                    : new GetOriginalDataResponse.OriginalDataResponse
+                                                        {
+                                                            Periode = date,
+                                                            PeriodeType = PeriodeType.Daily,
+                                                            Position = i,
+                                                            DataType = "datetime",
+                                                            LayoutItemId = item.Id
+                                                        };
+
+                                    datum.Type = item.Type;
+
+                                    response.OriginalData.Add(datum);
+                                }
+
+                                break;
+                            }
+                    }
+                }
+
+                response.IsSuccess = true;
+            }
+            catch (Exception exception)
+            {
+                response.Message = exception.Message;
+            }
+
+            return response;
+        }
+
+        public SaveOriginalDataResponse SaveOriginalData(SaveOriginalDataRequest request)
+        {
+            var response = new SaveOriginalDataResponse();
+            try
+            {
+                foreach (var datum in request.OriginalData)
+                {
+                    var layoutItem = new DerLayoutItem { Id = datum.LayoutItemId };
+                    if (DataContext.DerLayoutItems.Local.FirstOrDefault(x => x.Id == layoutItem.Id) == null)
+                    {
+                        DataContext.DerLayoutItems.Attach(layoutItem);
+                    }
+                    else
+                    {
+                        layoutItem = DataContext.DerLayoutItems.Local.FirstOrDefault(x => x.Id == layoutItem.Id);
+                    }
+
+                    if (datum.Id > 0)
+                    {
+                        var originalData = datum.MapTo<DerOriginalData>();
+                        originalData.LayoutItem = layoutItem;
+                        DataContext.DerOriginalDatas.Attach(originalData);
+                        DataContext.Entry(originalData).State = EntityState.Modified;
+                    }
+                    else
+                    {
+                        var originalData = datum.MapTo<DerOriginalData>();
+                        originalData.LayoutItem = layoutItem;
+                        DataContext.DerOriginalDatas.Add(originalData);
+                    }
+                }
+
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+            }
+            catch (Exception exception)
+            {
+                response.Message = exception.Message;
+            }
+
+            return response;
+        }
+
+        public GetDafwcDataResponse GetDafwcData(int id, DateTime date)
+        {
+            var response = new GetDafwcDataResponse();
+            
+            try
+            {   
+                var derLayoutItem = DataContext.DerLayoutItems.Include(x => x.OriginalData).Single(x => x.Id == id);
+                var daysWithoutDafwcData = derLayoutItem.OriginalData.FirstOrDefault(x => x.Position == 0 && 
+                    (x.Periode.Day == date.Day && x.Periode.Month == date.Month && x.Periode.Year == date.Year));
+                var daysWithoutLopcData = derLayoutItem.OriginalData.FirstOrDefault(x => x.Position == 1 &&
+                    (x.Periode.Day == date.Day && x.Periode.Month == date.Month && x.Periode.Year == date.Year));
+
+                if (daysWithoutDafwcData != null)
+                {
+                    DateTime dafwcDate;
+                    bool isDate = DateTime.TryParse(daysWithoutDafwcData.Data, out dafwcDate);
+                    if (isDate)
+                    {
+                        response.DaysWithoutDafwc = (date - dafwcDate).TotalDays.ToString(CultureInfo.InvariantCulture) + " days";
+                        response.DaysWithoutDafwcSince = dafwcDate.ToShortDateString();
+                    } 
+                }
+
+                if (daysWithoutLopcData != null)
+                {
+                    DateTime lopcDate;
+                    bool isDate = DateTime.TryParse(daysWithoutLopcData.Data, out lopcDate);
+                    if (isDate)
+                    {
+                        response.DaysWithoutLopc = (date - lopcDate).TotalDays.ToString(CultureInfo.InvariantCulture) + " days";
+                        response.DaysWithoutLopcSince = lopcDate.ToShortDateString();
+                    }
+                }
+
+                response.IsSuccess = true;
+            }
+            catch (Exception exception)
+            {
+                response.Message = exception.Message;
+            }
+
+            return response;
+        }
+
+        /*private string ConvertOriginalData(DerOriginalData originalData)
+        {
+            switch (originalData.DataType.ToLowerInvariant())
+            {
+                case "datetime":
+                    DateTime date;
+                    bool isDate = DateTime.TryParse(originalData.Data, out date);
+                    return isDate ? date.ToShortDateString() : originalData.Data;
+            }
+        }*/
 
         private BaseResponse SaveLineChart(SaveLayoutItemRequest request)
         {
@@ -895,6 +1053,7 @@ namespace DSLNG.PEAR.Services
                 }
 
                 DataContext.SaveChanges();
+                response.IsSuccess = true;
             }
             catch (Exception exception)
             {
@@ -922,14 +1081,15 @@ namespace DSLNG.PEAR.Services
                     derLayoutItem.Column = request.Column;
                     derLayoutItem.Row = request.Row;
                     derLayoutItem.Type = request.Type;
-                    var derDynamicHighlight = new DerStaticHighlight();
-                    derDynamicHighlight.Type = request.Type;
-                    derLayoutItem.StaticHighlight = derDynamicHighlight;
-                    DataContext.DerStaticHighlights.Add(derDynamicHighlight);
+                    var derStaticHighlight = new DerStaticHighlight();
+                    derStaticHighlight.Type = request.Type;
+                    derLayoutItem.StaticHighlight = derStaticHighlight;
+                    DataContext.DerStaticHighlights.Add(derStaticHighlight);
                     DataContext.DerLayoutItems.Add(derLayoutItem);
                 }
 
                 DataContext.SaveChanges();
+                response.IsSuccess = true;
             }
             catch (Exception exception)
             {
@@ -957,7 +1117,7 @@ namespace DSLNG.PEAR.Services
                 {
                     if (item.KpiId > 0)
                     {
-                        var kpi = new Kpi {Id = item.KpiId};
+                        var kpi = new Kpi { Id = item.KpiId };
                         if (DataContext.Kpis.Local.FirstOrDefault(x => x.Id == kpi.Id) == null)
                         {
                             DataContext.Kpis.Attach(kpi);
@@ -966,7 +1126,7 @@ namespace DSLNG.PEAR.Services
                         {
                             kpi = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == kpi.Id);
                         }
-                        kpiInformations.Add(new DerKpiInformation { Kpi = kpi, Position = item.Position, IsOriginalData = item.IsOriginalData});
+                        kpiInformations.Add(new DerKpiInformation { Kpi = kpi, Position = item.Position, IsOriginalData = item.IsOriginalData });
                     }
                 }
 
@@ -976,6 +1136,38 @@ namespace DSLNG.PEAR.Services
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
                 response.Message = "Changes has been saved";
+            }
+            catch (Exception exception)
+            {
+                response.Message = exception.Message;
+            }
+
+            return response;
+        }
+
+        private BaseResponse SaveDafwc(SaveLayoutItemRequest request)
+        {
+            var response = new GetDerLayoutResponse();
+            try
+            {
+                if (request.Id > 0)
+                {
+
+                }
+                else
+                {
+                    var derLayoutItem = new DerLayoutItem();
+                    var derLayout = new DerLayout { Id = request.DerLayoutId };
+                    DataContext.DerLayouts.Attach(derLayout);
+                    derLayoutItem.DerLayout = derLayout;
+                    derLayoutItem.Column = request.Column;
+                    derLayoutItem.Row = request.Row;
+                    derLayoutItem.Type = request.Type;
+                    DataContext.DerLayoutItems.Add(derLayoutItem);
+                }
+
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
             }
             catch (Exception exception)
             {

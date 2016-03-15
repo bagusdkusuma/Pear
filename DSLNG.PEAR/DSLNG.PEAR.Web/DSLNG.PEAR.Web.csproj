@@ -760,6 +760,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Compile Include="Controllers\AssumptionDataController.cs" />
+    <Compile Include="Extensions\NumberExtension.cs" />
     <Compile Include="ViewModels\DerLayout\CreateDerLayoutViewModel.cs" />
     <Compile Include="Controllers\DerController.cs" />
     <Compile Include="Controllers\DerLayoutController.cs" />
@@ -788,6 +789,10 @@
     <Compile Include="ViewModels\Der\DerDisplayIndexViewModel.cs" />
     <Compile Include="ViewModels\Der\DerIndexViewModel.cs" />
     <Compile Include="ViewModels\Der\DerViewModel.cs" />
+    <Compile Include="ViewModels\Der\DisplayOriginalDataViewModel.cs" />
+    <Compile Include="ViewModels\Der\Display\DisplayDafwcViewModel.cs" />
+    <Compile Include="ViewModels\Der\Display\DisplayJobPmtsViewModel.cs" />
+    <Compile Include="ViewModels\Der\Display\DisplayLngAndCdsViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplaySecurityViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplaySafetyTableViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayAvgYtdKeyStatisticViewModel.cs" />
@@ -1040,6 +1045,11 @@
     <Content Include="Views\DerLayout\LayoutType\_LngAndCds.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_Security.cshtml" />
     <Content Include="Views\Der\Display\_Security.cshtml" />
+    <Content Include="Views\Der\Display\_LngAndCds.cshtml" />
+    <Content Include="Views\Der\OriginalData.cshtml" />
+    <Content Include="Views\Der\Display\_Dafwc.cshtml" />
+    <Content Include="Views\Der\Display\_JobPmts.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_JobPmts.cshtml" />
     <None Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\SpeedometerChart\_Edit.cshtml" />
     <Content Include="Views\Tabular\_Create.cshtml" />

@@ -895,6 +895,14 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
             Mapper.CreateMap<DerKpiInformation, GetDerLayoutitemResponse.KpiInformationResponse>();
             Mapper.CreateMap<Kpi, GetDerLayoutitemResponse.KpiInformationResponse.KpiResponse>();
+
+            //DER Original Data
+            Mapper.CreateMap<DerOriginalData, GetOriginalDataResponse.OriginalDataResponse>()
+                  .ForMember(x => x.LayoutItemId, y => y.MapFrom(z => z.LayoutItem.Id));
+            Mapper.CreateMap<SaveOriginalDataRequest, DerOriginalData>();
+            Mapper.CreateMap<SaveOriginalDataRequest.OriginalDataRequest, DerOriginalData>()
+                  .ForMember(x => x.LayoutItem, y => y.Ignore())
+                  .ForMember(x => x.Id, y => y.Ignore());
         }
     }
 }

@@ -1,0 +1,44 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.DisplayOriginalDataViewModel
+@{
+    ViewBag.Title = "Original Data";
+}
+
+<h2>Original Data</h2>
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.CurrentDate)
+    @Html.HiddenFor(model => model.Id)
+    <div class="form-horizontal">
+        @{
+    IList<string> groups = new List<string>();
+    IDictionary<string, List<string>> labels = new Dictionary<string, List<string>>();
+    labels.Add("dafwc", new List<string>() { "Days Without DAFWC (since)", "Days Without LOPC (since)", "Safe Man-hours since Last DAFWC " });
+
+    for (var i = 0; i < Model.OriginalData.Count; i++)
+    {
+        if (!groups.Contains(Model.OriginalData[i].Type))
+        {
+            groups.Add(Model.OriginalData[i].Type);
+            <h1>@Model.OriginalData[i].Type</h1>
+        }
+            <div class="form-group">
+                <label class="control-label col-md-2">@labels["dafwc"][i]</label>
+                <div class="col-md-10">
+                    @Html.EditorFor(x => Model.OriginalData[i].Data)
+                    @Html.HiddenFor(x => Model.OriginalData[i].DataType)
+                    @Html.HiddenFor(x => Model.OriginalData[i].Periode)
+                    @Html.HiddenFor(x => Model.OriginalData[i].PeriodeType)
+                    @Html.HiddenFor(x => Model.OriginalData[i].Position)
+                    @Html.HiddenFor(x => Model.OriginalData[i].LayoutItemId)
+                </div>
+            </div>
+    }
+            
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        }
+    </div>
+}

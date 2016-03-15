@@ -13,7 +13,7 @@
     <tr style="text-decoration: underline">
        @for (var i = 1; i <= 6; i++)
             {
-                <td>@Model.AvgYtdKeyStatistics.Single(x => x.Position == i).Value</td>
+                <td>@Model.AvgYtdKeyStatistics.Single(x => x.Position == i).Ytd</td>
             }
     </tr>
     <tr>

@@ -251,13 +251,13 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "avg-ytd-key-statistic":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetAvgYytdKeyStatisticKpiInformations();
+                        viewModel.KpiInformations = GetKpiInformations(6);
                         return PartialView("LayoutType/_AvgYtdKeyStatistic", viewModel);
                     }
                 case "safety":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetSafetyTableKpiInformations();
+                        viewModel.KpiInformations = GetKpiInformations(9);
                         return PartialView("LayoutType/_SafetyTable", viewModel);
                     }
                 case "security":
@@ -269,8 +269,19 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "lng-and-cds":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(3);
+                        viewModel.KpiInformations = GetKpiInformations(12);
                         return PartialView("LayoutType/_LngAndCds", viewModel);
+                    }
+                case "dafwc":
+                    {
+                        //var viewModel = new DerLayoutItemViewModel();
+                        return Content("You have chosen DAFWC and LOPC type");
+                    }
+                case "job-pmts":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(3);
+                        return PartialView("LayoutType/_JobPmts", viewModel);
                     }
             }
 
@@ -336,17 +347,20 @@ namespace DSLNG.PEAR.Web.Controllers
                         response = _derService.SaveLayoutItem(request);
                         break;
                     }
-                case "avg-ytd-key-statistic":
+                /*case "avg-ytd-key-statistic":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.KpiInformations =
                             layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
                         response = _derService.SaveLayoutItem(request);
                         break;
-                    }
+                    }*/
                 case "safety":
                 case "lng-and-css":
                 case "security":
+                case "job-pmts":
+                case "avg-ytd-key-statistic":
+                case "lng-and-cds":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.KpiInformations =
@@ -354,7 +368,20 @@ namespace DSLNG.PEAR.Web.Controllers
                         response = _derService.SaveLayoutItem(request);
                         break;
                     }
-
+                /*case "lng-and-cds":
+                    {
+                        request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
+                        request.KpiInformations =
+                            layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
+                        response = _derService.SaveLayoutItem(request);
+                        break;
+                    }*/
+                case "dafwc":
+                    {
+                        request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
+                        response = _derService.SaveLayoutItem(request);
+                        break;
+                    }
             }
 
             TempData["IsSuccess"] = response.IsSuccess;
@@ -363,7 +390,7 @@ namespace DSLNG.PEAR.Web.Controllers
             return RedirectToAction("Config", new { id = layoutItemViewModel.DerLayoutId });
         }
 
-        private IList<DerLayoutItemViewModel.DerKpiInformationViewModel> GetAvgYytdKeyStatisticKpiInformations()
+       /* private IList<DerLayoutItemViewModel.DerKpiInformationViewModel> GetAvgYytdKeyStatisticKpiInformations()
         {
             var list = new List<DerLayoutItemViewModel.DerKpiInformationViewModel>();
             for (int i = 1; i <= 6; i++)
@@ -383,12 +410,12 @@ namespace DSLNG.PEAR.Web.Controllers
             }
 
             return list;
-        }
+        }*/
 
         private IList<DerLayoutItemViewModel.DerKpiInformationViewModel> GetKpiInformations(int numberOfKpi)
         {
             var list = new List<DerLayoutItemViewModel.DerKpiInformationViewModel>();
-            for (int i = 1; i <= numberOfKpi; i++)
+            for (int i = 0; i < numberOfKpi; i++)
             {
                 list.Add(new DerLayoutItemViewModel.DerKpiInformationViewModel { Position = i });
             }

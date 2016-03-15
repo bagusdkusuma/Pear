@@ -288,7 +288,9 @@ namespace DSLNG.PEAR.Services
                     new Dropdown {Text = "Avg Ytd-Key Statistic", Value = "avg-ytd-key-statistic"},
                     new Dropdown {Text = "Safety", Value = "safety"},
                     new Dropdown {Text = "Security Incident Type", Value = "security"},
-                    //new Dropdown {Text = "LNG And CDS Table", Value = "lng-and-cds"},
+                    new Dropdown {Text = "LNG And CDS Table", Value = "lng-and-cds"},
+                    new Dropdown {Text = "DAFWC and LOPC", Value = "dafwc"},
+                    new Dropdown {Text = "JOB PMTS", Value = "job-pmts"},
                 };
         }
     }
