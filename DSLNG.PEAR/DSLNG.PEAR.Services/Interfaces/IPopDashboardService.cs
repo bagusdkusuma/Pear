@@ -13,5 +13,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetPopDashboardsResponse GetPopDashboards(GetPopDashboardsRequest request);
         SavePopDashboardResponse SavePopDashboard(SavePopDashboardRequest request);
         GetPopDashboardResponse GetPopDashboard(GetPopDashboardRequest request);
+
     }
 }

@@ -31,12 +31,16 @@ namespace DSLNG.PEAR.Web.ViewModels.PopDashboard
         public SavePopDashboardViewModel()
         {
             IsActive = true;
+            Statuses = new List<SelectListItem>();
         }
         public int Id { get; set; }
         public string Title { get; set; }
         public string Number { get; set; }
         public string Subtitle { get; set; }
         public bool IsActive { get; set; }
+        public string Status { get; set; }
+        public IList<SelectListItem> Statuses { get; set; }
+        public string Attachment { get; set; }
     }
 
     public class GetPopDashboardViewModel

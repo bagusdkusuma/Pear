@@ -14,6 +14,8 @@ namespace DSLNG.PEAR.Services.Responses.PopDashboard
         public string Number { get; set; }
         public string Subtitle { get; set; }
         public bool IsActive { get; set; }
+        public string Status { get; set; }
+        public string Attachment { get; set; }
         public IList<PopInformation> PopInformations { get; set; }
         public IList<Signature> Signatures { get; set; }
 
