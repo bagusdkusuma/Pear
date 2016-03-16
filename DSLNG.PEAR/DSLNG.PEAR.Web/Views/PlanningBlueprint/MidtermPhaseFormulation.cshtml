@@ -13,10 +13,10 @@ else
     <div class="business-posture">
             <div class="row">
                 <div class="col-md-12">
-                    <h4 style="background-color: #00bfff;">Business Posture Identification</h4>
+                    <h4 class="bp-header" style="background-color: #00bfff;">Business Posture Identification</h4>
                 </div>
             </div>
-            <div class="row">
+            <div class="row bp-wrapper">
                 <div class="col-md-12">
                     <table class="table-bordered table-desired-states">
                         <tr>
@@ -267,12 +267,26 @@ else
         <input type="hidden" name="MidtermPhaseStageId" />
         <input type="hidden" name="Type" />
         <label>Description</label>
-        <textarea name="Value" cols="25" rows="5"></textarea>
+        <textarea name="Value" cols="25" rows="5" required="required"></textarea>
+        <div>
         <input type="submit" class="btn btn-primary add-stage-definition" value="submit" />
+            </div>
     </form>
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
+        $(document).on('click', '.bp-header', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            if ($this.hasClass('collapsed')) {
+                $this.removeClass('collapsed');
+            } else {
+                $this.addClass('collapsed');
+            }
+            $('.bp-wrapper').slideToggle(500, function () {
+
+            });
+        });
         $('body').popover({
             selector: '.add-formulation-stage',
             html: true,
@@ -380,6 +394,7 @@ else
             e.preventDefault();
             var $form = $(this).closest('form');
             var $trigger = $(this).closest('.popover').prev();
+            if (!$form.valid()) return;
             $.post($form.prop('action'), $form.serialize(), function (data) {
                 if (data.IsSuccess) {
                     $trigger.html(data.Value);
@@ -393,6 +408,7 @@ else
             var $trigger = $this.closest('.popover').prev('a');
             var $stage = $this.closest('.formulation-stage');
             var $form = $this.closest('form');
+            if (!$form.valid()) return;
             $form.find('input[name="MidtermPhaseStageId"]').val($stage.data('id'));
             $form.find('input[name="Type"]').val($trigger.data('target'));
             $.post($form.prop('action'), $form.serialize(), function (data) {

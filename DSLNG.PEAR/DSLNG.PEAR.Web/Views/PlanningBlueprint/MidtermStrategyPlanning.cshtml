@@ -98,12 +98,12 @@
                 <button type="submit" class="btn btn-primary btn-lg submit-al-mp"><span class="fa fa-floppy-o"></span>Submit</button>
             }
             }else{
-                <button type="button" class="btn btn-primary btn-lg btn-reject" data-toggle="modal" data-target="#reject-modal"><span class="fa fa-remove"></span>Reject</button>
-                using (Html.BeginForm("ApproveMidtermStrategy", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
+                 using (Html.BeginForm("ApproveMidtermStrategy", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
                 {
                 @Html.Hidden("Id", Model.Id)
                 <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Approve</button>
                 }
+                <button type="button" class="btn btn-primary btn-lg btn-reject" data-toggle="modal" data-target="#reject-modal"><span class="fa fa-remove"></span>Reject</button>
             }
         </div>
     </div>
@@ -147,7 +147,9 @@
             <input type="hidden" name="MidtermPlanningId" />
             <label>Objective</label>
             <textarea name="Value" cols="25" rows="5" required="required"></textarea>
+            <div>
             <input type="submit" class="btn btn-primary submit-objective" value="submit" />
+                </div>
         </form>
     </div>
     <div class="kpi-form">
@@ -255,6 +257,7 @@
             var $this = $(this);
             var $form = $this.closest('form');
             var $trigger = $this.closest('.popover').prev();
+            if (!$form.valid()) return;
             $.post($form.prop('action'), $form.serialize(), function (data) {
                 if (data.IsSuccess) {
                     $trigger.html(data.Value);
@@ -268,6 +271,7 @@
             var $midtermPlanning = $this.closest('.midterm-planning');
             var midtermPlanningId = $midtermPlanning.data('id');
             var $form = $this.closest('form');
+            if (!$form.valid()) return;
             $form.find('input[name="MidtermPlanningId"]').val(midtermPlanningId);
             $.post($form.prop('action'), $form.serialize(), function (data) {
                 if (data.IsSuccess) {
