@@ -1,11 +1,11 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.PopDashboard.SavePopDashboardViewModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Edit";
 }
 
 <div class="pop-dashboard-save">
-    @using (Html.BeginForm("Create", "PopDashboard", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("Edit", "PopDashboard", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
         <div class="col-md-12">

@@ -19,5 +19,7 @@ namespace DSLNG.PEAR.Data.Entities.Pop
         public bool IsActive { get; set; }
         public IList<PopInformation> PopInformations { get; set; }
         public IList<Signature> Signatures { get; set; }
+        public string Attachment { get; set; }
+        public string Status { get; set; }
     }
 }

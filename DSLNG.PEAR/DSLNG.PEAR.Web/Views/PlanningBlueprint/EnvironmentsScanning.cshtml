@@ -471,7 +471,7 @@
             @Html.LabelFor(model => model.Category)
             @Html.DropDownListFor(model => model.Category, Model.ChallengeCategories)
         </div>
-         <input type="hidden" name="id" />
+        <input type="hidden" name="id" />
         <input type="hidden" name="enviId" />
         <div>
             <input type="text" name="enviId" hidden="hidden" />
@@ -551,128 +551,127 @@
                         $form.find('.form-input-challenge').removeClass('form-input-challenge').addClass('edit-challenge').html('Save');
 
                         var formclone = '';
-                        if (formTarget == 'constraint')
-                        {
+                        var wrapper = '';
+                        if (formTarget == 'constraint') {
                             formclone = '.relation-contents'
+                            wrapper = 'wrapper-relation'
                         }
-                        else if (formTarget = 'challenge')
-                        {
+                        else if (formTarget = 'challenge') {
                             formclone = '.relation-challenges'
+                            wrapper = 'wrapper-challenge'
                         }
 
-                            $(formclone).html('');
-                            var $that = $(this);
-                            var thList = $('.th-list').clone();
-                            var oppList = $('.opp-list').clone();
-                            var wkList = $('.wk-list').clone();
-                            var stList = $('.st-list').clone();
-                            //if (thList.find('.popover').length) {
-                            //    thList.find('.popover').remove();
-                            //}
-                            //if (oppList.find('.popover').length) {
-                            //    oppList.find('.popover').remove();
-                            //}
-                            //if (wkList.find('.popover').length) {
-                            //    wkList.find('.popover').remove();
-                            //}
-                            //if (stList.find('.popover').length) {
-                            //    stList.find('.popover').remove();
-                            //}
-                            thList.removeClass('th-list list-group');
-                            oppList.removeClass('opp-list list-group');
-                            wkList.removeClass('wk-list list-group');
-                            stList.removeClass('st-list list-group');
-                            thList.addClass('list-checkbox');
-                            oppList.addClass('list-checkbox');
-                            wkList.addClass('list-checkbox');
-                            stList.addClass('list-checkbox');
-                            var sRelationids = $that.data('ids');
+                        $(formclone).html('');
+                        var $that = $(this);
+                        var thList = $('.th-list').clone();
+                        var oppList = $('.opp-list').clone();
+                        var wkList = $('.wk-list').clone();
+                        var stList = $('.st-list').clone();
+                        thList.removeClass('th-list list-group');
+                        oppList.removeClass('opp-list list-group');
+                        wkList.removeClass('wk-list list-group');
+                        stList.removeClass('st-list list-group');
+                        thList.addClass('list-checkbox');
+                        oppList.addClass('list-checkbox');
+                        wkList.addClass('list-checkbox');
+                        stList.addClass('list-checkbox');
+                        var sRelationids = $that.data('ids');
 
-                            var relationIds = [];
-                            if (sRelationids != '') {
-                                if (typeof sRelationids === 'string') {
-                                    var rInStrings = sRelationids.split(',');
-                                    for (var i in rInStrings) {
-                                        relationIds.push(parseInt(rInStrings[i]));
-                                    }
-                                } else {
-                                    relationIds = [parseInt(sRelationids)];
+                        var relationIds = [];
+                        if (sRelationids != '') {
+                            if (typeof sRelationids === 'string') {
+                                var rInStrings = sRelationids.split(',');
+                                for (var i in rInStrings) {
+                                    relationIds.push(parseInt(rInStrings[i]));
                                 }
+                            } else {
+                                relationIds = [parseInt(sRelationids)];
                             }
-                            thList.find('li').each(function (i, val) {
-                                var $item = $(val);
-                                var content = $item.find('span').html();
-                                $item.find('.envi-remove-button').remove();
-                                $item.html('');
-                                $item.html(content);
-                                var $checkbox = $('<input />');
-                                $checkbox.prop('type', 'checkbox');
-                                $checkbox.addClass('choose-list');
-                                if (relationIds.indexOf(parseInt($item.data('id'))) > -1) {
-                                    $checkbox.prop('checked', true);
-                                }
-                                $item.prepend($checkbox);
-                            });
-                            var threat = $('<h4 />');
-                            threat.html('Threat');
-                            $(formclone).append(threat, thList);
+                        }
+                        for (i = 0; i < relationIds.length; i++)
+                        {
+                            var $hiddenId = $('<input />');
+                            $hiddenId.prop('type', 'hidden');
+                            $hiddenId.prop('name', 'RelationIds[]');
+                            $hiddenId.val(relationIds[i]);
+                            $('.' + wrapper).append($hiddenId);
+                        }
 
-                            oppList.find('li').each(function (i, val) {
-                                var $item = $(val);
-                                var content = $item.find('span').html();
-                                $item.find('.envi-remove-button').remove();
-                                $item.html('');
-                                $item.html(content);
-                                var $checkbox = $('<input />');
-                                $checkbox.prop('type', 'checkbox');
-                                $checkbox.addClass('choose-list');
-                                if (relationIds.indexOf(parseInt($item.data('id'))) > -1) {
-                                    $checkbox.prop('checked', true);
-                                }
-                                $item.prepend($checkbox);
-                            });
-                            var opportunity = $('<h4 />');
-                            opportunity.html('Opportunity');
-                            $(formclone).append(opportunity, oppList);
+                        $(formclone).html('');
+                        thList.find('li').each(function (i, val) {
+                            var $item = $(val);
+                            var content = $item.find('span').html();
+                            $item.find('.envi-remove-button').remove();
+                            $item.html('');
+                            $item.html(content);
+                            var $checkbox = $('<input />');
+                            $checkbox.prop('type', 'checkbox');
+                            $checkbox.addClass('choose-list');
+                            if (relationIds.indexOf(parseInt($item.data('id'))) > -1) {
+                                $checkbox.prop('checked', true);
+                            }
+                            $item.prepend($checkbox);
+                        });
+                        var threat = $('<h4 />');
+                        threat.html('Threat');
+                        $(formclone).append(threat, thList);
 
-                            wkList.find('li').each(function (i, val) {
-                                var $item = $(val);
-                                var content = $item.find('span').html();
-                                $item.find('.envi-remove-button').remove();
-                                $item.html('');
-                                $item.html(content);
-                                var $checkbox = $('<input />');
-                                $checkbox.prop('type', 'checkbox');
-                                $checkbox.addClass('choose-list');
-                                if (relationIds.indexOf(parseInt($item.data('id'))) > -1) {
-                                    $checkbox.prop('checked', true);
-                                }
-                                $item.prepend($checkbox);
-                            });
-                            var weakness = $('<h4 />');
-                            weakness.html('Weakness');
-                            $(formclone).append(weakness, wkList);
+                        oppList.find('li').each(function (i, val) {
+                            var $item = $(val);
+                            var content = $item.find('span').html();
+                            $item.find('.envi-remove-button').remove();
+                            $item.html('');
+                            $item.html(content);
+                            var $checkbox = $('<input />');
+                            $checkbox.prop('type', 'checkbox');
+                            $checkbox.addClass('choose-list');
+                            if (relationIds.indexOf(parseInt($item.data('id'))) > -1) {
+                                $checkbox.prop('checked', true);
+                            }
+                            $item.prepend($checkbox);
+                        });
+                        var opportunity = $('<h4 />');
+                        opportunity.html('Opportunity');
+                        $(formclone).append(opportunity, oppList);
 
-                            stList.find('li').each(function (i, val) {
-                                var $item = $(val);
-                                var content = $item.find('span').html();
+                        wkList.find('li').each(function (i, val) {
+                            var $item = $(val);
+                            var content = $item.find('span').html();
+                            $item.find('.envi-remove-button').remove();
+                            $item.html('');
+                            $item.html(content);
+                            var $checkbox = $('<input />');
+                            $checkbox.prop('type', 'checkbox');
+                            $checkbox.addClass('choose-list');
+                            if (relationIds.indexOf(parseInt($item.data('id'))) > -1) {
+                                $checkbox.prop('checked', true);
+                            }
+                            $item.prepend($checkbox);
+                        });
+                        var weakness = $('<h4 />');
+                        weakness.html('Weakness');
+                        $(formclone).append(weakness, wkList);
 
-                                $item.find('.envi-remove-button').remove();
-                                $item.html('');
-                                $item.html(content);
-                                var $checkbox = $('<input />');
-                                $checkbox.prop('type', 'checkbox');
-                                $checkbox.addClass('choose-list');
-                                if (relationIds.indexOf(parseInt($item.data('id'))) > -1) {
-                                    $checkbox.prop('checked', true);
-                                }
-                                $item.prepend($checkbox);
-                            });
-                            var strength = $('<h4 />');
-                            strength.html('Strength');
-                            $(formclone).append(strength, stList);
-                        
-                        
+                        stList.find('li').each(function (i, val) {
+                            var $item = $(val);
+                            var content = $item.find('span').html();
+
+                            $item.find('.envi-remove-button').remove();
+                            $item.html('');
+                            $item.html(content);
+                            var $checkbox = $('<input />');
+                            $checkbox.prop('type', 'checkbox');
+                            $checkbox.addClass('choose-list');
+                            if (relationIds.indexOf(parseInt($item.data('id'))) > -1) {
+                                $checkbox.prop('checked', true);
+                            }
+                            $item.prepend($checkbox);
+                        });
+                        var strength = $('<h4 />');
+                        strength.html('Strength');
+                        $(formclone).append(strength, stList);
+
+
                     }
                     return $form.html();
                 }
@@ -1058,7 +1057,10 @@
 
                 thList.find('li').each(function (i, val) {
                     var $item = $(val);
+                    var content = $item.find('span').html();
                     $item.find('.envi-remove-button').remove();
+                    $item.html('');
+                    $item.html(content);
                     var $checkbox = $('<input />');
                     $checkbox.prop('type', 'checkbox');
                     $checkbox.addClass('choose-list');
@@ -1149,7 +1151,10 @@
 
                 thList.find('li').each(function (i, val) {
                     var $item = $(val);
+                    var content = $item.find('span').html();
                     $item.find('.envi-remove-button').remove();
+                    $item.html('');
+                    $item.html(content);
                     var $checkbox = $('<input />');
                     $checkbox.prop('type', 'checkbox');
                     $checkbox.addClass('choose-list');

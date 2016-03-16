@@ -1164,6 +1164,7 @@
     <Content Include="Views\PlanningBlueprint\CreateESCategory.cshtml" />
     <Content Include="Views\PlanningBlueprint\EditESCategory.cshtml" />
     <Content Include="Views\PopDashboard\Approval.cshtml" />
+    <Content Include="Views\PopDashboard\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -1432,6 +1433,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\img\signature\" />
+    <Folder Include="Content\popfile\" />
     <Folder Include="Content\signature\" />
     <Folder Include="Content\TemplateFiles\KpiAchievement\" />
     <Folder Include="Content\TemplateFiles\KpiTarget\" />
