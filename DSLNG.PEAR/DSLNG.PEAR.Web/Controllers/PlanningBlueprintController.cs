@@ -393,5 +393,13 @@ namespace DSLNG.PEAR.Web.Controllers
             TempData["Message"] = response.Message;
             return RedirectToAction("ESCategory");
         }
+
+        [HttpPost]
+        public ActionResult Delete(int id) {
+            var response = _planningBlueprintService.Delete(id);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            return RedirectToAction("Approval");
+        }
     }
 }
