@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
+using DSLNG.PEAR.Services.Interfaces;
+using DSLNG.PEAR.Web.DependencyResolution;
 using DSLNG.PEAR.Web.ViewModels.Artifact;
 using DSLNG.PEAR.Web.ViewModels.DerLayout.LayoutType;
 
@@ -11,9 +13,11 @@ namespace DSLNG.PEAR.Web.ViewModels.DerLayout
 {
     public class DerLayoutItemViewModel
     {
+        private readonly IDropdownService _dropdownService;
         public DerLayoutItemViewModel()
         {
-            KpiInformations = new List<DerKpiInformationViewModel>();    
+            _dropdownService = ObjectFactory.Container.GetInstance<IDropdownService>();
+            KpiInformations = new List<DerKpiInformationViewModel>();
         }
 
         public int Id { get; set; }
@@ -36,6 +40,16 @@ namespace DSLNG.PEAR.Web.ViewModels.DerLayout
 
         public IList<DerKpiInformationViewModel> KpiInformations { get; set; }
 
+        public IList<SelectListItem> ConfigTypes
+        {
+            get
+            {
+                return _dropdownService.GetConfigTypes(true)
+                                    .Select(x => new SelectListItem { Text = x.Text, Value = x.Value })
+                                    .ToList();
+            }
+        }
+
         public class DerKpiInformationViewModel
         {
             public int Id { get; set; }
@@ -43,6 +57,7 @@ namespace DSLNG.PEAR.Web.ViewModels.DerLayout
             public int KpiId { get; set; }
             public string KpiName { get; set; }
             public bool IsOriginalData { get; set; }
+            public string ConfigType { get; set; }
         }
 
         public class DerLayoutItemArtifactViewModel

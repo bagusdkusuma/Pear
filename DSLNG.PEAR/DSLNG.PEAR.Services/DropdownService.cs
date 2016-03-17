@@ -237,7 +237,6 @@ namespace DSLNG.PEAR.Services
                 }).ToList();
         }
 
-
         public IEnumerable<Dropdown> GetConfigTypes()
         {
             var config = Enum.GetValues(typeof(DSLNG.PEAR.Data.Enums.ConfigType)).Cast<DSLNG.PEAR.Data.Enums.ConfigType>();
@@ -292,6 +291,16 @@ namespace DSLNG.PEAR.Services
                     new Dropdown {Text = "DAFWC and LOPC", Value = "dafwc"},
                     new Dropdown {Text = "JOB PMTS", Value = "job-pmts"},
                 };
+        }
+
+        public IEnumerable<Dropdown> GetConfigTypes(bool isDer)
+        {
+            if (isDer)
+            {
+                var config = Enum.GetValues(typeof(ConfigType)).Cast<ConfigType>();
+                return (from configType in config.ToList() where configType == ConfigType.KpiAchievement || configType == ConfigType.KpiTarget select new Dropdown {Text = configType.ToString(), Value = configType.ToString()}).ToList();
+            }
+            return GetConfigTypes();
         }
     }
 }

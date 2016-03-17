@@ -476,17 +476,23 @@ namespace DSLNG.PEAR.Web.Controllers
                             jobPmtsViewModel.Position = item.Position;
                             if (item.Kpi != null)
                             {
-                                var actualDaily = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.CurrentDay);
+                                var request = new GetKpiValueRequest();
+                                request.ConfigType = item.ConfigType;
+                                request.Periode = date;
+                                request.RangeFilter = RangeFilter.CurrentDay;
+                                var daily = _derService.GetKpiValue(request);
                                 jobPmtsViewModel.KpiName = item.Kpi.Name;
-                                jobPmtsViewModel.ActualDaily = actualDaily.Value.HasValue ? actualDaily.Value.ToString() : "n/a";
+                                jobPmtsViewModel.Daily = daily.Value.HasValue ? string.Format(@"{0} {1}", daily.Value.ToString(), item.Kpi.MeasurementName) : "n/a";
 
-                                var actualMtd = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.MTD);
+                                request.RangeFilter = RangeFilter.MTD;
+                                var mtd = _derService.GetKpiValue(request);
                                 jobPmtsViewModel.KpiName = item.Kpi.Name;
-                                jobPmtsViewModel.ActualMtd = actualMtd.Value.HasValue ? actualMtd.Value.ToString() : "n/a";
+                                jobPmtsViewModel.Mtd = mtd.Value.HasValue ? string.Format(@"{0} {1}", mtd.Value.ToString(), item.Kpi.MeasurementName) : "n/a";
 
-                                var actualYtd = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.MTD);
+                                request.RangeFilter = RangeFilter.YTD;
+                                var ytd = _derService.GetKpiValue(request);
                                 jobPmtsViewModel.KpiName = item.Kpi.Name;
-                                jobPmtsViewModel.ActualYtd = actualYtd.Value.HasValue ? actualYtd.Value.ToString() : "n/a";
+                                jobPmtsViewModel.Ytd = ytd.Value.HasValue ? string.Format(@"{0} {1}", ytd.Value.ToString(), item.Kpi.MeasurementName) : "n/a";
                             }
 
                             viewModel.JobPmtsViewModels.Add(jobPmtsViewModel);
@@ -522,7 +528,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var response = _derService.SaveOriginalData(request);
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
-            return RedirectToAction("OriginalData", new {id = viewModel.Id, currentDate = viewModel.CurrentDate});
+            return RedirectToAction("OriginalData", new { id = viewModel.Id, currentDate = viewModel.CurrentDate });
         }
 
         private string GetDoubleToString(double? val)

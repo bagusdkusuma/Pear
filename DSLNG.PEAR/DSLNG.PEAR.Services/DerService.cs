@@ -21,9 +21,13 @@ namespace DSLNG.PEAR.Services
 {
     public class DerService : BaseService, IDerService
     {
-        public DerService(IDataContext dataContext)
+        private readonly IKpiAchievementService _kpiAchievementService;
+        private readonly IKpiTargetService _kpiTargetService;
+        public DerService(IDataContext dataContext, IKpiAchievementService kpiAchievementService, IKpiTargetService kpiTargetService)
             : base(dataContext)
         {
+            _kpiAchievementService = kpiAchievementService;
+            _kpiTargetService = kpiTargetService;
         }
 
         public GetDersResponse GetDers()
@@ -333,6 +337,19 @@ namespace DSLNG.PEAR.Services
                         break;
                     }
             }
+
+            return response;
+        }
+
+        public GetKpiValueResponse GetKpiValue(GetKpiValueRequest request)
+        {
+            GetKpiValueResponse response = request.ConfigType == ConfigType.KpiTarget
+                                               ? _kpiTargetService.GetKpiTarget(request.KpiId, request.Periode,
+                                                                                request.RangeFilter)
+                                                                  .MapTo<GetKpiValueResponse>()
+                                               : _kpiAchievementService.GetKpiAchievement(request.KpiId, request.Periode,
+                                                                                          request.RangeFilter)
+                                                                       .MapTo<GetKpiValueResponse>();
 
             return response;
         }
@@ -1284,27 +1301,6 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-        //private baseresponse deletehighlight(savelayoutitemrequest request)
-        //{
-        //    var response = new getderlayoutresponse();
-        //    try
-        //    {
-        //        var derlayoutitem = datacontext.derlayoutitems.include(x => x.highlight).include(x => x.highlight.selectoption).single(x => x.id == request.id);
-        //        var selectoption = new selectoption { id = request.highlight.selectoptionid };
-        //        datacontext.selectoptions.attach(selectoption);
-        //        derlayoutitem.highlight.selectoption = selectoption;
-        //        datacontext.derlayoutitems.remove(derlayoutitem);
-        //        datacontext.savechanges();
-        //        response.issuccess = true;
-        //    }
-        //    catch (exception exception)
-        //    {
-        //        response.message = exception.message;
-        //    }
-
-        //    return response;
-        //}
-
         private BaseResponse SaveDynamicHighlight(SaveLayoutItemRequest request)
         {
             var response = new GetDerLayoutResponse();
@@ -1397,19 +1393,17 @@ namespace DSLNG.PEAR.Services
                 var kpiInformations = new List<DerKpiInformation>();
                 foreach (var item in request.KpiInformations)
                 {
-                    if (item.KpiId > 0)
+                    if (item.KpiId <= 0) continue;
+                    var kpi = new Kpi { Id = item.KpiId };
+                    if (DataContext.Kpis.Local.FirstOrDefault(x => x.Id == kpi.Id) == null)
                     {
-                        var kpi = new Kpi { Id = item.KpiId };
-                        if (DataContext.Kpis.Local.FirstOrDefault(x => x.Id == kpi.Id) == null)
-                        {
-                            DataContext.Kpis.Attach(kpi);
-                        }
-                        else
-                        {
-                            kpi = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == kpi.Id);
-                        }
-                        kpiInformations.Add(new DerKpiInformation { Kpi = kpi, Position = item.Position, IsOriginalData = item.IsOriginalData });
+                        DataContext.Kpis.Attach(kpi);
                     }
+                    else
+                    {
+                        kpi = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == kpi.Id);
+                    }
+                    kpiInformations.Add(new DerKpiInformation { Kpi = kpi, Position = item.Position, IsOriginalData = item.IsOriginalData, ConfigType = item.ConfigType});
                 }
 
                 derLayoutItem.KpiInformations = kpiInformations;

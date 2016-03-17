@@ -115,6 +115,7 @@ namespace DSLNG.PEAR.Services.Requests.Der
             public int KpiId { get; set; }
             public string KpiName { get; set; }
             public bool IsOriginalData { get; set; }
+            public ConfigType ConfigType { get; set; }
         }
     }
 }

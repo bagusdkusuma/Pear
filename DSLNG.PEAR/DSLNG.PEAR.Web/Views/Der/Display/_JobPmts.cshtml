@@ -16,17 +16,17 @@
         var pos2 = Model.JobPmtsViewModels.Single(x => x.Position == 2);
         <tbody>
             <tr>
-                <td>@pos0.ActualDaily</td>
-                <td rowspan="2">@pos2.ActualDaily</td>
-                <td>@pos0.ActualMtd</td>
-                <td rowspan="2">@pos2.ActualMtd</td>
-                <td>@pos0.ActualYtd mmscf</td>
-                <td rowspan="2">@pos2.ActualYtd</td>
+                <td>@pos0.Daily</td>
+                <td rowspan="2">@pos2.Daily</td>
+                <td>@pos0.Mtd</td>
+                <td rowspan="2">@pos2.Mtd</td>
+                <td>@pos0.Ytd mmscf</td>
+                <td rowspan="2">@pos2.Ytd</td>
             </tr>
             <tr>
-                <td>@pos1.ActualDaily</td>
-                <td>@pos1.ActualMtd</td>
-                <td>@pos1.ActualYtd</td>
+                <td>@pos1.Daily</td>
+                <td>@pos1.Mtd</td>
+                <td>@pos1.Ytd</td>
             </tr>
             <tr>
                 <td colspan="2">134% of DCQ 277,750 mmbtu</td>

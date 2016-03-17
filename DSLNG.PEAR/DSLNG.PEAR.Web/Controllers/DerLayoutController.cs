@@ -291,7 +291,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "job-pmts":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(3);
+                        viewModel.KpiInformations = GetKpiInformations(4);
                         return PartialView("LayoutType/_JobPmts", viewModel);
                     }
             }
@@ -391,8 +391,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "lng-and-cds":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
-                        request.KpiInformations =
-                            layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
+                        request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
                         response = _derService.SaveLayoutItem(request);
                         break;
                     }
@@ -417,28 +416,6 @@ namespace DSLNG.PEAR.Web.Controllers
 
             return RedirectToAction("Config", new { id = layoutItemViewModel.DerLayoutId });
         }
-
-        /* private IList<DerLayoutItemViewModel.DerKpiInformationViewModel> GetAvgYytdKeyStatisticKpiInformations()
-         {
-             var list = new List<DerLayoutItemViewModel.DerKpiInformationViewModel>();
-             for (int i = 1; i <= 6; i++)
-             {
-                 list.Add(new DerLayoutItemViewModel.DerKpiInformationViewModel { Position = i });
-             }
-
-             return list;
-         }
-
-         private IList<DerLayoutItemViewModel.DerKpiInformationViewModel> GetSafetyTableKpiInformations()
-         {
-             var list = new List<DerLayoutItemViewModel.DerKpiInformationViewModel>();
-             for (int i = 1; i <= 9; i++)
-             {
-                 list.Add(new DerLayoutItemViewModel.DerKpiInformationViewModel { Position = i });
-             }
-
-             return list;
-         }*/
 
         private IList<DerLayoutItemViewModel.DerKpiInformationViewModel> GetKpiInformations(int numberOfKpi)
         {

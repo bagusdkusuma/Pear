@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using DSLNG.PEAR.Data.Enums;
+
 namespace DSLNG.PEAR.Services.Responses.Der
 {
     public class GetDerLayoutitemResponse : BaseResponse
@@ -85,11 +87,13 @@ namespace DSLNG.PEAR.Services.Responses.Der
             public KpiResponse Kpi { get; set; }
             public int Position { get; set; }
             public bool IsOriginalData { get; set; }
+            public ConfigType ConfigType { get; set; }
 
             public class KpiResponse 
             {
                 public int Id { get; set; }
                 public string Name { get; set; }
+                public string MeasurementName { get; set; }
             }
         }
     }
