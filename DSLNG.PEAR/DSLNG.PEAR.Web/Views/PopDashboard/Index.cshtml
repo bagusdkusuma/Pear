@@ -27,60 +27,60 @@
 
 @section Scripts{
     <script type="text/javascript">
-        $(document).ready(function() {
-            $('#popDashboard-table').DataTable({
-                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-                "iDisplayLength": -1,
-                "bProcessing": true,
-                "bServerSide": true,
-                "sServerMethod": "POST",
-                "sAjaxSource": '@Url.Action("Grid", "PopDashboard")',
-                "order": [[1, "asc"]],
-                "aoColumns": [
-                    { "mDataProp": "Title", "name": "Title", "className": "dt-body-left" },
-                    { "mDataProp": "Number", "name": "Number", "className": "dt-body-left" },
-                    { "mDataProp": "Subtitle", "name": "Subtitle", "className": "dt-body-left" },
-                    {
-                        "mDataProp": "IsActive", "name": "IsActive", "render": function (data, type, row) {
-                            var checked = '';
-                            if (data) {
-                                checked = 'checked="checked"';
-                            }
-                            return '<input type="checkbox" class="editor-active" ' + checked + ' disabled="disabled">';
-                        },
-                    },
-                    { "mDataProp": "Status", "name": "Status", "className": "dt-body-left" },
-                    {
-                        "orderable": false,
-                        "data": null,
-                        "defaultContent": '',
-                        "mRender": function (data, type, row) {
-                            var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
-                            var editLink = '@Html.ActionLink("Edit", "Popinformation", "PopDashboard", new { id = "_id_" }, null)'.replace('_id_', data.Id);
-                            return editLink;
+    $(document).ready(function () {
+        $('#popDashboard-table').DataTable({
+            "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+            "iDisplayLength": -1,
+            "bProcessing": true,
+            "bServerSide": true,
+            "sServerMethod": "POST",
+            "sAjaxSource": '@Url.Action("Grid", "PopDashboard")',
+            "order": [[1, "asc"]],
+            "aoColumns": [
+                { "mDataProp": "Title", "name": "Title", "className": "dt-body-left" },
+                { "mDataProp": "Number", "name": "Number", "className": "dt-body-left" },
+                { "mDataProp": "Subtitle", "name": "Subtitle", "className": "dt-body-left" },
+                {
+                    "mDataProp": "IsActive", "name": "IsActive", "render": function (data, type, row) {
+                        var checked = '';
+                        if (data) {
+                            checked = 'checked="checked"';
                         }
+                        return '<input type="checkbox" class="editor-active" ' + checked + ' disabled="disabled">';
                     },
-                    {
-                        "orderable": false,
-                        "data": null,
-                        "defaultContent": '',
-                        "mRender": function (data, type, row) {
-                            var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
-                            var editLink = '@Html.ActionLink("Edit", "Edit", "PopDashboard", new { id = "_id_" }, null)'.replace('_id_', data.Id);
-                            return editLink;
-                        }
+                },
+                { "mDataProp": "Status", "name": "Status", "className": "dt-body-left" },
+                {
+                    "orderable": false,
+                    "data": null,
+                    "defaultContent": '',
+                    "mRender": function (data, type, row) {
+                        var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
+                        var editLink = '@Html.ActionLink("Edit", "Popinformation", "PopDashboard", new { id = "_id_" }, null)'.replace('_id_', data.Id);
+                        return editLink;
                     }
-                ],
-                rowCallback: function (row, data) {
-                    // Set the checked state of the checkbox in the table
-                    //$('input.is-active', row).prop('checked', data.IsActive == 1);
+                },
+                {
+                    "orderable": false,
+                    "data": null,
+                    "defaultContent": '',
+                    "mRender": function (data, type, row) {
+                        var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
+                        var editLink = '@Html.ActionLink("Edit", "Edit", "PopDashboard", new { id = "_id_" }, null)'.replace('_id_', data.Id);
+                        return editLink + ' | ' + deleteLink;
+                    }
                 }
-            });
+            ],
+            rowCallback: function (row, data) {
+                // Set the checked state of the checkbox in the table
+                //$('input.is-active', row).prop('checked', data.IsActive == 1);
+            }
+        });
 
-            @*$('#planningBlueprints-table').on('click', '.delete', function () {
+        $('#popDashboard-table').on('click', '.delete', function () {
                 var id = $(this).attr('data-id');
                 if (confirm('Are you sure want to delete this item?' + id)) {
-                    var url = '@Url.Action("Delete", "PlanningBlueprint")';
+                    var url = '@Url.Action("Delete", "PopDashboard")';
                     var form = $('<form />');
                     form.attr('action', url);
                     form.attr('method', 'POST');
@@ -88,9 +88,9 @@
                     $('body').append(form);
                     form.submit();
                 }
-            });*@
+            });
 
 
-        });
+    });
     </script>
 }

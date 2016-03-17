@@ -133,6 +133,20 @@ namespace DSLNG.PEAR.Web.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            var response = _popDashboardService.DeletePopDashboard(id);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            if (response.IsSuccess)
+            {
+                return RedirectToAction("Index");
+            }
+            return View();
+
+        }
+
 
         public ActionResult PopInformation(int id)
         {
