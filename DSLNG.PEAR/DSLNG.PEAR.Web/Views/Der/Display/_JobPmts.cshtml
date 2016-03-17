@@ -10,24 +10,32 @@
             <th colspan="2" class="der-bg-blue-4">ACTUAL YTD</th>
         </tr>
     </thead>
-    <tbody>
-        <tr>
-            <td>333.68 mmscf</td>
-            <td rowspan="2">7,303.05 tonnes</td>
-            <td>7,058.64 mmscf</td>
-            <td rowspan="2">154,468.63 tonnes</td>
-            <td>7,058.64 mmscf</td>
-            <td rowspan="2">154,468.63 tonnes</td>
-        </tr>
-        <tr>
-            <td>373,265 mmbtu</td>
-            <td>7,894,592 mmbtu</td>
-            <td>7,894,592 mmbtu</td>
-        </tr>
-        <tr>
-            <td colspan="2">134% of DCQ 277,750 mmbtu</td>
-            <td colspan="2">92% of MGN 8,610 bbtu</td>
-            <td colspan="2">8% of ADP 101.6 TBtu</td>
-        </tr>
-    </tbody>
+    @{
+        var pos0 = Model.JobPmtsViewModels.Single(x => x.Position == 0);
+        var pos1 = Model.JobPmtsViewModels.Single(x => x.Position == 1);
+        var pos2 = Model.JobPmtsViewModels.Single(x => x.Position == 2);
+        <tbody>
+            <tr>
+                <td>@pos0.ActualDaily</td>
+                <td rowspan="2">@pos2.ActualDaily</td>
+                <td>@pos0.ActualMtd</td>
+                <td rowspan="2">@pos2.ActualMtd</td>
+                <td>@pos0.ActualYtd mmscf</td>
+                <td rowspan="2">@pos2.ActualYtd</td>
+            </tr>
+            <tr>
+                <td>@pos1.ActualDaily</td>
+                <td>@pos1.ActualMtd</td>
+                <td>@pos1.ActualYtd</td>
+            </tr>
+            <tr>
+                <td colspan="2">134% of DCQ 277,750 mmbtu</td>
+                <td colspan="2">92% of MGN 8,610 bbtu</td>
+                <td colspan="2">8% of ADP 101.6 TBtu</td>
+            </tr>
+        </tbody>
+        
+        
+    }
+
 </table>

@@ -343,10 +343,7 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-
-
-        public
-        UpdateKpiAchievementItemResponse UpdateKpiAchievementItem(UpdateKpiAchievementItemRequest request)
+        public UpdateKpiAchievementItemResponse UpdateKpiAchievementItem(UpdateKpiAchievementItemRequest request)
         {
             var response = new UpdateKpiAchievementItemResponse();
             try

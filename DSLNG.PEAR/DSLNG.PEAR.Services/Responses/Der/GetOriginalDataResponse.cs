@@ -25,6 +25,9 @@ namespace DSLNG.PEAR.Services.Responses.Der
             public PeriodeType PeriodeType { get; set; }
             public int Position { get; set; }
             public string Type { get; set; }
+            public bool IsKpiAchievement { get; set; }
+            public string Label { get; set; }
+            public int KpiId { get; set; }
         }
     }
 }

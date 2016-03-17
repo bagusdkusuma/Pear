@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DSLNG.PEAR.Data.Enums;
 
 namespace DSLNG.PEAR.Data.Entities.Der
 {
@@ -18,5 +19,6 @@ namespace DSLNG.PEAR.Data.Entities.Der
         public int Position { get; set; }
         [DefaultValue("false")]
         public bool IsOriginalData { get; set; }
+        public ConfigType ConfigType { get; set; }
     }
 }

@@ -214,8 +214,8 @@ namespace DSLNG.PEAR.Services
                     .Include(x => x.Artifact.Measurement)
                     .Include(x => x.Artifact.Series)
                     .Include(x => x.Artifact.Series.Select(y => y.Kpi))
-                    .Include(x => x.Artifact.Charts)
-                    .Include(x => x.Artifact.Charts.Select(y => y.Series))
+                    /*.Include(x => x.Artifact.Charts)
+                    .Include(x => x.Artifact.Charts.Select(y => y.Series))*/
                     .Include(x => x.Artifact.Charts.Select(y => y.Series.Select(z => z.Kpi)))
                     .Include(x => x.Artifact.Charts.Select(y => y.Measurement))
                     .Include(x => x.Artifact.Tank)
@@ -226,7 +226,7 @@ namespace DSLNG.PEAR.Services
                     .Include(x => x.Highlight)
                     .Include(x => x.Highlight.SelectOption)
                     .Include(x => x.KpiInformations)
-                    .Include(x => x.KpiInformations.Select(y => y.Kpi))
+                    .Include(x => x.KpiInformations.Select(y => y.Kpi.Measurement))
                     .Single(x => x.Id == id);
 
                 response = derLayoutItem.MapTo<GetDerLayoutitemResponse>();
@@ -281,6 +281,7 @@ namespace DSLNG.PEAR.Services
                 case "safety":
                 case "lng-and-cds":
                 case "security":
+                case "job-pmts":
                     {
                         baseResponse = SaveKpiInformations(request);
                         break;
@@ -339,10 +340,15 @@ namespace DSLNG.PEAR.Services
 
         public GetOriginalDataResponse GetOriginalData(int layoutId, DateTime date)
         {
+            IDictionary<string, List<string>> labels = new Dictionary<string, List<string>>();
+            labels.Add("dafwc", new List<string>() { "Days Without DAFWC (since)", "Days Without LOPC (since)", "Safe Man-hours since Last DAFWC " });
+
             var response = new GetOriginalDataResponse();
             try
             {
-                var der = DataContext.DerLayouts.Include(x => x.Items)
+                var der = DataContext.DerLayouts
+                    //.Include(x => x.Items.Select(y => y.KpiInformations))
+                    .Include(x => x.Items.Select(y => y.KpiInformations.Select(z => z.Kpi.Measurement)))
                     .Single(x => x.Id == layoutId);
 
                 foreach (var item in der.Items)
@@ -371,10 +377,37 @@ namespace DSLNG.PEAR.Services
                                                         };
 
                                     datum.Type = item.Type;
-
+                                    datum.Label = labels.ContainsKey(item.Type.ToLowerInvariant()) ? labels[item.Type.ToLowerInvariant()][i] : "undefined";
+                                    
                                     response.OriginalData.Add(datum);
                                 }
 
+                                break;
+                            }
+                        case "job-pmts" :
+                            {
+                                for (int i = 0; i <=2; i++)
+                                {
+                                    var datum = new GetOriginalDataResponse.OriginalDataResponse();
+                                    var kpiInformation = item.KpiInformations.ElementAtOrDefault(i);
+                                    if (kpiInformation != null)
+                                    {
+                                        datum.LayoutItemId = item.Id;
+                                        datum.PeriodeType = PeriodeType.Daily;
+                                        datum.Position = i;
+                                        datum.DataType = "double";
+                                        var kpiAchievement = DataContext.KpiAchievements.Include(x => x.Kpi).FirstOrDefault(x => x.PeriodeType == PeriodeType.Daily &&
+                                                                            x.Kpi.Id == kpiInformation.Kpi.Id && (x.Periode.Day == date.Day && x.Periode.Month == date.Month &&
+                                                                             x.Periode.Year == date.Year));
+                                        datum.Data = (kpiAchievement != null && kpiAchievement.Value.HasValue) ? kpiAchievement.Value.ToString() : string.Empty;
+                                        datum.Type = item.Type;
+                                        datum.IsKpiAchievement = true;
+                                        datum.Label = string.Format(@"{0} ({1})", kpiInformation.Kpi.Name, kpiInformation.Kpi.Measurement.Name);
+                                        datum.KpiId = kpiInformation.Kpi.Id;
+                                        datum.Periode = date;
+                                        response.OriginalData.Add(datum);
+                                    }
+                                }
                                 break;
                             }
                     }
@@ -407,22 +440,109 @@ namespace DSLNG.PEAR.Services
                         layoutItem = DataContext.DerLayoutItems.Local.FirstOrDefault(x => x.Id == layoutItem.Id);
                     }
 
-                    if (datum.Id > 0)
+                    switch (datum.Type)
                     {
-                        var originalData = datum.MapTo<DerOriginalData>();
-                        originalData.LayoutItem = layoutItem;
-                        DataContext.DerOriginalDatas.Attach(originalData);
-                        DataContext.Entry(originalData).State = EntityState.Modified;
-                    }
-                    else
-                    {
-                        var originalData = datum.MapTo<DerOriginalData>();
-                        originalData.LayoutItem = layoutItem;
-                        DataContext.DerOriginalDatas.Add(originalData);
+                        case "job-pmts":
+                            {
+                                if (datum.IsKpiAchievement)
+                                {
+                                    SaveOriginalDataRequest.OriginalDataRequest datum1 = datum;
+                                    var kpi = DataContext.Kpis.Single(x => x.Id == datum1.KpiId);
+                                    var kpiAchievements = DataContext.KpiAchievements
+                                        .Include(x => x.Kpi)
+                                        .Where(x => x.Kpi.Id == datum1.KpiId && ((x.Periode.Month == datum1.Periode.Month &&
+                                                                             x.Periode.Year == datum1.Periode.Year) || x.Periode.Year == datum1.Periode.Year)).ToList();
+                                    var kpiAchievementYearly =
+                                        DataContext.KpiAchievements.Where(
+                                            x => x.Periode.Year == 2016 && x.PeriodeType == PeriodeType.Yearly).ToList();
+                                    var dailyActual = kpiAchievements.FirstOrDefault(x => x.PeriodeType == PeriodeType.Daily 
+                                        && x.Periode.Day == datum1.Periode.Day);
+
+                                    if (!string.IsNullOrEmpty(datum1.Data))
+                                    {
+                                        double val;
+                                        bool isParsed = double.TryParse(datum1.Data, out val);
+                                        if (isParsed)
+                                        {
+                                            if (dailyActual != null)
+                                            {
+                                                dailyActual.Value = val;
+                                            }
+                                            else
+                                            {
+                                                dailyActual = new KpiAchievement
+                                                    {
+                                                        Kpi = DataContext.Kpis.Single(x => x.Id == datum.KpiId),
+                                                        Value = val
+                                                    };
+                                                DataContext.KpiAchievements.Add(dailyActual);
+                                            }
+                                        }
+                                    }
+
+                                    var monthly = kpiAchievements.Where(x => x.PeriodeType == PeriodeType.Daily &&
+                                                                              (x.Periode.Month == datum1.Periode.Month &&
+                                                                               x.Periode.Year == datum1.Periode.Year))
+                                                                  .AsQueryable();
+                                    double? achievementMtd = null;
+                                    if (kpi.YtdFormula == YtdFormula.Sum)
+                                    {
+                                        achievementMtd = monthly.Sum(x => x.Value);
+                                    }
+                                    else if (kpi.YtdFormula == YtdFormula.Average)
+                                    {
+                                        achievementMtd = monthly.Average(x => x.Value);
+                                    }
+
+
+                                    var monthlyActual = monthly.FirstOrDefault();
+
+                                    if (monthlyActual != null)
+                                    {
+                                        monthlyActual.Value = achievementMtd;
+                                    }
+
+                                    var yearly = kpiAchievements.Where(x => x.PeriodeType == PeriodeType.Monthly && x.Periode.Year == datum1.Periode.Year)
+                                                                  .AsQueryable();
+                                    double? achievementYtd = null;
+                                    if (kpi.YtdFormula == YtdFormula.Sum)
+                                    {
+                                        achievementYtd = yearly.Sum(x => x.Value);
+                                    }
+                                    else if (kpi.YtdFormula == YtdFormula.Average)
+                                    {
+                                        achievementYtd = yearly.Average(x => x.Value);
+                                    }
+
+                                    var yearlyActual = yearly.FirstOrDefault();
+                                    if (yearlyActual != null)
+                                    {
+                                        yearlyActual.Value = achievementYtd;
+                                    }
+                                }
+                                break;
+                            }
+                        default:
+                            {
+                                if (datum.Id > 0)
+                                {
+                                    var originalData = datum.MapTo<DerOriginalData>();
+                                    originalData.LayoutItem = layoutItem;
+                                    DataContext.DerOriginalDatas.Attach(originalData);
+                                    DataContext.Entry(originalData).State = EntityState.Modified;
+                                }
+                                else
+                                {
+                                    var originalData = datum.MapTo<DerOriginalData>();
+                                    originalData.LayoutItem = layoutItem;
+                                    DataContext.DerOriginalDatas.Add(originalData);
+                                }
+                                break;
+                            }
                     }
                 }
 
-                DataContext.SaveChanges();
+                //DataContext.SaveChanges();
                 response.IsSuccess = true;
             }
             catch (Exception exception)
@@ -476,17 +596,6 @@ namespace DSLNG.PEAR.Services
 
             return response;
         }
-
-        /*private string ConvertOriginalData(DerOriginalData originalData)
-        {
-            switch (originalData.DataType.ToLowerInvariant())
-            {
-                case "datetime":
-                    DateTime date;
-                    bool isDate = DateTime.TryParse(originalData.Data, out date);
-                    return isDate ? date.ToShortDateString() : originalData.Data;
-            }
-        }*/
 
         private BaseResponse SaveLineChart(SaveLayoutItemRequest request)
         {

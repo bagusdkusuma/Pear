@@ -409,7 +409,13 @@
         <p class="der-table-title" style="margin-bottom: 5px">COMMERCIAL OPERATION & MAINTENANCE PERFORMANCE</p>
         <p class="der-table-subtitle1" style="margin: 0 0 1px;">FEED GAS TO PLANT</p>
         <div class="col-md-6" style="padding: 0px 0px">
-            
+             @{
+                var row5Col0 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 0);
+                if (row5Col0 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row5Col0.Id })" class="layout-item"></div>
+                }
+            }
         </div>
         <div class="col-md-6" style="padding: 0px 0px">
             <table class="der-table der-dummy all-border">
