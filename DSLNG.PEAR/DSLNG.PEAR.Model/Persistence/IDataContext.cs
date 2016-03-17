@@ -69,7 +69,6 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<DerLayout> DerLayouts { get; set; }
         IDbSet<DerLayoutItem> DerLayoutItems { get; set; }
         IDbSet<DerArtifact> DerArtifacts { get; set; }
-        IDbSet<DerKpiInformation> DerTables { get; set; }
         IDbSet<DerArtifactChart> DerArtifactCharts { get; set; }
         IDbSet<DerArtifactSerie> DerArtifactSeries { get; set; }
         IDbSet<DerArtifactTank> DerArtifactTanks { get; set; }
@@ -99,6 +98,7 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<DerHighlight> DerHighlights { get; set; }
         IDbSet<DerStaticHighlight> DerStaticHighlights { get; set; }
         IDbSet<Wave> Waves { get; set; }
+        IDbSet<DerKpiInformation> DerKpiInformations { get; set; }
         Database Database { get; }
         int SaveChanges();
         DbEntityEntry Entry(object entity);

@@ -185,6 +185,7 @@
     <Compile Include="Responses\Der\GetDerItemResponse.cs" />
     <Compile Include="Responses\Der\GetDerResponse.cs" />
     <Compile Include="Responses\Der\GetDersResponse.cs" />
+    <Compile Include="Responses\Der\DeleteDerLayoutItemResponse.cs" />
     <Compile Include="Responses\Der\SaveOriginalDataResponse.cs" />
     <Compile Include="Responses\EconomicSummary\GetEconomicSummaryReportResponse.cs" />
     <Compile Include="Responses\EnvironmentScanning\DeleteChallengeResponse.cs" />

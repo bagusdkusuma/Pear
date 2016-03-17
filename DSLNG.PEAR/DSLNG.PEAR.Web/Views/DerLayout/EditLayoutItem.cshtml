@@ -13,6 +13,7 @@
         @Html.LabelFor(model => model.Type, new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.DropDownListFor(model => model.Type, Model.Types, "Select Type", new { style = "color:#000", @class = "der-layout-type" })
+            @*@Html.HiddenFor(model => model.Type)*@
             @Html.ValidationMessageFor(model => model.Row)
         </div>
     </div>
@@ -35,6 +36,9 @@
                 case "highlight":
                     Html.RenderPartial("~/Views/DerLayout/LayoutType/_Highlight.Edit.cshtml", Model);
                     break;
+                case "avg-ytd-key-statistic":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_AvgYtdKeyStatistic.Edit.cshtml", Model);
+                    break;
             }
         }
     </div>
@@ -50,9 +54,10 @@
     </div>
     <div class="col-md-12 artifact-designer-btns">
         <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
-        <button data-preview-url="@Url.Action("Preview", "Artifact")" id="graphic-preview-btn" type="button" class="btn btn-primary btn-lg"><span class="fa fa-eye"></span>View</button>
-        <a onclick="location.reload();" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>
-        <a href="@Url.Action("Index", "Artifact")" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+        @*<button data-preview-url="@Url.Action("Preview", "Artifact")" id="graphic-preview-btn" type="button" class="btn btn-primary btn-lg"><span class="fa fa-eye"></span>View</button>
+        <a onclick="location.reload();" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>*@
+        <a href="@Url.Action("Index", "DerLayout")" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+        <a href="@Url.Action("Delete", "DerLayout", new { id = Model.Id, type = Model.Type })" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Delete</a>
     </div>
             }
 
@@ -204,6 +209,11 @@
                     });
                     $hiddenFields.remove();
                     window.Pear.Artifact.Designer._setupCallbacks.multiaxis();
+                    break;
+                }
+            case "avg-ytd-key-statistic":
+                {
+                    window.Pear.Artifact.Designer._kpiAutoComplete($('.layout-type-area'));
                     break;
                 }
         }
