@@ -914,7 +914,7 @@
 
                         var span = '<span class="popover-edit-trigger" data-toggle="popover" data-placement="bottom" data-pl data-form-target="constraint" data-id="' + data.id + '" data-es-id="@Model.Id" data-type="' + data.type + '" data-category="' + data.categoryId + '" data-ids="' + data.relationids + '">' + data.definition + '</span>'
 
-                        $('.table-constraint').append('<tr><td class="td-entity">' + '<a href="#" data-toggle="modal" ' + input + ' data-target="#envi-modal" data-id="' + data.id + '" class="btn-show-constraint">' + '<span>' + relation + '</span>' + '</td><td class="td-definition" style="text-align:left">' + span + '<a href="#" data-id="' + data.id + '" class="constraint-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
+                        $('.table-constraint').append('<tr><td class="td-entity">' + relation + '</td><td class="td-definition" style="text-align:left">' + span + '<a href="#" data-id="' + data.id + '" class="constraint-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
                         popOverElem.popover('hide');
 
                         $('.relation-contents').html('');
@@ -955,7 +955,7 @@
                         $row = $trigger.closest('tr');
                         $row.remove();
                         var span = '<span class="popover-edit-trigger" data-toggle="popover" data-placement="bottom" data-form-target="constraint" data-id="' + data.id + '" data-es-id="@Model.Id" data-type="' + data.type + '" data-category="' + data.categoryId + '" data-ids="' + data.relationids + '">' + data.definition + '</span>'
-                        $('.table-constraint').append('<tr><td class="td-entity">' + '<a href="#" data-toggle="modal" ' + input + ' data-target="#envi-modal" data-id="' + data.id + '" class="btn-show-constraint">' + '<span>' + relation + '</span>' + '</td><td class="td-definition" style="text-align:left">' + span + '<a href="#" data-id="' + data.id + '" class="constraint-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
+                        $('.table-constraint').append('<tr><td class="td-entity">' +  relation + '</td><td class="td-definition" style="text-align:left">' + span + '<a href="#" data-id="' + data.id + '" class="constraint-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
 
                         $('.relation-contents').html('');
                         $('.wrapper-relation').html('');

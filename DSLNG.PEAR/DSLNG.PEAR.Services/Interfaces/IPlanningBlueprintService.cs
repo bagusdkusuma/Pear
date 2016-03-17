@@ -25,5 +25,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetESCategoryResponse GetESCategory(GetESCategoryRequest request);
         DeleteESCategoryResponse DeleteESCategory(DeleteESCategoryRequest request);
         BaseResponse Delete(int id);
+        BaseResponse ResetWorkflow(int id);
     }
 }

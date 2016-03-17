@@ -84,6 +84,12 @@ namespace DSLNG.PEAR.Web.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult REdit(int id) {
+            var viewModel = _planningBlueprintService.GetPlanningBlueprint(id).MapTo<PlanningBlueprintViewModel>();
+            viewModel.IsReviewer = true;
+            return View("Edit",viewModel);
+        }
+
         public ActionResult Edit(int id) {
             return View(_planningBlueprintService.GetPlanningBlueprint(id).MapTo<PlanningBlueprintViewModel>());
         }
@@ -94,7 +100,18 @@ namespace DSLNG.PEAR.Web.Controllers
             var response = _planningBlueprintService.SavePlanningBlueprint(request);
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
+            if (viewModel.IsReviewer) {
+                return RedirectToAction("Approval");
+            }
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult ResetWorkflow(int id) {
+            var response = _planningBlueprintService.ResetWorkflow(id);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            return RedirectToAction("Approval");
         }
 
         public ActionResult EnvironmentsScanning(int id)

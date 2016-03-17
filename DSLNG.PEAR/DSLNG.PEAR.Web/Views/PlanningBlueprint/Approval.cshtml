@@ -15,7 +15,7 @@
             <th>Midterm Phase Strategy</th>
              <th>Midterm Phase Strategy Notes</th>
             <th>Is Active</th>
-            <th>Action</th>
+            <th style="width:75px">Action</th>
         </tr>
     </thead>
 </table>
@@ -132,9 +132,10 @@
                          "data": null,
                          "defaultContent": '',
                          "mRender": function (data, type, row) {
-                             return '<form action="/Planningblueprint/Delete" method="POST">' +
+                             var editLink = '@Html.ActionLink("Edit", "REdit", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', data.Id);
+                             return '<form action="/Planningblueprint/Delete" method="POST" style="display:inline">' +
                                  '<input type="hidden" name="Id" value="'+row.Id+'" />' +
-                                 '<a href="#" class="delete-row">Delete</a></form>';
+                                 '<a href="#" class="delete-row">Delete</a></form> | ' + editLink;
                          }
                      },
                 ],

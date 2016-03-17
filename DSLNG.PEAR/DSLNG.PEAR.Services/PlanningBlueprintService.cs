@@ -296,7 +296,7 @@ namespace DSLNG.PEAR.Services
                     {
                         Value = request.Value,
                         PeriodeType = PeriodeType.Yearly,
-                        Periode = new DateTime(request.Start.Year,1,1),
+                        Periode = new DateTime(request.Start.Year, 1, 1),
                         Kpi = kpi
                     };
                     DataContext.KpiTargets.Add(newYearlyTarget);
@@ -352,10 +352,11 @@ namespace DSLNG.PEAR.Services
                 var scenario = DataContext.Scenarios.FirstOrDefault(x => x.IsActive && x.IsDashboard);
                 if (scenario == null)
                 {
-                    return new BaseResponse {
-                           IsSuccess = false,
-                           Message = "An error occured, please contact adminstrator for further information"
-                       };
+                    return new BaseResponse
+                    {
+                        IsSuccess = false,
+                        Message = "An error occured, please contact adminstrator for further information"
+                    };
                 }
 
                 //yearly
@@ -597,7 +598,8 @@ namespace DSLNG.PEAR.Services
                     .Include(x => x.Opportunity)
                     .Include(x => x.Weakness)
                     .First(x => x.Id == id);
-                foreach (var cp in environmentsScanning.ConstructionPhase.ToList()) {
+                foreach (var cp in environmentsScanning.ConstructionPhase.ToList())
+                {
                     environmentsScanning.ConstructionPhase.Remove(cp);
                 }
                 foreach (var op in environmentsScanning.OperationPhase.ToList())
@@ -608,7 +610,8 @@ namespace DSLNG.PEAR.Services
                 {
                     environmentsScanning.ReinventPhase.Remove(rp);
                 }
-                foreach (var t in environmentsScanning.Threat.ToList()) {
+                foreach (var t in environmentsScanning.Threat.ToList())
+                {
                     environmentsScanning.Threat.Remove(t);
                 }
                 foreach (var s in environmentsScanning.Strength.ToList())
@@ -631,7 +634,8 @@ namespace DSLNG.PEAR.Services
                     .Include(x => x.Postures.Select(y => y.DesiredStates))
                     .First(x => x.Id == id);
 
-                foreach (var pc in businessPosture.Postures.SelectMany(x => x.PostureChallenges).ToList()) {
+                foreach (var pc in businessPosture.Postures.SelectMany(x => x.PostureChallenges).ToList())
+                {
                     DataContext.PostureChalleges.Remove(pc);
                 }
                 foreach (var pc in businessPosture.Postures.SelectMany(x => x.PostureConstraints).ToList())
@@ -653,13 +657,51 @@ namespace DSLNG.PEAR.Services
                     Message = "You have been successfully deleted this item"
                 };
             }
-            catch {
+            catch
+            {
                 return new BaseResponse
                 {
                     IsSuccess = false,
                     Message = "An error has been occured please contact administrator for further information"
                 };
             }
+        }
+
+
+        public BaseResponse ResetWorkflow(int id)
+        {
+            try
+            {
+                var environmentsScanning = DataContext.EnvironmentsScannings.First(x => x.PlanningBlueprint.Id == id);
+                environmentsScanning.IsLocked = false;
+                var businessPosture = DataContext.BusinessPostures.First(x => x.PlanningBlueprint.Id == id);
+                businessPosture.IsApproved = false;
+                businessPosture.IsRejected = false;
+                businessPosture.IsLocked = true;
+                businessPosture.IsBeingReviewed = false;
+                var midtermFormulation = DataContext.MidtermPhaseFormulations.First(x => x.PlanningBlueprint.Id == id);
+                midtermFormulation.IsLocked = true;
+                var midtermPlanning = DataContext.MidtermStrategyPlannings.First(x => x.PlanningBlueprint.Id == id);
+                midtermPlanning.IsApproved = false;
+                midtermPlanning.IsRejected = false;
+                midtermPlanning.IsLocked = true;
+                midtermPlanning.IsBeingReviewed = false;
+                DataContext.SaveChanges();
+                return new BaseResponse
+                {
+                    IsSuccess = true,
+                    Message = "You have been successfully reset the workflow of the planning blueprint"
+                };
+            }
+            catch
+            {
+                return new BaseResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured please contact the adminstrator for further information"
+                };
+            }
+
         }
     }
 }
