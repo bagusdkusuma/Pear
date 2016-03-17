@@ -661,6 +661,7 @@
     <Compile Include="Responses\PmsSummary\UpdatePmsConfigResponse.cs" />
     <Compile Include="Requests\PmsSummary\UpdatePmsSummaryRequest.cs" />
     <Compile Include="Responses\PmsSummary\UpdatePmsSummaryResponse.cs" />
+    <Compile Include="Responses\PopDashboard\DeletePopDashboardResponse.cs" />
     <Compile Include="Responses\PopDashboard\GetPopDashboardResponse.cs" />
     <Compile Include="Responses\PopDashboard\GetPopDashboardsResponse.cs" />
     <Compile Include="Responses\PopDashboard\GetUsersDropdownResponse.cs" />
