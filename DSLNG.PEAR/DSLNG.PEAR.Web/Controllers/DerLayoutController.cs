@@ -15,6 +15,7 @@ using DSLNG.PEAR.Services.Responses.Der;
 using DSLNG.PEAR.Web.ViewModels.Artifact;
 using DSLNG.PEAR.Web.ViewModels.DerLayout;
 using DSLNG.PEAR.Web.ViewModels.DerLayout.LayoutType;
+using DSLNG.PEAR.Web.Grid;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -37,12 +38,25 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Index()
         {
+            return View();
+        }
+
+        public ActionResult Grid(GridParams gridParams)
+        {
             var viewModel = new DerLayoutIndexViewModel();
             var response = _derService.GetDerLayouts();
             viewModel.DerLayouts = response.DerLayouts.Select(x => new DerLayoutViewModel() { Id = x.Id, IsActive = x.IsActive, Title = x.Title })
                     .ToList();
-            // viewModel.DerLayouts.Add(new DerLayoutViewModel{Id = 1, Title = "First Layout"});
-            return View(viewModel);
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = viewModel.DerLayouts.Count,
+                iTotalRecords = viewModel.DerLayouts.Count,
+                aaData = viewModel.DerLayouts
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
+            //// viewModel.DerLayouts.Add(new DerLayoutViewModel{Id = 1, Title = "First Layout"});
+            //return View(viewModel);
         }
 
         public ActionResult Create()
@@ -52,10 +66,30 @@ namespace DSLNG.PEAR.Web.Controllers
             return View(viewModel);
         }
 
+        public ActionResult Edit(int id)
+        {
+            var viewModel = new CreateDerLayoutViewModel();
+            var response = _derService.GetDerLayout(id);
+            viewModel.Id = response.Id;
+            viewModel.Title = response.Title;
+            viewModel.IsActive = response.IsActive;
+
+            return View(viewModel);
+        }
+
+        public ActionResult DeleteLayout(int id)
+        {
+            var response = _derService.DeleteLayout(id);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            return RedirectToAction("Index");
+        }
+
         [HttpPost]
         public ActionResult Create(CreateDerLayoutViewModel viewModel)
         {
             var request = new CreateOrUpdateDerLayoutRequest();
+            request.Id = viewModel.Id;
             request.IsActive = viewModel.IsActive;
             request.Title = viewModel.Title;
             var response = _derService.CreateOrUpdateDerLayout(request);
@@ -303,7 +337,7 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             //var request = id;
             var response = _derService.DeleteLayoutItem(id, type);
-                        //{
+            //{
             //    case "highlight":
             //        {
             //            request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();

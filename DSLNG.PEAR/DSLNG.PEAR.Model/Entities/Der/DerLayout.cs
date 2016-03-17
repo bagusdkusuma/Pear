@@ -11,6 +11,7 @@ namespace DSLNG.PEAR.Data.Entities.Der
         public int Id { get; set; }
         public string Title { get; set; }
         public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
         public ICollection<DerLayoutItem> Items { get; set; }
     }
 }
