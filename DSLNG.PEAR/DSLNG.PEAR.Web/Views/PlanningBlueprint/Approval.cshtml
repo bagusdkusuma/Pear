@@ -15,6 +15,7 @@
             <th>Midterm Phase Strategy</th>
              <th>Midterm Phase Strategy Notes</th>
             <th>Is Active</th>
+            <th style="width:75px">Action</th>
         </tr>
     </thead>
 </table>
@@ -125,7 +126,18 @@
                             }
                             return '<input type="checkbox" class="editor-active" ' + checked + ' disabled="disabled">';
                         },
-                    }
+                    },
+                     {
+                         "orderable": false,
+                         "data": null,
+                         "defaultContent": '',
+                         "mRender": function (data, type, row) {
+                             var editLink = '@Html.ActionLink("Edit", "REdit", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', data.Id);
+                             return '<form action="/Planningblueprint/Delete" method="POST" style="display:inline">' +
+                                 '<input type="hidden" name="Id" value="'+row.Id+'" />' +
+                                 '<a href="#" class="delete-row">Delete</a></form> | ' + editLink;
+                         }
+                     },
                 ],
                 rowCallback: function (row, data) {
                     // Set the checked state of the checkbox in the table
@@ -133,16 +145,12 @@
                 }
             });
 
-            $('#planningBlueprints-table').on('click', '.delete', function () {
-                var id = $(this).attr('data-id');
-                if (confirm('Are you sure want to delete this item?' + id)) {
-                    var url = '@Url.Action("Delete", "PlanningBlueprint")';
-                    var form = $('<form />');
-                    form.attr('action', url);
-                    form.attr('method', 'POST');
-                    form.html('<input type="hidden" name="id" value="' + id + '" />');
-                    $('body').append(form);
-                    form.submit();
+            $('#planningBlueprints-table').on('click', '.delete-row', function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                if (confirm('Are you sure want to delete this item?')) {
+                    var $form = $this.closest('form');
+                    $form.submit();
                 }
             });
 
