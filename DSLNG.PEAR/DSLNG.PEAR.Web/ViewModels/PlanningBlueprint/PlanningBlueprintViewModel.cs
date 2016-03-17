@@ -9,6 +9,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PlanningBlueprint
             IsActive = true;
             KeyOutputs = new List<KeyOutputViewModel>();
         }
+        public bool IsReviewer { get; set; }
         public int Id { get; set; }
         [Required]
         public string Title { get; set; }

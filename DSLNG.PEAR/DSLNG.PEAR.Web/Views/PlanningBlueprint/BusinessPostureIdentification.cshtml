@@ -106,13 +106,13 @@
 @* Business Posture *@
 
 <div class="business-posture">
-    <h2>Business Posture Identification</h2>
+    @*<h2>Business Posture Identification</h2>*@
 
-    <div class="row">
+   @* <div class="row">
         <div class="col-md-12">
             <h4 style="background-color: rgba(0,176,240,1); width: 100%">Business Posture Identification</h4>
         </div>
-    </div>
+    </div>*@
 
     <div class="row">
         <div class="col-md-12">
@@ -463,7 +463,7 @@
                 @Html.Hidden("Id", Model.PlanningBlueprintId)
                 <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Approve</button>
                 }
-                <button type="button" data-toggle="modal" data-target="#reject-modal" class="btn btn-primary btn-lg btn-reject"><span class="fa fa-remove"></span>Reject</button>
+                <button type="button" data-toggle="modal" data-target="#reject-modal" class="btn btn-primary btn-lg btn-reject"><span class="fa fa-hand-stop-o"></span> Reject</button>
             }
         </div>
     </div>
@@ -814,6 +814,7 @@
             e.preventDefault();
             var $this = $(this);
             //relation-progress
+            //relation
             var blockType = $this.data('form-target');
             if (blockType != 'desired-state') {
                 var postureType = $this.data('posture-type');
@@ -821,14 +822,33 @@
                 desiredList.removeClass('list-result');
                 desiredList.find('li').each(function (i, val) {
                     var $item = $(val);
+                    var content = $item.find('span').html();
                     $item.find('.remove-item').remove();
+                    $item.html('');
+                    $item.html(content);
                     var $checkbox = $('<input />');
                     $checkbox.prop('type', 'checkbox');
                     $checkbox.addClass('choose-this');
                     $item.prepend($checkbox);
                 });
+                console.log(desiredList);
                 $('.relation-content').html(desiredList);
             }
+            //var blockType = $this.data('form-target');
+            //if (blockType != 'desired-state') {
+            //    var postureType = $this.data('posture-type');
+            //    var desiredList = $('.list-result.' + postureType + '-desired-list').clone(true);
+            //    desiredList.removeClass('list-result');
+            //    desiredList.find('li').each(function (i, val) {
+            //        var $item = $(val);
+            //        $item.find('.remove-item').remove();
+            //        var $checkbox = $('<input />');
+            //        $checkbox.prop('type', 'checkbox');
+            //        $checkbox.addClass('choose-this');
+            //        $item.prepend($checkbox);
+            //    });
+            //    $('.relation-content').html(desiredList);
+            //}
             popOverElem = $this;
         });
 

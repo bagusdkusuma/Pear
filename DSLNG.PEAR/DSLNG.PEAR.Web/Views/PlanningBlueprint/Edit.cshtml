@@ -1,13 +1,14 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.PlanningBlueprint.PlanningBlueprintViewModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Edit";
 }
 <div class="planning-blueprint-save">
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("Edit","PlanningBlueprint"))
     {
         @Html.AntiForgeryToken()
         @Html.HiddenFor(x => x.Id);
+        @Html.HiddenFor(x => x.IsReviewer);
         <div class="col-md-12">
             <div class="title">Planning Blueprint</div>
             <div>@Html.ValidationSummary(true)</div>
@@ -40,7 +41,12 @@
                     @Html.CheckBoxFor(model => model.IsActive, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.IsActive)
                 </div>
-
+                @if(Model.IsReviewer){
+                <div class="form-group form-list">
+                    <label>Reset Workflow</label>
+                    <a href="/PlanningBlueprint/ResetWorkflow" class="btn btn-default reset-workflow">Reset</a>
+                </div>
+                }
             </div>
         </div>
         <div class="col-md-12 artifact-designer-btns">
@@ -68,6 +74,21 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
+        $(document).on('click', '.reset-workflow', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var $form = $('<form />');
+            $form.attr('action', $this.attr('href'));
+            $form.attr('method', 'POST');
+            if (confirm("Are you sure want to reset the workflow of this planning blueprint?")) {
+                var $id = $('<input />');
+                $id.attr('type', 'hidden');
+                $id.attr('name', 'Id');
+                $id.val(@Model.Id);
+                $form.prepend($id);
+                $form.submit();
+            }
+        });
         var $economicHolder = $('.economic-indicators-holder');
         $('#economic-indicator-modal').on('show.bs.modal', function () {
             var $this = $(this);

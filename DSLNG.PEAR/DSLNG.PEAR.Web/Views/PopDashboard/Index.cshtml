@@ -18,6 +18,8 @@
             <th>Number</th>
             <th>Subtitle</th>
             <th>IsActive</th>
+            <th>Status</th>
+            <th>Pop Information</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -47,6 +49,7 @@
                             return '<input type="checkbox" class="editor-active" ' + checked + ' disabled="disabled">';
                         },
                     },
+                    { "mDataProp": "Status", "name": "Status", "className": "dt-body-left" },
                     {
                         "orderable": false,
                         "data": null,
@@ -54,6 +57,16 @@
                         "mRender": function (data, type, row) {
                             var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
                             var editLink = '@Html.ActionLink("Edit", "Popinformation", "PopDashboard", new { id = "_id_" }, null)'.replace('_id_', data.Id);
+                            return editLink;
+                        }
+                    },
+                    {
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": '',
+                        "mRender": function (data, type, row) {
+                            var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
+                            var editLink = '@Html.ActionLink("Edit", "Edit", "PopDashboard", new { id = "_id_" }, null)'.replace('_id_', data.Id);
                             return editLink;
                         }
                     }
