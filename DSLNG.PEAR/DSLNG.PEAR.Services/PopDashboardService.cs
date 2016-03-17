@@ -111,5 +111,19 @@ namespace DSLNG.PEAR.Services
                 .Include(x => x.Signatures.Select(y => y.User))
                 .FirstOrDefault().MapTo<GetPopDashboardResponse>();
         }
+
+
+        public DeletePopDashboardResponse DeletePopDashboard(int request)
+        {
+            var popDashboard = DataContext.PopDashboards.FirstOrDefault(x => x.Id == request);
+            DataContext.PopDashboards.Attach(popDashboard);
+            DataContext.PopDashboards.Remove(popDashboard);
+            DataContext.SaveChanges();
+            return new DeletePopDashboardResponse
+            {
+                IsSuccess = true,
+                Message = "Pop Dashboard has been Deleted!"
+            };
+        }
     }
 }
