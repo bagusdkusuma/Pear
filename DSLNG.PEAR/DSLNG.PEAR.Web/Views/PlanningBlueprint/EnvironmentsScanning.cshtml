@@ -914,7 +914,9 @@
 
                         var span = '<span class="popover-edit-trigger" data-toggle="popover" data-placement="bottom" data-pl data-form-target="constraint" data-id="' + data.id + '" data-es-id="@Model.Id" data-type="' + data.type + '" data-category="' + data.categoryId + '" data-ids="' + data.relationids + '">' + data.definition + '</span>'
 
-                        $('.table-constraint').append('<tr><td class="td-entity">' + relation + '</td><td class="td-definition" style="text-align:left">' + span + '<a href="#" data-id="' + data.id + '" class="constraint-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
+
+                        $('.table-constraint').append('<tr><td class="td-entity">' + '<a href="#" data-toggle="modal" ' + input + ' data-target="#envi-modal" data-id="' + data.id + '" class="btn-show-constraint">' + relation + '</a></td><td class="td-definition" style="text-align:left">' + span + '<a href="#" data-id="' + data.id + '" class="constraint-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
+
                         popOverElem.popover('hide');
 
                         $('.relation-contents').html('');
@@ -953,9 +955,20 @@
 
                         var $trigger = $that.closest('.popover').prev();
                         $row = $trigger.closest('tr');
-                        $row.remove();
+                        var $relationLink = $row.children('td:first-child');
+                        var $definitionLink = $row.children('td:nth-child(2)');
+                        var $typeLink = $row.children('td:nth-child(3)');
+                        var $categoryLink = $row.children('td:nth-child(4)');
+                        $relationLink.html('');
+                        $definitionLink.html('');
+                        $typeLink.html('');
+                        $categoryLink.html('');
+
                         var span = '<span class="popover-edit-trigger" data-toggle="popover" data-placement="bottom" data-form-target="constraint" data-id="' + data.id + '" data-es-id="@Model.Id" data-type="' + data.type + '" data-category="' + data.categoryId + '" data-ids="' + data.relationids + '">' + data.definition + '</span>'
-                        $('.table-constraint').append('<tr><td class="td-entity">' +  relation + '</td><td class="td-definition" style="text-align:left">' + span + '<a href="#" data-id="' + data.id + '" class="constraint-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
+                        $relationLink.append('<a href="#" data-toggle="modal" ' + input + ' data-target="#envi-modal" data-id="' + data.id + '" class="btn-show-constraint">' + relation + '</a>')
+                        $definitionLink.append(span + '<a href="#" data-id="' + data.id + '" class="constraint-remove-button" style="float:right"><i class="fa fa-minus"></i></a>')
+                        $typeLink.append(data.type);
+                        $categoryLink.append(data.category);
 
                         $('.relation-contents').html('');
                         $('.wrapper-relation').html('');
@@ -988,7 +1001,7 @@
                         }
                         var span = '<span class="popover-edit-trigger" data-toggle="popover" data-placement="top" data-form-target="challenge" data-id="' + data.id + '" data-es-id="@Model.Id" data-type="' + data.type + '" data-category="' + data.categoryId + '" data-ids="' + data.relationids + '">' + data.definition + '</span>'
 
-                        $('.table-challenge').append('<tr><td class="td-entity">' + ' <a href="#" data-toggle="modal" data-target="#envi-modal" data-id="' + data.id + '" class="btn-show-challenge">' + '<span>' + relation + '</span>' + '</td><td class="td-definition" style="text-align:left">' + span + '<a href="#" data-id="' + data.id + '" class="challenge-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
+                        $('.table-challenge').append('<tr><td class="td-entity">' + ' <a href="#" data-toggle="modal" data-target="#envi-modal" data-id="' + data.id + '" class="btn-show-challenge">' + relation + '</a></td><td class="td-definition" style="text-align:left">' + span + '<a href="#" data-id="' + data.id + '" class="challenge-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
                         popOverElem.popover('hide');
 
                         $('.relation-challenges').html('');
@@ -1022,13 +1035,27 @@
                             relation = relation + '<a href="#"  data-st="' + data.strengthIds + '" class="btn-show-constraint r-strength">S</a> '
                         }
 
+                        var input = [];
+                        input = input + 'data-th="' + data.threatIds + '"' + 'data-opp="' + data.opportunityIds + '"' + 'data-wk="' + data.weaknessIds + '"' + 'data-st="' + data.strengthIds + '"'
+
+
                         var $trigger = $that.closest('.popover').prev();
                         $row = $trigger.closest('tr');
-                        $row.remove();
+                        var $relationLink = $row.children('td:first-child');
+                        var $definitionLink = $row.children('td:nth-child(2)');
+                        var $typeLink = $row.children('td:nth-child(3)');
+                        var $categoryLink = $row.children('td:nth-child(4)');
+                        $relationLink.html('');
+                        $definitionLink.html('');
+                        $typeLink.html('');
+                        $categoryLink.html('');
+                        $relationLink.append()
                         var span = '<span class="popover-edit-trigger" data-toggle="popover" data-placement="top" data-form-target="challenge" data-id="' + data.id + '" data-es-id="@Model.Id" data-type="' + data.type + '" data-category="' + data.categoryId + '" data-ids="' + data.relationids + '">' + data.definition + '</span>'
 
-                        $('.table-challenge').append('<tr><td class="td-entity">' + ' <a href="#" data-toggle="modal" data-target="#envi-modal" data-id="' + data.id + '" class="btn-show-challenge">' + '<span>' + relation + '</span>' + '</td><td class="td-definition" style="text-align:left">' + span + '<a href="#" data-id="' + data.id + '" class="challenge-remove-button" style="float:right"><i class="fa fa-minus"></i></a>' + '</td><td class="td-entity">' + data.type + '</td><td class="td-entity">' + data.category + '</a></td></tr>');
-                        //popOverElem.popover('hide');
+                        $relationLink.append('<a href="#" data-toggle="modal" ' + input + ' data-target="#envi-modal" data-id="' + data.id + '" class="btn-show-constraint">' + relation + '</a>')
+                        $definitionLink.append(span + '<a href="#" data-id="' + data.id + '" class="constraint-remove-button" style="float:right"><i class="fa fa-minus"></i></a>')
+                        $typeLink.append(data.type);
+                        $categoryLink.append(data.category);
 
                         $('.relation-challenges').html('');
                         $('.wrapper-challenge').html('');
