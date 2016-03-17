@@ -814,6 +814,7 @@
             e.preventDefault();
             var $this = $(this);
             //relation-progress
+            //relation
             var blockType = $this.data('form-target');
             if (blockType != 'desired-state') {
                 var postureType = $this.data('posture-type');
@@ -821,14 +822,33 @@
                 desiredList.removeClass('list-result');
                 desiredList.find('li').each(function (i, val) {
                     var $item = $(val);
+                    var content = $item.find('span').html();
                     $item.find('.remove-item').remove();
+                    $item.html('');
+                    $item.html(content);
                     var $checkbox = $('<input />');
                     $checkbox.prop('type', 'checkbox');
                     $checkbox.addClass('choose-this');
                     $item.prepend($checkbox);
                 });
+                console.log(desiredList);
                 $('.relation-content').html(desiredList);
             }
+            //var blockType = $this.data('form-target');
+            //if (blockType != 'desired-state') {
+            //    var postureType = $this.data('posture-type');
+            //    var desiredList = $('.list-result.' + postureType + '-desired-list').clone(true);
+            //    desiredList.removeClass('list-result');
+            //    desiredList.find('li').each(function (i, val) {
+            //        var $item = $(val);
+            //        $item.find('.remove-item').remove();
+            //        var $checkbox = $('<input />');
+            //        $checkbox.prop('type', 'checkbox');
+            //        $checkbox.addClass('choose-this');
+            //        $item.prepend($checkbox);
+            //    });
+            //    $('.relation-content').html(desiredList);
+            //}
             popOverElem = $this;
         });
 
