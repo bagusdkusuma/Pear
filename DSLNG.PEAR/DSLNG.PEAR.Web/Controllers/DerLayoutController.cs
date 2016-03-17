@@ -155,14 +155,18 @@ namespace DSLNG.PEAR.Web.Controllers
 
                             break;
                         }
-
                     case "avg-ytd-key-statistic":
                         {
                             break;
                         }
-                        
+                    case "highlight":
+                        {
+                            var result = _selectService.GetHighlightTypesDropdown();
+                            editViewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                            editViewModel.HighlightId = response.Highlight.SelectOptionId;
+                            break;
+                        }
                 }
-
                 return View("EditLayoutItem", editViewModel);
             }
             else
@@ -236,7 +240,14 @@ namespace DSLNG.PEAR.Web.Controllers
                         var viewModel = new DerLayoutItemViewModel();
                         var result = _selectService.GetHighlightTypesDropdown();
                         viewModel.Highlights =
-                            result.Select(x => new SelectListItem() { Text = x.Text, Value = x.Value }).ToList();
+                            result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                        //foreach(var item in result)
+                        //{
+                        //    var sl = new SelectListItem();
+                        //    sl.Text = item.Text;
+                        //    sl.Value = item.Value;
+                        //    viewModel.Highlights.Add(sl);
+                        //}
                         return PartialView("LayoutType/_Highlight", viewModel);
                     }
                 case "alert":
@@ -287,7 +298,24 @@ namespace DSLNG.PEAR.Web.Controllers
 
             return Content("Error");
         }
-        
+
+        public ActionResult Delete(int id, string type)
+        {
+            //var request = id;
+            var response = _derService.DeleteLayoutItem(id, type);
+                        //{
+            //    case "highlight":
+            //        {
+            //            request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
+            //            response = _derService.DeleteLayoutItem(request);
+            //            break;
+            //        }
+            //}
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            return RedirectToAction("Config", new { id = response.DerLayoutId });
+        }
+
         [HttpPost]
         public ActionResult SaveLayoutItem(DerLayoutItemViewModel layoutItemViewModel)
         {
@@ -390,27 +418,27 @@ namespace DSLNG.PEAR.Web.Controllers
             return RedirectToAction("Config", new { id = layoutItemViewModel.DerLayoutId });
         }
 
-       /* private IList<DerLayoutItemViewModel.DerKpiInformationViewModel> GetAvgYytdKeyStatisticKpiInformations()
-        {
-            var list = new List<DerLayoutItemViewModel.DerKpiInformationViewModel>();
-            for (int i = 1; i <= 6; i++)
-            {
-                list.Add(new DerLayoutItemViewModel.DerKpiInformationViewModel { Position = i });
-            }
+        /* private IList<DerLayoutItemViewModel.DerKpiInformationViewModel> GetAvgYytdKeyStatisticKpiInformations()
+         {
+             var list = new List<DerLayoutItemViewModel.DerKpiInformationViewModel>();
+             for (int i = 1; i <= 6; i++)
+             {
+                 list.Add(new DerLayoutItemViewModel.DerKpiInformationViewModel { Position = i });
+             }
 
-            return list;
-        }
+             return list;
+         }
 
-        private IList<DerLayoutItemViewModel.DerKpiInformationViewModel> GetSafetyTableKpiInformations()
-        {
-            var list = new List<DerLayoutItemViewModel.DerKpiInformationViewModel>();
-            for (int i = 1; i <= 9; i++)
-            {
-                list.Add(new DerLayoutItemViewModel.DerKpiInformationViewModel { Position = i });
-            }
+         private IList<DerLayoutItemViewModel.DerKpiInformationViewModel> GetSafetyTableKpiInformations()
+         {
+             var list = new List<DerLayoutItemViewModel.DerKpiInformationViewModel>();
+             for (int i = 1; i <= 9; i++)
+             {
+                 list.Add(new DerLayoutItemViewModel.DerKpiInformationViewModel { Position = i });
+             }
 
-            return list;
-        }*/
+             return list;
+         }*/
 
         private IList<DerLayoutItemViewModel.DerKpiInformationViewModel> GetKpiInformations(int numberOfKpi)
         {

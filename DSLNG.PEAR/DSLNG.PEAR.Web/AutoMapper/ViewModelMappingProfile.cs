@@ -1001,6 +1001,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             //Der KpiInformations
             Mapper.CreateMap<DerLayoutItemViewModel.DerKpiInformationViewModel, SaveLayoutItemRequest.DerKpiInformationRequest>();
+            Mapper.CreateMap<GetDerLayoutitemResponse.KpiInformationResponse, DerLayoutItemViewModel.DerKpiInformationViewModel>();
 
             //DER original data
             Mapper.CreateMap<GetOriginalDataResponse, DisplayOriginalDataViewModel>();

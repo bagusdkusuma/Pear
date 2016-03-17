@@ -1,4 +1,4 @@
-﻿@model DSLNG.PEAR.Web.ViewModels.DerLayout.DerLayoutConfigViewModel
+﻿ @model DSLNG.PEAR.Web.ViewModels.DerLayout.DerLayoutConfigViewModel
 @{
     ViewBag.Title = "Config";
 }
@@ -891,11 +891,11 @@
                     var row11Col0 = Model.Items.FirstOrDefault(x => x.Row == 11 && x.Column == 0);
                     if (row11Col0 != null)
                     {
-                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 2, derLayoutId = Model.DerLayoutId, id = row11Col0.Id })" class="btn btn-default">Manage</a>
+                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 11, derLayoutId = Model.DerLayoutId, id = row11Col0.Id })" class="btn btn-default">Manage</a>
                     }
                     else
                     {
-                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 2, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 11, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
                     }
                 }</td>
             </tr>
@@ -1026,14 +1026,14 @@
             <tbody>
                 <tr>
                     <td colspan="3">@{
-                        var row13Col1 = Model.Items.FirstOrDefault(x => x.Row == 13 && x.Column == 1);
-                        if (row13Col1 != null)
+                        var row14Col0 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 0);
+                        if (row14Col0 != null)
                         {
-                            <a href="@Url.Action("LayoutItem", new { column = 1, row = 13, derLayoutId = Model.DerLayoutId, id = row13Col1.Id })" class="btn btn-default">Manage</a>
+                            <a href="@Url.Action("LayoutItem", new { column = 0, row = 14, derLayoutId = Model.DerLayoutId, id = row14Col0.Id })" class="btn btn-default">Manage</a>
                         }
                         else
                         {
-                            <a href="@Url.Action("LayoutItem", new { column = 1, row = 13, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                            <a href="@Url.Action("LayoutItem", new { column = 0, row = 14, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
                         }
                     }</td>
                 </tr>
@@ -1056,14 +1056,14 @@
             <tbody>
                 <tr>
                     <td colspan="5">@{
-                        var row13Col2 = Model.Items.FirstOrDefault(x => x.Row == 13 && x.Column == 2);
-                        if (row13Col2 != null)
+                        var row13Col1 = Model.Items.FirstOrDefault(x => x.Row == 13 && x.Column == 1);
+                        if (row13Col1 != null)
                         {
-                            <a href="@Url.Action("LayoutItem", new { column = 2, row = 13, derLayoutId = Model.DerLayoutId, id = row13Col2.Id })" class="btn btn-default">Manage</a>
+                            <a href="@Url.Action("LayoutItem", new { column = 1, row = 13, derLayoutId = Model.DerLayoutId, id = row13Col1.Id })" class="btn btn-default">Manage</a>
                         }
                         else
                         {
-                            <a href="@Url.Action("LayoutItem", new { column = 2, row = 2, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                            <a href="@Url.Action("LayoutItem", new { column = 1, row = 13, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
                         }
                     }</td>
                 </tr>
@@ -1077,14 +1077,14 @@
             </tr>
             <tr>
                 <td>@{
-                    var row13Col3 = Model.Items.FirstOrDefault(x => x.Row == 13 && x.Column == 3);
-                    if (row13Col3 != null)
+                    var row13Col2 = Model.Items.FirstOrDefault(x => x.Row == 13 && x.Column == 2);
+                    if (row13Col2 != null)
                     {
-                        <a href="@Url.Action("LayoutItem", new { column = 3, row = 13, derLayoutId = Model.DerLayoutId, id = row13Col3.Id })" class="btn btn-default">Manage</a>
+                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 13, derLayoutId = Model.DerLayoutId, id = row13Col2.Id })" class="btn btn-default">Manage</a>
                     }
                     else
                     {
-                        <a href="@Url.Action("LayoutItem", new { column = 3, row = 13, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 13, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
                     }
                 }</td>
             </tr>
@@ -1097,14 +1097,14 @@
             </tr>
             <tr>
                 <td>@{
-                    var row13Col4 = Model.Items.FirstOrDefault(x => x.Row == 13 && x.Column == 3);
-                    if (row13Col4 != null)
+                    var row14Col1 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 1);
+                    if (row14Col1 != null)
                     {
-                        <a href="@Url.Action("LayoutItem", new { column = 3, row = 13, derLayoutId = Model.DerLayoutId, id = row13Col4.Id })" class="btn btn-default">Manage</a>
+                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 14, derLayoutId = Model.DerLayoutId, id = row14Col1.Id })" class="btn btn-default">Manage</a>
                     }
                     else
                     {
-                        <a href="@Url.Action("LayoutItem", new { column = 3, row = 13, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 14, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
                     }
                 }</td>
             </tr>
@@ -1115,14 +1115,14 @@
             <tr>
                 <td class="der-title-underline">Market Tone:</td>
                 <td>@{
-                    var row13Col5 = Model.Items.FirstOrDefault(x => x.Row == 13 && x.Column == 5);
-                    if (row13Col5 != null)
+                    var row14Col2 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 2);
+                    if (row14Col2 != null)
                     {
-                        <a href="@Url.Action("LayoutItem", new { column = 5, row = 13, derLayoutId = Model.DerLayoutId, id = row13Col5.Id })" class="btn btn-default">Manage</a>
+                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 14, derLayoutId = Model.DerLayoutId, id = row14Col2.Id })" class="btn btn-default">Manage</a>
                     }
                     else
                     {
-                        <a href="@Url.Action("LayoutItem", new { column = 5, row = 13, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 14, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
                     }
                 }</td>
             </tr>

@@ -38,6 +38,7 @@ namespace DSLNG.PEAR.Web.ViewModels.DerLayout
 
         public class DerKpiInformationViewModel
         {
+            public int Id { get; set; }
             public int Position { get; set; }
             public int KpiId { get; set; }
             public string KpiName { get; set; }
