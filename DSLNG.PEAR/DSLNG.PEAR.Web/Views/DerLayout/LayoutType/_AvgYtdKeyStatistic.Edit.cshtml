@@ -1,10 +1,39 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.DerLayout.DerLayoutItemViewModel
 
-<table style="border: 1px solid #ffffff">
+<table>
+    @{
+        string[] label = { "Feed Gas", "MCHE Rundown", "LNG Prod", "CDS Prod", "Fuel Gas", "Loss" };
+        var a = 0;
+        for (int i = 0; i <= 6; i++)
+        {
+
+            var posIndex = Model.KpiInformations.FirstOrDefault(x => x.Position == i);
+            if (posIndex != null)
+            {
+                <tr>
+                    <td>
+                        <label>@label[i]</label>
+                    </td>
+                    <td>
+                       @Html.DropDownListFor(model => model.KpiInformations[i].KpiId, new List<SelectListItem> { new SelectListItem { Value = Model.KpiInformations[i].KpiId.ToString(), Text = Model.KpiInformations[i].KpiName } }, new { @class = "kpi-list form-control", style = "width:180px" })
+                        @Html.HiddenFor(model => model.KpiInformations[i].Position)
+                        <input type="hidden" name="KpiInformations.Index" value="@a" />
+                    </td>
+                    <td style="color:white">
+                        Is Original Data @Html.EditorFor(model => model.KpiInformations[i].IsOriginalData)
+                    </td>
+                </tr>
+            }
+            a++;
+        }
+    }
+</table>
+
+@*<table style="border: 1px solid #ffffff">
     <tr>
         @{
             var a = 0;
-            for (int i = 0; i <= 5; i++)
+            for (int i = 0; i <= 6; i++)
             {
 
                 var posIndex = Model.KpiInformations.FirstOrDefault(x => x.Position == i);
@@ -24,7 +53,7 @@
 
     <tr>
         @{
-            for (int j = 0; j <= 5; j++)
+            for (int j = 0; j <= 6; j++)
             {
 
                 var posIndex = Model.KpiInformations.FirstOrDefault(x => x.Position == j);
@@ -37,6 +66,6 @@
             }
         }
     </tr>
-</table>
+</table>*@
 
 

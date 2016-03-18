@@ -1,4 +1,4 @@
-﻿  // Common
+﻿// Common
 /*
  * Date Format 1.2.3
  * (c) 2007-2009 Steven Levithan <stevenlevithan.com>
@@ -370,7 +370,7 @@ Number.prototype.format = function (n, x) {
                     case "traffic":
                     case "pie":
                         toRemove.hourly = ['AllExistingYears'];
-                        toRemove.daily = ['CurrentHour', 'CurrentWeek', 'CurrentYear', 'DTD', 'MTD', 'YTD', 'CurrentMonth', 'YTD', 'Interval', 'SpecificMonth', 'SpecificYear','AllExistingYears'];
+                        toRemove.daily = ['CurrentHour', 'CurrentWeek', 'CurrentYear', 'DTD', 'MTD', 'YTD', 'CurrentMonth', 'YTD', 'Interval', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
                         toRemove.weekly = ['AllExistingYears'];
                         toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'CurrentYear', 'YTD', 'Interval', 'SpecificDay', 'SpecificYear', 'AllExistingYears'];
                         toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'Interval', 'SpecificDay', 'SpecificMonth', 'AllExistingYears'];
@@ -1129,7 +1129,7 @@ Number.prototype.format = function (n, x) {
                 stackTemplate.remove();
                 Pear.Artifact.Designer._setupCallbacks.area();
                 break;
-            case 'tabular': 
+            case 'tabular':
                 var $hiddenFields = $('#hidden-fields');
                 $hiddenFields.find('.row-template:not(.original)').each(function (i, val) {
                     $this = $(val);
@@ -1146,10 +1146,10 @@ Number.prototype.format = function (n, x) {
                     Pear.Artifact.Designer._kpiAutoComplete($this, false);
                     Pear.Artifact.Designer._colorPicker($this);
                     if ($this.find('.range-filter').val().indexOf('Specific') > -1) {
-                        $this.find('#range-holder').attr('style','display:block !important');
+                        $this.find('#range-holder').attr('style', 'display:block !important');
                         $this.find('.end-in-display').hide();
-                    } 
-                    if($this.find('.range-filter').val().indexOf('Interval') > -1) {
+                    }
+                    if ($this.find('.range-filter').val().indexOf('Interval') > -1) {
                         $this.find('#range-holder').attr('style', 'display:block !important');
                     }
                     artifactDesigner._setupCallbacks.tabularrow.rangeDatePicker($this);
@@ -1167,9 +1167,9 @@ Number.prototype.format = function (n, x) {
                 $hiddenFields.remove();
                 $('#general-graphic-settings').css('display', 'none');
                 $('.form-measurement').css('display', 'none');
-                
+
                 Pear.Artifact.Designer._setupCallbacks.tabular();
-                
+
 
                 break;
             case 'pie':
@@ -2585,7 +2585,7 @@ Number.prototype.format = function (n, x) {
 
     //tabular
     artifactDesigner._setupCallbacks.tabularrow = {};
-    artifactDesigner._setupCallbacks.tabularrow.rangeControl = function(context) {
+    artifactDesigner._setupCallbacks.tabularrow.rangeControl = function (context) {
         context.find('.range-filter').change(function (e) {
             e.preventDefault();
             var $this = $(this);
@@ -2635,7 +2635,7 @@ Number.prototype.format = function (n, x) {
             var $this = $(this);
             rangeFilterSetup($this.val().toLowerCase().trim());
             context.find('#range-holder').removeAttr('class');
-            
+
         });
     };
     artifactDesigner._setupCallbacks.tabularrow.specificDate = function (context) {
@@ -2646,12 +2646,12 @@ Number.prototype.format = function (n, x) {
         });
     };
     artifactDesigner._setupCallbacks.tabularrow.rangeDatePicker = function (context) {
-        
+
         context.find('.datepicker').change(function (e) {
             //console.log(this);
         });
         context.find('.periode-type').change(function (e) {
-            
+
             e.preventDefault();
             var $this = $(this);
             var clearValue = context.find('.datepicker').each(function (i, val) {
@@ -2659,7 +2659,7 @@ Number.prototype.format = function (n, x) {
                 if ($(val).data("DateTimePicker") != undefined) {
                     $(val).data("DateTimePicker").destroy();
                 }
-                
+
             });
             switch ($this.val().toLowerCase().trim()) {
                 case 'hourly':
@@ -2730,7 +2730,7 @@ Number.prototype.format = function (n, x) {
                 rowCount++;
             });
         };
-        
+
         addRow();
         removeRow();
         $('#general-graphic-settings').css('display', 'none');
@@ -2768,16 +2768,16 @@ Number.prototype.format = function (n, x) {
         var additionalField = 0;
         if (data.Tabular.Actual)
             additionalField += 1;
-        
+
         if (data.Tabular.Target)
             additionalField += 1;
-        
+
         if (data.Tabular.Remark)
             additionalField += 1;
 
         var thWidth = 50 / additionalField;
         arrWidth.push(thWidth);
-        
+
         if (data.Tabular.Actual) {
             rowHeader.append($('<th style="width:' + arrWidth[2] + '%">').html('Actual'));
             counter += 1;
@@ -2790,7 +2790,7 @@ Number.prototype.format = function (n, x) {
             rowHeader.append($('<th style="width:' + arrWidth[2] + '%">').html('Remark'));
             counter += 1;
         }
-        
+
         tHead.append(rowHeader);
         $table.append(tHead);
         for (var i in data.Tabular.Rows) {
@@ -2809,13 +2809,13 @@ Number.prototype.format = function (n, x) {
             }
             $table.append(row);
         }
-        
+
         tableScrollContainer.append(panel);
         panel.append($table);
         wrapper.append(tableScrollContainer);
-        
+
         container.html(wrapper);
-        
+
         $('.table2 tbody').perfectScrollbar();
 
         var resizeTabular = function () {
@@ -2830,7 +2830,7 @@ Number.prototype.format = function (n, x) {
         }, 500);
 
         $('.left-content-toggle').click(function () {
-            setTimeout(function() {
+            setTimeout(function () {
                 resizeTabular();
             }, 500);
 
@@ -3416,7 +3416,7 @@ Number.prototype.format = function (n, x) {
                         var next = (parseInt(i) + 1);
                         var nextExist = typeof this.points[next] !== 'undefined';
                         var prevExist = typeof this.points[prev] !== 'undefined';
-                        
+
                         //total in process
                         if (typeof this.points[i].series.stackKey !== 'undefined') {
                             if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
@@ -4432,7 +4432,7 @@ Number.prototype.format = function (n, x) {
                 paramsHolder.children('.dynamic-kpi:last-child').append(buttonAdd.clone(true));
             }
         }
-       
+
         $('.remove-kpi').click(function (e) {
             e.preventDefault();
             removeKpi($(this));
@@ -4524,7 +4524,7 @@ Number.prototype.format = function (n, x) {
                         var kpi = kpiParam.clone(true);
                         if (i == 1) {
                             kpi.addClass('dynamic-kpi');
-                           
+
                             kpi.append(buttonAdd.clone(true));
                         }
                         Pear.OutputConfig._autocomplete(kpi.find('select'));
@@ -4763,6 +4763,7 @@ Number.prototype.format = function (n, x) {
                 var href = $('.nav-tabs .active a').attr('href');
                 var s = href + '&Periode=' + encodeURIComponent(e.date.format("MM/DD/YYYY"));
                 window.location = s;
+
             });
 
             $('.monthpicker').datetimepicker({
