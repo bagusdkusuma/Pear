@@ -27,6 +27,7 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
             {
                 Stacks = new List<StackRequest>();
             }
+            public int Order { get; set; }
             public int KpiId { get; set; }
             public string Label { get; set; }
             public ValueAxis ValueAxis { get; set; }
