@@ -906,7 +906,10 @@ namespace DSLNG.PEAR.Services.AutoMapper
                   .ForMember(x => x.LayoutItem, y => y.Ignore())
                   .ForMember(x => x.Id, y => y.Ignore());
             Mapper.CreateMap<GetKpiTargetItemResponse, GetKpiValueResponse>();
+            Mapper.CreateMap<GetKpiTargetItemResponse.KpiResponse, GetKpiValueResponse.KpiResponse>();
+
             Mapper.CreateMap<GetKpiAchievementResponse, GetKpiValueResponse>();
+            Mapper.CreateMap<GetKpiAchievementResponse.KpiResponse, GetKpiValueResponse.KpiResponse>();
         }
     }
 }

@@ -590,6 +590,8 @@ namespace DSLNG.PEAR.Services
                 switch (rangeFilter)
                 {
                     case RangeFilter.CurrentDay:
+                    case RangeFilter.CurrentMonth:
+                    case RangeFilter.CurrentYear:
                     case RangeFilter.MTD:
                     case RangeFilter.YTD:
                     case RangeFilter.AllExistingYears:
@@ -623,6 +625,46 @@ namespace DSLNG.PEAR.Services
                         {
                             var kpi = DataContext.Kpis.Include(x => x.Measurement).Single(x => x.Id == kpiId);
                             var data = DataContext.KpiTargets.Include(x => x.Kpi).FirstOrDefault(x => x.Kpi.Id == kpiId && x.PeriodeType == PeriodeType.Daily && x.Periode == date);
+                            var kpiResponse = new GetKpiTargetItemResponse.KpiResponse
+                            {
+                                Id = kpi.Id,
+                                Measurement = kpi.Measurement.Name,
+                                Name = kpi.Name,
+                                Remark = kpi.Remark,
+                            };
+
+                            return new GetKpiTargetItemResponse
+                            {
+                                Value = (data != null) ? data.Value : null,
+                                Kpi = kpiResponse,
+                                IsSuccess = true
+                            };
+                        }
+
+                    case RangeFilter.CurrentMonth:
+                        {
+                            var kpi = DataContext.Kpis.Include(x => x.Measurement).Single(x => x.Id == kpiId);
+                            var data = DataContext.KpiTargets.Include(x => x.Kpi).FirstOrDefault(x => x.Kpi.Id == kpiId && x.PeriodeType == PeriodeType.Monthly && x.Periode.Month == date.Month && x.Periode.Year == date.Year);
+                            var kpiResponse = new GetKpiTargetItemResponse.KpiResponse
+                            {
+                                Id = kpi.Id,
+                                Measurement = kpi.Measurement.Name,
+                                Name = kpi.Name,
+                                Remark = kpi.Remark,
+                            };
+
+                            return new GetKpiTargetItemResponse
+                            {
+                                Value = (data != null) ? data.Value : null,
+                                Kpi = kpiResponse,
+                                IsSuccess = true
+                            };
+                        }
+
+                    case RangeFilter.CurrentYear:
+                        {
+                            var kpi = DataContext.Kpis.Include(x => x.Measurement).Single(x => x.Id == kpiId);
+                            var data = DataContext.KpiTargets.Include(x => x.Kpi).FirstOrDefault(x => x.Kpi.Id == kpiId && x.PeriodeType == PeriodeType.Yearly && x.Periode.Year == date.Year);
                             var kpiResponse = new GetKpiTargetItemResponse.KpiResponse
                             {
                                 Id = kpi.Id,

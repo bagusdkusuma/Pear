@@ -25,6 +25,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         SaveOriginalDataResponse SaveOriginalData(SaveOriginalDataRequest request);
         GetDafwcDataResponse GetDafwcData(int id, DateTime date);
         DeleteDerLayoutItemResponse DeleteLayoutItem(int id, string type );
+        BaseResponse DeleteLayout(int id);
         GetKpiValueResponse GetKpiValue(GetKpiValueRequest request);
     }
 

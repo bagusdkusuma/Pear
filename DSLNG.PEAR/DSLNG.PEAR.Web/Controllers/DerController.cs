@@ -467,7 +467,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     {
                         var viewModel = new DisplayJobPmtsViewModel();
 
-                        for (int i = 0; i <= 2; i++)
+                        for (int i = 0; i <= 5; i++)
                         {
                             var jobPmtsViewModel = new DisplayJobPmtsViewModel.JobPmtsViewModel();
                             var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
@@ -477,22 +477,29 @@ namespace DSLNG.PEAR.Web.Controllers
                             if (item.Kpi != null)
                             {
                                 var request = new GetKpiValueRequest();
+                                request.KpiId = item.Kpi.Id;
                                 request.ConfigType = item.ConfigType;
                                 request.Periode = date;
                                 request.RangeFilter = RangeFilter.CurrentDay;
                                 var daily = _derService.GetKpiValue(request);
                                 jobPmtsViewModel.KpiName = item.Kpi.Name;
-                                jobPmtsViewModel.Daily = daily.Value.HasValue ? string.Format(@"{0} {1}", daily.Value.ToString(), item.Kpi.MeasurementName) : "n/a";
+                                jobPmtsViewModel.Measurement = item.Kpi.MeasurementName;
+                                jobPmtsViewModel.Daily = daily.Value.HasValue ? daily.Value.ToString() : "n/a";
 
-                                request.RangeFilter = RangeFilter.MTD;
+                                request.RangeFilter = i < 2 ? RangeFilter.MTD : RangeFilter.CurrentMonth;
                                 var mtd = _derService.GetKpiValue(request);
-                                jobPmtsViewModel.KpiName = item.Kpi.Name;
-                                jobPmtsViewModel.Mtd = mtd.Value.HasValue ? string.Format(@"{0} {1}", mtd.Value.ToString(), item.Kpi.MeasurementName) : "n/a";
+                                jobPmtsViewModel.Mtd = mtd.Value.HasValue ? mtd.Value.ToString() : "n/a";
 
-                                request.RangeFilter = RangeFilter.YTD;
+                                request.RangeFilter = i < 2 ? RangeFilter.YTD : RangeFilter.CurrentYear;
                                 var ytd = _derService.GetKpiValue(request);
-                                jobPmtsViewModel.KpiName = item.Kpi.Name;
-                                jobPmtsViewModel.Ytd = ytd.Value.HasValue ? string.Format(@"{0} {1}", ytd.Value.ToString(), item.Kpi.MeasurementName) : "n/a";
+                                jobPmtsViewModel.Ytd = ytd.Value.HasValue ? ytd.Value.ToString() : "n/a";
+
+                                
+                                /*double dailyValue = (daily.Value.HasValue) ? daily.Value.Value : 0;
+                                double mtdValue = (mtd.Value.HasValue) ? mtd.Value.Value : 0;
+                                double ytdValue = (ytd.Value.HasValue) ? ytd.Value.Value : 0;*/
+
+
                             }
 
                             viewModel.JobPmtsViewModels.Add(jobPmtsViewModel);

@@ -134,7 +134,7 @@ namespace DSLNG.PEAR.Services
                 }
                 else
                 {
-                    DataContext.DerLayouts.Add(new DerLayout() { IsActive = request.IsActive, Title = request.Title });
+                    DataContext.DerLayouts.Add(new DerLayout() { IsActive = request.IsActive, Title = request.Title, IsDeleted = false });
                 }
 
                 DataContext.SaveChanges();
@@ -151,7 +151,7 @@ namespace DSLNG.PEAR.Services
 
         public GetDerLayoutsResponse GetDerLayouts()
         {
-            var derLayouts = DataContext.DerLayouts.ToList();
+            var derLayouts = DataContext.DerLayouts.Where(x => x.IsDeleted == false).ToList();
             return new GetDerLayoutsResponse
             {
                 IsSuccess = true,
@@ -163,6 +163,47 @@ namespace DSLNG.PEAR.Services
                 }).ToList()
             };
         }
+
+        public BaseResponse DeleteLayout(int id)
+        {
+            var response = new BaseResponse();
+            //var derLayoutItems = new List<DerLayoutItem>();
+            //var res = new DeleteDerLayoutItemResponse();
+            try
+            {
+                var derLayout = DataContext.DerLayouts
+                .Include(x => x.Items)
+                .Single(x => x.Id == id);
+                derLayout.IsDeleted = true;
+                DataContext.Entry(derLayout).State = EntityState.Modified;
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+            }
+            catch (Exception exception)
+            {
+                response.Message = exception.Message;
+            }
+            //derLayoutItems = derLayout.Items.ToList();
+            //foreach(var item in derLayoutItems)
+            //{
+            //    res = DeleteLayoutItem(id, item.Type);
+            //    if(res.Message != null)
+            //    {
+            //        break;
+            //    }
+            //};
+            //if (res.Message == null)
+            //{
+            //    DataContext.DerLayouts.Remove(derLayout);
+            //    DataContext.SaveChanges();
+            //} else
+            //{
+            //    response.Message = res.Message;
+            //}
+
+            return response;
+        }
+
 
         public GetDerLayoutitemsResponse GetDerLayoutItems(int derLayoutId)
         {
@@ -312,6 +353,9 @@ namespace DSLNG.PEAR.Services
                         break;
                     }
                 case "avg-ytd-key-statistic":
+                case "safety":
+                case "lng-and-cds":
+                case "security":
                     {
                         try
                         {

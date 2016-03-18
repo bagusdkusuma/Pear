@@ -8,11 +8,17 @@
 
 </style>
 
-<h2>Display</h2> <a href="@Url.Action("OriginalData", new {id = Model.Id, currentDate = "02/18/2016"})">Original Data</a>
-<div class="form-group form-list">
-    <label for="StartInDisplay">Start</label>
-    <input id="currentDate" class="form-control datepicker" type="text" value="@Model.Today">
-    <span class="field-validation-valid" data-valmsg-for="StartInDisplay" data-valmsg-replace="true"></span>
+<h2>Display</h2>
+<a href="@Url.Action("OriginalData", new { id = Model.Id, currentDate = "02/18/2016" })">Original Data</a>
+<div class="row der-display" style="margin-bottom: 40px">
+    <div class="col-sm-12">
+        <form class="form-inline">
+            <div class="form-group form-list">
+                <label for="GraphicName">Date</label>
+                <input id="currentDate" class="form-control datepicker" type="text" value="@Model.Today">
+            </div>
+        </form>
+    </div>
 </div>
 <div class="container-fluid">
     <div class="row der-row">
@@ -76,7 +82,7 @@
     <div class="row der-row">
         <p class="der-table-title">QHSSE & PROCESS SAFETY MANAGEMENT</p>
         <div class="col-md-5 no-padding">
-             @{
+            @{
                 var row2Col0 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 0);
                 if (row2Col0 != null)
                 {
@@ -409,7 +415,7 @@
         <p class="der-table-title" style="margin-bottom: 5px">COMMERCIAL OPERATION & MAINTENANCE PERFORMANCE</p>
         <p class="der-table-subtitle1" style="margin: 0 0 1px;">FEED GAS TO PLANT</p>
         <div class="col-md-6" style="padding: 0px 0px">
-             @{
+            @{
                 var row5Col0 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 0);
                 if (row5Col0 != null)
                 {
@@ -1300,7 +1306,7 @@
                     url: that.attr('data-url'),
                     data: { currentDate: currentDate },
                     success: function (data) {
-                        
+
                         if (data.GraphicType !== undefined) {
                             var callback = window.Pear.Artifact.Designer._previewCallbacks;
                             callback[data.GraphicType](data, that);

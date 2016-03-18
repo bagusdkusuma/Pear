@@ -21,9 +21,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Der.Display
             public string Daily { get; set; }
             public string Mtd { get; set; }
             public string Ytd { get; set; }
-            public string PercentageDaily { get; set; }
-            public string PercentageMonthly { get; set; }
-            public string PercentageYearly { get; set; }
+            public string Measurement { get; set; }
         }
     }
 }

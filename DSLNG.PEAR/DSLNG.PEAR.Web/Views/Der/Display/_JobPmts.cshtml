@@ -1,4 +1,22 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayJobPmtsViewModel
+
+@helper GetPercentage(string actual, string target, string measurement) {
+    double actualDouble;
+    bool isActualParsed = double.TryParse(actual, out actualDouble);
+
+    double targetDouble;
+    bool isTargetParsed = double.TryParse(target, out targetDouble);
+    
+    if (isActualParsed && isTargetParsed)
+    {
+        var percentage = actualDouble / targetDouble * 100;
+        var x = string.Format("{0}% of {1} {2}", percentage, target, measurement);
+        @x
+    }
+    else
+    {
+    }
+}
 <table class="der-table all-border">
     <thead>
         <tr>
@@ -14,6 +32,9 @@
         var pos0 = Model.JobPmtsViewModels.Single(x => x.Position == 0);
         var pos1 = Model.JobPmtsViewModels.Single(x => x.Position == 1);
         var pos2 = Model.JobPmtsViewModels.Single(x => x.Position == 2);
+        var pos3 = Model.JobPmtsViewModels.Single(x => x.Position == 3);
+        var pos4 = Model.JobPmtsViewModels.Single(x => x.Position == 4);
+        var pos5 = Model.JobPmtsViewModels.Single(x => x.Position == 5);
         <tbody>
             <tr>
                 <td>@pos0.Daily</td>
@@ -29,13 +50,11 @@
                 <td>@pos1.Ytd</td>
             </tr>
             <tr>
-                <td colspan="2">134% of DCQ 277,750 mmbtu</td>
-                <td colspan="2">92% of MGN 8,610 bbtu</td>
-                <td colspan="2">8% of ADP 101.6 TBtu</td>
+                <td colspan="2">@GetPercentage(pos0.Daily, pos3.Daily, pos0.Measurement)</td>
+                <td colspan="2">@GetPercentage(pos1.Mtd, pos4.Mtd, pos1.Measurement)</td>
+                <td colspan="2">@GetPercentage(pos2.Ytd, pos5.Ytd, pos2.Measurement)</td>
             </tr>
         </tbody>
-        
-        
     }
 
 </table>
