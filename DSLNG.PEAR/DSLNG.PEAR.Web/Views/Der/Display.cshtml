@@ -183,30 +183,6 @@
                 </div>
             </div>
         </div>
-        @*<div class="col-md-2 no-padding">
-                <table class="der-table der-dummy" style="min-height: 161px">
-                    <thead>
-                        <tr>
-                            <th colspan="2" style="background-color: rgb(183,222,232); width: 33.3%">PROCESS UPSET / ANOMALY  / CONDITION</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>BOG compressor tripped LT 13:40hrs (approx. 1 hrs) due to LAHH signal, investigation was ongoing.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="col-md-2 no-padding">
-                @{
-                    var row3Col2 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 2);
-                    if (row3Col2 != null)
-                    {
-                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row3Col2.Id })" class="layout-item"></div>
-                    }
-                }
-            </div>*@
     </div>
     <div class="row der-row">
         <div class="col-md-6 no-padding security-remark">
@@ -724,95 +700,7 @@
                 </tbody>
             </table>
         </div>
-        @*<div class="col-md-6" style="padding:0px 0px">
-            <table class="der-table">
-            <thead>
-            <tr>
-            <th>
-            NEXT LOADING SCHEDULE
-            </th>
-            <th>
-            Vessel
-            (capacity)
-            </th>
-            <th>
-            ETA
-            </th>
-            <th>
-            ETD
-            </th>
-            <th>
-            Cargo#
-            </th>
-            <th>
-            Remarks
-            </th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-            <td>
-            LNG
-            </td>
-            <td>
-            Maleo (125,000m3)
-            </td>
-            <td>
-            20/01/2016 (arv)
-            </td>
-            <td>
-            23/01/2016 (dep)
-            </td>
-            <td>
-            3rd
-            </td>
-            <td>
-            ADP/QE/DES at Oita Terminal, loading completed at LT13:00hrs, final COB: 125,987.237m3, sailed off at LT:17:30hrs
-            </td>
-            </tr>
-            <tr>
-            <td>
-            CDS
-            </td>
-            <td>
-            Arin-8 (54,750bbl)
-            </td>
-            <td>
-            20-Jan-16 (arv)
-            </td>
-            <td>
-            TBA
-            </td>
-            <td>
-            9th
-            </td>
-            <td>
-            PT Titis Sampurna, loading in progress
-            </td>
-            </tr>
-            <tr>
-            <td>
-            LNG
-            </td>
-            <td>
-            Hyundai Utopia (125,000m3)
-            </td>
-            <td>
-            2-Feb-16
-            </td>
-            <td>
-            TBA
-            </td>
-            <td>
-            4th
-            </td>
-            <td>
-            ADP/CE/DES-Chita Terminal
-            </td>
-            </tr>
-            </tbody>
-            </table>
-            </div>*@
+        
     </div>
     <div class="row" style="font-size: 11px">
         <div class="col-md-6 no-padding">
