@@ -127,11 +127,11 @@ namespace DSLNG.PEAR.Web.Controllers
                         request.ValueAxis = ValueAxis.KpiActual;
 
                         var series = layout.Artifact.Series.Select(x => new GetCartesianChartDataRequest.SeriesRequest
-                            {
-                                Color = x.Color,
-                                KpiId = x.KpiId,
-                                Label = x.Label
-                            }).ToList();
+                        {
+                            Color = x.Color,
+                            KpiId = x.KpiId,
+                            Label = x.Label
+                        }).ToList();
                         request.Series = series;
                         var chartData = _artifactService.GetChartData(request);
 
@@ -253,10 +253,10 @@ namespace DSLNG.PEAR.Web.Controllers
                     {
                         var highlight =
                             _highlightService.GetHighlightByPeriode(new GetHighlightRequest
-                                {
-                                    Date = date,
-                                    HighlightTypeId = layout.Highlight.SelectOptionId
-                                });
+                            {
+                                Date = date,
+                                HighlightTypeId = layout.Highlight.SelectOptionId
+                            });
                         var view = RenderPartialViewToString("Display/_Highlight", highlight);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
@@ -266,10 +266,10 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "weather":
                     {
                         var weather = _weatherService.GetWeather(new GetWeatherRequest
-                            {
-                                Date = date,
-                                ByDate = true
-                            });
+                        {
+                            Date = date,
+                            ByDate = true
+                        });
 
                         var view = RenderPartialViewToString("Display/_Weather", weather);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
@@ -280,10 +280,10 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "alert":
                     {
                         var alert = _highlightService.GetHighlightByPeriode(new GetHighlightRequest
-                            {
-                                Type = "Alert",
-                                Date = date
-                            });
+                        {
+                            Type = "Alert",
+                            Date = date
+                        });
                         var view = RenderPartialViewToString("Display/_Alert", alert);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
@@ -484,17 +484,17 @@ namespace DSLNG.PEAR.Web.Controllers
                                 var daily = _derService.GetKpiValue(request);
                                 jobPmtsViewModel.KpiName = item.Kpi.Name;
                                 jobPmtsViewModel.Measurement = item.Kpi.MeasurementName;
-                                jobPmtsViewModel.Daily = daily.Value.HasValue ? daily.Value.ToString() : "n/a";
+                                jobPmtsViewModel.Daily = daily.Value.HasValue ? daily.Value.Value.ToString() : "n/a";
 
                                 request.RangeFilter = i < 2 ? RangeFilter.MTD : RangeFilter.CurrentMonth;
                                 var mtd = _derService.GetKpiValue(request);
-                                jobPmtsViewModel.Mtd = mtd.Value.HasValue ? mtd.Value.ToString() : "n/a";
+                                jobPmtsViewModel.Mtd = mtd.Value.HasValue ? mtd.Value.Value.ToString() : "n/a";
 
                                 request.RangeFilter = i < 2 ? RangeFilter.YTD : RangeFilter.CurrentYear;
                                 var ytd = _derService.GetKpiValue(request);
-                                jobPmtsViewModel.Ytd = ytd.Value.HasValue ? ytd.Value.ToString() : "n/a";
+                                jobPmtsViewModel.Ytd = ytd.Value.HasValue ? ytd.Value.Value.ToString() : "n/a";
 
-                                
+
                                 /*double dailyValue = (daily.Value.HasValue) ? daily.Value.Value : 0;
                                 double mtdValue = (mtd.Value.HasValue) ? mtd.Value.Value : 0;
                                 double ytdValue = (ytd.Value.HasValue) ? ytd.Value.Value : 0;*/
@@ -510,6 +510,40 @@ namespace DSLNG.PEAR.Web.Controllers
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
                 #endregion
+                #region total feed gas
+                case "total-feed-gas":
+                    {
+                        var viewModel = new DisplayTotalFeedGasViewModel();
+                        for (int i = 0; i <= 3; i++)
+                        {
+                            var totalFeedGasViewModel = new DisplayTotalFeedGasViewModel.TotalFeedGasViewModel();
+                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
+                                      new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
+                            totalFeedGasViewModel.Position = item.Position;
+                            if (item.Kpi != null)
+                            {
+                                var request = new GetKpiValueRequest();
+                                request.ConfigType = item.ConfigType;
+                                request.KpiId = item.Kpi.Id;
+                                request.Periode = date;
+                                request.RangeFilter = RangeFilter.CurrentDay;
+                                var daily = _derService.GetKpiValue(request);
+                                totalFeedGasViewModel.Daily = daily.Value.HasValue ? daily.Value.Value.ToString() : "n/a";
+                                request.RangeFilter = RangeFilter.MTD;
+                                var mtd = _derService.GetKpiValue(request);
+                                totalFeedGasViewModel.Mtd = mtd.Value.HasValue ? daily.Value.Value.ToString() : "n/a";
+                                request.RangeFilter = RangeFilter.YTD;
+                                var ytd = _derService.GetKpiValue(request);
+                                totalFeedGasViewModel.Ytd = ytd.Value.HasValue ? ytd.Value.Value.ToString() : "n/a";
+                            }
+                            viewModel.TotalFeedGasViewModels.Add(totalFeedGasViewModel);
+                        }
+                        var view = RenderPartialViewToString("Display/_TotalFeedGas", viewModel);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+                    #endregion
+
             }
             return Content("Switch case does not matching");
         }

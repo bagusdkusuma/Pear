@@ -290,6 +290,8 @@ namespace DSLNG.PEAR.Services
                     new Dropdown {Text = "LNG And CDS Table", Value = "lng-and-cds"},
                     new Dropdown {Text = "DAFWC and LOPC", Value = "dafwc"},
                     new Dropdown {Text = "JOB PMTS", Value = "job-pmts"},
+                    new Dropdown {Text = "TOTAL FEED GAS", Value= "total-feed-gas" },
+                    new Dropdown {Text = "Table Tank", Value = "table-tank" }
                 };
         }
 

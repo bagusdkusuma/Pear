@@ -440,6 +440,7 @@ namespace DSLNG.PEAR.Services
                 case "lng-and-cds":
                 case "security":
                 case "job-pmts":
+                case "total-feed-gas":
                     {
                         baseResponse = request.Id > 0 ? UpdateKpiInformations(request) : SaveKpiInformations(request);
                         break;

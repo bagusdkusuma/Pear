@@ -64,15 +64,16 @@
                 case 'lng-and-cds':
                 case 'security':
                 case 'job-pmts':
+                case 'total-feed-gas':
                     {
                         $.ajax({
                             url: '@Url.Action("LayoutSetting", "DerLayout", new { type = "_type_" })'.replace('_type_', that.val()),
-                             success: function (data) {
-                                 $('.layout-type-area').html(data);
-                                 window.Pear.Artifact.Designer._kpiAutoComplete($('.layout-type-area'));
-                             }
-                         });
-                        
+                            success: function (data) {
+                                $('.layout-type-area').html(data);
+                                window.Pear.Artifact.Designer._kpiAutoComplete($('.layout-type-area'));
+                            }
+                        });
+
                         break;
                     }
                 case 'dafwc':

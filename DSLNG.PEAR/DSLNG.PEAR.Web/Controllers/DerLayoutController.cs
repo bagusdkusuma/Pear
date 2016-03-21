@@ -328,6 +328,12 @@ namespace DSLNG.PEAR.Web.Controllers
                         viewModel.KpiInformations = GetKpiInformations(6);
                         return PartialView("LayoutType/_JobPmts", viewModel);
                     }
+                case "total-feed-gas":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(4);
+                        return PartialView("LayoutType/_TotalFeedGas", viewModel);
+                    }
             }
 
             return Content("Error");
@@ -423,6 +429,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "job-pmts":
                 case "avg-ytd-key-statistic":
                 case "lng-and-cds":
+                case "total-feed-gas":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
