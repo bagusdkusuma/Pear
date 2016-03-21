@@ -20,5 +20,6 @@ namespace DSLNG.PEAR.Data.Entities.Der
         [DefaultValue("false")]
         public bool IsOriginalData { get; set; }
         public ConfigType ConfigType { get; set; }
+        public SelectOption SelectOption { get; set; }
     }
 }

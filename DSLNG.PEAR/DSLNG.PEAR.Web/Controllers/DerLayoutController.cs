@@ -334,6 +334,12 @@ namespace DSLNG.PEAR.Web.Controllers
                         viewModel.KpiInformations = GetKpiInformations(4);
                         return PartialView("LayoutType/_TotalFeedGas", viewModel);
                     }
+                case "weekly-maintenance":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(4);
+                        return PartialView("LayoutType/_TotalFeedGas", viewModel);
+                    }
             }
 
             return Content("Error");
