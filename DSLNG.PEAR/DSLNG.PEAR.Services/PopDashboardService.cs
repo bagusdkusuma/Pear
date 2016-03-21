@@ -72,13 +72,13 @@ namespace DSLNG.PEAR.Services
                         break;
                     case "StructureOwner":
                         data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.Status).ThenBy(x => x.IsActive)
-                            : data.OrderByDescending(x => x.Status).ThenBy(x => x.IsActive);
+                            ? data.OrderBy(x => x.StructureOwner).ThenBy(x => x.IsActive)
+                            : data.OrderByDescending(x => x.StructureOwner).ThenBy(x => x.IsActive);
                         break;
                     case "ResourceTotalCost":
                         data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.Status).ThenBy(x => x.IsActive)
-                            : data.OrderByDescending(x => x.Status).ThenBy(x => x.IsActive);
+                            ? data.OrderBy(x => x.ResourceTotalCost).ThenBy(x => x.IsActive)
+                            : data.OrderByDescending(x => x.ResourceTotalCost).ThenBy(x => x.IsActive);
                         break;
                 }
             }
