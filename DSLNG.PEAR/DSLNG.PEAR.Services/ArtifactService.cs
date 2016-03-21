@@ -941,6 +941,10 @@ namespace DSLNG.PEAR.Services
                     seriesResponse = this._getKpiEconomicSeries(request.Series, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes, false, request.AsNetbackChart);
                     break;
                 default:
+                    var i = 0;
+                    foreach (var series in request.Series) {
+                        series.Order = i++;
+                    }
                     var actualSeries = request.Series.Where(x => x.ValueAxis == ValueAxis.KpiActual).ToList();
                     var targetSeries = request.Series.Where(x => x.ValueAxis == ValueAxis.KpiTarget).ToList();
                     var economicSeries = request.Series.Where(x => x.ValueAxis == ValueAxis.KpiEconomic).ToList();
@@ -949,6 +953,7 @@ namespace DSLNG.PEAR.Services
                     var series2 = this._getKpiActualSeries(actualSeries, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes, false);
                     var series3 = this._getKpiEconomicSeries(economicSeries, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes, false, request.AsNetbackChart);
                     seriesResponse = series1.Concat(series2).Concat(series3).ToList();
+                    seriesResponse = seriesResponse.OrderBy(x => x.Order).ToList();
                     break;
 
             }
@@ -1258,7 +1263,8 @@ namespace DSLNG.PEAR.Services
                         {
                             Name = series.Label,
                             Stack = series.Label,
-                            Color = series.Color
+                            Color = series.Color,
+                            Order = series.Order
                         };
                         if (rangeFilter == RangeFilter.YTD || rangeFilter == RangeFilter.DTD || rangeFilter == RangeFilter.MTD)
                         {
@@ -1300,7 +1306,8 @@ namespace DSLNG.PEAR.Services
                             {
                                 Name = "Previous Accumulation",
                                 Color = string.IsNullOrEmpty(series.PreviousColor) ? "#004071" : series.PreviousColor,
-                                Stack = series.Label
+                                Stack = series.Label,
+                                Order = series.Order
                             };
                             for (var i = 0; i < aSeries.Data.Count; i++)
                             {
@@ -1320,7 +1327,8 @@ namespace DSLNG.PEAR.Services
                         var aSeries = new GetCartesianChartDataResponse.SeriesResponse
                         {
                             Name = series.Label,
-                            Color = series.Color
+                            Color = series.Color,
+                            Order = series.Order
                         };
                         if (comparison)
                         {
@@ -1365,6 +1373,7 @@ namespace DSLNG.PEAR.Services
                             {
                                 Name = "Previous Accumulation",
                                 Color = string.IsNullOrEmpty(series.PreviousColor) ? "#004071" : series.PreviousColor,
+                                Order = series.Order
                             };
                             if (comparison)
                             {
@@ -1431,7 +1440,8 @@ namespace DSLNG.PEAR.Services
                             {
                                 Name = stack.Label,
                                 Stack = series.Label,
-                                Color = stack.Color
+                                Color = stack.Color,
+                                Order = series.Order
                             };
                             if (rangeFilter == RangeFilter.YTD || rangeFilter == RangeFilter.DTD || rangeFilter == RangeFilter.MTD)
                             {
@@ -1473,7 +1483,8 @@ namespace DSLNG.PEAR.Services
                             var aSeries = new GetCartesianChartDataResponse.SeriesResponse
                             {
                                 Name = stack.Label,
-                                Color = stack.Color
+                                Color = stack.Color,
+                                Order = series.Order
                             };
                             if (comparison)
                             {
@@ -1589,7 +1600,8 @@ namespace DSLNG.PEAR.Services
                         {
                             Name = series.Label,
                             Stack = series.Label,
-                            Color = series.Color
+                            Color = series.Color,
+                            Order = series.Order
                         };
                         if (asNetbackChart)
                         {
@@ -1667,7 +1679,8 @@ namespace DSLNG.PEAR.Services
                             {
                                 Name = "Previous Accumulation",
                                 Color = string.IsNullOrEmpty(series.PreviousColor) ? "#004071" : series.PreviousColor,
-                                Stack = series.Label
+                                Stack = series.Label,
+                                Order = series.Order
                             };
                             for (var i = 0; i < aSeries.Data.Count; i++)
                             {
@@ -1700,7 +1713,8 @@ namespace DSLNG.PEAR.Services
                         var aSeries = new GetCartesianChartDataResponse.SeriesResponse
                         {
                             Name = series.Label,
-                            Color = series.Color
+                            Color = series.Color,
+                            Order = series.Order
                         };
                         if (comparison)
                         {
@@ -1745,6 +1759,7 @@ namespace DSLNG.PEAR.Services
                             {
                                 Name = "Previous Accumulation",
                                 Color = string.IsNullOrEmpty(series.PreviousColor) ? "#004071" : series.PreviousColor,
+                                Order = series.Order
                             };
                             if (comparison)
                             {
@@ -1811,7 +1826,8 @@ namespace DSLNG.PEAR.Services
                             {
                                 Name = stack.Label,
                                 Stack = series.Label,
-                                Color = stack.Color
+                                Color = stack.Color,
+                                Order = series.Order
                             };
                             if (rangeFilter == RangeFilter.YTD || rangeFilter == RangeFilter.DTD || rangeFilter == RangeFilter.MTD)
                             {
@@ -1853,7 +1869,8 @@ namespace DSLNG.PEAR.Services
                             var aSeries = new GetCartesianChartDataResponse.SeriesResponse
                             {
                                 Name = stack.Label,
-                                Color = stack.Color
+                                Color = stack.Color,
+                                Order = series.Order
                             };
                             if (comparison)
                             {
@@ -1954,7 +1971,8 @@ namespace DSLNG.PEAR.Services
                         {
                             Name = series.Label,
                             Stack = series.Label,
-                            Color = series.Color
+                            Color = series.Color,
+                            Order = series.Order
                         };
                         if (rangeFilter == RangeFilter.YTD || rangeFilter == RangeFilter.DTD || rangeFilter == RangeFilter.MTD)
                         {
@@ -1994,7 +2012,8 @@ namespace DSLNG.PEAR.Services
                         {
                             Name = "Previous Accumulation",
                             Color = string.IsNullOrEmpty(series.PreviousColor) ? "#004071" : series.PreviousColor,
-                            Stack = series.Label
+                            Stack = series.Label,
+                            Order = series.Order
                         };
                         for (var i = 0; i < aSeries.Data.Count; i++)
                         {
@@ -2013,7 +2032,8 @@ namespace DSLNG.PEAR.Services
                         var aSeries = new GetCartesianChartDataResponse.SeriesResponse
                         {
                             Name = series.Label,
-                            Color = series.Color
+                            Color = series.Color,
+                            Order = series.Order
                         };
                         if (comparison)
                         {
@@ -2056,6 +2076,7 @@ namespace DSLNG.PEAR.Services
                         {
                             Name = "Previous Accumulation",
                             Color = string.IsNullOrEmpty(series.PreviousColor) ? "#004071" : series.PreviousColor,
+                            Order = series.Order
                         };
                         if (comparison)
                         {
@@ -2095,7 +2116,8 @@ namespace DSLNG.PEAR.Services
                         var aSeries = new GetCartesianChartDataResponse.SeriesResponse
                         {
                             Name = series.Label,
-                            Color = string.IsNullOrEmpty(series.Color) ? "blue" : series.Color
+                            Color = string.IsNullOrEmpty(series.Color) ? "blue" : series.Color,
+                            Order = series.Order
                         };
                         if (comparison)
                         {
@@ -2104,7 +2126,8 @@ namespace DSLNG.PEAR.Services
                         var remainSeries = new GetCartesianChartDataResponse.SeriesResponse
                         {
                             Name = "Remain",
-                            Color = "red"
+                            Color = "red",
+                            Order = series.Order
                         };
                         if (comparison)
                         {
@@ -2113,7 +2136,8 @@ namespace DSLNG.PEAR.Services
                         var exceedSeries = new GetCartesianChartDataResponse.SeriesResponse
                         {
                             Name = "Exceed",
-                            Color = "green"
+                            Color = "green",
+                            Order = series.Order
                         };
                         if (comparison)
                         {
@@ -2239,7 +2263,8 @@ namespace DSLNG.PEAR.Services
                         var aSeries = new GetCartesianChartDataResponse.SeriesResponse
                         {
                             Name = series.Label,
-                            Color = series.Color
+                            Color = series.Color,
+                            Order = series.Order
                         };
                         if (comparison)
                         {
@@ -2284,6 +2309,7 @@ namespace DSLNG.PEAR.Services
                             {
                                 Name = "Previous Accumulation",
                                 Color = string.IsNullOrEmpty(series.PreviousColor) ? "#004071" : series.PreviousColor,
+                                Order = series.Order
                             };
                             if (comparison)
                             {
@@ -2348,7 +2374,8 @@ namespace DSLNG.PEAR.Services
                             {
                                 Name = stack.Label,
                                 Stack = series.Label,
-                                Color = stack.Color
+                                Color = stack.Color,
+                                Order = series.Order
                             };
                             if (comparison)
                             {
@@ -2394,7 +2421,8 @@ namespace DSLNG.PEAR.Services
                             var aSeries = new GetCartesianChartDataResponse.SeriesResponse
                             {
                                 Name = stack.Label,
-                                Color = stack.Color
+                                Color = stack.Color,
+                                Order = series.Order
                             };
                             if (comparison)
                             {
