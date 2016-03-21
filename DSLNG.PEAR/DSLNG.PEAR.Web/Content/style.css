@@ -2862,6 +2862,9 @@ table.kpis {
 .pop-information .pop-title h4{
     text-align: right;
 }
+.pop-information .pop-title img{
+    text-align: left;
+}
 
 .pop-information .col-md-4 {
     word-break: break-all;
@@ -3007,4 +3010,8 @@ span.popover-edit-trigger {
 table.list-result tbody > tr > td,
 table.popover-envi tbody > tr > td {
     vertical-align:top;
+}
+
+pop-information pop-title img{
+    text-align: left;
 }

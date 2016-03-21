@@ -1,6 +1,7 @@
 ﻿using DSLNG.PEAR.Data.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -22,6 +23,13 @@ namespace DSLNG.PEAR.Web.ViewModels.PopDashboard
             public string Number { get; set; }
             public string Subtitle { get; set; }
             public bool IsActive { get; set; }
+            public string DashboardObjective { get; set; }
+            public string StructureLeader { get; set; }
+            public string StructureOwner { get; set; }
+            public double ResourceTotalCost { get; set; }
+            public string ResourceCategory { get; set; }
+            public string ResourceRemakr { get; set; }
+
         }
     }
 
@@ -41,6 +49,18 @@ namespace DSLNG.PEAR.Web.ViewModels.PopDashboard
         public string Status { get; set; }
         public IList<SelectListItem> Statuses { get; set; }
         public string Attachment { get; set; }
+        [Display(Name = "Dashboard Objective")]
+        public string DashboardObjective { get; set; }
+        [Display(Name = "Leader")]
+        public string StructureLeader { get; set; }
+        [Display(Name = "Owner")]
+        public string StructureOwner { get; set; }
+        [Display(Name = "Total Cost")]
+        public double ResourceTotalCost { get; set; }
+        [Display(Name = "Category")]
+        public string ResourceCategory { get; set; }
+        [Display(Name = "Remark")]
+        public string ResourceRemark { get; set; }
     }
 
     public class GetPopDashboardViewModel
@@ -65,6 +85,14 @@ namespace DSLNG.PEAR.Web.ViewModels.PopDashboard
         public int TypeSignature { get; set; }
         public bool IsApprove { get; set; }
         public bool IsReject { get; set; }
+        public string Attachment { get; set; }
+        public string Status { get; set; }
+        public string DashboardObjective { get; set; }
+        public string StructureLeader { get; set; }
+        public string StructureOwner { get; set; }
+        public double ResourceTotalCost { get; set; }
+        public string ResourceCategory { get; set; }
+        public string ResourceRemark { get; set; }
 
         public class PopInformation
         {
