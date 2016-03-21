@@ -30,6 +30,36 @@
                     @Html.ValidationMessageFor(model => model.Subtitle)
                 </div>
                 <div class="form-group form-list">
+                    @Html.LabelFor(model => model.DashboardObjective)
+                    @Html.TextBoxFor(model => model.DashboardObjective, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.DashboardObjective)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.StructureLeader)
+                    @Html.TextBoxFor(model => model.StructureLeader, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.StructureLeader)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.StructureOwner)
+                    @Html.TextBoxFor(model => model.StructureOwner, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.StructureOwner)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.ResourceTotalCost)
+                    @Html.TextBoxFor(model => model.ResourceTotalCost, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ResourceTotalCost)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.ResourceCategory)
+                    @Html.TextBoxFor(model => model.ResourceCategory, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ResourceCategory)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.ResourceRemark)
+                    @Html.TextBoxFor(model => model.ResourceRemark, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ResourceRemark)
+                </div>
+                <div class="form-group form-list">
                     @Html.LabelFor(model => model.IsActive)
                     @Html.CheckBoxFor(model => model.IsActive, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.IsActive)
