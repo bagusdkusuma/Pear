@@ -65,6 +65,7 @@
                 case 'security':
                 case 'job-pmts':
                 case 'total-feed-gas':
+                case 'table-tank':
                     {
                         $.ajax({
                             url: '@Url.Action("LayoutSetting", "DerLayout", new { type = "_type_" })'.replace('_type_', that.val()),

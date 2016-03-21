@@ -1,4 +1,4 @@
-﻿ @model DSLNG.PEAR.Web.ViewModels.DerLayout.DerLayoutConfigViewModel
+﻿@model DSLNG.PEAR.Web.ViewModels.DerLayout.DerLayoutConfigViewModel
 @{
     ViewBag.Title = "Config";
 }
@@ -22,1116 +22,1224 @@
                     <tr>
                         <td>
                             @{
-                            var row0Col0 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 0);
-                            if (row0Col0 != null)
+                                var row0Col0 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 0);
+                                if (row0Col0 != null)
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 0, row = 0, derLayoutId = Model.DerLayoutId, id = row0Col0.Id })" class="btn btn-default">Manage</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 0, row = 0, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                }
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6 no-padding">
+            <table class="der-table" style="text-align: center">
+                <tbody>
+                    <tr>
+                        <td class="der-title-underline">Daily Highlight :</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @{
+                                var row0Col1 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 1);
+                                if (row0Col1 != null)
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 1, row = 0, derLayoutId = Model.DerLayoutId, id = row0Col1.Id })" class="btn btn-default">Manage</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 1, row = 0, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                }
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row der-row">
+        <div class="col-md-3" style="text-align:center">
+            @{
+                var row1Col0 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 0);
+                if (row1Col0 != null)
+                {
+                    <a href="@Url.Action("LayoutItem", new { column = 0, row = 1, derLayoutId = Model.DerLayoutId, id = row1Col0.Id })" class="btn btn-default">Manage</a>
+                }
+                else
+                {
+                    <a href="@Url.Action("LayoutItem", new { column = 0, row = 1, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                }
+            }
+        </div>
+        <div class="col-md-3" style="text-align:center">
+            @{
+                var row1Col1 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 1);
+                if (row1Col1 != null)
+                {
+                    <a href="@Url.Action("LayoutItem", new { column = 1, row = 1, derLayoutId = Model.DerLayoutId, id = row1Col1.Id })" class="btn btn-default">Manage</a>
+                }
+                else
+                {
+                    <a href="@Url.Action("LayoutItem", new { column = 1, row = 1, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                }
+            }
+        </div>
+        <div class="col-md-3" style="text-align:center">
+            @{
+                var row1Col2 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 2);
+                if (row1Col2 != null)
+                {
+                    <a href="@Url.Action("LayoutItem", new { column = 2, row = 1, derLayoutId = Model.DerLayoutId, id = row1Col2.Id })" class="btn btn-default">Manage</a>
+                }
+                else
+                {
+                    <a href="@Url.Action("LayoutItem", new { column = 2, row = 1, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                }
+            }
+        </div>
+        <div class="col-md-3" style="text-align:center">
+            @{
+                var row1Col3 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 3);
+                if (row1Col3 != null)
+                {
+                    <a href="@Url.Action("LayoutItem", new { column = 3, row = 1, derLayoutId = Model.DerLayoutId, id = row1Col3.Id })" class="btn btn-default">Manage</a>
+                }
+                else
+                {
+                    <a href="@Url.Action("LayoutItem", new { column = 3, row = 1, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                }
+            }
+        </div>
+    </div>
+    <div class="row der-row">
+        <p class="der-table-title">QHSSE & PROCESS SAFETY MANAGEMENT</p>
+        <div class="col-md-5 no-padding">
+            <table class="der-table" style="text-align:center">
+                <tr>
+                    <td>
+                        @{
+                            var row2Col0 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 0);
+                            if (row2Col0 != null)
                             {
-                                <a href="@Url.Action("LayoutItem", new { column = 0, row = 0, derLayoutId = Model.DerLayoutId, id = row0Col0.Id })" class="btn btn-default">Manage</a>
+                                <a href="@Url.Action("LayoutItem", new { column = 0, row = 2, derLayoutId = Model.DerLayoutId, id = row2Col0.Id })" class="btn btn-default">Manage</a>
                             }
                             else
                             {
-                                <a href="@Url.Action("LayoutItem", new { column = 0, row = 0, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                <a href="@Url.Action("LayoutItem", new { column = 0, row = 2, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
                             }
                         }
                     </td>
                 </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="col-md-6 no-padding">
-        <table class="der-table" style="text-align: center">
-            <tbody>
+            </table>
+        </div>
+        <div class="col-md-3 no-padding">
+            <table class="der-table" style="text-align:center">
                 <tr>
-                    <td class="der-title-underline">Daily Highlight :</td>
+                    <td>
+                        @{
+                            var row2Col1 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 1);
+                            if (row2Col1 != null)
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 1, row = 2, derLayoutId = Model.DerLayoutId, id = row2Col1.Id })" class="btn btn-default">Manage</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 1, row = 2, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                            }
+                        }
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-4 no-padding">
+            <table class="der-table" style="text-align:center">
+                <tr>
+                    <td>
+                        @{
+                            var row2Col2 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 2);
+                            if (row2Col2 != null)
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 2, row = 2, derLayoutId = Model.DerLayoutId, id = row2Col2.Id })" class="btn btn-default">Manage</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 2, row = 2, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                            }
+                        }
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row der-row">
+        <div class="col-md-5 no-padding">
+            <table class="der-table" style="height:104px">
+                <tr>
+                    <th style="background-color: rgb(183,222,232)">KPI</th>
+                    <th style="background-color: rgb(184,204,228)">ACT 24H</th>
+                    <th style="background-color: rgb(184,204,228)">MTD</th>
+                    <th style="background-color: rgb(184,204,228)">YTD</th>
+                    <th style="background-color: rgb(184,204,228)">Annual-Target</th>
+                    <th style="background-color: rgb(184,204,228)">ITD</th>
                 </tr>
                 <tr>
-                    <td>@{
-                        var row0Col1 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 1);
-                        if (row0Col1 != null)
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 1, row = 0, derLayoutId = Model.DerLayoutId, id = row0Col1.Id })" class="btn btn-default">Manage</a>
+                    <td colspan="6">
+                        @{
+                            var row3Col0 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 0);
+                            if (row3Col0 != null)
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 0, row = 3, derLayoutId = Model.DerLayoutId, id = row3Col0.Id })" class="btn btn-default">Manage</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 0, row = 3, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                            }
                         }
-                        else
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 1, row = 0, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                        }
-                    }</td>
+                    </td>
                 </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-<div class="row der-row">
-    <div class="col-md-3" style="text-align:center">
-        @{
-            var row1Col0 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 0);
-            if (row1Col0 != null)
-            {
-                <a href="@Url.Action("LayoutItem", new { column = 0, row = 1, derLayoutId = Model.DerLayoutId, id = row1Col0.Id })" class="btn btn-default">Manage</a>
-            }
-            else
-            {
-                <a href="@Url.Action("LayoutItem", new { column = 0, row = 1, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-            }
-        }
-    </div>
-    <div class="col-md-3" style="text-align:center">
-        @{
-            var row1Col1 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 1);
-            if (row1Col1 != null)
-            {
-                <a href="@Url.Action("LayoutItem", new { column = 1, row = 1, derLayoutId = Model.DerLayoutId, id = row1Col1.Id })" class="btn btn-default">Manage</a>
-            }
-            else
-            {
-                <a href="@Url.Action("LayoutItem", new { column = 1, row = 1, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-            }
-        }
-    </div>
-    <div class="col-md-3" style="text-align:center">
-        @{
-            var row1Col2 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 2);
-            if (row1Col2 != null)
-            {
-                <a href="@Url.Action("LayoutItem", new { column = 2, row = 1, derLayoutId = Model.DerLayoutId, id = row1Col2.Id })" class="btn btn-default">Manage</a>
-            }
-            else
-            {
-                <a href="@Url.Action("LayoutItem", new { column = 2, row = 1, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-            }
-        }
-    </div>
-    <div class="col-md-3" style="text-align:center">
-        @{
-            var row1Col3 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 3);
-            if (row1Col3 != null)
-            {
-                <a href="@Url.Action("LayoutItem", new { column = 3, row = 1, derLayoutId = Model.DerLayoutId, id = row1Col3.Id })" class="btn btn-default">Manage</a>
-            }
-            else
-            {
-                <a href="@Url.Action("LayoutItem", new { column = 3, row = 1, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-            }
-        }
-    </div>
-</div>
-<div class="row der-row">
-    <p class="der-table-title">QHSSE & PROCESS SAFETY MANAGEMENT</p>
-    <div class="col-md-5 no-padding">
-        <table class="der-table" style="text-align:center">
-            <tr>
-                <td>@{
-                    var row2Col0 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 0);
-                    if (row2Col0 != null)
-                    {
-                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 2, derLayoutId = Model.DerLayoutId, id = row2Col0.Id })" class="btn btn-default">Manage</a>
-                    }
-                    else
-                    {
-                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 2, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                    }
-                }</td>
-            </tr>
-        </table>
-    </div>
-    <div class="col-md-3 no-padding">
-        <table class="der-table" style="text-align:center">
-            <tr>
-                <td>@{
-                    var row2Col1 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 1);
-                    if (row2Col1 != null)
-                    {
-                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 2, derLayoutId = Model.DerLayoutId, id = row2Col1.Id })" class="btn btn-default">Manage</a>
-                    }
-                    else
-                    {
-                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 2, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                    }
-                }</td>
-            </tr>
-        </table>
-    </div>
-    <div class="col-md-4 no-padding">
-        <table class="der-table" style="text-align:center">
-            <tr>
-                <td>@{
-                    var row2Col2 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 2);
-                    if (row2Col2 != null)
-                    {
-                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 2, derLayoutId = Model.DerLayoutId, id = row2Col2.Id })" class="btn btn-default">Manage</a>
-                    }
-                    else
-                    {
-                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 2, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                    }
-                }</td>
-            </tr>
-        </table>
-    </div>
-</div>
-<div class="row der-row">
-    <div class="col-md-5 no-padding">
-        <table class="der-table" style="height:104px">
-            <tr>
-                <th style="background-color: rgb(183,222,232)">KPI</th>
-                <th style="background-color: rgb(184,204,228)">ACT 24H</th>
-                <th style="background-color: rgb(184,204,228)">MTD</th>
-                <th style="background-color: rgb(184,204,228)">YTD</th>
-                <th style="background-color: rgb(184,204,228)">Annual-Target</th>
-                <th style="background-color: rgb(184,204,228)">ITD</th>
-            </tr>
-            <tr>
-                <td colspan="6">@{
-                    var row3Col0 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 0);
-                    if (row3Col0 != null)
-                    {
-                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 3, derLayoutId = Model.DerLayoutId, id = row3Col0.Id })" class="btn btn-default">Manage</a>
-                    }
-                    else
-                    {
-                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 3, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                    }
-                }</td>
-            </tr>
-        </table>
-    </div>
-    <div class="col-md-3 no-padding">
-        <table class="der-table">
-            <thead>
-                <tr>
-                    <th class="der-bg-blue-1">QHSE & PSM Remark</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>@{
-                        var row3Col1 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 1);
-                        if (row3Col1 != null)
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 1, row = 3, derLayoutId = Model.DerLayoutId, id = row3Col1.Id })" class="btn btn-default">Manage</a>
-                        }
-                        else
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 1, row = 3, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                        }
-                    }</td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="der-table ">
-            <thead>
-                <tr>
-                    <th class="der-bg-blue-1">WEEKLY ALARM MANAGEMENT SYSTEM (28 Dec-4 Jan)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>@{
-                        var row3Col2 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 2);
-                        if (row3Col2 != null)
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 2, row = 3, derLayoutId = Model.DerLayoutId, id = row3Col2.Id })" class="btn btn-default">Manage</a>
-                        }
-                        else
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 2, row = 3, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                        }
-                    }</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="col-md-4 no-padding">
-        <p class="der-bg-blue-1" style="border:1px solid black;text-align:center;margin:0 0 1px">PROCESS UPSET / ANOMALY  / CONDITION</p>
-        <div class="row der-row" style="margin-left:0;width:100%">
-            <div class="col-md-6 no-padding">
-                <table class="der-table " style="height:86px">
-                    <tbody>
-                        <tr>
-                            <td>@{
-                                var row3Col3 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 3);
-                                if (row3Col3 != null)
+            </table>
+        </div>
+        <div class="col-md-3 no-padding">
+            <table class="der-table">
+                <thead>
+                    <tr>
+                        <th class="der-bg-blue-1">QHSE & PSM Remark</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            @{
+                                var row3Col1 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 1);
+                                if (row3Col1 != null)
                                 {
-                                    <a href="@Url.Action("LayoutItem", new { column = 3, row = 3, derLayoutId = Model.DerLayoutId, id = row3Col3.Id })" class="btn btn-default">Manage</a>
+                                    <a href="@Url.Action("LayoutItem", new { column = 1, row = 3, derLayoutId = Model.DerLayoutId, id = row3Col1.Id })" class="btn btn-default">Manage</a>
                                 }
                                 else
                                 {
-                                    <a href="@Url.Action("LayoutItem", new { column = 3, row = 3, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                    <a href="@Url.Action("LayoutItem", new { column = 1, row = 3, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
                                 }
-                            }</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-md-6 no-padding">
-                <table class="der-table " style="height:86px">
-                    <tbody>
-                        <tr>
-                            <td>@{
-                                var row3Col4 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 4);
-                                if (row3Col4 != null)
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="der-table ">
+                <thead>
+                    <tr>
+                        <th class="der-bg-blue-1">WEEKLY ALARM MANAGEMENT SYSTEM (28 Dec-4 Jan)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            @{
+                                var row3Col2 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 2);
+                                if (row3Col2 != null)
                                 {
-                                    <a href="@Url.Action("LayoutItem", new { column = 4, row = 3, derLayoutId = Model.DerLayoutId, id = row3Col4.Id })" class="btn btn-default">Manage</a>
+                                    <a href="@Url.Action("LayoutItem", new { column = 2, row = 3, derLayoutId = Model.DerLayoutId, id = row3Col2.Id })" class="btn btn-default">Manage</a>
                                 }
                                 else
                                 {
-                                    <a href="@Url.Action("LayoutItem", new { column = 4, row = 3, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                    <a href="@Url.Action("LayoutItem", new { column = 2, row = 3, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
                                 }
-                            }</td>
-                        </tr>
-                    </tbody>
-                </table>
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4 no-padding">
+            <p class="der-bg-blue-1" style="border:1px solid black;text-align:center;margin:0 0 1px">PROCESS UPSET / ANOMALY  / CONDITION</p>
+            <div class="row der-row" style="margin-left:0;width:100%">
+                <div class="col-md-6 no-padding">
+                    <table class="der-table " style="height:86px">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    @{
+                                        var row3Col3 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 3);
+                                        if (row3Col3 != null)
+                                        {
+                                            <a href="@Url.Action("LayoutItem", new { column = 3, row = 3, derLayoutId = Model.DerLayoutId, id = row3Col3.Id })" class="btn btn-default">Manage</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("LayoutItem", new { column = 3, row = 3, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-6 no-padding">
+                    <table class="der-table " style="height:86px">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    @{
+                                        var row3Col4 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 4);
+                                        if (row3Col4 != null)
+                                        {
+                                            <a href="@Url.Action("LayoutItem", new { column = 4, row = 3, derLayoutId = Model.DerLayoutId, id = row3Col4.Id })" class="btn btn-default">Manage</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("LayoutItem", new { column = 4, row = 3, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="row der-row">
-    <div class="col-md-6 no-padding security-remark">
-        <table class="der-table " style="height:51px">
-            <tbody>
+    <div class="row der-row">
+        <div class="col-md-6 no-padding security-remark">
+            <table class="der-table " style="height:51px">
+                <tbody>
+                    <tr>
+                        <td>
+                            @{
+                                var row4Col0 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 0);
+                                if (row4Col0 != null)
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 0, row = 4, derLayoutId = Model.DerLayoutId, id = row4Col0.Id })" class="btn btn-default">Manage</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 0, row = 4, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                }
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4 no-padding">
+            <table class="der-table " style="height:51px">
                 <tr>
-                    <td>@{
-                        var row4Col0 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 0);
-                        if (row4Col0 != null)
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 0, row = 4, derLayoutId = Model.DerLayoutId, id = row4Col0.Id })" class="btn btn-default">Manage</a>
-                        }
-                        else
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 0, row = 4, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                        }
-                    }</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="col-md-4 no-padding">
-        <table class="der-table " style="height:51px">
-            <tr>
-                <td class="der-bg-blue-1" style="text-align:left;width:25%">Security Incident Type (Act 24H)</td>
-                <td>@{
-                    var row4Col1 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 1);
-                    if (row4Col1 != null)
-                    {
-                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 4, derLayoutId = Model.DerLayoutId, id = row4Col1.Id })" class="btn btn-default">Manage</a>
-                    }
-                    else
-                    {
-                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 4, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                    }
-                }</td>
-            </tr>
-        </table>
-    </div>
-    <div class="col-md-2 no-padding">
-        <table class="der-table " style="min-height: 47px">
-            <tr>
-                <td class="der-bg-blue-1">Alert Condition</td>
-            </tr>
-            <tr>
-                <td>@{
-                    var row4Col2 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 2);
-                    if (row4Col2 != null)
-                    {
-                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 4, derLayoutId = Model.DerLayoutId, id = row4Col2.Id })" class="btn btn-default">Manage</a>
-                    }
-                    else
-                    {
-                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 4, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                    }
-                }</td>
-            </tr>
-        </table>
-    </div>
-</div>
-<div class="row" style="font-size: 11px">
-    <p class="der-table-title" style="margin-bottom: 5px">COMMERCIAL OPERATION & MAINTENANCE PERFORMANCE</p>
-    <p class="der-table-subtitle1" style="margin: 0 0 1px;">FEED GAS TO PLANT</p>
-    <div class="col-md-6" style="padding: 0px 0px">
-        <table class="der-table  all-border">
-            <thead>
-                <tr>
-                    <th colspan="6" class="der-bg-purple">JOB PMTS</th>
-                </tr>
-                <tr>
-                    <th colspan="2" class="der-bg-blue-4">ACTUAL 24H</th>
-                    <th colspan="2" class="der-bg-blue-4">ACTUAL MTD</th>
-                    <th colspan="2" class="der-bg-blue-4">ACTUAL YTD</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td colspan="6">@{
-                        var row5Col0 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 0);
-                        if (row5Col0 != null)
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 0, row = 5, derLayoutId = Model.DerLayoutId, id = row5Col0.Id })" class="btn btn-default">Manage</a>
-                        }
-                        else
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 0, row = 5, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                        }
-                    }</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="col-md-6" style="padding: 0px 0px">
-        <table class="der-table  all-border">
-            <thead>
-                <tr>
-                    <th colspan="6" width="75%" class="der-bg-purple">MGDP</th>
-                    <th colspan="2" width="25%" class="der-bg-green-3">HHV</th>
-                </tr>
-                <tr>
-                    <th colspan="2" class="der-bg-blue-7">ACTUAL 24H</th>
-                    <th colspan="2" class="der-bg-blue-4">ACTUAL MTD</th>
-                    <th colspan="2" class="der-bg-blue-4">ACTUAL YTD</th>
-                    <th class="der-bg-green-3">JOB PMTS</th>
-                    <th class="der-bg-green-3">MGDP</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td colspan="8">@{
-                        var row5Col1 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 1);
-                        if (row5Col1 != null)
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 1, row = 5, derLayoutId = Model.DerLayoutId, id = row5Col1.Id })" class="btn btn-default">Manage</a>
-                        }
-                        else
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 1, row = 5, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                        }
-                    }</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="col-md-4 no-padding">
-        <table class="der-table  all-border">
-            <thead>
-                <tr style="height:61px">
-                    <th class="der-bg-blue-1">
-                        TOTAL FEED GAS
-                    </th>
-                    <th class="der-bg-blue-4">
-                        ACTUAL 24H
-                    </th>
-                    <th class="der-bg-blue-4">
-                        ACTUAL MTD
-                    </th>
-                    <th class="der-bg-blue-4">
-                        ACTUAL YTD
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
+                    <td class="der-bg-blue-1" style="text-align:left;width:25%">Security Incident Type (Act 24H)</td>
                     <td>
-                        Volume
+                        @{
+                            var row4Col1 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 1);
+                            if (row4Col1 != null)
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 1, row = 4, derLayoutId = Model.DerLayoutId, id = row4Col1.Id })" class="btn btn-default">Manage</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 1, row = 4, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                            }
+                        }
                     </td>
-                    <td colspan="3" rowspan="3">@{
-                        var row6Col0 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 0);
-                        if (row6Col0 != null)
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 0, row = 6, derLayoutId = Model.DerLayoutId, id = row6Col0.Id })" class="btn btn-default">Manage</a>
-                        }
-                        else
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 0, row = 6, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                        }
-                    }</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-2 no-padding">
+            <table class="der-table " style="min-height: 47px">
+                <tr>
+                    <td class="der-bg-blue-1">Alert Condition</td>
                 </tr>
                 <tr>
                     <td>
-                        Energy
+                        @{
+                            var row4Col2 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 2);
+                            if (row4Col2 != null)
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 2, row = 4, derLayoutId = Model.DerLayoutId, id = row4Col2.Id })" class="btn btn-default">Manage</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 2, row = 4, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                            }
+                        }
                     </td>
                 </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row" style="font-size: 11px">
+        <p class="der-table-title" style="margin-bottom: 5px">COMMERCIAL OPERATION & MAINTENANCE PERFORMANCE</p>
+        <p class="der-table-subtitle1" style="margin: 0 0 1px;">FEED GAS TO PLANT</p>
+        <div class="col-md-6" style="padding: 0px 0px">
+            <table class="der-table  all-border">
+                <thead>
+                    <tr>
+                        <th colspan="6" class="der-bg-purple">JOB PMTS</th>
+                    </tr>
+                    <tr>
+                        <th colspan="2" class="der-bg-blue-4">ACTUAL 24H</th>
+                        <th colspan="2" class="der-bg-blue-4">ACTUAL MTD</th>
+                        <th colspan="2" class="der-bg-blue-4">ACTUAL YTD</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="6">
+                            @{
+                                var row5Col0 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 0);
+                                if (row5Col0 != null)
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 0, row = 5, derLayoutId = Model.DerLayoutId, id = row5Col0.Id })" class="btn btn-default">Manage</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 0, row = 5, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                }
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6" style="padding: 0px 0px">
+            <table class="der-table  all-border">
+                <thead>
+                    <tr>
+                        <th colspan="6" width="75%" class="der-bg-purple">MGDP</th>
+                        <th colspan="2" width="25%" class="der-bg-green-3">HHV</th>
+                    </tr>
+                    <tr>
+                        <th colspan="2" class="der-bg-blue-7">ACTUAL 24H</th>
+                        <th colspan="2" class="der-bg-blue-4">ACTUAL MTD</th>
+                        <th colspan="2" class="der-bg-blue-4">ACTUAL YTD</th>
+                        <th class="der-bg-green-3">JOB PMTS</th>
+                        <th class="der-bg-green-3">MGDP</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="8">
+                            @{
+                                var row5Col1 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 1);
+                                if (row5Col1 != null)
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 1, row = 5, derLayoutId = Model.DerLayoutId, id = row5Col1.Id })" class="btn btn-default">Manage</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 1, row = 5, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                }
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4 no-padding">
+            <table class="der-table  all-border">
+                <thead>
+                    <tr style="height:61px">
+                        <th class="der-bg-blue-1">
+                            TOTAL FEED GAS
+                        </th>
+                        <th class="der-bg-blue-4">
+                            ACTUAL 24H
+                        </th>
+                        <th class="der-bg-blue-4">
+                            ACTUAL MTD
+                        </th>
+                        <th class="der-bg-blue-4">
+                            ACTUAL YTD
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            Volume
+                        </td>
+                        <td colspan="3" rowspan="3">
+                            @{
+                                var row6Col0 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 0);
+                                if (row6Col0 != null)
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 0, row = 6, derLayoutId = Model.DerLayoutId, id = row6Col0.Id })" class="btn btn-default">Manage</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 0, row = 6, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                }
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Energy
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Energy
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-2 no-padding">
+            <table class="der-table" style="height:110px">
+                <thead>
+                    <tr>
+                        <td>Impurities (GSA spec)</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            @{
+                                var row6Col1 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 1);
+                                if (row6Col1 != null)
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 1, row = 6, derLayoutId = Model.DerLayoutId, id = row6Col1.Id })" class="btn btn-default">Manage</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 1, row = 6, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                }
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6 no-padding">
+            <table class="der-table  all-border" style="height:110px">
+                <thead>
+                    <tr>
+                        <th class="der-bg-blue-7" style="width:15%">Description</th>
+                        <th class="der-bg-blue-7">Plant Availability (hour-daily)</th>
+                        <th class="der-bg-blue-7">
+                            Plant Thermal Efficiency
+                        </th>
+                        <th class="der-bg-blue-7">
+                            Material Balance (Flare Loss-%)
+                        </th>
+                        <th class="der-bg-blue-7">
+                            Act Feed/ Max.Cap (Plant intake Utilization)
+                        </th>
+                        <th class="der-bg-blue-5">
+                            Refrigerant Prod (C2&C3)
+                        </th>
+                        <th class="der-bg-blue-3">
+                            Total Fuel Gas
+                            (GTG-GTC-LP Fuel)
+                        </th>
+                        <th class="der-bg-blue-3">
+                            Total Flared Gas
+                            (Wet-Dry-Tankage)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="der-bg-blue-4">
+                            ACTUAL 24H
+                        </td>
+                        <td colspan="7" rowspan="3">
+                            @{
+                                var row6Col2 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 2);
+                                if (row6Col2 != null)
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 2, row = 6, derLayoutId = Model.DerLayoutId, id = row6Col2.Id })" class="btn btn-default">Manage</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 2, row = 6, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                }
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="der-bg-blue-4">
+                            ACTUAL MTD
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="der-bg-blue-4">
+                            2016 Target
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6" style="padding: 0px 0px">
+            <table class="der-table  all-border">
+                <thead>
+                    <tr style="height:31px">
+                        <th class="der-bg-blue-1">PRODUCTION</th>
+                        <th colspan="3" class="der-bg-blue-1">LNG</th>
+                        <th colspan="3" class="der-bg-blue-8">
+                            CDS
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            ACTUAL 24H
+                        </td>
+                        <td colspan="6" rowspan="3">
+                            @{
+                                var row7Col0 = Model.Items.FirstOrDefault(x => x.Row == 7 && x.Column == 0);
+                                if (row7Col0 != null)
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 0, row = 7, derLayoutId = Model.DerLayoutId, id = row7Col0.Id })" class="btn btn-default">Manage</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 0, row = 7, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                }
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            ACTUAL MTD
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>ACTUAL YTD</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            MCHE Rundown :
+                        </td>
+                        <td colspan="2">
+                            LNG HHV :
+                        </td>
+                        <td colspan="2">
+                            CDS Reid Vapor Pressure (RVP) :
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="der-table  all-border">
+                <tr>
+                    <td colspan="2" class="der-bg-blue-7">
+                        @{
+                            var row8Col0 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 0);
+                            if (row8Col0 != null)
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 0, row = 8, derLayoutId = Model.DerLayoutId, id = row8Col0.Id })" class="btn btn-default">Manage</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 0, row = 8, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                            }
+                        }
+                    </td>
+                    <td colspan="2" class="der-bg-blue-7">
+                        @{
+                            var row8Col1 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 1);
+                            if (row8Col1 != null)
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 1, row = 8, derLayoutId = Model.DerLayoutId, id = row8Col1.Id })" class="btn btn-default">Manage</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 1, row = 8, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                            }
+                        }
+                    </td>
+                    <td colspan="2" class="der-bg-blue-7">
+                        @{
+                            var row8Col2 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 2);
+                            if (row8Col2 != null)
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 2, row = 8, derLayoutId = Model.DerLayoutId, id = row8Col2.Id })" class="btn btn-default">Manage</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 2, row = 8, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                            }
+                        }
+                    </td>
+                    <td class="der-bg-blue-7">
+                        @{
+                            var row8Col3 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 3);
+                            if (row8Col3 != null)
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 3, row = 8, derLayoutId = Model.DerLayoutId, id = row8Col3.Id })" class="btn btn-default">Manage</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 3, row = 8, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                            }
+                        }
+                    </td>
+                </tr>
+            </table>
+            <table class="der-table all-border">
+                <thead>
+                    <tr>
+                        <th colspan="2">LNG Tank</th>
+                        <th colspan="2">CDS Tank</th>
+                        <th colspan="2">CDS Buffer Tank</th>
+                        <th colspan="2">CDS day-tank</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="8">
+                            @{
+                                var row9Col0 = Model.Items.FirstOrDefault(x => x.Row == 9 && x.Column == 0);
+                                if (row9Col0 != null)
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 0, row = 9, derLayoutId = Model.DerLayoutId, id = row9Col0.Id })" class="btn btn-default">Manage</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 0, row = 9, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                }
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Days to tank top</td>
+                        <td>&nbsp;</td>
+                        <td>Days to tank top</td>
+                        <td>&nbsp;</td>
+                        <td>Days to tank top</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6" style="padding: 0px 0px">
+            <table class="der-table  all-border">
+                <thead>
+                    <tr>
+                        <th class="der-bg-blue-3" style="width:15%">
+                            LNG LOADED
+                        </th>
+                        <th class="der-bg-blue-3">
+                            m3
+                        </th>
+                        <th class="der-bg-blue-3">
+                            tonnes
+                        </th>
+                        <th class="der-bg-blue-3">
+                            mmbtu
+                        </th>
+                        <th class="der-bg-blue-4">
+                            #Cargo Shipped
+                        </th>
+                        <th class="der-bg-blue-7">
+                            Planned Cargoes
+                            (ADP 2016)
+                        </th>
+                        <th class="der-bg-blue-7" style="width:9%">
+                            Remarks
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="der-bg-blue-4">
+                            ACTUAL MTD
+                        </td>
+                        <td colspan="6" rowspan="2">
+                            @{
+                                var row7Col1 = Model.Items.FirstOrDefault(x => x.Row == 7 && x.Column == 1);
+                                if (row7Col1 != null)
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 1, row = 7, derLayoutId = Model.DerLayoutId, id = row7Col1.Id })" class="btn btn-default">Manage</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 1, row = 7, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                }
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="der-bg-blue-4">
+                            ACTUAL YTD
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="der-table  all-border">
+                <thead>
+                    <tr>
+                        <th class="der-bg-blue-3">
+                            CDS LOADED
+                        </th>
+                        <th class="der-bg-blue-3">
+                            m3
+                        </th>
+                        <th class="der-bg-blue-3">
+                            tonnes
+                        </th>
+                        <th>
+                            Bbls
+                        </th>
+                        <th>
+                            #Cargo Shipped
+                        </th>
+                        <th>
+                            Note
+                        </th>
+                        <th>
+                            Remarks
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            ACTUAL MTD
+                        </td>
+                        <td colspan="6" rowspan="2">
+                            @{
+                                var row7Col2 = Model.Items.FirstOrDefault(x => x.Row == 7 && x.Column == 2);
+                                if (row7Col2 != null)
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 2, row = 7, derLayoutId = Model.DerLayoutId, id = row7Col2.Id })" class="btn btn-default">Manage</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 2, row = 7, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                }
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            ACTUAL MTD
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="der-table  all-border">
+                <thead>
+                    <tr>
+                        <th>
+                            NEXT LOADING SCHEDULE
+                        </th>
+                        <th>
+                            Vessel
+                            (capacity)
+                        </th>
+                        <th>
+                            ETA
+                        </th>
+                        <th>
+                            ETD
+                        </th>
+                        <th>
+                            Cargo#
+                        </th>
+                        <th>
+                            Remarks
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            LNG
+                        </td>
+                        <td colspan="5" rowspan="3">
+                            @{
+                                var row8Col4 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 4);
+                                if (row8Col4 != null)
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 4, row = 8, derLayoutId = Model.DerLayoutId, id = row8Col4.Id })" class="btn btn-default">Manage</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 4, row = 8, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                }
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            CDS
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            LNG
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row" style="font-size: 11px">
+        <div class="col-md-6 no-padding">
+            <table class="der-table  all-border">
+                <thead>
+                    <tr>
+                        <th colspan="6">
+                            WEEKLY MAINTENANCE BACKLOG (as of 20 Jan 2016)
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            Type
+                        </th>
+                        <th>
+                            PM
+                        </th>
+                        <th>
+                            CM
+                        </th>
+                        <th>
+                            Total
+                        </th>
+                        <th>
+                            Remarks
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="5">
+                            @{
+                                var row10Col0 = Model.Items.FirstOrDefault(x => x.Row == 10 && x.Column == 0);
+                                if (row10Col0 != null)
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 0, row = 10, derLayoutId = Model.DerLayoutId, id = row10Col0.Id })" class="btn btn-default">Manage</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 0, row = 10, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                }
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="der-table  all-border">
+                <thead>
+                    <tr>
+                        <th colspan="6">
+                            CRITICAL PM COMPLIANCE/OVERDUE
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            Type
+                        </th>
+                        <th>
+                            Relieve Valve
+                        </th>
+                        <th>
+                            SIF
+                        </th>
+                        <th>
+                            Other
+                        </th>
+                        <th>
+                            Total
+                        </th>
+                        <th>
+                            Remarks
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="6">
+                            @{
+                                var row11Col0 = Model.Items.FirstOrDefault(x => x.Row == 11 && x.Column == 0);
+                                if (row11Col0 != null)
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 0, row = 11, derLayoutId = Model.DerLayoutId, id = row11Col0.Id })" class="btn btn-default">Manage</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 0, row = 11, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                }
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="der-table ">
                 <tr>
                     <td>
-                        Energy
+                        Operation Highlight & Immediate Concern :
                     </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="col-md-2 no-padding">
-        <table class="der-table" style="height:110px">
-            <thead>
-                <tr>
-                    <td>Impurities (GSA spec)</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>@{
-                        var row6Col1 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 1);
-                        if (row6Col1 != null)
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 1, row = 6, derLayoutId = Model.DerLayoutId, id = row6Col1.Id })" class="btn btn-default">Manage</a>
-                        }
-                        else
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 1, row = 6, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                        }
-                    }</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="col-md-6 no-padding">
-        <table class="der-table  all-border" style="height:110px">
-            <thead>
-                <tr>
-                    <th class="der-bg-blue-7" style="width:15%">Description</th>
-                    <th class="der-bg-blue-7">Plant Availability (hour-daily)</th>
-                    <th class="der-bg-blue-7">
-                        Plant Thermal Efficiency
-                    </th>
-                    <th class="der-bg-blue-7">
-                        Material Balance (Flare Loss-%)
-                    </th>
-                    <th class="der-bg-blue-7">
-                        Act Feed/ Max.Cap (Plant intake Utilization)
-                    </th>
-                    <th class="der-bg-blue-5">
-                        Refrigerant Prod (C2&C3)
-                    </th>
-                    <th class="der-bg-blue-3">
-                        Total Fuel Gas
-                        (GTG-GTC-LP Fuel)
-                    </th>
-                    <th class="der-bg-blue-3">
-                        Total Flared Gas
-                        (Wet-Dry-Tankage)
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="der-bg-blue-4">
-                        ACTUAL 24H
-                    </td>
-                    <td colspan="7" rowspan="3">@{
-                        var row6Col2 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 2);
-                        if (row6Col2 != null)
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 2, row = 6, derLayoutId = Model.DerLayoutId, id = row6Col2.Id })" class="btn btn-default">Manage</a>
-                        }
-                        else
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 2, row = 6, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                        }
-                    }</td>
+                    <td>Plant Mode : Holding</td>
                 </tr>
                 <tr>
-                    <td class="der-bg-blue-4">
-                        ACTUAL MTD
-                    </td>
-                </tr>
-                <tr>
-                    <td class="der-bg-blue-4">
-                        2016 Target
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="col-md-6" style="padding: 0px 0px">
-        <table class="der-table  all-border">
-            <thead>
-                <tr style="height:31px">
-                    <th class="der-bg-blue-1">PRODUCTION</th>
-                    <th colspan="3" class="der-bg-blue-1">LNG</th>
-                    <th colspan="3" class="der-bg-blue-8">
-                        CDS
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        ACTUAL 24H
-                    </td>
-                    <td colspan="6" rowspan="3">@{
-                        var row7Col0 = Model.Items.FirstOrDefault(x => x.Row == 7 && x.Column == 0);
-                        if (row7Col0 != null)
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 0, row = 7, derLayoutId = Model.DerLayoutId, id = row7Col0.Id })" class="btn btn-default">Manage</a>
-                        }
-                        else
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 0, row = 7, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                        }
-                    }</td>
-                </tr>
-                <tr>
-                    <td>
-                        ACTUAL MTD
-                    </td>
-                </tr>
-                <tr>
-                    <td>ACTUAL YTD</td>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        MCHE Rundown :
-                    </td>
                     <td colspan="2">
-                        LNG HHV :
+                        @{
+                            var row12Col0 = Model.Items.FirstOrDefault(x => x.Row == 12 && x.Column == 0);
+                            if (row12Col0 != null)
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 0, row = 12, derLayoutId = Model.DerLayoutId, id = row12Col0.Id })" class="btn btn-default">Manage</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 0, row = 12, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                            }
+                        }
                     </td>
+                </tr>
+            </table>
+            <table class="der-table ">
+                <tr>
                     <td colspan="2">
-                        CDS Reid Vapor Pressure (RVP) :
+                        Maintenance Highlight & Immediate Concern:
                     </td>
                 </tr>
-            </tbody>
-        </table>
-        <table class="der-table  all-border" style="height:75px">
-            <tr>
-                <td colspan="2" class="der-bg-blue-7">@{
-                    var row8Col0 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 0);
-                    if (row8Col0 != null)
-                    {
-                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 8, derLayoutId = Model.DerLayoutId, id = row8Col0.Id })" class="btn btn-default">Manage</a>
-                    }
-                    else
-                    {
-                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 8, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                    }
-                }</td>
-                <td colspan="2" class="der-bg-blue-7">@{
-                    var row8Col1 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 1);
-                    if (row8Col1 != null)
-                    {
-                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 8, derLayoutId = Model.DerLayoutId, id = row8Col1.Id })" class="btn btn-default">Manage</a>
-                    }
-                    else
-                    {
-                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 8, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                    }
-                }</td>
-                <td colspan="2" class="der-bg-blue-7">@{
-                    var row8Col2 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 2);
-                    if (row8Col2 != null)
-                    {
-                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 8, derLayoutId = Model.DerLayoutId, id = row8Col2.Id })" class="btn btn-default">Manage</a>
-                    }
-                    else
-                    {
-                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 8, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                    }
-                }</td>
-                <td class="der-bg-blue-7">@{
-                    var row8Col3 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 3);
-                    if (row8Col3 != null)
-                    {
-                        <a href="@Url.Action("LayoutItem", new { column = 3, row = 8, derLayoutId = Model.DerLayoutId, id = row8Col3.Id })" class="btn btn-default">Manage</a>
-                    }
-                    else
-                    {
-                        <a href="@Url.Action("LayoutItem", new { column = 3, row = 8, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                    }
-                }</td>
-            </tr>
-        </table>
-    </div>
-    <div class="col-md-6" style="padding: 0px 0px">
-        <table class="der-table  all-border">
-            <thead>
                 <tr>
-                    <th class="der-bg-blue-3" style="width:15%">
-                        LNG LOADED
-                    </th>
-                    <th class="der-bg-blue-3">
-                        m3
-                    </th>
-                    <th class="der-bg-blue-3">
-                        tonnes
-                    </th>
-                    <th class="der-bg-blue-3">
-                        mmbtu
-                    </th>
-                    <th class="der-bg-blue-4">
-                        #Cargo Shipped
-                    </th>
-                    <th class="der-bg-blue-7">
-                        Planned Cargoes
-                        (ADP 2016)
-                    </th>
-                    <th class="der-bg-blue-7" style="width:9%">
-                        Remarks
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="der-bg-blue-4">
-                        ACTUAL MTD
-                    </td>
-                    <td colspan="6" rowspan="2">@{
-                        var row7Col1 = Model.Items.FirstOrDefault(x => x.Row == 7 && x.Column == 1);
-                        if (row7Col1 != null)
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 1, row = 7, derLayoutId = Model.DerLayoutId, id = row7Col1.Id })" class="btn btn-default">Manage</a>
+                    <td colspan="2">
+                        @{
+                            var row13Col0 = Model.Items.FirstOrDefault(x => x.Row == 13 && x.Column == 0);
+                            if (row13Col0 != null)
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 0, row = 13, derLayoutId = Model.DerLayoutId, id = row13Col0.Id })" class="btn btn-default">Manage</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 0, row = 13, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                            }
                         }
-                        else
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 1, row = 7, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                        }
-                    }</td>
-                </tr>
-                <tr>
-                    <td class="der-bg-blue-4">
-                        ACTUAL YTD
                     </td>
                 </tr>
-            </tbody>
-        </table>
-        <table class="der-table  all-border">
-            <thead>
-                <tr>
-                    <th class="der-bg-blue-3">
-                        CDS LOADED
-                    </th>
-                    <th class="der-bg-blue-3">
-                        m3
-                    </th>
-                    <th class="der-bg-blue-3">
-                        tonnes
-                    </th>
-                    <th>
-                        Bbls
-                    </th>
-                    <th>
-                        #Cargo Shipped
-                    </th>
-                    <th>
-                        Note
-                    </th>
-                    <th>
-                        Remarks
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
+            </table>
+        </div>
+        <div class="col-md-6 no-padding">
+            <table class="der-table  all-border">
+                <thead>
+                    <tr>
+                        <th colspan="8">
+                            KEY EQUIPMENT STATUS
+                        </th>
+                    </tr>
+                    <tr>
+                        <th colspan="2">
+                            Power
+                        </th>
+                        <th colspan="2">
+                            Process Train
+                        </th>
+                        <th colspan="2">
+                            Utilities
+                        </th>
+                        <th colspan="2">
+                            Support
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="8" rowspan="6">
+                            @{
+                                var row9Col1 = Model.Items.FirstOrDefault(x => x.Row == 9 && x.Column == 1);
+                                if (row9Col1 != null)
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 1, row = 9, derLayoutId = Model.DerLayoutId, id = row9Col1.Id })" class="btn btn-default">Manage</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 1, row = 9, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                }
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="der-table " style="height:174px">
                 <tr>
                     <td>
-                        ACTUAL MTD
-                    </td>
-                    <td colspan="6" rowspan="2">@{
-                        var row7Col2 = Model.Items.FirstOrDefault(x => x.Row == 7 && x.Column == 2);
-                        if (row7Col2 != null)
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 2, row = 7, derLayoutId = Model.DerLayoutId, id = row7Col2.Id })" class="btn btn-default">Manage</a>
-                        }
-                        else
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 2, row = 7, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                        }
-                    }</td>
-                </tr>
-                <tr>
-                    <td>
-                        ACTUAL MTD
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="der-table  all-border">
-            <thead>
-                <tr>
-                    <th>
-                        NEXT LOADING SCHEDULE
-                    </th>
-                    <th>
-                        Vessel
-                        (capacity)
-                    </th>
-                    <th>
-                        ETA
-                    </th>
-                    <th>
-                        ETD
-                    </th>
-                    <th>
-                        Cargo#
-                    </th>
-                    <th>
-                        Remarks
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        LNG
-                    </td>
-                    <td colspan="5" rowspan="3">@{
-                        var row8Col4 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 4);
-                        if (row8Col4 != null)
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 4, row = 8, derLayoutId = Model.DerLayoutId, id = row8Col4.Id })" class="btn btn-default">Manage</a>
-                        }
-                        else
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 4, row = 8, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                        }
-                    }</td>
-                </tr>
-                <tr>
-                    <td>
-                        CDS
+                        Marine, Shipping and Cargo Delivery:
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        LNG
+                        @{
+                            var row10Col1 = Model.Items.FirstOrDefault(x => x.Row == 10 && x.Column == 1);
+                            if (row10Col1 != null)
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 1, row = 10, derLayoutId = Model.DerLayoutId, id = row10Col1.Id })" class="btn btn-default">Manage</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 1, row = 10, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                            }
+                        }
                     </td>
                 </tr>
-            </tbody>
-        </table>
+            </table>
+        </div>
     </div>
-</div>
-<div class="row" style="font-size: 11px">
-    <div class="col-md-6 no-padding">
-        <table class="der-table  all-border">
-            <thead>
+    <div class="row der-row">
+        <p class="der-table-title" style="margin-bottom: 0 0 1px">SUPPORT & ENABLER PERFORMANCE</p>
+        <div class="col-md-3 no-padding">
+            <table class="der-table  all-border">
+                <thead>
+                    <tr>
+                        <th>
+                            PROCUREMENT
+                        </th>
+                        <th>
+                            PO / SO (Plant Related)
+                        </th>
+                        <th>
+                            Remarks
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="3">
+                            @{
+                                var row14Col0 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 0);
+                                if (row14Col0 != null)
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 0, row = 14, derLayoutId = Model.DerLayoutId, id = row14Col0.Id })" class="btn btn-default">Manage</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 0, row = 14, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                }
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="der-table  all-border">
+                <thead>
+                    <tr>
+                        <th colspan="3" style="height:32px">DSLNG Indicative Commercial Price (JCC based)-USD/mmbtu</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="3">
+                            @{
+                                var row15Col0 = Model.Items.FirstOrDefault(x => x.Row == 15 && x.Column == 0);
+                                if (row15Col0 != null)
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 0, row = 15, derLayoutId = Model.DerLayoutId, id = row15Col0.Id })" class="btn btn-default">Manage</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 0, row = 15, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                }
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-3 no-padding">
+            <table class="der-table " style="height:122px">
+                <thead>
+                    <tr>
+                        <th colspan="3" style="width: 18.75%">
+                            Economic Indicator
+                        </th>
+                        <th colspan="2" style="width: 12.5%">
+                            FX rate
+                            SDR:IMF major ccy basket index
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="5">
+                            @{
+                                var row14Col1 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 1);
+                                if (row14Col1 != null)
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 1, row = 14, derLayoutId = Model.DerLayoutId, id = row14Col1.Id })" class="btn btn-default">Manage</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 1, row = 14, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                }
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6 no-padding">
+            <table class="der-table " style="height:60px">
                 <tr>
-                    <th colspan="6">
-                        WEEKLY MAINTENANCE BACKLOG (as of 20 Jan 2016)
-                    </th>
+                    <td class="der-title-underline">Community Relation and Government Engagement Highlight:</td>
                 </tr>
                 <tr>
-                    <th>
-                        Type
-                    </th>
-                    <th>
-                        PM
-                    </th>
-                    <th>
-                        CM
-                    </th>
-                    <th>
-                        Total
-                    </th>
-                    <th>
-                        Remarks
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td colspan="5">@{
-                        var row9Col0 = Model.Items.FirstOrDefault(x => x.Row == 9 && x.Column == 0);
-                        if (row9Col0 != null)
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 0, row = 9, derLayoutId = Model.DerLayoutId, id = row9Col0.Id })" class="btn btn-default">Manage</a>
+                    <td>
+                        @{
+                            var row14Col2 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 2);
+                            if (row14Col2 != null)
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 2, row = 14, derLayoutId = Model.DerLayoutId, id = row14Col2.Id })" class="btn btn-default">Manage</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 2, row = 14, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                            }
                         }
-                        else
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 0, row = 9, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                        }
-                    }</td>
+                    </td>
                 </tr>
-            </tbody>
-        </table>
-        <table class="der-table  all-border">
-            <thead>
+            </table>
+        </div>
+        <div class="col-md-3 no-padding">
+            <table class="der-table " style="height:60px">
                 <tr>
-                    <th colspan="6">
-                        CRITICAL PM COMPLIANCE/OVERDUE
-                    </th>
+                    <td class="der-title-underline">Macro Economic/Market Flash :</td>
                 </tr>
                 <tr>
-                    <th>
-                        Type
-                    </th>
-                    <th>
-                        Relieve Valve
-                    </th>
-                    <th>
-                        SIF
-                    </th>
-                    <th>
-                        Other
-                    </th>
-                    <th>
-                        Total
-                    </th>
-                    <th>
-                        Remarks
-                    </th>
+                    <td>
+                        @{
+                            var row15Col1 = Model.Items.FirstOrDefault(x => x.Row == 1514 && x.Column == 1);
+                            if (row15Col1 != null)
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 1, row = 15, derLayoutId = Model.DerLayoutId, id = row15Col1.Id })" class="btn btn-default">Manage</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 1, row = 15, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                            }
+                        }
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
+            </table>
+        </div>
+        <div class="col-md-3 no-padding">
+            <table class="der-table " style="height:60px">
                 <tr>
-                    <td colspan="6">@{
-                        var row10Col0 = Model.Items.FirstOrDefault(x => x.Row == 10 && x.Column == 0);
-                        if (row10Col0 != null)
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 0, row = 10, derLayoutId = Model.DerLayoutId, id = row10Col0.Id })" class="btn btn-default">Manage</a>
+                    <td class="der-title-underline">Market Tone:</td>
+                    <td>
+                        @{
+                            var row15Col2 = Model.Items.FirstOrDefault(x => x.Row == 15 && x.Column == 2);
+                            if (row15Col2 != null)
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 2, row = 15, derLayoutId = Model.DerLayoutId, id = row15Col2.Id })" class="btn btn-default">Manage</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 2, row = 15, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                            }
                         }
-                        else
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 0, row = 10, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                        }
-                    }</td>
+                    </td>
                 </tr>
-            </tbody>
-        </table>
-        <table class="der-table ">
-            <tr>
-                <td>
-                    Operation Highlight & Immediate Concern :
-                </td>
-                <td>Plant Mode : Holding</td>
-            </tr>
-            <tr>
-                <td colspan="2">@{
-                    var row11Col0 = Model.Items.FirstOrDefault(x => x.Row == 11 && x.Column == 0);
-                    if (row11Col0 != null)
-                    {
-                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 11, derLayoutId = Model.DerLayoutId, id = row11Col0.Id })" class="btn btn-default">Manage</a>
-                    }
-                    else
-                    {
-                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 11, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                    }
-                }</td>
-            </tr>
-        </table>
-        <table class="der-table ">
-            <tr>
-                <td colspan="2">
-                    Maintenance Highlight & Immediate Concern:
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">@{
-                    var row12Col0 = Model.Items.FirstOrDefault(x => x.Row == 12 && x.Column == 0);
-                    if (row12Col0 != null)
-                    {
-                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 12, derLayoutId = Model.DerLayoutId, id = row12Col0.Id })" class="btn btn-default">Manage</a>
-                    }
-                    else
-                    {
-                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 12, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                    }
-                }</td>
-            </tr>
-        </table>
+            </table>
+        </div>
     </div>
-    <div class="col-md-6 no-padding">
-        <table class="der-table  all-border">
-            <thead>
-                <tr>
-                    <th colspan="8">
-                        KEY EQUIPMENT STATUS
-                    </th>
-                </tr>
-                <tr>
-                    <th colspan="2">
-                        Power
-                    </th>
-                    <th colspan="2">
-                        Process Train
-                    </th>
-                    <th colspan="2">
-                        Utilities
-                    </th>
-                    <th colspan="2">
-                        Support
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td colspan="8" rowspan="6">@{
-                        var row9Col1 = Model.Items.FirstOrDefault(x => x.Row == 9 && x.Column == 1);
-                        if (row9Col1 != null)
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 1, row = 9, derLayoutId = Model.DerLayoutId, id = row9Col1.Id })" class="btn btn-default">Manage</a>
-                        }
-                        else
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 1, row = 9, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                        }
-                    }</td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="der-table " style="height:174px">
-            <tr>
-                <td>
-                    Marine, Shipping and Cargo Delivery:
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @{
-                        var row10Col1 = Model.Items.FirstOrDefault(x => x.Row == 10 && x.Column == 1);
-                        if (row10Col1 != null)
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 1, row = 10, derLayoutId = Model.DerLayoutId, id = row10Col1.Id })" class="btn btn-default">Manage</a>
-                        }
-                        else
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 1, row = 10, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                        }
-                    }
-                </td>
-            </tr>
-        </table>
-    </div>
-</div>
-<div class="row der-row">
-    <p class="der-table-title" style="margin-bottom: 0 0 1px">SUPPORT & ENABLER PERFORMANCE</p>
-    <div class="col-md-3 no-padding">
-        <table class="der-table  all-border">
-            <thead>
-                <tr>
-                    <th>
-                        PROCUREMENT
-                    </th>
-                    <th>
-                        PO / SO (Plant Related)
-                    </th>
-                    <th>
-                        Remarks
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td colspan="3">@{
-                        var row13Col0 = Model.Items.FirstOrDefault(x => x.Row == 13 && x.Column == 0);
-                        if (row13Col0 != null)
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 0, row = 13, derLayoutId = Model.DerLayoutId, id = row13Col0.Id })" class="btn btn-default">Manage</a>
-                        }
-                        else
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 0, row = 13, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                        }
-                    }</td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="der-table  all-border">
-            <thead>
-                <tr>
-                    <th colspan="3" style="height:32px">DSLNG Indicative Commercial Price (JCC based)-USD/mmbtu</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td colspan="3">@{
-                        var row14Col0 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 0);
-                        if (row14Col0 != null)
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 0, row = 14, derLayoutId = Model.DerLayoutId, id = row14Col0.Id })" class="btn btn-default">Manage</a>
-                        }
-                        else
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 0, row = 14, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                        }
-                    }</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="col-md-3 no-padding">
-        <table class="der-table " style="height:122px">
-            <thead>
-                <tr>
-                    <th colspan="3" style="width: 18.75%">
-                        Economic Indicator
-                    </th>
-                    <th colspan="2" style="width: 12.5%">
-                        FX rate
-                        SDR:IMF major ccy basket index
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td colspan="5">@{
-                        var row13Col1 = Model.Items.FirstOrDefault(x => x.Row == 13 && x.Column == 1);
-                        if (row13Col1 != null)
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 1, row = 13, derLayoutId = Model.DerLayoutId, id = row13Col1.Id })" class="btn btn-default">Manage</a>
-                        }
-                        else
-                        {
-                            <a href="@Url.Action("LayoutItem", new { column = 1, row = 13, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                        }
-                    }</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="col-md-6 no-padding">
-        <table class="der-table " style="height:60px">
-            <tr>
-                <td class="der-title-underline">Community Relation and Government Engagement Highlight:</td>
-            </tr>
-            <tr>
-                <td>@{
-                    var row13Col2 = Model.Items.FirstOrDefault(x => x.Row == 13 && x.Column == 2);
-                    if (row13Col2 != null)
-                    {
-                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 13, derLayoutId = Model.DerLayoutId, id = row13Col2.Id })" class="btn btn-default">Manage</a>
-                    }
-                    else
-                    {
-                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 13, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                    }
-                }</td>
-            </tr>
-        </table>
-    </div>
-    <div class="col-md-3 no-padding">
-        <table class="der-table " style="height:60px">
-            <tr>
-                <td class="der-title-underline">Macro Economic/Market Flash :</td>
-            </tr>
-            <tr>
-                <td>@{
-                    var row14Col1 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 1);
-                    if (row14Col1 != null)
-                    {
-                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 14, derLayoutId = Model.DerLayoutId, id = row14Col1.Id })" class="btn btn-default">Manage</a>
-                    }
-                    else
-                    {
-                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 14, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                    }
-                }</td>
-            </tr>
-        </table>
-    </div>
-    <div class="col-md-3 no-padding">
-        <table class="der-table " style="height:60px">
-            <tr>
-                <td class="der-title-underline">Market Tone:</td>
-                <td>@{
-                    var row14Col2 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 2);
-                    if (row14Col2 != null)
-                    {
-                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 14, derLayoutId = Model.DerLayoutId, id = row14Col2.Id })" class="btn btn-default">Manage</a>
-                    }
-                    else
-                    {
-                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 14, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
-                    }
-                }</td>
-            </tr>
-        </table>
-    </div>
-</div>
 
 
 
 
 
-@Html.Partial("_Modal");
+    @Html.Partial("_Modal");

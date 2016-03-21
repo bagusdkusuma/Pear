@@ -542,7 +542,35 @@ namespace DSLNG.PEAR.Web.Controllers
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
+                #endregion
+                #region table tank
+                case "table-tank":
+                    {
+                        var viewModel = new DisplayTableTankViewModel();
+                        for (int i = 0; i <= 10; i++)
+                        {
+                            var totalTableTankViewModel = new DisplayTableTankViewModel.TableTankViewModel();
+                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
+                                      new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
+                            totalTableTankViewModel.Position = item.Position;
+                            if (item.Kpi != null)
+                            {
+                                var request = new GetKpiValueRequest();
+                                request.ConfigType = item.ConfigType;
+                                request.KpiId = item.Kpi.Id;
+                                request.Periode = date;
+                                request.RangeFilter = RangeFilter.CurrentDay;
+                                var daily = _derService.GetKpiValue(request);
+                                totalTableTankViewModel.Daily = daily.Value.HasValue ? daily.Value.Value.ToString() : "n/a";
+                            }
+                            viewModel.TableTankViewModels.Add(totalTableTankViewModel);
+                        }
+                        var view = RenderPartialViewToString("Display/_TableTank", viewModel);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
                     #endregion
+
 
             }
             return Content("Switch case does not matching");

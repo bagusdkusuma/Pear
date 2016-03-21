@@ -334,6 +334,12 @@ namespace DSLNG.PEAR.Web.Controllers
                         viewModel.KpiInformations = GetKpiInformations(4);
                         return PartialView("LayoutType/_TotalFeedGas", viewModel);
                     }
+                case "table-tank":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(11);
+                        return PartialView("LayoutType/_TableTank", viewModel);
+                    }
             }
 
             return Content("Error");
@@ -430,6 +436,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "avg-ytd-key-statistic":
                 case "lng-and-cds":
                 case "total-feed-gas":
+                case "table-tank":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();

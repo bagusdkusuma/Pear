@@ -487,67 +487,14 @@
                     <td colspan="2" class="der-bg-blue-7">tank</td>
                     <td class="der-bg-blue-7">tank</td>
                 </tr>
-                <tr>
-                    <td colspan="2" class="der-bg-blue-8">
-                        LNG Tank (071)
-                    </td>
-                    <td colspan="2" class="der-bg-blue-8">
-                        CDS Tank (079/1001)
-                    </td>
-                    <td colspan="2" class="der-bg-blue-8">
-                        CDS Buffer Tank (079/1002)
-                    </td>
-                    <td class="der-bg-blue-8">
-                        CDS day-tank (076)
-                    </td>
-                </tr>
-                <tr>
-                    <td class="der-bg-yellow">
-                        12,197.74 tonnes
-                    </td>
-                    <td class="der-bg-yellow">
-                        26,749.89 m3
-                    </td>
-                    <td class="der-bg-gray-1">
-                        n/a
-                    </td>
-                    <td class="der-bg-gray-1">
-                        n/a
-                    </td>
-                    <td class="der-bg-gray-1">
-                        n/a
-                    </td>
-                    <td class="der-bg-gray-1">
-                        n/a
-                    </td>
-                    <td class="der-bg-gray-1">
-                        157.7 bbl
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Days to tank top
-                    </td>
-                    <td class="der-bg-yellow">
-                        10.9 days
-                    </td>
-                    <td class="der-bg-gray-1">
-                        Days to tank top
-                    </td>
-                    <td class="der-bg-gray-1">
-                        n/a
-                    </td>
-                    <td class="der-bg-gray-1">
-                        Days to tank top
-                    </td>
-                    <td class="der-bg-gray-1">
-                        n/a
-                    </td>
-                    <td class="der-bg-yellow">
-                        16.09 tonnes
-                    </td>
-                </tr>
             </table>
+            @{
+                var row9Col0 = Model.Items.FirstOrDefault(x => x.Row == 9 && x.Column == 0);
+                if (row9Col0 != null)
+                {
+                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row9Col0.Id })" class="layout-item"></div>
+                }
+            }
         </div>
         <div class="col-md-6" style="padding: 0px 0px">
             @{
@@ -645,7 +592,7 @@
                 </tbody>
             </table>
         </div>
-        
+
     </div>
     <div class="row" style="font-size: 11px">
         <div class="col-md-6 no-padding">
@@ -1211,7 +1158,7 @@
                             callback[data.GraphicType](data, that);
                         } else if (data.type === "highlight" || data.type === "weather" ||
                             data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
-                        data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas") {
+                        data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas" || data.type == "table-tank") {
                             that.html(data.view);
                         }
 

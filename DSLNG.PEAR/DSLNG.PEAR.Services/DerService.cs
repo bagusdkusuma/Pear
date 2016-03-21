@@ -216,8 +216,6 @@ namespace DSLNG.PEAR.Services
             IList<RowAndColumns> rowAndColumns = new List<RowAndColumns>();
             rowAndColumns.Add(new RowAndColumns { Row = 0, Column = 0 });
             rowAndColumns.Add(new RowAndColumns { Row = 0, Column = 1 });
-            //rowAndColumns.Add(new RowAndColumns { Row = 0, Column = 2 });
-            //rowAndColumns.Add(new RowAndColumns { Row = 0, Column = 3 });
             rowAndColumns.Add(new RowAndColumns { Row = 1, Column = 0 });
             rowAndColumns.Add(new RowAndColumns { Row = 1, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 1, Column = 2 });
@@ -258,7 +256,10 @@ namespace DSLNG.PEAR.Services
             rowAndColumns.Add(new RowAndColumns { Row = 14, Column = 0 });
             rowAndColumns.Add(new RowAndColumns { Row = 14, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 14, Column = 2 });
-
+            rowAndColumns.Add(new RowAndColumns { Row = 15, Column = 0 });
+            rowAndColumns.Add(new RowAndColumns { Row = 15, Column = 1 });
+            rowAndColumns.Add(new RowAndColumns { Row = 15, Column = 2 });
+            
             foreach (var rowAndColumn in rowAndColumns)
             {
                 var item = derLayoutItems.FirstOrDefault(x => x.Row == rowAndColumn.Row && x.Column == rowAndColumn.Column);
@@ -441,6 +442,7 @@ namespace DSLNG.PEAR.Services
                 case "security":
                 case "job-pmts":
                 case "total-feed-gas":
+                case "table-tank":
                     {
                         baseResponse = request.Id > 0 ? UpdateKpiInformations(request) : SaveKpiInformations(request);
                         break;
