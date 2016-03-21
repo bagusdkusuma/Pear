@@ -65,6 +65,8 @@ namespace DSLNG.PEAR.Web.ViewModels.PopDashboard
         public int TypeSignature { get; set; }
         public bool IsApprove { get; set; }
         public bool IsReject { get; set; }
+        public string Attachment { get; set; }
+        public string Status { get; set; }
 
         public class PopInformation
         {
