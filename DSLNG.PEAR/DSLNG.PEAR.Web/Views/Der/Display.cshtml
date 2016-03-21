@@ -220,47 +220,25 @@
         <div class="col-md-6" style="padding: 0px 0px">
 
         </div>
-        <div class="col-md-6" style="padding: 0px 0px">
-            <table class="der-table der-dummy all-border">
-                <thead>
-                    <tr>
-                        <th colspan="6" width="75%" class="der-bg-purple">MGDP</th>
-                        <th colspan="2" width="25%" class="der-bg-green-3">HHV</th>
-                    </tr>
-                    <tr>
-                        <th colspan="2" class="der-bg-blue-7">ACTUAL 24H</th>
-                        <th colspan="2" class="der-bg-blue-4">ACTUAL MTD</th>
-                        <th colspan="2" class="der-bg-blue-4">ACTUAL YTD</th>
-                        <th class="der-bg-green-3">JOB PMTS</th>
-                        <th class="der-bg-green-3">MGDP</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="der-bg-gray-1">N/A</td>
-                        <td rowspan="2" class="der-bg-gray-1">N/A</td>
-                        <td class="der-bg-gray-1">N/A</td>
-                        <td rowspan="2" class="der-bg-gray-1">N/A</td>
-                        <td class="der-bg-gray-1">N/A</td>
-                        <td rowspan="2" class="der-bg-gray-1">N/A</td>
-                        <td rowspan="2" class="der-bg-yellow">1,118.62 btu/scf</td>
-                        <td rowspan="2" class="der-bg-gray-1">N/A</td>
-                    </tr>
-                    <tr>
-                        <td class="der-bg-gray-1">N/A</td>
-                        <td class="der-bg-gray-1">N/A</td>
-                        <td class="der-bg-gray-1">N/A</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="der-bg-gray-1">N/A</td>
-                        <td colspan="2" class="der-bg-gray-1">N/A</td>
-                        <td colspan="2" class="der-bg-gray-1">N/A</td>
-                        <td class="der-bg-green-3">min 1,111</td>
-                        <td class="der-bg-green-3">min 1,050</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="col-md-4" style="padding: 0px 0px">
+            @{
+                var row5Col1 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 1);
+                if (row5Col1 != null)
+                {
+                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row5Col1.Id })" class="layout-item"></div>
+                }
+            }
         </div>
+        <div class="col-md-2" style="padding: 0px 0px">
+            @{
+                var row5Col2 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 2);
+                if (row5Col2 != null)
+                {
+                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row5Col2.Id })" class="layout-item"></div>
+                }
+            }
+        </div>
+
         <div class="col-md-4 no-padding">
             @{
                 var row5Col0 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 0);
@@ -1158,7 +1136,7 @@
                             callback[data.GraphicType](data, that);
                         } else if (data.type === "highlight" || data.type === "weather" ||
                             data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
-                        data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas" || data.type == "table-tank") {
+                        data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas" || data.type == "table-tank" || data.type == "mgdp" || data.type == "hhv") {
                             that.html(data.view);
                         }
 

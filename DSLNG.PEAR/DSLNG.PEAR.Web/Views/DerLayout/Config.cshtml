@@ -401,19 +401,16 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-md-6" style="padding: 0px 0px">
+        <div class="col-md-4" style="padding: 0px 0px">
             <table class="der-table  all-border">
                 <thead>
                     <tr>
-                        <th colspan="6" width="75%" class="der-bg-purple">MGDP</th>
-                        <th colspan="2" width="25%" class="der-bg-green-3">HHV</th>
+                        <th colspan="6" class="der-bg-purple">MGDP</th>
                     </tr>
                     <tr>
                         <th colspan="2" class="der-bg-blue-7">ACTUAL 24H</th>
                         <th colspan="2" class="der-bg-blue-4">ACTUAL MTD</th>
                         <th colspan="2" class="der-bg-blue-4">ACTUAL YTD</th>
-                        <th class="der-bg-green-3">JOB PMTS</th>
-                        <th class="der-bg-green-3">MGDP</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -428,6 +425,36 @@
                                 else
                                 {
                                     <a href="@Url.Action("LayoutItem", new { column = 1, row = 5, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                }
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-2" style="padding: 0px 0px">
+            <table class="der-table  all-border">
+                <thead>
+                    <tr>
+                        <th colspan="2" class="der-bg-green-3">HHV</th>
+                    </tr>
+                    <tr>
+                        <th class="der-bg-green-3">JOB PMTS</th>
+                        <th class="der-bg-green-3">MGDP</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="2">
+                            @{
+                                var row5Col2 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 2);
+                                if (row5Col2 != null)
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 2, row = 5, derLayoutId = Model.DerLayoutId, id = row5Col2.Id })" class="btn btn-default">Manage</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 2, row = 5, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
                                 }
                             }
                         </td>

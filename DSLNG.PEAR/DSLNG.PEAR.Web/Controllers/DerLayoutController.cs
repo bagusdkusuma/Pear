@@ -340,6 +340,18 @@ namespace DSLNG.PEAR.Web.Controllers
                         viewModel.KpiInformations = GetKpiInformations(11);
                         return PartialView("LayoutType/_TableTank", viewModel);
                     }
+                case "mgdp":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(6);
+                        return PartialView("LayoutType/_MGDP", viewModel);
+                    }
+                case "hhv":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(4);
+                        return PartialView("LayoutType/_HHV", viewModel);
+                    }
             }
 
             return Content("Error");
@@ -437,6 +449,8 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "lng-and-cds":
                 case "total-feed-gas":
                 case "table-tank":
+                case "mgdp":
+                case "hhv":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
