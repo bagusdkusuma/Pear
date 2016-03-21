@@ -132,6 +132,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="NReco.ImageGenerator, Version=1.0.3.0, Culture=neutral, PublicKeyToken=0ef6c878974c90ac, processorArchitecture=MSIL">
+      <HintPath>..\packages\NReco.ImageGenerator.1.0.3.0\lib\net20\NReco.ImageGenerator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="StructureMap, Version=3.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\structuremap.3.1.1.134\lib\net40\StructureMap.dll</HintPath>
       <Private>True</Private>
@@ -759,6 +763,7 @@
     <Content Include="Third Party\Svg.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Compile Include="Controllers\ArtifactCloneController.cs" />
     <Compile Include="Controllers\AssumptionDataController.cs" />
     <Compile Include="ViewModels\DerLayout\CreateDerLayoutViewModel.cs" />
     <Compile Include="Controllers\DerController.cs" />
@@ -1040,6 +1045,7 @@
     <Content Include="Views\DerLayout\LayoutType\_LngAndCds.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_Security.cshtml" />
     <Content Include="Views\Der\Display\_Security.cshtml" />
+    <Content Include="Views\ArtifactClone\Display.cshtml" />
     <None Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\SpeedometerChart\_Edit.cshtml" />
     <Content Include="Views\Tabular\_Create.cshtml" />
