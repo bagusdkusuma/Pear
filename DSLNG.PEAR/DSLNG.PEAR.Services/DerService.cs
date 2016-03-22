@@ -353,10 +353,18 @@ namespace DSLNG.PEAR.Services
                         }
                         break;
                     }
-                case "avg-ytd-key-statistic":
                 case "safety":
-                case "lng-and-cds":
                 case "security":
+                case "job-pmts":
+                case "avg-ytd-key-statistic":
+                case "lng-and-cds":
+                case "total-feed-gas":
+                case "table-tank":
+                case "mgdp":
+                case "hhv":
+                case "lng-and-cds-production":
+                case "weekly-maintenance":
+                case "critical-pm":
                     {
                         try
                         {
