@@ -1,9 +1,4 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.DerLayout.DerLayoutItemViewModel
-<style>
-    td {
-        padding: 10px;
-    }
-</style>
 
 @{
     string[] label = { "Feed Gas", "MCHE Rundown", "LNG Prod", "CDS Prod", "Fuel Gas", "Loss" };
@@ -16,36 +11,21 @@
         {
             <div class="form-group row">
                 <label class="control-label col-md-2">@label[i]</label>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     @Html.DropDownListFor(model => model.KpiInformations[i].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
                     @Html.HiddenFor(model => model.KpiInformations[i].Position)
                     <input type="hidden" name="KpiInformations.Index" value="@a" />
                 </div>
-                <div class="col-md-7" style="color:white">
-                    @Html.EditorFor(model => model.KpiInformations[i].IsOriginalData) Is Original Data 
+                <div class="col-md-8">
+                    @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes)
+                    <span style="color:white">
+                        @Html.EditorFor(model => model.KpiInformations[i].IsOriginalData) Is Original Data
+                    </span>                 
                 </div>
             </div>
         }
         a++;
     }
 }
-
-
-@*<tr>*@
-@*@{
-        for (int j = 0; j <= 6; j++)
-        {
-
-            var posIndex = Model.KpiInformations.FirstOrDefault(x => x.Position == j);
-            if (posIndex != null)
-            {
-                <td>
-                    Is Original Data @Html.EditorFor(model => model.KpiInformations[j].IsOriginalData)
-                </td>
-            }
-        }
-    }*@
-@*</tr>*@
-                </table>
 
 

@@ -54,6 +54,9 @@
                 case "lng-and-cds-production":
                     Html.RenderPartial("~/Views/DerLayout/LayoutType/_LngAndCdsProduction.Edit.cshtml", Model);
                     break;
+                case "safety":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/ _SafetyTable.Edit.cshtml", Model);
+                    break;
             }
         }
     </div>
@@ -232,6 +235,7 @@
             case "mgdp":
             case "hhv":
             case "lng-and-cds-production":
+            case "safety":
                 {
                     window.Pear.Artifact.Designer._kpiAutoComplete($('.layout-type-area'));
                     break;
