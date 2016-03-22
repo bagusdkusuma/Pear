@@ -40,6 +40,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PopDashboard
         {
             IsActive = true;
             Statuses = new List<SelectListItem>();
+
         }
         public int Id { get; set; }
         public string Title { get; set; }
@@ -51,14 +52,23 @@ namespace DSLNG.PEAR.Web.ViewModels.PopDashboard
         public string Attachment { get; set; }
         [Display(Name = "Dashboard Objective")]
         public string DashboardObjective { get; set; }
+
+        [Required]
+        [DataType(DataType.MultilineText)]
+        [AllowHtml]
         [Display(Name = "Leader")]
         public string StructureLeader { get; set; }
+
         [Display(Name = "Owner")]
         public string StructureOwner { get; set; }
         [Display(Name = "Total Cost")]
         public double ResourceTotalCost { get; set; }
         [Display(Name = "Category")]
         public string ResourceCategory { get; set; }
+
+        [Required]
+        [DataType(DataType.MultilineText)]
+        [AllowHtml]
         [Display(Name = "Remark")]
         public string ResourceRemark { get; set; }
     }

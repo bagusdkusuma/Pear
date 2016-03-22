@@ -34,10 +34,12 @@
                     @Html.TextBoxFor(model => model.DashboardObjective, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.DashboardObjective)
                 </div>
-                <div class="form-group form-list">
-                    @Html.LabelFor(model => model.StructureLeader)
-                    @Html.TextBoxFor(model => model.StructureLeader, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.StructureLeader)
+                <div class="message-holder">
+                    <div class="form-group form-list message-text-area">
+                        @Html.LabelFor(model => model.StructureLeader)
+                        @Html.TextAreaFor(model => model.StructureLeader, 5, 100, new { @class = "form-control popDasboard-message" })
+                        @Html.ValidationMessageFor(model => model.StructureLeader)
+                    </div>
                 </div>
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.StructureOwner)
@@ -56,7 +58,7 @@
                 </div>
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.ResourceRemark)
-                    @Html.TextBoxFor(model => model.ResourceRemark, new { @class = "form-control" })
+                    @Html.TextAreaFor(model => model.ResourceRemark, 5, 100, new { @class = "form-control popDasboard-message" })
                     @Html.ValidationMessageFor(model => model.ResourceRemark)
                 </div>
                 <div class="form-group form-list">
@@ -81,7 +83,26 @@
         <div class="col-md-12 artifact-designer-btns">
             <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
             <a onclick="location.reload();" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>
-            <a href="/PlanningBlueprint" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+            <a href="/PopDashboard" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
         </div>
     }
 </div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            tinyMCE.init({
+                selector: ".popDasboard-message",
+                plugins: [
+                    "advlist autolink lists link image charmap print preview anchor",
+                    "searchreplace visualblocks code fullscreen",
+                    "insertdatetime media table contextmenu paste"
+                ],
+                toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+            });
+
+
+        });
+    </script>
+}
