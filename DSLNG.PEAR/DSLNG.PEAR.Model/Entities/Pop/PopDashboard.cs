@@ -21,5 +21,11 @@ namespace DSLNG.PEAR.Data.Entities.Pop
         public IList<Signature> Signatures { get; set; }
         public string Attachment { get; set; }
         public string Status { get; set; }
+        public string DashboardObjective { get; set; }
+        public string StructureLeader { get; set; }
+        public string StructureOwner { get; set; }
+        public double ResourceTotalCost { get; set; }
+        public string ResourceCategory { get; set; }
+        public string ResourceRemark { get; set; }
     }
 }

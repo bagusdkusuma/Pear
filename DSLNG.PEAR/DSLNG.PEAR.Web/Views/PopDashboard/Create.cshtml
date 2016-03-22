@@ -30,6 +30,38 @@
                     @Html.ValidationMessageFor(model => model.Subtitle)
                 </div>
                 <div class="form-group form-list">
+                    @Html.LabelFor(model => model.DashboardObjective)
+                    @Html.TextBoxFor(model => model.DashboardObjective, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.DashboardObjective)
+                </div>
+                <div class="message-holder">
+                    <div class="form-group form-list message-text-area">
+                        @Html.LabelFor(model => model.StructureLeader)
+                        @Html.TextAreaFor(model => model.StructureLeader, 5, 100, new { @class = "form-control popDasboard-message" })
+                        @Html.ValidationMessageFor(model => model.StructureLeader)
+                    </div>
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.StructureOwner)
+                    @Html.TextBoxFor(model => model.StructureOwner, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.StructureOwner)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.ResourceTotalCost)
+                    @Html.TextBoxFor(model => model.ResourceTotalCost, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ResourceTotalCost)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.ResourceCategory)
+                    @Html.TextBoxFor(model => model.ResourceCategory, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ResourceCategory)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.ResourceRemark)
+                    @Html.TextAreaFor(model => model.ResourceRemark, 5, 100, new { @class = "form-control popDasboard-message" })
+                    @Html.ValidationMessageFor(model => model.ResourceRemark)
+                </div>
+                <div class="form-group form-list">
                     @Html.LabelFor(model => model.IsActive)
                     @Html.CheckBoxFor(model => model.IsActive, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.IsActive)
@@ -51,7 +83,26 @@
         <div class="col-md-12 artifact-designer-btns">
             <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
             <a onclick="location.reload();" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>
-            <a href="/PlanningBlueprint" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+            <a href="/PopDashboard" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
         </div>
     }
 </div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            tinyMCE.init({
+                selector: ".popDasboard-message",
+                plugins: [
+                    "advlist autolink lists link image charmap print preview anchor",
+                    "searchreplace visualblocks code fullscreen",
+                    "insertdatetime media table contextmenu paste"
+                ],
+                toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+            });
+
+
+        });
+    </script>
+}
