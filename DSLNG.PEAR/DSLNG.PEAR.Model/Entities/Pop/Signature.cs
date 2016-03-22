@@ -13,5 +13,8 @@ namespace DSLNG.PEAR.Data.Entities.Pop
         public PopDashboard PopDashboard { get; set; }
         public User User { get; set; }
         public SignatureType Type { get; set; }
+        public bool IsApprove { get; set; }
+        public bool IsReject { get; set; }
+        public string Note { get; set; }
     }
 }

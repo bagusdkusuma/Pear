@@ -358,6 +358,22 @@ namespace DSLNG.PEAR.Web.Controllers
                         viewModel.KpiInformations = GetKpiInformations(9);
                         return PartialView("LayoutType/_LngAndCdsProduction", viewModel);
                     }
+                case "weekly-maintenance":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(4);
+                        var result = _selectService.GetHighlightTypesDropdown();
+                        viewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                        return PartialView("LayoutType/_WeeklyMaintenance", viewModel);
+                    }
+                case "critical-pm":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(5);
+                        var result = _selectService.GetHighlightTypesDropdown();
+                        viewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                        return PartialView("LayoutType/_CriticalPm", viewModel);
+                    }
             }
 
             return Content("Error");
@@ -365,16 +381,8 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Delete(int id, string type)
         {
-            //var request = id;
             var response = _derService.DeleteLayoutItem(id, type);
-            //{
-            //    case "highlight":
-            //        {
-            //            request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
-            //            response = _derService.DeleteLayoutItem(request);
-            //            break;
-            //        }
-            //}
+           
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
             return RedirectToAction("Config", new { id = response.DerLayoutId });
@@ -457,6 +465,8 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "mgdp":
                 case "hhv":
                 case "lng-and-cds-production":
+                case "weekly-maintenance":
+                case "critical-pm":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
@@ -495,6 +505,25 @@ namespace DSLNG.PEAR.Web.Controllers
 
             return list;
         }
+
+       /* private IList<DerLayoutItemViewModel.DerKpiInformationViewModel> GetWeeklyMaintenance(int numberOfKpi)
+        {
+            var list = new List<DerLayoutItemViewModel.DerKpiInformationViewModel>();
+            for (int i = 0; i < numberOfKpi; i++)
+            {
+                if (i < 3)
+                {
+                    list.Add(new DerLayoutItemViewModel.DerKpiInformationViewModel {Position = i});
+                }
+                else
+                {
+                    list.Add();
+                }
+                
+            }
+
+            return list;
+        } */
 
     }
 }

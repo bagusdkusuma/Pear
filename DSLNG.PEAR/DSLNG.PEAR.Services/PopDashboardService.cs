@@ -65,6 +65,11 @@ namespace DSLNG.PEAR.Services
                             ? data.OrderBy(x => x.Number).ThenBy(x => x.IsActive)
                             : data.OrderByDescending(x => x.Number).ThenBy(x => x.IsActive);
                         break;
+                    case "Status":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Status).ThenBy(x => x.IsActive)
+                            : data.OrderByDescending(x => x.Status).ThenBy(x => x.IsActive);
+                        break;
                 }
             }
 
@@ -77,14 +82,15 @@ namespace DSLNG.PEAR.Services
 
         public SavePopDashboardResponse SavePopDashboard(SavePopDashboardRequest request)
         {
+            var popDashboard = request.MapTo<PopDashboard>();
             if (request.Id == 0)
             {
-                var popDashboard = request.MapTo<PopDashboard>();
                 DataContext.PopDashboards.Add(popDashboard);
             }
             else
             {
-
+                popDashboard = DataContext.PopDashboards.FirstOrDefault(x => x.Id == request.Id);
+                request.MapPropertiesToInstance<PopDashboard>(popDashboard);
             }
 
             DataContext.SaveChanges();
@@ -104,6 +110,20 @@ namespace DSLNG.PEAR.Services
                 .Include(x => x.Signatures)
                 .Include(x => x.Signatures.Select(y => y.User))
                 .FirstOrDefault().MapTo<GetPopDashboardResponse>();
+        }
+
+
+        public DeletePopDashboardResponse DeletePopDashboard(int request)
+        {
+            var popDashboard = DataContext.PopDashboards.FirstOrDefault(x => x.Id == request);
+            DataContext.PopDashboards.Attach(popDashboard);
+            DataContext.PopDashboards.Remove(popDashboard);
+            DataContext.SaveChanges();
+            return new DeletePopDashboardResponse
+            {
+                IsSuccess = true,
+                Message = "Pop Dashboard has been Deleted!"
+            };
         }
     }
 }

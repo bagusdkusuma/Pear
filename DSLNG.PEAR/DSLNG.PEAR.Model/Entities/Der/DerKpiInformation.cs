@@ -19,6 +19,8 @@ namespace DSLNG.PEAR.Data.Entities.Der
         public int Position { get; set; }
         [DefaultValue("false")]
         public bool IsOriginalData { get; set; }
+        [DefaultValue(ConfigType.KpiAchievement)]
         public ConfigType ConfigType { get; set; }
+        public SelectOption SelectOption { get; set; }
     }
 }

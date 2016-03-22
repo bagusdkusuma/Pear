@@ -1,0 +1,48 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayCriticalPmViewModel
+
+@{
+    var pos0 = Model.CriticalPmViewModels.Single(x => x.Position == 0);
+    var pos1 = Model.CriticalPmViewModels.Single(x => x.Position == 1);
+    var pos2 = Model.CriticalPmViewModels.Single(x => x.Position == 2);
+    var pos3 = Model.CriticalPmViewModels.Single(x => x.Position == 3);
+    var pos4 = Model.CriticalPmViewModels.Single(x => x.Position == 4);
+    
+}
+<table class="der-table all-border">
+    <thead>
+        <tr>
+            <th colspan="6">CRITICAL PM COMPLIANCE/OVERDUE
+            </th>
+        </tr>
+        <tr>
+            <th>Type
+            </th>
+            <th>Relieve Valve
+            </th>
+            <th>SIF
+            </th>
+            <th>Other
+            </th>
+            <th>Total
+            </th>
+            <th>Remarks
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>No. of PM overdue
+            </td>
+            <td>@pos0.Weekly
+            </td>
+            <td>@pos1.Weekly
+            </td>
+            <td>@pos2.Weekly
+            </td>
+            <td>@pos3.Weekly
+            </td>
+            <td>@pos4.Remarks
+            </td>
+        </tr>
+    </tbody>
+</table>

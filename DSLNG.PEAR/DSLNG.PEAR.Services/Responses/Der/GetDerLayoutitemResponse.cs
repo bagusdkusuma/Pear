@@ -24,7 +24,7 @@ namespace DSLNG.PEAR.Services.Responses.Der
             public DerArtifact()
             {
                 Series = new List<DerArtifactSerie>();
-            } 
+            }
             public int Id { get; set; }
             public string HeaderTitle { get; set; }
             public int MeasurementId { get; set; }
@@ -88,12 +88,20 @@ namespace DSLNG.PEAR.Services.Responses.Der
             public int Position { get; set; }
             public bool IsOriginalData { get; set; }
             public ConfigType ConfigType { get; set; }
+            public SelectOptionResponse SelectOption { get; set; }
 
-            public class KpiResponse 
+            public class KpiResponse
             {
                 public int Id { get; set; }
                 public string Name { get; set; }
                 public string MeasurementName { get; set; }
+            }
+
+            public class SelectOptionResponse
+            {
+                public int Id { get; set; }
+                public string Value { get; set; }
+                public string Text { get; set; }
             }
         }
     }

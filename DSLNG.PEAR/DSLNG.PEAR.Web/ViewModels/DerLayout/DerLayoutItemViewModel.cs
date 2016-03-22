@@ -58,6 +58,7 @@ namespace DSLNG.PEAR.Web.ViewModels.DerLayout
             public string KpiName { get; set; }
             public bool IsOriginalData { get; set; }
             public string ConfigType { get; set; }
+            public int HighlightId { get; set; }
         }
 
         public class DerLayoutItemArtifactViewModel

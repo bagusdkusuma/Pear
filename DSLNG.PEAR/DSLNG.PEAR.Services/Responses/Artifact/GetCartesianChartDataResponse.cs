@@ -24,6 +24,7 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
                 BorderColor = "#ffffff";
                 ShowInLegend = true;
             }
+            public int Order { get; set; }
             public string Name { get; set; }
             public IList<double?> Data { get; set; }
             public string Stack { get; set; }
