@@ -1006,7 +1006,16 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifact, TankViewModel>();
 
             //Der KpiInformations
-            Mapper.CreateMap<DerLayoutItemViewModel.DerKpiInformationViewModel, SaveLayoutItemRequest.DerKpiInformationRequest>();
+            Mapper.CreateMap<DerLayoutItemViewModel.DerKpiInformationViewModel, SaveLayoutItemRequest.DerKpiInformationRequest>()
+                .ForMember(x => x.ConfigType, y=> y.MapFrom(z => (ConfigType)Enum.Parse(typeof(ConfigType), z.ConfigType)));
+            Mapper.CreateMap<GetDerLayoutitemResponse.KpiInformationResponse, DerLayoutItemViewModel.DerKpiInformationViewModel>();
+
+            //DER original data
+            Mapper.CreateMap<GetOriginalDataResponse, DisplayOriginalDataViewModel>();
+            Mapper.CreateMap<GetOriginalDataResponse.OriginalDataResponse, DisplayOriginalDataViewModel.OriginalDataViewModel>()
+                .ForMember(x => x.PeriodeType, y => y.MapFrom(z => z.PeriodeType.ToString()));
+            Mapper.CreateMap<DisplayOriginalDataViewModel, SaveOriginalDataRequest>();
+            Mapper.CreateMap<DisplayOriginalDataViewModel.OriginalDataViewModel, SaveOriginalDataRequest.OriginalDataRequest>();
 
             /*Mapper.CreateMap<DerLayoutItemViewModel, SaveLayoutItemRequest>();
             Mapper.CreateMap<DerLayoutLineViewModel, SaveLayoutItemRequest.LayoutItemArtifact>();

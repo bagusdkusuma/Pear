@@ -1,9 +1,10 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.DerLayout.DerLayoutItemViewModel
 
+
 <table class="der-table all-border" style="text-align: center">
     <thead>
         <tr>
-            <th style="background-color: rgb(183,222,232)">KPI</th>
+            <th colspan="2" style="background-color: rgb(183,222,232)">KPI</th>
             <th style="background-color: rgb(184,204,228)">ACT 24H</th>
             <th style="background-color: rgb(184,204,228)">MTD</th>
             <th style="background-color: rgb(184,204,228)">YTD</th>
@@ -17,12 +18,12 @@
             for (int i = 1; i <= Model.KpiInformations.Count; i++)
             {
                 <tr>
-                    <td>
-                        @Html.DropDownListFor(model => model.KpiInformations[i - 1].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
+                    <td width="190px" style="border-right:none;padding:5px">
+                        @Html.DropDownListFor(model => model.KpiInformations[i - 1].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px;margin:0 auto" })
                         @Html.HiddenFor(model => model.KpiInformations[i - 1].Position)
                         <input type="hidden" name="KpiInformations.Index" value="@a" />
-                        @Html.EditorFor(model => model.KpiInformations[i - 1].IsOriginalData)  Is  Original Data? 
                     </td>
+                    <td style="border-left:none">@Html.EditorFor(model => model.KpiInformations[i - 1].IsOriginalData)  Is  Original Data? </td>
                     <td>&nbsp;</td>
                     <td>&nbsp;</td>
                     <td style="text-align: right">&nbsp;</td>

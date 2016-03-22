@@ -1,0 +1,109 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayLngAndCdsViewModel
+
+<table class="der-table all-border">
+    <thead>
+        <tr>
+            <th class="der-bg-blue-3" style="width: 12%">LNG LOADED
+            </th>
+            <th class="der-bg-blue-3">m3
+            </th>
+            <th class="der-bg-blue-3">tonnes
+            </th>
+            <th class="der-bg-blue-3">mmbtu
+            </th>
+            <th class="der-bg-blue-4">#Cargo Shipped
+            </th>
+            <th class="der-bg-blue-7">Planned Cargoes
+                        (ADP 2016)
+            </th>
+            <th class="der-bg-blue-7" style="width: 9%">Remarks
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="der-bg-blue-4">ACTUAL MTD
+            </td>
+            <td>@Model.DisplayLngAndCds.Single(x => x.Position == 1).ActualMtd
+            </td>
+            <td>@Model.DisplayLngAndCds.Single(x => x.Position == 2).ActualMtd
+            </td>
+            <td>@Model.DisplayLngAndCds.Single(x => x.Position == 3).ActualMtd
+            </td>
+            <td>@Model.DisplayLngAndCds.Single(x => x.Position == 4).ActualMtd
+            </td>
+            <td>@Model.DisplayLngAndCds.Single(x => x.Position == 5).ActualMtd
+            </td>
+            <td>Nanti diisi di original data
+            </td>
+        </tr>
+        <tr>
+            <td class="der-bg-blue-4">ACTUAL YTD
+            </td>
+            <td>@Model.DisplayLngAndCds.Single(x => x.Position == 1).ActualYtd
+            </td>
+            <td>@Model.DisplayLngAndCds.Single(x => x.Position == 2).ActualYtd
+            </td>
+            <td>@Model.DisplayLngAndCds.Single(x => x.Position == 3).ActualYtd
+            </td>
+            <td>@Model.DisplayLngAndCds.Single(x => x.Position == 4).ActualYtd
+            </td>
+            <td>@Model.DisplayLngAndCds.Single(x => x.Position == 5).ActualYtd
+            </td>
+            <td>On-track
+            </td>
+        </tr>
+    </tbody>
+</table>
+<table class="der-table all-border">
+    <thead>
+        <tr>
+            <th class="der-bg-blue-3">CDS LOADED
+            </th>
+            <th class="der-bg-blue-3">m3
+            </th>
+            <th class="der-bg-blue-3">tonnes
+            </th>
+            <th>Bbls
+            </th>
+            <th>#Cargo Shipped
+            </th>
+            <th>Note
+            </th>
+            <th>Remarks
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>ACTUAL MTD
+            </td>
+            <td>@Model.DisplayLngAndCds.Single(x => x.Position == 9).ActualMtd
+            </td>
+            <td>@Model.DisplayLngAndCds.Single(x => x.Position == 10).ActualMtd
+            </td>
+            <td>@Model.DisplayLngAndCds.Single(x => x.Position == 11).ActualMtd
+            </td>
+            <td>@Model.DisplayLngAndCds.Single(x => x.Position == 12).ActualMtd
+            </td>
+            <td rowspan="2">Diisi via original data
+            </td>
+            <td>Diisi via original data
+            </td>
+        </tr>
+        <tr>
+            <td>ACTUAL MTD
+            </td>
+            <td>@Model.DisplayLngAndCds.Single(x => x.Position == 9).ActualYtd
+            </td>
+            <td>@Model.DisplayLngAndCds.Single(x => x.Position == 10).ActualYtd
+            </td>
+            <td>@Model.DisplayLngAndCds.Single(x => x.Position == 11).ActualYtd
+            </td>
+            <td>@Model.DisplayLngAndCds.Single(x => x.Position == 12).ActualYtd
+            </td>
+            <td>Diisi via original data
+            </td>
+        </tr>
+    </tbody>
+</table>

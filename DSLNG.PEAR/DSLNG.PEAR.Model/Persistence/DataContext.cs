@@ -71,6 +71,7 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<KeyOutputConfiguration> KeyOutputConfigs { get; set; }
         public IDbSet<StaticHighlightPrivilege> StaticHighlightPrivileges { get; set; }
         public IDbSet<DerArtifactTank> DerArtifactTanks { get; set; }
+        public IDbSet<DerOriginalData> DerOriginalDatas { get; set; }
         public IDbSet<PlanningBlueprint> PlanningBlueprints { get; set; }
         public IDbSet<UltimateObjectivePoint> UltimateObjectivePoints { get; set; }
         public IDbSet<EnvironmentsScanning> EnvironmentsScannings { get; set; }
@@ -89,7 +90,7 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<DerLayout> DerLayouts { get; set; }
         public IDbSet<DerLayoutItem> DerLayoutItems { get; set; }
         public IDbSet<DerArtifact> DerArtifacts { get; set; }
-        public IDbSet<DerKpiInformation> DerTables { get; set; }
+        public IDbSet<DerKpiInformation> DerKpiInformations { get; set; }
         public IDbSet<DerArtifactChart> DerArtifactCharts { get; set; }
         public IDbSet<DerArtifactSerie> DerArtifactSeries { get; set; }
         public IDbSet<Wave> Waves { get; set; }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -16,6 +17,7 @@ using DSLNG.PEAR.Services.Responses.Der;
 using DSLNG.PEAR.Web.ViewModels.Artifact;
 using DSLNG.PEAR.Web.ViewModels.Der;
 using DSLNG.PEAR.Web.ViewModels.Der.Display;
+using DSLNG.PEAR.Web.Extensions;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -125,11 +127,11 @@ namespace DSLNG.PEAR.Web.Controllers
                         request.ValueAxis = ValueAxis.KpiActual;
 
                         var series = layout.Artifact.Series.Select(x => new GetCartesianChartDataRequest.SeriesRequest
-                            {
-                                Color = x.Color,
-                                KpiId = x.KpiId,
-                                Label = x.Label
-                            }).ToList();
+                        {
+                            Color = x.Color,
+                            KpiId = x.KpiId,
+                            Label = x.Label
+                        }).ToList();
                         request.Series = series;
                         var chartData = _artifactService.GetChartData(request);
 
@@ -246,43 +248,48 @@ namespace DSLNG.PEAR.Web.Controllers
                         return Json(previewViewModel, JsonRequestBehavior.AllowGet);
                     }
                 #endregion
-
+                #region highlight
                 case "highlight":
                     {
                         var highlight =
                             _highlightService.GetHighlightByPeriode(new GetHighlightRequest
-                                {
-                                    Date = date,
-                                    HighlightTypeId = layout.Highlight.SelectOptionId
-                                });
+                            {
+                                Date = date,
+                                HighlightTypeId = layout.Highlight.SelectOptionId
+                            });
                         var view = RenderPartialViewToString("Display/_Highlight", highlight);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
+                #endregion
+                #region weather
                 case "weather":
                     {
                         var weather = _weatherService.GetWeather(new GetWeatherRequest
-                            {
-                                Date = date,
-                                ByDate = true
-                            });
+                        {
+                            Date = date,
+                            ByDate = true
+                        });
 
                         var view = RenderPartialViewToString("Display/_Weather", weather);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
+                #endregion
+                #region alert
                 case "alert":
                     {
                         var alert = _highlightService.GetHighlightByPeriode(new GetHighlightRequest
-                            {
-                                Type = "Alert",
-                                Date = date
-                            });
+                        {
+                            Type = "Alert",
+                            Date = date
+                        });
                         var view = RenderPartialViewToString("Display/_Alert", alert);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
-
+                #endregion
+                #region avg ytd key statistic
                 case "avg-ytd-key-statistic":
                     {
                         var viewModel = new DisplayAvgYtdKeyStatisticViewModel();
@@ -298,7 +305,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             {
                                 var actual = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.YTD, YtdFormula.Average);
                                 avgYtdKeyStatisticViewModel.KpiName = item.Kpi.Name;
-                                avgYtdKeyStatisticViewModel.Value = actual.Value.HasValue ? actual.Value.ToString() : "n/a";
+                                avgYtdKeyStatisticViewModel.Ytd = actual.Value.HasValue ? actual.Value.ToString() : "n/a";
                             }
 
                             viewModel.AvgYtdKeyStatistics.Add(avgYtdKeyStatisticViewModel);
@@ -308,7 +315,8 @@ namespace DSLNG.PEAR.Web.Controllers
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
-
+                #endregion
+                #region safety
                 case "safety":
                     {
                         var viewModel = new DisplaySafetyTableViewModel();
@@ -342,7 +350,8 @@ namespace DSLNG.PEAR.Web.Controllers
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
-
+                #endregion
+                #region security
                 case "security":
                     {
                         var viewModel = new DisplaySecurityViewModel();
@@ -368,15 +377,436 @@ namespace DSLNG.PEAR.Web.Controllers
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
+                #endregion
+                #region lng and cds
+                case "lng-and-cds":
+                    {
+                        var viewModel = new DisplayLngAndCdsViewModel();
+                        bool isPlannedCargoes = false;
+                        for (int i = 1; i <= 12; i++)
+                        {
+                            var lngAndCdsViewModel = new DisplayLngAndCdsViewModel.LngAndCdsViewModel();
+                            if (i <= 4 || i >= 9)
+                            {
+                                var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
+                                           new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
+
+                                lngAndCdsViewModel.Position = item.Position;
+                                if (item.Kpi != null)
+                                {
+                                    lngAndCdsViewModel.KpiName = item.Kpi.Name;
+                                    var actualMtd = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.MTD);
+                                    lngAndCdsViewModel.ActualMtd = actualMtd.Value.ToStringFromNullableDouble("n/a");
+                                    var targetMtd = _kpiTargetService.GetKpiTarget(item.Kpi.Id, date, RangeFilter.MTD);
+                                    lngAndCdsViewModel.TargetYtd = targetMtd.Value.ToStringFromNullableDouble("n/a");
+                                    var actualYtd = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.YTD);
+                                    lngAndCdsViewModel.ActualYtd = actualYtd.Value.ToStringFromNullableDouble("n/a");
+                                    var targetYtd = _kpiTargetService.GetKpiTarget(item.Kpi.Id, date, RangeFilter.MTD);
+                                    lngAndCdsViewModel.TargetYtd = targetYtd.Value.ToStringFromNullableDouble("n/a");
+                                }
+
+
+                            }
+                            else
+                            {
+                                if (!isPlannedCargoes)
+                                {
+                                    var mtdList = new List<string>();
+                                    var ytdList = new List<string>();
+
+                                    var list = layout.KpiInformations.Where(x => x.Position == 5).ToList();
+                                    foreach (var item in list)
+                                    {
+                                        string mtd, ytd = string.Empty;
+                                        if (item.Kpi != null)
+                                        {
+                                            var actualMtd = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.MTD);
+                                            var targetMtd = _kpiTargetService.GetKpiTarget(item.Kpi.Id, date, RangeFilter.MTD);
+                                            var actualYtd = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.MTD);
+                                            var targetYtd = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.MTD);
+                                            mtd = string.Format(@"{0}/{1} {2}", actualMtd.Value.ToStringFromNullableDouble("-"), targetMtd.Value.ToStringFromNullableDouble("-"), item.Kpi.Name);
+                                            ytd = string.Format(@"{0}/{1} {2}", actualYtd.Value.ToStringFromNullableDouble("-"), targetYtd.Value.ToStringFromNullableDouble("-"), item.Kpi.Name);
+                                            mtdList.Add(mtd);
+                                            ytdList.Add(ytd);
+                                        }
+                                    }
+
+                                    lngAndCdsViewModel.KpiName = "Planned Cargoes";
+                                    lngAndCdsViewModel.ActualMtd = string.Join(",", mtdList);
+                                    lngAndCdsViewModel.ActualMtd = string.Join(",", ytdList);
+                                    lngAndCdsViewModel.Position = 5;
+                                    isPlannedCargoes = true;
+                                }
+                            }
+
+                            viewModel.DisplayLngAndCds.Add(lngAndCdsViewModel);
+                        }
+
+                        var view = RenderPartialViewToString("Display/_LngAndCds", viewModel);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+                #endregion
+                #region dafwc
+                case "dafwc":
+                    {
+                        var viewModel = new DisplayDafwcViewModel();
+
+                        var response = _derService.GetDafwcData(id, date);
+                        viewModel.DaysWithoutDafwc = response.DaysWithoutDafwc;
+                        viewModel.DaysWithoutLopc = response.DaysWithoutLopc;
+                        viewModel.DaysWithoutDafwcSince = response.DaysWithoutDafwcSince;
+                        viewModel.DaysWithoutLopcSince = response.DaysWithoutLopcSince;
+                        var view = RenderPartialViewToString("Display/_Dafwc", viewModel);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+                #endregion
+                #region job pmts
+                case "job-pmts":
+                    {
+                        var viewModel = new DisplayJobPmtsViewModel();
+
+                        for (int i = 0; i <= 5; i++)
+                        {
+                            var jobPmtsViewModel = new DisplayJobPmtsViewModel.JobPmtsViewModel();
+                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
+                                       new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
+
+                            jobPmtsViewModel.Position = item.Position;
+                            if (item.Kpi != null)
+                            {
+                                var request = new GetKpiValueRequest();
+                                request.KpiId = item.Kpi.Id;
+                                request.ConfigType = item.ConfigType;
+                                request.Periode = date;
+                                request.RangeFilter = RangeFilter.CurrentDay;
+                                var daily = _derService.GetKpiValue(request);
+                                jobPmtsViewModel.KpiName = item.Kpi.Name;
+                                jobPmtsViewModel.Measurement = item.Kpi.MeasurementName;
+                                jobPmtsViewModel.Daily = daily.Value.HasValue ? daily.Value.Value.ToString() : "n/a";
+
+                                request.RangeFilter = i < 2 ? RangeFilter.MTD : RangeFilter.CurrentMonth;
+                                var mtd = _derService.GetKpiValue(request);
+                                jobPmtsViewModel.Mtd = mtd.Value.HasValue ? mtd.Value.Value.ToString() : "n/a";
+
+                                request.RangeFilter = i < 2 ? RangeFilter.YTD : RangeFilter.CurrentYear;
+                                var ytd = _derService.GetKpiValue(request);
+                                jobPmtsViewModel.Ytd = ytd.Value.HasValue ? ytd.Value.Value.ToString() : "n/a";
+
+
+                                /*double dailyValue = (daily.Value.HasValue) ? daily.Value.Value : 0;
+                                double mtdValue = (mtd.Value.HasValue) ? mtd.Value.Value : 0;
+                                double ytdValue = (ytd.Value.HasValue) ? ytd.Value.Value : 0;*/
+
+
+                            }
+
+                            viewModel.JobPmtsViewModels.Add(jobPmtsViewModel);
+                        }
+
+                        var view = RenderPartialViewToString("Display/_JobPmts", viewModel);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+                #endregion
+                #region total feed gas
+                case "total-feed-gas":
+                    {
+                        var viewModel = new DisplayTotalFeedGasViewModel();
+                        for (int i = 0; i <= 3; i++)
+                        {
+                            var totalFeedGasViewModel = new DisplayTotalFeedGasViewModel.TotalFeedGasViewModel();
+                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
+                                      new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
+                            totalFeedGasViewModel.Position = item.Position;
+                            if (item.Kpi != null)
+                            {
+                                var request = new GetKpiValueRequest();
+                                request.ConfigType = item.ConfigType;
+                                request.KpiId = item.Kpi.Id;
+                                request.Periode = date;
+                                request.RangeFilter = RangeFilter.CurrentDay;
+                                var daily = _derService.GetKpiValue(request);
+                                totalFeedGasViewModel.Daily = daily.Value.HasValue ? daily.Value.Value.ToString() : "n/a";
+                                request.RangeFilter = RangeFilter.MTD;
+                                var mtd = _derService.GetKpiValue(request);
+                                totalFeedGasViewModel.Mtd = mtd.Value.HasValue ? mtd.Value.Value.ToString() : "n/a";
+                                request.RangeFilter = RangeFilter.YTD;
+                                var ytd = _derService.GetKpiValue(request);
+                                totalFeedGasViewModel.Ytd = ytd.Value.HasValue ? ytd.Value.Value.ToString() : "n/a";
+                            }
+                            viewModel.TotalFeedGasViewModels.Add(totalFeedGasViewModel);
+                        }
+                        var view = RenderPartialViewToString("Display/_TotalFeedGas", viewModel);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+                #endregion
+                #region table tank
+                case "table-tank":
+                    {
+                        var viewModel = new DisplayTableTankViewModel();
+                        for (int i = 0; i <= 10; i++)
+                        {
+                            var totalTableTankViewModel = new DisplayTableTankViewModel.TableTankViewModel();
+                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
+                                      new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
+                            totalTableTankViewModel.Position = item.Position;
+                            if (item.Kpi != null)
+                            {
+                                var request = new GetKpiValueRequest();
+                                request.ConfigType = item.ConfigType;
+                                request.KpiId = item.Kpi.Id;
+                                request.Periode = date;
+                                request.RangeFilter = RangeFilter.CurrentDay;
+                                var daily = _derService.GetKpiValue(request);
+                                totalTableTankViewModel.Daily = daily.Value.HasValue ? daily.Value.Value.ToString() : "n/a";
+                            }
+                            viewModel.TableTankViewModels.Add(totalTableTankViewModel);
+                        }
+                        var view = RenderPartialViewToString("Display/_TableTank", viewModel);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+                #endregion
+                #region MGDP
+                case "mgdp":
+                    {
+                        var viewModel = new DisplayMGDPViewModel();
+
+                        for (int i = 0; i <= 5; i++)
+                        {
+                            var MGDPViewModel = new DisplayMGDPViewModel.MGDPViewModel();
+                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
+                                       new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
+
+                            MGDPViewModel.Position = item.Position;
+                            if (item.Kpi != null)
+                            {
+                                var request = new GetKpiValueRequest();
+                                request.KpiId = item.Kpi.Id;
+                                request.ConfigType = item.ConfigType;
+                                request.Periode = date;
+                                request.RangeFilter = RangeFilter.CurrentDay;
+                                var daily = _derService.GetKpiValue(request);
+                                MGDPViewModel.KpiName = item.Kpi.Name;
+                                MGDPViewModel.Measurement = item.Kpi.MeasurementName;
+                                MGDPViewModel.Daily = daily.Value.HasValue ? daily.Value.Value.ToString() : "n/a";
+
+                                request.RangeFilter = RangeFilter.MTD;
+                                var mtd = _derService.GetKpiValue(request);
+                                MGDPViewModel.Mtd = mtd.Value.HasValue ? mtd.Value.Value.ToString() : "n/a";
+
+                                request.RangeFilter = RangeFilter.YTD;
+                                var ytd = _derService.GetKpiValue(request);
+                                MGDPViewModel.Ytd = ytd.Value.HasValue ? ytd.Value.Value.ToString() : "n/a";
+
+
+                                /*double dailyValue = (daily.Value.HasValue) ? daily.Value.Value : 0;
+                                double mtdValue = (mtd.Value.HasValue) ? mtd.Value.Value : 0;
+                                double ytdValue = (ytd.Value.HasValue) ? ytd.Value.Value : 0;*/
+
+
+                            }
+
+                            viewModel.MGDPViewModels.Add(MGDPViewModel);
+                        }
+
+                        var view = RenderPartialViewToString("Display/_MGDP", viewModel);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+                #endregion
+                #region HHV
+                case "hhv":
+                    {
+                        var viewModel = new DisplayHHVViewModel();
+                        for (int i = 0; i <= 3; i++)
+                        {
+                            var totalHHVViewModel = new DisplayHHVViewModel.HHVViewModel();
+                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
+                                      new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
+                            totalHHVViewModel.Position = item.Position;
+                            if (item.Kpi != null)
+                            {
+                                var request = new GetKpiValueRequest();
+                                request.ConfigType = item.ConfigType;
+                                request.KpiId = item.Kpi.Id;
+                                request.Periode = date;
+                                request.RangeFilter = RangeFilter.CurrentDay;
+                                var daily = _derService.GetKpiValue(request);
+                                totalHHVViewModel.Daily = daily.Value.HasValue ? daily.Value.Value.ToString() : "n/a";
+                                request.RangeFilter = RangeFilter.MTD;
+                            }
+                            viewModel.HHVViewModels.Add(totalHHVViewModel);
+                        }
+                        var view = RenderPartialViewToString("Display/_HHV", viewModel);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+                #endregion
+                #region LNG and CDS Production
+                case "lng-and-cds-production":
+                    {
+                        var viewModel = new DisplayLngAndCdsProductionViewModel();
+
+                        for (int i = 0; i <= 8; i++)
+                        {
+                            var MGDPViewModel = new DisplayLngAndCdsProductionViewModel.LngAndCdsProductionViewModel();
+                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
+                                       new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
+
+                            MGDPViewModel.Position = item.Position;
+                            if (item.Kpi != null)
+                            {
+                                var request = new GetKpiValueRequest();
+                                request.KpiId = item.Kpi.Id;
+                                request.ConfigType = item.ConfigType;
+                                request.Periode = date;
+                                request.RangeFilter = RangeFilter.CurrentDay;
+                                var daily = _derService.GetKpiValue(request);
+                                MGDPViewModel.KpiName = item.Kpi.Name;
+                                MGDPViewModel.Measurement = item.Kpi.MeasurementName;
+                                MGDPViewModel.Daily = daily.Value.HasValue ? daily.Value.Value.ToString() : "n/a";
+
+                                request.RangeFilter = RangeFilter.MTD;
+                                var mtd = _derService.GetKpiValue(request);
+                                MGDPViewModel.Mtd = mtd.Value.HasValue ? mtd.Value.Value.ToString() : "n/a";
+
+                                request.RangeFilter = RangeFilter.YTD;
+                                var ytd = _derService.GetKpiValue(request);
+                                MGDPViewModel.Ytd = ytd.Value.HasValue ? ytd.Value.Value.ToString() : "n/a";
+
+
+                                /*double dailyValue = (daily.Value.HasValue) ? daily.Value.Value : 0;
+                                double mtdValue = (mtd.Value.HasValue) ? mtd.Value.Value : 0;
+                                double ytdValue = (ytd.Value.HasValue) ? ytd.Value.Value : 0;*/
+
+
+                            }
+
+                            viewModel.LngAndCdsProductionViewModels.Add(MGDPViewModel);
+                        }
+
+                        var view = RenderPartialViewToString("Display/_LngAndCdsProduction", viewModel);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+                    #endregion
+                #region weekly maintenance
+                case "weekly-maintenance":
+                    {
+                        var viewModel = new DisplayWeeklyMaintenanceViewModel();
+                        DateTime lastWednesday = date;
+                        while (lastWednesday.DayOfWeek != DayOfWeek.Wednesday)
+                            lastWednesday = lastWednesday.AddDays(-1);
+                        viewModel.Date = lastWednesday.ToString("dd MMM yyyy");
+                        for (int i = 0; i <= 3; i++)
+                        {
+                            var weeklyMaintenanceViewModel = new DisplayWeeklyMaintenanceViewModel.WeeklyMaintenanceViewModel();
+                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ?? 
+                                new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
+                            weeklyMaintenanceViewModel.Position = item.Position;
+                            if (item.Kpi != null)
+                            {
+                                var request = new GetKpiValueRequest();
+                                request.ConfigType = item.ConfigType;
+                                request.KpiId = item.Kpi.Id;
+                                request.Periode = date;
+                                request.RangeFilter = RangeFilter.CurrentWeek;
+                                var weekly = _derService.GetKpiValue(request);
+                                weeklyMaintenanceViewModel.Weekly = weekly.Value.HasValue && weekly.Value != null ? weekly.Value.Value.ToString() : "n/a"; ;
+                            } 
+                            else if (item.SelectOption != null)
+                            {
+                                var highlight = _highlightService.GetHighlightByPeriode(new GetHighlightRequest
+                                    {
+                                        Date = date,
+                                        HighlightTypeId = item.SelectOption.Id
+                                    });
+                                weeklyMaintenanceViewModel.Remarks = !string.IsNullOrEmpty(highlight.Message)
+                                                                         ? highlight.Message
+                                                                         : "n/a";
+                            }
+                            viewModel.WeeklyMaintenanceViewModels.Add(weeklyMaintenanceViewModel);
+                        }
+                        var view = RenderPartialViewToString("Display/_WeeklyMaintenance", viewModel);
+                        var json = new {type = layout.Type.ToLowerInvariant(), view};
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+                #endregion
+                #region critical PM
+                case "critical-pm":
+                    {
+                        var viewModel = new DisplayCriticalPmViewModel();
+                        for (int i = 0; i <= 4; i++)
+                        {
+                            var criticalViewModel = new DisplayCriticalPmViewModel.CriticalPmViewModel();
+                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
+                                new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
+                            criticalViewModel.Position = item.Position;
+                            if (item.Kpi != null)
+                            {
+                                var request = new GetKpiValueRequest();
+                                request.ConfigType = item.ConfigType;
+                                request.KpiId = item.Kpi.Id;
+                                request.Periode = date;
+                                request.RangeFilter = RangeFilter.CurrentWeek;
+                                var weekly = _derService.GetKpiValue(request);
+                                criticalViewModel.Weekly = weekly.Value.HasValue && weekly.Value != null ? weekly.Value.Value.ToString() : "n/a"; ;
+                            }
+                            else if (item.SelectOption != null)
+                            {
+                                var highlight = _highlightService.GetHighlightByPeriode(new GetHighlightRequest
+                                {
+                                    Date = date,
+                                    HighlightTypeId = item.SelectOption.Id
+                                });
+                                criticalViewModel.Remarks = !string.IsNullOrEmpty(highlight.Message)
+                                                                         ? highlight.Message
+                                                                         : "n/a";
+                            }
+                            viewModel.CriticalPmViewModels.Add(criticalViewModel);
+                        }
+                        var view = RenderPartialViewToString("Display/_CriticalPm", viewModel);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+                #endregion
 
 
             }
-            return Content("as");
+            return Content("Switch case does not matching");
+        }
+
+        public ActionResult OriginalData(int id, string currentDate)
+        {
+            DateTime date;
+            bool isDate = DateTime.TryParse(currentDate, out date);
+            if (!isDate)
+            {
+                return base.ErrorPage("Original Data should have date parameter");
+            }
+            var response = _derService.GetOriginalData(id, date);
+            var viewModel = response.MapTo<DisplayOriginalDataViewModel>();
+            viewModel.Id = id;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult OriginalData(DisplayOriginalDataViewModel viewModel)
+        {
+            var request = viewModel.MapTo<SaveOriginalDataRequest>();
+            var response = _derService.SaveOriginalData(request);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            return RedirectToAction("OriginalData", new { id = viewModel.Id, currentDate = viewModel.CurrentDate });
         }
 
         private string GetDoubleToString(double? val)
         {
-            return val.HasValue ? val.Value.ToString() : "n/a";
+            return val.HasValue ? val.Value.ToString(CultureInfo.InvariantCulture) : "n/a";
         }
     }
 }

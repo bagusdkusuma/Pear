@@ -19,7 +19,7 @@
         <tr>
             <td>
                 @Html.DropDownListFor(model => model.KpiInformations[i].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
-                <input type="hidden" name="KpiInformations[@i].Index" value="4" />
+                <input type="hidden" name="KpiInformations[@i].Position" value="5" />
                 <input type="hidden" name="KpiInformations.Index" value="@i" />
                 @Html.EditorFor(model => model.KpiInformations[i].IsOriginalData)  Is  Original Data? 
             </td>

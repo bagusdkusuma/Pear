@@ -35,6 +35,7 @@ namespace DSLNG.PEAR.Services.Interfaces
 
         IEnumerable<Dropdown> GetConfigTypes();
         IEnumerable<Dropdown> GetDerItemTypes();
+        IEnumerable<Dropdown> GetConfigTypes(bool isDer);
     }
 
     public class Dropdown
