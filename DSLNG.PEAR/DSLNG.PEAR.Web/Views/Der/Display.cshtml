@@ -241,10 +241,10 @@
 
         <div class="col-md-4 no-padding">
             @{
-                var row5Col0 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 0);
-                if (row5Col0 != null)
+                var row6Col0 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 0);
+                if (row6Col0 != null)
                 {
-                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row5Col0.Id })" class="layout-item"></div>
+                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col0.Id })" class="layout-item"></div>
                 }
             }
         </div>
@@ -358,106 +358,13 @@
             </table>
         </div>
         <div class="col-md-6" style="padding: 0px 0px">
-            <table class="der-table der-dummy all-border">
-                <thead>
-                    <tr style="height: 31px">
-                        <th class="der-bg-blue-1">PRODUCTION</th>
-                        <th colspan="3" class="der-bg-blue-1">LNG</th>
-                        <th colspan="3" class="der-bg-blue-8">
-                            CDS
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            ACTUAL 24H
-                        </td>
-                        <td class="der-bg-yellow">
-                            14,031.03 m3
-                        </td>
-                        <td class="der-bg-yellow">
-                            6,386.90 tonnes
-                        </td>
-                        <td>
-                            329,721 mmbtu
-                        </td>
-                        <td>
-                            2,234.80 bbl
-                        </td>
-                        <td class="der-bg-yellow">
-                            227.96 tonnes
-                        </td>
-                        <td class="der-bg-yellow">
-                            10,560 mmbtu
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            ACTUAL MTD
-                        </td>
-                        <td>
-                            278,357.19 m3
-                        </td>
-                        <td>
-                            126,983.20 tonnes
-                        </td>
-                        <td>
-                            6,560,784 mmbtu
-                        </td>
-                        <td>
-                            45,790.27 bbl
-                        </td>
-                        <td>
-                            4,670.77 tonnes
-                        </td>
-                        <td>
-                            216,362 mmbtu
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>ACTUAL YTD</td>
-                        <td>
-                            278,357.19 m3
-                        </td>
-                        <td>
-                            126,983.20 tonnes
-                        </td>
-                        <td>
-                            6,560,784 mmbtu
-                        </td>
-                        <td>
-                            45,790.27 bbl
-                        </td>
-                        <td>
-                            4,670.77 tonnes
-                        </td>
-                        <td>
-                            216,362 mmbtu
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            MCHE Rundown :
-                        </td>
-                        <td>
-                            6,798.15 ton/d
-                        </td>
-                        <td>
-                            LNG HHV :
-                        </td>
-                        <td>
-                            1,099.11 btu/scf
-                        </td>
-                        <td colspan="2">
-                            CDS Reid Vapor Pressure (RVP) :
-                        </td>
-                        <td>
-                            11.32 Psia
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            @{
+                var row7Col0 = Model.Items.FirstOrDefault(x => x.Row == 7 && x.Column == 0);
+                if (row7Col0 != null)
+                {
+                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row7Col0.Id })" class="layout-item"></div>
+                }
+            }
             <table class="der-table der-dummy all-border">
                 <tr>
                     <td colspan="2" class="der-bg-blue-7">tank</td>
@@ -1136,7 +1043,7 @@
                             callback[data.GraphicType](data, that);
                         } else if (data.type === "highlight" || data.type === "weather" ||
                             data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
-                        data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas" || data.type == "table-tank" || data.type == "mgdp" || data.type == "hhv") {
+                        data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas" || data.type == "table-tank" || data.type == "mgdp" || data.type == "hhv" || data.type == "lng-and-cds-production") {
                             that.html(data.view);
                         }
 

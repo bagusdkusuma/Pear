@@ -293,7 +293,8 @@ namespace DSLNG.PEAR.Services
                     new Dropdown {Text = "TOTAL FEED GAS", Value= "total-feed-gas" },
                     new Dropdown {Text = "Table Tank", Value = "table-tank" },
                     new Dropdown {Text = "MGDP", Value = "mgdp" },
-                    new Dropdown {Text = "HHV", Value = "hhv" }
+                    new Dropdown {Text = "HHV", Value = "hhv" },
+                    new Dropdown {Text = "LNG And CDS Production", Value = "lng-and-cds-production" }
                  };
         }
 

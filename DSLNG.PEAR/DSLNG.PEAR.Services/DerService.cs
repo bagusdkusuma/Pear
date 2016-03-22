@@ -446,6 +446,7 @@ namespace DSLNG.PEAR.Services
                 case "table-tank":
                 case "mgdp":
                 case "hhv":
+                case "lng-and-cds-production":
                     {
                         baseResponse = request.Id > 0 ? UpdateKpiInformations(request) : SaveKpiInformations(request);
                         break;

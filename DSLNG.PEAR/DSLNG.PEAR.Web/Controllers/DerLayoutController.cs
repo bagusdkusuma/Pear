@@ -352,6 +352,12 @@ namespace DSLNG.PEAR.Web.Controllers
                         viewModel.KpiInformations = GetKpiInformations(4);
                         return PartialView("LayoutType/_HHV", viewModel);
                     }
+                case "lng-and-cds-production":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(9);
+                        return PartialView("LayoutType/_LngAndCdsProduction", viewModel);
+                    }
             }
 
             return Content("Error");
@@ -451,6 +457,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "table-tank":
                 case "mgdp":
                 case "hhv":
+                case "lng-and-cds-production":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
