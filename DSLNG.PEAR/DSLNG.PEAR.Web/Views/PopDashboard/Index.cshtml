@@ -21,7 +21,7 @@
             <th>Total Cost</th>
             <th>IsActive</th>
             <th>Status</th>
-            <th>Pop Information</th>
+            <th>File Attachment</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -59,9 +59,15 @@
                         "data": null,
                         "defaultContent": '',
                         "mRender": function (data, type, row) {
-                            var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
-                            var editLink = '@Html.ActionLink("Edit", "Popinformation", "PopDashboard", new { id = "_id_" }, null)'.replace('_id_', data.Id);
-                            return editLink;
+                            if (data.Attachment != null)
+                            {
+                                var downloadLink = '<a href="_download_" download>Download</a>'.replace('_download_', data.Attachment).replace('Download', data.Filename);
+                            }
+                            else
+                            {
+                                var downloadLink = '';
+                            }
+                            return downloadLink;
                         }
                     },
                     {

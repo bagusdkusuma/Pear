@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,7 @@ namespace DSLNG.PEAR.Services.Responses.PopDashboard
             public double ResourceTotalCost { get; set; }
             public string ResourceCategory { get; set; }
             public string ResourceRemark { get; set; }
+            public string Filename { get { return Path.GetFileName(this.Attachment); } }
         }
     }
 }
