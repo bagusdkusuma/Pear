@@ -1,7 +1,7 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.DerLayout.DerLayoutItemViewModel
 
 @{
-    var labels = new List<string> { "Job PMTS(btu/scf)", "Job PMTS(min)", "MGDP(btu/scf)", "MGDP(min)" };
+    var labels = new List<string> { "LNG Loaded(m3)", "LNG Loaded(tonnes)", "LNG Loaded(mmbtu)", "#Cargo Shipped", "Planned Cargoes", "Remarks", "CDS(m3)", "CDS(tonnes)", "CDS(bbls)", "#Cargo Shipped", "Note", "Remarks" };
     for (int i = 0; i < Model.KpiInformations.Count; i++)
     {
         var posIndex = Model.KpiInformations.FirstOrDefault(x => x.Position == i);
@@ -13,6 +13,7 @@
                     @Html.DropDownListFor(model => model.KpiInformations[i].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
                     @Html.HiddenFor(model => model.KpiInformations[i].Position)
                     @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes)
+                    @Html.HiddenFor(model => model.KpiInformations[i].Id)
                     <span style="color:white">
                         @Html.EditorFor(model => model.KpiInformations[i].IsOriginalData) Is Original Data
                     </span>
@@ -22,6 +23,7 @@
         }
     }
 }
+
 
 
 

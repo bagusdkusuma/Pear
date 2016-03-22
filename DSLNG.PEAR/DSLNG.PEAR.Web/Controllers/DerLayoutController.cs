@@ -448,7 +448,6 @@ namespace DSLNG.PEAR.Web.Controllers
                         break;
                     }*/
                 case "safety":
-                case "lng-and-css":
                 case "security":
                 case "job-pmts":
                 case "avg-ytd-key-statistic":
