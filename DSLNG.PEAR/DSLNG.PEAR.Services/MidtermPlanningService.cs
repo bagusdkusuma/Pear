@@ -40,8 +40,9 @@ namespace DSLNG.PEAR.Services
                 var end = midtermPlannings.Last().EndDate;
 
                 var targets = DataContext.KpiTargets.Where(x => kpiIds.Contains(x.Kpi.Id) &&
-                    (PeriodeType.Yearly == x.PeriodeType || PeriodeType.Monthly == x.PeriodeType) &&
-                    x.Periode >= start && x.Periode <= end && x.Value.HasValue).ToList();
+                    PeriodeType.Yearly == x.PeriodeType && 
+                    x.Periode.Year >= start.Value.Year && x.Periode.Year<= end.Value.Year
+                    && x.Value.HasValue).ToList();
 
                 foreach (var midtermPlanning in midtermPlannings) {
                     foreach (var kpi in midtermPlanning.Kpis) {
@@ -223,10 +224,17 @@ namespace DSLNG.PEAR.Services
             try
             {
                 var objective = request.MapTo<MidtermStrategicPlanningObjective>();
-                var midtermPlanning = new MidtermStrategicPlanning { Id = request.MidtermPlanningId };
-                DataContext.MidtermStrategicPlannings.Attach(midtermPlanning);
-                objective.MidtermStrategicPlanning = midtermPlanning;
-                DataContext.MidtermStrategicPlanningObjectives.Add(objective);
+                if (request.Id == 0)
+                {
+                    var midtermPlanning = new MidtermStrategicPlanning { Id = request.MidtermPlanningId };
+                    DataContext.MidtermStrategicPlannings.Attach(midtermPlanning);
+                    objective.MidtermStrategicPlanning = midtermPlanning;
+                    DataContext.MidtermStrategicPlanningObjectives.Add(objective);
+                }
+                else { 
+                    objective = DataContext.MidtermStrategicPlanningObjectives.First(x => x.Id == request.Id);
+                    request.MapPropertiesToInstance<MidtermStrategicPlanningObjective>(objective);
+                }
                 DataContext.SaveChanges();
                 return new AddObjectiveResponse
                 {
@@ -275,8 +283,24 @@ namespace DSLNG.PEAR.Services
                 .Include(x => x.Kpis)
                 .Include(x => x.Kpis.Select(y => y.Measurement))
                 .First(x => x.Id == request.MidtermPlanningId);
-            var kpi = DataContext.Kpis.Include(x => x.Measurement).First(x => x.Id == request.KpiId);
-            midtermPlanning.Kpis.Add(kpi);
+            Kpi kpi = null;
+            if (request.OldKpiId != 0 )
+            {
+                if (request.OldKpiId != request.KpiId)
+                {
+                    midtermPlanning.Kpis.Remove(midtermPlanning.Kpis.First(x => x.Id == request.OldKpiId));
+                    kpi = DataContext.Kpis.Include(x => x.Measurement).First(x => x.Id == request.KpiId);
+                    midtermPlanning.Kpis.Add(kpi);
+                }
+                else {
+                    kpi = midtermPlanning.Kpis.First(x => x.Id == request.KpiId);
+                }
+            }
+            else
+            {
+                kpi = DataContext.Kpis.Include(x => x.Measurement).First(x => x.Id == request.KpiId);
+                midtermPlanning.Kpis.Add(kpi);
+            }
             DataContext.SaveChanges();
             var activeScenario = DataContext.Scenarios.FirstOrDefault(x => x.IsActive && x.IsDashboard);
             //if (midtermPlanning.StartDate.Value.Month == 1 && midtermPlanning.EndDate.Value.Month == 12)

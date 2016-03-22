@@ -195,19 +195,38 @@ namespace DSLNG.PEAR.Data.Persistence
 
             modelBuilder.Entity<EnvironmentsScanning>()
                 .HasRequired(x => x.PlanningBlueprint)
-                .WithRequiredDependent(x => x.EnvironmentsScanning);
+                .WithRequiredDependent(x => x.EnvironmentsScanning)
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<BusinessPostureIdentification>()
                 .HasRequired(x => x.PlanningBlueprint)
-                .WithRequiredDependent(x => x.BusinessPostureIdentification);
+                .WithRequiredDependent(x => x.BusinessPostureIdentification)
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<MidtermPhaseFormulation>()
                .HasRequired(x => x.PlanningBlueprint)
-               .WithRequiredDependent(x => x.MidtermPhaseFormulation);
+               .WithRequiredDependent(x => x.MidtermPhaseFormulation)
+               .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<MidtermPhaseFormulation>()
+                .HasMany(x => x.MidtermPhaseFormulationStages)
+                .WithOptional(x => x.MidtermPhaseFormulation)
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<MidtermStrategyPlanning>()
              .HasRequired(x => x.PlanningBlueprint)
-             .WithRequiredDependent(x => x.MidtermStragetyPlanning);
+             .WithRequiredDependent(x => x.MidtermStragetyPlanning)
+             .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<EnvironmentsScanning>()
+                .HasMany(x => x.Challenges)
+                .WithOptional(x => x.EnvironmentScanning)
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<EnvironmentsScanning>()
+            .HasMany(x => x.Constraints)
+            .WithOptional(x => x.EnvironmentScanning)
+            .WillCascadeOnDelete(true);
 
 
             modelBuilder.Entity<EnvironmentalScanning>()

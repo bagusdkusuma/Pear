@@ -32,7 +32,8 @@ namespace DSLNG.PEAR.Services
                 .Include(x => x.OperationPhase)
                 .Include(x => x.ReinventPhase)
                 .Include(x => x.Constraints)
-                .Include(x => x.Challenges)
+                .Include(x => x.Constraints.Select(y => y.ESCategory))
+                .Include(x => x.Challenges.Select(y => y.ESCategory))
                 .Where(x => x.PlanningBlueprint.Id == response.PlanningBlueprintId).FirstOrDefault().MapTo<GetBusinessPostureResponse.EnvironmentScanning>();
             return response;
         }
@@ -124,8 +125,12 @@ namespace DSLNG.PEAR.Services
                     postureChallenge.DesiredStates = new List<DesiredState>();
                     foreach (var id in request.RelationIds)
                     {
-                        var desiredState = new DesiredState { Id = id };
-                        DataContext.DesiredStates.Attach(desiredState);
+                        var desiredState = DataContext.DesiredStates.Local.FirstOrDefault(x => x.Id == id);
+                        if (desiredState == null)
+                        {
+                            desiredState = new DesiredState { Id = id };
+                            DataContext.DesiredStates.Attach(desiredState);
+                        }
                         postureChallenge.DesiredStates.Add(desiredState);
                     }
                    
@@ -203,8 +208,12 @@ namespace DSLNG.PEAR.Services
                     postureConstraint.DesiredStates = new List<DesiredState>();
                     foreach (var id in request.RelationIds)
                     {
-                        var desiredState = new DesiredState { Id = id };
-                        DataContext.DesiredStates.Attach(desiredState);
+                        var desiredState = DataContext.DesiredStates.Local.FirstOrDefault(x => x.Id == id);
+                        if (desiredState == null)
+                        {
+                            desiredState = new DesiredState { Id = id };
+                            DataContext.DesiredStates.Attach(desiredState);
+                        }
                         postureConstraint.DesiredStates.Add(desiredState);
                     }
 

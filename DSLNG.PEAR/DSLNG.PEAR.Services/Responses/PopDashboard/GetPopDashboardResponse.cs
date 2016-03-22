@@ -14,6 +14,8 @@ namespace DSLNG.PEAR.Services.Responses.PopDashboard
         public string Number { get; set; }
         public string Subtitle { get; set; }
         public bool IsActive { get; set; }
+        public string Status { get; set; }
+        public string Attachment { get; set; }
         public IList<PopInformation> PopInformations { get; set; }
         public IList<Signature> Signatures { get; set; }
 
@@ -33,6 +35,9 @@ namespace DSLNG.PEAR.Services.Responses.PopDashboard
             public string User { get; set; }
             public SignatureType Type {get; set;}
             public string SignatureImage { get; set; }
+            public bool IsApprove { get; set; }
+            public bool IsReject { get; set; }
+            public string Note { get; set; }
         }
     }
 }

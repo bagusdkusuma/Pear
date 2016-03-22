@@ -675,11 +675,16 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetActiveOutputCategoriesResponse.OutputCategoryResponse, EconomicIndicatorsViewModel.OutputCategoryViewModel>();
             Mapper.CreateMap<GetActiveOutputCategoriesResponse.KeyOutputResponse, EconomicIndicatorsViewModel.KeyOutputViewModel>();
             Mapper.CreateMap<SavePopDashboardViewModel, SavePopDashboardRequest>();
+            Mapper.CreateMap<GetPopDashboardResponse, SavePopDashboardViewModel>();
             Mapper.CreateMap<GetPopDashboardResponse, GetPopDashboardViewModel>();
             Mapper.CreateMap<GetPopDashboardResponse.PopInformation, GetPopDashboardViewModel.PopInformation>();
             Mapper.CreateMap<GetPopDashboardResponse.Signature, SignatureViewModel>();
             Mapper.CreateMap<SavePopInformationViewModel, SavePopInformationRequest>();
             Mapper.CreateMap<GetPopDashboardViewModel, SaveSignatureRequest>();
+
+
+            Mapper.CreateMap<SaveApprovalViewModel, ApproveSignatureRequest>();
+
 
             Mapper.CreateMap<KpiTargetInputViewModel, KpiTargetInputRequest>()
                 .ForMember(d => d.Start, o => o.MapFrom(s => DateTime.ParseExact(s.Start, "dd/MM/yyyy", CultureInfo.InvariantCulture)))
@@ -691,6 +696,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<RejectVoyagePlanViewModel, RejectVoyagePlanRequest>();
             Mapper.CreateMap<RejectMidtermStrategyViewModel, RejectMidtermStrategyRequest>();
+
             base.Configure();
         }
         

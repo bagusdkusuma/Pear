@@ -13,10 +13,10 @@ else
     <div class="business-posture">
             <div class="row">
                 <div class="col-md-12">
-                    <h4 style="background-color: #00bfff;">Business Posture Identification</h4>
+                    <h4 class="bp-header" style="background-color: #00bfff;">Business Posture Identification</h4>
                 </div>
             </div>
-            <div class="row">
+            <div class="row bp-wrapper">
                 <div class="col-md-12">
                     <table class="table-bordered table-desired-states">
                         <tr>
@@ -115,7 +115,7 @@ else
                     <ul class="defined-list description">
                         @foreach (var desc in item.Descriptions)
                         { 
-                            <li data-id="@desc.Id">@desc.Value    @if (!Model.IsReviewer)
+                            <li data-id="@desc.Id"><span class="popover-edit-trigger" data-toggle="popover">@desc.Value</span>    @if (!Model.IsReviewer)
                                                                   {<a class="remove-item" href="/MidtermFormulation/DeleteStageDesc"><i class="fa fa-minus"></i></a>}</li>
                         }
                     </ul>
@@ -129,7 +129,7 @@ else
                     <ul class="defined-list key-driver">
                         @foreach (var keyDriver in item.KeyDrivers)
                         { 
-                            <li data-id="@keyDriver.Id">@keyDriver.Value    @if (!Model.IsReviewer)
+                            <li data-id="@keyDriver.Id"><span class="popover-edit-trigger" data-toggle="popover">@keyDriver.Value</span>    @if (!Model.IsReviewer)
                                                                             {<a class="remove-item" href="/MidtermFormulation/DeleteStageKey"><i class="fa fa-minus"></i></a>}</li>
                         }
                     </ul>
@@ -263,15 +263,30 @@ else
 </div>
 <div class="definition-form">
     <form action="/MidtermFormulation/AddDefinition">
+        <input type="hidden" name="Id" />
         <input type="hidden" name="MidtermPhaseStageId" />
         <input type="hidden" name="Type" />
         <label>Description</label>
-        <textarea name="Value" cols="25" rows="5"></textarea>
+        <textarea name="Value" cols="25" rows="5" required="required"></textarea>
+        <div>
         <input type="submit" class="btn btn-primary add-stage-definition" value="submit" />
+            </div>
     </form>
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
+        $(document).on('click', '.bp-header', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            if ($this.hasClass('collapsed')) {
+                $this.removeClass('collapsed');
+            } else {
+                $this.addClass('collapsed');
+            }
+            $('.bp-wrapper').slideToggle(500, function () {
+
+            });
+        });
         $('body').popover({
             selector: '.add-formulation-stage',
             html: true,
@@ -358,12 +373,42 @@ else
                 return $('.definition-form').html();
             }
         });
+        $('.defined-list').popover({
+            selector: '.popover-edit-trigger',
+            html: true,
+            placement: 'top',
+            content: function () {
+                var $this = $(this);
+                var $stage = $this.closest('.formulation-stage');
+                var type = $this.closest('.defined-list').hasClass('description') ? 'description' : 'key-driver';
+                var $form = $('.definition-form').clone(true);
+                $form.find('input[name="MidtermPhaseStageId"]').val($stage.data('id'));
+                $form.find('input[name="Type"]').val(type);
+                $form.find('input[name="Id"]').val($this.closest('li').data('id'));
+                $form.find('textarea').html($this.html());
+                $form.find('.add-stage-definition').removeClass('add-stage-definition').addClass('edit-stage-definition');
+                return $form.html();
+            }
+        });
+        $(document).on('click', '.edit-stage-definition', function (e) {
+            e.preventDefault();
+            var $form = $(this).closest('form');
+            var $trigger = $(this).closest('.popover').prev();
+            if (!$form.valid()) return;
+            $.post($form.prop('action'), $form.serialize(), function (data) {
+                if (data.IsSuccess) {
+                    $trigger.html(data.Value);
+                    $trigger.popover('hide');
+                }
+            });
+        });
         $(document).on('click', '.add-stage-definition', function (e) {
             e.preventDefault();
             var $this = $(this);
             var $trigger = $this.closest('.popover').prev('a');
             var $stage = $this.closest('.formulation-stage');
             var $form = $this.closest('form');
+            if (!$form.valid()) return;
             $form.find('input[name="MidtermPhaseStageId"]').val($stage.data('id'));
             $form.find('input[name="Type"]').val($trigger.data('target'));
             $.post($form.prop('action'), $form.serialize(), function (data) {
@@ -371,9 +416,9 @@ else
                     console.log('success');
                     var $listResult = $stage.find('.defined-list.' + $trigger.data('target'));
                     if ($trigger.data('target') == 'description') {
-                        $listResult.append('<li data-id="' + data.Id + '">' + data.Value + '<a class="remove-item" href="/MidtermFormulation/DeleteStageDesc"><i class="fa fa-minus"></i></a>');
+                        $listResult.append('<li data-id="' + data.Id + '"><span class="popover-edit-trigger" data-toggle="popover">' + data.Value + '</span><a class="remove-item" href="/MidtermFormulation/DeleteStageDesc"><i class="fa fa-minus"></i></a>');
                     } else {
-                        $listResult.append('<li data-id="' + data.Id + '">' + data.Value + '<a class="remove-item" href="/MidtermFormulation/DeleteStageKey"><i class="fa fa-minus"></i></a>');
+                        $listResult.append('<li data-id="' + data.Id + '"><span class="popover-edit-trigger" data-toggle="popover">' + data.Value + '</span><a class="remove-item" href="/MidtermFormulation/DeleteStageKey"><i class="fa fa-minus"></i></a>');
                     }
                     $trigger.popover('hide');
                 }

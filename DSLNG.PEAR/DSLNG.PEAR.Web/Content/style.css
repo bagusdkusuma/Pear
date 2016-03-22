@@ -1891,8 +1891,40 @@ a.see-more {
 
 .row-uo h4 {
     text-align: center;
-    padding-top: 10px;
+    padding: 10px;
+    margin:0;
 }
+.row-uo.bp,
+.bp-header {
+    position:relative;
+    cursor:pointer;
+}
+
+.row-uo.bp:after,
+.bp-header:after {
+    content:"\f107";
+    /*content: "\f105";*/
+    /*width: 19px;*/
+    font-size: 24px;
+    display: inline-block;
+    text-align: right;
+    margin-right: 10px;
+    position:absolute;
+    right:6px;
+    font:normal normal normal 24px/1 FontAwesome;
+    top:6px;
+    color:#fff;
+    transition:all 0.5s;
+}
+
+.env-scanning-wrapper h6 {
+    float:none;
+}
+
+    .row-uo.bp.collapsed:after,
+    .bp-header.collapsed:after {
+          transform: rotate(-90deg);
+    }
 
 .row-uo,
 .row-environmental {
@@ -2164,6 +2196,8 @@ li > input.choose-list {
         list-style: decimal;
         padding-right: 20px;
         position: relative;
+            text-align: justify;
+    word-break: normal
     }
 
         .formulation-stage .defined-list li .remove-item {
@@ -2307,7 +2341,8 @@ li > input.choose-list {
 
     .midterm-plannings .midterm-planning table th:first-child a {
         position: absolute;
-        right: 5px;
+        right: 0px;
+        left: auto;
     }
 
     .midterm-plannings .midterm-planning table.kpis th:first-child {
@@ -2396,6 +2431,7 @@ li > input.choose-list {
 
     .business-posture ul li {
         position: relative;
+        word-break:normal;
     }
 
 .business-posture .table-desired-states .remove-item {
@@ -2403,7 +2439,10 @@ li > input.choose-list {
     right: -25px;
     top: 0;
 }
-
+.table-posture-challenge,
+.table-posture-constraint {
+    width:100%;
+}
 .table-posture-constraint,
 .table-posture-constraint tbody > tr > td,
 .table-posture-challenge,
@@ -2415,8 +2454,8 @@ table.list-result {
     margin: 0;
 }
 
-    table.list-result tr th,
-    table.list-result tr td {
+    .business-posture table.list-result tr th,
+    .business-posture table.list-result tr td {
         border: 1px solid #ddd;
         border-right: none;
     }
@@ -2424,9 +2463,10 @@ table.list-result {
         table.list-result tr th:first-child,
         table.list-result tr td:first-child {
             border-left: none;
+            vertical-align:top;
         }
 
-            table.list-result tr td:first-child span {
+            table.list-result tr td:first-child > a > span {
                 display: inline-block;
                 width: 17px;
                 height: 17px;
@@ -2439,6 +2479,7 @@ table.list-result {
         table.list-result tr td:last-child {
             border-right: none;
             border-left: none;
+            vertical-align:top;
         }
 
 table.list-result {
@@ -2627,7 +2668,6 @@ table.kpis {
     top: 5px;
 }
 
-<<<<<<< HEAD
 .pop-information .row .table-info tr td {
     display: block;
 }
@@ -2934,7 +2974,6 @@ color: #3498db;
 
 
 .pop-information .col-md-8 {
-    border: 1px solid white;
     padding-left: 0px;
     padding-right: 0px;
 }
@@ -2957,4 +2996,15 @@ color: #3498db;
 }
 .notes-value {
     display:none;
+}
+span.popover-edit-trigger {
+    display:inline-block;
+    width:100%;
+    vertical-align: top;
+    word-break:normal;
+        text-align: justify;
+}
+table.list-result tbody > tr > td,
+table.popover-envi tbody > tr > td {
+    vertical-align:top;
 }

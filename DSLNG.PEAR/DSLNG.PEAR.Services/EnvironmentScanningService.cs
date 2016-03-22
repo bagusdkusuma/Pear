@@ -51,68 +51,85 @@ namespace DSLNG.PEAR.Services
 
         public SaveEnvironmentScanningResponse SaveEnvironmentScanning(SaveEnvironmentScanningRequest request)
         {
-            if (request.Id == 0)
+            if (request.Type == "cp")
             {
-                if (request.Type == "cp")
+                var Environmen = request.MapTo<UltimateObjectivePoint>();
+                if (request.Id == 0)
                 {
-                    var Environmen = request.MapTo<UltimateObjectivePoint>();
                     Environmen.ConstructionPhaseHost = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EsId).FirstOrDefault();
                     DataContext.UltimateObjectivePoints.Add(Environmen);
-                    DataContext.SaveChanges();
-                    return new SaveEnvironmentScanningResponse
-                    {
-                        Id = Environmen.Id,
-                        Description = Environmen.Description,
-                        IsSuccess = true,
-                        Message = "Environment has been saved succesfully!"
-                    };
-                }
-                else if (request.Type == "op")
-                {
-                    var Environmen = request.MapTo<UltimateObjectivePoint>();
-                    Environmen.OperationPhaseHost = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EsId).FirstOrDefault();
-                    DataContext.UltimateObjectivePoints.Add(Environmen);
-                    DataContext.SaveChanges();
-                    return new SaveEnvironmentScanningResponse
-                    {
-                        Id = Environmen.Id,
-                        Description = Environmen.Description,
-                        IsSuccess = true,
-                        Message = "Environment has been saved succesfully!"
-                    };
-                }
-                else if (request.Type == "rp")
-                {
-                    var Environmen = request.MapTo<UltimateObjectivePoint>();
-                    Environmen.ReinventPhaseHost = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EsId).FirstOrDefault();
-                    DataContext.UltimateObjectivePoints.Add(Environmen);
-                    DataContext.SaveChanges();
-                    return new SaveEnvironmentScanningResponse
-                    {
-                        Id = Environmen.Id,
-                        Description = Environmen.Description,
-                        IsSuccess = true,
-                        Message = "Environment has been saved succesfully!"
-                    };
                 }
                 else
                 {
-                    return new SaveEnvironmentScanningResponse
-                    {
-                        IsSuccess = false,
-                        Message = "False data input!"
-                    };
+                    Environmen = DataContext.UltimateObjectivePoints.FirstOrDefault(x => x.Id == request.Id);
+                    Environmen.ConstructionPhaseHost = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EsId).FirstOrDefault();
+                    request.MapPropertiesToInstance<UltimateObjectivePoint>(Environmen);
                 }
+
+                DataContext.SaveChanges();
+                return new SaveEnvironmentScanningResponse
+                {
+                    Id = Environmen.Id,
+                    Description = Environmen.Description,
+                    IsSuccess = true,
+                    Message = "Environment has been saved succesfully!"
+                };
+            }
+            else if (request.Type == "op")
+            {
+                var Environmen = request.MapTo<UltimateObjectivePoint>();
+                if (request.Id == 0)
+                {
+                    Environmen.OperationPhaseHost = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EsId).FirstOrDefault();
+                    DataContext.UltimateObjectivePoints.Add(Environmen);
+                }
+                else
+                {
+                    Environmen = DataContext.UltimateObjectivePoints.FirstOrDefault(x => x.Id == request.Id);
+                    Environmen.ConstructionPhaseHost = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EsId).FirstOrDefault();
+                    request.MapPropertiesToInstance<UltimateObjectivePoint>(Environmen);
+                }
+
+                DataContext.SaveChanges();
+                return new SaveEnvironmentScanningResponse
+                {
+                    Id = Environmen.Id,
+                    Description = Environmen.Description,
+                    IsSuccess = true,
+                    Message = "Environment has been saved succesfully!"
+                };
+            }
+            else if (request.Type == "rp")
+            {
+                var Environmen = request.MapTo<UltimateObjectivePoint>();
+                if (request.Id == 0)
+                {
+                    Environmen.ReinventPhaseHost = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EsId).FirstOrDefault();
+                    DataContext.UltimateObjectivePoints.Add(Environmen);
+                }
+                else
+                {
+                    Environmen = DataContext.UltimateObjectivePoints.FirstOrDefault(x => x.Id == request.Id);
+                    Environmen.ConstructionPhaseHost = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EsId).FirstOrDefault();
+                    request.MapPropertiesToInstance<UltimateObjectivePoint>(Environmen);
+                }
+                DataContext.SaveChanges();
+                return new SaveEnvironmentScanningResponse
+                {
+                    Id = Environmen.Id,
+                    Description = Environmen.Description,
+                    IsSuccess = true,
+                    Message = "Environment has been saved succesfully!"
+                };
             }
             else
             {
                 return new SaveEnvironmentScanningResponse
                 {
                     IsSuccess = false,
-                    Message = "False data input"
+                    Message = "Saved has been failed!"
                 };
             }
-
         }
 
 
@@ -153,75 +170,103 @@ namespace DSLNG.PEAR.Services
 
         public SaveEnvironmentalScanningResponse SaveEnvironmentalScanning(SaveEnvironmentalScanningRequest request)
         {
-            if (request.Id == 0)
+            if (request.Type == "th")
             {
-                if (request.EnviType == "th")
+                var Environmental = request.MapTo<EnvironmentalScanning>();
+                if (request.Id == 0)
                 {
-                    var Environmental = request.MapTo<EnvironmentalScanning>();
-                    Environmental.ThreatHost = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EnviId).FirstOrDefault();
+                    Environmental.ThreatHost = DataContext.EnvironmentsScannings.Where(x => x.Id == request.Esid).FirstOrDefault();
                     DataContext.EnvironmentalScannings.Add(Environmental);
-                    DataContext.SaveChanges();
-                    return new SaveEnvironmentalScanningResponse
-                    {
-                        Id = Environmental.Id,
-                        Description = Environmental.Desc,
-                        IsSuccess = true,
-                        Message = "Environmental has been saved succesfully"
-                    };
-                }
-
-                else if (request.EnviType == "opp")
-                {
-                    var Environmental = request.MapTo<EnvironmentalScanning>();
-                    Environmental.OpportunityHost = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EnviId).FirstOrDefault();
-                    DataContext.EnvironmentalScannings.Add(Environmental);
-                    DataContext.SaveChanges();
-                    return new SaveEnvironmentalScanningResponse
-                    {
-                        Id = Environmental.Id,
-                        Description = Environmental.Desc,
-                        IsSuccess = true,
-                        Message = "Environmental has been saved succesfully"
-                    };
-                }
-
-                else if (request.EnviType == "wk")
-                {
-                    var Environmental = request.MapTo<EnvironmentalScanning>();
-                    Environmental.WeaknessHost = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EnviId).FirstOrDefault();
-                    DataContext.EnvironmentalScannings.Add(Environmental);
-                    DataContext.SaveChanges();
-                    return new SaveEnvironmentalScanningResponse
-                    {
-                        Id = Environmental.Id,
-                        Description = Environmental.Desc,
-                        IsSuccess = true,
-                        Message = "Environmental has been saved succesfully"
-                    };
-                }
-
-                else if (request.EnviType == "st")
-                {
-                    var Environmental = request.MapTo<EnvironmentalScanning>();
-                    Environmental.StrengthHost = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EnviId).FirstOrDefault();
-                    DataContext.EnvironmentalScannings.Add(Environmental);
-                    DataContext.SaveChanges();
-                    return new SaveEnvironmentalScanningResponse
-                    {
-                        Id = Environmental.Id,
-                        Description = Environmental.Desc,
-                        IsSuccess = true,
-                        Message = "Environmental has been saved succesfully"
-                    };
                 }
                 else
                 {
-                    return new SaveEnvironmentalScanningResponse
-                    {
-                        IsSuccess = false,
-                        Message = "invalid data!"
-                    };
+                    Environmental = DataContext.EnvironmentalScannings.FirstOrDefault(x => x.Id == request.Id);
+                    Environmental.ThreatHost = DataContext.EnvironmentsScannings.Where(x => x.Id == request.Esid).FirstOrDefault();
+                    request.MapPropertiesToInstance<EnvironmentalScanning>(Environmental);
+
                 }
+                DataContext.SaveChanges();
+                return new SaveEnvironmentalScanningResponse
+                {
+                    Id = Environmental.Id,
+                    Description = Environmental.Desc,
+                    IsSuccess = true,
+                    Message = "Environmental has been saved succesfully"
+                };
+            }
+
+            else if (request.Type == "opp")
+            {
+                var Environmental = request.MapTo<EnvironmentalScanning>();
+                if (request.Id == 0)
+                {
+                    Environmental.OpportunityHost = DataContext.EnvironmentsScannings.Where(x => x.Id == request.Esid).FirstOrDefault();
+                    DataContext.EnvironmentalScannings.Add(Environmental);
+                }
+                else
+                {
+                    Environmental = DataContext.EnvironmentalScannings.FirstOrDefault(x => x.Id == request.Id);
+                    Environmental.OpportunityHost = DataContext.EnvironmentsScannings.Where(x => x.Id == request.Esid).FirstOrDefault();
+                    request.MapPropertiesToInstance<EnvironmentalScanning>(Environmental);
+                }
+
+                DataContext.SaveChanges();
+                return new SaveEnvironmentalScanningResponse
+                {
+                    Id = Environmental.Id,
+                    Description = Environmental.Desc,
+                    IsSuccess = true,
+                    Message = "Environmental has been saved succesfully"
+                };
+            }
+
+            else if (request.Type == "wk")
+            {
+                var Environmental = request.MapTo<EnvironmentalScanning>();
+                if (request.Id == 0)
+                {
+                    Environmental.WeaknessHost = DataContext.EnvironmentsScannings.Where(x => x.Id == request.Esid).FirstOrDefault();
+                    DataContext.EnvironmentalScannings.Add(Environmental);
+                }
+                else
+                {
+                    Environmental = DataContext.EnvironmentalScannings.FirstOrDefault(x => x.Id == request.Id);
+                    Environmental.WeaknessHost = DataContext.EnvironmentsScannings.Where(x => x.Id == request.Esid).FirstOrDefault();
+                    request.MapPropertiesToInstance<EnvironmentalScanning>(Environmental);
+                } 
+                
+                DataContext.SaveChanges();
+                return new SaveEnvironmentalScanningResponse
+                {
+                    Id = Environmental.Id,
+                    Description = Environmental.Desc,
+                    IsSuccess = true,
+                    Message = "Environmental has been saved succesfully"
+                };
+            }
+
+            else if (request.Type == "st")
+            {
+                var Environmental = request.MapTo<EnvironmentalScanning>();
+                if (request.Id == 0)
+                {
+                    Environmental.StrengthHost = DataContext.EnvironmentsScannings.Where(x => x.Id == request.Esid).FirstOrDefault();
+                    DataContext.EnvironmentalScannings.Add(Environmental);
+                }
+                else
+                {
+                    Environmental = DataContext.EnvironmentalScannings.FirstOrDefault(x => x.Id == request.Id);
+                    Environmental.StrengthHost = DataContext.EnvironmentsScannings.Where(x => x.Id == request.Esid).FirstOrDefault();
+                    request.MapPropertiesToInstance<EnvironmentalScanning>(Environmental);
+                }
+                DataContext.SaveChanges();
+                return new SaveEnvironmentalScanningResponse
+                {
+                    Id = Environmental.Id,
+                    Description = Environmental.Desc,
+                    IsSuccess = true,
+                    Message = "Environmental has been saved succesfully"
+                };
             }
             else
             {
@@ -231,6 +276,7 @@ namespace DSLNG.PEAR.Services
                     Message = "invalid data!"
                 };
             }
+
         }
 
         public DeleteConstraintResponse DeleteConstraint(DeleteConstraintRequest request)
@@ -266,31 +312,61 @@ namespace DSLNG.PEAR.Services
         public SaveConstraintResponse SaveConstraint(SaveConstraintRequest request)
         {
             var constraint = request.MapTo<Constraint>();
-            constraint.EnvironmentScanning = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EnviId).FirstOrDefault();
-            constraint.ESCategory = DataContext.ESCategories.FirstOrDefault(x => x.Id == request.Category);
-            foreach (var id in request.RelationIds)
+            if (request.Id == 0)
             {
-                 var envistate = DataContext.EnvironmentalScannings.Local.FirstOrDefault(x => x.Id == id);
-                 if (envistate == null)
-                 {
-                     envistate = new EnvironmentalScanning { Id = id };
-                     DataContext.EnvironmentalScannings.Attach(envistate);
-                 }
-                constraint.Relations.Add(envistate);
+                constraint.EnvironmentScanning = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EnviId).FirstOrDefault();
+                constraint.ESCategory = DataContext.ESCategories.FirstOrDefault(x => x.Id == request.Category);
+                foreach (var id in request.RelationIds)
+                {
+                    var envistate = DataContext.EnvironmentalScannings.Local.FirstOrDefault(x => x.Id == id);
+                    if (envistate == null)
+                    {
+                        envistate = new EnvironmentalScanning { Id = id };
+                        DataContext.EnvironmentalScannings.Attach(envistate);
+                    }
+                    constraint.Relations.Add(envistate);
+                }
+
+                DataContext.Constraint.Add(constraint);
+            }
+            else
+            {
+                constraint = DataContext.Constraint.Include(x => x.ESCategory)
+                     .Include(x => x.Relations)
+                    .Include(x => x.ESCategory)
+                    .Include(x => x.Relations.Select(y => y.ThreatHost))
+                    .Include(x => x.Relations.Select(y => y.OpportunityHost))
+                    .Include(x => x.Relations.Select(y => y.WeaknessHost))
+                    .Include(x => x.Relations.Select(y => y.StrengthHost))
+                    .FirstOrDefault(x => x.Id == request.Id);
+                request.MapPropertiesToInstance<Constraint>(constraint);
+                if (constraint.ESCategory.Id != request.Category)
+                {
+                    constraint.ESCategory = DataContext.ESCategories.FirstOrDefault(x => x.Id == request.Category);
+                }
+                constraint.Relations = new List<EnvironmentalScanning>();
+                foreach (var id in request.RelationIds)
+                {
+                    var envistate = DataContext.EnvironmentalScannings.Local.FirstOrDefault(x => x.Id == id);
+                    if (envistate == null)
+                    {
+                        envistate = new EnvironmentalScanning { Id = id };
+                        DataContext.EnvironmentalScannings.Attach(envistate);
+                    }
+                    constraint.Relations.Add(envistate);
+                }
+
+
             }
 
-            DataContext.Constraint.Add(constraint);
             DataContext.SaveChanges();
-
-            var result = DataContext.Constraint
+            var result = DataContext.Constraint.Where(x => x.Id == constraint.Id)
                 .Include(x => x.Relations)
-                .Include(x => x.ESCategory)
                 .Include(x => x.Relations.Select(y => y.ThreatHost))
                 .Include(x => x.Relations.Select(y => y.OpportunityHost))
                 .Include(x => x.Relations.Select(y => y.WeaknessHost))
-                .Include(x => x.Relations.Select(y => y.StrengthHost))
-                .Where(x => x.Id == constraint.Id).FirstOrDefault();
-            
+                .Include(x => x.Relations.Select(y => y.StrengthHost)).FirstOrDefault();
+
             return new SaveConstraintResponse
             {
                 IsSuccess = true,
@@ -304,6 +380,7 @@ namespace DSLNG.PEAR.Services
                 OpportunityIds = result.Relations.Where(x => x.OpportunityHost != null).Select(y => y.Id).ToArray(),
                 WeaknessIds = result.Relations.Where(x => x.WeaknessHost != null).Select(y => y.Id).ToArray(),
                 StrengthIds = result.Relations.Where(x => x.StrengthHost != null).Select(y => y.Id).ToArray(),
+                CategoryId = result.ESCategory.Id
 
             };
 
@@ -313,27 +390,62 @@ namespace DSLNG.PEAR.Services
         public SaveChallengeResponse SaveChallenge(SaveChallengeRequest request)
         {
             var challenge = request.MapTo<Challenge>();
-            challenge.EnvironmentScanning = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EnviId).FirstOrDefault();
-            challenge.ESCategory = DataContext.ESCategories.FirstOrDefault(x => x.Id == request.Category);
-            foreach(var id in request.RelationIds)
+            if (request.Id == 0)
             {
-                var envistate = DataContext.EnvironmentalScannings.Local.FirstOrDefault(x => x.Id == id);
-                if (envistate == null)
+                challenge.EnvironmentScanning = DataContext.EnvironmentsScannings.Where(x => x.Id == request.EnviId).FirstOrDefault();
+                challenge.ESCategory = DataContext.ESCategories.FirstOrDefault(x => x.Id == request.Category);
+                challenge.Relations = new List<EnvironmentalScanning>();
+                foreach (var id in request.RelationIds)
                 {
-                    envistate = new EnvironmentalScanning { Id = id };
-                    DataContext.EnvironmentalScannings.Attach(envistate);
+                    var envistate = DataContext.EnvironmentalScannings.Local.FirstOrDefault(x => x.Id == id);
+                    if (envistate == null)
+                    {
+                        envistate = new EnvironmentalScanning { Id = id };
+                        DataContext.EnvironmentalScannings.Attach(envistate);
+                    }
+                    challenge.Relations.Add(envistate);
                 }
-                challenge.Relations.Add(envistate);
+                DataContext.Challenges.Add(challenge);
             }
-            DataContext.Challenges.Add(challenge);
+            else
+            {
+                challenge = DataContext.Challenges.Include(x => x.ESCategory)
+                    .Include(x => x.Relations)
+                    .Include(x => x.ESCategory)
+                    .Include(x => x.Relations.Select(y => y.ThreatHost))
+                    .Include(x => x.Relations.Select(y => y.OpportunityHost))
+                    .Include(x => x.Relations.Select(y => y.WeaknessHost))
+                    .Include(x => x.Relations.Select(y => y.StrengthHost))
+                    .FirstOrDefault(x => x.Id == request.Id);
+                request.MapPropertiesToInstance<Challenge>(challenge);
+                if (challenge.ESCategory.Id != request.Category)
+                {
+                    challenge.ESCategory = DataContext.ESCategories.FirstOrDefault(x => x.Id == request.Category);
+                }
+                challenge.Relations = new List<EnvironmentalScanning>();
+                foreach (var id in request.RelationIds)
+                {
+                    var envistate = DataContext.EnvironmentalScannings.Local.FirstOrDefault(x => x.Id == id);
+                    if (envistate == null)
+                    {
+                        envistate = new EnvironmentalScanning { Id = id };
+                        DataContext.EnvironmentalScannings.Attach(envistate);
+                    }
+                    challenge.Relations.Add(envistate);
+                }
+
+            }
+           
             DataContext.SaveChanges();
 
             var result = DataContext.Challenges.Where(x => x.Id == challenge.Id)
                 .Include(x => x.Relations)
+                .Include(x => x.ESCategory)
                 .Include(x => x.Relations.Select(y => y.ThreatHost))
                 .Include(x => x.Relations.Select(y => y.OpportunityHost))
                 .Include(x => x.Relations.Select(y => y.WeaknessHost))
                 .Include(x => x.Relations.Select(y => y.StrengthHost)).FirstOrDefault();
+
 
             return new SaveChallengeResponse
             {
@@ -348,6 +460,7 @@ namespace DSLNG.PEAR.Services
                 OpportunityIds = result.Relations.Where(x => x.OpportunityHost != null).Select(y => y.Id).ToArray(),
                 WeaknessIds = result.Relations.Where(x => x.WeaknessHost != null).Select(y => y.Id).ToArray(),
                 StrengthIds = result.Relations.Where(x => x.StrengthHost != null).Select(y => y.Id).ToArray(),
+                CategoryId = result.ESCategory.Id
             };
         }
 
@@ -392,7 +505,8 @@ namespace DSLNG.PEAR.Services
                     BusinessPostureId = businessPosture.Id
                 };
             }
-            catch {
+            catch
+            {
                 return new SubmitEnvironmentsScanningResponse
                 {
                     IsSuccess = false,

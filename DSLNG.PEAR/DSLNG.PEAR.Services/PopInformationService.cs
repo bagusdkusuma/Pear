@@ -37,6 +37,7 @@ namespace DSLNG.PEAR.Services
             else
             {
                 popInformation = DataContext.PopInformations.Where(x => x.Id == request.Id).FirstOrDefault();
+                popInformation.PopDashboardHost = DataContext.PopDashboards.FirstOrDefault(x => x.Id == request.DashboardId);
                 request.MapPropertiesToInstance<PopInformation>(popInformation);
             }
 

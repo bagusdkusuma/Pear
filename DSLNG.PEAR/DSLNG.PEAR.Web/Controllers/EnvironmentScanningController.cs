@@ -62,7 +62,7 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 id = response.Id,
                 description = response.Description,
-                type = viewModel.EnviType
+                type = viewModel.Type
             };
             return Json(data, JsonRequestBehavior.AllowGet);
         }
@@ -94,6 +94,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 id = response.Id,
                 type = response.Type,
                 category = response.Category,
+                categoryId = response.CategoryId,
                 definition = response.Definition,
                 relationids = response.RelationIds,
                 threatIds = response.ThreatIds,
@@ -116,8 +117,10 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 id = response.Id,
                 type = response.Type,
+                categoryId = response.CategoryId,
                 category = response.Category,
                 definition = response.Definition,
+                relationids = response.RelationIds,
                 threatIds = response.ThreatIds,
                 opportunityIds = response.OpportunityIds,
                 weaknessIds = response.WeaknessIds,

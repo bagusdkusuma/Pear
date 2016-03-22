@@ -649,102 +649,20 @@
     </div>
     <div class="row" style="font-size: 11px">
         <div class="col-md-6 no-padding">
-            <table class="der-table der-dummy all-border">
-                <thead>
-                    <tr>
-                        <th colspan="6">
-                            WEEKLY MAINTENANCE BACKLOG (as of 20 Jan 2016)
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>
-                            Type
-                        </th>
-                        <th>
-                            PM
-                        </th>
-                        <th>
-                            CM
-                        </th>
-                        <th>
-                            Total
-                        </th>
-                        <th>
-                            Remarks
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            Weekly Backlog
-                        </td>
-                        <td>
-                            125
-                        </td>
-                        <td>
-                            534
-                        </td>
-                        <td>
-                            659 hours
-                        </td>
-                        <td>
-                            Nothing to concern
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="der-table der-dummy all-border">
-                <thead>
-                    <tr>
-                        <th colspan="6">
-                            CRITICAL PM COMPLIANCE/OVERDUE
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>
-                            Type
-                        </th>
-                        <th>
-                            Relieve Valve
-                        </th>
-                        <th>
-                            SIF
-                        </th>
-                        <th>
-                            Other
-                        </th>
-                        <th>
-                            Total
-                        </th>
-                        <th>
-                            Remarks
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            No. of PM overdue
-                        </td>
-                        <td>
-                            0
-                        </td>
-                        <td>
-                            0
-                        </td>
-                        <td>
-                            0
-                        </td>
-                        <td>
-                            0
-                        </td>
-                        <td>
-                            target is zero
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            @{
+                var row9Col0 = Model.Items.FirstOrDefault(x => x.Row == 9 && x.Column == 0);
+                if (row9Col0 != null)
+                {
+                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row9Col0.Id })" class="layout-item"></div>
+                }
+            }
+            @{
+                var row10Col0 = Model.Items.FirstOrDefault(x => x.Row == 10 && x.Column == 0);
+                if (row10Col0 != null)
+                {
+                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row10Col0.Id })" class="layout-item"></div>
+                }
+            }
             <table class="der-table der-dummy">
                 <tr>
                     <td>
@@ -1211,7 +1129,8 @@
                             callback[data.GraphicType](data, that);
                         } else if (data.type === "highlight" || data.type === "weather" ||
                             data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
-                        data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas") {
+                        data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
+                        || data.type === "weekly-maintenance" || data.type === "critical-pm") {
                             that.html(data.view);
                         }
 

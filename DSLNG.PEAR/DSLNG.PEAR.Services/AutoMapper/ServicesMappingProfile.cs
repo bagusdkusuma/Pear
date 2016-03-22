@@ -572,8 +572,10 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.Ids, o => o.MapFrom(y => y.DesiredStates.Select(z => z.Id)));
             Mapper.CreateMap<EnvironmentsScanning, GetBusinessPostureResponse.EnvironmentScanning>();
             Mapper.CreateMap<UltimateObjectivePoint, GetBusinessPostureResponse.EnvironmentScanning.UltimateObjective>();
-            Mapper.CreateMap<Constraint, GetBusinessPostureResponse.EnvironmentScanning.Constraint>();
-            Mapper.CreateMap<Challenge, GetBusinessPostureResponse.EnvironmentScanning.Challenge>();
+            Mapper.CreateMap<Constraint, GetBusinessPostureResponse.EnvironmentScanning.Constraint>()
+                .ForMember(x => x.Category, o => o.MapFrom(s => s.ESCategory.Name));
+            Mapper.CreateMap<Challenge, GetBusinessPostureResponse.EnvironmentScanning.Challenge>()
+                .ForMember(x => x.Category, o => o.MapFrom(s => s.ESCategory.Name));
             
 
 
@@ -594,17 +596,23 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.OpportunityIds, y => y.MapFrom(z => z.Relations.Where(u => u.OpportunityHost != null).Select(m => m.Id).ToArray()))
                 .ForMember(x => x.WeaknessIds, y => y.MapFrom(z => z.Relations.Where(u => u.WeaknessHost != null).Select(m => m.Id).ToArray()))
                 .ForMember(x => x.StrengthIds, y => y.MapFrom(z => z.Relations.Where(u => u.StrengthHost != null).Select(m => m.Id).ToArray()))
-                .ForMember(x => x.Category, o => o.MapFrom(y => y.ESCategory.Name));
+                .ForMember(x => x.RelationIds, y => y.MapFrom(z => z.Relations.Select(m => m.Id).ToArray()))
+                .ForMember(x => x.Category, o => o.MapFrom(y => y.ESCategory.Name))
+                .ForMember(x => x.CategoryId, o => o.MapFrom(y => y.ESCategory.Id));
             Mapper.CreateMap<Challenge, GetEnvironmentsScanningResponse.Challenge>()
                 .ForMember(x => x.ThreatIds, y => y.MapFrom(z => z.Relations.Where(u => u.ThreatHost != null).Select(m => m.Id).ToArray()))
                 .ForMember(x => x.OpportunityIds, y => y.MapFrom(z => z.Relations.Where(u => u.OpportunityHost != null).Select(m => m.Id).ToArray()))
                 .ForMember(x => x.WeaknessIds, y => y.MapFrom(z => z.Relations.Where(u => u.WeaknessHost != null).Select(m => m.Id).ToArray()))
                 .ForMember(x => x.StrengthIds, y => y.MapFrom(z => z.Relations.Where(u => u.StrengthHost != null).Select(m => m.Id).ToArray()))
-                .ForMember(x => x.Category, o => o.MapFrom(y => y.ESCategory.Name));
+                .ForMember(x => x.RelationIds, y => y.MapFrom(z => z.Relations.Select(m => m.Id).ToArray()))
+                .ForMember(x => x.Category, o => o.MapFrom(y => y.ESCategory.Name))
+                .ForMember(x => x.CategoryId, o => o.MapFrom(y => y.ESCategory.Id));
             Mapper.CreateMap<SaveConstraintRequest, Constraint>();
-            Mapper.CreateMap<Constraint, SaveConstraintResponse>();
+            Mapper.CreateMap<Constraint, SaveConstraintResponse>()
+                .ForMember(x => x.CategoryId, o => o.MapFrom(y => y.ESCategory.Id));
             Mapper.CreateMap<SaveChallengeRequest, Challenge>();
-            Mapper.CreateMap<Challenge, SaveChallengeResponse>();
+            Mapper.CreateMap<Challenge, SaveChallengeResponse>()
+                .ForMember(x => x.CategoryId, o => o.MapFrom(y => y.ESCategory.Id));
             Mapper.CreateMap<SaveESCategoryRequest, ESCategory>();
             Mapper.CreateMap<ESCategory, GetESCategoryResponse>();
 
@@ -678,6 +686,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<SavePopInformationRequest, PopInformation>();
             Mapper.CreateMap<SaveSignatureRequest, DSLNG.PEAR.Data.Entities.Pop.Signature>()
                 .ForMember(x => x.Type, o => o.MapFrom(y => y.TypeSignature));
+
+
+            Mapper.CreateMap<ApproveSignatureRequest, Signature>();
             base.Configure();
         }
 
@@ -896,6 +907,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<DerKpiInformation, GetDerLayoutitemResponse.KpiInformationResponse>();
             Mapper.CreateMap<Kpi, GetDerLayoutitemResponse.KpiInformationResponse.KpiResponse>()
                 .ForMember(x => x.MeasurementName, y => y.MapFrom(z => z.Measurement.Name));
+            Mapper.CreateMap<SelectOption, GetDerLayoutitemResponse.KpiInformationResponse.SelectOptionResponse>();
                 
 
             //DER Original Data

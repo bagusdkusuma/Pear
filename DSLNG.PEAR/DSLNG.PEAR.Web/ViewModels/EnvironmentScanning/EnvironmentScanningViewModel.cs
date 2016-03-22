@@ -82,9 +82,9 @@ namespace DSLNG.PEAR.Web.ViewModels.EnvironmentScanning
         public class CreateEnvironmentalViewModel
         {
             public int Id { get; set; }
-            public int EnviId { get; set; }
+            public int EsId { get; set; }
             public string Description { get; set; }
-            public string EnviType { get; set; }
+            public string Type { get; set; }
         }
 
         public class Constraint
@@ -93,6 +93,7 @@ namespace DSLNG.PEAR.Web.ViewModels.EnvironmentScanning
             public IList<Environmental> Relation { get; set; }
             public string Definition { get; set; }
             public string Type { get; set; }
+            public int CategoryId { get; set; }
             public string Category { get; set; }
             public int EnviId { get; set; }
             public int[] RelationIds { get; set; }
@@ -102,6 +103,11 @@ namespace DSLNG.PEAR.Web.ViewModels.EnvironmentScanning
             public int[] WeaknessIds { get; set; }
             public int[] StrengthIds { get; set; }
 
+
+            public string RelationIdsString 
+            {
+                get { return string.Join(",", this.RelationIds); }
+            }
             public string ThreatIdString
             {
                 get { return string.Join(",", this.ThreatIds); }
@@ -128,6 +134,7 @@ namespace DSLNG.PEAR.Web.ViewModels.EnvironmentScanning
             public IList<Environmental> Relation { get; set; }
             public string Definition { get; set; }
             public string Type { get; set; }
+            public int CategoryId { get; set; }
             public string Category { get; set; }
             public int EnviId { get; set; }
             public int[] RelationIds { get; set; }
@@ -137,6 +144,10 @@ namespace DSLNG.PEAR.Web.ViewModels.EnvironmentScanning
             public int[] WeaknessIds { get; set; }
             public int[] StrengthIds { get; set; }
 
+            public string RelationIdsString
+            {
+                get { return string.Join(",", this.RelationIds); }
+            }
             public string ThreatIdString
             {
                 get { return string.Join(",", this.ThreatIds); }

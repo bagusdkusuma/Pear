@@ -531,7 +531,7 @@ namespace DSLNG.PEAR.Web.Controllers
                                 totalFeedGasViewModel.Daily = daily.Value.HasValue ? daily.Value.Value.ToString() : "n/a";
                                 request.RangeFilter = RangeFilter.MTD;
                                 var mtd = _derService.GetKpiValue(request);
-                                totalFeedGasViewModel.Mtd = mtd.Value.HasValue ? daily.Value.Value.ToString() : "n/a";
+                                totalFeedGasViewModel.Mtd = mtd.Value.HasValue ? mtd.Value.Value.ToString() : "n/a";
                                 request.RangeFilter = RangeFilter.YTD;
                                 var ytd = _derService.GetKpiValue(request);
                                 totalFeedGasViewModel.Ytd = ytd.Value.HasValue ? ytd.Value.Value.ToString() : "n/a";
@@ -543,6 +543,86 @@ namespace DSLNG.PEAR.Web.Controllers
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
                     #endregion
+                #region weekly maintenance
+                case "weekly-maintenance":
+                    {
+                        var viewModel = new DisplayWeeklyMaintenanceViewModel();
+                        DateTime lastWednesday = date;
+                        while (lastWednesday.DayOfWeek != DayOfWeek.Wednesday)
+                            lastWednesday = lastWednesday.AddDays(-1);
+                        viewModel.Date = lastWednesday.ToString("dd MMM yyyy");
+                        for (int i = 0; i <= 3; i++)
+                        {
+                            var weeklyMaintenanceViewModel = new DisplayWeeklyMaintenanceViewModel.WeeklyMaintenanceViewModel();
+                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ?? 
+                                new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
+                            weeklyMaintenanceViewModel.Position = item.Position;
+                            if (item.Kpi != null)
+                            {
+                                var request = new GetKpiValueRequest();
+                                request.ConfigType = item.ConfigType;
+                                request.KpiId = item.Kpi.Id;
+                                request.Periode = date;
+                                request.RangeFilter = RangeFilter.CurrentWeek;
+                                var weekly = _derService.GetKpiValue(request);
+                                weeklyMaintenanceViewModel.Weekly = weekly.Value.HasValue && weekly.Value != null ? weekly.Value.Value.ToString() : "n/a"; ;
+                            } 
+                            else if (item.SelectOption != null)
+                            {
+                                var highlight = _highlightService.GetHighlightByPeriode(new GetHighlightRequest
+                                    {
+                                        Date = date,
+                                        HighlightTypeId = item.SelectOption.Id
+                                    });
+                                weeklyMaintenanceViewModel.Remarks = !string.IsNullOrEmpty(highlight.Message)
+                                                                         ? highlight.Message
+                                                                         : "n/a";
+                            }
+                            viewModel.WeeklyMaintenanceViewModels.Add(weeklyMaintenanceViewModel);
+                        }
+                        var view = RenderPartialViewToString("Display/_WeeklyMaintenance", viewModel);
+                        var json = new {type = layout.Type.ToLowerInvariant(), view};
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+                #endregion
+                #region critical PM
+                case "critical-pm":
+                    {
+                        var viewModel = new DisplayCriticalPmViewModel();
+                        for (int i = 0; i <= 4; i++)
+                        {
+                            var criticalViewModel = new DisplayCriticalPmViewModel.CriticalPmViewModel();
+                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
+                                new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
+                            criticalViewModel.Position = item.Position;
+                            if (item.Kpi != null)
+                            {
+                                var request = new GetKpiValueRequest();
+                                request.ConfigType = item.ConfigType;
+                                request.KpiId = item.Kpi.Id;
+                                request.Periode = date;
+                                request.RangeFilter = RangeFilter.CurrentWeek;
+                                var weekly = _derService.GetKpiValue(request);
+                                criticalViewModel.Weekly = weekly.Value.HasValue && weekly.Value != null ? weekly.Value.Value.ToString() : "n/a"; ;
+                            }
+                            else if (item.SelectOption != null)
+                            {
+                                var highlight = _highlightService.GetHighlightByPeriode(new GetHighlightRequest
+                                {
+                                    Date = date,
+                                    HighlightTypeId = item.SelectOption.Id
+                                });
+                                criticalViewModel.Remarks = !string.IsNullOrEmpty(highlight.Message)
+                                                                         ? highlight.Message
+                                                                         : "n/a";
+                            }
+                            viewModel.CriticalPmViewModels.Add(criticalViewModel);
+                        }
+                        var view = RenderPartialViewToString("Display/_CriticalPm", viewModel);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+                #endregion
 
             }
             return Content("Switch case does not matching");

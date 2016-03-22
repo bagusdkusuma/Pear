@@ -1,0 +1,57 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.PopDashboard.SavePopDashboardViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="pop-dashboard-save">
+    @using (Html.BeginForm("Edit", "PopDashboard", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="col-md-12">
+            <div class="title">Pop Dashboard</div>
+            <div>@Html.ValidationSummary(true)</div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-inline whitebox">
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.Title)
+                    @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Title)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.Number)
+                    @Html.TextBoxFor(model => model.Number, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Number)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.Subtitle)
+                    @Html.TextBoxFor(model => model.Subtitle, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Subtitle)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.IsActive)
+                    @Html.CheckBoxFor(model => model.IsActive, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IsActive)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.Status)
+                    @Html.DropDownListFor(model => model.Status, Model.Statuses, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Status)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Attachment, new { @class = "control-label" })
+                    <input type="file" name="file" id="file" class="form-control" />
+                    @Html.ValidationMessageFor(model => model.Attachment)
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col-md-12 artifact-designer-btns">
+            <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
+            <a onclick="location.reload();" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>
+            <a href="/PlanningBlueprint" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+        </div>
+    }
+</div>

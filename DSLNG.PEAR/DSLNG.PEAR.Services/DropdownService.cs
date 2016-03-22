@@ -292,7 +292,8 @@ namespace DSLNG.PEAR.Services
                     new Dropdown {Text = "JOB PMTS", Value = "job-pmts"},
                     new Dropdown {Text = "Total Feed Gas", Value= "total-feed-gas" },
                     new Dropdown {Text = "Table Tank", Value = "table-tank" },
-                    new Dropdown {Text = "Weekly Maintenance Backlog", Value = "weekly-maintenance" }
+                    new Dropdown {Text = "Weekly Maintenance Backlog", Value = "weekly-maintenance" },
+                    new Dropdown {Text = "Critical PM", Value = "critical-pm" }
                 };
         }
 
