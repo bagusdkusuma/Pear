@@ -790,6 +790,7 @@
     <Compile Include="ViewModels\Der\DerIndexViewModel.cs" />
     <Compile Include="ViewModels\Der\DerViewModel.cs" />
     <Compile Include="ViewModels\Der\DisplayOriginalDataViewModel.cs" />
+    <Compile Include="ViewModels\Der\Display\DisplayCriticalPmViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayDafwcViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayLngAndCdsProductionViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayMGDPViewModel.cs" />
@@ -801,6 +802,7 @@
     <Compile Include="ViewModels\Der\Display\DisplaySecurityViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplaySafetyTableViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayAvgYtdKeyStatisticViewModel.cs" />
+    <Compile Include="ViewModels\Der\Display\DisplayWeeklyMaintenanceViewModel.cs" />
     <Compile Include="ViewModels\Der\ManageDerItemViewModel.cs" />
     <Compile Include="ViewModels\EconomicSummary\EconomicSummaryReportViewModel.cs" />
     <Compile Include="Controllers\HighlightController.cs" />
