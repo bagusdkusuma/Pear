@@ -334,6 +334,30 @@ namespace DSLNG.PEAR.Web.Controllers
                         viewModel.KpiInformations = GetKpiInformations(4);
                         return PartialView("LayoutType/_TotalFeedGas", viewModel);
                     }
+                case "table-tank":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(11);
+                        return PartialView("LayoutType/_TableTank", viewModel);
+                    }
+                case "mgdp":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(6);
+                        return PartialView("LayoutType/_MGDP", viewModel);
+                    }
+                case "hhv":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(4);
+                        return PartialView("LayoutType/_HHV", viewModel);
+                    }
+                case "lng-and-cds-production":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(9);
+                        return PartialView("LayoutType/_LngAndCdsProduction", viewModel);
+                    }
                 case "weekly-maintenance":
                     {
                         var viewModel = new DerLayoutItemViewModel();
@@ -438,6 +462,10 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "avg-ytd-key-statistic":
                 case "lng-and-cds":
                 case "total-feed-gas":
+                case "table-tank":
+                case "mgdp":
+                case "hhv":
+                case "lng-and-cds-production":
                 case "weekly-maintenance":
                 case "critical-pm":
                     {

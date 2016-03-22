@@ -32,10 +32,10 @@ namespace DSLNG.PEAR.Services
         public IEnumerable<Dropdown> GetPillars()
         {
             return DataContext.Pillars.Select(x => new Dropdown
-                {
-                    Text = x.Name,
-                    Value = x.Id.ToString()
-                }).ToList();
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }).ToList();
         }
 
         public IEnumerable<Dropdown> GetPillars(int pmsSummaryId)
@@ -45,20 +45,20 @@ namespace DSLNG.PEAR.Services
                                                  .Where(x => x.PmsSummary.Id == pmsSummaryId).Select(x => x.Pillar);
 
             return DataContext.Pillars.Except(notAvailablePillars).Select(x => new Dropdown
-                {
-                    Text = x.Name,
-                    Value = x.Id.ToString()
-                }).ToList();
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }).ToList();
         }
 
         public IEnumerable<Dropdown> GetKpis(int pillarId)
         {
             return DataContext.Kpis.Include(x => x.Pillar).Where(x => x.Pillar.Id == pillarId)
                 .Select(x => new Dropdown
-                    {
-                        Text = x.Name,
-                        Value = x.Id.ToString()
-                    }).ToList();
+                {
+                    Text = x.Name,
+                    Value = x.Id.ToString()
+                }).ToList();
         }
 
         public IEnumerable<Dropdown> GetKpisForPmsConfigDetails(int pmsConfigId)
@@ -73,19 +73,19 @@ namespace DSLNG.PEAR.Services
                     x => x.Type.Code.ToLower() == Constants.Type.Corporate && x.Pillar.Id == pmsConfig.Pillar.Id
                          && !kpiIds.Contains(x.Id))
                            .Select(x => new Dropdown
-                               {
-                                   Text = x.Name + " (" + x.Measurement.Name + ")",
-                                   Value = x.Id.ToString()
-                               }).ToList();
+                           {
+                               Text = x.Name + " (" + x.Measurement.Name + ")",
+                               Value = x.Id.ToString()
+                           }).ToList();
         }
 
         public IEnumerable<Dropdown> GetYearsForPmsSummary()
         {
             return DataContext.PmsSummaries.Select(x => new Dropdown
-                {
-                    Text = x.Year.ToString(),
-                    Value = x.Year.ToString()
-                }).ToList();
+            {
+                Text = x.Year.ToString(),
+                Value = x.Year.ToString()
+            }).ToList();
         }
 
         public IEnumerable<Dropdown> GetMonths()
@@ -257,19 +257,19 @@ namespace DSLNG.PEAR.Services
         public IEnumerable<Dropdown> GetESConstraintCategories()
         {
             return DataContext.ESCategories.Where(x => x.Type == EnvirontmentType.constraint).Select(x => new Dropdown
-                {
-                    Text = x.Name,
-                    Value = x.Id.ToString()
-                }).ToList();
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }).ToList();
         }
 
         public IEnumerable<Dropdown> GetESChallengeCategories()
         {
             return DataContext.ESCategories.Where(x => x.Type == EnvirontmentType.challenge).Select(x => new Dropdown
-                {
-                    Text = x.Name,
-                    Value = x.Id.ToString()
-                }).ToList();
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }).ToList();
         }
 
         public IEnumerable<Dropdown> GetDerItemTypes()
@@ -290,6 +290,11 @@ namespace DSLNG.PEAR.Services
                     new Dropdown {Text = "LNG And CDS Table", Value = "lng-and-cds"},
                     new Dropdown {Text = "DAFWC and LOPC", Value = "dafwc"},
                     new Dropdown {Text = "JOB PMTS", Value = "job-pmts"},
+                  
+                    new Dropdown {Text = "MGDP", Value = "mgdp" },
+                    new Dropdown {Text = "HHV", Value = "hhv" },
+                    new Dropdown {Text = "LNG And CDS Production", Value = "lng-and-cds-production" }
+                 };
                     new Dropdown {Text = "Total Feed Gas", Value= "total-feed-gas" },
                     new Dropdown {Text = "Table Tank", Value = "table-tank" },
                     new Dropdown {Text = "Weekly Maintenance Backlog", Value = "weekly-maintenance" },
@@ -302,7 +307,7 @@ namespace DSLNG.PEAR.Services
             if (isDer)
             {
                 var config = Enum.GetValues(typeof(ConfigType)).Cast<ConfigType>();
-                return (from configType in config.ToList() where configType == ConfigType.KpiAchievement || configType == ConfigType.KpiTarget select new Dropdown {Text = configType.ToString(), Value = configType.ToString()}).ToList();
+                return (from configType in config.ToList() where configType == ConfigType.KpiAchievement || configType == ConfigType.KpiTarget select new Dropdown { Text = configType.ToString(), Value = configType.ToString() }).ToList();
             }
             return GetConfigTypes();
         }

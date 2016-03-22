@@ -220,53 +220,31 @@
         <div class="col-md-6" style="padding: 0px 0px">
 
         </div>
-        <div class="col-md-6" style="padding: 0px 0px">
-            <table class="der-table der-dummy all-border">
-                <thead>
-                    <tr>
-                        <th colspan="6" width="75%" class="der-bg-purple">MGDP</th>
-                        <th colspan="2" width="25%" class="der-bg-green-3">HHV</th>
-                    </tr>
-                    <tr>
-                        <th colspan="2" class="der-bg-blue-7">ACTUAL 24H</th>
-                        <th colspan="2" class="der-bg-blue-4">ACTUAL MTD</th>
-                        <th colspan="2" class="der-bg-blue-4">ACTUAL YTD</th>
-                        <th class="der-bg-green-3">JOB PMTS</th>
-                        <th class="der-bg-green-3">MGDP</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="der-bg-gray-1">N/A</td>
-                        <td rowspan="2" class="der-bg-gray-1">N/A</td>
-                        <td class="der-bg-gray-1">N/A</td>
-                        <td rowspan="2" class="der-bg-gray-1">N/A</td>
-                        <td class="der-bg-gray-1">N/A</td>
-                        <td rowspan="2" class="der-bg-gray-1">N/A</td>
-                        <td rowspan="2" class="der-bg-yellow">1,118.62 btu/scf</td>
-                        <td rowspan="2" class="der-bg-gray-1">N/A</td>
-                    </tr>
-                    <tr>
-                        <td class="der-bg-gray-1">N/A</td>
-                        <td class="der-bg-gray-1">N/A</td>
-                        <td class="der-bg-gray-1">N/A</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="der-bg-gray-1">N/A</td>
-                        <td colspan="2" class="der-bg-gray-1">N/A</td>
-                        <td colspan="2" class="der-bg-gray-1">N/A</td>
-                        <td class="der-bg-green-3">min 1,111</td>
-                        <td class="der-bg-green-3">min 1,050</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="col-md-4" style="padding: 0px 0px">
+            @{
+                var row5Col1 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 1);
+                if (row5Col1 != null)
+                {
+                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row5Col1.Id })" class="layout-item"></div>
+                }
+            }
         </div>
+        <div class="col-md-2" style="padding: 0px 0px">
+            @{
+                var row5Col2 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 2);
+                if (row5Col2 != null)
+                {
+                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row5Col2.Id })" class="layout-item"></div>
+                }
+            }
+        </div>
+
         <div class="col-md-4 no-padding">
             @{
-                var row5Col0 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 0);
-                if (row5Col0 != null)
+                var row6Col0 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 0);
+                if (row6Col0 != null)
                 {
-                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row5Col0.Id })" class="layout-item"></div>
+                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col0.Id })" class="layout-item"></div>
                 }
             }
         </div>
@@ -380,106 +358,13 @@
             </table>
         </div>
         <div class="col-md-6" style="padding: 0px 0px">
-            <table class="der-table der-dummy all-border">
-                <thead>
-                    <tr style="height: 31px">
-                        <th class="der-bg-blue-1">PRODUCTION</th>
-                        <th colspan="3" class="der-bg-blue-1">LNG</th>
-                        <th colspan="3" class="der-bg-blue-8">
-                            CDS
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            ACTUAL 24H
-                        </td>
-                        <td class="der-bg-yellow">
-                            14,031.03 m3
-                        </td>
-                        <td class="der-bg-yellow">
-                            6,386.90 tonnes
-                        </td>
-                        <td>
-                            329,721 mmbtu
-                        </td>
-                        <td>
-                            2,234.80 bbl
-                        </td>
-                        <td class="der-bg-yellow">
-                            227.96 tonnes
-                        </td>
-                        <td class="der-bg-yellow">
-                            10,560 mmbtu
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            ACTUAL MTD
-                        </td>
-                        <td>
-                            278,357.19 m3
-                        </td>
-                        <td>
-                            126,983.20 tonnes
-                        </td>
-                        <td>
-                            6,560,784 mmbtu
-                        </td>
-                        <td>
-                            45,790.27 bbl
-                        </td>
-                        <td>
-                            4,670.77 tonnes
-                        </td>
-                        <td>
-                            216,362 mmbtu
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>ACTUAL YTD</td>
-                        <td>
-                            278,357.19 m3
-                        </td>
-                        <td>
-                            126,983.20 tonnes
-                        </td>
-                        <td>
-                            6,560,784 mmbtu
-                        </td>
-                        <td>
-                            45,790.27 bbl
-                        </td>
-                        <td>
-                            4,670.77 tonnes
-                        </td>
-                        <td>
-                            216,362 mmbtu
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            MCHE Rundown :
-                        </td>
-                        <td>
-                            6,798.15 ton/d
-                        </td>
-                        <td>
-                            LNG HHV :
-                        </td>
-                        <td>
-                            1,099.11 btu/scf
-                        </td>
-                        <td colspan="2">
-                            CDS Reid Vapor Pressure (RVP) :
-                        </td>
-                        <td>
-                            11.32 Psia
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            @{
+                var row7Col0 = Model.Items.FirstOrDefault(x => x.Row == 7 && x.Column == 0);
+                if (row7Col0 != null)
+                {
+                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row7Col0.Id })" class="layout-item"></div>
+                }
+            }
             <table class="der-table der-dummy all-border">
                 <tr>
                     <td colspan="2" class="der-bg-blue-7">tank</td>
@@ -487,67 +372,14 @@
                     <td colspan="2" class="der-bg-blue-7">tank</td>
                     <td class="der-bg-blue-7">tank</td>
                 </tr>
-                <tr>
-                    <td colspan="2" class="der-bg-blue-8">
-                        LNG Tank (071)
-                    </td>
-                    <td colspan="2" class="der-bg-blue-8">
-                        CDS Tank (079/1001)
-                    </td>
-                    <td colspan="2" class="der-bg-blue-8">
-                        CDS Buffer Tank (079/1002)
-                    </td>
-                    <td class="der-bg-blue-8">
-                        CDS day-tank (076)
-                    </td>
-                </tr>
-                <tr>
-                    <td class="der-bg-yellow">
-                        12,197.74 tonnes
-                    </td>
-                    <td class="der-bg-yellow">
-                        26,749.89 m3
-                    </td>
-                    <td class="der-bg-gray-1">
-                        n/a
-                    </td>
-                    <td class="der-bg-gray-1">
-                        n/a
-                    </td>
-                    <td class="der-bg-gray-1">
-                        n/a
-                    </td>
-                    <td class="der-bg-gray-1">
-                        n/a
-                    </td>
-                    <td class="der-bg-gray-1">
-                        157.7 bbl
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Days to tank top
-                    </td>
-                    <td class="der-bg-yellow">
-                        10.9 days
-                    </td>
-                    <td class="der-bg-gray-1">
-                        Days to tank top
-                    </td>
-                    <td class="der-bg-gray-1">
-                        n/a
-                    </td>
-                    <td class="der-bg-gray-1">
-                        Days to tank top
-                    </td>
-                    <td class="der-bg-gray-1">
-                        n/a
-                    </td>
-                    <td class="der-bg-yellow">
-                        16.09 tonnes
-                    </td>
-                </tr>
             </table>
+            @{
+                var row9Col0 = Model.Items.FirstOrDefault(x => x.Row == 9 && x.Column == 0);
+                if (row9Col0 != null)
+                {
+                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row9Col0.Id })" class="layout-item"></div>
+                }
+            }
         </div>
         <div class="col-md-6" style="padding: 0px 0px">
             @{
@@ -645,7 +477,7 @@
                 </tbody>
             </table>
         </div>
-        
+
     </div>
     <div class="row" style="font-size: 11px">
         <div class="col-md-6 no-padding">

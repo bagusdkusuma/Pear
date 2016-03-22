@@ -215,8 +215,6 @@ namespace DSLNG.PEAR.Services
             IList<RowAndColumns> rowAndColumns = new List<RowAndColumns>();
             rowAndColumns.Add(new RowAndColumns { Row = 0, Column = 0 });
             rowAndColumns.Add(new RowAndColumns { Row = 0, Column = 1 });
-            //rowAndColumns.Add(new RowAndColumns { Row = 0, Column = 2 });
-            //rowAndColumns.Add(new RowAndColumns { Row = 0, Column = 3 });
             rowAndColumns.Add(new RowAndColumns { Row = 1, Column = 0 });
             rowAndColumns.Add(new RowAndColumns { Row = 1, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 1, Column = 2 });
@@ -234,6 +232,7 @@ namespace DSLNG.PEAR.Services
             rowAndColumns.Add(new RowAndColumns { Row = 4, Column = 2 });
             rowAndColumns.Add(new RowAndColumns { Row = 5, Column = 0 });
             rowAndColumns.Add(new RowAndColumns { Row = 5, Column = 1 });
+            rowAndColumns.Add(new RowAndColumns { Row = 5, Column = 2 });
             rowAndColumns.Add(new RowAndColumns { Row = 6, Column = 0 });
             rowAndColumns.Add(new RowAndColumns { Row = 6, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 6, Column = 2 });
@@ -257,6 +256,9 @@ namespace DSLNG.PEAR.Services
             rowAndColumns.Add(new RowAndColumns { Row = 14, Column = 0 });
             rowAndColumns.Add(new RowAndColumns { Row = 14, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 14, Column = 2 });
+            rowAndColumns.Add(new RowAndColumns { Row = 15, Column = 0 });
+            rowAndColumns.Add(new RowAndColumns { Row = 15, Column = 1 });
+            rowAndColumns.Add(new RowAndColumns { Row = 15, Column = 2 });
 
             foreach (var rowAndColumn in rowAndColumns)
             {
@@ -440,6 +442,10 @@ namespace DSLNG.PEAR.Services
                 case "security":
                 case "job-pmts":
                 case "total-feed-gas":
+                case "table-tank":
+                case "mgdp":
+                case "hhv":
+                case "lng-and-cds-production":
                 case "weekly-maintenance":
                 case "critical-pm":
                     {
@@ -538,15 +544,15 @@ namespace DSLNG.PEAR.Services
 
                                     datum.Type = item.Type;
                                     datum.Label = labels.ContainsKey(item.Type.ToLowerInvariant()) ? labels[item.Type.ToLowerInvariant()][i] : "undefined";
-                                    
+
                                     response.OriginalData.Add(datum);
                                 }
 
                                 break;
                             }
-                        case "job-pmts" :
+                        case "job-pmts":
                             {
-                                for (int i = 0; i <=2; i++)
+                                for (int i = 0; i <= 2; i++)
                                 {
                                     var datum = new GetOriginalDataResponse.OriginalDataResponse();
                                     var kpiInformation = item.KpiInformations.ElementAtOrDefault(i);
@@ -615,7 +621,7 @@ namespace DSLNG.PEAR.Services
                                     var kpiAchievementYearly =
                                         DataContext.KpiAchievements.Where(
                                             x => x.Periode.Year == 2016 && x.PeriodeType == PeriodeType.Yearly).ToList();
-                                    var dailyActual = kpiAchievements.FirstOrDefault(x => x.PeriodeType == PeriodeType.Daily 
+                                    var dailyActual = kpiAchievements.FirstOrDefault(x => x.PeriodeType == PeriodeType.Daily
                                         && x.Periode.Day == datum1.Periode.Day);
 
                                     if (!string.IsNullOrEmpty(datum1.Data))
@@ -631,10 +637,10 @@ namespace DSLNG.PEAR.Services
                                             else
                                             {
                                                 dailyActual = new KpiAchievement
-                                                    {
-                                                        Kpi = DataContext.Kpis.Single(x => x.Id == datum.KpiId),
-                                                        Value = val
-                                                    };
+                                                {
+                                                    Kpi = DataContext.Kpis.Single(x => x.Id == datum.KpiId),
+                                                    Value = val
+                                                };
                                                 DataContext.KpiAchievements.Add(dailyActual);
                                             }
                                         }

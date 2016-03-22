@@ -1,0 +1,83 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayTableTankViewModel
+
+<table class="der-table all-border">
+    <thead>
+        <tr>
+            <th colspan="2" class="der-bg-blue-8">
+                LNG Tank (071)
+            </th>
+            <th colspan="2" class="der-bg-blue-8">
+                CDS Tank (079/1001)
+            </th>
+            <th colspan="2" class="der-bg-blue-8">
+                CDS Buffer Tank (079/1002)
+            </th>
+            <th class="der-bg-blue-8">
+                CDS day-tank (076)
+            </th>
+        </tr>
+    </thead>
+    @{
+        var pos0 = Model.TableTankViewModels.Single(x => x.Position == 0);
+        var pos1 = Model.TableTankViewModels.Single(x => x.Position == 1);
+        var pos2 = Model.TableTankViewModels.Single(x => x.Position == 2);
+        var pos3 = Model.TableTankViewModels.Single(x => x.Position == 3);
+        var pos4 = Model.TableTankViewModels.Single(x => x.Position == 4);
+        var pos5 = Model.TableTankViewModels.Single(x => x.Position == 5);
+        var pos6 = Model.TableTankViewModels.Single(x => x.Position == 6);
+        var pos7 = Model.TableTankViewModels.Single(x => x.Position == 7);
+        var pos8 = Model.TableTankViewModels.Single(x => x.Position == 8);
+        var pos9 = Model.TableTankViewModels.Single(x => x.Position == 9);
+        var pos10 = Model.TableTankViewModels.Single(x => x.Position == 10);
+
+        <tbody>
+            <tr>
+                <td class="der-bg-yellow">
+                    @pos0.Daily @pos0.Measurement
+                </td>
+                <td class="der-bg-yellow">
+                    @pos1.Daily @pos1.Measurement
+                </td>
+                <td class="der-bg-gray-1">
+                    @pos3.Daily @pos3.Measurement
+                </td>
+                <td class="der-bg-gray-1">
+                    @pos4.Daily @pos4.Measurement
+                </td>
+                <td class="der-bg-gray-1">
+                    @pos6.Daily @pos6.Measurement
+                </td>
+                <td class="der-bg-gray-1">
+                    @pos7.Daily @pos7.Measurement
+                </td>
+                <td class="der-bg-gray-1">
+                    @pos9.Daily @pos9.Measurement
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Days to tank top
+                </td>
+                <td class="der-bg-yellow">
+                    @pos2.Daily @pos2.Measurement
+                </td>
+                <td class="der-bg-gray-1">
+                    Days to tank top
+                </td>
+                <td class="der-bg-gray-1">
+                    @pos5.Daily @pos5.Measurement
+                </td>
+                <td class="der-bg-gray-1">
+                    Days to tank top
+                </td>
+                <td class="der-bg-gray-1">
+                    @pos8.Daily @pos8.Measurement
+                </td>
+                <td class="der-bg-yellow">
+                    @pos10.Daily @pos10.Measurement
+                </td>
+            </tr>
+        </tbody>
+    }
+</table>
+
