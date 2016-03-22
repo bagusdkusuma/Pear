@@ -1068,6 +1068,11 @@
     <Content Include="Views\Der\Display\_HHV.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_LngAndCdsProduction.cshtml" />
     <Content Include="Views\Der\Display\_LngAndCdsProduction.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_TotalFeedGas.Edit.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_TableTank.Edit.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_MGDP.Edit.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_HHV.Edit.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_LngAndCdsProduction.Edit.cshtml" />
     <None Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\SpeedometerChart\_Edit.cshtml" />
     <Content Include="Views\Tabular\_Create.cshtml" />
