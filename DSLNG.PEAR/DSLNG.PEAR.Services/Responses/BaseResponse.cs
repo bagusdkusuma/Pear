@@ -10,5 +10,6 @@ namespace DSLNG.PEAR.Services.Responses
     {
         public bool IsSuccess { get; set; }
         public string Message { get; set; }
+        public System.Type ExceptionType { get; set; }
     }
 }
