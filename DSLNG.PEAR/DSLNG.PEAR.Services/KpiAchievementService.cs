@@ -250,7 +250,7 @@ namespace DSLNG.PEAR.Services
                             var kpiDto = kpi.MapTo<GetKpiAchievementsConfigurationResponse.Kpi>();
                             foreach (var number in YearlyNumbers)
                             {
-                                var achievement = kpiAchievementsYearly.SingleOrDefault(x => x.Kpi.Id == kpi.Id && x.Periode.Year == number);
+                                var achievement = kpiAchievementsYearly.FirstOrDefault(x => x.Kpi.Id == kpi.Id && x.Periode.Year == number);
                                 if (achievement != null)
                                 {
                                     var achievementDto =
@@ -398,6 +398,7 @@ namespace DSLNG.PEAR.Services
             {
                 response.IsSuccess = false;
                 response.Message = invalidOperationException.Message;
+                response.ExceptionType = typeof (InvalidOperationException);
             }
             catch (ArgumentNullException argumentNullException)
             {
@@ -664,6 +665,34 @@ namespace DSLNG.PEAR.Services
                 response.Message = exception.Message;
             }
 
+
+            return response;
+        }
+
+        public BaseResponse DeleteKpiAchievement(int kpiId, DateTime periode, PeriodeType periodeType)
+        {
+            var response = new BaseResponse();
+            try
+            {
+                var achievements = DataContext.KpiAchievements.Where(
+                x => x.Kpi.Id == kpiId && x.Periode == periode && x.PeriodeType == periodeType).ToList();
+                foreach (var achievement in achievements)
+                {
+                    DataContext.KpiAchievements.Remove(achievement);
+                }
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                response.Message = invalidOperationException.Message;
+                response.ExceptionType = typeof (InvalidOperationException);
+            }
+            catch (ArgumentNullException argumentNullException)
+            {
+                response.Message = argumentNullException.Message;
+                response.ExceptionType = typeof(ArgumentNullException);
+            }
 
             return response;
         }
