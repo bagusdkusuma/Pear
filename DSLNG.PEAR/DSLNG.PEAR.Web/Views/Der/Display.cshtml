@@ -482,10 +482,10 @@
     <div class="row" style="font-size: 11px">
         <div class="col-md-6 no-padding">
             @{
-                var row9Col0 = Model.Items.FirstOrDefault(x => x.Row == 9 && x.Column == 0);
-                if (row9Col0 != null)
+                var row9Col1 = Model.Items.FirstOrDefault(x => x.Row == 9 && x.Column == 0);
+                if (row9Col1 != null)
                 {
-                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row9Col0.Id })" class="layout-item"></div>
+                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row9Col1.Id })" class="layout-item"></div>
                 }
             }
             @{
@@ -721,45 +721,20 @@
     <div class="row der-row">
         <p class="der-table-title" style="margin-bottom: 0 0 1px">SUPPORT & ENABLER PERFORMANCE</p>
         <div class="col-md-3 no-padding">
-            <table class="der-table der-dummy all-border">
-                <thead>
-                    <tr>
-                        <th>
-                            PROCUREMENT
-                        </th>
-                        <th>
-                            PO / SO (Plant Related)
-                        </th>
-                        <th>
-                            Remarks
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            # Backlog
-                        </td>
-                        <td>
-                            2
-                        </td>
-                        <td>
-                            as of 19 Jan'16
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Avg Backlog time
-                        </td>
-                        <td>
-                            209 days
-                        </td>
-                        <td>
-                            incl partial PO
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+           @{
+               var row14Col0 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 0);
+               if (row14Col0 != null)
+               {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row14Col0.Id })" class="layout-item"></div>
+               }
+        }
+            @{
+                var row15Col0 = Model.Items.FirstOrDefault(x => x.Row == 15 && x.Column == 0);
+                if (row15Col0 != null)
+                {
+                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row15Col0.Id })" class="layout-item"></div>
+                }
+            }
             <table class="der-table der-dummy all-border">
                 <thead>
                     <tr>
@@ -962,7 +937,7 @@
                         } else if (data.type === "highlight" || data.type === "weather" ||
                             data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
                         data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
-                        || data.type === "weekly-maintenance" || data.type === "critical-pm") {
+                        || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type == "procurement" || data.type == "indicative-commercial-price") {
                             that.html(data.view);
                         }
 

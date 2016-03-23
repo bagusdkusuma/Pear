@@ -637,7 +637,6 @@ namespace DSLNG.PEAR.Web.Controllers
                                 request.RangeFilter = RangeFilter.CurrentDay;
                                 var daily = _derService.GetKpiValue(request);
                                 totalHHVViewModel.Daily = daily.Value.HasValue ? daily.Value.Value.ToString() : "n/a";
-                                request.RangeFilter = RangeFilter.MTD;
                             }
                             viewModel.HHVViewModels.Add(totalHHVViewModel);
                         }
@@ -774,6 +773,71 @@ namespace DSLNG.PEAR.Web.Controllers
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
                 #endregion
+                #region procurement
+                case "procurement":
+                    {
+                        var viewModel = new DisplayProcurementViewModel();
+                        for (int i = 0; i <= 3; i++)
+                        {
+                            var procureMentViewModel = new DisplayProcurementViewModel.ProcurementViewModel();
+                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
+                                new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
+                            procureMentViewModel.Position = item.Position;
+                            if (item.Kpi != null)
+                            {
+                                var request = new GetKpiValueRequest();
+                                request.ConfigType = item.ConfigType;
+                                request.KpiId = item.Kpi.Id;
+                                request.Periode = date;
+                                request.RangeFilter = RangeFilter.CurrentDay;
+                                var daily = _derService.GetKpiValue(request);
+                                procureMentViewModel.Daily = daily.Value.HasValue && daily.Value != null ? daily.Value.Value.ToString() : "n/a"; ;
+                            }
+                            else if (item.SelectOption != null)
+                            {
+                                var highlight = _highlightService.GetHighlightByPeriode(new GetHighlightRequest
+                                {
+                                    Date = date,
+                                    HighlightTypeId = item.SelectOption.Id
+                                });
+                                procureMentViewModel.Remarks = !string.IsNullOrEmpty(highlight.Message)
+                                                                         ? highlight.Message
+                                                                         : "n/a";
+                            }
+                            viewModel.ProcurementViewModels.Add(procureMentViewModel);
+                        }
+                        var view = RenderPartialViewToString("Display/_Procurement", viewModel);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+                #endregion
+                #region Indicative Commercial Price
+                case "indicative-commercial-price":
+                    {
+                        var viewModel = new DisplayIndicativeCommercialPriceViewModel();
+                        for (int i = 0; i <= 3; i++)
+                        {
+                            var indicativeCommercialPriceViewModel = new DisplayIndicativeCommercialPriceViewModel.IndicativeCommercialPriceViewModel();
+                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
+                                      new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
+                            indicativeCommercialPriceViewModel.Position = item.Position;
+                            if (item.Kpi != null)
+                            {
+                                var request = new GetKpiValueRequest();
+                                request.ConfigType = item.ConfigType;
+                                request.KpiId = item.Kpi.Id;
+                                request.Periode = date;
+                                request.RangeFilter = RangeFilter.CurrentDay;
+                                var daily = _derService.GetKpiValue(request);
+                                indicativeCommercialPriceViewModel.Daily = daily.Value.HasValue ? daily.Value.Value.ToString() : "n/a";
+                            }
+                            viewModel.IndicativeCommercialPriceViewModels.Add(indicativeCommercialPriceViewModel);
+                        }
+                        var view = RenderPartialViewToString("Display/_IndicativeCommercialPrice", viewModel);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+                    #endregion
 
 
             }

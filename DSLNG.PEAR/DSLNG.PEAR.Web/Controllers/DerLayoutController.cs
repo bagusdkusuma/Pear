@@ -200,6 +200,19 @@ namespace DSLNG.PEAR.Web.Controllers
                             editViewModel.HighlightId = response.Highlight.SelectOptionId;
                             break;
                         }
+                    case "procurement":
+                        {
+                            var result = _selectService.GetHighlightTypesDropdown();
+                            editViewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                            for (int i = 0; i < response.KpiInformations.Count; i++)
+                            {
+                                if (response.KpiInformations[i].SelectOption != null)
+                                {
+                                    editViewModel.KpiInformations[i].HighlightId = response.KpiInformations[i].SelectOption.Id;
+                                }
+                            }
+                            break;
+                        }
                 }
                 return View("EditLayoutItem", editViewModel);
             }
@@ -374,6 +387,20 @@ namespace DSLNG.PEAR.Web.Controllers
                         viewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
                         return PartialView("LayoutType/_CriticalPm", viewModel);
                     }
+                case "procurement":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(4);
+                        var result = _selectService.GetHighlightTypesDropdown();
+                        viewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                        return PartialView("LayoutType/_Procurement", viewModel);
+                    }
+                case "indicative-commercial-price":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(4);
+                        return PartialView("LayoutType/_IndicativeCommercialPrice", viewModel);
+                    }
             }
 
             return Content("Error");
@@ -382,7 +409,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Delete(int id, string type)
         {
             var response = _derService.DeleteLayoutItem(id, type);
-           
+
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
             return RedirectToAction("Config", new { id = response.DerLayoutId });
@@ -467,6 +494,8 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "lng-and-cds-production":
                 case "weekly-maintenance":
                 case "critical-pm":
+                case "procurement":
+                case "indicative-commercial-price":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
@@ -506,24 +535,24 @@ namespace DSLNG.PEAR.Web.Controllers
             return list;
         }
 
-       /* private IList<DerLayoutItemViewModel.DerKpiInformationViewModel> GetWeeklyMaintenance(int numberOfKpi)
-        {
-            var list = new List<DerLayoutItemViewModel.DerKpiInformationViewModel>();
-            for (int i = 0; i < numberOfKpi; i++)
-            {
-                if (i < 3)
-                {
-                    list.Add(new DerLayoutItemViewModel.DerKpiInformationViewModel {Position = i});
-                }
-                else
-                {
-                    list.Add();
-                }
-                
-            }
+        /* private IList<DerLayoutItemViewModel.DerKpiInformationViewModel> GetWeeklyMaintenance(int numberOfKpi)
+         {
+             var list = new List<DerLayoutItemViewModel.DerKpiInformationViewModel>();
+             for (int i = 0; i < numberOfKpi; i++)
+             {
+                 if (i < 3)
+                 {
+                     list.Add(new DerLayoutItemViewModel.DerKpiInformationViewModel {Position = i});
+                 }
+                 else
+                 {
+                     list.Add();
+                 }
 
-            return list;
-        } */
+             }
+
+             return list;
+         } */
 
     }
 }

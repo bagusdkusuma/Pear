@@ -290,14 +290,15 @@ namespace DSLNG.PEAR.Services
                     new Dropdown {Text = "LNG And CDS Table", Value = "lng-and-cds"},
                     new Dropdown {Text = "DAFWC and LOPC", Value = "dafwc"},
                     new Dropdown {Text = "JOB PMTS", Value = "job-pmts"},
-                  
                     new Dropdown {Text = "MGDP", Value = "mgdp" },
                     new Dropdown {Text = "HHV", Value = "hhv" },
                     new Dropdown {Text = "LNG And CDS Production", Value = "lng-and-cds-production" },
                     new Dropdown {Text = "Total Feed Gas", Value= "total-feed-gas" },
                     new Dropdown {Text = "Table Tank", Value = "table-tank" },
                     new Dropdown {Text = "Weekly Maintenance Backlog", Value = "weekly-maintenance" },
-                    new Dropdown {Text = "Critical PM", Value = "critical-pm" }
+                    new Dropdown {Text = "Critical PM", Value = "critical-pm" },
+                    new Dropdown {Text = "Procurement", Value = "procurement" },
+                    new Dropdown {Text = "Indicative Commercial Price", Value = "indicative-commercial-price" }
                 };
         }
 
