@@ -401,6 +401,12 @@ namespace DSLNG.PEAR.Web.Controllers
                         viewModel.KpiInformations = GetKpiInformations(4);
                         return PartialView("LayoutType/_IndicativeCommercialPrice", viewModel);
                     }
+                case "plant-availability":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(10);
+                        return PartialView("LayoutType/_PlantAvailability", viewModel);
+                    }
             }
 
             return Content("Error");
@@ -496,6 +502,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "critical-pm":
                 case "procurement":
                 case "indicative-commercial-price":
+                case "plant-availability":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();

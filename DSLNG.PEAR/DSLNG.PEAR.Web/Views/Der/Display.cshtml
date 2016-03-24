@@ -250,113 +250,13 @@
         </div>
         <div class="col-md-2 no-padding"></div>
         <div class="col-md-6 no-padding">
-            <table class="der-table der-dummy all-border">
-                <thead>
-                    <tr>
-                        <th class="der-bg-blue-7" style="width: 12%">Description</th>
-                        <th class="der-bg-blue-7">Plant Availability (hour-daily)</th>
-                        <th class="der-bg-blue-7">
-                            Plant Thermal Efficiency
-                        </th>
-                        <th class="der-bg-blue-7">
-                            Material Balance (Flare Loss-%)
-                        </th>
-                        <th class="der-bg-blue-7">
-                            Act Feed/ Max.Cap (Plant intake Utilization)
-                        </th>
-                        <th class="der-bg-blue-5" style="width: 15%">
-                            Refrigerant Prod (C2&C3)
-                        </th>
-                        <th class="der-bg-blue-3">
-                            Total Fuel Gas
-                            (GTG-GTC-LP Fuel)
-                        </th>
-                        <th class="der-bg-blue-3">
-                            Total Flared Gas
-                            (Wet-Dry-Tankage)
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="der-bg-blue-4">
-                            ACTUAL 24H
-                        </td>
-                        <td>
-                            100.0%
-                        </td>
-                        <td>
-                            91.16%
-                        </td>
-                        <td>
-                            -0.31%
-                        </td>
-                        <td>
-                            99.61%
-                        </td>
-                        <td class="der-bg-yellow">
-                            Refr prod:5.92 ton
-                        </td>
-                        <td class="der-bg-yellow">
-                            34.24 mmscf
-                        </td>
-                        <td class="der-bg-yellow">
-                            17,435 nm3
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="der-bg-blue-4">
-                            ACTUAL MTD
-                        </td>
-                        <td>
-                            92.4%
-                        </td>
-                        <td>
-                            85.85%
-                        </td>
-                        <td>
-                            4.67%
-                        </td>
-                        <td>
-                            91.61%
-                        </td>
-                        <td class="der-bg-orange-1">
-                            Total Loss
-                        </td>
-                        <td class="der-bg-yellow">
-                            704.88 tonnes
-                        </td>
-                        <td class="der-bg-blue-4">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td class="der-bg-blue-4">
-                            2016 Target
-                        </td>
-                        <td>
-                            93.0%
-                        </td>
-                        <td>
-                            89.00%
-                        </td>
-                        <td>
-                            < 2.00%
-                        </td>
-                        <td>
-                            N/A
-                        </td>
-                        <td class="der-bg-orange-1">
-                            -Loss:22.61 ton
-                        </td>
-                        <td class="der-bg-yellow">
-                            34,751 mmbtu
-                        </td>
-                        <td class="der-bg-yellow">
-                            0.65 mmscf
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+            @{
+                var row6Col2 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 2);
+                if (row6Col2 != null)
+                {
+                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col2.Id })" class="layout-item"></div>
+                }
+            }
         <div class="col-md-6" style="padding: 0px 0px">
             @{
                 var row7Col0 = Model.Items.FirstOrDefault(x => x.Row == 7 && x.Column == 0);
@@ -383,10 +283,10 @@
         </div>
         <div class="col-md-6" style="padding: 0px 0px">
             @{
-                var row6Col2 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 2);
-                if (row6Col2 != null)
+                var row7Col2 = Model.Items.FirstOrDefault(x => x.Row == 7 && x.Column == 2);
+                if (row7Col2 != null)
                 {
-                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col2.Id })" class="layout-item"></div>
+                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row7Col2.Id })" class="layout-item"></div>
                 }
             }
             <table class="der-table der-dummy all-border">
@@ -937,7 +837,8 @@
                         } else if (data.type === "highlight" || data.type === "weather" ||
                             data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
                         data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
-                        || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type == "procurement" || data.type == "indicative-commercial-price") {
+                        || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type == "procurement" || data.type == "indicative-commercial-price" ||
+                            data.type === "plant-availability") {
                             that.html(data.view);
                         }
 

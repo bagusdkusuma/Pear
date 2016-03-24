@@ -365,6 +365,8 @@ namespace DSLNG.PEAR.Services
                 case "lng-and-cds-production":
                 case "weekly-maintenance":
                 case "critical-pm":
+                case "procurement":
+                case "indicative-commercial-price":
                     {
                         try
                         {
@@ -458,6 +460,7 @@ namespace DSLNG.PEAR.Services
                 case "critical-pm":
                 case "procurement":
                 case "indicative-commercial-price":
+                case "plant-availability":
                     {
                         baseResponse = request.Id > 0 ? UpdateKpiInformations(request) : SaveKpiInformations(request);
                         break;

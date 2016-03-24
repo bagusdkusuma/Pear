@@ -795,6 +795,7 @@
     <Compile Include="ViewModels\Der\Display\DisplayIndicativeCommercialPriceViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayLngAndCdsProductionViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayMGDPViewModel.cs" />
+    <Compile Include="ViewModels\Der\Display\DisplayPlantAvalabilityViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayHHVViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayTableTankViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayTotalFeedGasViewModel.cs" />
@@ -1087,6 +1088,10 @@
     <Content Include="Views\Der\Display\_Procurement.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_IndicativeCommercialPrice.cshtml" />
     <Content Include="Views\Der\Display\_IndicativeCommercialPrice.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_IndicativeCommercialPrice.Edit.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_PlantAvailability.cshtml" />
+    <Content Include="Views\Der\Display\_PlantAvalability.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_PlantAvailability.Edit.cshtml" />
     <None Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\SpeedometerChart\_Edit.cshtml" />
     <Content Include="Views\Tabular\_Create.cshtml" />
