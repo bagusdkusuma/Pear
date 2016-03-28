@@ -6,6 +6,8 @@ namespace DSLNG.PEAR.Services.Interfaces
 {
     public interface IMirConfigurationService
     {
-        GetMirConfigurationsResponse Get(GetMirConfigurationsRequest request);
+        GetsMirConfigurationsResponse Gets(GetMirConfigurationsRequest request);
+        SaveMirConfigurationResponse Save(SaveMirConfigurationRequest request);
+        GetMirConfigurationsResponse Get(int id);
     }
 }

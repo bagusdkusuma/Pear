@@ -109,6 +109,9 @@ using DSLNG.PEAR.Services.Requests.PopInformation;
 using DSLNG.PEAR.Services.Responses.PopInformation;
 using PopInformationType = DSLNG.PEAR.Data.Enums.PopInformationType;
 using DSLNG.PEAR.Services.Requests.Signature;
+using DSLNG.PEAR.Data.Entities.Mir;
+using DSLNG.PEAR.Services.Responses.MirConfiguration;
+using DSLNG.PEAR.Services.Requests.MirConfiguration;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -692,6 +695,13 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
 
             Mapper.CreateMap<ApproveSignatureRequest, Signature>();
+
+
+            Mapper.CreateMap<MirConfiguration, GetsMirConfigurationsResponse.MirConfiguration>();
+            Mapper.CreateMap<SaveMirConfigurationRequest, MirConfiguration>();
+            Mapper.CreateMap<MirConfiguration, GetMirConfigurationsResponse>();
+            Mapper.CreateMap<MirDataTable, GetMirConfigurationsResponse.MirDataTable>();
+            Mapper.CreateMap<Kpi, GetMirConfigurationsResponse.MirDataTable.Kpi>();
             base.Configure();
         }
 
