@@ -69,6 +69,9 @@
                 case "lng-and-cds":
                     Html.RenderPartial("~/Views/DerLayout/LayoutType/_LngAndCds.Edit.cshtml", Model);
                     break;
+                case "economic-indicator":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_EconomicIndicator.Edit.cshtml", Model);
+                    break;
             }
         }
     </div>
@@ -252,6 +255,7 @@
             case "indicative-commercial-price":
             case "plant-availability":
             case "lng-and-cds":
+            case "economic-indicator":
                 {
                     window.Pear.Artifact.Designer._kpiAutoComplete($('.layout-type-area'));
                     break;

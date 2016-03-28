@@ -793,6 +793,7 @@
     <Compile Include="ViewModels\Der\DisplayOriginalDataViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayCriticalPmViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayDafwcViewModel.cs" />
+    <Compile Include="ViewModels\Der\Display\DisplayEconomicIndicatorViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayIndicativeCommercialPriceViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayLngAndCdsProductionViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayMGDPViewModel.cs" />
@@ -1101,6 +1102,9 @@
     <Content Include="Views\Der\Display\_WeeklyMaintenance.cshtml" />
     <Content Include="Views\Der\Display\_Nls.cshtml" />
     <Content Include="Views\Der\Display\_Wave.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_EconomicIndicator.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_EconomicIndicator.Edit.cshtml" />
+    <Content Include="Views\Der\Display\_EconomicIndicator.cshtml" />
     <None Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\SpeedometerChart\_Edit.cshtml" />
     <Content Include="Views\Tabular\_Create.cshtml" />

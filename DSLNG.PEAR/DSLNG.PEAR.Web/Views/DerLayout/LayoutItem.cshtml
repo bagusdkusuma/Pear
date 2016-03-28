@@ -74,6 +74,7 @@
                 case "procurement":
                 case "indicative-commercial-price":
                 case "plant-availability":
+                case "economic-indicator":
                     {
                         $.ajax({
                             url: '@Url.Action("LayoutSetting", "DerLayout", new { type = "_type_" })'.replace('_type_', that.val()),

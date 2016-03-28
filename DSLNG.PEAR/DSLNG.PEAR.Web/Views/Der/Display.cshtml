@@ -265,26 +265,27 @@
                         }*@
                     </td>
                     <td colspan="2" class="der-bg-blue-7">@{
-                                                              var row8Col1 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 1);
-                                                              if (row8Col1 != null)
-                                                              {
-                                                                  <div data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col1.Id })" class="layout-item"></div>
-                                                              }
-                                                          }</td>
+                        var row8Col1 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 1);
+                        if (row8Col1 != null)
+                        {
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col1.Id })" class="layout-item"></div>
+                        }
+                    }</td>
                     <td colspan="2" class="der-bg-blue-7">@{
-                                                              var row8Col2 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 2);
-                                                              if (row8Col2 != null)
-                                                              {
-                                                                  <div data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col2.Id })" class="layout-item"></div>
-                                                              }
-                                                          }</td>
-                    <td class="der-bg-blue-7">@{
-                                                  var row8Col3 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 3);
-                                                  if (row8Col3 != null)
-                                                  {
-                                                      <div data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col3.Id })" class="layout-item"></div>
-                                                  }
-                                              }</td>
+                        var row8Col2 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 2);
+                        if (row8Col2 != null)
+                        {
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col2.Id })" class="layout-item"></div>
+                        }
+                    }</td>
+                    <<td class="der-bg-blue-7">@{
+                        var row8Col3 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 3);
+                        if (row8Col3 != null)
+                        {
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col3.Id })" class="layout-item"></div>
+                        }
+                    }</td>
+
                 </tr>
             </table>
             @*@{
@@ -503,89 +504,13 @@
 
         </div>
         <div class="col-md-3 no-padding">
-            <table class="der-table der-dummy">
-                <thead>
-                    <tr>
-                        <th colspan="3" style="width: 18.75%">Economic Indicator
-                        </th>
-                        <th colspan="2" style="width: 12.5%">FX rate
-                            SDR:IMF major ccy basket index
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style="width: 33%">Dubai Crude
-                            (DME OQD FUT)
-                        </td>
-                        <td>0.00
-                        </td>
-                        <td style="width: 30%">26.28 USD/bbl
-                        </td>
-                        <td>0
-                        </td>
-                        <td style="width: 30%">USD/SDR 0.7251
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>BRENT FUT
-                        </td>
-                        <td>0.00
-                        </td>
-                        <td>32.16 USD/bbl
-                        </td>
-                        <td>0
-                        </td>
-                        <td>USD/IDR 13,845
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Naphta FOB Sing
-                        </td>
-                        <td>0.00
-                        </td>
-                        <td>36.58 USD/bbl
-                        </td>
-                        <td>0
-                        </td>
-                        <td>JPY/IDR 116.54
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Naphta FOB Sing
-                        </td>
-                        <td>0.00
-                        </td>
-                        <td>36.58 USD/bbl
-                        </td>
-                        <td>0
-                        </td>
-                        <td>JPY/IDR 116.54
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Naphta FOB Sing
-                        </td>
-                        <td>0.00
-                        </td>
-                        <td>36.58 USD/bbl
-                        </td>
-                        <td>0
-                        </td>
-                        <td>JPY/IDR 116.54
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="3">LNG Shipping Cost benchmark
-                            (Jap-Kor-Aus)
-                        </td>
-                        <td>0.00
-                        </td>
-                        <td>0.27 USD/mmbtu
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            @{
+                var row14Col1 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 1);
+                if (row14Col1 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row14Col1.Id })" class="layout-item"></div>
+                }
+            }
         </div>
         <div class="col-md-6 no-padding">
             @{
@@ -646,7 +571,7 @@
                             data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
                         data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
                         || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type == "procurement" || data.type == "indicative-commercial-price" ||
-                            data.type === "plant-availability") {
+                            data.type === "plant-availability" || data.type === "economic-indicator") {
                             that.html(data.view);
                         }
                         /*else if (data.type === "weather" || data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
