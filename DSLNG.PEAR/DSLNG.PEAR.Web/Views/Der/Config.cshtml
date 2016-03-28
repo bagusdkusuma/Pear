@@ -45,37 +45,3 @@
     </tbody>
 </table>
 
-@*@Html.Partial("_Modal")
-@Html.Partial("_ModalScoreIndicator")
-
-@section Scripts{
-    <script type="text/javascript">
-        var confirmDelete = function (id, controller) {
-            if (confirm('Are you sure want to delete this item?')) {
-                var url = '@Url.Action("Delete", "PmsSummary")';
-                $('<form action="' + url + '" method="POST">' +
-                    '<input type="hidden" name="id" value="' + id + '">' +
-                    '</form>').submit();
-            }
-        };
-
-        $(document).ready(function() {
-            $('.is-active').change(function() {
-                var id = $(this).data('id');
-                var isActive = $(this).is(':checked');
-                console.log({ id: id, isActive: isActive });
-                $.ajax({
-                    url: '@Url.Action("UpdateStatus", "PmsSummary")',
-                    data: { id: id, isActive: isActive },
-                    method: "POST",
-                    success:function(data) {
-                        console.log(data);
-                        location.reload();
-                    }
-                });
-            });
-        });
-    </script>
-}*@
-
-

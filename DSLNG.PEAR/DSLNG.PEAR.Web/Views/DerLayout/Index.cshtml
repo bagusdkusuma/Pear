@@ -6,25 +6,96 @@
 
 <h2>Index</h2>
 
-<p>
+<div class="add-button-wrapper">
     @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>Title</th>
-        <th></th>
-    </tr>
+</div>
 
-@foreach (var item in Model.DerLayouts) {
-    <tr>
-        <td>@item.Title</td>
-        <td>
-            @Html.ActionLink("Config", "Config", new {  id=item.Id  })
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
-
+<table id="level-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Action</th>
+            <th>Is Active</th>
+        </tr>
+    </thead>
 </table>
+
+@*<table class="table">
+        <tr>
+            <th>Title</th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.DerLayouts)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>
+                    @Html.ActionLink("Config", "Config", new { id = item.Id })
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+
+    </table>*@
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#level-table").DataTable({
+                "bFilter": false,
+                "bPaginate": false,
+                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                "iDisplayLength": -1,
+                "bProcessing": true,
+                "bServerSide": true,
+                "sServerMethod": "POST",
+                "sAjaxSource": '@Url.Action("Grid", "DerLayout")',
+                "aoColumns": [
+                       {
+                           "orderable": false,
+                           "mDataProp": "Title", "name": "Title"
+                       },
+                       {
+                           "orderable": false,
+                           "data": null,
+                           "defaultContent": '',
+                           "mRender": function (data, type, row) {
+                               var configLink = '@Html.ActionLink("Config", "Config", new { id = "_id_" })'.replace('_id_', data.Id);
+                               var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
+                               var editLink = '@Html.ActionLink("Edit", "Edit", new { id = "_id_" })'.replace('_id_', data.Id);
+                               return configLink + ' | ' + editLink + ' | ' + deleteLink;
+                           }
+                       },
+                       {
+                           "orderable": false,
+                           "mDataProp": "IsActive", "name": "IsActive",
+                           render: function (data, type, row) {
+                               if (type === 'display') {
+                                   return '<input type="checkbox" class="is-active">';
+                               }
+                               return data;
+                           }
+                       }
+                ],
+                rowCallback: function (row, data) {
+                    // Set the checked state of the checkbox in the table
+                    $('input.is-active', row).prop('checked', data.IsActive == 1);
+                }
+            });
+            $('#level-table').on('click', '.delete', function () {
+                var id = $(this).attr('data-id');
+                if (confirm('Are you sure want to delete this item?')) {
+                    var url = '@Url.Action("DeleteLayout", "DerLayout")';
+                    var form = $('<form />');
+                    form.attr('action', url);
+                    form.attr('method', 'POST');
+                    form.html('<input type="hidden" name="id" value="' + id + '" />');
+                    $('body').append(form);
+                    form.submit();
+                }
+            });
+        })
+    </script>
+}

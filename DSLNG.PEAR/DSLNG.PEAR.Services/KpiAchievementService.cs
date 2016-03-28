@@ -250,7 +250,7 @@ namespace DSLNG.PEAR.Services
                             var kpiDto = kpi.MapTo<GetKpiAchievementsConfigurationResponse.Kpi>();
                             foreach (var number in YearlyNumbers)
                             {
-                                var achievement = kpiAchievementsYearly.SingleOrDefault(x => x.Kpi.Id == kpi.Id && x.Periode.Year == number);
+                                var achievement = kpiAchievementsYearly.FirstOrDefault(x => x.Kpi.Id == kpi.Id && x.Periode.Year == number);
                                 if (achievement != null)
                                 {
                                     var achievementDto =
@@ -343,10 +343,7 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-
-
-        public
-        UpdateKpiAchievementItemResponse UpdateKpiAchievementItem(UpdateKpiAchievementItemRequest request)
+        public UpdateKpiAchievementItemResponse UpdateKpiAchievementItem(UpdateKpiAchievementItemRequest request)
         {
             var response = new UpdateKpiAchievementItemResponse();
             try
@@ -401,6 +398,7 @@ namespace DSLNG.PEAR.Services
             {
                 response.IsSuccess = false;
                 response.Message = invalidOperationException.Message;
+                response.ExceptionType = typeof (InvalidOperationException);
             }
             catch (ArgumentNullException argumentNullException)
             {
@@ -517,6 +515,7 @@ namespace DSLNG.PEAR.Services
                     case RangeFilter.MTD:
                     case RangeFilter.YTD:
                     case RangeFilter.AllExistingYears:
+                    case RangeFilter.CurrentWeek:
                         {
                             var kpi = DataContext.Kpis
                                 .Include(x => x.Measurement)
@@ -631,6 +630,33 @@ namespace DSLNG.PEAR.Services
                                 IsSuccess = true
                             };
                         }
+                    case RangeFilter.CurrentWeek:
+                        {
+                            DateTime lastWednesday = date;
+                            while (lastWednesday.DayOfWeek != DayOfWeek.Wednesday)
+                                lastWednesday = lastWednesday.AddDays(-1);
+                            var kpi = DataContext.Kpis.Include(x => x.Measurement).Single(x => x.Id == kpiId);
+                            var data = DataContext.KpiAchievements.Include(x => x.Kpi)
+                                    .Where(x => x.Kpi.Id == kpiId && x.PeriodeType == PeriodeType.Daily && x.Value.HasValue &&
+                                        ((x.Periode.Year == lastWednesday.Year && x.Periode.Month == lastWednesday.Month && x.Periode.Day >= lastWednesday.Day) &&
+                                        (x.Periode.Year == date.Year && x.Periode.Month == date.Month && x.Periode.Day <= date.Day))).AsQueryable();
+
+                            double? kpiAchievement = ytdFormula == YtdFormula.Average ? data.Average(x => x.Value) : data.Sum(x => x.Value);
+                            var kpiResponse = new GetKpiAchievementResponse.KpiResponse
+                            {
+                                Id = kpi.Id,
+                                Measurement = kpi.Measurement.Name,
+                                Name = kpi.Name,
+                                Remark = kpi.Remark,
+                            };
+
+                            return new GetKpiAchievementResponse
+                            {
+                                Value = kpiAchievement,
+                                Kpi = kpiResponse,
+                                IsSuccess = true
+                            };
+                        }
                 }
 
             }
@@ -639,6 +665,34 @@ namespace DSLNG.PEAR.Services
                 response.Message = exception.Message;
             }
 
+
+            return response;
+        }
+
+        public BaseResponse DeleteKpiAchievement(int kpiId, DateTime periode, PeriodeType periodeType)
+        {
+            var response = new BaseResponse();
+            try
+            {
+                var achievements = DataContext.KpiAchievements.Where(
+                x => x.Kpi.Id == kpiId && x.Periode == periode && x.PeriodeType == periodeType).ToList();
+                foreach (var achievement in achievements)
+                {
+                    DataContext.KpiAchievements.Remove(achievement);
+                }
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                response.Message = invalidOperationException.Message;
+                response.ExceptionType = typeof (InvalidOperationException);
+            }
+            catch (ArgumentNullException argumentNullException)
+            {
+                response.Message = argumentNullException.Message;
+                response.ExceptionType = typeof(ArgumentNullException);
+            }
 
             return response;
         }

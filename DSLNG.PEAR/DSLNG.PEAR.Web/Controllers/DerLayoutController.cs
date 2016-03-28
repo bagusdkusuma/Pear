@@ -15,6 +15,7 @@ using DSLNG.PEAR.Services.Responses.Der;
 using DSLNG.PEAR.Web.ViewModels.Artifact;
 using DSLNG.PEAR.Web.ViewModels.DerLayout;
 using DSLNG.PEAR.Web.ViewModels.DerLayout.LayoutType;
+using DSLNG.PEAR.Web.Grid;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -37,12 +38,25 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Index()
         {
+            return View();
+        }
+
+        public ActionResult Grid(GridParams gridParams)
+        {
             var viewModel = new DerLayoutIndexViewModel();
             var response = _derService.GetDerLayouts();
             viewModel.DerLayouts = response.DerLayouts.Select(x => new DerLayoutViewModel() { Id = x.Id, IsActive = x.IsActive, Title = x.Title })
                     .ToList();
-            // viewModel.DerLayouts.Add(new DerLayoutViewModel{Id = 1, Title = "First Layout"});
-            return View(viewModel);
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = viewModel.DerLayouts.Count,
+                iTotalRecords = viewModel.DerLayouts.Count,
+                aaData = viewModel.DerLayouts
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
+            //// viewModel.DerLayouts.Add(new DerLayoutViewModel{Id = 1, Title = "First Layout"});
+            //return View(viewModel);
         }
 
         public ActionResult Create()
@@ -52,10 +66,30 @@ namespace DSLNG.PEAR.Web.Controllers
             return View(viewModel);
         }
 
+        public ActionResult Edit(int id)
+        {
+            var viewModel = new CreateDerLayoutViewModel();
+            var response = _derService.GetDerLayout(id);
+            viewModel.Id = response.Id;
+            viewModel.Title = response.Title;
+            viewModel.IsActive = response.IsActive;
+
+            return View(viewModel);
+        }
+
+        public ActionResult DeleteLayout(int id)
+        {
+            var response = _derService.DeleteLayout(id);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            return RedirectToAction("Index");
+        }
+
         [HttpPost]
         public ActionResult Create(CreateDerLayoutViewModel viewModel)
         {
             var request = new CreateOrUpdateDerLayoutRequest();
+            request.Id = viewModel.Id;
             request.IsActive = viewModel.IsActive;
             request.Title = viewModel.Title;
             var response = _derService.CreateOrUpdateDerLayout(request);
@@ -155,14 +189,18 @@ namespace DSLNG.PEAR.Web.Controllers
 
                             break;
                         }
-
                     case "avg-ytd-key-statistic":
                         {
                             break;
                         }
-                        
+                    case "highlight":
+                        {
+                            var result = _selectService.GetHighlightTypesDropdown();
+                            editViewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                            editViewModel.HighlightId = response.Highlight.SelectOptionId;
+                            break;
+                        }
                 }
-
                 return View("EditLayoutItem", editViewModel);
             }
             else
@@ -236,7 +274,14 @@ namespace DSLNG.PEAR.Web.Controllers
                         var viewModel = new DerLayoutItemViewModel();
                         var result = _selectService.GetHighlightTypesDropdown();
                         viewModel.Highlights =
-                            result.Select(x => new SelectListItem() { Text = x.Text, Value = x.Value }).ToList();
+                            result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                        //foreach(var item in result)
+                        //{
+                        //    var sl = new SelectListItem();
+                        //    sl.Text = item.Text;
+                        //    sl.Value = item.Value;
+                        //    viewModel.Highlights.Add(sl);
+                        //}
                         return PartialView("LayoutType/_Highlight", viewModel);
                     }
                 case "alert":
@@ -251,13 +296,13 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "avg-ytd-key-statistic":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetAvgYytdKeyStatisticKpiInformations();
+                        viewModel.KpiInformations = GetKpiInformations(6);
                         return PartialView("LayoutType/_AvgYtdKeyStatistic", viewModel);
                     }
                 case "safety":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetSafetyTableKpiInformations();
+                        viewModel.KpiInformations = GetKpiInformations(9);
                         return PartialView("LayoutType/_SafetyTable", viewModel);
                     }
                 case "security":
@@ -269,14 +314,80 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "lng-and-cds":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(3);
+                        viewModel.KpiInformations = GetKpiInformations(12);
                         return PartialView("LayoutType/_LngAndCds", viewModel);
+                    }
+                case "dafwc":
+                    {
+                        //var viewModel = new DerLayoutItemViewModel();
+                        return Content("You have chosen DAFWC and LOPC type");
+                    }
+                case "job-pmts":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(6);
+                        return PartialView("LayoutType/_JobPmts", viewModel);
+                    }
+                case "total-feed-gas":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(4);
+                        return PartialView("LayoutType/_TotalFeedGas", viewModel);
+                    }
+                case "table-tank":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(11);
+                        return PartialView("LayoutType/_TableTank", viewModel);
+                    }
+                case "mgdp":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(6);
+                        return PartialView("LayoutType/_MGDP", viewModel);
+                    }
+                case "hhv":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(4);
+                        return PartialView("LayoutType/_HHV", viewModel);
+                    }
+                case "lng-and-cds-production":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(9);
+                        return PartialView("LayoutType/_LngAndCdsProduction", viewModel);
+                    }
+                case "weekly-maintenance":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(4);
+                        var result = _selectService.GetHighlightTypesDropdown();
+                        viewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                        return PartialView("LayoutType/_WeeklyMaintenance", viewModel);
+                    }
+                case "critical-pm":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(5);
+                        var result = _selectService.GetHighlightTypesDropdown();
+                        viewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                        return PartialView("LayoutType/_CriticalPm", viewModel);
                     }
             }
 
             return Content("Error");
         }
-        
+
+        public ActionResult Delete(int id, string type)
+        {
+            var response = _derService.DeleteLayoutItem(id, type);
+           
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            return RedirectToAction("Config", new { id = response.DerLayoutId });
+        }
+
         [HttpPost]
         public ActionResult SaveLayoutItem(DerLayoutItemViewModel layoutItemViewModel)
         {
@@ -336,25 +447,46 @@ namespace DSLNG.PEAR.Web.Controllers
                         response = _derService.SaveLayoutItem(request);
                         break;
                     }
-                case "avg-ytd-key-statistic":
+                /*case "avg-ytd-key-statistic":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.KpiInformations =
                             layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
                         response = _derService.SaveLayoutItem(request);
                         break;
-                    }
+                    }*/
                 case "safety":
-                case "lng-and-css":
                 case "security":
+                case "job-pmts":
+                case "avg-ytd-key-statistic":
+                case "lng-and-cds":
+                case "total-feed-gas":
+                case "table-tank":
+                case "mgdp":
+                case "hhv":
+                case "lng-and-cds-production":
+                case "weekly-maintenance":
+                case "critical-pm":
+                    {
+                        request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
+                        request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
+                        response = _derService.SaveLayoutItem(request);
+                        break;
+                    }
+                /*case "lng-and-cds":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.KpiInformations =
                             layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
                         response = _derService.SaveLayoutItem(request);
                         break;
+                    }*/
+                case "dafwc":
+                    {
+                        request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
+                        response = _derService.SaveLayoutItem(request);
+                        break;
                     }
-
             }
 
             TempData["IsSuccess"] = response.IsSuccess;
@@ -363,38 +495,35 @@ namespace DSLNG.PEAR.Web.Controllers
             return RedirectToAction("Config", new { id = layoutItemViewModel.DerLayoutId });
         }
 
-        private IList<DerLayoutItemViewModel.DerKpiInformationViewModel> GetAvgYytdKeyStatisticKpiInformations()
-        {
-            var list = new List<DerLayoutItemViewModel.DerKpiInformationViewModel>();
-            for (int i = 1; i <= 6; i++)
-            {
-                list.Add(new DerLayoutItemViewModel.DerKpiInformationViewModel { Position = i });
-            }
-
-            return list;
-        }
-
-        private IList<DerLayoutItemViewModel.DerKpiInformationViewModel> GetSafetyTableKpiInformations()
-        {
-            var list = new List<DerLayoutItemViewModel.DerKpiInformationViewModel>();
-            for (int i = 1; i <= 9; i++)
-            {
-                list.Add(new DerLayoutItemViewModel.DerKpiInformationViewModel { Position = i });
-            }
-
-            return list;
-        }
-
         private IList<DerLayoutItemViewModel.DerKpiInformationViewModel> GetKpiInformations(int numberOfKpi)
         {
             var list = new List<DerLayoutItemViewModel.DerKpiInformationViewModel>();
-            for (int i = 1; i <= numberOfKpi; i++)
+            for (int i = 0; i < numberOfKpi; i++)
             {
                 list.Add(new DerLayoutItemViewModel.DerKpiInformationViewModel { Position = i });
             }
 
             return list;
         }
+
+       /* private IList<DerLayoutItemViewModel.DerKpiInformationViewModel> GetWeeklyMaintenance(int numberOfKpi)
+        {
+            var list = new List<DerLayoutItemViewModel.DerKpiInformationViewModel>();
+            for (int i = 0; i < numberOfKpi; i++)
+            {
+                if (i < 3)
+                {
+                    list.Add(new DerLayoutItemViewModel.DerKpiInformationViewModel {Position = i});
+                }
+                else
+                {
+                    list.Add();
+                }
+                
+            }
+
+            return list;
+        } */
 
     }
 }

@@ -24,6 +24,7 @@ namespace DSLNG.PEAR.Services.Requests.Der
 
         public class LayoutItemHighlight
         {
+            public int Id { get; set; }
             public int SelectOptionId { get; set; }
         }
 
@@ -109,10 +110,13 @@ namespace DSLNG.PEAR.Services.Requests.Der
 
         public class DerKpiInformationRequest
         {
+            public int Id { get; set; }
             public int Position { get; set; }
             public int KpiId { get; set; }
             public string KpiName { get; set; }
             public bool IsOriginalData { get; set; }
+            public ConfigType ConfigType { get; set; }
+            public int HighlightId { get; set; }
         }
     }
 }

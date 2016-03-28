@@ -918,7 +918,23 @@ namespace DSLNG.PEAR.Services.AutoMapper
                   .ForMember(x => x.SelectOptionId, y => y.MapFrom(z => z.SelectOption.Id));
 
             Mapper.CreateMap<DerKpiInformation, GetDerLayoutitemResponse.KpiInformationResponse>();
-            Mapper.CreateMap<Kpi, GetDerLayoutitemResponse.KpiInformationResponse.KpiResponse>();
+            Mapper.CreateMap<Kpi, GetDerLayoutitemResponse.KpiInformationResponse.KpiResponse>()
+                .ForMember(x => x.MeasurementName, y => y.MapFrom(z => z.Measurement.Name));
+            Mapper.CreateMap<SelectOption, GetDerLayoutitemResponse.KpiInformationResponse.SelectOptionResponse>();
+                
+
+            //DER Original Data
+            Mapper.CreateMap<DerOriginalData, GetOriginalDataResponse.OriginalDataResponse>()
+                  .ForMember(x => x.LayoutItemId, y => y.MapFrom(z => z.LayoutItem.Id));
+            Mapper.CreateMap<SaveOriginalDataRequest, DerOriginalData>();
+            Mapper.CreateMap<SaveOriginalDataRequest.OriginalDataRequest, DerOriginalData>()
+                  .ForMember(x => x.LayoutItem, y => y.Ignore())
+                  .ForMember(x => x.Id, y => y.Ignore());
+            Mapper.CreateMap<GetKpiTargetItemResponse, GetKpiValueResponse>();
+            Mapper.CreateMap<GetKpiTargetItemResponse.KpiResponse, GetKpiValueResponse.KpiResponse>();
+
+            Mapper.CreateMap<GetKpiAchievementResponse, GetKpiValueResponse>();
+            Mapper.CreateMap<GetKpiAchievementResponse.KpiResponse, GetKpiValueResponse.KpiResponse>();
         }
     }
 }

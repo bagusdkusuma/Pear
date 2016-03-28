@@ -1,44 +1,28 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.DerLayout.DerLayoutItemViewModel
 
+@{
+    var labels = new List<string> { "LNG Loaded(m3)", "LNG Loaded(tonnes)", "LNG Loaded(mmbtu)", "#Cargo Shipped", "Planned Cargoes", "Remarks", "CDS(m3)", "CDS(tonnes)", "CDS(bbls)", "#Cargo Shipped", "Note", "Remarks" };
+    for (int i = 0; i < Model.KpiInformations.Count; i++)
+    {
+        var posIndex = Model.KpiInformations.FirstOrDefault(x => x.Position == i);
+        if (posIndex != null)
+        {
+            <div class="form-group row">
+                <label class="control-label col-md-2">@labels.ElementAtOrDefault(i)</label>
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.KpiInformations[i].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
+                    @Html.HiddenFor(model => model.KpiInformations[i].Position)
+                    @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes)
+                    <span style="color:white">
+                        @Html.EditorFor(model => model.KpiInformations[i].IsOriginalData) Is Original Data
+                    </span>
+                    <input type="hidden" name="KpiInformations.Index" value="@i" />
+                </div>
+            </div>
+        }
+    }
+}
 
-<table class="der-table  all-border">
-    @for (int i = 0; i <= 3; i++)
-    {
-        <tr>
-            <td>
-                @Html.DropDownListFor(model => model.KpiInformations[i].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
-                @Html.HiddenFor(model => model.KpiInformations[i].Position)
-                <input type="hidden" name="KpiInformations.Index" value="@i" />
-                @Html.EditorFor(model => model.KpiInformations[i].IsOriginalData)  Is  Original Data? 
-            </td>
-        </tr>
-    }
-    
-    @for (int i = 4; i <= 7; i++)
-    {
-        <tr>
-            <td>
-                @Html.DropDownListFor(model => model.KpiInformations[i].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
-                <input type="hidden" name="KpiInformations[@i].Index" value="4" />
-                <input type="hidden" name="KpiInformations.Index" value="@i" />
-                @Html.EditorFor(model => model.KpiInformations[i].IsOriginalData)  Is  Original Data? 
-            </td>
-        </tr>
-    }
-</table>
 
-<table class="der-table  all-border">
-    @for (int i = 8; i <= 11; i++)
-    {
-        <tr>
-            <td>
-                @Html.DropDownListFor(model => model.KpiInformations[i].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
-                @Html.HiddenFor(model => model.KpiInformations[i].Position)
-                <input type="hidden" name="KpiInformations.Index" value="@i" />
-                @Html.EditorFor(model => model.KpiInformations[i].IsOriginalData)  Is  Original Data? 
-            </td>
-        </tr>
-    }
-</table>
 
 
