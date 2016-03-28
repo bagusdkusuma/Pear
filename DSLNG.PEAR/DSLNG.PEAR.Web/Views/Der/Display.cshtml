@@ -252,14 +252,17 @@
             }
             <table class="der-table all-border">
                 <tr>
-                    <td colspan="2" class="der-bg-blue-7">
-                        @{
+                    @{
+                        var row8Col0 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 0);
+                    }
+                    <td colspan="2" class="der-bg-blue-7 layout-item"  data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col0.Id })" style="height:250px;width:200px;">
+                        @*@{
                             var row8Col0 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 0);
                             if (row8Col0 != null)
                             {
-                            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col0.Id })" class="layout-item"></div>
+                            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col0.Id })" class="layout-item" style="height:250px;width:200px;"></div>
                             }
-                        }
+                        }*@
                     </td>
                     <td colspan="2" class="der-bg-blue-7">@{
                         var row8Col1 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 1);
@@ -275,13 +278,14 @@
                         <div data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col2.Id })" class="layout-item"></div>
                         }
                     }</td>
-                    <td class="der-bg-blue-7">@{
+                    <<td class="der-bg-blue-7">@{
                         var row8Col3 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 3);
                         if (row8Col3 != null)
                         {
                         <div data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col3.Id })" class="layout-item"></div>
                         }
                     }</td>
+
                 </tr>
             </table>
             @*@{
@@ -481,7 +485,7 @@
         </div>
     </div>
     <div class="row der-row">
-        <p class="der-table-title" style="margin-bottom: 0 0 1px">SUPPORT & ENABLER PERFORMANCE</p>
+        <p class="der-table-title" style="margin: 0 0 1px">SUPPORT & ENABLER PERFORMANCE</p>
         <div class="col-md-3 no-padding">
             @{
                 var row14Col0 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 0);
@@ -497,16 +501,16 @@
                 <div data-url="@Url.Action("LayoutItem", "Der", new { id = row15Col0.Id })" class="layout-item"></div>
                 }
             }
-           
+
         </div>
         <div class="col-md-3 no-padding">
-           @{
-               var row14Col1 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 1);
-               if (row14Col1 != null)
-               {
+            @{
+                var row14Col1 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 1);
+                if (row14Col1 != null)
+                {
                 <div data-url="@Url.Action("LayoutItem", "Der", new { id = row14Col1.Id })" class="layout-item"></div>
-               }
-        }
+                }
+            }
         </div>
         <div class="col-md-6 no-padding">
             @{
