@@ -296,11 +296,11 @@ namespace DSLNG.PEAR.Services
                     new Dropdown {Text = "Total Feed Gas", Value= "total-feed-gas" },
                     new Dropdown {Text = "Table Tank", Value = "table-tank" },
                     new Dropdown {Text = "Weekly Maintenance Backlog", Value = "weekly-maintenance" },
-                    new Dropdown {Text = "Next Loading Schedule", Value = "nls" },
                     new Dropdown {Text = "Critical PM", Value = "critical-pm" },
                     new Dropdown {Text = "Procurement", Value = "procurement" },
                     new Dropdown {Text = "Indicative Commercial Price", Value = "indicative-commercial-price" },
-                    new Dropdown {Text = "Plant Availability", Value = "plant-availability" }
+                    new Dropdown {Text = "Plant Availability", Value = "plant-availability" },
+                    new Dropdown {Text = "Economic Indicator", Value = "economic-indicator" }
                 };
         }
 

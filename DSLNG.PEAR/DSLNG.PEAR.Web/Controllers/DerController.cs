@@ -895,7 +895,34 @@ namespace DSLNG.PEAR.Web.Controllers
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
                     #endregion
-                    
+                #region Economic Indicator
+                case "economic-indicator":
+                    {
+                        var viewModel = new DisplayEconomicIndicatorViewModel();
+                        for (int i = 0; i <= 10; i++)
+                        {
+                            var indicativeCommercialPriceViewModel = new DisplayEconomicIndicatorViewModel.EconomicIndicatorViewModel();
+                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
+                                      new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
+                            indicativeCommercialPriceViewModel.Position = item.Position;
+                            if (item.Kpi != null)
+                            {
+                                var request = new GetKpiValueRequest();
+                                request.ConfigType = item.ConfigType;
+                                request.KpiId = item.Kpi.Id;
+                                request.Periode = date;
+                                request.RangeFilter = RangeFilter.CurrentDay;
+                                var daily = _derService.GetKpiValue(request);
+                                indicativeCommercialPriceViewModel.Daily = daily.Value.HasValue ? daily.Value.Value.ToString() : "n/a";
+                            }
+                            viewModel.EconomicIndicatorViewModels.Add(indicativeCommercialPriceViewModel);
+                        }
+                        var view = RenderPartialViewToString("Display/_EconomicIndicator", viewModel);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+                    #endregion
+
 
             }
             return Content("Switch case does not matching");
