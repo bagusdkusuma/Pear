@@ -382,70 +382,42 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "lng-and-cds":
                     {
                         var viewModel = new DisplayLngAndCdsViewModel();
-                        bool isPlannedCargoes = false;
-                        for (int i = 1; i <= 12; i++)
+                        for (int i = 0; i < 14; i++)
                         {
-                            var lngAndCdsViewModel = new DisplayLngAndCdsViewModel.LngAndCdsViewModel();
-                            if (i <= 4 || i >= 9)
+                            var procureMentViewModel = new DisplayLngAndCdsViewModel.LngAndCdsViewModel();
+                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
+                                new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
+                            procureMentViewModel.Position = item.Position;
+                            if (item.Kpi != null)
                             {
-                                var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
-                                           new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
-
-                                lngAndCdsViewModel.Position = item.Position;
-                                if (item.Kpi != null)
-                                {
-                                    lngAndCdsViewModel.KpiName = item.Kpi.Name;
-                                    var actualMtd = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.MTD);
-                                    lngAndCdsViewModel.ActualMtd = actualMtd.Value.ToStringFromNullableDouble("n/a");
-                                    var targetMtd = _kpiTargetService.GetKpiTarget(item.Kpi.Id, date, RangeFilter.MTD);
-                                    lngAndCdsViewModel.TargetYtd = targetMtd.Value.ToStringFromNullableDouble("n/a");
-                                    var actualYtd = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.YTD);
-                                    lngAndCdsViewModel.ActualYtd = actualYtd.Value.ToStringFromNullableDouble("n/a");
-                                    var targetYtd = _kpiTargetService.GetKpiTarget(item.Kpi.Id, date, RangeFilter.MTD);
-                                    lngAndCdsViewModel.TargetYtd = targetYtd.Value.ToStringFromNullableDouble("n/a");
-                                }
-
-
+                                var request = new GetKpiValueRequest();
+                                request.ConfigType = item.ConfigType;
+                                request.KpiId = item.Kpi.Id;
+                                request.Periode = date;
+                                request.RangeFilter = RangeFilter.MTD;
+                                var mtd = _derService.GetKpiValue(request);
+                                procureMentViewModel.Mtd = mtd.Value.HasValue && mtd.Value != null ? mtd.Value.Value.ToString() : "n/a"; ;
+                                request.RangeFilter = RangeFilter.YTD;
+                                var ytd = _derService.GetKpiValue(request);
+                                procureMentViewModel.Ytd = ytd.Value.HasValue && ytd.Value != null ? ytd.Value.Value.ToString() : "n/a"; ;
                             }
-                            else
+                            else if (item.SelectOption != null)
                             {
-                                if (!isPlannedCargoes)
+                                var highlight = _highlightService.GetHighlightByPeriode(new GetHighlightRequest
                                 {
-                                    var mtdList = new List<string>();
-                                    var ytdList = new List<string>();
-
-                                    var list = layout.KpiInformations.Where(x => x.Position == 5).ToList();
-                                    foreach (var item in list)
-                                    {
-                                        string mtd, ytd = string.Empty;
-                                        if (item.Kpi != null)
-                                        {
-                                            var actualMtd = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.MTD);
-                                            var targetMtd = _kpiTargetService.GetKpiTarget(item.Kpi.Id, date, RangeFilter.MTD);
-                                            var actualYtd = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.MTD);
-                                            var targetYtd = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.MTD);
-                                            mtd = string.Format(@"{0}/{1} {2}", actualMtd.Value.ToStringFromNullableDouble("-"), targetMtd.Value.ToStringFromNullableDouble("-"), item.Kpi.Name);
-                                            ytd = string.Format(@"{0}/{1} {2}", actualYtd.Value.ToStringFromNullableDouble("-"), targetYtd.Value.ToStringFromNullableDouble("-"), item.Kpi.Name);
-                                            mtdList.Add(mtd);
-                                            ytdList.Add(ytd);
-                                        }
-                                    }
-
-                                    lngAndCdsViewModel.KpiName = "Planned Cargoes";
-                                    lngAndCdsViewModel.ActualMtd = string.Join(",", mtdList);
-                                    lngAndCdsViewModel.ActualMtd = string.Join(",", ytdList);
-                                    lngAndCdsViewModel.Position = 5;
-                                    isPlannedCargoes = true;
-                                }
+                                    Date = date,
+                                    HighlightTypeId = item.SelectOption.Id
+                                });
+                                procureMentViewModel.Remarks = !string.IsNullOrEmpty(highlight.Message)
+                                                                         ? highlight.Message
+                                                                         : "n/a";
                             }
-
-                            viewModel.DisplayLngAndCds.Add(lngAndCdsViewModel);
+                            viewModel.DisplayLngAndCds.Add(procureMentViewModel);
                         }
-
                         var view = RenderPartialViewToString("Display/_LngAndCds", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
-                    }
+                    };
                 #endregion
                 #region dafwc
                 case "dafwc":

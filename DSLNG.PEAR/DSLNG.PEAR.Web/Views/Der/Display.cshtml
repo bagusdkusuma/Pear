@@ -257,6 +257,7 @@
                     <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col2.Id })" class="layout-item"></div>
                 }
             }
+        </div>
         <div class="col-md-6" style="padding: 0px 0px">
             @{
                 var row7Col0 = Model.Items.FirstOrDefault(x => x.Row == 7 && x.Column == 0);
@@ -283,10 +284,10 @@
         </div>
         <div class="col-md-6" style="padding: 0px 0px">
             @{
-                var row7Col2 = Model.Items.FirstOrDefault(x => x.Row == 7 && x.Column == 2);
-                if (row7Col2 != null)
+                var row7Col1 = Model.Items.FirstOrDefault(x => x.Row == 7 && x.Column == 1);
+                if (row7Col1 != null)
                 {
-                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row7Col2.Id })" class="layout-item"></div>
+                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row7Col1.Id })" class="layout-item"></div>
                 }
             }
             <table class="der-table der-dummy all-border">
@@ -621,13 +622,13 @@
     <div class="row der-row">
         <p class="der-table-title" style="margin-bottom: 0 0 1px">SUPPORT & ENABLER PERFORMANCE</p>
         <div class="col-md-3 no-padding">
-           @{
-               var row14Col0 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 0);
-               if (row14Col0 != null)
-               {
-                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row14Col0.Id })" class="layout-item"></div>
-               }
-        }
+            @{
+                var row14Col0 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 0);
+                if (row14Col0 != null)
+                {
+                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row14Col0.Id })" class="layout-item"></div>
+                }
+            }
             @{
                 var row15Col0 = Model.Items.FirstOrDefault(x => x.Row == 15 && x.Column == 0);
                 if (row15Col0 != null)

@@ -18,10 +18,10 @@ namespace DSLNG.PEAR.Web.ViewModels.Der.Display
         {
             public int Position { get; set; }
             public string KpiName { get; set; }
-            public string ActualMtd { get; set; }
-            public string ActualYtd { get; set; }
-            public string TargetMtd { get; set; }
-            public string TargetYtd { get; set; }
+            public string Mtd { get; set; }
+            public string Ytd { get; set; }
+            public string Remarks { get; set; }
+            public string Measurement { get; set; }
         }
     }
 }

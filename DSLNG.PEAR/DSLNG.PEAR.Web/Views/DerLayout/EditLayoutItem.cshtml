@@ -66,6 +66,9 @@
                 case "plant-availability":
                     Html.RenderPartial("~/Views/DerLayout/LayoutType/_PlantAvailability.Edit.cshtml", Model);
                     break;
+                case "lng-and-cds":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_LngAndCds.Edit.cshtml", Model);
+                    break;
             }
         }
     </div>
@@ -248,6 +251,7 @@
             case "procurement":
             case "indicative-commercial-price":
             case "plant-availability":
+            case "lng-and-cds":
                 {
                     window.Pear.Artifact.Designer._kpiAutoComplete($('.layout-type-area'));
                     break;
