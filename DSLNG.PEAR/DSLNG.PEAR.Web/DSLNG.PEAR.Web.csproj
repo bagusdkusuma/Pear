@@ -793,8 +793,10 @@
     <Compile Include="ViewModels\Der\DisplayOriginalDataViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayCriticalPmViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayDafwcViewModel.cs" />
+    <Compile Include="ViewModels\Der\Display\DisplayIndicativeCommercialPriceViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayLngAndCdsProductionViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayMGDPViewModel.cs" />
+    <Compile Include="ViewModels\Der\Display\DisplayPlantAvalabilityViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayHHVViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayTableTankViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayTotalFeedGasViewModel.cs" />
@@ -803,6 +805,7 @@
     <Compile Include="ViewModels\Der\Display\DisplaySecurityViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplaySafetyTableViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayAvgYtdKeyStatisticViewModel.cs" />
+    <Compile Include="ViewModels\Der\Display\DisplayProcurementViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayWeeklyMaintenanceViewModel.cs" />
     <Compile Include="ViewModels\Der\ManageDerItemViewModel.cs" />
     <Compile Include="ViewModels\EconomicSummary\EconomicSummaryReportViewModel.cs" />
@@ -1079,6 +1082,17 @@
     <Content Include="Views\DerLayout\LayoutType\_SafetyTable.Edit.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_Security.Edit.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_LngAndCds.Edit.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_CriticalPm.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_WeeklyMaintenance.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_Procurement.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_Procurement.Edit.cshtml" />
+    <Content Include="Views\Der\Display\_Procurement.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_IndicativeCommercialPrice.cshtml" />
+    <Content Include="Views\Der\Display\_IndicativeCommercialPrice.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_IndicativeCommercialPrice.Edit.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_PlantAvailability.cshtml" />
+    <Content Include="Views\Der\Display\_PlantAvalability.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_PlantAvailability.Edit.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_CriticalPm.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_WeeklyMaintenance.cshtml">
       <SubType>Code</SubType>

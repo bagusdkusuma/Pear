@@ -1,0 +1,48 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayProcurementViewModel
+
+@{
+    var pos0 = Model.ProcurementViewModels.Single(x => x.Position == 0);
+    var pos1 = Model.ProcurementViewModels.Single(x => x.Position == 1);
+    var pos2 = Model.ProcurementViewModels.Single(x => x.Position == 2);
+    var pos3 = Model.ProcurementViewModels.Single(x => x.Position == 3);
+
+}
+<table class="der-table all-border">
+    <thead>
+        <tr>
+            <th>
+                PROCUREMENT
+            </th>
+            <th>
+                PO / SO (Plant Related)
+            </th>
+            <th>
+                Remarks
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                # Backlog
+            </td>
+            <td>
+                @pos0.Daily @pos0.Measurement
+            </td>
+            <td>
+                @pos1.Remarks
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Avg Backlog time
+            </td>
+            <td>
+               @pos2.Daily @pos2.Measurement
+            </td>
+            <td>
+                incl partial PO
+            </td>
+        </tr>
+    </tbody>
+</table>

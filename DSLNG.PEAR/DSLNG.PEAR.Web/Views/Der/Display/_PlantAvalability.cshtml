@@ -1,0 +1,140 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayPlantAvailabilityViewModel
+
+<table class="der-table all-border">
+    <thead>
+        <tr>
+            <th class="der-bg-blue-7" style="width: 15%">Description</th>
+            <th class="der-bg-blue-7">Plant Availability (hour-daily)</th>
+            <th class="der-bg-blue-7">
+                Plant Thermal Efficiency
+            </th>
+            <th class="der-bg-blue-7">
+                Material Balance (Flare Loss-%)
+            </th>
+            <th class="der-bg-blue-7">
+                Plant intake Utilization(Feed/ Max.Cap)
+            </th>
+            <th class="der-bg-blue-5">
+                Total Flared Gas
+                (Wet-Dry-Tankage)
+            </th>
+            <th class="der-bg-blue-3">
+                Refrigerant Prod (C2&C3)
+            </th>
+            <th class="der-bg-blue-3">
+                Material Balance (Loss)
+            </th>
+        </tr>
+    </thead>
+    @{
+        var pos0 = Model.PlantAvailabilityViewModels.Single(x => x.Position == 0);
+        var pos1 = Model.PlantAvailabilityViewModels.Single(x => x.Position == 1);
+        var pos2 = Model.PlantAvailabilityViewModels.Single(x => x.Position == 2);
+        var pos3 = Model.PlantAvailabilityViewModels.Single(x => x.Position == 3);
+        var pos4 = Model.PlantAvailabilityViewModels.Single(x => x.Position == 4);
+        var pos5 = Model.PlantAvailabilityViewModels.Single(x => x.Position == 5);
+        var pos6 = Model.PlantAvailabilityViewModels.Single(x => x.Position == 6);
+        var pos7 = Model.PlantAvailabilityViewModels.Single(x => x.Position == 7);
+        var pos8 = Model.PlantAvailabilityViewModels.Single(x => x.Position == 8);
+        var pos9 = Model.PlantAvailabilityViewModels.Single(x => x.Position == 9);
+
+        <tbody>
+            <tr>
+                <td class="der-bg-blue-4">
+                    ACTUAL 24H
+                </td>
+                <td>
+                    @pos0.Daily
+                </td>
+                <td>
+                    @pos1.Daily
+                </td>
+                <td>
+                    @pos2.Daily
+                </td>
+                <td>
+                    @pos3.Daily
+                </td>
+                <td class="der-bg-yellow">
+                    @pos4.Daily
+                </td>
+                <td class="der-bg-yellow">
+                    @pos5.Daily
+                </td>
+                <td class="der-bg-yellow">
+                    @pos6.Daily
+                </td>
+            </tr>
+            <tr>
+                <td class="der-bg-blue-4">
+                    ACTUAL MTD
+                </td>
+                <td>
+                    @pos0.Mtd
+                </td>
+                <td>
+                    @pos1.Mtd
+                </td>
+                <td>
+                    @pos2.Mtd
+                </td>
+                <td>
+                    @pos3.Mtd
+                </td>
+                <td class="der-bg-orange-1">
+                    @pos4.Mtd
+                </td>
+                <td class="der-bg-yellow">
+                    @pos5.Mtd
+                </td>
+                <td class="der-bg-blue-4">@pos6.Mtd</td>
+            </tr>
+            <tr>
+                <td class="der-bg-blue-4">
+                    Actual YTD
+                </td>
+                <td>
+                    @pos0.Ytd
+                </td>
+                <td>
+                    @pos1.Ytd
+                </td>
+                <td>
+                    @pos2.Ytd
+                </td>
+                <td>
+                    @pos3.Ytd
+                </td>
+                <td colspan="3">
+                    Total Fuel Gas (GTG-GTC-LP Fuel)
+                </td>
+            </tr>
+            <tr>
+                <td class="der-bg-blue-4">
+                    ACTUAL 24H
+                </td>
+                <td>
+                    @pos0.Ytd
+                </td>
+                <td>
+                    @pos1.Ytd
+                </td>
+                <td>
+                    @pos2.Ytd
+                </td>
+                <td>
+                    @pos3.Ytd
+                </td>
+                <td class="der-bg-yellow">
+                    @pos7.Daily
+                </td>
+                <td class="der-bg-yellow">
+                    @pos8.Daily
+                </td>
+                <td class="der-bg-yellow">
+                    @pos9.Daily
+                </td>
+            </tr>
+        </tbody>
+    }
+</table>

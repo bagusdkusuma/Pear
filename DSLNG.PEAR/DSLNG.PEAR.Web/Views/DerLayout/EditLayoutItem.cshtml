@@ -55,7 +55,19 @@
                     Html.RenderPartial("~/Views/DerLayout/LayoutType/_LngAndCdsProduction.Edit.cshtml", Model);
                     break;
                 case "safety":
-                    Html.RenderPartial("~/Views/DerLayout/LayoutType/ _SafetyTable.Edit.cshtml", Model);
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_SafetyTable.Edit.cshtml", Model);
+                    break;
+                case "procurement":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_Procurement.Edit.cshtml", Model);
+                    break;
+                case "indicative-commercial-price":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_IndicativeCommercialPrice.Edit.cshtml", Model);
+                    break;
+                case "plant-availability":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_PlantAvailability.Edit.cshtml", Model);
+                    break;
+                case "lng-and-cds":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_LngAndCds.Edit.cshtml", Model);
                     break;
             }
         }
@@ -236,6 +248,10 @@
             case "hhv":
             case "lng-and-cds-production":
             case "safety":
+            case "procurement":
+            case "indicative-commercial-price":
+            case "plant-availability":
+            case "lng-and-cds":
                 {
                     window.Pear.Artifact.Designer._kpiAutoComplete($('.layout-type-area'));
                     break;
