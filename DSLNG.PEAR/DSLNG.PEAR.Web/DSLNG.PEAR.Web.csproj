@@ -765,6 +765,7 @@
     </Content>
     <Compile Include="Controllers\ArtifactCloneController.cs" />
     <Compile Include="Controllers\AssumptionDataController.cs" />
+    <Compile Include="Controllers\MirConfigurationController.cs" />
     <Compile Include="ViewModels\DerLayout\CreateDerLayoutViewModel.cs" />
     <Compile Include="Controllers\DerController.cs" />
     <Compile Include="Controllers\DerLayoutController.cs" />
@@ -1171,6 +1172,7 @@
     <Content Include="Views\PlanningBlueprint\EditESCategory.cshtml" />
     <Content Include="Views\PopDashboard\Approval.cshtml" />
     <Content Include="Views\PopDashboard\Edit.cshtml" />
+    <Content Include="Views\MirConfiguration\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -1439,7 +1441,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\img\signature\" />
-    <Folder Include="Content\popfile\" />
     <Folder Include="Content\signature\" />
     <Folder Include="Content\TemplateFiles\KpiAchievement\" />
     <Folder Include="Content\TemplateFiles\KpiTarget\" />

@@ -66,7 +66,7 @@ else
         <div class="row">
             <div class="col-md-12">
                 <h4 style="background-color: #00bfff;">Mid Term Phase Formulation 
-                @if (!Model.IsReviewer)
+                @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
                 {
                     <a class="add-formulation-stage" data-toggle="popover" href="javascript:void(0)"><i class="fa fa-plus"></i></a>
                 }
@@ -93,7 +93,7 @@ else
                     <td data-id="@item.Id" class="formulation-stage">
                         <div>
                           <div data-id="@item.Id" class="title">@item.Title
-                        @if (!Model.IsReviewer)
+                        @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
                         {
                             <a class="remove-item" href="/MidtermFormulation/DeleteStage"><i class="fa fa-minus"></i></a>
                         }
@@ -107,7 +107,7 @@ else
                         <div class="sub-title">
                             Description
                         </div>
-                        @if (!Model.IsReviewer)
+                        @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
                         {
                             <a data-toggle="popover" href="javascript:void(0)" class="add-definition" data-target="description"><i class="fa fa-plus"></i></a>
                         }
@@ -122,7 +122,7 @@ else
                     <div class="defined-header key-driver">
                         <div class="sub-title">
                             Key Driver
-                           @if (!Model.IsReviewer)
+                           @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
                            {<a data-toggle="popover" href="javascript:void(0)" class="add-definition" data-target="key-driver"><i class="fa fa-plus"></i></a>}
                         </div>
                     </div>

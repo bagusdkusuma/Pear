@@ -585,7 +585,10 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<SavePostureConstraintRequest, PostureConstraint>();
 
             Mapper.CreateMap<EnvironmentsScanning, GetEnvironmentsScanningResponse>()
-                .ForMember(x => x.BusinessPostureId, o => o.MapFrom(s => s.PlanningBlueprint.BusinessPostureIdentification.Id));
+                .ForMember(x => x.BusinessPostureId, o => o.MapFrom(s => s.PlanningBlueprint.BusinessPostureIdentification.Id))
+                .ForMember(x => x.IsApproved, o => o.MapFrom(s => s.PlanningBlueprint.BusinessPostureIdentification.IsApproved))
+                .ForMember(x => x.IsBeingReviewed, o => o.MapFrom(s => s.PlanningBlueprint.BusinessPostureIdentification.IsBeingReviewed))
+                .ForMember(x => x.IsRejected, o => o.MapFrom(s => s.PlanningBlueprint.BusinessPostureIdentification.IsRejected));
             Mapper.CreateMap<UltimateObjectivePoint, GetEnvironmentsScanningResponse.UltimateObjective>();
             Mapper.CreateMap<EnvironmentalScanning, GetEnvironmentsScanningResponse.Environmental>();
             Mapper.CreateMap<SaveEnvironmentScanningRequest, UltimateObjectivePoint>();

@@ -87,18 +87,24 @@
      <div class="row">
         <div class="col-md-12 artifact-designer-btns">
             @if(!Model.IsReviewer){
-            <a href="@Url.Action("Index", "PlanningBlueprint")" class="btn btn-primary btn-lg"><span class="fa fa-arrow-left"></span>Back To List</a>
-            }else{
-                <a href="@Url.Action("MPFReview", "PlanningBlueprint", new { id = Model.Id})" class="btn btn-primary btn-lg"><span class="fa fa-arrow-left"></span>Back</a>
+            <a href="@Url.Action("Index", "PlanningBlueprint")" class="btn btn-primary btn-lg"><span class="fa fa-arrow-left"></span> Back To List</a>
             }
-            @if(!Model.IsReviewer){
-            using (Html.BeginForm("SubmitMidtermPlanning", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
+            else
             {
+                <a href="@Url.Action("MidtermPhaseFormulation", "PlanningBlueprint", new { id = Model.Id })" class="btn btn-primary btn-lg"><span class="fa fa-arrow-left"></span> Back</a>
+            }
+            @if (!Model.IsReviewer)
+            {
+                <a href="@Url.Action("MPFReview", "PlanningBlueprint", new { id = Model.Id })" class="btn btn-primary btn-lg"><span class="fa fa-arrow-left"></span> Back To MPF</a>
+                using (Html.BeginForm("SubmitMidtermPlanning", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
+                {
                 @Html.Hidden("Id", Model.Id)
                 <button type="submit" class="btn btn-primary btn-lg submit-al-mp"><span class="fa fa-floppy-o"></span> Submit</button>
+                }
             }
-            }else{
-                 using (Html.BeginForm("ApproveMidtermStrategy", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
+            else
+            {
+                using (Html.BeginForm("ApproveMidtermStrategy", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
                 {
                 @Html.Hidden("Id", Model.Id)
                 <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span> Approve</button>
@@ -187,7 +193,7 @@
 
         <div class="modal-content">
              @using (Html.BeginForm("RejectMidtermStrategy", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
-                {
+             {
             <div class="modal-header">
                 <button type="button" class="close btn-finish-relation" data-dismiss="modal">&times;</button>
                 <h3 class="modal-title">Notes</h3>

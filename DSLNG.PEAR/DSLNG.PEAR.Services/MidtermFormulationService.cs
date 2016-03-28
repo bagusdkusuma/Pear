@@ -25,6 +25,7 @@ namespace DSLNG.PEAR.Services
                 .Include(x => x.MidtermPhaseFormulation.MidtermPhaseFormulationStages)
                 .Include(x => x.MidtermPhaseFormulation.MidtermPhaseFormulationStages.Select(y => y.Descriptions))
                 .Include(x => x.MidtermPhaseFormulation.MidtermPhaseFormulationStages.Select(y => y.KeyDrivers))
+                .Include(x => x.MidtermStragetyPlanning)
                 .Include(x => x.BusinessPostureIdentification)
                 .Include(x => x.BusinessPostureIdentification.Postures)
                 .Include(x => x.BusinessPostureIdentification.Postures.Select(y => y.DesiredStates))
@@ -34,6 +35,10 @@ namespace DSLNG.PEAR.Services
             {
                 Id = planningBlueprint.MidtermPhaseFormulation.Id,
                 IsLocked = planningBlueprint.MidtermPhaseFormulation.IsLocked,
+                IsApproved = planningBlueprint.MidtermStragetyPlanning.IsApproved,
+                IsRejected = planningBlueprint.MidtermStragetyPlanning.IsRejected,
+                IsBeingReviewed = planningBlueprint.MidtermStragetyPlanning.IsBeingReviewed,
+                MidtermPlanningId = planningBlueprint.MidtermStragetyPlanning.Id,
                 ConstructionPosture = planningBlueprint.BusinessPostureIdentification.Postures.First(x => x.Type == PostureType.Construction).MapTo<GetMidtermFormulationResponse.Posture>(),
                 OperationPosture = planningBlueprint.BusinessPostureIdentification.Postures.First(x => x.Type == PostureType.Operation).MapTo<GetMidtermFormulationResponse.Posture>(),
                 DecommissioningPosture = planningBlueprint.BusinessPostureIdentification.Postures.First(x => x.Type == PostureType.Decommissioning).MapTo<GetMidtermFormulationResponse.Posture>(),
@@ -239,7 +244,6 @@ namespace DSLNG.PEAR.Services
             try
             {
                 var midtermFormulation = DataContext.MidtermPhaseFormulations.Include(x => x.PlanningBlueprint).First(x => x.Id == id);
-                midtermFormulation.IsLocked = true;
                 var midtermPlanning = DataContext.MidtermStrategyPlannings.First(x => x.PlanningBlueprint.Id == midtermFormulation.PlanningBlueprint.Id);
                 midtermPlanning.IsLocked = false;
                 DataContext.SaveChanges();
