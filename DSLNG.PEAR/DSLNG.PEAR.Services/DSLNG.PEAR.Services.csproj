@@ -95,7 +95,6 @@
     <Compile Include="Interfaces\IMirDataTableService.cs" />
     <Compile Include="MirConfigurationService.cs" />
     <Compile Include="MirDataTableService.cs" />
-    <Compile Include="Requests\Der\SaveLayoutItemRequest.cs" />
     <Compile Include="Requests\MirConfiguration\GetMirConfigurationsRequest.cs" />
     <Compile Include="Requests\MirConfiguration\SaveMirConfigurationRequest.cs" />
     <Compile Include="Requests\MirDataTable\DeleteKpiMirDataTableRequest.cs" />
