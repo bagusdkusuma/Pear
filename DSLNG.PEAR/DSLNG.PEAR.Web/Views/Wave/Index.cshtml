@@ -1,0 +1,88 @@
+﻿@{
+    ViewBag.Title = "Wave List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Wave List</h2>
+@Html.Partial("_MessageResponse")
+<div class="add-button-wrapper">
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+</div>
+@*@Html.Action("IndexPartial")
+
+@section Scripts{
+    <script type="text/javascript">
+        var confirmDelete = function (id) {
+            if (confirm('Are you sure want to delete this item?')) {
+                var url = '@Url.Action("Delete", "Weather")';
+                $('<form action="' + url + '" method="POST">' +
+                    '<input type="hidden" name="id" value="' + id + '">' +
+                    '</form>').submit();
+            }
+        };
+    </script>
+}*@
+
+<table id="wave-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Periode Type</th>
+            <th>Date</th>
+            <th>Value</th>
+            <th>Speed</th>
+            <th>Tide</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+</table>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#wave-table').DataTable({
+                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                "iDisplayLength": -1,
+                "bProcessing": true,
+                "bServerSide": true,
+                "sServerMethod": "POST",
+                "sAjaxSource": '@Url.Action("Grid", "Wave")',
+                "order": [[3, "asc"]],
+                "aoColumns": [
+                    { "mDataProp": "PeriodeType", "name": "PeriodeType" },
+                    { "mDataProp": "Date", "name": "Date" },
+                    { "mDataProp": "Value", "name": "Value" },
+                    { "mDataProp": "Speed", "name": "Speed" },
+                    { "mDataProp": "Tide", "name": "Tide" },
+                    {
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": '',
+                        "mRender": function (data, type, row) {
+                            var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
+                            var editLink = '@Html.ActionLink("Edit", "Edit", "Wave", new {id = "_id_"}, null)'.replace('_id_', data.Id);
+                            return editLink + ' | ' + deleteLink;
+                        }
+                    }
+                ],
+                rowCallback: function (row, data) {
+                    // Set the checked state of the checkbox in the table
+                    //$('input.is-active', row).prop('checked', data.IsActive == 1);
+                }
+            });
+
+            $('#wave-table').on('click', '.delete', function () {
+                var id = $(this).attr('data-id');
+                if (confirm('Are you sure want to delete this item?' + id)) {
+                    var url = '@Url.Action("Delete", "Wave")';
+                    var form = $('<form />');
+                    form.attr('action', url);
+                    form.attr('method', 'POST');
+                    form.html('<input type="hidden" name="id" value="' + id + '" />');
+                    $('body').append(form);
+                    form.submit();
+                }
+            });
+
+        });
+    </script>
+}

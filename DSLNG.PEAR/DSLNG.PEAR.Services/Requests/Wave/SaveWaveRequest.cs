@@ -1,22 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DSLNG.PEAR.Data.Enums;
+using DSLNG.PEAR.Services.Requests.Periode;
 
-namespace DSLNG.PEAR.Data.Entities
+namespace DSLNG.PEAR.Services.Requests.Wave
 {
-    public class Wave
+    public class SaveWaveRequest
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public PeriodeType PeriodeType { get; set; }
         public DateTime Date { get; set; }
-        public SelectOption Value { get; set; } //direction
+        public int ValueId { get; set; }
         public string Tide { get; set; }
         public string Speed { get; set; }
     }

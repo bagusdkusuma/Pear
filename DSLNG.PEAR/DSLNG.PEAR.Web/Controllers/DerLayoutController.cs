@@ -287,6 +287,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "alert":
                 case "weather":
                 case "wave":
+                case "nls":
                     {
                         var viewModel = new DerLayoutItemViewModel();
                         viewModel.Type = type;
@@ -441,6 +442,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "alert":
                 case "weather":
                 case "wave":
+                case "nls":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.Type = layoutItemViewModel.Type;

@@ -432,6 +432,7 @@ namespace DSLNG.PEAR.Services
                 case "weather":
                 case "alert":
                 case "wave":
+                case "nls":
                     {
                         baseResponse = SaveDynamicHighlight(request);
                         break;

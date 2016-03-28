@@ -5,7 +5,8 @@
 }
 
 <style type="text/css"></style>
-<h2>Display</h2> <a href="@Url.Action("OriginalData", new {id = Model.Id, currentDate = "02/18/2016"})">Original Data</a>
+<h2>Display</h2>
+<a href="@Url.Action("OriginalData", new { id = Model.Id, currentDate = "02/18/2016" })">Original Data</a>
 <div class="row der-display">
     <div class="col-sm-12">
         <form class="form-inline">
@@ -24,7 +25,7 @@
                 var row0Col0 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 0);
                 if (row0Col0 != null)
                 {
-                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col0.Id })" class="layout-item"></div>
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col0.Id })" class="layout-item"></div>
                 }
             }
         </div>
@@ -33,7 +34,7 @@
                 var row0Col1 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 1);
                 if (row0Col1 != null)
                 {
-                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col1.Id })" class="layout-item"></div>
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col1.Id })" class="layout-item"></div>
                 }
             }
         </div>
@@ -44,7 +45,7 @@
                 var row1Col0 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 0);
                 if (row1Col0 != null)
                 {
-                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col0.Id })" class="layout-item"></div>
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col0.Id })" class="layout-item"></div>
                 }
             }
         </div>
@@ -53,7 +54,7 @@
                 var row1Col1 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 1);
                 if (row1Col1 != null)
                 {
-                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col1.Id })" class="layout-item"></div>
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col1.Id })" class="layout-item"></div>
                 }
             }
         </div>
@@ -62,7 +63,7 @@
                 var row1Col2 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 2);
                 if (row1Col2 != null)
                 {
-                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col2.Id })" class="layout-item"></div>
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col2.Id })" class="layout-item"></div>
                 }
             }
         </div>
@@ -71,7 +72,7 @@
                 var row1Col3 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 3);
                 if (row1Col3 != null)
                 {
-                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col3.Id })" class="layout-item"></div>
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col3.Id })" class="layout-item"></div>
                 }
             }
         </div>
@@ -83,7 +84,7 @@
                 var row2Col0 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 0);
                 if (row2Col0 != null)
                 {
-                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row2Col0.Id })" class="layout-item"></div>
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row2Col0.Id })" class="layout-item"></div>
                 }
             }
         </div>
@@ -92,29 +93,18 @@
                 var row2Col1 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 1);
                 if (row2Col1 != null)
                 {
-                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row2Col1.Id })" class="layout-item"></div>
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row2Col1.Id })" class="layout-item"></div>
                 }
             }
         </div>
         <div class="col-md-4 no-padding">
-            <table class="der-table der-dummy der-qhsse-row-1">
-                <tr>
-                    <td>Tide/Wave at Jetty:</td>
-                    <td style="text-align: center">asfasf</td>
-                    <td colspan="2" style="text-align: center">0.0meter/0.25 meter</td>
-                </tr>
-                <tr>
-                    <td>&nbsp;</td>
-                    <td rowspan="2" style="text-align: center">fdasfds</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>Wind Direction&Speed:</td>
-                    <td style="text-align: right">East</td>
-                    <td style="text-align: center">22 km/h</td>
-                </tr>
-            </table>
+             @{
+                var row2Col2 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 2);
+                if (row2Col2 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row2Col2.Id })" class="layout-item"></div>
+                }
+            }
         </div>
     </div>
     <div class="row der-row">
@@ -123,7 +113,7 @@
                 var row3Col0 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 0);
                 if (row3Col0 != null)
                 {
-                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row3Col0.Id })" class="layout-item"></div>
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row3Col0.Id })" class="layout-item"></div>
                 }
             }
         </div>
@@ -132,52 +122,38 @@
                 var row3Col1 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 1);
                 if (row3Col1 != null)
                 {
-                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row3Col1.Id })" class="layout-item"></div>
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row3Col1.Id })" class="layout-item"></div>
                 }
             }
-            <table class="der-table der-dummy der-qhsee-weekly-alarm">
-                <thead>
-                    <tr>
-                        <th colspan="2" class="der-bg-blue-1">WEEKLY ALARM MANAGEMENT SYSTEM (28 Dec-4 Jan)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style="text-align: left; border: none">Process Train Areas :</td>
-                        <td style="text-align: right; border: none">1</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: left; border: none">Utilities-Off Site Areas :</td>
-                        <td style="text-align: right; border: none">3</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: left; border: none">High Priority Standing Alarm Total</td>
-                        <td style="text-align: right; border: none">4</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="text-align: left; border: none">Note: Hot Oil Heater 062F-1001 High Temp</td>
-                    </tr>
-                </tbody>
-            </table>
+            
+             @{
+                var row3Col2 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 2);
+                if (row3Col2 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row3Col2.Id })" class="layout-item"></div>
+                }
+            }
+           
         </div>
         <div class="col-md-4 no-padding">
             <p class="der-bg-blue-1" style="border: 1px solid black; text-align: center; margin: 0 0 1px">PROCESS UPSET / ANOMALY  / CONDITION</p>
             <div class="row der-row" style="margin-left: 0">
                 <div class="col-md-6 no-padding">
-                    <table class="der-table der-dummy" style="min-height: 400px">
-                        <tbody>
-                            <tr>
-                                <td>BOG compressor tripped LT 13:40hrs (approx. 1 hrs) due to LAHH signal, investigation was ongoing.</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    @{
+                var row3Col3 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 3);
+                if (row3Col3 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row3Col3.Id })" class="layout-item"></div>
+                }
+            }
+                   
                 </div>
                 <div class="col-md-6 no-padding">
                     @{
-                        var row3Col2 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 2);
-                        if (row3Col2 != null)
+                        var row3Col4 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 4);
+                        if (row3Col4 != null)
                         {
-                            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row3Col2.Id })" class="layout-item"></div>
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row3Col4.Id })" class="layout-item"></div>
                         }
                     }
                 </div>
@@ -190,7 +166,7 @@
                 var row4Col0 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 0);
                 if (row4Col0 != null)
                 {
-                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row4Col0.Id })" class="layout-item"></div>
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row4Col0.Id })" class="layout-item"></div>
                 }
             }
         </div>
@@ -199,7 +175,7 @@
                 var row4Col1 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 1);
                 if (row4Col1 != null)
                 {
-                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row4Col1.Id })" class="layout-item"></div>
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row4Col1.Id })" class="layout-item"></div>
                 }
             }
         </div>
@@ -208,7 +184,7 @@
                 var row4Col2 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 2);
                 if (row4Col2 != null)
                 {
-                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row4Col2.Id })" class="layout-item"></div>
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row4Col2.Id })" class="layout-item"></div>
                 }
             }
 
@@ -218,14 +194,20 @@
         <p class="der-table-title" style="margin-bottom: 5px">COMMERCIAL OPERATION & MAINTENANCE PERFORMANCE</p>
         <p class="der-table-subtitle1" style="margin: 0 0 1px;">FEED GAS TO PLANT</p>
         <div class="col-md-6" style="padding: 0px 0px">
-
+             @{
+                var row5Col0 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 0);
+                if (row5Col0 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row5Col0.Id })" class="layout-item"></div>
+                }
+            }
         </div>
         <div class="col-md-4" style="padding: 0px 0px">
             @{
                 var row5Col1 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 1);
                 if (row5Col1 != null)
                 {
-                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row5Col1.Id })" class="layout-item"></div>
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row5Col1.Id })" class="layout-item"></div>
                 }
             }
         </div>
@@ -234,7 +216,7 @@
                 var row5Col2 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 2);
                 if (row5Col2 != null)
                 {
-                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row5Col2.Id })" class="layout-item"></div>
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row5Col2.Id })" class="layout-item"></div>
                 }
             }
         </div>
@@ -244,7 +226,7 @@
                 var row6Col0 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 0);
                 if (row6Col0 != null)
                 {
-                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col0.Id })" class="layout-item"></div>
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col0.Id })" class="layout-item"></div>
                 }
             }
         </div>
@@ -255,103 +237,74 @@
                     <tr>
                         <th class="der-bg-blue-7" style="width: 12%">Description</th>
                         <th class="der-bg-blue-7">Plant Availability (hour-daily)</th>
-                        <th class="der-bg-blue-7">
-                            Plant Thermal Efficiency
+                        <th class="der-bg-blue-7">Plant Thermal Efficiency
                         </th>
-                        <th class="der-bg-blue-7">
-                            Material Balance (Flare Loss-%)
+                        <th class="der-bg-blue-7">Material Balance (Flare Loss-%)
                         </th>
-                        <th class="der-bg-blue-7">
-                            Act Feed/ Max.Cap (Plant intake Utilization)
+                        <th class="der-bg-blue-7">Act Feed/ Max.Cap (Plant intake Utilization)
                         </th>
-                        <th class="der-bg-blue-5" style="width: 15%">
-                            Refrigerant Prod (C2&C3)
+                        <th class="der-bg-blue-5" style="width: 15%">Refrigerant Prod (C2&C3)
                         </th>
-                        <th class="der-bg-blue-3">
-                            Total Fuel Gas
+                        <th class="der-bg-blue-3">Total Fuel Gas
                             (GTG-GTC-LP Fuel)
                         </th>
-                        <th class="der-bg-blue-3">
-                            Total Flared Gas
+                        <th class="der-bg-blue-3">Total Flared Gas
                             (Wet-Dry-Tankage)
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="der-bg-blue-4">
-                            ACTUAL 24H
+                        <td class="der-bg-blue-4">ACTUAL 24H
                         </td>
-                        <td>
-                            100.0%
+                        <td>100.0%
                         </td>
-                        <td>
-                            91.16%
+                        <td>91.16%
                         </td>
-                        <td>
-                            -0.31%
+                        <td>-0.31%
                         </td>
-                        <td>
-                            99.61%
+                        <td>99.61%
                         </td>
-                        <td class="der-bg-yellow">
-                            Refr prod:5.92 ton
+                        <td class="der-bg-yellow">Refr prod:5.92 ton
                         </td>
-                        <td class="der-bg-yellow">
-                            34.24 mmscf
+                        <td class="der-bg-yellow">34.24 mmscf
                         </td>
-                        <td class="der-bg-yellow">
-                            17,435 nm3
+                        <td class="der-bg-yellow">17,435 nm3
                         </td>
                     </tr>
                     <tr>
-                        <td class="der-bg-blue-4">
-                            ACTUAL MTD
+                        <td class="der-bg-blue-4">ACTUAL MTD
                         </td>
-                        <td>
-                            92.4%
+                        <td>92.4%
                         </td>
-                        <td>
-                            85.85%
+                        <td>85.85%
                         </td>
-                        <td>
-                            4.67%
+                        <td>4.67%
                         </td>
-                        <td>
-                            91.61%
+                        <td>91.61%
                         </td>
-                        <td class="der-bg-orange-1">
-                            Total Loss
+                        <td class="der-bg-orange-1">Total Loss
                         </td>
-                        <td class="der-bg-yellow">
-                            704.88 tonnes
+                        <td class="der-bg-yellow">704.88 tonnes
                         </td>
                         <td class="der-bg-blue-4">&nbsp;</td>
                     </tr>
                     <tr>
-                        <td class="der-bg-blue-4">
-                            2016 Target
+                        <td class="der-bg-blue-4">2016 Target
                         </td>
-                        <td>
-                            93.0%
+                        <td>93.0%
                         </td>
-                        <td>
-                            89.00%
+                        <td>89.00%
                         </td>
-                        <td>
-                            < 2.00%
+                        <td>< 2.00%
                         </td>
-                        <td>
-                            N/A
+                        <td>N/A
                         </td>
-                        <td class="der-bg-orange-1">
-                            -Loss:22.61 ton
+                        <td class="der-bg-orange-1">-Loss:22.61 ton
                         </td>
-                        <td class="der-bg-yellow">
-                            34,751 mmbtu
+                        <td class="der-bg-yellow">34,751 mmbtu
                         </td>
-                        <td class="der-bg-yellow">
-                            0.65 mmscf
+                        <td class="der-bg-yellow">0.65 mmscf
                         </td>
                     </tr>
                 </tbody>
@@ -362,120 +315,129 @@
                 var row7Col0 = Model.Items.FirstOrDefault(x => x.Row == 7 && x.Column == 0);
                 if (row7Col0 != null)
                 {
-                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row7Col0.Id })" class="layout-item"></div>
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row7Col0.Id })" class="layout-item"></div>
                 }
             }
-            <table class="der-table der-dummy all-border">
+            <table class="der-table all-border">
                 <tr>
-                    <td colspan="2" class="der-bg-blue-7">tank</td>
-                    <td colspan="2" class="der-bg-blue-7">tank</td>
-                    <td colspan="2" class="der-bg-blue-7">tank</td>
-                    <td class="der-bg-blue-7">tank</td>
+                    <td colspan="2" class="der-bg-blue-7">
+                        @{
+                            var row8Col0 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 0);
+                            if (row8Col0 != null)
+                            {
+                            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col0.Id })" class="layout-item"></div>
+                            }
+                        }
+                    </td>
+                    <td colspan="2" class="der-bg-blue-7">@{
+                        var row8Col1 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 1);
+                        if (row8Col1 != null)
+                        {
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col1.Id })" class="layout-item"></div>
+                        }
+                    }</td>
+                    <td colspan="2" class="der-bg-blue-7">@{
+                        var row8Col2 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 2);
+                        if (row8Col2 != null)
+                        {
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col2.Id })" class="layout-item"></div>
+                        }
+                    }<</td>
+                    <td class="der-bg-blue-7">@{
+                        var row8Col3 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 3);
+                        if (row8Col3 != null)
+                        {
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col3.Id })" class="layout-item"></div>
+                        }
+                    }</td>
                 </tr>
             </table>
-            @{
+            @*@{
                 var row9Col0 = Model.Items.FirstOrDefault(x => x.Row == 9 && x.Column == 0);
                 if (row9Col0 != null)
                 {
                     <div data-url="@Url.Action("LayoutItem", "Der", new { id = row9Col0.Id })" class="layout-item"></div>
                 }
-            }
+            }*@
         </div>
         <div class="col-md-6" style="padding: 0px 0px">
             @{
                 var row6Col2 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 2);
                 if (row6Col2 != null)
                 {
-                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col2.Id })" class="layout-item"></div>
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col2.Id })" class="layout-item"></div>
                 }
             }
-            <table class="der-table der-dummy all-border">
+             @{
+                var row8Col4 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 4);
+                if (row8Col4 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col4.Id })" class="layout-item"></div>
+                }
+            }
+            @*<table class="der-table der-dummy all-border">
                 <thead>
                     <tr>
-                        <th>
-                            NEXT LOADING SCHEDULE
+                        <th>NEXT LOADING SCHEDULE
                         </th>
-                        <th>
-                            Vessel
+                        <th>Vessel
                             (capacity)
                         </th>
-                        <th>
-                            ETA
+                        <th>ETA
                         </th>
-                        <th>
-                            ETD
+                        <th>ETD
                         </th>
-                        <th>
-                            Cargo#
+                        <th>Cargo#
                         </th>
-                        <th>
-                            Remarks
+                        <th>Remarks
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>
-                            LNG
+                        <td>LNG
                         </td>
-                        <td>
-                            Maleo (125,000m3)
+                        <td>Maleo (125,000m3)
                         </td>
-                        <td>
-                            20/01/2016 (arv)
+                        <td>20/01/2016 (arv)
                         </td>
-                        <td>
-                            23/01/2016 (dep)
+                        <td>23/01/2016 (dep)
                         </td>
-                        <td>
-                            3rd
+                        <td>3rd
                         </td>
-                        <td>
-                            ADP/QE/DES at Oita Terminal, loading completed at LT13:00hrs, final COB: 125,987.237m3, sailed off at LT:17:30hrs
+                        <td>ADP/QE/DES at Oita Terminal, loading completed at LT13:00hrs, final COB: 125,987.237m3, sailed off at LT:17:30hrs
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            CDS
+                        <td>CDS
                         </td>
-                        <td>
-                            Arin-8 (54,750bbl)
+                        <td>Arin-8 (54,750bbl)
                         </td>
-                        <td>
-                            20-Jan-16 (arv)
+                        <td>20-Jan-16 (arv)
                         </td>
-                        <td>
-                            TBA
+                        <td>TBA
                         </td>
-                        <td>
-                            9th
+                        <td>9th
                         </td>
-                        <td>
-                            PT Titis Sampurna, loading in progress
+                        <td>PT Titis Sampurna, loading in progress
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            LNG
+                        <td>LNG
                         </td>
-                        <td>
-                            Hyundai Utopia (125,000m3)
+                        <td>Hyundai Utopia (125,000m3)
                         </td>
-                        <td>
-                            2-Feb-16
+                        <td>2-Feb-16
                         </td>
-                        <td>
-                            TBA
+                        <td>TBA
                         </td>
-                        <td>
-                            4th
+                        <td>4th
                         </td>
-                        <td>
-                            ADP/CE/DES-Chita Terminal
+                        <td>ADP/CE/DES-Chita Terminal
                         </td>
                     </tr>
                 </tbody>
-            </table>
+            </table>*@
         </div>
 
     </div>
@@ -485,237 +447,168 @@
                 var row9Col0 = Model.Items.FirstOrDefault(x => x.Row == 9 && x.Column == 0);
                 if (row9Col0 != null)
                 {
-                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row9Col0.Id })" class="layout-item"></div>
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row9Col0.Id })" class="layout-item"></div>
                 }
             }
             @{
                 var row10Col0 = Model.Items.FirstOrDefault(x => x.Row == 10 && x.Column == 0);
                 if (row10Col0 != null)
                 {
-                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row10Col0.Id })" class="layout-item"></div>
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row10Col0.Id })" class="layout-item"></div>
                 }
             }
-            <table class="der-table der-dummy">
-                <tr>
-                    <td>
-                        Operation Highlight & Immediate Concern :
-                    </td>
-                    <td>Plant Mode : Holding</td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        Normal Ops. Feed gas rate was maintained at 335MMSCFD. Debutanizer direct to CDS vessel. GTG-B/C running in LSP mode with total load 11.2MW.
-                    </td>
-                </tr>
-            </table>
-            <table class="der-table der-dummy">
-                <tr>
-                    <td colspan="2">
-                        Maintenance Highlight & Immediate Concern:
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        The GTG-A ratcheting issue still on-going. BOG compressor tripped at LT 13:40hrs for approx. 1 hour due to LAHH on 071-D-1001 when loading completed. Unit was put back in operation, investigation was ongoing.
-                    </td>
-                </tr>
-            </table>
+           @{
+                var row12Col0 = Model.Items.FirstOrDefault(x => x.Row == 12 && x.Column == 0);
+                if (row12Col0 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row12Col0.Id })" class="layout-item"></div>
+                }
+            }
+            @{
+                var row13Col0 = Model.Items.FirstOrDefault(x => x.Row == 13 && x.Column == 0);
+                if (row13Col0 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row13Col0.Id })" class="layout-item"></div>
+                }
+            }
+             @{
+                var row10Col1 = Model.Items.FirstOrDefault(x => x.Row == 10 && x.Column == 1);
+                if (row10Col1 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row10Col1.Id })" class="layout-item"></div>
+                }
+            }
         </div>
         <div class="col-md-6 no-padding">
             <table class="der-table der-dummy all-border">
                 <thead>
                     <tr>
-                        <th colspan="8">
-                            KEY EQUIPMENT STATUS
+                        <th colspan="8">KEY EQUIPMENT STATUS
                         </th>
                     </tr>
                     <tr>
-                        <th colspan="2">
-                            Power
+                        <th colspan="2">Power
                         </th>
-                        <th colspan="2">
-                            Process Train
+                        <th colspan="2">Process Train
                         </th>
-                        <th colspan="2">
-                            Utilities
+                        <th colspan="2">Utilities
                         </th>
-                        <th colspan="2">
-                            Support
+                        <th colspan="2">Support
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>
-                            GTG-A
+                        <td>GTG-A
                         </td>
-                        <td>
-                            Not Available
+                        <td>Not Available
                         </td>
-                        <td>
-                            C3 Compr
+                        <td>C3 Compr
                         </td>
-                        <td>
-                            Running
+                        <td>Running
                         </td>
-                        <td>
-                            Air Compr-A
+                        <td>Air Compr-A
                         </td>
-                        <td>
-                            Standby
+                        <td>Standby
                         </td>
-                        <td>
-                            Feed Inlet System
+                        <td>Feed Inlet System
                         </td>
-                        <td>
-                            Normal Ops
+                        <td>Normal Ops
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            GTG-B
+                        <td>GTG-B
                         </td>
-                        <td>
-                            Running
+                        <td>Running
                         </td>
-                        <td>
-                            LP-MR Compr
+                        <td>LP-MR Compr
                         </td>
-                        <td>
-                            Running
+                        <td>Running
                         </td>
-                        <td>
-                            Air Compr-B
+                        <td>Air Compr-B
                         </td>
-                        <td>
-                            Running
+                        <td>Running
                         </td>
-                        <td>
-                            Potable Water Syst
+                        <td>Potable Water Syst
                         </td>
-                        <td>
-                            Normal Ops
+                        <td>Normal Ops
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            GTG-C
+                        <td>GTG-C
                         </td>
-                        <td>
-                            Running
+                        <td>Running
                         </td>
-                        <td>
-                            HP-MR Compr
+                        <td>HP-MR Compr
                         </td>
-                        <td>
-                            Running
+                        <td>Running
                         </td>
-                        <td>
-                            Air Compr-C
+                        <td>Air Compr-C
                         </td>
-                        <td>
-                            Standby
+                        <td>Standby
                         </td>
-                        <td>
-                            Fire-Protect Syst
+                        <td>Fire-Protect Syst
                         </td>
-                        <td>
-                            Normal Ops
+                        <td>Normal Ops
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            EDG-A
+                        <td>EDG-A
                         </td>
-                        <td>
-                            Standby
+                        <td>Standby
                         </td>
-                        <td>
-                            Hot Oil System
+                        <td>Hot Oil System
                         </td>
-                        <td>
-                            Normal Ops
+                        <td>Normal Ops
                         </td>
-                        <td>
-                            N2 System
+                        <td>N2 System
                         </td>
-                        <td>
-                            Normal Ops
+                        <td>Normal Ops
                         </td>
-                        <td>
-                            C2&C3 Storage Tank
+                        <td>C2&C3 Storage Tank
                         </td>
-                        <td>
-                            Normal Ops
+                        <td>Normal Ops
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            EDG-B
+                        <td>EDG-B
                         </td>
-                        <td>
-                            Standby
+                        <td>Standby
                         </td>
-                        <td>
-                            Fuel Gas System
+                        <td>Fuel Gas System
                         </td>
-                        <td>
-                            Normal Ops
+                        <td>Normal Ops
                         </td>
-                        <td>
-                            BOG Compr
+                        <td>BOG Compr
                         </td>
-                        <td>
-                            Tripped
+                        <td>Tripped
                         </td>
-                        <td>
-                            Flare System
+                        <td>Flare System
                         </td>
-                        <td>
-                            Normal Ops
+                        <td>Normal Ops
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            EDG-C
+                        <td>EDG-C
                         </td>
-                        <td>
-                            Standby
+                        <td>Standby
                         </td>
-                        <td>
-                            MCHE
+                        <td>MCHE
                         </td>
-                        <td>
-                            Normal Ops
+                        <td>Normal Ops
                         </td>
-                        <td>
-                            LNG Jetty
+                        <td>LNG Jetty
                         </td>
-                        <td>
-                            Normal Ops
+                        <td>Normal Ops
                         </td>
-                        <td>
-                            Waste System
+                        <td>Waste System
                         </td>
-                        <td>
-                            Normal Ops
+                        <td>Normal Ops
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <table class="der-table der-dummy">
-                <tr>
-                    <td>
-                        Marine, Shipping and Cargo Delivery:
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        LNG Excel: Vessel steaming in a drifting area and anchored at D1 Yosu (Gwang Yang) 12 Jan'16, LT09:00. Waiting for discharge schedule on 28 Jan 2016.
-                        LNG Maleo: sailed off at LT17:30hrs, ETA OitaTerminal on 30 Jan'16. LNG Hyundai Utopia: discharged completion on 23 Jan'16 LT11:42hrs (122,953.826 m3) at Pyeongtaek Terminal, enroute to DSLNG ETA Luwuk-Indonesia: 01 Feb., 2016 LT10:00hrs. MT-Indradi (CDS Vessel): Finalization of inspection result still ongoing.
-                    </td>
-                </tr>
-            </table>
+            
         </div>
     </div>
     <div class="row der-row">
@@ -724,38 +617,29 @@
             <table class="der-table der-dummy all-border">
                 <thead>
                     <tr>
-                        <th>
-                            PROCUREMENT
+                        <th>PROCUREMENT
                         </th>
-                        <th>
-                            PO / SO (Plant Related)
+                        <th>PO / SO (Plant Related)
                         </th>
-                        <th>
-                            Remarks
+                        <th>Remarks
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>
-                            # Backlog
+                        <td># Backlog
                         </td>
-                        <td>
-                            2
+                        <td>2
                         </td>
-                        <td>
-                            as of 19 Jan'16
+                        <td>as of 19 Jan'16
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            Avg Backlog time
+                        <td>Avg Backlog time
                         </td>
-                        <td>
-                            209 days
+                        <td>209 days
                         </td>
-                        <td>
-                            incl partial PO
+                        <td>incl partial PO
                         </td>
                     </tr>
                 </tbody>
@@ -768,25 +652,19 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>
-                            Feed Gas (GSA)
+                        <td>Feed Gas (GSA)
                         </td>
-                        <td>
-                            JOB 2.87
+                        <td>JOB 2.87
                         </td>
-                        <td>
-                            DES 7.71
+                        <td>DES 7.71
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            Feed Gas (GSA)
+                        <td>Feed Gas (GSA)
                         </td>
-                        <td>
-                            JOB 2.87
+                        <td>JOB 2.87
                         </td>
-                        <td>
-                            DES 7.71
+                        <td>DES 7.71
                         </td>
                     </tr>
                 </tbody>
@@ -796,136 +674,104 @@
             <table class="der-table der-dummy">
                 <thead>
                     <tr>
-                        <th colspan="3" style="width: 18.75%">
-                            Economic Indicator
+                        <th colspan="3" style="width: 18.75%">Economic Indicator
                         </th>
-                        <th colspan="2" style="width: 12.5%">
-                            FX rate
+                        <th colspan="2" style="width: 12.5%">FX rate
                             SDR:IMF major ccy basket index
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td style="width: 33%">
-                            Dubai Crude
+                        <td style="width: 33%">Dubai Crude
                             (DME OQD FUT)
                         </td>
-                        <td>
-                            0.00
+                        <td>0.00
                         </td>
-                        <td style="width: 30%">
-                            26.28 USD/bbl
+                        <td style="width: 30%">26.28 USD/bbl
                         </td>
-                        <td>
-                            0
+                        <td>0
                         </td>
-                        <td style="width: 30%">
-                            USD/SDR 0.7251
+                        <td style="width: 30%">USD/SDR 0.7251
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            BRENT FUT
+                        <td>BRENT FUT
                         </td>
-                        <td>
-                            0.00
+                        <td>0.00
                         </td>
-                        <td>
-                            32.16 USD/bbl
+                        <td>32.16 USD/bbl
                         </td>
-                        <td>
-                            0
+                        <td>0
                         </td>
-                        <td>
-                            USD/IDR 13,845
+                        <td>USD/IDR 13,845
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            Naphta FOB Sing
+                        <td>Naphta FOB Sing
                         </td>
-                        <td>
-                            0.00
+                        <td>0.00
                         </td>
-                        <td>
-                            36.58 USD/bbl
+                        <td>36.58 USD/bbl
                         </td>
-                        <td>
-                            0
+                        <td>0
                         </td>
-                        <td>
-                            JPY/IDR 116.54
+                        <td>JPY/IDR 116.54
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            Naphta FOB Sing
+                        <td>Naphta FOB Sing
                         </td>
-                        <td>
-                            0.00
+                        <td>0.00
                         </td>
-                        <td>
-                            36.58 USD/bbl
+                        <td>36.58 USD/bbl
                         </td>
-                        <td>
-                            0
+                        <td>0
                         </td>
-                        <td>
-                            JPY/IDR 116.54
+                        <td>JPY/IDR 116.54
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            Naphta FOB Sing
+                        <td>Naphta FOB Sing
                         </td>
-                        <td>
-                            0.00
+                        <td>0.00
                         </td>
-                        <td>
-                            36.58 USD/bbl
+                        <td>36.58 USD/bbl
                         </td>
-                        <td>
-                            0
+                        <td>0
                         </td>
-                        <td>
-                            JPY/IDR 116.54
+                        <td>JPY/IDR 116.54
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="3">
-                            LNG Shipping Cost benchmark
+                        <td colspan="3">LNG Shipping Cost benchmark
                             (Jap-Kor-Aus)
                         </td>
-                        <td>
-                            0.00
+                        <td>0.00
                         </td>
-                        <td>
-                            0.27 USD/mmbtu
+                        <td>0.27 USD/mmbtu
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div class="col-md-6 no-padding">
-            <table class="der-table der-dummy">
-                <tr>
-                    <td class="der-title-underline">Community Relation and Government Engagement Highlight:</td>
-                </tr>
-                <tr>
-                    <td>Routine program preparations and monitoring</td>
-                </tr>
-            </table>
+            @{
+                var row14Col2 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 2);
+                if (row14Col2 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row14Col2.Id })" class="layout-item"></div>
+                }
+            }
         </div>
         <div class="col-md-3 no-padding">
-            <table class="der-table der-dummy">
-                <tr>
-                    <td class="der-title-underline">Macro Economic/Market Flash :</td>
-                </tr>
-                <tr>
-                    <td>Market closed.</td>
-                </tr>
-            </table>
+            @{
+                var row15Col1 = Model.Items.FirstOrDefault(x => x.Row == 15 && x.Column == 1);
+                if (row15Col1 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row15Col1.Id })" class="layout-item"></div>
+                }
+            }
         </div>
         <div class="col-md-3 no-padding">
             <table class="der-table der-dummy">
@@ -959,12 +805,19 @@
                         if (data.GraphicType !== undefined) {
                             var callback = window.Pear.Artifact.Designer._previewCallbacks;
                             callback[data.GraphicType](data, that);
-                        } else if (data.type === "highlight" || data.type === "weather" ||
-                            data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
-                        data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
-                        || data.type === "weekly-maintenance" || data.type === "critical-pm") {
+                        }
+                        else if (data.type === "highlight") {
+                            var aneh = data.view.replace(/\"/g, "");
+                            console.log(aneh);
+                            that.html(aneh);
+                        } else {
                             that.html(data.view);
                         }
+                        /*else if (data.type === "weather" || data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
+                        data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
+                        || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type === 'mgdp') {
+                            that.html(data.view);
+                        }*/
 
                     }
                 });

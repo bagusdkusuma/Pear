@@ -12,12 +12,15 @@ using DSLNG.PEAR.Services.Requests.Artifact;
 using DSLNG.PEAR.Services.Requests.Der;
 using DSLNG.PEAR.Services.Requests.Highlight;
 using DSLNG.PEAR.Services.Requests.KpiAchievement;
+using DSLNG.PEAR.Services.Requests.VesselSchedule;
+using DSLNG.PEAR.Services.Requests.Wave;
 using DSLNG.PEAR.Services.Requests.Weather;
 using DSLNG.PEAR.Services.Responses.Der;
 using DSLNG.PEAR.Web.ViewModels.Artifact;
 using DSLNG.PEAR.Web.ViewModels.Der;
 using DSLNG.PEAR.Web.ViewModels.Der.Display;
 using DSLNG.PEAR.Web.Extensions;
+using DSLNG.PEAR.Web.ViewModels.Highlight;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -30,8 +33,10 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IWeatherService _weatherService;
         private readonly IKpiAchievementService _kpiAchievementService;
         private readonly IKpiTargetService _kpiTargetService;
+        private readonly IVesselScheduleService _vesselScheduleService;
+        private readonly IWaveService _waveService;
 
-        public DerController(IDerService derService, IDropdownService dropdownService, IArtifactService artifactService, IHighlightService highlightService, IWeatherService weatherService, IKpiAchievementService kpiAchievementService, IKpiTargetService kpiTargetService)
+        public DerController(IDerService derService, IDropdownService dropdownService, IArtifactService artifactService, IHighlightService highlightService, IWeatherService weatherService, IKpiAchievementService kpiAchievementService, IKpiTargetService kpiTargetService, IVesselScheduleService vesselScheduleService, IWaveService waveService)
         {
             _derService = derService;
             _dropdownService = dropdownService;
@@ -40,6 +45,8 @@ namespace DSLNG.PEAR.Web.Controllers
             _weatherService = weatherService;
             _kpiAchievementService = kpiAchievementService;
             _kpiTargetService = kpiTargetService;
+            _vesselScheduleService = vesselScheduleService;
+            _waveService = waveService;
         }
 
         public ActionResult Index()
@@ -285,6 +292,36 @@ namespace DSLNG.PEAR.Web.Controllers
                             Date = date
                         });
                         var view = RenderPartialViewToString("Display/_Alert", alert);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+                #endregion
+                #region wave
+                case "wave":
+                    {
+                        var wave = _waveService.GetWave(new GetWaveRequest
+                        {
+                            Date = date,
+                            ByDate = true
+                        });
+                        var view = RenderPartialViewToString("Display/_Wave", wave);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+                #endregion
+                #region nls
+                case "nls":
+                    {
+                        var vesselSchedule = _vesselScheduleService.GetVesselSchedules(new GetVesselSchedulesRequest
+                        {
+                            allActiveList = true,
+                            Skip = 0,
+                            Take = 3,
+                        });
+                        var schedules = vesselSchedule.VesselSchedules.OrderBy(x => x.ETA).Take(3).ToList();
+                        var nls = schedules.MapTo<DailyExecutionReportViewModel.NLSViewModel>();
+                        
+                        var view = RenderPartialViewToString("Display/_Nls", nls);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
