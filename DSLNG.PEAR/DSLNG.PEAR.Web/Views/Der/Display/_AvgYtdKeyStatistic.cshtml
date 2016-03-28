@@ -19,7 +19,7 @@
     <tr>
         @for (var i = 1; i <= 6; i++)
             {
-                <td>&nbsp;</td>
+                <td>@Model.AvgYtdKeyStatistics.Single(x => x.Position == i).Progress</td>
             }
     </tr>
 </table>

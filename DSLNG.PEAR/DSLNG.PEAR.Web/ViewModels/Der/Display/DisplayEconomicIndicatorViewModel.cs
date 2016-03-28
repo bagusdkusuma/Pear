@@ -20,6 +20,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Der.Display
             public string KpiName { get; set; }
             public string Daily { get; set; }
             public string Measurement { get; set; }
+            public string Progress { get; set; }
         }
     }
 }
