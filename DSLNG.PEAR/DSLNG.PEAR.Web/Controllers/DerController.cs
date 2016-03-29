@@ -320,7 +320,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         });
                         var schedules = vesselSchedule.VesselSchedules.OrderBy(x => x.ETA).Take(3).ToList();
                         var nls = schedules.MapTo<DailyExecutionReportViewModel.NLSViewModel>();
-                        
+
                         var view = RenderPartialViewToString("Display/_Nls", nls);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
@@ -341,6 +341,26 @@ namespace DSLNG.PEAR.Web.Controllers
                             if (item.Kpi != null)
                             {
                                 var actual = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.YTD, YtdFormula.Average);
+                                var beforeActual = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date.AddDays(-1), RangeFilter.YTD, YtdFormula.Average);
+                                if (actual.Value.HasValue && beforeActual.Value.HasValue)
+                                {
+                                    if (actual.Value.Value > beforeActual.Value.Value)
+                                    {
+                                        avgYtdKeyStatisticViewModel.Progress = "up";
+                                    }
+                                    else if (beforeActual.Value.Value > actual.Value.Value)
+                                    {
+                                        avgYtdKeyStatisticViewModel.Progress = "down";
+                                    }
+                                    else
+                                    {
+                                        avgYtdKeyStatisticViewModel.Progress = "non";
+                                    }
+                                }
+                                else
+                                {
+                                    avgYtdKeyStatisticViewModel.Progress = "non";
+                                }
                                 avgYtdKeyStatisticViewModel.KpiName = item.Kpi.Name;
                                 avgYtdKeyStatisticViewModel.Ytd = actual.Value.HasValue ? actual.Value.ToString() : "n/a";
                             }
@@ -701,7 +721,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
-                    #endregion
+                #endregion
                 #region weekly maintenance
                 case "weekly-maintenance":
                     {
@@ -713,7 +733,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         for (int i = 0; i <= 3; i++)
                         {
                             var weeklyMaintenanceViewModel = new DisplayWeeklyMaintenanceViewModel.WeeklyMaintenanceViewModel();
-                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ?? 
+                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
                                 new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
                             weeklyMaintenanceViewModel.Position = item.Position;
                             if (item.Kpi != null)
@@ -725,14 +745,14 @@ namespace DSLNG.PEAR.Web.Controllers
                                 request.RangeFilter = RangeFilter.CurrentWeek;
                                 var weekly = _derService.GetKpiValue(request);
                                 weeklyMaintenanceViewModel.Weekly = weekly.Value.HasValue && weekly.Value != null ? weekly.Value.Value.ToString() : "n/a"; ;
-                            } 
+                            }
                             else if (item.SelectOption != null)
                             {
                                 var highlight = _highlightService.GetHighlightByPeriode(new GetHighlightRequest
-                                    {
-                                        Date = date,
-                                        HighlightTypeId = item.SelectOption.Id
-                                    });
+                                {
+                                    Date = date,
+                                    HighlightTypeId = item.SelectOption.Id
+                                });
                                 weeklyMaintenanceViewModel.Remarks = !string.IsNullOrEmpty(highlight.Message)
                                                                          ? highlight.Message
                                                                          : "n/a";
@@ -740,7 +760,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             viewModel.WeeklyMaintenanceViewModels.Add(weeklyMaintenanceViewModel);
                         }
                         var view = RenderPartialViewToString("Display/_WeeklyMaintenance", viewModel);
-                        var json = new {type = layout.Type.ToLowerInvariant(), view};
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
                 #endregion
@@ -894,17 +914,17 @@ namespace DSLNG.PEAR.Web.Controllers
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
-                    #endregion
+                #endregion
                 #region Economic Indicator
                 case "economic-indicator":
                     {
                         var viewModel = new DisplayEconomicIndicatorViewModel();
                         for (int i = 0; i <= 10; i++)
                         {
-                            var indicativeCommercialPriceViewModel = new DisplayEconomicIndicatorViewModel.EconomicIndicatorViewModel();
+                            var EconomicIndicatorViewModel = new DisplayEconomicIndicatorViewModel.EconomicIndicatorViewModel();
                             var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
                                       new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
-                            indicativeCommercialPriceViewModel.Position = item.Position;
+                            EconomicIndicatorViewModel.Position = item.Position;
                             if (item.Kpi != null)
                             {
                                 var request = new GetKpiValueRequest();
@@ -913,9 +933,30 @@ namespace DSLNG.PEAR.Web.Controllers
                                 request.Periode = date;
                                 request.RangeFilter = RangeFilter.CurrentDay;
                                 var daily = _derService.GetKpiValue(request);
-                                indicativeCommercialPriceViewModel.Daily = daily.Value.HasValue ? daily.Value.Value.ToString() : "n/a";
+                                request.Periode = date.AddDays(-1);
+                                var yesterday = _derService.GetKpiValue(request);
+                                if (daily.Value.HasValue && yesterday.Value.HasValue)
+                                {
+                                    if (daily.Value.Value > yesterday.Value.Value)
+                                    {
+                                        EconomicIndicatorViewModel.Progress = "up";
+                                    }
+                                    else if (yesterday.Value.Value > daily.Value.Value)
+                                    {
+                                        EconomicIndicatorViewModel.Progress = "down";
+                                    }
+                                    else
+                                    {
+                                        EconomicIndicatorViewModel.Progress = "non";
+                                    }
+                                }
+                                else
+                                {
+                                    EconomicIndicatorViewModel.Progress = "non";
+                                }
+                                EconomicIndicatorViewModel.Daily = daily.Value.HasValue ? daily.Value.Value.ToString() : "n/a";
                             }
-                            viewModel.EconomicIndicatorViewModels.Add(indicativeCommercialPriceViewModel);
+                            viewModel.EconomicIndicatorViewModels.Add(EconomicIndicatorViewModel);
                         }
                         var view = RenderPartialViewToString("Display/_EconomicIndicator", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
