@@ -80,5 +80,14 @@ namespace DSLNG.PEAR.Services
         {
             throw new NotImplementedException();
         }
+
+        public GetProcessBlueprintsResponse All()
+        {
+            var data = DataContext.ProcessBlueprints.ToList();
+            return new GetProcessBlueprintsResponse {
+                TotalRecords = data.Count(),
+                ProcessBlueprints = data.ToList().MapTo<GetProcessBlueprintsResponse.ProcessBlueprint>()
+            };
+        }
     }
 }

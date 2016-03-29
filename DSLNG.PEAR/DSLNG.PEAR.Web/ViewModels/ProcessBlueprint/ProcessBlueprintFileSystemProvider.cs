@@ -19,7 +19,7 @@ namespace DSLNG.PEAR.Web.ViewModels.ProcessBlueprint
             List<FileSystemItem> files = (List<FileSystemItem>)HttpContext.Current.Session["ProcessBlueprintItems"];
             if (files == null)
             {
-                files = service.Gets(new GetProcessBlueprintsRequest { Take = 0, Skip = 0 }).ProcessBlueprints.ToList().MapTo<FileSystemItem>();
+                files = service.All().ProcessBlueprints.ToList().MapTo<FileSystemItem>();
                 HttpContext.Current.Session["ProcessBlueprintItems"] = files;
             }
             return files;
