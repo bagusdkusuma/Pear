@@ -111,6 +111,9 @@ using PopInformationType = DSLNG.PEAR.Data.Enums.PopInformationType;
 using DSLNG.PEAR.Services.Requests.Signature;
 using DSLNG.PEAR.Services.Responses.Wave;
 using DSLNG.PEAR.Services.Requests.Wave;
+using DSLNG.PEAR.Data.Entities.Mir;
+using DSLNG.PEAR.Services.Responses.MirConfiguration;
+using DSLNG.PEAR.Services.Requests.MirConfiguration;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -587,7 +590,10 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<SavePostureConstraintRequest, PostureConstraint>();
 
             Mapper.CreateMap<EnvironmentsScanning, GetEnvironmentsScanningResponse>()
-                .ForMember(x => x.BusinessPostureId, o => o.MapFrom(s => s.PlanningBlueprint.BusinessPostureIdentification.Id));
+                .ForMember(x => x.BusinessPostureId, o => o.MapFrom(s => s.PlanningBlueprint.BusinessPostureIdentification.Id))
+                .ForMember(x => x.IsApproved, o => o.MapFrom(s => s.PlanningBlueprint.BusinessPostureIdentification.IsApproved))
+                .ForMember(x => x.IsBeingReviewed, o => o.MapFrom(s => s.PlanningBlueprint.BusinessPostureIdentification.IsBeingReviewed))
+                .ForMember(x => x.IsRejected, o => o.MapFrom(s => s.PlanningBlueprint.BusinessPostureIdentification.IsRejected));
             Mapper.CreateMap<UltimateObjectivePoint, GetEnvironmentsScanningResponse.UltimateObjective>();
             Mapper.CreateMap<EnvironmentalScanning, GetEnvironmentsScanningResponse.Environmental>();
             Mapper.CreateMap<SaveEnvironmentScanningRequest, UltimateObjectivePoint>();
@@ -694,6 +700,13 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Wave, GetWavesResponse.WaveResponse>()
                 .ForMember(x => x.Value, y => y.MapFrom(z => z.Value.Text));
             Mapper.CreateMap<SaveWaveRequest, Wave>();
+
+
+            Mapper.CreateMap<MirConfiguration, GetsMirConfigurationsResponse.MirConfiguration>();
+            Mapper.CreateMap<SaveMirConfigurationRequest, MirConfiguration>();
+            Mapper.CreateMap<MirConfiguration, GetMirConfigurationsResponse>();
+            Mapper.CreateMap<MirDataTable, GetMirConfigurationsResponse.MirDataTable>();
+            Mapper.CreateMap<Kpi, GetMirConfigurationsResponse.MirDataTable.Kpi>();
             base.Configure();
         }
 
