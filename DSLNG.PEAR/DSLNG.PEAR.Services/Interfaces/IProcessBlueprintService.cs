@@ -10,6 +10,7 @@ namespace DSLNG.PEAR.Services.Interfaces
 {
     public interface IProcessBlueprintService
     {
+        GetProcessBlueprintsResponse All();
         GetProcessBlueprintsResponse Gets(GetProcessBlueprintsRequest request);
         GetProcessBlueprintResponse Get(GetProcessBlueprintRequest request);
         GetProcessBlueprintResponse Save(SaveProcessBlueprintRequest request);
