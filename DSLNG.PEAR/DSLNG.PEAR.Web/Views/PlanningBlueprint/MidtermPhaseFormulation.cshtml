@@ -119,7 +119,7 @@ else
                     <ul class="defined-list description">
                         @foreach (var desc in item.Descriptions)
                         { 
-                            <li data-id="@desc.Id"><span class="popover-edit-trigger" data-toggle="popover">@desc.Value</span>    @if (!Model.IsReviewer)
+                            <li data-id="@desc.Id"><span class="popover-edit-trigger" data-toggle="popover">@desc.Value</span>    @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
                                                                                                                                   {<a class="remove-item" href="/MidtermFormulation/DeleteStageDesc"><i class="fa fa-minus"></i></a>}</li>
                         }
                     </ul>
@@ -133,7 +133,7 @@ else
                     <ul class="defined-list key-driver">
                         @foreach (var keyDriver in item.KeyDrivers)
                         { 
-                            <li data-id="@keyDriver.Id"><span class="popover-edit-trigger" data-toggle="popover">@keyDriver.Value</span>    @if (!Model.IsReviewer)
+                            <li data-id="@keyDriver.Id"><span class="popover-edit-trigger" data-toggle="popover">@keyDriver.Value</span>    @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
                                                                                                                                             {<a class="remove-item" href="/MidtermFormulation/DeleteStageKey"><i class="fa fa-minus"></i></a>}</li>
                         }
                     </ul>
@@ -302,6 +302,8 @@ else
                 return $('.formulation-stage-form').html();
             }
         });
+         @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
+                    {<text>
         $('.add-formulation-stage, .popover-edit-stage').on('shown.bs.popover', function () {
             $('.popover .monthpicker').datetimepicker({
                 format: "MM/YYYY"
@@ -311,6 +313,7 @@ else
                 }
             });
         });
+        </text>}
         $(document).on('click', '.add-midterm-stage', function (e) {
             e.preventDefault();
             var $this = $(this);
@@ -403,6 +406,8 @@ else
                 return $('.definition-form').html();
             }
         });
+         @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
+                    {<text>
         $('.defined-list').popover({
             selector: '.popover-edit-trigger',
             html: true,
@@ -432,6 +437,7 @@ else
                 }
             });
         });
+        </text>}
         $(document).on('click', '.add-stage-definition', function (e) {
             e.preventDefault();
             var $this = $(this);
@@ -521,6 +527,8 @@ else
                 $(this).closest('form').submit();
             }
         });
+         @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
+                    {<text>
         $('.formulation-stages-wrapper').popover({
             selector: '.popover-edit-stage',
             html: true,
@@ -574,40 +582,37 @@ else
                     $stage.find('.end').html(data.End);
                     $stage.attr('data-order', data.Order);
 
-                    console.log($stage);
-
-                    //reorder = 
-                    var stages = [];
-                    $('.formulation-stage').each(function (i, val) {
-                        stages.push(val);
-                    });
-                    
-                    stages = stages.sort(function (a, b) {
-                        console.log(parseInt($(a).attr('data-order')) - parseInt($(b).attr('data-order')));
-                        return parseInt($(a).attr('data-order')) - parseInt($(b).attr('data-order'));
-                    });
-                    console.log(stages);
-
                     $trigger.popover('hide');
+                    setTimeout(function () {
+                        //reorder = 
+                        var stages = [];
+                        $('.formulation-stage').each(function (i, val) {
+                            stages.push(val);
+                        });
 
-                    var $table = $('.formulation-stages-table');
-                    $table.find('.formulation-stages').remove();
-
-
-                    for (var i = 0; i < stages.length; i += 4) {
-                        var $tr = $('<tr />');
-                        $tr.addClass('formulation-stages');
-                        for (var j = i; j < i + 4; j++) {
-                            if (j > stages.length) break;
-                            $tr.append(stages[j]);
+                        stages = stages.sort(function (a, b) {
+                            console.log(parseInt($(a).attr('data-order')) - parseInt($(b).attr('data-order')));
+                            return parseInt($(a).attr('data-order')) - parseInt($(b).attr('data-order'));
+                        });
+                        var $table = $('.formulation-stages-table');
+                        $table.find('.formulation-stages').remove();
+                        for (var i = 0; i < stages.length; i += 4) {
+                            var $tr = $('<tr />');
+                            $tr.addClass('formulation-stages');
+                            for (var j = i; j < i + 4; j++) {
+                                if (j > stages.length) break;
+                                $tr.append(stages[j]);
+                            }
+                            $table.append($tr);
                         }
-                        $table.append($tr);
-                    }
+                    }, 300);
+                    
 
 
                 }
             });
         });
+        </text>}
         //var popOverElem;
         //$(document).on('click', '.add-definition,.add-formulation-stage', function () {
         //    popOverElem = $(this);
