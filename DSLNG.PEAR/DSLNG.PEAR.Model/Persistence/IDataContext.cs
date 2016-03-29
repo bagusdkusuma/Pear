@@ -104,6 +104,7 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<MirHighlight> MirHighlights { get; set; }
         IDbSet<MirArtifact> MirArtifacts { get; set; }
         IDbSet<MirConfiguration> MirConfigurations { get; set; }
+        IDbSet<MidtermPlanningKpi> MidtermPlanningKpis { get; set; }
         Database Database { get; }
         int SaveChanges();
         DbEntityEntry Entry(object entity);

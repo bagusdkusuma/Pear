@@ -661,7 +661,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<AddDefinitionRequest, MidtermPhaseDescription>();
             Mapper.CreateMap<AddDefinitionRequest, MidtermPhaseKeyDriver>();
 
-            Mapper.CreateMap<MidtermStrategicPlanning, GetMidtermPlanningsResponse.MidtermPlanning>();
+            Mapper.CreateMap<MidtermStrategicPlanning, GetMidtermPlanningsResponse.MidtermPlanning>()
+                .ForMember(d => d.Kpis, o => o.MapFrom(s => s.Kpis.Select(x => x.Kpi).ToList().MapTo<GetMidtermPlanningsResponse.Kpi>()));
             Mapper.CreateMap<MidtermStrategicPlanningObjective, GetMidtermPlanningsResponse.MidtermPlanningObjective>();
             Mapper.CreateMap<Kpi, GetMidtermPlanningsResponse.Kpi>()
                 .ForMember(d => d.Measurement, o => o.MapFrom(s => s.Measurement.Name));
