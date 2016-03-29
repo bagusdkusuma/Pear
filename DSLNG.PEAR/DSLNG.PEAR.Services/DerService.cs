@@ -353,10 +353,20 @@ namespace DSLNG.PEAR.Services
                         }
                         break;
                     }
-                case "avg-ytd-key-statistic":
                 case "safety":
-                case "lng-and-cds":
                 case "security":
+                case "job-pmts":
+                case "avg-ytd-key-statistic":
+                case "lng-and-cds":
+                case "total-feed-gas":
+                case "table-tank":
+                case "mgdp":
+                case "hhv":
+                case "lng-and-cds-production":
+                case "weekly-maintenance":
+                case "critical-pm":
+                case "procurement":
+                case "indicative-commercial-price":
                     {
                         try
                         {
@@ -432,6 +442,7 @@ namespace DSLNG.PEAR.Services
                 case "weather":
                 case "alert":
                 case "wave":
+                case "nls":
                     {
                         baseResponse = SaveDynamicHighlight(request);
                         break;
@@ -448,6 +459,10 @@ namespace DSLNG.PEAR.Services
                 case "lng-and-cds-production":
                 case "weekly-maintenance":
                 case "critical-pm":
+                case "procurement":
+                case "indicative-commercial-price":
+                case "plant-availability":
+                case "economic-indicator":
                     {
                         baseResponse = request.Id > 0 ? UpdateKpiInformations(request) : SaveKpiInformations(request);
                         break;
@@ -1412,6 +1427,19 @@ namespace DSLNG.PEAR.Services
                             kpi = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == kpi.Id);
                         }
                         kpiInformations.Add(new DerKpiInformation { Kpi = kpi, Position = item.Position, IsOriginalData = item.IsOriginalData });
+                    }
+                    else if (item.HighlightId > 0)
+                    {
+                        var selectOption = new SelectOption { Id = item.HighlightId };
+                        if (DataContext.SelectOptions.Local.FirstOrDefault(x => x.Id == selectOption.Id) == null)
+                        {
+                            DataContext.SelectOptions.Attach(selectOption);
+                        }
+                        else
+                        {
+                            selectOption = DataContext.SelectOptions.Local.FirstOrDefault(x => x.Id == selectOption.Id);
+                        }
+                        kpiInformations.Add(new DerKpiInformation { SelectOption = selectOption, Position = item.Position, IsOriginalData = item.IsOriginalData, ConfigType = item.ConfigType });
                     }
                 }
                 derLayoutItem.KpiInformations = kpiInformations;

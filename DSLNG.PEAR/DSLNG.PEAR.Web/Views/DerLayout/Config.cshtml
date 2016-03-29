@@ -775,7 +775,7 @@
                         <td class="der-bg-blue-4">
                             ACTUAL MTD
                         </td>
-                        <td colspan="6" rowspan="2">
+                        <td colspan="6" rowspan="5">
                             @{
                                 var row7Col1 = Model.Items.FirstOrDefault(x => x.Row == 7 && x.Column == 1);
                                 if (row7Col1 != null)
@@ -794,9 +794,24 @@
                             ACTUAL YTD
                         </td>
                     </tr>
+                    <tr>
+                        <th class="der-bg-blue-3">
+                            CDS LOADED
+                        </th>
+                    </tr>
+                    <tr>
+                        <td class="der-bg-blue-4">
+                            ACTUAL MTD
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="der-bg-blue-4">
+                            ACTUAL YTD
+                        </td>
+                    </tr>
                 </tbody>
             </table>
-            <table class="der-table  all-border">
+            @*<table class="der-table  all-border">
                 <thead>
                     <tr>
                         <th class="der-bg-blue-3">
@@ -847,7 +862,7 @@
                         </td>
                     </tr>
                 </tbody>
-            </table>
+            </table>*@
             <table class="der-table  all-border">
                 <thead>
                     <tr>

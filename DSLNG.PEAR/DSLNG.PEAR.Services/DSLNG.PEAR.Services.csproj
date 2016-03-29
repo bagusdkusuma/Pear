@@ -98,6 +98,7 @@
     <Compile Include="Requests\MirConfiguration\GetMirConfigurationsRequest.cs" />
     <Compile Include="Requests\MirConfiguration\SaveMirConfigurationRequest.cs" />
     <Compile Include="Requests\MirDataTable\DeleteKpiMirDataTableRequest.cs" />
+    <Compile Include="Interfaces\IWaveService.cs" />
     <Compile Include="Requests\Der\GetKpiValueRequest.cs" />
     <Compile Include="Requests\Der\SaveLayoutItemRequest.cs" />
     <Compile Include="Requests\Der\SaveOriginalDataRequest.cs" />
@@ -106,6 +107,9 @@
     <Compile Include="Requests\PlanningBlueprint\KpiTargetInputRequest.cs" />
     <Compile Include="Requests\PlanningBlueprint\RejectMidtermStrategyRequest.cs" />
     <Compile Include="Requests\PlanningBlueprint\RejectVoyagePlanRequest.cs" />
+    <Compile Include="Requests\Wave\GetWaveRequest.cs" />
+    <Compile Include="Requests\Wave\GetWavesRequest.cs" />
+    <Compile Include="Requests\Wave\SaveWaveRequest.cs" />
     <Compile Include="Responses\Der\GetDafwcDataResponse.cs" />
     <Compile Include="Responses\Der\GetKpiValueResponse.cs" />
     <Compile Include="Responses\Der\GetOriginalDataResponse.cs" />
@@ -737,6 +741,8 @@
     <Compile Include="Responses\Vessel\GetVesselResponse.cs" />
     <Compile Include="Responses\Vessel\GetVesselsResponse.cs" />
     <Compile Include="Responses\Vessel\SaveVesselResponse.cs" />
+    <Compile Include="Responses\Wave\GetWavesResponse.cs" />
+    <Compile Include="Responses\Wave\GetWaveResponse.cs" />
     <Compile Include="Responses\Weather\DeleteWeatherResponse.cs" />
     <Compile Include="Responses\Weather\GetWeatherResponse.cs" />
     <Compile Include="Responses\Weather\GetWeathersResponse.cs" />
@@ -755,6 +761,7 @@
     <Compile Include="Responses\User\GetUserResponse.cs" />
     <Compile Include="VesselScheduleService.cs" />
     <Compile Include="VesselService.cs" />
+    <Compile Include="WaveService.cs" />
     <Compile Include="WeatherService.cs" />
   </ItemGroup>
   <ItemGroup>

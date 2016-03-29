@@ -5,22 +5,22 @@ using System.Web;
 
 namespace DSLNG.PEAR.Web.ViewModels.Der.Display
 {
-    public class DisplayLngAndCdsViewModel
+    public class DisplayPlantAvailabilityViewModel
     {
-        public DisplayLngAndCdsViewModel()
+        public DisplayPlantAvailabilityViewModel()
         {
-            DisplayLngAndCds = new List<LngAndCdsViewModel>();    
+            PlantAvailabilityViewModels = new List<PlantAvailabilityViewModel>();
         }
 
-        public IList<LngAndCdsViewModel> DisplayLngAndCds { get; set; }
+        public IList<PlantAvailabilityViewModel> PlantAvailabilityViewModels { get; set; }
 
-        public class LngAndCdsViewModel
+        public class PlantAvailabilityViewModel
         {
             public int Position { get; set; }
             public string KpiName { get; set; }
+            public string Daily { get; set; }
             public string Mtd { get; set; }
             public string Ytd { get; set; }
-            public string Remarks { get; set; }
             public string Measurement { get; set; }
         }
     }

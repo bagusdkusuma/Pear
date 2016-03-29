@@ -109,6 +109,8 @@ using DSLNG.PEAR.Services.Requests.PopInformation;
 using DSLNG.PEAR.Services.Responses.PopInformation;
 using PopInformationType = DSLNG.PEAR.Data.Enums.PopInformationType;
 using DSLNG.PEAR.Services.Requests.Signature;
+using DSLNG.PEAR.Services.Responses.Wave;
+using DSLNG.PEAR.Services.Requests.Wave;
 using DSLNG.PEAR.Data.Entities.Mir;
 using DSLNG.PEAR.Services.Responses.MirConfiguration;
 using DSLNG.PEAR.Services.Requests.MirConfiguration;
@@ -696,6 +698,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
 
             Mapper.CreateMap<ApproveSignatureRequest, Signature>();
+            Mapper.CreateMap<Wave, GetWavesResponse.WaveResponse>()
+                .ForMember(x => x.Value, y => y.MapFrom(z => z.Value.Text));
+            Mapper.CreateMap<SaveWaveRequest, Wave>();
 
 
             Mapper.CreateMap<MirConfiguration, GetsMirConfigurationsResponse.MirConfiguration>();
@@ -936,6 +941,10 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
             Mapper.CreateMap<GetKpiAchievementResponse, GetKpiValueResponse>();
             Mapper.CreateMap<GetKpiAchievementResponse.KpiResponse, GetKpiValueResponse.KpiResponse>();
+
+            Mapper.CreateMap<Wave, GetWaveResponse>()
+                .ForMember(x => x.Value, o => o.MapFrom(s => s.Value.Value))
+                .ForMember(x => x.Text, o => o.MapFrom(s => s.Value.Text));
         }
     }
 }

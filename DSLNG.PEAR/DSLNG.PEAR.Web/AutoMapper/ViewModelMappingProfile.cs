@@ -164,6 +164,8 @@ using DSLNG.PEAR.Services.Responses.Der;
 using DSLNG.PEAR.Web.ViewModels.MirConfiguration;
 using DSLNG.PEAR.Services.Requests.MirConfiguration;
 using DSLNG.PEAR.Services.Responses.MirConfiguration;
+using DSLNG.PEAR.Services.Requests.Wave;
+using DSLNG.PEAR.Web.ViewModels.Wave;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -1028,6 +1030,8 @@ namespace DSLNG.PEAR.Web.AutoMapper
             /*Mapper.CreateMap<DerLayoutItemViewModel, SaveLayoutItemRequest>();
             Mapper.CreateMap<DerLayoutLineViewModel, SaveLayoutItemRequest.LayoutItemArtifact>();
             Mapper.CreateMap<LineChartViewModel, SaveLayoutItemRequest.LayoutItemArtifactLine>();*/
+
+            Mapper.CreateMap<WaveViewModel, SaveWaveRequest>();
 
         }
 
