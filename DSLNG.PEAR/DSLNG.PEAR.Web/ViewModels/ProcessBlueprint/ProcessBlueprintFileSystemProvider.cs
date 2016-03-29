@@ -16,11 +16,11 @@ namespace DSLNG.PEAR.Web.ViewModels.ProcessBlueprint
         public static IProcessBlueprintService service { get { return ObjectFactory.Container.GetInstance<IProcessBlueprintService>(); } }
         public static List<FileSystemItem> GetAll()
         {
-            List<FileSystemItem> files = (List<FileSystemItem>)HttpContext.Current.Session["ProcessBlueprintItems"];
+            List<FileSystemItem> files = (List<FileSystemItem>)HttpContext.Current.Session["FileSystemItem"];
             if (files == null)
             {
                 files = service.All().ProcessBlueprints.ToList().MapTo<FileSystemItem>();
-                HttpContext.Current.Session["ProcessBlueprintItems"] = files;
+                HttpContext.Current.Session["FileSystemItem"] = files;
             }
             return files;
         }
@@ -60,31 +60,62 @@ namespace DSLNG.PEAR.Web.ViewModels.ProcessBlueprint
 
         public override IEnumerable<FileManagerFile> GetFiles(FileManagerFolder folder)
         {
-            return base.GetFiles(folder);
+            FileSystemItem folderItem = FindFolderItem(folder);
+            return from item in ProcessBlueprintDataProvider.GetAll()
+                   where !item.IsFolder && item.ParentId == folderItem.FileId
+                   select new FileManagerFile(this, folder, item.Name);
         }
 
         public override IEnumerable<FileManagerFolder> GetFolders(FileManagerFolder parentFolder)
         {
-            return base.GetFolders(parentFolder);
+            FileSystemItem folderItem = FindFolderItem(parentFolder);
+            return (from item in FolderCache.Values
+                    where item.IsFolder && folderItem.ParentId == item.FileId
+                    select new FileManagerFolder(this, parentFolder, item.Name));
+        }
+
+        private FileSystemItem FindFolderItem(FileManagerFolder parentFolder)
+        {
+            return (from item in FolderCache.Values
+                    where item.IsFolder && GetRelativeName(item) == parentFolder.RelativeName
+                    select item).FirstOrDefault();
+        }
+
+        protected string GetRelativeName(FileSystemItem item)
+        {
+            if (item.FileId == RootItemId) return string.Empty;
+            if (item.ParentId == RootItemId) return item.Name;
+            if(!FolderCache.ContainsKey((int)item.ParentId)) return null;
+            string name = GetRelativeName(FolderCache[(int)item.ParentId]);
+            return name == null ? null : Path.Combine(name,item.Name);
         }
 
         public override bool Exists(FileManagerFile file)
         {
-            return base.Exists(file);
+            return FindFileItem(file) != null;
+        }
+
+        protected FileSystemItem FindFileItem(FileManagerFile file)
+        {
+            FileSystemItem fileItem = FindFolderItem(file.Folder);
+            if (fileItem == null)
+                return null;
+            return ProcessBlueprintDataProvider.GetAll().FindAll(item => (int)item.ParentId == fileItem.FileId && !item.IsFolder && item.Name == file.Name).FirstOrDefault();
         }
 
         public override bool Exists(FileManagerFolder folder)
         {
-            return base.Exists(folder);
+            return FindFolderItem(folder) != null;
         }
         public override Stream ReadFile(FileManagerFile file)
         {
-            return base.ReadFile(file);
+            return new MemoryStream(FindFileItem(file).Data.ToArray());
         }
 
         public override DateTime GetLastWriteTime(FileManagerFile file)
         {
-            return base.GetLastWriteTime(file);
+            var fileItem = FindFileItem(file);
+            return fileItem.LastWriteTime.GetValueOrDefault(DateTime.Now);
         }
 
         public override void CopyFile(FileManagerFile file, FileManagerFolder newParentFolder)
@@ -94,7 +125,8 @@ namespace DSLNG.PEAR.Web.ViewModels.ProcessBlueprint
 
         public override long GetLength(FileManagerFile file)
         {
-            return base.GetLength(file);
+            var fileItem = FindFileItem(file);
+            return fileItem.Data.Length;
         }
 
         public override void CreateFolder(FileManagerFolder parent, string name)
