@@ -321,7 +321,9 @@
             }
             $input.val(val);
             $this.append($input);
-            $input.focus();
+            setTimeout(function () {
+                $this.find('input').focus();
+            }, 100);
         });
         $(document).on('change', '.target-input', function (e) {
             e.preventDefault();

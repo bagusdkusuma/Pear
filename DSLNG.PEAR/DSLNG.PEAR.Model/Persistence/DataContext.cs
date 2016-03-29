@@ -111,7 +111,7 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<MirHighlight> MirHighlights { get; set; }
         public IDbSet<MirArtifact> MirArtifacts { get; set; }
         public IDbSet<MirConfiguration> MirConfigurations { get; set; }
-
+        public IDbSet<MidtermPlanningKpi> MidtermPlanningKpis { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Kpi>()
@@ -268,6 +268,10 @@ namespace DSLNG.PEAR.Data.Persistence
                .WillCascadeOnDelete(true);
             modelBuilder.Entity<MidtermStrategicPlanning>()
               .HasMany(x => x.Objectives)
+              .WithOptional(x => x.MidtermStrategicPlanning)
+              .WillCascadeOnDelete(true);
+            modelBuilder.Entity<MidtermStrategicPlanning>()
+              .HasMany(x => x.Kpis)
               .WithOptional(x => x.MidtermStrategicPlanning)
               .WillCascadeOnDelete(true);
             modelBuilder.Entity<DerLayoutItem>()

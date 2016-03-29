@@ -14,7 +14,7 @@ namespace DSLNG.PEAR.Data.Entities.Blueprint
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public IList<MidtermStrategicPlanningObjective> Objectives { get; set; }
-        public IList<Kpi> Kpis { get; set; }
+        public IList<MidtermPlanningKpi> Kpis { get; set; }
         public MidtermPhaseFormulationStage Stage { get; set; }
     }
 }

@@ -520,7 +520,9 @@
                     return $('.objective-content').html();
                 }
             });
-
+             @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
+                    {
+                 <text>
             $('.list-result').popover({
                 selector: '.popover-edit-trigger',
                 html: true,
@@ -709,7 +711,8 @@
                     }
                 })
             });
-
+            </text>
+             }
             $(document).on('click', '.cancel-popover', function (e) {
                 e.preventDefault();
                 $('.popover').popover('hide');
@@ -925,7 +928,9 @@
                     }
                 })
             });
-
+             @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
+                    {
+                 <text>
             $(document).on('click', '.edit-constraint', function (e) {
                 e.preventDefault();
                 var $that = $(this);
@@ -976,6 +981,8 @@
                     }
                 })
             });
+            </text>
+             }
 
             $(document).on('click', '.form-input-challenge', function (e) {
                 e.preventDefault();
@@ -1010,7 +1017,9 @@
                     }
                 })
             });
-
+             @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
+                    {
+                 <text>
             $(document).on('click', '.edit-challenge', function (e) {
                 e.preventDefault();
                 var $that = $(this);
@@ -1064,7 +1073,8 @@
                 })
             });
 
-
+            </text>
+             }
 
             $(document).on('click', '.btn-create-constraint', function (e) {
                 e.preventDefault();
