@@ -200,3 +200,4 @@ FakesAssemblies/
 Web.config
 /DSLNG.PEAR/DSLNG.PEAR.Web/Web.config
 DSLNG.PEAR/DSLNG.PEAR.Web/Content/TemplateFiles/*
+/DSLNG.PEAR/DSLNG.PEAR.Web/Content/popfile

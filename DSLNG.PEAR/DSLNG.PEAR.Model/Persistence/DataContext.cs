@@ -6,6 +6,7 @@ using DSLNG.PEAR.Data.Entities.EconomicModel;
 using System;
 using DSLNG.PEAR.Data.Entities.Blueprint;
 using DSLNG.PEAR.Data.Entities.Pop;
+using DSLNG.PEAR.Data.Entities.Mir;
 
 namespace DSLNG.PEAR.Data.Persistence
 {
@@ -106,7 +107,11 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<PopInformation> PopInformations { get; set; }
         public IDbSet<Signature> Signatures { get; set; }
         public IDbSet<ESCategory> ESCategories { get; set; }
-
+        public IDbSet<MirDataTable> MirDataTables { get; set; }
+        public IDbSet<MirHighlight> MirHighlights { get; set; }
+        public IDbSet<MirArtifact> MirArtifacts { get; set; }
+        public IDbSet<MirConfiguration> MirConfigurations { get; set; }
+        public IDbSet<MidtermPlanningKpi> MidtermPlanningKpis { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Kpi>()
@@ -263,6 +268,10 @@ namespace DSLNG.PEAR.Data.Persistence
                .WillCascadeOnDelete(true);
             modelBuilder.Entity<MidtermStrategicPlanning>()
               .HasMany(x => x.Objectives)
+              .WithOptional(x => x.MidtermStrategicPlanning)
+              .WillCascadeOnDelete(true);
+            modelBuilder.Entity<MidtermStrategicPlanning>()
+              .HasMany(x => x.Kpis)
               .WithOptional(x => x.MidtermStrategicPlanning)
               .WillCascadeOnDelete(true);
             modelBuilder.Entity<DerLayoutItem>()
