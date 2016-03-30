@@ -72,6 +72,7 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<KeyOutputConfiguration> KeyOutputConfigs { get; set; }
         public IDbSet<StaticHighlightPrivilege> StaticHighlightPrivileges { get; set; }
         public IDbSet<DerArtifactTank> DerArtifactTanks { get; set; }
+        public IDbSet<DerOriginalData> DerOriginalDatas { get; set; }
         public IDbSet<PlanningBlueprint> PlanningBlueprints { get; set; }
         public IDbSet<UltimateObjectivePoint> UltimateObjectivePoints { get; set; }
         public IDbSet<EnvironmentsScanning> EnvironmentsScannings { get; set; }
@@ -90,7 +91,7 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<DerLayout> DerLayouts { get; set; }
         public IDbSet<DerLayoutItem> DerLayoutItems { get; set; }
         public IDbSet<DerArtifact> DerArtifacts { get; set; }
-        public IDbSet<DerKpiInformation> DerTables { get; set; }
+        public IDbSet<DerKpiInformation> DerKpiInformations { get; set; }
         public IDbSet<DerArtifactChart> DerArtifactCharts { get; set; }
         public IDbSet<DerArtifactSerie> DerArtifactSeries { get; set; }
         public IDbSet<Wave> Waves { get; set; }
@@ -110,7 +111,9 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<MirHighlight> MirHighlights { get; set; }
         public IDbSet<MirArtifact> MirArtifacts { get; set; }
         public IDbSet<MirConfiguration> MirConfigurations { get; set; }
+        public IDbSet<MidtermPlanningKpi> MidtermPlanningKpis { get; set; }
 
+        public IDbSet<ProcessBlueprint> ProcessBlueprints { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Kpi>()
@@ -267,6 +270,10 @@ namespace DSLNG.PEAR.Data.Persistence
                .WillCascadeOnDelete(true);
             modelBuilder.Entity<MidtermStrategicPlanning>()
               .HasMany(x => x.Objectives)
+              .WithOptional(x => x.MidtermStrategicPlanning)
+              .WillCascadeOnDelete(true);
+            modelBuilder.Entity<MidtermStrategicPlanning>()
+              .HasMany(x => x.Kpis)
               .WithOptional(x => x.MidtermStrategicPlanning)
               .WillCascadeOnDelete(true);
             modelBuilder.Entity<DerLayoutItem>()

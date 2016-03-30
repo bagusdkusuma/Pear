@@ -47,10 +47,11 @@ namespace DSLNG.PEAR.Services
         }
 
 
-        public AddStageResponse AddStage(AddStageRequest request)
+        public AddStageResponse SaveStage(AddStageRequest request)
         {
             try
             {
+
                 var stage = request.MapTo<MidtermPhaseFormulationStage>();
                 var formulation = new MidtermPhaseFormulation { Id = request.MidtermFormulationId };
                 DataContext.MidtermPhaseFormulations.Attach(formulation);
@@ -58,15 +59,49 @@ namespace DSLNG.PEAR.Services
                 var interval = stage.EndDate.Value.Year - stage.StartDate.Value.Year + 1;
                 var startYear = stage.StartDate.Value.Year;
                 var endYear = stage.EndDate.Value.Year;
-                for (var i = 0; i < interval; i++) {
-                    var planning = new MidtermStrategicPlanning { 
-                        Title = "Annual Objective Planning",
-                        StartDate = i == 0? stage.StartDate : new DateTime(startYear + i, 1, 1),
-                        EndDate = i == interval - 1? stage.EndDate : new DateTime(startYear + i, 12, 1)
-                    };
-                    stage.MidtermStrategicPlannings.Add(planning);
+                if (request.Id != 0)
+                {
+                    stage = DataContext.MidtermPhaseFormulationStages.Include(x => x.MidtermPhaseFormulation)
+                        .Include(x => x.MidtermStrategicPlannings)
+                        .First(x => x.Id == request.Id);
+                    request.MapPropertiesToInstance<MidtermPhaseFormulationStage>(stage);
+                    //delete unnecessary plannings
+                    foreach(var plan in stage.MidtermStrategicPlannings.ToList()){
+                        if (plan.StartDate < stage.StartDate || plan.EndDate > stage.EndDate) {
+                            stage.MidtermStrategicPlannings.Remove(plan);
+                        }
+                    }
+                    //add new strategic plannings
+                    for (var i = 0; i < interval; i++)
+                    {
+                        var planning = new MidtermStrategicPlanning
+                        {
+                            Title = "Annual Objective Planning",
+                            StartDate = i == 0 ? stage.StartDate : new DateTime(startYear + i, 1, 1),
+                            EndDate = i == interval - 1 ? stage.EndDate : new DateTime(startYear + i, 12, 1)
+                        };
+                        if (stage.MidtermStrategicPlannings.FirstOrDefault(x => x.StartDate == planning.StartDate &&
+                            x.EndDate == planning.EndDate) == null)
+                        {
+                            stage.MidtermStrategicPlannings.Add(planning);
+                        }
+                    }
                 }
-                DataContext.MidtermPhaseFormulationStages.Add(stage);
+                else
+                {
+
+                    for (var i = 0; i < interval; i++)
+                    {
+                        var planning = new MidtermStrategicPlanning
+                        {
+                            Title = "Annual Objective Planning",
+                            StartDate = i == 0 ? stage.StartDate : new DateTime(startYear + i, 1, 1),
+                            EndDate = i == interval - 1 ? stage.EndDate : new DateTime(startYear + i, 12, 1)
+                        };
+                        stage.MidtermStrategicPlannings.Add(planning);
+                    }
+                    DataContext.MidtermPhaseFormulationStages.Add(stage);
+                }
                 DataContext.SaveChanges();
                 return new AddStageResponse
                 {
@@ -74,6 +109,7 @@ namespace DSLNG.PEAR.Services
                     Message = "You have been successfully add new stage",
                     Id = stage.Id,
                     Title = stage.Title,
+                    Order = stage.Order,
                     Start = request.StartDate.HasValue ? request.StartDate.Value.ToString("MMM yyyy", CultureInfo.InvariantCulture) : "",
                     End = request.EndDate.HasValue? request.EndDate.Value.ToString("MMM yyyy", CultureInfo.InvariantCulture) : ""
                 };

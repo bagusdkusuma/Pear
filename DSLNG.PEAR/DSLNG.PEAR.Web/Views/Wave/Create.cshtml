@@ -1,0 +1,55 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Wave.WaveViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="highlight-save">
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="col-md-12">
+        <div class="title">Weather</div>
+        <div class="description_year">New</div>
+        <div>@Html.ValidationSummary(true)</div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-inline whitebox">
+            <div class="form-group form-list">
+                @Html.LabelFor(model => model.PeriodeType)
+                @Html.DropDownListFor(model => model.PeriodeType, Model.PeriodeTypes, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PeriodeType)
+            </div>
+            <div class="form-group form-list">
+                @Html.LabelFor(model => model.DateInDisplay)
+                @Html.TextBoxFor(model => model.DateInDisplay, new { @class = "form-control datepicker" })
+                @Html.ValidationMessageFor(model => model.DateInDisplay)
+            </div>
+              <div class="form-group form-list">
+                @Html.LabelFor(model => model.ValueId)
+                @Html.DropDownListFor(model => model.ValueId, Model.Values,"Select Value", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ValueId)
+            </div>
+            <div class="form-group form-list">
+                @Html.LabelFor(model => model.Tide)
+                @Html.TextBoxFor(model => model.Tide, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Tide)
+            </div>
+            <div class="form-group form-list">
+                @Html.LabelFor(model => model.Speed)
+                @Html.TextBoxFor(model => model.Speed, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Speed)
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 artifact-designer-btns">
+        <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
+        <a onclick="location.reload();" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>
+        <a href="@Url.Action("Index")" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+    </div>
+}
+    </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

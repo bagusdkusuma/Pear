@@ -109,10 +109,14 @@ using DSLNG.PEAR.Services.Requests.PopInformation;
 using DSLNG.PEAR.Services.Responses.PopInformation;
 using PopInformationType = DSLNG.PEAR.Data.Enums.PopInformationType;
 using DSLNG.PEAR.Services.Requests.Signature;
+using DSLNG.PEAR.Services.Responses.Wave;
+using DSLNG.PEAR.Services.Requests.Wave;
 using DSLNG.PEAR.Data.Entities.Mir;
 using DSLNG.PEAR.Services.Responses.MirConfiguration;
 using DSLNG.PEAR.Services.Requests.MirConfiguration;
 using DSLNG.PEAR.Services.Requests.MirDataTable;
+using DSLNG.PEAR.Services.Responses.ProcessBlueprint;
+using DSLNG.PEAR.Services.Requests.ProcessBlueprint;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -130,6 +134,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             ConfigureKeyOperation();
             ConfigureEconomicSummary();
             ConfigureDer();
+            ConfigureProcessBlueprint();
 
             Mapper.CreateMap<Data.Entities.User, GetUsersResponse.User>();
             Mapper.CreateMap<GetUsersResponse.User, Data.Entities.User>();
@@ -662,7 +667,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<AddDefinitionRequest, MidtermPhaseDescription>();
             Mapper.CreateMap<AddDefinitionRequest, MidtermPhaseKeyDriver>();
 
-            Mapper.CreateMap<MidtermStrategicPlanning, GetMidtermPlanningsResponse.MidtermPlanning>();
+            Mapper.CreateMap<MidtermStrategicPlanning, GetMidtermPlanningsResponse.MidtermPlanning>()
+                .ForMember(d => d.Kpis, o => o.MapFrom(s => s.Kpis.Select(x => x.Kpi).ToList().MapTo<GetMidtermPlanningsResponse.Kpi>()));
             Mapper.CreateMap<MidtermStrategicPlanningObjective, GetMidtermPlanningsResponse.MidtermPlanningObjective>();
             Mapper.CreateMap<Kpi, GetMidtermPlanningsResponse.Kpi>()
                 .ForMember(d => d.Measurement, o => o.MapFrom(s => s.Measurement.Name));
@@ -696,6 +702,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
 
             Mapper.CreateMap<ApproveSignatureRequest, Signature>();
+            Mapper.CreateMap<Wave, GetWavesResponse.WaveResponse>()
+                .ForMember(x => x.Value, y => y.MapFrom(z => z.Value.Text));
+            Mapper.CreateMap<SaveWaveRequest, Wave>();
 
 
             Mapper.CreateMap<MirConfiguration, GetsMirConfigurationsResponse.MirConfiguration>();
@@ -706,6 +715,13 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Kpi, GetMirConfigurationsResponse.MirDataTable.Kpi>();
             Mapper.CreateMap<SaveMirDataTableRequest, MirDataTable>();
             base.Configure();
+        }
+
+        private void ConfigureProcessBlueprint()
+        {
+            Mapper.CreateMap<ProcessBlueprint, GetProcessBlueprintResponse>();
+            Mapper.CreateMap<ProcessBlueprint, GetProcessBlueprintsResponse.ProcessBlueprint>();
+            Mapper.CreateMap<SaveProcessBlueprintRequest, ProcessBlueprint>();
         }
 
         private void ConfigureEconomicSummary()
@@ -921,7 +937,27 @@ namespace DSLNG.PEAR.Services.AutoMapper
                   .ForMember(x => x.SelectOptionId, y => y.MapFrom(z => z.SelectOption.Id));
 
             Mapper.CreateMap<DerKpiInformation, GetDerLayoutitemResponse.KpiInformationResponse>();
-            Mapper.CreateMap<Kpi, GetDerLayoutitemResponse.KpiInformationResponse.KpiResponse>();
+            Mapper.CreateMap<Kpi, GetDerLayoutitemResponse.KpiInformationResponse.KpiResponse>()
+                .ForMember(x => x.MeasurementName, y => y.MapFrom(z => z.Measurement.Name));
+            Mapper.CreateMap<SelectOption, GetDerLayoutitemResponse.KpiInformationResponse.SelectOptionResponse>();
+                
+
+            //DER Original Data
+            Mapper.CreateMap<DerOriginalData, GetOriginalDataResponse.OriginalDataResponse>()
+                  .ForMember(x => x.LayoutItemId, y => y.MapFrom(z => z.LayoutItem.Id));
+            Mapper.CreateMap<SaveOriginalDataRequest, DerOriginalData>();
+            Mapper.CreateMap<SaveOriginalDataRequest.OriginalDataRequest, DerOriginalData>()
+                  .ForMember(x => x.LayoutItem, y => y.Ignore())
+                  .ForMember(x => x.Id, y => y.Ignore());
+            Mapper.CreateMap<GetKpiTargetItemResponse, GetKpiValueResponse>();
+            Mapper.CreateMap<GetKpiTargetItemResponse.KpiResponse, GetKpiValueResponse.KpiResponse>();
+
+            Mapper.CreateMap<GetKpiAchievementResponse, GetKpiValueResponse>();
+            Mapper.CreateMap<GetKpiAchievementResponse.KpiResponse, GetKpiValueResponse.KpiResponse>();
+
+            Mapper.CreateMap<Wave, GetWaveResponse>()
+                .ForMember(x => x.Value, o => o.MapFrom(s => s.Value.Value))
+                .ForMember(x => x.Text, o => o.MapFrom(s => s.Value.Text));
         }
     }
 }

@@ -17,8 +17,8 @@ namespace DSLNG.PEAR.Web.Controllers
 {
     public class WeatherController : BaseController
     {
-        private IWeatherService _weatherService;
-        private ISelectService _selectService;
+        private readonly IWeatherService _weatherService;
+        private readonly ISelectService _selectService;
 
         public WeatherController(IWeatherService weatherService,ISelectService selectService) {
             _weatherService = weatherService;
@@ -29,6 +29,7 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             return View();
         }
+
         public ActionResult IndexPartial()
         {
             var viewModel = GridViewExtension.GetViewModel("gridArtifactIndex");

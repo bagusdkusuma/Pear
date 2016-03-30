@@ -18,7 +18,8 @@ namespace DSLNG.PEAR.Web.ViewModels.Der.Display
         {
             public int Position { get; set; }
             public string KpiName { get; set; }
-            public string Value { get; set; }     
+            public string Ytd { get; set; }    
+            public string Progress { get; set; } 
         }
         
     }

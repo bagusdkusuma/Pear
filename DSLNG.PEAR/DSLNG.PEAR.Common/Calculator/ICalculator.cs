@@ -9,5 +9,6 @@ namespace DSLNG.PEAR.Common.Calculator
         /// </summary>
         /// <returns></returns>
         double Execute();
+        double ComputeIRR();
     }
 }

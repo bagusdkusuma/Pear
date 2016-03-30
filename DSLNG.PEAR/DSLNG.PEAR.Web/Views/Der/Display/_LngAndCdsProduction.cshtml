@@ -1,0 +1,114 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayLngAndCdsProductionViewModel
+<table class="der-table all-border">
+    <thead>
+        <tr style="height: 31px">
+            <th class="der-bg-blue-1">PRODUCTION</th>
+            <th colspan="3" class="der-bg-blue-1">LNG</th>
+            <th colspan="3" class="der-bg-blue-8">
+                CDS
+            </th>
+        </tr>
+    </thead>
+    @{
+        var pos0 = Model.LngAndCdsProductionViewModels.Single(x => x.Position == 0);
+        var pos1 = Model.LngAndCdsProductionViewModels.Single(x => x.Position == 1);
+        var pos2 = Model.LngAndCdsProductionViewModels.Single(x => x.Position == 2);
+        var pos3 = Model.LngAndCdsProductionViewModels.Single(x => x.Position == 3);
+        var pos4 = Model.LngAndCdsProductionViewModels.Single(x => x.Position == 4);
+        var pos5 = Model.LngAndCdsProductionViewModels.Single(x => x.Position == 5);
+        var pos6 = Model.LngAndCdsProductionViewModels.Single(x => x.Position == 6);
+        var pos7 = Model.LngAndCdsProductionViewModels.Single(x => x.Position == 7);
+        var pos8 = Model.LngAndCdsProductionViewModels.Single(x => x.Position == 8);
+
+        <tbody>
+            <tr>
+                <td>
+                    ACTUAL 24H
+                </td>
+                <td class="der-bg-yellow">
+                    @pos0.Daily @pos0.Measurement
+                </td>
+                <td class="der-bg-yellow">
+                    @pos1.Daily @pos1.Measurement
+                </td>
+                <td>
+                    @pos2.Daily @pos2.Measurement
+                </td>
+                <td>
+                    @pos3.Daily @pos3.Measurement
+                </td>
+                <td class="der-bg-yellow">
+                    @pos4.Daily @pos4.Measurement
+                </td>
+                <td class="der-bg-yellow">
+                    @pos5.Daily @pos5.Measurement
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    ACTUAL MTD
+                </td>
+                <td>
+                    @pos0.Mtd @pos0.Measurement
+                </td>
+                <td>
+                    @pos1.Mtd @pos1.Measurement
+                </td>
+                <td>
+                    @pos2.Mtd @pos2.Measurement
+                </td>
+                <td>
+                    @pos3.Mtd @pos3.Measurement
+                </td>
+                <td>
+                    @pos4.Mtd @pos4.Measurement
+                </td>
+                <td>
+                    @pos5.Mtd @pos5.Measurement
+                </td>
+            </tr>
+            <tr>
+                <td>ACTUAL YTD</td>
+                <td>
+                    @pos0.Ytd @pos0.Measurement
+                </td>
+                <td>
+                    @pos1.Ytd @pos1.Measurement
+                </td>
+                <td>
+                    @pos2.Ytd @pos2.Measurement
+                </td>
+                <td>
+                    @pos3.Ytd @pos3.Measurement
+                </td>
+                <td>
+                    @pos4.Ytd @pos4.Measurement
+                </td>
+                <td>
+                    @pos5.Ytd @pos5.Measurement
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    MCHE Rundown :
+                </td>
+                <td>
+                    @pos6.Daily @pos6.Measurement
+                </td>
+                <td>
+                    LNG HHV :
+                </td>
+                <td>
+                    @pos7.Daily @pos7.Measurement
+                </td>
+                <td colspan="2">
+                    CDS Reid Vapor Pressure (RVP) :
+                </td>
+                <td>
+                    @pos8.Daily @pos8.Measurement
+                </td>
+            </tr>
+        </tbody>
+    }
+</table>
+

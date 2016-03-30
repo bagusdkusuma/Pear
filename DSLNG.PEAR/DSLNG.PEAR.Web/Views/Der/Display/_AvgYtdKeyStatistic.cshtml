@@ -13,13 +13,13 @@
     <tr style="text-decoration: underline">
        @for (var i = 1; i <= 6; i++)
             {
-                <td>@Model.AvgYtdKeyStatistics.Single(x => x.Position == i).Value</td>
+                <td>@Model.AvgYtdKeyStatistics.Single(x => x.Position == i).Ytd</td>
             }
     </tr>
     <tr>
         @for (var i = 1; i <= 6; i++)
             {
-                <td>&nbsp;</td>
+                <td>@Model.AvgYtdKeyStatistics.Single(x => x.Position == i).Progress</td>
             }
     </tr>
 </table>

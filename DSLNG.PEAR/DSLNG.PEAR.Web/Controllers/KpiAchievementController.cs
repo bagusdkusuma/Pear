@@ -193,146 +193,182 @@ namespace DSLNG.PEAR.Web.Controllers
 
         private ReadExcelFileModel _ReadExcelFile(string filename)
         {
-            int inserted = 0;
-            int skipped = 0;
-            int rejected = 0;
-            var listPrev = new List<UpdateKpiAchievementsViewModel.KpiAchievementItem>();
             var response = new ReadExcelFileModel();
-            var file = Server.MapPath(filename);
-            var userId = UserProfile().UserId;
-            Workbook workbook = new Workbook();
-            using (FileStream stream = new FileStream(file, FileMode.Open))
+            try
             {
-                workbook.LoadDocument(stream, DevExpress.Spreadsheet.DocumentFormat.OpenXml);
-                foreach (var worksheet in workbook.Worksheets)
+                int inserted = 0;
+                int skipped = 0;
+                int rejected = 0;
+                var listPrev = new List<UpdateKpiAchievementsViewModel.KpiAchievementItem>();
+
+                var file = Server.MapPath(filename);
+                var userId = UserProfile().UserId;
+                Workbook workbook = new Workbook();
+                using (FileStream stream = new FileStream(file, FileMode.Open))
                 {
-                    string[] name = worksheet.Name.Split('_');
-                    //if (name.Count() > 0 && name[0] != "Sheet1" && (name[0] == PeriodeType.Daily.ToString() || name[0] == PeriodeType.Hourly.ToString() || name[0] == PeriodeType.Monthly.ToString() || name[0] == PeriodeType.Weekly.ToString() || name[0] == PeriodeType.Yearly.ToString()))
-                    if (name[0] == "Daily" || name[0] == "Monthly" || name[0] == "Yearly")
+                    workbook.LoadDocument(stream, DevExpress.Spreadsheet.DocumentFormat.OpenXml);
+                    foreach (var worksheet in workbook.Worksheets)
                     {
-
-                        string periodType = name[0];
-                        PeriodeType pType = string.IsNullOrEmpty(periodType)
-                            ? PeriodeType.Yearly
-                            : (PeriodeType)Enum.Parse(typeof(PeriodeType), periodType);
-                        string period = name[name.Count() - 1];
-                        string[] periodes = null;
-                        int tahun, bulan;
-                        //validate and switch value by periodType
-                        if (periodType != period && !string.IsNullOrEmpty(period))
+                        string[] name = worksheet.Name.Split('_');
+                        //if (name.Count() > 0 && name[0] != "Sheet1" && (name[0] == PeriodeType.Daily.ToString() || name[0] == PeriodeType.Hourly.ToString() || name[0] == PeriodeType.Monthly.ToString() || name[0] == PeriodeType.Weekly.ToString() || name[0] == PeriodeType.Yearly.ToString()))
+                        if (name[0] == "Daily" || name[0] == "Monthly" || name[0] == "Yearly")
                         {
-                            switch (periodType)
-                            {
-                                case "Daily":
-                                    periodes = period.Split('-');
-                                    tahun = int.Parse(periodes[0]);
-                                    bulan = int.Parse(periodes[periodes.Count() - 1]);
-                                    break;
-                                case "Monthly":
-                                    tahun = int.Parse(period);
-                                    break;
-                                case "Yearly":
-                                default:
-                                    break;
-                            }
-                        }
 
-                        //coba baca value
-                        workbook.Worksheets.ActiveWorksheet = worksheet;
-                        //get row
-
-                        Range range = worksheet.GetUsedRange();
-                        int rows = range.RowCount;
-                        int column = range.ColumnCount - 2;
-                        int kpiId = 0;
-                        DateTime periodData = new DateTime();
-                        double? nilai = null;
-                        for (int i = 1; i < rows; i++)
-                        {
-                            //get rows
-                            for (int j = 0; j < column; j++)
+                            string periodType = name[0];
+                            PeriodeType pType = string.IsNullOrEmpty(periodType)
+                                                    ? PeriodeType.Yearly
+                                                    : (PeriodeType)Enum.Parse(typeof(PeriodeType), periodType);
+                            string period = name[name.Count() - 1];
+                            string[] periodes = null;
+                            int tahun, bulan;
+                            //validate and switch value by periodType
+                            if (periodType != period && !string.IsNullOrEmpty(period))
                             {
-                                bool fromExistedToNull = false;
-                                var prepareDataContainer = new UpdateKpiAchievementsViewModel.KpiAchievementItem();
-                                //get rows header and period
-                                if (j == 0)
+                                switch (periodType)
                                 {
-                                    if (worksheet.Cells[i, j].Value.Type == CellValueType.Numeric)
-                                    {
-                                        kpiId = int.Parse(worksheet.Cells[i, j].Value.ToString());
-                                    }
+                                    case "Daily":
+                                        periodes = period.Split('-');
+                                        tahun = int.Parse(periodes[0]);
+                                        bulan = int.Parse(periodes[periodes.Count() - 1]);
+                                        break;
+                                    case "Monthly":
+                                        tahun = int.Parse(period);
+                                        break;
+                                    case "Yearly":
+                                    default:
+                                        break;
                                 }
-                                else if (j > 1)
+                            }
+
+                            //coba baca value
+                            workbook.Worksheets.ActiveWorksheet = worksheet;
+                            //get row
+
+                            Range range = worksheet.GetUsedRange();
+                            int rows = range.RowCount;
+                            int column = range.ColumnCount - 2;
+                            int kpiId = 0;
+                            DateTime periodData = new DateTime();
+                            double? nilai = null;
+                            for (int i = 1; i < rows; i++)
+                            {
+                                //get rows
+                                for (int j = 0; j < column; j++)
                                 {
-                                    if (worksheet.Cells[0, j].Value.Type == CellValueType.DateTime)
+                                    bool fromExistedToNull = false;
+                                    var prepareDataContainer = new UpdateKpiAchievementsViewModel.KpiAchievementItem();
+                                    //get rows header and period
+                                    if (j == 0)
                                     {
-                                        periodData = DateTime.Parse(worksheet.Cells[0, j].Value.ToString());
-                                    }
-
-                                    if (worksheet.Cells[i, j].Value.Type == CellValueType.Numeric)
-                                    {
-                                        nilai = double.Parse(worksheet.Cells[i, j].Value.ToString());
-                                    }
-                                    else if (worksheet.Cells[i, j].Value.Type == CellValueType.Text)
-                                    {
-                                        fromExistedToNull = true;
-                                        nilai = null;
-                                    }
-                                    else
-                                    {
-                                        nilai = null;
-                                    }
-
-                                    bool isValidKpi = false;
-                                    if (!this.UserProfile().IsSuperAdmin)
-                                    {
-                                        skipped++;
-                                        isValidKpi = _kpiService.IsValidKpi(new Services.Requests.Kpi.GetKpiByRole { RoleId = this.UserProfile().RoleId });
-                                    }
-                                    else
-                                    {
-                                        isValidKpi = true;
-                                    }
-
-                                    if (isValidKpi && (nilai != null || fromExistedToNull))
-                                    {
-                                        prepareDataContainer.Value = nilai;
-                                        prepareDataContainer.KpiId = kpiId;
-                                        prepareDataContainer.Periode = periodData;
-                                        prepareDataContainer.PeriodeType = pType;
-                                        var oldKpiAchievement = _kpiAchievementService.GetKpiAchievementByValue(new GetKpiAchievementRequestByValue { KpiId = kpiId, Periode = periodData, PeriodeType = periodType });
-                                        if (oldKpiAchievement.IsSuccess)
+                                        if (worksheet.Cells[i, j].Value.Type == CellValueType.Numeric)
                                         {
-                                            prepareDataContainer.Id = oldKpiAchievement.Id;
+                                            kpiId = int.Parse(worksheet.Cells[i, j].Value.ToString());
                                         }
-                                        var request = prepareDataContainer.MapTo<UpdateKpiAchievementItemRequest>();
-                                        request.UserId = userId;
-                                        var insert = _kpiAchievementService.UpdateKpiAchievementItem(request);
-                                        if (insert.IsSuccess)
+                                    }
+                                    else if (j > 1)
+                                    {
+                                        if (worksheet.Cells[0, j].Value.Type == CellValueType.DateTime)
                                         {
-                                            inserted++;
+                                            periodData = DateTime.Parse(worksheet.Cells[0, j].Value.ToString());
+                                        }
+
+                                        if (worksheet.Cells[i, j].Value.Type == CellValueType.Numeric)
+                                        {
+                                            nilai = double.Parse(worksheet.Cells[i, j].Value.ToString());
+                                        }
+                                        else if (worksheet.Cells[i, j].Value.Type == CellValueType.Text)
+                                        {
+                                            fromExistedToNull = true;
+                                            nilai = null;
                                         }
                                         else
                                         {
-                                            rejected++;
+                                            nilai = null;
                                         }
-                                    }                                  
+
+                                        bool isValidKpi = false;
+                                        if (!this.UserProfile().IsSuperAdmin)
+                                        {
+                                            skipped++;
+                                            isValidKpi =
+                                                _kpiService.IsValidKpi(new Services.Requests.Kpi.GetKpiByRole
+                                                    {
+                                                        RoleId = this.UserProfile().RoleId
+                                                    });
+                                        }
+                                        else
+                                        {
+                                            isValidKpi = true;
+                                        }
+
+                                        if (isValidKpi && (nilai != null || fromExistedToNull))
+                                        {
+                                            prepareDataContainer.Value = nilai;
+                                            prepareDataContainer.KpiId = kpiId;
+                                            prepareDataContainer.Periode = periodData;
+                                            prepareDataContainer.PeriodeType = pType;
+                                            var oldKpiAchievement =
+                                                _kpiAchievementService.GetKpiAchievementByValue(
+                                                    new GetKpiAchievementRequestByValue
+                                                        {
+                                                            KpiId = kpiId,
+                                                            Periode = periodData,
+                                                            PeriodeType = periodType
+                                                        });
+                                            if (oldKpiAchievement.IsSuccess)
+                                            {
+                                                prepareDataContainer.Id = oldKpiAchievement.Id;
+                                            }
+                                            else
+                                            {
+                                                var fixedError = false;
+                                                if (oldKpiAchievement.ExceptionType != null &&
+                                                    oldKpiAchievement.ExceptionType ==
+                                                    typeof(InvalidOperationException))
+                                                {
+                                                    var delete = _kpiAchievementService.DeleteKpiAchievement(kpiId, periodData, pType);
+                                                    fixedError = delete.IsSuccess;
+                                                }
+
+                                                if (!fixedError)
+                                                {
+                                                    throw new Exception(string.Format(@"KPI with id {0} and periode {1} and periode type {2} can't be inserted", kpiId, periodData.ToShortDateString(), pType.ToString()));
+                                                }
+                                            }
+                                            var request = prepareDataContainer.MapTo<UpdateKpiAchievementItemRequest>();
+                                            request.UserId = userId;
+                                            var insert = _kpiAchievementService.UpdateKpiAchievementItem(request);
+                                            if (insert.IsSuccess)
+                                            {
+                                                inserted++;
+                                            }
+                                            else
+                                            {
+                                                rejected++;
+                                            }
+                                        }
+                                    }
                                 }
                             }
+
+                            response.isSuccess = true;
+                            response.Message = "Success :" + inserted + "\r\n";
+                            response.Message += "Skipped :" + skipped + "\r\n";
+                            response.Message += "Rejected :" + rejected + "\r\n";
                         }
-                       
-                        response.isSuccess = true;
-                        response.Message = "Success :" + inserted + "\r\n";
-                        response.Message += "Skipped :" + skipped + "\r\n";
-                        response.Message += "Rejected :" + rejected + "\r\n";
-                    }
-                    else
-                    {
-                        response.isSuccess = false;
-                        response.Message = "File Not Valid";
-                        break;
+                        else
+                        {
+                            response.isSuccess = false;
+                            response.Message = "File Not Valid";
+                            break;
+                        }
                     }
                 }
+            }
+            catch (Exception exception)
+            {
+                response.Message = exception.Message;
+                response.isSuccess = false;
             }
 
             return response;

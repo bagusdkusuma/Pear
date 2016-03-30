@@ -1,0 +1,85 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.DerLayout.DerLayoutItemViewModel
+
+<h4>LNG Tank</h4>
+@{
+    for (int i = 0; i < 3; i++)
+    {
+        var posIndex = Model.KpiInformations.FirstOrDefault(x => x.Position == i);
+        if (posIndex != null)
+        {
+            <div class="form-group row">
+                @Html.DropDownListFor(model => model.KpiInformations[i].KpiId, new List<SelectListItem> { new SelectListItem { Value = Model.KpiInformations[i].KpiId.ToString(), Text = Model.KpiInformations[i].KpiName } }, new { @class = "kpi-list form-control", style = "width:180px" })
+                @Html.HiddenFor(model => model.KpiInformations[i].Position)
+                @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes)
+                @Html.HiddenFor(model => model.KpiInformations[i].Id)
+                <span style="color:white">
+                    @Html.EditorFor(model => model.KpiInformations[i].IsOriginalData) Is Original Data
+                </span>
+                <input type="hidden" name="KpiInformations.Index" value="@i" />
+            </div>
+        }
+    }
+}
+<br />
+<h4>CDS Tank</h4>
+@{
+    for (int i = 3; i < 6; i++)
+    {
+        var posIndex = Model.KpiInformations.FirstOrDefault(x => x.Position == i);
+        if (posIndex != null)
+        {
+            <div class="form-group row">
+                @Html.DropDownListFor(model => model.KpiInformations[i].KpiId, new List<SelectListItem> { new SelectListItem { Value = Model.KpiInformations[i].KpiId.ToString(), Text = Model.KpiInformations[i].KpiName } }, new { @class = "kpi-list form-control", style = "width:180px" })
+                @Html.HiddenFor(model => model.KpiInformations[i].Position)
+                @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes)
+                @Html.HiddenFor(model => model.KpiInformations[i].Id)
+                <span style="color:white">
+                    @Html.EditorFor(model => model.KpiInformations[i].IsOriginalData) Is Original Data
+                </span>
+                <input type="hidden" name="KpiInformations.Index" value="@i" />
+            </div>
+        }
+    }
+}
+<br />
+<h4>CDS Buffer Tank</h4>
+@{
+    for (int i = 6; i < 9; i++)
+    {
+        var posIndex = Model.KpiInformations.FirstOrDefault(x => x.Position == i);
+        if (posIndex != null)
+        {
+            <div class="form-group row">
+                @Html.DropDownListFor(model => model.KpiInformations[i].KpiId, new List<SelectListItem> { new SelectListItem { Value = Model.KpiInformations[i].KpiId.ToString(), Text = Model.KpiInformations[i].KpiName } }, new { @class = "kpi-list form-control", style = "width:180px" })
+                @Html.HiddenFor(model => model.KpiInformations[i].Position)
+                @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes)
+                @Html.HiddenFor(model => model.KpiInformations[i].Id)
+                <span style="color:white">
+                    @Html.EditorFor(model => model.KpiInformations[i].IsOriginalData) Is Original Data
+                </span>
+                <input type="hidden" name="KpiInformations.Index" value="@i" />
+            </div>
+        }
+    }
+}
+<br />
+<h4>CDS day-tank</h4>
+@{
+    for (int i = 9; i < 11; i++)
+    {
+        var posIndex = Model.KpiInformations.FirstOrDefault(x => x.Position == i);
+        if (posIndex != null)
+        {
+            <div class="form-group row">
+                @Html.DropDownListFor(model => model.KpiInformations[i].KpiId, new List<SelectListItem> { new SelectListItem { Value = Model.KpiInformations[i].KpiId.ToString(), Text = Model.KpiInformations[i].KpiName } }, new { @class = "kpi-list form-control", style = "width:180px" })
+                @Html.HiddenFor(model => model.KpiInformations[i].Position)
+                @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes)
+                @Html.HiddenFor(model => model.KpiInformations[i].Id)
+                <span style="color:white">
+                    @Html.EditorFor(model => model.KpiInformations[i].IsOriginalData) Is Original Data
+                </span>
+                <input type="hidden" name="KpiInformations.Index" value="@i" />
+            </div>
+        }
+    }
+}

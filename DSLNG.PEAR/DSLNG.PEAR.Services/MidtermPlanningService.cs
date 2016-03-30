@@ -25,7 +25,8 @@ namespace DSLNG.PEAR.Services
             var midtermPlannings = DataContext.MidtermStrategicPlannings
                 .Include(x => x.Objectives)
                 .Include(x => x.Kpis)
-                .Include(x => x.Kpis.Select(y => y.Measurement))
+                .Include(x => x.Kpis.Select(y => y.Kpi))
+                .Include(x => x.Kpis.Select(y => y.Kpi.Measurement))
                 .OrderBy(x => x.Id)
                 .Where(x => x.Stage.Id == id).ToList().MapTo<GetMidtermPlanningsResponse.MidtermPlanning>();
             var resp = new GetMidtermPlanningsResponse
@@ -281,25 +282,28 @@ namespace DSLNG.PEAR.Services
             var response = new AddPlanningKpiResponse();
             var midtermPlanning = DataContext.MidtermStrategicPlannings
                 .Include(x => x.Kpis)
-                .Include(x => x.Kpis.Select(y => y.Measurement))
+                .Include(x => x.Kpis.Select(y => y.Kpi))
+                .Include(x => x.Kpis.Select(y => y.Kpi.Measurement))
                 .First(x => x.Id == request.MidtermPlanningId);
             Kpi kpi = null;
             if (request.OldKpiId != 0 )
             {
                 if (request.OldKpiId != request.KpiId)
                 {
-                    midtermPlanning.Kpis.Remove(midtermPlanning.Kpis.First(x => x.Id == request.OldKpiId));
-                    kpi = DataContext.Kpis.Include(x => x.Measurement).First(x => x.Id == request.KpiId);
-                    midtermPlanning.Kpis.Add(kpi);
+                    var oldRelation = midtermPlanning.Kpis.First(x => x.Kpi.Id == request.OldKpiId);
+                    oldRelation.Kpi = DataContext.Kpis.Include(x => x.Measurement).First(x => x.Id == request.KpiId);
                 }
                 else {
-                    kpi = midtermPlanning.Kpis.First(x => x.Id == request.KpiId);
+                    kpi = midtermPlanning.Kpis.First(x => x.Kpi.Id == request.KpiId).Kpi;
                 }
             }
             else
             {
                 kpi = DataContext.Kpis.Include(x => x.Measurement).First(x => x.Id == request.KpiId);
-                midtermPlanning.Kpis.Add(kpi);
+                DataContext.MidtermPlanningKpis.Add(new MidtermPlanningKpi { 
+                    Kpi = kpi,
+                    MidtermStrategicPlanning = midtermPlanning
+                });
             }
             DataContext.SaveChanges();
             var activeScenario = DataContext.Scenarios.FirstOrDefault(x => x.IsActive && x.IsDashboard);
@@ -380,11 +384,9 @@ namespace DSLNG.PEAR.Services
         {
             try
             {
-                var midtermPlanning = DataContext.MidtermStrategicPlannings
-                .Include(x => x.Kpis)
-                .Include(x => x.Kpis.Select(y => y.Measurement))
-                .First(x => x.Id == midTermId);
-                midtermPlanning.Kpis.Remove(midtermPlanning.Kpis.First(x => x.Id == id));
+                var midtermPlanningKpi = DataContext.MidtermPlanningKpis.First(x => x.Kpi.Id == id &&
+                    x.MidtermStrategicPlanning.Id == midTermId);
+                DataContext.MidtermPlanningKpis.Remove(midtermPlanningKpi);
                 DataContext.SaveChanges();
                 return new BaseResponse
                 {

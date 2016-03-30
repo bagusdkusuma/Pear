@@ -1,0 +1,61 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayWeeklyMaintenanceViewModel
+
+@helper GetPercentage(string actual, string target, string measurement)
+{
+    double actualDouble;
+    bool isActualParsed = double.TryParse(actual, out actualDouble);
+
+    double targetDouble;
+    bool isTargetParsed = double.TryParse(target, out targetDouble);
+
+    if (isActualParsed && isTargetParsed)
+    {
+        var percentage = actualDouble / targetDouble * 100;
+        var x = string.Format("{0}% of {1} {2}", percentage, target, measurement);
+    @x
+    }
+    else
+    {
+    }
+}
+@{
+    var pos0 = Model.WeeklyMaintenanceViewModels.Single(x => x.Position == 0);
+    var pos1 = Model.WeeklyMaintenanceViewModels.Single(x => x.Position == 1);
+    var pos2 = Model.WeeklyMaintenanceViewModels.Single(x => x.Position == 2);
+    var pos3 = Model.WeeklyMaintenanceViewModels.Single(x => x.Position == 3);
+    
+}
+<table class="der-table all-border">
+    <thead>
+        <tr>
+            <th colspan="6">WEEKLY MAINTENANCE BACKLOG (as of @Model.Date)
+            </th>
+        </tr>
+        <tr>
+            <th>Type
+            </th>
+            <th>PM
+            </th>
+            <th>CM
+            </th>
+            <th>Total
+            </th>
+            <th>Remarks
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Weekly Backlog
+            </td>
+            <td>@pos0.Weekly
+            </td>
+            <td>@pos1.Weekly
+            </td>
+            <td>@pos2.Weekly
+            </td>
+            <td>@pos3.Remarks
+            </td>
+        </tr>
+    </tbody>
+</table>

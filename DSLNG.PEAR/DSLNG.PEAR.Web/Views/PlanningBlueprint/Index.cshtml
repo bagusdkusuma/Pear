@@ -143,12 +143,12 @@
                           "defaultContent": '',
                           "mRender": function (data, type, row) {
                               if (row.MidtermStragetyPlanning.IsRejected) {
-                                  return 'Rejected';
+                                  return '@Html.ActionLink("Rejected", "MidtermStrategyPlanning", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.MidtermStragetyPlanning.Id);
                               }else
                               if (row.MidtermStragetyPlanning.IsApproved) {
-                                  return 'Approved';
+                                  return '@Html.ActionLink("Approved", "MidtermStrategyPlanning", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.MidtermStragetyPlanning.Id);
                               } else if (row.MidtermStragetyPlanning.IsBeingReviewed) {
-                                  return 'Being Reviewed';
+                                  return '@Html.ActionLink("Being Reviewed", "MidtermStrategyPlanning", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.MidtermStragetyPlanning.Id);
                               } else if (row.MidtermStragetyPlanning.IsLocked) {
                                   return 'Locked';
                               }
@@ -182,7 +182,7 @@
                         "defaultContent": '',
                         "mRender": function (data, type, row) {
                             var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
-                            var PrepareLink = '@Html.ActionLink("Prepare", "Prepare", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', data.Id);
+                            var PrepareLink = '@Html.ActionLink("Edit", "Edit", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', data.Id);
                             return PrepareLink;
                         }
                     }

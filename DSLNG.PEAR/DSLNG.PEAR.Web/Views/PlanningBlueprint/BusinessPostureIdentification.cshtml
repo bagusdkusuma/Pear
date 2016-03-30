@@ -632,6 +632,9 @@
                 return $('.' + $(this).data('form-target') + '-form').html();
             }
         });
+         @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
+                    {
+             <text>
         $('.list-result').popover({
             selector: '.popover-edit-trigger',
             html: true,
@@ -692,6 +695,8 @@
                 popOverElem.popover('hide');
             });
         });
+        </text>
+         }
         $(document).on('click', '.add-item', function (e) {
             e.preventDefault();
             var $this = $(this);

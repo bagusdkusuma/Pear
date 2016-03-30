@@ -29,6 +29,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PlanningBlueprint
             }
             public int Id { get; set; }
             public string Title { get; set; }
+            public int Order { get; set; }
             public DateTime? StartDate { get; set; }
             public DateTime? EndDate { get; set; }
             public IList<MidtermPhaseDescriptionViewModel> Descriptions { get; set; }
