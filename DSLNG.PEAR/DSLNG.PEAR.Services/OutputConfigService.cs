@@ -233,7 +233,7 @@ namespace DSLNG.PEAR.Services
                 }
                 resp.OutputCategories.Add(categoryResp);
             }
-                SerializationHelper.SerializeObject<CalculateOutputResponse>(resp, "output-scenario-" + request.ScenarioId);
+            SerializationHelper.SerializeObject<CalculateOutputResponse>(resp, "output-scenario-" + request.ScenarioId);
             return resp;
         }
 
@@ -322,18 +322,22 @@ namespace DSLNG.PEAR.Services
                     }
                     break;
             }
-            if (keyOutput.ConversionType.HasValue && keyOutput.ConversionValue.HasValue) {
-                if (!string.IsNullOrEmpty(resp.Actual)) {
-                    switch (keyOutput.ConversionType) { 
+            if (keyOutput.ConversionType.HasValue && keyOutput.ConversionValue.HasValue)
+            {
+                if (!string.IsNullOrEmpty(resp.Actual))
+                {
+                    switch (keyOutput.ConversionType)
+                    {
                         case ConversionType.Division:
                             resp.Actual = (double.Parse(resp.Actual) / keyOutput.ConversionValue.Value).ToString();
                             break;
                         default:
-                             resp.Actual = (double.Parse(resp.Actual) * keyOutput.ConversionValue.Value).ToString();
+                            resp.Actual = (double.Parse(resp.Actual) * keyOutput.ConversionValue.Value).ToString();
                             break;
                     }
                 }
-                if (!string.IsNullOrEmpty(resp.Forecast)) {
+                if (!string.IsNullOrEmpty(resp.Forecast))
+                {
                     switch (keyOutput.ConversionType)
                     {
                         case ConversionType.Division:
@@ -434,10 +438,16 @@ namespace DSLNG.PEAR.Services
                     && x.Periode.Year >= startActual.Year && x.Periode.Year < currentYear && x.PeriodeType == PeriodeType.Yearly).Sum(x => x.Value);
                 var futureValue = DataContext.KeyOperationDatas.Where(x => x.Kpi.Id == kpiId
                     && x.Periode.Year <= endActual.Year && x.Periode.Year > currentYear && x.PeriodeType == PeriodeType.Yearly && x.Scenario.Id == scenarioId).Sum(x => x.Value);
-                var untilNowThisYearValue = DataContext.KpiAchievements.Where(x => x.Kpi.Id == kpiId && x.Periode.Year == currentYear
-                    && x.Periode.Month < currentMonth && x.PeriodeType == PeriodeType.Monthly).Sum(x => x.Value);
+                var untilNowThisYear = DataContext.KpiAchievements.Where(x => x.Kpi.Id == kpiId && x.Periode.Year == currentYear
+                    && x.PeriodeType == PeriodeType.Monthly && x.Value.HasValue).OrderBy(x => x.Periode).ToList();
+                var startingForecastMonthCurrentYear = 1;
+                if (untilNowThisYear.Count > 0)
+                {
+                    startingForecastMonthCurrentYear = untilNowThisYear.Last().Periode.Month + 1;
+                }
+                var untilNowThisYearValue = untilNowThisYear.Sum(x => x.Value);
                 var thisYearForecastValue = DataContext.KeyOperationDatas.Where(x => x.Kpi.Id == kpiId && x.Periode.Year == currentYear
-                    && x.Periode.Month >= currentMonth && x.PeriodeType == PeriodeType.Monthly && x.Scenario.Id == scenarioId).Sum(x => x.Value);
+                    && x.Periode.Month >= startingForecastMonthCurrentYear && x.PeriodeType == PeriodeType.Monthly && x.Scenario.Id == scenarioId).Sum(x => x.Value);
                 var actualValues =
                     new List<double?> { pastValue, futureValue, untilNowThisYearValue, thisYearForecastValue };
                 if (actualValues.Any(x => x.HasValue))
@@ -482,11 +492,16 @@ namespace DSLNG.PEAR.Services
                     && x.Periode.Year < currentYear && x.PeriodeType == PeriodeType.Yearly).Select(x => x.Value).ToList();
                 var futureValues = DataContext.KeyOperationDatas.Where(x => x.Kpi.Id == kpiId
                     && x.Periode.Year <= endActual.Year && x.Periode.Year > currentYear && x.PeriodeType == PeriodeType.Yearly && x.Scenario.Id == scenarioId).Select(x => x.Value).ToList();
-
-                var untilNowThisYearValues = DataContext.KpiAchievements.Where(x => x.Kpi.Id == kpiId && x.Periode.Year == currentYear
-                    && x.Periode.Month < currentMonth && x.PeriodeType == PeriodeType.Monthly).Select(x => x.Value).ToList();
+                var untilNowThisYear = DataContext.KpiAchievements.Where(x => x.Kpi.Id == kpiId && x.Periode.Year == currentYear
+                    && x.PeriodeType == PeriodeType.Monthly && x.Value.HasValue).OrderBy(x => x.Periode).ToList();
+                var startingForecastMonthCurrentYear = 1;
+                if (untilNowThisYear.Count > 0)
+                {
+                    startingForecastMonthCurrentYear = untilNowThisYear.Last().Periode.Month + 1;
+                }
+                var untilNowThisYearValues = untilNowThisYear.Select(x => x.Value).ToList();
                 var thisYearForecastValues = DataContext.KeyOperationDatas.Where(x => x.Kpi.Id == kpiId && x.Periode.Year == currentYear
-                    && x.Periode.Month >= currentMonth && x.PeriodeType == PeriodeType.Monthly && x.Scenario.Id == scenarioId).Select(x => x.Value).ToList();
+                    && x.Periode.Month >= startingForecastMonthCurrentYear && x.PeriodeType == PeriodeType.Monthly && x.Scenario.Id == scenarioId).Select(x => x.Value).ToList();
                 var currentYearValue = untilNowThisYearValues.Concat(thisYearForecastValues).Sum();
                 pastValues.Add(currentYearValue);
 
@@ -527,11 +542,16 @@ namespace DSLNG.PEAR.Services
             DateTime endActual;
             if (IsStartAndEndValid(startAssumption.ActualValue, endAssumption.ActualValue, out startActual, out endActual))
             {
-                var pastValues = DataContext.KpiAchievements.Where(x => x.Kpi.Id == kpiId
-                   && x.Periode >= startActual && x.Periode < currentDate && x.PeriodeType == PeriodeType.Monthly
-                   && x.Value != keyOutput.ExcludeValue).Select(x => x.Value).ToList();
+                var untilNowThisYear = DataContext.KpiAchievements.Where(x => x.Kpi.Id == kpiId
+                   && x.Periode >= startActual && x.PeriodeType == PeriodeType.Monthly
+                   && x.Value != keyOutput.ExcludeValue).OrderBy(x => x.Periode).ToList();
+                DateTime startingDateForecast = startActual;
+                if (untilNowThisYear.Count > 0) {
+                    startingDateForecast = untilNowThisYear.Last().Periode.AddMonths(1);
+                }
+                var pastValues = untilNowThisYear.Select(x => x.Value).ToList();
                 var futureValues = DataContext.KeyOperationDatas.Where(x => x.Kpi.Id == kpiId
-                    && x.Periode >= currentDate && x.Periode <= endForecast && x.PeriodeType == PeriodeType.Monthly && x.Scenario.Id == scenarioId
+                    && x.Periode >= startingDateForecast && x.Periode <= endForecast && x.PeriodeType == PeriodeType.Monthly && x.Scenario.Id == scenarioId
                     && x.Value != keyOutput.ExcludeValue).Select(x => x.Value).ToList();
                 var minActual = pastValues.Concat(futureValues).Min();
                 if (minActual != null) result.Actual = minActual.ToString();
@@ -571,14 +591,18 @@ namespace DSLNG.PEAR.Services
             if (IsStartAndEndValid(startAssumption.ActualValue, endAssumption.ActualValue, out startActual, out endActual))
             {
                 var pastValues = DataContext.KpiAchievements.Where(x => x.Kpi.Id == kpiId
-                    && x.Periode >= startActual && x.Periode < currentDate && x.PeriodeType == PeriodeType.Monthly
-                    && x.Value != keyOutput.ExcludeValue).Select(x => new
+                    && x.Periode >= startActual && x.PeriodeType == PeriodeType.Monthly
+                    && x.Value != keyOutput.ExcludeValue).OrderBy(x => x.Periode).Select(x => new
                     {
                         Periode = x.Periode,
                         Value = x.Value
                     });
+                var startingDateForecast = startActual;
+                if (pastValues.Count() > 0) {
+                    startingDateForecast = pastValues.Last().Periode.AddMonths(1);
+                }
                 var futureValues = DataContext.KeyOperationDatas.Where(x => x.Kpi.Id == kpiId
-                    && x.Periode >= currentDate && x.Periode <= endForecast && x.PeriodeType == PeriodeType.Monthly && x.Scenario.Id == scenarioId
+                    && x.Periode >= startingDateForecast && x.Periode <= endForecast && x.PeriodeType == PeriodeType.Monthly && x.Scenario.Id == scenarioId
                     && x.Value != keyOutput.ExcludeValue).Select(x => new
                     {
                         Periode = x.Periode,
@@ -614,7 +638,7 @@ namespace DSLNG.PEAR.Services
             if (!string.IsNullOrEmpty(payback.Forecast) && IsStartAndEndValid(startAssumption.ForecastValue, endAssumption.ForecastValue, out startForecast, out endForecast))
             {
                 var breakEventYear = startForecast.AddYears((int)Math.Floor(decimal.Parse(payback.Forecast)));
-                var month = Math.Round((decimal.Parse(payback.Forecast) - Math.Floor(decimal.Parse(payback.Forecast))) * 12,0);
+                var month = Math.Round((decimal.Parse(payback.Forecast) - Math.Floor(decimal.Parse(payback.Forecast))) * 12, 0);
                 breakEventYear = breakEventYear.AddMonths((int)month);
                 result.Forecast = breakEventYear.ToString();
             }
@@ -651,8 +675,8 @@ namespace DSLNG.PEAR.Services
             }
             var startAssumption = DataContext.KeyAssumptionDatas.FirstOrDefault(x => x.KeyAssumptionConfig.Id == startId);
             var endAssumption = DataContext.KeyAssumptionDatas.FirstOrDefault(x => x.KeyAssumptionConfig.Id == endId);
-            
-          
+
+
             if (startAssumption == null || endAssumption == null)
             {
                 return new OutputResult();
@@ -665,7 +689,8 @@ namespace DSLNG.PEAR.Services
                    && x.Periode.Year >= startForecast.Year && x.Periode.Year <= endForecast.Year
                    && x.PeriodeType == PeriodeType.Yearly).ToList();
                 var accumulationForecastList = new List<KeyOperationData>();
-                foreach (var fc in forecastList.OrderBy(x => x.Periode).ToList()) {
+                foreach (var fc in forecastList.OrderBy(x => x.Periode).ToList())
+                {
                     var accForecast = new KeyOperationData
                     {
                         Periode = fc.Periode,
@@ -693,7 +718,7 @@ namespace DSLNG.PEAR.Services
                             result.Forecast = (double.Parse(result.Forecast) - ((commercialForecast - constForecast).Days / 365.00)).ToString();
                         }
                     }
-                   
+
                 }
             }
             DateTime startActual;
@@ -702,34 +727,40 @@ namespace DSLNG.PEAR.Services
             {
                 var pastValues = DataContext.KpiAchievements.Where(x => x.Kpi.Id == kpiId
                    && x.Periode.Year >= startActual.Year && x.Periode.Year < currentYear
-                   && x.PeriodeType == PeriodeType.Yearly).Select(x => new { Value = x.Value, Periode = x.Periode }).ToList();
+                   && x.PeriodeType == PeriodeType.Yearly).Select(x => new { Value = x.Value, Periode = x.Periode, PeriodeType = x.PeriodeType }).ToList();
                 var futureValues = DataContext.KeyOperationDatas.Where(x => x.Kpi.Id == kpiId
                     && x.Periode.Year <= endActual.Year && x.Periode.Year > currentYear
-                    && x.PeriodeType == PeriodeType.Yearly && x.Scenario.Id == scenarioId).Select(x => new { Value = x.Value, Periode = x.Periode }).ToList();
-                var untilNowThisYearValue = DataContext.KpiAchievements.Where(x => x.Kpi.Id == kpiId
-                    && x.Periode.Year == currentYear && x.Periode.Month < currentMonth
-                    && x.PeriodeType == PeriodeType.Monthly).Sum(x => x.Value);
+                    && x.PeriodeType == PeriodeType.Yearly && x.Scenario.Id == scenarioId).Select(x => new { Value = x.Value, Periode = x.Periode, PeriodeType = x.PeriodeType }).ToList();
+                var untilNowThisYear = DataContext.KpiAchievements.Where(x => x.Kpi.Id == kpiId && x.Periode.Year == currentYear
+                    && x.PeriodeType == PeriodeType.Monthly && x.Value.HasValue).OrderBy(x => x.Periode).ToList();
+                var startingForecastMonthCurrentYear = 1;
+                if (untilNowThisYear.Count > 0)
+                {
+                    startingForecastMonthCurrentYear = untilNowThisYear.Last().Periode.Month + 1;
+                }
+                var untilNowThisYearValue = untilNowThisYear.Sum(x => x.Value);
                 var thisYearForecastValue = DataContext.KeyOperationDatas.Where(x => x.Kpi.Id == kpiId
-                    && x.Periode.Year == currentYear && x.Periode.Month >= currentMonth
+                    && x.Periode.Year == currentYear && x.Periode.Month >= startingForecastMonthCurrentYear
                     && x.PeriodeType == PeriodeType.Monthly && x.Scenario.Id == scenarioId).Sum(x => x.Value);
                 var currentYearValue = new
                 {
                     Value = new List<double?> { thisYearForecastValue, untilNowThisYearValue }.Sum(),
-                    Periode = DateTime.Now
+                    Periode = DateTime.Now,
+                    PeriodeType = PeriodeType.Yearly
                 };
                 pastValues.Add(currentYearValue);
                 var actualList = pastValues.Concat(futureValues);
                 var accActualList = new List<KeyOperationData>();
 
-                foreach (var ac in accActualList.OrderBy(x => x.Periode).ToList())
+                foreach (var ac in actualList.OrderBy(x => x.Periode).ToList())
                 {
-                    var accForecast = new KeyOperationData
+                    var accActual = new KeyOperationData
                     {
                         Periode = ac.Periode,
                         PeriodeType = ac.PeriodeType,
-                        Value = accActualList.Where(x => x.Periode <= ac.Periode).Sum(x => x.Value)
+                        Value = actualList.Where(x => x.Periode <= ac.Periode).Sum(x => x.Value)
                     };
-                    accActualList.Add(accForecast);
+                    accActualList.Add(accActual);
                 }
 
                 var actual = accActualList.OrderBy(x => x.Periode).FirstOrDefault(x => x.Value > 0);
@@ -752,7 +783,7 @@ namespace DSLNG.PEAR.Services
                             result.Actual = (double.Parse(result.Actual) - ((commercialActual - constActual).Days / 365.00)).ToString();
                         }
                     }
-                    
+
                 }
             }
 
@@ -803,13 +834,20 @@ namespace DSLNG.PEAR.Services
 
                 if (currentYear == completionActual.Year)
                 {
-                    var pastMonthsThisYear = DataContext.KpiAchievements.Where(x => x.Kpi.Id == kpiId
+                    var untilNowThisYear = DataContext.KpiAchievements.Where(x => x.Kpi.Id == kpiId
                     && x.PeriodeType == PeriodeType.Monthly
-                    && x.Periode.Year == completionForecast.Year && x.Periode.Month < currentMonth).Sum(x => x.Value);
+                    && x.Periode.Year == completionForecast.Year && x.Value.HasValue).OrderBy(x => x.Periode).ToList();
+                    var startingMonthForecast = 1;
+                    if (untilNowThisYear.Count > 0)
+                    {
+                        startingMonthForecast = untilNowThisYear.Last().Periode.Month + 1;
+                    }
+
+                    var pastMonthsThisYear = untilNowThisYear.Sum(x => x.Value);
 
                     var nextMonthThisYear = DataContext.KeyOperationDatas.Where(x => x.Kpi.Id == kpiId && scenarioId == x.Scenario.Id
                     && x.PeriodeType == PeriodeType.Monthly
-                    && x.Periode.Year == completionForecast.Year && x.Periode.Month > currentMonth).Sum(x => x.Value);
+                    && x.Periode.Year == completionForecast.Year && x.Periode.Month >= startingMonthForecast).Sum(x => x.Value);
 
                     if (pastMonthsThisYear.HasValue || nextMonthThisYear.HasValue)
                     {
@@ -899,8 +937,9 @@ namespace DSLNG.PEAR.Services
             var currentDate = DateTime.Now;
             var result = new OutputResult();
             var kpiId = keyOutput.Kpis[0].Id;
-            var startId = keyOutput.KeyAssumptions[0].Id;
-            var endId = keyOutput.KeyAssumptions[1].Id;
+            var keyAssumptionIds = keyOutput.KeyAssumptionIds.Split(',');
+            var startId = int.Parse(keyAssumptionIds[0]);
+            var endId = int.Parse(keyAssumptionIds[1]);
 
             var startAssumption = DataContext.KeyAssumptionDatas.FirstOrDefault(x => x.KeyAssumptionConfig.Id == startId);
             var endAssumption = DataContext.KeyAssumptionDatas.FirstOrDefault(x => x.KeyAssumptionConfig.Id == endId);
@@ -913,12 +952,12 @@ namespace DSLNG.PEAR.Services
             if (IsStartAndEndValid(startAssumption.ForecastValue, endAssumption.ForecastValue, out startForecast, out endForecast))
             {
                 var forecast = DataContext.KeyOperationDatas.Where(x => x.Scenario.Id == scenarioId && x.Kpi.Id == kpiId
-                        && startForecast <= x.Periode && x.Periode <= endForecast
+                        && x.Periode.Year >= startForecast.Year && x.Periode.Year <= endForecast.Year
                     && x.PeriodeType == PeriodeType.Yearly).OrderBy(x => x.Periode).Select(x => x.Value.Value).ToList().ToArray();
                 if (forecast.Length >= 2)
                 {
                     var forecastIrrCalculator = new NewtonRaphsonIRRCalculator(forecast);
-                    result.Forecast = forecastIrrCalculator.Execute().ToString();
+                    result.Forecast = forecastIrrCalculator.ComputeIRR().ToString();
                 }
             }
             DateTime startActual;
@@ -926,23 +965,30 @@ namespace DSLNG.PEAR.Services
             if (IsStartAndEndValid(startAssumption.ActualValue, endAssumption.ActualValue, out startActual, out endActual))
             {
                 var past = DataContext.KpiAchievements.Where(x => x.Kpi.Id == kpiId
-                    && startActual <= x.Periode && x.Periode.Year < currentYear
+                    && startActual.Year <= x.Periode.Year && x.Periode.Year < currentYear
                     && x.PeriodeType == PeriodeType.Yearly).OrderBy(x => x.Periode).Select(x => x.Value).ToList();
                 var future = DataContext.KeyOperationDatas.Where(x => x.Kpi.Id == kpiId && x.Scenario.Id == scenarioId
-                    && x.Periode <= endActual && x.Periode.Year > currentYear
+                    && x.Periode.Year <= endActual.Year && x.Periode.Year > currentYear
                     && x.PeriodeType == PeriodeType.Yearly).OrderBy(x => x.Periode).Select(x => x.Value).ToList();
-                var currentPastMonths = DataContext.KpiAchievements.Where(x => x.Kpi.Id == kpiId
-                    && x.Periode.Year == currentYear && x.Periode.Month < currentMonth
-                    && x.PeriodeType == PeriodeType.Monthly).OrderBy(x => x.Periode).Sum(x => x.Value);
+                var untilNowThisYear = DataContext.KpiAchievements.Where(x => x.Kpi.Id == kpiId
+                  && x.PeriodeType == PeriodeType.Monthly
+                  && x.Periode.Year == currentYear && x.Value.HasValue).OrderBy(x => x.Periode).ToList();
+                var startingMonthForecast = 1;
+                if (untilNowThisYear.Count > 0)
+                {
+                    startingMonthForecast = untilNowThisYear.Last().Periode.Month + 1;
+                }
+
+                var currentPastMonths = untilNowThisYear.Sum(x => x.Value);
                 var currentNextMonths = DataContext.KeyOperationDatas.Where(x => x.Kpi.Id == kpiId && x.Scenario.Id == scenarioId
-                    && x.Periode.Year == currentYear && x.Periode.Month >= currentMonth
+                    && x.Periode.Year == currentYear && x.Periode.Month >= startingMonthForecast
                     && x.PeriodeType == PeriodeType.Monthly).OrderBy(x => x.Periode).Sum(x => x.Value);
                 past.Add(currentPastMonths + currentNextMonths);
                 var actualArray = past.Concat(future).ToArray();
                 if (actualArray.Length >= 2)
                 {
                     var actualIrrCalculator = new NewtonRaphsonIRRCalculator(actualArray.Select(x => x.HasValue ? x.Value : 0).ToArray());
-                    result.Actual = actualIrrCalculator.Execute().ToString();
+                    result.Actual = actualIrrCalculator.ComputeIRR().ToString();
                 }
             }
             return result;
