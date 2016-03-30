@@ -164,6 +164,8 @@ using DSLNG.PEAR.Services.Responses.Der;
 using DSLNG.PEAR.Web.ViewModels.MirConfiguration;
 using DSLNG.PEAR.Services.Requests.MirConfiguration;
 using DSLNG.PEAR.Services.Responses.MirConfiguration;
+using DSLNG.PEAR.Web.ViewModels.MirDataTable;
+using DSLNG.PEAR.Services.Requests.MirDataTable;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -703,8 +705,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetMirConfigurationsResponse, SaveMirConfigurationViewModel>();
             Mapper.CreateMap<GetMirConfigurationsResponse, ConfigureMirConfigurationViewModel>();
             Mapper.CreateMap<GetMirConfigurationsResponse.MirDataTable, ConfigureMirConfigurationViewModel.MirDataTable>();
-            Mapper.CreateMap<GetMirConfigurationsResponse.MirDataTable.Kpi, ConfigureMirConfigurationViewModel.MirDataTable.Kpi>();
-
+            Mapper.CreateMap<SaveMirDataTableViewModel, SaveMirDataTableRequest>();
             base.Configure();
         }
         

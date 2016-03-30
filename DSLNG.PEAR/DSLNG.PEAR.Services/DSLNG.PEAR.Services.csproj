@@ -99,6 +99,7 @@
     <Compile Include="Requests\MirConfiguration\GetMirConfigurationsRequest.cs" />
     <Compile Include="Requests\MirConfiguration\SaveMirConfigurationRequest.cs" />
     <Compile Include="Requests\MirDataTable\DeleteKpiMirDataTableRequest.cs" />
+    <Compile Include="Requests\MirDataTable\SaveMirDataTableRequest.cs" />
     <Compile Include="Requests\Signature\ApproveSignatureRequest.cs" />
     <Compile Include="Requests\PlanningBlueprint\KpiEconomicInputRequest.cs" />
     <Compile Include="Requests\PlanningBlueprint\KpiTargetInputRequest.cs" />
@@ -220,6 +221,7 @@
     <Compile Include="Responses\MirConfiguration\GetsMirConfigurationsResponse.cs" />
     <Compile Include="Responses\MirConfiguration\SaveMirConfigurationResponse.cs" />
     <Compile Include="Responses\MirDataTable\DeleteKpiMirDataTableResponse.cs" />
+    <Compile Include="Responses\MirDataTable\SaveMirDataTableResponse.cs" />
     <Compile Include="Responses\OperationalData\GetOperationDataConfigurationResponse.cs" />
     <Compile Include="Responses\OperationalData\GetOperationalDataDetailResponse.cs" />
     <Compile Include="Requests\OperationalData\GetOperationalDataDetailRequest.cs" />

@@ -13,5 +13,6 @@ namespace DSLNG.PEAR.Data.Entities.Mir
         public int Id { get; set; }
         public IList<Kpi> Kpis { get; set; }
         public MirTableType Type { get; set; }
+        public MirConfiguration MirConfiguration { get; set; }
     }
 }

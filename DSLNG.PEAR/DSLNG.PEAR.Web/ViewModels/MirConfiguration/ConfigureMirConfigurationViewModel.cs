@@ -12,29 +12,24 @@ namespace DSLNG.PEAR.Web.ViewModels.MirConfiguration
         public ConfigureMirConfigurationViewModel()
         {
             MirDataTables = new List<MirDataTable>();
+            KpiList = new List<SelectListItem>();
         }
         public int Id { get; set; }
         public string Title { get; set; }
         public IList<MirDataTable> MirDataTables { get; set; }
         public bool IsActive { get; set; }
+        public List<SelectListItem> KpiList { get; set; }
         
 
         public class MirDataTable
         {
             public MirDataTable()
             {
-                Kpis = new List<Kpi>();
+                KpiIds = new List<int>();
             }
             public int Id { get; set; }
-            public IList<Kpi> Kpis { get; set; }
             public MirTableType Type { get; set; }
-            public int KpiId { get; set; }
-            public List<SelectListItem> KpiList { get; set; }
-            public class Kpi
-            {
-                public int Id { get; set; }
-                public string Name { get; set; }
-            }
+            public List<int> KpiIds { get; set; }
         }
     }
 }
