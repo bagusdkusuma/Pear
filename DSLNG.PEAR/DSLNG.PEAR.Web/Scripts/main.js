@@ -2919,61 +2919,6 @@ Number.prototype.format = function (n, x) {
             height: container.height(),
             width: container.width()
         });
-        /*var containerHeight = container.height() - 50;
-        var tankToTopHeight = 75;
-        var tankHeight = containerHeight - tankToTopHeight;
-        var volumeColor = '#00aeef';
-        var $tank = $('<div>', { 'class': 'tank-chart' });
-        var generalWidth = 250;
-        var volumeUnit = data.Tank.VolumeInventoryUnit;
-        var periodeUnit = data.Tank.DaysToTankTopUnit;
-        $tank.height(tankHeight);
-        $tank.width(generalWidth);
-        $tank.css('margin-top', tankToTopHeight + 'px');
-        var $volume = $('<div>', { 'class': 'tank-volume' });
-        var volumeHeight = data.Tank.VolumeInventory / data.Tank.MaxCapacity * tankHeight;
-        $volume.height(volumeHeight);
-        $volume.width(generalWidth - 2);
-        $volume.css('background-color', volumeColor);
-        var $tankToTop = $('<div>', { 'class': 'tank-to-top' });
-        $tankToTop.append('<p>' + data.Tank.DaysToTankTop + ' ' + periodeUnit + '</p>');
-        $tankToTop.append('<p>' + data.Tank.DaysToTankTopTitle + '</p>');
-        $tankToTop.width(generalWidth);
-        $tankToTop.height(tankToTopHeight);
-        $tankToTop.css('top', -tankToTopHeight + 'px');
-        var $volumeMeter = $('<div>', { 'class': 'tank-volume-meter' });
-        $volumeMeter.height(tankHeight);
-
-        var $zeroMeter = $('<p>', { 'class': 'tank-zero-meter' });
-        $zeroMeter.html('- 0 ' + volumeUnit);
-
-        var $minCapacity = $('<p>', { 'class': 'tank-min-capacity' });
-        $minCapacity.html('- ' + data.Tank.MinCapacity.format(2) + ' ' + volumeUnit + ' (Min)');
-        var minCapacityPos = data.Tank.MinCapacity / data.Tank.MaxCapacity * tankHeight;
-        $minCapacity.css('bottom', minCapacityPos + 'px');
-
-        var $maxCapacity = $('<p>', { 'class': 'tank-max-capacity' });
-        $maxCapacity.html('- ' + data.Tank.MaxCapacity.format(2) + ' ' + volumeUnit + ' (Max)');
-
-        var $currentVol = $('<p>', { 'class': 'tank-current-volume' });
-        var currentVolPercent = Math.round(data.Tank.VolumeInventory / data.Tank.MaxCapacity * 100).toFixed(2);
-        $currentVol.css('bottom', (volumeHeight - 6) + 'px');
-        $currentVol.html('- ' + data.Tank.VolumeInventory.format(2) + ' ' + volumeUnit + ' (' + currentVolPercent + '%)');
-
-        $tank.append($volume);
-        $tank.append($tankToTop);
-        $tank.append($volumeMeter);
-        $tank.append($zeroMeter);
-        $tank.append($minCapacity);
-        $tank.append($maxCapacity);
-        if (data.Tank.VolumeInventory != 0 && data.Tank.VolumeInventory != data.Tank.MinCapacity && data.Tank.MaxCapacity) {
-            $tank.append($currentVol);
-        }
-        var $wrapper = $('<div>', { 'class': 'tank-wrapper' });
-        $wrapper.html('<h3>' + data.Tank.Title + '</h3>');
-        $wrapper.append('<h4>' + data.Tank.Subtitle + '</h4>');
-        $wrapper.append($tank);
-        container.html($wrapper);*/
     };
 
     //mutliaxis

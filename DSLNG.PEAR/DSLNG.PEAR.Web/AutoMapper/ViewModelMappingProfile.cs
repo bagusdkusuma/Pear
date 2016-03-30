@@ -164,6 +164,10 @@ using DSLNG.PEAR.Services.Responses.Der;
 using DSLNG.PEAR.Web.ViewModels.MirConfiguration;
 using DSLNG.PEAR.Services.Requests.MirConfiguration;
 using DSLNG.PEAR.Services.Responses.MirConfiguration;
+using DSLNG.PEAR.Services.Requests.Wave;
+using DSLNG.PEAR.Web.ViewModels.Wave;
+using DSLNG.PEAR.Web.ViewModels.ProcessBlueprint;
+using DSLNG.PEAR.Services.Responses.ProcessBlueprint;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -180,6 +184,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             ConfigureOperationData();
             ConfigureEconomicSummary();
             ConfigureDerViewModel();
+            ConfigureProcessBlueprint();
 
             Mapper.CreateMap<Dropdown, SelectListItem>();
             Mapper.CreateMap<SearchKpiViewModel, GetKpiToSeriesRequest>();
@@ -707,6 +712,16 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             base.Configure();
         }
+
+        private void ConfigureProcessBlueprint()
+        {
+            Mapper.CreateMap<GetProcessBlueprintResponse, ProcessBlueprintViewModel>();
+            Mapper.CreateMap<GetProcessBlueprintsResponse.ProcessBlueprint, ProcessBlueprintViewModel>();
+            Mapper.CreateMap<GetProcessBlueprintResponse, FileSystemItem>()
+                .ForMember(x => x.FileId, y => y.MapFrom(z => z.Id));
+            Mapper.CreateMap<GetProcessBlueprintsResponse.ProcessBlueprint, FileSystemItem>()
+                .ForMember(x => x.FileId, y => y.MapFrom(z => z.Id));
+        }
         
         private void ConfigureEconomicSummary()
         {
@@ -1028,6 +1043,8 @@ namespace DSLNG.PEAR.Web.AutoMapper
             /*Mapper.CreateMap<DerLayoutItemViewModel, SaveLayoutItemRequest>();
             Mapper.CreateMap<DerLayoutLineViewModel, SaveLayoutItemRequest.LayoutItemArtifact>();
             Mapper.CreateMap<LineChartViewModel, SaveLayoutItemRequest.LayoutItemArtifactLine>();*/
+
+            Mapper.CreateMap<WaveViewModel, SaveWaveRequest>();
 
         }
 

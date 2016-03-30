@@ -179,7 +179,9 @@ namespace DSLNG.PEAR.Services
                 keyOperationConfigs = DataContext.KeyOperationConfigs
                                                      .Include(x => x.Kpi)
                                                      .Include(x => x.Kpi.Measurement)
-                                                     .Where(x => x.KeyOperationGroup != null && x.KeyOperationGroup.Id == request.GroupId && x.IsActive).ToList();
+                                                     .Where(x => x.KeyOperationGroup != null && x.KeyOperationGroup.Id == request.GroupId && x.IsActive)
+                                                     .OrderBy(x => x.KeyOperationGroup.Order)
+                                                     .ThenBy(x => x.Order).ToList();
             }
             else
             {
@@ -187,7 +189,9 @@ namespace DSLNG.PEAR.Services
                 .Include(x => x.Kpi)
                 .Include(x => x.Kpi.Measurement)
                 .Include(x => x.KeyOperationGroup)
-                .Where(x => x.IsActive && x.KeyOperationGroup != null).ToList();
+                .Where(x => x.IsActive && x.KeyOperationGroup != null)
+                .OrderBy(x => x.KeyOperationGroup.Order)
+                .ThenBy(x => x.Order).ToList();
             }
 
 

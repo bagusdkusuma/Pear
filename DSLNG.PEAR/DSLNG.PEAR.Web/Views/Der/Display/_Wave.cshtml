@@ -1,0 +1,25 @@
+﻿@model DSLNG.PEAR.Services.Responses.Wave.GetWaveResponse
+@if (Model.ValueId > 0)
+{
+    <table class="der-table der-qhsse-row-1">
+        <tr>
+            <td>Tide/Wave at Jetty:</td>
+            <td style="text-align: center">[image]</td>
+            <td colspan="2" style="text-align: center">@Model.Tide</td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td rowspan="2" style="text-align: center">[image]</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>Wind Direction&Speed:</td>
+            <td style="text-align: right"><img height="60" width="60" src="@Url.Content("/content/img/select/" + Model.Value)" /></td>
+            <td style="text-align: center">@Model.Speed</td>
+        </tr>
+    </table>
+    
+  
+}
+

@@ -88,6 +88,8 @@ namespace DSLNG.PEAR.Web.DependencyResolution {
             For<ISignatureService>().Use<SignatureService>();
             For<IMirConfigurationService>().Use<MirConfigurationService>();
             For<IMirDataTableService>().Use<MirDataTableService>();
+            For<IWaveService>().Use<WaveService>();
+            For<IProcessBlueprintService>().Use<ProcessBlueprintService>();
         }
 
         #endregion

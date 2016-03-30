@@ -1,6 +1,10 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.OperationData.OperationDataConfigurationViewModel
+<style type="text/css">
+    .text-align-right {
+        padding-left: 20px !important;
+    }
+</style>
 <div role="tabpanel" class="tab-pane active" id="monthly">
-
     <div style="overflow: auto">
         <form class="form-inline" style="float: left">
             <div class="form-group" style="padding-right: 30px;">
@@ -11,8 +15,7 @@
         <table class="table table-hover table-transparent table-bordered">
             <tbody>
                 <tr>
-                    <th style="width: 30%;">KPI Name</th>
-                    <th style="width: 15%;">Group</th>
+                    <th style="min-width: 200px;">KPI Name</th>
                     <th style="width: 50px;">Jan</th>
                     <th style="width: 50px;">Feb</th>
                     <th style="width: 50px;">Mar</th>
@@ -29,17 +32,25 @@
                 @{ 
                     var a = 0;
                     int number = 1;
+                    var groups = new List<string>();
                 }
                 @foreach (var kpi in Model.Kpis)
                 {
+                    if (!groups.Contains(kpi.GroupName.ToLowerInvariant()))
+                    {
+                        groups.Add(kpi.GroupName.ToLowerInvariant());
+                    <tr>
+                        <td style="text-align: left;border-bottom: 1px solid #fff;border-top: 1px solid #fff" colspan="23"><b>@kpi.GroupName.ToUpperInvariant()</b></td>
+                    </tr>
+                    }
                     <tr>
                         <td style="text-align: left">@(number++). @kpi.Name (@kpi.MeasurementName)</td>
-                        <td style="text-align: left">@kpi.GroupName</td>
+
                         @{ var b = 0;}
                         @foreach (var operationData in kpi.OperationDatas)
                         {
-                            <th>
-                                @operationData.Value
+                            <th class="text-align-right">
+                                @Html.ParseToNumber(operationData.Value.ToString())
                             </th>
                             b++;
                         }

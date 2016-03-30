@@ -16,9 +16,8 @@ namespace DSLNG.PEAR.Data.Entities
         public int Id { get; set; }
         public PeriodeType PeriodeType { get; set; }
         public DateTime Date { get; set; }
-        public SelectOption Value { get; set; }
+        public SelectOption Value { get; set; } //direction
         public string Tide { get; set; }
-        public string WindDirection { get; set; }
         public string Speed { get; set; }
     }
 }

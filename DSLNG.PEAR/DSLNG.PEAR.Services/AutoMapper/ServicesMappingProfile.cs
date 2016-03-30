@@ -109,9 +109,13 @@ using DSLNG.PEAR.Services.Requests.PopInformation;
 using DSLNG.PEAR.Services.Responses.PopInformation;
 using PopInformationType = DSLNG.PEAR.Data.Enums.PopInformationType;
 using DSLNG.PEAR.Services.Requests.Signature;
+using DSLNG.PEAR.Services.Responses.Wave;
+using DSLNG.PEAR.Services.Requests.Wave;
 using DSLNG.PEAR.Data.Entities.Mir;
 using DSLNG.PEAR.Services.Responses.MirConfiguration;
 using DSLNG.PEAR.Services.Requests.MirConfiguration;
+using DSLNG.PEAR.Services.Responses.ProcessBlueprint;
+using DSLNG.PEAR.Services.Requests.ProcessBlueprint;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -129,6 +133,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             ConfigureKeyOperation();
             ConfigureEconomicSummary();
             ConfigureDer();
+            ConfigureProcessBlueprint();
 
             Mapper.CreateMap<Data.Entities.User, GetUsersResponse.User>();
             Mapper.CreateMap<GetUsersResponse.User, Data.Entities.User>();
@@ -696,6 +701,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
 
             Mapper.CreateMap<ApproveSignatureRequest, Signature>();
+            Mapper.CreateMap<Wave, GetWavesResponse.WaveResponse>()
+                .ForMember(x => x.Value, y => y.MapFrom(z => z.Value.Text));
+            Mapper.CreateMap<SaveWaveRequest, Wave>();
 
 
             Mapper.CreateMap<MirConfiguration, GetsMirConfigurationsResponse.MirConfiguration>();
@@ -704,6 +712,13 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<MirDataTable, GetMirConfigurationsResponse.MirDataTable>();
             Mapper.CreateMap<Kpi, GetMirConfigurationsResponse.MirDataTable.Kpi>();
             base.Configure();
+        }
+
+        private void ConfigureProcessBlueprint()
+        {
+            Mapper.CreateMap<ProcessBlueprint, GetProcessBlueprintResponse>();
+            Mapper.CreateMap<ProcessBlueprint, GetProcessBlueprintsResponse.ProcessBlueprint>();
+            Mapper.CreateMap<SaveProcessBlueprintRequest, ProcessBlueprint>();
         }
 
         private void ConfigureEconomicSummary()
@@ -936,6 +951,10 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
             Mapper.CreateMap<GetKpiAchievementResponse, GetKpiValueResponse>();
             Mapper.CreateMap<GetKpiAchievementResponse.KpiResponse, GetKpiValueResponse.KpiResponse>();
+
+            Mapper.CreateMap<Wave, GetWaveResponse>()
+                .ForMember(x => x.Value, o => o.MapFrom(s => s.Value.Value))
+                .ForMember(x => x.Text, o => o.MapFrom(s => s.Value.Text));
         }
     }
 }
