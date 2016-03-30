@@ -38,8 +38,9 @@ namespace DSLNG.PEAR.Services
             var data = DataContext.HighlightGroups.Include(x => x.Options)
                 .Include(x => x.Options.Select(y => y.RoleGroups))
                 .AsQueryable();
-            if (onlyIsActive) {
-                data = data.Where(x => x.Options.Where(y => y.IsActive == true).Count() > 0);
+            if (onlyIsActive)
+            {
+                data = data.Where(x => x.Options.Any(y => y.IsActive));
             }
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             {
@@ -80,7 +81,8 @@ namespace DSLNG.PEAR.Services
                     var highlightGroup = request.MapTo<HighlightGroup>();
                     DataContext.HighlightGroups.Add(highlightGroup);
                 }
-                else {
+                else
+                {
                     var higlightGroup = DataContext.HighlightGroups.First(x => x.Id == request.Id);
                     request.MapPropertiesToInstance<HighlightGroup>(higlightGroup);
                 }
@@ -91,7 +93,8 @@ namespace DSLNG.PEAR.Services
                     Message = "Highlight Group item has been saved successfull"
                 };
             }
-            catch {
+            catch
+            {
                 return new SaveHighlightGroupResponse
                 {
                     IsSuccess = false,
