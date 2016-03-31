@@ -839,6 +839,8 @@
     <Compile Include="ViewModels\MirConfiguration\ConfigureMirConfigurationViewModel.cs" />
     <Compile Include="ViewModels\MirConfiguration\MirConfigurationViewModel.cs" />
     <Compile Include="ViewModels\MirConfiguration\SaveMirConfigurationViewModel.cs" />
+    <Compile Include="ViewModels\MirDataTable\DeleteMirDataTableViewModel.cs" />
+    <Compile Include="ViewModels\MirDataTable\SaveMirDataTableViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\AnnualBusinessPlanViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\RejectMidtermStrategyViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\RejectVoyagePlanViewModel.cs" />

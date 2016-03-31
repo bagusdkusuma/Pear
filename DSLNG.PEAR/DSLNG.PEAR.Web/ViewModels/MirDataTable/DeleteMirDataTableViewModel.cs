@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace DSLNG.PEAR.Services.Requests.MirDataTable
+namespace DSLNG.PEAR.Web.ViewModels.MirDataTable
 {
-    public class DeleteKpiMirDataTableRequest
+    public class DeleteMirDataTableViewModel
     {
         public int KpiId { get; set; }
         public int MirDataTableId { get; set; }

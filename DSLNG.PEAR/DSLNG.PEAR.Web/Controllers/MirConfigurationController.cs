@@ -15,8 +15,8 @@ namespace DSLNG.PEAR.Web.Controllers
 {
     public class MirConfigurationController : BaseController
     {
-        public IMirConfigurationService _mirConfigurationService;
-        public IDropdownService _dropdownService;
+        private readonly IMirConfigurationService _mirConfigurationService;
+        private readonly IDropdownService _dropdownService;
         public MirConfigurationController(IMirConfigurationService mirConfigurationService, IDropdownService dropdownService)
         {
             _mirConfigurationService = mirConfigurationService;
@@ -138,9 +138,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Configure(int id)
         {
             var viewModel = _mirConfigurationService.Get(id).MapTo<ConfigureMirConfigurationViewModel>();
-            var mirConfiguration = new ConfigureMirConfigurationViewModel.MirDataTable();
-            mirConfiguration.KpiList = _dropdownService.GetKpis().MapTo<SelectListItem>();
-
+            viewModel.KpiList = _dropdownService.GetKpis().MapTo<SelectListItem>();
             return View(viewModel);
         }
 	}
