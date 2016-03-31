@@ -64,7 +64,7 @@ namespace DSLNG.PEAR.Common.Calculator
                 guessRate = (lowGuessRate + highGuessRate) / 2;
                 newGuessRate = guessRate;
             }
-            return guessRate;
+            return guessRate * 100;
         }
 
         /// <summary>
