@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Data.Entities;
 
 namespace DSLNG.PEAR.Services
 {
@@ -15,11 +17,56 @@ namespace DSLNG.PEAR.Services
     {
         public MirDataTableService(IDataContext dataContext) : base(dataContext) { }
 
+        public SaveMirDataTableResponse SaveMirDataTableRespons(SaveMirDataTableRequest request)
+        {
+            var MirDataTable = request.MapTo<MirDataTable>();
+            if (request.MirDataId == 0)
+            {
+                MirDataTable.MirConfiguration = DataContext.MirConfigurations.FirstOrDefault(x => x.Id == request.MirConfigurationId);
+                MirDataTable.Kpis = new List<Kpi>();
+                foreach(var kpiId in request.KpiIds)
+                {
+                    var kpi = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == kpiId);
+                    if (kpi == null )
+                    {
+                        kpi = new Kpi { Id = kpiId };
+                        DataContext.Kpis.Attach(kpi);
+                    }
+                    MirDataTable.Kpis.Add(kpi);
+                }
+                DataContext.MirDataTables.Add(MirDataTable);
+            }
+            else
+            {
+                MirDataTable = DataContext.MirDataTables.FirstOrDefault(x => x.Id == request.MirDataId);
+                request.MapPropertiesToInstance<MirDataTable>(MirDataTable);
+                MirDataTable.Kpis = new List<Kpi>();
+                foreach(var kpiId in request.KpiIds)
+                {
+                    var kpi = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == kpiId);
+                    if(kpi == null)
+                    {
+                        kpi = new Kpi { Id = kpiId };
+                        DataContext.Kpis.Attach(kpi);
+                    }
+                    MirDataTable.Kpis.Add(kpi);
+                }
+            }
+
+            DataContext.SaveChanges();
+
+            return new SaveMirDataTableResponse
+            {
+                IsSuccess = true,
+                Message = "Mir Data Table has been saved succesfully"
+            };
+        }
+
 
         //public DeleteKpiMirDataTableResponse DeleteKpi(DeleteKpiMirDataTableRequest request)
         //{
-        //    var MirDataTable = new MirDataTable { Id = request.MirDataTableId };
-
+        //    var mirDataTable = DataContext.MirDataTables.FirstOrDefault(x => x.Id == request.MirDataTableId);
+        //    return null;
         //}
     }
 }

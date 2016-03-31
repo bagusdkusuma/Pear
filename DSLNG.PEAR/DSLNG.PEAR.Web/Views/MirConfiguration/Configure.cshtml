@@ -3,45 +3,98 @@
     ViewBag.Title = "Configure";
 }
 
+<div class="notification"></div>
 <div class="MirConfiguration-save">
-    @Html.HiddenFor(model => model.Id);
-    <div class="col-md-12">
-        <div><h4>QHSE Statistics</h4></div>
-        <div>
-            <a href="#" class="btn btn-primary add-kpi">Add KPI</a>
-            <div class="list-kpi">
-                <ul>
-                    @{
-                        foreach (var kpi in Model.MirDataTables.Where(x => x.Type == DSLNG.PEAR.Data.Enums.MirTableType.QhseStatistics).SelectMany(x => x.Kpis).ToList())
-                        {
-                            <li>@kpi.Name <a href="#" class="kpi-remove" data-id="@kpi.Id"><i class="fa fa-minus"></i></a></li>
-                        }
-                    }
-                </ul>
-            </div>
+    @if (Model.MirDataTables.Count == 0)
+    {
+        <div class="qhse-statistics">
+            <h4>QHSE Statistics</h4>
+            @using (Html.BeginForm("Save", "MirDataTable", FormMethod.Post, new { @class = "form-MirData" }))
+            {
+                <input type="hidden" name="type" value="0" />
+                <input type="hidden" name="MirConfigurationId" value="@Model.Id" />
+                <input type="hidden" name="MirDataId" value="0" />
+                <a href="#" class="btn btn-primary add-kpi">Add KPI</a>
+                <div class="list-kpi">
+                </div>
+                <input type="submit" name="submit" class="btn btn-primary" />
+            }
         </div>
+    }
+    else
+    {
+        <div class="qhse-statistics">
+            <h4>QHSE Statistics</h4>
+            @using (Html.BeginForm("Save", "MirDataTable", FormMethod.Post, new {@class = "form-MirData" }))
+            {
+                <input type="hidden" name="type" value="0" />
+                <input type="hidden" name="MirConfigurationId" value="@Model.Id" />
+                <a href="#" class="btn btn-primary add-kpi">Add KPI</a>
+                <div class="list-kpi">
+                    @{
+                var mirDataTable = Model.MirDataTables.Where(x => x.Type == DSLNG.PEAR.Data.Enums.MirTableType.QhseStatistics).FirstOrDefault();
+                <input type="hidden" name="MirDataId" value="@mirDataTable.Id" />
+                foreach (var item in mirDataTable.KpiIds)
+                {
+                    @Html.DropDownListFor(x => item, Model.KpiList) <a href="#" class="kpi-remove" data-kpiId="@item" data-mirDataId="@mirDataTable.Id" data-mirConfigId="@Model.Id"><i class="fa fa-minus"></i></a>
+                }
+                    }
+                </div>
+                <input type="submit" name="submit" class="btn btn-primary" />
+            }
+        </div>
+    }
+</div>
 
-    </div>
+<div class="dropdown" style="display:none">
+    @{
+        var list = Model.MirDataTables.Where(x => x.Type == DSLNG.PEAR.Data.Enums.MirTableType.QhseStatistics).FirstOrDefault();
+        @Html.DropDownList("KpiIds", Model.KpiList, "Choose KPI")
+    }
 </div>
 
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
             $(document).on('click', '.add-kpi', function () {
-                alert('Test')
+                var cloned = $('.dropdown').clone(true);
+                var select = $(cloned).find('select').clone(true);
+                $(select).appendTo('.list-kpi');
+
+
             });
 
             $(document).on('click', '.kpi-remove', function () {
                 var $this = $(this);
-                var $id = $this.data('id');
+                var kpi = $this.data('kpiId');
+                var mirData = $this.data('mirDataId');
+                var mirConfig = $this.data('mirConfigId');
                 $.ajax({
-                    url: '@Url.Action("DeleteKpi", "MirDataTable")',
-                    data: {id : $id},
+                    url: '@Url.Action("Delete", "MirDataTable")',
+                    data: {KpiId: kpi, MirDataTableId : mirData, MirConfigureId : mirConfig},
                     type: 'POST',
                     success: function (data) {
 
                     }
                 });
+            });
+
+            $(document).on('submit', '.form-MirData', function (e) {
+                e.preventDefault();
+                $this = $(this);
+                console.log($this.serialize())
+                $.ajax({
+                    url: '@Url.Action("Save", "MirDataTable")',
+                    data: $this.serialize(),
+                    type: 'POST',
+                    success: function (data) {
+                        $('.notification').empty();
+                        var alertType = data.IsSuccess === true ? 'alert-success' : 'alert-danger';
+                        var message = '<div class="alert ' + alertType + '" role="alert">' + data.Message + '</div>';
+                        $('.notification').append(message).fadeIn().delay(1000).fadeOut();
+
+                    }
+                })
             });
 
         });

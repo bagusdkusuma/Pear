@@ -18,6 +18,7 @@ namespace DSLNG.PEAR.Services.Responses.MirConfiguration
         {
             public int Id { get; set; }
             public IList<Kpi> Kpis { get; set; }
+            public int[] KpiIds { get; set; }
             public MirTableType Type { get; set; }
 
             public class Kpi
