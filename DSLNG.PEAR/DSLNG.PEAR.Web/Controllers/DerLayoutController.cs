@@ -218,6 +218,155 @@ namespace DSLNG.PEAR.Web.Controllers
             else
             {
                 viewModel.Types = _dropdownService.GetDerItemTypes().OrderBy(x => x.Text).MapTo<SelectListItem>();
+                var x = viewModel.Row.ToString() + "-and-" + viewModel.Column.ToString();
+                switch (x)
+                {
+                    case "0-and-0":
+                        {
+                            viewModel.Type = "avg-ytd-key-statistic";
+                            break;
+                        };
+                    case "1-and-0":
+                        {
+                            viewModel.Type = "multiaxis";
+                            break;
+                        }
+                    case "1-and-1":
+                    case "1-and-2":
+                    case "1-and-3":
+                        {
+                            viewModel.Type = "line";
+                            break;
+                        }
+                    case "2-and-0":
+                        {
+                            viewModel.Type = "dafwc";
+                            break;
+                        }
+                    case "2-and-1":
+                        {
+                            viewModel.Type = "weather";
+                            break;
+                        }
+                    case "2-and-2":
+                        {
+                            viewModel.Type = "wave";
+                            break;
+                        }
+                    case "3-and-0":
+                        {
+                            viewModel.Type = "safety";
+                            break;
+                        }
+                    case "3-and-1":
+                    case "3-and-2":
+                    case "3-and-3":
+                    case "0-and-1":
+                    case "4-and-0":
+                    case "11-and-1":
+                    case "12-and-0":
+                    case "13-and-0":
+                    case "14-and-2":
+                    case "15-and-1":
+                    case "15-and-2":
+                        {
+                            viewModel.Type = "highlight";
+                            break;
+                        }
+                    case "3-and-4":
+                        {
+                            viewModel.Type = "pie";
+                            break;
+                        }
+                    case "4-and-1":
+                        {
+                            viewModel.Type = "highlight";
+                            break;
+                        }
+                    case "4-and-2":
+                        {
+                            viewModel.Type = "alert";
+                            break;
+                        }
+                    case "5-and-0":
+                        {
+                            viewModel.Type = "job-pmts";
+                            break;
+                        }
+                    case "5-and-1":
+                        {
+                            viewModel.Type = "mgdp";
+                            break;
+                        }
+                    case "5-and-2":
+                        {
+                            viewModel.Type = "hhv";
+                            break;
+                        }
+                    case "6-and-0":
+                        {
+                            viewModel.Type = "total-feed-gas";
+                            break;
+                        }
+                    case "6-and-2":
+                        {
+                            viewModel.Type = "plant-availability";
+                            break;
+                        }
+                    case "7-and-0":
+                        {
+                            viewModel.Type = "lng-and-cds-production";
+                            break;
+                        }
+                    case "7-and-1":
+                        {
+                            viewModel.Type = "lng-and-cds";
+                            break;
+                        }
+                    case "8-and-0":
+                    case "8-and-1":
+                    case "8-and-2":
+                    case "8-and-3":
+                        {
+                            viewModel.Type = "tank";
+                            break;
+                        }
+                    case "8-and-4":
+                        {
+                            viewModel.Type = "nls";
+                            break;
+                        }
+                    case "9-and-0":
+                        {
+                            viewModel.Type = "table-tank";
+                            break;
+                        }
+                    case "10-and-0":
+                        {
+                            viewModel.Type = "weekly-maintenance";
+                            break;
+                        }
+                    case "11-and-0":
+                        {
+                            viewModel.Type = "critical-pm";
+                            break;
+                        }
+                    case "14-and-0":
+                        {
+                            viewModel.Type = "procurement";
+                            break;
+                        }
+                    case "15-and-0":
+                        {
+                            viewModel.Type = "indicative-commercial-price";
+                            break;
+                        }
+                    case "14-and-1":
+                        {
+                            viewModel.Type = "economic-indicator";
+                            break;
+                        }
+                }
                 return View("LayoutItem", viewModel);
             }
         }

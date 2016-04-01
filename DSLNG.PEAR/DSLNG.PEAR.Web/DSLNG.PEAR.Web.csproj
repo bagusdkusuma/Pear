@@ -1095,7 +1095,6 @@
     <Content Include="Views\DerLayout\LayoutType\_Security.Edit.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_LngAndCds.Edit.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_CriticalPm.cshtml" />
-    <Content Include="Views\DerLayout\LayoutType\_WeeklyMaintenance.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_Procurement.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_Procurement.Edit.cshtml" />
     <Content Include="Views\Der\Display\_Procurement.cshtml" />
@@ -1105,10 +1104,6 @@
     <Content Include="Views\DerLayout\LayoutType\_PlantAvailability.cshtml" />
     <Content Include="Views\Der\Display\_PlantAvalability.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_PlantAvailability.Edit.cshtml" />
-    <Content Include="Views\DerLayout\LayoutType\_CriticalPm.cshtml" />
-    <Content Include="Views\DerLayout\LayoutType\_WeeklyMaintenance.cshtml">
-      <SubType>Code</SubType>
-    </Content>
     <Content Include="Views\Der\Display\_CriticalPm.cshtml" />
     <Content Include="Views\Der\Display\_WeeklyMaintenance.cshtml" />
     <Content Include="Views\Der\Display\_Nls.cshtml" />
@@ -1116,6 +1111,9 @@
     <Content Include="Views\DerLayout\LayoutType\_EconomicIndicator.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_EconomicIndicator.Edit.cshtml" />
     <Content Include="Views\Der\Display\_EconomicIndicator.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_WeeklyMaintenance.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_CriticalPm.Edit.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_WeeklyMaintenance.Edit.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_KeyEquipmentStatus.cshtml" />
     <None Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\SpeedometerChart\_Edit.cshtml" />
