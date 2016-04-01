@@ -806,6 +806,7 @@
     <Compile Include="ViewModels\Der\Display\DisplayMGDPViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayPlantAvalabilityViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayHHVViewModel.cs" />
+    <Compile Include="ViewModels\Der\Display\DisplayKeyEquipmentStatusViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayTableTankViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayTotalFeedGasViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayJobPmtsViewModel.cs" />
@@ -1115,6 +1116,8 @@
     <Content Include="Views\DerLayout\LayoutType\_CriticalPm.Edit.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_WeeklyMaintenance.Edit.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_KeyEquipmentStatus.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_KeyEquipmentStatus.Edit.cshtml" />
+    <Content Include="Views\Der\Display\_KeyEquipmentStatus.cshtml" />
     <None Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\SpeedometerChart\_Edit.cshtml" />
     <Content Include="Views\Tabular\_Create.cshtml" />
@@ -1564,7 +1567,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>2043</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

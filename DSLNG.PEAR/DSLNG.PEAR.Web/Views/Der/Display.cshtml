@@ -252,17 +252,14 @@
             }
             <table class="der-table all-border">
                 <tr>
+                    <td>
                     @{
-                        var row8Col0 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 0);
-                    }
-                    <td colspan="2" class="der-bg-blue-7 layout-item"  data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col0.Id })" style="height:250px;width:200px;">
-                        @*@{
                             var row8Col0 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 0);
                             if (row8Col0 != null)
                             {
                             <div data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col0.Id })" class="layout-item" style="height:250px;width:200px;"></div>
                             }
-                        }*@
+                        }
                     </td>
                     <td colspan="2" class="der-bg-blue-7">@{
                         var row8Col1 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 1);
@@ -316,18 +313,18 @@
     </div>
     <div class="row" style="font-size: 11px">
         <div class="col-md-6 no-padding">
-            @{
+            @*@{
                 var row9Col1 = Model.Items.FirstOrDefault(x => x.Row == 9 && x.Column == 1);
                 if (row9Col1 != null)
                 {
                 <div data-url="@Url.Action("LayoutItem", "Der", new { id = row9Col1.Id })" class="layout-item"></div>
                 }
-            }
+            }*@
             @{
-                var row10Col0 = Model.Items.FirstOrDefault(x => x.Row == 10 && x.Column == 0);
-                if (row10Col0 != null)
+                var row11Col0 = Model.Items.FirstOrDefault(x => x.Row == 11 && x.Column == 0);
+                if (row11Col0 != null)
                 {
-                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row10Col0.Id })" class="layout-item"></div>
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row11Col0.Id })" class="layout-item"></div>
                 }
             }
             @{
@@ -344,16 +341,9 @@
                 <div data-url="@Url.Action("LayoutItem", "Der", new { id = row13Col0.Id })" class="layout-item"></div>
                 }
             }
-            @{
-                var row10Col1 = Model.Items.FirstOrDefault(x => x.Row == 10 && x.Column == 1);
-                if (row10Col1 != null)
-                {
-                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row10Col1.Id })" class="layout-item"></div>
-                }
-            }
         </div>
         <div class="col-md-6 no-padding">
-            <table class="der-table der-dummy all-border">
+            @*<table class="der-table der-dummy all-border">
                 <thead>
                     <tr>
                         <th colspan="8">KEY EQUIPMENT STATUS
@@ -480,8 +470,14 @@
                         </td>
                     </tr>
                 </tbody>
-            </table>
-
+            </table>*@
+            @{
+                var row10Col1 = Model.Items.FirstOrDefault(x => x.Row == 10 && x.Column == 1);
+                if (row10Col1 != null)
+                {
+                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row10Col1.Id })" class="layout-item"></div>
+                }
+            }
         </div>
     </div>
     <div class="row der-row">
@@ -572,7 +568,7 @@
                         data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
                         || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type == "procurement" || data.type == "indicative-commercial-price" ||
                             data.type === "plant-availability" || data.type === "economic-indicator" || data.type === "mgdp" || data.type === "hhv" || data.type === "lng-and-cds-production"
-                            || data.type === "nls") {
+                            || data.type === "nls" || data.type === "key-equipment-status") {
                             that.html(data.view);
                         }
                         /*else if (data.type === "weather" || data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
