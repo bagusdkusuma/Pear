@@ -301,7 +301,8 @@ namespace DSLNG.PEAR.Services
                     new Dropdown {Text = "Procurement", Value = "procurement" },
                     new Dropdown {Text = "Indicative Commercial Price", Value = "indicative-commercial-price" },
                     new Dropdown {Text = "Plant Availability", Value = "plant-availability" },
-                    new Dropdown {Text = "Economic Indicator", Value = "economic-indicator" }
+                    new Dropdown {Text = "Economic Indicator", Value = "economic-indicator" },
+                    new Dropdown {Text = "Key Equipment Status", Value = "key-equipment-status" },
                 };
         }
 

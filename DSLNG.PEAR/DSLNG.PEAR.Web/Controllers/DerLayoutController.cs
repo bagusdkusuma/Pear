@@ -24,7 +24,6 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IDropdownService _dropdownService;
         private readonly IDerService _derService;
         private readonly IMeasurementService _measurementService;
-        private readonly IHighlightService _highlightService;
         private readonly ISelectService _selectService;
 
         public DerLayoutController(IDropdownService dropdownService, IDerService derService, IMeasurementService measurementService, IHighlightService highlightService, ISelectService selectService)
@@ -32,7 +31,6 @@ namespace DSLNG.PEAR.Web.Controllers
             _dropdownService = dropdownService;
             _derService = derService;
             _measurementService = measurementService;
-            _highlightService = highlightService;
             _selectService = selectService;
         }
 
@@ -115,7 +113,7 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 var response = _derService.GetDerLayoutItem(viewModel.Id);
                 var editViewModel = response.MapTo<DerLayoutItemViewModel>();
-                editViewModel.Types = _dropdownService.GetDerItemTypes().MapTo<SelectListItem>();
+                editViewModel.Types = _dropdownService.GetDerItemTypes().OrderBy(x => x.Text).MapTo<SelectListItem>();
                 editViewModel.Type = response.Type;
                 switch (response.Type.ToLowerInvariant())
                 {
@@ -219,7 +217,7 @@ namespace DSLNG.PEAR.Web.Controllers
             }
             else
             {
-                viewModel.Types = _dropdownService.GetDerItemTypes().MapTo<SelectListItem>();
+                viewModel.Types = _dropdownService.GetDerItemTypes().OrderBy(x => x.Text).MapTo<SelectListItem>();
                 var x = viewModel.Row.ToString() + "-and-" + viewModel.Column.ToString();
                 switch (x)
                 {
@@ -565,6 +563,14 @@ namespace DSLNG.PEAR.Web.Controllers
                         var viewModel = new DerLayoutItemViewModel();
                         viewModel.KpiInformations = GetKpiInformations(11);
                         return PartialView("LayoutType/_EconomicIndicator", viewModel);
+                    }
+                case "key-equipment-status":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(24);
+                        var result = _selectService.GetHighlightTypesDropdown();
+                        viewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                        return PartialView("LayoutType/_KeyEquipmentStatus", viewModel);
                     }
             }
 
