@@ -218,8 +218,8 @@ namespace DSLNG.PEAR.Web.Controllers
             else
             {
                 viewModel.Types = _dropdownService.GetDerItemTypes().OrderBy(x => x.Text).MapTo<SelectListItem>();
-                var x = viewModel.Row.ToString() + "-and-" + viewModel.Column.ToString();
-                switch (x)
+                var rowCol = viewModel.Row.ToString() + "-and-" + viewModel.Column.ToString();
+                switch (rowCol)
                 {
                     case "0-and-0":
                         {

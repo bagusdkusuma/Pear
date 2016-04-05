@@ -1,16 +1,13 @@
 ﻿using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Interfaces;
-using DSLNG.PEAR.Services.Requests.Config;
 using DSLNG.PEAR.Services.Requests.KpiAchievement;
 using DSLNG.PEAR.Services.Responses;
 using DSLNG.PEAR.Web.ViewModels.Config;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using DSLNG.PEAR.Services.Responses.Config;
 using DSLNG.PEAR.Services.Requests.KpiTarget;
 using System.Text;
 using DevExpress.Web.Mvc;
@@ -18,8 +15,6 @@ using DSLNG.PEAR.Web.Extensions;
 using System.IO;
 using DevExpress.Spreadsheet;
 using System.Drawing;
-using DSLNG.PEAR.Web.ViewModels.KpiAchievement;
-using DSLNG.PEAR.Web.ViewModels.KpiTarget;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -35,8 +30,7 @@ namespace DSLNG.PEAR.Web.Controllers
             _kpiTargetService = kpiTargetService;
             _dropdownService = dropdownService;
         }
-        //
-        // GET: /Download/
+
         public ActionResult Index()
         {
             return View();
@@ -48,10 +42,8 @@ namespace DSLNG.PEAR.Web.Controllers
                                     ? ConfigType.KpiAchievement
                                     : (ConfigType)Enum.Parse(typeof(ConfigType), configType);
 
-            var model = new ConfigurationViewModel() { /*switch (config)*/ /*{*/ /*    case ConfigType.KpiAchievement:*/ /*        var request = new GetKpiAchievementsConfigurationRequest();*/ /*        var achievement = _kpiAchievementService.GetKpiAchievementsConfiguration(request);*/ /*        model = achievement.MapTo<ConfigurationViewModel>();*/ /*        break;*/ /*    case ConfigType.KpiTarget:*/ /*        var targetRequest = new GetKpiTargetsConfigurationRequest();*/ /*        var target = _kpiTargetService.GetKpiTargetsConfiguration(targetRequest);*/ /*        model = target.MapTo<ConfigurationViewModel>();*/ /*        break;*/ /*    case ConfigType.Economic:*/ /*        //var request = new GetKpiAchievementsConfigurationRequest();*/ /*        //var achievement = _kpiAchievementService.GetKpiAchievementsConfiguration(request);*/ /*        //model = achievement.MapTo<ConfigurationViewModel>();*/ /*        break;*/ /*}*/PeriodeType = "Yearly", Year = DateTime.Now.Year, Month = DateTime.Now.Month, ConfigType = config.ToString(), Years = _dropdownService.GetYears().MapTo<SelectListItem>(), Months = _dropdownService.GetMonths().MapTo<SelectListItem>(), PeriodeTypes = _dropdownService.GetPeriodeTypes().MapTo<SelectListItem>() };
-            return PartialView("_Download", model);
-
-            //return base.ErrorPage(response.Message);
+            var viewModel = new ConfigurationViewModel() { /*switch (config)*/ /*{*/ /*    case ConfigType.KpiAchievement:*/ /*        var request = new GetKpiAchievementsConfigurationRequest();*/ /*        var achievement = _kpiAchievementService.GetKpiAchievementsConfiguration(request);*/ /*        model = achievement.MapTo<ConfigurationViewModel>();*/ /*        break;*/ /*    case ConfigType.KpiTarget:*/ /*        var targetRequest = new GetKpiTargetsConfigurationRequest();*/ /*        var target = _kpiTargetService.GetKpiTargetsConfiguration(targetRequest);*/ /*        model = target.MapTo<ConfigurationViewModel>();*/ /*        break;*/ /*    case ConfigType.Economic:*/ /*        //var request = new GetKpiAchievementsConfigurationRequest();*/ /*        //var achievement = _kpiAchievementService.GetKpiAchievementsConfiguration(request);*/ /*        //model = achievement.MapTo<ConfigurationViewModel>();*/ /*        break;*/ /*}*/PeriodeType = "Yearly", Year = DateTime.Now.Year, Month = DateTime.Now.Month, ConfigType = config.ToString(), Years = _dropdownService.GetYears().MapTo<SelectListItem>(), Months = _dropdownService.GetMonths().MapTo<SelectListItem>(), PeriodeTypes = _dropdownService.GetPeriodeTypes().MapTo<SelectListItem>() };
+            return PartialView("_Download", viewModel);
         }
 
         public FileResult DownloadTemplate(string configType, string periodeType, int year, int month)
@@ -222,20 +214,18 @@ namespace DSLNG.PEAR.Web.Controllers
             //workbook.SaveDocument(resultFilePath, DocumentFormat.OpenXml);
             //workbook.Dispose();
             #endregion
-
-
+            
             string namafile = Path.GetFileName(resultFilePath);
             byte[] fileBytes = System.IO.File.ReadAllBytes(resultFilePath);
             var response = new FileContentResult(fileBytes, "application/octet-stream") { FileDownloadName = fileName };
             return response;
-
         }
 
         public ActionResult Upload(string configType)
         {
-            ConfigurationViewModel model = new ConfigurationViewModel();
-            model.ConfigType = configType;
-            return PartialView("_Upload", model);
+            var viewModel = new ConfigurationViewModel();
+            viewModel.ConfigType = configType;
+            return PartialView("_Upload", viewModel);
         }
 
         public ActionResult UploadControlCallbackAction(string configType)
@@ -253,17 +243,16 @@ namespace DSLNG.PEAR.Web.Controllers
         public JsonResult ProcessFile(string configType, string filename)
         {
             var file = string.Format("{0}{1}/{2}", UploadDirectory, configType, filename);
-            var response = this._ReadExcelFile(configType, file);
+            var response = ReadExcelFile(configType, file);
             return Json(new { isSuccess = response.IsSuccess, Message = response.Message });
         }
 
-        private BaseResponse _ReadExcelFile(string configType, string filename)
+        private BaseResponse ReadExcelFile(string configType, string filename)
         {
             var response = new BaseResponse();
             string periodType = string.Empty;
-            PeriodeType pType = PeriodeType.Yearly;
             int tahun = DateTime.Now.Year, bulan = DateTime.Now.Month;
-            List<ConfigurationViewModel.Item> list_data = new List<ConfigurationViewModel.Item>();
+            var listData = new List<ConfigurationViewModel.Item>();
             if (filename != Path.GetFullPath(filename))
             {
                 filename = Server.MapPath(filename);
@@ -285,6 +274,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 foreach (var worksheet in workbook.Worksheets)
                 {
                     string[] name = worksheet.Name.Split('_');
+                    PeriodeType pType;
                     if (name[0] == "Daily" || name[0] == "Monthly" || name[0] == "Yearly")
                     {
                         periodType = name[0];
@@ -318,9 +308,8 @@ namespace DSLNG.PEAR.Web.Controllers
                         Range range = worksheet.GetUsedRange();
                         int rows = range.RowCount;
                         int column = range.ColumnCount - 2;
-                        int Kpi_Id = 0;
-                        DateTime periodData = new DateTime();
-                        double? nilai = null;
+                        int kpiId = 0;
+                        DateTime periodData;
 
                         //get rows
                         for (int i = 1; i < rows; i++)
@@ -332,7 +321,7 @@ namespace DSLNG.PEAR.Web.Controllers
                                 {
                                     if (worksheet.Cells[i, j].Value.Type == CellValueType.Numeric)
                                     {
-                                        Kpi_Id = int.Parse(worksheet.Cells[i, j].Value.ToString());
+                                        kpiId = int.Parse(worksheet.Cells[i, j].Value.ToString());
                                     }
                                 }
                                 else if (j > 1)
@@ -340,7 +329,7 @@ namespace DSLNG.PEAR.Web.Controllers
                                     if (worksheet.Cells[0, j].Value.Type == CellValueType.DateTime)
                                     {
                                         periodData = DateTime.Parse(worksheet.Cells[0, j].Value.ToString());
-                                        //}
+                                        double? nilai;
                                         if (worksheet.Cells[i, j].Value.Type == CellValueType.Numeric)
                                         {
                                             nilai = double.Parse(worksheet.Cells[i, j].Value.ToString());
@@ -358,8 +347,8 @@ namespace DSLNG.PEAR.Web.Controllers
                                         if (nilai != null || fromExistedToNull)
                                         {
                                             // try to cacth and update
-                                            var data = new ConfigurationViewModel.Item() { Value = nilai, KpiId = Kpi_Id, Periode = periodData, PeriodeType = pType };
-                                            list_data.Add(data);
+                                            var data = new ConfigurationViewModel.Item() { Value = nilai, KpiId = kpiId, Periode = periodData, PeriodeType = pType };
+                                            listData.Add(data);
                                             //switch (configType)
                                             //{
                                             //    case "KpiTarget":
@@ -391,13 +380,13 @@ namespace DSLNG.PEAR.Web.Controllers
                     switch (configType)
                     {
                         case "KpiTarget":
-                            response = this._UpdateKpiTarget(list_data);
+                            response = this.UpdateKpiTarget(listData);
                             break;
                         case "KpiAchievement":
-                            response = this._UpdateKpiAchievement(list_data, pType.ToString(), tahun, bulan);
+                            response = this.UpdateKpiAchievement(listData, pType.ToString(), tahun, bulan);
                             break;
                         case "Economic":
-                            response = this._UpdateEconomic(list_data);
+                            response = this.UpdateEconomic(listData);
                             break;
                         default:
                             response.IsSuccess = false;
@@ -412,29 +401,29 @@ namespace DSLNG.PEAR.Web.Controllers
             return response;
         }
 
-        private BaseResponse _UpdateEconomic(List<ConfigurationViewModel.Item> datas)
+        private BaseResponse UpdateEconomic(List<ConfigurationViewModel.Item> datas)
         {
             var response = new BaseResponse { IsSuccess = false, Message = "Data Not Valid" };
 
             return response;
         }
 
-        private bool CompareData(List<ConfigurationViewModel.Item> new_list, List<ConfigurationViewModel.Item> old_list, out List<ConfigurationViewModel.Item> deleted, out List<ConfigurationViewModel.Item> inserted)
+        private bool CompareData(List<ConfigurationViewModel.Item> newList, List<ConfigurationViewModel.Item> oldList, out List<ConfigurationViewModel.Item> deleted, out List<ConfigurationViewModel.Item> inserted)
         {
-            deleted = new_list.Except(old_list).ToList();
-            inserted = old_list.Except(new_list).ToList();
+            deleted = newList.Except(oldList).ToList();
+            inserted = oldList.Except(newList).ToList();
             return false;
         }
 
-        private BaseResponse _UpdateKpiAchievement(List<ConfigurationViewModel.Item> datas, string periodeType, int year, int month)
+        private BaseResponse UpdateKpiAchievement(IEnumerable<ConfigurationViewModel.Item> data, string periodeType, int year, int month)
         {
             var response = new BaseResponse();
-            if (datas != null)
+            if (data != null)
             {
                 var batch = new BatchUpdateKpiAchievementRequest();
-                foreach (var data in datas)
+                foreach (var datum in data)
                 {
-                    var prepare = new UpdateKpiAchievementItemRequest() { Id = data.Id, KpiId = data.KpiId, Periode = data.Periode, Value = data.Value, PeriodeType = data.PeriodeType, Remark = data.Remark };// data.MapTo<UpdateKpiAchievementItemRequest>();
+                    var prepare = new UpdateKpiAchievementItemRequest() { Id = datum.Id, KpiId = datum.KpiId, Periode = datum.Periode, Value = datum.Value.HasValue ? datum.Value.ToString() : string.Empty, PeriodeType = datum.PeriodeType, Remark = datum.Remark };// data.MapTo<UpdateKpiAchievementItemRequest>();
                     batch.BatchUpdateKpiAchievementItemRequest.Add(prepare);
                 }
                 response = _kpiAchievementService.BatchUpdateKpiAchievements(batch);
@@ -442,15 +431,15 @@ namespace DSLNG.PEAR.Web.Controllers
             return response;
         }
 
-        private BaseResponse _UpdateKpiTarget(List<ConfigurationViewModel.Item> datas)
+        private BaseResponse UpdateKpiTarget(IEnumerable<ConfigurationViewModel.Item> data)
         {
             var response = new BaseResponse();
-            if (datas != null)
+            if (data != null)
             {
                 var batch = new BatchUpdateTargetRequest();
-                foreach (var data in datas)
+                foreach (var datum in data)
                 {
-                    var prepare = new SaveKpiTargetRequest() { Value = data.Value, KpiId = data.KpiId, Periode = data.Periode, PeriodeType = data.PeriodeType, Remark = data.Remark };
+                    var prepare = new SaveKpiTargetRequest() { Value = datum.Value, KpiId = datum.KpiId, Periode = datum.Periode, PeriodeType = datum.PeriodeType, Remark = datum.Remark };
                     batch.BatchUpdateKpiTargetItemRequest.Add(prepare);
                 }
                 response = _kpiTargetService.BatchUpdateKpiTargetss(batch);

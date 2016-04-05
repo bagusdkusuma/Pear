@@ -350,26 +350,48 @@ namespace DSLNG.PEAR.Services
             {
                 var user = DataContext.Users.First(x => x.Id == request.UserId);
                 var kpiAchievement = request.MapTo<KpiAchievement>();
-                if (request.Id != 0)
+
+                if ( request.Id > 0)
                 {
-                    kpiAchievement = DataContext.KpiAchievements
-                        .Include(x => x.Kpi)
-                        .Include(x => x.UpdatedBy)
-                        .Single(x => x.Id == request.Id);
-                    request.MapPropertiesToInstance<KpiAchievement>(kpiAchievement);
+                    if (string.IsNullOrEmpty(request.Value) || request.Value == "-" || request.Value.ToLowerInvariant() == "null")
+                    {
+                        kpiAchievement = DataContext.KpiAchievements.Single(x => x.Id == request.Id);
+                        DataContext.KpiAchievements.Remove(kpiAchievement);
+                    }
+                    else
+                    {
+                        kpiAchievement = DataContext.KpiAchievements
+                                                .Include(x => x.Kpi)
+                                                .Include(x => x.UpdatedBy)
+                                                .Single(x => x.Id == request.Id);
+                        request.MapPropertiesToInstance<KpiAchievement>(kpiAchievement);
+                        kpiAchievement.UpdatedBy = user;
+                        kpiAchievement.Kpi = DataContext.Kpis.Single(x => x.Id == request.KpiId);
+                    }
                 }
-                else
+                else if (request.Id == 0)
                 {
-                    kpiAchievement.CreatedBy = user;
-                    DataContext.KpiAchievements.Add(kpiAchievement);
+                    if ((string.IsNullOrEmpty(request.Value) || request.Value == "-" ||
+                         request.Value.ToLowerInvariant() == "null") && request.Id == 0)
+                    {
+                        response.IsSuccess = false;
+                        response.Message = "You can not update this item because it is not existed";
+                        return response;
+                    }
+                    else
+                    {
+                        kpiAchievement.CreatedBy = user;
+                        kpiAchievement.UpdatedBy = user;
+                        kpiAchievement.Kpi = DataContext.Kpis.Single(x => x.Id == request.KpiId);
+                        DataContext.KpiAchievements.Add(kpiAchievement);
+                    }
                 }
-                kpiAchievement.UpdatedBy = user;
-                kpiAchievement.Kpi = DataContext.Kpis.Single(x => x.Id == request.KpiId);
+
+                
                 DataContext.SaveChanges();
-                response.Id = kpiAchievement.Id;
+                response.Id = request.Id > 0 ? request.Id : kpiAchievement.Id;
                 response.IsSuccess = true;
                 response.Message = "KPI Achievement item has been updated successfully";
-
             }
             catch (InvalidOperationException invalidOperationException)
             {
@@ -398,7 +420,7 @@ namespace DSLNG.PEAR.Services
             {
                 response.IsSuccess = false;
                 response.Message = invalidOperationException.Message;
-                response.ExceptionType = typeof (InvalidOperationException);
+                response.ExceptionType = typeof(InvalidOperationException);
             }
             catch (ArgumentNullException argumentNullException)
             {
@@ -448,7 +470,7 @@ namespace DSLNG.PEAR.Services
                 foreach (var item in request.BatchUpdateKpiAchievementItemRequest)
                 {
                     var kpiAchievement = item.MapTo<KpiAchievement>();
-                    var exist = DataContext.KpiAchievements.FirstOrDefault(x => x.Kpi.Id == item.KpiId && x.PeriodeType == item.PeriodeType && x.Periode == item.Periode && x.Value == item.Value && x.Remark == item.Remark);
+                    var exist = DataContext.KpiAchievements.FirstOrDefault(x => x.Kpi.Id == item.KpiId && x.PeriodeType == item.PeriodeType && x.Periode == item.Periode && x.Value == item.RealValue && x.Remark == item.Remark);
                     //skip no change value
                     if (exist != null)
                     {
@@ -686,7 +708,7 @@ namespace DSLNG.PEAR.Services
             catch (InvalidOperationException invalidOperationException)
             {
                 response.Message = invalidOperationException.Message;
-                response.ExceptionType = typeof (InvalidOperationException);
+                response.ExceptionType = typeof(InvalidOperationException);
             }
             catch (ArgumentNullException argumentNullException)
             {

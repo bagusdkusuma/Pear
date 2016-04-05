@@ -303,7 +303,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
                                         if (isValidKpi && (nilai != null || fromExistedToNull))
                                         {
-                                            prepareDataContainer.Value = nilai;
+                                            prepareDataContainer.Value = nilai.ToString();
                                             prepareDataContainer.KpiId = kpiId;
                                             prepareDataContainer.Periode = periodData;
                                             prepareDataContainer.PeriodeType = pType;

@@ -390,7 +390,7 @@ namespace DSLNG.PEAR.Web.Controllers
         [HttpPost]
         public JsonResult KpiTargetItem(KpiTargetItem kpiTarget)
         {
-            if (kpiTarget.Id > 0)
+            /*if (kpiTarget.Id > 0)
             {
                 var request = kpiTarget.MapTo<UpdateKpiTargetItemRequest>();
                 var response = _kpiTargetService.UpdateKpiTargetItem(request);
@@ -401,7 +401,12 @@ namespace DSLNG.PEAR.Web.Controllers
                 var request = kpiTarget.MapTo<CreateKpiTargetRequest>();
                 var response = _kpiTargetService.Create(request);
                 return Json(new { Id = response.Id, Message = response.Message, isSuccess = response.IsSuccess });
-            }
+            }*/
+
+            var request = kpiTarget.MapTo<UpdateKpiTargetItemRequest>();
+            request.UserId = this.UserProfile().UserId;
+            var response = _kpiTargetService.UpdateKpiTargetItem(request);
+            return Json(new { Id = response.Id, Message = response.Message, isSuccess = response.IsSuccess });
         }
 
         public ActionResult UploadControlCallbackAction()
