@@ -24,7 +24,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         public MultiaxisChartDataViewModel MultiaxisChart { get; set; }
         public PieDataViewModel Pie { get; set; }
         public ComboChartDataViewModel ComboChart { get; set; }
-
+        public bool AsNetbackChart { get; set; }
         public class HighlightViewModel{
             public string Title {get;set;}
             public string Message {get;set;}

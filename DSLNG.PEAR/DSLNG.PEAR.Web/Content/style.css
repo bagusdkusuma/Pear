@@ -3015,3 +3015,9 @@ table.popover-envi tbody > tr > td {
 pop-information pop-title img{
     text-align: left;
 }
+
+input.control-form.assumption-input {
+    text-align:right;
+    padding-right:5px;
+    padding-left:5px;
+}

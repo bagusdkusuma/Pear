@@ -1093,6 +1093,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             });
                             previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
                         }
+                        previewViewModel.AsNetbackChart = viewModel.AsNetbackChart;
                         previewViewModel.PeriodeType = viewModel.PeriodeType;
                         previewViewModel.TimePeriodes = chartData.TimePeriodes;
                         previewViewModel.GraphicType = viewModel.GraphicType;
