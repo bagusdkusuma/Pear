@@ -510,7 +510,7 @@ namespace DSLNG.PEAR.Services
                 var thisYearForecastValues = DataContext.KeyOperationDatas.Where(x => x.Kpi.Id == kpiId && x.Periode.Year == currentYear
                     && x.Periode.Month >= startingForecastMonthCurrentYear && x.PeriodeType == PeriodeType.Monthly && x.Scenario.Id == scenarioId
                     && x.Value.HasValue).Select(x => x.Value).ToList();
-                var currentYearValue = untilNowThisYearValues.Concat(thisYearForecastValues).Sum();
+                var currentYearValue = untilNowThisYearValues.Concat(thisYearForecastValues).Average();
                 pastValues.Add(currentYearValue);
 
                 var actualValue = pastValues.Concat(futureValues).Average();
