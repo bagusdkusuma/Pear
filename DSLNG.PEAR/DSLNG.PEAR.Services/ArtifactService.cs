@@ -1533,8 +1533,8 @@ namespace DSLNG.PEAR.Services
         private IList<GetCartesianChartDataResponse.SeriesResponse> _getKpiEconomicSeries(IList<GetCartesianChartDataRequest.SeriesRequest> configSeries, PeriodeType periodeType, IList<DateTime> dateTimePeriodes, string seriesType, RangeFilter rangeFilter, string graphicType, out string newTimeInformation, out IList<DateTime> newDatetimePeriodes, bool comparison = false, bool asNetbackChart = false)
         {
             var seriesResponse = new List<GetCartesianChartDataResponse.SeriesResponse>();
-            var start = rangeFilter == RangeFilter.AllExistingYears ? DateTime.Now : dateTimePeriodes[0];
-            var end = rangeFilter == RangeFilter.AllExistingYears ? DateTime.Now : dateTimePeriodes[dateTimePeriodes.Count - 1];
+            var start = rangeFilter == RangeFilter.AllExistingYears ? DateTime.MinValue : dateTimePeriodes[0];
+            var end = rangeFilter == RangeFilter.AllExistingYears ? DateTime.MaxValue : dateTimePeriodes[dateTimePeriodes.Count - 1];
             var scenarioId = 0;
             var scenario = DataContext.Scenarios.FirstOrDefault(x => x.IsDashboard == true);
             if (scenario != null)
@@ -1605,7 +1605,7 @@ namespace DSLNG.PEAR.Services
                         };
                         if (asNetbackChart)
                         {
-                            var sumValue = kpiEconomics.Sum(x => x.Value);
+                            var sumValue = kpiEconomics.Where(x => x.Value.HasValue).Average(x => x.Value);
                             aSeries.BorderColor = "transparent";
                             aSeries.Data.Add(sumValue);
                             if (newTimeInformation == null && newDatetimePeriodes.Count == 0)

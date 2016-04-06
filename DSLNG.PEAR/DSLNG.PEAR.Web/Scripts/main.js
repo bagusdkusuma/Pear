@@ -228,6 +228,7 @@ Number.prototype.format = function (n, x) {
         });
     };
     artifactDesigner._toJavascriptDate = function (value, periodeType) {
+        if (value == undefined) return '';
         var pattern = /Date\(([^)]+)\)/;
         var results = pattern.exec(value);
         var dt = new Date(parseFloat(results[1]));
@@ -1442,9 +1443,11 @@ Number.prototype.format = function (n, x) {
                         //        tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br>';
                         //    }
                         //}
-                        if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
-                            tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
-                            tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                        if (data.Highlights != null && data.Highlights != undefined) {
+                            if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
+                                tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
+                                tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                            }
                         }
                     }
                     return tooltip;
@@ -1582,9 +1585,11 @@ Number.prototype.format = function (n, x) {
                         //        tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br>';
                         //    }
                         //}
-                        if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
-                            tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
-                            tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                        if (data.Highlights != null && data.Highlights != undefined) {
+                            if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
+                                tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
+                                tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                            }
                         }
                     }
                     return tooltip;
@@ -1689,7 +1694,16 @@ Number.prototype.format = function (n, x) {
             },
             tooltip: {
                 formatter: function () {
-                    var tooltip = '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
+                    console.log(data);
+                    var tooltip = '';
+                    if (data.BarChart.Periodes.length == 1) {
+                        tooltip += '<b>' + data.BarChart.Subtitle + '</b><br/>';
+                    }else if (data.TimePeriodes.length) {
+                        tooltip += '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
+                    } else {
+                        
+                        tooltip += '<b>' + data.BarChart.Subtitle + '</b><br/>';
+                    }
                     var totalInProcess = 0;
                     var netbackValue = 0;
                     for (var i in this.points) {
@@ -1734,9 +1748,11 @@ Number.prototype.format = function (n, x) {
                         //        tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br>';
                         //    }
                         //}
-                        if (!nextExist && data.Highlights !== null && data.Highlights[this.points[i].point.index] != null) {
-                            tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
-                            tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                        if (data.Highlights != null && data.Highlights != undefined) {
+                            if (!nextExist && data.Highlights !== null && data.Highlights[this.points[i].point.index] != null) {
+                                tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
+                                tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                            }
                         }
                     }
                     return tooltip;
@@ -1960,9 +1976,11 @@ Number.prototype.format = function (n, x) {
                         //        tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.LineChart.ValueAxisTitle + '<br>';
                         //    }
                         //}
-                        if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
-                            tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
-                            tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                        if (data.Highlights != null && data.Highlights != undefined) {
+                            if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
+                                tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
+                                tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                            }
                         }
                     }
                     return tooltip;
@@ -2170,9 +2188,11 @@ Number.prototype.format = function (n, x) {
                         //        tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.AreaChart.ValueAxisTitle + '<br>';
                         //    }
                         //}
-                        if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
-                            tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
-                            tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                        if (data.Highlights != null && data.Highlights != undefined) {
+                            if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
+                                tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
+                                tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                            }
                         }
                     }
                     return tooltip;
@@ -2336,9 +2356,11 @@ Number.prototype.format = function (n, x) {
                         //        tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.AreaChart.ValueAxisTitle + '<br>';
                         //    }
                         //}
-                        if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
-                            tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
-                            tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                        if (data.Highlights != null && data.Highlights != undefined) {
+                            if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
+                                tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
+                                tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                            }
                         }
                     }
                     return tooltip;
@@ -3439,9 +3461,11 @@ Number.prototype.format = function (n, x) {
                         //        tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + this.points[i].series.options.tooltip.valueSuffix + '<br>';
                         //    }
                         //}
-                        if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
-                            tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
-                            tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                        if (data.Highlights != null && data.Highlights != undefined) {
+                            if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
+                                tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
+                                tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                            }
                         }
                     }
                     return tooltip;
@@ -3697,9 +3721,11 @@ Number.prototype.format = function (n, x) {
                         //    (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
                         //    tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + this.points[i].series.options.tooltip.valueSuffix + '<br>';
                         //}
-                        if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
-                            tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
-                            tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                        if (data.Highlights != null && data.Highlights != undefined) {
+                            if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
+                                tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
+                                tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                            }
                         }
                     }
                     return tooltip;
