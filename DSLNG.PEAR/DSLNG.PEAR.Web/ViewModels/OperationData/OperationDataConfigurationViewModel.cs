@@ -17,7 +17,7 @@ namespace DSLNG.PEAR.Web.ViewModels.OperationData
         public string ConfigType { get; set; }
         public IList<SelectListItem> Scenarios { get; set; }
         public string PeriodeType { get; set; }
-        public int GroupId { get; set; }
+        public int RoleGroupId { get; set; }
         public string GroupName { get; set; }
         public IList<Kpi> Kpis { get; set; }
         public IList<SelectListItem> Years { get; set; }
@@ -28,14 +28,14 @@ namespace DSLNG.PEAR.Web.ViewModels.OperationData
         {
             public Kpi()
             {
-                OperationDatas = new List<OperationData>();
+                OperationData = new List<OperationData>();
             }
 
             public int Id { get; set; }
             public string Name { get; set; }
             public string PeriodeType { get; set; }
             public string MeasurementName { get; set; }
-            public IList<OperationData> OperationDatas { get; set; }
+            public IList<OperationData> OperationData { get; set; }
             public string GroupName { get; set; }
         }
 
@@ -58,7 +58,7 @@ namespace DSLNG.PEAR.Web.ViewModels.OperationData
             public DateTime Periode { get; set; }
             public double? Value { get; set; }
             public string Remark { get; set; }
-            public DSLNG.PEAR.Data.Enums.PeriodeType PeriodeType { get; set; }
+            public PeriodeType PeriodeType { get; set; }
         }
     }
 }

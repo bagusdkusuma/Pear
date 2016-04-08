@@ -817,7 +817,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<KpiTarget, GetKpiTargetsConfigurationResponse.KpiTarget>();
             Mapper.CreateMap<KpiTarget, GetKpiTargetItemResponse>();
             Mapper.CreateMap<Kpi, GetKpiTargetItemResponse.KpiResponse>();
-            Mapper.CreateMap<SaveKpiTargetRequest, KpiTarget>();
+            Mapper.CreateMap<SaveKpiTargetRequest, KpiTarget>()
+                .ForMember(x => x.Value , y => y.MapFrom(z => z.RealValue));
         }
 
         private void ConfigurePmsConfig()
@@ -876,7 +877,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
                   .ForMember(x => x.PeriodeType, y => y.MapFrom(z => z.PeriodeType))
                   .ForMember(x => x.Kpi, y => y.Ignore())
                   .ForMember(x => x.Scenario, y => y.Ignore())
-                  .ForMember(x => x.KeyOperationConfig, y => y.Ignore());
+                  .ForMember(x => x.KeyOperationConfig, y => y.Ignore())
+                  .ForMember(x => x.Value, y => y.MapFrom(z => z.RealValue));
         }
 
         private void ConfigureDer()

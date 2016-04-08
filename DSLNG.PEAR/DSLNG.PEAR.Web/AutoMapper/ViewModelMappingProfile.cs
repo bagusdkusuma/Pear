@@ -166,6 +166,7 @@ using DSLNG.PEAR.Services.Requests.MirConfiguration;
 using DSLNG.PEAR.Services.Responses.MirConfiguration;
 using DSLNG.PEAR.Services.Requests.Wave;
 using DSLNG.PEAR.Web.ViewModels.Wave;
+using DSLNG.PEAR.Web.ViewModels.File;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -707,6 +708,10 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetMirConfigurationsResponse.MirDataTable, ConfigureMirConfigurationViewModel.MirDataTable>();
             Mapper.CreateMap<GetMirConfigurationsResponse.MirDataTable.Kpi, ConfigureMirConfigurationViewModel.MirDataTable.Kpi>();
 
+            Mapper.CreateMap<DownloadTemplateViewModel, GetKpiTargetsConfigurationRequest>();
+            Mapper.CreateMap<DownloadTemplateViewModel, GetKpiAchievementsConfigurationRequest>();
+            Mapper.CreateMap<DownloadTemplateViewModel, GetOperationDataConfigurationRequest>();
+
             base.Configure();
         }
         
@@ -888,7 +893,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetKpiTargetsConfigurationResponse.KpiTarget, ConfigurationViewModel.KpiTarget>();
             Mapper.CreateMap<ConfigurationViewModel.KpiTarget, ConfigurationViewModel.Item>();
             Mapper.CreateMap<ConfigurationViewModel.KpiAchievement, ConfigurationViewModel.Item>();
-            Mapper.CreateMap<ConfigurationViewModel.Economic, ConfigurationViewModel.Item>();
+            Mapper.CreateMap<ConfigurationViewModel.OperationData, ConfigurationViewModel.Item>();
 
             Mapper.CreateMap<UpdateKpiTargetViewModel.KpiTargetItem, ConfigurationViewModel.Item>();
             Mapper.CreateMap<GetKpiTargetItemResponse.KpiResponse, ConfigurationViewModel.Kpi>();
@@ -926,11 +931,16 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetKpiAchievementsConfigurationResponse.Kpi, ConfigurationViewModel.Kpi>();
             Mapper.CreateMap<GetKpiAchievementsConfigurationResponse.KpiAchievement, ConfigurationViewModel.KpiAchievement>();
 
+            Mapper.CreateMap<GetOperationDataConfigurationResponse, ConfigurationViewModel>();
+            Mapper.CreateMap<GetOperationDataConfigurationResponse.Kpi, ConfigurationViewModel.Kpi>();
+            Mapper.CreateMap<GetOperationDataConfigurationResponse.OperationData, ConfigurationViewModel.OperationData>();
+
             Mapper.CreateMap<GetConfigurationResponse, ConfigurationViewModel>();
             Mapper.CreateMap<GetConfigurationResponse.Kpi, ConfigurationViewModel.Kpi>();
             Mapper.CreateMap<GetConfigurationResponse.KpiAchievement, ConfigurationViewModel.KpiAchievement>();
             Mapper.CreateMap<GetConfigurationResponse.KpiTarget, ConfigurationViewModel.KpiTarget>();
-            Mapper.CreateMap<GetConfigurationResponse.Economic, ConfigurationViewModel.Economic>();
+            Mapper.CreateMap<GetConfigurationResponse.Economic, ConfigurationViewModel.OperationData>();
+
 
             Mapper.CreateMap<UpdateKpiAchievementsViewModel.KpiAchievementItem, ConfigurationViewModel.Item>();
             Mapper.CreateMap<GetKpiAchievementsResponse.KpiAchievement, ConfigurationViewModel.Item>();

@@ -124,7 +124,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 viewModel.Years = _dropdownService.GetYears().MapTo<SelectListItem>();
                 viewModel.Months = _dropdownService.GetMonths().MapTo<SelectListItem>();
                 viewModel.PeriodeType = pType.ToString();
-                viewModel.FileName = this._ExportToExcel(viewModel);
+                //viewModel.FileName = this._ExportToExcel(viewModel);
                 return View(viewModel);
             }
 
@@ -153,7 +153,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 viewModel.Years = _dropdownService.GetYears().MapTo<SelectListItem>();
                 viewModel.Months = _dropdownService.GetMonths().MapTo<SelectListItem>();
                 viewModel.PeriodeType = pType.ToString();
-                viewModel.FileName = this._ExportToExcel(viewModel);
+                //viewModel.FileName = this._ExportToExcel(viewModel);
                 return PartialView("Configuration/_" + pType.ToString(), viewModel);
             }
 

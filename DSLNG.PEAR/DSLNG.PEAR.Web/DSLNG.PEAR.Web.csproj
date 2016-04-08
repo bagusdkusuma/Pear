@@ -832,6 +832,8 @@
     <Compile Include="Grid\GridModelBinder.cs" />
     <Compile Include="Grid\GridParams.cs" />
     <Compile Include="ViewModels\EnvironmentScanning\EnvironmentScanningViewModel.cs" />
+    <Compile Include="ViewModels\File\DownloadTemplateViewModel.cs" />
+    <Compile Include="ViewModels\File\ProcessFileViewModel.cs" />
     <Compile Include="ViewModels\HighlightGroup\HighlightGroupViewModel.cs" />
     <Compile Include="ViewModels\Kpi\DetailKpiViewModel.cs" />
     <Compile Include="ViewModels\Kpi\UploadViewModel.cs" />
@@ -1129,7 +1131,7 @@
     <Content Include="Views\MultiaxisChart\_AreaChartCreate.cshtml" />
     <Content Include="Views\KpiAchievement\UploadControlPartial.cshtml" />
     <Content Include="Views\Shared\UploadControlPartial.cshtml" />
-    <Content Include="Views\Shared\_Download.cshtml" />
+    <Content Include="Views\File\_Download.cshtml" />
     <Content Include="Views\Shared\_Upload.cshtml" />
     <Content Include="Views\MultiaxisChart\_Edit.cshtml" />
     <Content Include="Views\MultiaxisChart\_BarChartEdit.cshtml" />

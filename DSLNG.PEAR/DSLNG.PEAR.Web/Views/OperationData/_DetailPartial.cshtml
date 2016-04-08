@@ -49,7 +49,7 @@
             var that = $(this);
             var periodeType = that.attr('data-periodeType');
             var data = {};
-            data.groupId = '@Model.GroupId';
+            data.groupId = '@Model.RoleGroupId';
             data.scenarioId = '@Model.ScenarioId';
             data.periodeType = periodeType;
             _periodeType = periodeType;
@@ -81,7 +81,7 @@
             var that = $(this);
             var periodeType = 'Monthly';
             var data = {};
-            data.groupId = '@Model.GroupId';
+            data.groupId = '@Model.RoleGroupId';
             data.scenarioId = '@Model.ScenarioId';
             data.periodeType = periodeType;
             data.year = that.val();

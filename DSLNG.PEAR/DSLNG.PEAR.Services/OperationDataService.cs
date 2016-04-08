@@ -164,22 +164,22 @@ namespace DSLNG.PEAR.Services
         public GetOperationDataConfigurationResponse GetOperationDataConfiguration(GetOperationDataConfigurationRequest request)
         {
             var response = new GetOperationDataConfigurationResponse();
-            response.GroupId = request.GroupId;
+            response.RoleGroupId = request.RoleGroupId;
             response.ScenarioId = request.ScenarioId;
-            if (request.GroupId > 0)
+            if (request.RoleGroupId > 0)
             {
                 response.GroupName =
-                DataContext.KeyOperationGroups.Single(x => x.Id == request.GroupId).Name;
+                DataContext.KeyOperationGroups.Single(x => x.Id == request.RoleGroupId).Name;
             }
 
             var periodeType = request.PeriodeType;
             List<KeyOperationConfig> keyOperationConfigs;
-            if (!request.IsPartial)
+            if (request.RoleGroupId > 0)
             {
                 keyOperationConfigs = DataContext.KeyOperationConfigs
                                                      .Include(x => x.Kpi)
                                                      .Include(x => x.Kpi.Measurement)
-                                                     .Where(x => x.KeyOperationGroup != null && x.KeyOperationGroup.Id == request.GroupId && x.IsActive)
+                                                     .Where(x => x.KeyOperationGroup != null && x.KeyOperationGroup.Id == request.RoleGroupId && x.IsActive)
                                                      .OrderBy(x => x.KeyOperationGroup.Order)
                                                      .ThenBy(x => x.Order).ToList();
             }
@@ -219,14 +219,14 @@ namespace DSLNG.PEAR.Services
                                     operation.MapTo<GetOperationDataConfigurationResponse.OperationData>();
                                 operationtDataDto.ScenarioId = request.ScenarioId;
                                 operationtDataDto.KeyOperationConfigId = keyOperationConfig.Id;
-                                kpiDto.OperationDatas.Add(operationtDataDto);
+                                kpiDto.OperationData.Add(operationtDataDto);
                             }
                             else
                             {
                                 var operationtDataDto = new GetOperationDataConfigurationResponse.OperationData();
                                 operationtDataDto.Periode = new DateTime(number, 1, 1);
                                 operationtDataDto.KeyOperationConfigId = keyOperationConfig.Id;
-                                kpiDto.OperationDatas.Add(operationtDataDto);
+                                kpiDto.OperationData.Add(operationtDataDto);
                             }
                         }
 
@@ -255,7 +255,7 @@ namespace DSLNG.PEAR.Services
                                     operationData.MapTo<GetOperationDataConfigurationResponse.OperationData>();
                                 operationDataDto.ScenarioId = request.ScenarioId;
                                 operationDataDto.KeyOperationConfigId = keyOperationConfig.Id;
-                                kpiDto.OperationDatas.Add(operationDataDto);
+                                kpiDto.OperationData.Add(operationDataDto);
                             }
                             else
                             {
@@ -263,7 +263,7 @@ namespace DSLNG.PEAR.Services
                                 operationDataDto.Periode = new DateTime(request.Year, i, 1);
                                 operationDataDto.ScenarioId = request.ScenarioId;
                                 operationDataDto.KeyOperationConfigId = keyOperationConfig.Id;
-                                kpiDto.OperationDatas.Add(operationDataDto);
+                                kpiDto.OperationData.Add(operationDataDto);
                             }
                         }
                         response.Kpis.Add(kpiDto);
@@ -401,60 +401,125 @@ namespace DSLNG.PEAR.Services
 
         public BaseResponse BatchUpdateOperationDatas(BatchUpdateOperationDataRequest request)
         {
+            //var response = new BaseResponse();
+            //try
+            //{
+            //    int i = 0;
+            //    foreach (var item in request.BatchUpdateOperationDataItemRequest)
+            //    {
+            //        var operationData = item.MapTo<KeyOperationData>();
+            //        operationData.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == item.KpiId);
+            //        operationData.Scenario = DataContext.Scenarios.FirstOrDefault(x => x.Id == item.ScenarioId);
+            //        operationData.KeyOperationConfig = DataContext.KeyOperationConfigs.FirstOrDefault(x => x.Id == item.KeyOperationConfigId);
+            //        var exist = DataContext.KeyOperationDatas.FirstOrDefault(x => x.Kpi.Id == item.KpiId && x.PeriodeType == item.PeriodeType && x.Periode == item.Periode && x.Value == item.Value && x.Remark == item.Remark && x.Scenario.Id == item.ScenarioId && x.KeyOperationConfig.Id == item.KeyOperationConfigId);
+            //        //skip no change value
+            //        if (exist != null)
+            //        {
+            //            continue;
+            //        }
+            //        var attachedEntity = DataContext.KeyOperationDatas.FirstOrDefault(x => x.Kpi.Id == item.KpiId && x.PeriodeType == item.PeriodeType && x.Periode == item.Periode && x.Scenario.Id == item.ScenarioId && x.KeyOperationConfig.Id == item.KeyOperationConfigId);
+            //        if (attachedEntity != null)
+            //        {
+            //            operationData.Id = attachedEntity.Id;
+            //        }
+            //        //jika tidak ada perubahan di skip aja
+            //        //if (existing.Value.Equals(item.Value) && existing.Periode.Equals(item.Periode) && existing.Kpi.Id.Equals(item.KpiId) && existing.PeriodeType.Equals(item.PeriodeType)) {
+            //        //    break;
+            //        //}
+            //        if (operationData.Id != 0)
+            //        {
+            //            //var attachedEntity = DataContext.KpiAchievements.Find(item.Id);
+            //            if (attachedEntity != null && DataContext.Entry(attachedEntity).State != EntityState.Detached)
+            //            {
+            //                DataContext.Entry(attachedEntity).State = EntityState.Detached;
+            //            }
+            //            DataContext.KeyOperationDatas.Attach(operationData);
+            //            DataContext.Entry(operationData).State = EntityState.Modified;
+            //        }
+            //        else
+            //        {
+            //            operationData.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == item.KpiId);
+            //            DataContext.KeyOperationDatas.Add(operationData);
+            //        }
+            //        i++;
+            //    }
+            //    DataContext.SaveChanges();
+            //    response.IsSuccess = true;
+            //    if (i > 0)
+            //    {
+            //        response.Message = string.Format("{0}  Operation Data items has been updated successfully", i.ToString());
+            //    }
+            //    else
+            //    {
+            //        response.Message = "File Successfully Parsed, but no data changed!";
+            //    }
+
+
+            //}
+            //catch (InvalidOperationException invalidOperationException)
+            //{
+            //    response.Message = invalidOperationException.Message;
+            //}
+            //catch (ArgumentNullException argumentNullException)
+            //{
+            //    response.Message = argumentNullException.Message;
+            //}
+            //return response;
+
             var response = new BaseResponse();
             try
             {
                 int i = 0;
                 foreach (var item in request.BatchUpdateOperationDataItemRequest)
                 {
-                    var operationData = item.MapTo<KeyOperationData>();
-                    operationData.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == item.KpiId);
-                    operationData.Scenario = DataContext.Scenarios.FirstOrDefault(x => x.Id == item.ScenarioId);
-                    operationData.KeyOperationConfig = DataContext.KeyOperationConfigs.FirstOrDefault(x => x.Id == item.KeyOperationConfigId);
-                    var exist = DataContext.KeyOperationDatas.FirstOrDefault(x => x.Kpi.Id == item.KpiId && x.PeriodeType == item.PeriodeType && x.Periode == item.Periode && x.Value == item.Value && x.Remark == item.Remark && x.Scenario.Id == item.ScenarioId && x.KeyOperationConfig.Id == item.KeyOperationConfigId);
-                    //skip no change value
-                    if (exist != null)
+                    if (!string.IsNullOrEmpty(item.Value))
                     {
-                        continue;
-                    }
-                    var attachedEntity = DataContext.KeyOperationDatas.FirstOrDefault(x => x.Kpi.Id == item.KpiId && x.PeriodeType == item.PeriodeType && x.Periode == item.Periode && x.Scenario.Id == item.ScenarioId && x.KeyOperationConfig.Id == item.KeyOperationConfigId);
-                    if (attachedEntity != null)
-                    {
-                        operationData.Id = attachedEntity.Id;
-                    }
-                    //jika tidak ada perubahan di skip aja
-                    //if (existing.Value.Equals(item.Value) && existing.Periode.Equals(item.Periode) && existing.Kpi.Id.Equals(item.KpiId) && existing.PeriodeType.Equals(item.PeriodeType)) {
-                    //    break;
-                    //}
-                    if (operationData.Id != 0)
-                    {
-                        //var attachedEntity = DataContext.KpiAchievements.Find(item.Id);
-                        if (attachedEntity != null && DataContext.Entry(attachedEntity).State != EntityState.Detached)
+                        var existedOperationDatum = DataContext.KeyOperationDatas
+                            .Include(x => x.KeyOperationConfig)
+                            .Include(x => x.Scenario)
+                            .FirstOrDefault(x =>x.Kpi.Id == item.KpiId 
+                            && x.PeriodeType == item.PeriodeType && x.Periode == item.Periode && x.Scenario.Id == item.ScenarioId && x.KeyOperationConfig.Id 
+                            == item.KeyOperationConfigId);
+
+
+                        if (existedOperationDatum != null)
                         {
-                            DataContext.Entry(attachedEntity).State = EntityState.Detached;
+                            if (item.Value.Equals("-") || item.Value.ToLowerInvariant().Equals("null"))
+                            {
+                                DataContext.KeyOperationDatas.Remove(existedOperationDatum);
+                            }
+                            else
+                            {
+                                existedOperationDatum.Value = item.RealValue;
+                                DataContext.Entry(existedOperationDatum).State = EntityState.Modified;
+                            }
                         }
-                        DataContext.KeyOperationDatas.Attach(operationData);
-                        DataContext.Entry(operationData).State = EntityState.Modified;
+                        else
+                        {
+                            var operationDatum = item.MapTo<KeyOperationData>();
+                            if (operationDatum.Value.HasValue)
+                            {
+                                operationDatum.Kpi = DataContext.Kpis.Single(x => x.Id == item.KpiId);
+                                operationDatum.KeyOperationConfig = DataContext.KeyOperationConfigs.Single(x => x.Id == item.KeyOperationConfigId);
+                                operationDatum.Scenario = DataContext.Scenarios.Single(x => x.Id == item.ScenarioId);
+                                DataContext.KeyOperationDatas.Add(operationDatum);
+                            }
+
+                        }
                     }
-                    else
-                    {
-                        operationData.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == item.KpiId);
-                        DataContext.KeyOperationDatas.Add(operationData);
-                    }
+
                     i++;
                 }
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
                 if (i > 0)
                 {
-                    response.Message = string.Format("{0}  Operation Data items has been updated successfully", i.ToString());
+                    response.Message = string.Format("{0}  KPI Target items has been updated successfully", i.ToString());
                 }
                 else
                 {
                     response.Message = "File Successfully Parsed, but no data changed!";
                 }
-
-
             }
             catch (InvalidOperationException invalidOperationException)
             {
@@ -471,7 +536,7 @@ namespace DSLNG.PEAR.Services
         public GetOperationDataConfigurationResponse GetOperationDataConfigurationForAllGroup(GetOperationDataConfigurationRequest request)
         {
             var response = new GetOperationDataConfigurationResponse();
-            response.GroupId = request.GroupId;
+            response.RoleGroupId = request.RoleGroupId;
             response.ScenarioId = request.ScenarioId;
            
             var periodeType = request.PeriodeType;
@@ -481,9 +546,7 @@ namespace DSLNG.PEAR.Services
             .Include(x => x.Kpi.Measurement)
             .Include(x => x.KeyOperationGroup)
             .Where(x => x.IsActive && x.KeyOperationGroup != null).ToList();
-
-
-
+            
             switch (periodeType)
             {
                 case PeriodeType.Yearly:
@@ -508,14 +571,14 @@ namespace DSLNG.PEAR.Services
                                     operation.MapTo<GetOperationDataConfigurationResponse.OperationData>();
                                 operationtDataDto.ScenarioId = request.ScenarioId;
                                 operationtDataDto.KeyOperationConfigId = keyOperationConfig.Id;
-                                kpiDto.OperationDatas.Add(operationtDataDto);
+                                kpiDto.OperationData.Add(operationtDataDto);
                             }
                             else
                             {
                                 var operationtDataDto = new GetOperationDataConfigurationResponse.OperationData();
                                 operationtDataDto.Periode = new DateTime(number, 1, 1);
                                 operationtDataDto.KeyOperationConfigId = keyOperationConfig.Id;
-                                kpiDto.OperationDatas.Add(operationtDataDto);
+                                kpiDto.OperationData.Add(operationtDataDto);
                             }
                         }
 
@@ -544,7 +607,7 @@ namespace DSLNG.PEAR.Services
                                     operationData.MapTo<GetOperationDataConfigurationResponse.OperationData>();
                                 operationDataDto.ScenarioId = request.ScenarioId;
                                 operationDataDto.KeyOperationConfigId = keyOperationConfig.Id;
-                                kpiDto.OperationDatas.Add(operationDataDto);
+                                kpiDto.OperationData.Add(operationDataDto);
                             }
                             else
                             {
@@ -552,7 +615,7 @@ namespace DSLNG.PEAR.Services
                                 operationDataDto.Periode = new DateTime(request.Year, i, 1);
                                 operationDataDto.ScenarioId = request.ScenarioId;
                                 operationDataDto.KeyOperationConfigId = keyOperationConfig.Id;
-                                kpiDto.OperationDatas.Add(operationDataDto);
+                                kpiDto.OperationData.Add(operationDataDto);
                             }
                         }
                         response.Kpis.Add(kpiDto);

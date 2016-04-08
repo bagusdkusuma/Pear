@@ -252,7 +252,7 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.Years = _dropdownService.GetYearsForOperationData().MapTo<SelectListItem>();
             viewModel.PeriodeType = pType.ToString();
             viewModel.Year = request.Year;
-            viewModel.ConfigType = "Economic";
+            viewModel.ConfigType = ConfigType.OperationData.ToString();
             return ConvertToExcelFile(paramViewModel, viewModel);
         }
 
@@ -312,7 +312,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 worksheet.Cells[i, kpiIdColumn.Index].Value = kpi.Id;
                 worksheet.Cells[i, kpiNameColumn.Index].Value = string.Format(@"{0} ({1})", kpi.Name, kpi.MeasurementName);
 
-                foreach (var operationData in kpi.OperationDatas.OrderBy(x => x.Periode))
+                foreach (var operationData in kpi.OperationData.OrderBy(x => x.Periode))
                 {
                     worksheet.Cells[headerRow.Index, j].Value = operationData.Periode;
                     worksheet.Cells[headerRow.Index, j].NumberFormat = dateFormat;
@@ -553,8 +553,8 @@ namespace DSLNG.PEAR.Web.Controllers
                 var batch = new BatchUpdateOperationDataRequest();
                 foreach (var data in datas)
                 {
-                    var prepare = new UpdateOperationDataRequest() { Id = data.Id, KpiId = data.KpiId, Periode = data.Periode, Value = data.Value, PeriodeType = data.PeriodeType, Remark = data.Remark, KeyOperationConfigId = data.OperationId, ScenarioId = data.ScenarioId };// data.MapTo<UpdateKpiAchievementItemRequest>();
-                    batch.BatchUpdateOperationDataItemRequest.Add(prepare);
+                    //var prepare = new UpdateOperationDataRequest() { Id = data.Id, KpiId = data.KpiId, Periode = data.Periode, Value = data.Value, PeriodeType = data.PeriodeType, Remark = data.Remark, KeyOperationConfigId = data.OperationId, ScenarioId = data.ScenarioId };// data.MapTo<UpdateKpiAchievementItemRequest>();
+                    //batch.BatchUpdateOperationDataItemRequest.Add(prepare);
                 }
                 response = _operationDataService.BatchUpdateOperationDatas(batch);
             }
@@ -575,7 +575,7 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.Years = _dropdownService.GetYearsForOperationData().MapTo<SelectListItem>();
             viewModel.PeriodeType = pType.ToString();
             viewModel.Year = request.Year;
-            viewModel.ConfigType = "Economic";
+            viewModel.ConfigType = ConfigType.OperationData.ToString();
             return viewModel;
         }
     }

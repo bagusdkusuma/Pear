@@ -13,7 +13,7 @@ namespace DSLNG.PEAR.Services.Responses.OperationalData
         }
 
         public IList<Kpi> Kpis { get; set; }
-        public int GroupId { get; set; }
+        public int RoleGroupId { get; set; }
         public string GroupName { get; set; }
         public int ScenarioId { get; set; }
 
@@ -21,14 +21,14 @@ namespace DSLNG.PEAR.Services.Responses.OperationalData
         {
             public Kpi()
             {
-                OperationDatas = new List<OperationData>();
+                OperationData = new List<OperationData>();
             }
 
             public int Id { get; set; }
             public string Name { get; set; }
             public string PeriodeType { get; set; }
             public string MeasurementName { get; set; }
-            public IList<OperationData> OperationDatas { get; set; }
+            public IList<OperationData> OperationData { get; set; }
             public string GroupName { get; set; }
         }
 

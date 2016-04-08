@@ -1,13 +1,13 @@
-﻿@model DSLNG.PEAR.Web.ViewModels.KpiTarget.ConfigurationKpiTargetsViewModel
+﻿@using DSLNG.PEAR.Data.Enums
+@model DSLNG.PEAR.Web.ViewModels.KpiTarget.ConfigurationKpiTargetsViewModel
 <script type="text/javascript">
     $(document).ready(function () {
         $("#fixed-table").tableHeadFixer({ "left": 1 });
         $('#div-proceed').hide();
         $('#btn-proceed').click(function () {
-            //window.location = '@Url.Action("ProcessFile", "File")' + '?filename=' + encodeURIComponent(link);
             var formData = {
                 'filename': encodeURIComponent(link),
-                'configType': 'KpiTarget'
+                'configType': '@ConfigType.KpiTarget.ToString()'
             };
 
             $.ajax({
@@ -24,7 +24,11 @@
                 var alertType = result.isSuccess === true ? 'alert-success' : 'alert-danger';
                 if (result.isSuccess === true || result.message === null) {
                     $('.notification').html('<div class="alert ' + alertType + '" role="alert">File Successfully Parsed : ' + link + ' </div>').fadeIn().delay(10000).fadeOut();
-                    $(".nav-tabs .active").find('a').click();
+                    if (window.location.href.indexOf("yearly") > -1) {
+                        location.reload();
+                    } else {
+                        $(".nav-tabs .active").find('a').click();
+                    }
                 } else {
                     $('.notification').html('<div class="alert ' + alertType + '" role="alert">' + result.Message + '</div>').fadeIn().delay(10000).fadeOut();
                 }
@@ -33,50 +37,55 @@
             });
         });
     });
-        var link = null;
-        function OnClick(s, e) {
-            uc.Upload();
+    var link = null;
+    function OnClick(s, e) {
+        uc.Upload();
+    }
+    function OnUploadTextChanged(s, e) {
+        uc.Upload();
+    }
+    function OnFileUploadComplete(s, e) {
+        var callback;
+        var message;
+        if (e.callbackData !== "") {
+            link = e.callbackData;
+            callback = 'FileUploadComplete: ' + e.callbackData;
+            $('.notification').empty();
+            message = '<div class="alert alert-success" role="alert">' + callback + '</div>';
+            $('.notification').append(message).fadeIn().delay(10000).fadeOut();
+            $('#div-proceed').show();
         }
-        function OnUploadTextChanged(s, e) {
-            uc.Upload();
+        else {
+            $('.notification').empty();
+            callback = 'The selected file was not uploaded.';
+            message = '<div class="alert alert-danger" role="alert">' + callback + '</div>';
+            $('.notification').append(message).fadeIn().delay(10000).fadeOut();
         }
-        function OnFileUploadComplete(s, e) {
-            if (e.callbackData !== "") {
-                link = e.callbackData;
-                var callback = 'FileUploadComplete: ' + e.callbackData;
-                $('.notification').empty();
-                var message = '<div class="alert alert-success" role="alert">' + callback + '</div>';
-                $('.notification').append(message).fadeIn().delay(10000).fadeOut();
-                //alert('FileUploadComplete: ' + e.callbackData);
-                $('#div-proceed').show();
-                //proceed(e.callbackData);
-            }
-            else {
-                $('.notification').empty();
-                var callback = 'The selected file was not uploaded.'
-                var message = '<div class="alert alert-danger" role="alert">' + callback + '</div>';
-                $('.notification').append(message).fadeIn().delay(10000).fadeOut();
-            }
-        }
-        function proceed(s) {
-            alert(s);
-            //$('#proceed').html('<a href="' + s + '">Process</a>');
-            //$('#proceed').show();
+    }
 
-
-        }
+    function proceed(s) {
+        alert(s);
+    }
 
 </script>
 <div class="notification"></div>
 
+@using (Html.BeginForm("DownloadTemplate", "File", FormMethod.Post, new { @class = "form-inline", @style = "float: left" }))
+{
+    <input type="hidden" value="@ConfigType.KpiTarget" name="ConfigType" id="ConfigType"/>
+    @Html.HiddenFor(x => x.RoleGroupId)
+    @Html.HiddenFor(x => x.PeriodeType)
+    @Html.HiddenFor(x => x.Year)
+    @Html.HiddenFor(x => x.Month)
+    <input type="submit" value="Download Template" class="btn btn-primary" />
+}
+
 <form class="form-inline" style="float: left">
-    <div class="form-group">
-        @Html.ActionLink("Download Template", "DownloadTemplate", new { filename = @Model.FileName }, new { @class = "btn btn-primary" })
-    </div>
     <div class="form-group" id="div-proceed">
         <input id="btn-proceed" class="btn btn-primary" value="Proceed" />
     </div>
 </form>
+
 @using (Html.BeginForm("Upload", "File", new { configType = "KpiTarget" }, FormMethod.Post, new { @class = "form-inline" }))
 {
 
@@ -115,7 +124,7 @@
             </tr>
         </thead>
         <tbody>
-            
+
             @{
                 var a = 0;
                 int number = 1;
@@ -145,7 +154,7 @@
                         b++;
                     }
                 </tr>
-                a++;
+                    a++;
             }
         </tbody>
     </table>

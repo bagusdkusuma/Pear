@@ -461,6 +461,71 @@ namespace DSLNG.PEAR.Services
         }
 
 
+        //public BaseResponse BatchUpdateKpiAchievements(BatchUpdateKpiAchievementRequest request)
+        //{
+        //    var response = new BaseResponse();
+        //    try
+        //    {
+        //        int i = 0;
+        //        foreach (var item in request.BatchUpdateKpiAchievementItemRequest)
+        //        {
+        //            var kpiAchievement = item.MapTo<KpiAchievement>();
+        //            var exist = DataContext.KpiAchievements.FirstOrDefault(x => x.Kpi.Id == item.KpiId && x.PeriodeType == item.PeriodeType && x.Periode == item.Periode && x.Value == item.RealValue && x.Remark == item.Remark);
+        //            //skip no change value
+        //            if (exist != null)
+        //            {
+        //                continue;
+        //            }
+        //            var attachedEntity = DataContext.KpiAchievements.FirstOrDefault(x => x.Kpi.Id == item.KpiId && x.PeriodeType == item.PeriodeType && x.Periode == item.Periode);
+        //            if (attachedEntity != null)
+        //            {
+        //                kpiAchievement.Id = attachedEntity.Id;
+        //            }
+        //            //jika tidak ada perubahan di skip aja
+        //            //if (existing.Value.Equals(item.Value) && existing.Periode.Equals(item.Periode) && existing.Kpi.Id.Equals(item.KpiId) && existing.PeriodeType.Equals(item.PeriodeType)) {
+        //            //    break;
+        //            //}
+        //            if (kpiAchievement.Id != 0)
+        //            {
+        //                //var attachedEntity = DataContext.KpiAchievements.Find(item.Id);
+        //                if (attachedEntity != null && DataContext.Entry(attachedEntity).State != EntityState.Detached)
+        //                {
+        //                    DataContext.Entry(attachedEntity).State = EntityState.Detached;
+        //                }
+        //                DataContext.KpiAchievements.Attach(kpiAchievement);
+        //                DataContext.Entry(kpiAchievement).State = EntityState.Modified;
+        //            }
+        //            else
+        //            {
+        //                kpiAchievement.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == item.KpiId);
+        //                DataContext.KpiAchievements.Add(kpiAchievement);
+        //            }
+        //            i++;
+        //        }
+        //        DataContext.SaveChanges();
+        //        response.IsSuccess = true;
+        //        if (i > 0)
+        //        {
+        //            response.Message = string.Format("{0}  KPI Achievement items has been updated successfully", i.ToString());
+        //        }
+        //        else
+        //        {
+        //            response.Message = "File Successfully Parsed, but no data changed!";
+        //        }
+
+
+        //    }
+        //    catch (InvalidOperationException invalidOperationException)
+        //    {
+        //        response.Message = invalidOperationException.Message;
+        //    }
+        //    catch (ArgumentNullException argumentNullException)
+        //    {
+        //        response.Message = argumentNullException.Message;
+        //    }
+        //    return response;
+        //}
+
         public BaseResponse BatchUpdateKpiAchievements(BatchUpdateKpiAchievementRequest request)
         {
             var response = new BaseResponse();
@@ -469,51 +534,50 @@ namespace DSLNG.PEAR.Services
                 int i = 0;
                 foreach (var item in request.BatchUpdateKpiAchievementItemRequest)
                 {
-                    var kpiAchievement = item.MapTo<KpiAchievement>();
-                    var exist = DataContext.KpiAchievements.FirstOrDefault(x => x.Kpi.Id == item.KpiId && x.PeriodeType == item.PeriodeType && x.Periode == item.Periode && x.Value == item.RealValue && x.Remark == item.Remark);
-                    //skip no change value
-                    if (exist != null)
+                    if (!string.IsNullOrEmpty(item.Value))
                     {
-                        continue;
-                    }
-                    var attachedEntity = DataContext.KpiAchievements.FirstOrDefault(x => x.Kpi.Id == item.KpiId && x.PeriodeType == item.PeriodeType && x.Periode == item.Periode);
-                    if (attachedEntity != null)
-                    {
-                        kpiAchievement.Id = attachedEntity.Id;
-                    }
-                    //jika tidak ada perubahan di skip aja
-                    //if (existing.Value.Equals(item.Value) && existing.Periode.Equals(item.Periode) && existing.Kpi.Id.Equals(item.KpiId) && existing.PeriodeType.Equals(item.PeriodeType)) {
-                    //    break;
-                    //}
-                    if (kpiAchievement.Id != 0)
-                    {
-                        //var attachedEntity = DataContext.KpiAchievements.Find(item.Id);
-                        if (attachedEntity != null && DataContext.Entry(attachedEntity).State != EntityState.Detached)
+                        var existedKpiAchievement =
+                            DataContext.KpiAchievements.FirstOrDefault(
+                                x =>
+                                x.Kpi.Id == item.KpiId && x.PeriodeType == item.PeriodeType && x.Periode == item.Periode);
+
+
+                        if (existedKpiAchievement != null)
                         {
-                            DataContext.Entry(attachedEntity).State = EntityState.Detached;
+                            if (item.Value.Equals("-") || item.Value.ToLowerInvariant().Equals("null"))
+                            {
+                                DataContext.KpiAchievements.Remove(existedKpiAchievement);
+                            }
+                            else
+                            {
+                                existedKpiAchievement.Value = item.RealValue;
+                                DataContext.Entry(existedKpiAchievement).State = EntityState.Modified;
+                            }
                         }
-                        DataContext.KpiAchievements.Attach(kpiAchievement);
-                        DataContext.Entry(kpiAchievement).State = EntityState.Modified;
+                        else
+                        {
+                            var kpiAchievement = item.MapTo<KpiAchievement>();
+                            if (kpiAchievement.Value.HasValue)
+                            {
+                                kpiAchievement.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == item.KpiId);
+                                DataContext.KpiAchievements.Add(kpiAchievement);
+                            }
+
+                        }
                     }
-                    else
-                    {
-                        kpiAchievement.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == item.KpiId);
-                        DataContext.KpiAchievements.Add(kpiAchievement);
-                    }
+                    
                     i++;
                 }
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
                 if (i > 0)
                 {
-                    response.Message = string.Format("{0}  KPI Achievement items has been updated successfully", i.ToString());
+                    response.Message = string.Format("{0}  KPI Target items has been updated successfully", i.ToString());
                 }
                 else
                 {
                     response.Message = "File Successfully Parsed, but no data changed!";
                 }
-
-
             }
             catch (InvalidOperationException invalidOperationException)
             {

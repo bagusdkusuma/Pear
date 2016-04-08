@@ -4,7 +4,6 @@
     var data = {};
     $(document).ready(function () {
         $('#div-month, #div-year').hide();
-        //$('#div-year').attr("style", "padding-right: 30px; border-right: solid 1px #3f454f;");
         $('#periodeType').change(function () {
             var periode = $('#periodeType').val();
             switch (periode) {
@@ -48,7 +47,8 @@
             data.year = $('#year').val();
             data.month = $('#month').val();
         });
-        $('#btn-download').click(function () {
+        
+        @*$('#btn-download').click(function () {
             var configType = '@Model.ConfigType';
             var periodeType = $('#periodeType').val();
             var year = $('#year').val();
@@ -57,13 +57,11 @@
                 url: '@Url.Action("DownloadTemplate", "File")',
                 type: 'GET',
                 data: data,
-                beforeSend: function (result) {
+                beforeSend: function(result) {
                     $('.ajax-loader2').show();
-                    //$('.config-content').hide();
                 }
-
-            })
-        });
+            });
+        });*@
     });
 </script>
 <div class="notification"></div>
