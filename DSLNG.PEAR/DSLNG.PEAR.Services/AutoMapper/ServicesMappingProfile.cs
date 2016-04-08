@@ -235,7 +235,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<KpiAchievement, GetPmsDetailsResponse.KpiAchievment>()
                 .ForMember(k => k.Period, o => o.MapFrom(k => k.Periode.ToString("MMM")))
                 .ForMember(k => k.Type, o => o.MapFrom(k => k.PeriodeType.ToString()));
-            Mapper.CreateMap<UpdateKpiAchievementItemRequest, KpiAchievement>();
+            Mapper.CreateMap<UpdateKpiAchievementItemRequest, KpiAchievement>()
+                .ForMember(x => x.Value, y => y.MapFrom(z => z.RealValue));
             Mapper.CreateMap<Data.Entities.Pillar, GetPillarsResponse>();
             Mapper.CreateMap<Data.Entities.Pillar, GetPillarResponse>();
             Mapper.CreateMap<Data.Entities.Pillar, GetPillarsResponse.Pillar>();
@@ -777,7 +778,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
             Mapper.CreateMap<CreateKpiTargetsRequest.KpiTarget, KpiTarget>();
             Mapper.CreateMap<CreateKpiTargetRequest, KpiTarget>();
-            Mapper.CreateMap<UpdateKpiTargetItemRequest, KpiTarget>();
+            Mapper.CreateMap<UpdateKpiTargetItemRequest, KpiTarget>()
+                .ForMember(x => x.Value, y => y.MapFrom(z => z.RealValue));
             Mapper.CreateMap<Kpi, GetKpisByPillarIdResponse.Kpi>();
             Mapper.CreateMap<CreatePmsConfigRequest, PmsConfig>()
                 .ForMember(x => x.ScoringType, y => y.MapFrom(z => Enum.Parse(typeof(ScoringType), z.ScoringType)));
@@ -828,7 +830,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<KpiTarget, GetKpiTargetsConfigurationResponse.KpiTarget>();
             Mapper.CreateMap<KpiTarget, GetKpiTargetItemResponse>();
             Mapper.CreateMap<Kpi, GetKpiTargetItemResponse.KpiResponse>();
-            Mapper.CreateMap<SaveKpiTargetRequest, KpiTarget>();
+            Mapper.CreateMap<SaveKpiTargetRequest, KpiTarget>()
+                .ForMember(x => x.Value , y => y.MapFrom(z => z.RealValue));
         }
 
         private void ConfigurePmsConfig()
@@ -887,7 +890,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
                   .ForMember(x => x.PeriodeType, y => y.MapFrom(z => z.PeriodeType))
                   .ForMember(x => x.Kpi, y => y.Ignore())
                   .ForMember(x => x.Scenario, y => y.Ignore())
-                  .ForMember(x => x.KeyOperationConfig, y => y.Ignore());
+                  .ForMember(x => x.KeyOperationConfig, y => y.Ignore())
+                  .ForMember(x => x.Value, y => y.MapFrom(z => z.RealValue));
         }
 
         private void ConfigureDer()

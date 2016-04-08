@@ -29,7 +29,8 @@ namespace DSLNG.PEAR.Services
             {
                 var select = request.MapTo<Select>();
                 DataContext.Selects.Add(select);
-                if (request.ParentId != 0) {
+                if (request.ParentId != 0)
+                {
                     var parent = new Select { Id = request.ParentId };
                     DataContext.Selects.Attach(parent);
                     select.Parent = parent;
@@ -64,7 +65,7 @@ namespace DSLNG.PEAR.Services
                                         .Single();
 
                 DataContext.Entry(select).CurrentValues.SetValues(request);
-                
+
                 foreach (var option in select.Options.ToList())
                 {
                     if (request.Options.All(c => c.Id != option.Id))
@@ -89,16 +90,18 @@ namespace DSLNG.PEAR.Services
                         select.Options.Add(newOption);
                     }
                 }
+
                 if (request.ParentId != 0 && (select.Parent == null || select.Parent.Id != request.ParentId))
                 {
                     var parent = new Select { Id = request.ParentId };
                     DataContext.Selects.Attach(parent);
                     select.Parent = parent;
-                     var parentOption = new SelectOption { Id = request.ParentOptionId };
+                    var parentOption = new SelectOption { Id = request.ParentOptionId };
                     DataContext.SelectOptions.Attach(parentOption);
                     select.ParentOption = parentOption;
                 }
-                else if(request.ParentId == 0){
+                else if (request.ParentId == 0)
+                {
                     select.Parent = null;
                     select.ParentOption = null;
                 }
@@ -155,13 +158,16 @@ namespace DSLNG.PEAR.Services
             try
             {
                 var query = DataContext.Selects.Include(x => x.Options);
-                if (request.Id != 0) {
+                if (request.Id != 0)
+                {
                     query = query.Where(x => x.Id == request.Id);
                 }
-                else if (!string.IsNullOrEmpty(request.Name)) {
+                else if (!string.IsNullOrEmpty(request.Name))
+                {
                     query = query.Where(x => x.Name == request.Name);
                 }
-                else if (!string.IsNullOrEmpty(request.ParentName) && request.ParentOptionId != 0) {
+                else if (!string.IsNullOrEmpty(request.ParentName) && request.ParentOptionId != 0)
+                {
                     query = query.Where(x => x.Parent.Name == request.ParentName && x.ParentOption.Id == request.ParentOptionId);
                 }
 
@@ -270,7 +276,7 @@ namespace DSLNG.PEAR.Services
             var dropdowns =
                 DataContext.SelectOptions.Where(x => x.Group != null && x.IsActive && x.Select.Name == "highlight-types")
                            .ToList();
-            return dropdowns.Select(x => new Dropdown() {Text = x.Text, Value = x.Id.ToString()}).ToList();
-        }  
+            return dropdowns.Select(x => new Dropdown() { Text = x.Text, Value = x.Id.ToString() }).ToList();
+        }
     }
 }

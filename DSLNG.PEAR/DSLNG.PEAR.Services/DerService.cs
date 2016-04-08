@@ -463,6 +463,7 @@ namespace DSLNG.PEAR.Services
                 case "indicative-commercial-price":
                 case "plant-availability":
                 case "economic-indicator":
+                case "key-equipment-status":
                     {
                         baseResponse = request.Id > 0 ? UpdateKpiInformations(request) : SaveKpiInformations(request);
                         break;

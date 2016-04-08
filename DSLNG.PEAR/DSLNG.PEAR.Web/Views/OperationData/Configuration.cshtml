@@ -68,7 +68,7 @@
                 var that = $(this);
                 var periodeType = that.attr('data-periodeType');
                 var data = {};
-                data.groupId = '@Model.GroupId';
+                data.roleGroupId = '@Model.RoleGroupId';
                 data.scenarioId = '@Model.ScenarioId';
                 data.periodeType = periodeType;
                 _periodeType = periodeType;
@@ -178,13 +178,13 @@
             $(document).on('change', '.ddl-year, .ddl-month', function () {
                 var year = $('.ddl-year').val();
                 var month = $('.ddl-month').val();
-                var _groupId = '@Model.GroupId';
-                var _scenarioId = '@Model.ScenarioId';
+                var roleGroupId = '@Model.RoleGroupId';
+                var scenarioId = '@Model.ScenarioId';
                 var url;
                 if (month !== undefined) {
-                    url = '@Html.Raw(Url.Action("Configuration", "OperationData", new { year = "_year_", month = "_month_", periodeType = "_periodeType_", groupId= "_groupId_", scenarioId = "_scenarioId_" }))'.replace('_year_', year).replace('_month_', month).replace("_periodeType_", _periodeType).replace("_groupId_", _groupId).replace("_scenarioId_", _scenarioId);
+                    url = '@Html.Raw(Url.Action("Configuration", "OperationData", new { year = "_year_", month = "_month_", periodeType = "_periodeType_", roleGroupId= "_roleGroupId", scenarioId = "_scenarioId_" }))'.replace('_year_', year).replace('_month_', month).replace("_periodeType_", _periodeType).replace("_roleGroupId_", roleGroupId).replace("_scenarioId_", scenarioId);
                 } else {
-                    url = '@Html.Raw(Url.Action("Configuration", "OperationData", new { year = "_year_", periodeType = "_periodeType_", groupId= "_groupId_", scenarioId = "_scenarioId_" }))'.replace('_year_', year).replace("_periodeType_", _periodeType).replace("_groupId_", _groupId).replace("_scenarioId_", _scenarioId);
+                    url = '@Html.Raw(Url.Action("Configuration", "OperationData", new { year = "_year_", periodeType = "_periodeType_", groupId= "_groupId_", scenarioId = "_scenarioId_" }))'.replace('_year_', year).replace("_periodeType_", _periodeType).replace("_roleGroupId_", roleGroupId).replace("_scenarioId_", scenarioId);
                 }
 
                 window.location = url;

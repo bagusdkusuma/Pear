@@ -15,13 +15,14 @@ namespace DSLNG.PEAR.Web.Controllers
 {
     public class HighlightDashboardController : BaseController
     {
-        public IHighlightOrderService _highlightOrderService;
-        private IHighlightGroupService _highlightGroupService;
+        public IHighlightOrderService HighlightOrderService;
+        private readonly IHighlightGroupService _highlightGroupService;
         private readonly IRoleGroupService _roleService;
-        public HighlightDashboardController(IHighlightOrderService highlightOrderService, 
+        public HighlightDashboardController(IHighlightOrderService highlightOrderService,
             IHighlightGroupService highlightGroupService,
-            IRoleGroupService roleGroupService) {
-            _highlightOrderService = highlightOrderService;
+            IRoleGroupService roleGroupService)
+        {
+            HighlightOrderService = highlightOrderService;
             _highlightGroupService = highlightGroupService;
             _roleService = roleGroupService;
         }
@@ -32,7 +33,7 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.Groups = _highlightGroupService.GetHighlightGroups(new GetHighlightGroupsRequest
             {
                 Take = -1,
-                SortingDictionary = new Dictionary<string, SortOrder>{{"Order",SortOrder.Ascending}}
+                SortingDictionary = new Dictionary<string, SortOrder> { { "Order", SortOrder.Ascending } }
             }).HighlightGroups.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
             viewModel.Groups.Insert(0, new SelectListItem { Value = "0", Text = "Choose Group" });
 
@@ -50,7 +51,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Grid(GridParams gridParams)
         {
-            var templates = _highlightOrderService.GetHighlights(new GetHighlightOrdersRequest
+            var templates = HighlightOrderService.GetHighlights(new GetHighlightOrdersRequest
             {
                 Skip = gridParams.DisplayStart,
                 Take = gridParams.DisplayLength,
@@ -70,15 +71,16 @@ namespace DSLNG.PEAR.Web.Controllers
         }
 
         [HttpPost]
-        public JsonResult Save(HighlightOrderViewModel viewModel) {
+        public JsonResult Save(HighlightOrderViewModel viewModel)
+        {
             var req = viewModel.MapTo<SaveHighlightOrderRequest>();
-            return Json(_highlightOrderService.SaveHighlight(req));
+            return Json(HighlightOrderService.SaveHighlight(req));
         }
         [HttpPost]
         public JsonResult SaveStatic(HighlightOrderViewModel viewModel)
         {
             var req = viewModel.MapTo<SaveStaticHighlightOrderRequest>();
-            return Json(_highlightOrderService.SaveStaticHighlight(req));
+            return Json(HighlightOrderService.SaveStaticHighlight(req));
         }
-	}
+    }
 }

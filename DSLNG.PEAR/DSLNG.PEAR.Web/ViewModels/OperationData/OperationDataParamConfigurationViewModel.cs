@@ -7,7 +7,7 @@ namespace DSLNG.PEAR.Web.ViewModels.OperationData
 {
     public class OperationDataParamConfigurationViewModel
     {
-        public int GroupId { get; set; }
+        public int RoleGroupId { get; set; }
         public int Month { get; set; }
         public int Year { get; set; }
         public string PeriodeType { get; set; }

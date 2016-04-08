@@ -56,9 +56,18 @@ namespace DSLNG.PEAR.Web.ViewModels.KpiAchievement
             public int Id { get; set; }
             public int KpiId { get; set; }
             public DateTime Periode { get; set; }
-            public double? Value { get; set; }
+            public string Value { get; set; }
             public string Remark { get; set; }
             public PeriodeType PeriodeType { get; set; }
+            public double? RealValue
+            {
+                get
+                {
+                    double realValue;
+                    var isParsed = double.TryParse(Value, out realValue);
+                    return isParsed ? realValue : default(double?);
+                }
+            }
         }
     }
 }

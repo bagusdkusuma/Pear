@@ -49,7 +49,7 @@
                     <td style="text-align: left">@(number++). @kpi.Name (@kpi.MeasurementName)</td>
 
                     @{ var b = 0;}
-                    @foreach (var operationData in kpi.OperationDatas)
+                    @foreach (var operationData in kpi.OperationData)
                     {
                         <th class="text-align-right">
                             @Html.ParseToNumber(operationData.Value.ToString())

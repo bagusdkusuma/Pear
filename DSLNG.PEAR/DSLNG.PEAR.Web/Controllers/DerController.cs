@@ -962,7 +962,34 @@ namespace DSLNG.PEAR.Web.Controllers
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
+                #endregion
+                #region Key Equipment Status
+                case "key-equipment-status":
+                    {
+                        var viewModel = new DisplayKeyEquipmentStatusViewModel();
+                        for (int i = 0; i <= 23; i++)
+                        {
+                            var keyOquipmentViewModel = new DisplayKeyEquipmentStatusViewModel.KeyEquipmentStatusViewModel();
+                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
+                                new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
+                            keyOquipmentViewModel.Position = item.Position;
+                            var highlight =
+                           _highlightService.GetHighlightByPeriode(new GetHighlightRequest
+                           {
+                               Date = date,
+                               HighlightTypeId = item.SelectOption.Id
+                           });
+                            keyOquipmentViewModel.highlight = !string.IsNullOrEmpty(highlight.Message)
+                                                                         ? highlight.Message
+                                                                         : "n/a";
+                            viewModel.KeyEquipmentStatusViewModels.Add(keyOquipmentViewModel);
+                        }
+                        var view = RenderPartialViewToString("Display/_KeyEquipmentStatus", viewModel);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
                     #endregion
+
 
 
             }

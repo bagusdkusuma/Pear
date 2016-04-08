@@ -24,7 +24,6 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IDropdownService _dropdownService;
         private readonly IDerService _derService;
         private readonly IMeasurementService _measurementService;
-        private readonly IHighlightService _highlightService;
         private readonly ISelectService _selectService;
 
         public DerLayoutController(IDropdownService dropdownService, IDerService derService, IMeasurementService measurementService, IHighlightService highlightService, ISelectService selectService)
@@ -32,7 +31,6 @@ namespace DSLNG.PEAR.Web.Controllers
             _dropdownService = dropdownService;
             _derService = derService;
             _measurementService = measurementService;
-            _highlightService = highlightService;
             _selectService = selectService;
         }
 
@@ -115,7 +113,7 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 var response = _derService.GetDerLayoutItem(viewModel.Id);
                 var editViewModel = response.MapTo<DerLayoutItemViewModel>();
-                editViewModel.Types = _dropdownService.GetDerItemTypes().MapTo<SelectListItem>();
+                editViewModel.Types = _dropdownService.GetDerItemTypes().OrderBy(x => x.Text).MapTo<SelectListItem>();
                 editViewModel.Type = response.Type;
                 switch (response.Type.ToLowerInvariant())
                 {
@@ -214,12 +212,179 @@ namespace DSLNG.PEAR.Web.Controllers
                             }
                             break;
                         }
+                    case "key-equipment-status":
+                        {
+                            var result = _selectService.GetHighlightTypesDropdown();
+                            editViewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                            for (int i = 0; i < response.KpiInformations.Count; i++)
+                            {
+                                if (response.KpiInformations[i].SelectOption != null)
+                                {
+                                    editViewModel.KpiInformations[i].HighlightId = response.KpiInformations[i].SelectOption.Id;
+                                }
+                            }
+                        }
+                        break;
                 }
                 return View("EditLayoutItem", editViewModel);
             }
             else
             {
-                viewModel.Types = _dropdownService.GetDerItemTypes().MapTo<SelectListItem>();
+                viewModel.Types = _dropdownService.GetDerItemTypes().OrderBy(x => x.Text).MapTo<SelectListItem>();
+                var rowCol = viewModel.Row.ToString() + "-and-" + viewModel.Column.ToString();
+                switch (rowCol)
+                {
+                    case "0-and-0":
+                        {
+                            viewModel.Type = "avg-ytd-key-statistic";
+                            break;
+                        };
+                    case "1-and-0":
+                        {
+                            viewModel.Type = "multiaxis";
+                            break;
+                        }
+                    case "1-and-1":
+                    case "1-and-2":
+                    case "1-and-3":
+                        {
+                            viewModel.Type = "line";
+                            break;
+                        }
+                    case "2-and-0":
+                        {
+                            viewModel.Type = "dafwc";
+                            break;
+                        }
+                    case "2-and-1":
+                        {
+                            viewModel.Type = "weather";
+                            break;
+                        }
+                    case "2-and-2":
+                        {
+                            viewModel.Type = "wave";
+                            break;
+                        }
+                    case "3-and-0":
+                        {
+                            viewModel.Type = "safety";
+                            break;
+                        }
+                    case "3-and-1":
+                    case "3-and-2":
+                    case "3-and-3":
+                    case "0-and-1":
+                    case "4-and-0":
+                    case "11-and-1":
+                    case "12-and-0":
+                    case "13-and-0":
+                    case "14-and-2":
+                    case "15-and-1":
+                    case "15-and-2":
+                        {
+                            viewModel.Type = "highlight";
+                            break;
+                        }
+                    case "3-and-4":
+                        {
+                            viewModel.Type = "pie";
+                            break;
+                        }
+                    case "4-and-1":
+                        {
+                            viewModel.Type = "highlight";
+                            break;
+                        }
+                    case "4-and-2":
+                        {
+                            viewModel.Type = "alert";
+                            break;
+                        }
+                    case "5-and-0":
+                        {
+                            viewModel.Type = "job-pmts";
+                            break;
+                        }
+                    case "5-and-1":
+                        {
+                            viewModel.Type = "mgdp";
+                            break;
+                        }
+                    case "5-and-2":
+                        {
+                            viewModel.Type = "hhv";
+                            break;
+                        }
+                    case "6-and-0":
+                        {
+                            viewModel.Type = "total-feed-gas";
+                            break;
+                        }
+                    case "6-and-2":
+                        {
+                            viewModel.Type = "plant-availability";
+                            break;
+                        }
+                    case "7-and-0":
+                        {
+                            viewModel.Type = "lng-and-cds-production";
+                            break;
+                        }
+                    case "7-and-1":
+                        {
+                            viewModel.Type = "lng-and-cds";
+                            break;
+                        }
+                    case "8-and-0":
+                    case "8-and-1":
+                    case "8-and-2":
+                    case "8-and-3":
+                        {
+                            viewModel.Type = "tank";
+                            break;
+                        }
+                    case "8-and-4":
+                        {
+                            viewModel.Type = "nls";
+                            break;
+                        }
+                    case "9-and-0":
+                        {
+                            viewModel.Type = "table-tank";
+                            break;
+                        }
+                    case "10-and-0":
+                        {
+                            viewModel.Type = "weekly-maintenance";
+                            break;
+                        }
+                    case "10-and-1":
+                        {
+                            viewModel.Type = "key-equipment-status";
+                            break;
+                        }
+                    case "11-and-0":
+                        {
+                            viewModel.Type = "critical-pm";
+                            break;
+                        }
+                    case "14-and-0":
+                        {
+                            viewModel.Type = "procurement";
+                            break;
+                        }
+                    case "15-and-0":
+                        {
+                            viewModel.Type = "indicative-commercial-price";
+                            break;
+                        }
+                    case "14-and-1":
+                        {
+                            viewModel.Type = "economic-indicator";
+                            break;
+                        }
+                }
                 return View("LayoutItem", viewModel);
             }
         }
@@ -417,6 +582,14 @@ namespace DSLNG.PEAR.Web.Controllers
                         viewModel.KpiInformations = GetKpiInformations(11);
                         return PartialView("LayoutType/_EconomicIndicator", viewModel);
                     }
+                case "key-equipment-status":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(24);
+                        var result = _selectService.GetHighlightTypesDropdown();
+                        viewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                        return PartialView("LayoutType/_KeyEquipmentStatus", viewModel);
+                    }
             }
 
             return Content("Error");
@@ -515,6 +688,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "indicative-commercial-price":
                 case "plant-availability":
                 case "economic-indicator":
+                case "key-equipment-status":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
