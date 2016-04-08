@@ -8,8 +8,8 @@ namespace DSLNG.PEAR.Services.Requests.MirDataTable
 {
     public class DeleteKpiMirDataTableRequest
     {
-        public int MirConfigurationId { get; set; }
-        public int MirDataTableId { get; set; }
         public int KpiId { get; set; }
+        public int MirDataTableId { get; set; }
+        public int MirConfigureId { get; set; }
     }
 }

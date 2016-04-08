@@ -228,6 +228,7 @@ Number.prototype.format = function (n, x) {
         });
     };
     artifactDesigner._toJavascriptDate = function (value, periodeType) {
+        if (value == undefined) return '';
         var pattern = /Date\(([^)]+)\)/;
         var results = pattern.exec(value);
         var dt = new Date(parseFloat(results[1]));
@@ -1310,6 +1311,7 @@ Number.prototype.format = function (n, x) {
         addStack();
     };
     artifactDesigner._previewCallbacks.bar = function (data, container) {
+        //console.log(data.BarChart.SeriesType);
         if (data.BarChart.SeriesType == "single-stack") {
             Pear.Artifact.Designer._displayBasicBarChart(data, container);
         } else if (data.BarChart.SeriesType == "multi-stack") {
@@ -1395,29 +1397,45 @@ Number.prototype.format = function (n, x) {
                 formatter: function () {
                     var tooltip = '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
                     var totalInProcess = 0;
+                    var netbackValue = 0;
                     for (var i in this.points) {
-                        tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>';
-
+                        if (this.points[i].series.name.trim().indexOf('invisible')) {
+                            tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>';
+                        }
                         var prev = (parseInt(i) - 1);
                         var next = (parseInt(i) + 1);
                         var nextExist = typeof this.points[next] !== 'undefined';
                         var prevExist = typeof this.points[prev] !== 'undefined';
-
-                        if (typeof this.points[i].series.stackKey !== 'undefined') {
-                            //total in process
-                            //if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                        if (data.AsNetbackChart) {
+                            if (i == 0) {
+                                netbackValue += this.points[i].y;
+                            } else {
+                                if (this.points[i].series.name.trim().indexOf('invisible')) {
+                                    netbackValue -= this.points[i].y;
+                                }
+                            }
+                            if (i == this.points.length - 1) {
+                                tooltip += '<strong>Net back value : ' + netbackValue.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
+                            }
+                        } else {
+                            if (typeof this.points[i].series.stackKey !== 'undefined') {
+                                //total in process
+                                //if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
                                 totalInProcess += this.points[i].y;
-                            //}
+                                //}
 
-                            if ((nextExist && prevExist && this.points[next].series.stackKey != this.points[i].series.stackKey && this.points[prev].series.stackKey == this.points[i].series.stackKey) ||
-                                (!nextExist && prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
-                                tooltip += '<strong>Total: ' + totalInProcess.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
-                                //totalInProcess = 0;
+                                if ((nextExist && prevExist && this.points[next].series.stackKey != this.points[i].series.stackKey && this.points[prev].series.stackKey == this.points[i].series.stackKey) ||
+                                    (!nextExist && prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                    tooltip += '<strong>Total: ' + totalInProcess.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
+                                    //totalInProcess = 0;
+                                }
+                                if (nextExist && this.points[next].series.stackKey != this.points[i].series.stackKey) {
+                                    totalInProcess = 0;
+                                }
                             }
-                            if (nextExist && this.points[next].series.stackKey != this.points[i].series.stackKey) {
-                                totalInProcess = 0;
-                            }
+
                         }
+                        
 
                         //if (typeof this.points[i].total !== 'undefined') {
                         //    if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
@@ -1425,9 +1443,11 @@ Number.prototype.format = function (n, x) {
                         //        tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br>';
                         //    }
                         //}
-                        if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
-                            tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
-                            tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                        if (data.Highlights != null && data.Highlights != undefined) {
+                            if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
+                                tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
+                                tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                            }
                         }
                     }
                     return tooltip;
@@ -1565,9 +1585,11 @@ Number.prototype.format = function (n, x) {
                         //        tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br>';
                         //    }
                         //}
-                        if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
-                            tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
-                            tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                        if (data.Highlights != null && data.Highlights != undefined) {
+                            if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
+                                tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
+                                tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                            }
                         }
                     }
                     return tooltip;
@@ -1672,41 +1694,65 @@ Number.prototype.format = function (n, x) {
             },
             tooltip: {
                 formatter: function () {
-                    var tooltip = '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
+                    console.log(data);
+                    var tooltip = '';
+                    if (data.BarChart.Periodes.length == 1) {
+                        tooltip += '<b>' + data.BarChart.Subtitle + '</b><br/>';
+                    }else if (data.TimePeriodes.length) {
+                        tooltip += '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
+                    } else {
+                        
+                        tooltip += '<b>' + data.BarChart.Subtitle + '</b><br/>';
+                    }
                     var totalInProcess = 0;
+                    var netbackValue = 0;
                     for (var i in this.points) {
-                        tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>';
-
+                        if (this.points[i].series.name.trim().indexOf('invisible')) {
+                            tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>';
+                        }
                         var prev = (parseInt(i) - 1);
                         var next = (parseInt(i) + 1);
                         var nextExist = typeof this.points[next] !== 'undefined';
                         var prevExist = typeof this.points[prev] !== 'undefined';
-
-                        if (typeof this.points[i].series.stackKey !== 'undefined') {
-                            //total in process
-                            //if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
-                                totalInProcess += this.points[i].y;
-                            //}
-
-                            if ((nextExist && prevExist && this.points[next].series.stackKey != this.points[i].series.stackKey && this.points[prev].series.stackKey == this.points[i].series.stackKey) ||
-                                (!nextExist && prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
-                                tooltip += '<strong>Total: ' + totalInProcess.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
-                                //totalInProcess = 0;
+                        if (data.AsNetbackChart) {
+                            if (i == 0) {
+                                netbackValue += this.points[i].y;
+                            } else {
+                                if (this.points[i].series.name.trim().indexOf('invisible')) {
+                                    netbackValue -= this.points[i].y;
+                                }
                             }
-                            if (nextExist && this.points[next].series.stackKey != this.points[i].series.stackKey) {
-                                totalInProcess = 0;
+                            if (i == this.points.length - 1) {
+                                tooltip += '<strong>Net back value : ' + netbackValue.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
+                            }
+                        } else {
+                            if (typeof this.points[i].series.stackKey !== 'undefined') {
+                                //total in process
+                                //if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                totalInProcess += this.points[i].y;
+                                //}
+
+                                if ((nextExist && prevExist && this.points[next].series.stackKey != this.points[i].series.stackKey && this.points[prev].series.stackKey == this.points[i].series.stackKey) ||
+                                    (!nextExist && prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                    tooltip += '<strong>Total: ' + totalInProcess.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
+                                    //totalInProcess = 0;
+                                }
+                                if (nextExist && this.points[next].series.stackKey != this.points[i].series.stackKey) {
+                                    totalInProcess = 0;
+                                }
                             }
                         }
-
                         //if (typeof this.points[i].total !== 'undefined') {
                         //    if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
                         //        (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
                         //        tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br>';
                         //    }
                         //}
-                        if (!nextExist && data.Highlights !== null && data.Highlights[this.points[i].point.index] != null) {
-                            tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
-                            tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                        if (data.Highlights != null && data.Highlights != undefined) {
+                            if (!nextExist && data.Highlights !== null && data.Highlights[this.points[i].point.index] != null) {
+                                tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
+                                tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                            }
                         }
                     }
                     return tooltip;
@@ -1930,9 +1976,11 @@ Number.prototype.format = function (n, x) {
                         //        tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.LineChart.ValueAxisTitle + '<br>';
                         //    }
                         //}
-                        if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
-                            tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
-                            tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                        if (data.Highlights != null && data.Highlights != undefined) {
+                            if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
+                                tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
+                                tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                            }
                         }
                     }
                     return tooltip;
@@ -2140,9 +2188,11 @@ Number.prototype.format = function (n, x) {
                         //        tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.AreaChart.ValueAxisTitle + '<br>';
                         //    }
                         //}
-                        if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
-                            tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
-                            tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                        if (data.Highlights != null && data.Highlights != undefined) {
+                            if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
+                                tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
+                                tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                            }
                         }
                     }
                     return tooltip;
@@ -2306,9 +2356,11 @@ Number.prototype.format = function (n, x) {
                         //        tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.AreaChart.ValueAxisTitle + '<br>';
                         //    }
                         //}
-                        if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
-                            tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
-                            tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                        if (data.Highlights != null && data.Highlights != undefined) {
+                            if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
+                                tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
+                                tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                            }
                         }
                     }
                     return tooltip;
@@ -3409,9 +3461,11 @@ Number.prototype.format = function (n, x) {
                         //        tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + this.points[i].series.options.tooltip.valueSuffix + '<br>';
                         //    }
                         //}
-                        if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
-                            tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
-                            tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                        if (data.Highlights != null && data.Highlights != undefined) {
+                            if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
+                                tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
+                                tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                            }
                         }
                     }
                     return tooltip;
@@ -3667,9 +3721,11 @@ Number.prototype.format = function (n, x) {
                         //    (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
                         //    tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + this.points[i].series.options.tooltip.valueSuffix + '<br>';
                         //}
-                        if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
-                            tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
-                            tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                        if (data.Highlights != null && data.Highlights != undefined) {
+                            if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
+                                tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
+                                tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                            }
                         }
                     }
                     return tooltip;

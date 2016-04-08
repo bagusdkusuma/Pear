@@ -13,6 +13,60 @@ namespace DSLNG.PEAR.Common.Calculator
             _cashFlows = cashFlows;
         }
 
+        //new method compute IRr
+        public double ComputeIRR()
+        {
+            int i = 0, j = 0;
+            double m = 0.0;
+            double old = 0.00;
+            double theNew = 0.00;
+            var oldGuessRate = 0.01;
+            var newGuessRate = 0.01;
+            double guessRate = 0.01;
+            double lowGuessRate = 0.01;
+            double highGuessRate = 0.05;
+            double npv = 0.0;
+            double denom = 0.0;
+            for (i = 0; i < 1000; i++)
+            {
+                npv = 0.00;
+                for (j = 0; j < _cashFlows.Length; j++)
+                {
+                    denom = Math.Pow((1 + guessRate), j);
+                    npv = npv + (_cashFlows[j] / denom);
+                }
+                /* Stop checking once the required precision is achieved */
+                if ((npv > 0) && (npv < 0.00000001))
+                    break;
+                if (old == 0)
+                    old = npv;
+                else
+                    old = theNew;
+                theNew = npv;
+                if (i > 0)
+                {
+                    if (old < theNew)
+                    {
+                        if (old < 0 && theNew < 0)
+                            highGuessRate = newGuessRate;
+                        else
+                            lowGuessRate = newGuessRate;
+                    }
+                    else
+                    {
+                        if (old > 0 && theNew > 0)
+                            lowGuessRate = newGuessRate;
+                        else
+                            highGuessRate = newGuessRate;
+                    }
+                }
+                oldGuessRate = guessRate;
+                guessRate = (lowGuessRate + highGuessRate) / 2;
+                newGuessRate = guessRate;
+            }
+            return guessRate * 100;
+        }
+
         /// <summary>
         /// Gets a value indicating whether this instance is valid cash flows.
         /// </summary>
@@ -27,7 +81,8 @@ namespace DSLNG.PEAR.Common.Calculator
             {
                 const int MIN_NO_CASH_FLOW_PERIODS = 2;
 
-                if (_cashFlows.Length < MIN_NO_CASH_FLOW_PERIODS || (_cashFlows[0] > 0))
+                //if (_cashFlows.Length < MIN_NO_CASH_FLOW_PERIODS || (_cashFlows[0] > 0))
+                if (_cashFlows.Length < MIN_NO_CASH_FLOW_PERIODS)
                 {
                     throw new ArgumentOutOfRangeException(
                         "Cash flow for the first period  must be negative and there should");
@@ -75,7 +130,7 @@ namespace DSLNG.PEAR.Common.Calculator
         {
             _numberOfIterations++;
             _result = estimatedReturn - SumOfIRRPolynomial(estimatedReturn) / IRRDerivativeSum(estimatedReturn);
-            while (!HasConverged(_result) && 50000 != _numberOfIterations)
+            while (!HasConverged(_result) && 1000 != _numberOfIterations)
             {
                 DoNewtonRapshonCalculation(_result);
             }

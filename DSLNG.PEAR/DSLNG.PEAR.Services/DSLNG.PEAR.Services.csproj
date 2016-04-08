@@ -93,15 +93,20 @@
     <Compile Include="Interfaces\GetDerLayoutResponse.cs" />
     <Compile Include="Interfaces\IMirConfigurationService.cs" />
     <Compile Include="Interfaces\IMirDataTableService.cs" />
+    <Compile Include="Interfaces\IProcessBlueprintService.cs" />
     <Compile Include="MirConfigurationService.cs" />
     <Compile Include="MirDataTableService.cs" />
+    <Compile Include="ProcessBlueprintService.cs" />
     <Compile Include="Requests\MirConfiguration\GetMirConfigurationsRequest.cs" />
     <Compile Include="Requests\MirConfiguration\SaveMirConfigurationRequest.cs" />
     <Compile Include="Requests\MirDataTable\DeleteKpiMirDataTableRequest.cs" />
+    <Compile Include="Requests\MirDataTable\SaveMirDataTableRequest.cs" />
     <Compile Include="Interfaces\IWaveService.cs" />
     <Compile Include="Requests\Der\GetKpiValueRequest.cs" />
     <Compile Include="Requests\Der\SaveLayoutItemRequest.cs" />
     <Compile Include="Requests\Der\SaveOriginalDataRequest.cs" />
+    <Compile Include="Requests\ProcessBlueprint\GetProcessBlueprintRequest.cs" />
+    <Compile Include="Requests\ProcessBlueprint\SaveProcessBlueprintRequest.cs" />
     <Compile Include="Requests\Signature\ApproveSignatureRequest.cs" />
     <Compile Include="Requests\PlanningBlueprint\KpiEconomicInputRequest.cs" />
     <Compile Include="Requests\PlanningBlueprint\KpiTargetInputRequest.cs" />
@@ -231,6 +236,7 @@
     <Compile Include="Responses\MirConfiguration\GetsMirConfigurationsResponse.cs" />
     <Compile Include="Responses\MirConfiguration\SaveMirConfigurationResponse.cs" />
     <Compile Include="Responses\MirDataTable\DeleteKpiMirDataTableResponse.cs" />
+    <Compile Include="Responses\MirDataTable\SaveMirDataTableResponse.cs" />
     <Compile Include="Responses\OperationalData\GetOperationDataConfigurationResponse.cs" />
     <Compile Include="Responses\OperationalData\GetOperationalDataDetailResponse.cs" />
     <Compile Include="Requests\OperationalData\GetOperationalDataDetailRequest.cs" />
@@ -690,6 +696,8 @@
     <Compile Include="Responses\PopDashboard\SavePopDashboardResponse.cs" />
     <Compile Include="Responses\PopInformation\GetPopInformationResponse.cs" />
     <Compile Include="Responses\PopInformation\SavePopInformationResponse.cs" />
+    <Compile Include="Responses\ProcessBlueprint\GetProcessBlueprintResponse.cs" />
+    <Compile Include="Responses\ProcessBlueprint\GetProcessBlueprintsResponse.cs" />
     <Compile Include="Responses\RoleGroup\CreateRoleGroupResponse.cs" />
     <Compile Include="Responses\RoleGroup\DeleteRoleGroupResponse.cs" />
     <Compile Include="Responses\RoleGroup\Level.cs" />

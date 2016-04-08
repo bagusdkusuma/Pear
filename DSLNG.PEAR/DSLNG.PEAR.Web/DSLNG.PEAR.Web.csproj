@@ -767,6 +767,7 @@
     <Compile Include="Controllers\AssumptionDataController.cs" />
     <Compile Include="Controllers\MirConfigurationController.cs" />
     <Compile Include="Controllers\MirDataTableController.cs" />
+    <Compile Include="Controllers\ProcessBlueprintController.cs" />
     <Compile Include="Controllers\WaveController.cs" />
     <Compile Include="Extensions\NumberExtension.cs" />
     <Compile Include="ViewModels\DerLayout\CreateDerLayoutViewModel.cs" />
@@ -841,6 +842,8 @@
     <Compile Include="ViewModels\MirConfiguration\ConfigureMirConfigurationViewModel.cs" />
     <Compile Include="ViewModels\MirConfiguration\MirConfigurationViewModel.cs" />
     <Compile Include="ViewModels\MirConfiguration\SaveMirConfigurationViewModel.cs" />
+    <Compile Include="ViewModels\MirDataTable\DeleteMirDataTableViewModel.cs" />
+    <Compile Include="ViewModels\MirDataTable\SaveMirDataTableViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\AnnualBusinessPlanViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\RejectMidtermStrategyViewModel.cs" />
     <Compile Include="ViewModels\PlanningBlueprint\RejectVoyagePlanViewModel.cs" />
@@ -1251,6 +1254,8 @@
     <Content Include="Views\MirConfiguration\Configure.cshtml" />
     <Content Include="Views\Wave\Index.cshtml" />
     <Content Include="Views\Wave\Create.cshtml" />
+    <Content Include="Views\ProcessBlueprint\Index.cshtml" />
+    <Content Include="Views\ProcessBlueprint\_ProcessBlueprintPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -1485,6 +1490,8 @@
     <Compile Include="ViewModels\PopDashboard\PopDashboardViewModel.cs" />
     <Compile Include="ViewModels\PopDashboard\PopInformationViewModel.cs" />
     <Compile Include="ViewModels\PopDashboard\SignatureViewModel.cs" />
+    <Compile Include="ViewModels\ProcessBlueprint\ProcessBlueprintFileSystemProvider.cs" />
+    <Compile Include="ViewModels\ProcessBlueprint\ProcessBlueprintViewModel.cs" />
     <Compile Include="ViewModels\RoleGroup\CreateRoleGroupViewModel.cs" />
     <Compile Include="ViewModels\RoleGroup\IndexRoleGroupViewModel.cs" />
     <Compile Include="ViewModels\RoleGroup\RoleGroupViewModel.cs" />
@@ -1518,6 +1525,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\FileManager\" />
     <Folder Include="Content\img\signature\" />
     <Folder Include="Content\signature\" />
     <Folder Include="Content\TemplateFiles\KpiAchievement\" />

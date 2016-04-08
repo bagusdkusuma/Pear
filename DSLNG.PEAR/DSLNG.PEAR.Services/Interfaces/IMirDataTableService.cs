@@ -10,6 +10,7 @@ namespace DSLNG.PEAR.Services.Interfaces
 {
     public interface IMirDataTableService
     {
+        SaveMirDataTableResponse SaveMirDataTableRespons(SaveMirDataTableRequest request);
         //DeleteKpiMirDataTableResponse DeleteKpi(DeleteKpiMirDataTableRequest request);
     }
 }

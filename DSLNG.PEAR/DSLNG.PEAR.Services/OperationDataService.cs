@@ -211,7 +211,7 @@ namespace DSLNG.PEAR.Services
                         kpiDto.GroupName = keyOperationConfig.KeyOperationGroup.Name;
                         foreach (var number in YearlyNumbersForOperationData)
                         {
-                            var operation = operationDataYearly.FirstOrDefault(x => x.Kpi.Id == keyOperationConfig.Kpi.Id && x.Periode.Year == number);
+                            var operation = operationDataYearly.FirstOrDefault(x => x.Kpi != null && x.Kpi.Id == keyOperationConfig.Kpi.Id && x.Periode.Year == number);
 
                             if (operation != null)
                             {
@@ -563,7 +563,7 @@ namespace DSLNG.PEAR.Services
                         kpiDto.GroupName = keyOperationConfig.KeyOperationGroup.Name;
                         foreach (var number in YearlyNumbersForOperationData)
                         {
-                            var operation = operationDataYearly.FirstOrDefault(x => x.Kpi.Id == keyOperationConfig.Kpi.Id && x.Periode.Year == number);
+                            var operation = operationDataYearly.FirstOrDefault(x => x.Kpi != null && x.Kpi.Id == keyOperationConfig.Kpi.Id && x.Periode.Year == number);
 
                             if (operation != null)
                             {

@@ -114,6 +114,9 @@ using DSLNG.PEAR.Services.Requests.Wave;
 using DSLNG.PEAR.Data.Entities.Mir;
 using DSLNG.PEAR.Services.Responses.MirConfiguration;
 using DSLNG.PEAR.Services.Requests.MirConfiguration;
+using DSLNG.PEAR.Services.Requests.MirDataTable;
+using DSLNG.PEAR.Services.Responses.ProcessBlueprint;
+using DSLNG.PEAR.Services.Requests.ProcessBlueprint;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -131,6 +134,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             ConfigureKeyOperation();
             ConfigureEconomicSummary();
             ConfigureDer();
+            ConfigureProcessBlueprint();
 
             Mapper.CreateMap<Data.Entities.User, GetUsersResponse.User>();
             Mapper.CreateMap<GetUsersResponse.User, Data.Entities.User>();
@@ -707,9 +711,18 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<MirConfiguration, GetsMirConfigurationsResponse.MirConfiguration>();
             Mapper.CreateMap<SaveMirConfigurationRequest, MirConfiguration>();
             Mapper.CreateMap<MirConfiguration, GetMirConfigurationsResponse>();
-            Mapper.CreateMap<MirDataTable, GetMirConfigurationsResponse.MirDataTable>();
+            Mapper.CreateMap<MirDataTable, GetMirConfigurationsResponse.MirDataTable>()
+                .ForMember(x => x.KpiIds, o => o.MapFrom(s => s.Kpis.Select(y => y.Id).ToArray()));
             Mapper.CreateMap<Kpi, GetMirConfigurationsResponse.MirDataTable.Kpi>();
+            Mapper.CreateMap<SaveMirDataTableRequest, MirDataTable>();
             base.Configure();
+        }
+
+        private void ConfigureProcessBlueprint()
+        {
+            Mapper.CreateMap<ProcessBlueprint, GetProcessBlueprintResponse>();
+            Mapper.CreateMap<ProcessBlueprint, GetProcessBlueprintsResponse.ProcessBlueprint>();
+            Mapper.CreateMap<SaveProcessBlueprintRequest, ProcessBlueprint>();
         }
 
         private void ConfigureEconomicSummary()
