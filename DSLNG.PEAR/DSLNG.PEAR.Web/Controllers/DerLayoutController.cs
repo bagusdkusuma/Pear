@@ -212,6 +212,19 @@ namespace DSLNG.PEAR.Web.Controllers
                             }
                             break;
                         }
+                    case "key-equipment-status":
+                        {
+                            var result = _selectService.GetHighlightTypesDropdown();
+                            editViewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                            for (int i = 0; i < response.KpiInformations.Count; i++)
+                            {
+                                if (response.KpiInformations[i].SelectOption != null)
+                                {
+                                    editViewModel.KpiInformations[i].HighlightId = response.KpiInformations[i].SelectOption.Id;
+                                }
+                            }
+                        }
+                        break;
                 }
                 return View("EditLayoutItem", editViewModel);
             }
@@ -344,6 +357,11 @@ namespace DSLNG.PEAR.Web.Controllers
                     case "10-and-0":
                         {
                             viewModel.Type = "weekly-maintenance";
+                            break;
+                        }
+                    case "10-and-1":
+                        {
+                            viewModel.Type = "key-equipment-status";
                             break;
                         }
                     case "11-and-0":
@@ -670,6 +688,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "indicative-commercial-price":
                 case "plant-availability":
                 case "economic-indicator":
+                case "key-equipment-status":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
