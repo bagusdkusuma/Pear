@@ -1,25 +1,24 @@
 ﻿using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Interfaces;
-using DSLNG.PEAR.Services.Requests.Config;
 using DSLNG.PEAR.Services.Requests.KpiAchievement;
+using DSLNG.PEAR.Services.Requests.Operation;
 using DSLNG.PEAR.Services.Responses;
 using DSLNG.PEAR.Web.ViewModels.Config;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using DSLNG.PEAR.Services.Responses.Config;
 using DSLNG.PEAR.Services.Requests.KpiTarget;
 using System.Text;
+using DSLNG.PEAR.Web.ViewModels.File;
 using DevExpress.Web.Mvc;
 using DSLNG.PEAR.Web.Extensions;
 using System.IO;
 using DevExpress.Spreadsheet;
 using System.Drawing;
-using DSLNG.PEAR.Web.ViewModels.KpiAchievement;
-using DSLNG.PEAR.Web.ViewModels.KpiTarget;
+using DSLNG.PEAR.Services.Requests.OperationalData;
+using DSLNG.PEAR.Services.Responses.Operation;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -28,15 +27,18 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IKpiAchievementService _kpiAchievementService;
         private readonly IDropdownService _dropdownService;
         private readonly IKpiTargetService _kpiTargetService;
+        private readonly IOperationDataService _operationDataService;
+        private readonly IOperationConfigService _operationConfigService;
 
-        public FileController(IKpiAchievementService kpiAchievementService, IKpiTargetService kpiTargetService, IDropdownService dropdownService)
+        public FileController(IKpiAchievementService kpiAchievementService, IKpiTargetService kpiTargetService, IDropdownService dropdownService, IOperationDataService operationDataService, IOperationConfigService operationConfigService)
         {
             _kpiAchievementService = kpiAchievementService;
             _kpiTargetService = kpiTargetService;
             _dropdownService = dropdownService;
+            _operationDataService = operationDataService;
+            _operationConfigService = operationConfigService;
         }
-        //
-        // GET: /Download/
+
         public ActionResult Index()
         {
             return View();
@@ -48,40 +50,71 @@ namespace DSLNG.PEAR.Web.Controllers
                                     ? ConfigType.KpiAchievement
                                     : (ConfigType)Enum.Parse(typeof(ConfigType), configType);
 
-            var model = new ConfigurationViewModel() { /*switch (config)*/ /*{*/ /*    case ConfigType.KpiAchievement:*/ /*        var request = new GetKpiAchievementsConfigurationRequest();*/ /*        var achievement = _kpiAchievementService.GetKpiAchievementsConfiguration(request);*/ /*        model = achievement.MapTo<ConfigurationViewModel>();*/ /*        break;*/ /*    case ConfigType.KpiTarget:*/ /*        var targetRequest = new GetKpiTargetsConfigurationRequest();*/ /*        var target = _kpiTargetService.GetKpiTargetsConfiguration(targetRequest);*/ /*        model = target.MapTo<ConfigurationViewModel>();*/ /*        break;*/ /*    case ConfigType.Economic:*/ /*        //var request = new GetKpiAchievementsConfigurationRequest();*/ /*        //var achievement = _kpiAchievementService.GetKpiAchievementsConfiguration(request);*/ /*        //model = achievement.MapTo<ConfigurationViewModel>();*/ /*        break;*/ /*}*/PeriodeType = "Yearly", Year = DateTime.Now.Year, Month = DateTime.Now.Month, ConfigType = config.ToString(), Years = _dropdownService.GetYears().MapTo<SelectListItem>(), Months = _dropdownService.GetMonths().MapTo<SelectListItem>(), PeriodeTypes = _dropdownService.GetPeriodeTypes().MapTo<SelectListItem>() };
-            return PartialView("_Download", model);
+            var viewModel = new ConfigurationViewModel()
+                {
+                    PeriodeType = "Yearly",
+                    Year = DateTime.Now.Year,
+                    Month = DateTime.Now.Month,
+                    ConfigType = config.ToString(),
+                    Years = _dropdownService.GetYears().MapTo<SelectListItem>(),
+                    Months = _dropdownService.GetMonths().MapTo<SelectListItem>(),
+                    PeriodeTypes = _dropdownService.GetPeriodeTypes().MapTo<SelectListItem>()
+                };
 
-            //return base.ErrorPage(response.Message);
+            return PartialView("_Download", viewModel);
         }
 
-        public FileResult DownloadTemplate(string configType, string periodeType, int year, int month)
+        public FileResult DownloadTemplate(DownloadTemplateViewModel vModel)
         {
-            ConfigType config = string.IsNullOrEmpty(configType)
-                                    ? ConfigType.KpiTarget
-                                    : (ConfigType)Enum.Parse(typeof(ConfigType), configType);
+            ConfigType config = string.IsNullOrEmpty(vModel.ConfigType) ? ConfigType.KpiTarget
+                                    : (ConfigType)Enum.Parse(typeof(ConfigType), vModel.ConfigType);
 
             #region Get Data
-            PeriodeType pType = string.IsNullOrEmpty(periodeType)
-                            ? PeriodeType.Yearly
-                            : (PeriodeType)Enum.Parse(typeof(PeriodeType), periodeType);
+            PeriodeType pType = string.IsNullOrEmpty(vModel.PeriodeType) ? PeriodeType.Yearly
+                            : (PeriodeType)Enum.Parse(typeof(PeriodeType), vModel.PeriodeType);
 
             var viewModel = new ConfigurationViewModel();
             switch (config)
             {
                 case ConfigType.KpiTarget:
-                    //todo get KpiTarget Data
-                    var targetRequest = new GetKpiTargetsConfigurationRequest() { PeriodeType = periodeType, Year = year, Month = month };
-                    var target = _kpiTargetService.GetKpiTargetsConfiguration(targetRequest);
-                    viewModel = target.MapTo<ConfigurationViewModel>();
-                    break;
+                    {
+                        var request = new GetKpiTargetsConfigurationRequest()
+                        {
+                            PeriodeType = vModel.PeriodeType,
+                            Year = vModel.Year,
+                            Month = vModel.Month,
+                            RoleGroupId = vModel.RoleGroupId
+                        };
+                        var target = _kpiTargetService.GetKpiTargetsConfiguration(request);
+                        viewModel = target.MapTo<ConfigurationViewModel>();
+                        break;
+                    }
+                    
                 case ConfigType.KpiAchievement:
-                    //todo get KpiAchievement Data
-                    var request = new GetKpiAchievementsConfigurationRequest() { PeriodeType = periodeType, Year = year, Month = month };
-                    var achievement = _kpiAchievementService.GetKpiAchievementsConfiguration(request);
-                    viewModel = achievement.MapTo<ConfigurationViewModel>();
-                    break;
-                case ConfigType.Economic:
-                    break;
+                    {
+                        var request = new GetKpiAchievementsConfigurationRequest()
+                        {
+                            PeriodeType = vModel.PeriodeType,
+                            Year = vModel.Year,
+                            Month = vModel.Month,
+                            RoleGroupId = vModel.RoleGroupId
+                        };
+                        var achievement = _kpiAchievementService.GetKpiAchievementsConfiguration(request);
+                        viewModel = achievement.MapTo<ConfigurationViewModel>();
+                        break;
+                    }
+                    
+                case ConfigType.OperationData:
+                    {
+                        var request = vModel.MapTo<GetOperationDataConfigurationRequest>();
+                        request.PeriodeType = pType;
+                        request.IsPartial = false;
+                        var operationData = _operationDataService.GetOperationDataConfiguration(request);
+                        viewModel = operationData.MapTo<ConfigurationViewModel>();
+                        //return new FileContentResult(null, "application/octet-stream") { FileDownloadName = "as" };
+                        break;
+                    }
+                     
                 default:
                     break;
             }
@@ -90,37 +123,33 @@ namespace DSLNG.PEAR.Web.Controllers
             /*
              * Find and Create Directory
              */
-            var resultPath = Server.MapPath(string.Format("{0}{1}/", TemplateDirectory, configType));
-            if (!System.IO.Directory.Exists(resultPath))
+            var resultPath = Server.MapPath(string.Format("{0}{1}/", TemplateDirectory, vModel.ConfigType));
+            if (!Directory.Exists(resultPath))
             {
-                System.IO.Directory.CreateDirectory(resultPath);
+                Directory.CreateDirectory(resultPath);
             }
 
 
             #region parsing data to excel
             string dateFormat = string.Empty;
-            string workSheetName = new StringBuilder(periodeType).ToString();
-            switch (periodeType)
+            string workSheetName = new StringBuilder(vModel.PeriodeType).ToString();
+            switch (vModel.PeriodeType)
             {
                 case "Yearly":
                     dateFormat = "yyyy";
                     break;
                 case "Monthly":
                     dateFormat = "mmm-yy";
-                    workSheetName = string.Format("{0}_{1}", workSheetName, year);
+                    workSheetName = string.Format("{0}_{1}", workSheetName, vModel.Year);
                     break;
                 default:
                     dateFormat = "dd-mmm-yy";
-                    workSheetName = string.Format("{0}_{1}-{2}", workSheetName, year, month.ToString().PadLeft(2, '0'));
+                    workSheetName = string.Format("{0}_{1}-{2}", workSheetName, vModel.Year, vModel.Month.ToString().PadLeft(2, '0'));
                     break;
             }
 
             string fileName = string.Format(@"{0}.xlsx", DateTime.Now.ToString("yyyymmddMMss"));
 
-            //using (FileStream stream = new FileStream(fileName,FileMode.Create,FileAccess.ReadWrite)
-            //{
-
-            //}
             IWorkbook workbook = new Workbook();
             Worksheet worksheet = workbook.Worksheets[0];
 
@@ -129,86 +158,118 @@ namespace DSLNG.PEAR.Web.Controllers
             RowCollection rows = workbook.Worksheets[0].Rows;
             ColumnCollection columns = workbook.Worksheets[0].Columns;
 
-            Row HeaderRow = rows[0];
-            HeaderRow.FillColor = Color.DarkGray;
-            HeaderRow.Alignment.Horizontal = SpreadsheetHorizontalAlignment.Center;
-            HeaderRow.Alignment.Vertical = SpreadsheetVerticalAlignment.Center;
-            Column KpiIdColumn = columns[0];
-            Column KpiNameColumn = columns[1];
-            KpiIdColumn.Visible = false;
+            Row headerRow = rows[0];
+            headerRow.FillColor = Color.DarkGray;
+            headerRow.Alignment.Horizontal = SpreadsheetHorizontalAlignment.Center;
+            headerRow.Alignment.Vertical = SpreadsheetVerticalAlignment.Center;
+            Column kpiIdColumn = columns[0];
+            Column kpiNameColumn = columns[1];
+            kpiIdColumn.Visible = false;
 
-            HeaderRow.Worksheet.Cells[HeaderRow.Index, KpiIdColumn.Index].Value = "KPI ID";
-            HeaderRow.Worksheet.Cells[HeaderRow.Index, KpiNameColumn.Index].Value = "KPI Name";
+            headerRow.Worksheet.Cells[headerRow.Index, kpiIdColumn.Index].Value = "KPI ID";
+            headerRow.Worksheet.Cells[headerRow.Index, kpiNameColumn.Index].Value = "KPI Name";
             int i = 1; //i for row
             #region inserting from models
             foreach (var kpi in viewModel.Kpis)
             {
-                worksheet.Cells[i, KpiIdColumn.Index].Value = kpi.Id;
-                worksheet.Cells[i, KpiNameColumn.Index].Value = string.Format("{0} ({1})", kpi.Name, kpi.Measurement);
+                worksheet.Cells[i, kpiIdColumn.Index].Value = kpi.Id;
+                worksheet.Cells[i, kpiNameColumn.Index].Value = string.Format("{0} ({1})", kpi.Name, kpi.Measurement);
                 int j = 2; // for column
                 var items = new List<ConfigurationViewModel.Item>();
-                switch (configType)
+                switch (vModel.ConfigType)
                 {
                     case "KpiTarget":
-                        foreach (var target in kpi.KpiTargets)
                         {
-                            var item = new ConfigurationViewModel.Item();
-                            item.Id = target.Id;
-                            item.KpiId = kpi.Id;
-                            item.Periode = target.Periode;
-                            item.Remark = target.Remark;
-                            item.Value = target.Value;
-                            item.PeriodeType = pType;
-                            items.Add(item);
+                            foreach (var target in kpi.KpiTargets)
+                            {
+                                var item = new ConfigurationViewModel.Item
+                                    {
+                                        Id = target.Id,
+                                        KpiId = kpi.Id,
+                                        Periode = target.Periode,
+                                        Remark = target.Remark,
+                                        Value = target.Value.HasValue ? target.Value.ToString() : string.Empty,
+                                        PeriodeType = pType
+                                    };
+                                items.Add(item);
+                            }
+                            break;
                         }
-                        break;
+                        
                     case "KpiAchievement":
-                        foreach (var achieve in kpi.KpiAchievements)
                         {
-                            var item = new ConfigurationViewModel.Item() { Id = achieve.Id, KpiId = achieve.Id, Periode = achieve.Periode, Remark = achieve.Remark, Value = achieve.Value, PeriodeType = pType };
-                            items.Add(item);
+                            foreach (var achievement in kpi.KpiAchievements)
+                            {
+                                var item = new ConfigurationViewModel.Item()
+                                {
+                                    Id = achievement.Id,
+                                    KpiId = kpi.Id,
+                                    Periode = achievement.Periode,
+                                    Remark = achievement.Remark,
+                                    Value = achievement.Value.HasValue ? achievement.Value.ToString() : string.Empty,
+                                    PeriodeType = pType
+                                };
+                                items.Add(item);
+                            }
+                            break;
                         }
-                        break;
-                    case "Economic":
-                        items = kpi.Economics.MapTo<ConfigurationViewModel.Item>();
-                        break;
-                    default:
-                        break;
+                        
+                    case "OperationData":
+                        {
+                            //items = kpi.OperationData.MapTo<ConfigurationViewModel.Item>();
+                            foreach (var operationData in kpi.OperationData)
+                            {
+                                var item = new ConfigurationViewModel.Item()
+                                {
+                                    Id = operationData.Id,
+                                    KpiId = kpi.Id,
+                                    Periode = operationData.Periode,
+                                    Remark = operationData.Remark,
+                                    Value = operationData.Value.HasValue ? operationData.Value.ToString() : string.Empty,
+                                    PeriodeType = pType
+                                };
+                                items.Add(item);
+                            }
+                            break;
+                        }
                 }
-                foreach (var achievement in items)
-                {
-                    worksheet.Cells[HeaderRow.Index, j].Value = achievement.Periode;
-                    worksheet.Cells[HeaderRow.Index, j].NumberFormat = dateFormat;
-                    worksheet.Cells[HeaderRow.Index, j].AutoFitColumns();
 
-                    worksheet.Cells[i, j].Value = achievement.Value;
+                foreach (var item in items)
+                {
+                    worksheet.Cells[headerRow.Index, j].Value = item.Periode;
+                    worksheet.Cells[headerRow.Index, j].NumberFormat = dateFormat;
+                    worksheet.Cells[headerRow.Index, j].AutoFitColumns();
+
+                    worksheet.Cells[i, j].Value = item.RealValue;
                     worksheet.Cells[i, j].NumberFormat = "#,0.#0";
                     worksheet.Columns[j].AutoFitColumns();
                     j++;
                 }
-                Column TotalValueColumn = worksheet.Columns[j];
-                if (i == HeaderRow.Index + 1)
+
+                Column totalValueColumn = worksheet.Columns[j];
+                if (i == headerRow.Index + 1)
                 {
-                    worksheet.Cells[HeaderRow.Index, TotalValueColumn.Index].Value = "Average";
-                    worksheet.Cells[HeaderRow.Index, TotalValueColumn.Index + 1].Value = "SUM";
-                    Range r1 = worksheet.Range.FromLTRB(KpiNameColumn.Index + 1, i, j - 1, i);
+                    worksheet.Cells[headerRow.Index, totalValueColumn.Index].Value = "Average";
+                    worksheet.Cells[headerRow.Index, totalValueColumn.Index + 1].Value = "SUM";
+                    Range r1 = worksheet.Range.FromLTRB(kpiNameColumn.Index + 1, i, j - 1, i);
                     worksheet.Cells[i, j].Formula = string.Format("=AVERAGE({0})", r1.GetReferenceA1());
                     worksheet.Cells[i, j + 1].Formula = string.Format("=SUM({0})", r1.GetReferenceA1());
                 }
                 else
                 {
                     // add formula
-                    Range r2 = worksheet.Range.FromLTRB(KpiNameColumn.Index + 1, i, j - 1, i);
+                    Range r2 = worksheet.Range.FromLTRB(kpiNameColumn.Index + 1, i, j - 1, i);
                     worksheet.Cells[i, j].Formula = string.Format("=AVERAGE({0})", r2.GetReferenceA1());
                     worksheet.Cells[i, j + 1].Formula = string.Format("=SUM({0})", r2.GetReferenceA1());
                 }
                 i++;
             }
             #endregion
-            KpiNameColumn.AutoFitColumns();
-            worksheet.FreezePanes(HeaderRow.Index, KpiNameColumn.Index);
+            kpiNameColumn.AutoFitColumns();
+            worksheet.FreezePanes(headerRow.Index, kpiNameColumn.Index);
 
-            string resultFilePath = string.Format("{0},{1}", resultPath, fileName);// System.Web.HttpContext.Current.Request.MapPath(resultPath + fileName);
+            string resultFilePath = string.Format("{0},{1}", resultPath, fileName);
+            //System.Web.HttpContext.Current.Request.MapPath(resultPath + fileName);
             //System.Web.HttpContext.Current.Response.Clear();
             //System.Web.HttpContext.Current.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
             //System.Web.HttpContext.Current.Response.AddHeader("content-disposition", String.Format(@"attachment;filename={0}", fileName));
@@ -223,19 +284,17 @@ namespace DSLNG.PEAR.Web.Controllers
             //workbook.Dispose();
             #endregion
 
-
             string namafile = Path.GetFileName(resultFilePath);
             byte[] fileBytes = System.IO.File.ReadAllBytes(resultFilePath);
             var response = new FileContentResult(fileBytes, "application/octet-stream") { FileDownloadName = fileName };
             return response;
-
         }
 
         public ActionResult Upload(string configType)
         {
-            ConfigurationViewModel model = new ConfigurationViewModel();
-            model.ConfigType = configType;
-            return PartialView("_Upload", model);
+            var viewModel = new ConfigurationViewModel();
+            viewModel.ConfigType = configType;
+            return PartialView("_Upload", viewModel);
         }
 
         public ActionResult UploadControlCallbackAction(string configType)
@@ -250,191 +309,222 @@ namespace DSLNG.PEAR.Web.Controllers
             return null;
         }
 
-        public JsonResult ProcessFile(string configType, string filename)
+        public JsonResult ProcessFile(ProcessFileViewModel viewModel)
         {
-            var file = string.Format("{0}{1}/{2}", UploadDirectory, configType, filename);
-            var response = this._ReadExcelFile(configType, file);
+            var file = string.Format("{0}{1}/{2}", UploadDirectory, viewModel.ConfigType, viewModel.Filename);
+            viewModel.Filename = file;
+            var response = ReadExcelFile(viewModel);
             return Json(new { isSuccess = response.IsSuccess, Message = response.Message });
         }
 
-        private BaseResponse _ReadExcelFile(string configType, string filename)
+        private BaseResponse ReadExcelFile(ProcessFileViewModel viewModel)
         {
-            var response = new BaseResponse();
-            string periodType = string.Empty;
-            PeriodeType pType = PeriodeType.Yearly;
-            int tahun = DateTime.Now.Year, bulan = DateTime.Now.Month;
-            List<ConfigurationViewModel.Item> list_data = new List<ConfigurationViewModel.Item>();
-            if (filename != Path.GetFullPath(filename))
+            var response = new BaseResponse(); 
+
+            try
             {
-                filename = Server.MapPath(filename);
-            }
-            /*
-             * cek file exist and return immediatelly if not exist
-             */
-            if (!System.IO.File.Exists(filename))
-            {
-                response.IsSuccess = false;
-                response.Message = "File Not Found";
-                return response;
-            }
-            Workbook workbook = new Workbook();
-            using (FileStream stream = new FileStream(filename, FileMode.Open))
-            {
-                workbook.LoadDocument(stream, DevExpress.Spreadsheet.DocumentFormat.OpenXml);
-                #region foreach
-                foreach (var worksheet in workbook.Worksheets)
+                int year = DateTime.Now.Year;
+                int month = DateTime.Now.Month;
+                var listData = new List<ConfigurationViewModel.Item>();
+
+                if (viewModel.Filename != Path.GetFullPath(viewModel.Filename))
                 {
-                    string[] name = worksheet.Name.Split('_');
-                    if (name[0] == "Daily" || name[0] == "Monthly" || name[0] == "Yearly")
+                    viewModel.Filename = Server.MapPath(viewModel.Filename);
+                }
+
+                if (!System.IO.File.Exists(viewModel.Filename))
+                {
+                    response.IsSuccess = false;
+                    response.Message = "File Not Found";
+                    return response;
+                }
+
+                Workbook workbook = new Workbook();
+                using (FileStream stream = new FileStream(viewModel.Filename, FileMode.Open))
+                {
+                    workbook.LoadDocument(stream, DevExpress.Spreadsheet.DocumentFormat.OpenXml);
+                    #region foreach
+                    foreach (var worksheet in workbook.Worksheets)
                     {
-                        periodType = name[0];
-                        pType = string.IsNullOrEmpty(periodType)
-                            ? PeriodeType.Yearly
-                            : (PeriodeType)Enum.Parse(typeof(PeriodeType), periodType);
-                        string period = name[name.Count() - 1];
-                        string[] periodes = null;
-                        //validate and switch value by periodType
-                        if (periodType != period && !string.IsNullOrEmpty(period))
+                        string[] name = worksheet.Name.Split('_');
+                        PeriodeType pType;
+                        if (name[0] == "Daily" || name[0] == "Monthly" || name[0] == "Yearly")
                         {
-                            switch (periodType)
+                            string periodeType = name[0];
+                            pType = string.IsNullOrEmpty(periodeType) ? PeriodeType.Yearly : (PeriodeType)Enum.Parse(typeof(PeriodeType), periodeType);
+                            string period = name[name.Count() - 1];
+                            string[] periodes = null;
+
+                            if (periodeType != period && !string.IsNullOrEmpty(period))
                             {
-                                case "Daily":
-                                    periodes = period.Split('-');
-                                    tahun = int.Parse(periodes[0]);
-                                    bulan = int.Parse(periodes[periodes.Count() - 1]);
-                                    break;
-                                case "Monthly":
-                                    tahun = int.Parse(period);
-                                    break;
-                                case "Yearly":
-                                default:
-                                    break;
-                            }
-                        }
-
-                        workbook.Worksheets.ActiveWorksheet = worksheet;
-                        //get row
-
-                        Range range = worksheet.GetUsedRange();
-                        int rows = range.RowCount;
-                        int column = range.ColumnCount - 2;
-                        int Kpi_Id = 0;
-                        DateTime periodData = new DateTime();
-                        double? nilai = null;
-
-                        //get rows
-                        for (int i = 1; i < rows; i++)
-                        {
-                            for (int j = 0; j < column; j++)
-                            {
-                                bool fromExistedToNull = false;
-                                if (j == 0)
+                                switch (periodeType)
                                 {
-                                    if (worksheet.Cells[i, j].Value.Type == CellValueType.Numeric)
+                                    case "Yearly":
+                                        break;
+                                    case "Monthly":
+                                        year = int.Parse(period);
+                                        break;
+                                    case "Daily":
+                                        periodes = period.Split('-');
+                                        year = int.Parse(periodes[0]);
+                                        month = int.Parse(periodes[periodes.Count() - 1]);
+                                        break;
+                                }
+                            }
+
+                            workbook.Worksheets.ActiveWorksheet = worksheet;
+                            
+                            Range range = worksheet.GetUsedRange();
+                            int rows = range.RowCount;
+                            int column = range.ColumnCount - 2;
+                            int kpiId = 0;
+                            var kpiListWithOperationConfigId = new List<int>();
+                            var operationIds = new GetOperationsInResponse();
+
+                            #region get kpi list with key operation config
+                            if (viewModel.ConfigType.ToLowerInvariant().Equals("operationdata"))
+                            {
+                                for (int i = 1; i < rows; i++)
+                                {
+                                    for (int j = 0; j < column; j++)
                                     {
-                                        Kpi_Id = int.Parse(worksheet.Cells[i, j].Value.ToString());
+                                        if (j == 0)
+                                        {
+                                            if (worksheet.Cells[i, j].Value.Type == CellValueType.Numeric)
+                                            {
+                                                kpiId = int.Parse(worksheet.Cells[i, j].Value.ToString());
+                                                kpiListWithOperationConfigId.Add(kpiId);
+                                            }
+                                        }
                                     }
                                 }
-                                else if (j > 1)
+                                operationIds = _operationConfigService.GetOperationIn(new GetOperationsInRequest { KpiIds = kpiListWithOperationConfigId });
+                            }
+                            #endregion
+
+                            for (int i = 1; i < rows; i++)
+                            {
+                                for (int j = 0; j < column; j++)
                                 {
-                                    if (worksheet.Cells[0, j].Value.Type == CellValueType.DateTime)
+                                    if (j == 0)
                                     {
-                                        periodData = DateTime.Parse(worksheet.Cells[0, j].Value.ToString());
-                                        //}
                                         if (worksheet.Cells[i, j].Value.Type == CellValueType.Numeric)
                                         {
-                                            nilai = double.Parse(worksheet.Cells[i, j].Value.ToString());
+                                            kpiId = int.Parse(worksheet.Cells[i, j].Value.ToString());
                                         }
-                                        else if (worksheet.Cells[i, j].Value.Type == CellValueType.Text)
+                                    }
+                                    else if (j > 1)
+                                    {
+                                        if (worksheet.Cells[0, j].Value.Type == CellValueType.DateTime)
                                         {
-                                            fromExistedToNull = true;
-                                            nilai = null;
-                                        }
-                                        else
-                                        {
-                                            nilai = null;
-                                        }
+                                            DateTime periodData = DateTime.Parse(worksheet.Cells[0, j].Value.ToString());
 
-                                        if (nilai != null || fromExistedToNull)
-                                        {
-                                            // try to cacth and update
-                                            var data = new ConfigurationViewModel.Item() { Value = nilai, KpiId = Kpi_Id, Periode = periodData, PeriodeType = pType };
-                                            list_data.Add(data);
-                                            //switch (configType)
-                                            //{
-                                            //    case "KpiTarget":
-                                            //        response = this._UpdateKpiTarget(data);
-                                            //        break;
-                                            //    case "KpiAchievement":
-                                            //        response = this._UpdateKpiAchievement(data);
-                                            //        break;
-                                            //    case "Economic":
-                                            //        response = this._UpdateEconomic(data);
-                                            //        break;
-                                            //    default:
-                                            //        response.IsSuccess = false;
-                                            //        response.Message = "No Table Selected";
-                                            //        break;
-                                            //}
-                                        }
+                                            if (worksheet.Cells[i, j].Value.Type == CellValueType.Numeric ||
+                                                 worksheet.Cells[i, j].Value.Type == CellValueType.Text)
+                                            {
+                                                string value = worksheet.Cells[i, j].Value.ToString();
+                                                int operationId = 0;
+                                                if (viewModel.ConfigType.ToLowerInvariant().Equals(ConfigType.OperationData.ToString().ToLowerInvariant()))
+                                                {
+                                                    
+                                                    var operation = operationIds.KeyOperations.FirstOrDefault(x => x.KpiId == kpiId);
+                                                    if (operation != null)
+                                                    {
+                                                        operationId = operation.Id;
+                                                    }
+                                                }
+
+                                                if (!string.IsNullOrEmpty(value))
+                                                {
+                                                    var data = new ConfigurationViewModel.Item
+                                                        {
+                                                            Value = value,
+                                                            KpiId = kpiId,
+                                                            Periode = periodData,
+                                                            PeriodeType = pType,
+                                                            OperationId = operationId,
+                                                            ScenarioId = viewModel.ScenarioId
+                                                        };
+                                                    
+                                                    listData.Add(data);
+                                                }
+                                            }
+                                        } 
                                     }
                                 }
                             }
                         }
-                    }
-                    else
-                    {
-                        response.IsSuccess = false;
-                        response.Message = "File Not Valid";
-                        break;
-                    }
-                    switch (configType)
-                    {
-                        case "KpiTarget":
-                            response = this._UpdateKpiTarget(list_data);
-                            break;
-                        case "KpiAchievement":
-                            response = this._UpdateKpiAchievement(list_data, pType.ToString(), tahun, bulan);
-                            break;
-                        case "Economic":
-                            response = this._UpdateEconomic(list_data);
-                            break;
-                        default:
+                        else
+                        {
                             response.IsSuccess = false;
-                            response.Message = "No Table Selected";
+                            response.Message = "File Not Valid";
                             break;
+                        }
+                        switch (viewModel.ConfigType)
+                        {
+                            case "KpiTarget":
+                                response = UpdateKpiTarget(listData);
+                                break;
+                            case "KpiAchievement":
+                                response = UpdateKpiAchievement(listData);
+                                break;
+                            case "OperationData":
+                                response = UpdateOperationData(listData);
+                                break;
+                            default:
+                                response.IsSuccess = false;
+                                response.Message = string.Format(@"config type for {0} is not existed",
+                                                                 viewModel.ConfigType);
+                                break;
+                        }
                     }
+                    #endregion
                 }
-                #endregion
+            }
+            catch (Exception exception)
+            {
+                response.IsSuccess = false;
+                response.Message = exception.Message;
             }
 
-            //here to read excel fileController
             return response;
         }
 
-        private BaseResponse _UpdateEconomic(List<ConfigurationViewModel.Item> datas)
+        private BaseResponse UpdateOperationData(IEnumerable<ConfigurationViewModel.Item> datas)
         {
             var response = new BaseResponse { IsSuccess = false, Message = "Data Not Valid" };
-
+            if (datas != null)
+            {
+                var batch = new BatchUpdateOperationDataRequest();
+                foreach (var data in datas)
+                {
+                    var prepare = new UpdateOperationDataRequest()
+                        {
+                            Id = data.Id,
+                            KpiId = data.KpiId,
+                            Periode = data.Periode,
+                            Value = data.Value,
+                            PeriodeType = data.PeriodeType,
+                            Remark = data.Remark,
+                            KeyOperationConfigId = data.OperationId,
+                            ScenarioId = data.ScenarioId
+                        };// data.MapTo<UpdateKpiAchievementItemRequest>();
+                    batch.BatchUpdateOperationDataItemRequest.Add(prepare);
+                }
+                response = _operationDataService.BatchUpdateOperationDatas(batch);
+            }
             return response;
         }
 
-        private bool CompareData(List<ConfigurationViewModel.Item> new_list, List<ConfigurationViewModel.Item> old_list, out List<ConfigurationViewModel.Item> deleted, out List<ConfigurationViewModel.Item> inserted)
+        private BaseResponse UpdateKpiAchievement(IEnumerable<ConfigurationViewModel.Item> data)
         {
-            deleted = new_list.Except(old_list).ToList();
-            inserted = old_list.Except(new_list).ToList();
-            return false;
-        }
-
-        private BaseResponse _UpdateKpiAchievement(List<ConfigurationViewModel.Item> datas, string periodeType, int year, int month)
-        {
-            var response = new BaseResponse();
-            if (datas != null)
+            var response = new BaseResponse { IsSuccess = false, Message = "Data Not Valid" };
+            if (data != null)
             {
                 var batch = new BatchUpdateKpiAchievementRequest();
-                foreach (var data in datas)
+                foreach (var datum in data)
                 {
-                    var prepare = new UpdateKpiAchievementItemRequest() { Id = data.Id, KpiId = data.KpiId, Periode = data.Periode, Value = data.Value, PeriodeType = data.PeriodeType, Remark = data.Remark };// data.MapTo<UpdateKpiAchievementItemRequest>();
+                    var prepare = new UpdateKpiAchievementItemRequest() { Id = datum.Id, KpiId = datum.KpiId, Periode = datum.Periode, Value = datum.Value, PeriodeType = datum.PeriodeType, Remark = datum.Remark };// data.MapTo<UpdateKpiAchievementItemRequest>();
                     batch.BatchUpdateKpiAchievementItemRequest.Add(prepare);
                 }
                 response = _kpiAchievementService.BatchUpdateKpiAchievements(batch);
@@ -442,15 +532,15 @@ namespace DSLNG.PEAR.Web.Controllers
             return response;
         }
 
-        private BaseResponse _UpdateKpiTarget(List<ConfigurationViewModel.Item> datas)
+        private BaseResponse UpdateKpiTarget(IEnumerable<ConfigurationViewModel.Item> data)
         {
-            var response = new BaseResponse();
-            if (datas != null)
+            var response = new BaseResponse { IsSuccess = false, Message = "Data Not Valid" };
+            if (data != null)
             {
                 var batch = new BatchUpdateTargetRequest();
-                foreach (var data in datas)
+                foreach (var datum in data)
                 {
-                    var prepare = new SaveKpiTargetRequest() { Value = data.Value, KpiId = data.KpiId, Periode = data.Periode, PeriodeType = data.PeriodeType, Remark = data.Remark };
+                    var prepare = new SaveKpiTargetRequest() { Value = datum.Value, KpiId = datum.KpiId, Periode = datum.Periode, PeriodeType = datum.PeriodeType, Remark = datum.Remark };
                     batch.BatchUpdateKpiTargetItemRequest.Add(prepare);
                 }
                 response = _kpiTargetService.BatchUpdateKpiTargetss(batch);

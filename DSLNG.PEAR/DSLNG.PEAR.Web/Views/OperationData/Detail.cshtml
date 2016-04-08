@@ -1,4 +1,5 @@
-﻿@model DSLNG.PEAR.Web.ViewModels.OperationalData.OperationDataDetailViewModel
+﻿@using DSLNG.PEAR.Data.Enums
+@model DSLNG.PEAR.Web.ViewModels.OperationalData.OperationDataDetailViewModel
 @{
     ViewBag.Title = "Detail";
 }
@@ -6,7 +7,7 @@
 @section Scripts{
     <script type="text/javascript">
         var data = {};
-        data.configType = "Economic";
+        data.configType = "@ConfigType.OperationData.ToString()";
         data.scenarioId = "@Model.ScenarioId";
         var link = null;
         $(document).ready(function () {
@@ -35,7 +36,7 @@
                     });
                 } else {
                     data.scenarioId = @Model.ScenarioId
-                    data.configType = "Economic";
+                    data.configType = "@ConfigType.OperationData.ToString()";
                     $.ajax({
                         url: '@Url.Action("Upload", "OperationData")',
                         type: 'GET',
@@ -143,7 +144,7 @@
                             @group.Name
                         </td>
                         <td class="text-button" style="margin: auto;">
-                            <a href="@Url.Action("Configuration", "OperationData", new {groupId = group.Id, scenarioId = Model.ScenarioId})"><span class="fa fa-pencil-square-o"></span>Manage</a>
+                            <a href="@Url.Action("Configuration", "OperationData", new {roleGroupId = group.Id, scenarioId = Model.ScenarioId})"><span class="fa fa-pencil-square-o"></span>Manage</a>
                         </td>
                     </tr>
 

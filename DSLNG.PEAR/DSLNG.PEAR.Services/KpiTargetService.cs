@@ -270,6 +270,64 @@ namespace DSLNG.PEAR.Services
             var response = new UpdateKpiTargetItemResponse();
             try
             {
+                var user = DataContext.Users.First(x => x.Id == request.UserId);
+                var kpiTarget = request.MapTo<KpiTarget>();
+
+                if (request.Id > 0)
+                {
+                    if (string.IsNullOrEmpty(request.Value) || request.Value == "-" || request.Value.ToLowerInvariant() == "null")
+                    {
+                        kpiTarget = DataContext.KpiTargets.Single(x => x.Id == request.Id);
+                        DataContext.KpiTargets.Remove(kpiTarget);
+                    }
+                    else
+                    {
+                        kpiTarget = DataContext.KpiTargets
+                                                .Include(x => x.Kpi)
+                                                .Include(x => x.UpdatedBy)
+                                                .Single(x => x.Id == request.Id);
+                        request.MapPropertiesToInstance<KpiTarget>(kpiTarget);
+                        kpiTarget.UpdatedBy = user;
+                        kpiTarget.Kpi = DataContext.Kpis.Single(x => x.Id == request.KpiId);
+                    }
+                }
+                else if (request.Id == 0)
+                {
+                    if ((string.IsNullOrEmpty(request.Value) || request.Value == "-" ||
+                         request.Value.ToLowerInvariant() == "null") && request.Id == 0)
+                    {
+                        response.IsSuccess = false;
+                        response.Message = "Value is null but data is not existed before";
+                        return response;
+                    }
+                    else
+                    {
+                        kpiTarget.CreatedBy = user;
+                        kpiTarget.UpdatedBy = user;
+                        kpiTarget.Kpi = DataContext.Kpis.Single(x => x.Id == request.KpiId);
+                        DataContext.KpiTargets.Add(kpiTarget);
+                    }
+                }
+
+
+                DataContext.SaveChanges();
+                response.Id = request.Id > 0 ? request.Id : kpiTarget.Id;
+                response.IsSuccess = true;
+                response.Message = "KPI Target item has been updated successfully";
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                response.Message = invalidOperationException.Message;
+            }
+            catch (ArgumentNullException argumentNullException)
+            {
+                response.Message = argumentNullException.Message;
+            }
+
+            return response;
+            /*var response = new UpdateKpiTargetItemResponse();
+            try
+            {
                 var kpiTarget = request.MapTo<KpiTarget>();
                 DataContext.KpiTargets.Attach(kpiTarget);
                 DataContext.Entry(kpiTarget).State = EntityState.Modified;
@@ -283,7 +341,7 @@ namespace DSLNG.PEAR.Services
                 response.Message = dbUpdateException.Message;
             }
 
-            return response;
+            return response;*/
         }
 
         public GetKpiTargetsConfigurationResponse GetKpiTargetsConfiguration(GetKpiTargetsConfigurationRequest request)
@@ -319,7 +377,7 @@ namespace DSLNG.PEAR.Services
                             var kpiDto = kpi.MapTo<GetKpiTargetsConfigurationResponse.Kpi>();
                             foreach (var number in YearlyNumbers)
                             {
-                                var achievement = kpiTargetsYearly.SingleOrDefault(x => x.Kpi.Id == kpi.Id && x.Periode.Year == number);
+                                var achievement = kpiTargetsYearly.SingleOrDefault(x => x.Kpi !=null && x.Kpi.Id == kpi.Id && x.Periode.Year == number);
                                 if (achievement != null)
                                 {
                                     var targetDto =
@@ -516,7 +574,7 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-        public BaseResponse BatchUpdateKpiTargetss(BatchUpdateTargetRequest request)
+        /*public BaseResponse BatchUpdateKpiTargetss(BatchUpdateTargetRequest request)
         {
             var response = new BaseResponse();
             try
@@ -579,9 +637,107 @@ namespace DSLNG.PEAR.Services
                 response.Message = argumentNullException.Message;
             }
             return response;
+        }*/
+
+        public BaseResponse BatchUpdateKpiTargetss(BatchUpdateTargetRequest request)
+        {
+            var response = new BaseResponse();
+            try
+            {
+                int i = 0;
+                foreach (var item in request.BatchUpdateKpiTargetItemRequest)
+                {
+                    //var kpiTarget = item.MapTo<KpiTarget>();
+                    if (!string.IsNullOrEmpty(item.Value))
+                    {
+                        var existedKpiTarget =
+                            DataContext.KpiTargets.FirstOrDefault(
+                                x =>
+                                x.Kpi.Id == item.KpiId && x.PeriodeType == item.PeriodeType && x.Periode == item.Periode);
+
+                        
+                        if (existedKpiTarget != null)
+                        {
+                            if (item.Value.Equals("-") || item.Value.ToLowerInvariant().Equals("null"))
+                            {
+                                DataContext.KpiTargets.Remove(existedKpiTarget);
+                            }
+                            else
+                            {
+                                existedKpiTarget.Value = item.RealValue;
+                                DataContext.Entry(existedKpiTarget).State = EntityState.Modified;    
+                            }
+                        }
+                        else
+                        {
+                            var kpiTarget = item.MapTo<KpiTarget>();
+                            if (kpiTarget.Value.HasValue)
+                            {
+                                kpiTarget.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == item.KpiId);
+                                DataContext.KpiTargets.Add(kpiTarget);    
+                            }
+                            
+                        }
+                    }
+
+                    
+
+                    /*var exist = DataContext.KpiTargets.FirstOrDefault(x => x.Kpi.Id == item.KpiId && x.PeriodeType == item.PeriodeType && x.Periode == item.Periode && x.Value == item.Value && x.Remark == item.Remark);
+                    //skip no change value
+                    if (exist != null)
+                    {
+                        continue;
+                    }
+                    var attachedEntity = DataContext.KpiTargets.FirstOrDefault(x => x.Kpi.Id == item.KpiId && x.PeriodeType == item.PeriodeType && x.Periode == item.Periode);
+                    if (attachedEntity != null)
+                    {
+                        kpiTarget.Id = attachedEntity.Id;
+                    }
+                    //jika tidak ada perubahan di skip aja
+                    //if (existing.Value.Equals(item.Value) && existing.Periode.Equals(item.Periode) && existing.Kpi.Id.Equals(item.KpiId) && existing.PeriodeType.Equals(item.PeriodeType)) {
+                    //    break;
+                    //}
+                    if (kpiTarget.Id != 0)
+                    {
+                        //var attachedEntity = DataContext.KpiAchievements.Find(item.Id);
+                        if (attachedEntity != null && DataContext.Entry(attachedEntity).State != EntityState.Detached)
+                        {
+                            DataContext.Entry(attachedEntity).State = EntityState.Detached;
+                        }
+                        DataContext.KpiTargets.Attach(kpiTarget);
+                        DataContext.Entry(kpiTarget).State = EntityState.Modified;
+                    }
+                    else
+                    {
+                        kpiTarget.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == item.KpiId);
+                        DataContext.KpiTargets.Add(kpiTarget);
+                    }*/
+                    i++;
+                }
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                if (i > 0)
+                {
+                    response.Message = string.Format("{0}  KPI Target items has been updated successfully", i.ToString());
+                }
+                else
+                {
+                    response.Message = "File Successfully Parsed, but no data changed!";
+                }
+
+
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                response.Message = invalidOperationException.Message;
+            }
+            catch (ArgumentNullException argumentNullException)
+            {
+                response.Message = argumentNullException.Message;
+            }
+            return response;
         }
 
-        
         public GetKpiTargetItemResponse GetKpiTarget(int kpiId, DateTime date, RangeFilter rangeFilter)
         {
             var response = new GetKpiTargetItemResponse();

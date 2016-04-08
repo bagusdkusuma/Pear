@@ -11,8 +11,17 @@ namespace DSLNG.PEAR.Services.Requests.KpiTarget
         public int Id { get; set; }
         public int KpiId { get; set; }
         public DateTime Periode { get; set; }
-        public double? Value { get; set; }
+        public string Value { get; set; }
+        public double? RealValue
+        {
+            get
+            {
+                double realValue;
+                var isParsed = double.TryParse(Value, out realValue);
+                return isParsed ? realValue : default(double?);
+            }
+        }
         public string Remark { get; set; }
-        public DSLNG.PEAR.Data.Enums.PeriodeType PeriodeType { get; set; }
+        public Data.Enums.PeriodeType PeriodeType { get; set; }
     }
 }

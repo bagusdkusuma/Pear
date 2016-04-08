@@ -31,10 +31,9 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $('.der-layout-type').change(function () {
-            var that = $(this);
-            var type = that.val().toLowerCase();
-            switch (type) {
+        var getForm = function () {
+            var that = $('.der-layout-type');
+            switch ($('.der-layout-type').val().toLowerCase()) {
                 case 'multiaxis':
                     $.ajax({
                         url: '@Url.Action("LayoutSetting", "DerLayout", new { type = "_type_" })'.replace('_type_', that.val()),
@@ -87,6 +86,7 @@
                         break;
                     }
                 case 'dafwc':
+                case 'key-equipment-status':
                     {
                         $.ajax({
                             url: '@Url.Action("LayoutSetting", "DerLayout", new { type = "_type_" })'.replace('_type_', that.val()),
@@ -108,7 +108,11 @@
                         }
                     });
                     break;
-            }
+            };
+        };
+        getForm();
+        $('.der-layout-type').change(function () {
+            getForm();
         });
     });
 </script>

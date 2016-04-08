@@ -1,0 +1,211 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKeyEquipmentStatusViewModel
+
+@{
+    var pos0 = Model.KeyEquipmentStatusViewModels.Single(x => x.Position == 0);
+    var pos1 = Model.KeyEquipmentStatusViewModels.Single(x => x.Position == 1);
+    var pos2 = Model.KeyEquipmentStatusViewModels.Single(x => x.Position == 2);
+    var pos3 = Model.KeyEquipmentStatusViewModels.Single(x => x.Position == 3);
+    var pos4 = Model.KeyEquipmentStatusViewModels.Single(x => x.Position == 4);
+    var pos5 = Model.KeyEquipmentStatusViewModels.Single(x => x.Position == 5);
+    var pos6 = Model.KeyEquipmentStatusViewModels.Single(x => x.Position == 6);
+    var pos7 = Model.KeyEquipmentStatusViewModels.Single(x => x.Position == 7);
+    var pos8 = Model.KeyEquipmentStatusViewModels.Single(x => x.Position == 8);
+    var pos9 = Model.KeyEquipmentStatusViewModels.Single(x => x.Position == 9);
+    var pos10 = Model.KeyEquipmentStatusViewModels.Single(x => x.Position == 10);
+    var pos11 = Model.KeyEquipmentStatusViewModels.Single(x => x.Position == 11);
+    var pos12 = Model.KeyEquipmentStatusViewModels.Single(x => x.Position == 12);
+    var pos13 = Model.KeyEquipmentStatusViewModels.Single(x => x.Position == 13);
+    var pos14 = Model.KeyEquipmentStatusViewModels.Single(x => x.Position == 14);
+    var pos15 = Model.KeyEquipmentStatusViewModels.Single(x => x.Position == 15);
+    var pos16 = Model.KeyEquipmentStatusViewModels.Single(x => x.Position == 16);
+    var pos17 = Model.KeyEquipmentStatusViewModels.Single(x => x.Position == 17);
+    var pos18 = Model.KeyEquipmentStatusViewModels.Single(x => x.Position == 18);
+    var pos19 = Model.KeyEquipmentStatusViewModels.Single(x => x.Position == 19);
+    var pos20 = Model.KeyEquipmentStatusViewModels.Single(x => x.Position == 20);
+    var pos21 = Model.KeyEquipmentStatusViewModels.Single(x => x.Position == 21);
+    var pos22 = Model.KeyEquipmentStatusViewModels.Single(x => x.Position == 22);
+    var pos23 = Model.KeyEquipmentStatusViewModels.Single(x => x.Position == 23);
+
+}
+
+<table class="der-table all-border">
+    <thead>
+        <tr>
+            <th colspan="8">
+                KEY EQUIPMENT STATUS
+            </th>
+        </tr>
+        <tr>
+            <th colspan="2">
+                Power
+            </th>
+            <th colspan="2">
+                Process Train
+            </th>
+            <th colspan="2">
+                Utilities
+            </th>
+            <th colspan="2">
+                Support
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                GTG-A
+            </td>
+            <td>
+                @pos0.highlight
+            </td>
+            <td>
+                C3 Compr
+            </td>
+            <td>
+                @pos6.highlight
+            </td>
+            <td>
+                Air Compr-A
+            </td>
+            <td>
+                @pos12.highlight
+            </td>
+            <td>
+                Feed Inlet System
+            </td>
+            <td>
+                @pos16.highlight
+            </td>
+        </tr>
+        <tr>
+            <td>
+                GTG-B
+            </td>
+            <td>
+                @pos1.highlight
+            </td>
+            <td>
+                LP-MR Compr
+            </td>
+            <td>
+                @pos7.highlight
+            </td>
+            <td>
+                Air Compr-B
+            </td>
+            <td>
+                @pos13.highlight
+            </td>
+            <td>
+                Potable Water Syst
+            </td>
+            <td>
+                @pos19.highlight
+            </td>
+        </tr>
+        <tr>
+            <td>
+                GTG-C
+            </td>
+            <td>
+                @pos2.highlight
+            </td>
+            <td>
+                HP-MR Compr
+            </td>
+            <td>
+                @pos8.highlight
+            </td>
+            <td>
+                Air Compr-C
+            </td>
+            <td>
+                @pos14.highlight
+            </td>
+            <td>
+                Fire-Protect Syst
+            </td>
+            <td>
+               @pos20.highlight
+            </td>
+        </tr>
+        <tr>
+            <td>
+                EDG-A
+            </td>
+            <td>
+                @pos3.highlight
+            </td>
+            <td>
+                Hot Oil System
+            </td>
+            <td>
+                @pos9.highlight
+            </td>
+            <td>
+                N2 System
+            </td>
+            <td>
+                @pos15.highlight
+            </td>
+            <td>
+                C2&C3 Storage Tank
+            </td>
+            <td>
+                @pos21.highlight
+            </td>
+        </tr>
+        <tr>
+            <td>
+                EDG-B
+            </td>
+            <td>
+                @pos4.highlight
+            </td>
+            <td>
+                Fuel Gas System
+            </td>
+            <td>
+                @pos10.highlight
+            </td>
+            <td>
+                BOG Compr
+            </td>
+            <td>
+                @pos16.highlight
+            </td>
+            <td>
+                Flare System
+            </td>
+            <td>
+               @pos22.highlight
+            </td>
+        </tr>
+        <tr>
+            <td>
+                EDG-C
+            </td>
+            <td>
+                @pos5.highlight
+            </td>
+            <td>
+                MCHE
+            </td>
+            <td>
+                @pos15.highlight
+            </td>
+            <td>
+                LNG Jetty
+            </td>
+            <td>
+                @pos17.highlight
+            </td>
+            <td>
+                Waste System
+            </td>
+            <td>
+                @pos23.highlight
+            </td>
+        </tr>
+    </tbody>
+</table>

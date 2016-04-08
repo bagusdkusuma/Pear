@@ -1,13 +1,10 @@
-﻿@model DSLNG.PEAR.Web.ViewModels.OperationData.OperationDataConfigurationViewModel
+﻿@using DSLNG.PEAR.Data.Enums
+@model DSLNG.PEAR.Web.ViewModels.OperationData.OperationDataConfigurationViewModel
 
 <script type="text/javascript">
     $(document).ready(function () {
         $('#div-proceed').hide();
         $('#btn-proceed').click(function () {
-            /*alert(link);
-            alert(encodeURIComponent(link));
-            return false;*/
-            //window.location = '@Url.Action("ProceedFile", "OperationData")' + '?filename=' + encodeURIComponent(link);
             var formData = {
                 'filename': link,
                 'scenarioId': value.scenarioId,
@@ -15,7 +12,7 @@
 
             };
             $.ajax({
-                url: '@Url.Action("ProceedFile", "OperationData")',
+                url: '@Url.Action("ProcessFile", "File")',
                 type: 'POST',
                 data: formData,
                 beforeSend: function () {
@@ -25,6 +22,7 @@
                     $('.notification').hide();
                 }
             }).done(function (result) {
+                debugger;
                 $('.ajax-loader2').hide();
                 var alertType = result.isSuccess === true ? 'alert-success' : 'alert-danger';
                 if (result.isSuccess === true || result.message === null) {
@@ -78,23 +76,33 @@
         }
 
         var value = getUrlVars();
-        value.configType = "Economic";
+        value.configType = "@ConfigType.OperationData.ToString()";
 
 </script>
 
-<div style="overflow: auto">
-    <form class="form-inline" style="float: left">
-        <div class="form-group">
-            @Html.ActionLink("Download Template", "DownloadTemplate", new { groupId = Model.GroupId, scenarioId = Model.ScenarioId, periodeType = Model.PeriodeType }, new { @class = "btn btn-primary" })
-        </div>
-        <div class="form-group" id="div-proceed">
-            <input id="btn-proceed" class="btn btn-primary" value="Proceed" />
-        </div>
-    </form>
-    @using (Html.BeginForm("Upload", "OperationData", new { configType = Model.ConfigType, scenarioId = Model.ScenarioId }, FormMethod.Post, new { @class = "form-inline" }))
-    {
+<div class="notification"></div>
+@using (Html.BeginForm("DownloadTemplate", "File", FormMethod.Post, new { @class = "form-inline", @style = "float: left" }))
+{
+    <input type="hidden" value="@ConfigType.OperationData" name="ConfigType" id="ConfigType"/>
+    @Html.HiddenFor(x => x.RoleGroupId)
+    @Html.HiddenFor(x => x.PeriodeType)
+    @Html.HiddenFor(x => x.Year)
+    @Html.HiddenFor(x => x.ScenarioId)
+    <input type="submit" value="Download Template" class="btn btn-primary" />
+}
 
-        @Html.DevExpress().UploadControl(settings =>
+<form class="form-inline" style="float: left">
+    <div class="form-group">
+        @*@Html.ActionLink("Download Template", "DownloadTemplate", new { groupId = Model.GroupId, scenarioId = Model.ScenarioId, periodeType = Model.PeriodeType }, new { @class = "btn btn-primary" })*@
+    </div>
+    <div class="form-group" id="div-proceed">
+        <input id="btn-proceed" class="btn btn-primary" value="Proceed" />
+    </div>
+</form>
+@using (Html.BeginForm("ProcessFile", "File", new { configType = Model.ConfigType, scenarioId = Model.ScenarioId }, FormMethod.Post, new { @class = "form-inline" }))
+{
+
+    @Html.DevExpress().UploadControl(settings =>
         {
             settings.Name = "uc";
             settings.CallbackRouteValues = new { configType = Model.ConfigType, scenarioId = Model.ScenarioId, Controller = "OperationData", Action = "UploadControlCallbackAction" };
@@ -103,9 +111,10 @@
             settings.ShowProgressPanel = true;
             settings.ValidationSettings.Assign(DSLNG.PEAR.Web.Extensions.ExcelUploadHelper.ValidationSettings);
         }).GetHtml()
-    }
-
-    <table class="table table-hover table-transparent table-bordered" style="width: 100%">
+}
+<div style="clear: both"></div>
+<div id="parent-fixed-table">
+    <table id="fixed-table" class="table table-hover table-transparent table-bordered">
         <tbody>
             <tr>
                 <th style="width: 10%;">KPI Name</th>
@@ -139,7 +148,7 @@
                 <tr>
                     <td style="text-align: left">@(number++). @kpi.Name (@kpi.MeasurementName)</td>
                     @{ var b = 0;}
-                    @foreach (var operationData in kpi.OperationDatas)
+                    @foreach (var operationData in kpi.OperationData)
                     {
                         var remarkSign = "";
                         if (!string.IsNullOrEmpty(operationData.Remark))

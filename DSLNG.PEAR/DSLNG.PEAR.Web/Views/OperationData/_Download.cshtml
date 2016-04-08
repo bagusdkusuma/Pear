@@ -1,4 +1,5 @@
-﻿@model DSLNG.PEAR.Web.ViewModels.Config.ConfigurationViewModel
+﻿@using DSLNG.PEAR.Data.Enums
+@model DSLNG.PEAR.Web.ViewModels.Config.ConfigurationViewModel
 
 <script type="text/javascript">
     var data = {};
@@ -69,8 +70,9 @@
 <div class="notification"></div>
 <!---->
 <div>
-    @using (Html.BeginForm("DownloadTemplateForAllGroup", "OperationData", FormMethod.Post, new { @class = "form-inline", @style = "float: left" }))
+    @using (Html.BeginForm("DownloadTemplate", "File", FormMethod.Post, new { @class = "form-inline", @style = "float: left" }))
     {
+        <input type="hidden" value="@ConfigType.OperationData" name="ConfigType" id="ConfigType"/>
         <div class="form-group">
             <label class="labletop">Periode Type :</label>
             @Html.DropDownListFor(x => x.PeriodeType, Model.PeriodeTypes, new { @class = "form-control", id = "periodeType" })

@@ -98,7 +98,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 viewModel.Years = _dropdownService.GetYears().MapTo<SelectListItem>();
                 viewModel.Months = _dropdownService.GetMonths().MapTo<SelectListItem>();
                 viewModel.PeriodeType = pType.ToString();
-                viewModel.FileName = this._ExportToExcel(viewModel);
+                //viewModel.FileName = this._ExportToExcel(viewModel);
                 return View(viewModel);
             }
 
@@ -213,6 +213,7 @@ namespace DSLNG.PEAR.Web.Controllers
             //todo create file from viewModel
             return string.Format("{0}KpiTarget/{1}", TemplateDirectory,fileName);
         }
+
         public ActionResult ConfigurationPartial(ConfigurationParamViewModel paramViewModel)
         {
             int roleGroupId = paramViewModel.Id;
@@ -234,7 +235,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 viewModel.Years = _dropdownService.GetYears().MapTo<SelectListItem>();
                 viewModel.Months = _dropdownService.GetMonths().MapTo<SelectListItem>();
                 viewModel.PeriodeType = pType.ToString();
-                viewModel.FileName = this._ExportToExcel(viewModel);
+                //viewModel.FileName = this._ExportToExcel(viewModel);
                 return PartialView("Configuration/_" + pType.ToString(), viewModel);
             }
 
@@ -253,7 +254,7 @@ namespace DSLNG.PEAR.Web.Controllers
             return base.ErrorPage(response.Message);
         }
 
-        public ActionResult IndexPartial()
+        /*public ActionResult IndexPartial()
         {
             var viewModel = GridViewExtension.GetViewModel("gridKpiTargetIndex");
             if (viewModel == null)
@@ -301,7 +302,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 Skip = e.StartDataRowIndex,
                 Take = e.DataRowCount
             }).KpiTargets;
-        }
+        }*/
 
         public ActionResult Create()
         {
@@ -390,7 +391,7 @@ namespace DSLNG.PEAR.Web.Controllers
         [HttpPost]
         public JsonResult KpiTargetItem(KpiTargetItem kpiTarget)
         {
-            if (kpiTarget.Id > 0)
+            /*if (kpiTarget.Id > 0)
             {
                 var request = kpiTarget.MapTo<UpdateKpiTargetItemRequest>();
                 var response = _kpiTargetService.UpdateKpiTargetItem(request);
@@ -401,7 +402,12 @@ namespace DSLNG.PEAR.Web.Controllers
                 var request = kpiTarget.MapTo<CreateKpiTargetRequest>();
                 var response = _kpiTargetService.Create(request);
                 return Json(new { Id = response.Id, Message = response.Message, isSuccess = response.IsSuccess });
-            }
+            }*/
+
+            var request = kpiTarget.MapTo<UpdateKpiTargetItemRequest>();
+            request.UserId = this.UserProfile().UserId;
+            var response = _kpiTargetService.UpdateKpiTargetItem(request);
+            return Json(new { Id = response.Id, Message = response.Message, isSuccess = response.IsSuccess });
         }
 
         public ActionResult UploadControlCallbackAction()

@@ -12,13 +12,23 @@ namespace DSLNG.PEAR.Services.Requests.OperationalData
         public int ScenarioId { get; set; }
         public int KeyOperationConfigId { get; set; }
         public int KpiId { get; set; }
-        public double? Value { get; set; }
+        public string Value { get; set; }
+        public double? RealValue
+        {
+            get
+            {
+                double realValue;
+                var isParsed = double.TryParse(Value, out realValue);
+                return isParsed ? realValue : default(double?);
+            }
+        }
         public string Remark { get; set; }
         public DateTime Periode { get; set; }
-        public DSLNG.PEAR.Data.Enums.PeriodeType PeriodeType { get; set; }
+        public Data.Enums.PeriodeType PeriodeType { get; set; }
     }
 
-    public class BatchUpdateOperationDataRequest {
+    public class BatchUpdateOperationDataRequest
+    {
         public BatchUpdateOperationDataRequest()
         {
             BatchUpdateOperationDataItemRequest = new List<UpdateOperationDataRequest>();
