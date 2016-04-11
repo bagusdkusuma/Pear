@@ -711,16 +711,13 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetMirConfigurationsResponse, SaveMirConfigurationViewModel>();
             Mapper.CreateMap<GetMirConfigurationsResponse, ConfigureMirConfigurationViewModel>();
             Mapper.CreateMap<GetMirConfigurationsResponse.MirDataTable, ConfigureMirConfigurationViewModel.MirDataTable>();
-<<<<<<< HEAD
-            Mapper.CreateMap<GetMirConfigurationsResponse.MirDataTable.Kpi, ConfigureMirConfigurationViewModel.MirDataTable.Kpi>();
+            //Mapper.CreateMap<GetMirConfigurationsResponse.MirDataTable.Kpi, ConfigureMirConfigurationViewModel.MirDataTable.Kpi>();
 
             Mapper.CreateMap<DownloadTemplateViewModel, GetKpiTargetsConfigurationRequest>();
             Mapper.CreateMap<DownloadTemplateViewModel, GetKpiAchievementsConfigurationRequest>();
             Mapper.CreateMap<DownloadTemplateViewModel, GetOperationDataConfigurationRequest>();
 
-=======
             Mapper.CreateMap<SaveMirDataTableViewModel, SaveMirDataTableRequest>();
->>>>>>> upstream/master
             base.Configure();
         }
 
