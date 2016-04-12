@@ -16,7 +16,7 @@
             $('.config-content').hide();
             $('[data-toggle=tab]').click(function () {
                 var that = $(this);
-
+                data.configType = "@ConfigType.OperationData.ToString()";
                 var tabType = that.attr('data-tabtype');
                 if (tabType == 'download') {
                     $.ajax({

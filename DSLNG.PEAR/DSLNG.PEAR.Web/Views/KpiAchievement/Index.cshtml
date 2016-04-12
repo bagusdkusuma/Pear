@@ -1,4 +1,5 @@
-﻿@model DSLNG.PEAR.Web.ViewModels.KpiAchievement.IndexKpiAchievementViewModel
+﻿@using DSLNG.PEAR.Data.Enums
+@model DSLNG.PEAR.Web.ViewModels.KpiAchievement.IndexKpiAchievementViewModel
 @{
 
 }
@@ -6,7 +7,7 @@
 @section Scripts{
     <script type="text/javascript">
         var data = {};
-        data.configType = 'KpiAchievement';
+        data.configType = '@ConfigType.KpiAchievement.ToString()';
         var link = null;
         $(document).ready(function () {
 
@@ -17,7 +18,7 @@
 
                 var tabType = that.attr('data-tabtype');
                 if (tabType == 'download') {
-                    data.configType = 'KpiAchievement';
+                    data.configType = '@ConfigType.KpiAchievement.ToString()';
                     $.ajax({
                         url: '@Url.Action("Download", "File")',
                         type: 'GET',
@@ -56,31 +57,35 @@
 
 
         function OnFileUploadComplete(s, e) {
+            var callback;
+            var message;
+            var btnpro;
             if (e.callbackData !== "") {
                 link = e.callbackData;
                 //console.log(link);
-                var callback = 'FileUploadComplete: ' + e.callbackData;
+                callback = 'FileUploadComplete: ' + e.callbackData;
                 $('.notification').empty();
-                var message = '<div class="alert alert-success" role="alert">' + callback + '</div>';
-                $('.notification').append(message).fadeIn().delay(10000).fadeOut();
+                message = '<div class="alert alert-success" role="alert">' + callback + '</div>';
+                $('.notification').append(message).fadeOut("slow");
                 //alert('FileUploadComplete: ' + e.callbackData);
-                var btnpro = document.getElementById('btn-proceed');
+                btnpro = document.getElementById('btn-proceed');
                 btnpro.removeAttribute('disabled');
-                var link_text = document.getElementById('filename-text');
-                link_text.setAttribute('value', link);
+                var linkText = document.getElementById('filename-text');
+                linkText.setAttribute('value', link);
                 //console.log(link_text);
                 //$('#div-proceed').show();
                 //proceed(e.callbackData);
             }
             else {
-                var btnpro = document.getElementById('btn-proceed');
+                btnpro = document.getElementById('btn-proceed');
                 btnpro.setAttribute('disabled', 'disabled');
                 $('.notification').empty();
-                var callback = 'The selected file was not uploaded.'
-                var message = '<div class="alert alert-danger" role="alert">' + callback + '</div>';
+                callback = 'The selected file was not uploaded.';
+                message = '<div class="alert alert-danger" role="alert">' + callback + '</div>';
                 $('.notification').append(message).fadeIn().delay(10000).fadeOut();
             }
         }
+
         function OnUploadTextChanged(s, e) {
             uc.Upload();
         }
