@@ -531,7 +531,10 @@ namespace DSLNG.PEAR.Services
             var response = new BaseResponse();
             try
             {
-                int i = 0;
+                int deletedCounter = 0;
+                int updatedCounter = 0;
+                int addedCounter = 0;
+                int skippedCounter = 0;
                 foreach (var item in request.BatchUpdateKpiAchievementItemRequest)
                 {
                     if (!string.IsNullOrEmpty(item.Value))
@@ -547,11 +550,20 @@ namespace DSLNG.PEAR.Services
                             if (item.Value.Equals("-") || item.Value.ToLowerInvariant().Equals("null"))
                             {
                                 DataContext.KpiAchievements.Remove(existedKpiAchievement);
+                                deletedCounter++;
                             }
                             else
                             {
-                                existedKpiAchievement.Value = item.RealValue;
-                                DataContext.Entry(existedKpiAchievement).State = EntityState.Modified;
+                                if (existedKpiAchievement.Value.Equals(item.RealValue))
+                                {
+                                    skippedCounter++;
+                                }
+                                else
+                                {
+                                    existedKpiAchievement.Value = item.RealValue;
+                                    DataContext.Entry(existedKpiAchievement).State = EntityState.Modified;
+                                    updatedCounter++;
+                                }
                             }
                         }
                         else
@@ -561,23 +573,15 @@ namespace DSLNG.PEAR.Services
                             {
                                 kpiAchievement.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == item.KpiId);
                                 DataContext.KpiAchievements.Add(kpiAchievement);
+                                addedCounter++;
                             }
-
                         }
                     }
-                    
-                    i++;
                 }
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
-                if (i > 0)
-                {
-                    response.Message = string.Format("{0}  KPI Target items has been updated successfully", i.ToString());
-                }
-                else
-                {
-                    response.Message = "File Successfully Parsed, but no data changed!";
-                }
+                response.Message = string.Format("{0} data has been added, {1} data has been updated, {2} data has been removed, {3} data didn't change", addedCounter.ToString()
+                   , updatedCounter.ToString(), deletedCounter.ToString(), skippedCounter.ToString());
             }
             catch (InvalidOperationException invalidOperationException)
             {

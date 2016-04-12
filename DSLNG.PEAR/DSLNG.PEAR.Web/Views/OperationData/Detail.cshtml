@@ -58,31 +58,30 @@
 
 
         function OnFileUploadComplete(s, e) {
+            var message;
+            var callback;
+            var btnpro;
             if (e.callbackData !== "") {
                 link = e.callbackData;
-                //console.log(link);
-                var callback = 'FileUploadComplete: ' + e.callbackData;
+                callback = 'FileUploadComplete: ' + e.callbackData;
                 $('.notification').empty();
-                var message = '<div class="alert alert-success" role="alert">' + callback + '</div>';
+                message = '<div class="alert alert-success" role="alert">' + callback + '</div>';
                 $('.notification').append(message).fadeIn().delay(10000).fadeOut();
-                //alert('FileUploadComplete: ' + e.callbackData);
-                var btnpro = document.getElementById('btn-proceed');
+                btnpro = document.getElementById('btn-proceed');
                 btnpro.removeAttribute('disabled');
-                var link_text = document.getElementById('filename-text');
-                link_text.setAttribute('value', link);
-                //console.log(link_text);
-                //$('#div-proceed').show();
-                //proceed(e.callbackData);
+                var linkText = document.getElementById('filename-text');
+                linkText.setAttribute('value', link);
             }
             else {
-                var btnpro = document.getElementById('btn-proceed');
+                btnpro = document.getElementById('btn-proceed');
                 btnpro.setAttribute('disabled', 'disabled');
                 $('.notification').empty();
-                var callback = 'The selected file was not uploaded.'
-                var message = '<div class="alert alert-danger" role="alert">' + callback + '</div>';
+                callback = 'The selected file was not uploaded.';
+                message = '<div class="alert alert-danger" role="alert">' + callback + '</div>';
                 $('.notification').append(message).fadeIn().delay(10000).fadeOut();
             }
         }
+
         function OnUploadTextChanged(s, e) {
             uc.Upload();
         }

@@ -5,7 +5,7 @@
         var formData = {
             'filename': link,
             'scenarioId': "@Model.ScenarioId",
-            'configType' : "@Model.ConfigType"
+            'configType': "@Model.ConfigType"
 
         };
         $.ajax({
@@ -22,11 +22,10 @@
             $('.ajax-loader2').hide();
             var alertType = result.isSuccess === true ? 'alert-success' : 'alert-danger';
             if (result.isSuccess === true) {
-                //console.log(result.Message);
-                $('.notification').html('<div class="alert ' + alertType + '" role="alert">' + result.Message + ' </div>').fadeIn().delay(10000).fadeOut();
+                $('.notification').html('<div class="alert ' + alertType + '" role="alert">' + result.Message + ' </div>').fadeOut("fast");
                 $(".nav-tabs .active").find('a').click();
             } else {
-                $('.notification').html('<div class="alert ' + alertType + '" role="alert">' + result.Message + '</div>').fadeIn().delay(10000).fadeOut();
+                $('.notification').html('<div class="alert ' + alertType + '" role="alert">' + result.Message + '</div>').fadeOut("fast");
             }
 
             $('.notification').show();
@@ -43,13 +42,13 @@
         </div>
     </form>
 
-    @using (Html.BeginForm("Upload", "OperationData", new {configType = Model.ConfigType, scenarioId = Model.ScenarioId}, FormMethod.Post, new { @class = "form-inline" }))
+    @using (Html.BeginForm("Upload", "OperationData", new { configType = Model.ConfigType, scenarioId = Model.ScenarioId }, FormMethod.Post, new { @class = "form-inline" }))
     {
 
         @Html.DevExpress().UploadControl(settings =>
         {
             settings.Name = "uc";
-            settings.CallbackRouteValues = new {configType = Model.ConfigType, scenarioId = Model.ScenarioId, Controller = "OperationData", Action = "UploadControlCallbackAction" };
+            settings.CallbackRouteValues = new { configType = Model.ConfigType, scenarioId = Model.ScenarioId, Controller = "OperationData", Action = "UploadControlCallbackAction" };
             settings.ClientSideEvents.FileUploadComplete = "OnFileUploadComplete";
             settings.ClientSideEvents.TextChanged = "function(s,e){uc.Upload();}";
             settings.ShowProgressPanel = true;

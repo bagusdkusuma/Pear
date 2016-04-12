@@ -469,7 +469,11 @@ namespace DSLNG.PEAR.Services
             var response = new BaseResponse();
             try
             {
-                int i = 0;
+                int deletedCounter = 0;
+                int updatedCounter = 0;
+                int addedCounter = 0;
+                int skippedCounter = 0;
+
                 foreach (var item in request.BatchUpdateOperationDataItemRequest)
                 {
                     if (!string.IsNullOrEmpty(item.Value))
@@ -487,11 +491,20 @@ namespace DSLNG.PEAR.Services
                             if (item.Value.Equals("-") || item.Value.ToLowerInvariant().Equals("null"))
                             {
                                 DataContext.KeyOperationDatas.Remove(existedOperationDatum);
+                                deletedCounter++;
                             }
                             else
                             {
-                                existedOperationDatum.Value = item.RealValue;
-                                DataContext.Entry(existedOperationDatum).State = EntityState.Modified;
+                                if (existedOperationDatum.Value.Equals(item.RealValue))
+                                {
+                                    skippedCounter++;
+                                }
+                                else
+                                {
+                                    existedOperationDatum.Value = item.RealValue;
+                                    DataContext.Entry(existedOperationDatum).State = EntityState.Modified;
+                                    updatedCounter++;    
+                                }
                             }
                         }
                         else
@@ -503,23 +516,16 @@ namespace DSLNG.PEAR.Services
                                 operationDatum.KeyOperationConfig = DataContext.KeyOperationConfigs.Single(x => x.Id == item.KeyOperationConfigId);
                                 operationDatum.Scenario = DataContext.Scenarios.Single(x => x.Id == item.ScenarioId);
                                 DataContext.KeyOperationDatas.Add(operationDatum);
+                                addedCounter++;
                             }
 
                         }
                     }
-
-                    i++;
                 }
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
-                if (i > 0)
-                {
-                    response.Message = string.Format("{0}  KPI Target items has been updated successfully", i.ToString());
-                }
-                else
-                {
-                    response.Message = "File Successfully Parsed, but no data changed!";
-                }
+                response.Message = string.Format("{0} data has been added, {1} data has been updated, {2} data has been removed, {3} data didn't change", addedCounter.ToString()
+                   , updatedCounter.ToString(), deletedCounter.ToString(), skippedCounter.ToString());
             }
             catch (InvalidOperationException invalidOperationException)
             {

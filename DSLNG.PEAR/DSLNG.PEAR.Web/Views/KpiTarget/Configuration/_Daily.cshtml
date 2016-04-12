@@ -27,10 +27,10 @@
                 $('.ajax-loader2').hide();
                 var alertType = result.isSuccess === true ? 'alert-success' : 'alert-danger';
                 if (result.isSuccess === true || result.message === null) {
-                    $('.notification').html('<div class="alert ' + alertType + '" role="alert">File Successfully Parsed : ' + link + ' </div>').fadeIn().delay(10000).fadeOut();
+                    $('.notification').html('<div class="alert ' + alertType + '" role="alert">' + result.Message + '</div>').fadeOut("slow");
                     $(".nav-tabs .active").find('a').click();
                 } else {
-                    $('.notification').html('<div class="alert ' + alertType + '" role="alert">' + result.Message + '</div>').fadeIn().delay(10000).fadeOut();
+                    $('.notification').html('<div class="alert ' + alertType + '" role="alert">' + result.Message + '</div>').fadeOut("slow");
                 }
 
                 $('.notification').show();
@@ -70,7 +70,7 @@
 </script>
 <div class="notification"></div>
 
-<form class="form-inline" style="float: left" action="@Url.Action("DownloadTemplate", "File")" method="POST">
+<form class="form-inline" style = "float: left;margin:0 10px 10px 0" action="@Url.Action("DownloadTemplate", "File")" method="POST">
     <div class="form-group" style="padding-right: 30px; border-right: solid 1px #3f454f;">
         <label class="labletop">Year :</label>
         @Html.DropDownListFor(x => x.Year, Model.Years, new { @class = "form-control ddl-year" })

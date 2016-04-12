@@ -1,7 +1,7 @@
 ﻿@using DSLNG.PEAR.Data.Enums
 @model DSLNG.PEAR.Web.ViewModels.KpiAchievement.ConfigurationKpiAchievementsViewModel
 
-<script type="text/javascript" src="@Url.Content("~/Scripts/tableHeadFixer.js")"></script>
+@*<script type="text/javascript" src="@Url.Content("~/Scripts/tableHeadFixer.js")"></script>*@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#fixed-table").tableHeadFixer({ "left": 1 });
@@ -25,7 +25,7 @@
                 $('.ajax-loader2').hide();
                 var alertType = result.isSuccess === true ? 'alert-success' : 'alert-danger';
                 if (result.isSuccess === true || result.message === null) {
-                    $('.notification').html('<div class="alert ' + alertType + '" role="alert">File Successfully Parsed : ' + link + ' </div>').fadeIn().delay(10000).fadeOut();
+                    $('.notification').html('<div class="alert ' + alertType + '" role="alert">' + result.Message + '</div>').fadeOut("slow");
                     if (window.location.href.indexOf("yearly") > -1) {
                         location.reload();
                     } else {
@@ -33,7 +33,7 @@
                     }
                     
                 } else {
-                    $('.notification').html('<div class="alert ' + alertType + '" role="alert">' + result.Message + '</div>').fadeIn().delay(10000).fadeOut();
+                    $('.notification').html('<div class="alert ' + alertType + '" role="alert">' + result.Message + '</div>').fadeOut("slow");
                 }
 
                 $('.notification').show();
@@ -74,7 +74,7 @@
 
 <div class="notification"></div>
 
-@using (Html.BeginForm("DownloadTemplate", "File", FormMethod.Post, new { @class = "form-inline", @style = "float: left" }))
+@using (Html.BeginForm("DownloadTemplate", "File", FormMethod.Post, new { @class = "form-inline", @style = "float: left;margin:0 10px 10px 0" }))
 {
     <input type="hidden" value="@ConfigType.KpiAchievement" name="ConfigType" id="ConfigType"/>
     @Html.HiddenFor(x => x.RoleGroupId)
@@ -89,16 +89,25 @@
         <input id="btn-proceed" class="btn btn-primary" value="Proceed" />
     </div>
 </form>
-@using (Html.BeginForm("UploadControlCallbackAction", "KpiAchievement", FormMethod.Post, new { @class = "form-inline" }))
+@using (Html.BeginForm("Upload", "File", new { configType = ConfigType.KpiAchievement.ToString() }, FormMethod.Post, new { @class = "form-inline" }))
 {
-    Html.RenderPartial("UploadControlPartial");
+
+    @Html.DevExpress().UploadControl(settings =>
+        {
+            settings.Name = "uc";
+            settings.CallbackRouteValues = new { configType = ConfigType.KpiAchievement.ToString(), Controller = "File", Action = "UploadControlCallbackAction" };
+            settings.ClientSideEvents.FileUploadComplete = "OnFileUploadComplete";
+            settings.ClientSideEvents.TextChanged = "function(s,e){uc.Upload();}";
+            settings.ShowProgressPanel = true;
+            settings.ValidationSettings.Assign(DSLNG.PEAR.Web.Extensions.ExcelUploadHelper.ValidationSettings);
+        }).GetHtml()
 }
 <div style="clear: both"></div>
 <div id="parent-fixed-table">
-    <table id="fixed-table" class="table table-hover table-transparent table-bordered">
+    <table id="fixed-table" class="table table-hover table-transparent table-bordered" style="table-layout: fixed">
         <thead>
             <tr style="background-color: #6aa89d">
-                <th style="width: 50px;">KPI Name</th>
+                <th style="width: 165px;">KPI Name</th>
                 <th style="width: 50px;">2015</th>
                 <th style="width: 50px;">2016</th>
                 <th style="width: 50px;">2017</th>
@@ -138,7 +147,7 @@
                         <th>
                             <input type="hidden" name="KpiId" class="kpiId" value="@kpi.Id" />
                             <input type="hidden" name="HeaderPopover" class="header-popover" value="" />
-                            <input type="hidden" name="PeriodeType" class="periodeType" value="@DSLNG.PEAR.Data.Enums.PeriodeType.Yearly" />
+                            <input type="hidden" name="PeriodeType" class="periodeType" value="@PeriodeType.Yearly" />
                             <input type="text" data-toggle="popover" class="form-control-small value kpi-popover @remarkSign" id="@idValue" value="@kpiAchievement.Value" readonly="readonly">
                             <input type="hidden" class="form-control-small id" value="@kpiAchievement.Id">
                             <input type="hidden" class="form-control-small remark" value="@kpiAchievement.Remark">

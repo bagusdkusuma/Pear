@@ -148,7 +148,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     break;
             }
 
-            string fileName = string.Format(@"{0}.xlsx", DateTime.Now.ToString("yyyymmddMMss"));
+            string fileName = string.Format(@"{0}_{1}_{2}.xlsx", vModel.ConfigType, vModel.PeriodeType, DateTime.Now.ToString("yyyymmddMMss"));
 
             IWorkbook workbook = new Workbook();
             Worksheet worksheet = workbook.Worksheets[0];
