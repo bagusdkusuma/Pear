@@ -1,7 +1,8 @@
-﻿@Html.DevExpress().UploadControl(settings =>
+﻿@using DSLNG.PEAR.Data.Enums
+@Html.DevExpress().UploadControl(settings =>
 {
     settings.Name = "uc";
-    settings.CallbackRouteValues = new { Controller = "KpiAchievement", Action = "UploadControlCallbackAction" };
+    settings.CallbackRouteValues = new { Controller = "File", Action = "UploadControlCallbackAction", configType = ConfigType.KpiAchievement.ToString() };
     settings.ClientSideEvents.FileUploadComplete = "OnFileUploadComplete";
     settings.ClientSideEvents.TextChanged = "OnUploadTextChanged";
     settings.ShowProgressPanel = true;

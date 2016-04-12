@@ -23,14 +23,14 @@
                 $('.ajax-loader2').hide();
                 var alertType = result.isSuccess === true ? 'alert-success' : 'alert-danger';
                 if (result.isSuccess === true || result.message === null) {
-                    $('.notification').html('<div class="alert ' + alertType + '" role="alert">File Successfully Parsed : ' + link + ' </div>').fadeIn().delay(10000).fadeOut();
+                    $('.notification').html('<div class="alert ' + alertType + '" role="alert">' + result.Message + '</div>').fadeOut("slow");
                     if (window.location.href.indexOf("yearly") > -1) {
                         location.reload();
                     } else {
                         $(".nav-tabs .active").find('a').click();
                     }
                 } else {
-                    $('.notification').html('<div class="alert ' + alertType + '" role="alert">' + result.Message + '</div>').fadeIn().delay(10000).fadeOut();
+                    $('.notification').html('<div class="alert ' + alertType + '" role="alert">' + result.Message + '</div>').fadeOut("slow");
                 }
 
                 $('.notification').show();
@@ -70,7 +70,7 @@
 </script>
 <div class="notification"></div>
 
-@using (Html.BeginForm("DownloadTemplate", "File", FormMethod.Post, new { @class = "form-inline", @style = "float: left" }))
+@using (Html.BeginForm("DownloadTemplate", "File", FormMethod.Post, new { @class = "form-inline", @style = "float: left;margin:0 10px 10px 0" }))
 {
     <input type="hidden" value="@ConfigType.KpiTarget" name="ConfigType" id="ConfigType"/>
     @Html.HiddenFor(x => x.RoleGroupId)

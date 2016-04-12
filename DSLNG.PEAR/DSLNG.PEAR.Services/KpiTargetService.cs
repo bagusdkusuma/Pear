@@ -644,10 +644,12 @@ namespace DSLNG.PEAR.Services
             var response = new BaseResponse();
             try
             {
-                int i = 0;
+                int deletedCounter = 0;
+                int updatedCounter = 0;
+                int addedCounter = 0;
+                int skippedCounter = 0;
                 foreach (var item in request.BatchUpdateKpiTargetItemRequest)
                 {
-                    //var kpiTarget = item.MapTo<KpiTarget>();
                     if (!string.IsNullOrEmpty(item.Value))
                     {
                         var existedKpiTarget =
@@ -661,11 +663,20 @@ namespace DSLNG.PEAR.Services
                             if (item.Value.Equals("-") || item.Value.ToLowerInvariant().Equals("null"))
                             {
                                 DataContext.KpiTargets.Remove(existedKpiTarget);
+                                deletedCounter++;
                             }
                             else
                             {
-                                existedKpiTarget.Value = item.RealValue;
-                                DataContext.Entry(existedKpiTarget).State = EntityState.Modified;    
+                                if (existedKpiTarget.Value.Equals(item.RealValue))
+                                {
+                                    skippedCounter++;
+                                }
+                                else
+                                {
+                                    existedKpiTarget.Value = item.RealValue;
+                                    DataContext.Entry(existedKpiTarget).State = EntityState.Modified;
+                                    updatedCounter++;    
+                                }
                             }
                         }
                         else
@@ -674,57 +685,20 @@ namespace DSLNG.PEAR.Services
                             if (kpiTarget.Value.HasValue)
                             {
                                 kpiTarget.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == item.KpiId);
-                                DataContext.KpiTargets.Add(kpiTarget);    
+                                DataContext.KpiTargets.Add(kpiTarget);
+                                addedCounter++;
                             }
-                            
+                            else
+                            {
+                                skippedCounter++;
+                            }
                         }
                     }
-
-                    
-
-                    /*var exist = DataContext.KpiTargets.FirstOrDefault(x => x.Kpi.Id == item.KpiId && x.PeriodeType == item.PeriodeType && x.Periode == item.Periode && x.Value == item.Value && x.Remark == item.Remark);
-                    //skip no change value
-                    if (exist != null)
-                    {
-                        continue;
-                    }
-                    var attachedEntity = DataContext.KpiTargets.FirstOrDefault(x => x.Kpi.Id == item.KpiId && x.PeriodeType == item.PeriodeType && x.Periode == item.Periode);
-                    if (attachedEntity != null)
-                    {
-                        kpiTarget.Id = attachedEntity.Id;
-                    }
-                    //jika tidak ada perubahan di skip aja
-                    //if (existing.Value.Equals(item.Value) && existing.Periode.Equals(item.Periode) && existing.Kpi.Id.Equals(item.KpiId) && existing.PeriodeType.Equals(item.PeriodeType)) {
-                    //    break;
-                    //}
-                    if (kpiTarget.Id != 0)
-                    {
-                        //var attachedEntity = DataContext.KpiAchievements.Find(item.Id);
-                        if (attachedEntity != null && DataContext.Entry(attachedEntity).State != EntityState.Detached)
-                        {
-                            DataContext.Entry(attachedEntity).State = EntityState.Detached;
-                        }
-                        DataContext.KpiTargets.Attach(kpiTarget);
-                        DataContext.Entry(kpiTarget).State = EntityState.Modified;
-                    }
-                    else
-                    {
-                        kpiTarget.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == item.KpiId);
-                        DataContext.KpiTargets.Add(kpiTarget);
-                    }*/
-                    i++;
                 }
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
-                if (i > 0)
-                {
-                    response.Message = string.Format("{0}  KPI Target items has been updated successfully", i.ToString());
-                }
-                else
-                {
-                    response.Message = "File Successfully Parsed, but no data changed!";
-                }
-
+                response.Message = string.Format("{0} data has been added, {1} data has been updated, {2} data has been removed, {3} data didn't change", addedCounter.ToString()
+                   , updatedCounter.ToString(), deletedCounter.ToString(), skippedCounter.ToString());
 
             }
             catch (InvalidOperationException invalidOperationException)
