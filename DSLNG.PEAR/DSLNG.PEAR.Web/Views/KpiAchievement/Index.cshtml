@@ -62,19 +62,14 @@
             var btnpro;
             if (e.callbackData !== "") {
                 link = e.callbackData;
-                //console.log(link);
                 callback = 'FileUploadComplete: ' + e.callbackData;
                 $('.notification').empty();
                 message = '<div class="alert alert-success" role="alert">' + callback + '</div>';
-                $('.notification').append(message).fadeOut("slow");
-                //alert('FileUploadComplete: ' + e.callbackData);
+                $('.notification').append(message).fadeIn().delay(10000).fadeOut();
                 btnpro = document.getElementById('btn-proceed');
                 btnpro.removeAttribute('disabled');
                 var linkText = document.getElementById('filename-text');
                 linkText.setAttribute('value', link);
-                //console.log(link_text);
-                //$('#div-proceed').show();
-                //proceed(e.callbackData);
             }
             else {
                 btnpro = document.getElementById('btn-proceed');
