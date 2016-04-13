@@ -1,4 +1,5 @@
-﻿using DSLNG.PEAR.Data.Enums;
+﻿using System.Globalization;
+using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.OperationalData;
@@ -465,7 +466,6 @@ namespace DSLNG.PEAR.Services
             //    response.Message = argumentNullException.Message;
             //}
             //return response;
-
             var response = new BaseResponse();
             try
             {
@@ -473,7 +473,6 @@ namespace DSLNG.PEAR.Services
                 int updatedCounter = 0;
                 int addedCounter = 0;
                 int skippedCounter = 0;
-
                 foreach (var item in request.BatchUpdateOperationDataItemRequest)
                 {
                     if (!string.IsNullOrEmpty(item.Value))
@@ -482,8 +481,7 @@ namespace DSLNG.PEAR.Services
                             .Include(x => x.KeyOperationConfig)
                             .Include(x => x.Scenario)
                             .FirstOrDefault(x =>x.Kpi.Id == item.KpiId 
-                            && x.PeriodeType == item.PeriodeType && x.Periode == item.Periode && x.Scenario.Id == item.ScenarioId && x.KeyOperationConfig.Id 
-                            == item.KeyOperationConfigId);
+                            && x.PeriodeType == item.PeriodeType && x.Periode == item.Periode && x.Scenario.Id == item.ScenarioId);
 
 
                         if (existedOperationDatum != null)
@@ -495,7 +493,10 @@ namespace DSLNG.PEAR.Services
                             }
                             else
                             {
-                                if (existedOperationDatum.Value.Equals(item.RealValue))
+                                string oldValue = !existedOperationDatum.Value.HasValue ? string.Empty : existedOperationDatum.Value.Value.ToString(CultureInfo.InvariantCulture);
+                                string newValue = !item.RealValue.HasValue ? string.Empty : item.RealValue.Value.ToString(CultureInfo.InvariantCulture);
+
+                                if (oldValue.Equals(newValue))
                                 {
                                     skippedCounter++;
                                 }
