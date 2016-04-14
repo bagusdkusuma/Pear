@@ -171,6 +171,7 @@ using DSLNG.PEAR.Web.ViewModels.Wave;
 using DSLNG.PEAR.Web.ViewModels.File;
 using DSLNG.PEAR.Web.ViewModels.ProcessBlueprint;
 using DSLNG.PEAR.Services.Responses.ProcessBlueprint;
+using DSLNG.PEAR.Services.Requests.ProcessBlueprint;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -726,9 +727,13 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetProcessBlueprintResponse, ProcessBlueprintViewModel>();
             Mapper.CreateMap<GetProcessBlueprintsResponse.ProcessBlueprint, ProcessBlueprintViewModel>();
             Mapper.CreateMap<GetProcessBlueprintResponse, FileSystemItem>()
-                .ForMember(x => x.FileId, y => y.MapFrom(z => z.Id));
+                .ForMember(x => x.FileId, y => y.MapFrom(z => z.Id))
+                .ForMember(x => x.CreatedBy, y => y.MapFrom(z => z.CreatedBy));
             Mapper.CreateMap<GetProcessBlueprintsResponse.ProcessBlueprint, FileSystemItem>()
-                .ForMember(x => x.FileId, y => y.MapFrom(z => z.Id));
+                .ForMember(x => x.FileId, y => y.MapFrom(z => z.Id))
+                .ForMember(x => x.CreatedBy, y => y.MapFrom(z => z.CreatedBy));
+            Mapper.CreateMap<FileSystemItem, SaveProcessBlueprintRequest>()
+                .ForMember(x => x.Id, y => y.MapFrom(z => z.FileId));
         }
         
         private void ConfigureEconomicSummary()

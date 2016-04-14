@@ -10,12 +10,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using DSLNG.PEAR.Data.Entities;
+using System.Data.Entity.Infrastructure;
+using DSLNG.PEAR.Services.Responses;
+using System.Data.Entity;
 
 namespace DSLNG.PEAR.Services
 {
     public class ProcessBlueprintService : BaseService, IProcessBlueprintService
     {
-        public ProcessBlueprintService(IDataContext dataContext):base(dataContext)
+        public ProcessBlueprintService(IDataContext dataContext)
+            : base(dataContext)
         {
 
         }
@@ -37,7 +41,7 @@ namespace DSLNG.PEAR.Services
 
         private IEnumerable<ProcessBlueprint> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
         {
-            var data = DataContext.ProcessBlueprints.AsQueryable();
+            var data = DataContext.ProcessBlueprints.Include(x => x.CreatedBy).AsQueryable();
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             {
                 data = data.Where(x => x.Name.Contains(search));
@@ -61,30 +65,83 @@ namespace DSLNG.PEAR.Services
             }
             TotalRecords = data.Count();
             return data;
-            
+
         }
 
         public GetProcessBlueprintResponse Get(GetProcessBlueprintRequest request)
         {
-            var data = DataContext.ProcessBlueprints.FirstOrDefault(x => x.Id == request.Id);
+            var data = DataContext.ProcessBlueprints.Include(x => x.CreatedBy).FirstOrDefault(x => x.Id == request.Id);
             return data.MapTo<GetProcessBlueprintResponse>();
         }
 
-        public GetProcessBlueprintResponse Save(SaveProcessBlueprintRequest request)
+        public SaveProcessBlueprintResponse Save(SaveProcessBlueprintRequest request)
         {
-            throw new NotImplementedException();
+            var response = new SaveProcessBlueprintResponse();
+            try
+            {
+                var proses = new ProcessBlueprint();
+                var user = DataContext.Users.Single(x => x.Id == request.UserId);
+                if (request.Id > 0)
+                {
+                    proses = DataContext.ProcessBlueprints.Single(x => x.Id == request.Id);
+                    proses.Name = request.Name;
+                    proses.ParentId = request.ParentId;
+                    proses.IsFolder = request.IsFolder;
+                    proses.LastWriteTime = request.LastWriteTime;
+                    proses.Data = request.Data;
+                    proses.UpdatedBy = user;
+                    DataContext.Entry(proses).State = System.Data.Entity.EntityState.Modified;
+                }
+                else
+                {
+                    proses.Name = request.Name;
+                    proses.IsFolder = request.IsFolder;
+                    proses.ParentId = request.ParentId;
+                    proses.Data = request.Data;
+                    proses.LastWriteTime = request.LastWriteTime;
+                    proses.CreatedBy = user;
+                    DataContext.ProcessBlueprints.Add(proses);
+                }
+
+                DataContext.SaveChanges();
+                DataContext.Entry(proses).GetDatabaseValues();
+                response.Id = proses.Id;
+                response.IsSuccess = true;
+                response.Message = "File Manager Successfully Saved";
+            }
+            catch (DbUpdateException ex)
+            {
+
+                response.IsSuccess = false;
+                response.Message = ex.Message;
+            }
+            return response;
         }
 
 
-        public GetProcessBlueprintResponse Delete(int Id)
+        public BaseResponse Delete(int Id)
         {
-            throw new NotImplementedException();
+            var response = new BaseResponse();
+            try
+            {
+                var prosess = DataContext.ProcessBlueprints.Single(x => x.Id == Id);
+                DataContext.ProcessBlueprints.Remove(prosess);
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+            }
+            catch (DbUpdateException ex)
+            {
+                response.IsSuccess = false;
+                response.Message = ex.Message;
+            }
+            return response;
         }
 
         public GetProcessBlueprintsResponse All()
         {
-            var data = DataContext.ProcessBlueprints.ToList();
-            return new GetProcessBlueprintsResponse {
+            var data = DataContext.ProcessBlueprints.Include(x => x.CreatedBy).ToList();
+            return new GetProcessBlueprintsResponse
+            {
                 TotalRecords = data.Count(),
                 ProcessBlueprints = data.ToList().MapTo<GetProcessBlueprintsResponse.ProcessBlueprint>()
             };

@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DSLNG.PEAR.Services.Requests.ProcessBlueprint
+namespace DSLNG.PEAR.Services.Responses.ProcessBlueprint
 {
-    public class SaveProcessBlueprintRequest
+    public class SaveProcessBlueprintResponse : BaseResponse
     {
         public int Id { get; set; }
-
         public int ParentId { get; set; }
 
         public string Name { get; set; }
