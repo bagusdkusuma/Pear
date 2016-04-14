@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Data.Entities
 {
-    public class ProcessBlueprint
+    public class ProcessBlueprint : BaseEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

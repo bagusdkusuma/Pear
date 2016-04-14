@@ -698,6 +698,7 @@
     <Compile Include="Responses\PopInformation\SavePopInformationResponse.cs" />
     <Compile Include="Responses\ProcessBlueprint\GetProcessBlueprintResponse.cs" />
     <Compile Include="Responses\ProcessBlueprint\GetProcessBlueprintsResponse.cs" />
+    <Compile Include="Responses\ProcessBlueprint\SaveProcessBlueprintResponse.cs" />
     <Compile Include="Responses\RoleGroup\CreateRoleGroupResponse.cs" />
     <Compile Include="Responses\RoleGroup\DeleteRoleGroupResponse.cs" />
     <Compile Include="Responses\RoleGroup\Level.cs" />

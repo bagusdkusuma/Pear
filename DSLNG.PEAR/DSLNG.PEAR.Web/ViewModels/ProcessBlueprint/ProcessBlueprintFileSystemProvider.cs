@@ -8,21 +8,83 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using DSLNG.PEAR.Services.Requests.ProcessBlueprint;
+using DSLNG.PEAR.Services.Responses.ProcessBlueprint;
 
 namespace DSLNG.PEAR.Web.ViewModels.ProcessBlueprint
 {
     public static class ProcessBlueprintDataProvider
     {
+        static UserProfileSessionData sessionData = (UserProfileSessionData)HttpContext.Current.Session["LoginUser"];
         public static IProcessBlueprintService service { get { return ObjectFactory.Container.GetInstance<IProcessBlueprintService>(); } }
         public static List<FileSystemItem> GetAll()
         {
+            var test = service.All().ProcessBlueprints.ToList();
             List<FileSystemItem> files = (List<FileSystemItem>)HttpContext.Current.Session["FileSystemItem"];
             if (files == null)
             {
                 files = service.All().ProcessBlueprints.ToList().MapTo<FileSystemItem>();
                 HttpContext.Current.Session["FileSystemItem"] = files;
             }
+
             return files;
+        }
+
+        public static void Insert(FileSystemItem file)
+        {
+            var response = service.Save(new SaveProcessBlueprintRequest
+            {
+                IsFolder = file.IsFolder,
+                ParentId = file.ParentId,
+                Name = file.Name,
+                Data = file.Data,
+                LastWriteTime = file.LastWriteTime,
+                UserId = sessionData.UserId
+            });
+            if (response.IsSuccess)
+            {
+                file.FileId = response.Id;
+                GetAll().Add(file);
+            }
+        }
+        public static void Update(FileSystemItem file)
+        {
+            service.Save(new SaveProcessBlueprintRequest
+            {
+                Id = file.FileId,
+                ParentId = file.ParentId,
+                IsFolder = file.IsFolder,
+                Name = file.Name,
+                Data = file.Data,
+                LastWriteTime = file.LastWriteTime,
+                UserId = sessionData.UserId
+            });
+        }
+
+        public static void Delete(FileSystemItem file)
+        {
+            if (file.IsFolder)
+            {
+                List<FileSystemItem> childFolders = GetAll().FindAll(item => item.IsFolder && item.ParentId == file.FileId);
+                if (childFolders != null && childFolders.Count > 0)
+                {
+                    foreach (var childFolder in childFolders)
+                    {
+                        Delete(childFolder);
+                    }
+                }
+                List<FileSystemItem> files = GetAll().FindAll(item => item.ParentId == file.FileId);
+                if (files != null && files.Count > 0)
+                {
+                    foreach (var item in files)
+                    {
+                        Delete(item);
+                    }
+                }
+            }
+            if (service.Delete(file.FileId).IsSuccess)
+            {
+                GetAll().Remove(file);
+            }
         }
     }
     public class FileSystemItem
@@ -38,13 +100,15 @@ namespace DSLNG.PEAR.Web.ViewModels.ProcessBlueprint
         public byte[] Data { get; set; }
 
         public DateTime? LastWriteTime { get; set; }
+        public int CreatedBy { get; set; }
     }
     public class ProcessBlueprintFileSystemProvider : FileSystemProviderBase
     {
         const int RootItemId = 1;
         string rootFolderDisplayName;
         Dictionary<int, FileSystemItem> folderCache;
-        public ProcessBlueprintFileSystemProvider(string rootFolder):base(rootFolder)
+        public ProcessBlueprintFileSystemProvider(string rootFolder)
+            : base(rootFolder)
         {
             RefreshFolderCache();
         }
@@ -58,36 +122,63 @@ namespace DSLNG.PEAR.Web.ViewModels.ProcessBlueprint
         }
         public Dictionary<int, FileSystemItem> FolderCache { get { return folderCache; } }
 
+        public override string GetDetailsCustomColumnDisplayText(FileManagerDetailsColumn column)
+        {
+            return base.GetDetailsCustomColumnDisplayText(column);
+        }
         public override IEnumerable<FileManagerFile> GetFiles(FileManagerFolder folder)
         {
+            if (string.IsNullOrEmpty(folder.Name.ToString()))
+            {
+                return null;
+            }
             FileSystemItem folderItem = FindFolderItem(folder);
             return from item in ProcessBlueprintDataProvider.GetAll()
                    where !item.IsFolder && item.ParentId == folderItem.FileId
                    select new FileManagerFile(this, folder, item.Name);
         }
 
+        public FileSystemItem GetFile(FileManagerFile file)
+        {
+            return FindFileItem(file);
+        }
         public override IEnumerable<FileManagerFolder> GetFolders(FileManagerFolder parentFolder)
         {
             FileSystemItem folderItem = FindFolderItem(parentFolder);
-            return (from item in FolderCache.Values
-                    where item.IsFolder && folderItem.ParentId == item.FileId
-                    select new FileManagerFolder(this, parentFolder, item.Name));
+            var response = (from item in FolderCache.Values
+                            where item.IsFolder && folderItem.FileId == item.ParentId
+                            select new FileManagerFolder(this, parentFolder, item.Name));
+            return response;
         }
 
         private FileSystemItem FindFolderItem(FileManagerFolder parentFolder)
         {
-            return (from item in FolderCache.Values
-                    where item.IsFolder && GetRelativeName(item) == parentFolder.RelativeName
-                    select item).FirstOrDefault();
+            var response = (from item in FolderCache.Values
+                            where item.IsFolder && GetRelativeName(item) == parentFolder.RelativeName
+                            select item).FirstOrDefault();
+            return response;
         }
 
-        protected string GetRelativeName(FileSystemItem item)
+        public string GetRelativeName(FileSystemItem item)
         {
+            //if (item.FileId == RootItemId) return string.Empty;
+            //if (item.ParentId == RootItemId) return item.Name;
+            //if (!FolderCache.ContainsKey((int)item.ParentId)) return null;
+            //var parent = FolderCache[(int)item.ParentId];
+            //string name = GetRelativeName(FolderCache[(int)item.ParentId]);
+            //return name == null ? null : Path.Combine(name, item.Name);
+
             if (item.FileId == RootItemId) return string.Empty;
             if (item.ParentId == RootItemId) return item.Name;
-            if(!FolderCache.ContainsKey((int)item.ParentId)) return null;
+            if (!FolderCache.ContainsKey((int)item.ParentId)) return null;
+            //var parent = FolderCache[(int)item.ParentId];
             string name = GetRelativeName(FolderCache[(int)item.ParentId]);
-            return name == null ? null : Path.Combine(name,item.Name);
+            //if (parent.ParentId != -1 && parent.FileId > 1)
+            //{
+            //    name = Path.Combine(GetRelativeName(FolderCache[(int)parent.ParentId]), name);
+            //}
+            string result = name == null ? null : Path.Combine(name, item.Name);
+            return result;
         }
 
         public override bool Exists(FileManagerFile file)
@@ -107,6 +198,19 @@ namespace DSLNG.PEAR.Web.ViewModels.ProcessBlueprint
         {
             return FindFolderItem(folder) != null;
         }
+
+        public override void UploadFile(FileManagerFolder folder, string fileName, Stream content)
+        {
+            ProcessBlueprintDataProvider.Insert(new FileSystemItem
+            {
+                IsFolder = false,
+                LastWriteTime = DateTime.Now,
+                Name = fileName,
+                ParentId = FindFolderItem(folder).FileId,
+                Data = ReadAllBytes(content)
+            });
+            //base.UploadFile(folder, fileName, content);
+        }
         public override Stream ReadFile(FileManagerFile file)
         {
             return new MemoryStream(FindFileItem(file).Data.ToArray());
@@ -120,7 +224,26 @@ namespace DSLNG.PEAR.Web.ViewModels.ProcessBlueprint
 
         public override void CopyFile(FileManagerFile file, FileManagerFolder newParentFolder)
         {
-            base.CopyFile(file, newParentFolder);
+            ProcessBlueprintDataProvider.Insert(new FileSystemItem
+            {
+                IsFolder = false,
+                ParentId = FindFolderItem(newParentFolder).FileId,
+                Data = FindFileItem(file).Data,
+                LastWriteTime = DateTime.Now
+            });
+            RefreshFolderCache();
+        }
+
+        public override void RenameFile(FileManagerFile file, string name)
+        {
+            ProcessBlueprintDataProvider.Update(new FileSystemItem
+            {
+                FileId = FindFileItem(file).FileId,
+                IsFolder = false,
+                Name = name,
+                LastWriteTime = DateTime.Now
+            });
+            RefreshFolderCache();
         }
 
         public override long GetLength(FileManagerFile file)
@@ -129,32 +252,69 @@ namespace DSLNG.PEAR.Web.ViewModels.ProcessBlueprint
             return fileItem.Data.Length;
         }
 
+        public override void RenameFolder(FileManagerFolder folder, string name)
+        {
+            ProcessBlueprintDataProvider.Update(new FileSystemItem
+            {
+                FileId = FindFolderItem(folder).FileId,
+                IsFolder = true,
+                Name = name,
+                ParentId = FindFolderItem(folder).ParentId,
+                LastWriteTime = DateTime.Now
+            });
+            RefreshFolderCache();
+        }
         public override void CreateFolder(FileManagerFolder parent, string name)
         {
-            base.CreateFolder(parent, name);
+            ProcessBlueprintDataProvider.Insert(new FileSystemItem
+            {
+                IsFolder = true,
+                Name = name,
+                ParentId = FindFolderItem(parent).FileId,
+                LastWriteTime = DateTime.Now
+            });
+            RefreshFolderCache();
         }
 
         public override void CopyFolder(FileManagerFolder folder, FileManagerFolder newParentFolder)
         {
-            base.CopyFolder(folder, newParentFolder);
+            ProcessBlueprintDataProvider.Insert(new FileSystemItem
+            {
+                IsFolder = true,
+                Name = folder.Name,
+                ParentId = FindFolderItem(newParentFolder).ParentId,
+                LastWriteTime = DateTime.Now
+            });
         }
 
         public override void DeleteFolder(FileManagerFolder folder)
         {
-            base.DeleteFolder(folder);
+            ProcessBlueprintDataProvider.Delete(FindFolderItem(folder));
+            RefreshFolderCache();
         }
 
         public override void DeleteFile(FileManagerFile file)
         {
-            base.DeleteFile(file);
+            ProcessBlueprintDataProvider.Delete(FindFileItem(file));
+
         }
         public override void MoveFile(FileManagerFile file, FileManagerFolder newParentFolder)
         {
-            base.MoveFile(file, newParentFolder);
+            ProcessBlueprintDataProvider.Update(new FileSystemItem
+            {
+                FileId = FindFileItem(file).FileId,
+                ParentId = FindFolderItem(newParentFolder).ParentId,
+                LastWriteTime = DateTime.Now
+            });
         }
         public override void MoveFolder(FileManagerFolder folder, FileManagerFolder newParentFolder)
         {
-            base.MoveFolder(folder, newParentFolder);
+            ProcessBlueprintDataProvider.Update(new FileSystemItem
+            {
+                FileId = FindFolderItem(folder).FileId,
+                ParentId = FindFolderItem(newParentFolder).ParentId,
+                LastWriteTime = DateTime.Now
+            });
         }
         protected void RefreshFolderCache()
         {

@@ -720,8 +720,10 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
         private void ConfigureProcessBlueprint()
         {
-            Mapper.CreateMap<ProcessBlueprint, GetProcessBlueprintResponse>();
-            Mapper.CreateMap<ProcessBlueprint, GetProcessBlueprintsResponse.ProcessBlueprint>();
+            Mapper.CreateMap<ProcessBlueprint, GetProcessBlueprintResponse>()
+                .ForMember(x => x.CreatedBy, y => y.MapFrom(z => z.CreatedBy.Id));
+            Mapper.CreateMap<ProcessBlueprint, GetProcessBlueprintsResponse.ProcessBlueprint>()
+                .ForMember(x => x.CreatedBy, y => y.MapFrom(z => z.CreatedBy.Id));
             Mapper.CreateMap<SaveProcessBlueprintRequest, ProcessBlueprint>();
         }
 
