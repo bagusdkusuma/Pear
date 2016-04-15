@@ -1,0 +1,21 @@
+﻿@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "PrivilegeView";
+    settings.CallbackRouteValues = new { Controller = "ProcessBlueprint", Action = "PrivilegeViewPartialView" };
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.SettingsPager.Visible = false;
+    settings.SettingsPager.PageSize = 20;
+    settings.Settings.VerticalScrollableHeight = 350;
+    settings.Settings.VerticalScrollBarStyle = GridViewVerticalScrollBarStyle.Virtual;
+    settings.ControlStyle.Paddings.Padding = System.Web.UI.WebControls.Unit.Pixel(0);
+    settings.ControlStyle.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+    settings.ControlStyle.BorderBottom.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(1);
+
+    settings.Settings.ShowFilterRow = false;
+    settings.Settings.ShowFilterRowMenu = true;
+    settings.SettingsBehavior.EnableCustomizationWindow = true;
+    settings.SettingsBehavior.AllowSelectByRowClick = true;
+    settings.Settings.ShowFilterBar = GridViewStatusBarMode.Visible;
+    settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
+
+}).GetHtml()

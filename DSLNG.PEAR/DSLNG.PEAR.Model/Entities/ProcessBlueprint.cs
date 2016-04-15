@@ -10,6 +10,10 @@ namespace DSLNG.PEAR.Data.Entities
 {
     public class ProcessBlueprint : BaseEntity
     {
+        public ProcessBlueprint()
+        {
+            RoleGroups = new List<RoleGroup>();
+        }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -23,5 +27,6 @@ namespace DSLNG.PEAR.Data.Entities
         public byte[] Data { get; set; }
 
         public DateTime? LastWriteTime { get; set; }
+        public ICollection<RoleGroup> RoleGroups { get; set; }
     }
 }
