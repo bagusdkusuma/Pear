@@ -30,6 +30,7 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 dynamic state = JsonConvert.DeserializeObject(Request.Params["ProcessBlueprint_State"]);
                 selectedFolder = (string)state.currentPath.Value;
+                selectedFolder = selectedFolder.Substring(0, selectedFolder.IndexOf('|'));
             }
             var provider = ProcessBlueprintControllerProcessBlueprintSettings.ProcessBlueprintFileSystemProvider;
             var folder = new FileManagerFolder(provider, selectedFolder);
@@ -42,6 +43,11 @@ namespace DSLNG.PEAR.Web.Controllers
             return PartialView("_ProcessBlueprintPartial", ProcessBlueprintControllerProcessBlueprintSettings.ProcessBlueprintFileSystemProvider);
         }
 
+        public ActionResult CustomToolbarAction(string viewType)
+        {
+            HttpContext.Session["aspxCustomToolbarAction"] = viewType == "Thumbnails" ? FileListView.Thumbnails : FileListView.Details;
+            return PartialView("_ProcessBlueprintPartial", ProcessBlueprintControllerProcessBlueprintSettings.ProcessBlueprintFileSystemProvider);
+        }
         public PartialViewResult PrivilegeViewPartialView(FileSystemItem model)
         {
             ///todo create matrix of file vs role vs privilege
@@ -189,6 +195,7 @@ namespace DSLNG.PEAR.Web.Controllers
     {
         FileManagerSettingsEditing settingsEditing;
         FileManagerSettingsToolbar settingsToolbar;
+        FileManagerSettingsContextMenu settingsContextMenu;
         FileManagerSettingsFolders settingsFolders;
         MVCxFileManagerSettingsUpload settingsUpload;
         UserProfileSessionData sessionData = (UserProfileSessionData)HttpContext.Current.Session["LoginUser"];
@@ -208,10 +215,21 @@ namespace DSLNG.PEAR.Web.Controllers
             this.settingsToolbar = new FileManagerSettingsToolbar(null)
             {
                 ShowPath = true,
-                ShowFilterBox = true
+                ShowFilterBox = true,
+                ShowCopyButton = privileges.AllowCopy,
+                ShowCreateButton = privileges.AllowCreate,
+                ShowDeleteButton = privileges.AllowDelete,
+                ShowDownloadButton = privileges.AllowDownload,
+                ShowMoveButton = privileges.AllowMove,
+                ShowRenameButton = privileges.AllowRename
             };
+            
 
 
+            this.settingsContextMenu = new FileManagerSettingsContextMenu(null)
+            {
+                Enabled = true
+            };
 
             this.settingsFolders = new FileManagerSettingsFolders(null)
             {
@@ -225,18 +243,20 @@ namespace DSLNG.PEAR.Web.Controllers
             this.settingsUpload.AdvancedModeSettings.EnableMultiSelect = true;
         }
 
+        
+
         private FileManagerPrivilege GetPrivilege(UserProfileSessionData sessionData)
         {
             ///dummy next should get from profile provider
             var privilege = new FileManagerPrivilege()
             {
-                AllowCopy = true,
-                AllowCreate = true,
+                AllowCopy = false,
+                AllowCreate = false,
                 AllowDelete = true,
                 AllowDownload = false,
                 AllowMove = true,
                 AllowRename = true,
-                AllowUpload = true
+                AllowUpload = false
             };
             return privilege;
         }
@@ -249,9 +269,10 @@ namespace DSLNG.PEAR.Web.Controllers
         public FileManagerSettingsToolbar SettingsToolbar { get { return settingsToolbar; } }
         [Display(Name = "Settings Folders")]
         public FileManagerSettingsFolders SettingsFolders { get { return settingsFolders; } }
+        [Display(Name="Settings Context Menu")]
+        public FileManagerSettingsContextMenu SettingContextMenu { get { return SettingContextMenu; } }
         [Display(Name = "Settings Upload")]
         public MVCxFileManagerSettingsUpload SettingsUpload { get { return settingsUpload; } }
-
         public class FileManagerPrivilege
         {
             public bool AllowCreate { get; set; }

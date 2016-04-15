@@ -4,11 +4,62 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<style type="text/css">
+    .dxpc-mainDiv.DetailsPopup {
+        border-width: 4px;
+    }
+
+        .dxpc-mainDiv.DetailsPopup .dxpc-content {
+            padding: 0;
+        }
+
+            .dxpc-mainDiv.DetailsPopup .dxpc-content > div {
+                margin: auto;
+            }
+
+        .dxpc-mainDiv.DetailsPopup .dxflGroupSys {
+            padding-top: 12px;
+            padding-bottom: 12px;
+        }
+
+        .dxpc-mainDiv.DetailsPopup .dxflCaptionCellSys label {
+            color: #929292;
+        }
+</style>
+
+<script>
+    function OnCustomCommand(s, e) {
+        var args = e.commandName.split("-");
+        switch (args[0]) {
+            case "ChangeView":
+                ProcessBlueprint.PerformCallback({ viewType: args[1] });
+                break;
+            case "Properties":
+                var isFileSelected = ProcessBlueprint.GetActiveAreaName() == "Files";
+                var relativePath = isFileSelected ? ProcessBlueprint.GetSelectedFile().GetFullName() : ProcessBlueprint.GetCurrentPath();
+                popupControl.PerformCallback({ relativePath: relativePath });
+                break;
+        }
+    }
+    function OnToolbarUpdating(s, e) {
+        var enabled = (e.activeAreaName == "Folders" || ProcessBlueprint.GetSelectedItems().length > 0) && e.activeAreaName != "None";
+        ProcessBlueprint.GetToolbarItemByCommandName("Properties").SetEnabled(enabled);
+        ProcessBlueprint.GetContextMenuItemByCommandName("Properties").SetEnabled(enabled);
+    }
+    function OnPopupEndCallback(s, e) {
+        UpdatePopupHeaderText();
+        popupControl.ShowAtElement(ProcessBlueprint.GetMainElement());
+    }
+    function UpdatePopupHeaderText() {
+        var headerText = "Privilege";
+        popupControl.SetHeaderText(headerText);
+    }
+</script>
 
 @using (Html.BeginForm())
 {
     @Html.Partial("_ProcessBlueprintPartial", Model)
+    @Html.Action("ProcessConfigPartial")
     <p class="Note">
         <b>Allowed Extensions</b>: .jpg, .jpeg, .gif, .rtf, .txt, .avi, .png, .mp3, .xml, .doc, .pdf
     </p>
