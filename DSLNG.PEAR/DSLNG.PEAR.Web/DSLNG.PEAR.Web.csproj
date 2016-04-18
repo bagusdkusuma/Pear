@@ -1492,6 +1492,7 @@
     <Compile Include="ViewModels\PopDashboard\PopDashboardViewModel.cs" />
     <Compile Include="ViewModels\PopDashboard\PopInformationViewModel.cs" />
     <Compile Include="ViewModels\PopDashboard\SignatureViewModel.cs" />
+    <Compile Include="ViewModels\ProcessBlueprint\FileManagerRolePrivilegeViewModel.cs" />
     <Compile Include="ViewModels\ProcessBlueprint\ProcessBlueprintFileSystemProvider.cs" />
     <Compile Include="ViewModels\ProcessBlueprint\ProcessBlueprintViewModel.cs" />
     <Compile Include="ViewModels\RoleGroup\CreateRoleGroupViewModel.cs" />

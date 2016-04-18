@@ -16,5 +16,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetProcessBlueprintResponse Get(GetProcessBlueprintRequest request);
         SaveProcessBlueprintResponse Save(SaveProcessBlueprintRequest request);
         BaseResponse Delete(int Id);
+        GetProcessBlueprintPrivilegesResponse GetPrivilege(GetProcessBlueprintPrivilegeRequest request);
     }
 }

@@ -139,12 +139,32 @@ namespace DSLNG.PEAR.Services
 
         public GetProcessBlueprintsResponse All()
         {
-            var data = DataContext.ProcessBlueprints.Include(x => x.CreatedBy).ToList();
+            var data = DataContext.ProcessBlueprints.Include(x => x.CreatedBy).Include(z => z.FileManagerRolePrivileges).ToList();
             return new GetProcessBlueprintsResponse
             {
                 TotalRecords = data.Count(),
                 ProcessBlueprints = data.ToList().MapTo<GetProcessBlueprintsResponse.ProcessBlueprint>()
             };
+        }
+
+
+        public GetProcessBlueprintPrivilegesResponse GetPrivilege(GetProcessBlueprintPrivilegeRequest request)
+        {
+            var data = DataContext.FileManagerRolePrivileges.Include(x => x.ProcessBlueprint).Include(y => y.RoleGroup).ToList();
+            if (request.FileId > 0)
+            {
+                data = data.Where(x => x.ProcessBlueprint.Id == request.FileId).ToList();
+            }
+            if (request.RoleGroupId > 0)
+            {
+                data = data.Where(x => x.RoleGroup.Id == request.RoleGroupId).ToList();
+            }
+            return new GetProcessBlueprintPrivilegesResponse
+            {
+                TotalRecords = data.Count(),
+                FileManagerRolePrivileges = data.ToList().MapTo<GetProcessBlueprintPrivilegesResponse.FileManagerRolePrivilege>()
+            };
+            
         }
     }
 }
