@@ -244,7 +244,17 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Index()
         {
-            var response = _kpiTargetService.GetAllKpiTargets();
+            var isAdmin = this.UserProfile().IsSuperAdmin;
+            var response = new AllKpiTargetsResponse();
+
+            if (isAdmin)
+            {
+                response = _kpiTargetService.GetAllKpiTargets();
+            }
+            else
+            {
+                response = _kpiTargetService.GetAllKpiTargetByRole(new GetKpiTargetsConfigurationRequest { RoleGroupId = this.UserProfile().RoleId });
+            }
             if (response.IsSuccess)
             {
                 var viewModel = response.MapTo<IndexKpiTargetViewModel>();
