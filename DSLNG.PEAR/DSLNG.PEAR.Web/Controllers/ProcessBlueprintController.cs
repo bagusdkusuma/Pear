@@ -10,6 +10,7 @@ using System.ComponentModel.DataAnnotations;
 using DevExpress.Web;
 using Newtonsoft.Json;
 using System.IO;
+using DSLNG.PEAR.Common.Extensions;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -77,7 +78,7 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             return FileManagerExtension.DownloadFiles(ProcessBlueprintControllerProcessBlueprintSettings.CreateFileManagerDownloadSettings(), ProcessBlueprintControllerProcessBlueprintSettings.ProcessBlueprintFileSystemProvider);
         }
-	}
+    }
 
     #region FileManager Settings
     public class ProcessBlueprintControllerProcessBlueprintSettings
@@ -98,28 +99,50 @@ namespace DSLNG.PEAR.Web.Controllers
         {
 
             //set for my own files
-            var myFolder = ProcessBlueprintDataProvider.GetAll().FindAll(x => x.CreatedBy == sessionData.UserId).ToList();
-            foreach (var item in myFolder)
+            //var myFolder = ProcessBlueprintDataProvider.GetAll().FindAll(x => x.CreatedBy == sessionData.UserId).ToList();
+            var myFolder = ProcessBlueprintDataProvider.service.GetPrivilege(new Services.Requests.ProcessBlueprint.GetProcessBlueprintPrivilegeRequest { RoleGroupId = sessionData.RoleId });
+            if (myFolder.TotalRecords > 0)
             {
-                FileManagerAccessRuleBase rule = null;
-                // get folderitem
-                var folderItem = ProcessBlueprintFileSystemProvider.GetRelativeName(item);
-                if (item.IsFolder)
+                foreach (var item in myFolder.FileManagerRolePrivileges)
                 {
-                    rule = new FileManagerFolderAccessRule();
-                    //settings.AccessRules.Add(new FileManagerFolderAccessRule(folderItem) { Edit = Rights.Allow, Browse = Rights.Allow, Role = sessionData.RoleName });
-                    //settings.AccessRules.Add(new FileManagerFolderAccessRule(folderItem) { EditContents = Rights.Allow, Role = sessionData.RoleName });
+                    var file = item.ProcessBlueprint.MapTo<FileSystemItem>();
+                    var folderItem = ProcessBlueprintFileSystemProvider.GetRelativeName(file);
+                    FileManagerAccessRuleBase rule = null;
+                    if (item.ProcessBlueprint.IsFolder)
+                    {
+                        rule = new FileManagerFolderAccessRule();
+                    }
+                    else
+                    {
+                        rule = new FileManagerFileAccessRule();
+                    }
+                    rule.Path = folderItem;
+                    rule.Browse = item.AllowBrowse ? Rights.Allow : Rights.Deny;
+                    rule.Edit = item.AllowRename == item.AllowCreate == item.AllowCopy == item.AllowDelete == item.AllowMove ? Rights.Allow : Rights.Deny;
+                    settings.AccessRules.Add(rule);
                 }
-                else
-                {
-                    rule = new FileManagerFileAccessRule();
-                    //settings.AccessRules.Add(new FileManagerFileAccessRule(folderItem) { Edit = Rights.Allow, Role = sessionData.RoleName });
-                }
-                rule.Path = folderItem;
-                rule.Browse = Rights.Allow;
-                rule.Edit = Rights.Allow;
-                settings.AccessRules.Add(rule);
             }
+            //foreach (var item in myFolder.FileManagerRolePrivileges)
+            //{
+            //    FileManagerAccessRuleBase rule = null;
+            //    // get folderitem
+            //    var folderItem = ProcessBlueprintFileSystemProvider.GetRelativeName(item);
+            //    if (item.IsFolder)
+            //    {
+            //        rule = new FileManagerFolderAccessRule();
+            //        //settings.AccessRules.Add(new FileManagerFolderAccessRule(folderItem) { Edit = Rights.Allow, Browse = Rights.Allow, Role = sessionData.RoleName });
+            //        //settings.AccessRules.Add(new FileManagerFolderAccessRule(folderItem) { EditContents = Rights.Allow, Role = sessionData.RoleName });
+            //    }
+            //    else
+            //    {
+            //        rule = new FileManagerFileAccessRule();
+            //        //settings.AccessRules.Add(new FileManagerFileAccessRule(folderItem) { Edit = Rights.Allow, Role = sessionData.RoleName });
+            //    }
+            //    rule.Path = folderItem;
+            //    rule.Browse = Rights.Allow;
+            //    rule.Edit = Rights.Allow;
+            //    settings.AccessRules.Add(rule);
+            //}
         }
         public static FileManagerFeaturesOption FeatureOptions
         {
@@ -195,42 +218,25 @@ namespace DSLNG.PEAR.Web.Controllers
     {
         FileManagerSettingsEditing settingsEditing;
         FileManagerSettingsToolbar settingsToolbar;
-        FileManagerSettingsContextMenu settingsContextMenu;
         FileManagerSettingsFolders settingsFolders;
         MVCxFileManagerSettingsUpload settingsUpload;
-        UserProfileSessionData sessionData = (UserProfileSessionData)HttpContext.Current.Session["LoginUser"];
         public FileManagerFeaturesOption()
         {
-            FileManagerPrivilege privileges = GetPrivilege(sessionData);
-
             this.settingsEditing = new FileManagerSettingsEditing(null)
             {
-                AllowCreate = privileges.AllowCreate,
-                AllowMove = privileges.AllowMove,
-                AllowDelete = privileges.AllowDelete,
-                AllowRename = privileges.AllowRename,
-                AllowCopy = privileges.AllowCopy,
-                AllowDownload = privileges.AllowDownload
+                AllowCopy = false,
+                AllowCreate = false,
+                AllowDelete = false,
+                AllowDownload = false,
+                AllowMove = false,
+                AllowRename = false
             };
+
             this.settingsToolbar = new FileManagerSettingsToolbar(null)
             {
                 ShowPath = true,
-                ShowFilterBox = true,
-                ShowCopyButton = privileges.AllowCopy,
-                ShowCreateButton = privileges.AllowCreate,
-                ShowDeleteButton = privileges.AllowDelete,
-                ShowDownloadButton = privileges.AllowDownload,
-                ShowMoveButton = privileges.AllowMove,
-                ShowRenameButton = privileges.AllowRename
+                ShowFilterBox = true
             };
-            
-
-
-            this.settingsContextMenu = new FileManagerSettingsContextMenu(null)
-            {
-                Enabled = true
-            };
-
             this.settingsFolders = new FileManagerSettingsFolders(null)
             {
                 Visible = true,
@@ -239,29 +245,75 @@ namespace DSLNG.PEAR.Web.Controllers
                 ShowLockedFolderIcons = true
             };
             this.settingsUpload = new MVCxFileManagerSettingsUpload();
-            this.settingsUpload.Enabled = privileges.AllowUpload;
+            this.settingsUpload.Enabled = false;
             this.settingsUpload.AdvancedModeSettings.EnableMultiSelect = true;
         }
-
+        #region old code
+        //UserProfileSessionData sessionData = (UserProfileSessionData)HttpContext.Current.Session["LoginUser"];
         
+        //public FileManagerFeaturesOption(string folder)
+        //{
+        //    FileManagerPrivilege privileges = GetPrivilege(sessionData);
 
-        private FileManagerPrivilege GetPrivilege(UserProfileSessionData sessionData)
-        {
-            ///dummy next should get from profile provider
-            var privilege = new FileManagerPrivilege()
-            {
-                AllowCopy = false,
-                AllowCreate = false,
-                AllowDelete = true,
-                AllowDownload = false,
-                AllowMove = true,
-                AllowRename = true,
-                AllowUpload = false
-            };
-            return privilege;
-        }
+        //    this.settingsEditing = new FileManagerSettingsEditing(null)
+        //    {
+        //        AllowCreate = privileges.AllowCreate,
+        //        AllowMove = privileges.AllowMove,
+        //        AllowDelete = privileges.AllowDelete,
+        //        AllowRename = privileges.AllowRename,
+        //        AllowCopy = privileges.AllowCopy,
+        //        AllowDownload = privileges.AllowDownload
+        //    };
+        //    this.settingsToolbar = new FileManagerSettingsToolbar(null)
+        //    {
+        //        ShowPath = true,
+        //        ShowFilterBox = true,
+        //        ShowCopyButton = privileges.AllowCopy,
+        //        ShowCreateButton = privileges.AllowCreate,
+        //        ShowDeleteButton = privileges.AllowDelete,
+        //        ShowDownloadButton = privileges.AllowDownload,
+        //        ShowMoveButton = privileges.AllowMove,
+        //        ShowRenameButton = privileges.AllowRename
+        //    };
 
 
+
+        //    this.settingsContextMenu = new FileManagerSettingsContextMenu(null)
+        //    {
+        //        Enabled = true
+        //    };
+
+        //    this.settingsFolders = new FileManagerSettingsFolders(null)
+        //    {
+        //        Visible = true,
+        //        EnableCallBacks = false,
+        //        ShowFolderIcons = true,
+        //        ShowLockedFolderIcons = true
+        //    };
+        //    this.settingsUpload = new MVCxFileManagerSettingsUpload();
+        //    this.settingsUpload.Enabled = privileges.AllowUpload;
+        //    this.settingsUpload.AdvancedModeSettings.EnableMultiSelect = true;
+        //}
+
+
+
+        //private FileManagerPrivilege GetPrivilege(UserProfileSessionData sessionData)
+        //{
+        //    ///dummy next should get from profile provider
+        //    var privilege = new FileManagerPrivilege()
+        //    {
+        //        AllowCopy = false,
+        //        AllowCreate = false,
+        //        AllowDelete = true,
+        //        AllowDownload = false,
+        //        AllowMove = true,
+        //        AllowRename = true,
+        //        AllowUpload = false
+        //    };
+        //    return privilege;
+        //}
+
+        #endregion old code
 
         [Display(Name = "Settings Editing")]
         public FileManagerSettingsEditing SettingsEditing { get { return settingsEditing; } }
@@ -269,20 +321,18 @@ namespace DSLNG.PEAR.Web.Controllers
         public FileManagerSettingsToolbar SettingsToolbar { get { return settingsToolbar; } }
         [Display(Name = "Settings Folders")]
         public FileManagerSettingsFolders SettingsFolders { get { return settingsFolders; } }
-        [Display(Name="Settings Context Menu")]
-        public FileManagerSettingsContextMenu SettingContextMenu { get { return SettingContextMenu; } }
         [Display(Name = "Settings Upload")]
         public MVCxFileManagerSettingsUpload SettingsUpload { get { return settingsUpload; } }
-        public class FileManagerPrivilege
-        {
-            public bool AllowCreate { get; set; }
-            public bool AllowMove { get; set; }
-            public bool AllowDelete { get; set; }
-            public bool AllowRename { get; set; }
-            public bool AllowCopy { get; set; }
-            public bool AllowDownload { get; set; }
-            public bool AllowUpload { get; set; }
-        }
+        //public class FileManagerPrivilege
+        //{
+        //    public bool AllowCreate { get; set; }
+        //    public bool AllowMove { get; set; }
+        //    public bool AllowDelete { get; set; }
+        //    public bool AllowRename { get; set; }
+        //    public bool AllowCopy { get; set; }
+        //    public bool AllowDownload { get; set; }
+        //    public bool AllowUpload { get; set; }
+        //}
     }
     #endregion
 

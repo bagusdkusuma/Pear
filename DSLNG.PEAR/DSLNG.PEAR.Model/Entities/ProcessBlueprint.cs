@@ -12,7 +12,7 @@ namespace DSLNG.PEAR.Data.Entities
     {
         public ProcessBlueprint()
         {
-            RoleGroups = new List<RoleGroup>();
+            //FileManagerRolePrivileges = new List<FileManagerRolePrivilege>();
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -27,6 +27,6 @@ namespace DSLNG.PEAR.Data.Entities
         public byte[] Data { get; set; }
 
         public DateTime? LastWriteTime { get; set; }
-        public ICollection<RoleGroup> RoleGroups { get; set; }
+        public ICollection<FileManagerRolePrivilege> FileManagerRolePrivileges { get; set; }
     }
 }

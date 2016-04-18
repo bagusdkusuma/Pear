@@ -114,6 +114,7 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<MidtermPlanningKpi> MidtermPlanningKpis { get; set; }
 
         public IDbSet<ProcessBlueprint> ProcessBlueprints { get; set; }
+        public IDbSet<FileManagerRolePrivilege> FileManagerRolePrivileges { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Kpi>()
@@ -310,7 +311,16 @@ namespace DSLNG.PEAR.Data.Persistence
                 .HasOptional(x => x.Tank)
                 .WithOptionalDependent()
                 .WillCascadeOnDelete();
-
+            //modelBuilder.Entity<ProcessBlueprint>()
+            //    .HasMany(x => x.FileManagerRolePrivileges)
+            //    .WithOptional()
+            //    .WillCascadeOnDelete();
+            //modelBuilder.Entity<FileManagerRolePrivilege>()
+            //    .HasRequired<ProcessBlueprint>(s => s.ProcessBlueprint)
+            //    .WithMany(s => s.FileManagerRolePrivileges);
+            //modelBuilder.Entity<FileManagerRolePrivilege>()
+            //    .HasRequired<RoleGroup>(s => s.RoleGroup)
+            //    .WithMany(s => s.FileManagerRolePrivileges);
             base.OnModelCreating(modelBuilder);
         }
         //public DbEntries 
