@@ -95,13 +95,18 @@ namespace DSLNG.PEAR.Web.Controllers
                     var sessionData = (UserProfileSessionData)this.Session["LoginUser"];
                     if (!sessionData.IsSuperAdmin)
                     {
-                        var currentUrl = filterContext.HttpContext.Request.Url.AbsolutePath;
-                        if (currentUrl.Length > 1)
+
+                        var controller = filterContext.HttpContext.Request.RequestContext.RouteData.Values["Controller"].ToString();
+                        var action = filterContext.HttpContext.Request.RequestContext.RouteData.Values["Action"].ToString();
+                        var urlHelperUrl = new UrlHelper(System.Web.HttpContext.Current.Request.RequestContext);
+                        string cleanUrl = urlHelperUrl.Action(action, controller, new { id = string.Empty });
+                        //var currentUrl = filterContext.HttpContext.Request.Url.AbsolutePath;
+                        if (cleanUrl.Length > 1)
                         {
-                            if (currentUrl != "/UnAuthorized/Error")
+                            if (cleanUrl != "/UnAuthorized/Error")
                             {
                                 var menuService = ObjectFactory.Container.GetInstance<IMenuService>();
-                                var menu = menuService.GetMenuByUrl(new GetMenuRequestByUrl { Url = currentUrl, RoleId = sessionData.RoleId });
+                                var menu = menuService.GetMenuByUrl(new GetMenuRequestByUrl { Url = cleanUrl, RoleId = sessionData.RoleId });
                                 if (menu == null || menu.IsSuccess == false)
                                 {
                                     filterContext.Result = new RedirectToRouteResult(

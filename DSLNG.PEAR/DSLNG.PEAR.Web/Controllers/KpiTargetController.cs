@@ -245,6 +245,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Index()
         {
             var isAdmin = this.UserProfile().IsSuperAdmin;
+            ViewBag.IsSuperAdmin = isAdmin;
             var response = new AllKpiTargetsResponse();
 
             if (isAdmin)
