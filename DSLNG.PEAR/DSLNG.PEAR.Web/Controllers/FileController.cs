@@ -29,14 +29,16 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IKpiTargetService _kpiTargetService;
         private readonly IOperationDataService _operationDataService;
         private readonly IOperationConfigService _operationConfigService;
+        private readonly IKpiService _kpiService;
 
-        public FileController(IKpiAchievementService kpiAchievementService, IKpiTargetService kpiTargetService, IDropdownService dropdownService, IOperationDataService operationDataService, IOperationConfigService operationConfigService)
+        public FileController(IKpiAchievementService kpiAchievementService, IKpiTargetService kpiTargetService, IDropdownService dropdownService, IOperationDataService operationDataService, IOperationConfigService operationConfigService, IKpiService kpiService)
         {
             _kpiAchievementService = kpiAchievementService;
             _kpiTargetService = kpiTargetService;
             _dropdownService = dropdownService;
             _operationDataService = operationDataService;
             _operationConfigService = operationConfigService;
+            _kpiService = kpiService;
         }
 
         public ActionResult Index()
@@ -304,9 +306,17 @@ namespace DSLNG.PEAR.Web.Controllers
             var sourcePath = string.Format("{0}{1}/", TemplateDirectory, configType);
             var targetPath = string.Format("{0}{1}/", UploadDirectory, configType);
             ExcelUploadHelper.setPath(sourcePath, targetPath);
-            ExcelUploadHelper.setValidationSettings(extension, 20971520);
+            ExcelUploadHelper.setValidationSettings(extension, 30000000);
             UploadControlExtension.GetUploadedFiles("uc", ExcelUploadHelper.ValidationSettings, ExcelUploadHelper.FileUploadComplete);
             return null;
+            //switch (configType)
+            //{
+            //    case "KpiAchievement":
+            //        return PartialView("UploadControlPartial", configType);
+            //        break;
+            //    default:
+            //        break;
+            //}
         }
 
         public JsonResult ProcessFile(ProcessFileViewModel viewModel)
@@ -404,6 +414,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
                             for (int i = 1; i < rows; i++)
                             {
+                                bool isAuthorizedKPI = false;
                                 for (int j = 0; j < column; j++)
                                 {
                                     if (j == 0)
@@ -411,6 +422,11 @@ namespace DSLNG.PEAR.Web.Controllers
                                         if (worksheet.Cells[i, j].Value.Type == CellValueType.Numeric)
                                         {
                                             kpiId = int.Parse(worksheet.Cells[i, j].Value.ToString());
+                                            //this will validate authorized KPI based on Role
+                                            isAuthorizedKPI = ValidateAuthorizeKPI(kpiId);
+                                            if (!isAuthorizedKPI) {
+                                                break;
+                                            }
                                         }
                                     }
                                     else if (j > 1)
@@ -452,6 +468,7 @@ namespace DSLNG.PEAR.Web.Controllers
                                         } 
                                     }
                                 }
+                                if (!isAuthorizedKPI) continue;
                             }
                         }
                         else
@@ -488,6 +505,22 @@ namespace DSLNG.PEAR.Web.Controllers
             }
 
             return response;
+        }
+
+        private bool ValidateAuthorizeKPI(int kpiId)
+        {
+            var response = new DSLNG.PEAR.Services.Responses.Kpi.GetKpiDetailResponse();
+            if (this.UserProfile().IsSuperAdmin) return true;
+            response = _kpiService.GetKpiDetail(new Services.Requests.Kpi.GetKpiRequest { Id = kpiId });
+            if (response.IsSuccess) {
+                if (response.RoleGroup == this.UserProfile().RoleName)
+                {
+                    return true;
+                }
+                else
+                    return false;
+            }
+            return false;
         }
 
         private BaseResponse UpdateOperationData(IEnumerable<ConfigurationViewModel.Item> datas)

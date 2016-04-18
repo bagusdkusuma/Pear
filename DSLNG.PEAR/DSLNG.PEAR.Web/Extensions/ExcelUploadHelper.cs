@@ -23,8 +23,8 @@ namespace DSLNG.PEAR.Web.Extensions
         }
 
         public static void setValidationSettings(string[] allowedExtension, long maxFileSize) {
-            extensions = allowedExtension;
-            maxSize = maxFileSize;
+            extensions = new string[] { ".xls", ".xlsx", ".csv", }; ;
+            maxSize = 20971520;
         }
 
         public static void FileUploadComplete(object sender, DevExpress.Web.FileUploadCompleteEventArgs e)
