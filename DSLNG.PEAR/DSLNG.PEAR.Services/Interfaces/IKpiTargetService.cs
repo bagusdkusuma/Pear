@@ -20,7 +20,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         UpdateKpiTargetItemResponse SaveKpiTargetItem(SaveKpiTargetRequest request);
         GetKpiTargetsConfigurationResponse GetKpiTargetsConfiguration(GetKpiTargetsConfigurationRequest request);
         AllKpiTargetsResponse GetAllKpiTargets();
-
         AllKpiTargetsResponse GetAllKpiTargetByRole(GetKpiTargetsConfigurationRequest request);
         BaseResponse BatchUpdateKpiTargetss(BatchUpdateTargetRequest request);
 
