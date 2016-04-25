@@ -1257,6 +1257,8 @@
     <Content Include="Views\ProcessBlueprint\Index.cshtml" />
     <Content Include="Views\ProcessBlueprint\_ProcessBlueprintPartial.cshtml" />
     <Content Include="Views\PopDashboard\_AttachmentForm.cshtml" />
+    <Content Include="Views\ProcessBlueprint\_PrivilegeConfigPartial.cshtml" />
+    <Content Include="Views\ProcessBlueprint\_PrivilegePartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -1491,6 +1493,7 @@
     <Compile Include="ViewModels\PopDashboard\PopDashboardViewModel.cs" />
     <Compile Include="ViewModels\PopDashboard\PopInformationViewModel.cs" />
     <Compile Include="ViewModels\PopDashboard\SignatureViewModel.cs" />
+    <Compile Include="ViewModels\ProcessBlueprint\FileManagerRolePrivilegeViewModel.cs" />
     <Compile Include="ViewModels\ProcessBlueprint\ProcessBlueprintFileSystemProvider.cs" />
     <Compile Include="ViewModels\ProcessBlueprint\ProcessBlueprintViewModel.cs" />
     <Compile Include="ViewModels\RoleGroup\CreateRoleGroupViewModel.cs" />

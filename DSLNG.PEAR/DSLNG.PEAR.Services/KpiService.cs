@@ -84,7 +84,7 @@ namespace DSLNG.PEAR.Services
             {
                 var kpi = GetSingleKpi(request);
                 var response = kpi.MapTo<GetKpiDetailResponse>();
-
+                response.IsSuccess = true;
                 return response;
             }
             catch (System.InvalidOperationException x)

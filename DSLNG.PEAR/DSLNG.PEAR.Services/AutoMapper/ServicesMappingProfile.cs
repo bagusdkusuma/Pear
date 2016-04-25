@@ -722,9 +722,15 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
         private void ConfigureProcessBlueprint()
         {
-            Mapper.CreateMap<ProcessBlueprint, GetProcessBlueprintResponse>();
-            Mapper.CreateMap<ProcessBlueprint, GetProcessBlueprintsResponse.ProcessBlueprint>();
+            Mapper.CreateMap<ProcessBlueprint, GetProcessBlueprintResponse>()
+                .ForMember(x => x.CreatedBy, y => y.MapFrom(z => z.CreatedBy.Id));
+            Mapper.CreateMap<ProcessBlueprint, GetProcessBlueprintsResponse.ProcessBlueprint>()
+                .ForMember(x => x.CreatedBy, y => y.MapFrom(z => z.CreatedBy.Id));
             Mapper.CreateMap<SaveProcessBlueprintRequest, ProcessBlueprint>();
+            Mapper.CreateMap<FileManagerRolePrivilege, GetProcessBlueprintPrivilegesResponse.FileManagerRolePrivilege>()
+                .ForMember(x => x.FileId, y => y.MapFrom(z => z.ProcessBlueprint.Id))
+                .ForMember(x => x.RoleGroupId, y => y.MapFrom(z => z.RoleGroup.Id));
+            Mapper.CreateMap<ProcessBlueprint, GetProcessBlueprintPrivilegesResponse.FileManagerRolePrivilege.BlueprintFile>();
         }
 
         private void ConfigureEconomicSummary()

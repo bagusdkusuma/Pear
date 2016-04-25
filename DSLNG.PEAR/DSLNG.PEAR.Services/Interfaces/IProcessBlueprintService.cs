@@ -1,4 +1,5 @@
 ﻿using DSLNG.PEAR.Services.Requests.ProcessBlueprint;
+using DSLNG.PEAR.Services.Responses;
 using DSLNG.PEAR.Services.Responses.ProcessBlueprint;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,8 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetProcessBlueprintsResponse All();
         GetProcessBlueprintsResponse Gets(GetProcessBlueprintsRequest request);
         GetProcessBlueprintResponse Get(GetProcessBlueprintRequest request);
-        GetProcessBlueprintResponse Save(SaveProcessBlueprintRequest request);
-        GetProcessBlueprintResponse Delete(int Id);
+        SaveProcessBlueprintResponse Save(SaveProcessBlueprintRequest request);
+        BaseResponse Delete(int Id);
+        GetProcessBlueprintPrivilegesResponse GetPrivilege(GetProcessBlueprintPrivilegeRequest request);
     }
 }
