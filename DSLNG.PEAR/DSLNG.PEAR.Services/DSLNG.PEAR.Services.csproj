@@ -94,9 +94,11 @@
     <Compile Include="Interfaces\IMirConfigurationService.cs" />
     <Compile Include="Interfaces\IMirDataTableService.cs" />
     <Compile Include="Interfaces\IProcessBlueprintService.cs" />
+    <Compile Include="Interfaces\IRolePrivilegeService.cs" />
     <Compile Include="MirConfigurationService.cs" />
     <Compile Include="MirDataTableService.cs" />
     <Compile Include="ProcessBlueprintService.cs" />
+    <Compile Include="Requests\Menu\GetMenuPrivilegeRequest.cs" />
     <Compile Include="Requests\MirConfiguration\GetMirConfigurationsRequest.cs" />
     <Compile Include="Requests\MirConfiguration\SaveMirConfigurationRequest.cs" />
     <Compile Include="Requests\MirDataTable\DeleteKpiMirDataTableRequest.cs" />
@@ -224,6 +226,7 @@
     <Compile Include="Responses\HighlightOrder\GetStaticHighlightOrdersResponse.cs" />
     <Compile Include="Responses\HighlightOrder\SaveStaticHighlightOrderResponse.cs" />
     <Compile Include="Responses\Kpi\GetKpiDetailResponse.cs" />
+    <Compile Include="Responses\Menu\GetMenuPrivilegeResponse.cs" />
     <Compile Include="Responses\MidtermFormulation\AddDefinitionResponse.cs" />
     <Compile Include="Responses\MidtermFormulation\AddStageResponse.cs" />
     <Compile Include="Responses\MidtermFormulation\GetMidtermFormulationResponse.cs" />
@@ -759,6 +762,7 @@
     <Compile Include="Responses\Weather\GetWeathersResponse.cs" />
     <Compile Include="Responses\Weather\SaveWeatherResponse.cs" />
     <Compile Include="RoleGroupService.cs" />
+    <Compile Include="RolePrivilegeService.cs" />
     <Compile Include="RowAndColumns.cs" />
     <Compile Include="ScenarioService.cs" />
     <Compile Include="SelectService.cs" />

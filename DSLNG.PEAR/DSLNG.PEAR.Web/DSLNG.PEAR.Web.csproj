@@ -763,6 +763,7 @@
     <Content Include="Third Party\Svg.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Compile Include="Attributes\AuthorizeUserAttribute.cs" />
     <Compile Include="Controllers\ArtifactCloneController.cs" />
     <Compile Include="Controllers\AssumptionDataController.cs" />
     <Compile Include="Controllers\MirConfigurationController.cs" />
@@ -839,6 +840,7 @@
     <Compile Include="ViewModels\HighlightGroup\HighlightGroupViewModel.cs" />
     <Compile Include="ViewModels\Kpi\DetailKpiViewModel.cs" />
     <Compile Include="ViewModels\Kpi\UploadViewModel.cs" />
+    <Compile Include="ViewModels\Menu\MenuPrivilegeViewModel.cs" />
     <Compile Include="ViewModels\MirConfiguration\ConfigureMirConfigurationViewModel.cs" />
     <Compile Include="ViewModels\MirConfiguration\MirConfigurationViewModel.cs" />
     <Compile Include="ViewModels\MirConfiguration\SaveMirConfigurationViewModel.cs" />

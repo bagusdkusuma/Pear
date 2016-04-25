@@ -241,6 +241,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
                 .ForMember(o => o.LevelId, p => p.MapFrom(k => k.Level.Id));
             Mapper.CreateMap<UpdateRoleGroupViewModel, UpdateRoleGroupRequest>();
             Mapper.CreateMap<GetRoleGroupResponse, DSLNG.PEAR.Web.ViewModels.Kpi.RoleGroup>();
+            Mapper.CreateMap<GetMenuPrivilegeResponse, MenuPrivilegeViewModel>();
 
             Mapper.CreateMap<GetTypeResponse, UpdateTypeViewModel>();
             Mapper.CreateMap<GetTypesResponse.Type, TypeViewModel>();

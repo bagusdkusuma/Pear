@@ -17,9 +17,11 @@ using DevExpress.Web.Mvc;
 using DSLNG.PEAR.Services.Requests.Kpi;
 using DSLNG.PEAR.Web.ViewModels.Kpi;
 using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Web.Attributes;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
+    [Authorize]
     public class KpiController : BaseController
     {
         private readonly IKpiService _kpiService;
@@ -41,7 +43,7 @@ namespace DSLNG.PEAR.Web.Controllers
             _dropdownService = dropdownService;
         }
 
-
+        [AuthorizeUser(AccessLevel="AllowView")]
         public ActionResult Index()
         {
 
@@ -122,6 +124,7 @@ namespace DSLNG.PEAR.Web.Controllers
             return viewModel;
         }
 
+        [AuthorizeUser(AccessLevel = "AllowCreate")]
         public ActionResult Create()
         {
             var viewModel = new CreateKpiViewModel();
@@ -151,6 +154,7 @@ namespace DSLNG.PEAR.Web.Controllers
             return View("Create", viewModel);
         }
 
+        [AuthorizeUser(AccessLevel = "AllowUpdate")]
         public ActionResult Update(int id)
         {
             var response = _kpiService.GetKpi(new GetKpiRequest { Id = id });
@@ -240,6 +244,7 @@ namespace DSLNG.PEAR.Web.Controllers
         }
 
         [HttpPost]
+        [AuthorizeUser(AccessLevel = "AllowUpload")]
         public ActionResult Upload(HttpPostedFileBase iconFile, string returnUrl)
         {
 
@@ -346,6 +351,7 @@ namespace DSLNG.PEAR.Web.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
+        [AuthorizeUser(AccessLevel = "AllowDownload")]
         public ActionResult Download()
         {
             var sheetName = "Kpi";

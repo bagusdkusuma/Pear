@@ -37,6 +37,11 @@
                         @Html.ValidationMessageFor(model => model.Module)
                     </div>
                     <div class="form-group">
+                        @Html.LabelFor(model => model.IsRoot, new { @class = "control-label" })
+                        @Html.EditorFor(model => model.IsRoot, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.IsRoot)
+                    </div>
+                    <div class="form-group">
                         @Html.LabelFor(model => model.IsActive, new { @class = "control-label" })
                         @Html.EditorFor(model => model.IsActive, new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.IsActive)

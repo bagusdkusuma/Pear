@@ -143,14 +143,19 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<UpdateUserRequest, User>();
             Mapper.CreateMap<GetUserRequest, User>();
             Mapper.CreateMap<Data.Entities.RoleGroup, GetUserResponse.RoleGroup>();
+            Mapper.CreateMap<Data.Entities.RolePrivilege, GetUserResponse.RolePrivilege>();
             Mapper.CreateMap<Data.Entities.RoleGroup, GetUsersResponse.RoleGroup>();
             Mapper.CreateMap<Data.Entities.User, GetUserResponse>();
             Mapper.CreateMap<Data.Entities.User, LoginUserResponse>();
+            Mapper.CreateMap<Data.Entities.RolePrivilege, LoginUserResponse.RolePrivilege>();
             Mapper.CreateMap<Data.Entities.RoleGroup, LoginUserResponse.RoleGroup>();
             Mapper.CreateMap<Data.Entities.ResetPassword, ResetPasswordResponse>();
             Mapper.CreateMap<ResetPasswordResponse, ResetPassword>();
             //Mapper.CreateMap<ResetPasswordResponse.User, Data.Entities.User>();
             Mapper.CreateMap<GetUserResponse, ResetPasswordResponse.User>();
+            Mapper.CreateMap<MenuRolePrivilege, GetMenuPrivilegeResponse>();
+            Mapper.CreateMap<Data.Entities.RolePrivilege, GetMenuPrivilegeResponse.Privilege>();
+            Mapper.CreateMap<Data.Entities.Menu, GetMenuPrivilegeResponse.MenuPrivilege>();
             //Mapper.CreateMap<
 
             /*Level*/
@@ -164,6 +169,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Data.Entities.Menu, GetMenusResponse.Menu>();
             Mapper.CreateMap<CreateMenuRequest, Data.Entities.Menu>();
             Mapper.CreateMap<Data.Entities.Menu, GetMenuResponse>();
+            Mapper.CreateMap<GetMenuResponse, UpdateMenuRequest>();
             Mapper.CreateMap<Data.Entities.Menu, DSLNG.PEAR.Services.Responses.Menu.Menu>();
 
             Mapper.CreateMap<UpdateMenuRequest, Data.Entities.Menu>();

@@ -36,6 +36,7 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             var response = new AllKpiAchievementsResponse();
             bool isAdmin = this.UserProfile().IsSuperAdmin;
+            var privilege = this.UserProfile().RolePrivilegeName;
             ViewBag.IsSuperAdmin = isAdmin;
             if (this.UserProfile().IsSuperAdmin)
             {

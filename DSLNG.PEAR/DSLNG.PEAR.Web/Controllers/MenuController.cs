@@ -144,6 +144,7 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             var viewModel = new CreateMenuViewModel();
             viewModel.IsActive = true;
+            viewModel.AddParent = true;
             viewModel = CreateViewModel(viewModel);
 
             return View(viewModel);

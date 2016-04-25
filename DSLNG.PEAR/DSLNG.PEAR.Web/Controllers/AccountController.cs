@@ -73,8 +73,29 @@ namespace DSLNG.PEAR.Web.Controllers
                  */
                 //this._createRole(user.RoleName);
                 //this._userAddToRole(user.Username, user.RoleName);
-                var profileData = new UserProfileSessionData { UserId = user.Id, Email = user.Email, Name = user.Username, RoleId = user.RoleId, RoleName = user.RoleName, RedirectUrl = user.ChangeModel, IsSuperAdmin = user.IsSuperAdmin };
+                var roleName = new List<KeyValuePair<int, string>>();
+                //roleName = user.RolePrivileges.ToDictionary(x => x.Id);
+                if (user.RolePrivileges.Count() > 0)
+                {
+                    foreach (var role in user.RolePrivileges)
+                    {
+                        //this._userAddToRole(user.Username, role.Name);
+                        roleName.Add(new KeyValuePair<int, string>(role.Id, role.Name));
+                    }
+                }
+                var profileData = new UserProfileSessionData { UserId = user.Id, Email = user.Email, Name = user.Username, RoleId = user.RoleId, RoleName = user.RoleName, RedirectUrl = user.ChangeModel, IsSuperAdmin = user.IsSuperAdmin, RolePrivilegeName = roleName };
                 this.Session["LoginUser"] = profileData;
+                //var authTicket = new FormsAuthenticationTicket(
+                //    version:1,
+                //    name : user.Username,
+                //    issueDate : DateTime.Now,
+                //    expiration: DateTime.Now.AddMinutes(30),
+                //    isPersistent : false,
+                //    userData : string.Join("|",roles)
+                //    );
+                //string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
+                //HttpCookie authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
+                //System.Web.HttpContext.Current.Response.Cookies.Add(authCookie);
                 FormsAuthentication.SetAuthCookie(user.Username, false);
                 return user.IsSuccess;
             }
@@ -178,10 +199,11 @@ namespace DSLNG.PEAR.Web.Controllers
                     ViewBag.Message = "Email Address Not Found";
                 }
             }
-            else {
+            else
+            {
                 ModelState.AddModelError("", "Invalid Email Address");
             }
-            
+
             return View(model);
         }
 
@@ -228,14 +250,16 @@ namespace DSLNG.PEAR.Web.Controllers
                 model.UserId = response.Profile.Id;
                 model.Token = response.Token;
             }
-            else {
+            else
+            {
                 ViewBag.Message = "Invalid Token";
             }
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult Reset(ResetPasswordChangeModel model) {
+        public ActionResult Reset(ResetPasswordChangeModel model)
+        {
             return View(model);
         }
     }
