@@ -11,6 +11,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using WebMatrix.WebData;
+using DSLNG.PEAR.Web.ViewModels.Menu;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -20,6 +21,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public const string UploadDirectory = "~/Content/UploadedFiles/";
         public const string TemplateDirectory = "~/Content/TemplateFiles/";
         //private UserProfileSessionData _userinfo;
+        private readonly IMenuService _menuService = ObjectFactory.Container.GetInstance<IMenuService>();
         public ContentResult ErrorPage(string message)
         {
             return Content(message);
@@ -88,40 +90,70 @@ namespace DSLNG.PEAR.Web.Controllers
                     { "action", "Login" } 
                 });
             }
-            else
-            {
-                if (!filterContext.RequestContext.HttpContext.Request.IsAjaxRequest())
-                {
-                    var sessionData = (UserProfileSessionData)this.Session["LoginUser"];
-                    if (!sessionData.IsSuperAdmin)
-                    {
+            #region authorize
+            //else
+            //{
+            //    if (!filterContext.RequestContext.HttpContext.Request.IsAjaxRequest())
+            //    {
+            //        var sessionData = (UserProfileSessionData)this.Session["LoginUser"];
+            //        if (!sessionData.IsSuperAdmin)
+            //        {
 
-                        var controller = filterContext.HttpContext.Request.RequestContext.RouteData.Values["Controller"].ToString();
-                        var action = filterContext.HttpContext.Request.RequestContext.RouteData.Values["Action"].ToString();
-                        var urlHelperUrl = new UrlHelper(System.Web.HttpContext.Current.Request.RequestContext);
-                        string cleanUrl = urlHelperUrl.Action(action, controller, new { id = string.Empty });
-                        //var currentUrl = filterContext.HttpContext.Request.Url.AbsolutePath;
-                        if (cleanUrl.Length > 1)
-                        {
-                            if (cleanUrl != "/UnAuthorized/Error")
-                            {
-                                var menuService = ObjectFactory.Container.GetInstance<IMenuService>();
-                                var menu = menuService.GetMenuByUrl(new GetMenuRequestByUrl { Url = cleanUrl, RoleId = sessionData.RoleId });
-                                if (menu == null || menu.IsSuccess == false)
-                                {
-                                    filterContext.Result = new RedirectToRouteResult(
-                                            new RouteValueDictionary 
-                                { 
-                                    { "controller", "UnAuthorized" }, 
-                                    { "action", "Error" } 
-                                });
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            //            var controller = filterContext.HttpContext.Request.RequestContext.RouteData.Values["Controller"].ToString();
+            //            var action = filterContext.HttpContext.Request.RequestContext.RouteData.Values["Action"].ToString();
+            //            var urlHelperUrl = new UrlHelper(System.Web.HttpContext.Current.Request.RequestContext);
+            //            string cleanUrl = urlHelperUrl.Action(action, controller, new { id = string.Empty });
+            //            //var currentUrl = filterContext.HttpContext.Request.Url.AbsolutePath;
+            //            if (cleanUrl.Length > 1)
+            //            {
+            //                if (cleanUrl != "/UnAuthorized/Error")
+            //                {
+            //                    var menuService = ObjectFactory.Container.GetInstance<IMenuService>();
+            //                    var menu = menuService.GetMenuByUrl(new GetMenuRequestByUrl { Url = cleanUrl, RoleId = sessionData.RoleId });
+            //                    if (menu == null || menu.IsSuccess == false)
+            //                    {
+            //                        filterContext.Result = new RedirectToRouteResult(
+            //                                new RouteValueDictionary 
+            //                    { 
+            //                        { "controller", "UnAuthorized" }, 
+            //                        { "action", "Error" } 
+            //                    });
+            //                    }
+            //                    else
+            //                    {
+            //                        GetMenuPrivilege(menu.Id, sessionData.RolePrivilegeName);
+            //                    }
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
+            #endregion
             base.OnAuthorization(filterContext);
+        }
+
+        private void GetMenuPrivilege(int menu_id, List<KeyValuePair<int, string>> privileges)
+        {
+            MenuPrivilegeViewModel Global = new MenuPrivilegeViewModel();
+            foreach (var item in privileges)
+            {
+                var privilege = _menuService.GetMenuPrivilege(new GetMenuPrivilegeRequest { Menu_Id = menu_id, RolePrivilege_Id = item.Key });
+                if (!privilege.IsSuccess) continue;
+                Global.Menu_Id = menu_id;
+                Global.Menu_Name = privilege.Menu.Name;
+                Global.Menu_Url = privilege.Menu.Url;
+                Global.AllowApprove = Global.AllowApprove == false ? privilege.AllowApprove : Global.AllowApprove;
+                Global.AllowCreate = Global.AllowCreate == false ? privilege.AllowCreate : Global.AllowCreate;
+                Global.AllowDelete = Global.AllowDelete == false ? privilege.AllowDelete : Global.AllowDelete;
+                Global.AllowDownload = Global.AllowDownload == false ? privilege.AllowDownload : Global.AllowDownload;
+                Global.AllowPublish = Global.AllowPublish == false ? privilege.AllowPublish : Global.AllowPublish;
+                Global.AllowUpdate = Global.AllowUpdate == false ? privilege.AllowUpdate : Global.AllowUpdate;
+                Global.AllowUpload = Global.AllowUpload == false ? privilege.AllowUpload : Global.AllowUpload;
+                Global.AllowView = Global.AllowView == false ? privilege.AllowView : Global.AllowView;
+                //GetMenuPrivilege(menu_id, item.Key);
+            }
+            Session[Global.Menu_Url.ToString()] = Global;
+            //return authorized;
         }
         protected override void OnException(ExceptionContext filterContext)
         {

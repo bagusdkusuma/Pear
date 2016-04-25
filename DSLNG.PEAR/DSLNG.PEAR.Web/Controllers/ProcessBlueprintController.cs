@@ -11,6 +11,7 @@ using DevExpress.Web;
 using Newtonsoft.Json;
 using System.IO;
 using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Web.Attributes;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -18,6 +19,7 @@ namespace DSLNG.PEAR.Web.Controllers
     {
         //
         // GET: /ProcessBlueprint/
+        [AuthorizeUser(AccessLevel="AllowView")]
         public ActionResult Index()
         {
             return View(ProcessBlueprintControllerProcessBlueprintSettings.ProcessBlueprintFileSystemProvider);
@@ -220,16 +222,17 @@ namespace DSLNG.PEAR.Web.Controllers
         FileManagerSettingsToolbar settingsToolbar;
         FileManagerSettingsFolders settingsFolders;
         MVCxFileManagerSettingsUpload settingsUpload;
+        List<string> rights = (List<string>)HttpContext.Current.Session["ProcessBlueprint"];
         public FileManagerFeaturesOption()
         {
             this.settingsEditing = new FileManagerSettingsEditing(null)
             {
-                AllowCopy = false,
-                AllowCreate = false,
-                AllowDelete = false,
-                AllowDownload = false,
-                AllowMove = false,
-                AllowRename = false
+                AllowCopy = rights.Contains("AllowCopy"),
+                AllowCreate = rights.Contains("AllowCreate"),
+                AllowDelete = rights.Contains("AllowDelete"),
+                AllowDownload = rights.Contains("AllowDownload"),
+                AllowMove = rights.Contains("AllowUpdate"),
+                AllowRename = rights.Contains("AllowUpdate")
             };
 
             this.settingsToolbar = new FileManagerSettingsToolbar(null)
@@ -245,11 +248,12 @@ namespace DSLNG.PEAR.Web.Controllers
                 ShowLockedFolderIcons = true
             };
             this.settingsUpload = new MVCxFileManagerSettingsUpload();
-            this.settingsUpload.Enabled = false;
+            this.settingsUpload.Enabled = rights.Contains("AllowUpload");
             this.settingsUpload.AdvancedModeSettings.EnableMultiSelect = true;
         }
         #region old code
         //UserProfileSessionData sessionData = (UserProfileSessionData)HttpContext.Current.Session["LoginUser"];
+        
         
         //public FileManagerFeaturesOption(string folder)
         //{
