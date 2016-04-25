@@ -12,6 +12,7 @@ using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Requests.PopInformation;
 using System.Data.SqlClient;
 using System.IO;
+using DSLNG.PEAR.Common.Contants;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -57,32 +58,22 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create()
         {
             var viewModel = new SavePopDashboardViewModel();
-            var StatusList = new List<SelectListItem>();
-            SelectListItem item1 = new SelectListItem { Value = "OnProgress", Text = "OnProgress" };
-            StatusList.Add(item1);
-            SelectListItem item2 = new SelectListItem { Value = "Reviewed", Text = "Reviewed" };
-            StatusList.Add(item2);
-            viewModel.Statuses = StatusList;
+            var StatusList = new List<SelectListItem>() { 
+                new SelectListItem{Value = "Not Start Yet", Text = "Not Start Yet"},
+                new SelectListItem{Value = "In Progress", Text = "In Progress"},
+                new SelectListItem{Value = "Close", Text = "Close"}
+            };
+            viewModel.StatusOptions = StatusList;
             return View(viewModel);
         }
 
 
         [HttpPost]
-        public ActionResult Create(SavePopDashboardViewModel viewModel, HttpPostedFileBase file)
+        public ActionResult Create(SavePopDashboardViewModel viewModel)
         {
-            if (file != null)
-            {
-                var filename = Path.GetFileName(file.FileName);
-                var path = Path.Combine(Server.MapPath("~/Content/popfile/"), filename);
-                var url = "/Content/popfile/" + filename;
-                file.SaveAs(path);
-                viewModel.Attachment = url;
-            }
-            else
-            {
-                viewModel.Attachment = null;
-            }
             var request = viewModel.MapTo<SavePopDashboardRequest>();
+            ProcessAttachment(viewModel, request);
+
             var response = _popDashboardService.SavePopDashboard(request);
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
@@ -96,19 +87,8 @@ namespace DSLNG.PEAR.Web.Controllers
         [HttpPost]
         public ActionResult Edit(SavePopDashboardViewModel viewModel, HttpPostedFileBase file)
         {
-            if (file != null)
-            {
-                var filename = Path.GetFileName(file.FileName);
-                var path = Path.Combine(Server.MapPath("~/Content/popfile/"), filename);
-                var url = "/Content/popfile/" + filename;
-                file.SaveAs(path);
-                viewModel.Attachment = url;
-            }
-            else
-            {
-                viewModel.Attachment = null;
-            }
             var request = viewModel.MapTo<SavePopDashboardRequest>();
+            ProcessAttachment(viewModel, request);
             var response = _popDashboardService.SavePopDashboard(request);
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
@@ -122,14 +102,12 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Edit(int id)
         {
             var viewModel = _popDashboardService.GetPopDashboard(new GetPopDashboardRequest { Id = id }).MapTo<SavePopDashboardViewModel>();
-            var StatusList = new List<SelectListItem>();
-            SelectListItem item1 = new SelectListItem { Value = "OnProgress", Text = "OnProgress" };
-            StatusList.Add(item1);
-            SelectListItem item2 = new SelectListItem { Value = "Reviewed", Text = "Reviewed" };
-            StatusList.Add(item2);
-            var path = "~" + viewModel.Attachment;
-            viewModel.Statuses = StatusList;
-            viewModel.Attachment = path;
+            var StatusList = new List<SelectListItem>() { 
+                new SelectListItem{Value = "Not Start Yet", Text = "Not Start Yet"},
+                new SelectListItem{Value = "In Progress", Text = "In Progress"},
+                new SelectListItem{Value = "Close", Text = "Close"}
+            };
+            viewModel.StatusOptions = StatusList;
             return View(viewModel);
         }
 
@@ -160,6 +138,81 @@ namespace DSLNG.PEAR.Web.Controllers
             var viewModel = _popDashboardService.GetPopDashboard(new GetPopDashboardRequest { Id = id }).MapTo<GetPopDashboardViewModel>();
             viewModel.Users = _dropdownService.GetUsers().MapTo<SelectListItem>();
             return View(viewModel);
+        }
+
+        private void ProcessAttachment(SavePopDashboardViewModel viewModel, SavePopDashboardRequest request) {
+            if (viewModel.Attachments.Count > 0)
+            {
+                var validImageTypes = new string[]
+                {
+                    "image/gif",
+                    "image/jpeg",
+                    "image/pjpeg",
+                    "image/png"
+                };
+                var pdfType = "application/pdf";
+                var excelTypes = new string[]{
+                    "application/vnd.ms-excel",
+                    "application/msexcel",
+                    "application/x-msexcel",
+                    "application/x-ms-excel",
+                    "application/x-excel",
+                    "application/x-dos_ms_excel",
+                    "application/xls",
+                    "application/x-xls",
+                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                };
+                var docTypes = new string[]{
+                    "application/msword",
+                    "application/msword",
+                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                    "application/vnd.openxmlformats-officedocument.wordprocessingml.template",
+                    "application/vnd.ms-word.document.macroEnabled.12",
+                    "application/vnd.ms-word.template.macroEnabled.12"
+                };
+                foreach (var attachment in viewModel.Attachments)
+                {
+                    if (attachment.File != null)
+                    {
+                        var filename = Path.GetFileName(attachment.File.FileName);
+                        string type = null;
+                        if (attachment.File.ContentType == pdfType)
+                        {
+                            type = "pdf";
+                        }
+                        else if (validImageTypes.Contains(attachment.File.ContentType))
+                        {
+                            type = "image";
+                        }
+                        else if (excelTypes.Contains(attachment.File.ContentType))
+                        {
+                            type = "excel";
+                        }
+                        else if (docTypes.Contains(attachment.File.ContentType))
+                        {
+                            type = "doc";
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                        if (!Directory.Exists(Server.MapPath(PathConstant.PopAttachmentPath)))
+                        {
+                            Directory.CreateDirectory(Server.MapPath(PathConstant.PopAttachmentPath));
+                        }
+                        var filePath = Path.Combine(Server.MapPath(PathConstant.PopAttachmentPath), attachment.File.FileName);
+                        var url = PathConstant.PopAttachmentPath + "/" + filename;
+                        attachment.File.SaveAs(filePath);
+                        var attachmentReq = new SavePopDashboardRequest.Attachment
+                        {
+                            FileName = url,
+                            Alias = attachment.Alias,
+                            Type = type
+                        };
+                        request.AttachmentFiles.Add(attachmentReq);
+                    }
+                }
+            }
         }
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -19,16 +20,27 @@ namespace DSLNG.PEAR.Web.ViewModels.PopDashboard
         public class PopDashboard
         {
             public int Id { get; set; }
+            [Display(Name = "Project Title")]
             public string Title { get; set; }
+            [Display(Name="Project No")]
             public string Number { get; set; }
-            public string Subtitle { get; set; }
-            public bool IsActive { get; set; }
+            [Display(Name = "Project Purpose/Objective")]
             public string DashboardObjective { get; set; }
-            public string StructureLeader { get; set; }
+            [Display(Name = "Project Owner(dept/div)")]
             public string StructureOwner { get; set; }
-            public double ResourceTotalCost { get; set; }
-            public string ResourceCategory { get; set; }
-            public string ResourceRemakr { get; set; }
+            [Display(Name = "Project Team")]
+            public string Team { get; set; }
+            [Display(Name = "Budget-OPEX(USD)")]
+            public double BudgetOpex { get; set; }
+            [Display(Name = "Budget-CAPEX(USD)")]
+            public double BudgetCapex { get; set; }
+            [Display(Name = "Affected KPI")]
+            public string AffectedKPI { get; set; }
+            [Display(Name = "Project Start")]
+            public DateTime ProjectStart { get; set; }
+            [Display(Name = "Project End")]
+            public DateTime ProjectEnd { get; set; }
+            public string Status { get; set; }
 
         }
     }
@@ -38,39 +50,100 @@ namespace DSLNG.PEAR.Web.ViewModels.PopDashboard
     {
         public SavePopDashboardViewModel()
         {
-            IsActive = true;
-            Statuses = new List<SelectListItem>();
-
+            //IsActive = true;
+            StatusOptions = new List<SelectListItem>();
+            Attachments = new List<AttachmentViewModel>()
+            {
+                new AttachmentViewModel()
+            };
         }
         public int Id { get; set; }
+        [Display(Name = "Project Title")]
+        [DataType(DataType.MultilineText)]
+        [Required]
         public string Title { get; set; }
+        [Display(Name = "Project No")]
+        [Required]
         public string Number { get; set; }
-        public string Subtitle { get; set; }
-        public bool IsActive { get; set; }
-        public string Status { get; set; }
-        public IList<SelectListItem> Statuses { get; set; }
-        public string Attachment { get; set; }
-        [Display(Name = "Dashboard Objective")]
+        [Display(Name = "Project Purpose/Objective")]
+        [Required]
+        [DataType(DataType.MultilineText)]
+        [AllowHtml]
         public string DashboardObjective { get; set; }
-
+        [Display(Name = "Project Owner(dept/div)")]
         [Required]
-        [DataType(DataType.MultilineText)]
-        [AllowHtml]
-        [Display(Name = "Leader")]
-        public string StructureLeader { get; set; }
-
-        [Display(Name = "Owner")]
         public string StructureOwner { get; set; }
-        [Display(Name = "Total Cost")]
-        public double ResourceTotalCost { get; set; }
-        [Display(Name = "Category")]
-        public string ResourceCategory { get; set; }
-
-        [Required]
+        [Display(Name = "Project Team")]
         [DataType(DataType.MultilineText)]
         [AllowHtml]
-        [Display(Name = "Remark")]
-        public string ResourceRemark { get; set; }
+        [Required]
+        public string Team { get; set; }
+        [Display(Name = "Budget-OPEX(USD)")]
+        [Required]
+        public double BudgetOpex { get; set; }
+        [Display(Name = "Budget-CAPEX(USD)")]
+        [Required]
+        public double BudgetCapex { get; set; }
+        [Display(Name = "Affected KPI")]
+        [DataType(DataType.MultilineText)]
+        [AllowHtml]
+        [Required]
+        public string AffectedKPI { get; set; }
+        public DateTime? ProjectStart { get; set; }
+        public string _projectStartDisplay { get; set; }
+        [Display(Name = "Project Start")]
+        [Required]
+        public string ProjectStartDispay
+        {
+            get
+            {
+                if (ProjectStart.HasValue)
+                {
+                    return ProjectStart.Value.ToString("MM/dd/yyyy");
+                }
+                return this._projectStartDisplay;
+            }
+            set
+            {
+                this.ProjectStart = DateTime.ParseExact(value, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+                this._projectStartDisplay = value;
+            }
+        }
+
+        
+        public DateTime? ProjectEnd { get; set; }
+        public string _projectEndDisplay { get; set; }
+        [Display(Name = "Project End")]
+        [Required]
+        public string ProjectEndDispay
+        {
+            get
+            {
+                if (ProjectEnd.HasValue)
+                {
+                    return ProjectEnd.Value.ToString("MM/dd/yyyy");
+                }
+                return this._projectEndDisplay;
+            }
+            set
+            {
+                this.ProjectEnd = DateTime.ParseExact(value, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+                this._projectEndDisplay = value;
+            }
+        }
+         [Required]
+        public string Status { get; set; }
+
+        public IList<SelectListItem> StatusOptions { get; set; }
+        public IList<AttachmentViewModel> Attachments { get; set; }
+
+        public class AttachmentViewModel {
+            public int Id { get; set; }
+            public string Alias { get; set; }
+            public string Type { get; set; }
+            public string Filename { get; set; }
+            public HttpPostedFileBase File { get; set; }
+        }
     }
 
     public class GetPopDashboardViewModel

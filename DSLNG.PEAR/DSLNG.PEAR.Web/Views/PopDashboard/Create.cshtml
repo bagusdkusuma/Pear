@@ -14,69 +14,65 @@
         </div>
         <div class="col-md-12">
             <div class="form-inline whitebox">
-                <div class="form-group form-list">
-                    @Html.LabelFor(model => model.Title)
-                    @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Title)
-                </div>
-                <div class="form-group form-list">
+                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.Number)
                     @Html.TextBoxFor(model => model.Number, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Number)
                 </div>
                 <div class="form-group form-list">
-                    @Html.LabelFor(model => model.Subtitle)
-                    @Html.TextBoxFor(model => model.Subtitle, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Subtitle)
+                    @Html.LabelFor(model => model.Title)
+                    @Html.TextAreaFor(model => model.Title, new { @class = "form-control allow-html" })
+                    @Html.ValidationMessageFor(model => model.Title)
+                </div>
+               <div class="form-group form-list">
+                    @Html.LabelFor(model => model.DashboardObjective)
+                    @Html.TextAreaFor(model => model.DashboardObjective, new { @class = "form-control allow-html" })
+                    @Html.ValidationMessageFor(model => model.DashboardObjective)
+                </div>
+                 <div class="form-group form-list">
+                    @Html.LabelFor(model => model.StructureOwner)
+                    @Html.TextBoxFor(model => model.StructureOwner, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.StructureOwner)
+                </div>
+                 <div class="form-group form-list">
+                    @Html.LabelFor(model => model.BudgetOpex)
+                    @Html.TextBoxFor(model => model.BudgetOpex, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.BudgetOpex)
+                </div>
+                 <div class="form-group form-list">
+                    @Html.LabelFor(model => model.BudgetCapex)
+                    @Html.TextBoxFor(model => model.BudgetCapex, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.BudgetCapex)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.AffectedKPI)
+                    @Html.TextAreaFor(model => model.AffectedKPI, new { @class = "form-control allow-html" })
+                    @Html.ValidationMessageFor(model => model.AffectedKPI)
                 </div>
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.DashboardObjective)
                     @Html.TextBoxFor(model => model.DashboardObjective, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.DashboardObjective)
                 </div>
-                <div class="message-holder">
-                    <div class="form-group form-list message-text-area">
-                        @Html.LabelFor(model => model.StructureLeader)
-                        @Html.TextAreaFor(model => model.StructureLeader, 5, 100, new { @class = "form-control popDasboard-message" })
-                        @Html.ValidationMessageFor(model => model.StructureLeader)
-                    </div>
+               <div class="form-group form-list">
+                    @Html.LabelFor(model => model.ProjectStartDispay)
+                    @Html.TextBoxFor(model => model.ProjectStartDispay, new { @class = "form-control start" })
+                    @Html.ValidationMessageFor(model => model.ProjectStartDispay)
                 </div>
-                <div class="form-group form-list">
-                    @Html.LabelFor(model => model.StructureOwner)
-                    @Html.TextBoxFor(model => model.StructureOwner, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.StructureOwner)
+                 <div class="form-group form-list">
+                    @Html.LabelFor(model => model.ProjectEndDispay)
+                    @Html.TextBoxFor(model => model.ProjectEndDispay, new { @class = "form-control end" })
+                    @Html.ValidationMessageFor(model => model.ProjectEndDispay)
                 </div>
-                <div class="form-group form-list">
-                    @Html.LabelFor(model => model.ResourceTotalCost)
-                    @Html.TextBoxFor(model => model.ResourceTotalCost, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.ResourceTotalCost)
-                </div>
-                <div class="form-group form-list">
-                    @Html.LabelFor(model => model.ResourceCategory)
-                    @Html.TextBoxFor(model => model.ResourceCategory, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.ResourceCategory)
-                </div>
-                <div class="form-group form-list">
-                    @Html.LabelFor(model => model.ResourceRemark)
-                    @Html.TextAreaFor(model => model.ResourceRemark, 5, 100, new { @class = "form-control popDasboard-message" })
-                    @Html.ValidationMessageFor(model => model.ResourceRemark)
-                </div>
-                <div class="form-group form-list">
-                    @Html.LabelFor(model => model.IsActive)
-                    @Html.CheckBoxFor(model => model.IsActive, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.IsActive)
-                </div>
+               
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.Status)
-                    @Html.DropDownListFor(model => model.Status, Model.Statuses, new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.Status, Model.StatusOptions, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Status)
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Attachment, new { @class = "control-label" })
-                    <input type="file" name="file" id="file" class="form-control" />
-                    @Html.ValidationMessageFor(model => model.Attachment)
-                </div>
-
+       
+                //here we are the attachments
+                 @Html.Partial("_AttachmentForm", Model.Attachments)
 
             </div>
         </div>
@@ -92,8 +88,14 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
+            $('.start').datetimepicker({
+                format: "MM/DD/YYYY"
+            });
+            $('.end').datetimepicker({
+                format: "MM/DD/YYYY"
+            });
             tinyMCE.init({
-                selector: ".popDasboard-message",
+                selector: ".allow-html",
                 plugins: [
                     "advlist autolink lists link image charmap print preview anchor",
                     "searchreplace visualblocks code fullscreen",

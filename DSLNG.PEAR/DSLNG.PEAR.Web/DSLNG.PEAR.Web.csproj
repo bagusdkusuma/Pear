@@ -1256,6 +1256,7 @@
     <Content Include="Views\Wave\Create.cshtml" />
     <Content Include="Views\ProcessBlueprint\Index.cshtml" />
     <Content Include="Views\ProcessBlueprint\_ProcessBlueprintPartial.cshtml" />
+    <Content Include="Views\PopDashboard\_AttachmentForm.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

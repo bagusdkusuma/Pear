@@ -15,20 +15,31 @@ namespace DSLNG.PEAR.Services.Responses.PopDashboard
 
         public class PopDashboard
         {
+            public PopDashboard() {
+                Attachments = new List<Attachment>();
+            }
             public int Id { get; set; }
             public string Title { get; set; }
             public string Number { get; set; }
-            public string Subtitle { get; set; }
-            public bool IsActive { get; set; }
-            public string Status { get; set; }
-            public string Attachment { get; set; }
             public string DashboardObjective { get; set; }
-            public string StructureLeader { get; set; }
             public string StructureOwner { get; set; }
-            public double ResourceTotalCost { get; set; }
-            public string ResourceCategory { get; set; }
-            public string ResourceRemark { get; set; }
-            public string Filename { get { return Path.GetFileName(this.Attachment); } }
+            public string Team { get; set; }
+            public double BudgetOpex { get; set; }
+            public double BudgetCapex { get; set; }
+            public string AffectedKPI { get; set; }
+            public DateTime ProjectStart { get; set; }
+            public DateTime ProjectEnd { get; set; }
+            public string Status { get; set; }
+            public IList<Attachment> Attachments { get; set; }
         }
+
+        public class Attachment
+        {
+            public int Id { get; set; }
+            public string Filename { get; set; }
+            public string Alias { get; set; }
+            public string Type { get; set; }
+        }
+
     }
 }
