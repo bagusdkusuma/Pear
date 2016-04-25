@@ -227,7 +227,7 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             this.settingsEditing = new FileManagerSettingsEditing(null)
             {
-                AllowCopy = rights.Contains("AllowCopy"),
+                AllowCopy = rights.Contains("AllowUpdate"),
                 AllowCreate = rights.Contains("AllowCreate"),
                 AllowDelete = rights.Contains("AllowDelete"),
                 AllowDownload = rights.Contains("AllowDownload"),
