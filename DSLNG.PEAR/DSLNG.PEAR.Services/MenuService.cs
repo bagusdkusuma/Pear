@@ -666,19 +666,12 @@ namespace DSLNG.PEAR.Services
         {
             try
             {
-                //var role = DataContext.RoleGroups.First(x => x.Id == request.RoleId);
-                //var menu = DataContext.Menus.Include(x => x.RoleGroups).Where(x=>x.RoleGroups == role).First(x => x.Url == request.Url);
-                //var url = request.Url != null ? request.Url.Split('/') : null;
-                //string authorized = "/";
-                //if (url[1].Length > 0)
-                //{
-                //    authorized = string.Format("/{0}/", url[1]);
-                //    //authorized += url[1];
-                //}
-                //var menu = DataContext.Menus.Include(x => x.RoleGroups).First(x => x.RoleGroups.Select(y => y.Id).Contains(request.RoleId) && x.Url.Contains(authorized));
-                var menu = DataContext.Menus.Include(x => x.RoleGroups).First(x => x.RoleGroups.Select(y => y.Id).Contains(request.RoleId) && x.Url.Contains(request.Url));
-                //var menu = DataContext.Menus.Include(x => x.RoleGroups).First(x => x.RoleGroups.Select(y => y.Id).Contains(request.RoleId) && ( x.Url.Contains(request.Url) || request.Url.Contains(x.Url.ToString())));
-                var response = menu.MapTo<GetMenuResponse>();
+                var response = new GetMenuResponse();
+                using (var ctx = new DataContext())
+                {
+                    var menu = DataContext.Menus.Include(x => x.RoleGroups).First(x => x.RoleGroups.Select(y => y.Id).Contains(request.RoleId) && x.Url.Contains(request.Url));
+                    response = menu.MapTo<GetMenuResponse>();
+                }
                 response.IsSuccess = true;
                 return response;
             }

@@ -17,7 +17,16 @@ namespace DSLNG.PEAR.Web.Attributes
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
             var sessionData = (UserProfileSessionData)httpContext.Session["LoginUser"];
+            //by passing super admin
+            
             var controller = httpContext.Request.RequestContext.RouteData.Values["Controller"].ToString();
+
+            if (sessionData.IsSuperAdmin)
+            {
+                //GetAllRights(controller);
+                return true;
+            }
+
             var action = httpContext.Request.RequestContext.RouteData.Values["Action"].ToString();
             var url = httpContext.Request.RawUrl;
             var urlHelperUrl = new UrlHelper(HttpContext.Current.Request.RequestContext);
@@ -33,6 +42,14 @@ namespace DSLNG.PEAR.Web.Attributes
 
             if (privilegeLevels.Contains(this.AccessLevel)) return true;
             else return false;
+        }
+
+        private void GetAllRights(string controller)
+        {
+            List<string> userRights = (List<string>)HttpContext.Current.Session[controller] != null ? (List<string>)HttpContext.Current.Session[controller] : new List<string> { 
+                "AllowApprove","AllowView","AllowCreate","AllowDelete","AllowDownload","AllowUpload","AllowPublish","AllowUpdate"
+            };
+            HttpContext.Current.Session[controller] = userRights;
         }
 
         private IEnumerable<string> GetUserRights(int menu_id, string menu_name, List<KeyValuePair<int, string>> currentPrivileges)
