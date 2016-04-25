@@ -61,6 +61,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PopDashboard
         [Display(Name = "Project Title")]
         [DataType(DataType.MultilineText)]
         [Required]
+        [AllowHtml]
         public string Title { get; set; }
         [Display(Name = "Project No")]
         [Required]
