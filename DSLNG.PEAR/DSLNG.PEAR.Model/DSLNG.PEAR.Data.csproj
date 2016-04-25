@@ -125,6 +125,7 @@
     <Compile Include="Entities\Mir\MirDataTable.cs" />
     <Compile Include="Entities\Mir\MirHighlight.cs" />
     <Compile Include="Entities\Pop\PopDashboard.cs" />
+    <Compile Include="Entities\Pop\PopDashboardAttachment.cs" />
     <Compile Include="Entities\Pop\PopInformation.cs" />
     <Compile Include="Entities\Pop\Signature.cs" />
     <Compile Include="Entities\ProcessBlueprint.cs" />

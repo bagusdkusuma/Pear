@@ -688,6 +688,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetActiveOutputCategoriesResponse.KeyOutputResponse, EconomicIndicatorsViewModel.KeyOutputViewModel>();
             Mapper.CreateMap<SavePopDashboardViewModel, SavePopDashboardRequest>();
             Mapper.CreateMap<GetPopDashboardResponse, SavePopDashboardViewModel>();
+            Mapper.CreateMap<GetPopDashboardResponse.Attachment, SavePopDashboardViewModel.AttachmentViewModel>();
             Mapper.CreateMap<GetPopDashboardResponse, GetPopDashboardViewModel>();
             Mapper.CreateMap<GetPopDashboardResponse.PopInformation, GetPopDashboardViewModel.PopInformation>();
             Mapper.CreateMap<GetPopDashboardResponse.Signature, SignatureViewModel>();

@@ -690,8 +690,10 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
 
             Mapper.CreateMap<PopDashboard, GetPopDashboardsResponse.PopDashboard>();
+            Mapper.CreateMap<PopDashboardAttachment, GetPopDashboardsResponse.Attachment>();
             Mapper.CreateMap<SavePopDashboardRequest, PopDashboard>();
             Mapper.CreateMap<PopDashboard, GetPopDashboardResponse>();
+            Mapper.CreateMap<PopDashboardAttachment, GetPopDashboardResponse.Attachment>();
             Mapper.CreateMap<PopInformation, GetPopDashboardResponse.PopInformation>();
             Mapper.CreateMap<Signature, GetPopDashboardResponse.Signature>()
                 .ForMember(x => x.User, o => o.MapFrom(y => y.User.Username))

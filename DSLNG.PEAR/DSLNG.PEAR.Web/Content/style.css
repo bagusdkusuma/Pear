@@ -3021,3 +3021,48 @@ input.control-form.assumption-input {
     padding-right:5px;
     padding-left:5px;
 }
+
+.pop-attachments .row:first-child .remove-option {
+    visibility:hidden;
+}
+.document-link {
+    position:relative;
+    padding-left:25px;
+}
+.document-link:before {
+       content: '';
+   
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: 0px 0;
+    position: absolute;
+    left: 0px;
+    top: -2px;
+}
+    .document-link.doc-type-pdf:before {
+     background-image: url(/content/images/pdf.png);
+    }
+    .document-link.doc-type-image:before {
+     background-image: url(/content/images/image.png);
+    }
+    .document-link.doc-type-excel:before {
+     background-image: url(/content/images/excel.png);
+    }
+    .document-link.doc-type-doc:before {
+     background-image: url(/content/images/doc.png);
+    }
+
+ul.pop-attachments-list {
+    list-style:none;
+    padding:0;
+}
+    ul.pop-attachments-list li {
+        margin-bottom:10px;
+    }
+
+#popDashboard-table tbody tr:not(:first-child) td{
+    vertical-align:top;
+}

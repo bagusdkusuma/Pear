@@ -14,9 +14,9 @@ using System.Data.Entity;
 
 namespace DSLNG.PEAR.Services
 {
-    public class PopDashboardService: BaseService, IPopDashboardService
+    public class PopDashboardService : BaseService, IPopDashboardService
     {
-        public PopDashboardService(IDataContext dataContext) : base(dataContext){}
+        public PopDashboardService(IDataContext dataContext) : base(dataContext) { }
 
 
 
@@ -40,10 +40,10 @@ namespace DSLNG.PEAR.Services
 
         public IEnumerable<PopDashboard> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
         {
-            var data = DataContext.PopDashboards.Include(x => x.PopInformations).Include(x => x.Signatures).AsQueryable();
+            var data = DataContext.PopDashboards.Include(x => x.Attachments).Include(x => x.PopInformations).Include(x => x.Signatures).AsQueryable();
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             {
-                data = data.Where(x => x.Number.Contains(search) || x.Subtitle.Contains(search) || x.Title.Contains(search));
+                data = data.Where(x => x.Number.Contains(search) || x.Title.Contains(search));
             }
 
             foreach (var sortOrder in sortingDictionary)
@@ -52,33 +52,24 @@ namespace DSLNG.PEAR.Services
                 {
                     case "Title":
                         data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.Title).ThenBy(x => x.IsActive)
-                            : data.OrderByDescending(x => x.Title).ThenBy(x => x.IsActive);
+                            ? data.OrderBy(x => x.Title)
+                            : data.OrderByDescending(x => x.Title);
                         break;
-                    case "Subtitle":
-                        data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.Subtitle).ThenBy(x => x.IsActive)
-                            : data.OrderByDescending(x => x.Subtitle).ThenBy(x => x.IsActive);
-                        break;
+
                     case "Number":
                         data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.Number).ThenBy(x => x.IsActive)
-                            : data.OrderByDescending(x => x.Number).ThenBy(x => x.IsActive);
+                            ? data.OrderBy(x => x.Number)
+                            : data.OrderByDescending(x => x.Number);
                         break;
                     case "Status":
                         data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.Status).ThenBy(x => x.IsActive)
-                            : data.OrderByDescending(x => x.Status).ThenBy(x => x.IsActive);
+                            ? data.OrderBy(x => x.Status)
+                            : data.OrderByDescending(x => x.Status);
                         break;
                     case "StructureOwner":
                         data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.StructureOwner).ThenBy(x => x.IsActive)
-                            : data.OrderByDescending(x => x.StructureOwner).ThenBy(x => x.IsActive);
-                        break;
-                    case "ResourceTotalCost":
-                        data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.ResourceTotalCost).ThenBy(x => x.IsActive)
-                            : data.OrderByDescending(x => x.ResourceTotalCost).ThenBy(x => x.IsActive);
+                            ? data.OrderBy(x => x.StructureOwner)
+                            : data.OrderByDescending(x => x.StructureOwner);
                         break;
                 }
             }
@@ -95,11 +86,50 @@ namespace DSLNG.PEAR.Services
             var popDashboard = request.MapTo<PopDashboard>();
             if (request.Id == 0)
             {
+                foreach (var attachment in request.AttachmentFiles)
+                {
+                    popDashboard.Attachments.Add(new PopDashboardAttachment
+                    {
+                        Alias = attachment.Alias,
+                        Filename = attachment.FileName,
+                        Type = attachment.Type
+                    });
+                }
                 DataContext.PopDashboards.Add(popDashboard);
             }
             else
             {
-                popDashboard = DataContext.PopDashboards.FirstOrDefault(x => x.Id == request.Id);
+                popDashboard = DataContext.PopDashboards
+                    .Include(x => x.Attachments)
+                    .FirstOrDefault(x => x.Id == request.Id);
+
+                foreach (var attachment in popDashboard.Attachments.ToList()) { 
+                    if(request.AttachmentFiles.All(x => x.Id != attachment.Id)){
+                         popDashboard.Attachments.Remove(attachment);
+                    }
+                }
+
+                foreach (var attachmentReq in request.AttachmentFiles)
+                {
+                    var existingAttachment = popDashboard.Attachments.SingleOrDefault(c => c.Id == attachmentReq.Id);
+
+                    if (existingAttachment != null && existingAttachment.Id != 0)
+                    {
+                        DataContext.Entry(existingAttachment).CurrentValues.SetValues(attachmentReq);
+                    }
+                    else
+                    {
+                        var newAttachment = new PopDashboardAttachment()
+                            {
+                                Alias = attachmentReq.Alias,
+                                Type = attachmentReq.Type,
+                                Filename = attachmentReq.FileName
+                            };
+                        popDashboard.Attachments.Add(newAttachment);
+                    }
+                }
+
+
                 request.MapPropertiesToInstance<PopDashboard>(popDashboard);
             }
 
@@ -116,6 +146,7 @@ namespace DSLNG.PEAR.Services
         public GetPopDashboardResponse GetPopDashboard(GetPopDashboardRequest request)
         {
             return DataContext.PopDashboards.Where(x => x.Id == request.Id)
+                .Include(x => x.Attachments)
                 .Include(x => x.PopInformations)
                 .Include(x => x.Signatures)
                 .Include(x => x.Signatures.Select(y => y.User))
