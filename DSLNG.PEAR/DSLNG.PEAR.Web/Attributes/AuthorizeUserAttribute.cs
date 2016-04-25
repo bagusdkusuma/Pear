@@ -23,7 +23,7 @@ namespace DSLNG.PEAR.Web.Attributes
 
             if (sessionData.IsSuperAdmin)
             {
-                //GetAllRights(controller);
+                GetAllRights(controller);
                 return true;
             }
 
