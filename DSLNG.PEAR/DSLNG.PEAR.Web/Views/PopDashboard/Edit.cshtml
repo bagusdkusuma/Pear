@@ -51,11 +51,6 @@
                     @Html.ValidationMessageFor(model => model.AffectedKPI)
                 </div>
                 <div class="form-group form-list">
-                    @Html.LabelFor(model => model.DashboardObjective)
-                    @Html.TextBoxFor(model => model.DashboardObjective, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.DashboardObjective)
-                </div>
-                <div class="form-group form-list">
                     @Html.LabelFor(model => model.ProjectStartDispay)
                     @Html.TextBoxFor(model => model.ProjectStartDispay, new { @class = "form-control start" })
                     @Html.ValidationMessageFor(model => model.ProjectStartDispay)
@@ -71,7 +66,6 @@
                     @Html.ValidationMessageFor(model => model.Status)
                 </div>
        
-                //here we are the attachments
                  @Html.Partial("_AttachmentForm", Model.Attachments)
 
             </div>
@@ -96,6 +90,7 @@
             });
             tinyMCE.init({
                 selector: ".allow-html",
+                menubar: false,
                 plugins: [
                     "advlist autolink lists link image charmap print preview anchor",
                     "searchreplace visualblocks code fullscreen",

@@ -8,7 +8,7 @@
     <button type="button" class="btn btn-default form-inline add-option"><i class="glyphicon glyphicon-plus"></i></button>
 </div>
 
-<div class="option-wrapper">
+<div class="option-wrapper pop-attachments">
     @foreach (var item in Model)
     {
         <div class="row hidden-option" style="margin-bottom: 10px;">
@@ -18,9 +18,8 @@
                 <input class="form-control opt-text" name="Attachments[@i].Alias" type="text" placeholder="Alias" value="@item.Alias" style="width:200px;">
                 <input  class="form-control opt-value-file" name="Attachments[@i].File" type="file" placeholder="File" value="@item.File" style="width:200px;">
                 <button type="button" class="btn btn-default form-control remove-option" style="display: inline-block;"><i class="glyphicon glyphicon-minus"></i></button>
-                // type should be here..
                 @if (!string.IsNullOrEmpty(item.Filename)) { 
-                    <a href="@Url.Content(item.Filename)" download class="doc-type-@item.Type">@item.Alias</a>
+                    <a href="@Url.Content(item.Filename)" download class="doc-type-@item.Type document-link">@item.Alias</a>
                 }
             </div>
         </div>
@@ -45,6 +44,10 @@
                 clone.find('.opt-value-file').show();
                 clone.find('.opt-value-file').attr('name', 'Attachments[' + i + '].File').val('');
                 clone.find('.opt-value').hide();
+                var file = clone.find('.document-link');
+                if (file.length) {
+                    file.remove();
+                }
             clone.appendTo('.option-wrapper').show();
 
             if (i > 0) {

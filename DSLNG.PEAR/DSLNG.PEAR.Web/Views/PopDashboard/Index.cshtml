@@ -22,6 +22,7 @@
             <th>Project Start</th>
             <th>Project End</th>
             <th>Status</th>
+            <th>Attachments</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -29,6 +30,7 @@
 
 @section Scripts{
     <script type="text/javascript">
+        var contentUrl = '@Url.Content("$x$")';
         $(document).ready(function () {
             $('#popDashboard-table').DataTable({
                 "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
@@ -37,7 +39,7 @@
                 "bServerSide": true,
                 "sServerMethod": "POST",
                 "sAjaxSource": '@Url.Action("Grid", "PopDashboard")',
-                "order": [[1, "asc"]],
+                "order": [[0, "asc"]],
                 "aoColumns": [
                     { "mDataProp": "Number", "name": "Number", "className": "dt-body-left" },
                     { "mDataProp": "Title", "name": "Title", "className": "dt-body-left" },
@@ -66,6 +68,16 @@
                         }
                     },
                     { "mDataProp": "Status", "name": "Status", "className": "dt-body-left" },
+                    { "mDataProp": "Attachments", "name": "Attachments", "className": "dt-body-left","mRender": function (data, type, row) {
+                        var list = '<ul class="pop-attachments-list">';
+                        for (var i in data) {
+                            list += '<li><a href="' + contentUrl.replace('$x$', data[i].Filename.substr(2, data[i].Filename.length)) + '" class="document-link doc-type-' + data[i].Type +
+                                '" >' + data[i].Alias + '</a></li>';
+                        }
+                        list += '</ul>';
+                        return list;
+                    }
+        },
                     {
                         "orderable": false,
                         "data": null,

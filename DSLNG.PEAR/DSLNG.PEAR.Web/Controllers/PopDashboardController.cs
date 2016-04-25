@@ -139,7 +139,20 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.Users = _dropdownService.GetUsers().MapTo<SelectListItem>();
             return View(viewModel);
         }
+        private static string RandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            var random = new Random();
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+        private static string MakeValidFileName(string name)
+        {
+            string invalidChars = System.Text.RegularExpressions.Regex.Escape(new string(System.IO.Path.GetInvalidFileNameChars()));
+            string invalidRegStr = string.Format(@"([{0}]*\.+$)|([{0}]+)", invalidChars);
 
+            return System.Text.RegularExpressions.Regex.Replace(name, invalidRegStr, "_");
+        }
         private void ProcessAttachment(SavePopDashboardViewModel viewModel, SavePopDashboardRequest request) {
             if (viewModel.Attachments.Count > 0)
             {
@@ -200,14 +213,24 @@ namespace DSLNG.PEAR.Web.Controllers
                         {
                             Directory.CreateDirectory(Server.MapPath(PathConstant.PopAttachmentPath));
                         }
-                        var filePath = Path.Combine(Server.MapPath(PathConstant.PopAttachmentPath), attachment.File.FileName);
-                        var url = PathConstant.PopAttachmentPath + "/" + filename;
+                        var uniqueFilename = RandomString(8) + MakeValidFileName(attachment.File.FileName).Replace(" ", "_");
+                        var filePath = Path.Combine(Server.MapPath(PathConstant.PopAttachmentPath), uniqueFilename);
+                        var url = PathConstant.PopAttachmentPath + "/" + uniqueFilename;
                         attachment.File.SaveAs(filePath);
                         var attachmentReq = new SavePopDashboardRequest.Attachment
                         {
+                            Id = attachment.Id,
                             FileName = url,
                             Alias = attachment.Alias,
                             Type = type
+                        };
+                        request.AttachmentFiles.Add(attachmentReq);
+                    }
+                    else {
+                        var attachmentReq = new SavePopDashboardRequest.Attachment
+                        {
+                            Id = attachment.Id,
+                            Alias = attachment.Alias,
                         };
                         request.AttachmentFiles.Add(attachmentReq);
                     }
