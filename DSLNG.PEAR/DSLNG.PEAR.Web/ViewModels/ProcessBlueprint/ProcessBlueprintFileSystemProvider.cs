@@ -224,13 +224,19 @@ namespace DSLNG.PEAR.Web.ViewModels.ProcessBlueprint
 
         public override void CopyFile(FileManagerFile file, FileManagerFolder newParentFolder)
         {
-            ProcessBlueprintDataProvider.Insert(new FileSystemItem
+            var fileData = FindFileItem(file);
+            if (fileData != null)
             {
-                IsFolder = false,
-                ParentId = FindFolderItem(newParentFolder).FileId,
-                Data = FindFileItem(file).Data,
-                LastWriteTime = DateTime.Now
-            });
+                ProcessBlueprintDataProvider.Insert(new FileSystemItem
+                {
+                    IsFolder = false,
+                    ParentId = FindFolderItem(newParentFolder).FileId,
+                    Name = fileData.Name,
+                    Data = fileData.Data,
+                    LastWriteTime = DateTime.Now
+                });
+            }
+            
             RefreshFolderCache();
         }
 
@@ -300,12 +306,19 @@ namespace DSLNG.PEAR.Web.ViewModels.ProcessBlueprint
         }
         public override void MoveFile(FileManagerFile file, FileManagerFolder newParentFolder)
         {
-            ProcessBlueprintDataProvider.Update(new FileSystemItem
+            var fileData = FindFileItem(file);
+            if (fileData != null)
             {
-                FileId = FindFileItem(file).FileId,
-                ParentId = FindFolderItem(newParentFolder).ParentId,
-                LastWriteTime = DateTime.Now
-            });
+                ProcessBlueprintDataProvider.Update(new FileSystemItem
+                {
+                    FileId = fileData.FileId,
+                    ParentId = FindFolderItem(newParentFolder).ParentId,
+                    Name = file.Name,
+                    Data = fileData.Data,
+                    LastWriteTime = DateTime.Now
+                });
+            }
+            RefreshFolderCache();
         }
         public override void MoveFolder(FileManagerFolder folder, FileManagerFolder newParentFolder)
         {
@@ -313,8 +326,10 @@ namespace DSLNG.PEAR.Web.ViewModels.ProcessBlueprint
             {
                 FileId = FindFolderItem(folder).FileId,
                 ParentId = FindFolderItem(newParentFolder).ParentId,
+                Name = folder.Name,
                 LastWriteTime = DateTime.Now
             });
+            RefreshFolderCache();
         }
         protected void RefreshFolderCache()
         {

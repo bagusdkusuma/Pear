@@ -108,6 +108,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 foreach (var item in myFolder.FileManagerRolePrivileges)
                 {
                     var file = item.ProcessBlueprint.MapTo<FileSystemItem>();
+                    if (string.IsNullOrEmpty(file.Name)) continue;
                     var folderItem = ProcessBlueprintFileSystemProvider.GetRelativeName(file);
                     FileManagerAccessRuleBase rule = null;
                     if (item.ProcessBlueprint.IsFolder)
