@@ -24,7 +24,10 @@ namespace DSLNG.PEAR.Web.ViewModels.Menu
         public string Remark { get; set; }
         public string Module { get; set; }
         [Required]
+        [Display(Name="Activate?")]
         public bool IsActive { get; set; }
+        [Display(Name="Set As Root Menu")]
+        public bool IsRoot { get; set; }
         [Display(Name = "Select Role Groups")]
         public List<int> RoleGroupIds { get; set; }
         [Display(Name = "Parent Menu")]

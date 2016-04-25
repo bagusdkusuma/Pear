@@ -17,6 +17,7 @@ namespace DSLNG.PEAR.Services.Responses.User
         public string RoleName { get; set; }
         public string ChangeModel { get; set; }
         public bool IsSuperAdmin { get; set; }
+        public ICollection<RolePrivilege> RolePrivileges { get; set; }
         public class RoleGroup
         {
             public int Id { get; set; }
@@ -24,6 +25,13 @@ namespace DSLNG.PEAR.Services.Responses.User
             public string Icon { get; set; }
             public string Remark { get; set; }
             public bool IsActive { get; set; }
+        }
+
+        public class RolePrivilege
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+        
         }
     }
 }

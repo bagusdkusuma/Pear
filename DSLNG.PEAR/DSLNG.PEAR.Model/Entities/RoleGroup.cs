@@ -10,6 +10,7 @@ namespace DSLNG.PEAR.Data.Entities
         {
             Menus = new HashSet<Menu>();
             SelectOptions = new List<SelectOption>();
+            //RolePrivileges = new HashSet<RolePrivilege>();
             //FileManagerRolePrivileges = new List<FileManagerRolePrivilege>();
         }
         [Key]
@@ -26,5 +27,6 @@ namespace DSLNG.PEAR.Data.Entities
         public ICollection<SelectOption> SelectOptions { get; set; }
         public ICollection<StaticHighlightPrivilege> StaticHighlightPrivileges { get; set; }
         public virtual ICollection<FileManagerRolePrivilege> FileManagerRolePrivileges { get; set; }
+        public virtual ICollection<RolePrivilege> RolePrivileges { get; set; }
     }
 }

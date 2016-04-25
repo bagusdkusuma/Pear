@@ -16,5 +16,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         UpdateMenuResponse Update(UpdateMenuRequest request);
         DeleteMenuResponse Delete(int id);
         GetRootMenuResponse GetRootMenu(GetRootMenuRequest request);
+        GetMenuPrivilegeResponse GetMenuPrivilege(GetMenuPrivilegeRequest request);
     }
 }

@@ -30,9 +30,6 @@
     propertiesButton.CommandName = "Properties";
     propertiesButton.Image.IconID = IconID.SetupProperties16x16;
     settings.SettingsToolbar.Items.Add(propertiesButton);
-    var refreshButton = new FileManagerToolbarRefreshButton();
-    refreshButton.BeginGroup = false;
-    settings.SettingsToolbar.Items.Add(refreshButton);
     var thumbnailsViewButton = new FileManagerToolbarCustomButton();
     thumbnailsViewButton.CommandName = "ChangeView-Thumbnails";
     thumbnailsViewButton.Text = "Thumbnails View";

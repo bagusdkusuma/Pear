@@ -119,6 +119,7 @@
     <Compile Include="Entities\EconomicModel\Scenario.cs" />
     <Compile Include="Entities\FileManagerRolePrivilege.cs" />
     <Compile Include="Entities\HighlightGroup.cs" />
+    <Compile Include="Entities\MenuRolePrivilege.cs" />
     <Compile Include="Entities\Mir\MirArtifact.cs" />
     <Compile Include="Entities\Mir\MirConfiguration.cs" />
     <Compile Include="Entities\Mir\MirDataTable.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="Entities\Pop\Signature.cs" />
     <Compile Include="Entities\ProcessBlueprint.cs" />
     <Compile Include="Entities\ResetPassword.cs" />
+    <Compile Include="Entities\RolePrivilege.cs" />
     <Compile Include="Entities\Select.cs" />
     <Compile Include="Entities\SelectOption.cs" />
     <Compile Include="Entities\Economic.cs" />

@@ -203,3 +203,5 @@ DSLNG.PEAR/DSLNG.PEAR.Web/Content/TemplateFiles/*
 /DSLNG.PEAR/DSLNG.PEAR.Web/Content/popfile
 /DSLNG.PEAR/DSLNG.PEAR.Web/Content/popfile
 /DSLNG.PEAR/DSLNG.PEAR.Web/Content/FileManager/Thumbnails
+/DSLNG.PEAR/DSLNG.PEAR.Web/Content/UploadedFiles/KpiAchievement
+/DSLNG.PEAR/DSLNG.PEAR.Web/Content/UploadedFiles/KpiTarget

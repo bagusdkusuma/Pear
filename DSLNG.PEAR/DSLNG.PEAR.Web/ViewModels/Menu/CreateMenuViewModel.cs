@@ -25,11 +25,14 @@ namespace DSLNG.PEAR.Web.ViewModels.Menu
         [Display(Name="Url Action")]
         public string Url { get; set; }
         [Required]
+        [Display(Name="Active?")]
         public bool IsActive { get; set; }
         [Display(Name = "Select Role Groups")]
         public List<int> RoleGroupIds { get; set; }
         [Display(Name = "Parent Menu")]
         public int? ParentId { get; set; }
+        [Display(Name="Auto Add Parent Menu Privilege?")]
+        public bool AddParent { get; set; }
         public List<SelectListItem> RoleGroupOptions { get; set; }
         public List<SelectListItem> MenuOptions { get; set; }
         public String[] IconList { 

@@ -1,6 +1,7 @@
 ﻿
 
 
+using System.Collections.Generic;
 namespace DSLNG.PEAR.Services.Responses.User
 {
     public class GetUserResponse : BaseResponse
@@ -15,6 +16,7 @@ namespace DSLNG.PEAR.Services.Responses.User
         public bool IsSuperAdmin { get; set; }
         public string FullName { get; set; }
         public string SignatureImage { get; set; }
+        public IList<RolePrivilege> Privileges { get; set; }
         public class RoleGroup
         {
             public int Id { get; set; }
@@ -35,6 +37,15 @@ namespace DSLNG.PEAR.Services.Responses.User
             public string Remark { get; set; }
 
             public bool IsActive { get; set; }
+        }
+
+        public class RolePrivilege
+        {
+            public int Id { get; set; }
+            public int RoleGroup_Id { get; set; }
+            public string Name { get; set; }
+            public string Descriptions { get; set; }
+            public RoleGroup RoleGroup { get; set; }
         }
     }
 
