@@ -322,11 +322,12 @@ namespace DSLNG.PEAR.Web.ViewModels.ProcessBlueprint
         }
         public override void MoveFolder(FileManagerFolder folder, FileManagerFolder newParentFolder)
         {
+            var folderData = FindFolderItem(folder);
             ProcessBlueprintDataProvider.Update(new FileSystemItem
             {
-                FileId = FindFolderItem(folder).FileId,
+                FileId = folderData.FileId,
                 ParentId = FindFolderItem(newParentFolder).ParentId,
-                Name = folder.Name,
+                Name = folderData.Name,
                 LastWriteTime = DateTime.Now
             });
             RefreshFolderCache();
