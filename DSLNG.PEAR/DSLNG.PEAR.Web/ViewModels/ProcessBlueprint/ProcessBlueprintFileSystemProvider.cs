@@ -18,15 +18,14 @@ namespace DSLNG.PEAR.Web.ViewModels.ProcessBlueprint
         public static IProcessBlueprintService service { get { return ObjectFactory.Container.GetInstance<IProcessBlueprintService>(); } }
         public static List<FileSystemItem> GetAll()
         {
-            var test = service.All().ProcessBlueprints.ToList();
-            List<FileSystemItem> files = (List<FileSystemItem>)HttpContext.Current.Session["FileSystemItem"];
-            if (files == null)
-            {
-                files = service.All().ProcessBlueprints.ToList().MapTo<FileSystemItem>();
-                HttpContext.Current.Session["FileSystemItem"] = files;
-            }
+            //List<FileSystemItem> files = (List<FileSystemItem>)HttpContext.Current.Session["FileSystemItem"];
+            //if (files == null)
+            //{
+            //    files = service.All().ProcessBlueprints.ToList().MapTo<FileSystemItem>();
+            //    HttpContext.Current.Session["FileSystemItem"] = files;
+            //}
 
-            return files;
+            return service.All().ProcessBlueprints.ToList().MapTo<FileSystemItem>();
         }
 
         public static void Insert(FileSystemItem file)

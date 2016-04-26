@@ -226,6 +226,7 @@ namespace DSLNG.PEAR.Web.Controllers
         List<string> rights = (List<string>)HttpContext.Current.Session["ProcessBlueprint"];
         public FileManagerFeaturesOption()
         {
+            if (rights == null) rights = new List<string>();
             this.settingsEditing = new FileManagerSettingsEditing(null)
             {
                 AllowCopy = rights.Contains("AllowUpdate"),
