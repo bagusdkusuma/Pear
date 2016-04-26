@@ -216,6 +216,7 @@ namespace DSLNG.PEAR.Services
                 //    }
                 //}
             }
+            resp.MidtermPlannings = resp.MidtermPlannings.OrderBy(x => x.StartDate).ToList();
             return resp;
         }
 
@@ -442,6 +443,7 @@ namespace DSLNG.PEAR.Services
                 var midtermPlanning = DataContext.MidtermStrategyPlannings.First(x => x.Id == id);
                 midtermPlanning.IsLocked = true;
                 midtermPlanning.IsBeingReviewed = true;
+                midtermPlanning.IsRejected = false;
                 DataContext.SaveChanges();
                 return new SubmitMidtermPlanningResponse
                 {
