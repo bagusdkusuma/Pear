@@ -102,6 +102,11 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Edit(int id)
         {
             var viewModel = _popDashboardService.GetPopDashboard(new GetPopDashboardRequest { Id = id }).MapTo<SavePopDashboardViewModel>();
+            if (viewModel.Attachments == null || viewModel.Attachments.Count == 0) {
+                viewModel.Attachments = new List<SavePopDashboardViewModel.AttachmentViewModel>{
+                    new SavePopDashboardViewModel.AttachmentViewModel()
+                };
+            }
             var StatusList = new List<SelectListItem>() { 
                 new SelectListItem{Value = "Not Start Yet", Text = "Not Start Yet"},
                 new SelectListItem{Value = "In Progress", Text = "In Progress"},
@@ -247,12 +252,15 @@ namespace DSLNG.PEAR.Web.Controllers
                     }
                     else
                     {
-                        var attachmentReq = new SavePopDashboardRequest.Attachment
+                        if (attachment.Id != 0)
                         {
-                            Id = attachment.Id,
-                            Alias = attachment.Alias,
-                        };
-                        request.AttachmentFiles.Add(attachmentReq);
+                            var attachmentReq = new SavePopDashboardRequest.Attachment
+                            {
+                                Id = attachment.Id,
+                                Alias = attachment.Alias,
+                            };
+                            request.AttachmentFiles.Add(attachmentReq);
+                        }
                     }
                 }
             }
