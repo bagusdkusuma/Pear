@@ -12,10 +12,11 @@ namespace DSLNG.PEAR.Web.Attributes
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public class AuthorizeUserAttribute : AuthorizeAttribute
     {
-        private readonly IMenuService _menuService = ObjectFactory.Container.GetInstance<IMenuService>();
+        //private readonly IMenuService _menuService = ObjectFactory.Container.GetInstance<IMenuService>();
         public string AccessLevel { get; set; }
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
+            var _menuService = ObjectFactory.Container.GetInstance<IMenuService>();
             var sessionData = (UserProfileSessionData)httpContext.Session["LoginUser"];
             //by passing super admin
             
@@ -54,6 +55,7 @@ namespace DSLNG.PEAR.Web.Attributes
 
         private IEnumerable<string> GetUserRights(int menu_id, string menu_name, List<KeyValuePair<int, string>> currentPrivileges)
         {
+            var _menuService = ObjectFactory.Container.GetInstance<IMenuService>();
             List<string> userRights = (List<string>)HttpContext.Current.Session[menu_name] != null ? (List<string>)HttpContext.Current.Session[menu_name] : new List<string>();
             foreach (var item in currentPrivileges)
             {
