@@ -8,6 +8,7 @@ namespace DSLNG.PEAR.Web.ViewModels.ProcessBlueprint
     public class FileManagerRolePrivilegeViewModel
     {
         public int RoleGroupId { get; set; }
+        public string RoleGroupName { get; set; }
         public int FileId { get; set; }
         public bool AllowCreate { get; set; }
         public bool AllowMove { get; set; }
