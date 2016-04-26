@@ -1,7 +1,7 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.PopDashboard.SavePopDashboardViewModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Edit";
 }
 
 <div class="pop-dashboard-save">
@@ -50,14 +50,14 @@
                     @Html.TextAreaFor(model => model.AffectedKPI, new { @class = "form-control allow-html" })
                     @Html.ValidationMessageFor(model => model.AffectedKPI)
                 </div>
-                <div class="form-group form-list">
+                <div class="form-group form-list"   >
                     @Html.LabelFor(model => model.ProjectStartDispay)
                     @Html.TextBoxFor(model => model.ProjectStartDispay, new { @class = "form-control start" })
                     @Html.ValidationMessageFor(model => model.ProjectStartDispay)
                 </div>
-                 <div class="form-group form-list">
+                 <div class="form-group form-list"  style="position:relative">
                     @Html.LabelFor(model => model.ProjectEndDispay)
-                    @Html.TextBoxFor(model => model.ProjectEndDispay, new { @class = "form-control end" })
+                    @Html.TextBoxFor(model => model.ProjectEndDispay, new { @class = "form-control end"})
                     @Html.ValidationMessageFor(model => model.ProjectEndDispay)
                 </div>
                 <div class="form-group form-list">
@@ -72,7 +72,7 @@
         </div>
         <div class="col-md-12 artifact-designer-btns">
             <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
-            <a onclick="location.reload();" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>
+            <a href="@Request.Url.ToString()" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>
             <a href="/PopDashboard" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
         </div>
     }

@@ -111,12 +111,14 @@
             }
             else
             {
+                if(Model.IsBeingReviewed){
                 using (Html.BeginForm("ApproveMidtermStrategy", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
                 {
                 @Html.Hidden("Id", Model.Id)
                 <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span> Approve</button>
                 }
                 <button type="button" class="btn btn-primary btn-lg btn-reject" data-toggle="modal" data-target="#reject-modal"><span class="fa fa-hand-stop-o"></span> Reject</button>
+            }
             }
         </div>
     </div>

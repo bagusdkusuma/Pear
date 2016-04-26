@@ -3028,6 +3028,7 @@ input.control-form.assumption-input {
 .document-link {
     position:relative;
     padding-left:25px;
+    display: inline-block;
 }
 .document-link:before {
        content: '';

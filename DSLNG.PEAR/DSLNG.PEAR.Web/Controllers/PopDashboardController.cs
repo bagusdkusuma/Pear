@@ -187,7 +187,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 {
                     if (attachment.File != null)
                     {
-                        var filename = Path.GetFileName(attachment.File.FileName);
+                        //var filename = Path.GetFileName(attachment.File.FileName);
                         string type = null;
                         if (attachment.File.ContentType == pdfType)
                         {
@@ -213,6 +213,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         {
                             Directory.CreateDirectory(Server.MapPath(PathConstant.PopAttachmentPath));
                         }
+                        var filename = attachment.File.FileName;
                         var uniqueFilename = RandomString(8) + MakeValidFileName(attachment.File.FileName).Replace(" ", "_");
                         var filePath = Path.Combine(Server.MapPath(PathConstant.PopAttachmentPath), uniqueFilename);
                         var url = PathConstant.PopAttachmentPath + "/" + uniqueFilename;
@@ -221,7 +222,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         {
                             Id = attachment.Id,
                             FileName = url,
-                            Alias = attachment.Alias,
+                            Alias = string.IsNullOrEmpty(attachment.Alias)?filename : attachment.Alias,
                             Type = type
                         };
                         request.AttachmentFiles.Add(attachmentReq);
