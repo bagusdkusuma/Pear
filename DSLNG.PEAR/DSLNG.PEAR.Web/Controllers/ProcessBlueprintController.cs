@@ -53,8 +53,37 @@ namespace DSLNG.PEAR.Web.Controllers
         }
         public PartialViewResult PrivilegeViewPartialView(FileSystemItem model)
         {
+            List<FileManagerRolePrivilegeViewModel> models = new List<FileManagerRolePrivilegeViewModel>();
             ///todo create matrix of file vs role vs privilege
-            return PartialView("_PrivilegePartial");
+            if (model != null)
+            {
+                var data = ProcessBlueprintDataProvider.service.GetPrivilege(new Services.Requests.ProcessBlueprint.GetProcessBlueprintPrivilegeRequest { FileId = model.FileId });
+                if (data.IsSuccess)
+                {
+                    models = data.FileManagerRolePrivileges.ToList().MapTo<FileManagerRolePrivilegeViewModel>();
+                }
+            }
+
+            return PartialView("_PrivilegePartial",models);
+        }
+
+        [ValidateInput(false)]
+        public ActionResult PrivilegeUpdate(MVCxGridViewBatchUpdateValues<FileManagerRolePrivilegeViewModel, int> updateValues)
+        {
+            int fileId = 0;
+            List<FileManagerRolePrivilegeViewModel> models = new List<FileManagerRolePrivilegeViewModel>();
+            //todo here is create connection to service update FileManagerPrivileges
+            foreach (var item in updateValues.Update)
+            {
+                fileId = item.FileId;
+                if (fileId > 0) break;
+            }
+            var data = ProcessBlueprintDataProvider.service.GetPrivilege(new Services.Requests.ProcessBlueprint.GetProcessBlueprintPrivilegeRequest { FileId = fileId });
+            if (data.IsSuccess)
+            {
+                models = data.FileManagerRolePrivileges.ToList().MapTo<FileManagerRolePrivilegeViewModel>(); 
+            }
+            return PartialView("_PrivilegePartial",models);
         }
         public ActionResult ProcessConfigPartial(string relativePath)
         {

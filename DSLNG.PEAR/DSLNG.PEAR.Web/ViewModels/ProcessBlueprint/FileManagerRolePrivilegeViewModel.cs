@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -7,8 +9,9 @@ namespace DSLNG.PEAR.Web.ViewModels.ProcessBlueprint
 {
     public class FileManagerRolePrivilegeViewModel
     {
+        [Key,Column(Order=0)]
         public int RoleGroupId { get; set; }
-        public string RoleGroupName { get; set; }
+        [Key, Column(Order = 1)]
         public int FileId { get; set; }
         public bool AllowCreate { get; set; }
         public bool AllowMove { get; set; }
@@ -18,6 +21,7 @@ namespace DSLNG.PEAR.Web.ViewModels.ProcessBlueprint
         public bool AllowDownload { get; set; }
         public bool AllowUpload { get; set; }
         public bool AllowBrowse { get; set; }
+        public string RoleGroupName { get; set; }
         public BlueprintFile ProcessBlueprint { get; set; }
         public class BlueprintFile
         {
