@@ -350,11 +350,11 @@ namespace DSLNG.PEAR.Services
             IQueryable<Data.Entities.Menu> menus;
             if (request.Take != 0)
             {
-                menus = DataContext.Menus.OrderBy(x => x.Order).Skip(request.Skip).Take(request.Take);
+                menus = DataContext.Menus.AsNoTracking().OrderBy(x => x.Order).Skip(request.Skip).Take(request.Take);
             }
             else
             {
-                menus = DataContext.Menus;
+                menus = DataContext.Menus.AsNoTracking();
             }
 
             var response = new GetMenusResponse() { Menus = menus.MapTo<GetMenusResponse.Menu>() };
@@ -382,7 +382,7 @@ namespace DSLNG.PEAR.Services
         {
             try
             {
-                var menu = DataContext.Menus.Include(x => x.RoleGroups).First(x => x.Id == request.Id);
+                var menu = DataContext.Menus.AsNoTracking().Include(x => x.RoleGroups).First(x => x.Id == request.Id);
                 var response = menu.MapTo<GetMenuResponse>();
 
                 return response;
@@ -667,7 +667,7 @@ namespace DSLNG.PEAR.Services
             try
             {
                 var response = new GetMenuResponse();
-                var menu = DataContext.Menus.Include(x => x.RoleGroups).FirstOrDefault(x => x.RoleGroups.Select(y => y.Id).Contains(request.RoleId) && x.Url.Contains(request.Url));
+                var menu = DataContext.Menus.AsNoTracking().Include(x => x.RoleGroups).FirstOrDefault(x => x.RoleGroups.Select(y => y.Id).Contains(request.RoleId) && x.Url.Contains(request.Url));
                 response = menu.MapTo<GetMenuResponse>();
                 response.IsSuccess = true;
                 return response;
@@ -757,7 +757,7 @@ namespace DSLNG.PEAR.Services
 
         private IEnumerable<Data.Entities.Menu> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int totalRecords)
         {
-            var data = DataContext.Menus.Include(x => x.RoleGroups).AsQueryable();
+            var data = DataContext.Menus.AsNoTracking().Include(x => x.RoleGroups).AsQueryable();
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             {
                 data = data.Where(x => x.Module.Contains(search) || x.Name.Contains(search));
@@ -804,7 +804,7 @@ namespace DSLNG.PEAR.Services
             var response = new GetMenuPrivilegeResponse();
             try
             {
-                response = DataContext.MenuRolePrivileges.Include(x => x.RolePrivilege).Include(y => y.Menu).Where(z => z.Menu.Id == request.Menu_Id && z.RolePrivilege.Id == request.RolePrivilege_Id).FirstOrDefault().MapTo<GetMenuPrivilegeResponse>();
+                response = DataContext.MenuRolePrivileges.AsNoTracking().Include(x => x.RolePrivilege).Include(y => y.Menu).Where(z => z.Menu.Id == request.Menu_Id && z.RolePrivilege.Id == request.RolePrivilege_Id).FirstOrDefault().MapTo<GetMenuPrivilegeResponse>();
                 response.IsSuccess = true;
             }
             catch (Exception e)
