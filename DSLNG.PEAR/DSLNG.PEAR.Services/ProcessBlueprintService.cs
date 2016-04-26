@@ -150,20 +150,32 @@ namespace DSLNG.PEAR.Services
 
         public GetProcessBlueprintPrivilegesResponse GetPrivilege(GetProcessBlueprintPrivilegeRequest request)
         {
-            var data = DataContext.FileManagerRolePrivileges.Include(x => x.ProcessBlueprint).Include(y => y.RoleGroup).ToList();
-            if (request.FileId > 0)
+            var response = new GetProcessBlueprintPrivilegesResponse();
+            try
             {
-                data = data.Where(x => x.ProcessBlueprint.Id == request.FileId).ToList();
+                var data = DataContext.FileManagerRolePrivileges.Include(x => x.ProcessBlueprint).Include(y => y.RoleGroup).ToList();
+                
+                if (request.FileId > 0)
+                {
+                    data = data.Where(x => x.ProcessBlueprint.Id == request.FileId).ToList();
+                }
+                if (request.RoleGroupId > 0)
+                {
+                    data = data.Where(x => x.RoleGroup.Id == request.RoleGroupId).ToList();
+                }
+                response.IsSuccess = true;
+                response.TotalRecords = data.Count();
+                response.FileManagerRolePrivileges = data.ToList().MapTo<GetProcessBlueprintPrivilegesResponse.FileManagerRolePrivilege>();
+                
             }
-            if (request.RoleGroupId > 0)
+            catch (InvalidOperationException e)
             {
-                data = data.Where(x => x.RoleGroup.Id == request.RoleGroupId).ToList();
+                response.IsSuccess = false;
+                response.Message = e.Message;
             }
-            return new GetProcessBlueprintPrivilegesResponse
-            {
-                TotalRecords = data.Count(),
-                FileManagerRolePrivileges = data.ToList().MapTo<GetProcessBlueprintPrivilegesResponse.FileManagerRolePrivilege>()
-            };
+            
+            return response;
+            
             
         }
     }
