@@ -429,12 +429,12 @@ namespace DSLNG.PEAR.Services
 
                 //ensure url end with slash
                 menu.Url = menu.Url != null && menu.Url.Length > 0 ? _CleanUpMenuUrl(menu.Url) : menu.Url;
-                
+
                 DataContext.Menus.Add(menu);
                 DataContext.SaveChanges();
                 if (request.AddParent && !menu.IsRoot)
                 {
-                    AddParentMenu(menu.ParentId,request.RoleGroupIds);
+                    AddParentMenu(menu.ParentId, request.RoleGroupIds);
                 }
                 response.IsSuccess = true;
                 response.Message = "Menu item has been added successfully";
@@ -483,10 +483,10 @@ namespace DSLNG.PEAR.Services
                 }
                 catch (DbUpdateException ex)
                 {
-                    
+
                     throw ex;
                 }
-                
+
             }
 
         }
@@ -515,7 +515,7 @@ namespace DSLNG.PEAR.Services
         //        item.State = EntityState.Modified;
         //        item.CurrentValues.SetValues(menu);
         //        //DataContext.Entry(currentValue).CurrentValues.SetValues(menu);
-                
+
         //        //var item = DataContext.Entry(menu);
         //        //if (item.State == EntityState.Detached)
         //        //{
@@ -534,7 +534,7 @@ namespace DSLNG.PEAR.Services
         //        menu.IsRoot = request.ParentId <= 0;
         //        menu.ParentId = menu.IsRoot ? null : menu.ParentId;
         //        //currentValue.RoleGroups.Clear();
-                
+
         //        var dicts = menu.RoleGroups.ToDictionary(x => x.Id);
         //        if (request.RoleGroupIds.Count > 0)
         //        {
@@ -551,7 +551,7 @@ namespace DSLNG.PEAR.Services
         //            }
         //        }
         //        //remove existing RoleGroup
-                
+
 
         //        ///Removed due to performance issue
         //        //List<int> existing = new List<int>(menu.RoleGroups.Count());
@@ -579,7 +579,7 @@ namespace DSLNG.PEAR.Services
         //        //currentValue.Url = currentValue.Url != null && currentValue.Url.Length > 0 ? _CleanUpMenuUrl(currentValue.Url) : currentValue.Url;
         //        //DataContext.Menus.Attach(menu);
         //        //DataContext.Entry(menu).State = EntityState.Modified;
-                
+
         //        DataContext.SaveChanges();
         //        response.IsSuccess = true;
         //        response.Message = "Menu item has been updated successfully";
@@ -667,11 +667,8 @@ namespace DSLNG.PEAR.Services
             try
             {
                 var response = new GetMenuResponse();
-                using (var ctx = new DataContext())
-                {
-                    var menu = DataContext.Menus.Include(x => x.RoleGroups).First(x => x.RoleGroups.Select(y => y.Id).Contains(request.RoleId) && x.Url.Contains(request.Url));
-                    response = menu.MapTo<GetMenuResponse>();
-                }
+                var menu = DataContext.Menus.Include(x => x.RoleGroups).FirstOrDefault(x => x.RoleGroups.Select(y => y.Id).Contains(request.RoleId) && x.Url.Contains(request.Url));
+                response = menu.MapTo<GetMenuResponse>();
                 response.IsSuccess = true;
                 return response;
             }
