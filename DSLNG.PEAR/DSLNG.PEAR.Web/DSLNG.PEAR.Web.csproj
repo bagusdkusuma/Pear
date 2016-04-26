@@ -299,6 +299,7 @@
     <Content Include="Content\images\forward_enabled_hover.png" />
     <Content Include="Content\images\image.png" />
     <Content Include="Content\images\pdf.png" />
+    <Content Include="Content\images\ppt.png" />
     <Content Include="Content\images\sort_asc.png" />
     <Content Include="Content\images\sort_asc_disabled.png" />
     <Content Include="Content\images\sort_both.png" />

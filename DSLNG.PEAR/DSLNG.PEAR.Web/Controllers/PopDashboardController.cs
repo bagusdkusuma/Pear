@@ -153,7 +153,8 @@ namespace DSLNG.PEAR.Web.Controllers
 
             return System.Text.RegularExpressions.Regex.Replace(name, invalidRegStr, "_");
         }
-        private void ProcessAttachment(SavePopDashboardViewModel viewModel, SavePopDashboardRequest request) {
+        private void ProcessAttachment(SavePopDashboardViewModel viewModel, SavePopDashboardRequest request)
+        {
             if (viewModel.Attachments.Count > 0)
             {
                 var validImageTypes = new string[]
@@ -183,6 +184,19 @@ namespace DSLNG.PEAR.Web.Controllers
                     "application/vnd.ms-word.document.macroEnabled.12",
                     "application/vnd.ms-word.template.macroEnabled.12"
                 };
+                var pptTypes = new string[]{
+                   "application/vnd.ms-powerpoint",
+                    "application/vnd.ms-powerpoint",
+                    "application/vnd.ms-powerpoint",
+                    "application/vnd.ms-powerpoint",
+                    "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                    "application/vnd.openxmlformats-officedocument.presentationml.template",
+                    "application/vnd.openxmlformats-officedocument.presentationml.slideshow",
+                    "application/vnd.ms-powerpoint.addin.macroEnabled.12",
+                    "application/vnd.ms-powerpoint.presentation.macroEnabled.12",
+                    "application/vnd.ms-powerpoint.template.macroEnabled.12",
+                    "application/vnd.ms-powerpoint.slideshow.macroEnabled.12"
+                };
                 foreach (var attachment in viewModel.Attachments)
                 {
                     if (attachment.File != null)
@@ -205,9 +219,13 @@ namespace DSLNG.PEAR.Web.Controllers
                         {
                             type = "doc";
                         }
+                        else if (pptTypes.Contains(attachment.File.ContentType))
+                        {
+                            type = "ppt";
+                        }
                         else
                         {
-                            continue;
+                            type = "blank";
                         }
                         if (!Directory.Exists(Server.MapPath(PathConstant.PopAttachmentPath)))
                         {
@@ -222,12 +240,13 @@ namespace DSLNG.PEAR.Web.Controllers
                         {
                             Id = attachment.Id,
                             FileName = url,
-                            Alias = string.IsNullOrEmpty(attachment.Alias)?filename : attachment.Alias,
+                            Alias = string.IsNullOrEmpty(attachment.Alias) ? filename : attachment.Alias,
                             Type = type
                         };
                         request.AttachmentFiles.Add(attachmentReq);
                     }
-                    else {
+                    else
+                    {
                         var attachmentReq = new SavePopDashboardRequest.Attachment
                         {
                             Id = attachment.Id,

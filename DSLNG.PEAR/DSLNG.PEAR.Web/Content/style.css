@@ -3055,6 +3055,9 @@ input.control-form.assumption-input {
     .document-link.doc-type-doc:before {
      background-image: url(/content/images/doc.png);
     }
+    .document-link.doc-type-ppt:before {
+     background-image: url(/content/images/ppt.png);
+    }
 
 ul.pop-attachments-list {
     list-style:none;

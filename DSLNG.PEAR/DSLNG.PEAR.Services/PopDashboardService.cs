@@ -158,8 +158,12 @@ namespace DSLNG.PEAR.Services
 
         public DeletePopDashboardResponse DeletePopDashboard(int request)
         {
-            var popDashboard = DataContext.PopDashboards.FirstOrDefault(x => x.Id == request);
-            DataContext.PopDashboards.Attach(popDashboard);
+            var popDashboard = DataContext.PopDashboards
+                .Include(x => x.Attachments)
+                .FirstOrDefault(x => x.Id == request);
+            foreach(var attchment in popDashboard.Attachments.ToList()){
+                popDashboard.Attachments.Remove(attchment);
+            }
             DataContext.PopDashboards.Remove(popDashboard);
             DataContext.SaveChanges();
             return new DeletePopDashboardResponse
