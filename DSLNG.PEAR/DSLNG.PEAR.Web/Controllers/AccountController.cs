@@ -67,7 +67,7 @@ namespace DSLNG.PEAR.Web.Controllers
         private bool IsValid(string email, string password)
         {
             var user = _userService.Login(new LoginUserRequest { Email = email, Password = password });
-            if (user != null)
+            if (user != null && user.IsSuccess)
             {
                 /* Try Get Current User Role
                  */
