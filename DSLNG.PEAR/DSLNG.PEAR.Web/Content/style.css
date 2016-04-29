@@ -3024,6 +3024,12 @@ input.control-form.assumption-input {
 
 /* ANGGA STYLE CSS */
 
+
+.midterm-plannings .midterm-planning table th {
+    background: none !important;
+}
+
+
 #economic-indicator-modal .modal-content {
     width: 800px;
 }
