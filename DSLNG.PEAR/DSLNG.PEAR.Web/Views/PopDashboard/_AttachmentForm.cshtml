@@ -74,9 +74,8 @@
             var $this = $(this);
             if ($this.val().trim() != '') {
                 var filename = $this.val().replace(/.*[\/\\]/, '');
-                if (filename.length > 15) {
-                    alert("The filename shouldn't longer than 15 characters! You can change the alias by correcting it in provided input");
-                    filename = filename.substr(0, 11) + '...';
+                if (filename.length > 25) {
+                    filename = filename.substr(0, 21) + '...';
                 }
                 $this.prev().val(filename);
             }
