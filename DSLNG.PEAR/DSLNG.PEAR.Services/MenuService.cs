@@ -23,7 +23,7 @@ namespace DSLNG.PEAR.Services
         public MenuService(IDataContext dataContext)
             : base(dataContext)
         {
-
+            
         }
 
         public GetSiteMenusResponse GetSiteMenus(GetSiteMenusRequest request)
@@ -484,7 +484,7 @@ namespace DSLNG.PEAR.Services
                 catch (DbUpdateException ex)
                 {
 
-                    throw ex;
+                    throw;
                 }
 
             }

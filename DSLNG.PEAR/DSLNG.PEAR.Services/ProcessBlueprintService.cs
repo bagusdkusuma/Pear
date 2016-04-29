@@ -148,35 +148,145 @@ namespace DSLNG.PEAR.Services
         }
 
 
-        public GetProcessBlueprintPrivilegesResponse GetPrivilege(GetProcessBlueprintPrivilegeRequest request)
+        public GetProcessBlueprintPrivilegesResponse GetPrivileges(GetProcessBlueprintPrivilegeRequest request)
         {
             var response = new GetProcessBlueprintPrivilegesResponse();
             try
             {
-                var data = DataContext.FileManagerRolePrivileges.Include(x => x.ProcessBlueprint).Include(y => y.RoleGroup).ToList();
+
+
+                //var data = DataContext.FileManagerRolePrivileges.Include(x => x.ProcessBlueprint).Include(y => y.RoleGroup).ToList();
+                var data = new List<FileManagerRolePrivilege>();
+                if (request.FileId > 0 && request.RoleGroupId == 0)
+                {
+                    var file = DataContext.ProcessBlueprints.Find(request.FileId);
+                    var roles = DataContext.RoleGroups.ToList();
+                    foreach (var role in roles)
+                    {
+                        var privilege = DataContext.FileManagerRolePrivileges.Include(x => x.ProcessBlueprint).Include(y => y.RoleGroup).SingleOrDefault(x => x.ProcessBlueprint_Id == request.FileId && x.RoleGroup_Id == role.Id);
+                        if (privilege == null)
+                        {
+                            privilege = new FileManagerRolePrivilege
+                            {
+                                ProcessBlueprint = file,
+                                ProcessBlueprint_Id = file.Id,
+                                RoleGroup = role,
+                                RoleGroup_Id = role.Id,
+                                AllowBrowse = false,
+                                AllowCopy = false,
+                                AllowCreate = false,
+                                AllowDelete = false,
+                                AllowDownload = false,
+                                AllowMove = false,
+                                AllowRename = false,
+                                AllowUpload = false
+                            };
+                        }
+                        data.Add(privilege);
+                    }
+                    //var file = DataContext.ProcessBlueprints.AsNoTracking().Include(x=>x.FileManagerRolePrivileges).First(x => x.Id == request.FileId);
+                    //data = data.Where(x => x.ProcessBlueprint.Id == request.FileId).ToList();
+                }
+                if (request.RoleGroupId > 0 && request.FileId == 0)
+                {
+                    var files = DataContext.ProcessBlueprints.AsNoTracking().ToDictionary(x => x.Id);
+                    var role = DataContext.RoleGroups.Find(request.RoleGroupId);
+                    foreach (var file in files)
+                    {
+                        var privilege = DataContext.FileManagerRolePrivileges.Include(x=>x.ProcessBlueprint).Include(y=>y.RoleGroup).SingleOrDefault(x=>x.ProcessBlueprint_Id == file.Key && x.RoleGroup_Id == request.RoleGroupId);
+                        if (privilege == null)
+                        {
+                            privilege = new FileManagerRolePrivilege
+                            {
+                                ProcessBlueprint = file.Value,
+                                ProcessBlueprint_Id = file.Key,
+                                RoleGroup = role,
+                                RoleGroup_Id = role.Id,
+                                AllowBrowse = false,
+                                AllowCopy = false,
+                                AllowCreate = false,
+                                AllowDelete = false,
+                                AllowDownload = false,
+                                AllowMove = false,
+                                AllowRename = false,
+                                AllowUpload = false
+                            };
+                        }
+                        data.Add(privilege);
+                    }
+                    //data = data.Where(x => x.RoleGroup.Id == request.RoleGroupId).ToList();
+                }
+                if (request.FileId > 0 && request.RoleGroupId > 0)
+                {
+                    var privilege = DataContext.FileManagerRolePrivileges.Include(x => x.ProcessBlueprint).Include(y => y.RoleGroup).SingleOrDefault(x => x.ProcessBlueprint_Id == request.FileId && x.RoleGroup_Id == request.RoleGroupId);
+                    data.Add(privilege);   
+                }
                 
-                if (request.FileId > 0)
-                {
-                    data = data.Where(x => x.ProcessBlueprint.Id == request.FileId).ToList();
-                }
-                if (request.RoleGroupId > 0)
-                {
-                    data = data.Where(x => x.RoleGroup.Id == request.RoleGroupId).ToList();
-                }
-                response.IsSuccess = true;
-                response.TotalRecords = data.Count();
                 response.FileManagerRolePrivileges = data.ToList().MapTo<GetProcessBlueprintPrivilegesResponse.FileManagerRolePrivilege>();
-                
+                response.IsSuccess = response.FileManagerRolePrivileges != null;
+                response.TotalRecords = response.FileManagerRolePrivileges != null ? response.FileManagerRolePrivileges.Count() : 0;
             }
             catch (InvalidOperationException e)
             {
                 response.IsSuccess = false;
                 response.Message = e.Message;
             }
-            
+
             return response;
-            
-            
+
+
+        }
+
+
+        public BaseResponse BatchUpdateFilePrivilege(Requests.FileManagerRolePrivilege.BatchUpdateFilePrivilegeRequest request)
+        {
+            var response = new BaseResponse();
+            try
+            {
+                int addCounter = 0;
+                int updatedCounter = 0;
+                foreach (var item in request.BatchUpdateFilePrivilege)
+                {
+                    if (item.ProcessBlueprint_Id > 0 && item.RoleGroup_Id > 0)
+                    {
+                        var toUpdate = DataContext.FileManagerRolePrivileges.Find(item.ProcessBlueprint_Id, item.RoleGroup_Id);
+                        if (toUpdate != null)
+                        {
+                            // put update code here
+                            toUpdate.AllowBrowse = item.AllowBrowse;
+                            toUpdate.AllowCopy = item.AllowCopy;
+                            toUpdate.AllowCreate = item.AllowCreate;
+                            toUpdate.AllowDelete = item.AllowDelete;
+                            toUpdate.AllowDownload = item.AllowDownload;
+                            toUpdate.AllowMove = item.AllowMove;
+                            toUpdate.AllowRename = item.AllowRename;
+                            toUpdate.AllowUpload = item.AllowUpload;
+                            DataContext.Entry(toUpdate).State = EntityState.Modified;
+                            updatedCounter++;
+                        }
+                        else
+                        {
+                            //put insert code here
+                            var privilege = item.MapTo<FileManagerRolePrivilege>();
+                            DataContext.FileManagerRolePrivileges.Add(privilege);
+                            addCounter++;
+                        }
+                    }
+                }
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = string.Format("{0} data has been added, {1} data has been updated", addCounter.ToString()
+                   , updatedCounter.ToString());
+            }
+            catch (InvalidOperationException inval)
+            {
+                response.Message = inval.Message;   
+            }
+            catch (ArgumentNullException arg)
+            {
+                response.Message = arg.Message;
+            }
+            return response;
         }
     }
 }

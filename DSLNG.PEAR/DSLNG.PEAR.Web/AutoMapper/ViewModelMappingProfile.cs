@@ -172,6 +172,7 @@ using DSLNG.PEAR.Web.ViewModels.File;
 using DSLNG.PEAR.Web.ViewModels.ProcessBlueprint;
 using DSLNG.PEAR.Services.Responses.ProcessBlueprint;
 using DSLNG.PEAR.Services.Requests.ProcessBlueprint;
+using DSLNG.PEAR.Services.Requests.FileManagerRolePrivilege;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -740,8 +741,10 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetProcessBlueprintPrivilegesResponse.FileManagerRolePrivilege.BlueprintFile, FileManagerRolePrivilegeViewModel.BlueprintFile>();
             Mapper.CreateMap<GetProcessBlueprintPrivilegesResponse.FileManagerRolePrivilege.BlueprintFile, FileSystemItem>()
                 .ForMember(x => x.FileId, y => y.MapFrom(z => z.Id));
+            Mapper.CreateMap<FileManagerRolePrivilegeViewModel, UpdateFilePrivilegeRequest>()
+                .ForMember(x => x.ProcessBlueprint_Id, y => y.MapFrom(z => z.FileId));
         }
-        
+
         private void ConfigureEconomicSummary()
         {
             Mapper.CreateMap<EconomicSummaryCreateViewModel, SaveEconomicSummaryRequest>();
@@ -988,13 +991,13 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetDerItemResponse, ManageDerItemViewModel>();
             Mapper.CreateMap<GetDerLayoutitemsResponse, DerLayoutConfigViewModel>();
             Mapper.CreateMap<GetDerLayoutitemsResponse.LayoutItem, DerLayoutConfigViewModel.LayoutItem>();
-            
+
             Mapper.CreateMap<DerLayoutItemViewModel, SaveLayoutItemRequest>();
             Mapper.CreateMap<DerLayoutLineViewModel, SaveLayoutItemRequest.LayoutItemArtifact>();
             Mapper.CreateMap<LineChartViewModel, SaveLayoutItemRequest.LayoutItemArtifactLine>();
             Mapper.CreateMap<DerLayoutLineViewModel, SaveLayoutItemRequest.LayoutItemArtifactSerie>();
 
-            Mapper.CreateMap<GetDerLayoutResponse, DerDisplayViewModel >();
+            Mapper.CreateMap<GetDerLayoutResponse, DerDisplayViewModel>();
             /*Mapper.CreateMap<GetDerLayoutResponse.DerArtifact, DerDisplayViewModel.DerArtifact>();
             Mapper.CreateMap<GetDerLayoutResponse.DerArtifactSerie, DerDisplayViewModel.DerArtifactSerie>();*/
             Mapper.CreateMap<GetDerLayoutResponse.DerLayoutItem, DerDisplayViewModel.DerLayoutItem>();
@@ -1039,7 +1042,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
                   .ForMember(x => x.PeriodeType, y => y.MapFrom(z => DSLNG.PEAR.Data.Enums.PeriodeType.Daily))
                   .ForMember(x => x.RangeFilter, y => y.MapFrom(z => DSLNG.PEAR.Data.Enums.RangeFilter.Interval));
 
-            
+
             //DER Pie
             Mapper.CreateMap<PieViewModel, SaveLayoutItemRequest.LayoutItemArtifactPie>();
             Mapper.CreateMap<PieViewModel.SeriesViewModel, SaveLayoutItemRequest.LayoutItemArtifactSerie>();
@@ -1054,7 +1057,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             //Der KpiInformations
             Mapper.CreateMap<DerLayoutItemViewModel.DerKpiInformationViewModel, SaveLayoutItemRequest.DerKpiInformationRequest>()
-                .ForMember(x => x.ConfigType, y=> y.MapFrom(z => (ConfigType)Enum.Parse(typeof(ConfigType), z.ConfigType)));
+                .ForMember(x => x.ConfigType, y => y.MapFrom(z => (ConfigType)Enum.Parse(typeof(ConfigType), z.ConfigType)));
             Mapper.CreateMap<GetDerLayoutitemResponse.KpiInformationResponse, DerLayoutItemViewModel.DerKpiInformationViewModel>();
 
             //DER original data

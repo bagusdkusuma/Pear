@@ -14,6 +14,7 @@
     settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
     settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
     settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
+    settings.SettingsEditing.BatchEditSettings.ShowConfirmOnLosingChanges = true;
     settings.CommandColumn.Visible = false;
 
     settings.Columns.Add(column => {
@@ -72,7 +73,10 @@
             col.ColumnType = MVCxGridViewColumnType.CheckBox;
         }); 
     });
-    
+
+    settings.SettingsBehavior.AllowSort = false;
+    settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
+
     
     //settings.SettingsPager.Visible = true;
     //settings.SettingsPager.PageSize = 20;

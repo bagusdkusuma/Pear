@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using System.IO;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Web.Attributes;
+using DSLNG.PEAR.Services.Requests.FileManagerRolePrivilege;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -55,9 +56,9 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             List<FileManagerRolePrivilegeViewModel> models = new List<FileManagerRolePrivilegeViewModel>();
             ///todo create matrix of file vs role vs privilege
-            if (model != null)
+            if (model != null && model.FileId > 0)
             {
-                var data = ProcessBlueprintDataProvider.service.GetPrivilege(new Services.Requests.ProcessBlueprint.GetProcessBlueprintPrivilegeRequest { FileId = model.FileId });
+                var data = ProcessBlueprintDataProvider.service.GetPrivileges(new Services.Requests.ProcessBlueprint.GetProcessBlueprintPrivilegeRequest { FileId = model.FileId });
                 if (data.IsSuccess)
                 {
                     models = data.FileManagerRolePrivileges.ToList().MapTo<FileManagerRolePrivilegeViewModel>();
@@ -73,19 +74,24 @@ namespace DSLNG.PEAR.Web.Controllers
             int fileId = 0;
             List<FileManagerRolePrivilegeViewModel> models = new List<FileManagerRolePrivilegeViewModel>();
             //todo here is create connection to service update FileManagerPrivileges
+            BatchUpdateFilePrivilegeRequest request = new BatchUpdateFilePrivilegeRequest();
+            var datas = new List<UpdateFilePrivilegeRequest>();
             foreach (var item in updateValues.Update)
             {
+                var privilege = item.MapTo<UpdateFilePrivilegeRequest>();
+                datas.Add(privilege);
                 fileId = item.FileId;
-                if (fileId > 0) break;
             }
-            var data = ProcessBlueprintDataProvider.service.GetPrivilege(new Services.Requests.ProcessBlueprint.GetProcessBlueprintPrivilegeRequest { FileId = fileId });
+            request.BatchUpdateFilePrivilege = datas.ToList();
+            var response = ProcessBlueprintDataProvider.service.BatchUpdateFilePrivilege(request);
+            var data = ProcessBlueprintDataProvider.service.GetPrivileges(new Services.Requests.ProcessBlueprint.GetProcessBlueprintPrivilegeRequest { FileId = fileId });
             if (data.IsSuccess)
             {
                 models = data.FileManagerRolePrivileges.ToList().MapTo<FileManagerRolePrivilegeViewModel>(); 
             }
             return PartialView("_PrivilegePartial",models);
         }
-        public ActionResult ProcessConfigPartial(string relativePath)
+        public ActionResult ProcessConfigPartial(string relativePath, bool? isFileSelected)
         {
             string selecetedFile = string.Empty;
             FileSystemItem item = new FileSystemItem();
@@ -97,8 +103,17 @@ namespace DSLNG.PEAR.Web.Controllers
                     selecetedFile = Path.Combine(selecetedFile, val[i]);
                 }
                 var provider = ProcessBlueprintControllerProcessBlueprintSettings.ProcessBlueprintFileSystemProvider;
-                var file = new FileManagerFile(provider, selecetedFile);
-                item = ProcessBlueprintControllerProcessBlueprintSettings.ProcessBlueprintFileSystemProvider.GetFile(file);
+                if (isFileSelected.HasValue && isFileSelected.Value == true)
+                {
+                    var file = new FileManagerFile(provider, selecetedFile);
+                    item = ProcessBlueprintControllerProcessBlueprintSettings.ProcessBlueprintFileSystemProvider.GetFile(file);
+                }
+                else
+                {
+                    var folder = new FileManagerFolder(provider, selecetedFile);
+                    item = ProcessBlueprintControllerProcessBlueprintSettings.ProcessBlueprintFileSystemProvider.GetFolder(folder);
+                }
+                
             }
             //FileManagerFile file = ProcessBlueprintControllerProcessBlueprintSettings.ProcessBlueprintFileSystemProvider.GetFile()
 
@@ -131,7 +146,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
             //set for my own files
             //var myFolder = ProcessBlueprintDataProvider.GetAll().FindAll(x => x.CreatedBy == sessionData.UserId).ToList();
-            var myFolder = ProcessBlueprintDataProvider.service.GetPrivilege(new Services.Requests.ProcessBlueprint.GetProcessBlueprintPrivilegeRequest { RoleGroupId = sessionData.RoleId });
+            var myFolder = ProcessBlueprintDataProvider.service.GetPrivileges(new Services.Requests.ProcessBlueprint.GetProcessBlueprintPrivilegeRequest { RoleGroupId = sessionData.RoleId });
             if (myFolder.TotalRecords > 0)
             {
                 foreach (var item in myFolder.FileManagerRolePrivileges)
