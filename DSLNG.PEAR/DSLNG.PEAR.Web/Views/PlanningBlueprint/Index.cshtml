@@ -5,34 +5,34 @@
 <h2>Planning Blueprints</h2>
 @Html.Partial("_MessageResponse")
 <div class="add-button-wrapper">
-    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn-master-rgw btn btn-primary" })
 </div>
 @*@Html.Action("IndexPartial")
 
-@section Scripts{
-    <script type="text/javascript">
-        var confirmDelete = function (id) {
-            if (confirm('Are you sure want to delete this item?')) {
-                var url = '@Url.Action("Delete", "AssumptionData")';
-                $('<form action="' + url + '" method="POST">' +
-                    '<input type="hidden" name="id" value="' + id + '">' +
-                    '</form>').submit();
-            }
-        };
-    </script>
-}*@
+    @section Scripts{
+        <script type="text/javascript">
+            var confirmDelete = function (id) {
+                if (confirm('Are you sure want to delete this item?')) {
+                    var url = '@Url.Action("Delete", "AssumptionData")';
+                    $('<form action="' + url + '" method="POST">' +
+                        '<input type="hidden" name="id" value="' + id + '">' +
+                        '</form>').submit();
+                }
+            };
+        </script>
+    }*@
 
-<table id="planningBlueprints-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
+<table id="planningBlueprints-table" class="rgw-tbl-bp rgw-tbl table-transparent table table-responsive" cellspacing="0" width="100%">
     <thead>
         <tr>
             <th>Title</th>
             <th>Description</th>
             <th>Environments Scanning</th>
             <th>Business Posture Identification</th>
-            <th>Notes</th>
+            <th><span class="fa fa-file" aria-hidden="true"></span>Notes</th>
             <th>Mid Term Phase Formulation</th>
             <th>Mid Term Strategy Planning</th>
-            <th>Notes</th>
+            <th><span class="fa fa-file" aria-hidden="true"></span>Notes</th>
             <th>Is Active</th>
             <th>Action</th>
         </tr>
@@ -48,7 +48,7 @@
             </div>
             <div class="modal-body" style="color:#fff">
             </div>
-             <div class="modal-footer" style="border-top:none">
+            <div class="modal-footer" style="border-top:none">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -182,7 +182,7 @@
                         "defaultContent": '',
                         "mRender": function (data, type, row) {
                             var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
-                            var PrepareLink = '@Html.ActionLink("Edit", "Edit", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', data.Id);
+                            var PrepareLink = '<span class="fa fa-edit"></span> @Html.ActionLink("Edit", "Edit", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', data.Id);
                             return PrepareLink;
                         }
                     }
