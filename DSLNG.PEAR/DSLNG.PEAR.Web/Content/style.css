@@ -3023,12 +3023,13 @@ input.control-form.assumption-input {
 }
 
 .pop-attachments .row:first-child .remove-option {
-    visibility:hidden;
+    /*visibility:hidden;*/
 }
 .document-link {
     position:relative;
     padding-left:25px;
     display: inline-block;
+    word-break: break-all;
 }
 .document-link:before {
        content: '';

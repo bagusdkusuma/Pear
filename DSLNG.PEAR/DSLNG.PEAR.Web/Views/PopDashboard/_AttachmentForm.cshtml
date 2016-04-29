@@ -15,8 +15,8 @@
             <div class="col-sm-12 form-inline">
                 <input type="hidden" name="Attachments.Index" value="@i" />
                 <input class="form-control opt-id" type="hidden" name="Attachments[@i].Id" value="@item.Id" style="width:50px;" />
-                <input class="form-control opt-text" name="Attachments[@i].Alias" type="text" placeholder="Alias" value="@item.Alias" style="width:200px;">
-                <input  class="form-control opt-value-file" name="Attachments[@i].File" type="file" placeholder="File" value="@item.File" style="width:200px;">
+                <input class="form-control opt-text" maxlength="15" name="Attachments[@i].Alias" type="text" placeholder="Alias" value="@item.Alias" style="width:200px;">
+                <input  multiple="false" class="form-control opt-value-file" name="Attachments[@i].File" type="file" placeholder="File" value="@item.File" style="width:200px;">
                 <button type="button" class="btn btn-default form-control remove-option" style="display: inline-block;"><i class="glyphicon glyphicon-minus"></i></button>
                 @if (!string.IsNullOrEmpty(item.Filename)) { 
                     <a href="@Url.Content(item.Filename)" download class="doc-type-@item.Type document-link">@item.Alias</a>
@@ -33,8 +33,9 @@
     $(document).ready(function () {
         var i = $('#counter').attr('data-option');
         i = parseInt(i) === NaN ? 0 : parseInt(i);
+        var oriClone  = $('.hidden-option:last').clone(true);
         $('.add-option').click(function () {
-            var clone = $('.hidden-option:last').clone(true);
+            var clone = oriClone.clone(true);
             clone.find('input[name="Attachments.Index"]').val(i);
             clone.find('.opt-id').attr('name', 'Attachments[' + i + '].Id').attr('value', 0);
             clone.find('.opt-text').attr('name', 'Attachments[' + i + '].Alias').val('');
@@ -50,20 +51,34 @@
                 }
             clone.appendTo('.option-wrapper').show();
 
-            if (i > 0) {
-                $('.remove-option').show();
-            }
+            //if (i > 0) {
+            //    $('.remove-option').show();
+            //}
             i++;
         });
 
-        if (i <= 1) {
-            $('.remove-option').hide();
-        }
-        $('.remove-option').click(function () {
+        //if (i <= 1) {
+        //    $('.remove-option').hide();
+        //}
+        $(document).on('click', '.remove-option', function (e) {
+            e.preventDefault();
             i--;
             $(this).parent().parent().remove();
             if (i == 1) {
                 $('.remove-option').hide();
+            }
+        });
+
+        $(document).on('change', '.opt-value-file', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            if ($this.val().trim() != '') {
+                var filename = $this.val().replace(/.*[\/\\]/, '');
+                if (filename.length > 15) {
+                    alert("The filename shouldn't longer than 15 characters! You can change the alias by correcting it in provided input");
+                    filename = filename.substr(0, 11) + '...';
+                }
+                $this.prev().val(filename);
             }
         });
     })

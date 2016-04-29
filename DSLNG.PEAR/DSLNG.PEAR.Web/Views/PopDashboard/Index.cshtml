@@ -21,6 +21,7 @@
             <th>Budget-CAPEX(USD)</th>
             <th>Project Start</th>
             <th>Project End</th>
+            <th>Affected KPI</th>
             <th>Status</th>
             <th>Attachments</th>
             <th>Action</th>
@@ -61,12 +62,12 @@
                         }
                     },
                     {
-                        "mDataProp": "ProjectEnd", "name": "ProjectEnd", "className": "dt-body-left",
-                        "mDataProp": "ProjectStart", "name": "ProjectStart", "className": "dt-body-left", "mRender": function (data, type, row) {
+                        "mDataProp": "ProjectEnd", "name": "ProjectEnd", "className": "dt-body-left", "mRender": function (data, type, row) {
                             return moment(new Date(data.match(/\d+/)[0] * 1)).format('DD-MMM-YY')
                             //return data;
                         }
                     },
+                    { "mDataProp": "AffectedKPI", "name": "AffectedKPI", "className": "dt-body-left" },
                     { "mDataProp": "Status", "name": "Status", "className": "dt-body-left" },
                     { "mDataProp": "Attachments", "name": "Attachments", "className": "dt-body-left","mRender": function (data, type, row) {
                         var list = '<ul class="pop-attachments-list">';
