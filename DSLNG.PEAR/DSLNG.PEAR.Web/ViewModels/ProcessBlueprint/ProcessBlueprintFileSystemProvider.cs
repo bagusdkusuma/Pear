@@ -141,6 +141,11 @@ namespace DSLNG.PEAR.Web.ViewModels.ProcessBlueprint
         {
             return FindFileItem(file);
         }
+
+        public FileSystemItem GetFolder(FileManagerFolder folder)
+        {
+            return FindFolderItem(folder);
+        }
         public override IEnumerable<FileManagerFolder> GetFolders(FileManagerFolder parentFolder)
         {
             FileSystemItem folderItem = FindFolderItem(parentFolder);

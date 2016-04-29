@@ -13,7 +13,7 @@ namespace DSLNG.PEAR.Data.Entities
         public RolePrivilege()
         {
             Users = new HashSet<User>();
-            MenuRolePrivileges = new List<MenuRolePrivilege>();
+            //MenuRolePrivileges = new List<MenuRolePrivilege>();
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
