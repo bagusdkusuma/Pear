@@ -5,17 +5,17 @@
 <h2>Planning Blueprints Approval</h2>
 @Html.Partial("_MessageResponse")
 
-<table id="planningBlueprints-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
+<table id="planningBlueprints-table" class="rgw-tbl-ba rgw-tbl table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
     <thead>
         <tr>
             <th>Title</th>
             <th>Description</th>
             <th>Voyage Plan</th>
-            <th>Voyage Plan Notes</th>
+            <th><span class="fa fa-file"></span><br /> Voyage Plan Notes</th>
             <th>Midterm Phase Strategy</th>
-             <th>Midterm Phase Strategy Notes</th>
+            <th><span class="fa fa-file"></span><br /> Midterm Phase Strategy Notes</th>
             <th>Is Active</th>
-            <th style="width:75px">Action</th>
+            <th style="width:150px">Action</th>
         </tr>
     </thead>
 </table>
@@ -29,8 +29,8 @@
             </div>
             <div class="modal-body" style="color:#fff">
             </div>
-             <div class="modal-footer" style="border-top:none">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            <div class="modal-footer" style="border-top:none">
+                <button type="button" class="btn-master-rgw btn btn-primary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -135,10 +135,10 @@
                          "data": null,
                          "defaultContent": '',
                          "mRender": function (data, type, row) {
-                             var editLink = '@Html.ActionLink("Edit", "REdit", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', data.Id);
+                             var editLink = '<span class="fa fa-edit"></span> @Html.ActionLink("Edit", "REdit", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', data.Id);
                              return '<form action="/Planningblueprint/Delete" method="POST" style="display:inline">' +
                                  '<input type="hidden" name="Id" value="'+row.Id+'" />' +
-                                 '<a href="#" class="delete-row">Delete</a></form> | ' + editLink;
+                                 '<a href="#" class="delete-row"><span class="fa fa-trash"></span> Delete</a></form> | ' + editLink;
                          }
                      },
                 ],
