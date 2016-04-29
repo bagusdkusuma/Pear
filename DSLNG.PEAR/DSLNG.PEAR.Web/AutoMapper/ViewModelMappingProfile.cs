@@ -737,6 +737,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<FileSystemItem, SaveProcessBlueprintRequest>()
                 .ForMember(x => x.Id, y => y.MapFrom(z => z.FileId));
             Mapper.CreateMap<GetProcessBlueprintPrivilegesResponse.FileManagerRolePrivilege, FileManagerRolePrivilegeViewModel>();
+            Mapper.CreateMap<GetProcessBlueprintPrivilegesResponse.FileManagerRolePrivilege.BlueprintFile, FileManagerRolePrivilegeViewModel.BlueprintFile>();
             Mapper.CreateMap<GetProcessBlueprintPrivilegesResponse.FileManagerRolePrivilege.BlueprintFile, FileSystemItem>()
                 .ForMember(x => x.FileId, y => y.MapFrom(z => z.Id));
         }

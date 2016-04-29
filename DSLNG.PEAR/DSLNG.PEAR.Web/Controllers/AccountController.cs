@@ -75,7 +75,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 //this._userAddToRole(user.Username, user.RoleName);
                 var roleName = new List<KeyValuePair<int, string>>();
                 //roleName = user.RolePrivileges.ToDictionary(x => x.Id);
-                if (user.RolePrivileges.Count() > 0)
+                if (user.RolePrivileges != null && user.RolePrivileges.Count() > 0)
                 {
                     foreach (var role in user.RolePrivileges)
                     {
