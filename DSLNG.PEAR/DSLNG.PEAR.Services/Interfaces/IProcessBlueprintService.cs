@@ -1,4 +1,5 @@
-﻿using DSLNG.PEAR.Services.Requests.ProcessBlueprint;
+﻿using DSLNG.PEAR.Services.Requests.FileManagerRolePrivilege;
+using DSLNG.PEAR.Services.Requests.ProcessBlueprint;
 using DSLNG.PEAR.Services.Responses;
 using DSLNG.PEAR.Services.Responses.ProcessBlueprint;
 using System;
@@ -16,6 +17,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetProcessBlueprintResponse Get(GetProcessBlueprintRequest request);
         SaveProcessBlueprintResponse Save(SaveProcessBlueprintRequest request);
         BaseResponse Delete(int Id);
-        GetProcessBlueprintPrivilegesResponse GetPrivilege(GetProcessBlueprintPrivilegeRequest request);
+        GetProcessBlueprintPrivilegesResponse GetPrivileges(GetProcessBlueprintPrivilegeRequest request);
+        BaseResponse BatchUpdateFilePrivilege(BatchUpdateFilePrivilegeRequest request);
     }
 }

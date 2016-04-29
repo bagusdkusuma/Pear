@@ -3269,7 +3269,7 @@ input.control-form.assumption-input {
 
 
 .pop-attachments .row:first-child .remove-option {
-    visibility:hidden;
+    /*visibility:hidden;*/
 }
 
 
@@ -3277,6 +3277,7 @@ input.control-form.assumption-input {
     position:relative;
     padding-left:25px;
     display: inline-block;
+    word-break: break-all;
 }
 
 

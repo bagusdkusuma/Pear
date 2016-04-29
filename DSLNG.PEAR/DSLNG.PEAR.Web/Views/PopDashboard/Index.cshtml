@@ -14,16 +14,21 @@
 <table id="popDashboard-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
     <thead>
         <tr>
-            <th>Project No</th>
-            <th>Project Title</th>
-            <th>Project Owner</th>
-            <th>Budget-OPEX(USD)</th>
-            <th>Budget-CAPEX(USD)</th>
-            <th>Project Start</th>
-            <th>Project End</th>
-            <th>Status</th>
-            <th>Attachments</th>
-            <th>Action</th>
+            <th rowspan="2">Project No</th>
+            <th rowspan="2">Project Title</th>
+            <th rowspan="2">Project Owner</th>
+            <th colspan="2">Project</th>
+            <th colspan="2">Budget</th>
+            <th rowspan="2">Affected KPI</th>
+            <th rowspan="2">Status</th>
+            <th rowspan="2">Attachments</th>
+            <th rowspan="2">Action</th>
+        </tr>
+        <tr>
+            <th>OPEX(USD)</th>
+            <th>CAPEX(USD)</th>
+            <th style="width:65px">Start</th>
+            <th style="width:65px">End</th>
         </tr>
     </thead>
 </table>
@@ -61,12 +66,12 @@
                         }
                     },
                     {
-                        "mDataProp": "ProjectEnd", "name": "ProjectEnd", "className": "dt-body-left",
-                        "mDataProp": "ProjectStart", "name": "ProjectStart", "className": "dt-body-left", "mRender": function (data, type, row) {
+                        "mDataProp": "ProjectEnd", "name": "ProjectEnd", "className": "dt-body-left", "mRender": function (data, type, row) {
                             return moment(new Date(data.match(/\d+/)[0] * 1)).format('DD-MMM-YY')
                             //return data;
                         }
                     },
+                    { "mDataProp": "AffectedKPI", "name": "AffectedKPI", "className": "dt-body-left" },
                     { "mDataProp": "Status", "name": "Status", "className": "dt-body-left" },
                     { "mDataProp": "Attachments", "name": "Attachments", "className": "dt-body-left","mRender": function (data, type, row) {
                         var list = '<ul class="pop-attachments-list">';

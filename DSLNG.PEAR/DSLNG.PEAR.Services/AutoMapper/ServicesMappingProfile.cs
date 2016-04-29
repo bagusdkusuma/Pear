@@ -117,6 +117,7 @@ using DSLNG.PEAR.Services.Requests.MirConfiguration;
 using DSLNG.PEAR.Services.Requests.MirDataTable;
 using DSLNG.PEAR.Services.Responses.ProcessBlueprint;
 using DSLNG.PEAR.Services.Requests.ProcessBlueprint;
+using DSLNG.PEAR.Services.Requests.FileManagerRolePrivilege;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -738,6 +739,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.RoleGroupId, y => y.MapFrom(z => z.RoleGroup.Id))
                 .ForMember(x=>x.RoleGroupName,y=>y.MapFrom(z=>z.RoleGroup.Name));
             Mapper.CreateMap<ProcessBlueprint, GetProcessBlueprintPrivilegesResponse.FileManagerRolePrivilege.BlueprintFile>();
+            Mapper.CreateMap<UpdateFilePrivilegeRequest, FileManagerRolePrivilege>();
         }
 
         private void ConfigureEconomicSummary()

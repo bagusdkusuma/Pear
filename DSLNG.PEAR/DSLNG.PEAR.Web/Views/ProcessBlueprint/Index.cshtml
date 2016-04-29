@@ -37,7 +37,7 @@
             case "Properties":
                 var isFileSelected = ProcessBlueprint.GetActiveAreaName() == "Files";
                 var relativePath = isFileSelected ? ProcessBlueprint.GetSelectedFile().GetFullName() : ProcessBlueprint.GetCurrentPath();
-                popupControl.PerformCallback({ relativePath: relativePath });
+                popupControl.PerformCallback({ relativePath: relativePath, isFileSelected: isFileSelected });
                 break;
         }
     }
@@ -54,6 +54,7 @@
         var headerText = "Privilege";
         popupControl.SetHeaderText(headerText);
     }
+
 </script>
 
 @using (Html.BeginForm())

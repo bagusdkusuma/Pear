@@ -15,6 +15,7 @@ namespace DSLNG.PEAR.Data.Persistence
         public DataContext()
             : base("DefaultConnection")
         {
+            //Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
         }
 
 
