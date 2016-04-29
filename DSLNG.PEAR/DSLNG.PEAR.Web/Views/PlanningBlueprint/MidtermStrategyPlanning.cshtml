@@ -71,7 +71,7 @@
     <div class="row">
         <div class="col-md-12">
             <h4 style="background-color: #00bfff;">Midterm Strategic Planning
-                @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
+                @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed )
                     {
                   <a class="add-strategic-planning"  data-toggle="popover" href="javascript:void(0)"><i class="fa fa-plus"></i></a>
                 }
@@ -101,7 +101,7 @@
             @if (!Model.IsReviewer)
             {
                 <a href="@Url.Action("MidtermPhaseFormulation", "PlanningBlueprint", new { id = Model.Id })" class="btn btn-primary btn-lg"><span class="fa fa-arrow-left"></span> Back To MPF</a>
-                    if(!Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected){
+                    if(!Model.IsApproved && !Model.IsBeingReviewed ){
                 using (Html.BeginForm("SubmitMidtermPlanning", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
                 {
                 @Html.Hidden("Id", Model.Id)
@@ -111,12 +111,14 @@
             }
             else
             {
+                if(Model.IsBeingReviewed){
                 using (Html.BeginForm("ApproveMidtermStrategy", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
                 {
                 @Html.Hidden("Id", Model.Id)
                 <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span> Approve</button>
                 }
                 <button type="button" class="btn btn-primary btn-lg btn-reject" data-toggle="modal" data-target="#reject-modal"><span class="fa fa-hand-stop-o"></span> Reject</button>
+            }
             }
         </div>
     </div>
@@ -125,7 +127,7 @@
     <td class="midterm-planning-template">
         <div class="midterm-planning-header">
         <h4 class="header-title"></h4>
-              @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
+              @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed )
               {
             <a href="/MidtermStrategyPlanning/Delete" class="remove-midterm-planning"><i class="fa fa-minus"></i></a>
               }
@@ -137,7 +139,7 @@
         <div class="clear"></div>
         <div class="objective-header">
             <h5 class="objective-title">Objective</h5>
-              @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
+              @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed )
               {
             <a data-toggle="popover" href="javascript:void(0)" class="add-objective"><i class="fa fa-plus"></i></a>
               }
@@ -146,7 +148,7 @@
         </ul>
         <table class="kpis">
             <tr>
-                <th>Kpi   @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
+                <th>Kpi   @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed )
                           {<a data-toggle="popover" href="javascript:void(0)" class="add-kpi"><i class="fa fa-plus"></i></a>} </th>
                 <th>Target</th>
                 <th>Economic</th>
@@ -374,7 +376,7 @@
                     var $objectivesHolder = $mpTemplate.find('.objectives');
                     for (var j in mPlanning.Objectives) {
                         var objective = mPlanning.Objectives[j];
-                          @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
+                          @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed )
                           {
                         <text>$objectivesHolder.append('<li data-id="' + objective.Id + '"><span class="popover-edit-trigger" data-target-form="objective" data-toggle="popover">' + objective.Value + '</span><a  href="/MidtermStrategyPlanning/DeleteObjective" class="remove-objective"><i class="fa fa-minus"></i></a></li>');</text>
                           }
@@ -394,7 +396,7 @@
                         $targetCol.addClass('target');
                         var $economicCol = $('<td />');
                         $economicCol.addClass('economic');
-                        @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
+                        @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed )
                         {
                         <text>$kpiCol.html('<span class="popover-edit-trigger" data-target-form="kpi" data-toggle="popover">' +
                             kpi.Name + ' (' + kpi.Measurement + ')</span> <a href="/MidtermStrategyPlanning/DeleteKpi" class="remove-kpi"><i class="fa fa-minus"></i></a>');</text>
@@ -552,7 +554,7 @@
                 }
             });
         });
-         @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
+         @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed )
                     {<text>
         $(document).on('click', '.target', function (e) {
             e.preventDefault();

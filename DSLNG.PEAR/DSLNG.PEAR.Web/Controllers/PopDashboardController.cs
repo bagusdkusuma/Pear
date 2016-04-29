@@ -102,6 +102,11 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Edit(int id)
         {
             var viewModel = _popDashboardService.GetPopDashboard(new GetPopDashboardRequest { Id = id }).MapTo<SavePopDashboardViewModel>();
+            if (viewModel.Attachments == null || viewModel.Attachments.Count == 0) {
+                viewModel.Attachments = new List<SavePopDashboardViewModel.AttachmentViewModel>{
+                    new SavePopDashboardViewModel.AttachmentViewModel()
+                };
+            }
             var StatusList = new List<SelectListItem>() { 
                 new SelectListItem{Value = "Not Start Yet", Text = "Not Start Yet"},
                 new SelectListItem{Value = "In Progress", Text = "In Progress"},
@@ -153,7 +158,8 @@ namespace DSLNG.PEAR.Web.Controllers
 
             return System.Text.RegularExpressions.Regex.Replace(name, invalidRegStr, "_");
         }
-        private void ProcessAttachment(SavePopDashboardViewModel viewModel, SavePopDashboardRequest request) {
+        private void ProcessAttachment(SavePopDashboardViewModel viewModel, SavePopDashboardRequest request)
+        {
             if (viewModel.Attachments.Count > 0)
             {
                 var validImageTypes = new string[]
@@ -183,11 +189,24 @@ namespace DSLNG.PEAR.Web.Controllers
                     "application/vnd.ms-word.document.macroEnabled.12",
                     "application/vnd.ms-word.template.macroEnabled.12"
                 };
+                var pptTypes = new string[]{
+                   "application/vnd.ms-powerpoint",
+                    "application/vnd.ms-powerpoint",
+                    "application/vnd.ms-powerpoint",
+                    "application/vnd.ms-powerpoint",
+                    "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                    "application/vnd.openxmlformats-officedocument.presentationml.template",
+                    "application/vnd.openxmlformats-officedocument.presentationml.slideshow",
+                    "application/vnd.ms-powerpoint.addin.macroEnabled.12",
+                    "application/vnd.ms-powerpoint.presentation.macroEnabled.12",
+                    "application/vnd.ms-powerpoint.template.macroEnabled.12",
+                    "application/vnd.ms-powerpoint.slideshow.macroEnabled.12"
+                };
                 foreach (var attachment in viewModel.Attachments)
                 {
                     if (attachment.File != null)
                     {
-                        var filename = Path.GetFileName(attachment.File.FileName);
+                        //var filename = Path.GetFileName(attachment.File.FileName);
                         string type = null;
                         if (attachment.File.ContentType == pdfType)
                         {
@@ -205,14 +224,19 @@ namespace DSLNG.PEAR.Web.Controllers
                         {
                             type = "doc";
                         }
+                        else if (pptTypes.Contains(attachment.File.ContentType))
+                        {
+                            type = "ppt";
+                        }
                         else
                         {
-                            continue;
+                            type = "blank";
                         }
                         if (!Directory.Exists(Server.MapPath(PathConstant.PopAttachmentPath)))
                         {
                             Directory.CreateDirectory(Server.MapPath(PathConstant.PopAttachmentPath));
                         }
+                        var filename = attachment.File.FileName;
                         var uniqueFilename = RandomString(8) + MakeValidFileName(attachment.File.FileName).Replace(" ", "_");
                         var filePath = Path.Combine(Server.MapPath(PathConstant.PopAttachmentPath), uniqueFilename);
                         var url = PathConstant.PopAttachmentPath + "/" + uniqueFilename;
@@ -221,18 +245,22 @@ namespace DSLNG.PEAR.Web.Controllers
                         {
                             Id = attachment.Id,
                             FileName = url,
-                            Alias = attachment.Alias,
+                            Alias = string.IsNullOrEmpty(attachment.Alias) ? filename : attachment.Alias,
                             Type = type
                         };
                         request.AttachmentFiles.Add(attachmentReq);
                     }
-                    else {
-                        var attachmentReq = new SavePopDashboardRequest.Attachment
+                    else
+                    {
+                        if (attachment.Id != 0)
                         {
-                            Id = attachment.Id,
-                            Alias = attachment.Alias,
-                        };
-                        request.AttachmentFiles.Add(attachmentReq);
+                            var attachmentReq = new SavePopDashboardRequest.Attachment
+                            {
+                                Id = attachment.Id,
+                                Alias = attachment.Alias,
+                            };
+                            request.AttachmentFiles.Add(attachmentReq);
+                        }
                     }
                 }
             }

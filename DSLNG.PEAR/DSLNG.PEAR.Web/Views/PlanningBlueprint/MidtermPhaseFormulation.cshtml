@@ -66,7 +66,7 @@ else
         <div class="row">
             <div class="col-md-12">
                 <h4 style="background-color: #00bfff;">Mid Term Phase Formulation 
-                @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
+                @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed )
                 {
                     <a class="add-formulation-stage" data-toggle="popover" href="javascript:void(0)"><i class="fa fa-plus"></i></a>
                 }
@@ -97,7 +97,7 @@ else
                     <td data-id="@item.Id" data-order="@item.Order" class="formulation-stage">
                         <div>
                           <div data-id="@item.Id" class="title"><span class="popover-edit-stage" data-toggle="popover">@item.Title</span>
-                        @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
+                        @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed )
                         {
                             <a class="remove-item" href="/MidtermFormulation/DeleteStage"><i class="fa fa-minus"></i></a>
                         }
@@ -111,7 +111,7 @@ else
                         <div class="sub-title">
                             Description
                         </div>
-                        @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
+                        @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed )
                         {
                             <a data-toggle="popover" href="javascript:void(0)" class="add-definition" data-target="description"><i class="fa fa-plus"></i></a>
                         }
@@ -119,21 +119,21 @@ else
                     <ul class="defined-list description">
                         @foreach (var desc in item.Descriptions)
                         { 
-                            <li data-id="@desc.Id"><span class="popover-edit-trigger" data-toggle="popover">@desc.Value</span>    @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
+                            <li data-id="@desc.Id"><span class="popover-edit-trigger" data-toggle="popover">@desc.Value</span>    @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed )
                                                                                                                                   {<a class="remove-item" href="/MidtermFormulation/DeleteStageDesc"><i class="fa fa-minus"></i></a>}</li>
                         }
                     </ul>
                     <div class="defined-header key-driver">
                         <div class="sub-title">
                             Key Driver
-                           @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
+                           @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed )
                            {<a data-toggle="popover" href="javascript:void(0)" class="add-definition" data-target="key-driver"><i class="fa fa-plus"></i></a>}
                         </div>
                     </div>
                     <ul class="defined-list key-driver">
                         @foreach (var keyDriver in item.KeyDrivers)
                         { 
-                            <li data-id="@keyDriver.Id"><span class="popover-edit-trigger" data-toggle="popover">@keyDriver.Value</span>    @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
+                            <li data-id="@keyDriver.Id"><span class="popover-edit-trigger" data-toggle="popover">@keyDriver.Value</span>    @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed )
                                                                                                                                             {<a class="remove-item" href="/MidtermFormulation/DeleteStageKey"><i class="fa fa-minus"></i></a>}</li>
                         }
                     </ul>
@@ -302,7 +302,7 @@ else
                 return $('.formulation-stage-form').html();
             }
         });
-         @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
+         @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed )
                     {<text>
         $('.add-formulation-stage, .popover-edit-stage').on('shown.bs.popover', function () {
             $('.popover .monthpicker').datetimepicker({
@@ -406,7 +406,7 @@ else
                 return $('.definition-form').html();
             }
         });
-         @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
+         @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed )
                     {<text>
         $('.defined-list').popover({
             selector: '.popover-edit-trigger',
@@ -527,7 +527,7 @@ else
                 $(this).closest('form').submit();
             }
         });
-         @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
+         @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed )
                     {<text>
         $('.formulation-stages-wrapper').popover({
             selector: '.popover-edit-stage',

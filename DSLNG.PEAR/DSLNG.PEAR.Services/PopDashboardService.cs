@@ -115,7 +115,9 @@ namespace DSLNG.PEAR.Services
 
                     if (existingAttachment != null && existingAttachment.Id != 0)
                     {
-                        DataContext.Entry(existingAttachment).CurrentValues.SetValues(attachmentReq);
+                        existingAttachment.Alias = attachmentReq.Alias;
+                        existingAttachment.Filename = string.IsNullOrEmpty(attachmentReq.FileName) ? existingAttachment.Filename : attachmentReq.FileName;
+                        existingAttachment.Type = string.IsNullOrEmpty(attachmentReq.Type) ? existingAttachment.Type : attachmentReq.Type;
                     }
                     else
                     {
@@ -137,7 +139,7 @@ namespace DSLNG.PEAR.Services
             return new SavePopDashboardResponse
             {
                 IsSuccess = true,
-                Message = "Pop Dashboard has been saved successfully!"
+                Message = "Project  has been saved successfully!"
             };
         }
 
@@ -156,14 +158,18 @@ namespace DSLNG.PEAR.Services
 
         public DeletePopDashboardResponse DeletePopDashboard(int request)
         {
-            var popDashboard = DataContext.PopDashboards.FirstOrDefault(x => x.Id == request);
-            DataContext.PopDashboards.Attach(popDashboard);
+            var popDashboard = DataContext.PopDashboards
+                .Include(x => x.Attachments)
+                .FirstOrDefault(x => x.Id == request);
+            foreach(var attchment in popDashboard.Attachments.ToList()){
+                popDashboard.Attachments.Remove(attchment);
+            }
             DataContext.PopDashboards.Remove(popDashboard);
             DataContext.SaveChanges();
             return new DeletePopDashboardResponse
             {
                 IsSuccess = true,
-                Message = "Pop Dashboard has been Deleted!"
+                Message = "Project has been Deleted!"
             };
         }
     }
