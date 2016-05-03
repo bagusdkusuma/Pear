@@ -32,11 +32,11 @@
                     <div class="center-side">
                         @if (Model.EconomicIndicators.Count > 0)
                         {
-                            <table class="table table-bordered table-responsive economic-table" style="width: 100%">
+                            <table class="rgw-tbl-voyage table table-bordered table-responsive economic-table" style="width: 100%">
                                 <tr>
-                                    <th>Critical Success Factor</th>
-                                    <th>CurrentOverview</th>
-                                    <th>Economic</th>
+                                    <th style="background: white; color: #3498db; font-weight: bold;">Critical Success Factor</th>
+                                    <th style="background: white; color: #3498db; font-weight: bold;">CurrentOverview</th>
+                                    <th style="background: white; color: #3498db; font-weight: bold;">Economic</th>
                                 </tr>
                                 @foreach (var indicator in Model.EconomicIndicators)
                                 { 
