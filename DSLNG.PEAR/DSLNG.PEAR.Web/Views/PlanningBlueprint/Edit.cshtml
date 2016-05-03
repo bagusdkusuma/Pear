@@ -4,7 +4,7 @@
     ViewBag.Title = "Edit";
 }
 <div class="planning-blueprint-save">
-    @using (Html.BeginForm("Edit","PlanningBlueprint"))
+    @using (Html.BeginForm("Edit", "PlanningBlueprint"))
     {
         @Html.AntiForgeryToken()
         @Html.HiddenFor(x => x.Id);
@@ -28,34 +28,36 @@
 
                 <div class="form-group form-list">
                     <label>Economic Indicators</label>
-                    <input type="button" data-toggle="modal" id="test"  data-target="#economic-indicator-modal" class="btn btn-default" value="Choose Economic Indicators" />
-                       
+                    <input type="button" data-toggle="modal" id="test" data-target="#economic-indicator-modal" class="btn btn-default" value="Choose Economic Indicators" />
+
                 </div>
-                 <ul class="economic-indicators-holder" style="padding-left: 200px;color:#fff">
-                     @foreach (var keyOutput in Model.KeyOutputs) { 
-                        <li data-id="@keyOutput.Id">@Html.Hidden("KeyOutputIds[]",keyOutput.Id)@keyOutput.Name</li>
-                     }
-                 </ul>
+                <ul class="economic-indicators-holder" style="padding-left: 200px;color:#fff">
+                    @foreach (var keyOutput in Model.KeyOutputs)
+                    {
+                        <li data-id="@keyOutput.Id">@Html.Hidden("KeyOutputIds[]", keyOutput.Id)@keyOutput.Name</li>
+                    }
+                </ul>
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.IsActive)
                     @Html.CheckBoxFor(model => model.IsActive, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.IsActive)
                 </div>
-                @if(Model.IsReviewer){
-                <div class="form-group form-list">
-                    <label>Reset Workflow</label>
-                    <a href="/PlanningBlueprint/ResetWorkflow" class="btn btn-default reset-workflow">Reset</a>
-                </div>
+                @if (Model.IsReviewer)
+                {
+                    <div class="form-group form-list">
+                        <label>Reset Workflow</label>
+                        <a style="color: white;" href="/PlanningBlueprint/ResetWorkflow" class="btn-master-rgw btn btn-default reset-workflow">Reset</a>
+                    </div>
                 }
             </div>
         </div>
         <div class="col-md-12 artifact-designer-btns">
-            <button type="submit" class="btn btn-primary btn-lg submit-pb"><span class="fa fa-floppy-o"></span>Save</button>
-            <a onclick="location.reload();" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>
-            <a href="/PlanningBlueprint" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+            <button type="submit" class="btn-master-rgw btn btn-primary btn-lg submit-pb"><span class="fa fa-floppy-o"></span> Save</button>
+            <a onclick="location.reload();" class="btn-master-rgw btn-clear-rgw btn btn-primary btn-lg"><span class="fa fa-eraser"></span>Clear</a>
+            <a href="/PlanningBlueprint" class="btn-master-rgw btn-cancel-rgw btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
         </div>
     }
-    </div>
+</div>
 <div class="modal fade" id="economic-indicator-modal" data-id="id">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -66,11 +68,11 @@
             </div>
 
             <div class="modal-body modal-loading">
-                 <div class="economic-indicators"></div>
-                 <img src="@Url.Content("~/Content/img/ajax-loader2.gif")" class="ajax-loading-dialog" style="position: absolute"></img>
+                <div class="economic-indicators"></div>
+                <img src="@Url.Content("~/Content/img/ajax-loader2.gif")" class="ajax-loading-dialog" style="position: absolute"></img>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">OK</button>
+                <button type="button" class="btn-master-rgw btn btn-primary" data-dismiss="modal" aria-label="Close">OK</button>
             </div>
         </div>
     </div>

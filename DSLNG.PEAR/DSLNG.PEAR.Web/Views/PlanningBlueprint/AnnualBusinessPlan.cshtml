@@ -33,59 +33,57 @@
                 Description
             </div>
         </div>
-        <ul class="defined-list description">
-        </ul>
+        <ul class="defined-list description"></ul>
         <div class="defined-header key-driver">
             <div class="sub-title">
                 Key Driver
             </div>
         </div>
-        <ul class="defined-list key-driver">
-        </ul>
+        <ul class="defined-list key-driver"></ul>
     </div>
 </div>
- <div class="midterm-planning template">
-        <div class="midterm-planning-header">
+<div class="midterm-planning template">
+    <div class="midterm-planning-header">
         <h4 class="header-title"></h4>
-            </div>
-        <ul class="range">
-            <li class="start"></li>
-            <li class="end"></li>
-        </ul>
-        <div class="clear"></div>
-        <div class="objective-header">
-            <h5 class="objective-title">Objective</h5>
-            <a data-toggle="popover" href="javascript:void(0)" class="add-objective"><i class="fa fa-plus"></i></a>
-           </div>
-        <ul class="objectives">
-        </ul>
-        <table class="kpis">
-            <tr>
-                <th>Kpi <a data-toggle="popover" href="javascript:void(0)" class="add-kpi"><i class="fa fa-plus"></i></a></th>
-                <th>Target</th>
-                <th>Economic</th>
-            </tr>
-        </table>
     </div>
- <div class="objective-form">
-        <form action="/MidtermStrategyPlanning/AddObjective">
-            <input type="hidden" name="MidtermPlanningId" />
-            <label>Objective</label>
-            <textarea name="Value" cols="25" rows="5"></textarea>
-            <input type="submit" class="btn btn-primary submit-objective" value="submit" />
-        </form>
+    <ul class="range">
+        <li class="start"></li>
+        <li class="end"></li>
+    </ul>
+    <div class="clear"></div>
+    <div class="objective-header">
+        <h5 class="objective-title">Objective</h5>
+        <a data-toggle="popover" href="javascript:void(0)" class="add-objective"><i class="fa fa-plus"></i></a>
     </div>
-    <div class="kpi-form">
-        <form action="/MidtermStrategyPlanning/AddKpi">
-            <input type="hidden" name="MidtermPlanningId" />
-            <div>
-                <label>Pilih Kpi</label>
-            </div>
-            <select name="KpiId" class="kpi-list" style="width: 180px"></select>
-            <input type="submit" class="btn btn-primary submit-kpi" value="submit" />
-        </form>
-    </div>
-    <div id="hidden-fields-holder" data-kpi-url="@Url.Action("KpiList", "Artifact")"></div>
+
+    <ul class="objectives"></ul>
+    <table class="kpis">
+        <tr>
+            <th>KPI <a data-toggle="popover" href="javascript:void(0)" class="add-kpi"><i class="fa fa-plus"></i></a></th>
+            <th>Target</th>
+            <th>Economic</th>
+        </tr>
+    </table>
+</div>
+<div class="objective-form">
+    <form action="/MidtermStrategyPlanning/AddObjective">
+        <input type="hidden" name="MidtermPlanningId" />
+        <label>Objective</label>
+        <textarea name="Value" cols="25" rows="5"></textarea>
+        <input type="submit" class="btn btn-primary submit-objective" value="submit" />
+    </form>
+</div>
+<div class="kpi-form">
+    <form action="/MidtermStrategyPlanning/AddKpi">
+        <input type="hidden" name="MidtermPlanningId" />
+        <div>
+            <label>Pilih KPI</label>
+        </div>
+        <select name="KpiId" class="kpi-list" style="width: 180px"></select>
+        <input type="submit" class="btn btn-primary submit-kpi" value="submit" />
+    </form>
+</div>
+<div id="hidden-fields-holder" data-kpi-url="@Url.Action("KpiList", "Artifact")"></div>
 @section Scripts{
 <script type="text/javascript">
     $(document).ready(function () {
@@ -226,7 +224,7 @@
             }
             $('.midterm-plannings').html($mpTemplate);
         });
-        
+
         $(document).on('click', '.submit-kpi', function (e) {
             e.preventDefault();
             var $this = $(this);
@@ -263,7 +261,7 @@
         });
         $(document).on('click', '.remove-kpi', function (e) {
             e.preventDefault();
-            if (!confirm("Are you sure want to delete this item?")) return;
+            if (!confirm("Are You Sure?")) return;
             var $this = $(this);
             $.post($this.prop('href'), 'id=' + $this.closest('tr').data('id') + '&midTermId=' + $this.closest('.midterm-planning').data('id'), function (data) {
                 if (data.IsSuccess) {
@@ -295,7 +293,7 @@
         });
         $(document).on('click', '.remove-objective', function (e) {
             e.preventDefault();
-            if (!confirm("Are you sure want to delete this item?")) return;
+            if (!confirm("Are You Sure?")) return;
             var $this = $(this);
             $.post($this.prop('href'), 'id=' + $this.parent().data('id'), function (data) {
                 if (data.IsSuccess) {
@@ -347,9 +345,7 @@
                 type: 'post',
                 dataType: 'json',
                 success: function (data) {
-                    if ($this.val().trim() != '') {
-                        $this.val(parseInt($this.val()).format(2));
-                    }
+                   
                 },
                 data: input
             });
@@ -358,6 +354,9 @@
             e.preventDefault();
             var $this = $(this);
             var $td = $this.closest('td');
+            if ($this.val().trim() != '') {
+                $this.val(parseInt($this.val()).format(2));
+            }
             $td.html($this.val());
         });
     });

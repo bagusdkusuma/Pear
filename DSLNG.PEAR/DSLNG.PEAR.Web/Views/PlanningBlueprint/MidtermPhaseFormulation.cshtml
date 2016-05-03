@@ -11,209 +11,210 @@
 else
 {
     <div class="business-posture">
-            <div class="row">
-                <div class="col-md-12">
-                    <h4 class="bp-header" style="background-color: #00bfff;">Business Posture Identification</h4>
-                </div>
-            </div>
-            <div class="row bp-wrapper">
-                <div class="col-md-12">
-                    <table class="table-bordered table-desired-states">
-                        <tr>
-                            <td class="list-block" style="width: 33.33%">
-                                <h4 style="background-color: #009933">Construction Posture</h4>
-                                <div class="sub-group">
-                                    <h6 style="background-color: #336600">Desired States</h6>
-                                </div>
-                                <ul class="list-result construction-desired-list">
-                                    @foreach (var item in Model.ConstructionPosture.DesiredStates)
-                                    {
-                                        <li data-id="@item.Id">@item.Description</li>
-                                    }
-                                </ul>
-                            </td>
-                            <td class="list-block" style="width: 33.33%">
-                                <h4 style="background-color: #009933">Operation Posture</h4>
-                                <div class="sub-group">
-                                    <h6 style="background-color: #336600">Desired States</h6>
-                                </div>
-                                <ul class="list-result operation-desired-list">
-                                    @foreach (var item in Model.OperationPosture.DesiredStates)
-                                    {
-                                        <li data-id="@item.Id">@item.Description</li>
-                                    }
-                                </ul>
-                            </td>
-                            <td class="list-block" style="width: 33.33%">
-                                <h4 style="background-color: #009933">Decommisssioning Posture</h4>
-                                <div class="sub-group">
-                                    <h6 style="background-color: #336600">Desired States</h6>
-                                </div>
-                                <ul class="list-result decommissioning-desired-list">
-                                    @foreach (var item in Model.DecommissioningPosture.DesiredStates)
-                                    {
-                                        <li data-id="@item.Id">@item.Description</li>
-                                    }
-                                </ul>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+        <div style="width: auto; margin: auto;" class="row row-uo">
+            <div class="col-md-12">
+                <h4 class="bp-header">Business Posture Identification</h4>
             </div>
         </div>
-    <div class="midterm-phase-formulation">
-        
-        <div class="row">
+        <div class="row bp-wrapper">
             <div class="col-md-12">
-                <h4 style="background-color: #00bfff;">Mid Term Phase Formulation 
-                @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed )
-                {
-                    <a class="add-formulation-stage" data-toggle="popover" href="javascript:void(0)"><i class="fa fa-plus"></i></a>
-                }
+                <table class="table-bordered table-desired-states">
+                    <tr>
+                        <td class="list-block" style="width: 33.33%">
+                            <h4 style="background-color: #1abc9c">Construction Posture</h4>
+                            <div class="sub-group">
+                                <h6 style="background-color: #16a085">Desired States</h6>
+                            </div>
+                            <ul class="list-result construction-desired-list">
+                                @foreach (var item in Model.ConstructionPosture.DesiredStates)
+                                {
+                                    <li data-id="@item.Id">@item.Description</li>
+                                }
+                            </ul>
+                        </td>
+                        <td class="list-block" style="width: 33.33%">
+                            <h4 style="background-color: #1abc9c">Operation Posture</h4>
+                            <div class="sub-group">
+                                <h6 style="background-color: #16a085">Desired States</h6>
+                            </div>
+                            <ul class="list-result operation-desired-list">
+                                @foreach (var item in Model.OperationPosture.DesiredStates)
+                                {
+                                    <li data-id="@item.Id">@item.Description</li>
+                                }
+                            </ul>
+                        </td>
+                        <td class="list-block" style="width: 33.33%">
+                            <h4 style="background-color: #1abc9c">Decommisssioning Posture</h4>
+                            <div class="sub-group">
+                                <h6 style="background-color: #16a085">Desired States</h6>
+                            </div>
+                            <ul class="list-result decommissioning-desired-list">
+                                @foreach (var item in Model.DecommissioningPosture.DesiredStates)
+                                {
+                                    <li data-id="@item.Id">@item.Description</li>
+                                }
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="midterm-phase-formulation">
+
+        <div class="row" style="background: #00B0F0; border: 1px solid white; margin: auto; height: 43px; width: auto;">
+            <div class="col-md-12">
+                <h4 style="margin-top: -20px;">
+                    Mid Term Phase Formulation
+                    @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed)
+                    {
+                        <a class="add-formulation-stage" data-toggle="popover" href="javascript:void(0)"><i class="fa fa-plus"></i></a>
+                    }
                 </h4>
             </div>
         </div>
         @{var count = Model.MidtermFormulationStages.Count;
-          var items = Model.MidtermFormulationStages.OrderBy(x => x.Order).ToList();
-          <div class="row formulation-stages-wrapper">
-        <table class="formulation-stages-table">
-            <tr>
-                <th style="width:25%">&nbsp;</th>
-                <th style="width:25%">&nbsp;</th>
-                <th style="width:25%">&nbsp;</th>
-                <th style="width:25%">&nbsp;</th>
-            </tr>
-            @if (count == 0)
-            { 
-              <tr class="formulation-stages"></tr>
-            }
-        @for (var i = 0; i < count; i += 4)
-        { 
-            <tr class="formulation-stages">
-                @for (var j = i; j < i + 4; j++)
+        var items = Model.MidtermFormulationStages.OrderBy(x => x.Order).ToList();
+        <div class="row formulation-stages-wrapper">
+            <table class="formulation-stages-table">
+
+                @if (count == 0)
                 {
-                    if (j >= count) { break; }
-                    var item = items[j];
-                    <td data-id="@item.Id" data-order="@item.Order" class="formulation-stage">
-                        <div>
-                          <div data-id="@item.Id" class="title"><span class="popover-edit-stage" data-toggle="popover">@item.Title</span>
-                        @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed )
-                        {
-                            <a class="remove-item" href="/MidtermFormulation/DeleteStage"><i class="fa fa-minus"></i></a>
-                        }
-                    </div>
-                    <ul class="date-range">
-                        <li><span class="start">@item.StartDate.Value.ToString("MMM yyyy", System.Globalization.CultureInfo.InvariantCulture)</span></li>
-                        <li><span class="end">@item.EndDate.Value.ToString("MMM yyyy", System.Globalization.CultureInfo.InvariantCulture)</span></li>
-                    </ul>
-                    <div class="clear"></div>
-                    <div class="defined-header description">
-                        <div class="sub-title">
-                            Description
-                        </div>
-                        @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed )
-                        {
-                            <a data-toggle="popover" href="javascript:void(0)" class="add-definition" data-target="description"><i class="fa fa-plus"></i></a>
-                        }
-                    </div>
-                    <ul class="defined-list description">
-                        @foreach (var desc in item.Descriptions)
-                        { 
-                            <li data-id="@desc.Id"><span class="popover-edit-trigger" data-toggle="popover">@desc.Value</span>    @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed )
-                                                                                                                                  {<a class="remove-item" href="/MidtermFormulation/DeleteStageDesc"><i class="fa fa-minus"></i></a>}</li>
-                        }
-                    </ul>
-                    <div class="defined-header key-driver">
-                        <div class="sub-title">
-                            Key Driver
-                           @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed )
-                           {<a data-toggle="popover" href="javascript:void(0)" class="add-definition" data-target="key-driver"><i class="fa fa-plus"></i></a>}
-                        </div>
-                    </div>
-                    <ul class="defined-list key-driver">
-                        @foreach (var keyDriver in item.KeyDrivers)
-                        { 
-                            <li data-id="@keyDriver.Id"><span class="popover-edit-trigger" data-toggle="popover">@keyDriver.Value</span>    @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed )
-                                                                                                                                            {<a class="remove-item" href="/MidtermFormulation/DeleteStageKey"><i class="fa fa-minus"></i></a>}</li>
-                        }
-                    </ul>
-                            </div>
-                    </td>    
+                    <tr class="formulation-stages"></tr>
                 }
-            </tr>
-        }
-        </table>
-              </div>
-        }
-      @*  <div class="row formulation-stages">
-            @foreach (var item in Model.MidtermFormulationStages)
-            { 
-                <div data-id="@item.Id" class="formulation-stage col-md-3">
-                    <div data-id="@item.Id" class="title">@item.Title
-                        @if (!Model.IsReviewer)
+                @for (var i = 0; i < count; i += 4)
+                {
+                    <tr class="formulation-stages">
+                        @for (var j = i; j < i + 4; j++)
                         {
-                            <a class="remove-item" href="/MidtermFormulation/DeleteStage"><i class="fa fa-minus"></i></a>
+                            if (j >= count) { break; }
+                            var item = items[j];
+                            <td data-id="@item.Id" data-order="@item.Order" class="formulation-stage">
+                                <div>
+                                    <div data-id="@item.Id" class="title">
+                                        <span class="popover-edit-stage" data-toggle="popover">@item.Title</span>
+                                        @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed)
+                                        {
+                                            <a class="remove-item" href="/MidtermFormulation/DeleteStage"><i class="fa fa-minus"></i></a>
+                                        }
+                                    </div>
+                                    <ul class="date-range">
+                                        <li><span class="start">@item.StartDate.Value.ToString("MMM yyyy", System.Globalization.CultureInfo.InvariantCulture)</span></li>
+                                        <li><span class="end">@item.EndDate.Value.ToString("MMM yyyy", System.Globalization.CultureInfo.InvariantCulture)</span></li>
+                                    </ul>
+                                    <div class="clear"></div>
+                                    <div class="defined-header description">
+                                        <div class="sub-title">
+                                            Description
+                                        </div>
+                                        @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed)
+                                        {
+                                            <a data-toggle="popover" href="javascript:void(0)" class="add-definition" data-target="description"><i class="fa fa-plus"></i></a>
+                                        }
+                                    </div>
+                                    <ul class="defined-list description">
+                                        @foreach (var desc in item.Descriptions)
+                                        {
+                                            <li data-id="@desc.Id">
+                                                <span class="popover-edit-trigger" data-toggle="popover">@desc.Value</span>    @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed)
+                                                {<a class="remove-item" href="/MidtermFormulation/DeleteStageDesc"><i class="fa fa-minus"></i></a>}
+                                            </li>
+                                        }
+                                    </ul>
+                                    <div class="defined-header key-driver">
+                                        <div class="sub-title">
+                                            Key Driver
+                                            @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed)
+                                            {<a data-toggle="popover" href="javascript:void(0)" class="add-definition" data-target="key-driver"><i class="fa fa-plus"></i></a>}
+                                        </div>
+                                    </div>
+                                    <ul class="defined-list key-driver">
+                                        @foreach (var keyDriver in item.KeyDrivers)
+                                        {
+                                            <li data-id="@keyDriver.Id">
+                                                <span class="popover-edit-trigger" data-toggle="popover">@keyDriver.Value</span>    @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed)
+                                                {<a class="remove-item" href="/MidtermFormulation/DeleteStageKey"><i class="fa fa-minus"></i></a>}
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </td>
                         }
-                    </div>
-                    <ul class="date-range">
-                        <li><span class="start">@item.StartDate.Value.ToString("MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)</span></li>
-                        <li><span class="end">@item.StartDate.Value.ToString("MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)</span></li>
-                    </ul>
-                    <div class="defined-header description">
-                        <div class="sub-title">
-                            Description
+                    </tr>
+                }
+            </table>
+        </div>
+        }
+        @*  <div class="row formulation-stages">
+                @foreach (var item in Model.MidtermFormulationStages)
+                {
+                    <div data-id="@item.Id" class="formulation-stage col-md-3">
+                        <div data-id="@item.Id" class="title">@item.Title
+                            @if (!Model.IsReviewer)
+                            {
+                                <a class="remove-item" href="/MidtermFormulation/DeleteStage"><i class="fa fa-minus"></i></a>
+                            }
                         </div>
-                        @if (!Model.IsReviewer)
-                        {
-                            <a data-toggle="popover" href="javascript:void(0)" class="add-definition" data-target="description"><i class="fa fa-plus"></i></a>
-                        }
-                    </div>
-                    <ul class="defined-list description">
-                        @foreach (var desc in item.Descriptions)
-                        { 
-                            <li data-id="@desc.Id">@desc.Value    @if (!Model.IsReviewer)
-                                                                  {<a class="remove-item" href="/MidtermFormulation/DeleteStageDesc"><i class="fa fa-minus"></i></a>}</li>
-                        }
-                    </ul>
-                    <div class="key-driver">
-                        <div class="sub-title">
-                            Key Driver
-                           @if (!Model.IsReviewer)
-                           {<a data-toggle="popover" href="javascript:void(0)" class="add-definition" data-target="key-driver"><i class="fa fa-plus"></i></a>}
+                        <ul class="date-range">
+                            <li><span class="start">@item.StartDate.Value.ToString("MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)</span></li>
+                            <li><span class="end">@item.StartDate.Value.ToString("MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)</span></li>
+                        </ul>
+                        <div class="defined-header description">
+                            <div class="sub-title">
+                                Description
+                            </div>
+                            @if (!Model.IsReviewer)
+                            {
+                                <a data-toggle="popover" href="javascript:void(0)" class="add-definition" data-target="description"><i class="fa fa-plus"></i></a>
+                            }
                         </div>
+                        <ul class="defined-list description">
+                            @foreach (var desc in item.Descriptions)
+                            {
+                                <li data-id="@desc.Id">@desc.Value    @if (!Model.IsReviewer)
+                                                                      {<a class="remove-item" href="/MidtermFormulation/DeleteStageDesc"><i class="fa fa-minus"></i></a>}</li>
+                            }
+                        </ul>
+                        <div class="key-driver">
+                            <div class="sub-title">
+                                Key Driver
+                               @if (!Model.IsReviewer)
+                               {<a data-toggle="popover" href="javascript:void(0)" class="add-definition" data-target="key-driver"><i class="fa fa-plus"></i></a>}
+                            </div>
+                        </div>
+                        <ul class="defined-list key-driver">
+                            @foreach (var keyDriver in item.KeyDrivers)
+                            {
+                                <li data-id="@keyDriver.Id">@keyDriver.Value    @if (!Model.IsReviewer)
+                                                                                {<a class="remove-item" href="/MidtermFormulation/DeleteStageKey"><i class="fa fa-minus"></i></a>}</li>
+                            }
+                        </ul>
                     </div>
-                    <ul class="defined-list key-driver">
-                        @foreach (var keyDriver in item.KeyDrivers)
-                        { 
-                            <li data-id="@keyDriver.Id">@keyDriver.Value    @if (!Model.IsReviewer)
-                                                                            {<a class="remove-item" href="/MidtermFormulation/DeleteStageKey"><i class="fa fa-minus"></i></a>}</li>
-                        }
-                    </ul>
-                </div>
-            }
-        </div>*@
+                }
+            </div>*@
         @if (!Model.IsDashboard)
         {
             <div class="row">
-                <div class="col-md-12 artifact-designer-btns">
+                <div style="border-top: 0; margin-top: -20px;" class="col-md-12 artifact-designer-btns">
                     @using (Html.BeginForm("SubmitMidtermFormulation", "PlanningBlueprint"))
                     {
                         @Html.Hidden("Id", Model.Id)
                         if (!Model.IsReviewer)
                         {
-                        <a href="@Url.Action("Index", "PlanningBlueprint")" class="btn btn-primary btn-lg"><span class="fa fa-arrow-left"></span>Back</a>
+                            <a href="@Url.Action("Index", "PlanningBlueprint")" class="btn-master-rgw btn btn-primary btn-lg"><span class="fa fa-arrow-left"></span>Back To List</a>
                         }
                         else
                         {
-                        <a href="@Url.Action("Approval", "PlanningBlueprint")" class="btn btn-primary btn-lg"><span class="fa fa-arrow-left"></span>Back</a>
+                            <a href="@Url.Action("Approval", "PlanningBlueprint")" class="btn-master-rgw btn btn-primary btn-lg"><span class="fa fa-arrow-left"></span>Back To List</a>
                         }
                         if (!Model.IsReviewer)
                         {
-                        <button type="submit" class="btn btn-primary btn-lg submit-al-mf"><span class="fa fa-arrow-right"></span>Mid Term Strategy Planning</button>
+                            <button type="submit" class="btn-master-rgw btn btn-primary btn-lg">Next To Mid Term Strategy Planning <span class="fa fa-arrow-right"></span></button>
                         }
                         else
                         {
-                        <a href="@Url.Action("MSPReview", "PlanningBlueprint", new { Id = Model.Id })" class="btn btn-primary btn-lg"><span class="fa fa-arrow-right"></span>Midterm Strategy Planning</a>
+                            <a href="@Url.Action("MSPReview", "PlanningBlueprint", new { Id = Model.Id })" class="btn-master-rgw btn btn-primary btn-lg">Next To Midterm Strategy Planning <span class="fa fa-arrow-right"></span></a>
                         }
                     }
                 </div>
@@ -221,40 +222,40 @@ else
         }
     </div>
 }
-<table><tr>
-<td class="formulation-stage-template">
-    <div class="title">
-        <a class="remove-item" href="/MidtermFormulation/DeleteStage"><i class="fa fa-minus"></i></a>
-    </div>
-    <ul class="date-range">
-        <li><span class="start"></span></li>
-        <li><span class="end"></span></li>
-    </ul>
-    <div class="clear"></div>
-    <div class="defined-header description">
-        <div class="sub-title">
-            Description
-        </div>
-        <a data-toggle="popover" href="javascript:void(0)" class="add-definition" data-target="description"><i class="fa fa-plus"></i></a>
-    </div>
-    <ul class="defined-list description">
-    </ul>
-    <div class="defined-header key-driver">
-        <div class="sub-title">
-            Key Driver
-            <a data-toggle="popover" href="javascript:void(0)" class="add-definition" data-target="key-driver"><i class="fa fa-plus"></i></a>
-        </div>
-    </div>
-    <ul class="defined-list key-driver">
-    </ul>
-</td>
-    </tr></table>
+<table>
+    <tr>
+        <td class="formulation-stage-template">
+            <div class="title">
+                <a class="remove-item" href="/MidtermFormulation/DeleteStage"><i class="fa fa-minus"></i></a>
+            </div>
+            <ul class="date-range">
+                <li><span class="start"></span></li>
+                <li><span class="end"></span></li>
+            </ul>
+            <div class="clear"></div>
+            <div class="defined-header description">
+                <div class="sub-title">
+                    Description
+                </div>
+                <a data-toggle="popover" href="javascript:void(0)" class="add-definition" data-target="description"><i class="fa fa-plus"></i></a>
+            </div>
+            <ul class="defined-list description"></ul>
+            <div class="defined-header key-driver">
+                <div class="sub-title">
+                    Key Driver
+                    <a data-toggle="popover" href="javascript:void(0)" class="add-definition" data-target="key-driver"><i class="fa fa-plus"></i></a>
+                </div>
+            </div>
+            <ul class="defined-list key-driver"></ul>
+        </td>
+    </tr>
+</table>
 <div class="formulation-stage-form">
     <form action="/MidtermFormulation/AddStage">
         <input type="hidden" name="MidtermFormulationId" value="@Model.Id" />
         <input type="hidden" name="Id" />
         <label style="width:50px">Title</label>
-        <input type="text" name="Title" required="required"/>
+        <input type="text" name="Title" required="required" />
         <div style="position: relative">
             <label style="width:50px">Start</label>
             <input type="text" name="StartDate" class="monthpicker" required="required" />
@@ -264,7 +265,7 @@ else
             <input type="text" name="EndDate" class="monthpicker" required="required" />
         </div>
         <label style="width:50px">Order</label>
-        <input type="number" name="Order" required="required"/>
+        <input type="number" name="Order" required="required" />
         <input type="submit" class="btn btn-primary add-midterm-stage" value="submit" />
     </form>
 </div>
@@ -276,8 +277,8 @@ else
         <label>Description</label>
         <textarea name="Value" cols="25" rows="5" required="required"></textarea>
         <div>
-        <input type="submit" class="btn btn-primary add-stage-definition" value="submit" />
-            </div>
+            <input type="submit" class="btn btn-primary add-stage-definition" value="submit" />
+        </div>
     </form>
 </div>
 <script type="text/javascript">
@@ -326,17 +327,17 @@ else
             };
 
             if (!$form.valid()) return;
-            
+
             var startDate = $form.find('input[name="StartDate"]').val();
             var endDate = $form.find('input[name="EndDate"]').val();
-           
+
             var mStartDate = moment('01/' + startDate, "DD/MM/YYYY");
             var mEndDate = moment('01/' + endDate, "DD/MM/YYYY");
 
             if (!moment('01/' + startDate, "DD/MM/YYYY", true).isValid() || !moment('01/' + endDate, "DD/MM/YYYY", true).isValid()) {
                 return alert("Date format is not valid!");
             }
-            
+
             if (mEndDate.isBefore(mStartDate)) {
                 return alert("End Date can't be earlier than Start Date!");
             }
@@ -359,7 +360,7 @@ else
                     $stageTemplate.find('.start').html(data.Start);
                     $stageTemplate.find('.end').html(data.End);
 
-                    //reorder = 
+                    //reorder =
                     var stages = [];
                     $('.formulation-stage').each(function(i, val){
                         stages.push(val);
@@ -392,7 +393,7 @@ else
                     //} else {
                     //    stages.append($stageTemplate);
                     //}
-                   
+
                     //$('.formulation-stages').append($stageTemplate);
                     $trigger.popover('hide');
                 }
@@ -480,7 +481,7 @@ else
                         } else {
                             $parent.closest('.formulation-stage').remove();
                         }
-                        //reorder = 
+                        //reorder =
                         var stages = [];
                         $('.formulation-stage').each(function (i, val) {
                             stages.push(val);
@@ -584,7 +585,7 @@ else
 
                     $trigger.popover('hide');
                     setTimeout(function () {
-                        //reorder = 
+                        //reorder =
                         var stages = [];
                         $('.formulation-stage').each(function (i, val) {
                             stages.push(val);
@@ -606,7 +607,7 @@ else
                             $table.append($tr);
                         }
                     }, 300);
-                    
+
 
 
                 }
