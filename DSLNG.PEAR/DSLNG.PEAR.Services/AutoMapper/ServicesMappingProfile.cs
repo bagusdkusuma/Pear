@@ -644,6 +644,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<PostureChallenge, GetVoyagePlanResponse.PostureChallenge>();
             Mapper.CreateMap<PostureConstraint, GetVoyagePlanResponse.PostureConstraint>();
             Mapper.CreateMap<CalculateOutputResponse.KeyOutputResponse, GetVoyagePlanResponse.KeyOutputResponse>();
+            Mapper.CreateMap<MidtermPhaseFormulationStage, GetVoyagePlanResponse.MidtermFormulationStage>();
+            Mapper.CreateMap<MidtermPhaseDescription, GetVoyagePlanResponse.MidtermPhaseDescription>();
+            Mapper.CreateMap<MidtermPhaseKeyDriver, GetVoyagePlanResponse.MidtermPhaseKeyDriver>();
             Mapper.CreateMap<Constraint, GetConstraintResponse>()
                 .ForMember(x =>x.ThreatIds, y => y.MapFrom(z => z.Relations.Where(o =>o.ThreatHost != null)))
                 .ForMember(x => x.Opportunitys, y => y.MapFrom(z => z.Relations.Where(o => o.OpportunityHost != null)))

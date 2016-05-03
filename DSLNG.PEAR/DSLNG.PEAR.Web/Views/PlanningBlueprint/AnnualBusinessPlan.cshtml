@@ -86,6 +86,7 @@
         </form>
     </div>
     <div id="hidden-fields-holder" data-kpi-url="@Url.Action("KpiList", "Artifact")"></div>
+@section Scripts{
 <script type="text/javascript">
     $(document).ready(function () {
         var currentStages;
@@ -94,7 +95,6 @@
             e.preventDefault();
             var $this = $(this);
             $.get('/MidtermFormulation/GetStagesByPbId/' + $this.val(), function (data) {
-                console.log(data);
                 $('.stage').html('');
                 currentStages = data.MidtermFormulationStages;
                 var $formGroup = $('<div />');
@@ -149,7 +149,6 @@
             $('.stage-display').html($stage);
             $.get('/MidtermStrategyPlanning/GetByStageId/' + $this.val(), function (data) {
                 currentBusiness = data;
-                console.log(data);
                 $('.annual-planning').html('');
                 var $formGroup = $('<div />');
                 $formGroup.addClass('form-group form-list');
@@ -185,7 +184,6 @@
 
         $(document).on('change', '.annual-planning-selector', function (e) {
             e.preventDefault();
-            console.log('mari');
             var $this = $(this);
             var mPlanning;
             for (var i in currentBusiness.MidtermPlannings) {
@@ -194,7 +192,6 @@
                     break;
                 }
             }
-            console.log(mPlanning);
             var $mpTemplate = $('.midterm-planning.template').clone(true);
             $mpTemplate.data('id', mPlanning.Id);
             $mpTemplate.removeClass('template');
@@ -218,14 +215,15 @@
                 var $economicCol = $('<td />');
                 $economicCol.addClass('economic');
                 $kpiCol.html(kpi.Name + ' (' + kpi.Measurement + ') <a href="/MidtermStrategyPlanning/DeleteKpi" class="remove-kpi"><i class="fa fa-minus"></i></a>');
-                $targetCol.html(kpiData.Target);
-                $economicCol.html(kpiData.Economic);
+                var target = kpiData.Target != null && kpiData.Target != '' ? kpiData.Target.format(2) : kpiData.Target;
+                var economic = kpiData.Economic != null && kpiData.Economic != '' ? kpiData.Economic.format(2) : kpiData.Economic;
+                $targetCol.html(target);
+                $economicCol.html(economic);
                 $row.append($kpiCol);
                 $row.append($targetCol);
                 $row.append($economicCol);
                 $kpisHolder.append($row);
             }
-            console.log($mpTemplate.html());
             $('.midterm-plannings').html($mpTemplate);
         });
         
@@ -248,8 +246,10 @@
                 var $economicCol = $('<td />');
                 $economicCol.addClass('economic');
                 $kpiCol.html(kpi.Name + ' (' + kpi.Measurement + ') <a href="/MidtermStrategyPlanning/DeleteKpi" class="remove-kpi"><i class="fa fa-minus"></i></a>');
-                $targetCol.html(kpi.Target);
-                $economicCol.html(kpi.Economic);
+                var target = kpi.Target != null && kpi.Target != '' ? kpi.Target.format(2) : kpi.Target;
+                var economic = kpi.Economic != null && kpi.Economic != '' ? kpi.Economic.format(2) : kpi.Economic;
+                $targetCol.html(target);
+                $economicCol.html(economic);
                 $row.append($kpiCol);
                 $row.append($targetCol);
                 $row.append($economicCol);
@@ -347,7 +347,9 @@
                 type: 'post',
                 dataType: 'json',
                 success: function (data) {
-                    console.log(data);
+                    if ($this.val().trim() != '') {
+                        $this.val(parseInt($this.val()).format(2));
+                    }
                 },
                 data: input
             });
@@ -360,3 +362,4 @@
         });
     });
 </script>
+    }

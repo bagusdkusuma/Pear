@@ -10,59 +10,60 @@
     {
         <div class="row">
             <div class="col-sm-12">
-            <div class="economic-indicators-wrapper">
-                <div class="left-side">
-                     <div class="internal-challenges">
-                <h3>Internall Challenges</h3>
-                <ul>
-                    @foreach (var item in Model.InternalChallenge)
-                    { 
-                        <li>@item.Definition</li>
-                    }
-                </ul>
-                <h3>External Challenges</h3>
-                <ul>
-                    @foreach (var item in Model.ExternalChallenge)
-                    { 
-                        <li>@item.Definition</li>
-                    }
-                </ul>
-            </div>
-                </div>
-                <div class="center-side">
-                      @if (Model.EconomicIndicators.Count > 0)
-                {
-                    <table class="table table-bordered table-responsive economic-table" style="width:100%">
-                        <tr>
-                            <th>Critical Success Factor</th>
-                            <th>CurrentOverview</th>
-                            <th>Economic</th>
-                        </tr>
-                        @foreach (var indicator in Model.EconomicIndicators) { 
-                            <tr>
-                                <td style="text-align:left">@indicator.Name</td>
-                                <td style="text-align:right">@Html.ParseToDateOrNumber(indicator.Actual)</td>
-                                <td style="text-align:right">@Html.ParseToDateOrNumber(indicator.Forecast)</td>
-                            </tr>
+                <div class="economic-indicators-wrapper">
+                    <div class="left-side">
+                        <div class="internal-challenges">
+                            <h3>Internall Challenges</h3>
+                            <ul>
+                                @foreach (var item in Model.InternalChallenge)
+                                { 
+                                    <li>@item.Definition</li>
+                                }
+                            </ul>
+                            <h3>External Challenges</h3>
+                            <ul>
+                                @foreach (var item in Model.ExternalChallenge)
+                                { 
+                                    <li>@item.Definition</li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="center-side">
+                        @if (Model.EconomicIndicators.Count > 0)
+                        {
+                            <table class="table table-bordered table-responsive economic-table" style="width: 100%">
+                                <tr>
+                                    <th>Critical Success Factor</th>
+                                    <th>CurrentOverview</th>
+                                    <th>Economic</th>
+                                </tr>
+                                @foreach (var indicator in Model.EconomicIndicators)
+                                { 
+                                    <tr>
+                                        <td style="text-align: left">@indicator.Name</td>
+                                        <td style="text-align: right">@Html.ParseToDateOrNumber(indicator.Actual)</td>
+                                        <td style="text-align: right">@Html.ParseToDateOrNumber(indicator.Forecast)</td>
+                                    </tr>
+                                }
+                            </table>
                         }
-                    </table>
-                }
-                else
-                {
-                    <p>Belum Ada Data</p>
-                }
+                        else
+                        {
+                            <p>Belum Ada Data</p>
+                        }
+                    </div>
+                    <div class="right-side">
+                        <h3>Constraints</h3>
+                        <ul>
+                            @foreach (var item in Model.Constraints)
+                            { 
+                                <li>@item.Definition</li>
+                            }
+                        </ul>
+                    </div>
+                    <img src="/Content/img/voyageChartTransparent.png" />
                 </div>
-                <div class="right-side">
-                       <h3>Constraints</h3>
-                <ul>
-                    @foreach (var item in Model.Constraints)
-                    { 
-                        <li>@item.Definition</li>
-                    }
-                </ul>
-                </div>
-                <img src="/Content/img/voyageChartTransparent.png" />
-            </div>
             </div>
         </div>
 
@@ -160,6 +161,76 @@
                     }
                 </ul>
             </div>
+        </div>
+        <div class="midterm-phase-formulation">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 style="background-color: #00bfff;">Mid Term Phase Formulation 
+                    </h4>
+                </div>
+            </div>
+            @{var count = Model.MidtermFormulationStages.Count;
+              var items = Model.MidtermFormulationStages.OrderBy(x => x.Order).ToList();
+                <div class="row formulation-stages-wrapper">
+                    <table class="formulation-stages-table">
+                        <tr>
+                            <th style="width: 25%">&nbsp;</th>
+                            <th style="width: 25%">&nbsp;</th>
+                            <th style="width: 25%">&nbsp;</th>
+                            <th style="width: 25%">&nbsp;</th>
+                        </tr>
+                        @if (count == 0)
+                        { 
+                            <tr class="formulation-stages"></tr>
+                        }
+                        @for (var i = 0; i < count; i += 4)
+                        { 
+                            <tr class="formulation-stages">
+                                @for (var j = i; j < i + 4; j++)
+                                {
+                                    if (j >= count) { break; }
+                                    var item = items[j];
+                                    <td data-id="@item.Id" data-order="@item.Order" class="formulation-stage">
+                                        <div>
+                                            <div data-id="@item.Id" class="title">
+                                                <span class="popover-edit-stage" data-toggle="popover">@item.Title</span>
+                                            </div>
+                                            <ul class="date-range">
+                                                <li><span class="start">@item.StartDate.Value.ToString("MMM yyyy", System.Globalization.CultureInfo.InvariantCulture)</span></li>
+                                                <li><span class="end">@item.EndDate.Value.ToString("MMM yyyy", System.Globalization.CultureInfo.InvariantCulture)</span></li>
+                                            </ul>
+                                            <div class="clear"></div>
+                                            <div class="defined-header description">
+                                                <div class="sub-title">
+                                                    Description
+                                                </div>
+                                            </div>
+                                            <ul class="defined-list description">
+                                                @foreach (var desc in item.Descriptions)
+                                                { 
+                                                    <li data-id="@desc.Id"><span class="popover-edit-trigger" data-toggle="popover">@desc.Value</span>   </li>
+                                                }
+                                            </ul>
+                                            <div class="defined-header key-driver">
+                                                <div class="sub-title">
+                                                    Key Driver
+                                                </div>
+                                            </div>
+                                            <ul class="defined-list key-driver">
+                                                @foreach (var keyDriver in item.KeyDrivers)
+                                                { 
+                                                    <li data-id="@keyDriver.Id"><span class="popover-edit-trigger" data-toggle="popover">@keyDriver.Value</span></li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    </td>    
+                                }
+                            </tr>
+                        }
+                    </table>
+                </div>
+            }
         </div>
     }
     else

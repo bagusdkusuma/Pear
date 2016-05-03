@@ -324,8 +324,10 @@
                     $economicCol.addClass('economic');
                     $kpiCol.html('<span class="popover-edit-trigger" data-target-form="kpi" data-toggle="popover">' +
                         kpi.Name + ' (' + kpi.Measurement + ')</span> <a href="/MidtermStrategyPlanning/DeleteKpi" class="remove-kpi"><i class="fa fa-minus"></i></a>');
-                    $targetCol.html(kpi.Target);
-                    $economicCol.html(kpi.Economic);
+                    var target = kpi.Target != null && kpi.Target != '' ? kpi.Target.format(2) : kpi.Target;
+                    var economic = kpi.Economic != null && kpi.Economic != '' ? kpi.Economic.format(2) : kpi.Economic;
+                    $targetCol.html(target);
+                    $economicCol.html(economic);
                     $row.append($kpiCol);
                     $row.append($targetCol);
                     $row.append($economicCol);
@@ -405,8 +407,10 @@
                         {
                         <text>$kpiCol.html(kpi.Name + ' (' + kpi.Measurement + ')');</text>
                         }
-                        $targetCol.html(kpiData.Target);
-                        $economicCol.html(kpiData.Economic);
+                        var target = kpiData.Target != null && kpiData.Target != '' ? kpiData.Target.format(2) : kpiData.Target;
+                        var economic = kpiData.Economic != null && kpiData.Economic != '' ? kpiData.Economic.format(2) : kpiData.Economic;
+                        $targetCol.html(target);
+                        $economicCol.html(economic);
                         $row.append($kpiCol);
                         $row.append($targetCol);
                         $row.append($economicCol);
@@ -604,7 +608,9 @@
                 type: 'post',
                 dataType: 'json',
                 success: function (data) {
-                    console.log(data);
+                    if ($this.val().trim() != '') {
+                        $this.val(parseInt($this.val()).format(2));
+                    }
                 },
                 data: input
             });

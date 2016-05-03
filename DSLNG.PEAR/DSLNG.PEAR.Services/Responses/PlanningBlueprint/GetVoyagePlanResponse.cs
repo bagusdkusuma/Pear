@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 namespace DSLNG.PEAR.Services.Responses.PlanningBlueprint
 {
@@ -58,6 +59,33 @@ namespace DSLNG.PEAR.Services.Responses.PlanningBlueprint
             public string Forecast { get; set; }
             public int Order { get; set; }
             public string Measurement { get; set; }
+        }
+
+        public IList<MidtermFormulationStage> MidtermFormulationStages { get; set; }
+        public class MidtermFormulationStage
+        {
+            public MidtermFormulationStage()
+            {
+                Descriptions = new List<MidtermPhaseDescription>();
+                KeyDrivers = new List<MidtermPhaseKeyDriver>();
+            }
+            public int Id { get; set; }
+            public string Title { get; set; }
+            public int Order { get; set; }
+            public DateTime? StartDate { get; set; }
+            public DateTime? EndDate { get; set; }
+            public IList<MidtermPhaseDescription> Descriptions { get; set; }
+            public IList<MidtermPhaseKeyDriver> KeyDrivers { get; set; }
+        }
+        public class MidtermPhaseDescription
+        {
+            public int Id { get; set; }
+            public string Value { get; set; }
+        }
+        public class MidtermPhaseKeyDriver
+        {
+            public int Id { get; set; }
+            public string Value { get; set; }
         }
     }
 }

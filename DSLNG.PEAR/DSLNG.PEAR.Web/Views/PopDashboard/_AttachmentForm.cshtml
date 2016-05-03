@@ -15,7 +15,7 @@
             <div class="col-sm-12 form-inline">
                 <input type="hidden" name="Attachments.Index" value="@i" />
                 <input class="form-control opt-id" type="hidden" name="Attachments[@i].Id" value="@item.Id" style="width:50px;" />
-                <input class="form-control opt-text" maxlength="15" name="Attachments[@i].Alias" type="text" placeholder="Alias" value="@item.Alias" style="width:200px;">
+                <input class="form-control opt-text" maxlength="25" name="Attachments[@i].Alias" type="text" placeholder="Alias" value="@item.Alias" style="width:200px;">
                 <input  multiple="false" class="form-control opt-value-file" name="Attachments[@i].File" type="file" placeholder="File" value="@item.File" style="width:200px;">
                 <button type="button" class="btn btn-default form-control remove-option" style="display: inline-block;"><i class="glyphicon glyphicon-minus"></i></button>
                 @if (!string.IsNullOrEmpty(item.Filename)) { 

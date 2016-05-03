@@ -2338,6 +2338,10 @@ li > input.choose-list {
         border: 1px solid white;
         text-align: center;
     }
+        .midterm-plannings .midterm-planning table td.target,
+        .midterm-plannings .midterm-planning table td.economic {
+            text-align:right;
+        }
 
     .midterm-plannings .midterm-planning table th:first-child a {
         position: absolute;
@@ -2939,7 +2943,7 @@ color: #3498db;
 .voyage-plan h3 {
     font-size: 14px;
 }
-.voyage-plan .row:first-child {
+.voyage-plan > .row:first-child {
        margin-left: -7%;
     margin-right: -5%;
 }
