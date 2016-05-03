@@ -3227,6 +3227,23 @@ input.control-form.assumption-input {
     font-size: 14px;
 }
 
+.economic-indicators-wrapper .economic-table > tbody > tr > td {
+    border-color: white;
+    color: white;
+}
+
+.economic-indicators-wrapper .economic-table > tbody > tr > th {
+    border-color: white;
+}
+
+.economic-indicators-wrapper .economic-table > tbody > tr > th:nth-child(2) {
+    border-left: 2px solid #E0E0E0;
+}
+
+.economic-indicators-wrapper .economic-table > tbody > tr > th:nth-child(3) {
+    border-left: 2px solid #E0E0E0;
+}
+
 .economic-indicators ul {
     margin: 0;
     margin-left: -40px;
