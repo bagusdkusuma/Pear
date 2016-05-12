@@ -3272,6 +3272,15 @@ input.control-form.assumption-input {
     margin-bottom: 20px;
 }
 
+.rgw-pop-tbl tbody tr td:nth-child(1){
+    text-align: center !important;
+}
+
+.rgw-pop-tbl tbody tr td {
+    vertical-align: text-top;
+}
+
+
 .rgw-tbl {
     border-radius: 10px;
 }
