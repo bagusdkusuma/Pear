@@ -1,6 +1,7 @@
 ﻿using DSLNG.PEAR.Data.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
@@ -56,6 +57,8 @@ namespace DSLNG.PEAR.Web.ViewModels.PopDashboard
             {
                 new AttachmentViewModel()
             };
+            ProjectStartDispay = "DD/MM/YYYY";
+            ProjectEndDispay = "DD/MM/YYYY";
         }
         public int Id { get; set; }
         [Display(Name = "Project Title")]
@@ -100,13 +103,16 @@ namespace DSLNG.PEAR.Web.ViewModels.PopDashboard
             {
                 if (ProjectStart.HasValue)
                 {
-                    return ProjectStart.Value.ToString("MM/dd/yyyy");
+                    return ProjectStart.Value.ToString("dd/MM/yyyy");
                 }
                 return this._projectStartDisplay;
             }
             set
             {
-                this.ProjectStart = DateTime.ParseExact(value, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+                if (value != "DD/MM/YYYY")
+                {
+                    this.ProjectStart = DateTime.ParseExact(value, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                }
                 this._projectStartDisplay = value;
             }
         }
@@ -122,13 +128,16 @@ namespace DSLNG.PEAR.Web.ViewModels.PopDashboard
             {
                 if (ProjectEnd.HasValue)
                 {
-                    return ProjectEnd.Value.ToString("MM/dd/yyyy");
+                    return ProjectEnd.Value.ToString("dd/MM/yyyy");
                 }
                 return this._projectEndDisplay;
             }
             set
             {
-                this.ProjectEnd = DateTime.ParseExact(value, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+                if (value != "DD/MM/YYYY")
+                {
+                    this.ProjectEnd = DateTime.ParseExact(value, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                }
                 this._projectEndDisplay = value;
             }
         }

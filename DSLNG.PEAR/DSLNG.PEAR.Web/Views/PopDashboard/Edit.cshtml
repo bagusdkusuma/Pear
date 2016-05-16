@@ -71,7 +71,7 @@
             </div>
         </div>
         <div class="col-md-12 artifact-designer-btns">
-            <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
+            <button type="submit" class="btn btn-primary btn-lg btn-submit"><span class="fa fa-floppy-o"></span>Save</button>
             <a href="@Request.Url.ToString()" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>
             <a href="/PopDashboard" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
         </div>
@@ -82,12 +82,12 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-            $('.start').datetimepicker({
-                format: "MM/DD/YYYY"
-            });
-            $('.end').datetimepicker({
-                format: "MM/DD/YYYY"
-            });
+            //$('.start').datetimepicker({
+            //    format: "MM/DD/YYYY"
+            //});
+            //$('.end').datetimepicker({
+            //    format: "MM/DD/YYYY"
+            //});
             tinyMCE.init({
                 selector: ".allow-html",
                 menubar: false,
@@ -98,7 +98,23 @@
                 ],
                 toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
             });
-
+            $('.btn-submit').click(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var $form = $this.closest('form');
+                //valiate date
+                var startIsValid = moment($form.find('.start').val().trim(), "DD/MM/YYYY", true).isValid();
+                var endIsValid = moment($form.find('.end').val().trim(), "DD/MM/YYYY", true).isValid();
+                if (!startIsValid) {
+                    alert('Project Start should be writtern in following format: DD/MM/YYYY');
+                    return;
+                }
+                if (!endIsValid) {
+                    alert('Project End should be writtern in following format: DD/MM/YYYY');
+                    return;
+                }
+                $form.submit();
+            });
 
         });
     </script>

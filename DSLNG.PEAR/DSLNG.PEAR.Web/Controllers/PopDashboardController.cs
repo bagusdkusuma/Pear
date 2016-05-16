@@ -61,7 +61,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var StatusList = new List<SelectListItem>() { 
                 new SelectListItem{Value = "Not Start Yet", Text = "Not Start Yet"},
                 new SelectListItem{Value = "In Progress", Text = "In Progress"},
-                new SelectListItem{Value = "Close", Text = "Close"}
+                new SelectListItem{Value = "Finish", Text = "Finish"}
             };
             viewModel.StatusOptions = StatusList;
             return View(viewModel);
@@ -110,7 +110,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var StatusList = new List<SelectListItem>() { 
                 new SelectListItem{Value = "Not Start Yet", Text = "Not Start Yet"},
                 new SelectListItem{Value = "In Progress", Text = "In Progress"},
-                new SelectListItem{Value = "Close", Text = "Close"}
+                new SelectListItem{Value = "Finish", Text = "Finish"}
             };
             viewModel.StatusOptions = StatusList;
             return View(viewModel);
