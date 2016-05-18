@@ -743,6 +743,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x=>x.RoleGroupName,y=>y.MapFrom(z=>z.RoleGroup.Name));
             Mapper.CreateMap<ProcessBlueprint, GetProcessBlueprintPrivilegesResponse.FileManagerRolePrivilege.BlueprintFile>();
             Mapper.CreateMap<UpdateFilePrivilegeRequest, FileManagerRolePrivilege>();
+            Mapper.CreateMap<FilePrivilegeRequest, FileManagerRolePrivilege>();
         }
 
         private void ConfigureEconomicSummary()

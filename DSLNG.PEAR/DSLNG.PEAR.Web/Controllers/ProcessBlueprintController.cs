@@ -20,7 +20,7 @@ namespace DSLNG.PEAR.Web.Controllers
     {
         //
         // GET: /ProcessBlueprint/
-        [AuthorizeUser(AccessLevel="AllowView")]
+        [AuthorizeUser(AccessLevel = "AllowView")]
         public ActionResult Index()
         {
             return View(ProcessBlueprintControllerProcessBlueprintSettings.ProcessBlueprintFileSystemProvider);
@@ -65,7 +65,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 }
             }
 
-            return PartialView("_PrivilegePartial",models);
+            return PartialView("_PrivilegePartial", models);
         }
 
         [ValidateInput(false)]
@@ -87,9 +87,9 @@ namespace DSLNG.PEAR.Web.Controllers
             var data = ProcessBlueprintDataProvider.service.GetPrivileges(new Services.Requests.ProcessBlueprint.GetProcessBlueprintPrivilegeRequest { FileId = fileId });
             if (data.IsSuccess)
             {
-                models = data.FileManagerRolePrivileges.ToList().MapTo<FileManagerRolePrivilegeViewModel>(); 
+                models = data.FileManagerRolePrivileges.ToList().MapTo<FileManagerRolePrivilegeViewModel>();
             }
-            return PartialView("_PrivilegePartial",models);
+            return PartialView("_PrivilegePartial", models);
         }
         public ActionResult ProcessConfigPartial(string relativePath, bool? isFileSelected)
         {
@@ -113,7 +113,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     var folder = new FileManagerFolder(provider, selecetedFile);
                     item = ProcessBlueprintControllerProcessBlueprintSettings.ProcessBlueprintFileSystemProvider.GetFolder(folder);
                 }
-                
+
             }
             //FileManagerFile file = ProcessBlueprintControllerProcessBlueprintSettings.ProcessBlueprintFileSystemProvider.GetFile()
 
@@ -143,10 +143,13 @@ namespace DSLNG.PEAR.Web.Controllers
         public static FileManagerSettingsPermissions SettingsPermissions { get { return settings; } }
         public static void ApplyRules(FileManagerFolder folder)
         {
-
+            int fileId = 0;
             //set for my own files
             //var myFolder = ProcessBlueprintDataProvider.GetAll().FindAll(x => x.CreatedBy == sessionData.UserId).ToList();
-            var myFolder = ProcessBlueprintDataProvider.service.GetPrivileges(new Services.Requests.ProcessBlueprint.GetProcessBlueprintPrivilegeRequest { RoleGroupId = sessionData.RoleId });
+            var fs = ProcessBlueprintFileSystemProvider.GetFolder(folder);
+            if(fs == null) return;
+            fileId = fs.FileId;
+            var myFolder = ProcessBlueprintDataProvider.service.GetPrivileges(new Services.Requests.ProcessBlueprint.GetProcessBlueprintPrivilegeRequest { FileId=fileId, RoleGroupId = sessionData.RoleId  });
             if (myFolder.TotalRecords > 0)
             {
                 foreach (var item in myFolder.FileManagerRolePrivileges)
@@ -168,6 +171,24 @@ namespace DSLNG.PEAR.Web.Controllers
                     rule.Edit = item.AllowRename == item.AllowCreate == item.AllowCopy == item.AllowDelete == item.AllowMove ? Rights.Allow : Rights.Deny;
                     settings.AccessRules.Add(rule);
                 }
+            }
+            else
+            {
+                var folderItem = ProcessBlueprintFileSystemProvider.GetRelativeName(fs);
+                FileManagerAccessRuleBase rule = null;
+                    
+                if (fs.IsFolder)
+                {
+                    rule = new FileManagerFolderAccessRule();
+                }
+                else
+                {
+                    rule = new FileManagerFileAccessRule();
+                }
+                rule.Path = folderItem;
+                rule.Browse = Rights.Default;
+                rule.Edit = Rights.Default;
+                settings.AccessRules.Add(rule);
             }
             //foreach (var item in myFolder.FileManagerRolePrivileges)
             //{
@@ -299,8 +320,8 @@ namespace DSLNG.PEAR.Web.Controllers
         }
         #region old code
         //UserProfileSessionData sessionData = (UserProfileSessionData)HttpContext.Current.Session["LoginUser"];
-        
-        
+
+
         //public FileManagerFeaturesOption(string folder)
         //{
         //    FileManagerPrivilege privileges = GetPrivilege(sessionData);

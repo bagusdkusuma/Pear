@@ -19,5 +19,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         BaseResponse Delete(int Id);
         GetProcessBlueprintPrivilegesResponse GetPrivileges(GetProcessBlueprintPrivilegeRequest request);
         BaseResponse BatchUpdateFilePrivilege(BatchUpdateFilePrivilegeRequest request);
+        BaseResponse InsertOwnerPrivilege(FilePrivilegeRequest request);
     }
 }
