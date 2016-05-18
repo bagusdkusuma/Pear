@@ -98,6 +98,7 @@
     <Compile Include="MirConfigurationService.cs" />
     <Compile Include="MirDataTableService.cs" />
     <Compile Include="ProcessBlueprintService.cs" />
+    <Compile Include="Requests\FileManagerRolePrivilege\FilePrivilegeRequest.cs" />
     <Compile Include="Requests\FileManagerRolePrivilege\UpdateFilePrivilegeRequest.cs" />
     <Compile Include="Requests\Menu\GetMenuPrivilegeRequest.cs" />
     <Compile Include="Requests\MirConfiguration\GetMirConfigurationsRequest.cs" />
