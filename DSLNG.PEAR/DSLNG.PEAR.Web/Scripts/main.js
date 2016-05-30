@@ -596,7 +596,15 @@ Number.prototype.format = function (n, x) {
             e.preventDefault();
             var $this = $(this);
             loadGraph($this.data('graph-url'), $this.val());
+            if ($this.val() === 'bar') {
+                $('.netback-chart-opt').show();
+            } else {
+                $('.netback-chart-opt').hide();
+            }
         });
+        if ($('#graphic-type').val() == 'bar') {
+            $('.netback-chart-opt').show();
+        }
         var specificDate = function () {
             $(".datepicker").on("dp.change", function (e) {
                 if ($('#RangeFilter').val().toLowerCase().indexOf('specific') > -1 && e.target.id === 'StartInDisplay') {
