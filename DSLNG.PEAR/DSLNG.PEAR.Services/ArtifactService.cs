@@ -932,10 +932,10 @@ namespace DSLNG.PEAR.Services
             switch (request.ValueAxis)
             {
                 case ValueAxis.KpiTarget:
-                    seriesResponse = this._getKpiTargetSeries(request.Series, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes);
+                    seriesResponse = this._getKpiTargetSeries(request.Series, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes, false, request.AsNetbackChart);
                     break;
                 case ValueAxis.KpiActual:
-                    seriesResponse = this._getKpiActualSeries(request.Series, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes);
+                    seriesResponse = this._getKpiActualSeries(request.Series, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes,false, request.AsNetbackChart);
                     break;
                 case ValueAxis.KpiEconomic:
                     seriesResponse = this._getKpiEconomicSeries(request.Series, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes, false, request.AsNetbackChart);
@@ -949,8 +949,8 @@ namespace DSLNG.PEAR.Services
                     var targetSeries = request.Series.Where(x => x.ValueAxis == ValueAxis.KpiTarget).ToList();
                     var economicSeries = request.Series.Where(x => x.ValueAxis == ValueAxis.KpiEconomic).ToList();
                     //seriesType = "multi-stacks-grouped";
-                    var series1 = this._getKpiTargetSeries(targetSeries, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes, false);
-                    var series2 = this._getKpiActualSeries(actualSeries, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes, false);
+                    var series1 = this._getKpiTargetSeries(targetSeries, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes, false, request.AsNetbackChart);
+                    var series2 = this._getKpiActualSeries(actualSeries, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes, false, request.AsNetbackChart);
                     var series3 = this._getKpiEconomicSeries(economicSeries, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes, false, request.AsNetbackChart);
                     seriesResponse = series1.Concat(series2).Concat(series3).ToList();
                     seriesResponse = seriesResponse.OrderBy(x => x.Order).ToList();
@@ -1209,11 +1209,11 @@ namespace DSLNG.PEAR.Services
             return periodes.ToArray();
         }
 
-        private IList<GetCartesianChartDataResponse.SeriesResponse> _getKpiTargetSeries(IList<GetCartesianChartDataRequest.SeriesRequest> configSeries, PeriodeType periodeType, IList<DateTime> dateTimePeriodes, string seriesType, RangeFilter rangeFilter, string graphicType, out string newTimeInformation, out IList<DateTime> newDatetimePeriodes, bool comparison = false)
+        private IList<GetCartesianChartDataResponse.SeriesResponse> _getKpiTargetSeries(IList<GetCartesianChartDataRequest.SeriesRequest> configSeries, PeriodeType periodeType, IList<DateTime> dateTimePeriodes, string seriesType, RangeFilter rangeFilter, string graphicType, out string newTimeInformation, out IList<DateTime> newDatetimePeriodes, bool comparison = false, bool asNetbackChart = false)
         {
             var seriesResponse = new List<GetCartesianChartDataResponse.SeriesResponse>();
-            var start = dateTimePeriodes[0];
-            var end = dateTimePeriodes[dateTimePeriodes.Count - 1];
+             var start = rangeFilter == RangeFilter.AllExistingYears ? DateTime.MinValue : dateTimePeriodes[0];
+            var end = rangeFilter == RangeFilter.AllExistingYears ? DateTime.MaxValue : dateTimePeriodes[dateTimePeriodes.Count - 1];
             newTimeInformation = null;
             newDatetimePeriodes = new List<DateTime>();
             foreach (var series in configSeries)
@@ -1266,6 +1266,41 @@ namespace DSLNG.PEAR.Services
                             Color = series.Color,
                             Order = series.Order
                         };
+                           if (asNetbackChart)
+                        {
+                            var sumValue = kpiTargets.Where(x => x.Value.HasValue).Average(x => x.Value);
+                            aSeries.BorderColor = "transparent";
+                            aSeries.Data.Add(sumValue);
+                            if (newTimeInformation == null && newDatetimePeriodes.Count == 0)
+                            {
+                                if (rangeFilter == RangeFilter.AllExistingYears)
+                                {
+                                    newTimeInformation = "2011 - 2030";
+                                    newDatetimePeriodes = new List<DateTime> { new DateTime(2011, 1, 1, 0, 0, 0), new DateTime(2030, 1, 1, 0, 0, 0) };
+                                }
+                                else
+                                {
+                                    switch (periodeType)
+                                    {
+                                        case PeriodeType.Hourly:
+                                            newTimeInformation = start.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture) + " - " + end.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
+                                            break;
+                                        case PeriodeType.Daily:
+                                            newTimeInformation = start.ToString("dd MMM yy", CultureInfo.InvariantCulture) + " - " + end.ToString("dd MMM yy", CultureInfo.InvariantCulture);
+                                            break;
+                                        case PeriodeType.Monthly:
+                                            newTimeInformation = start.ToString("MMM yy", CultureInfo.InvariantCulture) + " - " + end.ToString("MMM yy", CultureInfo.InvariantCulture);
+                                            break;
+                                        case PeriodeType.Yearly:
+                                            newTimeInformation = start.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture) + " - " + end.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
+                                            break;
+                                    }
+                                    dateTimePeriodes = new List<DateTime> { start, end };
+                                    newDatetimePeriodes = dateTimePeriodes;
+                                }
+                            }
+
+                        }else
                         if (rangeFilter == RangeFilter.YTD || rangeFilter == RangeFilter.DTD || rangeFilter == RangeFilter.MTD)
                         {
 
@@ -1321,6 +1356,19 @@ namespace DSLNG.PEAR.Services
                             seriesResponse.Add(previousSeries);
                         }
                         seriesResponse.Add(aSeries);
+                          if (asNetbackChart && seriesResponse.Count > 1)
+                        {
+                            var invicibleSeries = new GetCartesianChartDataResponse.SeriesResponse
+                            {
+                                Name = "invisible_" + series.Label,
+                                Stack = series.Label,
+                                Color = "transparent",
+                                BorderColor = "transparent",
+                                ShowInLegend = false
+                            };
+                            invicibleSeries.Data.Add(seriesResponse[seriesResponse.Count - 2].Data[0] - seriesResponse[seriesResponse.Count - 1].Data[0]);
+                            seriesResponse.Add(invicibleSeries);
+                        }
                     }
                     else
                     {
@@ -1917,11 +1965,11 @@ namespace DSLNG.PEAR.Services
         }
 
 
-        private IList<GetCartesianChartDataResponse.SeriesResponse> _getKpiActualSeries(IList<GetCartesianChartDataRequest.SeriesRequest> configSeries, PeriodeType periodeType, IList<DateTime> dateTimePeriodes, string seriesType, RangeFilter rangeFilter, string graphicType, out string newTimeInformation, out IList<DateTime> newDatetimePeriodes, bool comparison = false)
+        private IList<GetCartesianChartDataResponse.SeriesResponse> _getKpiActualSeries(IList<GetCartesianChartDataRequest.SeriesRequest> configSeries, PeriodeType periodeType, IList<DateTime> dateTimePeriodes, string seriesType, RangeFilter rangeFilter, string graphicType, out string newTimeInformation, out IList<DateTime> newDatetimePeriodes, bool comparison = false, bool asNetbackChart = false)
         {
             var seriesResponse = new List<GetCartesianChartDataResponse.SeriesResponse>();
-            var start = dateTimePeriodes[0];
-            var end = dateTimePeriodes[dateTimePeriodes.Count - 1];
+            var start = rangeFilter == RangeFilter.AllExistingYears ? DateTime.MinValue : dateTimePeriodes[0];
+            var end = rangeFilter == RangeFilter.AllExistingYears ? DateTime.MaxValue : dateTimePeriodes[dateTimePeriodes.Count - 1];
             newTimeInformation = null;
             newDatetimePeriodes = new List<DateTime>();
             foreach (var series in configSeries)
@@ -2255,7 +2303,121 @@ namespace DSLNG.PEAR.Services
                         seriesResponse.Add(exceedSeries);
                         seriesResponse.Add(aSeries);
                     }
-                    else
+                    else if (seriesType == "multi-stacks-grouped")
+                    {
+                        var aSeries = new GetCartesianChartDataResponse.SeriesResponse
+                        {
+                            Name = series.Label,
+                            Stack = series.Label,
+                            Color = series.Color,
+                            Order = series.Order
+                        };
+                        if (asNetbackChart)
+                        {
+                            var sumValue = kpiActuals.Where(x => x.Value.HasValue).Average(x => x.Value);
+                            aSeries.BorderColor = "transparent";
+                            aSeries.Data.Add(sumValue);
+                            if (newTimeInformation == null && newDatetimePeriodes.Count == 0)
+                            {
+                                if (rangeFilter == RangeFilter.AllExistingYears)
+                                {
+                                    newTimeInformation = "2011 - 2030";
+                                    newDatetimePeriodes = new List<DateTime> { new DateTime(2011, 1, 1, 0, 0, 0), new DateTime(2030, 1, 1, 0, 0, 0) };
+                                }
+                                else
+                                {
+                                    switch (periodeType)
+                                    {
+                                        case PeriodeType.Hourly:
+                                            newTimeInformation = start.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture) + " - " + end.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
+                                            break;
+                                        case PeriodeType.Daily:
+                                            newTimeInformation = start.ToString("dd MMM yy", CultureInfo.InvariantCulture) + " - " + end.ToString("dd MMM yy", CultureInfo.InvariantCulture);
+                                            break;
+                                        case PeriodeType.Monthly:
+                                            newTimeInformation = start.ToString("MMM yy", CultureInfo.InvariantCulture) + " - " + end.ToString("MMM yy", CultureInfo.InvariantCulture);
+                                            break;
+                                        case PeriodeType.Yearly:
+                                            newTimeInformation = start.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture) + " - " + end.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
+                                            break;
+                                    }
+                                    dateTimePeriodes = new List<DateTime> { start, end };
+                                    newDatetimePeriodes = dateTimePeriodes;
+                                }
+                            }
+
+                        }
+                        else if (rangeFilter == RangeFilter.YTD || rangeFilter == RangeFilter.DTD || rangeFilter == RangeFilter.MTD)
+                        {
+
+                            foreach (var periode in dateTimePeriodes)
+                            {
+                                var economicValue = kpiActuals.Where(x => x.Periode <= periode).GroupBy(x => x.Kpi)
+                                    .Select(x => x.Sum(y => y.Value)).FirstOrDefault();
+                                if (economicValue == null || !economicValue.HasValue)
+                                {
+                                    aSeries.Data.Add(null);
+                                }
+                                else
+                                {
+                                    aSeries.Data.Add(economicValue.Value);
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            foreach (var periode in dateTimePeriodes)
+                            {
+                                var target = kpiActuals.Where(x => x.Periode == periode).FirstOrDefault();
+                                if (target == null || !target.Value.HasValue)
+                                {
+                                    aSeries.Data.Add(null);
+                                }
+                                else
+                                {
+                                    aSeries.Data.Add(target.Value.Value);
+                                }
+                            }
+                        }
+
+
+                        if (graphicType == "baraccumulative")
+                        {
+                            var previousSeries = new GetCartesianChartDataResponse.SeriesResponse
+                            {
+                                Name = "Previous Accumulation",
+                                Color = string.IsNullOrEmpty(series.PreviousColor) ? "#004071" : series.PreviousColor,
+                                Stack = series.Label,
+                                Order = series.Order
+                            };
+                            for (var i = 0; i < aSeries.Data.Count; i++)
+                            {
+                                double data = 0;
+                                for (var j = 0; j < i; j++)
+                                {
+                                    data += aSeries.Data[j].HasValue ? aSeries.Data[j].Value : 0;
+                                }
+                                previousSeries.Data.Add(data);
+                            }
+                            seriesResponse.Add(previousSeries);
+                        }
+                        seriesResponse.Add(aSeries);
+                        if (asNetbackChart && seriesResponse.Count > 1)
+                        {
+                            var invicibleSeries = new GetCartesianChartDataResponse.SeriesResponse
+                            {
+                                Name = "invisible_" + series.Label,
+                                Stack = series.Label,
+                                Color = "transparent",
+                                BorderColor = "transparent",
+                                ShowInLegend = false
+                            };
+                            invicibleSeries.Data.Add(seriesResponse[seriesResponse.Count - 2].Data[0] - seriesResponse[seriesResponse.Count - 1].Data[0]);
+                            seriesResponse.Add(invicibleSeries);
+                        }
+                    }
+                    else // multistack groups?
                     {
                         //var kpiTargets = DataContext.KpiAchievements.Where(x => x.PeriodeType == periodeType &&
                         //     x.Periode >= start && x.Periode <= end && x.Kpi.Id == series.KpiId)
