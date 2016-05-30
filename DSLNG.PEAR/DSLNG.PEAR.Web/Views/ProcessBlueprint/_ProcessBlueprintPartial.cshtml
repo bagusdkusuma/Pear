@@ -1,19 +1,61 @@
-@Html.DevExpress().FileManager(settings => {
+@Html.DevExpress().FileManager(settings =>
+{
     settings.Name = "ProcessBlueprint";
     settings.CallbackRouteValues = new { Controller = "ProcessBlueprint", Action = "ProcessBlueprintPartial" };
+    settings.CustomActionRouteValues = new { Controller = "ProcessBlueprint", Action = "CustomToolbarAction" };
+    settings.DownloadRouteValues = new { Controller = "ProcessBlueprint", Action = "ProcessBlueprintPartialDownload" };
+    settings.ClientSideEvents.CustomCommand = "OnCustomCommand";
+    settings.SettingsFileList.View = Session["aspxCustomToolbarAction"] == null ? FileListView.Thumbnails : (FileListView)Session["aspxCustomToolbarAction"];
+    
+    settings.SettingsContextMenu.Enabled = true;
+    settings.SettingsToolbar.Items.CreateDefaultItems();
+    settings.SettingsContextMenu.Items.Add(new FileManagerToolbarMoveButton());
+    settings.SettingsContextMenu.Items.Add(new FileManagerToolbarCopyButton());
+    var renameButton = new FileManagerToolbarRenameButton();
+    renameButton.BeginGroup = true;
+    settings.SettingsContextMenu.Items.Add(renameButton);
+    settings.SettingsContextMenu.Items.Add(new FileManagerToolbarDeleteButton());
+    settings.SettingsContextMenu.Items.Add(new FileManagerToolbarRefreshButton());
+    var propertiesButton = new FileManagerToolbarCustomButton();
+    propertiesButton.CommandName = "Properties";
+    propertiesButton.Text = "Properties";
+    propertiesButton.Image.IconID = IconID.SetupProperties16x16;
+    propertiesButton.BeginGroup = true;
+    settings.SettingsContextMenu.Items.Add(propertiesButton);
 
-        settings.DownloadRouteValues = new { Controller = "ProcessBlueprint", Action = "ProcessBlueprintPartialDownload" };
-    settings.SettingsEditing.AllowDownload = true;
+    
+    
+    var isThumbnailsView = settings.SettingsFileList.View == FileListView.Thumbnails;
+    propertiesButton = new FileManagerToolbarCustomButton();
+    propertiesButton.CommandName = "Properties";
+    propertiesButton.Image.IconID = IconID.SetupProperties16x16;
+    settings.SettingsToolbar.Items.Add(propertiesButton);
+    var thumbnailsViewButton = new FileManagerToolbarCustomButton();
+    thumbnailsViewButton.CommandName = "ChangeView-Thumbnails";
+    thumbnailsViewButton.Text = "Thumbnails View";
+    thumbnailsViewButton.GroupName = "ViewMode";
+    thumbnailsViewButton.Image.IconID = IconID.GridCards16x16;
+    thumbnailsViewButton.Checked = isThumbnailsView;
+    settings.SettingsToolbar.Items.Add(thumbnailsViewButton);
+    var detailsViewButton = new FileManagerToolbarCustomButton();
+    detailsViewButton.CommandName = "ChangeView-Details";
+    detailsViewButton.Text = "Details View";
+    detailsViewButton.GroupName = "ViewMode";
+    detailsViewButton.Image.IconID = IconID.GridGrid16x16;
+    detailsViewButton.Checked = !isThumbnailsView;
+    settings.SettingsToolbar.Items.Add(detailsViewButton);
 
     settings.Settings.ThumbnailFolder = Url.Content("~/Content/FileManager/Thumbnails");
+    settings.Settings.AllowedFileExtensions = DSLNG.PEAR.Web.Controllers.ProcessBlueprintControllerProcessBlueprintSettings.AllowedFileExtensions;
+    settings.SettingsEditing.Assign(DSLNG.PEAR.Web.Controllers.ProcessBlueprintControllerProcessBlueprintSettings.FeatureOptions.SettingsEditing);
+    settings.SettingsPermissions.Assign(DSLNG.PEAR.Web.Controllers.ProcessBlueprintControllerProcessBlueprintSettings.SettingsPermissions);
+    //    settings.SettingsEditing.AllowCreate = true;
+    //        settings.SettingsEditing.AllowRename = true;
+    //        settings.SettingsEditing.AllowMove = true;
+    //        settings.SettingsEditing.AllowDelete = true;
+    //        settings.SettingsUpload.Enabled = true;
+    //        settings.SettingsUpload.UseAdvancedUploadMode = true;
+    //settings.SettingsUpload.AdvancedModeSettings.EnableMultiSelect = true;
 
-        settings.SettingsEditing.AllowCreate = true;
-            settings.SettingsEditing.AllowRename = true;
-            settings.SettingsEditing.AllowMove = true;
-            settings.SettingsEditing.AllowDelete = true;
-            settings.SettingsUpload.Enabled = true;
-            settings.SettingsUpload.UseAdvancedUploadMode = true;
-    settings.SettingsUpload.AdvancedModeSettings.EnableMultiSelect = true;
-
-    settings.SettingsFileList.View = DevExpress.Web.FileListView.Thumbnails;
+    //settings.SettingsFileList.View = DevExpress.Web.FileListView.Thumbnails;
 }).BindToFileSystemProvider(Model).GetHtml()

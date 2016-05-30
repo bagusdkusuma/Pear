@@ -107,6 +107,10 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<MidtermPlanningKpi> MidtermPlanningKpis { get; set; }
 
         IDbSet<ProcessBlueprint> ProcessBlueprints { get; set; }
+        IDbSet<FileManagerRolePrivilege> FileManagerRolePrivileges { get; set; }
+
+        IDbSet<RolePrivilege> RolePrivileges { get; set; }
+        IDbSet<MenuRolePrivilege> MenuRolePrivileges { get; set; }
         Database Database { get; }
         int SaveChanges();
         DbEntityEntry Entry(object entity);

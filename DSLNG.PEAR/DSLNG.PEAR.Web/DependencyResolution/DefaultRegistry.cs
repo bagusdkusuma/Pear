@@ -90,6 +90,7 @@ namespace DSLNG.PEAR.Web.DependencyResolution {
             For<IMirDataTableService>().Use<MirDataTableService>();
             For<IWaveService>().Use<WaveService>();
             For<IProcessBlueprintService>().Use<ProcessBlueprintService>();
+            For<IRolePrivilegeService>().Use<RolePrivilegeService>();
         }
 
         #endregion

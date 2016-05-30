@@ -2232,7 +2232,7 @@ li > input.choose-list {
 }
 
 .business-posture .highlight, .environment-scanning .highlight {
-    color: red;
+    color: yellow;
 }
 
 .stage-selected {
@@ -2338,6 +2338,10 @@ li > input.choose-list {
         border: 1px solid white;
         text-align: center;
     }
+        .midterm-plannings .midterm-planning table td.target,
+        .midterm-plannings .midterm-planning table td.economic {
+            text-align:right;
+        }
 
     .midterm-plannings .midterm-planning table th:first-child a {
         position: absolute;
@@ -2939,7 +2943,7 @@ color: #3498db;
 .voyage-plan h3 {
     font-size: 14px;
 }
-.voyage-plan .row:first-child {
+.voyage-plan > .row:first-child {
        margin-left: -7%;
     margin-right: -5%;
 }
@@ -3020,4 +3024,347 @@ input.control-form.assumption-input {
     text-align:right;
     padding-right:5px;
     padding-left:5px;
+}
+
+/* ANGGA STYLE CSS */
+
+
+.midterm-plannings .midterm-planning table th {
+    background: none !important;
+}
+
+
+#economic-indicator-modal .modal-content {
+    width: 800px;
+}
+
+.relation-content {
+    border-bottom: 1px solid white;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+.relation-content .construction-desired-list {
+    list-style-type: none;
+    margin-left: -55px;
+}
+
+.relation-content .decommissioning-desired-list {
+    list-style-type: none;
+    margin-left: -55px;
+}
+
+.relation-content .decommissioning-desired-list input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.relation-content .operation-desired-list {
+    list-style-type: none;
+    margin-left: -55px;
+}
+
+.relation-content .operation-desired-list input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.relation-content .construction-desired-list input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.rgw-merah {
+    background: #CA1414;
+}
+
+.rgw-hijau {
+    background: #11BB65;
+}
+
+.rgw-aspal {
+    background: #34495e;
+}
+
+.rgw-biru {
+    background: #3498db;
+}
+
+.rgw-coklat {
+    background: #c0392b;
+}
+
+.rgw-orange {
+    background: #f39c12;
+}
+
+.rgw-badge-threat {
+    font-weight: bold;
+    font-size: 12px;
+    -webkit-box-shadow: -1px 7px 72px -2px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px 7px 72px -2px rgba(0,0,0,0.75);
+    box-shadow: -1px 7px 72px -2px rgba(0,0,0,0.75);
+    border-radius: 100%;
+      background: -webkit-radial-gradient(); /* Safari 5.1 to 6.0 */
+      background: -o-radial-gradient(); /* For Opera 11.6 to 12.0 */
+      background: -moz-radial-gradient(); /* For Firefox 3.6 to 15 */
+      background: linear-gradient(#e74c3c, #c0392b) !important; /* Standard syntax */
+}
+
+.rgw-badge-opportunity {
+    font-weight: bold;
+    font-size: 12px;
+    -webkit-box-shadow: -1px 7px 72px -2px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px 7px 72px -2px rgba(0,0,0,0.75);
+    box-shadow: -1px 7px 72px -2px rgba(0,0,0,0.75);
+    border-radius: 100%;
+      background: -webkit-radial-gradient(); /* Safari 5.1 to 6.0 */
+      background: -o-radial-gradient(); /* For Opera 11.6 to 12.0 */
+      background: -moz-radial-gradient(); /* For Firefox 3.6 to 15 */
+      background: linear-gradient(#2ecc71, #11BB65) !important; /* Standard syntax */
+}
+
+.rgw-badge-weakness {
+    font-weight: bold;
+    font-size: 11px;
+    width: 18px;
+    height: 18px;
+    -webkit-box-shadow: -1px 7px 72px -2px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px 7px 72px -2px rgba(0,0,0,0.75);
+    box-shadow: -1px 7px 72px -2px rgba(0,0,0,0.75);
+    padding-top: 1px;
+    border-radius: 100%;
+      background: -webkit-radial-gradient(); /* Safari 5.1 to 6.0 */
+      background: -o-radial-gradient(); /* For Opera 11.6 to 12.0 */
+      background: -moz-radial-gradient(); /* For Firefox 3.6 to 15 */
+      background: linear-gradient(#34495e, #2c3e50) !important; /* Standard syntax */
+}
+
+.rgw-badge-strength {
+    font-weight: bold;
+    font-size: 12px;
+    -webkit-box-shadow: -1px 7px 72px -2px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px 7px 72px -2px rgba(0,0,0,0.75);
+    box-shadow: -1px 7px 72px -2px rgba(0,0,0,0.75);
+    border-radius: 100%;
+      background: -webkit-radial-gradient(); /* Safari 5.1 to 6.0 */
+      background: -o-radial-gradient(); /* For Opera 11.6 to 12.0 */
+      background: -moz-radial-gradient(); /* For Firefox 3.6 to 15 */
+      background: linear-gradient(#3498db, #2980b9) !important; /* Standard syntax */
+}
+
+.rgw-badge-relation {
+    font-weight: bold;
+    font-size: 12px;
+    width: 20px;
+    -webkit-box-shadow: -1px 7px 72px -2px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px 7px 72px -2px rgba(0,0,0,0.75);
+    box-shadow: -1px 7px 72px -2px rgba(0,0,0,0.75);
+    height: 20px;
+    padding-top: 1px;
+    border-radius: 100%;
+      background: -webkit-radial-gradient(); /* Safari 5.1 to 6.0 */
+      background: -o-radial-gradient(); /* For Opera 11.6 to 12.0 */
+      background: -moz-radial-gradient(); /* For Firefox 3.6 to 15 */
+      background: linear-gradient(#f1c40f, #f39c12) !important; /* Standard syntax */
+}
+
+.row-environmental {
+    margin-bottom: -5px;
+    border-right: 1px solid white;
+    border-left: 1px solid white;
+    border-top: 1px solid white;
+    margin-top: 0px;
+}
+
+.row-uo {
+    margin-bottom: -5px;
+    border-right: 1px solid white;
+    border-left: 1px solid white;
+    border-top: 1px solid white;
+    border-radius: 10px 10px 0 0;
+}
+
+.btn-clear-rgw .fa {
+    color: #f1c40f;
+}
+
+.btn-done-rgw .fa {
+    color: #2ecc71;
+}
+
+
+.btn-cancel-rgw .fa {
+    color: #e74c3c;
+}
+
+.alert-success {
+    width: auto;
+    background: none;
+    border: 0;
+    color: #2ecc71;
+}
+
+.rgw-modal-large {
+    width: 800px;
+    margin-left: -100px;
+}
+
+.widget-menu {
+    background: none;
+    border: 1px solid;
+}
+
+.form-control {
+    width: auto;
+}
+
+.artifact-designer-btns {
+    margin-top: 0;
+}
+
+.btn-master-rgw {
+    background: none !important;
+    border: 1px solid white;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.economic-indicators-wrapper .economic-table > tbody > tr > td {
+    border-color: white;
+    color: white;
+}
+
+.economic-indicators-wrapper .economic-table > tbody > tr > th {
+    border-color: white;
+}
+
+.economic-indicators-wrapper .economic-table > tbody > tr > th:nth-child(2) {
+    border-left: 2px solid #E0E0E0;
+}
+
+.economic-indicators-wrapper .economic-table > tbody > tr > th:nth-child(3) {
+    border-left: 2px solid #E0E0E0;
+}
+
+.economic-indicators ul {
+    margin: 0;
+    margin-left: -40px;
+}
+
+    .economic-indicators ul li {
+        display: block;
+        color: white;
+    }
+
+        .economic-indicators ul li input[type="checkbox"]{
+            margin-right: 10px !important;
+        }
+
+.rgw-bpi-header {
+    width: 1080px;
+    margin-left: 30px;
+    border: 1px solid white;
+    border-radius: 10px 10px 0 0;
+}
+
+.rgw-bts-bawah-tbl {
+    border-radius: 0 0 10px 10px;
+    border: 1px solid white;
+    height: 15px;
+    margin-bottom: 20px;
+}
+
+.rgw-pop-tbl tbody tr td:nth-child(1){
+    text-align: center !important;
+}
+
+.rgw-pop-tbl tbody tr td {
+    vertical-align: text-top;
+}
+
+
+.rgw-tbl {
+    border-radius: 10px;
+}
+    
+    .rgw-tbl tr th:nth-child(1) {
+        border-radius: 10px 0 0 0;
+        border-left: 0;
+    }
+
+    .rgw-tbl tr th {
+        border-left: 1px solid white;
+    }
+
+    .rgw-tbl tr th:nth-child(10) {
+        border-radius: 0 10px 0 0;
+    }
+
+    .document-link.doc-type-pdf:before {
+     background-image: url(/content/images/pdf.png);
+    }
+
+
+
+.pop-attachments .row:first-child .remove-option {
+    /*visibility:hidden;*/
+}
+
+
+.document-link {
+    position:relative;
+    padding-left:25px;
+    display: inline-block;
+    word-break: break-all;
+}
+
+
+
+
+.document-link:before {
+       content: '';
+   
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: 0px 0;
+    position: absolute;
+    left: 0px;
+    top: -2px;
+}
+
+    .document-link.doc-type-pdf:before {
+     background-image: url(/content/images/pdf.png);
+    }
+
+   .document-link.doc-type-image:before {
+     background-image: url(/content/images/image.png);
+    }
+
+
+
+
+    .document-link.doc-type-excel:before {
+     background-image: url(/content/images/excel.png);
+    }
+    .document-link.doc-type-doc:before {
+     background-image: url(/content/images/doc.png);
+    }
+    .document-link.doc-type-ppt:before {
+     background-image: url(/content/images/ppt.png);
+    }
+
+
+
+
+ul.pop-attachments-list {
+    list-style:none;
+    padding:0;
+}
+    ul.pop-attachments-list li {
+        margin-bottom:10px;
+    }
+
+#popDashboard-table tbody tr:not(:first-child) td{
+    vertical-align:top;
 }

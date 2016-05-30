@@ -157,6 +157,10 @@ namespace DSLNG.PEAR.Services
                 .Include(x => x.BusinessPostureIdentification.Postures.Select(y => y.DesiredStates))
                 .Include(x => x.BusinessPostureIdentification.Postures.Select(y => y.PostureChallenges))
                 .Include(x => x.BusinessPostureIdentification.Postures.Select(y => y.PostureConstraints))
+                .Include(x => x.MidtermPhaseFormulation)
+                .Include(x => x.MidtermPhaseFormulation.MidtermPhaseFormulationStages)
+                .Include(x => x.MidtermPhaseFormulation.MidtermPhaseFormulationStages.Select(y => y.Descriptions))
+                .Include(x => x.MidtermPhaseFormulation.MidtermPhaseFormulationStages.Select(y => y.KeyDrivers))
                 .OrderByDescending(x => x.Id)
                 .FirstOrDefault(x => x.IsActive && x.BusinessPostureIdentification.IsApproved);
             if (planningBluePrint != null)
@@ -181,6 +185,7 @@ namespace DSLNG.PEAR.Services
                     var planningIndicatorIds = planningBluePrint.KeyOutput.Select(x => x.Id).ToArray();
                     response.EconomicIndicators = keyOutputs.Where(x => planningIndicatorIds.Contains(x.Id)).ToList().MapTo<GetVoyagePlanResponse.KeyOutputResponse>();
                 }
+                response.MidtermFormulationStages = planningBluePrint.MidtermPhaseFormulation.MidtermPhaseFormulationStages.MapTo<GetVoyagePlanResponse.MidtermFormulationStage>();
                 return response;
             }
             return null;

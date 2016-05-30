@@ -7,986 +7,1001 @@
 @Html.Partial("_MessageResponse")
 @* Environtments Scanning *@
 <div class="row">
-<div class="col-md-12 environment-scanning">
-    <div class="row-uo bp">
-        <h4>Ultimate Objective</h4>
-    </div>
-    <div class="env-scanning-wrapper">
-        <div class="row-margin-5 color-white">
-            <table class="table-bordered table">
-                <tr>
-                    <th style="width: 33.33%">Ultimate Objective (Construction Phase)
-                    </th>
-                    <th style="width: 33.33%">Ultimate Objective (Operation Phase)
-                    </th>
-                    <th style="width: 33.33%">Ultimate Objective (Decomm.Re-Invent Phase)
-                    </th>
-                </tr>
-                <tr>
-                    <td>
-                        <ul class="cp-list">
-                            @foreach (var item in Model.EnvironmentScanningHost.ConstructionPhase)
-                            {
-                                <li>@item.Description</li>
-                            }
-                        </ul>
-                    </td>
-                    <td>
-                        <ul class="op-list">
-                            @foreach (var item in Model.EnvironmentScanningHost.OperationPhase)
-                            {
-                                <li>@item.Description</li>
-                            }
-                        </ul>
-                    </td>
-                    <td>
-                        <ul class="rp-list">
-                            @foreach (var item in Model.EnvironmentScanningHost.ReinventPhase)
-                            {
-                                <li>@item.Description</li>
-
-                            }
-                        </ul>
-                    </td>
-                </tr>
-            </table>
+    <div class="col-md-12 environment-scanning">
+        <div class="row-uo bp">
+            <h4>Ultimate Objective</h4>
         </div>
-
-        <div class="row-constraint margin-style-1 border-style-1" style="background-color: darkred; position: relative; padding: 6px">
-            <h6>Constraint</h6>
-        </div>
-        <div class="row-margin-5 row-table-constrain">
-            <table class="table table-constraint table table-bordered">
-                <tr>
-                    <td class="td-definition"><b>Definiton</b> </td>
-                    <td class="td-entity"><b>Type</b></td>
-                    <td class="td-entity"><b>Category</b></td>
-                </tr>
-                @{foreach (var item in Model.EnvironmentScanningHost.Constraints)
-                  {
+        <div class="env-scanning-wrapper">
+            <div class="row-margin-5 color-white">
+                <table class="table-bordered table">
                     <tr>
-                        <td class="td-definition" style="text-align: left">@item.Definition</td>
-                        <td class="td-entity">@item.Type</td>
-                        <td class="td-entity">@item.Category</td>
+                        <th style="width: 33.33%">
+                            Ultimate Objective (Construction Phase)
+                        </th>
+                        <th style="width: 33.33%">
+                            Ultimate Objective (Operation Phase)
+                        </th>
+                        <th style="width: 33.33%">
+                            Ultimate Objective (Decomm.Re-Invent Phase)
+                        </th>
                     </tr>
-                  }
-
-                }
-
-            </table>
-        </div>
-
-        <div class="row-challenges margin-style-1 border-style-1" style="background-color: gold; position: relative; padding: 6px">
-            <h6>Challenges</h6>
-        </div>
-        <div class="row-margin-5 row-table-constrain">
-            <table class="table table-challenge table table-bordered">
-                <tr>
-
-                    <td class="td-definition"><b>Definiton</b> </td>
-                    <td class="td-entity"><b>Type</b></td>
-                    <td class="td-entity"><b>Category</b></td>
-                </tr>
-                @{foreach (var item in Model.EnvironmentScanningHost.Challenges)
-                  {
                     <tr>
-                        <td class="td-definition" style="text-align: left">@item.Definition </td>
-                        <td class="td-entity">@item.Type</td>
-                        <td class="td-entity">@item.Category</td>
+                        <td>
+                            <ul class="cp-list">
+                                @foreach (var item in Model.EnvironmentScanningHost.ConstructionPhase)
+                                {
+                                    <li>@item.Description</li>
+                                }
+                            </ul>
+                        </td>
+                        <td>
+                            <ul class="op-list">
+                                @foreach (var item in Model.EnvironmentScanningHost.OperationPhase)
+                                {
+                                    <li>@item.Description</li>
+                                }
+                            </ul>
+                        </td>
+                        <td>
+                            <ul class="rp-list">
+                                @foreach (var item in Model.EnvironmentScanningHost.ReinventPhase)
+                                {
+                                    <li>@item.Description</li>
+
+                                }
+                            </ul>
+                        </td>
                     </tr>
-                  }
+                </table>
+                <div style="margin: auto; margin-top: -20px; border-top: 0; margin-bottom: 20px; background: none;" class="row rgw-bts-bawah-tbl"></div>
 
-                }
-            </table>
-        </div>
-    </div>
-</div>
-    </div>
 
-@* Business Posture *@
 
-<div class="business-posture">
-    @*<h2>Business Posture Identification</h2>*@
-
-    <div class="row" style="margin-top:10px">
-        <div class="col-md-12">
-            <h4 style="background-color: rgba(0,176,240,1); width: 100%">Business Posture Identification</h4>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <table class="table-bordered table-desired-states">
-                <tr>
-                    <td class="list-block" style="width: 33.33%">
-                        <h4 style="background-color: #009933">Construction Posture</h4>
-                        <div class="sub-group">
-                            <h6 style="background-color: #336600">Desired States</h6>
-                            @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
-                            {
-                                <a href="#" data-toggle="popover" data-title="Add Desired State" data-posture-id="@Model.ConstructionPosture.Id" data-form-target="desired-state" class="popover-trigger"><i class="fa fa-plus"></i></a>
-                            }
-                        </div>
-                        <ul class="list-result construction-desired-list">
-                            @foreach (var item in Model.ConstructionPosture.DesiredStates)
-                            {
-                                <li data-id="@item.Id">
-                                    <span data-toggle="popover" data-form-target="desired-state" class="popover-edit-trigger">@item.Description</span>
-                                    @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
-                                    {
-                                        <a href="/BusinessPosture/DeleteDesiredState" class="remove-item"><i class="fa fa-minus"></i></a>
-                                    }
-                                </li>
-                            }
-                        </ul>
-                    </td>
-                    <td class="list-block" style="width: 33.33%">
-                        <h4 style="background-color: #009933">Operation Posture</h4>
-                        <div class="sub-group">
-                            <h6 style="background-color: #336600">Desired States</h6>
-                            @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
-                            {<a href="#" data-toggle="popover" data-title="Add Desired State" data-posture-id="@Model.OperationPosture.Id" data-form-target="desired-state" class="popover-trigger"><i class="fa fa-plus"></i></a>
-                            }
-                        </div>
-                        <ul class="list-result operation-desired-list">
-                            @foreach (var item in Model.OperationPosture.DesiredStates)
-                            {
-                                <li data-id="@item.Id">
-                                    <span data-toggle="popover" data-form-target="desired-state" class="popover-edit-trigger">@item.Description</span>
-                                    @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
-                                    {
-                                        <a href="/BusinessPosture/DeleteDesiredState" class="remove-item"><i class="fa fa-minus"></i></a>
-                                    }</li>
-                            }
-                        </ul>
-                    </td>
-                    <td class="list-block" style="width: 33.33%">
-                        <h4 style="background-color: #009933">Decommisssioning Posture</h4>
-                        <div class="sub-group">
-                            <h6 style="background-color: #336600">Desired States</h6>
-                            @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
-                            {
-                                <a href="#" data-toggle="popover" data-title="Add Desired State" data-posture-id="@Model.DecommissioningPosture.Id" data-form-target="desired-state" class="popover-trigger"><i class="fa fa-plus"></i></a>
-                            }
-                        </div>
-                        <ul class="list-result decommissioning-desired-list">
-                            @foreach (var item in Model.DecommissioningPosture.DesiredStates)
-                            {
-                                <li data-id="@item.Id">
-                                    <span data-toggle="popover" data-form-target="desired-state" class="popover-edit-trigger">@item.Description</span>
-                                    @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
-                                    {
-                                        <a href="/BusinessPosture/DeleteDesiredState" class="remove-item"><i class="fa fa-minus"></i></a>
-                                    }</li>
-                            }
-                        </ul>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <table class="table-bordered table-posture-challenge">
-                <tr>
-                    <td class="list-block" style="width: 33.33%">
-                        <div>
-                            <div class="sub-group">
-                                <h6 style="background-color: #e6e600">Posture Challenge</h6>
-                                @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
-                                {
-                                    <a href="#" data-toggle="popover" data-posture-type="construction" data-title="Add Desired State" data-posture="PostureChallenge" data-posture-id="@Model.ConstructionPosture.Id" data-form-target="posture-challenge" class="popover-trigger"><i class="fa fa-plus"></i></a>
-                                }
-                            </div>
-                        </div>
-                        <table class=" table list-result">
+                <div class="rgw-orange row row-uo row-constraint border-style-1" style="margin: auto; margin-top: 20px; margin-bottom: -5px; position:relative;padding:6px">
+                    <h6><strong>Constraint</strong></h6>
+                </div>
+                <div class="row-margin-5 row-table-constrain">
+                    <table class="table table-constraint table table-bordered">
+                        <tr>
+                            <td class="td-definition"><b>Definiton</b> </td>
+                            <td class="td-entity"><b>Type</b></td>
+                            <td class="td-entity"><b>Category</b></td>
+                        </tr>
+                        @{foreach (var item in Model.EnvironmentScanningHost.Constraints)
+                        {
                             <tr>
-                                <th style="width: 74px;">Relation</th>
-                                <th style="width: 320px">Definition</th>
-                                @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
-                                {
-                                    <th style="width: 30px;"></th>
-                                }
+                                <td class="td-definition" style="text-align: left">@item.Definition</td>
+                                <td class="td-entity">@item.Type</td>
+                                <td class="td-entity">@item.Category</td>
                             </tr>
-                            @foreach (var item in Model.ConstructionPosture.PostureChallenges)
-                            {
-                                <tr data-id="@item.Id">
-                                    <td>
-                                        <a href="#" data-id="@item.Id" data-toggle="modal" data-ids="@item.RelationIdsString" data-type="construction" data-target="#posture-modal" class="btn-posture-challenge">
-                                            @if (item.HasRelation == true)
-                                            {
-                                                <span>R</span>
-                                            }
-                                        </a>
+                        }
 
-                                    </td>
-                                    <td style="text-align: left"><span data-toggle="popover" class="popover-edit-trigger" data-form-target="posture-challenge">@item.Definition</span></td>
-                                    @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
-                                    {
-                                        <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureChallenge" class="remove-item"><i class="fa fa-minus"></i></a></td>
-                                    }
-                                </tr>
-                            }
-                        </table>
-                    </td>
-                    <td class="list-block" style="width: 33.33%">
-                        <div>
-                            <div class="sub-group">
-                                <h6 style="background-color: #e6e600">Posture Challenge</h6>
-                                @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
-                                {
-                                    <a href="#" data-toggle="popover" data-posture-type="operation" data-title="Add Desired State" data-posture="PostureChallenge" data-posture-id="@Model.OperationPosture.Id" data-form-target="posture-challenge" class="popover-trigger"><i class="fa fa-plus"></i></a>
-                                }
-                            </div>
-                        </div>
-                        <table class="table list-result">
-                            <tr>
-                                <th style="width: 74px;">Relation</th>
-                                <th style="width: 320px">Definition</th>
-                                @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
-                                {
-                                    <th style="width: 30px;"></th>
-                                }
-                            </tr>
-                            @foreach (var item in Model.OperationPosture.PostureChallenges)
-                            {
-                                <tr data-id="@item.Id">
-                                    <td>
-                                        <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" data-ids="@item.RelationIdsString" data-type="operation" class="btn-posture-challenge">
-                                            @if (item.HasRelation == true)
-                                            {
-                                                <span>R</span>
-                                            }
-                                        </a>
-                                    </td>
-                                    <td style="text-align: left"><span data-toggle="popover" class="popover-edit-trigger" data-form-target="posture-challenge">@item.Definition</span></td>
-                                    @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
-                                    {
-                                        <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureChallenge" class="remove-item"><i class="fa fa-minus"></i></a></td>
-                                    }
-                                </tr>
-                            }
-                        </table>
-                    </td>
-                    <td class="list-block" style="width: 33.33%">
-                        <div>
-                            <div class="sub-group">
-                                <h6 style="background-color: #e6e600">Posture Challenge</h6>
-                                @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
-                                {
-                                    <a href="#" data-toggle="popover" data-posture-type="decommissioning" data-title="Add Desired State" data-posture="PostureChallenge" data-posture-id="@Model.DecommissioningPosture.Id" data-form-target="posture-challenge" class="popover-trigger"><i class="fa fa-plus"></i></a>
-                                }
-                            </div>
-                        </div>
-                        <table class="table list-result">
-                            <tr>
-                                <th style="width: 74px;">Relation</th>
-                                <th style="width: 320px">Definition</th>
-                                @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
-                                {
-                                    <th style="width: 30px;"></th>
-                                }
-                            </tr>
-                            @foreach (var item in Model.DecommissioningPosture.PostureChallenges)
-                            {
-                                <tr data-id="@item.Id">
-                                    <td>
-                                        <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" data-ids="@item.RelationIdsString" data-type="decommissioning" class="btn-posture-challenge">
-                                            @if (item.HasRelation == true)
-                                            {
-                                                <span>R</span>
-                                            }
-                                        </a>
-                                    </td>
-                                    <td style="text-align: left"><span data-toggle="popover" class="popover-edit-trigger" data-form-target="posture-challenge">@item.Definition</span></td>
-                                    @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
-                                    {
-                                        <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureChallenge" class="remove-item"><i class="fa fa-minus"></i></a></td>
-                                    }
-                                </tr>
-                            }
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <table class="table-bordered table-posture-constraint">
-                <tr>
-                    <td class="list-block" style="width: 33.33%">
-                        <div>
-                            <div class="sub-group">
-                                <h6 style="background-color: #ff0000">Posture Constraint</h6>
-                                @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
-                                {
-                                    <a href="#" data-toggle="popover" data-posture-type="construction" data-title="Add Desired State" data-posture="PostureConstraint" data-posture-id="@Model.ConstructionPosture.Id" data-form-target="posture-constraint" class="popover-trigger"><i class="fa fa-plus"></i></a>
-                                }
-                            </div>
-                        </div>
-                        <table class="table list-result">
-                            <tr>
-                                <th style="width: 74px;">Relation</th>
-                                <th style="width: 320px">Definition</th>
-                                @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
-                                {
-                                    <th style="width: 30px;"></th>
-                                }
-                            </tr>
-                            @foreach (var item in Model.ConstructionPosture.PostureConstraints)
-                            {
-                                <tr data-id="@item.Id">
-                                    <td>
-                                        <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" data-ids="@item.RelationIdsString" data-type="construction" class="btn-posture-constraint">
-                                            @if (item.HasRelation == true)
-                                            {
-                                                <span>R</span>
-                                            }
-                                        </a>
+                        }
 
-                                    </td>
-                                    <td style="text-align: left"><span data-toggle="popover" class="popover-edit-trigger" data-form-target="posture-constraint">@item.Definition</span></td>
-                                    @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
-                                    {
-                                        <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureConstraint" class="remove-item"><i class="fa fa-minus"></i></a></td>
-                                    }
-                                </tr>
-                            }
-                        </table>
-                    </td>
-                    <td class="list-block" style="width: 33.33%">
-                        <div>
-                            <div class="sub-group">
-                                <h6 style="background-color: #ff0000">Posture Constraint</h6>
-                                @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
-                                {
-                                    <a href="#" data-toggle="popover" data-posture-type="operation" data-title="Add Desired State" data-posture="PostureConstraint" data-posture-id="@Model.OperationPosture.Id" data-form-target="posture-constraint" class="popover-trigger"><i class="fa fa-plus"></i></a>
-                                }
-                            </div>
-                        </div>
-                        <table class="table list-result">
-                            <tr>
-                                <th style="width: 74px;">Relation</th>
-                                <th style="width: 320px">Definition</th>
-                                @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
-                                {
-                                    <th style="width: 30px;"></th>
-                                }
-                            </tr>
-                            @foreach (var item in Model.OperationPosture.PostureConstraints)
-                            {
-                                <tr data-id="@item.Id">
-                                    <td>
-                                        <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" data-ids="@item.RelationIdsString" data-type="operation" class="btn-posture-constraint">
-                                            @if (item.HasRelation == true)
-                                            {
-                                                <span>R</span>
-                                            }
-                                        </a>
-                                    </td>
-                                    <td style="text-align: left"><span data-toggle="popover" class="popover-edit-trigger" data-form-target="posture-constraint">@item.Definition</span></td>
-                                    @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
-                                    {
-                                        <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureConstraint" class="remove-item"><i class="fa fa-minus"></i></a></td>
-                                    }
-                                </tr>
-                            }
-                        </table>
-                    </td>
-                    <td class="list-block" style="width: 33.33%">
-                        <div>
-                            <div class="sub-group">
-                                <h6 style="background-color: #ff0000">Posture Constraint</h6>
-                                @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
-                                {
-                                    <a href="#" data-toggle="popover" data-posture-type="decommissioning" data-title="Add Desired State" data-posture="PostureConstraint" data-posture-id="@Model.DecommissioningPosture.Id" data-form-target="posture-constraint" class="popover-trigger"><i class="fa fa-plus"></i></a>
-                                }
-                            </div>
-                        </div>
-                        <table class="table list-result">
-                            <tr>
-                                <th style="width: 74px;">Relation</th>
-                                <th style="width: 320px">Definition</th>
-                                @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
-                                {
-                                    <th style="width: 30px;"></th>
-                                }
-                            </tr>
-                            @foreach (var item in Model.DecommissioningPosture.PostureConstraints)
-                            {
-                                <tr data-id="@item.Id">
-                                    <td>
-                                        <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" data-ids="@item.RelationIdsString" data-type="decommissioning" class="btn-posture-constraint">
-                                            @if (item.HasRelation == true)
-                                            {
-                                                <span>R</span>
-                                            }
-                                        </a>
-                                    </td>
-                                    <td style="text-align: left"><span data-toggle="popover" class="popover-edit-trigger" data-form-target="posture-constraint">@item.Definition</span></td>
-                                    @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
-                                    {
-                                        <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureConstraint" class="remove-item"><i class="fa fa-minus"></i></a></td>
-                                    }
-                                </tr>
-                            }
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 artifact-designer-btns">
-            @if (!Model.IsReviewer)
-            {
-                <a href="@Url.Action("Index", "PlanningBlueprint")" class="btn btn-primary btn-lg"><span class="fa fa-arrow-left"></span>Back To List</a>
-            }
-            else
-            {
-                <a href="@Url.Action("ESReview", "PlanningBlueprint", new { id = Model.PlanningBlueprintId })" class="btn btn-primary btn-lg"><span class="fa fa-arrow-left"></span>Back</a>
-            }
-            @if (!Model.IsReviewer)
-            {
-                 <a href="@Url.Action("EnvironmentsScanning", "PlanningBlueprint", new { id = Model.PlanningBlueprintId })" class="btn btn-primary btn-lg"><span class="fa fa-arrow-left"></span>Back To ES</a>
-                if(!Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected){
-                using (Html.BeginForm("SubmitBusinessPosture", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
-                {
-                @Html.Hidden("Id", Model.Id)
-                <button type="submit" class="btn btn-primary btn-lg submit-all-bp"><span class="fa fa-floppy-o"></span> Submit</button>
-                }
-                }
-            }
-            else
-            {
-                if(Model.IsBeingReviewed){
-                using (Html.BeginForm("ApproveVoyagePlan", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
-                {
-                @Html.Hidden("Id", Model.PlanningBlueprintId)
-                <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Approve</button>
-                }
-                <button type="button" data-toggle="modal" data-target="#reject-modal" class="btn btn-primary btn-lg btn-reject"><span class="fa fa-hand-stop-o"></span> Reject</button>
-            }
-            }
-        </div>
-    </div>
-</div>
-<div class="desired-state-form popover-to-content">
-    <form action="/BusinessPosture/AddDesiredState">
-        <input type="hidden" name="Id" />
-        <input type="hidden" name="PostureId" />
-        <div class="row">
-            <div class="col-md-12">
-                <label>Description</label>
-                <textarea name="Description" cols="25" rows="5" required="required"></textarea>
-            </div>
-            <div class="col-md-12">
-                <button type="button" class="btn btn-primary add-item">Add</button>
-                <button type="button" class="btn btn-primary cancel-popover">Cancel</button>
-            </div>
-        </div>
-    </form>
-</div>
-<div class="posture-challenge-form popover-to-content">
-    <form action="/BusinessPosture/AddPostureChallenge">
-        <input type="hidden" name="Id" />
-        <input type="hidden" name="PostureId" />
-        <input type="hidden" name="PostureType" />
-        <input type="hidden" name="Type" />
-        <div class="relation-ids-wrapper"></div>
-        <div class="row">
-            <div class="col-md-12">
-                <button type="button" class="btn btn-info choose-relation" data-toggle="modal" data-target="#modalDialog">Choose Desired States</button>
-            </div>
-            <div class="col-md-12">
-                <label>Definition</label>
-                <textarea name="Definition" cols="25" rows="5" required="required"></textarea>
-            </div>
-            <div class="col-md-12">
-                <button type="button" class="btn btn-primary add-item">Add</button>
-                <button type="button" class="btn btn-primary cancel-popover">Cancel</button>
-            </div>
-        </div>
-    </form>
-</div>
+                    </table>
+                </div>
 
-<div class="posture-constraint-form popover-to-content">
-    <form action="/BusinessPosture/AddPostureConstraint">
-        <input type="hidden" name="Id" />
-        <input type="hidden" name="PostureId" />
-        <input type="hidden" name="PostureType" />
-        <input type="hidden" name="Type" />
-        <div class="relation-ids-wrapper"></div>
-        <div class="row">
-            <div class="col-md-12">
-                <button type="button" class="btn btn-info choose-relation" data-toggle="modal" data-target="#modalDialog">Choose Desired States</button>
-            </div>
-            <div class="col-md-12">
-                <label>Definition</label>
-                <textarea name="Definition" cols="25" rows="5" required="required"></textarea>
-            </div>
-            <div class="col-md-12">
-                <button type="button" class="btn btn-primary add-item">Add</button>
-                <button type="button" class="btn btn-primary cancel-popover">Cancel</button>
-            </div>
-        </div>
-    </form>
-</div>
+                <div class="rgw-orange row row-challenges border-style-1" style="margin: auto; margin-top: -20px; margin-bottom: -5px; border: 1px solid white; position: relative; padding: 6px;">
+                    <h6><strong>Challenges</strong></h6>
+                </div>
+                <div class="row-margin-5 row-table-constrain">
+                    <table class="table table-challenge table table-bordered">
+                        <tr>
 
-<!-- Modal -->
-<div class="modal fade bs-example-modal-lg" id="modalDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close finish-relation" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <div class="row modal-header-detail">
-                    <div class="title">Choose Relation : Desired States</div>
+                            <td class="td-definition"><b>Definiton</b> </td>
+                            <td class="td-entity"><b>Type</b></td>
+                            <td class="td-entity"><b>Category</b></td>
+                        </tr>
+                        @{foreach (var item in Model.EnvironmentScanningHost.Challenges)
+                        {
+                            <tr>
+                                <td class="td-definition" style="text-align: left">@item.Definition </td>
+                                <td class="td-entity">@item.Type</td>
+                                <td class="td-entity">@item.Category</td>
+                            </tr>
+                        }
+
+                        }
+                    </table>
                 </div>
             </div>
-            <div class="modal-body color-white">
-                <div class="relation-content"></div>
-                <button type="button" class="btn btn-primary finish-relation" data-dismiss="modal" aria-label="Close">Submit</button>
+        </div>
+        <div style="margin: auto; margin-top: -20px; border-top: 0; margin-bottom: 20px; background: none;" class="row rgw-bts-bawah-tbl"></div>
+    </div>
+
+    @* Business Posture *@
+
+    <div class="col-md-12 business-posture">
+        @*<h2>Business Posture Identification</h2>*@
+
+        <div style="margin-top:10px">
+
+            <div style="margin-bottom: -10px; padding-bottom: 10px; background-color: #CA1414;" class="row-uo">
+
+                <h6><strong>Business Posture Identification</strong></h6>
             </div>
         </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
-@* Modal Posture *@
-<div class="modal fade" id="posture-modal" data-id="id">
-    <div class="modal-dialog">
-        <div class="modal-content">
 
-            <div class="modal-header">
-                <button type="button" class="close btn-finish-relation" data-dismiss="modal">&times;</button>
-                <h3 class="modal-title">Relation</h3>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table-bordered table-desired-states">
+                    <tr>
+                        <td class="list-block" style="width: 33.33%">
+                            <h4 style="background: #36BA45; ">Construction Posture</h4>
+                            <div class="sub-group">
+                                <h6 style="border-bottom: 1px solid white; background-color: #002619;">Desired States</h6>
+                                @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed)
+                                {
+                                    <a href="#" data-toggle="popover" data-title="Add Desired State" data-posture-id="@Model.ConstructionPosture.Id" data-form-target="desired-state" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                                }
+                            </div>
+                            <ul class="list-result construction-desired-list">
+                                @foreach (var item in Model.ConstructionPosture.DesiredStates)
+                                {
+                                    <li data-id="@item.Id">
+                                        <span data-toggle="popover" data-form-target="desired-state" class="popover-edit-trigger">@item.Description</span>
+                                        @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed)
+                                        {
+                                            <a href="/BusinessPosture/DeleteDesiredState" class="remove-item"><i class="fa fa-minus"></i></a>
+                                        }
+                                    </li>
+                                }
+                            </ul>
+                        </td>
+                        <td class="list-block" style="width: 33.33%">
+                            <h4 style="background: #147534;">Operation Posture</h4>
+                            <div class="sub-group">
+                                <h6 style="border-bottom: 1px solid white; background-color: #002619;">Desired States</h6>
+                                @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed)
+                                {<a href="#" data-toggle="popover" data-title="Add Desired State" data-posture-id="@Model.OperationPosture.Id" data-form-target="desired-state" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                                }
+                            </div>
+                            <ul class="list-result operation-desired-list">
+                                @foreach (var item in Model.OperationPosture.DesiredStates)
+                                {
+                                    <li data-id="@item.Id">
+                                        <span data-toggle="popover" data-form-target="desired-state" class="popover-edit-trigger">@item.Description</span>
+                                        @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed)
+                                        {
+                                            <a href="/BusinessPosture/DeleteDesiredState" class="remove-item"><i class="fa fa-minus"></i></a>
+                                        }
+                                    </li>
+                                }
+                            </ul>
+                        </td>
+                        <td class="list-block" style="width: 33.33%">
+                            <h4 style="background: #034525;">Decommisssioning Posture</h4>
+                            <div class="sub-group">
+                                <h6 style="border-bottom: 1px solid white; background-color: #002619;">Desired States</h6>
+                                @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed)
+                                {
+                                    <a href="#" data-toggle="popover" data-title="Add Desired State" data-posture-id="@Model.DecommissioningPosture.Id" data-form-target="desired-state" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                                }
+                            </div>
+                            <ul class="list-result decommissioning-desired-list">
+                                @foreach (var item in Model.DecommissioningPosture.DesiredStates)
+                                {
+                                    <li data-id="@item.Id">
+                                        <span data-toggle="popover" data-form-target="desired-state" class="popover-edit-trigger">@item.Description</span>
+                                        @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed)
+                                        {
+                                            <a href="/BusinessPosture/DeleteDesiredState" class="remove-item"><i class="fa fa-minus"></i></a>
+                                        }
+                                    </li>
+                                }
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
             </div>
+        </div>
 
-            <div class="modal-body modal-posture">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table-bordered table-posture-challenge">
+                    <tr>
+                        <td class="list-block" style="width: 33.33%">
+                            <div>
+                                <div class="sub-group">
+                                    <h6 class="rgw-orange"><strong>Posture Challenge</strong></h6>
+                                    @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed)
+                                    {
+                                        <a href="#" data-toggle="popover" data-posture-type="construction" data-title="Add Desired State" data-posture="PostureChallenge" data-posture-id="@Model.ConstructionPosture.Id" data-form-target="posture-challenge" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                                    }
+                                </div>
+                            </div>
+                            <table class=" table list-result">
+                                <tr>
+                                    <th style="border-right: 1px solid white; background-color: #d35400; width: 74px;">Relation</th>
+                                    <th style="background-color: #d35400; width: 320px; ">Definition</th>
+                                    @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed)
+                                    {
+                                        <th style="background-color: #d35400; width: 30px; "></th>
+                                    }
+                                </tr>
+                                @foreach (var item in Model.ConstructionPosture.PostureChallenges)
+                                {
+                                    <tr data-id="@item.Id">
+                                        <td style="border: 0;">
+                                            <a href="#" data-id="@item.Id" data-toggle="modal" data-ids="@item.RelationIdsString" data-type="construction" data-target="#posture-modal" class="btn-posture-challenge">
+                                                @if (item.HasRelation == true)
+                                                {
+                                                    <span class="rgw-badge-relation">R</span>
+                                                }
+                                            </a>
+
+                                        </td>
+                                        <td style="border: 0; text-align: left"><span data-toggle="popover" class="popover-edit-trigger" data-form-target="posture-challenge">@item.Definition</span></td>
+                                                                                @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed)
+                                        {
+                                            <td style="border: 0;" data-id=" @item.Id "><a href=" />BusinessPosture/DeletePostureChallenge" class="remove-item"><i class="fa fa-minus"></i></a></td>
+                                        }
+                                    </tr>
+                                }
+                            </table>
+                        </td>
+                        <td class="list-block" style="width: 33.33%">
+                            <div>
+                                <div class="sub-group">
+                                    <h6 class="rgw-orange"><strong>Posture Challenge</strong></h6>
+                                    @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed)
+                                    {
+                                        <a href="#" data-toggle="popover" data-posture-type="operation" data-title="Add Desired State" data-posture="PostureChallenge" data-posture-id="@Model.OperationPosture.Id" data-form-target="posture-challenge" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                                    }
+                                </div>
+                            </div>
+                            <table class="table list-result">
+                                <tr>
+                                    <th style="border-right: 1px solid white; background-color: #d35400; width: 74px;">Relation</th>
+                                    <th style="background-color: #d35400; width: 320px">Definition</th>
+                                    @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed)
+                                    {
+                                        <th style="background-color: #d35400; width: 30px;"></th>
+                                    }
+                                </tr>
+                                @foreach (var item in Model.OperationPosture.PostureChallenges)
+                                {
+                                    <tr data-id="@item.Id">
+                                        <td style="border: 0;">
+                                            <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" data-ids="@item.RelationIdsString" data-type="operation" class="btn-posture-challenge">
+                                                @if (item.HasRelation == true)
+                                                {
+                                                    <span class="rgw-badge-relation">R</span>
+                                                }
+                                            </a>
+                                        </td>
+                                        <td style="border: 0; text-align: left"><span data-toggle="popover" class="popover-edit-trigger" data-form-target="posture-challenge">@item.Definition</span></td>
+                                                                                @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed)
+                                        {
+                                            <td style="border: 0;" data-id=" @item.Id "><a href=" />BusinessPosture/DeletePostureChallenge" class="remove-item"><i class="fa fa-minus"></i></a></td>
+                                        }
+                                    </tr>
+                                }
+                            </table>
+                        </td>
+                        <td class="list-block" style="width: 33.33%">
+                            <div>
+                                <div class="sub-group">
+                                    <h6 class="rgw-orange"><strong>Posture Challenge</strong></h6>
+                                    @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed)
+                                    {
+                                        <a href="#" data-toggle="popover" data-posture-type="decommissioning" data-title="Add Desired State" data-posture="PostureChallenge" data-posture-id="@Model.DecommissioningPosture.Id" data-form-target="posture-challenge" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                                    }
+                                </div>
+                            </div>
+                            <table class="table list-result">
+                                <tr>
+                                    <th style="border-right: 1px solid white; background-color: #d35400; width: 74px;">Relation</th>
+                                    <th style="background-color: #d35400; width: 320px">Definition</th>
+                                    @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed)
+                                    {
+                                        <th style="background-color: #d35400; width: 30px;"></th>
+                                    }
+                                </tr>
+                                @foreach (var item in Model.DecommissioningPosture.PostureChallenges)
+                                {
+                                    <tr data-id="@item.Id">
+                                        <td style="border: 0;">
+                                            <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" data-ids="@item.RelationIdsString" data-type="decommissioning" class="btn-posture-challenge">
+                                                @if (item.HasRelation == true)
+                                                {
+                                                    <span class="rgw-badge-relation">R</span>
+                                                }
+                                            </a>
+                                        </td>
+                                        <td style="border: 0; text-align: left"><span data-toggle="popover" class="popover-edit-trigger" data-form-target="posture-challenge">@item.Definition</span></td>
+                                                                                @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed)
+                                        {
+                                            <td style="border: 0;" data-id=" @item.Id "><a href=" />BusinessPosture/DeletePostureChallenge" class="remove-item"><i class="fa fa-minus"></i></a></td>
+                                        }
+                                    </tr>
+                                }
+                            </table>
+                        </td>
+                    </tr>
+                </table>
             </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table-bordered table-posture-constraint">
+                    <tr>
+                        <td class="list-block" style="width: 33.33%">
+                            <div>
+                                <div class="sub-group">
+                                    <h6 class="rgw-merah"><strong>Posture Constraint</strong></h6>
+                                    @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed)
+                                    {
+                                        <a href="#" data-toggle="popover" data-posture-type="construction" data-title="Add Desired State" data-posture="PostureConstraint" data-posture-id="@Model.ConstructionPosture.Id" data-form-target="posture-constraint" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                                    }
+                                </div>
+                            </div>
+                            <table class="table list-result">
+                                <tr>
+                                    <th style="border-right: 1px solid white; background-color: #B11212; width: 74px; ">Relation</th>
+                                    <th style="background-color: #B11212; width: 320px">Definition</th>
+                                    @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed)
+                                    {
+                                        <th style="background-color: #B11212; width: 30px;"></th>
+                                    }
+                                </tr>
+                                @foreach (var item in Model.ConstructionPosture.PostureConstraints)
+                                {
+                                    <tr data-id="@item.Id">
+                                        <td style="border: 0;">
+                                            <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" data-ids="@item.RelationIdsString" data-type="construction" class="btn-posture-constraint">
+                                                @if (item.HasRelation == true)
+                                                {
+                                                    <span class="rgw-badge-relation">R</span>
+                                                }
+                                            </a>
 
-            <div class="modal-footer">
+                                        </td>
+                                        <td style="border: 0; text-align: left"><span data-toggle="popover" class="popover-edit-trigger" data-form-target="posture-constraint">@item.Definition</span></td>
+                                        @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed)
+                                        {
+                                            <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureConstraint" class="remove-item"><i class="fa fa-minus"></i></a></td>
+                                        }
+                                    </tr>
+                                }
+                            </table>
+                        </td>
+                        <td class="list-block" style="width: 33.33%">
+                            <div>
+                                <div class="sub-group">
+                                    <h6 class="rgw-merah"><strong>Posture Constraint</strong></h6>
+                                    @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed)
+                                    {
+                                        <a href="#" data-toggle="popover" data-posture-type="operation" data-title="Add Desired State" data-posture="PostureConstraint" data-posture-id="@Model.OperationPosture.Id" data-form-target="posture-constraint" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                                    }
+                                </div>
+                            </div>
+                            <table class="table list-result">
+                                <tr>
+                                    <th style="border-right: 1px solid white; background-color: #B11212; width: 74px;">Relation</th>
+                                    <th style="background-color: #B11212; width: 320px">Definition</th>
+                                    @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed)
+                                    {
+                                        <th style="background-color: #B11212; width: 30px;"></th>
+                                    }
+                                </tr>
+                                @foreach (var item in Model.OperationPosture.PostureConstraints)
+                                {
+                                    <tr data-id="@item.Id">
+                                        <td style="border: 0;">
+                                            <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" data-ids="@item.RelationIdsString" data-type="operation" class="btn-posture-constraint">
+                                                @if (item.HasRelation == true)
+                                                {
+                                                    <span class="rgw-badge-relation">R</span>
+                                                }
+                                            </a>
+                                        </td>
+                                        <td style="border: 0; text-align: left"><span data-toggle="popover" class="popover-edit-trigger" data-form-target="posture-constraint">@item.Definition</span></td>
+                                        @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed)
+                                        {
+                                            <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureConstraint" class="remove-item"><i class="fa fa-minus"></i></a></td>
+                                        }
+                                    </tr>
+                                }
+                            </table>
+                        </td>
+                        <td class="list-block" style="width: 33.33%">
+                            <div>
+                                <div class="sub-group">
+                                    <h6 class="rgw-merah"><strong>Posture Constraint</strong></h6>
+                                    @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed)
+                                    {
+                                        <a href="#" data-toggle="popover" data-posture-type="decommissioning" data-title="Add Desired State" data-posture="PostureConstraint" data-posture-id="@Model.DecommissioningPosture.Id" data-form-target="posture-constraint" class="popover-trigger"><i class="fa fa-plus"></i></a>
+                                    }
+                                </div>
+                            </div>
+                            <table class="table list-result">
+                                <tr>
+                                    <th style="border-right: 1px solid white; background-color: #B11212; width: 74px;">Relation</th>
+                                    <th style="background-color: #B11212; width: 320px">Definition</th>
+                                    @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed)
+                                    {
+                                        <th style="background-color: #B11212; width: 30px;"></th>
+                                    }
+                                </tr>
+                                @foreach (var item in Model.DecommissioningPosture.PostureConstraints)
+                                {
+                                    <tr data-id="@item.Id">
+                                        <td style="border: 0;">
+                                            <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#posture-modal" data-ids="@item.RelationIdsString" data-type="decommissioning" class="btn-posture-constraint">
+                                                @if (item.HasRelation == true)
+                                                {
+                                                    <span class="rgw-badge-relation">R</span>
+                                                }
+                                            </a>
+                                        </td>
+                                        <td style="border: 0; text-align: left"><span data-toggle="popover" class="popover-edit-trigger" data-form-target="posture-constraint">@item.Definition</span></td>
+                                        @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed)
+                                        {
+                                            <td data-id="@item.Id"><a href="/BusinessPosture/DeletePostureConstraint" class="remove-item"><i class="fa fa-minus"></i></a></td>
+                                        }
+                                    </tr>
+                                }
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div style="margin: auto; border-top: 0; background: none; " class="row rgw-bts-bawah-tbl"></div>
+        <div class="row">
+            <div style="border-top: 0;" class="col-md-12 artifact-designer-btns">
+                @if (!Model.IsReviewer)
+                {
+                    <a href="@Url.Action("Index", "PlanningBlueprint")" class="btn-master-rgw btn btn-primary btn-lg"><span class="fa fa-arrow-left"></span>Back To List</a>
+                }
+                else
+                {
+                    <a href="@Url.Action("ESReview", "PlanningBlueprint", new { id = Model.PlanningBlueprintId })" class="btn-master-rgw btn btn-primary btn-lg"><span class="fa fa-arrow-left"></span>Back To ES</a>
+                }
+                @if (!Model.IsReviewer)
+                {
+                    <a href="@Url.Action("EnvironmentsScanning", "PlanningBlueprint", new { id = Model.PlanningBlueprintId })" class="btn-master-rgw btn btn-primary btn-lg"><span class="fa fa-arrow-left"></span>Back To ES</a>
+                    if (!Model.IsApproved && !Model.IsBeingReviewed)
+                    {
+                        using (Html.BeginForm("SubmitBusinessPosture", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
+                        {
+                            @Html.Hidden("Id", Model.Id)
+                            <button type="submit" class="btn-master-rgw btn-done-rgw btn btn-primary btn-lg submit-all-bp"><span class="fa fa-check"></span> Submit</button>
+                        }
+                    }
+                }
+                else
+                {
+                    if (Model.IsBeingReviewed)
+                    {
+                        using (Html.BeginForm("ApproveVoyagePlan", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
+                        {
+                            @Html.Hidden("Id", Model.PlanningBlueprintId)
+                            <button type="submit" class="btn-done-rgw btn-master-rgw btn btn-primary btn-lg"><span class="fa fa-check"></span> Approve</button>
+                        }
+                        <button type="button" data-toggle="modal" data-target="#reject-modal" class="btn-cancel-rgw btn-master-rgw btn btn-primary btn-lg btn-reject"><span class="fa fa-remove"></span> Reject</button>
+                    }
+                }
+                <span style="border-radius: 5px; padding: 5px 10px 5px 10px; border:1px solid white; color: white;">Next Midterm Phase Formulation</span>
             </div>
         </div>
     </div>
-</div>
-<div class="modal fade" id="reject-modal" data-id="id">
-    <div class="modal-dialog">
+    <div class="desired-state-form popover-to-content">
+        <form action="/BusinessPosture/AddDesiredState">
+            <input type="hidden" name="Id" />
+            <input type="hidden" name="PostureId" />
+            <div class="row">
+                <div class="col-md-12">
+                    <label>Description</label>
+                    <textarea name="Description" cols="25" rows="5" required="required"></textarea>
+                </div>
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-primary add-item">Add</button>
+                    <button type="button" class="btn btn-primary cancel-popover">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="posture-challenge-form popover-to-content">
+        <form action="/BusinessPosture/AddPostureChallenge">
+            <input type="hidden" name="Id" />
+            <input type="hidden" name="PostureId" />
+            <input type="hidden" name="PostureType" />
+            <input type="hidden" name="Type" />
+            <div class="relation-ids-wrapper"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-info choose-relation" data-toggle="modal" data-target="#modalDialog">Choose Desired States</button>
+                </div>
+                <div class="col-md-12">
+                    <label>Definition</label>
+                    <textarea name="Definition" cols="25" rows="5" required="required"></textarea>
+                </div>
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-primary add-item">Add</button>
+                    <button type="button" class="btn btn-primary cancel-popover">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
 
-        <div class="modal-content">
-            @using (Html.BeginForm("RejectVoyagePlan", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
-            {
+    <div class="posture-constraint-form popover-to-content">
+        <form action="/BusinessPosture/AddPostureConstraint">
+            <input type="hidden" name="Id" />
+            <input type="hidden" name="PostureId" />
+            <input type="hidden" name="PostureType" />
+            <input type="hidden" name="Type" />
+            <div class="relation-ids-wrapper"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-info choose-relation" data-toggle="modal" data-target="#modalDialog">Choose Desired States</button>
+                </div>
+                <div class="col-md-12">
+                    <label>Definition</label>
+                    <textarea name="Definition" cols="25" rows="5" required="required"></textarea>
+                </div>
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-primary add-item">Add</button>
+                    <button type="button" class="btn btn-primary cancel-popover">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade bs-example-modal-lg" id="modalDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close finish-relation" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <div class="row modal-header-detail">
+                        <div class="title">Choose Relation : Desired States</div>
+                    </div>
+                </div>
+                <div class="modal-body color-white">
+                    <div class="relation-content"></div>
+                    <button style="color: white;" type="button" class="btn-master-rgw btn btn-primary finish-relation" data-dismiss="modal" aria-label="Close">Submit</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    @* Modal Posture *@
+    <div class="modal fade" id="posture-modal" data-id="id">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
                 <div class="modal-header">
                     <button type="button" class="close btn-finish-relation" data-dismiss="modal">&times;</button>
-                    <h3 class="modal-title">Notes</h3>
+                    <h3 class="modal-title">Relation</h3>
                 </div>
-                <div class="modal-body">
-                    @Html.Hidden("PlanningBlueprintId", Model.PlanningBlueprintId)
-                    <textarea rows="5" style="width: 100%" name="Notes"></textarea>
+
+                <div class="modal-body modal-posture">
                 </div>
+
                 <div class="modal-footer">
-                    <input type="submit" class="btn btn-primary" value="Submit" />
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
                 </div>
-            }
+            </div>
         </div>
     </div>
-</div>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $(document).on('click', '.row-uo.bp', function (e) {
-            e.preventDefault();
-            var $this = $(this);
-            //if ($this.hasClass('collapsed')) {
-            //    $('.env-scanning-wrapper').removeClass('collapsed');
-            //    $this.removeClass('collapsed');
-            //} else {
-            //    $('.env-scanning-wrapper').addClass('collapsed');
-            //    $this.addClass('collapsed');
-            //}
-            if ($this.hasClass('collapsed')) {
-                $this.removeClass('collapsed');
-            } else {
-                $this.addClass('collapsed');
-            }
-            $('.env-scanning-wrapper').slideToggle(500, function () {
-             
-            });
-        });
-        $(document).on('click', '.cancel-popover', function (e) {
-            e.preventDefault();
-            $('.popover').popover('hide');
-        });
+    <div class="modal fade" id="reject-modal" data-id="id">
+        <div class="modal-dialog">
 
-        $('body').popover({
-            selector: '.popover-trigger',
-            html: true,
-            placement: 'left',
-            title: function () {
-                return $(this).data('title');
-            },
-            content: function () {
-                return $('.' + $(this).data('form-target') + '-form').html();
-            }
-        });
-         @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed && !Model.IsRejected)
+            <div class="modal-content">
+                @using (Html.BeginForm("RejectVoyagePlan", "PlanningBlueprint", FormMethod.Post, new { style = "display:inline" }))
+                {
+                    <div class="modal-header">
+                        <button type="button" class="close btn-finish-relation" data-dismiss="modal">&times;</button>
+                        <h3 class="modal-title">Notes</h3>
+                    </div>
+                    <div class="modal-body">
+                        @Html.Hidden("PlanningBlueprintId", Model.PlanningBlueprintId)
+                        <textarea rows="5" style="width: 100%" name="Notes"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn-master-rgw btn btn-primary" value="Submit" />
+                        <button type="button" class="btn-master-rgw btn btn-primary" data-dismiss="modal">Cancel</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(document).on('click', '.row-uo.bp', function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                //if ($this.hasClass('collapsed')) {
+                //    $('.env-scanning-wrapper').removeClass('collapsed');
+                //    $this.removeClass('collapsed');
+                //} else {
+                //    $('.env-scanning-wrapper').addClass('collapsed');
+                //    $this.addClass('collapsed');
+                //}
+                if ($this.hasClass('collapsed')) {
+                    $this.removeClass('collapsed');
+                } else {
+                    $this.addClass('collapsed');
+                }
+                $('.env-scanning-wrapper').slideToggle(500, function () {
+
+                });
+            });
+            $(document).on('click', '.cancel-popover', function (e) {
+                e.preventDefault();
+                $('.popover').popover('hide');
+            });
+
+            $('body').popover({
+                selector: '.popover-trigger',
+                html: true,
+                placement: 'left',
+                title: function () {
+                    return $(this).data('title');
+                },
+                content: function () {
+                    return $('.' + $(this).data('form-target') + '-form').html();
+                }
+            });
+            @if (!Model.IsReviewer && !Model.IsApproved && !Model.IsBeingReviewed )
                     {
              <text>
-        $('.list-result').popover({
-            selector: '.popover-edit-trigger',
-            html: true,
-            placement: 'top',
-            title: function () {
-                return $(this).data('title');
-            },
-            content: function () {
-                var $this = $(this);
-                var formTarget = $this.data('form-target');
-                var $form = $('.' + formTarget + '-form').clone(true);
-                var $listBlock = $this.closest('.list-block');
-                $form.find('input[name="PostureId"]').val($listBlock.find('.popover-trigger').data('posture-id'));
-                if (formTarget == 'desired-state') {
-                    $form.find('input[name="Id"]').val($this.closest('li').data('id'));
-                } else {
-                    $form.find('input[name="Id"]').val($this.closest('tr').data('id'));
-                }
-                $form.find('textarea').html($this.html().trim().replace(/<[^>]*>/g, ""));
+            $('.list-result').popover({
+                selector: '.popover-edit-trigger',
+                html: true,
+                placement: 'top',
+                title: function () {
+                    return $(this).data('title');
+                },
+                content: function () {
+                    var $this = $(this);
+                    var formTarget = $this.data('form-target');
+                    var $form = $('.' + formTarget + '-form').clone(true);
+                    var $listBlock = $this.closest('.list-block');
+                    $form.find('input[name="PostureId"]').val($listBlock.find('.popover-trigger').data('posture-id'));
+                    if (formTarget == 'desired-state') {
+                        $form.find('input[name="Id"]').val($this.closest('li').data('id'));
+                    } else {
+                        $form.find('input[name="Id"]').val($this.closest('tr').data('id'));
+                    }
+                    $form.find('textarea').html($this.html().trim().replace(/<[^>]*>/g, ""));
 
-                //challenge or constraint
+                    //challenge or constraint
+                    $form.find('input[name="PostureType"]').val($listBlock.find('.popover-trigger').data('posture'));
+                    var type = $listBlock.find('.popover-trigger').data('posture-type');
+
+                    $form.find('.add-item').removeClass('add-item').addClass('edit-item').html('Save');
+                    return $form.html();
+                }
+            });
+            $(document).on('click', '.edit-item', function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var $form = $this.closest('form');
+                var $trigger = $this.closest('.popover').prev();
+                var $listBlock = $this.closest('.list-block');
+                var type = $listBlock.find('.popover-trigger').data('posture-type');
+                $.post($form.prop('action'), $form.serialize(), function (data) {
+                    if (data.IsSuccess) {
+                        var target = $listBlock.find('.popover-trigger').data('form-target');
+                        if (target == 'desired-state') {
+                            $trigger.html(data.Description);
+                        } else {
+                            var $row = $trigger.closest('tr');
+                            var $relationLink = $row.children('td:first-child');
+                            $relationLink.html('');
+                            var relationType = '';
+                            if (data.PostureType == "PostureChallenge") {
+                                relationType = relationType + 'data-id="' + data.Id + '"' + 'data-toggle="modal"' + 'data-target="#posture-modal"' + 'data-ids="' + data.RelationIds + '"' + 'class="btn-posture-challenge"'
+                            }
+                            if (data.PostureType == "PostureConstraint") {
+                                relationType = relationType + 'data-id="' + data.Id + '"' + 'data-toggle="modal"' + 'data-target="#posture-modal"' + 'data-ids="' + data.RelationIds + '"' + 'class="btn-posture-constraint"'
+
+                            }
+                            $relationLink.html(data.RelationIds.length ? '<a href="#" ' + relationType + 'data-type="' + type + '"' + '><span class="rgw-badge-relation">R</span></a>' : ' ');
+                            $trigger.html(data.Definition);
+                        }
+                    }
+                    $('.relation-ids-wrapper').html('');
+                    popOverElem.popover('hide');
+                });
+            });
+            </text>
+         }
+            $(document).on('click', '.add-item', function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var $form = $this.closest('form');
+                var $listBlock = $this.closest('.list-block');
+                var $listResult = $listBlock.find('.list-result');
+
+                $form.find('input[name="PostureId"]').val($listBlock.find('.popover-trigger').data('posture-id'));
                 $form.find('input[name="PostureType"]').val($listBlock.find('.popover-trigger').data('posture'));
                 var type = $listBlock.find('.popover-trigger').data('posture-type');
 
-                $form.find('.add-item').removeClass('add-item').addClass('edit-item').html('Save');
-                return $form.html();
-            }
-        });
-        $(document).on('click', '.edit-item', function (e) {
-            e.preventDefault();
-            var $this = $(this);
-            var $form = $this.closest('form');
-            var $trigger = $this.closest('.popover').prev();
-            var $listBlock = $this.closest('.list-block');
-            var type = $listBlock.find('.popover-trigger').data('posture-type');
-            $.post($form.prop('action'), $form.serialize(), function (data) {
-                if (data.IsSuccess) {
-                    var target = $listBlock.find('.popover-trigger').data('form-target');
-                    if (target == 'desired-state') {
-                        $trigger.html(data.Description);
-                    } else {
-                        var $row = $trigger.closest('tr');
-                        var $relationLink = $row.children('td:first-child');
-                        $relationLink.html('');
-                        var relationType = '';
-                        if (data.PostureType == "PostureChallenge") {
-                            relationType = relationType + 'data-id="' + data.Id + '"' + 'data-toggle="modal"' + 'data-target="#posture-modal"' + 'data-ids="' + data.RelationIds + '"' + 'class="btn-posture-challenge"'
-                        }
-                        if (data.PostureType == "PostureConstraint") {
-                            relationType = relationType + 'data-id="' + data.Id + '"' + 'data-toggle="modal"' + 'data-target="#posture-modal"' + 'data-ids="' + data.RelationIds + '"' + 'class="btn-posture-constraint"'
+                if (!$form.valid()) { return; }
 
-                        }
-                        $relationLink.html(data.RelationIds.length ? '<a href="#" ' + relationType + 'data-type="' + type + '"' + '><span>R</span></a>' : ' ');
-                        $trigger.html(data.Definition);
-                    }
-                }
-                $('.relation-ids-wrapper').html('');
-                popOverElem.popover('hide');
-            });
-        });
-        </text>
-         }
-        $(document).on('click', '.add-item', function (e) {
-            e.preventDefault();
-            var $this = $(this);
-            var $form = $this.closest('form');
-            var $listBlock = $this.closest('.list-block');
-            var $listResult = $listBlock.find('.list-result');
-
-            $form.find('input[name="PostureId"]').val($listBlock.find('.popover-trigger').data('posture-id'));
-            $form.find('input[name="PostureType"]').val($listBlock.find('.popover-trigger').data('posture'));
-            var type = $listBlock.find('.popover-trigger').data('posture-type');
-
-            if (!$form.valid()) { return; }
-
-            $.post($form.prop('action'), $form.serialize(), function (data) {
-                if (data.IsSuccess) {
-                    var target = $listBlock.find('.popover-trigger').data('form-target');
-                    if (target == 'desired-state') {
-                        //desired-state
-                        $listResult.append('<li data-id="' + data.Id + '" ><span data-toggle="popover" data-form-target="desired-state" class="popover-edit-trigger">' + data.Description + '</span><a href="/BusinessPosture/DeleteDesiredState"  class="remove-item"><i class="fa fa-minus"></i></a></li>');
-                    } else {
-                        var $tr = $('<tr />');
-                        $tr.attr('data-id', data.Id);
-                        var $relationCol = $('<td />');
-                        var relationType = '';
-                        if (data.PostureType == "PostureChallenge") {
-                            relationType = relationType + 'data-id="' + data.Id + '"' + 'data-toggle="modal"' + 'data-target="#posture-modal"' + 'data-ids="' + data.RelationIds + '"' + 'class="btn-posture-challenge"'
-                        }
-                        if (data.PostureType == "PostureConstraint") {
-                            relationType = relationType + 'data-id="' + data.Id + '"' + 'data-toggle="modal"' + 'data-target="#posture-modal"' + 'data-ids="' + data.RelationIds + '"' + 'class="btn-posture-constraint"'
-
-                        }
-                        $relationCol.html(data.RelationIds.length ? '<a href="#" ' + relationType + 'data-type="' + type + '"' + '><span>R</span></a>' : ' ');
-                        $tr.append($relationCol);
-                        var $definitionCol = $('<td />');
-                        $definitionCol.css({ 'text-align': 'left' });
-                        $definitionCol.html('<span data-toggle="popover" class="popover-edit-trigger" data-form-target="' + target + '">' + data.Definition + '</span>');
-                        $tr.append($definitionCol);
-                        var $removeBtn = $('<a />');
-                        $removeBtn.addClass('remove-item');
-                        if (target == 'posture-constraint') {
-                            $removeBtn.prop('href', '/BusinessPosture/DeletePostureConstraint');
-                        } else {
-                            $removeBtn.prop('href', '/BusinessPosture/DeletePostureChallenge');
-                        }
-                        $removeBtn.html('<i class="fa fa-minus"></i>');
-                        var $actionCol = $('<td />');
-                        $actionCol.attr('data-id', data.Id);
-                        $actionCol.append($removeBtn);
-                        $tr.append($actionCol);
-                        $listResult.append($tr);
-                    }
-                }
-                popOverElem.popover('hide');
-                $('.relation-ids-wrapper').html('');
-            });
-        });
-        $(document).on('click', '.remove-item', function (e) {
-            e.preventDefault();
-            if (confirm("Are you sure want to delete this item?")) {
-                var $this = $(this);
-                var id = $this.parent().data('id');
-                $.post($this.prop('href'), 'Id=' + id, function (data) {
+                $.post($form.prop('action'), $form.serialize(), function (data) {
                     if (data.IsSuccess) {
-                        var target = $this.closest('.list-block').find('.popover-trigger').data('form-target');
+                        var target = $listBlock.find('.popover-trigger').data('form-target');
                         if (target == 'desired-state') {
-                            $this.parent().remove();
+                            //desired-state
+                            $listResult.append('<li data-id="' + data.Id + '" ><span data-toggle="popover" data-form-target="desired-state" class="popover-edit-trigger">' + data.Description + '</span><a href="/BusinessPosture/DeleteDesiredState"  class="remove-item"><i class="fa fa-minus"></i></a></li>');
                         } else {
-                            $this.closest('tr').remove();
+                            var $tr = $('<tr />');
+                            $tr.attr('data-id', data.Id);
+                            var $relationCol = $('<td />');
+                            var relationType = '';
+                            if (data.PostureType == "PostureChallenge") {
+                                relationType = relationType + 'data-id="' + data.Id + '"' + 'data-toggle="modal"' + 'data-target="#posture-modal"' + 'data-ids="' + data.RelationIds + '"' + 'class="btn-posture-challenge"'
+                            }
+                            if (data.PostureType == "PostureConstraint") {
+                                relationType = relationType + 'data-id="' + data.Id + '"' + 'data-toggle="modal"' + 'data-target="#posture-modal"' + 'data-ids="' + data.RelationIds + '"' + 'class="btn-posture-constraint"'
+
+                            }
+                            $relationCol.html(data.RelationIds.length ? '<a href="#" ' + relationType + 'data-type="' + type + '"' + '><span class="rgw-badge-relation">R</span></a>' : ' ');
+                            $tr.append($relationCol);
+                            var $definitionCol = $('<td />');
+                            $definitionCol.css({ 'text-align': 'left' });
+                            $definitionCol.html('<span data-toggle="popover" class="popover-edit-trigger" data-form-target="' + target + '">' + data.Definition + '</span>');
+                            $tr.append($definitionCol);
+                            var $removeBtn = $('<a />');
+                            $removeBtn.addClass('remove-item');
+                            if (target == 'posture-constraint') {
+                                $removeBtn.prop('href', '/BusinessPosture/DeletePostureConstraint');
+                            } else {
+                                $removeBtn.prop('href', '/BusinessPosture/DeletePostureChallenge');
+                            }
+                            $removeBtn.html('<i class="fa fa-minus"></i>');
+                            var $actionCol = $('<td />');
+                            $actionCol.attr('data-id', data.Id);
+                            $actionCol.append($removeBtn);
+                            $tr.append($actionCol);
+                            $listResult.append($tr);
                         }
                     }
+                    popOverElem.popover('hide');
+                    $('.relation-ids-wrapper').html('');
                 });
-            }
-        });
-        var popOverElem;
-        $(document).on('click', '.popover-edit-trigger', function (e) {
-            e.preventDefault();
-            var $this = $(this);
-            var $listBlock = $this.closest('.list-block');
-            var $addTrigger = $listBlock.find('.popover-trigger');
-            var $row = $this.closest('tr');
-            var sRelationids = $row.children('td:first-child').find('a').data('ids');
-            var relationIds = [];
-            if (sRelationids != '') {
-                if (typeof sRelationids === 'string') {
-                    relationIds = sRelationids.split(',');
-                } else {
-                    relationIds = [parseInt(sRelationids)];
-                }
-            }
-            var $wrapper = $('.relation-ids-wrapper');
-            $wrapper.html('');
-            relationIds.forEach(function (id) {
-                var $hiddenId = $('<input />');
-                $hiddenId.prop('type', 'hidden');
-                $hiddenId.prop('name', 'RelationIds[]');
-                $hiddenId.val(id);
-                $wrapper.append($hiddenId);
             });
-            //relation
-            var blockType = $this.data('form-target');
-            if (blockType != 'desired-state') {
-                var postureType = $addTrigger.data('posture-type');
-                var desiredList = $('.list-result.' + postureType + '-desired-list').clone(true);
-                desiredList.removeClass('list-result');
-                desiredList.find('li').each(function (i, val) {
-                    var $item = $(val);
-                    var content = $item.find('span').html();
-                    $item.find('.remove-item').remove();
-                    $item.html('');
-                    $item.html(content);
-                    var $checkbox = $('<input />');
-                    $checkbox.prop('type', 'checkbox');
-                    $checkbox.addClass('choose-this');
-                    if (relationIds.indexOf(parseInt($item.data('id'))) > -1) {
-                        $checkbox.prop('checked', true);
+            $(document).on('click', '.remove-item', function (e) {
+                e.preventDefault();
+                if (confirm("Are you sure want to delete this item?")) {
+                    var $this = $(this);
+                    var id = $this.parent().data('id');
+                    $.post($this.prop('href'), 'Id=' + id, function (data) {
+                        if (data.IsSuccess) {
+                            var target = $this.closest('.list-block').find('.popover-trigger').data('form-target');
+                            if (target == 'desired-state') {
+                                $this.parent().remove();
+                            } else {
+                                $this.closest('tr').remove();
+                            }
+                        }
+                    });
+                }
+            });
+            var popOverElem;
+            $(document).on('click', '.popover-edit-trigger', function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var $listBlock = $this.closest('.list-block');
+                var $addTrigger = $listBlock.find('.popover-trigger');
+                var $row = $this.closest('tr');
+                var sRelationids = $row.children('td:first-child').find('a').data('ids');
+                var relationIds = [];
+                if (sRelationids != '') {
+                    if (typeof sRelationids === 'string') {
+                        relationIds = sRelationids.split(',');
+                    } else {
+                        relationIds = [parseInt(sRelationids)];
                     }
-                    $item.prepend($checkbox);
-                });
-                $('.relation-content').html(desiredList);
-            }
-
-            popOverElem = $this;
-        });
-        $(document).on('click', '.popover-trigger', function (e) {
-            e.preventDefault();
-            var $this = $(this);
-            //relation-progress
-            //relation
-            var blockType = $this.data('form-target');
-            if (blockType != 'desired-state') {
-                var postureType = $this.data('posture-type');
-                var desiredList = $('.list-result.' + postureType + '-desired-list').clone(true);
-                desiredList.removeClass('list-result');
-                desiredList.find('li').each(function (i, val) {
-                    var $item = $(val);
-                    var content = $item.find('span').html();
-                    $item.find('.remove-item').remove();
-                    $item.html('');
-                    $item.html(content);
-                    var $checkbox = $('<input />');
-                    $checkbox.prop('type', 'checkbox');
-                    $checkbox.addClass('choose-this');
-                    $item.prepend($checkbox);
-                });
-                console.log(desiredList);
-                $('.relation-content').html(desiredList);
-            }
-            //var blockType = $this.data('form-target');
-            //if (blockType != 'desired-state') {
-            //    var postureType = $this.data('posture-type');
-            //    var desiredList = $('.list-result.' + postureType + '-desired-list').clone(true);
-            //    desiredList.removeClass('list-result');
-            //    desiredList.find('li').each(function (i, val) {
-            //        var $item = $(val);
-            //        $item.find('.remove-item').remove();
-            //        var $checkbox = $('<input />');
-            //        $checkbox.prop('type', 'checkbox');
-            //        $checkbox.addClass('choose-this');
-            //        $item.prepend($checkbox);
-            //    });
-            //    $('.relation-content').html(desiredList);
-            //}
-            popOverElem = $this;
-        });
-
-        var modalLoadingHtml = $('.modal-loading').html();
-        $('#modalDialog').on('hidden.bs.modal', function (e) {
-            $(this).removeData('bs.modal');
-            $('#modalDialog').find('.modal-content').html(modalLoadingHtml);
-        });
-
-        $(document).on('click', '.finish-relation', function (e) {
-            //find relation ids wrapper and cleare it
-            var $wrapper = $('.relation-ids-wrapper');
-            $wrapper.html('');
-            $('input.choose-this:checked').each(function (i, val) {
-                var $hiddenId = $('<input />');
-                $hiddenId.prop('type', 'hidden');
-                $hiddenId.prop('name', 'RelationIds[]');
-                $hiddenId.val($(val).parent().data('id'));
-                $wrapper.append($hiddenId);
-            });
-        });
-
-
-        $(document).on('click', '.btn-posture-challenge', function () {
-            var $that = $(this);
-            var Id = ($that).data('id');
-            $.ajax({
-                url: '@Url.Action("GetPostureChallenge", "BusinessPosture")',
-                data: { id: Id },
-                type: 'POST',
-                dataType: "html",
-                success: function (data) {
-                    $('.modal-posture').html(data);
                 }
-            });
-        });
-
-        $(document).on('click', '.btn-posture-constraint', function () {
-            var $that = $(this);
-            var Id = ($that).data('id');
-            $.ajax({
-                url: '@Url.Action("GetPostureConstraint", "BusinessPosture")',
-                data: { id: Id },
-                type: 'POST',
-                dataType: "html",
-                success: function (data) {
-                    $('.modal-posture').html(data);
+                var $wrapper = $('.relation-ids-wrapper');
+                $wrapper.html('');
+                relationIds.forEach(function (id) {
+                    var $hiddenId = $('<input />');
+                    $hiddenId.prop('type', 'hidden');
+                    $hiddenId.prop('name', 'RelationIds[]');
+                    $hiddenId.val(id);
+                    $wrapper.append($hiddenId);
+                });
+                //relation
+                var blockType = $this.data('form-target');
+                if (blockType != 'desired-state') {
+                    var postureType = $addTrigger.data('posture-type');
+                    var desiredList = $('.list-result.' + postureType + '-desired-list').clone(true);
+                    desiredList.removeClass('list-result');
+                    desiredList.find('li').each(function (i, val) {
+                        var $item = $(val);
+                        var content = $item.find('span').html();
+                        $item.find('.remove-item').remove();
+                        $item.html('');
+                        $item.html(content);
+                        var $checkbox = $('<input />');
+                        $checkbox.prop('type', 'checkbox');
+                        $checkbox.addClass('choose-this');
+                        if (relationIds.indexOf(parseInt($item.data('id'))) > -1) {
+                            $checkbox.prop('checked', true);
+                        }
+                        $item.prepend($checkbox);
+                    });
+                    $('.relation-content').html(desiredList);
                 }
+
+                popOverElem = $this;
             });
-        });
-        $(document).on('click', '.submit-all-bp', function (e) {
-            e.preventDefault();
-            var valid = true;
-            $('ul.list-result').each(function (i, val) {
-                valid = valid && $(val).children('li').length;
+            $(document).on('click', '.popover-trigger', function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                //relation-progress
+                //relation
+                var blockType = $this.data('form-target');
+                if (blockType != 'desired-state') {
+                    var postureType = $this.data('posture-type');
+                    var desiredList = $('.list-result.' + postureType + '-desired-list').clone(true);
+                    desiredList.removeClass('list-result');
+                    desiredList.find('li').each(function (i, val) {
+                        var $item = $(val);
+                        var content = $item.find('span').html();
+                        $item.find('.remove-item').remove();
+                        $item.html('');
+                        $item.html(content);
+                        var $checkbox = $('<input />');
+                        $checkbox.prop('type', 'checkbox');
+                        $checkbox.addClass('choose-this');
+                        $item.prepend($checkbox);
+                    });
+                    console.log(desiredList);
+                    $('.relation-content').html(desiredList);
+                }
+                //var blockType = $this.data('form-target');
+                //if (blockType != 'desired-state') {
+                //    var postureType = $this.data('posture-type');
+                //    var desiredList = $('.list-result.' + postureType + '-desired-list').clone(true);
+                //    desiredList.removeClass('list-result');
+                //    desiredList.find('li').each(function (i, val) {
+                //        var $item = $(val);
+                //        $item.find('.remove-item').remove();
+                //        var $checkbox = $('<input />');
+                //        $checkbox.prop('type', 'checkbox');
+                //        $checkbox.addClass('choose-this');
+                //        $item.prepend($checkbox);
+                //    });
+                //    $('.relation-content').html(desiredList);
+                //}
+                popOverElem = $this;
             });
-            $('table.list-result').each(function (i, val) {
-                valid = valid && $(val).find('tr').length > 1;
+
+            var modalLoadingHtml = $('.modal-loading').html();
+            $('#modalDialog').on('hidden.bs.modal', function (e) {
+                $(this).removeData('bs.modal');
+                $('#modalDialog').find('.modal-content').html(modalLoadingHtml);
             });
-            if (!valid) {
-                if (window.confirm("One of block informations leave empty! Once you go through it you can't revise it. Are you sure want to go to next step?")) {
+
+            $(document).on('click', '.finish-relation', function (e) {
+                //find relation ids wrapper and cleare it
+                var $wrapper = $('.relation-ids-wrapper');
+                $wrapper.html('');
+                $('input.choose-this:checked').each(function (i, val) {
+                    var $hiddenId = $('<input />');
+                    $hiddenId.prop('type', 'hidden');
+                    $hiddenId.prop('name', 'RelationIds[]');
+                    $hiddenId.val($(val).parent().data('id'));
+                    $wrapper.append($hiddenId);
+                });
+            });
+
+
+
+            $(document).on('click', '.btn-posture-challenge', function () {
+                var $that = $(this);
+                var Id = ($that).data('id');
+                $.ajax({
+                    url: '@Url.Action("GetPostureChallenge", "BusinessPosture")',
+                    data: { id: Id },
+                    type: 'POST',
+                    dataType: "html",
+                    success: function (data) {
+                        $('.modal-posture').html(data);
+                    }
+                });
+            });
+
+            $(document).on('click', '.btn-posture-constraint', function () {
+                var $that = $(this);
+                var Id = ($that).data('id');
+                $.ajax({
+                    url: '@Url.Action("GetPostureConstraint", "BusinessPosture")',
+                    data: { id: Id },
+                    type: 'POST',
+                    dataType: "html",
+                    success: function (data) {
+                        $('.modal-posture').html(data);
+                    }
+                });
+            });
+            $(document).on('click', '.submit-all-bp', function (e) {
+                e.preventDefault();
+                var valid = true;
+                $('ul.list-result').each(function (i, val) {
+                    valid = valid && $(val).children('li').length;
+                });
+                $('table.list-result').each(function (i, val) {
+                    valid = valid && $(val).find('tr').length > 1;
+                });
+                if (!valid) {
+                    if (window.confirm("One of block informations leave empty! Once you go through it you can't revise it. Are you sure want to go to next step?")) {
+                        $(this).closest('form').submit();
+                    }
+                } else {
                     $(this).closest('form').submit();
                 }
+            });
+            $(document).on('click', '.submit-reject', function (e) {
+                //e.preventDefault();
+
+            });
+        });
+
+        $(document).on('mouseenter', '.btn-posture-challenge', function () {
+            var $that = $(this);
+            var $type = ($that).data('type');
+            var $ids = ($that).data('ids');
+            if (typeof $ids != 'string') {
+                $ids = [$ids];
             } else {
-                $(this).closest('form').submit();
+                $ids = $ids.split(',');
+                var iIds = [];
+                for (var i in $ids) {
+                    iIds.push(parseInt($ids[i]));
+                }
+                $ids = iIds;
             }
+            $('.' + $type + '-desired-list').children('li').each(function (i, val) {
+                var $li = $(val);
+                if ($ids.indexOf(parseInt($li.data('id'))) > -1) {
+                    $li.addClass('highlight');
+                }
+            });
         });
-        $(document).on('click', '.submit-reject', function (e) {
-            //e.preventDefault();
 
+        $(document).on('mouseleave', '.btn-posture-challenge', function () {
+            $('.highlight').each(function (i, val) {
+                $(val).removeClass('highlight');
+            })
         });
-    });
 
-    $(document).on('mouseenter', '.btn-posture-challenge', function () {
-        var $that = $(this);
-        var $type = ($that).data('type');
-        var $ids = ($that).data('ids');
-        if (typeof $ids != 'string') {
-            $ids = [$ids];
-        } else {
-            $ids = $ids.split(',');
-            var iIds = [];
-            for (var i in $ids) {
-                iIds.push(parseInt($ids[i]));
+
+
+        $(document).on('mouseenter', '.btn-posture-constraint', function () {
+            var $that = $(this);
+            var $type = ($that).data('type');
+            var $ids = ($that).data('ids');
+            if (typeof $ids != 'string') {
+                $ids = [$ids];
+            } else {
+                $ids = $ids.split(',');
+                var iIds = [];
+                for (var i in $ids) {
+                    iIds.push(parseInt($ids[i]));
+                }
+                $ids = iIds;
             }
-            $ids = iIds;
-        }
-        $('.' + $type + '-desired-list').children('li').each(function (i, val) {
-            var $li = $(val);
-            if ($ids.indexOf(parseInt($li.data('id'))) > -1) {
-                $li.addClass('highlight');
-            }
+            $('.' + $type + '-desired-list').children('li').each(function (i, val) {
+                var $li = $(val);
+                if ($ids.indexOf(parseInt($li.data('id'))) > -1) {
+                    $li.addClass('highlight');
+                }
+            });
         });
-    });
 
-    $(document).on('mouseleave', '.btn-posture-challenge', function () {
-        $('.highlight').each(function (i, val) {
-            $(val).removeClass('highlight');
-        })
-    });
-
-
-
-    $(document).on('mouseenter', '.btn-posture-constraint', function () {
-        var $that = $(this);
-        var $type = ($that).data('type');
-        var $ids = ($that).data('ids');
-        if (typeof $ids != 'string') {
-            $ids = [$ids];
-        } else {
-            $ids = $ids.split(',');
-            var iIds = [];
-            for (var i in $ids) {
-                iIds.push(parseInt($ids[i]));
-            }
-            $ids = iIds;
-        }
-        $('.' + $type + '-desired-list').children('li').each(function (i, val) {
-            var $li = $(val);
-            if ($ids.indexOf(parseInt($li.data('id'))) > -1) {
-                $li.addClass('highlight');
-            }
+        $(document).on('mouseleave', '.btn-posture-constraint', function () {
+            $('.highlight').each(function (i, val) {
+                $(val).removeClass('highlight');
+            })
         });
-    });
-
-    $(document).on('mouseleave', '.btn-posture-constraint', function () {
-        $('.highlight').each(function (i, val) {
-            $(val).removeClass('highlight');
-        })
-    });
-</script>
+    </script>

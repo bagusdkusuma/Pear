@@ -145,7 +145,7 @@ namespace DSLNG.PEAR.Services
             try
             {
                 //var user = DataContext.Users.Where(x => x.Username == request.Username).Include(x => x.Role).First();
-                var user = DataContext.Users.Where(x => x.Email == request.Email).Include(x => x.Role).First();
+                var user = DataContext.Users.Where(x => x.Email == request.Email).Include(x => x.Role).Include(y=>y.RolePrivileges).First();
                 if (user != null && user.Password == crypto.Compute(request.Password, user.PasswordSalt))
                 {
                     //Include(x => x.Role).
@@ -173,7 +173,7 @@ namespace DSLNG.PEAR.Services
         {
             try
             {
-                var user = DataContext.Users.Include(u => u.Role).First(x => x.Username == request.Name);
+                var user = DataContext.Users.Include(u => u.Role).Include(y=>y.RolePrivileges).First(x => x.Username == request.Name);
                 var response = user.MapTo<GetUserResponse>(); //Mapper.Map<GetUserResponse>(user);
                 //response.RoleName = DataContext.RoleGroups.FirstOrDefault(x => x.Id == user.RoleId).Name.ToString();
                 response.IsSuccess = true;

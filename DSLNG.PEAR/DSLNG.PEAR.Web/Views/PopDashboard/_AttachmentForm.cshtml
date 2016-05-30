@@ -1,0 +1,87 @@
+﻿@model IList<DSLNG.PEAR.Web.ViewModels.PopDashboard.SavePopDashboardViewModel.AttachmentViewModel>
+@{
+    int i = 0;
+}
+
+<div class="form-group form-list form-inline">
+    <label>Attachments</label>
+    <button type="button" class="btn btn-default form-inline add-option"><i class="glyphicon glyphicon-plus"></i></button>
+</div>
+
+<div class="option-wrapper pop-attachments">
+    @foreach (var item in Model)
+    {
+        <div class="row hidden-option" style="margin-bottom: 10px;">
+            <div class="col-sm-12 form-inline">
+                <input type="hidden" name="Attachments.Index" value="@i" />
+                <input class="form-control opt-id" type="hidden" name="Attachments[@i].Id" value="@item.Id" style="width:50px;" />
+                <input class="form-control opt-text" maxlength="25" name="Attachments[@i].Alias" type="text" placeholder="Alias" value="@item.Alias" style="width:200px;">
+                <input  multiple="false" class="form-control opt-value-file" name="Attachments[@i].File" type="file" placeholder="File" value="@item.File" style="width:200px;">
+                <button type="button" class="btn btn-default form-control remove-option" style="display: inline-block;"><i class="glyphicon glyphicon-minus"></i></button>
+                @if (!string.IsNullOrEmpty(item.Filename)) { 
+                    <a href="@Url.Content(item.Filename)" download class="doc-type-@item.Type document-link">@item.Alias</a>
+                }
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        i++;
+    }
+</div>
+<span id="counter" data-option="@i"></span>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var i = $('#counter').attr('data-option');
+        i = parseInt(i) === NaN ? 0 : parseInt(i);
+        var oriClone  = $('.hidden-option:last').clone(true);
+        $('.add-option').click(function () {
+            var clone = oriClone.clone(true);
+            clone.find('input[name="Attachments.Index"]').val(i);
+            clone.find('.opt-id').attr('name', 'Attachments[' + i + '].Id').attr('value', 0);
+            clone.find('.opt-text').attr('name', 'Attachments[' + i + '].Alias').val('');
+            clone.find('.display-image').remove();
+            clone.find('.opt-is-edited').remove();
+           
+                clone.find('.opt-value-file').show();
+                clone.find('.opt-value-file').attr('name', 'Attachments[' + i + '].File').val('');
+                clone.find('.opt-value').hide();
+                var file = clone.find('.document-link');
+                if (file.length) {
+                    file.remove();
+                }
+            clone.appendTo('.option-wrapper').show();
+
+            //if (i > 0) {
+            //    $('.remove-option').show();
+            //}
+            i++;
+        });
+
+        //if (i <= 1) {
+        //    $('.remove-option').hide();
+        //}
+        $(document).on('click', '.remove-option', function (e) {
+            e.preventDefault();
+            i--;
+            $(this).parent().parent().remove();
+            if (i == 1) {
+                $('.remove-option').hide();
+            }
+        });
+
+        $(document).on('change', '.opt-value-file', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            if ($this.val().trim() != '') {
+                var filename = $this.val().replace(/.*[\/\\]/, '');
+                if (filename.length > 25) {
+                    filename = filename.substr(0, 21) + '...';
+                }
+                $this.prev().val(filename);
+            }
+        });
+    })
+</script>
+
+
+

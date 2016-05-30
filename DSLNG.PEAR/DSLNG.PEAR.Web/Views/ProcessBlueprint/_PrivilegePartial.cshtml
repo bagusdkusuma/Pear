@@ -1,0 +1,96 @@
+﻿@model IEnumerable<DSLNG.PEAR.Web.ViewModels.ProcessBlueprint.FileManagerRolePrivilegeViewModel>
+
+@{
+    Html.EnableClientValidation();
+    Html.EnableUnobtrusiveJavaScript();
+}
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "PrivilegeView";
+    settings.KeyFieldName = "RoleGroupId;FileId";
+    settings.CallbackRouteValues = new { Controller = "ProcessBlueprint", Action = "PrivilegeViewPartialView" };
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "ProcessBlueprint", Action = "PrivilegeUpdate" };
+    settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+    settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
+    settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
+    settings.SettingsEditing.BatchEditSettings.ShowConfirmOnLosingChanges = true;
+    settings.CommandColumn.Visible = false;
+
+    settings.Columns.Add(column => {
+        column.FieldName = "RoleGroupName";
+        column.Caption = "Department";
+        column.ReadOnly = true;
+    });
+    settings.Columns.AddBand(band => {
+        band.Caption = "Privileges";
+        band.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
+        band.Columns.Add(col => {
+            col.FieldName = "AllowCreate";
+            col.Caption = "Create";
+            col.ColumnType = MVCxGridViewColumnType.CheckBox;
+        });
+        band.Columns.Add(col =>
+        {
+            col.FieldName = "AllowMove";
+            col.Caption = "Move";
+            col.ColumnType = MVCxGridViewColumnType.CheckBox;
+        });
+        band.Columns.Add(col =>
+        {
+            col.FieldName = "AllowDelete";
+            col.Caption = "Delete";
+            col.ColumnType = MVCxGridViewColumnType.CheckBox;
+        });
+        band.Columns.Add(col =>
+        {
+            col.FieldName = "AllowRename";
+            col.Caption = "Rename";
+            col.ColumnType = MVCxGridViewColumnType.CheckBox;
+        });
+        band.Columns.Add(col =>
+        {
+            col.FieldName = "AllowCopy";
+            col.Caption = "Copy";
+            col.ColumnType = MVCxGridViewColumnType.CheckBox;
+        });
+        band.Columns.Add(col =>
+        {
+            col.FieldName = "AllowDownload";
+            col.Caption = "Download";
+            col.ColumnType = MVCxGridViewColumnType.CheckBox;
+        });
+        band.Columns.Add(col =>
+        {
+            col.FieldName = "AllowUpload";
+            col.Caption = "Upload";
+            col.ColumnType = MVCxGridViewColumnType.CheckBox;
+        });
+        band.Columns.Add(col =>
+        {
+            col.FieldName = "AllowBrowse";
+            col.Caption = "Browse";
+            col.ColumnType = MVCxGridViewColumnType.CheckBox;
+        }); 
+    });
+
+    settings.SettingsBehavior.AllowSort = false;
+    settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
+
+    
+    //settings.SettingsPager.Visible = true;
+    //settings.SettingsPager.PageSize = 20;
+    //settings.Settings.VerticalScrollableHeight = 350;
+    //settings.Settings.VerticalScrollBarStyle = GridViewVerticalScrollBarStyle.Virtual;
+    //settings.ControlStyle.Paddings.Padding = System.Web.UI.WebControls.Unit.Pixel(0);
+    //settings.ControlStyle.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+    //settings.ControlStyle.BorderBottom.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(1);
+
+    //settings.Settings.ShowFilterRow = false;
+    //settings.Settings.ShowFilterRowMenu = false;
+    //settings.SettingsBehavior.EnableCustomizationWindow = true;
+    //settings.SettingsBehavior.AllowSelectByRowClick = true;
+    //settings.Settings.ShowFilterBar = GridViewStatusBarMode.Hidden;
+    //settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
+
+}).Bind(Model).GetHtml()

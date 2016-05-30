@@ -1,0 +1,21 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.ProcessBlueprint.FileSystemItem
+
+@Html.DevExpress().PopupControl(settings =>
+{
+    settings.Name = "popupControl";
+    settings.CallbackRouteValues = new { Controller = "ProcessBlueprint", Action = "ProcessConfigPartial" };
+    settings.PopupVerticalAlign = PopupVerticalAlign.Middle;
+    settings.PopupHorizontalAlign = PopupHorizontalAlign.Center;
+    settings.ShowFooter = false;
+    settings.ShowHeader = false;
+    settings.AllowDragging = true;
+    settings.DragElement = DragElement.Header;
+    settings.Width = Unit.Pixel(900);
+    settings.ControlStyle.CssClass = "DetailsPopup";
+
+    settings.ClientSideEvents.EndCallback = "OnPopupEndCallback";
+    settings.SetContent(() =>
+    {
+        Html.RenderAction("PrivilegeViewPartialView", new { model = Model });
+    });
+}).GetHtml()

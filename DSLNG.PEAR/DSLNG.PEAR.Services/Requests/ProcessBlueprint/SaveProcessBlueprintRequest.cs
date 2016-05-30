@@ -19,5 +19,6 @@ namespace DSLNG.PEAR.Services.Requests.ProcessBlueprint
         public byte[] Data { get; set; }
 
         public DateTime? LastWriteTime { get; set; }
+        public int UserId { get; set; }
     }
 }

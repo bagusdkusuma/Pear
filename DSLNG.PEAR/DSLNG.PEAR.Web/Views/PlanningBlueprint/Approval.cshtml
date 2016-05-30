@@ -5,18 +5,32 @@
 <h2>Planning Blueprints Approval</h2>
 @Html.Partial("_MessageResponse")
 
-<table id="planningBlueprints-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
+<table id="planningBlueprints-table" class="rgw-tbl-ba rgw-tbl table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
     <thead>
         <tr>
+            <th rowspan="2">Title</th>
+            <th rowspan="2" style="width: 200px;">Description</th>
+            <th colspan="2">Voyage Plan</th>
+            <th colspan="2">Mid Term Phase</th>
+            <th rowspan="2">Is Active</th>
+            <th rowspan="2">Action</th>
+        </tr>
+        <tr>
+            <th style="border-radius: 0; border-left: 1px solid white;">Status</th>
+            <th><span class="fa fa-file" aria-hidden="true"></span> Notes</th>
+            <th>Status</th>
+            <th><span class="fa fa-file" aria-hidden="true"></span> Notes</th>
+        </tr>
+        @*<tr>
             <th>Title</th>
             <th>Description</th>
             <th>Voyage Plan</th>
-            <th>Voyage Plan Notes</th>
+            <th><span class="fa fa-file"></span><br /> Voyage Plan Notes</th>
             <th>Midterm Phase Strategy</th>
-             <th>Midterm Phase Strategy Notes</th>
+            <th><span class="fa fa-file"></span><br /> Midterm Phase Strategy Notes</th>
             <th>Is Active</th>
-            <th style="width:75px">Action</th>
-        </tr>
+            <th style="width:150px">Action</th>
+        </tr>*@
     </thead>
 </table>
 <div class="modal fade" id="notes-modal" data-id="id">
@@ -29,8 +43,8 @@
             </div>
             <div class="modal-body" style="color:#fff">
             </div>
-             <div class="modal-footer" style="border-top:none">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            <div class="modal-footer" style="border-top:none">
+                <button type="button" class="btn-master-rgw btn btn-primary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -69,9 +83,9 @@
                             if (row.BusinessPostureIdentification.IsBeingReviewed) {
                                 return '@Html.ActionLink("Review", "ESReview", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.BusinessPostureIdentification.Id);
                             } else if (row.BusinessPostureIdentification.IsRejected) {
-                                return "Rejected";
+                                return '@Html.ActionLink("Rejected", "ESReview", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.BusinessPostureIdentification.Id);
                             } else if (row.BusinessPostureIdentification.IsApproved) {
-                                return "Approved";
+                                return '@Html.ActionLink("Approved", "ESReview", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.BusinessPostureIdentification.Id);
                             }else{
                                 return "Prepare";
                             }
@@ -98,10 +112,10 @@
                              if (row.MidtermStragetyPlanning.IsBeingReviewed) {
                                  return '@Html.ActionLink("Review", "MPFReview", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.MidtermStragetyPlanning.Id);
                              } else if (row.MidtermStragetyPlanning.IsRejected) {
-                                 return "Rejected";
+                                 return '@Html.ActionLink("Rejected", "MPFReview", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.MidtermStragetyPlanning.Id);
                              }
                              else if (row.MidtermStragetyPlanning.IsApproved) {
-                                 return "Approved";
+                                 return '@Html.ActionLink("Approved", "MPFReview", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.MidtermStragetyPlanning.Id);
                              } else if (!row.MidtermPhaseFormulation.IsLocked) {
                                  return 'Prepare';
                              } else {
@@ -135,10 +149,10 @@
                          "data": null,
                          "defaultContent": '',
                          "mRender": function (data, type, row) {
-                             var editLink = '@Html.ActionLink("Edit", "REdit", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', data.Id);
+                             var editLink = '<span class="fa fa-edit"></span> @Html.ActionLink("Edit", "REdit", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', data.Id);
                              return '<form action="/Planningblueprint/Delete" method="POST" style="display:inline">' +
                                  '<input type="hidden" name="Id" value="'+row.Id+'" />' +
-                                 '<a href="#" class="delete-row">Delete</a></form> | ' + editLink;
+                                 '<a href="#" class="delete-row"><span class="fa fa-trash"></span> Delete</a></form> | ' + editLink;
                          }
                      },
                 ],

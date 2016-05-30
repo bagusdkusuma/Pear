@@ -1,5 +1,6 @@
 ﻿
 
+using System;
 using System.Collections.Generic;
 namespace DSLNG.PEAR.Web.ViewModels.PlanningBlueprint
 {
@@ -66,6 +67,33 @@ namespace DSLNG.PEAR.Web.ViewModels.PlanningBlueprint
             public string Forecast { get; set; }
             public int Order { get; set; }
             public string Measurement { get; set; }
+        }
+
+        public IList<MidtermFormulationStageViewModel> MidtermFormulationStages { get; set; }
+        public class MidtermFormulationStageViewModel
+        {
+            public MidtermFormulationStageViewModel()
+            {
+                Descriptions = new List<MidtermPhaseDescriptionViewModel>();
+                KeyDrivers = new List<MidtermPhaseKeyDriverViewModel>();
+            }
+            public int Id { get; set; }
+            public string Title { get; set; }
+            public int Order { get; set; }
+            public DateTime? StartDate { get; set; }
+            public DateTime? EndDate { get; set; }
+            public IList<MidtermPhaseDescriptionViewModel> Descriptions { get; set; }
+            public IList<MidtermPhaseKeyDriverViewModel> KeyDrivers { get; set; }
+        }
+        public class MidtermPhaseDescriptionViewModel
+        {
+            public int Id { get; set; }
+            public string Value { get; set; }
+        }
+        public class MidtermPhaseKeyDriverViewModel
+        {
+            public int Id { get; set; }
+            public string Value { get; set; }
         }
     }
 }

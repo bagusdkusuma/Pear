@@ -94,9 +94,13 @@
     <Compile Include="Interfaces\IMirConfigurationService.cs" />
     <Compile Include="Interfaces\IMirDataTableService.cs" />
     <Compile Include="Interfaces\IProcessBlueprintService.cs" />
+    <Compile Include="Interfaces\IRolePrivilegeService.cs" />
     <Compile Include="MirConfigurationService.cs" />
     <Compile Include="MirDataTableService.cs" />
     <Compile Include="ProcessBlueprintService.cs" />
+    <Compile Include="Requests\FileManagerRolePrivilege\FilePrivilegeRequest.cs" />
+    <Compile Include="Requests\FileManagerRolePrivilege\UpdateFilePrivilegeRequest.cs" />
+    <Compile Include="Requests\Menu\GetMenuPrivilegeRequest.cs" />
     <Compile Include="Requests\MirConfiguration\GetMirConfigurationsRequest.cs" />
     <Compile Include="Requests\MirConfiguration\SaveMirConfigurationRequest.cs" />
     <Compile Include="Requests\MirDataTable\DeleteKpiMirDataTableRequest.cs" />
@@ -105,6 +109,7 @@
     <Compile Include="Requests\Der\GetKpiValueRequest.cs" />
     <Compile Include="Requests\Der\SaveLayoutItemRequest.cs" />
     <Compile Include="Requests\Der\SaveOriginalDataRequest.cs" />
+    <Compile Include="Requests\ProcessBlueprint\GetProcessBlueprintPrivilegeRequest.cs" />
     <Compile Include="Requests\ProcessBlueprint\GetProcessBlueprintRequest.cs" />
     <Compile Include="Requests\ProcessBlueprint\SaveProcessBlueprintRequest.cs" />
     <Compile Include="Requests\Signature\ApproveSignatureRequest.cs" />
@@ -223,6 +228,7 @@
     <Compile Include="Responses\HighlightOrder\GetStaticHighlightOrdersResponse.cs" />
     <Compile Include="Responses\HighlightOrder\SaveStaticHighlightOrderResponse.cs" />
     <Compile Include="Responses\Kpi\GetKpiDetailResponse.cs" />
+    <Compile Include="Responses\Menu\GetMenuPrivilegeResponse.cs" />
     <Compile Include="Responses\MidtermFormulation\AddDefinitionResponse.cs" />
     <Compile Include="Responses\MidtermFormulation\AddStageResponse.cs" />
     <Compile Include="Responses\MidtermFormulation\GetMidtermFormulationResponse.cs" />
@@ -696,8 +702,10 @@
     <Compile Include="Responses\PopDashboard\SavePopDashboardResponse.cs" />
     <Compile Include="Responses\PopInformation\GetPopInformationResponse.cs" />
     <Compile Include="Responses\PopInformation\SavePopInformationResponse.cs" />
+    <Compile Include="Responses\ProcessBlueprint\GetProcessBlueprintPrivilegeResponse.cs" />
     <Compile Include="Responses\ProcessBlueprint\GetProcessBlueprintResponse.cs" />
     <Compile Include="Responses\ProcessBlueprint\GetProcessBlueprintsResponse.cs" />
+    <Compile Include="Responses\ProcessBlueprint\SaveProcessBlueprintResponse.cs" />
     <Compile Include="Responses\RoleGroup\CreateRoleGroupResponse.cs" />
     <Compile Include="Responses\RoleGroup\DeleteRoleGroupResponse.cs" />
     <Compile Include="Responses\RoleGroup\Level.cs" />
@@ -756,6 +764,7 @@
     <Compile Include="Responses\Weather\GetWeathersResponse.cs" />
     <Compile Include="Responses\Weather\SaveWeatherResponse.cs" />
     <Compile Include="RoleGroupService.cs" />
+    <Compile Include="RolePrivilegeService.cs" />
     <Compile Include="RowAndColumns.cs" />
     <Compile Include="ScenarioService.cs" />
     <Compile Include="SelectService.cs" />

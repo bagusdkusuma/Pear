@@ -17,5 +17,7 @@ namespace DSLNG.PEAR.Web.ViewModels
         public string RoleName { get; set; }
         public bool IsSuperAdmin { get; set; }
         public string RedirectUrl { get; set; }
+
+        public List<KeyValuePair<int,string>> RolePrivilegeName { get; set; }
     }
 }

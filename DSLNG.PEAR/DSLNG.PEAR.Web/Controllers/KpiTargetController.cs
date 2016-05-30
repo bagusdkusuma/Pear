@@ -15,9 +15,11 @@ using System.Text;
 using System.IO;
 using DevExpress.Spreadsheet;
 using System.Drawing;
+using DSLNG.PEAR.Web.Attributes;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
+    [Authorize]
     public class KpiTargetController : BaseController
     {
         private readonly IKpiTargetService _kpiTargetService;
@@ -29,6 +31,7 @@ namespace DSLNG.PEAR.Web.Controllers
             _dropdownService = dropdownService;
         }
 
+        [AuthorizeUser(AccessLevel="AllowUpdate")]
         public ActionResult Update(int id, string periodeType)
         {
             int pmsSummaryId = id;
@@ -76,7 +79,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
             return Content(response.Message);
         }
-
+        [AuthorizeUser(AccessLevel = "AllowUpdate")]
         public ActionResult Configuration(ConfigurationParamViewModel paramViewModel)
         {
             int roleGroupId = paramViewModel.Id;
@@ -241,10 +244,21 @@ namespace DSLNG.PEAR.Web.Controllers
 
             return base.ErrorPage(response.Message);
         }
-
+        [AuthorizeUser(AccessLevel = "AllowView")]
         public ActionResult Index()
         {
-            var response = _kpiTargetService.GetAllKpiTargets();
+            var isAdmin = this.UserProfile().IsSuperAdmin;
+            ViewBag.IsSuperAdmin = isAdmin;
+            var response = new AllKpiTargetsResponse();
+
+            if (isAdmin)
+            {
+                response = _kpiTargetService.GetAllKpiTargets();
+            }
+            else
+            {
+                response = _kpiTargetService.GetAllKpiTargetByRole(new GetKpiTargetsConfigurationRequest { RoleGroupId = this.UserProfile().RoleId });
+            }
             if (response.IsSuccess)
             {
                 var viewModel = response.MapTo<IndexKpiTargetViewModel>();

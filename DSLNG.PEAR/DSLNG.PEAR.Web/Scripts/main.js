@@ -413,23 +413,26 @@ Number.prototype.format = function (n, x) {
             e.preventDefault();
             var $this = $(this);
             loadGraph($this.data('graph-url'), $this.val());
-            if ($this.val() === 'bar' && $('#bar-value-axis').val() === 'KpiEconomic') {
+            if ($this.val() === 'bar') {
                 $('.netback-chart-opt').show();
             } else {
                 $('.netback-chart-opt').hide();
             }
             $('#PeriodeType').change();
         });
-        $(document).on('change', '#bar-value-axis', function (e) {
-            if ($('#graphic-type').val() === 'bar' && $(this).val() === 'KpiEconomic') {
-                $('.netback-chart-opt').show();
-            } else {
-                $('.netback-chart-opt').hide();
-            }
-        });
+        //$(document).on('change', '#bar-value-axis', function (e) {
+        //    if ($('#graphic-type').val() === 'bar' && $(this).val() === 'KpiEconomic') {
+        //        $('.netback-chart-opt').show();
+        //    } else {
+        //        $('.netback-chart-opt').hide();
+        //    }
+        //});
 
 
         var initialGraphicType = $('#graphic-type');
+        if (initialGraphicType.val() == 'bar') {
+            $('.netback-chart-opt').show();
+        }
         loadGraph(initialGraphicType.data('graph-url'), initialGraphicType.val());
         rangeControl();
         rangeDatePicker();

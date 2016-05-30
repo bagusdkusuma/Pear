@@ -17,7 +17,9 @@ namespace DSLNG.PEAR.Web.ViewModels.PlanningBlueprint
         public string Description { get; set; }
         public int[] KeyOutputIds { get; set; }
         public IList<KeyOutputViewModel> KeyOutputs { get; set; }
+        [Display(Name="Is Active")]
         public bool IsActive { get; set; }
+        [Display(Name = "Is Approved")]
         public bool IsApproved { get; set; }
 
         public class KeyOutputViewModel {

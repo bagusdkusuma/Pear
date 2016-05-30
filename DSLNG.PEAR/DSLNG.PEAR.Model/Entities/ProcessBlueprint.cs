@@ -8,8 +8,12 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Data.Entities
 {
-    public class ProcessBlueprint
+    public class ProcessBlueprint : BaseEntity
     {
+        public ProcessBlueprint()
+        {
+            //FileManagerRolePrivileges = new List<FileManagerRolePrivilege>();
+        }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -23,5 +27,6 @@ namespace DSLNG.PEAR.Data.Entities
         public byte[] Data { get; set; }
 
         public DateTime? LastWriteTime { get; set; }
+        public ICollection<FileManagerRolePrivilege> FileManagerRolePrivileges { get; set; }
     }
 }

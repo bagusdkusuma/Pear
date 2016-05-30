@@ -117,6 +117,7 @@ using DSLNG.PEAR.Services.Requests.MirConfiguration;
 using DSLNG.PEAR.Services.Requests.MirDataTable;
 using DSLNG.PEAR.Services.Responses.ProcessBlueprint;
 using DSLNG.PEAR.Services.Requests.ProcessBlueprint;
+using DSLNG.PEAR.Services.Requests.FileManagerRolePrivilege;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -143,14 +144,19 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<UpdateUserRequest, User>();
             Mapper.CreateMap<GetUserRequest, User>();
             Mapper.CreateMap<Data.Entities.RoleGroup, GetUserResponse.RoleGroup>();
+            Mapper.CreateMap<Data.Entities.RolePrivilege, GetUserResponse.RolePrivilege>();
             Mapper.CreateMap<Data.Entities.RoleGroup, GetUsersResponse.RoleGroup>();
             Mapper.CreateMap<Data.Entities.User, GetUserResponse>();
             Mapper.CreateMap<Data.Entities.User, LoginUserResponse>();
+            Mapper.CreateMap<Data.Entities.RolePrivilege, LoginUserResponse.RolePrivilege>();
             Mapper.CreateMap<Data.Entities.RoleGroup, LoginUserResponse.RoleGroup>();
             Mapper.CreateMap<Data.Entities.ResetPassword, ResetPasswordResponse>();
             Mapper.CreateMap<ResetPasswordResponse, ResetPassword>();
             //Mapper.CreateMap<ResetPasswordResponse.User, Data.Entities.User>();
             Mapper.CreateMap<GetUserResponse, ResetPasswordResponse.User>();
+            Mapper.CreateMap<MenuRolePrivilege, GetMenuPrivilegeResponse>();
+            Mapper.CreateMap<Data.Entities.RolePrivilege, GetMenuPrivilegeResponse.Privilege>();
+            Mapper.CreateMap<Data.Entities.Menu, GetMenuPrivilegeResponse.MenuPrivilege>();
             //Mapper.CreateMap<
 
             /*Level*/
@@ -164,6 +170,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Data.Entities.Menu, GetMenusResponse.Menu>();
             Mapper.CreateMap<CreateMenuRequest, Data.Entities.Menu>();
             Mapper.CreateMap<Data.Entities.Menu, GetMenuResponse>();
+            Mapper.CreateMap<GetMenuResponse, UpdateMenuRequest>();
             Mapper.CreateMap<Data.Entities.Menu, DSLNG.PEAR.Services.Responses.Menu.Menu>();
 
             Mapper.CreateMap<UpdateMenuRequest, Data.Entities.Menu>();
@@ -637,6 +644,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<PostureChallenge, GetVoyagePlanResponse.PostureChallenge>();
             Mapper.CreateMap<PostureConstraint, GetVoyagePlanResponse.PostureConstraint>();
             Mapper.CreateMap<CalculateOutputResponse.KeyOutputResponse, GetVoyagePlanResponse.KeyOutputResponse>();
+            Mapper.CreateMap<MidtermPhaseFormulationStage, GetVoyagePlanResponse.MidtermFormulationStage>();
+            Mapper.CreateMap<MidtermPhaseDescription, GetVoyagePlanResponse.MidtermPhaseDescription>();
+            Mapper.CreateMap<MidtermPhaseKeyDriver, GetVoyagePlanResponse.MidtermPhaseKeyDriver>();
             Mapper.CreateMap<Constraint, GetConstraintResponse>()
                 .ForMember(x =>x.ThreatIds, y => y.MapFrom(z => z.Relations.Where(o =>o.ThreatHost != null)))
                 .ForMember(x => x.Opportunitys, y => y.MapFrom(z => z.Relations.Where(o => o.OpportunityHost != null)))
@@ -690,8 +700,10 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
 
             Mapper.CreateMap<PopDashboard, GetPopDashboardsResponse.PopDashboard>();
+            Mapper.CreateMap<PopDashboardAttachment, GetPopDashboardsResponse.Attachment>();
             Mapper.CreateMap<SavePopDashboardRequest, PopDashboard>();
             Mapper.CreateMap<PopDashboard, GetPopDashboardResponse>();
+            Mapper.CreateMap<PopDashboardAttachment, GetPopDashboardResponse.Attachment>();
             Mapper.CreateMap<PopInformation, GetPopDashboardResponse.PopInformation>();
             Mapper.CreateMap<Signature, GetPopDashboardResponse.Signature>()
                 .ForMember(x => x.User, o => o.MapFrom(y => y.User.Username))
@@ -720,9 +732,18 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
         private void ConfigureProcessBlueprint()
         {
-            Mapper.CreateMap<ProcessBlueprint, GetProcessBlueprintResponse>();
-            Mapper.CreateMap<ProcessBlueprint, GetProcessBlueprintsResponse.ProcessBlueprint>();
+            Mapper.CreateMap<ProcessBlueprint, GetProcessBlueprintResponse>()
+                .ForMember(x => x.CreatedBy, y => y.MapFrom(z => z.CreatedBy.Id));
+            Mapper.CreateMap<ProcessBlueprint, GetProcessBlueprintsResponse.ProcessBlueprint>()
+                .ForMember(x => x.CreatedBy, y => y.MapFrom(z => z.CreatedBy.Id));
             Mapper.CreateMap<SaveProcessBlueprintRequest, ProcessBlueprint>();
+            Mapper.CreateMap<FileManagerRolePrivilege, GetProcessBlueprintPrivilegesResponse.FileManagerRolePrivilege>()
+                .ForMember(x => x.FileId, y => y.MapFrom(z => z.ProcessBlueprint.Id))
+                .ForMember(x => x.RoleGroupId, y => y.MapFrom(z => z.RoleGroup.Id))
+                .ForMember(x=>x.RoleGroupName,y=>y.MapFrom(z=>z.RoleGroup.Name));
+            Mapper.CreateMap<ProcessBlueprint, GetProcessBlueprintPrivilegesResponse.FileManagerRolePrivilege.BlueprintFile>();
+            Mapper.CreateMap<UpdateFilePrivilegeRequest, FileManagerRolePrivilege>();
+            Mapper.CreateMap<FilePrivilegeRequest, FileManagerRolePrivilege>();
         }
 
         private void ConfigureEconomicSummary()

@@ -23,7 +23,7 @@ namespace DSLNG.PEAR.Services
         public MenuService(IDataContext dataContext)
             : base(dataContext)
         {
-
+            
         }
 
         public GetSiteMenusResponse GetSiteMenus(GetSiteMenusRequest request)
@@ -114,7 +114,7 @@ namespace DSLNG.PEAR.Services
                     }
                 }
 
-                
+
                 requestController = string.IsNullOrEmpty(ctrl) ? requestUrl[0] : ctrl;
             }
 
@@ -129,7 +129,7 @@ namespace DSLNG.PEAR.Services
             }
 
             IDictionary<int, int> dictionary = new Dictionary<int, int>();
-            
+
             var menus =
                 DataContext.Menus
                 .Include(x => x.Parent)
@@ -350,11 +350,11 @@ namespace DSLNG.PEAR.Services
             IQueryable<Data.Entities.Menu> menus;
             if (request.Take != 0)
             {
-                menus = DataContext.Menus.OrderBy(x => x.Order).Skip(request.Skip).Take(request.Take);
+                menus = DataContext.Menus.AsNoTracking().OrderBy(x => x.Order).Skip(request.Skip).Take(request.Take);
             }
             else
             {
-                menus = DataContext.Menus;
+                menus = DataContext.Menus.AsNoTracking();
             }
 
             var response = new GetMenusResponse() { Menus = menus.MapTo<GetMenusResponse.Menu>() };
@@ -382,7 +382,7 @@ namespace DSLNG.PEAR.Services
         {
             try
             {
-                var menu = DataContext.Menus.Include(x => x.RoleGroups).First(x => x.Id == request.Id);
+                var menu = DataContext.Menus.AsNoTracking().Include(x => x.RoleGroups).First(x => x.Id == request.Id);
                 var response = menu.MapTo<GetMenuResponse>();
 
                 return response;
@@ -407,6 +407,8 @@ namespace DSLNG.PEAR.Services
                 menu.IsRoot = request.ParentId <= 0;
                 menu.ParentId = menu.IsRoot ? null : menu.ParentId;
 
+
+
                 //check if has role group
                 if (request.RoleGroupIds.Count > 0)
                 {
@@ -430,6 +432,10 @@ namespace DSLNG.PEAR.Services
 
                 DataContext.Menus.Add(menu);
                 DataContext.SaveChanges();
+                if (request.AddParent && !menu.IsRoot)
+                {
+                    AddParentMenu(menu.ParentId, request.RoleGroupIds);
+                }
                 response.IsSuccess = true;
                 response.Message = "Menu item has been added successfully";
             }
@@ -441,6 +447,151 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
+        private void AddParentMenu(int? parentId, List<int> RoleGroupIds)
+        {
+            if (parentId.HasValue && parentId.Value > 0)
+            {
+                try
+                {
+                    var menu = DataContext.Menus.Find(parentId);
+                    var item = DataContext.Entry(menu);
+                    var state = item.State;
+                    item.State = EntityState.Modified;
+                    item.Collection("RoleGroups").Load();
+                    var dicts = menu.RoleGroups.ToDictionary(x => x.Id);
+                    if (RoleGroupIds.Count() > 0)
+                    {
+                        foreach (var role in RoleGroupIds)
+                        {
+                            dicts[role] = DataContext.RoleGroups.Find(role);
+                        }
+                        //merge existing with new group
+                        var merged = dicts.Values.ToList();
+                        //remove existing group
+                        menu.RoleGroups.Clear();
+                        foreach (var roleGroup in merged)
+                        {
+                            menu.RoleGroups.Add(roleGroup);
+                        }
+                        menu.Url = menu.Url != null && menu.Url.Length > 0 ? _CleanUpMenuUrl(menu.Url) : menu.Url;
+                    }
+                    DataContext.SaveChanges();
+                    if (menu.ParentId.HasValue && menu.ParentId.Value > 0)
+                    {
+                        AddParentMenu(menu.ParentId.Value, RoleGroupIds);
+                    }
+                }
+                catch (DbUpdateException ex)
+                {
+
+                    throw;
+                }
+
+            }
+
+        }
+
+        //private void AddParentMenu(UpdateMenuRequest request)
+        //{
+        //    Update(request);
+        //    if (request.ParentId != null && request.ParentId > 0)
+        //    {
+        //        var parentMenu = GetMenu(new GetMenuRequest { Id = (int)request.ParentId }).MapTo<UpdateMenuRequest>();
+        //        parentMenu.RoleGroupIds = request.RoleGroupIds;
+        //        AddParentMenu(parentMenu);
+        //    }
+        //}
+
+        #region new_update
+        //public UpdateMenuResponse Update(UpdateMenuRequest request)
+        //{
+        //    var response = new UpdateMenuResponse();
+        //    if (request.Id == 0) return response;
+        //    try
+        //    {
+        //        var currentValue = DataContext.Menus.Find(request.Id);
+        //        var menu = request.MapTo<Data.Entities.Menu>();
+        //        var item = DataContext.Entry(currentValue);//.State = EntityState.Modified;
+        //        item.State = EntityState.Modified;
+        //        item.CurrentValues.SetValues(menu);
+        //        //DataContext.Entry(currentValue).CurrentValues.SetValues(menu);
+
+        //        //var item = DataContext.Entry(menu);
+        //        //if (item.State == EntityState.Detached)
+        //        //{
+        //        //    DataContext.Menus.Attach(menu);
+        //        //}
+        //        //item.State = EntityState.Modified;
+        //        ////Load RoleGroups Collection
+        //        //item.Collection("RoleGroups").Load();
+
+        //        ////set IsRoot if no menu as parent
+        //        //menu.IsRoot = request.ParentId <= 0;
+        //        //menu.ParentId = menu.IsRoot ? null : menu.ParentId;
+        //        ////clear RoleGroups collection first
+        //        //menu.RoleGroups.Clear();
+        //        item.Collection("RoleGroups").Load();
+        //        menu.IsRoot = request.ParentId <= 0;
+        //        menu.ParentId = menu.IsRoot ? null : menu.ParentId;
+        //        //currentValue.RoleGroups.Clear();
+
+        //        var dicts = menu.RoleGroups.ToDictionary(x => x.Id);
+        //        if (request.RoleGroupIds.Count > 0)
+        //        {
+        //            foreach (var role in request.RoleGroupIds)
+        //            {
+        //                dicts[role] = DataContext.RoleGroups.Find(role);
+        //            }
+        //            var merged = dicts.Values.ToList();
+        //            menu.RoleGroups.Clear();
+
+        //            foreach (var dict in merged)
+        //            {
+        //                menu.RoleGroups.Add(dict);
+        //            }
+        //        }
+        //        //remove existing RoleGroup
+
+
+        //        ///Removed due to performance issue
+        //        //List<int> existing = new List<int>(menu.RoleGroups.Count());
+        //        //foreach (var exis in menu.RoleGroups)
+        //        //{
+        //        //    existing.Add(exis.Id);
+        //        //}
+        //        //List<int> inter = existing.Union(request.RoleGroupIds).ToList();
+        //        //if (inter.Count > 0)
+        //        //{
+        //        //    //menu.RoleGroups = new HashSet<Data.Entities.RoleGroup>();
+
+        //        //    foreach (int roleGroupId in inter)
+        //        //    {
+        //        //        var roleGroup = DataContext.RoleGroups.Find(roleGroupId);
+
+        //        //        //add selected role group to menu
+        //        //        menu.RoleGroups.Add(roleGroup);
+        //        //        //currentValue.RoleGroups.Add(roleGroup);
+        //        //    }
+        //        //}
+
+        //        //ensure url end with slash
+        //        menu.Url = menu.Url != null && menu.Url.Length > 0 ? _CleanUpMenuUrl(menu.Url) : menu.Url;
+        //        //currentValue.Url = currentValue.Url != null && currentValue.Url.Length > 0 ? _CleanUpMenuUrl(currentValue.Url) : currentValue.Url;
+        //        //DataContext.Menus.Attach(menu);
+        //        //DataContext.Entry(menu).State = EntityState.Modified;
+
+        //        DataContext.SaveChanges();
+        //        response.IsSuccess = true;
+        //        response.Message = "Menu item has been updated successfully";
+        //    }
+        //    catch (DbUpdateException dbUpdateException)
+        //    {
+        //        response.Message = dbUpdateException.Message;
+        //    }
+
+        //    return response;
+        //}
+        #endregion
         public UpdateMenuResponse Update(UpdateMenuRequest request)
         {
             var response = new UpdateMenuResponse();
@@ -515,19 +666,9 @@ namespace DSLNG.PEAR.Services
         {
             try
             {
-                //var role = DataContext.RoleGroups.First(x => x.Id == request.RoleId);
-                //var menu = DataContext.Menus.Include(x => x.RoleGroups).Where(x=>x.RoleGroups == role).First(x => x.Url == request.Url);
-                //var url = request.Url != null ? request.Url.Split('/') : null;
-                //string authorized = "/";
-                //if (url[1].Length > 0)
-                //{
-                //    authorized = string.Format("/{0}/", url[1]);
-                //    //authorized += url[1];
-                //}
-                //var menu = DataContext.Menus.Include(x => x.RoleGroups).First(x => x.RoleGroups.Select(y => y.Id).Contains(request.RoleId) && x.Url.Contains(authorized));
-                var menu = DataContext.Menus.Include(x => x.RoleGroups).First(x => x.RoleGroups.Select(y => y.Id).Contains(request.RoleId) && x.Url.Contains(request.Url));
-
-                var response = menu.MapTo<GetMenuResponse>();
+                var response = new GetMenuResponse();
+                var menu = DataContext.Menus.AsNoTracking().Include(x => x.RoleGroups).FirstOrDefault(x => x.RoleGroups.Select(y => y.Id).Contains(request.RoleId) && x.Url.Contains(request.Url));
+                response = menu.MapTo<GetMenuResponse>();
                 response.IsSuccess = true;
                 return response;
             }
@@ -616,7 +757,7 @@ namespace DSLNG.PEAR.Services
 
         private IEnumerable<Data.Entities.Menu> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int totalRecords)
         {
-            var data = DataContext.Menus.Include(x => x.RoleGroups).AsQueryable();
+            var data = DataContext.Menus.AsNoTracking().Include(x => x.RoleGroups).AsQueryable();
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             {
                 data = data.Where(x => x.Module.Contains(search) || x.Name.Contains(search));
@@ -655,6 +796,27 @@ namespace DSLNG.PEAR.Services
             }
             totalRecords = data.Count();
             return data;
+        }
+
+
+        public GetMenuPrivilegeResponse GetMenuPrivilege(GetMenuPrivilegeRequest request)
+        {
+            var response = new GetMenuPrivilegeResponse();
+            try
+            {
+                response = DataContext.MenuRolePrivileges.AsNoTracking().Include(x => x.RolePrivilege).Include(y => y.Menu).Where(z => z.Menu.Id == request.Menu_Id && z.RolePrivilege.Id == request.RolePrivilege_Id).FirstOrDefault().MapTo<GetMenuPrivilegeResponse>();
+                response.IsSuccess = true;
+            }
+            catch (Exception e)
+            {
+                response.IsSuccess = false;
+                response.Message = e.Message;
+            }
+            //var test = DataContext.MenuRolePrivileges.Include(x => x.RolePrivilege).Include(y => y.Menu).Where(z=>z.Menu.Id==request.Menu_Id && z.RolePrivilege.Id==request.RolePrivilege_Id).FirstOrDefault();
+
+            //response = test.MapTo<GetMenuPrivilegeResponse>();
+            ////response = DataContext.MenuRolePrivileges.Include(x => x.Menu).Where(x => x.Menu_Id == request.Menu_Id && x.RolePrivilege_Id == request.RolePrivilege_Id).Include(x => x.RolePrivilege).FirstOrDefault().MapTo<GetMenuPrivilegeResponse>();
+            return response;
         }
     }
 }

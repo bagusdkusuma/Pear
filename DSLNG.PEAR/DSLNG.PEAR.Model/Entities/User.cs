@@ -8,6 +8,9 @@ namespace DSLNG.PEAR.Data.Entities
 {
     public class User
     {
+        public User()
+        {
+        }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -32,7 +35,7 @@ namespace DSLNG.PEAR.Data.Entities
         public string ChangeModel { get; set; }
         public bool IsSuperAdmin { get; set; }
 
-
+        public ICollection<RolePrivilege> RolePrivileges { get; set; }
         public IList<Signature> Signatures { get; set; }
     }
 }
