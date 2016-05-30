@@ -19,7 +19,7 @@ namespace DSLNG.PEAR.Web.Attributes
             var _menuService = ObjectFactory.Container.GetInstance<IMenuService>();
             var sessionData = (UserProfileSessionData)httpContext.Session["LoginUser"];
             //by passing super admin
-            
+            if (sessionData == null) return false;
             var controller = httpContext.Request.RequestContext.RouteData.Values["Controller"].ToString();
 
             if (sessionData.IsSuperAdmin)

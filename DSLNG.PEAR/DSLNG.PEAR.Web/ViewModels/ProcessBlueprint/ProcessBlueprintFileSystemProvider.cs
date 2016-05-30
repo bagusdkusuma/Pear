@@ -43,7 +43,25 @@ namespace DSLNG.PEAR.Web.ViewModels.ProcessBlueprint
             {
                 file.FileId = response.Id;
                 GetAll().Add(file);
+                AddDefaultPrivilege(response.Id);
             }
+        }
+
+        private static void AddDefaultPrivilege(int processBlueprintId)
+        {
+            var roleid = sessionData.RoleId;
+            service.InsertOwnerPrivilege(new Services.Requests.FileManagerRolePrivilege.FilePrivilegeRequest { 
+                ProcessBlueprint_Id = processBlueprintId,
+                RoleGroup_Id = roleid,
+                AllowBrowse = true,
+                AllowCopy = true,
+                AllowCreate = true,
+                AllowDelete = true,
+                AllowDownload = true,
+                AllowMove = true,
+                AllowRename = true,
+                AllowUpload = true
+            });
         }
         public static void Update(FileSystemItem file)
         {
