@@ -118,7 +118,9 @@ using DSLNG.PEAR.Services.Requests.MirDataTable;
 using DSLNG.PEAR.Services.Responses.ProcessBlueprint;
 using DSLNG.PEAR.Services.Requests.ProcessBlueprint;
 using DSLNG.PEAR.Services.Requests.FileManagerRolePrivilege;
-
+using DSLNG.PEAR.Data.Entities.Files;
+using DSLNG.PEAR.Services.Responses.Files;
+using DSLNG.PEAR.Services.Requests.Files;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -136,6 +138,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             ConfigureEconomicSummary();
             ConfigureDer();
             ConfigureProcessBlueprint();
+            ConfigureFileRepository();
 
             Mapper.CreateMap<Data.Entities.User, GetUsersResponse.User>();
             Mapper.CreateMap<GetUsersResponse.User, Data.Entities.User>();
@@ -728,6 +731,13 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Kpi, GetMirConfigurationsResponse.MirDataTable.Kpi>();
             Mapper.CreateMap<SaveMirDataTableRequest, MirDataTable>();
             base.Configure();
+        }
+
+        private void ConfigureFileRepository()
+        {
+            Mapper.CreateMap<FileRepository, GetFileRepositoryResponse>();
+            Mapper.CreateMap<FileRepository, GetFilesRepositoryResponse.FileRepository>();
+            Mapper.CreateMap<SaveFileRepositoryRequest, FileRepository>();
         }
 
         private void ConfigureProcessBlueprint()

@@ -86,11 +86,13 @@
     <Compile Include="DropdownService.cs" />
     <Compile Include="EconomicSummaryService.cs" />
     <Compile Include="EnvironmentScanningService.cs" />
+    <Compile Include="FileRepositoryService.cs" />
     <Compile Include="GroupService.cs" />
     <Compile Include="HighlightGroupService.cs" />
     <Compile Include="HighlightOrderService.cs" />
     <Compile Include="HighlightService.cs" />
     <Compile Include="Interfaces\GetDerLayoutResponse.cs" />
+    <Compile Include="Interfaces\IFileRepositoryService.cs" />
     <Compile Include="Interfaces\IMirConfigurationService.cs" />
     <Compile Include="Interfaces\IMirDataTableService.cs" />
     <Compile Include="Interfaces\IProcessBlueprintService.cs" />
@@ -100,6 +102,9 @@
     <Compile Include="ProcessBlueprintService.cs" />
     <Compile Include="Requests\FileManagerRolePrivilege\FilePrivilegeRequest.cs" />
     <Compile Include="Requests\FileManagerRolePrivilege\UpdateFilePrivilegeRequest.cs" />
+    <Compile Include="Requests\Files\GetFileRequest.cs" />
+    <Compile Include="Requests\Files\GetFilesRequest.cs" />
+    <Compile Include="Requests\Files\SaveFileRepositoryRequest.cs" />
     <Compile Include="Requests\Menu\GetMenuPrivilegeRequest.cs" />
     <Compile Include="Requests\MirConfiguration\GetMirConfigurationsRequest.cs" />
     <Compile Include="Requests\MirConfiguration\SaveMirConfigurationRequest.cs" />
@@ -224,6 +229,8 @@
     <Compile Include="Responses\EnvironmentScanning\SaveEnvironmentalScanningResponse.cs" />
     <Compile Include="Responses\EnvironmentScanning\SaveEnvironmentScanningResponse.cs" />
     <Compile Include="Responses\EnvironmentScanning\SubmitEnvironmentsScanningResponse.cs" />
+    <Compile Include="Responses\Files\GetFileRepositoryResponse.cs" />
+    <Compile Include="Responses\Files\GetFilesRepositoryResponse.cs" />
     <Compile Include="Responses\HighlightGroup\DeleteHighlightGroupResponse.cs" />
     <Compile Include="Responses\HighlightOrder\GetStaticHighlightOrdersResponse.cs" />
     <Compile Include="Responses\HighlightOrder\SaveStaticHighlightOrderResponse.cs" />
