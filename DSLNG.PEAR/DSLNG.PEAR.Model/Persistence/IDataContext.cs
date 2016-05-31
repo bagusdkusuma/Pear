@@ -7,6 +7,7 @@ using DSLNG.PEAR.Data.Entities.EconomicModel;
 using DSLNG.PEAR.Data.Entities.Blueprint;
 using DSLNG.PEAR.Data.Entities.Pop;
 using DSLNG.PEAR.Data.Entities.Mir;
+using DSLNG.PEAR.Data.Entities.Files;
 
 namespace DSLNG.PEAR.Data.Persistence
 {
@@ -111,6 +112,9 @@ namespace DSLNG.PEAR.Data.Persistence
 
         IDbSet<RolePrivilege> RolePrivileges { get; set; }
         IDbSet<MenuRolePrivilege> MenuRolePrivileges { get; set; }
+
+        IDbSet<FileRepository> FileRepositories { get; set; }
+
         Database Database { get; }
         int SaveChanges();
         DbEntityEntry Entry(object entity);
