@@ -1,16 +1,17 @@
-﻿using DSLNG.PEAR.Services.Interfaces;
+﻿using DevExpress.Web;
+using DevExpress.Web.Mvc;
+using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Services.Interfaces;
+using DSLNG.PEAR.Services.Requests.Files;
 using DSLNG.PEAR.Services.Responses.Files;
 using DSLNG.PEAR.Web.Attributes;
 using DSLNG.PEAR.Web.Grid;
 using DSLNG.PEAR.Web.ViewModels.File;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Web;
 using System.Web.Mvc;
-using DSLNG.PEAR.Common.Extensions;
-using DevExpress.Web.Mvc;
-using DevExpress.Web;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -26,19 +27,23 @@ namespace DSLNG.PEAR.Web.Controllers
         // GET: MIR
         public ActionResult Index()
         {
+            ViewBag.Years = _dropDownService.GetYears().MapTo<SelectListItem>();
+            ViewBag.Year = DateTime.Now.Year;
             return View();
         }
 
-        public ActionResult Grid(GridParams gridParams)
+        public ActionResult Grid(GridParams gridParams, int? year)
         {
+            year = year.HasValue ? year.Value : DateTime.Now.Year;
             var mirData = _fileRepositoryService.GetFiles(new Services.Requests.Files.GetFilesRequest
             {
+                Year = year.Value,
                 Take = gridParams.DisplayLength,
                 Skip = gridParams.DisplayStart,
                 SortingDictionary = gridParams.SortingDictionary,
                 Search = gridParams.Search
             });
-            IList<GetFilesRepositoryResponse.FileRepository> DataResponse = mirData.FileRepositories;
+            List<FileRepositoryViewModel> DataResponse = mirData.FileRepositories.MapTo<FileRepositoryViewModel>();
             var data = new
             {
                 sEcho = gridParams.Echo + 1,
@@ -63,9 +68,34 @@ namespace DSLNG.PEAR.Web.Controllers
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult Create(FileRepositoryViewModel model)
+        public ActionResult Create(FileRepositoryCreateViewModel model)
         {
-            return View(model);
+            model.Years = _dropDownService.GetYears().MapTo<SelectListItem>();
+            model.Months = _dropDownService.GetMonths().MapTo<SelectListItem>();
+
+            if (ModelState.IsValid)
+            {
+                SaveFileRepositoryRequest saveModel = new SaveFileRepositoryRequest();
+                saveModel = model.MapTo<SaveFileRepositoryRequest>();
+                //this should be the reader
+                //try to read data on buffer
+                saveModel.Data = (byte[])Session[model.Filename];
+                saveModel.LastWriteTime = DateTime.Now;
+                saveModel.UserId = this.UserProfile().UserId;
+                if (_fileRepositoryService.Save(saveModel).IsSuccess)
+                {
+                    return RedirectToAction("Index", "MIR");
+                }
+                else
+                {
+                    return View(model);
+                }
+            }
+            else
+            {
+                return View(model);
+            }
+            
         }
 
         public ActionResult UploadControlCallbackAction()
@@ -73,24 +103,18 @@ namespace DSLNG.PEAR.Web.Controllers
             UploadControlExtension.GetUploadedFiles("mirUpload", MIRUploadControlSettings.ValidationSettings, MIRUploadControlSettings.FileUploadComplete);
             return null;
         }
-    }
 
-    public class MIRUploadControlSettings{
-        public static UploadControlValidationSettings ValidationSettings = new UploadControlValidationSettings()
+        protected static byte[] ReadAllBytes(Stream stream)
         {
-            AllowedFileExtensions = new string[] { ".pdf" },
-            MaxFileSize = 4194304
-        };
-        public static void FileUploadComplete(object sender, FileUploadCompleteEventArgs e)
-        {
-            if (e.UploadedFile.IsValid)
+            byte[] buffer = new byte[16 * 1024];
+            int readCount;
+            using (MemoryStream ms = new MemoryStream())
             {
-                var uploaded = new
+                while ((readCount = stream.Read(buffer, 0, buffer.Length)) > 0)
                 {
-                    fileName = e.UploadedFile.FileName,
-                    data = e.UploadedFile.FileBytes
-                };
-                HttpContext.Current.Session["MirAttachment"] = uploaded;
+                    ms.Write(buffer, 0, readCount);
+                }
+                return ms.ToArray();
             }
         }
     }
