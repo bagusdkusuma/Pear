@@ -1427,7 +1427,7 @@ namespace DSLNG.PEAR.Services
                         {
                             kpi = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == kpi.Id);
                         }
-                        kpiInformations.Add(new DerKpiInformation { Kpi = kpi, Position = item.Position, IsOriginalData = item.IsOriginalData });
+                        kpiInformations.Add(new DerKpiInformation { Kpi = kpi, Position = item.Position});
                     }
                     else if (item.HighlightId > 0)
                     {
@@ -1440,7 +1440,7 @@ namespace DSLNG.PEAR.Services
                         {
                             selectOption = DataContext.SelectOptions.Local.FirstOrDefault(x => x.Id == selectOption.Id);
                         }
-                        kpiInformations.Add(new DerKpiInformation { SelectOption = selectOption, Position = item.Position, IsOriginalData = item.IsOriginalData, ConfigType = item.ConfigType });
+                        kpiInformations.Add(new DerKpiInformation { SelectOption = selectOption, Position = item.Position, ConfigType = item.ConfigType });
                     }
                 }
                 derLayoutItem.KpiInformations = kpiInformations;
@@ -1485,7 +1485,7 @@ namespace DSLNG.PEAR.Services
                         {
                             kpi = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == kpi.Id);
                         }
-                        kpiInformations.Add(new DerKpiInformation { Kpi = kpi, Position = item.Position, IsOriginalData = item.IsOriginalData, ConfigType = item.ConfigType });
+                        kpiInformations.Add(new DerKpiInformation { Kpi = kpi, Position = item.Position, ConfigType = item.ConfigType });
                     } else if (item.HighlightId > 0)
                     {
                         var selectOption = new SelectOption { Id = item.HighlightId };
@@ -1497,7 +1497,7 @@ namespace DSLNG.PEAR.Services
                         {
                             selectOption = DataContext.SelectOptions.Local.FirstOrDefault(x => x.Id == selectOption.Id);
                         }
-                        kpiInformations.Add(new DerKpiInformation { SelectOption = selectOption, Position = item.Position, IsOriginalData = item.IsOriginalData, ConfigType = item.ConfigType });
+                        kpiInformations.Add(new DerKpiInformation { SelectOption = selectOption, Position = item.Position, ConfigType = item.ConfigType });
                     }
                     
                 }
