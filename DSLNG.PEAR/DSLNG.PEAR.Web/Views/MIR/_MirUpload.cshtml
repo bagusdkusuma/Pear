@@ -1,0 +1,9 @@
+﻿@Html.DevExpress().UploadControl(settings =>
+{
+    settings.Name = "mirUpload";
+    settings.ShowProgressPanel = true;
+    settings.CallbackRouteValues = new { Controller = "MIR", Action = "UploadControlCallbackAction" };
+    settings.ClientSideEvents.FileUploadComplete = "OnFileUploadComplete";
+    settings.ShowUploadButton = true;
+    settings.ValidationSettings.Assign(DSLNG.PEAR.Web.Controllers.MIRUploadControlSettings.ValidationSettings);
+}).GetHtml()
