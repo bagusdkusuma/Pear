@@ -7,6 +7,7 @@ using System;
 using DSLNG.PEAR.Data.Entities.Blueprint;
 using DSLNG.PEAR.Data.Entities.Pop;
 using DSLNG.PEAR.Data.Entities.Mir;
+using DSLNG.PEAR.Data.Entities.Files;
 
 namespace DSLNG.PEAR.Data.Persistence
 {
@@ -118,6 +119,9 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<FileManagerRolePrivilege> FileManagerRolePrivileges { get; set; }
         public IDbSet<RolePrivilege> RolePrivileges { get; set; }
         public IDbSet<MenuRolePrivilege> MenuRolePrivileges { get; set; }
+
+        public IDbSet<FileRepository> FileRepositories { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Kpi>()

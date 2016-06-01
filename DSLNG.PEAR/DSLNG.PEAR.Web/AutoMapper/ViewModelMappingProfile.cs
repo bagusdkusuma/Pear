@@ -173,6 +173,7 @@ using DSLNG.PEAR.Web.ViewModels.ProcessBlueprint;
 using DSLNG.PEAR.Services.Responses.ProcessBlueprint;
 using DSLNG.PEAR.Services.Requests.ProcessBlueprint;
 using DSLNG.PEAR.Services.Requests.FileManagerRolePrivilege;
+using DSLNG.PEAR.Services.Responses.Files;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -190,6 +191,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             ConfigureEconomicSummary();
             ConfigureDerViewModel();
             ConfigureProcessBlueprint();
+            ConfigureFileRepository();
 
             Mapper.CreateMap<Dropdown, SelectListItem>();
             Mapper.CreateMap<SearchKpiViewModel, GetKpiToSeriesRequest>();
@@ -726,6 +728,14 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<SaveMirDataTableViewModel, SaveMirDataTableRequest>();
             base.Configure();
+        }
+
+        private void ConfigureFileRepository()
+        {
+            Mapper.CreateMap<FileRepositoryViewModel, GetFileRepositoryResponse>();
+            Mapper.CreateMap<GetFilesRepositoryResponse.FileRepository, FileRepositoryGridViewModel.FileRepository>();
+            Mapper.CreateMap<FileRepositoryGridViewModel.FileRepository, FileRepositoryViewModel>();
+            Mapper.CreateMap<FileRepositoryViewModel, FileRepositoryGridViewModel.FileRepository>();
         }
 
         private void ConfigureProcessBlueprint()
