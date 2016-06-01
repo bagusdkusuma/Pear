@@ -18,7 +18,7 @@ namespace DSLNG.PEAR.Services
 {
     public class FileRepositoryService : BaseService, IFileRepositoryService
     {
-        public FileRepositoryService(IDataContext context):base(context)
+        public FileRepositoryService(IDataContext context) : base(context)
         {
 
         }
@@ -44,7 +44,7 @@ namespace DSLNG.PEAR.Services
                     Message = u.Message
                 };
             }
-            catch(InvalidOperationException i)
+            catch (InvalidOperationException i)
             {
                 return new BaseResponse
                 {
@@ -74,7 +74,7 @@ namespace DSLNG.PEAR.Services
         public GetFilesRepositoryResponse GetFiles(GetFilesRequest request)
         {
             int totalRecord = 0;
-            var data = SortData(request.Search, request.SortingDictionary, out totalRecord);
+            var data = SortData(request.Year, request.Search, request.SortingDictionary, out totalRecord);
             if (request.Take != -1)
             {
                 data = data.Skip(request.Skip).Take(request.Take);
@@ -86,9 +86,9 @@ namespace DSLNG.PEAR.Services
             };
         }
 
-        private IEnumerable<FileRepository> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        private IEnumerable<FileRepository> SortData(int year, string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
         {
-            var data = DataContext.FileRepositories.AsQueryable();
+            var data = DataContext.FileRepositories.Where(x => x.Year == year).AsQueryable();
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             {
                 data = data.Where(x => x.Name.Contains(search) || x.Summary.Contains(search));
@@ -142,6 +142,7 @@ namespace DSLNG.PEAR.Services
                 file.Name = request.Name;
                 file.Summary = request.Summary;
                 file.LastWriteTime = request.LastWriteTime;
+                file.Filename = request.Filename;
                 file.Data = request.Data;
                 if (request.Id > 0)
                 {
