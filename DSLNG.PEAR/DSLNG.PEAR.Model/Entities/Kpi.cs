@@ -34,6 +34,7 @@ namespace DSLNG.PEAR.Data.Entities
         public bool IsEconomic { get; set; }
         public int Order { get; set; }
         public YtdFormula YtdFormula { get; set; }
+        public string CustomFormula { get; set; }
         public Measurement Measurement { get; set; }
         public Method Method { get; set; }
         public int? ConversionId { get; set; }
