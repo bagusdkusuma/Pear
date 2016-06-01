@@ -25,6 +25,7 @@
     <IISExpressUseClassicPipelineMode />
     <UpgradeBackupLocation />
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -61,6 +62,8 @@
       <HintPath>..\packages\ClosedXML.0.76.0\lib\net40-client\ClosedXML.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.Docs.v14.2, Version=14.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Pdf.v14.2.Core, Version=14.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Pdf.v14.2.Drawing, Version=14.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DocumentFormat.OpenXml">
       <HintPath>..\packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
@@ -772,6 +775,7 @@
     <Compile Include="Controllers\ArtifactCloneController.cs" />
     <Compile Include="Controllers\AssumptionDataController.cs" />
     <Compile Include="Controllers\MirConfigurationController.cs" />
+    <Compile Include="Controllers\MIRController.cs" />
     <Compile Include="Controllers\MirDataTableController.cs" />
     <Compile Include="Controllers\ProcessBlueprintController.cs" />
     <Compile Include="Controllers\WaveController.cs" />
@@ -841,6 +845,10 @@
     <Compile Include="Grid\GridParams.cs" />
     <Compile Include="ViewModels\EnvironmentScanning\EnvironmentScanningViewModel.cs" />
     <Compile Include="ViewModels\File\DownloadTemplateViewModel.cs" />
+    <Compile Include="ViewModels\File\FileRepositoryCreateViewModel.cs" />
+    <Compile Include="ViewModels\File\FileRepositoryGridViewModel.cs" />
+    <Compile Include="ViewModels\File\FileRepositoryViewModel.cs" />
+    <Compile Include="ViewModels\File\PdfPageViewModel.cs" />
     <Compile Include="ViewModels\File\ProcessFileViewModel.cs" />
     <Compile Include="ViewModels\HighlightGroup\HighlightGroupViewModel.cs" />
     <Compile Include="ViewModels\Kpi\DetailKpiViewModel.cs" />
@@ -1267,6 +1275,9 @@
     <Content Include="Views\ProcessBlueprint\_PrivilegeConfigPartial.cshtml" />
     <Content Include="Views\ProcessBlueprint\_PrivilegePartial.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Currency.cshtml" />
+    <Content Include="Views\MIR\Index.cshtml" />
+    <Content Include="Views\MIR\Create.cshtml" />
+    <Content Include="Views\MIR\_MirUpload.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

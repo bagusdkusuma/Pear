@@ -1,0 +1,75 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.File.FileRepositoryCreateViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="pop-dashboard-save">
+    @using (Html.BeginForm("Create", "MIR", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="col-md-12">
+            <div class="title">Management Information Report Entry</div>
+            <div>@Html.ValidationSummary(true)</div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-inline whitebox">
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.Year)
+                    @Html.DropDownListFor(model => model.Year, Model.Years, new { htmlAttributes = new { @class = "form-control" } })
+                    @*@Html.EditorFor(model => model.Year, new { htmlAttributes = new { @class = "form-control" } })*@
+                    @Html.ValidationMessageFor(model => model.Year)
+                </div>
+
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.Month)
+                    @Html.DropDownListFor(model => model.Month, Model.Months, new { @class = "form-control" })
+                    @*@Html.EditorFor(model => model.Month, new { htmlAttributes = new { @class = "form-control" } })*@
+                    @Html.ValidationMessageFor(model => model.Month)
+                </div>
+
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.Name)
+                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
+
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.Summary)
+                    @Html.TextAreaFor(model => model.Summary, new { @class = "form-control allow-html" })
+                    @Html.ValidationMessageFor(model => model.Summary)
+                </div>
+                <div class="form-group form-list">
+                    @Html.Label("Attachment")
+                    @Html.Partial("_MirUpload")
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 artifact-designer-btns">
+            <button type="submit" class="btn btn-primary btn-lg btn-submit"><span class="fa fa-floppy-o"></span>Save</button>
+            <a href="@Request.Url.ToString()" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>
+            <a href="/MIR" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            tinyMCE.init({
+                selector: ".allow-html",
+                menubar: false,
+                plugins: [
+                    "advlist autolink lists link image charmap print preview anchor",
+                    "searchreplace visualblocks code fullscreen",
+                    "insertdatetime media table contextmenu paste"
+                ],
+                toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+            });
+        });
+    </script>
+}
+
+
+
+

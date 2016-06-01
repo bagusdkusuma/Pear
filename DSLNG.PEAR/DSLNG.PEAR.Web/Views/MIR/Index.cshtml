@@ -1,0 +1,86 @@
+﻿@model IEnumerable<DSLNG.PEAR.Web.ViewModels.File.FileRepositoryGridViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Management Information Reports</h2>
+@Html.Partial("_MessageResponse")
+<div class="add-button-wrapper">
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+</div>
+
+
+<table id="mir-table" class="rgw-pop-tbl table-transparent table row-border table-bordered table-responsive" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>Month</th>
+            <th>View Executive Summary</th>
+            <th>File Attachment</th>
+            <th style="width: 200px;">Action</th>
+        </tr>
+    </thead>
+</table>
+
+@section Scripts{
+    <script type="text/javascript">
+        var contentUrl = '@Url.Content("$x$")';
+        $(document).ready(function () {
+            $('#mir-table').DataTable({
+                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                "iDisplayLength": -1,
+                "bProcessing": true,
+                "bServerSide": true,
+                "sServerMethod": "POST",
+                "sAjaxSource": '@Url.Action("Grid", "MIR")',
+                "order": [[0, "asc"]],
+                "aoColumns": [
+                    { "mDataProp": "Number", "name": "Number", "className": "dt-body-left", "orderable" : false },
+                    { "mDataProp": "Month", "name": "Month", "className": "dt-body-left", "orderable": false },
+                    { "mDataProp": "Summary", "name": "Summary", "className": "dt-body-left", "orderable": false },
+                    {
+                        "mDataProp": "Data", "name": "Data", "className": "dt-body-left", "orderable": false, "mRender": function (data, type, row) {
+                        var list = '<ul class="pop-attachments-list">';
+                        for (var i in data) {
+                            list += '<li><a href="' + contentUrl.replace('$x$', data[i].Filename.substr(2, data[i].Filename.length)) + '" class="document-link doc-type-' + data[i].Type +
+                                '" >' + data[i].Alias + '</a></li>';
+                        }
+                        list += '</ul>';
+                        return list;
+                    }
+        },
+                    {
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": '',
+                        "mRender": function (data, type, row) {
+                            var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
+                            var editLink = '@Html.ActionLink("Edit", "Edit", "MIR", new { id = "_id_" }, null)'.replace('_id_', data.Id);
+                            return editLink + ' | ' + deleteLink;
+                        }
+                    }
+                ],
+                rowCallback: function (row, data) {
+                    // Set the checked state of the checkbox in the table
+                    //$('input.is-active', row).prop('checked', data.IsActive == 1);
+                }
+            });
+
+            $('#mir-table').on('click', '.delete', function () {
+                var id = $(this).attr('data-id');
+                if (confirm('Are you sure want to delete this item?' + id)) {
+                    var url = '@Url.Action("Delete", "MIR")';
+                    var form = $('<form />');
+                    form.attr('action', url);
+                    form.attr('method', 'POST');
+                    form.html('<input type="hidden" name="id" value="' + id + '" />');
+                    $('body').append(form);
+                    form.submit();
+                }
+            });
+
+
+        });
+    </script>
+}
