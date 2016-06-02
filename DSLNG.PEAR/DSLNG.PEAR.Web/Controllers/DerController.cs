@@ -1024,5 +1024,10 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             return val.HasValue ? val.Value.ToString(CultureInfo.InvariantCulture) : "n/a";
         }
+
+        [HttpGet]
+        public ActionResult Input() {
+            return View();
+        }
     }
 }
