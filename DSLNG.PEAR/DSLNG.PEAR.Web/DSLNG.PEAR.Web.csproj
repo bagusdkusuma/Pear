@@ -777,6 +777,7 @@
     <Compile Include="Controllers\MirConfigurationController.cs" />
     <Compile Include="Controllers\MIRController.cs" />
     <Compile Include="Controllers\MirDataTableController.cs" />
+    <Compile Include="Controllers\MIRUploadControlSettings.cs" />
     <Compile Include="Controllers\ProcessBlueprintController.cs" />
     <Compile Include="Controllers\WaveController.cs" />
     <Compile Include="Extensions\NumberExtension.cs" />

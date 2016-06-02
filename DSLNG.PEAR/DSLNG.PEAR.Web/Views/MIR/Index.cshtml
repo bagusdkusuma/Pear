@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DSLNG.PEAR.Web.ViewModels.File.FileRepositoryGridViewModel>
+﻿@model IEnumerable<DSLNG.PEAR.Web.ViewModels.File.FileRepositoryViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -6,7 +6,16 @@
 
 <h2>Management Information Reports</h2>
 @Html.Partial("_MessageResponse")
-<div class="add-button-wrapper">
+<div class="row">
+    <form class="form-inline">
+        <div class="form-group" style="margin-top: 5px; margin-left: 25px; padding-right: 30px; border-right: solid 1px #3f454f;">
+            <label class="labletop">MIR :</label>
+            @Html.DropDownList("Year", (IEnumerable<SelectListItem>)ViewBag.Years, new { @class = "form-control", id = "year" })
+        </div>
+
+    </form>
+</div>
+<div class="add-button-wrapper" style = "margin-bottom: -26px; margin-top:4px;">
     @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
 </div>
 
@@ -25,31 +34,47 @@
 
 @section Scripts{
     <script type="text/javascript">
+
         var contentUrl = '@Url.Content("$x$")';
         $(document).ready(function () {
-            $('#mir-table').DataTable({
-                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-                "iDisplayLength": -1,
+            var year = $('#year').val();
+            var myTable;
+            myTable = $('#mir-table').DataTable({
                 "bProcessing": true,
                 "bServerSide": true,
                 "sServerMethod": "POST",
                 "sAjaxSource": '@Url.Action("Grid", "MIR")',
+                //"fnServerParams": function (aoData) {
+                //    newData = aoData;
+                //    newData.push({ "name": "year", "value": year });
+                //    //aoData.push({ "name": "year", "value": year });
+                //},
+                "fnServerData": function (sSource, aoData, fnCallback) {
+                    newData = aoData;
+                    newData.push({ "name": "year", "value": year });
+                    $.getJSON(sSource, newData, function (json) {
+                        //* Do whatever additional processing you want on the callback, then tell DataTables *
+                        fnCallback(json);
+                    });
+                },
                 "order": [[0, "asc"]],
+                "paging":false,
                 "aoColumns": [
-                    { "mDataProp": "Number", "name": "Number", "className": "dt-body-left", "orderable" : false },
-                    { "mDataProp": "Month", "name": "Month", "className": "dt-body-left", "orderable": false },
+                    { "mDataProp": "Id", "name": "Id", "className": "dt-body-left", "orderable": false },
+                    { "mDataProp": "MonthName", "name": "MonthName", "className": "dt-body-left", "orderable": false },
                     { "mDataProp": "Summary", "name": "Summary", "className": "dt-body-left", "orderable": false },
-                    {
-                        "mDataProp": "Data", "name": "Data", "className": "dt-body-left", "orderable": false, "mRender": function (data, type, row) {
-                        var list = '<ul class="pop-attachments-list">';
-                        for (var i in data) {
-                            list += '<li><a href="' + contentUrl.replace('$x$', data[i].Filename.substr(2, data[i].Filename.length)) + '" class="document-link doc-type-' + data[i].Type +
-                                '" >' + data[i].Alias + '</a></li>';
-                        }
-                        list += '</ul>';
-                        return list;
-                    }
-        },
+                    { "mDataProp": "Filename", "name": "Filename", "className": "dt-body-left", "orderable": false },
+                    //{
+                    //    "mDataProp": "Filename", "name": "Filename", "className": "dt-body-left", "orderable": false, "mRender": function (data, type, row) {
+                    //        var list = '<ul class="pop-attachments-list">';
+                    //        for (var i in data) {
+                    //            list += '<li><a href="' + contentUrl.replace('$x$', data[i].Filename.substr(2, data[i].Filename.length)) + '" class="document-link doc-type-' + data[i].Type +
+                    //                '" >' + data[i].Alias + '</a></li>';
+                    //        }
+                    //        list += '</ul>';
+                    //        return list;
+                    //    }
+                    //},
                     {
                         "orderable": false,
                         "data": null,
@@ -80,7 +105,10 @@
                 }
             });
 
-
+            $('#year').on('change', function () {
+                year = $('#year').val();
+                myTable.draw();
+            });
         });
     </script>
 }

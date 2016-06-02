@@ -174,6 +174,7 @@ using DSLNG.PEAR.Services.Responses.ProcessBlueprint;
 using DSLNG.PEAR.Services.Requests.ProcessBlueprint;
 using DSLNG.PEAR.Services.Requests.FileManagerRolePrivilege;
 using DSLNG.PEAR.Services.Responses.Files;
+using DSLNG.PEAR.Services.Requests.Files;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -732,10 +733,14 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
         private void ConfigureFileRepository()
         {
-            Mapper.CreateMap<FileRepositoryViewModel, GetFileRepositoryResponse>();
+            Mapper.CreateMap<GetFileRepositoryResponse, FileRepositoryViewModel>();
+            Mapper.CreateMap<GetFilesRepositoryResponse.FileRepository, FileRepositoryViewModel>();
             Mapper.CreateMap<GetFilesRepositoryResponse.FileRepository, FileRepositoryGridViewModel.FileRepository>();
             Mapper.CreateMap<FileRepositoryGridViewModel.FileRepository, FileRepositoryViewModel>();
             Mapper.CreateMap<FileRepositoryViewModel, FileRepositoryGridViewModel.FileRepository>();
+            Mapper.CreateMap<FileRepositoryCreateViewModel, SaveFileRepositoryRequest>();
+            Mapper.CreateMap<FileRepositoryCreateViewModel, FileRepositoryViewModel>();
+            Mapper.CreateMap<FileRepositoryViewModel, FileRepositoryCreateViewModel>();
         }
 
         private void ConfigureProcessBlueprint()
@@ -853,15 +858,15 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<GetPmsSummaryConfigurationResponse, PmsSummaryDetailsViewModel>()
                   .ForMember(x => x.Kpis, y => y.MapFrom(z => z.Kpis.Select(a => new SelectListItem
-                      {
-                          Text = a.Name,
-                          Value = a.Id.ToString()
-                      })))
+                  {
+                      Text = a.Name,
+                      Value = a.Id.ToString()
+                  })))
                   .ForMember(x => x.Pillars, y => y.MapFrom(z => z.Pillars.Select(a => new SelectListItem
-                      {
-                          Text = a.Name,
-                          Value = a.Id.ToString()
-                      })));
+                  {
+                      Text = a.Name,
+                      Value = a.Id.ToString()
+                  })));
 
 
 
