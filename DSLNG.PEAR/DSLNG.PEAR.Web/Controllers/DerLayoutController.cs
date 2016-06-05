@@ -229,6 +229,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             break;
                         }
                     case "job-pmts":
+                    case "mgdp":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 3);
                             break;
@@ -536,7 +537,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "mgdp":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(6);
+                        viewModel.KpiInformations = GetKpiInformations(3);
                         return PartialView("LayoutType/_MGDP", viewModel);
                     }
                 case "hhv":
@@ -681,7 +682,6 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "lng-and-cds":
                 case "total-feed-gas":
                 case "table-tank":
-                case "mgdp":
                 case "hhv":
                 case "lng-and-cds-production":
                 case "weekly-maintenance":
@@ -698,6 +698,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         break;
                     }
                 case "job-pmts":
+                case "mgdp":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
