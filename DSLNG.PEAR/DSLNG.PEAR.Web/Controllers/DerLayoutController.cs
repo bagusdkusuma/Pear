@@ -111,6 +111,7 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             if (viewModel.Id > 0)
             {
+                #region edit
                 var response = _derService.GetDerLayoutItem(viewModel.Id);
                 var editViewModel = response.MapTo<DerLayoutItemViewModel>();
                 editViewModel.Types = _dropdownService.GetDerItemTypes().OrderBy(x => x.Text).MapTo<SelectListItem>();
@@ -222,15 +223,23 @@ namespace DSLNG.PEAR.Web.Controllers
                         }
                         break;
                     case "avg-ytd-key-statistic":
-                    {
+                    case "security":
+                        {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 6);
+                            break;
+                        }
+                    case "job-pmts":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 3);
                             break;
                         }
                 }
                 return View("EditLayoutItem", editViewModel);
+                #endregion
             }
             else
             {
+                #region create
                 viewModel.Types = _dropdownService.GetDerItemTypes().OrderBy(x => x.Text).MapTo<SelectListItem>();
                 var rowCol = viewModel.Row.ToString() + "-and-" + viewModel.Column.ToString();
                 switch (rowCol)
@@ -294,7 +303,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         }
                     case "4-and-1":
                         {
-                            viewModel.Type = "highlight";
+                            viewModel.Type = "security";
                             break;
                         }
                     case "4-and-2":
@@ -387,6 +396,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         }
                 }
                 return View("LayoutItem", viewModel);
+                #endregion
             }
         }
 
@@ -508,7 +518,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "job-pmts":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(6);
+                        viewModel.KpiInformations = GetKpiInformations(3);
                         return PartialView("LayoutType/_JobPmts", viewModel);
                     }
                 case "total-feed-gas":
@@ -667,7 +677,6 @@ namespace DSLNG.PEAR.Web.Controllers
                     }
                 case "safety":
                 case "security":
-                case "job-pmts":
                 case "avg-ytd-key-statistic":
                 case "lng-and-cds":
                 case "total-feed-gas":
@@ -685,6 +694,22 @@ namespace DSLNG.PEAR.Web.Controllers
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
+                        response = _derService.SaveLayoutItem(request);
+                        break;
+                    }
+                case "job-pmts":
+                    {
+                        request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
+                        request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
+                        var mbbtuKpi = request.KpiInformations.FirstOrDefault(x => x.Position == 1);
+                        if (mbbtuKpi != null)
+                        {
+                            var newMbbtuKpiTarget = new SaveLayoutItemRequest.DerKpiInformationRequest();
+                            newMbbtuKpiTarget.ConfigType = ConfigType.KpiTarget;
+                            newMbbtuKpiTarget.KpiId = mbbtuKpi.KpiId;
+                            newMbbtuKpiTarget.Position = 3;
+                            request.KpiInformations.Add(newMbbtuKpiTarget);
+                        }
                         response = _derService.SaveLayoutItem(request);
                         break;
                     }
