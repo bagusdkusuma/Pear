@@ -187,10 +187,6 @@ namespace DSLNG.PEAR.Web.Controllers
 
                             break;
                         }
-                    case "avg-ytd-key-statistic":
-                        {
-                            break;
-                        }
                     case "highlight":
                         {
                             var result = _selectService.GetHighlightTypesDropdown();
@@ -225,6 +221,11 @@ namespace DSLNG.PEAR.Web.Controllers
                             }
                         }
                         break;
+                    case "avg-ytd-key-statistic":
+                    {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 6);
+                            break;
+                        }
                 }
                 return View("EditLayoutItem", editViewModel);
             }
@@ -664,14 +665,6 @@ namespace DSLNG.PEAR.Web.Controllers
                         response = _derService.SaveLayoutItem(request);
                         break;
                     }
-                /*case "avg-ytd-key-statistic":
-                    {
-                        request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
-                        request.KpiInformations =
-                            layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
-                        response = _derService.SaveLayoutItem(request);
-                        break;
-                    }*/
                 case "safety":
                 case "security":
                 case "job-pmts":
@@ -726,6 +719,26 @@ namespace DSLNG.PEAR.Web.Controllers
             }
 
             return list;
+        }
+
+        private IList<DerLayoutItemViewModel.DerKpiInformationViewModel> AddEmptyKpiInformations(IList<DerLayoutItemViewModel.DerKpiInformationViewModel> kpiInformations, int i)
+        {
+            var listKpiInformation = new List<DerLayoutItemViewModel.DerKpiInformationViewModel>();
+            for (int j = 0; j < i; j++)
+            {
+                var kpiInformation = kpiInformations.SingleOrDefault(x => x.Position == j);
+                if (kpiInformation == null)
+                {
+                    listKpiInformation.Add(new DerLayoutItemViewModel.DerKpiInformationViewModel() { Position = j });
+                }
+                else
+                {
+                    listKpiInformation.Add(kpiInformation);
+                }
+
+            }
+
+            return listKpiInformation;
         }
 
         /* private IList<DerLayoutItemViewModel.DerKpiInformationViewModel> GetWeeklyMaintenance(int numberOfKpi)

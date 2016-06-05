@@ -55,9 +55,9 @@ namespace DSLNG.PEAR.Web.ViewModels.DerLayout
             public int Id { get; set; }
             public int Position { get; set; }
             public int KpiId { get; set; }
-            public string Label { get; set; }
+            public string KpiLabel { get; set; }
             public string KpiName { get; set; }
-            public bool IsOriginalData { get; set; }
+            public string KpiMeasurement { get; set; }
             public string ConfigType { get; set; }
             public int HighlightId { get; set; }
         }

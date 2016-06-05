@@ -1070,6 +1070,7 @@ namespace DSLNG.PEAR.Services
                 DataContext.DerArtifacts.Remove(oldArtifact);
 
                 DataContext.SaveChanges();
+                response.IsSuccess = true;
             }
             catch (Exception exception)
             {
@@ -1414,34 +1415,66 @@ namespace DSLNG.PEAR.Services
                 var kpiInformations = new List<DerKpiInformation>();
                 foreach (var item in request.KpiInformations)
                 {
-                    var kpiInformation = DataContext.DerKpiInformations.Single(x => x.Id == item.Id);
-                    DataContext.DerKpiInformations.Remove(kpiInformation);
-                    if (item.KpiId > 0)
+                    var kpiInformation = DataContext.DerKpiInformations.SingleOrDefault(x => x.Id == item.Id);
+                    if (kpiInformation != null)
                     {
-                        var kpi = new Kpi { Id = item.KpiId };
-                        if (DataContext.Kpis.Local.FirstOrDefault(x => x.Id == kpi.Id) == null)
+                        DataContext.DerKpiInformations.Remove(kpiInformation);
+                        if (item.KpiId > 0)
                         {
-                            DataContext.Kpis.Attach(kpi);
+                            var kpi = new Kpi {Id = item.KpiId};
+                            if (DataContext.Kpis.Local.FirstOrDefault(x => x.Id == kpi.Id) == null)
+                            {
+                                DataContext.Kpis.Attach(kpi);
+                            }
+                            else
+                            {
+                                kpi = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == kpi.Id);
+                            }
+                            var newKpiInformation = item.MapTo<DerKpiInformation>();
+                            newKpiInformation.Kpi = kpi;
+                            kpiInformations.Add(newKpiInformation);
                         }
-                        else
+                        else if (item.HighlightId > 0)
                         {
-                            kpi = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == kpi.Id);
+                            var selectOption = new SelectOption {Id = item.HighlightId};
+                            if (DataContext.SelectOptions.Local.FirstOrDefault(x => x.Id == selectOption.Id) == null)
+                            {
+                                DataContext.SelectOptions.Attach(selectOption);
+                            }
+                            else
+                            {
+                                selectOption =
+                                    DataContext.SelectOptions.Local.FirstOrDefault(x => x.Id == selectOption.Id);
+                            }
+                            kpiInformations.Add(new DerKpiInformation
+                            {
+                                SelectOption = selectOption,
+                                Position = item.Position,
+                                ConfigType = item.ConfigType
+                            });
                         }
-                        kpiInformations.Add(new DerKpiInformation { Kpi = kpi, Position = item.Position});
                     }
-                    else if (item.HighlightId > 0)
+                    else
                     {
-                        var selectOption = new SelectOption { Id = item.HighlightId };
-                        if (DataContext.SelectOptions.Local.FirstOrDefault(x => x.Id == selectOption.Id) == null)
+                        if (item.KpiId > 0)
                         {
-                            DataContext.SelectOptions.Attach(selectOption);
+                            var kpi = new Kpi { Id = item.KpiId };
+                            if (DataContext.Kpis.Local.FirstOrDefault(x => x.Id == kpi.Id) == null)
+                            {
+                                DataContext.Kpis.Attach(kpi);
+                            }
+                            else
+                            {
+                                kpi = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == kpi.Id);
+                            }
+                            var newKpiInformation = item.MapTo<DerKpiInformation>();
+                            newKpiInformation.Kpi = kpi;
+                            kpiInformations.Add(newKpiInformation);
+                            //kpiInformations.Add(new DerKpiInformation { Kpi = kpi, Position = item.Position, ConfigType = item.ConfigType, KpiLabel = item.KpiLabel, KpiMeasurement = item.KpiMeasurement});
                         }
-                        else
-                        {
-                            selectOption = DataContext.SelectOptions.Local.FirstOrDefault(x => x.Id == selectOption.Id);
-                        }
-                        kpiInformations.Add(new DerKpiInformation { SelectOption = selectOption, Position = item.Position, ConfigType = item.ConfigType });
+                        
                     }
+                    
                 }
                 derLayoutItem.KpiInformations = kpiInformations;
                 //DataContext.DerLayoutItems.Add(derLayoutItem);

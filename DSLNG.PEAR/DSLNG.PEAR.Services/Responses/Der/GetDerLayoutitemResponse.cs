@@ -86,7 +86,8 @@ namespace DSLNG.PEAR.Services.Responses.Der
             public int Id { get; set; }
             public KpiResponse Kpi { get; set; }
             public int Position { get; set; }
-            public bool IsOriginalData { get; set; }
+            public string KpiLabel { get; set; }
+            public string KpiMeasurement { get; set; }
             public ConfigType ConfigType { get; set; }
             public SelectOptionResponse SelectOption { get; set; }
 

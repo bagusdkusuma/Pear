@@ -14,9 +14,6 @@
                 @Html.HiddenFor(model => model.KpiInformations[i].Id)
                 <span style="padding-left:20px">
                     @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes)
-                    <span style="color:white">
-                        @Html.EditorFor(model => model.KpiInformations[i].IsOriginalData)  Is  Original Data?
-                    </span>
                 </span>
                 <input type="hidden" name="KpiInformations.Index" value="@a" />
             </div>
