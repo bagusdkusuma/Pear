@@ -16,6 +16,7 @@ namespace DSLNG.PEAR.Services.Requests.Files
         public string Name { get; set; }
         public string Summary { get; set; }
 
+        public string Filename { get; set; }
         public byte[] Data { get; set; }
 
         public DateTime? LastWriteTime { get; set; }
