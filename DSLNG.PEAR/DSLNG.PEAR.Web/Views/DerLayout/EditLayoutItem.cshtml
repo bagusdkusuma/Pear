@@ -139,6 +139,7 @@
                             $('.layout-type-area').html(data);
                             var pear = window.Pear;
                             var callback = pear.Artifact.Designer._setupCallbacks;
+                            console.log(that.val());
                             callback[that.val()]();
                         }
                     });

@@ -975,7 +975,14 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Kpi, GetDerLayoutitemResponse.KpiInformationResponse.KpiResponse>()
                 .ForMember(x => x.MeasurementName, y => y.MapFrom(z => z.Measurement.Name));
             Mapper.CreateMap<SelectOption, GetDerLayoutitemResponse.KpiInformationResponse.SelectOptionResponse>();
+
+            Mapper.CreateMap<SaveLayoutItemRequest.DerKpiInformationRequest, DerKpiInformation>()
+                .ForMember(x => x.KpiMeasurement, y => y.MapFrom(z => z.KpiMeasurement))
+                .ForMember(x => x.KpiLabel, y => y.MapFrom(z => z.KpiLabel))
+                .ForMember(x => x.Position, y => y.MapFrom(z => z.Position))
+                .ForMember(x => x.Kpi, y => y.Ignore());
                 
+
 
             //DER Original Data
             Mapper.CreateMap<DerOriginalData, GetOriginalDataResponse.OriginalDataResponse>()
@@ -993,6 +1000,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Wave, GetWaveResponse>()
                 .ForMember(x => x.Value, o => o.MapFrom(s => s.Value.Value))
                 .ForMember(x => x.Text, o => o.MapFrom(s => s.Value.Text));
+
+
         }
     }
 }
