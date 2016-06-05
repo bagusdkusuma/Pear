@@ -1140,6 +1140,8 @@
     <Content Include="Views\DerLayout\LayoutType\_KeyEquipmentStatus.Edit.cshtml" />
     <Content Include="Views\Der\Display\_KeyEquipmentStatus.cshtml" />
     <Content Include="Views\Der\Input.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_Speedometer.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_Speedometer.Edit.cshtml" />
     <None Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\SpeedometerChart\_Edit.cshtml" />
     <Content Include="Views\Tabular\_Create.cshtml" />

@@ -36,6 +36,25 @@ namespace DSLNG.PEAR.Services.Responses.Der
             public IList<DerArtifactSerie> Series { get; set; }
             public IList<DerArtifactChart> Charts { get; set; }
             public DerArtifactTank Tank { get; set; }
+
+            public KpiResponse CustomSerie { get; set; }
+            public IList<DerArtifactPlot> Plots { get; set; }
+
+            
+        }
+
+            public class KpiResponse
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public string MeasurementName { get; set; }
+        }
+
+        public class DerArtifactPlot {
+            public int Id { get; set; }
+            public double From { get; set; }
+            public double To { get; set; }
+            public string Color { get; set; }
         }
 
         public class DerArtifactSerie

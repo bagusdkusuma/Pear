@@ -40,6 +40,7 @@ namespace DSLNG.PEAR.Services.Requests.Der
             public LayoutItemArtifactMultiAxis MultiAxis { get; set; }
             public LayoutItemArtifactPie Pie { get; set; }
             public LayoutItemArtifactTank Tank { get; set; }
+            public LayoutItemArtifactSpeedometer Speedometer { get; set; }
         }
 
         public class LayoutItemArtifactLine
@@ -72,6 +73,17 @@ namespace DSLNG.PEAR.Services.Requests.Der
             public IList<LayoutItemArtifactSerie> Series { get; set; }
         }
 
+        public class LayoutItemArtifactSpeedometer
+        {
+            public LayoutItemArtifactSpeedometer()
+            {
+                Series = new LayoutItemArtifactSerie();
+                PlotBands = new List<LayoutItemPlotBand>();
+            }
+            public LayoutItemArtifactSerie Series { get; set; }
+            public IList<LayoutItemPlotBand> PlotBands { get; set; }
+        }
+
         public class LayoutItemArtifactChart
         {
             public int MeasurementId { get; set; }
@@ -89,6 +101,13 @@ namespace DSLNG.PEAR.Services.Requests.Der
         {
             public int KpiId { get; set; }
             public string Label { get; set; }
+            public string Color { get; set; }
+        }
+
+        public class LayoutItemPlotBand
+        {
+            public double From { get; set; }
+            public double To { get; set; }
             public string Color { get; set; }
         }
 
