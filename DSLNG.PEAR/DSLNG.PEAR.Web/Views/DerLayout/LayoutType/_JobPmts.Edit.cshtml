@@ -1,0 +1,26 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.DerLayout.DerLayoutItemViewModel
+
+@{
+    var labels = new List<string> { "Job Pmts (mmscf)", "Job Pmts (mmbtu)", "Job Pmts (tonnes)"};
+    for (int i = 0; i < Model.KpiInformations.Count; i++)
+    {
+        var posIndex = Model.KpiInformations.FirstOrDefault(x => x.Position == i);
+        if (posIndex != null)
+        {
+    <div class="form-group row">
+        <label class="control-label col-md-2">@labels.ElementAtOrDefault(i)</label>
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.KpiInformations[i].KpiId, new List<SelectListItem> { new SelectListItem { Value = Model.KpiInformations[i].KpiId.ToString(), Text = Model.KpiInformations[i].KpiName} }, new { @class = "kpi-list form-control", style = "width:280px;margin:0 auto" })
+            
+            @Html.HiddenFor(model => model.KpiInformations[i].Position)
+            @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes, new {style = "visibility: hidden"})
+            @Html.HiddenFor(model => model.KpiInformations[i].Id)
+            <input type="hidden" name="KpiInformations.Index" value="@i"/>
+        </div>
+    </div>
+        }
+    }
+}
+
+
+
