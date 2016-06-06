@@ -988,7 +988,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
-                    #endregion
+                #endregion
 
 
 
@@ -1026,13 +1026,19 @@ namespace DSLNG.PEAR.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult Input() {
+        public ActionResult Input()
+        {
             return View();
         }
 
         [HttpGet]
-        public ActionResult Preview() {
-            return View();
+        public ActionResult Preview()
+        {
+            var activeDer = _derService.GetActiveDer();
+            var id = activeDer.Id;
+            var response = _derService.GetDerLayout(id);
+            var viewModel = response.MapTo<DerDisplayViewModel>();
+            return View(viewModel);
         }
     }
 }

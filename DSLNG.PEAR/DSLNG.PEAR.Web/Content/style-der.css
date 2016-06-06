@@ -69,3 +69,7 @@
 			margin-top: 40px;
 		}
 
+.uncomplete {
+    color:red !important;
+    font-weight:bold;
+}

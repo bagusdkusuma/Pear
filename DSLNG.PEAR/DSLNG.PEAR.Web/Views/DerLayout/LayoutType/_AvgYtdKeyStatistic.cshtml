@@ -12,21 +12,19 @@
             <div class="form-group row">
                 <label class="control-label col-md-2">@label[i]</label>
                 <div class="col-md-2">
-                    @Html.TextBoxFor(model => model.KpiInformations[i].Label, new {placeholder = "label"})
-                    @*@Html.TextBoxFor(model => model.KpiInformations[i].Label, new {@class = "kpi-list form-control", style = "width:180px"})*@
-                    @Html.HiddenFor(model => model.KpiInformations[i].Position)
-                    <input type="hidden" name="KpiInformations.Index" value="@a"/>
-                </div>
-                <div class="col-md-2">
-                    @Html.DropDownListFor(model => model.KpiInformations[i].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
+                    @Html.TextBoxFor(model => model.KpiInformations[i].KpiLabel, new { placeholder = "KPI Custom Label" })
+                    @Html.TextBoxFor(model => model.KpiInformations[i].KpiMeasurement, new { placeholder = "KPI Measurement Label" })
                     @Html.HiddenFor(model => model.KpiInformations[i].Position)
                     <input type="hidden" name="KpiInformations.Index" value="@a" />
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-2">
+                    @Html.DropDownListFor(model => model.KpiInformations[i].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
+                </div>
+                <div class="col-md-6" style="visibility: hidden">
                     @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes)
-                    <span style="color:white">
+                    @*<span style="color:white">
                         @Html.EditorFor(model => model.KpiInformations[i].IsOriginalData) Is Original Data
-                    </span>                 
+                    </span>*@
                 </div>
             </div>
         }

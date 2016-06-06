@@ -27,6 +27,32 @@
                 {
                 <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col0.Id })" class="layout-item"></div>
                 }
+                <!--table class="text-center table table-bordered">
+                  <tr>
+                    <td colspan="5">Avg YTD-Key Statistics (compare to prior day)</td>
+                  </tr>
+                  <tr>
+                    <td>Feed Gas</td>
+                    <td>MCHE Rundown</td>
+                    <td>LNG Prod</td>
+                    <td>CDS Prod</td>
+                    <td>Fuel Gas</td>
+                  </tr>
+                  <tr>
+                    <td>324.1 mmscfd</td>
+                    <td>6,616.4 ton/d</td>
+                    <td>6,616.4 ton/d</td>
+                    <td>6,616.4 bpcd</td>
+                    <td>6,616.4 ton/d</td>
+                  </tr>
+                  <tr>
+                    <td><span class="fa fa-arrow-up fa-lg"></span></td>
+                    <td><span class="fa fa-arrow-up fa-lg"></span></td>
+                    <td><span class="fa fa-arrow-up fa-lg"></span></td>
+                    <td><span class="fa fa-arrow-up fa-lg"></span></td>
+                    <td><span class="fa fa-arrow-up fa-lg"></span></td>
+                  </tr>
+                </!--table -->
             }
         </div>
         <div class="col-md-6 no-padding daily-highlight">
@@ -254,11 +280,11 @@
                 <tr>
                     <td>
                     @{
-                            var row8Col0 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 0);
-                            if (row8Col0 != null)
-                            {
+                        var row8Col0 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 0);
+                        if (row8Col0 != null)
+                        {
                             <div data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col0.Id })" class="layout-item" style="height:250px;width:200px;"></div>
-                            }
+                        }
                         }
                     </td>
                     <td colspan="2" class="der-bg-blue-7">@{

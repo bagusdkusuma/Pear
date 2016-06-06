@@ -111,6 +111,7 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             if (viewModel.Id > 0)
             {
+                #region edit
                 var response = _derService.GetDerLayoutItem(viewModel.Id);
                 var editViewModel = response.MapTo<DerLayoutItemViewModel>();
                 editViewModel.Types = _dropdownService.GetDerItemTypes().OrderBy(x => x.Text).MapTo<SelectListItem>();
@@ -187,18 +188,12 @@ namespace DSLNG.PEAR.Web.Controllers
 
                             break;
                         }
-
                     case "speedometer":
                         {
                             var speedometerChart = new SpeedometerChartViewModel();
                             editViewModel.SpeedometerChart = response.Artifact.MapPropertiesToInstance<SpeedometerChartViewModel>(speedometerChart);
                             var plot = new SpeedometerChartViewModel.PlotBand();
                             editViewModel.SpeedometerChart.PlotBands.Insert(0, plot);
-                            break;
-                        }
-
-                    case "avg-ytd-key-statistic":
-                        {
                             break;
                         }
                     case "highlight":
@@ -235,11 +230,25 @@ namespace DSLNG.PEAR.Web.Controllers
                             }
                         }
                         break;
+                    case "avg-ytd-key-statistic":
+                    case "security":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 6);
+                            break;
+                        }
+                    case "job-pmts":
+                    case "mgdp":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 3);
+                            break;
+                        }
                 }
                 return View("EditLayoutItem", editViewModel);
+                #endregion
             }
             else
             {
+                #region create
                 viewModel.Types = _dropdownService.GetDerItemTypes().OrderBy(x => x.Text).MapTo<SelectListItem>();
                 var rowCol = viewModel.Row.ToString() + "-and-" + viewModel.Column.ToString();
                 switch (rowCol)
@@ -308,7 +317,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         }
                     case "4-and-1":
                         {
-                            viewModel.Type = "highlight";
+                            viewModel.Type = "security";
                             break;
                         }
                     case "4-and-2":
@@ -401,6 +410,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         }
                 }
                 return View("LayoutItem", viewModel);
+                #endregion
             }
         }
 
@@ -538,7 +548,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "job-pmts":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(6);
+                        viewModel.KpiInformations = GetKpiInformations(3);
                         return PartialView("LayoutType/_JobPmts", viewModel);
                     }
                 case "total-feed-gas":
@@ -556,7 +566,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "mgdp":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(6);
+                        viewModel.KpiInformations = GetKpiInformations(3);
                         return PartialView("LayoutType/_MGDP", viewModel);
                     }
                 case "hhv":
@@ -704,22 +714,12 @@ namespace DSLNG.PEAR.Web.Controllers
                         response = _derService.SaveLayoutItem(request);
                         break;
                     }
-                /*case "avg-ytd-key-statistic":
-                    {
-                        request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
-                        request.KpiInformations =
-                            layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
-                        response = _derService.SaveLayoutItem(request);
-                        break;
-                    }*/
                 case "safety":
                 case "security":
-                case "job-pmts":
                 case "avg-ytd-key-statistic":
                 case "lng-and-cds":
                 case "total-feed-gas":
                 case "table-tank":
-                case "mgdp":
                 case "hhv":
                 case "lng-and-cds-production":
                 case "weekly-maintenance":
@@ -732,6 +732,23 @@ namespace DSLNG.PEAR.Web.Controllers
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
+                        response = _derService.SaveLayoutItem(request);
+                        break;
+                    }
+                case "job-pmts":
+                case "mgdp":
+                    {
+                        request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
+                        request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
+                        var mbbtuKpi = request.KpiInformations.FirstOrDefault(x => x.Position == 1);
+                        if (mbbtuKpi != null)
+                        {
+                            var newMbbtuKpiTarget = new SaveLayoutItemRequest.DerKpiInformationRequest();
+                            newMbbtuKpiTarget.ConfigType = ConfigType.KpiTarget;
+                            newMbbtuKpiTarget.KpiId = mbbtuKpi.KpiId;
+                            newMbbtuKpiTarget.Position = 3;
+                            request.KpiInformations.Add(newMbbtuKpiTarget);
+                        }
                         response = _derService.SaveLayoutItem(request);
                         break;
                     }
@@ -766,6 +783,26 @@ namespace DSLNG.PEAR.Web.Controllers
             }
 
             return list;
+        }
+
+        private IList<DerLayoutItemViewModel.DerKpiInformationViewModel> AddEmptyKpiInformations(IList<DerLayoutItemViewModel.DerKpiInformationViewModel> kpiInformations, int i)
+        {
+            var listKpiInformation = new List<DerLayoutItemViewModel.DerKpiInformationViewModel>();
+            for (int j = 0; j < i; j++)
+            {
+                var kpiInformation = kpiInformations.SingleOrDefault(x => x.Position == j);
+                if (kpiInformation == null)
+                {
+                    listKpiInformation.Add(new DerLayoutItemViewModel.DerKpiInformationViewModel() { Position = j });
+                }
+                else
+                {
+                    listKpiInformation.Add(kpiInformation);
+                }
+
+            }
+
+            return listKpiInformation;
         }
 
         /* private IList<DerLayoutItemViewModel.DerKpiInformationViewModel> GetWeeklyMaintenance(int numberOfKpi)

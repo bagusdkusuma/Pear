@@ -1144,6 +1144,7 @@
     <Content Include="Views\DerLayout\LayoutType\_KeyEquipmentStatus.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_KeyEquipmentStatus.Edit.cshtml" />
     <Content Include="Views\Der\Display\_KeyEquipmentStatus.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_JobPmts.Edit.cshtml" />
     <Content Include="Views\Der\Input.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_Speedometer.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_Speedometer.Edit.cshtml" />

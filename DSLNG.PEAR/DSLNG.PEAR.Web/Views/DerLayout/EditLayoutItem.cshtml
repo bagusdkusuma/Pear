@@ -78,6 +78,13 @@
                 case "key-equipment-status":
                     Html.RenderPartial("~/Views/DerLayout/LayoutType/_KeyEquipmentStatus.Edit.cshtml", Model);
                     break;
+                case "security":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_Security.Edit.cshtml", Model);
+                    break;
+                case "job-pmts":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_JobPmts.Edit.cshtml", Model);
+                    break;
+
             }
         }
     </div>
@@ -108,6 +115,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('.der-layout-type').change(function () {
+            alert('as');
             var that = $(this);
             var type = that.val().toLowerCase();
             switch (type) {
@@ -158,6 +166,7 @@
                             $('.layout-type-area').html(data);
                             var pear = window.Pear;
                             var callback = pear.Artifact.Designer._setupCallbacks;
+                            console.log(that.val());
                             callback[that.val()]();
                         }
                     });
@@ -297,6 +306,8 @@
             case "plant-availability":
             case "lng-and-cds":
             case "economic-indicator":
+            case "security":
+            case "job-pmts":
                 {
                     window.Pear.Artifact.Designer._kpiAutoComplete($('.layout-type-area'));
                     break;

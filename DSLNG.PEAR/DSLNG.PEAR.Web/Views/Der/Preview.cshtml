@@ -1,4 +1,5 @@
-﻿@{
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.DerDisplayViewModel
+@{
     Layout = null;
 }
 <!DOCTYPE html>
@@ -20,14 +21,14 @@
     <![endif]-->
   </head>
   <body>
-    
+    <input type="hidden" id="currentDate" value="@Model.Today" />
     <div class="header-der-tbl">
       <div class="container-fluid">
         <div class="row">
           <div class="left col-md-8">
             <h5 class="text-center">DAILY EXECUTIVE REPORT</h5>
             <h6 class="text-center">The Last 24 Hours Business Perfomance</h6>
-            <h6 class="text-center">FOR THE PERIOD ENDED: 12-Apr-16 until LT24:00 HOURS</h6>
+            <h6 class="text-center uncomplete">FOR THE PERIOD ENDED: @Model.Today until LT24:00 HOURS</h6>
           </div>
           <div class="right col-md-4">
             <img src="@Url.Content("~/content/images/der/header-logo.png")" class="img-responsive" />
@@ -38,37 +39,25 @@
 
     <div class="daily-der-tbl">
       <div class="left">
-        <table class="text-center table table-bordered">
-          <tr>
-            <td colspan="5">Avg YTD-Key Statistics (compare to prior day)</td>
-          </tr>
-          <tr>
-            <td>Feed Gas</td>
-            <td>MCHE Rundown</td>
-            <td>LNG Prod</td>
-            <td>CDS Prod</td>
-            <td>Fuel Gas</td>
-          </tr>
-          <tr>
-            <td>324.1 mmscfd</td>
-            <td>6,616.4 ton/d</td>
-            <td>6,616.4 ton/d</td>
-            <td>6,616.4 bpcd</td>
-            <td>6,616.4 ton/d</td>
-          </tr>
-          <tr>
-            <td><span class="fa fa-arrow-up fa-lg"></span></td>
-            <td><span class="fa fa-arrow-up fa-lg"></span></td>
-            <td><span class="fa fa-arrow-up fa-lg"></span></td>
-            <td><span class="fa fa-arrow-up fa-lg"></span></td>
-            <td><span class="fa fa-arrow-up fa-lg"></span></td>
-          </tr>
-        </table>
+          @{
+                var row0Col0 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 0);
+                if (row0Col0 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col0.Id })" class="layout-item"></div>
+                }
+            }
       </div>
       <div class="right">
         <div class="col-md-9">
-          <h5 style="margin-top: 40px; text-decoration: underline;">Daily Highlight</h5>
-          <p>Normal Ops. CDS Vessel MT Indradi deberthed and switch over with Erawan-1. The later still being N2 purge before loading. CDS rundown recycle to day-tank.</p>
+            @{
+                var row0Col1 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 1);
+                if (row0Col1 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col1.Id })" class="layout-item"></div>
+                }
+                <!--h5 style="margin-top: 40px; text-decoration: underline;">Daily Highlight</!--h5>
+                <p>Normal Ops. CDS Vessel MT Indradi deberthed and switch over with Erawan-1. The later still being N2 purge before loading. CDS rundown recycle to day-tank.</p-->
+            }
         </div>
         <div class="col-md-3">
           <img src="img/daily-rundown.png" />
@@ -1534,36 +1523,60 @@
     </div><!-- operation mode -->
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="js/jquery-1.12.1.min.js"></script>
+    <script src="~/Scripts/jquery-1.11.3.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+   <script type="text/javascript" src="~/Content/datepicker/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        function reloadView() {
+            var currentDate = $('#currentDate').val();
+            $('.layout-item').each(function () {
+                var that = $(this);
+                $.ajax({
+                    url: that.attr('data-url'),
+                    data: { currentDate: currentDate },
+                    success: function (data) {
+
+                        if (data.GraphicType !== undefined) {
+                            var callback = window.Pear.Artifact.Designer._previewCallbacks;
+                            callback[data.GraphicType](data, that);
+                        }
+                        else if (data.type === "highlight") {
+                            var aneh = data.view.replace(/\"/g, "");
+                            console.log(aneh);
+                            that.html(aneh);
+                        } else if (data.type === "highlight" || data.type === "weather" ||
+                            data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
+                        data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
+                        || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type == "procurement" || data.type == "indicative-commercial-price" ||
+                            data.type === "plant-availability" || data.type === "economic-indicator" || data.type === "mgdp" || data.type === "hhv" || data.type === "lng-and-cds-production"
+                            || data.type === "nls" || data.type === "key-equipment-status") {
+                            that.html(data.view);
+                        }
+                        /*else if (data.type === "weather" || data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
+                        data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
+                        || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type === 'mgdp') {
+                            that.html(data.view);
+                        }*/
+
+                    }
+                });
+            });
+        }
+
+        $('#currentDate').val('02/18/2016');
+        reloadView();
+        if ($('.der-display').length) {
+            $('.datepicker').datetimepicker({
+                format: "MM/DD/YYYY",
+                focusOnShow: false
+            }).on('dp.change', function (e) {
+                $("#currentDate").blur();
+                reloadView();
+            });
+        };
+    });
+</script>
   </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
