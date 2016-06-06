@@ -234,6 +234,16 @@ namespace DSLNG.PEAR.Web.Controllers
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 3);
                             break;
                         }
+                    case "total-feed-gas":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 4);
+                            break;
+                        }
+                    case "plant-availability":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 10);
+                            break;
+                        }
                 }
                 return View("EditLayoutItem", editViewModel);
                 #endregion
@@ -688,16 +698,18 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "critical-pm":
                 case "procurement":
                 case "indicative-commercial-price":
-                case "plant-availability":
                 case "economic-indicator":
                 case "key-equipment-status":
+                case "plant-availability":
+                case "job-pmts":
+                case "mgdp":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
                         response = _derService.SaveLayoutItem(request);
                         break;
                     }
-                case "job-pmts":
+                /*case "job-pmts":
                 case "mgdp":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
@@ -713,7 +725,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         }
                         response = _derService.SaveLayoutItem(request);
                         break;
-                    }
+                    }*/
                 /*case "lng-and-cds":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
@@ -728,6 +740,23 @@ namespace DSLNG.PEAR.Web.Controllers
                         response = _derService.SaveLayoutItem(request);
                         break;
                     }
+                /*case "plant-availability":
+                {
+                        request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
+                        request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
+                        var mbbtuKpi = request.KpiInformations.FirstOrDefault(x => x.Position == 0 || x.Position == 1 || x.Position == 2 ||
+                            x.Position ==3);
+                        if (mbbtuKpi != null)
+                        {
+                            var newMbbtuKpiTarget = new SaveLayoutItemRequest.DerKpiInformationRequest();
+                            newMbbtuKpiTarget.ConfigType = ConfigType.KpiTarget;
+                            newMbbtuKpiTarget.KpiId = mbbtuKpi.KpiId;
+                            newMbbtuKpiTarget.Position = 3;
+                            request.KpiInformations.Add(newMbbtuKpiTarget);
+                        }
+                        response = _derService.SaveLayoutItem(request);
+                        break;
+                    }*/
             }
 
             TempData["IsSuccess"] = response.IsSuccess;
