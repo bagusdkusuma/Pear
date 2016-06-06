@@ -78,9 +78,9 @@ namespace DSLNG.PEAR.Services
             var response = new GetActiveDerResponse();
             try
             {
-                var der = DataContext.Ders
+                var der = DataContext.DerLayouts
                     .Include(x => x.Items)
-                    .First(x => x.IsActive);
+                    .First(x => x.IsActive && !x.IsDeleted);
 
                 response = der.MapTo<GetActiveDerResponse>();
 
@@ -215,6 +215,7 @@ namespace DSLNG.PEAR.Services
             IList<RowAndColumns> rowAndColumns = new List<RowAndColumns>();
             rowAndColumns.Add(new RowAndColumns { Row = 0, Column = 0 });
             rowAndColumns.Add(new RowAndColumns { Row = 0, Column = 1 });
+            rowAndColumns.Add(new RowAndColumns { Row = 0, Column = 2 });
             rowAndColumns.Add(new RowAndColumns { Row = 1, Column = 0 });
             rowAndColumns.Add(new RowAndColumns { Row = 1, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 1, Column = 2 });
@@ -310,6 +311,9 @@ namespace DSLNG.PEAR.Services
                     .Include(x => x.Artifact.Tank.DaysToTankTop)
                     .Include(x => x.Artifact.Tank.VolumeInventory.Measurement)
                     .Include(x => x.Artifact.Tank.DaysToTankTop.Measurement)
+                    .Include(x => x.Artifact.CustomSerie)
+                    .Include(x => x.Artifact.CustomSerie.Measurement)
+                    .Include(x => x.Artifact.Plots)
                     .Include(x => x.Highlight)
                     .Include(x => x.Highlight.SelectOption)
                     .Include(x => x.KpiInformations.Select(y => y.SelectOption))
@@ -433,6 +437,11 @@ namespace DSLNG.PEAR.Services
                 case "tank":
                     {
                         baseResponse = request.Id > 0 ? UpdateTank(request) : SaveTank(request);
+                        break;
+                    }
+                case "speedometer":
+                    {
+                        baseResponse = request.Id > 0 ? UpdateSpeedometer(request) : SaveSpeedometer(request);
                         break;
                     }
                 case "highlight":
@@ -812,6 +821,103 @@ namespace DSLNG.PEAR.Services
                 DataContext.DerArtifacts.Add(derArtifact);
                 derLayoutItem.Artifact = derArtifact;
                 DataContext.DerLayoutItems.Add(derLayoutItem);
+
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+            }
+            catch (Exception exception)
+            {
+                response.Message = exception.Message;
+            }
+
+            return response;
+        }
+
+
+        private BaseResponse SaveSpeedometer(SaveLayoutItemRequest request)
+        {
+            var response = new BaseResponse();
+            try
+            {
+                var derLayoutItem = new DerLayoutItem();
+                var derLayout = new DerLayout { Id = request.DerLayoutId };
+                DataContext.DerLayouts.Attach(derLayout);
+                derLayoutItem.DerLayout = derLayout;
+                derLayoutItem.Column = request.Column;
+                derLayoutItem.Row = request.Row;
+                derLayoutItem.Type = request.Type;
+                var derArtifact = new DerArtifact();
+                derArtifact.GraphicType = request.Type;
+                
+                var plots = request.Artifact.Speedometer.PlotBands.Select(x => new DerArtifactPlot
+                {
+                    Color = x.Color,
+                    From = x.From,
+                    To = x.To
+                }).ToList();
+                derArtifact.Plots = plots;
+                derArtifact.CustomSerie = DataContext.Kpis.FirstOrDefault(y => y.Id == request.Artifact.Speedometer.Series.KpiId);
+                DataContext.DerArtifacts.Add(derArtifact);
+                derLayoutItem.Artifact = derArtifact;
+                DataContext.DerLayoutItems.Add(derLayoutItem);
+
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+            }
+            catch (Exception exception)
+            {
+                response.Message = exception.Message;
+            }
+
+            return response;
+        }
+
+
+        private BaseResponse UpdateSpeedometer(SaveLayoutItemRequest request)
+        {
+            var response = new BaseResponse();
+            try
+            {
+                var derLayoutItem = DataContext.DerLayoutItems
+                    .Include(x => x.Artifact)
+                    .Include(x => x.Artifact.Plots)
+                    .Include(x => x.Artifact.CustomSerie)
+                    .Single(x => x.Id == request.Id);
+
+                //DataContext.DerArtifacts.Remove(derLayoutItem.Artifact);
+
+                var derLayout = new DerLayout { Id = request.DerLayoutId };
+                DataContext.DerLayouts.Attach(derLayout);
+                derLayoutItem.DerLayout = derLayout;
+                derLayoutItem.Column = request.Column;
+                derLayoutItem.Row = request.Row;
+                derLayoutItem.Type = request.Type;
+                var derArtifact = new DerArtifact();
+                derArtifact.GraphicType = request.Type;
+                var plots = request.Artifact.Speedometer.PlotBands.Select(x => new DerArtifactPlot
+                {
+                    Color = x.Color,
+                    From = x.From,
+                    To = x.To
+                }).ToList();
+
+                derArtifact.Plots = plots;
+                derArtifact.CustomSerie = DataContext.Kpis.FirstOrDefault(y => y.Id == request.Artifact.Speedometer.Series.KpiId);
+                DataContext.DerArtifacts.Add(derArtifact);
+                derLayoutItem.Artifact = derArtifact;
+                //DataContext.DerLayoutItems.Add(derLayoutItem);
+
+                var oldArtifact = new DerArtifact { Id = request.Artifact.Id };
+                if (DataContext.DerArtifacts.Local.FirstOrDefault(x => x.Id == oldArtifact.Id) == null)
+                {
+                    DataContext.DerArtifacts.Attach(oldArtifact);
+                }
+                else
+                {
+                    oldArtifact = DataContext.DerArtifacts.Local.FirstOrDefault(x => x.Id == oldArtifact.Id);
+                }
+
+                DataContext.DerArtifacts.Remove(oldArtifact);
 
                 DataContext.SaveChanges();
                 response.IsSuccess = true;

@@ -928,8 +928,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
         private void ConfigureDer()
         {
             Mapper.CreateMap<Der, GetDerResponse>();
-            Mapper.CreateMap<Der, GetActiveDerResponse>();
-            Mapper.CreateMap<DerItem, GetActiveDerResponse.DerItem>();
+            Mapper.CreateMap<DerLayout, GetActiveDerResponse>();
+            Mapper.CreateMap<DerLayoutItem, GetActiveDerResponse.DerItem>();
             Mapper.CreateMap<DerItem, GetDerItemResponse>();
             Mapper.CreateMap<GetDerItemRequest, GetDerItemResponse>();
             Mapper.CreateMap<DerLayoutItem, GetDerLayoutitemResponse>()
@@ -947,7 +947,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.KpiName, y => y.MapFrom(z => z.Kpi.Name));
             Mapper.CreateMap<DerArtifactChart, GetDerLayoutitemResponse.DerArtifactChart>()
                   .ForMember(x => x.MeasurementId, y => y.MapFrom(z => z.Measurement.Id));
-
+            Mapper.CreateMap<DerArtifactPlot, GetDerLayoutitemResponse.DerArtifactPlot>();
+            Mapper.CreateMap<Kpi, GetDerLayoutitemResponse.KpiResponse>()
+                .ForMember(x => x.MeasurementName, o => o.MapFrom(s => s.Measurement.Name));
             Mapper.CreateMap<SaveLayoutItemRequest, DerLayoutItem>()
                 .ForMember(x => x.Artifact, y => y.Ignore());
             Mapper.CreateMap<SaveLayoutItemRequest, DerArtifact>()
@@ -958,6 +960,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<SaveLayoutItemRequest.LayoutItemArtifactChart, DerArtifactChart>()
                 .ForMember(x => x.Series, y => y.Ignore());
             Mapper.CreateMap<SaveLayoutItemRequest.LayoutItemArtifactSerie, DerArtifactSerie>();
+            Mapper.CreateMap<SaveLayoutItemRequest.LayoutItemPlotBand, DerArtifactPlot>();
 
             //tank
             Mapper.CreateMap<SaveLayoutItemRequest.LayoutItemArtifactTank, DerArtifactTank>();
@@ -966,6 +969,15 @@ namespace DSLNG.PEAR.Services.AutoMapper
                .ForMember(x => x.VolumeInventory, o => o.MapFrom(s => s.VolumeInventory.Name + " (" + s.VolumeInventory.Measurement.Name + ")"))
                .ForMember(x => x.DaysToTankTopId, o => o.MapFrom(s => s.DaysToTankTop.Id))
                .ForMember(x => x.DaysToTankTop, o => o.MapFrom(s => s.DaysToTankTop.Name + " (" + s.DaysToTankTop.Measurement.Name + ")")); ;
+
+            //speedometer
+            //Mapper.CreateMap<SaveLayoutItemRequest, DerA>();
+            //Mapper.CreateMap<DerArtifactTank, GetDerLayoutitemResponse.DerArtifactTank>()
+            //    .ForMember(x => x.VolumeInventoryId, o => o.MapFrom(s => s.VolumeInventory.Id))
+            //   .ForMember(x => x.VolumeInventory, o => o.MapFrom(s => s.VolumeInventory.Name + " (" + s.VolumeInventory.Measurement.Name + ")"))
+            //   .ForMember(x => x.DaysToTankTopId, o => o.MapFrom(s => s.DaysToTankTop.Id))
+            //   .ForMember(x => x.DaysToTankTop, o => o.MapFrom(s => s.DaysToTankTop.Name + " (" + s.DaysToTankTop.Measurement.Name + ")")); ;
+
 
             //highlight
             Mapper.CreateMap<DerHighlight, GetDerLayoutitemResponse.DerHighlight>()

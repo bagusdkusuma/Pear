@@ -33,6 +33,7 @@ namespace DSLNG.PEAR.Web.ViewModels.DerLayout
         public MultiaxisChartViewModel MultiaxisChart { get; set; }
         public PieViewModel Pie { get; set; }
         public TankViewModel Tank { get; set; }
+        public SpeedometerChartViewModel SpeedometerChart { get; set; }
 
         [Display(Name = "Highlight")]
         public int HighlightId { get; set; }

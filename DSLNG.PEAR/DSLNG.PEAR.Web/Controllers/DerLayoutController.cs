@@ -188,6 +188,14 @@ namespace DSLNG.PEAR.Web.Controllers
 
                             break;
                         }
+                    case "speedometer":
+                        {
+                            var speedometerChart = new SpeedometerChartViewModel();
+                            editViewModel.SpeedometerChart = response.Artifact.MapPropertiesToInstance<SpeedometerChartViewModel>(speedometerChart);
+                            var plot = new SpeedometerChartViewModel.PlotBand();
+                            editViewModel.SpeedometerChart.PlotBands.Insert(0, plot);
+                            break;
+                        }
                     case "highlight":
                         {
                             var result = _selectService.GetHighlightTypesDropdown();
@@ -260,6 +268,11 @@ namespace DSLNG.PEAR.Web.Controllers
                             viewModel.Type = "avg-ytd-key-statistic";
                             break;
                         };
+                    case "0-and-2":
+                        {
+                            viewModel.Type = "speedometer";
+                            break;
+                        }
                     case "1-and-0":
                         {
                             viewModel.Type = "multiaxis";
@@ -429,6 +442,22 @@ namespace DSLNG.PEAR.Web.Controllers
                         var series = new LineChartViewModel.SeriesViewModel();
                         viewModel.LineChart.Series.Add(series);
                         return PartialView("LayoutType/_Line", viewModel);
+                    }
+
+                case "speedometer":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.Artifact = new DerLayoutItemViewModel.DerLayoutItemArtifactViewModel();
+                        viewModel.Artifact.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
+                        {
+                            Take = -1,
+                            SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+                        }).Measurements
+                    .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+                        viewModel.SpeedometerChart = new SpeedometerChartViewModel();
+                        var plot = new SpeedometerChartViewModel.PlotBand();
+                        viewModel.SpeedometerChart.PlotBands.Add(plot);
+                        return PartialView("LayoutType/_Speedometer", viewModel);
                     }
 
                 case "multiaxis":
@@ -666,6 +695,15 @@ namespace DSLNG.PEAR.Web.Controllers
                         request.Artifact = layoutItemViewModel.Artifact.MapTo<SaveLayoutItemRequest.LayoutItemArtifact>();
                         request.Artifact.Tank = layoutItemViewModel.Tank.MapTo<SaveLayoutItemRequest.LayoutItemArtifactTank>();
                         response = _derService.SaveLayoutItem(request);
+                        break;
+                    }
+                case "speedometer":
+                    {
+                        request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
+                        request.Artifact = layoutItemViewModel.Artifact.MapTo<SaveLayoutItemRequest.LayoutItemArtifact>();
+                        request.Artifact.Speedometer = layoutItemViewModel.SpeedometerChart.MapTo<SaveLayoutItemRequest.LayoutItemArtifactSpeedometer>();
+                        response = _derService.SaveLayoutItem(request);
+
                         break;
                     }
                 case "highlight":

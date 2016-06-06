@@ -1,0 +1,66 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.DerLayout.DerLayoutItemViewModel
+
+@Html.HiddenFor(model => model.Artifact.Id)
+@Html.HiddenFor(model => model.Artifact.HeaderTitle, new {value="Speedometer" })
+<div class="form-group row">
+     @Html.LabelFor(model => model.SpeedometerChart.Series.KpiId,new { @class = "control-label col-md-2" })
+     <div class="col-md-10">
+     @Html.DropDownListFor(model => model.SpeedometerChart.Series.KpiId, new List<SelectListItem> { new SelectListItem{Value=Model.SpeedometerChart.Series.KpiId.ToString(), Text=Model.SpeedometerChart.Series.KpiName}}, new { @class = "kpi-list form-control", style = "width:180px" })
+     @Html.ValidationMessageFor(model => model.SpeedometerChart.Series.KpiId)
+     </div>
+</div>
+
+<div class="form-group row">
+    <label class="control-label col-md-2">Plot Bands</label>
+    <div class="col-md-10">
+        <input type="button" value="Add Plot Bands" class="btn btn-lightblue" id="add-plot" />
+    </div>
+</div>
+
+@*<div class="form-group form-list">
+    <label>&nbsp;</label>
+    <input type="button" value="Add Plot Bands" class="btn btn-lightblue" id="add-plot" />
+</div>*@
+@*<div id="plot-bands-holder">
+</div>*@
+ <div class="col-md-12">
+            <div id="plot-bands-holder" class="form-inline graphic-properties">
+            </div>
+        </div>
+<div id="hidden-fields">
+    @for (var i = 0; i < Model.SpeedometerChart.PlotBands.Count; i++)
+    {
+        var original = i == 0 ? "original" : "";
+        <div class="plot-band-template @original whitebox">
+            <input type="hidden" name="SpeedometerChart.PlotBands.Index" value="@i" />
+            <h2>Plot Bands</h2>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.SpeedometerChart.PlotBands[i].From)
+                        @Html.TextBoxFor(model => model.SpeedometerChart.PlotBands[i].From, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.SpeedometerChart.PlotBands[i].From)
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.SpeedometerChart.PlotBands[i].To)
+                        @Html.TextBoxFor(model => model.SpeedometerChart.PlotBands[i].To,new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.SpeedometerChart.PlotBands[i].To)
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.SpeedometerChart.PlotBands[i].Color)
+                        <div class="input-group colorpicker">
+                            @Html.TextBoxFor(model => model.SpeedometerChart.PlotBands[i].Color, new { @class = "form-control" })
+                            <span class="input-group-addon"><i style="background-color:@Model.SpeedometerChart.PlotBands[i].Color"></i></span>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.SpeedometerChart.PlotBands[i].Color)
+                    </div>
+                </div>
+            </div>
+            <input type="button" value="Remove" class="remove" />
+        </div>
+    }
+</div>
