@@ -1029,5 +1029,10 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Input() {
             return View();
         }
+
+        [HttpGet]
+        public ActionResult Preview() {
+            return View();
+        }
     }
 }
