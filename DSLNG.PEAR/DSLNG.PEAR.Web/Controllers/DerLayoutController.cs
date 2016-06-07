@@ -203,7 +203,6 @@ namespace DSLNG.PEAR.Web.Controllers
                             editViewModel.HighlightId = response.Highlight.SelectOptionId;
                             break;
                         }
-                    case "lng-and-cds":
                     case "procurement":
                         {
                             var result = _selectService.GetHighlightTypesDropdown();
@@ -252,14 +251,19 @@ namespace DSLNG.PEAR.Web.Controllers
                             break;
                         }
                     case "lng-and-cds-production":
-                    {
+                        {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 9);
                             break;
-                    }
+                        }
                     case "job-pmts":
                     case "plant-availability":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 10);
+                            break;
+                        }
+                    case "lng-and-cds":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 13);
                             break;
                         }
                 }
@@ -555,9 +559,9 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "lng-and-cds":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(14);
-                        var result = _selectService.GetHighlightTypesDropdown();
-                        viewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                        viewModel.KpiInformations = GetKpiInformations(13);
+                        /*var result = _selectService.GetHighlightTypesDropdown();
+                        viewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();*/
                         return PartialView("LayoutType/_LngAndCds", viewModel);
                     }
                 case "dafwc":
