@@ -14,7 +14,7 @@ namespace DSLNG.PEAR.Web.ViewModels.File
         public IEnumerable<SelectListItem> Years { get; set; }
         public int Month { get; set; }
         public IEnumerable<SelectListItem> Months { get; set; }
-        [Required]
+        [Required,MaxLength(150),Display(Name="Title")]
         public string Name { get; set; }
         [Required]
         [AllowHtml]

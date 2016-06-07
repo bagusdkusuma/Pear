@@ -1289,6 +1289,11 @@
     <Content Include="Views\MIR\Index.cshtml" />
     <Content Include="Views\MIR\Create.cshtml" />
     <Content Include="Views\MIR\_MirUpload.cshtml" />
+    <Content Include="Views\Shared\_PdfViewerPartial.cshtml" />
+    <Content Include="Views\MIR\_Summary.cshtml" />
+    <Content Include="Views\MIR\_ModalViewPartial.cshtml" />
+    <Content Include="Views\MIR\Edit.cshtml" />
+    <Content Include="Views\Shared\_DocumentViewPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

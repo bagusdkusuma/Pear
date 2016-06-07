@@ -51,7 +51,9 @@ namespace DSLNG.PEAR.Web.Controllers
                 iTotalRecords = mirData.FileRepositories.Count,
                 aaData = DataResponse
             };
-            return Json(data, JsonRequestBehavior.AllowGet);
+            var jsonResult = Json(data, JsonRequestBehavior.AllowGet);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult; //Json(data, JsonRequestBehavior.AllowGet);
         }
 
         [AuthorizeUser(AccessLevel = "AllowCreate")]
@@ -95,13 +97,83 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 return View(model);
             }
-            
+
         }
 
+        public ActionResult Edit(int Id)
+        {
+            var model = _fileRepositoryService.GetFile(new GetFileRequest { Id = Id }).MapTo<FileRepositoryCreateViewModel>();
+            model.Years = _dropDownService.GetYears().MapTo<SelectListItem>();
+            model.Months = _dropDownService.GetMonths().MapTo<SelectListItem>();
+            return View(model);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult Edit(FileRepositoryCreateViewModel model)
+        {
+            model.Years = _dropDownService.GetYears().MapTo<SelectListItem>();
+            model.Months = _dropDownService.GetMonths().MapTo<SelectListItem>();
+
+            if (ModelState.IsValid)
+            {
+                SaveFileRepositoryRequest saveModel = new SaveFileRepositoryRequest();
+                saveModel = model.MapTo<SaveFileRepositoryRequest>();
+                //this should be the reader
+                //try to read data on buffer
+                saveModel.Data = (byte[])Session[model.Filename];
+                saveModel.LastWriteTime = DateTime.Now;
+                saveModel.UserId = this.UserProfile().UserId;
+                if (_fileRepositoryService.Save(saveModel).IsSuccess)
+                {
+                    return RedirectToAction("Index", "MIR");
+                }
+                else
+                {
+                    return View(model);
+                }
+            }
+            else
+            {
+                return View(model);
+            }
+
+        }
+        public ActionResult Viewer(FileRepositoryViewModel model)
+        {
+
+            return PartialView("_ModalViewPartial", model);
+        }
         public ActionResult UploadControlCallbackAction()
         {
             UploadControlExtension.GetUploadedFiles("mirUpload", MIRUploadControlSettings.ValidationSettings, MIRUploadControlSettings.FileUploadComplete);
             return null;
+        }
+
+        public PartialViewResult ModalPartialView(int Id, string type)
+        {
+            string data = string.Empty;
+            var model = _fileRepositoryService.GetFile(new GetFileRequest { Id = Id });
+            if (model.IsSuccess)
+            {
+                Session[model.Filename] = model.Data;
+                switch (type)
+                {
+                    case "summary":
+                        data = model.Summary;
+                        return PartialView("_Summary", data);
+                    case "pdf":
+                        data = model.Filename;
+                        return PartialView("_PdfViewerPartial", data);
+                }
+            }
+            return PartialView("_Summary", data);
+        }
+
+        public FileResult Download(int Id)
+        {
+            var model = _fileRepositoryService.GetFile(new GetFileRequest { Id = Id });
+            var response = new FileContentResult(model.Data, "application/pdf") { FileDownloadName = model.Filename };
+            return response;
         }
 
         protected static byte[] ReadAllBytes(Stream stream)
