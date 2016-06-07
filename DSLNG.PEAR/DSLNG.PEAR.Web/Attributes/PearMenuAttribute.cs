@@ -22,7 +22,14 @@ namespace DSLNG.PEAR.Web.Attributes
             var urlHelperUrl = new UrlHelper(HttpContext.Current.Request.RequestContext);
             string cleanUrl = urlHelperUrl.Action(action, controller, new {id = string.Empty});
             var rootMenuActive = menuService.GetSiteMenuActive(new GetSiteMenuActiveRequest() { Action = action, Controller = controller, Url = url, CleanUrl = cleanUrl });
-            filterContext.Controller.TempData.Add("RootMenuActive", rootMenuActive);
+            if(filterContext.Controller.TempData["RootMenuActive"] != null)
+            {
+                filterContext.Controller.TempData["RootMenuActive"] = rootMenuActive;
+            }
+            else
+            {
+                filterContext.Controller.TempData.Add("RootMenuActive", rootMenuActive);
+            }
 
             base.OnActionExecuting(filterContext);
         }
