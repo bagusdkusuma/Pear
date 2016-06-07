@@ -230,13 +230,11 @@ namespace DSLNG.PEAR.Web.Controllers
                             }
                         }
                         break;
-                    case "avg-ytd-key-statistic":
-                    case "security":
+                    case "hhv":
                         {
-                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 6);
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 2);
                             break;
                         }
-                    case "job-pmts":
                     case "mgdp":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 3);
@@ -247,6 +245,18 @@ namespace DSLNG.PEAR.Web.Controllers
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 4);
                             break;
                         }
+                    case "avg-ytd-key-statistic":
+                    case "security":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 6);
+                            break;
+                        }
+                    case "lng-and-cds-production":
+                    {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 9);
+                            break;
+                    }
+                    case "job-pmts":
                     case "plant-availability":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 10);
@@ -582,7 +592,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "hhv":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(4);
+                        viewModel.KpiInformations = GetKpiInformations(2);
                         return PartialView("LayoutType/_HHV", viewModel);
                     }
                 case "lng-and-cds-production":
@@ -778,23 +788,23 @@ namespace DSLNG.PEAR.Web.Controllers
                         response = _derService.SaveLayoutItem(request);
                         break;
                     }
-                /*case "plant-availability":
-                {
-                        request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
-                        request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
-                        var mbbtuKpi = request.KpiInformations.FirstOrDefault(x => x.Position == 0 || x.Position == 1 || x.Position == 2 ||
-                            x.Position ==3);
-                        if (mbbtuKpi != null)
-                        {
-                            var newMbbtuKpiTarget = new SaveLayoutItemRequest.DerKpiInformationRequest();
-                            newMbbtuKpiTarget.ConfigType = ConfigType.KpiTarget;
-                            newMbbtuKpiTarget.KpiId = mbbtuKpi.KpiId;
-                            newMbbtuKpiTarget.Position = 3;
-                            request.KpiInformations.Add(newMbbtuKpiTarget);
-                        }
-                        response = _derService.SaveLayoutItem(request);
-                        break;
-                    }*/
+                    /*case "plant-availability":
+                    {
+                            request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
+                            request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
+                            var mbbtuKpi = request.KpiInformations.FirstOrDefault(x => x.Position == 0 || x.Position == 1 || x.Position == 2 ||
+                                x.Position ==3);
+                            if (mbbtuKpi != null)
+                            {
+                                var newMbbtuKpiTarget = new SaveLayoutItemRequest.DerKpiInformationRequest();
+                                newMbbtuKpiTarget.ConfigType = ConfigType.KpiTarget;
+                                newMbbtuKpiTarget.KpiId = mbbtuKpi.KpiId;
+                                newMbbtuKpiTarget.Position = 3;
+                                request.KpiInformations.Add(newMbbtuKpiTarget);
+                            }
+                            response = _derService.SaveLayoutItem(request);
+                            break;
+                        }*/
             }
 
             TempData["IsSuccess"] = response.IsSuccess;
