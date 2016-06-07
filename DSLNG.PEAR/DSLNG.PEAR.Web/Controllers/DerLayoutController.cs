@@ -261,6 +261,11 @@ namespace DSLNG.PEAR.Web.Controllers
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 10);
                             break;
                         }
+                    case "table-tank":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 12);
+                            break;
+                        }
                     case "lng-and-cds":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 13);
@@ -584,7 +589,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "table-tank":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(11);
+                        viewModel.KpiInformations = GetKpiInformations(12);
                         return PartialView("LayoutType/_TableTank", viewModel);
                     }
                 case "mgdp":
