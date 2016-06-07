@@ -3,6 +3,32 @@
 @{
     ViewBag.Title = "Index";
 }
+<style type="text/css">
+    .dxpc-mainDiv.DetailsPopup {
+        border-width: 2px;
+        display: table; position: absolute;
+        left: 231px; top: -2px; overflow: visible;
+        width : 900px;
+        height :auto;
+    }
+
+    .dxpc-mainDiv.DetailsPopup .dxpc-content {
+        padding: initial;
+    }
+
+        .dxpc-mainDiv.DetailsPopup .dxpc-content > div {
+            margin: auto;
+        }
+
+    .dxpc-mainDiv.DetailsPopup .dxflGroupSys {
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+
+    .dxpc-mainDiv.DetailsPopup .dxflCaptionCellSys label {
+        color: #929292;
+    }
+</style>
 
 <h2>Management Information Reports</h2>
 @Html.Partial("_MessageResponse")
@@ -15,11 +41,9 @@
 
     </form>
 </div>
-<div class="add-button-wrapper" style = "margin-bottom: -26px; margin-top:4px;">
+<div class="add-button-wrapper" style="margin-bottom: -26px; margin-top:4px;">
     @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
 </div>
-
-
 <table id="mir-table" class="rgw-pop-tbl table-transparent table row-border table-bordered table-responsive" cellspacing="0" width="100%">
     <thead>
         <tr>
@@ -31,9 +55,15 @@
         </tr>
     </thead>
 </table>
-
+<div id="modal-container">
+    @Html.Action("Viewer")
+</div>
 @section Scripts{
     <script type="text/javascript">
+
+        function OnPopupEndCallback(s, e) {
+            alert(e);
+        }
 
         var contentUrl = '@Url.Content("$x$")';
         $(document).ready(function () {
@@ -58,12 +88,31 @@
                     });
                 },
                 "order": [[0, "asc"]],
-                "paging":false,
+                "paging": false,
                 "aoColumns": [
                     { "mDataProp": "Id", "name": "Id", "className": "dt-body-left", "orderable": false },
                     { "mDataProp": "MonthName", "name": "MonthName", "className": "dt-body-left", "orderable": false },
-                    { "mDataProp": "Summary", "name": "Summary", "className": "dt-body-left", "orderable": false },
-                    { "mDataProp": "Filename", "name": "Filename", "className": "dt-body-left", "orderable": false },
+                    {
+                        "mDataProp": "Summary", "name": "Summary", "className": "dt-body-left", "orderable": false, "sortable": false,
+                        "mRender": function (data, type, row) {
+                            if (!data) {
+                                return 'N/A';
+                            } else {
+                                var n = data.indexOf("</p>");
+                                var sub = data.substr(0, n).replace('<a>', '').replace('</a>', '');
+                                var more = '<a class="summary" data-id="_text_" href="javascript:;"><sup>more</sup></a>'.replace('_text_', row.Id);
+                                return sub + ' ' + more;
+                            }
+                        }
+                    },
+                    {
+                        "mDataProp": "Filename", "name": "Filename", "className": "dt-body-left", "orderable": false,
+                        "mRender": function (data, type, row) {
+                            var viewlink = '<a class="viewpdf" data-id="_name_" href="javascript:;">View<a/>'.replace('_name_', row.Id);
+                            var download = '<a class="download" data-id="_id_" href="javascript:;">Download</a>'.replace('_id_', row.Id);
+                            return data + ' | ' + viewlink + ' | ' + download;
+                        }
+                    },
                     //{
                     //    "mDataProp": "Filename", "name": "Filename", "className": "dt-body-left", "orderable": false, "mRender": function (data, type, row) {
                     //        var list = '<ul class="pop-attachments-list">';
@@ -82,6 +131,7 @@
                         "mRender": function (data, type, row) {
                             var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
                             var editLink = '@Html.ActionLink("Edit", "Edit", "MIR", new { id = "_id_" }, null)'.replace('_id_', data.Id);
+
                             return editLink + ' | ' + deleteLink;
                         }
                     }
@@ -105,10 +155,35 @@
                 }
             });
 
+            $('#mir-table').on('click', '.download', function () {
+                var id = $(this).attr('data-id');
+                var url = '@Url.Action("Download","MIR")';
+                var form = $('<form/>');
+                form.attr('action', url);
+                form.attr('method', 'GET');
+                form.html('<input type="hidden" name="id" value="' + id + '"/>');
+                $('body').append(form);
+                form.submit();
+
+            });
+            $('#mir-table').on('click', '.viewpdf', function () {
+                var a = $(this).attr('data-id');
+                popViewer.PerformCallback({ Id: a, type: 'pdf' });
+                popViewer.Show();
+            });
+
+            $('#mir-table').on('click', '.summary', function () {
+                var a = $(this).attr('data-id');
+                popViewer.PerformCallback({ Id: a, type: 'summary' });
+                popViewer.Show();
+            });
             $('#year').on('change', function () {
                 year = $('#year').val();
                 myTable.draw();
             });
+
+
         });
+
     </script>
 }

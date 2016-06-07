@@ -1,0 +1,23 @@
+﻿@using DSLNG.PEAR.Web.ViewModels.File;
+@model List<PdfPageViewModel>
+
+@Html.DevExpress().DataView(settings =>
+{
+    settings.Name = "DocumentView";
+    settings.CallbackRouteValues = new
+    {
+        Controller = "File",
+        Action = "PdfViewer"
+    };
+    settings.SettingsTableLayout.RowsPerPage = 1;
+    settings.SettingsTableLayout.ColumnCount = 1;
+    settings.PagerSettings.AllButton.Visible = true;
+    settings.SetItemTemplateContent(c =>
+    {
+        PdfPageViewModel pageModel = c.DataItem as PdfPageViewModel;
+        Html.DevExpress().BinaryImage(imageSettings =>
+        {
+            imageSettings.Name = "bimPdfPage" + pageModel.PageNumber;
+        }).Bind(pageModel.GetPageImageBytes()).Render();
+    });
+}).Bind(Model).GetHtml()
