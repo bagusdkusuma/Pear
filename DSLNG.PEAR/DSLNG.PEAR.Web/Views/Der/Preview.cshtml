@@ -70,17 +70,41 @@
 
     <div class="daily-der-chart">
       <div class="col-md-3">
-        <img src="img/daily-chart-1.png" class="img-responsive" />
+         @{
+                var row1Col0 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 0);
+                if (row1Col0 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col0.Id })" class="layout-item"></div>
+                }
+            }
       </div>
-      <div class="col-md-3">
-        <img src="img/daily-chart-2.png" class="img-responsive" style="margin-top: 10px;" />
-      </div>
-      <div class="col-md-3">
-        <img src="img/daily-chart-3.png" class="img-responsive" />
-      </div>
-      <div class="col-md-3">
-        <img src="img/daily-chart-4.png" class="img-responsive" />
-      </div> 
+       <div class="col-md-3">
+            @{
+                var row1Col1 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 1);
+                if (row1Col1 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col1.Id })" class="layout-item"></div>
+                }
+            }
+        </div>
+        <div class="col-md-3">
+            @{
+                var row1Col2 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 2);
+                if (row1Col2 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col2.Id })" class="layout-item"></div>
+                }
+            }
+        </div>
+        <div class="col-md-3">
+            @{
+                var row1Col3 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 3);
+                if (row1Col3 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col3.Id })" class="layout-item"></div>
+                }
+            }
+        </div>
     </div><!-- daily der chart -->
 
     <div class="qhsse-der">
@@ -1527,6 +1551,8 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="~/Scripts/bootstrap.min.js"></script>
    <script type="text/javascript" src="~/Content/datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/highcharts.js"></script>
+    <script src="~/Scripts/der-scripts.js"></script>
     <script type="text/javascript">
     $(document).ready(function () {
         function reloadView() {
@@ -1539,7 +1565,7 @@
                     success: function (data) {
 
                         if (data.GraphicType !== undefined) {
-                            var callback = window.Pear.Artifact.Designer._previewCallbacks;
+                            var callback = window.Der.Artifact;
                             callback[data.GraphicType](data, that);
                         }
                         else if (data.type === "highlight") {
