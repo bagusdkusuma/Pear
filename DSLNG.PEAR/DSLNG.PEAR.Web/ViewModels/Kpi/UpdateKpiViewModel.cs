@@ -70,9 +70,13 @@ namespace DSLNG.PEAR.Web.ViewModels.Kpi
 
         public YtdFormula YtdFormula { get; set; }
         [Required]
-        [Display(Name = "PMS Formula Ytd")]
+        [Display(Name = "Aggregation Formula")]
         public string YtdFormulaValue { get; set; }
         public IEnumerable<SelectListItem> YtdFormulaList { get; set; }
+
+
+        [Display(Name = "Custom Formula")]
+        public string CustomFormula { get; set; }
 
         [Display(Name="Measurement")]
         [Required]
