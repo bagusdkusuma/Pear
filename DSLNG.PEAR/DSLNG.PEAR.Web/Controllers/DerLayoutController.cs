@@ -237,6 +237,8 @@ namespace DSLNG.PEAR.Web.Controllers
                         }
                     case "mgdp":
                     case "indicative-commercial-price":
+                    case "dafwc":
+                    case "job-pmts":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 3);
                             break;
@@ -259,7 +261,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 9);
                             break;
                         }
-                    case "job-pmts":
+                    
                     case "plant-availability":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 10);
@@ -343,7 +345,6 @@ namespace DSLNG.PEAR.Web.Controllers
                     case "3-and-2":
                     case "3-and-3":
                     case "0-and-1":
-                    case "4-and-0":
                     case "11-and-1":
                     case "12-and-0":
                     case "13-and-0":
@@ -357,6 +358,11 @@ namespace DSLNG.PEAR.Web.Controllers
                     case "3-and-4":
                         {
                             viewModel.Type = "pie";
+                            break;
+                        }
+                    case "4-and-0":
+                    {
+                            viewModel.Type = "dafwc";
                             break;
                         }
                     case "4-and-1":
@@ -589,7 +595,9 @@ namespace DSLNG.PEAR.Web.Controllers
                     }
                 case "dafwc":
                     {
-                        return Content("You have chosen DAFWC and LOPC type");
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(3);
+                        return PartialView("LayoutType/_Dafwc", viewModel);
                     }
                 case "job-pmts":
                     {
@@ -780,6 +788,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "job-pmts":
                 case "mgdp":
                 case "global-stock-market":
+                case "dafwc":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
@@ -811,12 +820,12 @@ namespace DSLNG.PEAR.Web.Controllers
                         response = _derService.SaveLayoutItem(request);
                         break;
                     }*/
-                case "dafwc":
+                /*case "dafwc":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         response = _derService.SaveLayoutItem(request);
                         break;
-                    }
+                    }*/
                     /*case "plant-availability":
                     {
                             request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
