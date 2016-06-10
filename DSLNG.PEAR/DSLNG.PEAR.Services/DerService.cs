@@ -371,6 +371,7 @@ namespace DSLNG.PEAR.Services
                 case "critical-pm":
                 case "procurement":
                 case "indicative-commercial-price":
+                case "plant-availability":
                     {
                         try
                         {

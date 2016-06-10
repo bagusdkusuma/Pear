@@ -9,7 +9,8 @@ namespace DSLNG.PEAR.Services.Responses.Kpi
     {
         Sum,
         Average,
-        Max,
-        Min
+        Custom
+        //Max,
+        //Min
     }
 }

@@ -2,7 +2,7 @@
 
 <h4>LNG Tank</h4>
 @{
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 4; i++)
     {
         var posIndex = Model.KpiInformations.FirstOrDefault(x => x.Position == i);
         if (posIndex != null)
@@ -12,9 +12,7 @@
                 @Html.HiddenFor(model => model.KpiInformations[i].Position)
                 @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes)
                 @Html.HiddenFor(model => model.KpiInformations[i].Id)
-                <span style="color:white">
-                    @Html.EditorFor(model => model.KpiInformations[i].IsOriginalData) Is Original Data
-                </span>
+                
                 <input type="hidden" name="KpiInformations.Index" value="@i" />
             </div>
         }
@@ -23,7 +21,7 @@
 <br />
 <h4>CDS Tank</h4>
 @{
-    for (int i = 3; i < 6; i++)
+    for (int i = 4; i < 7; i++)
     {
         var posIndex = Model.KpiInformations.FirstOrDefault(x => x.Position == i);
         if (posIndex != null)
@@ -33,9 +31,7 @@
                 @Html.HiddenFor(model => model.KpiInformations[i].Position)
                 @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes)
                 @Html.HiddenFor(model => model.KpiInformations[i].Id)
-                <span style="color:white">
-                    @Html.EditorFor(model => model.KpiInformations[i].IsOriginalData) Is Original Data
-                </span>
+                
                 <input type="hidden" name="KpiInformations.Index" value="@i" />
             </div>
         }
@@ -44,7 +40,7 @@
 <br />
 <h4>CDS Buffer Tank</h4>
 @{
-    for (int i = 6; i < 9; i++)
+    for (int i = 7; i < 10; i++)
     {
         var posIndex = Model.KpiInformations.FirstOrDefault(x => x.Position == i);
         if (posIndex != null)
@@ -54,9 +50,7 @@
                 @Html.HiddenFor(model => model.KpiInformations[i].Position)
                 @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes)
                 @Html.HiddenFor(model => model.KpiInformations[i].Id)
-                <span style="color:white">
-                    @Html.EditorFor(model => model.KpiInformations[i].IsOriginalData) Is Original Data
-                </span>
+                
                 <input type="hidden" name="KpiInformations.Index" value="@i" />
             </div>
         }
@@ -65,7 +59,7 @@
 <br />
 <h4>CDS day-tank</h4>
 @{
-    for (int i = 9; i < 11; i++)
+    for (int i = 10; i < 12; i++)
     {
         var posIndex = Model.KpiInformations.FirstOrDefault(x => x.Position == i);
         if (posIndex != null)
@@ -75,9 +69,7 @@
                 @Html.HiddenFor(model => model.KpiInformations[i].Position)
                 @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes)
                 @Html.HiddenFor(model => model.KpiInformations[i].Id)
-                <span style="color:white">
-                    @Html.EditorFor(model => model.KpiInformations[i].IsOriginalData) Is Original Data
-                </span>
+                
                 <input type="hidden" name="KpiInformations.Index" value="@i" />
             </div>
         }
