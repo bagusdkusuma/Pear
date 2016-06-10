@@ -260,6 +260,7 @@ namespace DSLNG.PEAR.Services
             rowAndColumns.Add(new RowAndColumns { Row = 15, Column = 0 });
             rowAndColumns.Add(new RowAndColumns { Row = 15, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 15, Column = 2 });
+            rowAndColumns.Add(new RowAndColumns { Row = 16, Column = 1 });
 
             foreach (var rowAndColumn in rowAndColumns)
             {
@@ -372,6 +373,7 @@ namespace DSLNG.PEAR.Services
                 case "procurement":
                 case "indicative-commercial-price":
                 case "plant-availability":
+                case "economic-indicator":
                     {
                         try
                         {
@@ -474,6 +476,7 @@ namespace DSLNG.PEAR.Services
                 case "plant-availability":
                 case "economic-indicator":
                 case "key-equipment-status":
+                case "global-stock-market":
                     {
                         baseResponse = request.Id > 0 ? UpdateKpiInformations(request) : SaveKpiInformations(request);
                         break;
@@ -848,7 +851,7 @@ namespace DSLNG.PEAR.Services
                 derLayoutItem.Type = request.Type;
                 var derArtifact = new DerArtifact();
                 derArtifact.GraphicType = request.Type;
-                
+
                 var plots = request.Artifact.Speedometer.PlotBands.Select(x => new DerArtifactPlot
                 {
                     Color = x.Color,
@@ -1528,7 +1531,7 @@ namespace DSLNG.PEAR.Services
                         DataContext.DerKpiInformations.Remove(kpiInformation);
                         if (item.KpiId > 0)
                         {
-                            var kpi = new Kpi {Id = item.KpiId};
+                            var kpi = new Kpi { Id = item.KpiId };
                             if (DataContext.Kpis.Local.FirstOrDefault(x => x.Id == kpi.Id) == null)
                             {
                                 DataContext.Kpis.Attach(kpi);
@@ -1543,7 +1546,7 @@ namespace DSLNG.PEAR.Services
                         }
                         else if (item.HighlightId > 0)
                         {
-                            var selectOption = new SelectOption {Id = item.HighlightId};
+                            var selectOption = new SelectOption { Id = item.HighlightId };
                             if (DataContext.SelectOptions.Local.FirstOrDefault(x => x.Id == selectOption.Id) == null)
                             {
                                 DataContext.SelectOptions.Attach(selectOption);
@@ -1579,9 +1582,9 @@ namespace DSLNG.PEAR.Services
                             kpiInformations.Add(newKpiInformation);
                             //kpiInformations.Add(new DerKpiInformation { Kpi = kpi, Position = item.Position, ConfigType = item.ConfigType, KpiLabel = item.KpiLabel, KpiMeasurement = item.KpiMeasurement});
                         }
-                        
+
                     }
-                    
+
                 }
                 derLayoutItem.KpiInformations = kpiInformations;
                 //DataContext.DerLayoutItems.Add(derLayoutItem);
@@ -1626,7 +1629,8 @@ namespace DSLNG.PEAR.Services
                             kpi = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == kpi.Id);
                         }
                         kpiInformations.Add(new DerKpiInformation { Kpi = kpi, Position = item.Position, ConfigType = item.ConfigType });
-                    } else if (item.HighlightId > 0)
+                    }
+                    else if (item.HighlightId > 0)
                     {
                         var selectOption = new SelectOption { Id = item.HighlightId };
                         if (DataContext.SelectOptions.Local.FirstOrDefault(x => x.Id == selectOption.Id) == null)
@@ -1639,7 +1643,7 @@ namespace DSLNG.PEAR.Services
                         }
                         kpiInformations.Add(new DerKpiInformation { SelectOption = selectOption, Position = item.Position, ConfigType = item.ConfigType });
                     }
-                    
+
                 }
 
                 derLayoutItem.KpiInformations = kpiInformations;

@@ -1,7 +1,7 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.DerLayout.DerLayoutItemViewModel
 
 @{
-    var labels = new List<string> { "Economic Indicator(Dubai Crude)", "Economic Indicator(Brent FUT)", "Economic Indicator(Nephta FOB Sing)", "Economic Indicator(JCC Crude)", "Economic Indicator(LNG Spot DES JKM)", "FX rate(Dubai Crude)", "FX rate(Brent FUT)", "FX rate(Nephta FOB Sing)", "FX rate(JCC Crude)", "FX rate(LNG Spot DES JKM)", "LNG Shipping Cost benchmark" };
+    var labels = new List<string> { "Dubai ", "Economic Indicator(Brent FUT)", "Economic Indicator(Nephta FOB Sing)", "Economic Indicator(JCC Crude)", "Economic Indicator(LNG Spot DES JKM)", "FX rate(Dubai Crude)", "FX rate(Brent FUT)", "FX rate(Nephta FOB Sing)", "FX rate(JCC Crude)", "FX rate(LNG Spot DES JKM)", "LNG Shipping Cost benchmark" };
     for (int i = 0; i < Model.KpiInformations.Count; i++)
     {
         var posIndex = Model.KpiInformations.FirstOrDefault(x => x.Position == i);
@@ -12,10 +12,8 @@
                 <div class="col-md-10">
                     @Html.DropDownListFor(model => model.KpiInformations[i].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
                     @Html.HiddenFor(model => model.KpiInformations[i].Position)
-                    @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes)
-                    <span style="color:white">
-                        @Html.EditorFor(model => model.KpiInformations[i].IsOriginalData) Is Original Data
-                    </span>
+                    @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes, new { style = "visibility: hidden" })
+                    
                     <input type="hidden" name="KpiInformations.Index" value="@i" />
                 </div>
             </div>

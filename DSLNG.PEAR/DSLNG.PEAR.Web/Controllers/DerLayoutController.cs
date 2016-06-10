@@ -203,19 +203,19 @@ namespace DSLNG.PEAR.Web.Controllers
                             editViewModel.HighlightId = response.Highlight.SelectOptionId;
                             break;
                         }
-                    case "procurement":
-                        {
-                            var result = _selectService.GetHighlightTypesDropdown();
-                            editViewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
-                            for (int i = 0; i < response.KpiInformations.Count; i++)
-                            {
-                                if (response.KpiInformations[i].SelectOption != null)
-                                {
-                                    editViewModel.KpiInformations[i].HighlightId = response.KpiInformations[i].SelectOption.Id;
-                                }
-                            }
-                            break;
-                        }
+                    /* case "procurement":
+                         {
+                             var result = _selectService.GetHighlightTypesDropdown();
+                             editViewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                             for (int i = 0; i < response.KpiInformations.Count; i++)
+                             {
+                                 if (response.KpiInformations[i].SelectOption != null)
+                                 {
+                                     editViewModel.KpiInformations[i].HighlightId = response.KpiInformations[i].SelectOption.Id;
+                                 }
+                             }
+                             break;
+                         }*/
                     case "key-equipment-status":
                         {
                             var result = _selectService.GetHighlightTypesDropdown();
@@ -230,16 +230,20 @@ namespace DSLNG.PEAR.Web.Controllers
                         }
                         break;
                     case "hhv":
+                    case "procurement":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 2);
                             break;
                         }
                     case "mgdp":
+                    case "indicative-commercial-price":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 3);
                             break;
                         }
                     case "total-feed-gas":
+                    case "weekly-maintenance":
+                    case "critical-pm":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 4);
                             break;
@@ -261,16 +265,27 @@ namespace DSLNG.PEAR.Web.Controllers
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 10);
                             break;
                         }
+                    case "economic-indicator":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 11);
+                            break;
+                        }
+
                     case "table-tank":
+                    case "global-stock-market":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 12);
+                            var result = _selectService.GetHighlightTypesDropdown();
+                            editViewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
                             break;
                         }
                     case "lng-and-cds":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 13);
+                            
                             break;
                         }
+
                 }
                 return View("EditLayoutItem", editViewModel);
                 #endregion
@@ -437,6 +452,11 @@ namespace DSLNG.PEAR.Web.Controllers
                             viewModel.Type = "economic-indicator";
                             break;
                         }
+                    case "16-and-1":
+                        {
+                            viewModel.Type = "global-stock-market";
+                            break;
+                        }
                 }
                 return View("LayoutItem", viewModel);
                 #endregion
@@ -565,13 +585,10 @@ namespace DSLNG.PEAR.Web.Controllers
                     {
                         var viewModel = new DerLayoutItemViewModel();
                         viewModel.KpiInformations = GetKpiInformations(13);
-                        /*var result = _selectService.GetHighlightTypesDropdown();
-                        viewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();*/
                         return PartialView("LayoutType/_LngAndCds", viewModel);
                     }
                 case "dafwc":
                     {
-                        //var viewModel = new DerLayoutItemViewModel();
                         return Content("You have chosen DAFWC and LOPC type");
                     }
                 case "job-pmts":
@@ -614,30 +631,24 @@ namespace DSLNG.PEAR.Web.Controllers
                     {
                         var viewModel = new DerLayoutItemViewModel();
                         viewModel.KpiInformations = GetKpiInformations(4);
-                        var result = _selectService.GetHighlightTypesDropdown();
-                        viewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
                         return PartialView("LayoutType/_WeeklyMaintenance", viewModel);
                     }
                 case "critical-pm":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(5);
-                        var result = _selectService.GetHighlightTypesDropdown();
-                        viewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                        viewModel.KpiInformations = GetKpiInformations(4);
                         return PartialView("LayoutType/_CriticalPm", viewModel);
                     }
                 case "procurement":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(4);
-                        var result = _selectService.GetHighlightTypesDropdown();
-                        viewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                        viewModel.KpiInformations = GetKpiInformations(2);
                         return PartialView("LayoutType/_Procurement", viewModel);
                     }
                 case "indicative-commercial-price":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(4);
+                        viewModel.KpiInformations = GetKpiInformations(3);
                         return PartialView("LayoutType/_IndicativeCommercialPrice", viewModel);
                     }
                 case "plant-availability":
@@ -659,6 +670,14 @@ namespace DSLNG.PEAR.Web.Controllers
                         var result = _selectService.GetHighlightTypesDropdown();
                         viewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
                         return PartialView("LayoutType/_KeyEquipmentStatus", viewModel);
+                    }
+                case "global-stock-market":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(12);
+                        var result = _selectService.GetHighlightTypesDropdown();
+                        viewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                        return PartialView("LayoutType/_GlobalStockMarket", viewModel);
                     }
             }
 
@@ -760,6 +779,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "plant-availability":
                 case "job-pmts":
                 case "mgdp":
+                case "global-stock-market":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
