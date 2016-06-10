@@ -139,6 +139,10 @@
       <HintPath>..\packages\NReco.ImageGenerator.1.0.3.0\lib\net20\NReco.ImageGenerator.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NReco.PdfGenerator, Version=1.1.12.0, Culture=neutral, PublicKeyToken=231663d50a41b451, processorArchitecture=MSIL">
+      <HintPath>..\packages\NReco.PdfGenerator.1.1.12.0\lib\net20\NReco.PdfGenerator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="StructureMap, Version=3.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\structuremap.3.1.1.134\lib\net40\StructureMap.dll</HintPath>
       <Private>True</Private>
@@ -780,6 +784,7 @@
     <Compile Include="Attributes\AuthorizeUserAttribute.cs" />
     <Compile Include="Controllers\ArtifactCloneController.cs" />
     <Compile Include="Controllers\AssumptionDataController.cs" />
+    <Compile Include="Controllers\DerImageController.cs" />
     <Compile Include="Controllers\MirConfigurationController.cs" />
     <Compile Include="Controllers\MIRController.cs" />
     <Compile Include="Controllers\MirDataTableController.cs" />
@@ -1150,6 +1155,7 @@
     <Content Include="Views\DerLayout\LayoutType\_Speedometer.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_Speedometer.Edit.cshtml" />
     <Content Include="Views\Der\Preview.cshtml" />
+    <Content Include="Views\DerImage\Preview.cshtml" />
     <None Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\SpeedometerChart\_Edit.cshtml" />
     <Content Include="Views\Tabular\_Create.cshtml" />

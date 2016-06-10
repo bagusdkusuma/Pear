@@ -12,5 +12,6 @@ namespace DSLNG.PEAR.Common.Contants
         public const string PillarPath = "~/content/img/pillar";
         public const string SelectPath = "~/content/img/select";
         public const string PopAttachmentPath = "~/content/popattachments";
+        public const string DerPath = "~/content/der";
     }
 }

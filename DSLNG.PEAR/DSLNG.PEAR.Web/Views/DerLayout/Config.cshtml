@@ -515,6 +515,21 @@
                             Energy
                         </td>
                     </tr>
+                    <tr>
+                        <td colspan="4">
+                             @{
+                                var row6Col3 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 3);
+                                if (row6Col3 != null)
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 3, row = 6, derLayoutId = Model.DerLayoutId, id = row6Col3.Id })" class="btn btn-default">Manage</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 3, row = 6, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                }
+                            }
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>

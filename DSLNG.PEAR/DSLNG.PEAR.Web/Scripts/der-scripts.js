@@ -161,6 +161,7 @@ Number.prototype.format = function (n, x) {
             subtitle: {
                 text: data.LineChart.Subtitle,
             },
+
             plotOptions: {
                 line: {
                     marker: {
@@ -174,7 +175,8 @@ Number.prototype.format = function (n, x) {
                                 radius: 4
                             }
                         }
-                    }
+                    },
+                    animation: false
                 }
             },
             xAxis: {
@@ -311,5 +313,73 @@ Number.prototype.format = function (n, x) {
             series: series
         });
     };
+    Der.Artifact.speedometer = function (data, container) {
+        container.highcharts({
+            chart: {
+                type: 'solidgauge',
+                height: 135,
+                width:150
+            },
+
+            title: {
+                text: data.SpeedometerChart.Title,
+            },
+            //subtitle: {
+            //    text: data.SpeedometerChart.Subtitle,
+            //},
+            subtitle: {
+                text: "MCHE Rundown"
+            },
+            pane: {
+                center: ['50%', '85%'],
+                size: '140%',
+                startAngle: -90,
+                endAngle: 90,
+                background: {
+                    backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+                    innerRadius: '60%',
+                    outerRadius: '100%',
+                    shape: 'arc'
+                }
+            },
+
+           credits: {
+                enabled: false
+            },
+            // the value axis
+            yAxis: {
+                min: data.SpeedometerChart.PlotBands[0].from,
+                max: data.SpeedometerChart.PlotBands[data.SpeedometerChart.PlotBands.length - 1].to,
+
+                stops: [
+                 [0.0, '#55BF3B'], // green
+                 [0.9, '#DDDF0D'], // yellow
+                 [0.95, 'black'] // red
+                ],
+                lineWidth: 0,
+                minorTickInterval: null,
+                tickPixelInterval: 400,
+                tickWidth: 0,
+                title: {
+                    y: -70
+                },
+                labels: {
+                    y: 16
+                },
+                title: {
+                    text: data.SpeedometerChart.ValueAxisTitle,
+                },
+                //plotBands: data.SpeedometerChart.PlotBands
+            },
+            series: [{
+                name: data.SpeedometerChart.Series.name,
+                data: data.SpeedometerChart.Series.data,
+                tooltip: {
+                    valueSuffix: ' ' + data.SpeedometerChart.ValueAxisTitle
+                }
+            }]
+        });
+    };
+
     window.Der = Der;
 }(window,jQuery));
