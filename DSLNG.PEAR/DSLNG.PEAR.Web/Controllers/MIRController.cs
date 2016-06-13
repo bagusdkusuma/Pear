@@ -176,6 +176,16 @@ namespace DSLNG.PEAR.Web.Controllers
             return response;
         }
 
+        [HttpPost]
+        public ActionResult Delete(int Id)
+        {
+            var response = _fileRepositoryService.Delete(Id);
+            if (response.IsSuccess)
+            {
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
         protected static byte[] ReadAllBytes(Stream stream)
         {
             byte[] buffer = new byte[16 * 1024];

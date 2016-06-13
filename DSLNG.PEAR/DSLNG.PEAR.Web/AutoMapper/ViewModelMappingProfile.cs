@@ -175,6 +175,9 @@ using DSLNG.PEAR.Services.Requests.ProcessBlueprint;
 using DSLNG.PEAR.Services.Requests.FileManagerRolePrivilege;
 using DSLNG.PEAR.Services.Responses.Files;
 using DSLNG.PEAR.Services.Requests.Files;
+using DSLNG.PEAR.Web.ViewModels.RolePrivilege;
+using DSLNG.PEAR.Services.Requests.Privilege;
+using DSLNG.PEAR.Services.Responses.Privilege;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -229,17 +232,25 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<UpdateLevelViewModel, UpdateLevelRequest>();
 
             Mapper.CreateMap<CreateUserViewModel, CreateUserRequest>();
-            Mapper.CreateMap<GetUserResponse, UpdateUserViewModel>();
+            Mapper.CreateMap<GetUserResponse, UpdateUserViewModel>()
+                .ForMember(x => x.RolePrivilegeIds, o => o.MapFrom(k => k.RolePrivileges.Select(x => x.Id).ToList()));
+            Mapper.CreateMap<GetUserResponse.RolePrivilege, SelectListItem>();
+            Mapper.CreateMap<GetRoleGroupResponse.RolePrivilege, SelectListItem>();
             Mapper.CreateMap<UpdateUserViewModel, UpdateUserRequest>();
             Mapper.CreateMap<GetUsersResponse.User, UserViewModel>()
                 .ForMember(x => x.RoleName, y => y.MapFrom(z => z.Role.Name));
             Mapper.CreateMap<UserLoginViewModel, LoginUserRequest>();
             Mapper.CreateMap<ChangePasswordViewModel, ChangePasswordRequest>();
+
+            Mapper.CreateMap<RolePrivilegeViewModel, SaveRolePrivilegeRequest>();
+            Mapper.CreateMap<GetPrivilegeResponse, RolePrivilegeViewModel>();
+
             Mapper.CreateMap<ResetPasswordResponseViewModel, ResetPasswordResponse>();
             Mapper.CreateMap<ResetPasswordViewModel, ResetPasswordRequest>();
             Mapper.CreateMap<ResetPasswordResponse, ResetPasswordResponseViewModel>();
 
             Mapper.CreateMap<GetRoleGroupsResponse.RoleGroup, RoleGroupViewModel>();
+            Mapper.CreateMap<GetRoleGroupsResponse, SelectListItem>();
             Mapper.CreateMap<CreateRoleGroupViewModel, CreateRoleGroupRequest>();
             Mapper.CreateMap<GetRoleGroupResponse, UpdateRoleGroupViewModel>()
                 .ForMember(o => o.LevelId, p => p.MapFrom(k => k.Level.Id));

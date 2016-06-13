@@ -1,45 +1,16 @@
-﻿@model IEnumerable<DSLNG.PEAR.Web.ViewModels.File.FileRepositoryViewModel>
+﻿@model IEnumerable<DSLNG.PEAR.Web.ViewModels.RolePrivilege.RolePrivilegeViewModel>
 
 @{
     ViewBag.Title = "Index";
 }
-<style type="text/css">
-    .dxpc-mainDiv.DetailsPopup {
-        border-width: 2px;
-        display: table; position: absolute;
-        left: 231px; top: -2px; overflow: visible;
-        width : 900px;
-        height :auto;
-    }
 
-    .dxpc-mainDiv.DetailsPopup .dxpc-content {
-        padding: initial;
-    }
-
-        .dxpc-mainDiv.DetailsPopup .dxpc-content > div {
-            margin: auto;
-        }
-
-    .dxpc-mainDiv.DetailsPopup .dxflGroupSys {
-        padding-top: 12px;
-        padding-bottom: 12px;
-    }
-
-    .dxpc-mainDiv.DetailsPopup .dxflCaptionCellSys label {
-        color: #929292;
-    }
-    .dxdvControl_DSLNG .dxdvItem_DSLNG dx-al{
-        width:100%;
-    }
-</style>
-
-<h2>Management Information Reports</h2>
+<h2>Manage Role Privileges</h2>
 @Html.Partial("_MessageResponse")
 <div class="row">
     <form class="form-inline">
         <div class="form-group" style="margin-top: 5px; margin-left: 25px; padding-right: 30px; border-right: solid 1px #3f454f;">
-            <label class="labletop">MIR :</label>
-            @Html.DropDownList("Year", (IEnumerable<SelectListItem>)ViewBag.Years, new { @class = "form-control", id = "year" })
+            <label class="labletop">Department :</label>
+            @Html.DropDownList("RoleGroupId", (IEnumerable<SelectListItem>)ViewBag.RoleGroups, new { @class = "form-control"})
         </div>
 
     </form>
@@ -47,20 +18,16 @@
 <div class="add-button-wrapper" style="margin-bottom: -26px; margin-top:4px;">
     @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
 </div>
-<table id="mir-table" class="rgw-pop-tbl table-transparent table row-border table-bordered table-responsive" cellspacing="0" width="100%">
+<table id="privilege-table" class="rgw-pop-tbl table-transparent table row-border table-bordered table-responsive" cellspacing="0" width="100%">
     <thead>
         <tr>
             <th>No</th>
-            <th>Month</th>
-            <th>View Executive Summary</th>
-            <th>File Attachment</th>
+            <th>Name</th>
+            <th>Description</th>
             <th style="width: 200px;">Action</th>
         </tr>
     </thead>
 </table>
-<div id="modal-container">
-    @Html.Action("Viewer")
-</div>
 @section Scripts{
     <script type="text/javascript">
 
@@ -70,13 +37,13 @@
 
         var contentUrl = '@Url.Content("$x$")';
         $(document).ready(function () {
-            var year = $('#year').val();
+            var roleId = $('#RoleGroupId').val();
             var myTable;
-            myTable = $('#mir-table').DataTable({
+            myTable = $('#privilege-table').DataTable({
                 "bProcessing": true,
                 "bServerSide": true,
                 "sServerMethod": "POST",
-                "sAjaxSource": '@Url.Action("Grid", "MIR")',
+                "sAjaxSource": '@Url.Action("Grid", "Privilege")',
                 //"fnServerParams": function (aoData) {
                 //    newData = aoData;
                 //    newData.push({ "name": "year", "value": year });
@@ -84,7 +51,7 @@
                 //},
                 "fnServerData": function (sSource, aoData, fnCallback) {
                     newData = aoData;
-                    newData.push({ "name": "year", "value": year });
+                    newData.push({ "name": "roleId", "value": roleId });
                     $.getJSON(sSource, newData, function (json) {
                         //* Do whatever additional processing you want on the callback, then tell DataTables *
                         fnCallback(json);
@@ -94,9 +61,9 @@
                 "paging": false,
                 "aoColumns": [
                     { "mDataProp": "Id", "name": "Id", "className": "dt-body-left", "orderable": false },
-                    { "mDataProp": "MonthName", "name": "MonthName", "className": "dt-body-left", "orderable": false },
+                    { "mDataProp": "Name", "name": "Name", "className": "dt-body-left", "orderable": false },
                     {
-                        "mDataProp": "Summary", "name": "Summary", "className": "dt-body-left", "orderable": false, "sortable": false,
+                        "mDataProp": "Descriptions", "name": "Descriptions", "className": "dt-body-left", "orderable": false, "sortable": false,
                         "mRender": function (data, type, row) {
                             if (!data) {
                                 return 'N/A';
@@ -108,14 +75,14 @@
                             }
                         }
                     },
-                    {
-                        "mDataProp": "Filename", "name": "Filename", "className": "dt-body-left", "orderable": false,
-                        "mRender": function (data, type, row) {
-                            var viewlink = '<a class="viewpdf" data-id="_name_" href="javascript:;">View<a/>'.replace('_name_', row.Id);
-                            var download = '<a class="download" data-id="_id_" href="javascript:;">Download</a>'.replace('_id_', row.Id);
-                            return data + ' | ' + viewlink + ' | ' + download;
-                        }
-                    },
+                    //{
+                    //    "mDataProp": "Filename", "name": "Filename", "className": "dt-body-left", "orderable": false,
+                    //    "mRender": function (data, type, row) {
+                    //        var viewlink = '<a class="viewpdf" data-id="_name_" href="javascript:;">View<a/>'.replace('_name_', row.Id);
+                    //        var download = '<a class="download" data-id="_id_" href="javascript:;">Download</a>'.replace('_id_', row.Id);
+                    //        return data + ' | ' + viewlink + ' | ' + download;
+                    //    }
+                    //},
                     //{
                     //    "mDataProp": "Filename", "name": "Filename", "className": "dt-body-left", "orderable": false, "mRender": function (data, type, row) {
                     //        var list = '<ul class="pop-attachments-list">';
@@ -133,7 +100,7 @@
                         "defaultContent": '',
                         "mRender": function (data, type, row) {
                             var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
-                            var editLink = '@Html.ActionLink("Edit", "Edit", "MIR", new { id = "_id_" }, null)'.replace('_id_', data.Id);
+                            var editLink = '@Html.ActionLink("Edit", "Edit", "Privilege", new { id = "_id_" }, null)'.replace('_id_', data.Id);
 
                             return editLink + ' | ' + deleteLink;
                         }
@@ -145,10 +112,10 @@
                 }
             });
 
-            $('#mir-table').on('click', '.delete', function () {
+            $('#privilege-table').on('click', '.delete', function () {
                 var id = $(this).attr('data-id');
                 if (confirm('Are you sure want to delete this item?' + id)) {
-                    var url = '@Url.Action("Delete", "MIR")';
+                    var url = '@Url.Action("Delete", "Privilege")';
                     var form = $('<form />');
                     form.attr('action', url);
                     form.attr('method', 'POST');
@@ -158,30 +125,9 @@
                 }
             });
 
-            $('#mir-table').on('click', '.download', function () {
-                var id = $(this).attr('data-id');
-                var url = '@Url.Action("Download","MIR")';
-                var form = $('<form/>');
-                form.attr('action', url);
-                form.attr('method', 'GET');
-                form.html('<input type="hidden" name="id" value="' + id + '"/>');
-                $('body').append(form);
-                form.submit();
-
-            });
-            $('#mir-table').on('click', '.viewpdf', function () {
-                var a = $(this).attr('data-id');
-                popViewer.PerformCallback({ Id: a, type: 'pdf' });
-                popViewer.Show();
-            });
-
-            $('#mir-table').on('click', '.summary', function () {
-                var a = $(this).attr('data-id');
-                popViewer.PerformCallback({ Id: a, type: 'summary' });
-                popViewer.Show();
-            });
-            $('#year').on('change', function () {
-                year = $('#year').val();
+            
+            $('#RoleGroupId').on('change', function () {
+                roleId = $('#RoleGroupId').val();
                 myTable.draw();
             });
 

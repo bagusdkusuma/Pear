@@ -15,11 +15,13 @@ namespace DSLNG.PEAR.Services
 {
     public class RoleGroupService : BaseService, IRoleGroupService
     {
-        public RoleGroupService (IDataContext DataContext) : base (DataContext){
+        public RoleGroupService(IDataContext DataContext) : base(DataContext)
+        {
 
         }
 
-        public GetRoleGroupsResponse GetRoleGroups (GetRoleGroupsRequest request){
+        public GetRoleGroupsResponse GetRoleGroups(GetRoleGroupsRequest request)
+        {
 
             int totalRecords;
             var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
@@ -48,12 +50,14 @@ namespace DSLNG.PEAR.Services
             //return response;
         }
 
-        public GetRoleGroupResponse GetRoleGroup (GetRoleGroupRequest request){
+        public GetRoleGroupResponse GetRoleGroup(GetRoleGroupRequest request)
+        {
             try
             {
-                var roleGroup = DataContext.RoleGroups.Include(x => x.Level).First(x => x.Id == request.Id);
+                var roleGroup = DataContext.RoleGroups.Include(x => x.Level).Include(y => y.RolePrivileges).FirstOrDefault(x => x.Id == request.Id);
                 var response = roleGroup.MapTo<GetRoleGroupResponse>();
-
+                response.Privileges = roleGroup.RolePrivileges.MapTo<GetRoleGroupResponse.RolePrivilege>();
+                response.IsSuccess = true;
                 return response;
             }
             catch (System.InvalidOperationException x)
@@ -162,5 +166,15 @@ namespace DSLNG.PEAR.Services
             return data;
         }
 
+        public GetRoleGroupsResponse All()
+        {
+            var data = DataContext.RoleGroups.MapTo<GetRoleGroupsResponse.RoleGroup>();
+            return new GetRoleGroupsResponse
+            {
+                IsSuccess = true,
+                RoleGroups = data,
+                TotalRecords = data.Count
+            };
+        }
     }
 }

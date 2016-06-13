@@ -778,6 +778,7 @@
     <Compile Include="Controllers\MIRController.cs" />
     <Compile Include="Controllers\MirDataTableController.cs" />
     <Compile Include="Controllers\MIRUploadControlSettings.cs" />
+    <Compile Include="Controllers\PrivilegeController.cs" />
     <Compile Include="Controllers\ProcessBlueprintController.cs" />
     <Compile Include="Controllers\WaveController.cs" />
     <Compile Include="Extensions\NumberExtension.cs" />
@@ -1284,6 +1285,7 @@
     <Content Include="Views\MIR\_ModalViewPartial.cshtml" />
     <Content Include="Views\MIR\Edit.cshtml" />
     <Content Include="Views\Shared\_DocumentViewPartial.cshtml" />
+    <Content Include="Views\Privilege\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -1525,6 +1527,7 @@
     <Compile Include="ViewModels\RoleGroup\IndexRoleGroupViewModel.cs" />
     <Compile Include="ViewModels\RoleGroup\RoleGroupViewModel.cs" />
     <Compile Include="ViewModels\RoleGroup\UpdateRoleGroupViewModel.cs" />
+    <Compile Include="ViewModels\RolePrivilege\RolePrivilegeViewModel.cs" />
     <Compile Include="ViewModels\Scenario\ScenarioDetailViewModel.cs" />
     <Compile Include="ViewModels\Scenario\ScenarioViewModel.cs" />
     <Compile Include="ViewModels\Select\SelectOptionViewModel.cs" />

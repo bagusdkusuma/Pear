@@ -159,6 +159,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     Selected = viewModel.RoleId == x.Id ? true : false
                 }).ToList();
 
+            
             return viewModel;
         }
 
@@ -168,14 +169,35 @@ namespace DSLNG.PEAR.Web.Controllers
             var viewModel = response.MapTo<UpdateUserViewModel>();
 
             viewModel = UpdateViewModel(viewModel);
-
+            viewModel.RolePrivilegeOption = _roleGroupService.GetRoleGroup(new Services.Requests.RoleGroup.GetRoleGroupRequest { Id = viewModel.RoleId }).Privileges.MapTo<SelectListItem>();
             return View(viewModel);
         }
 
         [HttpPost]
+        public ActionResult GetPrivilege(int roleId)
+        {
+            List<SelectListItem> data = new List<SelectListItem>();
+            if (roleId > 0)
+            {
+                var role =  _roleGroupService.GetRoleGroup(new Services.Requests.RoleGroup.GetRoleGroupRequest { Id = roleId });
+                if (role.IsSuccess && role.Privileges != null)
+                {
+                    foreach (var privilege in role.Privileges)
+                    {
+                        data.Add(new SelectListItem
+                        {
+                            Text = privilege.Name,
+                            Value = privilege.Id.ToString()
+                        });
+                    }
+                }
+            }
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
         public ActionResult Update(UpdateUserViewModel viewModel)
         {
-              if (Request.Files.Count > 0)
+            if (Request.Files.Count > 0)
             {
                 var file = Request.Files[0];
 

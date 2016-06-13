@@ -13,6 +13,7 @@ namespace DSLNG.PEAR.Web.ViewModels.User
         public UpdateUserViewModel()
         {
             RoleGroupList = new List<SelectListItem>();
+            RolePrivilegeOption = new List<SelectListItem>();
         }
         [Required]
         public int Id { get; set; }
@@ -26,8 +27,12 @@ namespace DSLNG.PEAR.Web.ViewModels.User
         [Index(IsUnique = true)]
         public string Email { get; set; }
         public bool IsActive { get; set; }
+        [Display(Name ="Department")]
         public int RoleId { get; set; }
         public List<SelectListItem> RoleGroupList { get; set; }
+        [Display(Name ="Privileges")]
+        public List<int> RolePrivilegeIds { get; set; }
+        public List<SelectListItem> RolePrivilegeOption { get; set; }
         [Display(Name="Default Landing Page")]
         public string ChangeModel { get; set; }
         [Display(Name="User Is Superadmin")]
