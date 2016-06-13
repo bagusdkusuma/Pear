@@ -9,7 +9,7 @@
             "Feed Gas", "MCHE Rundown", "LNG Prod", "CDS Prod", "Fuel Gas", "Loss"
         };
     var a = 0;
-    for (int i = 0; i < 24; i++)
+    for (int i = 0; i <= 6; i++)
     {
 
         var posIndex = Model.KpiInformations.FirstOrDefault(x => x.Position == i);
@@ -18,15 +18,19 @@
             <div class="form-group row">
                 <label class="control-label col-md-2">@label[i]</label>
                 <div class="col-md-2">
-                    @Html.DropDownListFor(model => model.KpiInformations[i].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
+                    @Html.HiddenFor(model => model.KpiInformations[i].Id)
+                    @Html.TextBoxFor(model => model.KpiInformations[i].KpiLabel, new {placeholder = "KPI Custom Label"})
+                    @Html.TextBoxFor(model => model.KpiInformations[i].KpiMeasurement, new {placeholder = "KPI Measurement Label"})
                     @Html.HiddenFor(model => model.KpiInformations[i].Position)
-                    <input type="hidden" name="KpiInformations.Index" value="@a" />
+                    <input type="hidden" name="KpiInformations.Index" value="@a"/>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-2">
+                    <div class="col-md-2">@Html.DropDownListFor(model => model.KpiInformations[i].KpiId, new List<SelectListItem> { new SelectListItem { Value = Model.KpiInformations[i].KpiId.ToString(), Text = Model.KpiInformations[i].KpiName } }, new { @class = "kpi-list form-control", style = "width:180px;margin:0 auto" })</div>
+                    
+                    @Html.ValidationMessageFor(model => model.KpiInformations[i].KpiId)
+                </div>
+                <div class="col-md-6">
                     @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes)
-                    <span style="color:white">
-                        @Html.EditorFor(model => model.KpiInformations[i].IsOriginalData) Is Original Data
-                    </span>                 
                 </div>
             </div>
         }

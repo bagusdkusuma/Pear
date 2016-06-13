@@ -33,6 +33,7 @@ namespace DSLNG.PEAR.Web.ViewModels.DerLayout
         public MultiaxisChartViewModel MultiaxisChart { get; set; }
         public PieViewModel Pie { get; set; }
         public TankViewModel Tank { get; set; }
+        public SpeedometerChartViewModel SpeedometerChart { get; set; }
 
         [Display(Name = "Highlight")]
         public int HighlightId { get; set; }
@@ -55,8 +56,9 @@ namespace DSLNG.PEAR.Web.ViewModels.DerLayout
             public int Id { get; set; }
             public int Position { get; set; }
             public int KpiId { get; set; }
+            public string KpiLabel { get; set; }
             public string KpiName { get; set; }
-            public bool IsOriginalData { get; set; }
+            public string KpiMeasurement { get; set; }
             public string ConfigType { get; set; }
             public int HighlightId { get; set; }
         }

@@ -139,6 +139,10 @@
       <HintPath>..\packages\NReco.ImageGenerator.1.0.3.0\lib\net20\NReco.ImageGenerator.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NReco.PdfGenerator, Version=1.1.12.0, Culture=neutral, PublicKeyToken=231663d50a41b451, processorArchitecture=MSIL">
+      <HintPath>..\packages\NReco.PdfGenerator.1.1.12.0\lib\net20\NReco.PdfGenerator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="StructureMap, Version=3.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\structuremap.3.1.1.134\lib\net40\StructureMap.dll</HintPath>
       <Private>True</Private>
@@ -288,6 +292,10 @@
     <Content Include="Content\datatables\jquery.dataTables.min.css" />
     <Content Include="Content\datepicker\css\datepicker.css" />
     <Content Include="Content\datepicker\js\bootstrap-datepicker.js" />
+    <Content Include="Content\images\der\header-logo.png" />
+    <Content Include="Content\images\der\icon-food.png" />
+    <Content Include="Content\images\der\icon-operation.png" />
+    <Content Include="Content\images\der\icon-wifi.png" />
     <Content Include="Content\font-awesome\css\font-awesome.css" />
     <Content Include="Content\font-awesome\css\font-awesome.min.css" />
     <Content Include="Content\font-awesome\fonts\fontawesome-webfont.svg" />
@@ -408,6 +416,7 @@
     <Content Include="Content\select2\dist\js\select2.full.min.js" />
     <Content Include="Content\select2\dist\js\select2.js" />
     <Content Include="Content\select2\dist\js\select2.min.js" />
+    <Content Include="Content\style-der.css" />
     <Content Include="Content\style-regawa.css" />
     <Content Include="Content\style.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -425,6 +434,7 @@
     <Content Include="Scripts\calculator.production-yield.js" />
     <Content Include="Scripts\calculator.standard.js" />
     <Content Include="Scripts\calculator.plant-availability.js" />
+    <Content Include="Scripts\der-scripts.js" />
     <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery.freezeheader.js" />
     <Content Include="Scripts\perfect-scrollbar.jquery.min.js" />
@@ -774,6 +784,7 @@
     <Compile Include="Attributes\AuthorizeUserAttribute.cs" />
     <Compile Include="Controllers\ArtifactCloneController.cs" />
     <Compile Include="Controllers\AssumptionDataController.cs" />
+    <Compile Include="Controllers\DerImageController.cs" />
     <Compile Include="Controllers\MirConfigurationController.cs" />
     <Compile Include="Controllers\MIRController.cs" />
     <Compile Include="Controllers\MirDataTableController.cs" />
@@ -1140,6 +1151,12 @@
     <Content Include="Views\DerLayout\LayoutType\_KeyEquipmentStatus.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_KeyEquipmentStatus.Edit.cshtml" />
     <Content Include="Views\Der\Display\_KeyEquipmentStatus.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_JobPmts.Edit.cshtml" />
+    <Content Include="Views\Der\Input.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_Speedometer.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_Speedometer.Edit.cshtml" />
+    <Content Include="Views\Der\Preview.cshtml" />
+    <Content Include="Views\DerImage\Preview.cshtml" />
     <None Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\SpeedometerChart\_Edit.cshtml" />
     <Content Include="Views\Tabular\_Create.cshtml" />

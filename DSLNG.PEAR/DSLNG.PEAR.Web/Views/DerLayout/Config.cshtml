@@ -37,7 +37,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-md-6 no-padding">
+        <div class="col-md-4 no-padding">
             <table class="der-table" style="text-align: center">
                 <tbody>
                     <tr>
@@ -61,6 +61,12 @@
                 </tbody>
             </table>
         </div>
+         <div class="col-md-2 no-padding">
+             @{
+                 var row0Col2 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 2);
+                  <a href="@Url.Action("LayoutItem", new { column = 2, row = 0, derLayoutId = Model.DerLayoutId, id = row0Col2 == null? 0 :row0Col2.Id })" class="btn btn-default">Manage</a>
+             }
+         </div>
     </div>
     <div class="row der-row">
         <div class="col-md-3" style="text-align:center">
@@ -507,6 +513,21 @@
                     <tr>
                         <td>
                             Energy
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                             @{
+                                var row6Col3 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 3);
+                                if (row6Col3 != null)
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 3, row = 6, derLayoutId = Model.DerLayoutId, id = row6Col3.Id })" class="btn btn-default">Manage</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("LayoutItem", new { column = 3, row = 6, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                }
+                            }
                         </td>
                     </tr>
                 </tbody>

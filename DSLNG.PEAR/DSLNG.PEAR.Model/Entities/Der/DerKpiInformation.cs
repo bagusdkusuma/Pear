@@ -15,10 +15,12 @@ namespace DSLNG.PEAR.Data.Entities.Der
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int Id { get; set; }
+        public string KpiLabel { get; set; }   
         public Kpi Kpi { get; set; }
+        public string KpiMeasurement { get; set; }
         public int Position { get; set; }
-        [DefaultValue("false")]
-        public bool IsOriginalData { get; set; }
+        /*[DefaultValue("false")]
+        public bool IsOriginalData { get; set; }*/
         [DefaultValue(ConfigType.KpiAchievement)]
         public ConfigType ConfigType { get; set; }
         public SelectOption SelectOption { get; set; }

@@ -33,6 +33,9 @@
                 case "multiaxis":
                     Html.RenderPartial("~/Views/DerLayout/LayoutType/_Multiaxis.Edit.cshtml", Model);
                     break;
+                case "speedometer":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_Speedometer.Edit.cshtml", Model);
+                    break;
                 case "highlight":
                     Html.RenderPartial("~/Views/DerLayout/LayoutType/_Highlight.Edit.cshtml", Model);
                     break;
@@ -75,6 +78,13 @@
                 case "key-equipment-status":
                     Html.RenderPartial("~/Views/DerLayout/LayoutType/_KeyEquipmentStatus.Edit.cshtml", Model);
                     break;
+                case "security":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_Security.Edit.cshtml", Model);
+                    break;
+                case "job-pmts":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_JobPmts.Edit.cshtml", Model);
+                    break;
+
             }
         }
     </div>
@@ -105,6 +115,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('.der-layout-type').change(function () {
+            alert('as');
             var that = $(this);
             var type = that.val().toLowerCase();
             switch (type) {
@@ -119,6 +130,22 @@
                             var pear = window.Pear;
                             var callback = pear.Artifact.Designer._setupCallbacks;
                             callback['multiaxis']();
+                        }
+                    });
+                    break;
+                case 'speedometer':
+                    console.log('yayyaya');
+                    $.ajax({
+                        url: '@Url.Action("LayoutSetting", "DerLayout", new { type = "_type_" })'.replace('_type_', that.val()),
+                        success: function (data) {
+                            $('.layout-type-area').html(data);
+                            var $hiddenFields = $('#hidden-fields');
+                            $('#hidden-fields-holder').html($hiddenFields.html());
+                            $hiddenFields.remove();
+                            var pear = window.Pear;
+                            pear.Artifact.Designer._kpiAutoComplete($('.layout-type-area'));
+                            var callback = pear.Artifact.Designer._setupCallbacks;
+                            callback['speedometer']();
                         }
                     });
                     break;
@@ -139,6 +166,7 @@
                             $('.layout-type-area').html(data);
                             var pear = window.Pear;
                             var callback = pear.Artifact.Designer._setupCallbacks;
+                            console.log(that.val());
                             callback[that.val()]();
                         }
                     });
@@ -201,6 +229,25 @@
                     window.Pear.Artifact.Designer._setupCallbacks.tank();
                     break;
                 }
+
+            case "speedometer":
+                {
+                    var $hiddenFields = $('#hidden-fields');
+                    var plotTemplate = $hiddenFields.find('.plot-band-template.original');
+                    var plotTemplateClone = plotTemplate.clone(true);
+                    plotTemplateClone.children('input:first-child').remove();
+                    $('#hidden-fields-holder').html(plotTemplateClone);
+                    plotTemplate.remove();
+                    $('#plot-bands-holder').append($hiddenFields.html());
+                    $('#plot-bands-holder').find('.plot-band-template').each(function (i, val) {
+                        var $this = $(val);
+                        window.Pear.Artifact.Designer._colorPicker($this);
+                    });
+                    $hiddenFields.remove();
+                    window.Pear.Artifact.Designer._kpiAutoComplete($('.layout-type-area'));
+                    window.Pear.Artifact.Designer._setupCallbacks.speedometer();
+                    break;
+                }
             case "multiaxis":
                 {
                     var $hiddenFields = $('#hidden-fields');
@@ -259,6 +306,8 @@
             case "plant-availability":
             case "lng-and-cds":
             case "economic-indicator":
+            case "security":
+            case "job-pmts":
                 {
                     window.Pear.Artifact.Designer._kpiAutoComplete($('.layout-type-area'));
                     break;

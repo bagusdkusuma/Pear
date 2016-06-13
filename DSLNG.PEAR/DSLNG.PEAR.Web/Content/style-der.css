@@ -1,0 +1,82 @@
+﻿body {
+    overflow-x:hidden;
+}
+
+.qhsse-der {
+	
+}
+
+.header-der-tbl {
+
+}
+
+	.header-der-tbl .left {
+		background: rgb(0, 23, 79);
+		color: white;
+	}
+
+	.header-der-tbl .right {
+		background: #121212;
+		height: 82px;
+	}
+
+	.header-der-tbl .right img {
+		margin-top: 8px;
+	}
+
+.daily-der-tbl {
+
+}
+
+	.daily-der-tbl .left {
+		width: 50%;
+		overflow: hidden;
+		float: left;
+	}
+
+	.daily-der-tbl .left .table tr:nth-child(2) td,
+	.daily-der-tbl .left .table tr:nth-child(3) td,
+	.daily-der-tbl .left .table tr:nth-child(4) td  {
+		border: 0;
+		font-size: 12px;
+	}
+
+	.daily-der-tbl .left .table tr:nth-child(1) td {
+		background-color: #1DA4C2;
+	}
+
+	.daily-der-tbl .left .table tr:nth-child(3) td {
+		background-color: #81cc24;
+		text-decoration: underline;
+	}
+
+	.daily-der-tbl .left .table tr:nth-child(4) td {
+		color: #68ad13;
+	}
+
+	.daily-der-tbl .right {
+		width: 50%;
+		float: left;
+		height: 138px;
+		border-bottom: 1px solid #ddd;
+	}
+
+		.daily-der-tbl .right p {
+			font-size: 12px;
+		}
+
+		.daily-der-tbl .right img {
+			margin-top: 40px;
+		}
+
+.uncomplete {
+    color:red !important;
+    font-weight:bold;
+}
+.unproceed {
+    color:orange !important;
+    font-weight:bold;
+}
+.solid-gauge .highcharts-container {
+    height:140px;
+}

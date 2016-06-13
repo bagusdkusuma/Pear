@@ -17,6 +17,8 @@
                 $('#Icon').val(that.attr('data-icon').split('\\')[that.attr('data-icon').split('\\').length - 1]);
             }
         });
+
+
     </script>
 }
 
@@ -24,7 +26,7 @@
 <h2>@ViewBag.Title</h2>
 @Html.Partial("_MessageResponse")
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-10">
         <form action="@Url.Action("Update")" method="POST" enctype="multipart/form-data">
             @Html.HiddenFor(model => model.Id)
             <div class="form-group">
@@ -63,25 +65,38 @@
                 @Html.ValidationMessageFor(model => model.Order)
             </div>
             @Html.LabelFor(model => model.Code, new { @class = "control-label" })<span>(*)</span>
-            <div class="form-group">
-                <div class="col-lg-3">
+            <div class="form-inline code-from-pillar">
+                <div class="form-group">
                     @Html.TextBoxFor(model => model.CodeFromPillar, new { @class = "form-control", @readonly = "readonly" })
                 </div>
-                <div class="col-lg-3">
+                <div class="form-group">
                     @Html.TextBoxFor(model => model.CodeFromLevel, new { @class = "form-control", @readonly = "readonly" })
                 </div>
-                <div class="col-lg-3">
+                <div class="form-group">
                     @Html.TextBoxFor(model => model.Code, new { @class = "form-control" })
                 </div>
-                <div class="col-lg-3">
+                <div class="form-group">
                     @Html.TextBoxFor(model => model.CodeFromRoleGroup, new { @class = "form-control", @readonly = "readonly" })
                 </div>
                 @Html.ValidationMessageFor(model => model.Code)
             </div>
             <div class="form-group">
+                @Html.LabelFor(model => model.MethodId, new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.MethodId, Model.MethodList, "Select Method", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MethodId)
+            </div>
+            <div class="form-group">
                 @Html.LabelFor(model => model.YtdFormulaValue, new { @class = "control-label" })<span>(*)</span>
-                @Html.DropDownListFor(model => model.YtdFormulaValue, Model.YtdFormulaList, "Select PMS Formula Ytd", new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.YtdFormulaValue, Model.YtdFormulaList, "Select Aggregation Formula", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.YtdFormulaValue)
+            </div>
+            <div class="form-group custom-formula">
+                @if(Model.YtdFormula == DSLNG.PEAR.Web.ViewModels.Kpi.YtdFormula.Custom)
+                {
+                    @Html.LabelFor(model => model.CustomFormula, new { @class = "control-label"})<span>(*)</span>
+                    @Html.TextBoxFor(model => model.CustomFormula,  new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CustomFormula)
+                }
             </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.IsEconomic, new { @class = "control-label" })
@@ -113,11 +128,6 @@
                 @Html.DropDownListFor(model => model.MeasurementId, Model.MeasurementList, "Select Measurement", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.MeasurementId)
             </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.MethodId, new { @class = "control-label" })
-                @Html.DropDownListFor(model => model.MethodId, Model.MethodList, "Select Method", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.MethodId)
-            </div>
             <div class="form-group form-list">
                 <label>Relation Model</label>
                 <button type="button" class="btn btn-default form-inline add-relation-model"><i class="glyphicon glyphicon-plus"></i></button>
@@ -125,10 +135,10 @@
             <div class="relation-model-wrapper">
                 @foreach (var rm in Model.RelationModels)
                 {
-                    <div class="form-group relation-model-list">
+                    <div class="form-inline relation-model-list">
                         <input type="hidden" name="RelationModels.Index" value="@i" />
                         <input type="hidden" name="RelationModels[@i].Id" value="@rm.Id" class="rm-id"/>
-                        <div class="col-lg-5">
+                        <div class="form-group">
                             <select name="RelationModels[@i].KpiId" class="form-control rm-kpi">
                                 <option value="0">Select KPI</option>
                                 @foreach (var item in Model.KpiList)
@@ -138,7 +148,7 @@
                                 }
                             </select>
                         </div>
-                        <div class="col-lg-5">
+                        <div class="form-group">
                             <select name="RelationModels[@i].Method" class="form-control rm-method">
                                 <option value="0">Select Method</option>
                                 @foreach (var method in rm.Methods)
@@ -148,7 +158,7 @@
                                 }
                             </select>
                         </div>
-                        <div class="col-lg-2">
+                        <div class="form-group">
                             <button type="button" class="btn btn-default form-control remove-relation-model" style="display: inline-block;"><i class="glyphicon glyphicon-minus"></i></button>
 
                         </div>
@@ -210,6 +220,19 @@
             $(this).parent().parent().remove();
             if (i == 1) {
                 $('.remove-relation-model').hide();
+            }
+        });
+
+        $('#YtdFormulaValue').change(function () {
+            $this = $(this);
+            var value = $this.val();
+            if (value == 'Custom') {
+                var input = '<label class="control-label" for="custom-formula">Custom Formula (*)</label>'
+                input += '<input type="text" class="form-control" name="CustomFormula"/>'
+                $('.custom-formula').append(input);
+            }
+            else {
+                $('.custom-formula').empty();
             }
         });
     })

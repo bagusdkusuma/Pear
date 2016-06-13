@@ -28,5 +28,11 @@ namespace DSLNG.PEAR.Data.Entities.Der
         public ICollection<DerArtifactSerie> Series { get; set; }
         public ICollection<DerArtifactChart> Charts { get; set; }
         public DerArtifactTank Tank { get; set; }
+
+        public Kpi CustomSerie { get; set; }
+        public IList<DerArtifactPlot> Plots { get; set; }
     }
+
+
+    
 }

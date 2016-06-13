@@ -102,6 +102,7 @@
     <Compile Include="Entities\Der\Der.cs" />
     <Compile Include="Entities\Der\DerArtifact.cs" />
     <Compile Include="Entities\Der\DerArtifactChart.cs" />
+    <Compile Include="Entities\Der\DerArtifactPlot.cs" />
     <Compile Include="Entities\Der\DerArtifactSerie.cs" />
     <Compile Include="Entities\Der\DerArtifactTank.cs" />
     <Compile Include="Entities\Der\DerOriginalData.cs" />

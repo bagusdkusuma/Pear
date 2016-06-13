@@ -33,6 +33,7 @@ namespace DSLNG.PEAR.Services.Requests.Kpi
         public FormatInput FormatInput { get; set; }
         public PeriodeType Periode { get; set; }
         public string Remark { get; set; }
+        public string CustomFormula { get; set; }
 
         public bool IsActive { get; set; }
         public ICollection<KpiRelationModel> RelationModels { get; set; }

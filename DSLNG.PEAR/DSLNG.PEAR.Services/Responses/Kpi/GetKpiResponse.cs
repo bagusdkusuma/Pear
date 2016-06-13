@@ -29,6 +29,7 @@ namespace DSLNG.PEAR.Services.Responses.Kpi
         public string Remark { get; set; }
         public string Icon { get; set; }
         public bool IsActive { get; set; }
+        public string CustomFormula { get; set; }
         public ICollection<KpiRelationModel> RelationModels { get; set; }
     }
 }

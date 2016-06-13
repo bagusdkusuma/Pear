@@ -20,6 +20,7 @@ namespace DSLNG.PEAR.Services.Requests.Kpi
         public string IsEconomic { get; set; }
         public int Order { get; set; }
         public YtdFormula YtdFormula { get; set; }
+        public string CustomFormula { get; set; }
         public int MeasurementId { get; set; }
         public int MethodId { get; set; }
         public int? ConversionId { get; set; }

@@ -1,0 +1,807 @@
+﻿<style>
+    .nav-tabs > li > a {
+        color: #ffffff;
+    }
+
+    .nav-tabs > li:active > a {
+        color: #000000;
+    }
+</style>
+<section>
+    <div class="row">
+        <div class="title_page" style="border: none!important;">
+            <div class="row">
+                <div class="title">DER Daily Input</div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row der-display">
+        <div class="col-sm-12">
+            <form class="form-inline">
+                <div class="form-group form-list">
+                    <font color="#FFFFFF">Date : </font>
+                    <input id="currentDate" class="form-control datepicker" type="text">
+                    <span class="field-validation-valid" data-valmsg-for="StartInDisplay" data-valmsg-replace="true"></span>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+
+    </div>
+    <ul class="nav nav-tabs">
+        <li role="presentation">
+            <a href="#download" aria-controls="home" role="tab" data-toggle="tab" data-tabtype="download">
+                <div>Economic & Market Section</div>
+            </a>
+        </li>
+        <li role="presentation">
+            <a href="#upload" aria-controls="home" role="tab" data-toggle="tab" data-tabtype="upload">
+                <div>Ops & Engineering Section</div>
+            </a>
+        </li>
+        <li role="presentation">
+            <a href="#section3" aria-controls="home" role="tab" data-toggle="tab" data-tabtype="section3">
+                <div>Marine, Shipping, Cargo Delivery Section</div>
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+
+        <div id="download" class="tab-pane fade in active">
+            <div class="row" style="margin-bottom: 20px; margin-top: 20px;">
+                <div class="col-md-12">
+                    <h3 class="text-left">Economic Indicator section-b</h3>
+                </div>
+            </div><!-- row -->
+            <form action="@Url.Action("Input","Der")" method="post">
+            <table width="785" height="380" border="0" cellpadding="2" cellspacing="2">
+                <tr>
+                    <td width="91" align="left"><label class="control-label">USDXDR</label></td>
+                    <td align="left" width="176">
+                        <div class="form-group col-sm-8">
+                            <input class="form-control" data-val="true" data-val-required="The USDXDR field is required." id="text18" name="text18" type="text" value="" placeholder="rate" size="10" maxlength="10"> 
+                            <span class="field-validation-valid" data-valmsg-for="text18" data-valmsg-replace="true"></span>
+                        </div>
+                    </td>
+                    <td align="left" width="91"><label class="control-label">Dubai crude</label></td>
+                    <td align="left" width="176"><input type="text" class="form-control" id="text1" placeholder="usd/bbl" size="10" maxlength="10"></td>
+                    <td align="left" width="66"><label class="control-label">JKSE</label></td>
+                    <td align="left" width="147"><input type="text" class="form-control" id="text14" placeholder="indeks" size="10" maxlength="10" /></td>
+                </tr>
+                <tr>
+                    <td align="left"><label class="control-label">USD/IDR</label></td>
+                    <td align="left">
+                        <span class="col-sm-8">
+                            <input type="text" class="form-control" id="text" placeholder="rate" size="10" maxlength="10" />
+                        </span>
+                    </td>
+                    <td align="left"><label class="control-label">Brent</label></td>
+                    <td align="left"><input type="text" class="form-control" id="text7" placeholder="usd/bbl" size="10" maxlength="10" /></td>
+                    <td align="left"><label class="control-label">DJIA</label></td>
+                    <td align="left"><input type="text" class="form-control" id="text15" placeholder="indeks" size="10" maxlength="10" /></td>
+                </tr>
+                <tr>
+                    <td align="left"><label class="control-label">JPY/IDR</label></td>
+                    <td align="left">
+                        <span class="col-sm-8">
+                            <input type="text" class="form-control" id="text2" placeholder="rate" size="10" maxlength="10" />
+                        </span>
+                    </td>
+                    <td align="left"><label class="control-label">Henry Hub</label></td>
+                    <td align="left"><input type="text" class="form-control" id="text8" placeholder="usd/bbl" size="10" maxlength="10" /></td>
+                    <td align="left"><label class="control-label">Nikkei</label></td>
+                    <td align="left"><input type="text" class="form-control" id="text16" placeholder="indeks" size="10" maxlength="10" /></td>
+                </tr>
+                <tr>
+                    <td align="left"><label class="control-label">USD/JPY</label></td>
+                    <td align="left">
+                        <span class="col-sm-8">
+                            <input type="text" class="form-control" id="text3" placeholder="rate" size="10" maxlength="10" />
+                        </span>
+                    </td>
+                    <td align="left"><label class="control-label">Naptha</label></td>
+                    <td align="left"><input type="text" class="form-control" id="text9" placeholder="usd/bbl" size="10" maxlength="10" /></td>
+                    <td align="left"><label class="control-label">SSEC</label></td>
+                    <td align="left"><input type="text" class="form-control" id="text17" placeholder="indeks" size="10" maxlength="10" /></td>
+                </tr>
+                <tr>
+                    <td height="47" align="left"><label class="control-label">EUR/USD</label></td>
+                    <td align="left">
+                        <span class="col-sm-8">
+                            <input type="text" class="form-control" id="text4" placeholder="rate" size="10" maxlength="10" />
+                        </span>
+                    </td>
+                    <td align="left"><label class="control-label">ICP</label></td>
+                    <td align="left"><input type="text" class="form-control" id="text10" placeholder="usd/bbl" size="10" maxlength="10" /></td>
+                    <td align="left" valign="bottom" colspan="2" style="padding-top:12px"><label class="control-label">Macro Economic/Market Flash</label></td>
+                </tr>
+                <tr>
+                    <td align="left"><label class="control-label">EUR/IDR</label></td>
+                    <td align="left">
+                        <span class="col-sm-8">
+                            <input type="text" class="form-control" id="text5" placeholder="rate" size="10" maxlength="10" />
+                        </span>
+                    </td>
+                    <td align="left"><label class="control-label">Applied JCC</label></td>
+                    <td align="left"><input type="text" class="form-control" id="text11" placeholder="usd/bbl" size="10" maxlength="10" /></td>
+                    <td align="left" valign="top" colspan="2" rowspan="3" style="padding-top:12px"><textarea class="form-control" name="macroeconomic" cols="20" id="macroeconomic"></textarea></td>
+                </tr>
+                <tr>
+                    <td align="left"><label class="control-label">USD/KRW</label></td>
+                    <td align="left">
+                        <span class="col-sm-8">
+                            <input type="text" class="form-control" id="text6" placeholder="rate" size="10" maxlength="10" />
+                        </span>
+                    </td>
+                    <td align="left"><label class="control-label">LNG Spot</label></td>
+                    <td align="left"><input type="text" class="form-control" id="text12" placeholder="usd/mmbtu" size="10" maxlength="10" /></td>
+                </tr>
+                <tr>
+                    <td align="left">&nbsp;</td>
+                    <td align="left">&nbsp;</td>
+                    <td align="left"><label class="control-label">Shipping</label></td>
+                    <td align="left"><input type="text" class="form-control" id="text13" placeholder="usd/mmbtu" size="10" maxlength="10" /></td>
+                </tr>
+                <tr>
+                    <td align="left">&nbsp;</td>
+                    <td align="left">&nbsp;</td>
+                    <td align="left">&nbsp;</td>
+                    <td align="left">&nbsp;</td>
+                    <td align="left">&nbsp;</td>
+                    <td align="left">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td align="left"><label class="control-label">Market Tone</label></td>
+                    <td align="left">
+                        <select name="select" option="option">
+                            <option value="Bullish">Bullish</option>
+                            <option value="Mixed">Mixed</option>
+                            <option value="Bearish">Bearish</option>
+                        </select>
+                    </td>
+                    <td align="left"><label class="control-label">Monthly Bunker Price</label></td>
+                    <td align="left"><input type="text" class="form-control" id="text19" placeholder="usd/bbl" size="15" maxlength="15" /></td>
+                    <td align="left">&nbsp;</td>
+                    <td align="left">&nbsp;</td>
+                </tr>
+            </table>
+            <input type="submit" value="submit" />
+            </form>
+            <div class="row" style="margin-bottom: 20px; margin-top: 20px;">
+                <div class="col-md-12">
+                    <h3 class="text-left">Forecasted Market Indicator-B</h3>
+                </div>
+            </div><!-- row -->
+            <table width="720" height="364" border="0" cellpadding="2" cellspacing="2">
+                <tr>
+                    <td align="center" colspan="2"><label class="control-label">Commitments JOB PMTS</label></td>
+                    <td align="center" colspan="2"><label class="control-label">Feed Gas Impurities</label></td>
+                    <td align="center" colspan="2"><label class="control-label">Product Quality</label></td>
+                </tr>
+                <tr>
+                    <td width="64"><label class="control-label">DCQ</label></td>
+                    <td align="left" width="122"><input placeholder="mmbtu" type="text" class="form-control" id="text48" size="10" /></td>
+                    <td align="left" width="112"><label class="control-label">H2S</label></td>
+                    <td align="left" width="122"><input placeholder="ppm" type="text" class="form-control" id="text51" size="10" /></td>
+                    <td align="left" width="103"><label class="control-label">CDS-RVP</label></td>
+                    <td align="left" width="139"><input placeholder="Tbtu" type="text" class="form-control" id="text51" size="10" /></td>
+                </tr>
+                <tr>
+                    <td><label class="control-label">MGN</label></td>
+                    <td align="left"><input placeholder="bbtu" type="text" class="form-control" id="text49" size="10" /></td>
+                    <td align="left"><label class="control-label">CO2</label></td>
+                    <td align="left"><input placeholder="ppm" type="text" class="form-control" id="text52" size="10" /></td>
+                    <td align="left"><label class="control-label">LNG HHV</label></td>
+                    <td align="left"><input placeholder="Tbtu" type="text" class="form-control" id="text52" size="10" /></td>
+                </tr>
+                <tr>
+                    <td><label class="control-label">ADP</label></td>
+                    <td align="left"><input placeholder="Tbtu" type="text" class="form-control" id="text50" size="10" /></td>
+                    <td align="left"><label class="control-label">H2O</label></td>
+                    <td align="left"><input placeholder="ppm" type="text" class="form-control" id="text53" size="10" /></td>
+                    <td align="left"><label class="control-label">LNG-C1</label></td>
+                    <td align="left"><input placeholder="mol%" type="text" class="form-control" id="text53" size="10" /></td>
+                </tr>
+                <tr>
+                    <td align="center" colspan="2"><label class="control-label">Commitments MGDP</label></td>
+                    <td align="left"><label class="control-label">Dew Point</label></td>
+                    <td align="left"><input placeholder="oF" type="text" class="form-control" id="text54" size="10" /></td>
+                    <td align="left"><label class="control-label">LNG-C2</label></td>
+                    <td align="left"><input placeholder="mol%" type="text" class="form-control" id="text60" size="10" /></td>
+                </tr>
+                <tr>
+                    <td width="64"><label class="control-label">DCQ</label></td>
+                    <td align="left"><input placeholder="mmbtu" type="text" class="form-control" id="text48" size="10" /></td>
+                    <td align="left" width="112"><label class="control-label">Ttl Sulphur</label></td>
+                    <td align="left"><input placeholder="ppm" type="text" class="form-control" id="text55" size="10" /></td>
+                    <td align="left" width="103"><label class="control-label">LNG-C3</label></td>
+                    <td align="left"><input placeholder="mol%" type="text" class="form-control" id="text61" size="10" /></td>
+                </tr>
+                <tr>
+                    <td><label class="control-label">MGN</label></td>
+                    <td align="left"><input placeholder="bbtu" type="text" class="form-control" id="text49" size="10" /></td>
+                    <td align="left"><label class="control-label">BTX</label></td>
+                    <td align="left"><input placeholder="ppm" type="text" class="form-control" id="text56" size="10" /></td>
+                    <td align="left"><label class="control-label">LNG-iC4</label></td>
+                    <td align="left"><input placeholder="mol%" type="text" class="form-control" id="text62" size="10" /></td>
+                </tr>
+                <tr>
+                    <td><label class="control-label">ADP</label></td>
+                    <td align="left"><input placeholder="Tbtu" type="text" class="form-control" id="text50" size="10" /></td>
+                    <td align="left"><label class="control-label">MRU-Outlet Hg</label></td>
+                    <td align="left"><input placeholder="ppm" type="text" class="form-control" id="text57" size="10" /></td>
+                    <td align="left"><label class="control-label">LNG-nC4</label></td>
+                    <td align="left"><input placeholder="mol%" type="text" class="form-control" id="text63" size="10" /></td>
+                </tr>
+                <tr>
+                    <td align="left">&nbsp;</td>
+                    <td align="left">&nbsp;</td>
+                    <td align="left">&nbsp;</td>
+                    <td align="left">&nbsp;</td>
+                    <td align="left"><label class="control-label">LNG-C5+</label></td>
+                    <td align="left"><input placeholder="mol%" type="text" class="form-control" id="text58" size="10" /></td>
+                </tr>
+                <tr>
+                    <td align="left">&nbsp;</td>
+                    <td align="left">&nbsp;</td>
+                    <td align="left">&nbsp;</td>
+                    <td align="left">&nbsp;</td>
+                    <td align="left"><label class="control-label">N2</label></td>
+                    <td align="left"><input placeholder="mol%" type="text" class="form-control" id="text59" size="10" /></td>
+                </tr>
+            </table>
+
+            <div class="row" style="margin-bottom: 20px; margin-top: 20px;">
+                <div class="col-md-12">
+
+                </div>
+            </div><!-- row -->
+
+
+
+        </div>
+        <div id="upload" class="tab-pane fade">
+
+
+            <div class="row" style="margin-bottom: 20px; margin-top: 20px;">
+                <div class="col-md-12">
+                    <h3 class="text-left">Operation & Engineering Section-J</h3>
+                    <p style="color: white;" class="text-left"><strong>Plant Performance Corp KPI Target-Annual</strong></p>
+                </div>
+            </div><!-- row -->
+
+            <table width="832" height="162" border="0" cellpadding="2" cellspacing="2">
+                <tr>
+                    <td width="65"><label class="control-label">PAV</label></td>
+                    <td width="105"><input type="text" class="form-control" id="text1" placeholder="%" size="10"></td>
+                    <td width="206"><label class="control-label">Refrigerant Storage (C2 &amp; C3)</label></td>
+                    <td width="100"><input type="text" class="form-control" id="text1" placeholder="ton" size="10"></td>
+                    <td width="174"><label class="control-label">MCHE Rundown</label></td>
+                    <td width="144"><input type="text" class="form-control" id="text40" placeholder="ton/d" size="10" /></td>
+                </tr>
+                <tr>
+                    <td><label class="control-label">PTE</label></td>
+                    <td><input type="text" class="form-control" id="text35" placeholder="%" size="10" /></td>
+                    <td><label class="control-label">USM Feed Gas Pressure</label></td>
+                    <td><input type="text" class="form-control" id="text38" placeholder="psig" size="10" /></td>
+                    <td><label class="control-label">min HHV JOB PMTS</label></td>
+                    <td><input type="text" class="form-control" id="text41" placeholder="btu/scf" size="10" /></td>
+                </tr>
+                <tr>
+                    <td><label class="control-label">MTB</label></td>
+                    <td><input type="text" class="form-control" id="text36" placeholder="%" size="10" /></td>
+                    <td><label class="control-label">USM Feed Gas Temp</label></td>
+                    <td><input type="text" class="form-control" id="text39" placeholder="&#x2103;" size="10" /></td>
+                    <td><label class="control-label">min HHV MGDP</label></td>
+                    <td><input type="text" class="form-control" id="text42" placeholder="btu/scf" size="10" /></td>
+                </tr>
+                <tr>
+                    <td><label class="control-label">PUT</label></td>
+                    <td><input type="text" class="form-control" id="text37" placeholder="%" size="10" /></td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td><label class="control-label">Process Anomaly Highlight</label></td>
+                    <td><input type="text" class="form-control" id="text43" /></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+            </table>
+
+            <table width="785" height="160" border="0" cellpadding="2" cellspacing="2">
+                <tr>
+                    <td colspan="2"><label class="control-label">Feed Gas USM</label></td>
+                    <td colspan="2"><label class="control-label">Feed Gas JOB PMTS-CPP</label></td>
+                    <td colspan="2"><label class="control-label">Feed Gas MGDP-Donggi CPP</label></td>
+                    <td colspan="2"><label class="control-label">Feed Gas MGDP-Matindok CPP</label></td>
+                </tr>
+                <tr>
+                    <td width="64" height="36"><label class="control-label">24H</label></td>
+                    <td width="105"><input placeholder="mmscfd" type="text" class="form-control" id="text44" size="10" /></td>
+                    <td width="66"><label class="control-label">24H</label></td>
+                    <td width="114"><input placeholder="mmscfd" type="text" class="form-control" id="text44" size="10" /></td>
+                    <td width="66"><label class="control-label">24H</label></td>
+                    <td width="132"><input placeholder="mmscfd" type="text" class="form-control" id="text44" size="10" /></td>
+                    <td width="68"><label class="control-label">24H</label></td>
+                    <td width="136"><input placeholder="mmscfd" type="text" class="form-control" id="text44" size="10" /></td>
+                </tr>
+                <tr>
+                    <td><label class="control-label">24H</label></td>
+                    <td><input placeholder="tonnes" type="text" class="form-control" id="text45" size="10" /></td>
+                    <td><label class="control-label">24H</label></td>
+                    <td><input placeholder="tonnes" type="text" class="form-control" id="text45" size="10" /></td>
+                    <td><label class="control-label">24H</label></td>
+                    <td><input placeholder="tonnes" type="text" class="form-control" id="text45" size="10" /></td>
+                    <td><label class="control-label">24H</label></td>
+                    <td><input placeholder="tonnes" type="text" class="form-control" id="text45" size="10" /></td>
+                </tr>
+                <tr>
+                    <td><label class="control-label">24H</label></td>
+                    <td><input placeholder="btu/scf" type="text" class="form-control" id="text46" size="10" /></td>
+                    <td><label class="control-label">24H</label></td>
+                    <td><input placeholder="btu/scf" type="text" class="form-control" id="text46" size="10" /></td>
+                    <td><label class="control-label">24H</label></td>
+                    <td><input placeholder="btu/scf" type="text" class="form-control" id="text46" size="10" /></td>
+                    <td><label class="control-label">24H</label></td>
+                    <td><input placeholder="btu/scf" type="text" class="form-control" id="text46" size="10" /></td>
+                </tr>
+                <tr>
+                    <td><label class="control-label">24H</label></td>
+                    <td><input placeholder="mmbtud" type="text" class="form-control" id="text47" size="10" /></td>
+                    <td><label class="control-label">24H</label></td>
+                    <td><input placeholder="mmbtud" type="text" class="form-control" id="text47" size="10" /></td>
+                    <td><label class="control-label">24H</label></td>
+                    <td><input placeholder="mmbtud" type="text" class="form-control" id="text47" size="10" /></td>
+                    <td><label class="control-label">24H</label></td>
+                    <td><input placeholder="mmbtud" type="text" class="form-control" id="text47" size="10" /></td>
+                </tr>
+            </table>
+
+            <div class="col-md-12">
+
+            </div>
+            <p>&nbsp;</p>
+            <table width="700" height="360" border="0" cellpadding="2" cellspacing="2">
+                <tr>
+                    <td align="center" colspan="2"><label class="control-label">Commitments JOB PMTS</label></td>
+                    <td align="center" colspan="2"><label class="control-label">Feed Gas Impurities</label></td>
+                    <td align="center" colspan="2"><label class="control-label">Product Quality</label></td>
+                </tr>
+                <tr>
+                    <td width="64"><label class="control-label">DCQ</label></td>
+                    <td align="left" width="122"><input placeholder="mmbtu" type="text" class="form-control" id="text48" size="10" /></td>
+                    <td align="left" width="112"><label class="control-label">H2S</label></td>
+                    <td align="left" width="122"><input placeholder="ppm" type="text" class="form-control" id="text51" size="10" /></td>
+                    <td align="left" width="103"><label class="control-label">CDS-RVP</label></td>
+                    <td align="left" width="139"><input placeholder="Tbtu" type="text" class="form-control" id="text51" size="10" /></td>
+                </tr>
+                <tr>
+                    <td><label class="control-label">MGN</label></td>
+                    <td align="left"><input placeholder="bbtu" type="text" class="form-control" id="text49" size="10" /></td>
+                    <td align="left"><label class="control-label">CO2</label></td>
+                    <td align="left"><input placeholder="ppm" type="text" class="form-control" id="text52" size="10" /></td>
+                    <td align="left"><label class="control-label">LNG HHV</label></td>
+                    <td align="left"><input placeholder="Tbtu" type="text" class="form-control" id="text52" size="10" /></td>
+                </tr>
+                <tr>
+                    <td><label class="control-label">ADP</label></td>
+                    <td align="left"><input placeholder="Tbtu" type="text" class="form-control" id="text50" size="10" /></td>
+                    <td align="left"><label class="control-label">H2O</label></td>
+                    <td align="left"><input placeholder="ppm" type="text" class="form-control" id="text53" size="10" /></td>
+                    <td align="left"><label class="control-label">LNG-C1</label></td>
+                    <td align="left"><input placeholder="mol%" type="text" class="form-control" id="text53" size="10" /></td>
+                </tr>
+                <tr>
+                    <td align="center" colspan="2"><label class="control-label">Commitments MGDP</label></td>
+                    <td align="left"><label class="control-label">Dew Point</label></td>
+                    <td align="left"><input placeholder="oF" type="text" class="form-control" id="text54" size="10" /></td>
+                    <td align="left"><label class="control-label">LNG-C2</label></td>
+                    <td align="left"><input placeholder="mol%" type="text" class="form-control" id="text60" size="10" /></td>
+                </tr>
+                <tr>
+                    <td width="64"><label class="control-label">DCQ</label></td>
+                    <td align="left"><input placeholder="mmbtu" type="text" class="form-control" id="text48" size="10" /></td>
+                    <td align="left" width="112"><label class="control-label">Ttl Sulphur</label></td>
+                    <td align="left"><input placeholder="ppm" type="text" class="form-control" id="text55" size="10" /></td>
+                    <td align="left" width="103"><label class="control-label">LNG-C3</label></td>
+                    <td align="left"><input placeholder="mol%" type="text" class="form-control" id="text61" size="10" /></td>
+                </tr>
+                <tr>
+                    <td><label class="control-label">MGN</label></td>
+                    <td align="left"><input placeholder="bbtu" type="text" class="form-control" id="text49" size="10" /></td>
+                    <td align="left"><label class="control-label">BTX</label></td>
+                    <td align="left"><input placeholder="ppm" type="text" class="form-control" id="text56" size="10" /></td>
+                    <td align="left"><label class="control-label">LNG-iC4</label></td>
+                    <td align="left"><input placeholder="mol%" type="text" class="form-control" id="text62" size="10" /></td>
+                </tr>
+                <tr>
+                    <td><label class="control-label">ADP</label></td>
+                    <td align="left"><input placeholder="Tbtu" type="text" class="form-control" id="text50" size="10" /></td>
+                    <td align="left"><label class="control-label">MRU-Outlet Hg</label></td>
+                    <td align="left"><input placeholder="ppm" type="text" class="form-control" id="text57" size="10" /></td>
+                    <td align="left"><label class="control-label">LNG-nC4</label></td>
+                    <td align="left"><input placeholder="mol%" type="text" class="form-control" id="text63" size="10" /></td>
+                </tr>
+                <tr>
+                    <td align="left">&nbsp;</td>
+                    <td align="left">&nbsp;</td>
+                    <td align="left">&nbsp;</td>
+                    <td align="left">&nbsp;</td>
+                    <td align="left"><label class="control-label">LNG-C5+</label></td>
+                    <td align="left"><input placeholder="mol%" type="text" class="form-control" id="text58" size="10" /></td>
+                </tr>
+                <tr>
+                    <td align="left">&nbsp;</td>
+                    <td align="left">&nbsp;</td>
+                    <td align="left">&nbsp;</td>
+                    <td align="left">&nbsp;</td>
+                    <td align="left"><label class="control-label">N2</label></td>
+                    <td align="left"><input placeholder="mol%" type="text" class="form-control" id="text59" size="10" /></td>
+                </tr>
+            </table>
+            <p></p>
+            <table width="837" height="166" border="0">
+                <tr>
+                    <td colspan="2"><label class="control-label">Inventory-LNG Tank</label></td>
+                    <td colspan="2"><label class="control-label">Inventory-LNG Tank</label></td>
+                    <td colspan="2"><label class="control-label">Inventory-CDS Buffer Tank</label></td>
+                    <td colspan="2"><label class="control-label">Inventory-CDS Day Tank</label></td>
+                    <td colspan="2"><label class="control-label">Ambient Temp</label></td>
+                </tr>
+                <tr>
+                    <td width="69"><label class="control-label">Level</label></td>
+                    <td width="89"><input placeholder="%" type="text" class="form-control" id="text64" size="10" /></td>
+                    <td width="59"><label class="control-label">Level</label></td>
+                    <td width="93"><input placeholder="%" type="text" class="form-control" id="text64" size="10" /></td>
+                    <td width="59"><label class="control-label">Level</label></td>
+                    <td width="111"><input placeholder="%" type="text" class="form-control" id="text64" size="10" /></td>
+                    <td width="60"><label class="control-label">Level</label></td>
+                    <td width="102"><input placeholder="%" type="text" class="form-control" id="text64" size="10" /></td>
+                    <td width="40"><label class="control-label">Hi</label></td>
+                    <td width="86"><input placeholder="&#x2103;" type="text" class="form-control" id="text64" size="10" /></td>
+                </tr>
+                <tr>
+                    <td><label class="control-label">Vol</label></td>
+                    <td><input placeholder="m3" type="text" class="form-control" id="text65" size="10" /></td>
+                    <td><label class="control-label">Vol</label></td>
+                    <td><input placeholder="m3" type="text" class="form-control" id="text65" size="10" /></td>
+                    <td><label class="control-label">Vol</label></td>
+                    <td><input placeholder="m3" type="text" class="form-control" id="text65" size="10" /></td>
+                    <td><label class="control-label">Vol</label></td>
+                    <td><input placeholder="m3" type="text" class="form-control" id="text65" size="10" /></td>
+                    <td><label class="control-label">Low</label></td>
+                    <td><input placeholder="&#x2103;" type="text" class="form-control" id="text65" size="10" /></td>
+                </tr>
+                <tr>
+                    <td><label class="control-label">Vol</label></td>
+                    <td><input placeholder="ton" type="text" class="form-control" id="text66" size="10" /></td>
+                    <td><label class="control-label">Vol</label></td>
+                    <td><input placeholder="ton" type="text" class="form-control" id="text66" size="10" /></td>
+                    <td><label class="control-label">Vol</label></td>
+                    <td><input placeholder="ton" type="text" class="form-control" id="text66" size="10" /></td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td><label class="control-label">Vol</label></td>
+                    <td><input placeholder="MMbtu" type="text" class="form-control" id="text67" size="10" /></td>
+                    <td><label class="control-label">Vol</label></td>
+                    <td><input placeholder="mmbtu" type="text" class="form-control" id="text67" size="10" /></td>
+                    <td><label class="control-label">Vol</label></td>
+                    <td><input placeholder="mmbtu" type="text" class="form-control" id="text67" size="10" /></td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+            </table>
+            <p>
+
+
+            </p>
+            <table width="994" height="138" border="0">
+                <tr>
+                    <td colspan="2"><label class="control-label">LNG Production</label></td>
+                    <td colspan="2"><label class="control-label">CDS Production</label></td>
+                    <td colspan="2"><label class="control-label">Fuel Gas</label></td>
+                    <td colspan="2"><label class="control-label">LNG Loaded</label></td>
+                    <td colspan="2"><label class="control-label">LNG Planned Cargo</label></td>
+                    <td width="156"><label class="control-label">LNG Loaded Remark</label></td>
+                </tr>
+                <tr>
+                    <td width="67"><label class="control-label">24H</label></td>
+                    <td width="96"><input placeholder="m3" type="text" class="form-control" id="text65" size="10" /></td>
+                    <td width="67"><label class="control-label">24H</label></td>
+                    <td width="86"><input placeholder="m3" type="text" class="form-control" id="text65" size="10" /></td>
+                    <td width="67"><label class="control-label">24H</label></td>
+                    <td width="91"><input placeholder="m3" type="text" class="form-control" id="text65" size="10" /></td>
+                    <td width="67"><label class="control-label">24H</label></td>
+                    <td width="91"><input placeholder="m3" type="text" class="form-control" id="text65" size="10" /></td>
+                    <td width="67"><label class="control-label">ADP</label></td>
+                    <td width="93"><input type="text" class="form-control" id="text68" size="10" /></td>
+                    <td><input type="text" class="form-control" id="text71" size="12" /></td>
+                </tr>
+                <tr>
+                    <td><label class="control-label">24H</label></td>
+                    <td><input placeholder="ton" type="text" class="form-control" id="text66" size="10" /></td>
+                    <td><label class="control-label">24H</label></td>
+                    <td><input placeholder="ton" type="text" class="form-control" id="text66" size="10" /></td>
+                    <td><label class="control-label">24H</label></td>
+                    <td><input placeholder="ton" type="text" class="form-control" id="text66" size="10" /></td>
+                    <td><label class="control-label">24H</label></td>
+                    <td><input placeholder="ton" type="text" class="form-control" id="text66" size="10" /></td>
+                    <td><label class="control-label">MTD</label></td>
+                    <td><input type="text" class="form-control" id="text69" size="10" /></td>
+                    <td><input type="text" class="form-control" id="text72" size="12" /></td>
+                </tr>
+                <tr>
+                    <td><label class="control-label">24H</label></td>
+                    <td><input placeholder="MMbtu" type="text" class="form-control" id="text67" size="10" /></td>
+                    <td><label class="control-label">24H</label></td>
+                    <td><input placeholder="MMbtu" type="text" class="form-control" id="text67" size="10" /></td>
+                    <td><label class="control-label">24H</label></td>
+                    <td><input placeholder="MMbtu" type="text" class="form-control" id="text67" size="10" /></td>
+                    <td><label class="control-label">24H</label></td>
+                    <td><input placeholder="MMbtu" type="text" class="form-control" id="text67" size="10" /></td>
+                    <td><label class="control-label">YTD</label></td>
+                    <td><input type="text" class="form-control" id="text70" size="10" /></td>
+                    <td>&nbsp;</td>
+                </tr>
+            </table>
+
+            <p>&nbsp;</p>
+            <table width="785" border="0">
+                <tr>
+                    <td colspan="2"><label class="control-label">CDS Loaded</label></td>
+                    <td colspan="2"><label class="control-label">CDS Cargo shipped</label></td>
+                    <td width="204">&nbsp;</td>
+                    <td width="202">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td width="67"><label class="control-label">24H</label></td>
+                    <td width="96"><input placeholder="m3" type="text" class="form-control" id="text65" size="10" /></td>
+                    <td width="64"><label class="control-label">MTD</label></td>
+                    <td width="126"><input type="text" class="form-control" id="text69" size="10" /></td>
+                    <td width="204"><label class="control-label">CDS Loaded-Note</label></td>
+                    <td><input type="text" class="form-control" id="text73" size="10" /></td>
+                </tr>
+                <tr>
+                    <td><label class="control-label">24H</label></td>
+                    <td><input placeholder="ton" type="text" class="form-control" id="text66" size="10" /></td>
+                    <td><label class="control-label">YTD</label></td>
+                    <td><input type="text" class="form-control" id="text70" size="10" /></td>
+                    <td><label class="control-label">CDS Loaded-Remark</label></td>
+                    <td><input type="date" class="form-control" id="text74" size="10" /></td>
+                </tr>
+                <tr>
+                    <td><label class="control-label">24H</label></td>
+                    <td><input placeholder="MMbtu" type="text" class="form-control" id="text67" size="10" /></td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2">&nbsp;</td>
+                    <td colspan="2">&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2" valign="bottom" align="center" style="padding-left:15px;"><label class="control-label">Operation Highlight</label></td>
+                    <td align="center" colspan="2" valign="bottom"><label class="control-label">Plant Mode</label></td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td valign="top" align="right" colspan="2" style="padding-left:15px">
+
+                        <textarea class="form-control" name="textarea" id="textarea2" cols="15" rows="2"></textarea>
+                    </td>
+                    <td valign="top" align="center" colspan="2">
+                        <select class="form-control" name="select2" id="select">
+                            <option>Select Option</option>
+                            <option>Option 1</option>
+                            <option>Option 2</option>
+                        </select>
+                    </td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+            </table>
+
+            <p>&nbsp;</p>
+        </div>
+
+        <div id="section3" class="tab-pane fade">
+            <table width="741" height="145" border="0" cellpadding="2" cellspacing="2">
+                <tr>
+                    <td width="171" height="28" align="left"><label class="control-label">Next Loading Schedule</label></td>
+                    <td width="142" align="left"><label class="control-label">Vessel (capacity)</label></td>
+                    <td width="98" align="left"><label class="control-label">ETA</label></td>
+                    <td width="100" align="left"><label class="control-label">ETD</label></td>
+                    <td width="100" align="left"><label class="control-label">Cargo#</label></td>
+                    <td width="104" align="left"><label class="control-label">Remarks</label></td>
+                </tr>
+                <tr>
+                    <td>
+                        <select class="form-control" name="select3" id="select2">
+                            <option>LNG/CDS</option>
+                            <option>LNG arv / CDS arv</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-control" name="select7" id="select6">
+                            <option>LNG Maleo</option>
+                            <option>LNG HU</option>
+                            <option>Other</option>
+                        </select>
+                    </td>
+                    <td><input type="date" class="form-control" id="text75" size="10" /></td>
+                    <td><input type="date" class="form-control" id="text79" size="10" /></td>
+                    <td><input type="text" class="form-control" id="text83" size="10" /></td>
+                    <td><input type="text" class="form-control" id="text87" size="10" /></td>
+                </tr>
+                <tr>
+                    <td>
+                        <select class="form-control" name="select4" id="select3">
+                            <option>LNG/CDS</option>
+                            <option>LNG arv / CDS arv</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-control" name="select8" id="select7">
+                            <option>LNG Maleo</option>
+                            <option>LNG HU</option>
+                            <option>Other</option>
+                        </select>
+                    </td>
+                    <td><input type="date" class="form-control" id="text76" size="10" /></td>
+                    <td><input type="date" class="form-control" id="text80" size="10" /></td>
+                    <td><input type="text" class="form-control" id="text84" size="10" /></td>
+                    <td><input type="text" class="form-control" id="text88" size="10" /></td>
+                </tr>
+                <tr>
+                    <td>
+                        <select class="form-control" name="select5" id="select4">
+                            <option>LNG/CDS</option>
+                            <option>LNG arv / CDS arv</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-control" name="select9" id="select8">
+                            <option>LNG Maleo</option>
+                            <option>LNG HU</option>
+                            <option>Other</option>
+                        </select>
+                    </td>
+                    <td><input type="date" class="form-control" id="text77" size="10" /></td>
+                    <td><input type="date" class="form-control" id="text81" size="10" /></td>
+                    <td><input type="text" class="form-control" id="text85" size="10" /></td>
+                    <td><input type="text" class="form-control" id="text89" size="10" /></td>
+                </tr>
+                <tr>
+                    <td>
+                        <select class="form-control" name="select6" id="select5">
+                            <option>LNG/CDS</option>
+                            <option>LNG arv / CDS arv</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-control" name="select10" id="select9">
+                            <option>LNG Maleo</option>
+                            <option>LNG HU</option>
+                            <option>Other</option>
+                        </select>
+                    </td>
+                    <td><input type="date" class="form-control" id="text78" size="10" /></td>
+                    <td><input type="date" class="form-control" id="text82" size="10" /></td>
+                    <td><input type="text" class="form-control" id="text86" size="10" /></td>
+                    <td><input type="text" class="form-control" id="text90" size="10" /></td>
+                </tr>
+            </table>
+            <p>&nbsp;</p>
+
+            <table width="700" border="0" cellpadding="2" cellspacing="2">
+                <tr>
+                    <td height="32" colspan="2"><label class="control-label">Loading Duration</label></td>
+                    <td colspan="2"><label class="control-label">Ttl Terminal Time</label></td>
+                    <td width="216" align="left"><label class="control-label">Marine shipping cargo highlights</label></td>
+                </tr>
+                <tr>
+                    <td width="83"><label class="control-label">Standard</label></td>
+                    <td width="132"><input type="time" class="form-control" id="text91" size="10" /></td>
+                    <td width="124"><label class="control-label">Standard</label></td>
+                    <td width="123"><input type="time" class="form-control" id="text94" size="10" /></td>
+                    <td rowspan="3" valign="top">
+                        <label for="textarea"></label>
+                        <textarea name="textarea2" id="textarea" cols="22" rows="3"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label class="control-label">Last</label></td>
+                    <td><input type="time" class="form-control" id="text92" size="10" /></td>
+                    <td><label class="control-label">Last</label></td>
+                    <td><input type="time" class="form-control" id="text95" size="10" /></td>
+                </tr>
+                <tr>
+                    <td><label class="control-label">Avg YTD</label></td>
+                    <td><input type="time" class="form-control" id="text93" size="10" /></td>
+                    <td><label class="control-label">Avg YTD</label></td>
+                    <td><input type="time" class="form-control" id="text96" size="10" /></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+            </table>
+        </div>
+</section>
+<script type="text/javascript" src="~/Content/datepicker/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //$('.usdxdr').change(function (e) {
+
+        //});
+        function reloadView() {
+            var currentDate = $('#currentDate').val();
+            $('.layout-item').each(function () {
+                var that = $(this);
+                $.ajax({
+                    url: that.attr('data-url'),
+                    data: { currentDate: currentDate },
+                    success: function (data) {
+
+                        if (data.GraphicType !== undefined) {
+                            var callback = window.Pear.Artifact.Designer._previewCallbacks;
+                            callback[data.GraphicType](data, that);
+                        }
+                        else if (data.type === "highlight") {
+                            var aneh = data.view.replace(/\"/g, "");
+                            console.log(aneh);
+                            that.html(aneh);
+                        } else if (data.type === "highlight" || data.type === "weather" ||
+                            data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
+                        data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
+                        || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type == "procurement" || data.type == "indicative-commercial-price" ||
+                            data.type === "plant-availability" || data.type === "economic-indicator" || data.type === "mgdp" || data.type === "hhv" || data.type === "lng-and-cds-production"
+                            || data.type === "nls" || data.type === "key-equipment-status") {
+                            that.html(data.view);
+                        }
+                        /*else if (data.type === "weather" || data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
+                        data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
+                        || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type === 'mgdp') {
+                            that.html(data.view);
+                        }*/
+
+                    }
+                });
+            });
+        }
+
+        $('#currentDate').val('02/18/2016');
+        reloadView();
+        if ($('.der-display').length) {
+            $('.datepicker').datetimepicker({
+                format: "MM/DD/YYYY",
+                focusOnShow: false
+            }).on('dp.change', function (e) {
+                $("#currentDate").blur();
+                reloadView();
+            });
+        };
+    });
+</script>

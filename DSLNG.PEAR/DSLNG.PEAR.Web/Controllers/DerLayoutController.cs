@@ -111,6 +111,7 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             if (viewModel.Id > 0)
             {
+                #region edit
                 var response = _derService.GetDerLayoutItem(viewModel.Id);
                 var editViewModel = response.MapTo<DerLayoutItemViewModel>();
                 editViewModel.Types = _dropdownService.GetDerItemTypes().OrderBy(x => x.Text).MapTo<SelectListItem>();
@@ -187,8 +188,12 @@ namespace DSLNG.PEAR.Web.Controllers
 
                             break;
                         }
-                    case "avg-ytd-key-statistic":
+                    case "speedometer":
                         {
+                            var speedometerChart = new SpeedometerChartViewModel();
+                            editViewModel.SpeedometerChart = response.Artifact.MapPropertiesToInstance<SpeedometerChartViewModel>(speedometerChart);
+                            var plot = new SpeedometerChartViewModel.PlotBand();
+                            editViewModel.SpeedometerChart.PlotBands.Insert(0, plot);
                             break;
                         }
                     case "highlight":
@@ -198,7 +203,6 @@ namespace DSLNG.PEAR.Web.Controllers
                             editViewModel.HighlightId = response.Highlight.SelectOptionId;
                             break;
                         }
-                    case "lng-and-cds":
                     case "procurement":
                         {
                             var result = _selectService.GetHighlightTypesDropdown();
@@ -225,11 +229,55 @@ namespace DSLNG.PEAR.Web.Controllers
                             }
                         }
                         break;
+                    case "hhv":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 2);
+                            break;
+                        }
+                    case "mgdp":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 3);
+                            break;
+                        }
+                    case "total-feed-gas":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 4);
+                            break;
+                        }
+                    case "avg-ytd-key-statistic":
+                    case "security":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 6);
+                            break;
+                        }
+                    case "lng-and-cds-production":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 9);
+                            break;
+                        }
+                    case "job-pmts":
+                    case "plant-availability":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 10);
+                            break;
+                        }
+                    case "table-tank":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 12);
+                            break;
+                        }
+                    case "lng-and-cds":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 13);
+                            break;
+                        }
                 }
                 return View("EditLayoutItem", editViewModel);
+                #endregion
             }
             else
             {
+                #region create
                 viewModel.Types = _dropdownService.GetDerItemTypes().OrderBy(x => x.Text).MapTo<SelectListItem>();
                 var rowCol = viewModel.Row.ToString() + "-and-" + viewModel.Column.ToString();
                 switch (rowCol)
@@ -239,6 +287,11 @@ namespace DSLNG.PEAR.Web.Controllers
                             viewModel.Type = "avg-ytd-key-statistic";
                             break;
                         };
+                    case "0-and-2":
+                        {
+                            viewModel.Type = "speedometer";
+                            break;
+                        }
                     case "1-and-0":
                         {
                             viewModel.Type = "multiaxis";
@@ -293,7 +346,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         }
                     case "4-and-1":
                         {
-                            viewModel.Type = "highlight";
+                            viewModel.Type = "security";
                             break;
                         }
                     case "4-and-2":
@@ -386,6 +439,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         }
                 }
                 return View("LayoutItem", viewModel);
+                #endregion
             }
         }
 
@@ -407,6 +461,22 @@ namespace DSLNG.PEAR.Web.Controllers
                         var series = new LineChartViewModel.SeriesViewModel();
                         viewModel.LineChart.Series.Add(series);
                         return PartialView("LayoutType/_Line", viewModel);
+                    }
+
+                case "speedometer":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.Artifact = new DerLayoutItemViewModel.DerLayoutItemArtifactViewModel();
+                        viewModel.Artifact.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
+                        {
+                            Take = -1,
+                            SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+                        }).Measurements
+                    .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+                        viewModel.SpeedometerChart = new SpeedometerChartViewModel();
+                        var plot = new SpeedometerChartViewModel.PlotBand();
+                        viewModel.SpeedometerChart.PlotBands.Add(plot);
+                        return PartialView("LayoutType/_Speedometer", viewModel);
                     }
 
                 case "multiaxis":
@@ -494,9 +564,9 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "lng-and-cds":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(14);
-                        var result = _selectService.GetHighlightTypesDropdown();
-                        viewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                        viewModel.KpiInformations = GetKpiInformations(13);
+                        /*var result = _selectService.GetHighlightTypesDropdown();
+                        viewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();*/
                         return PartialView("LayoutType/_LngAndCds", viewModel);
                     }
                 case "dafwc":
@@ -507,7 +577,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "job-pmts":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(6);
+                        viewModel.KpiInformations = GetKpiInformations(3);
                         return PartialView("LayoutType/_JobPmts", viewModel);
                     }
                 case "total-feed-gas":
@@ -519,19 +589,19 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "table-tank":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(11);
+                        viewModel.KpiInformations = GetKpiInformations(12);
                         return PartialView("LayoutType/_TableTank", viewModel);
                     }
                 case "mgdp":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(6);
+                        viewModel.KpiInformations = GetKpiInformations(3);
                         return PartialView("LayoutType/_MGDP", viewModel);
                     }
                 case "hhv":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(4);
+                        viewModel.KpiInformations = GetKpiInformations(2);
                         return PartialView("LayoutType/_HHV", viewModel);
                     }
                 case "lng-and-cds-production":
@@ -646,6 +716,15 @@ namespace DSLNG.PEAR.Web.Controllers
                         response = _derService.SaveLayoutItem(request);
                         break;
                     }
+                case "speedometer":
+                    {
+                        request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
+                        request.Artifact = layoutItemViewModel.Artifact.MapTo<SaveLayoutItemRequest.LayoutItemArtifact>();
+                        request.Artifact.Speedometer = layoutItemViewModel.SpeedometerChart.MapTo<SaveLayoutItemRequest.LayoutItemArtifactSpeedometer>();
+                        response = _derService.SaveLayoutItem(request);
+
+                        break;
+                    }
                 case "highlight":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
@@ -664,37 +743,46 @@ namespace DSLNG.PEAR.Web.Controllers
                         response = _derService.SaveLayoutItem(request);
                         break;
                     }
-                /*case "avg-ytd-key-statistic":
-                    {
-                        request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
-                        request.KpiInformations =
-                            layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
-                        response = _derService.SaveLayoutItem(request);
-                        break;
-                    }*/
                 case "safety":
                 case "security":
-                case "job-pmts":
                 case "avg-ytd-key-statistic":
                 case "lng-and-cds":
                 case "total-feed-gas":
                 case "table-tank":
-                case "mgdp":
                 case "hhv":
                 case "lng-and-cds-production":
                 case "weekly-maintenance":
                 case "critical-pm":
                 case "procurement":
                 case "indicative-commercial-price":
-                case "plant-availability":
                 case "economic-indicator":
                 case "key-equipment-status":
+                case "plant-availability":
+                case "job-pmts":
+                case "mgdp":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
                         response = _derService.SaveLayoutItem(request);
                         break;
                     }
+                /*case "job-pmts":
+                case "mgdp":
+                    {
+                        request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
+                        request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
+                        var mbbtuKpi = request.KpiInformations.FirstOrDefault(x => x.Position == 1);
+                        if (mbbtuKpi != null)
+                        {
+                            var newMbbtuKpiTarget = new SaveLayoutItemRequest.DerKpiInformationRequest();
+                            newMbbtuKpiTarget.ConfigType = ConfigType.KpiTarget;
+                            newMbbtuKpiTarget.KpiId = mbbtuKpi.KpiId;
+                            newMbbtuKpiTarget.Position = 3;
+                            request.KpiInformations.Add(newMbbtuKpiTarget);
+                        }
+                        response = _derService.SaveLayoutItem(request);
+                        break;
+                    }*/
                 /*case "lng-and-cds":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
@@ -709,6 +797,23 @@ namespace DSLNG.PEAR.Web.Controllers
                         response = _derService.SaveLayoutItem(request);
                         break;
                     }
+                    /*case "plant-availability":
+                    {
+                            request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
+                            request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
+                            var mbbtuKpi = request.KpiInformations.FirstOrDefault(x => x.Position == 0 || x.Position == 1 || x.Position == 2 ||
+                                x.Position ==3);
+                            if (mbbtuKpi != null)
+                            {
+                                var newMbbtuKpiTarget = new SaveLayoutItemRequest.DerKpiInformationRequest();
+                                newMbbtuKpiTarget.ConfigType = ConfigType.KpiTarget;
+                                newMbbtuKpiTarget.KpiId = mbbtuKpi.KpiId;
+                                newMbbtuKpiTarget.Position = 3;
+                                request.KpiInformations.Add(newMbbtuKpiTarget);
+                            }
+                            response = _derService.SaveLayoutItem(request);
+                            break;
+                        }*/
             }
 
             TempData["IsSuccess"] = response.IsSuccess;
@@ -726,6 +831,26 @@ namespace DSLNG.PEAR.Web.Controllers
             }
 
             return list;
+        }
+
+        private IList<DerLayoutItemViewModel.DerKpiInformationViewModel> AddEmptyKpiInformations(IList<DerLayoutItemViewModel.DerKpiInformationViewModel> kpiInformations, int i)
+        {
+            var listKpiInformation = new List<DerLayoutItemViewModel.DerKpiInformationViewModel>();
+            for (int j = 0; j < i; j++)
+            {
+                var kpiInformation = kpiInformations.SingleOrDefault(x => x.Position == j);
+                if (kpiInformation == null)
+                {
+                    listKpiInformation.Add(new DerLayoutItemViewModel.DerKpiInformationViewModel() { Position = j });
+                }
+                else
+                {
+                    listKpiInformation.Add(kpiInformation);
+                }
+
+            }
+
+            return listKpiInformation;
         }
 
         /* private IList<DerLayoutItemViewModel.DerKpiInformationViewModel> GetWeeklyMaintenance(int numberOfKpi)

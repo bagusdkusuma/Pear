@@ -1085,6 +1085,22 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifactTank, TankViewModel>();
             Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifact, TankViewModel>();
 
+            //DER Speedometer
+            Mapper.CreateMap<SpeedometerChartViewModel, SaveLayoutItemRequest.LayoutItemArtifactSpeedometer>();
+            Mapper.CreateMap<SpeedometerChartViewModel.PlotBand, SaveLayoutItemRequest.LayoutItemPlotBand>();
+            Mapper.CreateMap<SpeedometerChartViewModel.SeriesViewModel, SaveLayoutItemRequest.LayoutItemArtifactSerie>();
+            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifact, SpeedometerChartViewModel>()
+                .ForMember(x => x.Series, o => o.MapFrom(s =>
+                    new SpeedometerChartViewModel.SeriesViewModel
+                    {
+                        KpiId = s.CustomSerie.Id,
+                        KpiName = s.CustomSerie.Name + " (" + s.CustomSerie.MeasurementName + ")"
+                    }
+                ))
+                .ForMember(x => x.PlotBands, o => o.MapFrom(s => s.Plots.MapTo<SpeedometerChartViewModel.PlotBand>()));
+            //Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifactSerie, SpeedometerChartViewModel.SeriesViewModel>();
+            Mapper.CreateMap<GetDerLayoutitemResponse.DerArtifactPlot, SpeedometerChartViewModel.PlotBand>();
+
             //Der KpiInformations
             Mapper.CreateMap<DerLayoutItemViewModel.DerKpiInformationViewModel, SaveLayoutItemRequest.DerKpiInformationRequest>()
                 .ForMember(x => x.ConfigType, y => y.MapFrom(z => (ConfigType)Enum.Parse(typeof(ConfigType), z.ConfigType)));
