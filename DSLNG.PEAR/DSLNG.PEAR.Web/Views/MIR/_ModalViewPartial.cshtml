@@ -6,14 +6,14 @@
     settings.CallbackRouteValues = new { Controller = "MIR", Action = "ModalPartialView" };
     settings.PopupVerticalAlign = PopupVerticalAlign.Middle;
     settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
-    settings.ShowFooter = false;
+    settings.ShowFooter = true;
     settings.ShowHeader = true;
     settings.AllowDragging = true;
     settings.DragElement = DragElement.Header;
     settings.Width = Unit.Pixel(900);
     settings.Height = Unit.Pixel(740);
     settings.ControlStyle.CssClass = "DetailsPopup";
-
+    settings.ScrollBars = ScrollBars.Auto;
     //settings.ClientSideEvents.EndCallback = "OnPopupEndCallback";
     settings.SetContent(() =>
     {

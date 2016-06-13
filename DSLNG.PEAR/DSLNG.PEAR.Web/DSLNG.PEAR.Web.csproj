@@ -434,6 +434,7 @@
     <Content Include="Scripts\calculator.production-yield.js" />
     <Content Include="Scripts\calculator.standard.js" />
     <Content Include="Scripts\calculator.plant-availability.js" />
+    <Content Include="Scripts\dataTables.buttons.min.js" />
     <Content Include="Scripts\der-scripts.js" />
     <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery.freezeheader.js" />
@@ -1303,6 +1304,7 @@
     <Content Include="Views\MIR\Edit.cshtml" />
     <Content Include="Views\Shared\_DocumentViewPartial.cshtml" />
     <Content Include="Views\Privilege\Index.cshtml" />
+    <Content Include="Views\Shared\_ExSumPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
