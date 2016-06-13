@@ -14,11 +14,12 @@ namespace DSLNG.PEAR.Web.ViewModels.File
         public IEnumerable<SelectListItem> Years { get; set; }
         public int Month { get; set; }
         public IEnumerable<SelectListItem> Months { get; set; }
-        [Required,MaxLength(150),Display(Name="Title")]
         public string Name { get; set; }
-        [Required]
         [AllowHtml]
         public string Summary { get; set; }
+        [Display(Name="Ex. Summary Default Page"),Required]
+        [UIHint("number")]
+        public int ExSumDefaultPage { get; set; }
         public string Filename { get; set; }
         public byte[] Data { get; set; }
 

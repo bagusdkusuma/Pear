@@ -6,6 +6,10 @@ namespace DSLNG.PEAR.Services.Responses.User
 {
     public class GetUserResponse : BaseResponse
     {
+        public GetUserResponse()
+        {
+            RolePrivileges = new List<RolePrivilege>();
+        }
         public int Id { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }
@@ -16,7 +20,7 @@ namespace DSLNG.PEAR.Services.Responses.User
         public bool IsSuperAdmin { get; set; }
         public string FullName { get; set; }
         public string SignatureImage { get; set; }
-        public IList<RolePrivilege> Privileges { get; set; }
+        public IList<RolePrivilege> RolePrivileges { get; set; }
         public class RoleGroup
         {
             public int Id { get; set; }
