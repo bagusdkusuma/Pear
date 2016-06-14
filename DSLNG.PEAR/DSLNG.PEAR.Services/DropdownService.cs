@@ -280,6 +280,7 @@ namespace DSLNG.PEAR.Services
                     new Dropdown {Text = "Line", Value = "line"},
                     new Dropdown {Text = "Multi Axis", Value = "multiaxis"},
                     new Dropdown {Text = "Speedometer", Value = "speedometer"},
+                    new Dropdown {Text = "Barmeter", Value = "barmeter"},
                     new Dropdown {Text = "Pie", Value = "pie"},
                     new Dropdown {Text = "Tank", Value = "tank"},
                     new Dropdown {Text = "Weather", Value = "weather"},
