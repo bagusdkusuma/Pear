@@ -51,6 +51,10 @@ namespace DSLNG.PEAR.Web.ViewModels.DerLayout
             }
         }
 
+        [Display(Name = "User")]
+        public int SignedBy { get; set; }
+        public IList<SelectListItem> Users { get; set; }
+
         public class DerKpiInformationViewModel
         {
             public int Id { get; set; }

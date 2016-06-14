@@ -28,8 +28,7 @@ namespace DSLNG.PEAR.Data.Entities.Der
         public DerStaticHighlight StaticHighlight { get; set; }
         public ICollection<DerKpiInformation> KpiInformations { get; set; }
         public ICollection<DerOriginalData> OriginalData { get; set; } 
-        public User PreparedBy { get; set; }
-        public User ReviewedBy { get; set; } 
+        public User SignedBy { get; set; }
         public int Test { get; set; }
     }
 }

@@ -261,6 +261,8 @@ namespace DSLNG.PEAR.Services
             rowAndColumns.Add(new RowAndColumns { Row = 15, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 15, Column = 2 });
             rowAndColumns.Add(new RowAndColumns { Row = 16, Column = 1 });
+            rowAndColumns.Add(new RowAndColumns { Row = 16, Column = 2 });
+            rowAndColumns.Add(new RowAndColumns { Row = 16, Column = 3 });
 
             foreach (var rowAndColumn in rowAndColumns)
             {
@@ -477,14 +479,23 @@ namespace DSLNG.PEAR.Services
                 case "economic-indicator":
                 case "key-equipment-status":
                 case "global-stock-market":
+                case "dafwc":
                     {
                         baseResponse = request.Id > 0 ? UpdateKpiInformations(request) : SaveKpiInformations(request);
                         break;
                     }
-                case "dafwc":
+                /*case "dafwc":
                     {
                         baseResponse = SaveDafwc(request);
                         break;
+                    }*/
+
+                case "prepared-by":
+                case "reviewed-by":
+                {
+                        baseResponse = request.Id > 0 ? UpdateUser(request) : SaveUser(request);
+                        break;
+
                     }
             }
 
@@ -1661,29 +1672,25 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-        private BaseResponse SaveDafwc(SaveLayoutItemRequest request)
+        private BaseResponse SaveUser(SaveLayoutItemRequest request)
         {
             var response = new GetDerLayoutResponse();
             try
             {
-                if (request.Id > 0)
-                {
+                var derLayoutItem = new DerLayoutItem();
+                var derLayout = new DerLayout { Id = request.DerLayoutId };
+                DataContext.DerLayouts.Attach(derLayout);
+                derLayoutItem.DerLayout = derLayout;
+                derLayoutItem.Column = request.Column;
+                derLayoutItem.Row = request.Row;
+                derLayoutItem.Type = request.Type;
+                derLayoutItem.SignedBy = DataContext.Users.Single(x => x.Id == request.SignedBy);
 
-                }
-                else
-                {
-                    var derLayoutItem = new DerLayoutItem();
-                    var derLayout = new DerLayout { Id = request.DerLayoutId };
-                    DataContext.DerLayouts.Attach(derLayout);
-                    derLayoutItem.DerLayout = derLayout;
-                    derLayoutItem.Column = request.Column;
-                    derLayoutItem.Row = request.Row;
-                    derLayoutItem.Type = request.Type;
-                    DataContext.DerLayoutItems.Add(derLayoutItem);
-                }
+                DataContext.DerLayoutItems.Add(derLayoutItem);
 
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
+                response.Message = "Changes has been saved";
             }
             catch (Exception exception)
             {
@@ -1692,5 +1699,64 @@ namespace DSLNG.PEAR.Services
 
             return response;
         }
-    }
+
+        private BaseResponse UpdateUser(SaveLayoutItemRequest request)
+        {
+            var response = new GetDerLayoutResponse();
+            try
+            {
+                var derLayoutItem = DataContext.DerLayoutItems.Include(x => x.KpiInformations).Single(x => x.Id == request.Id);
+                var derLayout = new DerLayout { Id = request.DerLayoutId };
+                DataContext.DerLayouts.Attach(derLayout);
+                derLayoutItem.DerLayout = derLayout;
+                derLayoutItem.Column = request.Column;
+                derLayoutItem.Row = request.Row;
+                derLayoutItem.Type = request.Type;
+                derLayoutItem.SignedBy = DataContext.Users.Single(x => x.Id == request.SignedBy);
+
+                DataContext.Entry(derLayoutItem).State = EntityState.Modified;
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = "Changes has been saved";
+            }
+            catch (Exception exception)
+            {
+                response.Message = exception.Message;
+            }
+
+            return response;
+        }
+
+        /* private BaseResponse SaveDafwc(SaveLayoutItemRequest request)
+             {
+                 var response = new GetDerLayoutResponse();
+                 try
+                 {
+                     if (request.Id > 0)
+                     {
+
+                     }
+                     else
+                     {
+                         var derLayoutItem = new DerLayoutItem();
+                         var derLayout = new DerLayout { Id = request.DerLayoutId };
+                         DataContext.DerLayouts.Attach(derLayout);
+                         derLayoutItem.DerLayout = derLayout;
+                         derLayoutItem.Column = request.Column;
+                         derLayoutItem.Row = request.Row;
+                         derLayoutItem.Type = request.Type;
+                         DataContext.DerLayoutItems.Add(derLayoutItem);
+                     }
+
+                     DataContext.SaveChanges();
+                     response.IsSuccess = true;
+                 }
+                 catch (Exception exception)
+                 {
+                     response.Message = exception.Message;
+                 }
+
+                 return response;
+             }*/
+        }
 }

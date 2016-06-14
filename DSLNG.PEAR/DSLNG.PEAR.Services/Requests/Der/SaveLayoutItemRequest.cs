@@ -21,6 +21,7 @@ namespace DSLNG.PEAR.Services.Requests.Der
         public int DerLayoutId { get; set; }
         public LayoutItemHighlight Highlight { get; set; }
         public LayoutItemArtifact Artifact { get; set; }
+        public int SignedBy { get; set; }
 
         public class LayoutItemHighlight
         {

@@ -305,6 +305,8 @@ namespace DSLNG.PEAR.Services
                     new Dropdown {Text = "Economic Indicator", Value = "economic-indicator" },
                     new Dropdown {Text = "Key Equipment Status", Value = "key-equipment-status" },
                     new Dropdown {Text = "Global Stock Market", Value = "global-stock-market" },
+                    new Dropdown {Text = "Prepared By", Value = "prepared-by" },
+                    new Dropdown {Text = "Reviewed By", Value = "reviewed-by" },
                 };
         }
 
