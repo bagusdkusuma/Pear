@@ -445,6 +445,7 @@ namespace DSLNG.PEAR.Services
                         break;
                     }
                 case "speedometer":
+                case "barmeter":
                     {
                         baseResponse = request.Id > 0 ? UpdateSpeedometer(request) : SaveSpeedometer(request);
                         break;
