@@ -379,6 +379,11 @@ namespace DSLNG.PEAR.Web.Controllers
                             viewModel.Type = "plant-availability";
                             break;
                         }
+                    case "6-and-3":
+                        {
+                            viewModel.Type = "barmeter";
+                            break;
+                        }
                     case "7-and-0":
                         {
                             viewModel.Type = "lng-and-cds-production";
@@ -462,7 +467,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         viewModel.LineChart.Series.Add(series);
                         return PartialView("LayoutType/_Line", viewModel);
                     }
-
+                case "barmeter" :
                 case "speedometer":
                     {
                         var viewModel = new DerLayoutItemViewModel();
@@ -716,6 +721,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         response = _derService.SaveLayoutItem(request);
                         break;
                     }
+                case "barmeter":
                 case "speedometer":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
