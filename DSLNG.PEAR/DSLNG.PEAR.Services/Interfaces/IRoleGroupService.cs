@@ -5,6 +5,7 @@ namespace DSLNG.PEAR.Services.Interfaces
 {
     public interface IRoleGroupService
     {
+        GetRoleGroupsResponse All();
         GetRoleGroupsResponse GetRoleGroups(GetRoleGroupsRequest request);
         GetRoleGroupResponse GetRoleGroup(GetRoleGroupRequest request);
         CreateRoleGroupResponse Create(CreateRoleGroupRequest request);

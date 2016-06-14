@@ -666,6 +666,41 @@ namespace DSLNG.PEAR.Web.Controllers
             
             return PartialView("_DocumentViewPartial", model);
         }
+
+        public ActionResult ExecutiveSummary(string[] ExSumParams)
+        {
+            string filename = string.Empty;
+            int pageNumber = 3;
+            if (ExSumParams != null && ExSumParams.Count() > 0) {
+                filename = ExSumParams[0];
+                pageNumber = int.Parse(ExSumParams[1]);
+            }
+
+            MemoryStream stream = null;//
+
+            if (!string.IsNullOrEmpty(filename))
+            {
+                stream = GetStream(filename);
+            }
+            else if (Session[SESSION_KEY] != null)
+            {
+                stream = new MemoryStream((byte[])Session[SESSION_KEY]);
+            }
+
+            List<PdfPageViewModel> model = new List<PdfPageViewModel>();
+            if (stream != null)
+            {
+                PdfDocumentProcessor documentProcessor = new PdfDocumentProcessor();
+                documentProcessor.LoadDocument(stream);
+
+                model.Add(new PdfPageViewModel(documentProcessor)
+                {
+                    PageNumber = pageNumber
+                });
+            }
+
+            return PartialView("_DocumentViewPartial", model);
+        }
         #endregion
     }
 }

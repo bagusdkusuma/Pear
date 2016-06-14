@@ -61,6 +61,7 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             FileRepositoryCreateViewModel model = new FileRepositoryCreateViewModel
             {
+                ExSumDefaultPage = 3,
                 Year = DateTime.Now.Year,
                 Month = DateTime.Now.Month,
                 Years = _dropDownService.GetYears().MapTo<SelectListItem>(),
@@ -159,8 +160,8 @@ namespace DSLNG.PEAR.Web.Controllers
                 switch (type)
                 {
                     case "summary":
-                        data = model.Summary;
-                        return PartialView("_Summary", data);
+                        string[] param = { model.Filename, model.ExSumDefaultPage.ToString() };
+                        return PartialView("_ExSumPartial", param);
                     case "pdf":
                         data = model.Filename;
                         return PartialView("_PdfViewerPartial", data);
@@ -176,6 +177,16 @@ namespace DSLNG.PEAR.Web.Controllers
             return response;
         }
 
+        [HttpPost]
+        public ActionResult Delete(int Id)
+        {
+            var response = _fileRepositoryService.Delete(Id);
+            if (response.IsSuccess)
+            {
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
         protected static byte[] ReadAllBytes(Stream stream)
         {
             byte[] buffer = new byte[16 * 1024];

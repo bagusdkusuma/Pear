@@ -22,6 +22,7 @@ namespace DSLNG.PEAR.Web.ViewModels.File
         }
         public string Name { get; set; }
         public string Summary { get; set; }
+        public int ExSumDefaultPage { get; set; }
         public string Filename { get; set; }
         public byte[] Data { get; set; }
 
