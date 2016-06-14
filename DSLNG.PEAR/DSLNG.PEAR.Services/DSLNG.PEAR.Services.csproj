@@ -114,6 +114,10 @@
     <Compile Include="Requests\Der\GetKpiValueRequest.cs" />
     <Compile Include="Requests\Der\SaveLayoutItemRequest.cs" />
     <Compile Include="Requests\Der\SaveOriginalDataRequest.cs" />
+    <Compile Include="Requests\Privilege\GetPrivilegeByRoleRequest.cs" />
+    <Compile Include="Requests\Privilege\GetPrivilegeRequest.cs" />
+    <Compile Include="Requests\Privilege\GetPrivilegesRequest.cs" />
+    <Compile Include="Requests\Privilege\SaveRolePrivilegeRequest.cs" />
     <Compile Include="Requests\ProcessBlueprint\GetProcessBlueprintPrivilegeRequest.cs" />
     <Compile Include="Requests\ProcessBlueprint\GetProcessBlueprintRequest.cs" />
     <Compile Include="Requests\ProcessBlueprint\SaveProcessBlueprintRequest.cs" />
@@ -709,6 +713,7 @@
     <Compile Include="Responses\PopDashboard\SavePopDashboardResponse.cs" />
     <Compile Include="Responses\PopInformation\GetPopInformationResponse.cs" />
     <Compile Include="Responses\PopInformation\SavePopInformationResponse.cs" />
+    <Compile Include="Responses\Privilege\GetPrivilegeResponse.cs" />
     <Compile Include="Responses\ProcessBlueprint\GetProcessBlueprintPrivilegeResponse.cs" />
     <Compile Include="Responses\ProcessBlueprint\GetProcessBlueprintResponse.cs" />
     <Compile Include="Responses\ProcessBlueprint\GetProcessBlueprintsResponse.cs" />

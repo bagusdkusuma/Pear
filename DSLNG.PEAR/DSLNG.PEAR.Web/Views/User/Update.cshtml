@@ -5,23 +5,53 @@
 
 <h2>@ViewBag.Title</h2>
 @Html.Partial("_MessageResponse")
+<script type="text/javascript">
+    $(document).ready(function () {
+        var roleid = '@Model.RoleId.ToString()';
+        roleid = roleid || "0";
+        console.log(roleid);
+        $('#RoleId').change(function () {
+            roleid = $('Select#RoleId').val();
+            console.log('@Model.RoleId.ToString()');
+            console.log('role id from select: '+ roleid);
+            $.ajax({
+                type: "post",
+                url: '@Url.Action("GetPrivilege")',
+                data: { roleId: parseInt(roleid) },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    var privilege = '<select id="RolePrivilegeIds">';
+                    console.log(data.Length);
+                    //privilege = privilege + '<option value="">--Select Privileges--</option>';
+                    for (var i = 0; i < data.Length; i++) {
+                        console.log(data[i].Text);
+                        privilege = privilege + '<option value="' + data[i].Value + '">' + data[i].Text + '</option>';
+                    }
+                    privilege = privilege + '</select>';
+                    $('#div-privilege').html(privilege);
+                }
+            });
+        });
+    });
+</script>
 <div class="row">
     <div class="col-md-6">
         @using (Html.BeginForm("Update", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @*<form action="@Url.Action("Update")" method="POST">*@
             @Html.HiddenFor(model => model.Id)
-            <div class="form-group">
+            <div class="form-group form-list">
                 @Html.LabelFor(model => model.FullName, new { @class = "control-label" })
                 @Html.TextBoxFor(model => model.FullName, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.FullName)
             </div>
-            <div class="form-group">
+            <div class="form-group form-list">
                 @Html.LabelFor(model => model.Username, new { @class = "control-label" })
                 @Html.TextBoxFor(model => model.Username, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Username)
             </div>
-            <div class="form-group">
+            <div class="form-group form-list">
                 @Html.LabelFor(model => model.Password, new { @class = "control-label" })
                 <div class="input-group">
                     @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
@@ -32,32 +62,37 @@
                 </div>
                 @Html.ValidationMessageFor(model => model.Password)
             </div>
-            <div class="form-group">
+            <div class="form-group form-list">
                 @Html.LabelFor(model => model.Email, new { @class = "control-label" })
                 @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Email)
             </div>
-            <div class="form-group">
+            <div class="form-group form-list">
                 @Html.LabelFor(model => model.ChangeModel, new { @class = "control-label" })
                 @Html.TextBoxFor(model => model.ChangeModel, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ChangeModel)
             </div>
-            <div class="form-group">
+            <div class="form-group form-list" id="div-role-id">
                 @Html.LabelFor(model => model.RoleId, new { @class = "control-label" })
                 @Html.DropDownListFor(model => model.RoleId, Model.RoleGroupList, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.RoleId)
             </div>
-            <div class="form-group">
+            <div class="form-group form-list" id="div-privilege">
+                @Html.LabelFor(model => model.RolePrivilegeIds, new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.RolePrivilegeIds, Model.RolePrivilegeOption, new { @class = "form-control"})
+                @Html.ValidationMessageFor(model => model.RolePrivilegeIds)
+            </div>
+            <div class="form-group form-list">
                 @Html.LabelFor(model => model.SignatureImage, new { @class = "control-label" })
                 <input type="file" name="file" id="SignatureImage" />
                 @Html.ValidationMessageFor(model => model.SignatureImage)
             </div>
-            <div class="form-group">
+            <div class="form-group form-list">
                 @Html.LabelFor(model => model.IsActive, new { @class = "control-label" })
                 @Html.EditorFor(model => model.IsActive, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IsActive)
             </div>
-            <div class="form-group">
+            <div class="form-group form-list">
                 @Html.LabelFor(model => model.IsSuperAdmin, new { @class = "control-label" })
                 @Html.EditorFor(model => model.IsSuperAdmin, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IsSuperAdmin)
