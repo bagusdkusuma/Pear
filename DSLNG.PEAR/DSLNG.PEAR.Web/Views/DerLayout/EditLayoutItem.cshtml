@@ -84,6 +84,15 @@
                 case "job-pmts":
                     Html.RenderPartial("~/Views/DerLayout/LayoutType/_JobPmts.Edit.cshtml", Model);
                     break;
+                case "weekly-maintenance":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_WeeklyMaintenance.Edit.cshtml", Model);
+                    break;
+                case "critical-pm":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_CriticalPm.Edit.cshtml", Model);
+                    break;
+                case "global-stock-market":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_GlobalStockMarket.Edit.cshtml", Model);
+                    break;
 
             }
         }
@@ -308,6 +317,9 @@
             case "economic-indicator":
             case "security":
             case "job-pmts":
+            case "weekly-maintenance":
+            case "critical-pm":
+            case "global-stock-market":
                 {
                     window.Pear.Artifact.Designer._kpiAutoComplete($('.layout-type-area'));
                     break;
