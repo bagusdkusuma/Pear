@@ -21,6 +21,10 @@ using DSLNG.PEAR.Web.ViewModels.Der;
 using DSLNG.PEAR.Web.ViewModels.Der.Display;
 using DSLNG.PEAR.Web.Extensions;
 using DSLNG.PEAR.Web.ViewModels.Highlight;
+using NReco.ImageGenerator;
+using NReco.PdfGenerator;
+using System.IO;
+using DSLNG.PEAR.Common.Contants;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -255,6 +259,48 @@ namespace DSLNG.PEAR.Web.Controllers
                         return Json(previewViewModel, JsonRequestBehavior.AllowGet);
                     }
                 #endregion
+                #region speedometer
+                case "speedometer":
+                    {
+                        var request = new GetSpeedometerChartDataRequest();
+                        request.Start = date.AddDays(-7);
+                        request.End = date;
+                        request.PeriodeType = PeriodeType.Daily;
+                        request.RangeFilter = RangeFilter.Interval;
+                        request.ValueAxis = ValueAxis.KpiActual;
+                        request.PlotBands = layout.Artifact.Plots.Select(x => new GetSpeedometerChartDataRequest.PlotBandRequest { 
+                            From = x.From,
+                            Color = x.Color,
+                            To = x.To
+                        }).ToList();
+                        request.Series = new GetSpeedometerChartDataRequest.SeriesRequest
+                        {
+                            KpiId = layout.Artifact.CustomSerie.Id,
+                            Label = layout.Artifact.CustomSerie.Name
+                        };
+                  
+                        var chartData = _artifactService.GetSpeedometerChartData(request);
+
+                        var previewViewModel = new ArtifactPreviewViewModel();
+                        previewViewModel.PeriodeType = "Daily";
+                        previewViewModel.Highlights = new List<ArtifactPreviewViewModel.HighlightViewModel>();
+                        for (DateTime counter = request.Start.Value;
+                             counter <= request.End.Value;
+                             counter = counter.AddDays(1))
+                        {
+                            previewViewModel.Highlights.Add(null);
+                        }
+                        previewViewModel.GraphicType = layout.Type;
+                        previewViewModel.SpeedometerChart = new SpeedometerChartDataViewModel();
+                        previewViewModel.SpeedometerChart.Title = layout.Artifact.HeaderTitle;
+                        previewViewModel.SpeedometerChart.Subtitle = chartData.Subtitle;
+                        previewViewModel.SpeedometerChart.ValueAxisTitle = layout.Artifact.MeasurementName;
+                        previewViewModel.SpeedometerChart.Series = chartData.Series.MapTo<SpeedometerChartDataViewModel.SeriesViewModel>();
+                        previewViewModel.SpeedometerChart.PlotBands = chartData.PlotBands.MapTo<SpeedometerChartDataViewModel.PlotBandViewModel>();
+                        previewViewModel.SpeedometerChart.PlotBands = previewViewModel.SpeedometerChart.PlotBands.OrderBy(x => x.to).ToList();
+                        return Json(previewViewModel, JsonRequestBehavior.AllowGet);
+                    }
+                #endregion
                 #region highlight
                 case "highlight":
                     {
@@ -264,7 +310,7 @@ namespace DSLNG.PEAR.Web.Controllers
                                 Date = date,
                                 HighlightTypeId = layout.Highlight.SelectOptionId
                             });
-                        var view = RenderPartialViewToString("Display/_Highlight", highlight);
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_Highlight.cshtml", highlight);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
@@ -278,7 +324,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             ByDate = true
                         });
 
-                        var view = RenderPartialViewToString("Display/_Weather", weather);
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_Weather.cshtml", weather);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
@@ -291,7 +337,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             Type = "Alert",
                             Date = date
                         });
-                        var view = RenderPartialViewToString("Display/_Alert", alert);
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_Alert.cshtml", alert);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
@@ -304,7 +350,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             Date = date,
                             ByDate = true
                         });
-                        var view = RenderPartialViewToString("Display/_Wave", wave);
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_Wave.cshtml", wave);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
@@ -321,7 +367,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         var schedules = vesselSchedule.VesselSchedules.OrderBy(x => x.ETA).Take(3).ToList();
                         var nls = schedules.MapTo<DailyExecutionReportViewModel.NLSViewModel>();
 
-                        var view = RenderPartialViewToString("Display/_Nls", nls);
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_Nls.cshtml", nls);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
@@ -368,7 +414,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             viewModel.AvgYtdKeyStatistics.Add(avgYtdKeyStatisticViewModel);
                         }
 
-                        var view = RenderPartialViewToString("Display/_AvgYtdKeyStatistic", viewModel);
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_AvgYtdKeyStatistic.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
@@ -403,7 +449,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             viewModel.SafetyTableViewModels.Add(safetyTableViewModel);
                         }
 
-                        var view = RenderPartialViewToString("Display/_SafetyTable", viewModel);
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_SafetyTable.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
@@ -430,7 +476,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             viewModel.SecurityViewModels.Add(securityViewModel);
                         }
 
-                        var view = RenderPartialViewToString("Display/_Security", viewModel);
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_Security.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
@@ -471,7 +517,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             }
                             viewModel.DisplayLngAndCds.Add(procureMentViewModel);
                         }
-                        var view = RenderPartialViewToString("Display/_LngAndCds", viewModel);
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_LngAndCds.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     };
@@ -486,7 +532,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         viewModel.DaysWithoutLopc = response.DaysWithoutLopc;
                         viewModel.DaysWithoutDafwcSince = response.DaysWithoutDafwcSince;
                         viewModel.DaysWithoutLopcSince = response.DaysWithoutLopcSince;
-                        var view = RenderPartialViewToString("Display/_Dafwc", viewModel);
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_Dafwc.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
@@ -534,7 +580,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             viewModel.JobPmtsViewModels.Add(jobPmtsViewModel);
                         }
 
-                        var view = RenderPartialViewToString("Display/_JobPmts", viewModel);
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_JobPmts.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
@@ -567,7 +613,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             }
                             viewModel.TotalFeedGasViewModels.Add(totalFeedGasViewModel);
                         }
-                        var view = RenderPartialViewToString("Display/_TotalFeedGas", viewModel);
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_TotalFeedGas.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
@@ -594,7 +640,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             }
                             viewModel.TableTankViewModels.Add(totalTableTankViewModel);
                         }
-                        var view = RenderPartialViewToString("Display/_TableTank", viewModel);
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_TableTank.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
@@ -642,7 +688,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             viewModel.MGDPViewModels.Add(MGDPViewModel);
                         }
 
-                        var view = RenderPartialViewToString("Display/_MGDP", viewModel);
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_MGDP.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
@@ -669,7 +715,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             }
                             viewModel.HHVViewModels.Add(totalHHVViewModel);
                         }
-                        var view = RenderPartialViewToString("Display/_HHV", viewModel);
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_HHV.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
@@ -717,7 +763,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             viewModel.LngAndCdsProductionViewModels.Add(MGDPViewModel);
                         }
 
-                        var view = RenderPartialViewToString("Display/_LngAndCdsProduction", viewModel);
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_LngAndCdsProduction.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
@@ -759,7 +805,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             }
                             viewModel.WeeklyMaintenanceViewModels.Add(weeklyMaintenanceViewModel);
                         }
-                        var view = RenderPartialViewToString("Display/_WeeklyMaintenance", viewModel);
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_WeeklyMaintenance.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
@@ -797,7 +843,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             }
                             viewModel.CriticalPmViewModels.Add(criticalViewModel);
                         }
-                        var view = RenderPartialViewToString("Display/_CriticalPm", viewModel);
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_CriticalPm.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
@@ -835,7 +881,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             }
                             viewModel.ProcurementViewModels.Add(procureMentViewModel);
                         }
-                        var view = RenderPartialViewToString("Display/_Procurement", viewModel);
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_Procurement.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
@@ -862,7 +908,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             }
                             viewModel.IndicativeCommercialPriceViewModels.Add(indicativeCommercialPriceViewModel);
                         }
-                        var view = RenderPartialViewToString("Display/_IndicativeCommercialPrice", viewModel);
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_IndicativeCommercialPrice.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
@@ -910,7 +956,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             viewModel.PlantAvailabilityViewModels.Add(MGDPViewModel);
                         }
 
-                        var view = RenderPartialViewToString("Display/_PlantAvalability", viewModel);
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_PlantAvalability.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
@@ -958,7 +1004,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             }
                             viewModel.EconomicIndicatorViewModels.Add(EconomicIndicatorViewModel);
                         }
-                        var view = RenderPartialViewToString("Display/_EconomicIndicator", viewModel);
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_EconomicIndicator.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
@@ -984,7 +1030,7 @@ namespace DSLNG.PEAR.Web.Controllers
                                                                          : "n/a";
                             viewModel.KeyEquipmentStatusViewModels.Add(keyOquipmentViewModel);
                         }
-                        var view = RenderPartialViewToString("Display/_KeyEquipmentStatus", viewModel);
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_KeyEquipmentStatus.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
@@ -1039,6 +1085,64 @@ namespace DSLNG.PEAR.Web.Controllers
             var response = _derService.GetDerLayout(id);
             var viewModel = response.MapTo<DerDisplayViewModel>();
             return View(viewModel);
+        }
+
+        public ActionResult Generate() {
+            var secretNumber = Guid.NewGuid().ToString();
+            DerImageController.SecretNumber = secretNumber;
+            var displayUrl = Url.Action("Preview", "DerImage", new {secretNumber = secretNumber }, this.Request.Url.Scheme);
+            var htmlToPdf = new HtmlToPdfConverter();
+            htmlToPdf.Size = PageSize.A3;
+            if (!Directory.Exists(Server.MapPath(PathConstant.DerPath)))
+            {
+                Directory.CreateDirectory(Server.MapPath(PathConstant.DerPath));
+            }
+
+            var htmlToImageConverter = new HtmlToImageConverter();
+            htmlToImageConverter.Height = 2481;
+            htmlToImageConverter.Width = 1754;
+            var imageName = "der_" + DateTime.Now.Ticks + ".png";
+            var imagePath = Path.Combine(Server.MapPath(PathConstant.DerPath), imageName);
+            htmlToImageConverter.GenerateImageFromFile(displayUrl, ImageFormat.Png, imagePath);
+            var htmlContent = String.Format("<body><img src='{0}' /></body>", Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content(PathConstant.DerPath + "/" + imageName));
+
+            var pdfPath = Path.Combine(Server.MapPath(PathConstant.DerPath), "der_" + DateTime.Now.Ticks + ".pdf");
+            htmlToPdf.GeneratePdf(htmlContent, null, pdfPath);
+            //htmlToPdf.GeneratePdfFromFile(displayUrl, null, pdfPath);
+            return File(pdfPath, "application/pdf");
+            //var htmlToImageConverter = new HtmlToImageConverter();
+            //htmlToImageConverter.Height = 2481;
+            //htmlToImageConverter.Width = 1754;
+            //return File(htmlToImageConverter.GenerateImageFromFile(displayUrl, ImageFormat.Png), "image/png", "TheGraph.png");
+        }
+
+
+        public bool ByteArrayToFile(string _FileName, byte[] _ByteArray)
+        {
+            try
+            {
+                // Open file for reading
+                System.IO.FileStream _FileStream =
+                   new System.IO.FileStream(_FileName, System.IO.FileMode.Create,
+                                            System.IO.FileAccess.Write);
+                // Writes a block of bytes to this stream using data from
+                // a byte array.
+                _FileStream.Write(_ByteArray, 0, _ByteArray.Length);
+
+                // close file stream
+                _FileStream.Close();
+
+                return true;
+            }
+            catch (Exception _Exception)
+            {
+                // Error
+                Console.WriteLine("Exception caught in process: {0}",
+                                  _Exception.ToString());
+            }
+
+            // error occured, return false
+            return false;
         }
     }
 }

@@ -73,3 +73,10 @@
     color:red !important;
     font-weight:bold;
 }
+.unproceed {
+    color:orange !important;
+    font-weight:bold;
+}
+.solid-gauge .highcharts-container {
+    height:140px;
+}

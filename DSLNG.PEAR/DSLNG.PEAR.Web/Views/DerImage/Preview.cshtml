@@ -43,7 +43,7 @@
                 var row0Col0 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 0);
                 if (row0Col0 != null)
                 {
-                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col0.Id })" class="layout-item"></div>
+                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row0Col0.Id })" class="layout-item"></div>
                 }
             }
       </div>
@@ -53,7 +53,7 @@
                 var row0Col1 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 1);
                 if (row0Col1 != null)
                 {
-                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col1.Id })" class="layout-item"></div>
+                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row0Col1.Id })" class="layout-item"></div>
                 }
                 <!--h5 style="margin-top: 40px; text-decoration: underline;">Daily Highlight</!--h5>
                 <p>Normal Ops. CDS Vessel MT Indradi deberthed and switch over with Erawan-1. The later still being N2 purge before loading. CDS rundown recycle to day-tank.</p-->
@@ -64,7 +64,7 @@
                 var row0Col2 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 2);
                 if (row0Col2 != null)
                 {
-                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col2.Id })" class="layout-item"></div>
+                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row0Col2.Id })" class="layout-item"></div>
                 }
                 <!--h5 style="margin-top: 40px; text-decoration: underline;">Daily Highlight</!--h5>
                 <p>Normal Ops. CDS Vessel MT Indradi deberthed and switch over with Erawan-1. The later still being N2 purge before loading. CDS rundown recycle to day-tank.</p-->
@@ -77,41 +77,43 @@
     </div>
 
     <div class="daily-der-chart">
-      <div class="col-md-3">
+        <div class="row">
+      <div class="col-md-3" style="width:25%">
          @{
                 var row1Col0 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 0);
                 if (row1Col0 != null)
                 {
-                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col0.Id })" class="layout-item"></div>
+                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row1Col0.Id })" class="layout-item"></div>
                 }
             }
       </div>
-       <div class="col-md-3">
+       <div class="col-md-3" style="width:25%">
             @{
                 var row1Col1 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 1);
                 if (row1Col1 != null)
                 {
-                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col1.Id })" class="layout-item"></div>
+                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row1Col1.Id })" class="layout-item"></div>
                 }
             }
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3" style="width:25%">
             @{
                 var row1Col2 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 2);
                 if (row1Col2 != null)
                 {
-                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col2.Id })" class="layout-item"></div>
+                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row1Col2.Id })" class="layout-item"></div>
                 }
             }
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3" style="width:25%">
             @{
                 var row1Col3 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 3);
                 if (row1Col3 != null)
                 {
-                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col3.Id })" class="layout-item"></div>
+                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row1Col3.Id })" class="layout-item"></div>
                 }
             }
+        </div>
         </div>
     </div><!-- daily der chart -->
 
@@ -129,7 +131,7 @@
                 var row2Col0 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 0);
                 if (row2Col0 != null)
                 {
-                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row2Col0.Id })" class="layout-item"></div>
+                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row2Col0.Id })" class="layout-item"></div>
                 }
             }
                 @*<div class="col-md-6">
@@ -314,7 +316,7 @@
                 var row4Col0 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 0);
                 if (row4Col0 != null)
                 {
-                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row4Col0.Id })" class="layout-item"></div>
+                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row4Col0.Id })" class="layout-item"></div>
                 }
             }
             @*<h6 style="text-decoration: underline;">SECURITY REMARKS:</h6>
