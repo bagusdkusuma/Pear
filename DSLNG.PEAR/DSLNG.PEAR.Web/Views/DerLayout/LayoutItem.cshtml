@@ -65,6 +65,8 @@
                     });
                     break;
                 case 'highlight':
+                case 'prepared-by':
+                case 'reviewed-by':
                     {
                         $.ajax({
                             url: '@Url.Action("LayoutSetting", "DerLayout", new { type = "_type_" })'.replace('_type_', that.val()),
@@ -90,6 +92,8 @@
                 case "indicative-commercial-price":
                 case "plant-availability":
                 case "economic-indicator":
+                case "global-stock-market":
+                case 'dafwc':
                     {
                         $.ajax({
                             url: '@Url.Action("LayoutSetting", "DerLayout", new { type = "_type_" })'.replace('_type_', that.val()),
@@ -101,7 +105,7 @@
 
                         break;
                     }
-                case 'dafwc':
+                
                 case 'key-equipment-status':
                     {
                         $.ajax({
@@ -132,4 +136,3 @@
         });
     });
 </script>
-
