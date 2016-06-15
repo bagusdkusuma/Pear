@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Data.Entities
 {
-    public class RolePrivilege 
+    public class RolePrivilege : BaseEntity
     {
         public RolePrivilege()
         {
