@@ -10,7 +10,7 @@
     <form class="form-inline">
         <div class="form-group" style="margin-top: 5px; margin-left: 25px; padding-right: 30px; border-right: solid 1px #3f454f;">
             <label class="labletop">Department :</label>
-            @Html.DropDownList("RoleGroupId", (IEnumerable<SelectListItem>)ViewBag.RoleGroups, new { @class = "form-control"})
+            @Html.DropDownList("RoleGroup_Id", (IEnumerable<SelectListItem>)ViewBag.RoleGroups, new { @class = "form-control"})
         </div>
 
     </form>
@@ -37,7 +37,7 @@
 
         var contentUrl = '@Url.Content("$x$")';
         $(document).ready(function () {
-            var roleId = $('#RoleGroupId').val();
+            var roleId = $('#RoleGroup_Id').val();
             var myTable;
             myTable = $('#privilege-table').DataTable({
                 "bProcessing": true,
@@ -126,8 +126,8 @@
             });
 
             
-            $('#RoleGroupId').on('change', function () {
-                roleId = $('#RoleGroupId').val();
+            $('#RoleGroup_Id').on('change', function () {
+                roleId = $('#RoleGroup_Id').val();
                 myTable.draw();
             });
 
