@@ -1163,6 +1163,9 @@
     <Content Include="Views\DerLayout\LayoutType\_Dafwc.Edit.cshtml" />
     <Content Include="Views\DerImage\Preview.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_User.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_Termometer.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_Termometer.Edit.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_User.Edit.cshtml" />
     <None Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\SpeedometerChart\_Edit.cshtml" />
     <Content Include="Views\Tabular\_Create.cshtml" />

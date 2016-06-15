@@ -40,7 +40,6 @@ namespace DSLNG.PEAR.Web.ViewModels.DerLayout
         public IList<SelectListItem> Highlights { get; set; }
 
         public IList<DerKpiInformationViewModel> KpiInformations { get; set; }
-
         public IList<SelectListItem> ConfigTypes
         {
             get

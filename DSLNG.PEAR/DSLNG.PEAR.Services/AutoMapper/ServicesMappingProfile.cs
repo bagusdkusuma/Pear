@@ -942,7 +942,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<DerItem, GetDerItemResponse>();
             Mapper.CreateMap<GetDerItemRequest, GetDerItemResponse>();
             Mapper.CreateMap<DerLayoutItem, GetDerLayoutitemResponse>()
-                  .ForMember(x => x.DerLayoutId, y => y.MapFrom(z => z.DerLayout.Id));
+                  .ForMember(x => x.DerLayoutId, y => y.MapFrom(z => z.DerLayout.Id))
+                  .ForMember(x => x.SignedBy, y => y.MapFrom(z => z.SignedBy.Id));
 
             Mapper.CreateMap<DerLayout, GetDerLayoutResponse>();
             Mapper.CreateMap<DerLayoutItem, GetDerLayoutResponse.DerLayoutItem>();

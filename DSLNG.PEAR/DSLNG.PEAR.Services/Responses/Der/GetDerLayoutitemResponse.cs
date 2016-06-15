@@ -18,6 +18,7 @@ namespace DSLNG.PEAR.Services.Responses.Der
         public DerArtifact Artifact { get; set; }
         public DerHighlight Highlight { get; set; }
         public IList<KpiInformationResponse> KpiInformations { get; set; }
+        public int SignedBy { get; set; }
 
         public class DerArtifact
         {
