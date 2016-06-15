@@ -43,6 +43,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     Selected = this.UserProfile().RoleId == x.Id
                 }).ToList();
 
+            ViewBag.RoleId = this.UserProfile().RoleId;
             return View(model);
         }
 
@@ -92,7 +93,51 @@ namespace DSLNG.PEAR.Web.Controllers
             return View(model);
         }
 
+        public ActionResult Create(int RoleId)
+        {
+            var model = new RolePrivilegeViewModel();
+            ViewBag.RoleGroups = _roleGroupService.GetRoleGroups(new Services.Requests.RoleGroup.GetRoleGroupsRequest
+            {
+                Take = -1,
+                SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+            })
+                            .RoleGroups.Select(x => new SelectListItem
+                            {
+                                Text = x.Name,
+                                Value = x.Id.ToString(),
+                                Selected = RoleId == x.Id
+                            }).ToList();
+            model.RoleGroup_Id = RoleId;
+            return View(model);
+        }
 
+        [HttpPost]
+        public ActionResult Create(RolePrivilegeViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var request = model.MapTo<SaveRolePrivilegeRequest>();
+                request.UserId = this.UserProfile().UserId;
+                if(_roleService.SaveRolePrivilege(request).IsSuccess)
+                {
+                    return RedirectToAction("Index");
+                }
+                
+            }
+            ViewBag.RoleGroups = _roleGroupService.GetRoleGroups(new Services.Requests.RoleGroup.GetRoleGroupsRequest
+            {
+                Take = -1,
+                SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+            })
+                            .RoleGroups.Select(x => new SelectListItem
+                            {
+                                Text = x.Name,
+                                Value = x.Id.ToString(),
+                                Selected = model.RoleGroup_Id == x.Id
+                            }).ToList();
+
+            return View(model);
+        }
 
         public ActionResult Edit(RolePrivilegeViewModel model)
         {
@@ -104,14 +149,14 @@ namespace DSLNG.PEAR.Web.Controllers
                 new SelectListItem  {
                                         Text = x.Name,
                                         Value = x.Id.ToString(),
-                                        Selected = this.UserProfile().RoleId == x.Id
+                                        Selected = model.RoleGroup_Id == x.Id
                                     }).ToList();
 
             if (ModelState.IsValid)
             {
-
+                return RedirectToAction("Index");
             }
-            return View();
+            return View(model);
         }
     }
 }

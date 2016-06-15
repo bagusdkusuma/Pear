@@ -12,6 +12,7 @@ using System.Data.Entity;
 using DSLNG.PEAR.Services.Responses;
 using DSLNG.PEAR.Data.Entities;
 using System.Data.SqlClient;
+using System.Data.Entity.Infrastructure;
 
 namespace DSLNG.PEAR.Services
 {
@@ -103,9 +104,48 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
+        /// <summary>
+        /// Save Or Update Role Privileges
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public BaseResponse SaveRolePrivilege(SaveRolePrivilegeRequest request)
         {
-            throw new NotImplementedException();
+            var response = new BaseResponse();
+            try
+            {
+                var privilege = request.MapTo<RolePrivilege>();
+                var user = DataContext.Users.Find(request.UserId);
+                if (request.Id > 0)
+                {
+                    //Update Mode
+                    privilege.UpdatedBy = user;
+                    privilege.UpdatedDate = DateTime.Now;
+                    DataContext.Entry(privilege).State = EntityState.Modified;
+                }
+                else
+                {
+                    //Insert mode
+                    privilege.CreatedBy = user;
+                    privilege.CreatedDate = DateTime.Now;
+                    DataContext.RolePrivileges.Add(privilege);
+                }
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = "Privilege Successfully Saved";
+            }
+            catch (DbUpdateException upd)
+            {
+                response.IsSuccess = false;
+                response.Message = upd.Message;
+            }
+            catch (InvalidOperationException inv)
+            {
+                response.IsSuccess = false;
+                response.Message = inv.Message;
+            }
+            
+            return response;
         }
     }
 }

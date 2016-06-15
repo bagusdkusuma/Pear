@@ -16,7 +16,8 @@
     </form>
 </div>
 <div class="add-button-wrapper" style="margin-bottom: -26px; margin-top:4px;">
-    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Create New", "Create", new { @RoleId = ViewBag.RoleId}, new { @class = "btn btn-primary", @id="privCreate" })
+    @*<a class="btn btn-primary" href="#" >Create New</a>*@
 </div>
 <table id="privilege-table" class="rgw-pop-tbl table-transparent table row-border table-bordered table-responsive" cellspacing="0" width="100%">
     <thead>
@@ -125,14 +126,27 @@
                 }
             });
 
-            
+
+
             $('#RoleGroup_Id').on('change', function () {
                 roleId = $('#RoleGroup_Id').val();
                 myTable.draw();
+                //$('.btn btn-primary').attr('href', function () {
+                //    return this.href.replace('_rolegroup', roleId);
+                //});
+                changeCreate(roleId);
             });
+
 
 
         });
 
+        function changeCreate(roleId) {
+            var url = "/Privilege/Create?RoleId=" + roleId;
+            var create = $('#privCreate');
+            create.removeAttr('href');
+            $('#privCreate').attr('href', url);
+            console.log(create.attr('href'));
+        }
     </script>
 }
