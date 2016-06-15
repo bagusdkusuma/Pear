@@ -10,6 +10,8 @@ using DSLNG.PEAR.Services.Responses.Privilege;
 using DSLNG.PEAR.Common.Extensions;
 using System.Data.Entity;
 using DSLNG.PEAR.Services.Responses;
+using DSLNG.PEAR.Data.Entities;
+using System.Data.SqlClient;
 
 namespace DSLNG.PEAR.Services
 {
@@ -47,7 +49,50 @@ namespace DSLNG.PEAR.Services
 
         public GetPrivilegesResponse GetRolePrivileges(GetPrivilegesRequest request)
         {
-            throw new NotImplementedException();
+            int totalRecords;
+            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            if (request.Take != -1)
+            {
+                data = data.Skip(request.Skip).Take(request.Take);
+            }
+
+            if (request.RoleId > 0)
+            {
+                data = data.Where(x => x.RoleGroup_Id == request.RoleId);
+            }
+            return new GetPrivilegesResponse
+            {
+                TotalRecords = totalRecords,
+                Privileges = data.ToList().MapTo<GetPrivilegesResponse.RolePrivilege>()
+            };
+        }
+
+        public IEnumerable<RolePrivilege> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        {
+            var data = DataContext.RolePrivileges.Include(x=>x.RoleGroup).AsQueryable();
+            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            {
+                data = data.Where(x => x.Name.Contains(search) || x.Descriptions.Contains(search));
+            }
+
+            foreach (var sortOrder in sortingDictionary)
+            {
+                switch (sortOrder.Key)
+                {
+                    case "Name":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Name)
+                            : data.OrderByDescending(x => x.Name);
+                        break;
+                    case "RoleGroup":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.RoleGroup.Name)
+                            : data.OrderByDescending(x => x.RoleGroup.Name);
+                        break;
+                }
+            }
+            TotalRecords = data.Count();
+            return data;
         }
 
         public GetPrivilegesResponse GetRolePrivileges(GetPrivilegeByRoleRequest request)

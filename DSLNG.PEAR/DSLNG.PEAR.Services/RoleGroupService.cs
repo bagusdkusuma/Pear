@@ -1,15 +1,14 @@
-﻿using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
+﻿using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Entities;
 using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.RoleGroup;
-using System;
-using System.Linq;
-using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Responses.RoleGroup;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace DSLNG.PEAR.Services
 {
