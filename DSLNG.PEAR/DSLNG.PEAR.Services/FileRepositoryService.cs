@@ -124,8 +124,8 @@ namespace DSLNG.PEAR.Services
                             break;
                         default:
                             data = sortOrder.Value == SortOrder.Ascending
-                                ? data.OrderBy(x => x.Id).ThenBy(x => x.Year).ThenBy(x => x.Month).ThenBy(x => x.LastWriteTime)
-                                : data.OrderByDescending(x => x.Id).ThenBy(x => x.Year).ThenBy(x => x.Month).ThenBy(x => x.LastWriteTime);
+                                ? data.OrderBy(x => x.Year).ThenBy(x => x.Month).ThenBy(x => x.LastWriteTime)
+                                : data.OrderByDescending(x => x.Year).ThenBy(x => x.Month).ThenBy(x => x.LastWriteTime);
                             break;
                     }
                 }
