@@ -1310,6 +1310,8 @@
     <Content Include="Views\Shared\_DocumentViewPartial.cshtml" />
     <Content Include="Views\Privilege\Index.cshtml" />
     <Content Include="Views\Shared\_ExSumPartial.cshtml" />
+    <Content Include="Views\Privilege\Edit.cshtml" />
+    <Content Include="Views\Privilege\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

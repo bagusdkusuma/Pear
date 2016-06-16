@@ -244,6 +244,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<RolePrivilegeViewModel, SaveRolePrivilegeRequest>();
             Mapper.CreateMap<GetPrivilegeResponse, RolePrivilegeViewModel>();
+            Mapper.CreateMap<GetPrivilegesResponse.RolePrivilege, RolePrivilegeViewModel>();
 
             Mapper.CreateMap<ResetPasswordResponseViewModel, ResetPasswordResponse>();
             Mapper.CreateMap<ResetPasswordViewModel, ResetPasswordRequest>();
