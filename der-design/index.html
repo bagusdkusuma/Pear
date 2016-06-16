@@ -133,6 +133,7 @@
          }
          .table.kpi-fatality{
              border-right: 1px solid #0D0D0D;
+             text-align: center;
          }
          .table.kpi-fatality thead td{
              background-color:#B8CCE4;
@@ -314,6 +315,7 @@
          }
            .table.tank thead tr td{
                height:100px;
+               background-color:#DBEEF4;
            }
          .table.tank tbody tr:first-child td{
              background-color:#95B3D7;
@@ -390,11 +392,26 @@
          }
          .table.weekly-maintenance{
              border-right:1px solid #0D0D0D;
+             text-align: center;
          }
         .table.weekly-critical{
              border-right:1px solid #0D0D0D;
              border-bottom:1px solid #0D0D0D;
+             text-align: center;
          }
+         .table.weekly-maintenance thead td,
+         .table.weekly-critical thead td{
+             background-color: #B7DEE8;
+         }
+          .table.weekly-maintenance thead tr:first-child td,
+           .table.weekly-critical thead tr:first-child td{
+              text-align: center;
+              background-color:#92CDDC;
+          }
+         .table.weekly-maintenance tr td:first-child,
+        .table.weekly-critical tr td:first-child{
+            text-align: left;
+        }
          .plant-mode{
              color:#00B050;;
          }
@@ -1036,7 +1053,7 @@
                 <table class="table table-bordered top-bottom-border production">
                     <thead>
                         <tr>
-                            <td>PRODUCTION</td>
+                            <td style="width:12.5%">PRODUCTION</td>
                             <td colspan="3">LNG</td>
                             <td colspan="3">
                                 CDS
@@ -1048,19 +1065,19 @@
                             <td>
                                 ACTUAL 24H
                             </td>
-                            <td>
+                            <td style="width:12.5%">
                                 14,031.03 m3
                             </td>
-                            <td>
+                            <td style="width:17%">
                                 6,386.90 tonnes
                             </td>
-                            <td>
+                            <td style="width:17%">
                                 329,721 mmbtu
                             </td>
-                            <td>
+                            <td style="width:11%">
                                 2,234.80 bbl
                             </td>
-                            <td>
+                            <td style="width:13%">
                                 227.96 tonnes
                             </td>
                             <td>
@@ -1136,9 +1153,9 @@
             <table class="table table-bordered tank vertical-space">
                 <thead>
                 <tr>
-                    <td colspan="2">tank</td>
-                    <td colspan="2">tank</td>
-                    <td colspan="2">tank</td>
+                    <td colspan="2" style="width:25%">tank</td>
+                    <td colspan="2" style="width:34%">tank</td>
+                    <td colspan="2" style="width:24%">tank</td>
                     <td>tank</td>
                 </tr>
                 </thead>
@@ -1208,24 +1225,24 @@
              <table class="table table-bordered weekly-maintenance top-bottom-border">
                 <thead>
                     <tr>
-                        <td colspan="5">
+                        <td colspan="6">
                             WEEKLY MAINTENANCE BACKLOG (as of 20 Jan 2016)
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td style="width:12.5%">
                             Type
                         </td>
-                        <td>
+                        <td style="width:12.5%">
                             PM
                         </td>
-                        <td>
+                        <td style="width:17%">
                             CM
                         </td>
-                        <td>
+                        <td style="width:17%">
                             Total
                         </td>
-                        <td>
+                        <td colspan="2">
                             Remarks
                         </td>
                     </tr>
@@ -1244,6 +1261,9 @@
                         <td>
                             659 hours
                         </td>
+                        <td style="width:12%">
+                            Target < 5,000
+                        </td>
                         <td>
                             Nothing to concern
                         </td>
@@ -1258,19 +1278,19 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td style="width:12.5%">
                             Type
                         </td>
-                        <td>
+                        <td style="width:12.5%">
                             Relieve Valve
                         </td>
-                        <td>
+                        <td style="width:17%">
                             SIF
                         </td>
-                        <td>
+                        <td style="width:17%">
                             Other
                         </td>
-                        <td>
+                        <td style="width:12%">
                             Total
                         </td>
                         <td>
@@ -1741,19 +1761,19 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>
+                        <td style="width: 12%">
                             GTG-A
                         </td>
-                        <td class="not-running">
+                        <td style="width: 13.2%;" class="not-running">
                             Not Running
                         </td>
-                        <td>
+                        <td style="width: 12.5%;">
                             C3 Compr
                         </td>
-                        <td class="running">
+                        <td style="width: 12.7%;" class="running">
                             Running
                         </td>
-                        <td>
+                        <td style="width: 12.5%;">
                             Air Compr-A
                         </td>
                         <td class="standby">
