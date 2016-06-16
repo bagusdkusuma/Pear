@@ -64,6 +64,24 @@ namespace DSLNG.PEAR.Web.Helpers
             return ParseToNumber(val);
         }
 
+        public static string DisplayDerValue(this HtmlHelper htmlHelper, string val, string defaultVal = "-")
+        {
+            return !string.IsNullOrEmpty(val) ? val : defaultVal;
+        }
+
+        public static string DisplayDerDeviation(this HtmlHelper htmlHelper, string deviation)
+        {
+            switch (deviation)
+            {
+                case "1":
+                    return "fa-arrow-up";
+                case "-1":
+                    return "fa-arrow-down";
+                default:
+                    return "fa-minus";
+            }
+        }
+
         private static string ParseToNumber(string val)
         {
             double x;
@@ -72,7 +90,6 @@ namespace DSLNG.PEAR.Web.Helpers
             //return isValidDouble ? Str x.ToString("0:0.###") : val;
             //return isValidDouble ? string.Format("{0:0,000.###}", x) : val;
             return isValidDouble ? string.Format("{0:#,##0.##}", x) : val;
-            
         }
     }
 }

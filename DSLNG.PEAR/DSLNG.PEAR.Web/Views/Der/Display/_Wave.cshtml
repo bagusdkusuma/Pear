@@ -1,5 +1,31 @@
 ﻿@model DSLNG.PEAR.Services.Responses.Wave.GetWaveResponse
-@if (Model.ValueId > 0)
+<table class="table borderless tide-wave">
+    <tbody>
+        <tr rowspan="2">
+            <td>
+                <label>Tide / Wave at Jetty :</label>
+            </td>
+            <td>
+                Image
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.Tide)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Wind Direction & Speed :</label>
+            </td>
+            <td>
+                Image
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.Text) @Html.DisplayDerValue(Model.Speed)
+            </td>
+        </tr>
+    </tbody>
+</table>
+@*@if (Model.ValueId > 0)
 {
     <table class="der-table der-qhsse-row-1">
         <tr>
@@ -19,7 +45,5 @@
             <td style="text-align: center">@Model.Speed</td>
         </tr>
     </table>
-    
-  
-}
+}*@
 

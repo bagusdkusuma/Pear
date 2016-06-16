@@ -375,48 +375,33 @@ namespace DSLNG.PEAR.Web.Controllers
                 #region avg ytd key statistic
                 case "avg-ytd-key-statistic":
                     {
-                        var viewModel = new DisplayAvgYtdKeyStatisticViewModel();
+                       var viewModel = new DisplayKpiInformationViewModel();
 
-                        for (int i = 1; i <= 6; i++)
+                        for (int i = 0; i < 5; i++)
                         {
-                            var avgYtdKeyStatisticViewModel = new DisplayAvgYtdKeyStatisticViewModel.AvgYtdKeyStatisticViewModel();
+                            var kpiInformationVm = new DisplayKpiInformationViewModel.KpiInformationViewModel { Position = i};
                             var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
                                        new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
-
-                            avgYtdKeyStatisticViewModel.Position = item.Position;
                             if (item.Kpi != null)
                             {
-                                var actual = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.YTD, YtdFormula.Average);
-                                var beforeActual = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date.AddDays(-1), RangeFilter.YTD, YtdFormula.Average);
-                                if (actual.Value.HasValue && beforeActual.Value.HasValue)
+                                kpiInformationVm = item.MapTo<DisplayKpiInformationViewModel.KpiInformationViewModel>();
+                                if (item.ConfigType.Equals(ConfigType.KpiAchievement))
                                 {
-                                    if (actual.Value.Value > beforeActual.Value.Value)
-                                    {
-                                        avgYtdKeyStatisticViewModel.Progress = "up";
-                                    }
-                                    else if (beforeActual.Value.Value > actual.Value.Value)
-                                    {
-                                        avgYtdKeyStatisticViewModel.Progress = "down";
-                                    }
-                                    else
-                                    {
-                                        avgYtdKeyStatisticViewModel.Progress = "non";
-                                    }
+                                    var achievement = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, PeriodeType.Daily);
+                                    kpiInformationVm.DerItemValue = achievement.MapTo<DerItemValueViewModel>();
                                 }
-                                else
+                                else if (item.ConfigType.Equals(ConfigType.KpiTarget))
                                 {
-                                    avgYtdKeyStatisticViewModel.Progress = "non";
+                                    var achievement = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, PeriodeType.Daily);
+                                    kpiInformationVm.DerItemValue = achievement.MapTo<DerItemValueViewModel>();
                                 }
-                                avgYtdKeyStatisticViewModel.KpiName = item.Kpi.Name;
-                                avgYtdKeyStatisticViewModel.Ytd = actual.Value.HasValue ? actual.Value.ToString() : "n/a";
                             }
-
-                            viewModel.AvgYtdKeyStatistics.Add(avgYtdKeyStatisticViewModel);
+                            
+                            viewModel.KpiInformationViewModels.Add(kpiInformationVm);
                         }
-
                         var view = RenderPartialViewToString("~/Views/Der/Display/_AvgYtdKeyStatistic.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
-                        return Json(json, JsonRequestBehavior.AllowGet);
+                        return Json(json, JsonRequestBehavior.AllowGet); 
                     }
                 #endregion
                 #region safety
@@ -525,13 +510,30 @@ namespace DSLNG.PEAR.Web.Controllers
                 #region dafwc
                 case "dafwc":
                     {
-                        var viewModel = new DisplayDafwcViewModel();
+                        var viewModel = new DisplayKpiInformationViewModel();
 
-                        var response = _derService.GetDafwcData(id, date);
-                        viewModel.DaysWithoutDafwc = response.DaysWithoutDafwc;
-                        viewModel.DaysWithoutLopc = response.DaysWithoutLopc;
-                        viewModel.DaysWithoutDafwcSince = response.DaysWithoutDafwcSince;
-                        viewModel.DaysWithoutLopcSince = response.DaysWithoutLopcSince;
+                        for (int i = 0; i < 3; i++)
+                        {
+                            var kpiInformationVm = new DisplayKpiInformationViewModel.KpiInformationViewModel { Position = i };
+                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
+                                       new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
+                            if (item.Kpi != null)
+                            {
+                                kpiInformationVm = item.MapTo<DisplayKpiInformationViewModel.KpiInformationViewModel>();
+                                if (item.ConfigType.Equals(ConfigType.KpiAchievement))
+                                {
+                                    var achievement = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, PeriodeType.Daily);
+                                    kpiInformationVm.DerItemValue = achievement.MapTo<DerItemValueViewModel>();
+                                }
+                                else if (item.ConfigType.Equals(ConfigType.KpiTarget))
+                                {
+                                    var achievement = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, PeriodeType.Daily);
+                                    kpiInformationVm.DerItemValue = achievement.MapTo<DerItemValueViewModel>();
+                                }
+                            }
+
+                            viewModel.KpiInformationViewModels.Add(kpiInformationVm);
+                        }
                         var view = RenderPartialViewToString("~/Views/Der/Display/_Dafwc.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
@@ -1035,9 +1037,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
                 #endregion
-
-
-
+                    
             }
             return Content("Switch case does not matching");
         }
@@ -1084,7 +1084,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var id = activeDer.Id;
             var response = _derService.GetDerLayout(id);
             var viewModel = response.MapTo<DerDisplayViewModel>();
-            return View(viewModel);
+            return View("Preview2", viewModel);
         }
 
         public ActionResult Generate() {

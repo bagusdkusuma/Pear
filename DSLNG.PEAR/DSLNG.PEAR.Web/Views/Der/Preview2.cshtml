@@ -1,0 +1,1140 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.DerDisplayViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="@Url.Content("~/content/der-dikdik.css")" />
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+    <div class="container">
+        <div class="row header">
+            <div class="header-left col-md-8 text-center">
+                <h5>DAILY EXECUTIVE REPORT</h5>
+                <h6>The Last 24 Hours Business Perfomance</h6>
+                <h6>FOR THE PERIOD ENDED: @Model.Today until LT24:00 HOURS</h6>
+            </div>
+            <div class="header-right col-md-4">
+            </div>
+        </div>
+        <div class="row bordered">
+            <div class="col-md-5">
+                @{
+                    var row0Col0 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 0);
+                    if (row0Col0 != null)
+                    {
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col0.Id })" class="layout-item"></div>
+                    }
+                }
+            </div>
+            <div class="col-md-7">
+                <div class="row">
+                    <div class="col-md-9 proper">
+                        <h5 style="text-decoration: underline;">Daily Highlight</h5>
+                        @{
+                            var row0Col1 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 1);
+                            if (row0Col1 != null)
+                            {
+                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row0Col1.Id})" class="layout-item"></div>
+                            }
+                        }
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row bordered border-top-none">
+
+            <div class="col-md-3">
+                @{
+                    var row1Col0 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 0);
+                    if (row1Col0 != null)
+                    {
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col0.Id })" class="layout-item"></div>
+                    }
+                }
+            </div>
+            <div class="col-md-3">
+                @{
+                    var row1Col1 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 1);
+                    if (row1Col1 != null)
+                    {
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col1.Id })" class="layout-item"></div>
+                    }
+                }
+            </div>
+            <div class="col-md-3">
+                @{
+                    var row1Col2 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 2);
+                    if (row1Col2 != null)
+                    {
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col2.Id })" class="layout-item"></div>
+                    }
+                }
+            </div>
+            <div class="col-md-3">
+                @{
+                    var row1Col3 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 3);
+                    if (row1Col3 != null)
+                    {
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col3.Id })" class="layout-item"></div>
+                    }
+                }
+            </div>
+
+        </div>
+        <div class="row bordered border-top-none">
+            <div class="col-md-12 text-center safty-management proper"><label>QHSSE & PROCESS SAFETY MANAGEMENT</label></div>
+        </div>
+        <div class="row bordered border-top-none safty-management-row">
+            <div class="col-md-5">
+                @{
+                    var row2Col0 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 0);
+                    if (row2Col0 != null)
+                    {
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row2Col0.Id })" class="layout-item"></div>
+                    }
+                }
+            </div>
+            <div class="col-md-3">
+                @{
+                    var row2Col1 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 1);
+                    if (row2Col1 != null)
+                    {
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row2Col1.Id })" class="layout-item"></div>
+                    }
+                }
+            </div>
+            <div class="col-md-4">
+                @{
+                    var row2Col2 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 2);
+                    if (row2Col2 != null)
+                    {
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row2Col2.Id })" class="layout-item"></div>
+                    }
+                }
+            </div>
+        </div>
+        <div class="row bordered border-top-none safty-management-row">
+            <div class="col-md-5">
+                <table class="table table-bordered kpi-fatality">
+                    <thead>
+                        <tr>
+                            <td>KPI</td>
+                            <td>ACT 24H</td>
+                            <td>MTD</td>
+                            <td>YTD</td>
+                            <td>Annual-Target</td>
+                            <td>ITD</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Fatality</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Fatality</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Env/Spill (>1bbl or
+                                >=moderate)
+                            </td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Fatality</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Fatality</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Fatality</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Fatality</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Fatality</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Fatality</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Fatality</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Fatality</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-4">
+                <table class="qhse-remark table table-bordered">
+                    <thead>
+                        <tr>
+                            <td class="text-center">
+                                QHSE & PSM Remark
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                @{
+                                    var row3Col1 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 1);
+                                    if (row3Col1 != null)
+                                    {
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row3Col1.Id })" class="layout-item"></div>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="weekly-alarm table borderless">
+                    <thead>
+                    <tr>
+                        <td>
+                            WEEKLY ALARM MANAGEMENT (3 Apr-10 Apr 2016)
+                        </td>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr>
+                        <td>@{
+                            var row3Col2 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 2);
+                            if (row3Col2 != null)
+                            {
+                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row3Col2.Id})" class="layout-item"></div>
+                            }
+                        }</td>
+                    </tr>
+                    
+                    </tbody>
+                </table>
+                
+            </div>
+            <div class="col-md-3">
+                <table class="table table-bordered pie">
+                    <thead>
+                        <tr>
+                            <td>
+                                PROCESS UPSET / ANOMALY / CONDITION
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                test aje
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row bordered border-top-none">
+            <div class="col-md-6">
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-9">
+                        <table class="table borderless security-incident">
+                            <tr>
+                                <td>
+                                    <ul class="list-unstyled">
+                                        <li>Security</li>
+                                        <li>Incident Type</li>
+                                        <li>(Act 24H)</li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul class="list-unstyled">
+                                        <li>0 Mass Gathering</li>
+                                        <li>0 Road Blockade</li>
+                                        <li>0 Traffic Accident</li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul class="list-unstyled">
+                                        <li>0 Theft/Criminal</li>
+                                        <li>0 Violence</li>
+                                        <li>0 Prop Destruction</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-3">
+                        <table class="table alert-condition text-center">
+                            <thead>
+                                <tr>
+                                    <td>
+                                        Alert condition
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        Low
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row bordered border-top-none">
+            <div class="col-md-12 text-center commercial-operation proper"><label>COMMERCIAL OPERATION & MAINTENANCE PERFORMANCE</label></div>
+        </div>
+        <div class="row bordered border-top-none">
+            &nbsp;
+        </div>
+        <div class="row bordered border-top-none">
+            <div class="col-md-12 text-center feed-gas proper"><label>FEED GAS TO PLANT</label></div>
+        </div>
+        <div class="row bordered border-top-none feed-gas-row">
+            <div class="col-md-6">
+                <table class="table table-bordered job-pmts vertical-space">
+                    <thead>
+                        <tr>
+                            <td colspan="6">JOB PMTS</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">ACTUAL 24H</td>
+                            <td colspan="2">ACTUAL MTD</td>
+                            <td colspan="2">ACTUAL YTD</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>333.68 mmscf</td>
+                            <td rowspan="2">7,303.05 tonnes</td>
+                            <td>7,058.64 mmscf</td>
+                            <td rowspan="2">154,468.63 tonnes</td>
+                            <td>7,058.64 mmscf</td>
+                            <td rowspan="2">154,468.63 tonnes</td>
+                        </tr>
+                        <tr>
+                            <td>373,265 mmbtu</td>
+                            <td>7,894,592 mmbtu</td>
+                            <td>7,894,592 mmbtu</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">134% of DCQ 277,750 mmbtu</td>
+                            <td colspan="2">92% of MGN 8,610 bbtu</td>
+                            <td colspan="2">8% of ADP 101.6 TBtu</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col-md-7">
+                        <table class="table table-bordered total-feed-gas top-bottom-border vertical-space">
+                            <thead>
+                                <tr>
+                                    <td>
+                                        TOTAL FEED GAS
+                                    </td>
+                                    <td>
+                                        ACTUAL 24H
+                                    </td>
+                                    <td>
+                                        ACTUAL MTD
+                                    </td>
+                                    <td>
+                                        ACTUAL YTD
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        Volume
+                                    </td>
+                                    <td>
+                                        333.68 mmscf
+                                    </td>
+                                    <td>
+                                        7,058.64 mmscf
+                                    </td>
+                                    <td>
+                                        7,058.64 mmscf
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Energy
+                                    </td>
+                                    <td>
+                                        373,265 mmbtu
+                                    </td>
+                                    <td>
+                                        7,894,592 mmbtu
+                                    </td>
+                                    <td>
+                                        7,894,592 mmbtu
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Energy
+                                    </td>
+                                    <td>
+                                        373,265 mmbtu
+                                    </td>
+                                    <td>
+                                        7,894,592 mmbtu
+                                    </td>
+                                    <td>
+                                        7,894,592 mmbtu
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        Feed Gas Pressure (Psig):
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="impurities vertical-space">
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-bordered top-bottom-border production">
+                    <thead>
+                        <tr>
+                            <td>PRODUCTION</td>
+                            <td colspan="3">LNG</td>
+                            <td colspan="3">
+                                CDS
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                ACTUAL 24H
+                            </td>
+                            <td>
+                                14,031.03 m3
+                            </td>
+                            <td>
+                                6,386.90 tonnes
+                            </td>
+                            <td>
+                                329,721 mmbtu
+                            </td>
+                            <td>
+                                2,234.80 bbl
+                            </td>
+                            <td>
+                                227.96 tonnes
+                            </td>
+                            <td>
+                                10,560 mmbtu
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                ACTUAL MTD
+                            </td>
+                            <td>
+                                278,357.19 m3
+                            </td>
+                            <td>
+                                126,983.20 tonnes
+                            </td>
+                            <td>
+                                6,560,784 mmbtu
+                            </td>
+                            <td>
+                                45,790.27 bbl
+                            </td>
+                            <td>
+                                4,670.77 tonnes
+                            </td>
+                            <td>
+                                216,362 mmbtu
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ACTUAL YTD</td>
+                            <td>
+                                278,357.19 m3
+                            </td>
+                            <td>
+                                126,983.20 tonnes
+                            </td>
+                            <td>
+                                6,560,784 mmbtu
+                            </td>
+                            <td>
+                                45,790.27 bbl
+                            </td>
+                            <td>
+                                4,670.77 tonnes
+                            </td>
+                            <td>
+                                216,362 mmbtu
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                MCHE Rundown :
+                            </td>
+                            <td>
+                                6,798.15 ton/d
+                            </td>
+                            <td>
+                                LNG HHV :
+                            </td>
+                            <td>
+                                1,099.11 btu/scf
+                            </td>
+                            <td colspan="2">
+                                CDS Reid Vapor Pressure (RVP) :
+                            </td>
+                            <td>
+                                11.32 Psia
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table table-bordered tank">
+                    <thead>
+                        <tr>
+                            <td colspan="2">tank</td>
+                            <td colspan="2">tank</td>
+                            <td colspan="2">tank</td>
+                            <td>tank</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="2">
+                                LNG Tank (071)
+                            </td>
+                            <td colspan="2">
+                                CDS Tank (079/1001)
+                            </td>
+                            <td colspan="2">
+                                CDS Buffer Tank (079/1002)
+                            </td>
+                            <td>
+                                CDS day-tank (076)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                12,197.74 tonnes
+                            </td>
+                            <td>
+                                26,749.89 m3
+                            </td>
+                            <td>
+                                n/a
+                            </td>
+                            <td>
+                                n/a
+                            </td>
+                            <td>
+                                n/a
+                            </td>
+                            <td>
+                                n/a
+                            </td>
+                            <td>
+                                157.7 bbl
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Days to tank top
+                            </td>
+                            <td>
+                                10.9 days
+                            </td>
+                            <td>
+                                Days to tank top
+                            </td>
+                            <td>
+                                n/a
+                            </td>
+                            <td>
+                                Days to tank top
+                            </td>
+                            <td>
+                                n/a
+                            </td>
+                            <td>
+                                16.09 tonnes
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-9">
+                        <table class="table table-bordered mgdp vertical-space">
+                            <thead>
+                                <tr>
+                                    <td colspan="6" width="75%">MGDP</th>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">ACTUAL 24H</td>
+                                    <td colspan="2">ACTUAL MTD</td>
+                                    <td colspan="2">ACTUAL YTD</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>N/A</td>
+                                    <td rowspan="2">N/A</td>
+                                    <td>N/A</td>
+                                    <td rowspan="2">N/A</td>
+                                    <td>N/A</td>
+                                    <td rowspan="2">N/A</td>
+                                </tr>
+                                <tr>
+                                    <td>N/A</td>
+                                    <td>N/A</td>
+                                    <td>N/A</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">N/A</td>
+                                    <td colspan="2">N/A</td>
+                                    <td colspan="2">N/A</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-3">
+                        <table class="table table-bordered hhv vertical-space">
+                            <thead>
+                                <tr>
+                                    <td colspan="2">
+                                        HHV
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        JOB PMTS
+                                    </td>
+                                    <td>
+                                        MGDP
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        1,115.30 btu/scf
+                                    </td>
+                                    <td>
+                                        N/A
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        min 1,111
+                                    </td>
+                                    <td>
+                                        min 1,111
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <table class="table table-bordered top-bottom-border vertical-space plant-availability">
+                    <thead>
+                        <tr>
+                            <td class="desc">Description</td>
+                            <td>Plant Availability (hour-daily)</td>
+                            <td>
+                                Plant Thermal Efficiency
+                            </td>
+                            <td>
+                                Material Balance (Flare Loss-%)
+                            </td>
+                            <td>
+                                Plant intake
+                                Utilization
+                                (Feed/ Max.Cap)
+                            </td>
+                            <td class="second-header">
+                                Total Flared Gas
+                                (Wet-Dry-Tankage)
+                            </td>
+                            <td class="refrigerant second-header">
+                                Refrigerant Prod
+                                (C2&C3)
+                            </td>
+                            <td class="refrigerant second-header">
+                                Material Balance
+                                (Loss)
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="left-header">
+                                ACTUAL 24H
+                            </td>
+                            <td>
+                                100.0%
+                            </td>
+                            <td>
+                                91.16%
+                            </td>
+                            <td>
+                                -0.31%
+                            </td>
+                            <td>
+                                99.61%
+                            </td>
+                            <td>
+                                6,378 nm3
+                            </td>
+                            <td rowspan="2" class="text-center" style="vertical-align:middle">
+                                34.24 mmscf
+                            </td>
+                            <td rowspan="2" class="text-center" style="vertical-align:middle">
+                                17,435 nm3
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="left-header">
+                                ACTUAL MTD
+                            </td>
+                            <td>
+                                92.4%
+                            </td>
+                            <td>
+                                85.85%
+                            </td>
+                            <td>
+                                4.67%
+                            </td>
+                            <td>
+                                91.61%
+                            </td>
+                            <td>
+                                0.24 mmscf
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="left-header">
+                                Actual-YTD
+                            </td>
+                            <td>
+                                93.0%
+                            </td>
+                            <td>
+                                89.00%
+                            </td>
+                            <td>
+                                < 2.00%
+                            </td>
+                            <td>
+                                N/A
+                            </td>
+                            <td colspan="3" class="text-center second-header">
+                                Total Fuel Gas (GTG-GTC-LP Fuel)
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td class="left-header">
+                                2016 Target
+                            </td>
+                            <td>
+                                93.0%
+                            </td>
+                            <td>
+                                89.00%
+                            </td>
+                            <td>
+                                < 2.00%
+                            </td>
+                            <td>
+                                N/A
+                            </td>
+                            <td>
+                                N/A
+                            </td>
+                            <td>
+                                34,751 mmbtu
+                            </td>
+                            <td>
+                                0.65 mmscf
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="table table-bordered lng-loaded top-bottom-border">
+                    <thead>
+                        <tr>
+                            <td>
+                                LNG LOADED
+                            </td>
+                            <td>
+                                m3
+                            </td>
+                            <td>
+                                tonnes
+                            </td>
+                            <td>
+                                mmbtu
+                            </td>
+                            <td class="cargo">
+                                #Cargo Shipped
+                            </td>
+                            <td class="right-header">
+                                Planned Cargoes
+                                (ADP 2016)
+                            </td>
+                            <td class="right-header">
+                                Remarks
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                ACTUAL MTD
+                            </td>
+                            <td>
+                                382,183.00
+                            </td>
+                            <td>
+                                173,951.55
+                            </td>
+                            <td>
+                                8,990,393.42
+                            </td>
+                            <td>
+                                3.1
+                            </td>
+                            <td>
+                                1/1 QE,  1/1 KOGAS, 1/1 Spot; ttl 3/3
+                            </td>
+                            <td>
+                                On-track
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                ACTUAL YTD
+                            </td>
+                            <td>
+                                382,183.00
+                            </td>
+                            <td>
+                                173,951.55
+                            </td>
+                            <td>
+                                8,990,393
+                            </td>
+                            <td>
+                                3.1
+                            </td>
+                            <td>
+                                1/11 Kogas, 0/7 CE, 1/5 QE, 1/13 Spot; Total 3/36 cargos
+                            </td>
+                            <td>
+                                On-track
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table table-bordered cds-loaded vertical-space">
+                    <thead>
+                        <tr>
+                            <td>
+                                CDS LOADED
+                            </td>
+                            <td>
+                                m3
+                            </td>
+                            <td>
+                                tonnes
+                            </td>
+                            <td>
+                                mmbtu
+                            </td>
+                            <td class="cargo">
+                                #Cargo Shipped
+                            </td>
+                            <td class="right-header">
+                                Note
+                            </td>
+                            <td class="right-header">
+                                Remarks
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                ACTUAL MTD
+                            </td>
+                            <td>
+                                7,278.71
+                            </td>
+                            <td>
+                                4,669.29
+                            </td>
+                            <td>
+                                45,778.05
+                            </td>
+                            <td>
+                                2
+                            </td>
+                            <td rowspan="2">
+                                Nothing to concern
+                            </td>
+                            <td>
+                                COB:1,265 m3
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                ACTUAL MTD
+                            </td>
+                            <td>
+                                7,278.71
+                            </td>
+                            <td>
+                                4,669.29
+                            </td>
+                            <td>
+                                45,778
+                            </td>
+                            <td>
+                                2
+                            </td>
+                            <td>
+                                7,956 bbl
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table table-bordered nls vertical-space top-bottom-border">
+                    <thead>
+                        <tr>
+                            <td>
+                                NEXT LOADING SCHEDULE
+                            </td>
+                            <td>
+                                Vessel
+                                (capacity)
+                            </td>
+                            <td>
+                                ETA
+                            </td>
+                            <td>
+                                ETD
+                            </td>
+                            <td>
+                                Cargo#
+                            </td>
+                            <td>
+                                Remarks
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                LNG
+                            </td>
+                            <td>
+                                Maleo (125,000m3)
+                            </td>
+                            <td>
+                                20/01/2016 (arv)
+                            </td>
+                            <td>
+                                23/01/2016 (dep)
+                            </td>
+                            <td>
+                                3rd
+                            </td>
+                            <td>
+                                ADP/QE/DES at Oita Terminal, loading completed at LT13:00hrs, final COB: 125,987.237m3, sailed off at LT:17:30hrs
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                CDS
+                            </td>
+                            <td>
+                                Arin-8 (54,750bbl)
+                            </td>
+                            <td>
+                                20-Jan-16 (arv)
+                            </td>
+                            <td>
+                                TBA
+                            </td>
+                            <td>
+                                9th
+                            </td>
+                            <td>
+                                PT Titis Sampurna, loading in progress
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                LNG
+                            </td>
+                            <td>
+                                Hyundai Utopia (125,000m3)
+                            </td>
+                            <td>
+                                2-Feb-16
+                            </td>
+                            <td>
+                                TBA
+                            </td>
+                            <td>
+                                4th
+                            </td>
+                            <td>
+                                ADP/CE/DES-Chita Terminal
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+
+    <script src="@Url.Content("~/Scripts/der-scripts.js")"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var currentDate = '02/18/2016';
+            $('.layout-item').each(function () {
+                var that = $(this);
+                $.ajax({
+                    url: that.attr('data-url'),
+                    data: { currentDate: currentDate },
+                    success: function (data) {
+                        if (data.GraphicType !== undefined) {
+                            var callback = window.Der.Artifact;
+                            callback[data.GraphicType](data, that);
+                        }
+                        /*else if (data.type === "highlight") {
+                            var aneh = data.view.replace(/\"/g, "");
+                            that.html(aneh);
+                        } */else if (data.type === "highlight" || data.type === "weather" ||
+                            data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
+                        data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
+                        || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type == "procurement" || data.type == "indicative-commercial-price" ||
+                            data.type === "plant-availability" || data.type === "economic-indicator" || data.type === "mgdp" || data.type === "hhv" || data.type === "lng-and-cds-production"
+                            || data.type === "nls" || data.type === "key-equipment-status" || data.type === "wave") {
+                            that.html(data.view);
+                        }
+                        /*else if (data.type === "weather" || data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
+                        data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
+                        || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type === 'mgdp') {
+                            that.html(data.view);
+                        }*/
+
+                    }
+                });
+            });
+        })
+    </script>
+</body>
+</html>
