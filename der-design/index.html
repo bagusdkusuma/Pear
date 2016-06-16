@@ -163,8 +163,18 @@
             border-collapse: collapse;
             border-spacing: 0;
         }
-        .table.weekly-alarm tbody tr:last-child td{
-            height:76px;
+        .table.weekly-alarm > tbody > tr:last-child > td{
+            height:113px;
+        }
+        .table.weekly-alarm > tbody > tr > td table{
+            width:100% !important;
+            height: auto !important;
+        }
+        .table.weekly-alarm > tbody > tr > td p{
+            padding:4px;
+        }
+        .table.weekly-alarm > tbody > tr > td table td{
+            padding:4px;
         }
         .table.pie tbody tr td{
             height: 218px;
@@ -784,13 +794,32 @@
                 <table class="weekly-alarm table borderless">
                     <thead>
                         <tr>
-                            <td colspan="2">
+                            <td>
                                 WEEKLY ALARM MANAGEMENT (3 Apr-10 Apr 2016)
                             </td>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
+                            <td>
+                                <div data-url="/Der/LayoutItem/18" class="layout-item">
+                                    <table style="height: 64px;" width="608">
+                                    <tbody>
+                                    <tr>
+                                    <td>Train Areas</td>
+                                    <td style="text-align: right;">0</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Utilities-Off Site Areas</td>
+                                    <td style="text-align: right;">1</td>
+                                    </tr>
+                                    </tbody>
+                                    </table>
+                                    <p>Note: Nothing to concern, plant operational went well.</p>
+                                </div>
+                            </td>
+                        </tr>
+                        <!--<tr>
                             <td>
                                Process Train Areas :
                             </td>
@@ -810,7 +839,7 @@
                             <td colspan="2">
                                 Note: Only Ethane tank high lvl alarm. The plant running well
                             </td>
-                        </tr>
+                        </tr>-->
                     </tbody>
                 </table>
             </div>
@@ -903,16 +932,16 @@
                             <td colspan="6">JOB PMTS</td>
                         </tr>
                         <tr>
-                            <td colspan="2">ACTUAL 24H</td>
+                            <td colspan="2" style="width:25%">ACTUAL 24H</td>
                             <td colspan="2">ACTUAL MTD</td>
-                            <td colspan="2">ACTUAL YTD</td>
+                            <td colspan="2" style="width:35%">ACTUAL YTD</td>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>333.68 mmscf</td>
                             <td rowspan="2">7,303.05 tonnes</td>
-                            <td>7,058.64 mmscf</td>
+                            <td style="width:17%">7,058.64 mmscf</td>
                             <td rowspan="2">154,468.63 tonnes</td>
                             <td>7,058.64 mmscf</td>
                             <td rowspan="2">154,468.63 tonnes</td>
@@ -934,10 +963,10 @@
                         <table class="table table-bordered total-feed-gas top-bottom-border vertical-space">
                             <thead>
                                 <tr>
-                                    <td>
+                                    <td style="width:21%">
                                         TOTAL FEED GAS
                                     </td>
-                                    <td>
+                                    <td style="width:21.5%">
                                         ACTUAL 24H
                                     </td>
                                     <td>
@@ -1295,9 +1324,9 @@
                                     <td colspan="6" width="75%">MGDP</th>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">ACTUAL 24H</td>
-                                    <td colspan="2">ACTUAL MTD</td>
-                                    <td colspan="2">ACTUAL YTD</td>
+                                    <td colspan="2" style="width:33%">ACTUAL 24H</td>
+                                    <td colspan="2" style="width:33%">ACTUAL MTD</td>
+                                    <td colspan="2" style="width:33%">ACTUAL YTD</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -1364,14 +1393,14 @@
                     <thead>
                         <tr>
                             <td class="desc">Description</td>
-                            <td>Plant Availability (hour-daily)</td>
-                            <td>
+                            <td style="width: 13.2%;">Plant Availability (hour-daily)</td>
+                            <td style="width: 12.5%;">
                                 Plant Thermal Efficiency
                             </td>
-                            <td>
+                            <td style="width: 12.7%;">
                                 Material Balance (Flare Loss-%)
                             </td>
-                            <td >
+                            <td style="width: 12.5%;">
                                 Plant intake
                                 Utilization
                                 (Feed/ Max.Cap)
@@ -1380,11 +1409,11 @@
                                 Total Flared Gas
                                 (Wet-Dry-Tankage)
                             </td>
-                            <td class="refrigerant second-header">
+                            <td style="width: 15%;" class="refrigerant second-header">
                                 Refrigerant Prod
                                 (C2&C3)
                             </td>
-                            <td class="refrigerant second-header">
+                            <td style="width: 10%;" class="refrigerant second-header">
                               Material Balance
                                 (Loss)
                             </td>
@@ -1490,26 +1519,26 @@
                 <table class="table table-bordered lng-loaded top-bottom-border">
                 <thead>
                     <tr>
-                        <td>
+                        <td style="width:12%">
                             LNG LOADED
                         </td>
-                        <td>
+                        <td style="width: 13.2%;">
                             m3
                         </td>
-                        <td>
+                        <td style="width: 12.5%;">
                             tonnes
                         </td>
-                        <td>
+                        <td style="width: 12.7%;">
                             mmbtu
                         </td>
-                        <td class="cargo">
+                        <td style="width: 12.5%;" class="cargo">
                             #Cargo Shipped
                         </td>
                         <td class="right-header">
                             Planned Cargoes
                             (ADP 2016)
                         </td>
-                        <td class="right-header">
+                        <td style="width:13%" class="right-header">
                             Remarks
                         </td>
                     </tr>
@@ -1566,25 +1595,25 @@
             <table class="table table-bordered cds-loaded vertical-space">
                 <thead>
                     <tr>
-                        <td>
+                        <td style="width:12%">
                             CDS LOADED
                         </td>
-                        <td>
+                        <td style="width: 13.2%;">
                             m3
                         </td>
-                        <td>
+                        <td style="width: 12.5%;">
                             tonnes
                         </td>
-                        <td>
+                        <td style="width: 12.7%;">
                             mmbtu
                         </td>
-                        <td class="cargo">
+                        <td style="width: 12.5%;" class="cargo">
                             #Cargo Shipped
                         </td>
                         <td class="right-header">
                             Note
                         </td>
-                        <td class="right-header">
+                        <td style="width:13%" class="right-header">
                             Remarks
                         </td>
                     </tr>
@@ -1638,11 +1667,21 @@
             <table class="table table-bordered nls vertical-space top-bottom-border">
                 <thead>
                     <tr>
-                        <td>NEXT LOADING SCHEDULE</td>
-                        <td>Vessel (capacity)</td>
-                        <td>ETA</td>
-                        <td>ETD</td>
-                        <td>Cargo#</td>
+                        <td style="width:12%">
+                            NEXT LOADING SCHEDULE
+                        </td>
+                        <td style="width: 13.2%;">
+                            Vessel (capacity)
+                        </td>
+                        <td style="width: 12.5%;">
+                            ETA
+                        </td>
+                        <td style="width: 12.7%;">
+                            ETD
+                        </td>
+                        <td style="width: 12.5%;" class="cargo">
+                            Cargo#
+                        </td>
                         <td>Remarks</td>
                     </tr>
                 </thead>
