@@ -63,7 +63,7 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 ExSumDefaultPage = 3,
                 Year = DateTime.Now.Year,
-                Month = DateTime.Now.Month,
+                Month = DateTime.Now.Month - 1,
                 Years = _dropDownService.GetYears().MapTo<SelectListItem>(),
                 Months = _dropDownService.GetMonths().MapTo<SelectListItem>()
             };
