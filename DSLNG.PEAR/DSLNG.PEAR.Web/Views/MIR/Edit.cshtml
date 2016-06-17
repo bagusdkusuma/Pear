@@ -1,4 +1,7 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.File.FileRepositoryCreateViewModel
+@{
+    ViewBag.Title = "Management Information Report Update";
+}
 
 <section>
     <script type="text/javascript">
@@ -8,21 +11,13 @@
             var btnpro;
             if (e.callbackData !== "") {
                 link = e.callbackData;
-                if (link.length > 150) {
-                    $('.notification').empty();
-                    $('.notification').empty();
-                    callback = 'The selected filename too long (max 150 char).';
-                    message = '<div class="alert alert-danger" role="alert">' + callback + '</div>';
-                    $('.notification').append(message).fadeIn().delay(10000).fadeOut();
-                    var linkText = document.getElementById('Filename');
-                    linkText.setAttribute('value', '');
-                    return;
-                }
-                callback = 'FileUploadComplete: ' + e.callbackData;
+                callback = 'FileUploadComplete : ' + e.callbackData;
                 $('.notification').empty();
                 message = '<div class="alert alert-success" role="alert">' + callback + '</div>';
                 $('.notification').append(message).fadeIn().delay(10000).fadeOut();
-                //$('#file-notification').append(link);
+                $('#file-notification').empty();
+                link = link + '  <a href="javascript:;" onclick="deleteUploadedFile()" class="dxbButton"> <span class="glyphicon glyphicon-remove"></span> Remove </a>';
+                $('#file-notification').append(link);
                 var linkText = document.getElementById('Filename');
                 linkText.setAttribute('value', link);
                 //linkText.hidden = false;
@@ -36,7 +31,28 @@
                 $('.notification').append(message).fadeIn().delay(10000).fadeOut();
             }
         }
+        function deleteUploadedFile(s, e) {
+            $('#file-notification').empty();
+        }
+
+        function OnUploadTextChanged(s, e) {
+            mirUpload.Upload();
+        }
     </script>
+    <style type="text/css">
+        .artifact-designer-btns {
+            margin-top: 0;
+        }
+
+        .artifact-designer-btns {
+            padding-top: 40px;
+            padding-bottom: 40px;
+            text-align: center;
+            border-top: none;
+            margin-top: 40px;
+        }
+    </style>
+
     <div class="row">
         <div class="title_page" style="border: none!important;">
             <div class="row">
@@ -74,26 +90,27 @@
 
                     <div class="form-group form-list">
                         @Html.LabelFor(model => model.ExSumDefaultPage)
-                        @Html.TextBoxFor(model => model.ExSumDefaultPage, new { @class = "form-control"})
+                        @Html.TextBoxFor(model => model.ExSumDefaultPage, new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.ExSumDefaultPage)
                     </div>
 
                     @*<div class="form-group form-list">
-                        @Html.LabelFor(model => model.Summary)
-                        @Html.TextAreaFor(model => model.Summary, new { @class = "form-control allow-html" })
-                        @Html.ValidationMessageFor(model => model.Summary)
-                    </div>*@
+                            @Html.LabelFor(model => model.Summary)
+                            @Html.TextAreaFor(model => model.Summary, new { @class = "form-control allow-html" })
+                            @Html.ValidationMessageFor(model => model.Summary)
+                        </div>*@
                     <div class="form-group form-list">
                         @Html.Label("Attachment")
                         @Html.Partial("_MirUpload")
                     </div>
                     <div class="form-group form-list">
                         @Html.Label("Filename")
-                        @Html.TextBoxFor(model => model.Filename, new { @readonly = "readonly", @style ="width:300px;" })
-                        @*<div id="file-notification"></div>*@
+                        @Html.TextBoxFor(model => model.Filename, new { style = "Display:none;" })
+                        <div id="file-notification">@Model.Filename <a href="javascript:;" onclick="deleteUploadedFile()" class="dxbButton"> <span class="glyphicon glyphicon-remove"></span> Remove </a></div>
                     </div>
                 </div>
-            </div><div class="col-md-12 artifact-designer-btns">
+            </div>
+            <div class="col-md-12 artifact-designer-btns">
                 <button type="submit" class="btn btn-primary btn-lg btn-submit"><span class="fa fa-floppy-o"></span>Save</button>
                 <a href="/MIR" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
             </div>
