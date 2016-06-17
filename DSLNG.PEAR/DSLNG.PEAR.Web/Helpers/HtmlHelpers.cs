@@ -64,7 +64,7 @@ namespace DSLNG.PEAR.Web.Helpers
             return ParseToNumber(val);
         }
 
-        public static string DisplayDerValue(this HtmlHelper htmlHelper, string val, string defaultVal = "-")
+        public static string DisplayDerValue(this HtmlHelper htmlHelper, string val, string defaultVal = "N/A")
         {
             return !string.IsNullOrEmpty(val) ? val : defaultVal;
         }
@@ -80,6 +80,13 @@ namespace DSLNG.PEAR.Web.Helpers
                 default:
                     return "fa-minus";
             }
+        }
+
+        public static string Divide(this HtmlHelper htmlHelper, string val, int number)
+        {
+            if (string.IsNullOrEmpty(val)) return val;
+            double x = double.Parse(val);
+            return (x/number).ToString(CultureInfo.InvariantCulture);
         }
 
         private static string ParseToNumber(string val)

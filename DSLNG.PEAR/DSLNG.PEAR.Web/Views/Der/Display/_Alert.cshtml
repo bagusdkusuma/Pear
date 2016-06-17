@@ -1,15 +1,32 @@
 ﻿@model DSLNG.PEAR.Services.Responses.Highlight.GetHighlightResponse
-
-<table class="der-table" style="min-height: 47px">
-    <tr>
-        <td class="der-bg-blue-1">Alert Condition</td>
-    </tr>
-    @if (!string.IsNullOrEmpty(Model.Message))
-    {
-        <tr>
-            <td rowspan="2" class="der-bg-green-1">
-                <img src="@Url.Content("~/content/img/select/" + Model.Message)" height="50" width="50"/></td>
-        </tr>
+<style>
+    .alert-condition tbody tr td:first-letter {
+        text-transform: uppercase;
     }
+</style>
+<table class="table alert-condition text-center">
+    <thead>
+        <tr>
+            <td>
+                Alert condition
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="alert-@Model.Message">
+                @SplitAlert(Model.Message)
+            </td>
+        </tr>
+    </tbody>
 </table>
+
+@helper SplitAlert(string message)
+{
+if (!string.IsNullOrEmpty(Model.Message))
+{
+        <text>@Model.Message.Replace(".jpg", "")</text>
+
+}
+}
 

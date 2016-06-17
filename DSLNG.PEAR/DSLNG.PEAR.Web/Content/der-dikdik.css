@@ -16,8 +16,8 @@ body {
     }
 
 .container {
-    width: 1123px;
-    height: 1584px;
+    width: 100%;
+    height: 2000px;
     overflow: hidden;
     padding: 0;
 }
@@ -187,8 +187,21 @@ label {
     border-spacing: 0;
 }
 
-    .table.weekly-alarm tbody tr:last-child td {
-        height: 76px;
+    .table.weekly-alarm > tbody > tr:last-child > td {
+        height: 113px;
+    }
+
+    .table.weekly-alarm > tbody > tr > td table {
+        width: 100% !important;
+        height: auto !important;
+    }
+
+    .table.weekly-alarm > tbody > tr > td p {
+        padding: 4px;
+    }
+
+    .table.weekly-alarm > tbody > tr > td table td {
+        padding: 4px;
     }
 
 .table.pie tbody tr td {
@@ -388,7 +401,9 @@ label {
     }
 
     .table.cds-loaded td.cargo,
-    .table.lng-loaded td.cargo {
+    .table.lng-loaded td.cargo,
+    .table.cds-loaded td.vertical-header,
+    .table.lng-loaded td.vertical-header {
         background-color: #DCE6F1;
     }
 
@@ -396,3 +411,216 @@ label {
     .table.lng-loaded td.right-header {
         background-color: #DAEEF3;
     }
+
+.table.nls {
+    border-left: 1px solid #0D0D0D;
+}
+
+    .table.nls thead tr td {
+        background-color: #B7DEE8;
+    }
+
+        .table.nls thead tr td:first-child {
+            background-color: #92CDDC;
+        }
+
+.table.key-equipment {
+    border-left: 1px solid #0D0D0D;
+}
+
+    .table.key-equipment thead tr td {
+        background-color: #92CDDC;
+    }
+
+    .table.key-equipment td.power {
+        background-color: #FABF8F;
+    }
+
+    .table.key-equipment td.process-train {
+        background-color: #538DD5;
+    }
+
+    .table.key-equipment td.utilities {
+        background-color: #E26B0A;
+    }
+
+    .table.key-equipment td.support {
+        background-color: #948A54;
+    }
+
+    .table.key-equipment thead tr td {
+        text-align: center;
+    }
+
+    .table.key-equipment td.running,
+    .table.key-equipment td.normal-ops {
+        background-color: #00B050;
+    }
+
+.table.table.key-equipment td.standby {
+    background-color: #BFBFBF;
+}
+
+.table.table.key-equipment td.not-running {
+    background-color: #00B0F0;
+}
+
+.loading-duration {
+    background-color: #B8CCE4;
+}
+
+.standard-loading {
+    background-color: #FFC000;
+}
+
+.ttl-terminal {
+    background-color: #F2DCDB;
+}
+
+.table.weekly-maintenance {
+    border-right: 1px solid #0D0D0D;
+}
+
+.table.weekly-critical {
+    border-right: 1px solid #0D0D0D;
+    border-bottom: 1px solid #0D0D0D;
+}
+
+.plant-mode {
+    color: #00B050;
+    ;
+}
+
+.row > .support {
+    background-color: #8DB4E2;
+}
+
+.table.procurement,
+.table.indicative {
+    border-bottom: 1px solid #0D0D0D;
+}
+
+.table.commodities {
+    border-left: 1px solid #0D0D0D;
+    border-right: 1px solid #0D0D0D;
+}
+
+.table.procurement thead tr td {
+    background-color: #B7DEE8;
+}
+
+    .table.procurement thead tr td:first-child {
+        background-color: #92CDDC;
+    }
+
+.table.procurement tbody tr:first-child td {
+    height: 29px;
+}
+
+.table.commodities thead tr td,
+.table.indicative thead tr td {
+    background-color: #92CDDC;
+}
+
+.table.indicative thead tr td {
+    height: 37px;
+}
+
+.table.global-stock {
+    border: 1px solid #0D0D0D;
+    border-bottom: none;
+}
+
+    .table.global-stock thead tr td {
+        background-color: #66FF99;
+    }
+
+    .table.global-stock thead tr:first-child td:first-child {
+        background-color: #B7DEE8;
+    }
+
+    .table.global-stock thead tr:first-child td {
+        background-color: #66CCFF;
+    }
+
+.table.ict-infra {
+    border-bottom: 1px solid #0D0D0D;
+}
+
+    .table.ict-infra td,
+    .table.gs-fm td {
+        vertical-align: middle;
+    }
+
+    .table.ict-infra img,
+    .table.gs-fm img {
+        height: 20px;
+        width: auto;
+    }
+
+h5 {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.row.header h5 {
+    font-size: 14px;
+}
+
+.community {
+    height: 70px;
+}
+
+    .community img {
+        height: 29px;
+        margin-top: -10px;
+        width: auto;
+    }
+
+.market-tone {
+    float: right;
+    margin-top: 4px;
+    margin-right: 30px;
+}
+
+.fa {
+    font-size: 12px;
+}
+
+.market-tone label {
+    margin-right: 30px;
+}
+
+.co-macro-eco {
+    padding: 5px;
+    height: 191px;
+    border-bottom: 1px solid #0D0D0D;
+}
+
+.table.signature thead tr td {
+    background-color: #DAEEF3;
+}
+
+.table.signature tbody tr td {
+    height: 95px;
+    text-align: center;
+}
+
+.table.signature td img {
+    height: 100%;
+}
+
+.table.signature td.signature {
+    width: 25%;
+}
+
+    .table.signature td.signature img {
+        height: 50px;
+        width: auto;
+    }
+
+.table.table.signature label,
+.table.table.signature .nothing {
+    margin: 8px 0;
+    display: block;
+}

@@ -293,15 +293,30 @@
                 <table class="table table-bordered pie">
                     <thead>
                         <tr>
-                            <td>
+                            <td colspan="2">
                                 PROCESS UPSET / ANOMALY / CONDITION
                             </td>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>
-                                test aje
+                            <td style="width: 50%">
+                                @{
+                                    var row3Col3 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 3);
+                                    if (row3Col3 != null)
+                                    {
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row3Col3.Id})" class="layout-item"></div>
+                                    }
+                                }
+                            </td>
+                            <td style="width: 50%">
+                                @{
+                                    var row3Col4 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 4);
+                                    if (row3Col4 != null)
+                                    {
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row3Col4.Id})" class="layout-item"></div>
+                                    }
+                                }
                             </td>
                         </tr>
                     </tbody>
@@ -310,53 +325,37 @@
         </div>
         <div class="row bordered border-top-none">
             <div class="col-md-6">
+                @{
+                    <h5 style="text-decoration: underline;">Security Remarks</h5>
+                    var row4Col0 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 0);
+                    if (row4Col0 != null) { 
+
+                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row4Col0.Id})" class="layout-item"></div>
+                    }
+                }
             </div>
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-9">
-                        <table class="table borderless security-incident">
-                            <tr>
-                                <td>
-                                    <ul class="list-unstyled">
-                                        <li>Security</li>
-                                        <li>Incident Type</li>
-                                        <li>(Act 24H)</li>
-                                    </ul>
-                                </td>
-                                <td>
-                                    <ul class="list-unstyled">
-                                        <li>0 Mass Gathering</li>
-                                        <li>0 Road Blockade</li>
-                                        <li>0 Traffic Accident</li>
-                                    </ul>
-                                </td>
-                                <td>
-                                    <ul class="list-unstyled">
-                                        <li>0 Theft/Criminal</li>
-                                        <li>0 Violence</li>
-                                        <li>0 Prop Destruction</li>
-                                    </ul>
-                                </td>
-                            </tr>
-                        </table>
+                        @{
+                            var row4Col1 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 1);
+                            if (row4Col1 != null)
+                            {
+
+                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row4Col1.Id})" class="layout-item"></div>
+                            }
+                        }
                     </div>
                     <div class="col-md-3">
-                        <table class="table alert-condition text-center">
-                            <thead>
-                                <tr>
-                                    <td>
-                                        Alert condition
-                                    </td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        Low
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        @{
+                            var row4Col2 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 2);
+                            if (row4Col2 != null)
+                            {
+
+                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row4Col2.Id})" class="layout-item"></div>
+                            }
+                        }
+                        @**@
                     </div>
                 </div>
             </div>
@@ -372,38 +371,14 @@
         </div>
         <div class="row bordered border-top-none feed-gas-row">
             <div class="col-md-6">
-                <table class="table table-bordered job-pmts vertical-space">
-                    <thead>
-                        <tr>
-                            <td colspan="6">JOB PMTS</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">ACTUAL 24H</td>
-                            <td colspan="2">ACTUAL MTD</td>
-                            <td colspan="2">ACTUAL YTD</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>333.68 mmscf</td>
-                            <td rowspan="2">7,303.05 tonnes</td>
-                            <td>7,058.64 mmscf</td>
-                            <td rowspan="2">154,468.63 tonnes</td>
-                            <td>7,058.64 mmscf</td>
-                            <td rowspan="2">154,468.63 tonnes</td>
-                        </tr>
-                        <tr>
-                            <td>373,265 mmbtu</td>
-                            <td>7,894,592 mmbtu</td>
-                            <td>7,894,592 mmbtu</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">134% of DCQ 277,750 mmbtu</td>
-                            <td colspan="2">92% of MGN 8,610 bbtu</td>
-                            <td colspan="2">8% of ADP 101.6 TBtu</td>
-                        </tr>
-                    </tbody>
-                </table>
+                @{
+                    var row5Col0 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 0);
+                    if (row5Col0 != null)
+                    {
+
+                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row5Col0.Id})" class="layout-item"></div>
+                    }
+                }
                 <div class="row">
                     <div class="col-md-7">
                         <table class="table table-bordered total-feed-gas top-bottom-border vertical-space">
@@ -655,75 +630,24 @@
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-9">
-                        <table class="table table-bordered mgdp vertical-space">
-                            <thead>
-                                <tr>
-                                    <td colspan="6" width="75%">MGDP</th>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">ACTUAL 24H</td>
-                                    <td colspan="2">ACTUAL MTD</td>
-                                    <td colspan="2">ACTUAL YTD</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>N/A</td>
-                                    <td rowspan="2">N/A</td>
-                                    <td>N/A</td>
-                                    <td rowspan="2">N/A</td>
-                                    <td>N/A</td>
-                                    <td rowspan="2">N/A</td>
-                                </tr>
-                                <tr>
-                                    <td>N/A</td>
-                                    <td>N/A</td>
-                                    <td>N/A</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">N/A</td>
-                                    <td colspan="2">N/A</td>
-                                    <td colspan="2">N/A</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        @{
+                            var row5Col1 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 1);
+                            if (row5Col1 != null)
+                            {
+
+                                <div data-url="@Url.Action("LayoutItem", "Der" , new {id= row5Col1.Id})" class="layout-item"></div>
+                            }
+                        }
                     </div>
                     <div class="col-md-3">
-                        <table class="table table-bordered hhv vertical-space">
-                            <thead>
-                                <tr>
-                                    <td colspan="2">
-                                        HHV
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        JOB PMTS
-                                    </td>
-                                    <td>
-                                        MGDP
-                                    </td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        1,115.30 btu/scf
-                                    </td>
-                                    <td>
-                                        N/A
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        min 1,111
-                                    </td>
-                                    <td>
-                                        min 1,111
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        @{
+                            var row5Col2 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 2);
+                            if (row5Col2 != null)
+                            {
+
+                                <div data-url="@Url.Action("LayoutItem", "Der" , new {id= row5Col2.Id})" class="layout-item"></div>
+                            }
+                        }
                     </div>
                 </div>
                 <table class="table table-bordered top-bottom-border vertical-space plant-availability">
