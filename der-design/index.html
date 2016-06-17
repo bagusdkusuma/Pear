@@ -20,6 +20,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <style>
+        
         body {
             font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
             font-size: 10px;
@@ -41,6 +42,10 @@
             height: 2000px;
             overflow: hidden;
             padding: 0;
+        }
+        .container.a3-ratio{
+            width: 1652px;
+            height: 2336px;
         }
         
         .header {
@@ -113,7 +118,23 @@
         .comparison .fa-arrow-up {
             color: #3A8A43;
         }
-        
+        .comparison .fa-minus {
+            color: #FDCB1D;
+        }
+        .comparison .fa-arrow-down {
+            color: #EB6264;
+        }
+        .comparison.absolute{
+            position: absolute;
+            left:4px;
+        }
+        .comparison.left-side{
+            margin-right: 4px;
+        }
+         .comparison.absolute{
+             position: absolute;
+             left: 4px;
+         }
         .avg-stats-value {
             background-color: #92D050;
         }
@@ -255,7 +276,7 @@
         }
         
         .table.table.security-incident tbody tr td:first-child + td {
-            width: 120px;
+            width: 32%;
         }
         
         .table.security-incident ul {
@@ -308,6 +329,9 @@
         .table.job-pmts thead {
             text-align: center;
         }
+        .table.job-pmts tbody tr td{
+            text-align: right;
+        }
         
         .table.mgdp {
             border-left: 1px solid #0D0D0D;
@@ -316,6 +340,10 @@
         
         .table.mgdp thead {
             text-align: center;
+        }
+
+        .table.mgdp tbody tr td:not(.text-center){
+            text-align: right;
         }
         
         .feed-gas-row > .col-md-6:first-child {
@@ -354,11 +382,19 @@
             vertical-align: middle;
             background-color: #DCE6F1;
         }
-        
+        .table.total-feed-gas thead tr td{
+            text-align: center;
+        }
         .table.total-feed-gas thead tr td:first-child {
             background-color: #92CDDC;
         }
-        
+        .table.total-feed-gas tbody tr td{
+            text-align: right;
+        }
+        .table.total-feed-gas tbody tr:last-child td,
+         .table.total-feed-gas tbody tr td:first-child{
+            text-align: left;
+        }
         .impurities {
             width: 100%;
             background-color: #215967;
@@ -391,6 +427,10 @@
         
         .table.plant-availability td.left-header {
             background-color: #DCE6F1;
+            text-align: left;
+        }
+        .table.plant-availability tbody tr td:not(.text-center):not(.left-header){
+            text-align: right;
         }
         
         .table.production {
@@ -399,11 +439,21 @@
         
         .table.production thead tr td {
             background-color: #92CDDC;
+            text-align: center;
         }
         
         .table.production thead tr td:last-child {
             background-color: #95B3D7;
         }
+         .table.production tbody tr td {
+            text-align:right;
+         }
+         .table.production tbody tr td:first-child{
+             text-align: left;
+         } 
+         .table.production tbody tr:last-child td:nth-child(odd){
+             text-align: left;
+         }
         
         .table.tank {
             border-right: 1px solid #0D0D0D;
@@ -411,13 +461,23 @@
         }
         
         .table.tank thead tr td {
-            height: 100px;
+            height: 111px;
             background-color: #DBEEF4;
+            text-align: center;
         }
         
         .table.tank tbody tr:first-child td {
             background-color: #95B3D7;
+            text-align: center;
         }
+         .table.tank tbody tr td{
+             text-align: right;
+         }
+          .table.tank tbody tr td:nth-child(2),
+          .table.tank tbody tr td:nth-child(3),
+          .table.tank tbody tr td:nth-child(5){
+              text-align: left;
+          }
         
         .table.cds-loaded,
         .table.lng-loaded {
@@ -431,6 +491,7 @@
         .table.cds-loaded thead tr td,
         .table.lng-loaded thead tr td {
             background-color: #92CDDC;
+            text-align: center;
         }
         
         .table.cds-loaded td.cargo,
@@ -444,18 +505,38 @@
         .table.lng-loaded td.right-header {
             background-color: #DAEEF3;
         }
-        
+        .table.cds-loaded tbody tr td,
+        .table.lng-loaded tbody tr td {
+            text-align: right;
+        }
+         .table.cds-loaded tbody tr td:first-child,
+        .table.lng-loaded tbody tr td:first-child,
+        .table.cds-loaded tbody tr td:nth-child(6),
+        .table.lng-loaded tbody tr td:nth-child(6),
+        .table.cds-loaded tbody tr td:nth-child(7),
+        .table.lng-loaded tbody tr td:nth-child(7) {
+            text-align: left;
+            vertical-align: middle;
+        }
         .table.nls {
             border-left: 1px solid #0D0D0D;
         }
         
         .table.nls thead tr td {
             background-color: #B7DEE8;
+            text-align: center;
         }
         
         .table.nls thead tr td:first-child {
             background-color: #92CDDC;
+            text-align: left;
         }
+         .table.nls tbody tr td:nth-child(3),
+         .table.nls tbody tr td:nth-child(4),
+         .table.nls tbody tr td:nth-child(5){
+             text-align: center;
+         }
+         
         
         .table.key-equipment {
             border-left: 1px solid #0D0D0D;
@@ -555,9 +636,29 @@
             border-left: 1px solid #0D0D0D;
             border-right: 1px solid #0D0D0D;
         }
+        .table.commodities tr td{
+            text-align: center;
+        }
+        .table.commodities tr td:last-child{
+            text-align: left;
+        }
+        .table.commodities tbody tr:last-child td:first-child{
+            text-align: right;
+        }
+        .table.commodities tbody tr:not(:last-child) td:nth-child(2){
+            text-align: left;
+            padding-left: 40px;
+        }
         
         .table.procurement thead tr td {
             background-color: #B7DEE8;
+            text-align: center;
+        }
+        .table.procurement tbody tr td{
+            text-align: center;
+        }
+        .table.procurement tbody tr td:first-child{
+            text-align: left;
         }
         
         .table.procurement thead tr td:first-child {
@@ -575,7 +676,15 @@
         
         .table.indicative thead tr td {
             height: 37px;
+            text-align: center;
+            vertical-align: middle;
         }
+         .table.indicative tbody tr td{
+             text-align: center;
+         }
+          .table.indicative tbody tr td:first-child{
+              text-align: left;
+          }
         
         .table.global-stock {
             border: 1px solid #0D0D0D;
@@ -584,6 +693,7 @@
         
         .table.global-stock thead tr td {
             background-color: #66FF99;
+            text-align: center;
         }
         
         .table.global-stock thead tr:first-child td:first-child {
@@ -593,9 +703,12 @@
         .table.global-stock thead tr:first-child td {
             background-color: #66CCFF;
         }
-        
+        .table.global-stock tbody tr td:not(:last-child){
+            text-align: right;
+        }
         .table.ict-infra {
             border-bottom: 1px solid #0D0D0D;
+            margin-top:26px;
         }
         
         .table.ict-infra td,
@@ -644,7 +757,7 @@
         
         .co-macro-eco {
             padding: 5px;
-            height: 191px;
+            height: 205px;
             border-bottom: 1px solid #0D0D0D;
         }
         
@@ -680,29 +793,47 @@
             background-color: #a6a6a6;
         }
 
-        td > span > .fa-circle, td > span > .fa-times-circle, td > span > .fa-exclamation-circle {
-            position: absolute;
-            left: 5px;
-        }
-
-        td > span > .fa-circle {
+        span.indicator .fa-circle {
             color: #5bbb75;
         } 
-        td > span > .fa-times-circle {
+        /*td > span > .fa-circle, td > span > .fa-times-circle, td > span > .fa-exclamation-circle {
+            position: absolute;
+            left: 5px;
+        }*/
+
+        
+        span.indicator .fa-times-circle {
             color: #F57D7F;
         } 
-        td > span > .fa-exclamation-circle {
+         span.indicator .fa-exclamation-circle {
             color: #FDD545;
         }
-
-        .table.table.kpi-fatality > tbody > tr > td:nth-last-child(2) {
+        .table tbody tr td {
             position: relative;
         }
+        span.indicator.left-side{
+            margin-right:10px;
+        }
+        span.indicator.right-side{
+            margin-left: 5px;
+        }
+        span.indicator.absolute{
+            position: absolute;
+            left:5px;
+        }
+
+        .daily-highlight .indicator.absolute{
+            left: 100px;
+            top: 15px;
+        }
+        /*.table.table.kpi-fatality > tbody > tr > td:nth-last-child(2) {
+            position: relative;
+        }*/
     </style>
 </head>
 
 <body>
-    <div class="container">
+    <div class="container a3-ratio">
         <div class="row header">
             <div class="header-left col-md-8 text-center">
                 <h5>DAILY EXECUTIVE REPORT</h5>
@@ -738,8 +869,8 @@
                         </tr>
                         <tr class="comparison">
                             <td><span class="fa fa-arrow-up fa-lg"></span></td>
-                            <td><span class="fa fa-arrow-up fa-lg"></span></td>
-                            <td><span class="fa fa-arrow-up fa-lg"></span></td>
+                            <td><span class="fa fa-arrow-down fa-lg"></span></td>
+                            <td><span class="fa fa-minus fa-lg"></span></td>
                             <td><span class="fa fa-arrow-up fa-lg"></span></td>
                             <td><span class="fa fa-arrow-up fa-lg"></span></td>
                         </tr>
@@ -748,8 +879,8 @@
             </div>
             <div class="col-md-7">
                 <div class="row">
-                    <div class="col-md-9 proper">
-                        <h5 style="text-decoration: underline;">Daily Highlight</h5>
+                    <div class="col-md-9 proper daily-highlight">
+                        <h5 style="text-decoration: underline;">Daily Highlight</h5> <span class="indicator absolute"><i class="fa fa-circle"></i></span>
                         <p>Normal Ops. CDS Vessel MT Indradi deberthed and switch over with Erawan-1. The later still being
                             N2 purge before loading. CDS rundown recycle to day-tank.</p>
                     </div>
@@ -886,7 +1017,7 @@
                             <td>0</td>
                             <td>0</td>
                             <td>0</td>
-                            <td><span><i class="fa fa-exclamation-circle" aria-hidden="true"></i></span> 0</td>
+                            <td><span class="indicator absolute"><i class="fa fa-exclamation-circle" aria-hidden="true"></i></span> 0</td>
                             <td>0</td>
                         </tr>
                         <tr>
@@ -894,7 +1025,7 @@
                             <td>0</td>
                             <td>0</td>
                             <td>0</td>
-                            <td><span><i class="fa fa-circle" aria-hidden="true"></i></span> 0</td>
+                            <td><span class="indicator absolute"><i class="fa fa-circle" aria-hidden="true"></i></span> 0</td>
                             <td>0</td>
                         </tr>
                         <tr>
@@ -903,7 +1034,7 @@
                             <td>0</td>
                             <td>0</td>
                             <td>0</td>
-                            <td><span><i class="fa fa-circle" aria-hidden="true"></i></span> 0</td>
+                            <td><span class="indicator absolute"><i class="fa fa-circle" aria-hidden="true"></i></span> 0</td>
                             <td>0</td>
                         </tr>
                         <tr>
@@ -911,7 +1042,7 @@
                             <td>0</td>
                             <td>0</td>
                             <td>0</td>
-                            <td><span><i class="fa fa-circle" aria-hidden="true"></i></span> 0</td>
+                            <td><span class="indicator absolute"><i class="fa fa-circle" aria-hidden="true"></i></span> 0</td>
                             <td>0</td>
                         </tr>
                         <tr>
@@ -919,7 +1050,7 @@
                             <td>0</td>
                             <td>0</td>
                             <td>0</td>
-                            <td><span><i class="fa fa-circle" aria-hidden="true"></i></span> 0</td>
+                            <td><span class="indicator absolute"><i class="fa fa-circle" aria-hidden="true"></i></span> 0</td>
                             <td>0</td>
                         </tr>
                         <tr>
@@ -927,7 +1058,7 @@
                             <td>0</td>
                             <td>0</td>
                             <td>0</td>
-                            <td><span><i class="fa fa-circle" aria-hidden="true"></i></span> 0</td>
+                            <td><span class="indicator absolute"><i class="fa fa-circle" aria-hidden="true"></i></span> 0</td>
                             <td>0</td>
                         </tr>
                         <tr>
@@ -935,7 +1066,7 @@
                             <td>0</td>
                             <td>0</td>
                             <td>0</td>
-                            <td><span><i class="fa fa-circle" aria-hidden="true"></i></span> 0</td>
+                            <td><span class="indicator absolute"><i class="fa fa-circle" aria-hidden="true"></i></span> 0</td>
                             <td>0</td>
                         </tr>
                         <tr>
@@ -943,7 +1074,7 @@
                             <td>0</td>
                             <td>0</td>
                             <td>0</td>
-                            <td><span><i class="fa fa-circle" aria-hidden="true"></i></span> 0</td>
+                            <td><span class="indicator absolute"><i class="fa fa-circle" aria-hidden="true"></i></span> 0</td>
                             <td>0</td>
                         </tr>
                         <tr>
@@ -994,7 +1125,7 @@
                     <thead>
                         <tr>
                             <td>
-                                <span><i class="fa fa-exclamation-circle" aria-hidden="true"></i></span> WEEKLY ALARM MANAGEMENT (3 Apr-10 Apr 2016)
+                                <span class="indicator left-side"><i class="fa fa-exclamation-circle" aria-hidden="true"></i></span> WEEKLY ALARM MANAGEMENT (3 Apr-10 Apr 2016)
                             </td>
                         </tr>
                     </thead>
@@ -1325,6 +1456,7 @@
                             </td>
                             <td colspan="2">
                                 CDS Reid Vapor Pressure (RVP) :
+                                <span class="indicator right-side"><i class="fa fa-circle"></i></span>
                             </td>
                             <td>
                                 11.32 Psia
@@ -1381,10 +1513,11 @@
                         </tr>
                         <tr>
                             <td>
-                                Days to tank top
+                                2,831,322 mmbtu
+                                
                             </td>
                             <td>
-                                10.9 days
+                                Days to tank top 10.9
                             </td>
                             <td>
                                 Days to tank top
@@ -1408,6 +1541,7 @@
                     <thead>
                         <tr>
                             <td colspan="6">
+                                <span class="indicator left-side"><i class="fa fa-circle"></i></span>
                                 WEEKLY MAINTENANCE BACKLOG (as of 20 Jan 2016)
                             </td>
                         </tr>
@@ -1456,6 +1590,7 @@
                     <thead>
                         <tr>
                             <td colspan="6">
+                                <span class="indicator left-side"><i class="fa fa-circle"></i></span>
                                 WEEKLY CRITICAL-TIER 1 PM COMPLIANCE/OVERDUE (as of 6 Apr 2016)
                             </td>
                         </tr>
@@ -1536,11 +1671,11 @@
                             <tbody>
                                 <tr>
                                     <td class="na-value">N/A</td>
-                                    <td rowspan="2" class="na-value">N/A</td>
+                                    <td rowspan="2" class="na-value text-center">N/A</td>
                                     <td class="na-value">N/A</td>
-                                    <td rowspan="2" class="na-value">N/A</td>
+                                    <td rowspan="2" class="na-value text-center">N/A</td>
                                     <td class="na-value">N/A</td>
-                                    <td rowspan="2" class="na-value">N/A</td>
+                                    <td rowspan="2" class="na-value text-center">N/A</td>
                                 </tr>
                                 <tr>
                                     <td class="na-value">N/A</td>
@@ -1624,12 +1759,15 @@
                                 ACTUAL 24H
                             </td>
                             <td>
+                                <span class="indicator absolute"><i class="fa fa-circle"></i></span>
                                 100.0%
                             </td>
                             <td>
+                                <span class="indicator absolute"><i class="fa fa-circle"></i></span>
                                 91.16%
                             </td>
                             <td>
+                                <span class="indicator absolute"><i class="fa fa-circle"></i></span>
                                 -0.31%
                             </td>
                             <td>
@@ -1650,12 +1788,15 @@
                                 ACTUAL MTD
                             </td>
                             <td>
+                                <span class="indicator absolute"><i class="fa fa-circle"></i></span>
                                 92.4%
                             </td>
                             <td>
+                                <span class="indicator absolute"><i class="fa fa-circle"></i></span>
                                 85.85%
                             </td>
                             <td>
+                                <span class="indicator absolute"><i class="fa fa-circle"></i></span>
                                 4.67%
                             </td>
                             <td>
@@ -1670,19 +1811,23 @@
                                 Actual-YTD
                             </td>
                             <td>
+                                <span class="indicator absolute"><i class="fa fa-circle"></i></span>
                                 93.0%
                             </td>
                             <td>
+                                <span class="indicator absolute"><i class="fa fa-circle"></i></span>
                                 89.00%
                             </td>
                             <td>
-                                < 2.00% </td>
-                                    <td class="na-value">
-                                        N/A
-                                    </td>
-                                    <td colspan="3" class="text-center second-header">
-                                        Total Fuel Gas (GTG-GTC-LP Fuel)
-                                    </td>
+                                <span class="indicator absolute"><i class="fa fa-circle"></i></span>
+                                < 2.00% 
+                            </td>
+                            <td class="na-value">
+                                N/A
+                            </td>
+                            <td colspan="3" class="text-center second-header">
+                                Total Fuel Gas (GTG-GTC-LP Fuel)
+                            </td>
 
                         </tr>
                         <tr>
@@ -1760,6 +1905,7 @@
                                 1/1 QE, 1/1 KOGAS, 1/1 Spot; ttl 3/3
                             </td>
                             <td>
+                                <span class="indicator left-side"><i class="fa fa-circle"></i></span>
                                 On-track
                             </td>
                         </tr>
@@ -1783,6 +1929,7 @@
                                 1/11 Kogas, 0/7 CE, 1/5 QE, 1/13 Spot; Total 3/36 cargos
                             </td>
                             <td>
+                                <span class="indicator left-side"><i class="fa fa-circle"></i></span>
                                 On-track
                             </td>
                         </tr>
@@ -2098,7 +2245,7 @@
                         <label>Marine, Shipping and Cargo Delivery(time in HH:MM):</label>
                         <div class="row loading-duration">
                             <div class="col-md-4"><label>Loading Duration</label></div>
-                            <div class="col-md-4">Last Shipping:31:44</div>
+                            <div class="col-md-4">Last Shipping:31:44 <span class="indicator right-side"><i class="fa fa-circle"></i></span></div>
                             <div class="col-md-4">Avg YTD: 32:26</div>
                         </div>
                     </div>
@@ -2109,7 +2256,7 @@
                         </div>
                         <div class="row ttl-terminal">
                             <div class="col-md-6"><label>Ttl terminal time (berth-unberth)</label></div>
-                            <div class="col-md-6">Last Shipping:70:45 &nbsp; &nbsp; Avg YTD:53:36</div>
+                            <div class="col-md-6">Last Shipping:70:45 <span class="indicator left-side"><i class="fa fa-circle"></i></span> Avg YTD:53:36</div>
                         </div>
                     </div>
                 </div>
@@ -2161,6 +2308,7 @@
                                         Avg Backlog time
                                     </td>
                                     <td>
+                                        <span class="indicator absolute"><i class="fa fa-circle"></i></span>
                                         209 days
                                     </td>
                                     <td>
@@ -2248,44 +2396,44 @@
                                     <td style="width:30%">
                                         Dubai Crude<br/> (DME OQD FUT)
                                     </td>
-                                    <td>37.20 USD/bbl</td>
-                                    <td style="width:30%">USD/SDR 0.7101</td>
+                                    <td><span class="comparison left-side"><i class="fa fa-arrow-up"></i></span>37.20 USD/bbl</td>
+                                    <td style="width:30%"><span class="comparison left-side"><i class="fa fa-arrow-up"></i></span>USD/SDR 0.7101</td>
                                 </tr>
                                 <tr>
                                     <td>BRENT FUT&nbsp;</td>
-                                    <td>41.94 USD/bbl</td>
-                                    <td>USD/IDR 13,140</td>
+                                    <td><span class="comparison left-side"><i class="fa fa-arrow-up"></i></span>41.94 USD/bbl</td>
+                                    <td><span class="comparison left-side"><i class="fa fa-arrow-up"></i></span>USD/IDR 13,140</td>
                                 </tr>
                                 <tr>
                                     <td>Naphta FOB Sing&nbsp;</td>
-                                    <td>41.63 USD/bbl</td>
-                                    <td>JPY/IDR 121.58</td>
+                                    <td><span class="comparison left-side"><i class="fa fa-arrow-up"></i></span>41.63 USD/bbl</td>
+                                    <td><span class="comparison left-side"><i class="fa fa-arrow-up"></i></span>JPY/IDR 121.58</td>
                                 </tr>
                                 <tr>
                                     <td>Applied JCC Crude (Apr)</td>
-                                    <td>36.93 USD/bbl</td>
-                                    <td>USD/JPY 108.03</td>
+                                    <td><span class="comparison left-side"><i class="fa fa-arrow-up"></i></span>36.93 USD/bbl</td>
+                                    <td><span class="comparison left-side"><i class="fa fa-arrow-up"></i></span>USD/JPY 108.03</td>
                                 </tr>
                                 <tr>
                                     <td>LNG Spot DES JKM&nbsp;</td>
-                                    <td>4.125 USD/mmbtu</td>
-                                    <td>EUR/USD 1.1399</td>
+                                    <td><span class="comparison left-side"><i class="fa fa-arrow-up"></i></span>4.125 USD/mmbtu</td>
+                                    <td><span class="comparison left-side"><i class="fa fa-arrow-up"></i></span>EUR/USD 1.1399</td>
                                 </tr>
                                 <tr>
                                     <td>Nat Gas Henry Hub</td>
-                                    <td>1.98 USD/mmbtu</td>
-                                    <td>EUR/IDR 14,940</td>
+                                    <td><span class="comparison left-side"><i class="fa fa-arrow-up"></i></span>1.98 USD/mmbtu</td>
+                                    <td><span class="comparison left-side"><i class="fa fa-arrow-up"></i></span>EUR/IDR 14,940</td>
                                 </tr>
                                 <tr>
                                     <td>ICP-Ind Crude Prc (Mar)</td>
-                                    <td>34.19 USD/bbl</td>
-                                    <td>USD/KRW 1,150.29</td>
+                                    <td><span class="comparison left-side"><i class="fa fa-arrow-up"></i></span>34.19 USD/bbl</td>
+                                    <td><span class="comparison left-side"><i class="fa fa-arrow-up"></i></span>USD/KRW 1,150.29</td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">
                                         LNG Shipping Cost benchmark (Jap-Kor-Aus)
                                     </td>
-                                    <td>0.23 USD/mmbtu</td>
+                                    <td><span class="comparison left-side"><i class="fa fa-arrow-up"></i></span>0.23 USD/mmbtu</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -2303,28 +2451,28 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>JKSE: 4,846.70</td>
-                                    <td>1M:107.94</td>
+                                    <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>JKSE: 4,846.70</td>
+                                    <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>1M:107.94</td>
                                     <td>Q2-16:39.00 USD/bbl</td>
-                                    <td>1 Month:13,198</td>
+                                    <td><span class="comparison left-side"><i class="fa fa-minus"></i></span>1 Month:13,198</td>
                                 </tr>
                                 <tr>
-                                    <td>DJIA: 17,576.96</td>
-                                    <td>3M:107.72</td>
+                                    <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>>DJIA: 17,576.96</td>
+                                    <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>3M:107.72</td>
                                     <td>Q3-16:41.60 USD/bbl</td>
-                                    <td>3 Month:13,345</td>
+                                    <td><span class="comparison left-side"><i class="fa fa-minus"></i></span>3 Month:13,345</td>
                                 </tr>
                                 <tr>
-                                    <td>Nikkei 225: 15,821.52</td>
-                                    <td>6M:107.35</td>
+                                    <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>Nikkei 225: 15,821.52</td>
+                                    <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>6M:107.35</td>
                                     <td>Avg-2016:40.00 USD/bbl</td>
-                                    <td>6 Month:13,555</td>
+                                    <td><span class="comparison left-side"><i class="fa fa-minus"></i></span>6 Month:13,555</td>
                                 </tr>
                                 <tr>
-                                    <td>Shanghai SEC: 2,985.76</td>
-                                    <td>1Yr:106.47</td>
+                                    <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>Shanghai SEC: 2,985.76</td>
+                                    <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>1Yr:106.47</td>
                                     <td>Avg-2017:54.60 USD/bbl</td>
-                                    <td>1 Year:14,015</td>
+                                    <td><span class="comparison left-side"><i class="fa fa-minus"></i></span>1 Year:14,015</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -2394,17 +2542,6 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
         crossorigin="anonymous"></script>
-    <script>
-            $( document ).ready(function() {
-                var $tdHasIcon = $("td>span>.fa").parents('td');
-    $tdHasIcon.parents('td').css('position', 'relative');
-    $tdHasIcon.each(function(){
-        if($(this).css('text-align') == 'start' || $(this).css('text-align') == 'left' ){
-            $(this).css('padding-left', '20px');
-        }
-    })
-});
-    </script>
 </body>
 
 </html>
