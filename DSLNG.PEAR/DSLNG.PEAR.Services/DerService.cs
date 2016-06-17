@@ -238,6 +238,13 @@ namespace DSLNG.PEAR.Services
             rowAndColumns.Add(new RowAndColumns { Row = 6, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 6, Column = 2 });
             rowAndColumns.Add(new RowAndColumns { Row = 6, Column = 3 });
+            rowAndColumns.Add(new RowAndColumns { Row = 6, Column = 4 });
+            rowAndColumns.Add(new RowAndColumns { Row = 6, Column = 5 });
+            rowAndColumns.Add(new RowAndColumns { Row = 6, Column = 6 });
+            rowAndColumns.Add(new RowAndColumns { Row = 6, Column = 7 });
+            rowAndColumns.Add(new RowAndColumns { Row = 6, Column = 8 });
+            rowAndColumns.Add(new RowAndColumns { Row = 6, Column = 9 });
+            rowAndColumns.Add(new RowAndColumns { Row = 6, Column = 10 });
             rowAndColumns.Add(new RowAndColumns { Row = 7, Column = 0 });
             rowAndColumns.Add(new RowAndColumns { Row = 7, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 7, Column = 2 });
@@ -322,6 +329,7 @@ namespace DSLNG.PEAR.Services
                     .Include(x => x.Highlight.SelectOption)
                     .Include(x => x.KpiInformations.Select(y => y.SelectOption))
                     .Include(x => x.KpiInformations.Select(y => y.Kpi.Measurement))
+                    .Include(x => x.SignedBy)
                     .Single(x => x.Id == id);
 
                 response = derLayoutItem.MapTo<GetDerLayoutitemResponse>();
@@ -445,6 +453,7 @@ namespace DSLNG.PEAR.Services
                         break;
                     }
                 case "speedometer":
+                case "barmeter":
                     {
                         baseResponse = request.Id > 0 ? UpdateSpeedometer(request) : SaveSpeedometer(request);
                         break;
@@ -481,16 +490,11 @@ namespace DSLNG.PEAR.Services
                 case "key-equipment-status":
                 case "global-stock-market":
                 case "dafwc":
+                case "termometer":
                     {
                         baseResponse = request.Id > 0 ? UpdateKpiInformations(request) : SaveKpiInformations(request);
                         break;
                     }
-                /*case "dafwc":
-                    {
-                        baseResponse = SaveDafwc(request);
-                        break;
-                    }*/
-
                 case "prepared-by":
                 case "reviewed-by":
                 {

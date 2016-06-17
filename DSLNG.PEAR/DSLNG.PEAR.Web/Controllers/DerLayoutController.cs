@@ -192,6 +192,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             break;
                         }
                     case "speedometer":
+                    case "barmeter":
                         {
                             var speedometerChart = new SpeedometerChartViewModel();
                             editViewModel.SpeedometerChart = response.Artifact.MapPropertiesToInstance<SpeedometerChartViewModel>(speedometerChart);
@@ -232,6 +233,11 @@ namespace DSLNG.PEAR.Web.Controllers
                             }
                         }
                         break;
+                    case "termometer":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 1);
+                            break;
+                        }
                     case "hhv":
                     case "procurement":
                         {
@@ -287,7 +293,16 @@ namespace DSLNG.PEAR.Web.Controllers
                     case "lng-and-cds":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 13);
-
+                            break;
+                        }
+                    case "prepared-by":
+                    case "reviewed-by":
+                        {
+                            editViewModel.SignedBy = response.SignedBy;
+                            var result = _userService.GetUsers(new GetUsersRequest { SortingDictionary = new Dictionary<string, SortOrder>(), Take = 1000 });
+                            editViewModel.Users =
+                                result.Users.Select(
+                                    item => new SelectListItem() { Text = item.Username, Value = item.Id.ToString() }).ToList();
                             break;
                         }
 
@@ -404,9 +419,21 @@ namespace DSLNG.PEAR.Web.Controllers
                             break;
                         }
                     case "6-and-3":
+                    case "6-and-4":
+                    case "6-and-6":
+                    case "6-and-7":
+                    case "6-and-8":
+                    case "6-and-9":
+                    case "6-and-10":
                         {
                             viewModel.Type = "barmeter";
                             break;
+                        }
+                    case "6-and-5":
+                        {
+                            viewModel.Type = "termometer";
+                            break;
+
                         }
                     case "7-and-0":
                         {
@@ -506,7 +533,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         viewModel.LineChart.Series.Add(series);
                         return PartialView("LayoutType/_Line", viewModel);
                     }
-                case "barmeter" :
+                case "barmeter":
                 case "speedometer":
                     {
                         var viewModel = new DerLayoutItemViewModel();
@@ -715,6 +742,13 @@ namespace DSLNG.PEAR.Web.Controllers
                                 item => new SelectListItem() { Text = item.Username, Value = item.Id.ToString() }).ToList();
                         return PartialView("LayoutType/_User", viewModel);
                     }
+                case "termometer":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(1);
+                        return PartialView("LayoutType/_Termometer", viewModel);
+
+                    }
             }
 
             return Content("Error");
@@ -818,6 +852,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "mgdp":
                 case "global-stock-market":
                 case "dafwc":
+                case "termometer":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
