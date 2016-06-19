@@ -1123,6 +1123,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<GetDerLayoutitemResponse.KpiInformationResponse, DisplayKpiInformationViewModel.KpiInformationViewModel>();
             Mapper.CreateMap<GetKpiAchievementResponse, DerItemValueViewModel>();
+            Mapper.CreateMap<GetKpiTargetItemResponse, DerItemValueViewModel>();
 
         }
 

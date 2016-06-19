@@ -1,140 +1,298 @@
-﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayPlantAvailabilityViewModel
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKpiInformationViewModel
 
-<table class="der-table all-border">
+<table class="table table-bordered top-bottom-border vertical-space plant-availability">
     <thead>
         <tr>
-            <th class="der-bg-blue-7" style="width: 15%">Description</th>
-            <th class="der-bg-blue-7">Plant Availability (hour-daily)</th>
-            <th class="der-bg-blue-7">
+            <td class="desc">Description</td>
+            <td style="width: 13.2%;">Plant Availability (hour-daily)</td>
+            <td style="width: 12.5%;">
                 Plant Thermal Efficiency
-            </th>
-            <th class="der-bg-blue-7">
+            </td>
+            <td style="width: 12.7%;">
                 Material Balance (Flare Loss-%)
-            </th>
-            <th class="der-bg-blue-7">
-                Plant intake Utilization(Feed/ Max.Cap)
-            </th>
-            <th class="der-bg-blue-5">
-                Total Flared Gas
-                (Wet-Dry-Tankage)
-            </th>
-            <th class="der-bg-blue-3">
-                Refrigerant Prod (C2&C3)
-            </th>
-            <th class="der-bg-blue-3">
+            </td>
+            <td style="width: 12.5%;">
+                Plant intake Utilization (Feed/ Max.Cap)
+            </td>
+            <td class="second-header">
+                Total Flared Gas (Wet-Dry-Tankage)
+            </td>
+            <td style="width: 15%;" class="refrigerant second-header">
+                Refrigerant Prod (C2&amp;C3)
+            </td>
+            <td style="width: 10%;" class="refrigerant second-header">
                 Material Balance (Loss)
-            </th>
+            </td>
         </tr>
     </thead>
-    @{
-        var pos0 = Model.PlantAvailabilityViewModels.Single(x => x.Position == 0);
-        var pos1 = Model.PlantAvailabilityViewModels.Single(x => x.Position == 1);
-        var pos2 = Model.PlantAvailabilityViewModels.Single(x => x.Position == 2);
-        var pos3 = Model.PlantAvailabilityViewModels.Single(x => x.Position == 3);
-        var pos4 = Model.PlantAvailabilityViewModels.Single(x => x.Position == 4);
-        var pos5 = Model.PlantAvailabilityViewModels.Single(x => x.Position == 5);
-        var pos6 = Model.PlantAvailabilityViewModels.Single(x => x.Position == 6);
-        var pos7 = Model.PlantAvailabilityViewModels.Single(x => x.Position == 7);
-        var pos8 = Model.PlantAvailabilityViewModels.Single(x => x.Position == 8);
-        var pos9 = Model.PlantAvailabilityViewModels.Single(x => x.Position == 9);
+    <tbody>
+        <tr>
+            <td class="left-header">
+                ACTUAL 24H
+            </td>
+            <td>
+                <span class="indicator absolute"><i class="fa fa-circle"></i></span>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "%")
+            </td>
+            <td>
+                <span class="indicator absolute"><i class="fa fa-circle"></i></span>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "%")
+            </td>
+            <td>
+                <span class="indicator absolute"><i class="fa fa-circle"></i></span>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "%")
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiMeasurement, "%")
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).KpiMeasurement, "nm3")
+            </td>
+            <td rowspan="2" class="text-center" style="vertical-align:middle">
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Value)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).KpiMeasurement, "mmscf")
+            </td>
+            <td rowspan="2" class="text-center" style="vertical-align:middle">
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Value)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 6).KpiMeasurement, "nm3")
+            </td>
+        </tr>
+        <tr>
+            <td class="left-header">
+                ACTUAL MTD
+            </td>
+            <td>
+                <span class="indicator absolute"><i class="fa fa-circle"></i></span>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Mtd)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "%")
+            </td>
+            <td>
+                <span class="indicator absolute"><i class="fa fa-circle"></i></span>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Mtd)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "%")
+            </td>
+            <td>
+                <span class="indicator absolute"><i class="fa fa-circle"></i></span>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Mtd)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "%")
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Mtd)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiMeasurement, "%")
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Mtd)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).KpiMeasurement, "mmscf")
+            </td>
+        </tr>
+        <tr>
+            <td class="left-header">
+                Actual-YTD
+            </td>
+            <td>
+                <span class="indicator absolute"><i class="fa fa-circle"></i></span>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Ytd)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "%")
+            </td>
+            <td>
+                <span class="indicator absolute"><i class="fa fa-circle"></i></span>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Ytd)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "%")
+            </td>
+            <td>
+                <span class="indicator absolute"><i class="fa fa-circle"></i></span>
+                &lt; @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Ytd)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "%")
+            </td>
+            <td class="na-value">
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Ytd)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiMeasurement, "%")
+            </td>
+            <td colspan="3" class="text-center second-header">
+                Total Fuel Gas (GTG-GTC-LP Fuel)
+            </td>
 
-        <tbody>
-            <tr>
-                <td class="der-bg-blue-4">
-                    ACTUAL 24H
-                </td>
-                <td>
-                    @pos0.Daily
-                </td>
-                <td>
-                    @pos1.Daily
-                </td>
-                <td>
-                    @pos2.Daily
-                </td>
-                <td>
-                    @pos3.Daily
-                </td>
-                <td class="der-bg-yellow">
-                    @pos4.Daily
-                </td>
-                <td class="der-bg-yellow">
-                    @pos5.Daily
-                </td>
-                <td class="der-bg-yellow">
-                    @pos6.Daily
-                </td>
-            </tr>
-            <tr>
-                <td class="der-bg-blue-4">
-                    ACTUAL MTD
-                </td>
-                <td>
-                    @pos0.Mtd
-                </td>
-                <td>
-                    @pos1.Mtd
-                </td>
-                <td>
-                    @pos2.Mtd
-                </td>
-                <td>
-                    @pos3.Mtd
-                </td>
-                <td class="der-bg-orange-1">
-                    @pos4.Mtd
-                </td>
-                <td class="der-bg-yellow">
-                    @pos5.Mtd
-                </td>
-                <td class="der-bg-blue-4">@pos6.Mtd</td>
-            </tr>
-            <tr>
-                <td class="der-bg-blue-4">
-                    Actual YTD
-                </td>
-                <td>
-                    @pos0.Ytd
-                </td>
-                <td>
-                    @pos1.Ytd
-                </td>
-                <td>
-                    @pos2.Ytd
-                </td>
-                <td>
-                    @pos3.Ytd
-                </td>
-                <td colspan="3">
-                    Total Fuel Gas (GTG-GTC-LP Fuel)
-                </td>
-            </tr>
-            <tr>
-                <td class="der-bg-blue-4">
-                    ACTUAL 24H
-                </td>
-                <td>
-                    @pos0.Ytd
-                </td>
-                <td>
-                    @pos1.Ytd
-                </td>
-                <td>
-                    @pos2.Ytd
-                </td>
-                <td>
-                    @pos3.Ytd
-                </td>
-                <td class="der-bg-yellow">
-                    @pos7.Daily
-                </td>
-                <td class="der-bg-yellow">
-                    @pos8.Daily
-                </td>
-                <td class="der-bg-yellow">
-                    @pos9.Daily
-                </td>
-            </tr>
-        </tbody>
-    }
+        </tr>
+        <tr>
+            <td class="left-header">
+                2016 Target
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Value)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 10).KpiMeasurement, "%")
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 11).DerItemValue.Value)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 11).KpiMeasurement, "%")
+            </td>
+            <td>
+                &lt; @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 12).DerItemValue.Value)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 12).KpiMeasurement, "%")
+            </td>
+            <td class="na-value">
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 13).DerItemValue.Value)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 13).KpiMeasurement, "%")
+            </td>
+            <td class="na-value">
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Value)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).KpiMeasurement, "%")
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Value)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 8).KpiMeasurement, "mmbtu")
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Value)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 8).KpiMeasurement, "mmscf") 
+            </td>
+        </tr>
+    </tbody>
 </table>
+
+@*
+    @model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayPlantAvailabilityViewModel
+
+    <table class="der-table all-border">
+        <thead>
+            <tr>
+                <th class="der-bg-blue-7" style="width: 15%">Description</th>
+                <th class="der-bg-blue-7">Plant Availability (hour-daily)</th>
+                <th class="der-bg-blue-7">
+                    Plant Thermal Efficiency
+                </th>
+                <th class="der-bg-blue-7">
+                    Material Balance (Flare Loss-%)
+                </th>
+                <th class="der-bg-blue-7">
+                    Plant intake Utilization(Feed/ Max.Cap)
+                </th>
+                <th class="der-bg-blue-5">
+                    Total Flared Gas
+                    (Wet-Dry-Tankage)
+                </th>
+                <th class="der-bg-blue-3">
+                    Refrigerant Prod (C2&C3)
+                </th>
+                <th class="der-bg-blue-3">
+                    Material Balance (Loss)
+                </th>
+            </tr>
+        </thead>
+        @{
+            var pos0 = Model.PlantAvailabilityViewModels.Single(x => x.Position == 0);
+            var pos1 = Model.PlantAvailabilityViewModels.Single(x => x.Position == 1);
+            var pos2 = Model.PlantAvailabilityViewModels.Single(x => x.Position == 2);
+            var pos3 = Model.PlantAvailabilityViewModels.Single(x => x.Position == 3);
+            var pos4 = Model.PlantAvailabilityViewModels.Single(x => x.Position == 4);
+            var pos5 = Model.PlantAvailabilityViewModels.Single(x => x.Position == 5);
+            var pos6 = Model.PlantAvailabilityViewModels.Single(x => x.Position == 6);
+            var pos7 = Model.PlantAvailabilityViewModels.Single(x => x.Position == 7);
+            var pos8 = Model.PlantAvailabilityViewModels.Single(x => x.Position == 8);
+            var pos9 = Model.PlantAvailabilityViewModels.Single(x => x.Position == 9);
+
+            <tbody>
+                <tr>
+                    <td class="der-bg-blue-4">
+                        ACTUAL 24H
+                    </td>
+                    <td>
+                        @pos0.Daily
+                    </td>
+                    <td>
+                        @pos1.Daily
+                    </td>
+                    <td>
+                        @pos2.Daily
+                    </td>
+                    <td>
+                        @pos3.Daily
+                    </td>
+                    <td class="der-bg-yellow">
+                        @pos4.Daily
+                    </td>
+                    <td class="der-bg-yellow">
+                        @pos5.Daily
+                    </td>
+                    <td class="der-bg-yellow">
+                        @pos6.Daily
+                    </td>
+                </tr>
+                <tr>
+                    <td class="der-bg-blue-4">
+                        ACTUAL MTD
+                    </td>
+                    <td>
+                        @pos0.Mtd
+                    </td>
+                    <td>
+                        @pos1.Mtd
+                    </td>
+                    <td>
+                        @pos2.Mtd
+                    </td>
+                    <td>
+                        @pos3.Mtd
+                    </td>
+                    <td class="der-bg-orange-1">
+                        @pos4.Mtd
+                    </td>
+                    <td class="der-bg-yellow">
+                        @pos5.Mtd
+                    </td>
+                    <td class="der-bg-blue-4">@pos6.Mtd</td>
+                </tr>
+                <tr>
+                    <td class="der-bg-blue-4">
+                        Actual YTD
+                    </td>
+                    <td>
+                        @pos0.Ytd
+                    </td>
+                    <td>
+                        @pos1.Ytd
+                    </td>
+                    <td>
+                        @pos2.Ytd
+                    </td>
+                    <td>
+                        @pos3.Ytd
+                    </td>
+                    <td colspan="3">
+                        Total Fuel Gas (GTG-GTC-LP Fuel)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="der-bg-blue-4">
+                        ACTUAL 24H
+                    </td>
+                    <td>
+                        @pos0.Ytd
+                    </td>
+                    <td>
+                        @pos1.Ytd
+                    </td>
+                    <td>
+                        @pos2.Ytd
+                    </td>
+                    <td>
+                        @pos3.Ytd
+                    </td>
+                    <td class="der-bg-yellow">
+                        @pos7.Daily
+                    </td>
+                    <td class="der-bg-yellow">
+                        @pos8.Daily
+                    </td>
+                    <td class="der-bg-yellow">
+                        @pos9.Daily
+                    </td>
+                </tr>
+            </tbody>
+        }
+    </table>
+*@

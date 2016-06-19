@@ -381,251 +381,95 @@
                 }
                 <div class="row">
                     <div class="col-md-7">
-                        <table class="table table-bordered total-feed-gas top-bottom-border vertical-space">
-                            <thead>
-                                <tr>
-                                    <td>
-                                        TOTAL FEED GAS
-                                    </td>
-                                    <td>
-                                        ACTUAL 24H
-                                    </td>
-                                    <td>
-                                        ACTUAL MTD
-                                    </td>
-                                    <td>
-                                        ACTUAL YTD
-                                    </td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        Volume
-                                    </td>
-                                    <td>
-                                        333.68 mmscf
-                                    </td>
-                                    <td>
-                                        7,058.64 mmscf
-                                    </td>
-                                    <td>
-                                        7,058.64 mmscf
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Energy
-                                    </td>
-                                    <td>
-                                        373,265 mmbtu
-                                    </td>
-                                    <td>
-                                        7,894,592 mmbtu
-                                    </td>
-                                    <td>
-                                        7,894,592 mmbtu
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Energy
-                                    </td>
-                                    <td>
-                                        373,265 mmbtu
-                                    </td>
-                                    <td>
-                                        7,894,592 mmbtu
-                                    </td>
-                                    <td>
-                                        7,894,592 mmbtu
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4">
-                                        Feed Gas Pressure (Psig):
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        @{
+                            var row6Col0 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 0);
+                            if (row6Col0 != null)
+                            {
+
+                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row6Col0.Id})" class="layout-item"></div>
+                            }
+                        }
                     </div>
                     <div class="col-md-5">
                         <div class="impurities vertical-space">
                         </div>
                     </div>
                 </div>
-                <table class="table table-bordered top-bottom-border production">
-                    <thead>
-                        <tr>
-                            <td>PRODUCTION</td>
-                            <td colspan="3">LNG</td>
-                            <td colspan="3">
-                                CDS
-                            </td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                ACTUAL 24H
-                            </td>
-                            <td>
-                                14,031.03 m3
-                            </td>
-                            <td>
-                                6,386.90 tonnes
-                            </td>
-                            <td>
-                                329,721 mmbtu
-                            </td>
-                            <td>
-                                2,234.80 bbl
-                            </td>
-                            <td>
-                                227.96 tonnes
-                            </td>
-                            <td>
-                                10,560 mmbtu
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                ACTUAL MTD
-                            </td>
-                            <td>
-                                278,357.19 m3
-                            </td>
-                            <td>
-                                126,983.20 tonnes
-                            </td>
-                            <td>
-                                6,560,784 mmbtu
-                            </td>
-                            <td>
-                                45,790.27 bbl
-                            </td>
-                            <td>
-                                4,670.77 tonnes
-                            </td>
-                            <td>
-                                216,362 mmbtu
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>ACTUAL YTD</td>
-                            <td>
-                                278,357.19 m3
-                            </td>
-                            <td>
-                                126,983.20 tonnes
-                            </td>
-                            <td>
-                                6,560,784 mmbtu
-                            </td>
-                            <td>
-                                45,790.27 bbl
-                            </td>
-                            <td>
-                                4,670.77 tonnes
-                            </td>
-                            <td>
-                                216,362 mmbtu
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                MCHE Rundown :
-                            </td>
-                            <td>
-                                6,798.15 ton/d
-                            </td>
-                            <td>
-                                LNG HHV :
-                            </td>
-                            <td>
-                                1,099.11 btu/scf
-                            </td>
-                            <td colspan="2">
-                                CDS Reid Vapor Pressure (RVP) :
-                            </td>
-                            <td>
-                                11.32 Psia
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                @{
+                    var row7Col0 = Model.Items.FirstOrDefault(x => x.Row == 7 && x.Column == 0);
+                    if (row7Col0 != null)
+                    {
+
+                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row7Col0.Id})" class="layout-item"></div>
+                    }
+                }
                 <table class="table table-bordered tank">
                     <thead>
-                        <tr>
-                            <td colspan="2">tank</td>
-                            <td colspan="2">tank</td>
-                            <td colspan="2">tank</td>
-                            <td>tank</td>
-                        </tr>
+                    <tr>
+                        <td colspan="2">tank</td>
+                        <td colspan="2">tank</td>
+                        <td colspan="2">tank</td>
+                        <td>tank</td>
+                    </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td colspan="2">
-                                LNG Tank (071)
-                            </td>
-                            <td colspan="2">
-                                CDS Tank (079/1001)
-                            </td>
-                            <td colspan="2">
-                                CDS Buffer Tank (079/1002)
-                            </td>
-                            <td>
-                                CDS day-tank (076)
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                12,197.74 tonnes
-                            </td>
-                            <td>
-                                26,749.89 m3
-                            </td>
-                            <td>
-                                n/a
-                            </td>
-                            <td>
-                                n/a
-                            </td>
-                            <td>
-                                n/a
-                            </td>
-                            <td>
-                                n/a
-                            </td>
-                            <td>
-                                157.7 bbl
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Days to tank top
-                            </td>
-                            <td>
-                                10.9 days
-                            </td>
-                            <td>
-                                Days to tank top
-                            </td>
-                            <td>
-                                n/a
-                            </td>
-                            <td>
-                                Days to tank top
-                            </td>
-                            <td>
-                                n/a
-                            </td>
-                            <td>
-                                16.09 tonnes
-                            </td>
-                        </tr>
+
                     </tbody>
                 </table>
+                @{
+                    var row9Col0 = Model.Items.FirstOrDefault(x => x.Row == 9 && x.Column == 0);
+                    if (row9Col0 != null)
+                    {
+
+                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row9Col0.Id})" class="layout-item"></div>
+                    }
+                }
+
+                @{
+                    var row10Col0 = Model.Items.FirstOrDefault(x => x.Row == 10 && x.Column == 0);
+                    if (row10Col0 != null)
+                    {
+
+                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row10Col0.Id})" class="layout-item"></div>
+                    }
+                }
+                @{
+                    var row11Col0 = Model.Items.FirstOrDefault(x => x.Row == 11 && x.Column == 0);
+                    if (row11Col0 != null)
+                    {
+
+                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row11Col0.Id})" class="layout-item"></div>
+                    }
+                }
+                <div class="row">
+                    <div class="col-md-10">
+                        <h5 style="text-decoration: underline;">Operation Highlight &amp; Immediate Concern :</h5>
+                        @{
+                            var row12Col0 = Model.Items.FirstOrDefault(x => x.Row == 12 && x.Column == 0);
+                            if (row12Col0 != null)
+                            {
+
+                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row12Col0.Id})" class="layout-item"></div>
+                            }
+                        }
+                    </div>
+
+                    <div class="col-md-2" style="padding-top: 14px !important;">
+                        <label>Plant Mode :</label><span class="plant-mode">Holding</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <h5 style="text-decoration: underline;"> Maintenance Highlight &amp; Immediate Concern:</h5>
+                    @{
+                        var row13Col0 = Model.Items.FirstOrDefault(x => x.Row == 13 && x.Column == 0);
+                        if (row13Col0 != null)
+                        {
+
+                            <div data-url="@Url.Action("LayoutItem", "Der" , new {id= row13Col0.Id})" class="layout-item"></div>
+                        }
+                    }
+                </div>
             </div>
             <div class="col-md-6">
                 <div class="row">
@@ -650,282 +494,33 @@
                         }
                     </div>
                 </div>
-                <table class="table table-bordered top-bottom-border vertical-space plant-availability">
-                    <thead>
-                        <tr>
-                            <td class="desc">Description</td>
-                            <td>Plant Availability (hour-daily)</td>
-                            <td>
-                                Plant Thermal Efficiency
-                            </td>
-                            <td>
-                                Material Balance (Flare Loss-%)
-                            </td>
-                            <td>
-                                Plant intake
-                                Utilization
-                                (Feed/ Max.Cap)
-                            </td>
-                            <td class="second-header">
-                                Total Flared Gas
-                                (Wet-Dry-Tankage)
-                            </td>
-                            <td class="refrigerant second-header">
-                                Refrigerant Prod
-                                (C2&C3)
-                            </td>
-                            <td class="refrigerant second-header">
-                                Material Balance
-                                (Loss)
-                            </td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="left-header">
-                                ACTUAL 24H
-                            </td>
-                            <td>
-                                100.0%
-                            </td>
-                            <td>
-                                91.16%
-                            </td>
-                            <td>
-                                -0.31%
-                            </td>
-                            <td>
-                                99.61%
-                            </td>
-                            <td>
-                                6,378 nm3
-                            </td>
-                            <td rowspan="2" class="text-center" style="vertical-align:middle">
-                                34.24 mmscf
-                            </td>
-                            <td rowspan="2" class="text-center" style="vertical-align:middle">
-                                17,435 nm3
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="left-header">
-                                ACTUAL MTD
-                            </td>
-                            <td>
-                                92.4%
-                            </td>
-                            <td>
-                                85.85%
-                            </td>
-                            <td>
-                                4.67%
-                            </td>
-                            <td>
-                                91.61%
-                            </td>
-                            <td>
-                                0.24 mmscf
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="left-header">
-                                Actual-YTD
-                            </td>
-                            <td>
-                                93.0%
-                            </td>
-                            <td>
-                                89.00%
-                            </td>
-                            <td>
-                                < 2.00%
-                            </td>
-                            <td>
-                                N/A
-                            </td>
-                            <td colspan="3" class="text-center second-header">
-                                Total Fuel Gas (GTG-GTC-LP Fuel)
-                            </td>
+               @{
+                   var row6Col2 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 2);
+                   if (row6Col2 != null)
+                   {
 
-                        </tr>
-                        <tr>
-                            <td class="left-header">
-                                2016 Target
-                            </td>
-                            <td>
-                                93.0%
-                            </td>
-                            <td>
-                                89.00%
-                            </td>
-                            <td>
-                                < 2.00%
-                            </td>
-                            <td>
-                                N/A
-                            </td>
-                            <td>
-                                N/A
-                            </td>
-                            <td>
-                                34,751 mmbtu
-                            </td>
-                            <td>
-                                0.65 mmscf
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                    <div data-url="@Url.Action("LayoutItem", "Der", new {id = row6Col2.Id})" class="layout-item"></div>
+                   }
+            }
+                @{
+                    var row7Col1 = Model.Items.FirstOrDefault(x => x.Row == 7 && x.Column == 1);
+                    if (row7Col1 != null)
+                    {
 
-                <table class="table table-bordered lng-loaded top-bottom-border">
-                    <thead>
-                        <tr>
-                            <td>
-                                LNG LOADED
-                            </td>
-                            <td>
-                                m3
-                            </td>
-                            <td>
-                                tonnes
-                            </td>
-                            <td>
-                                mmbtu
-                            </td>
-                            <td class="cargo">
-                                #Cargo Shipped
-                            </td>
-                            <td class="right-header">
-                                Planned Cargoes
-                                (ADP 2016)
-                            </td>
-                            <td class="right-header">
-                                Remarks
-                            </td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                ACTUAL MTD
-                            </td>
-                            <td>
-                                382,183.00
-                            </td>
-                            <td>
-                                173,951.55
-                            </td>
-                            <td>
-                                8,990,393.42
-                            </td>
-                            <td>
-                                3.1
-                            </td>
-                            <td>
-                                1/1 QE,  1/1 KOGAS, 1/1 Spot; ttl 3/3
-                            </td>
-                            <td>
-                                On-track
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                ACTUAL YTD
-                            </td>
-                            <td>
-                                382,183.00
-                            </td>
-                            <td>
-                                173,951.55
-                            </td>
-                            <td>
-                                8,990,393
-                            </td>
-                            <td>
-                                3.1
-                            </td>
-                            <td>
-                                1/11 Kogas, 0/7 CE, 1/5 QE, 1/13 Spot; Total 3/36 cargos
-                            </td>
-                            <td>
-                                On-track
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="table table-bordered cds-loaded vertical-space">
-                    <thead>
-                        <tr>
-                            <td>
-                                CDS LOADED
-                            </td>
-                            <td>
-                                m3
-                            </td>
-                            <td>
-                                tonnes
-                            </td>
-                            <td>
-                                mmbtu
-                            </td>
-                            <td class="cargo">
-                                #Cargo Shipped
-                            </td>
-                            <td class="right-header">
-                                Note
-                            </td>
-                            <td class="right-header">
-                                Remarks
-                            </td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                ACTUAL MTD
-                            </td>
-                            <td>
-                                7,278.71
-                            </td>
-                            <td>
-                                4,669.29
-                            </td>
-                            <td>
-                                45,778.05
-                            </td>
-                            <td>
-                                2
-                            </td>
-                            <td rowspan="2">
-                                Nothing to concern
-                            </td>
-                            <td>
-                                COB:1,265 m3
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                ACTUAL MTD
-                            </td>
-                            <td>
-                                7,278.71
-                            </td>
-                            <td>
-                                4,669.29
-                            </td>
-                            <td>
-                                45,778
-                            </td>
-                            <td>
-                                2
-                            </td>
-                            <td>
-                                7,956 bbl
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="table table-bordered nls vertical-space top-bottom-border">
+                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row7Col1.Id})" class="layout-item"></div>
+                    }
+                }
+
+                @{
+                    var row8Col4 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 4);
+                    if (row8Col4 != null)
+                    {
+
+                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row8Col4.Id})" class="layout-item"></div>
+                    }
+                }
+
+                @*<table class="table table-bordered nls vertical-space top-bottom-border">
                     <thead>
                         <tr>
                             <td>
@@ -1011,7 +606,7 @@
                             </td>
                         </tr>
                     </tbody>
-                </table>
+                </table>*@
             </div>
         </div>
     </div>
@@ -1046,7 +641,7 @@
                         data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
                         || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type == "procurement" || data.type == "indicative-commercial-price" ||
                             data.type === "plant-availability" || data.type === "economic-indicator" || data.type === "mgdp" || data.type === "hhv" || data.type === "lng-and-cds-production"
-                            || data.type === "nls" || data.type === "key-equipment-status" || data.type === "wave") {
+                            || data.type === "nls" || data.type === "key-equipment-status" || data.type === "wave" || data.type==="table-tank") {
                             that.html(data.view);
                         }
                         /*else if (data.type === "weather" || data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
