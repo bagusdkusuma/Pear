@@ -400,6 +400,7 @@
             background-color: #215967;
             height: 127px;
             border: 1px solid #0D0D0D;
+            color:#fff;
         }
         
         .table.plant-availability {
@@ -829,6 +830,51 @@
         /*.table.table.kpi-fatality > tbody > tr > td:nth-last-child(2) {
             position: relative;
         }*/
+        .psig .barmeter{
+            height: 14px;
+            width: 283px;
+            position: absolute;
+            top: 2px;
+            right: 30px;
+        }
+        .barmeter-wrapper{
+            position: relative;
+            height: 100%;
+            width:100%;
+            text-align: center;
+        }
+        .barmeter-wrapper label{
+            position: absolute;
+            color:#000;
+            top:5px;
+            left: 20px;
+        }
+        .impurities .barmeter{
+            height: 30px;
+            width:100%;
+            margin-top:6px;
+        }
+        .impurities .thermometer{
+            height: 100px;
+            width:50px;
+            background: url(images/thermometer.png);
+            background-size: 100% 100%;
+            margin-top: 2px;
+            margin-left: 5px;
+        }
+        .impurities .thermometer .bar-thermo{
+            width: 27px;
+            height: 80px;
+            top: 17px;
+            left: 22px;
+            position: absolute;
+        }
+        .bar-thermo img{
+            width: 10px;
+            position: absolute;
+            top: 5px;
+            left: 9px;
+        }
     </style>
 </head>
 
@@ -1351,15 +1397,49 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="4">
+                                    <td colspan="4" class="psig">
                                         Feed Gas Pressure (Psig):
+                                        <div class="barmeter">
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="col-md-5">
-                        <div class="impurities vertical-space">
+                        <div class="impurities vertical-space text-center">
+                            <label>Impurities (24H Avg-GSA spec)</label>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="barmeter">
+                                        <label>H<span style="font-size:8px">2</span>S- ppm
+                                    </div>
+                                    <div class="barmeter">
+                                        <label>CO<span style="font-size:8px">2</span>S- ppm
+                                    </div>
+                                    <div class="barmeter">
+                                        <label>H<span style="font-size:8px">2</span>O- ppm
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                     <div class="thermometer">
+                                         <div class="bar-thermo">
+                                             <img src="images/water-drop.png" />
+                                         </div>
+                                     </div>
+                                </div>
+                                <div class="col-md-5">
+                                     <div class="barmeter">
+                                         <label>BTX-ppm</label>
+                                    </div>
+                                    <div class="barmeter">
+                                        <label>Ttl Sulphur-ppm</label>
+                                    </div>
+                                    <div class="barmeter">
+                                        <label>Hg-MRU outlet ng/nm3</label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -2542,6 +2622,91 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
         crossorigin="anonymous"></script>
+    <script>
+ 
+        $('.barmeter').each(function(i,val){
+            var $wrapper = $('<div />');
+            $wrapper.addClass('barmeter-wrapper');
+            var $this = $(val);
+            var $canvas = $('<canvas />');
+            var $label = $this.find('label').clone();
+            $this.find('label').css('display','none');
+            $canvas.css({
+                width:'100%',
+                height : '100%'
+            });
+            $wrapper.append($label);
+            $this.append($wrapper.append($canvas))
+           
+            var canvas = $this.find('canvas')[0];
+            if (canvas.getContext) {
+                var ctx = canvas.getContext("2d");
+                gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+                // Add the colors with fixed stops at 1/4 of the width.
+                gradient.addColorStop("0", "blue");
+                gradient.addColorStop(".20", "#00FF00");
+                gradient.addColorStop(".65", "#00FF00");
+                gradient.addColorStop(".70", "yellow");
+                gradient.addColorStop(".75", "orange");
+                gradient.addColorStop("1.0", "red");;
+
+                // Use the gradient.
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                // ctx.fillRect(250, 300, 600, 500);
+                ctx.fillStyle = "rgb(0,0,0)";
+                ctx.fillRect (100, 0, 6, canvas.height-30);
+
+                // the triangle
+                ctx.beginPath();
+                ctx.moveTo(100, canvas.height-30);
+                ctx.lineTo(103, canvas.height);
+                ctx.lineTo(106, canvas.height-30);
+                ctx.closePath();
+                ctx.fillStyle = "rgb(0,0,0)";
+                ctx.fill();
+            }
+        });
+
+        $('.bar-thermo').each(function(i,val){
+            var $this = $(val);
+            var $canvas = $('<canvas/>');
+             $canvas.css({
+                width:'100%',
+                height : '100%'
+            });
+            $this.append($canvas);
+            var canvas = $this.find('canvas')[0];
+            if (canvas.getContext) {
+                var ctx = canvas.getContext("2d");
+                var start = (100 - 30) * canvas.height / 100;
+                var end = canvas.height;
+                gradient = ctx.createLinearGradient(0, start, 0, end);
+                gradient.addColorStop("0", "#17375E");
+                gradient.addColorStop("1.0", "#8EB4E3");
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, start, canvas.width, 30 * canvas.height /100);
+               
+            }
+        });
+    //    var canvas = document.getElementById("barmeter");
+    //    if (canvas.getContext) {
+    //      var ctx = canvas.getContext("2d");
+    //      gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+    //      // Add the colors with fixed stops at 1/4 of the width.
+    //      gradient.addColorStop("0", "magenta");
+    //      gradient.addColorStop(".25", "blue");
+    //      gradient.addColorStop(".50", "green");
+    //      gradient.addColorStop(".75", "yellow");
+    //      gradient.addColorStop("1.0", "red");
+
+    //      // Use the gradient.
+    //      ctx.fillStyle = gradient;
+    //      ctx.fillRect(0, 0, 300, 250);
+    //      ctx.fillRect(250, 300, 600, 500);
+    //    }
+ 
+  </script>
 </body>
 
 </html>
