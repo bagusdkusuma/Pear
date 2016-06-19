@@ -1,8 +1,9 @@
 ﻿@model IEnumerable<DSLNG.PEAR.Web.ViewModels.File.FileRepositoryViewModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Management Information Reports";
 }
+
 <style type="text/css">
     .dxpc-mainDiv.DetailsPopup {
         border-width: 0px;
@@ -31,7 +32,7 @@
     .dxdvControl_DSLNG, .dxdvItem_DSLNG {
         width:100%;
     }
-    
+
     .dx-al > * {
         width: 100%;
     }
@@ -48,14 +49,14 @@
     </form>
 </div>
 <div class="add-button-wrapper" style="margin-bottom: -26px; margin-top:4px;">
-    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary"})
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
 </div>
 <table id="mir-table" class="rgw-pop-tbl table-transparent table row-border table-bordered table-responsive" cellspacing="0" width="100%">
     <thead>
         <tr>
             <th>No</th>
             <th>Month</th>
-        @*    <th>View Executive Summary</th>*@
+            @*    <th>View Executive Summary</th>*@
             <th>File Attachment</th>
             <th style="width: 200px;">Action</th>
         </tr>
@@ -70,6 +71,8 @@
         function OnPopupEndCallback(s, e) {
             alert(e);
         }
+
+
 
         var contentUrl = '@Url.Content("$x$")';
         $(document).ready(function () {
@@ -119,7 +122,7 @@
                     //    }
                     //},
                     {
-                        "mDataProp": "Filename", "name": "Filename", "className": "dt-body-left", "orderable": false,
+                        "mDataProp": "Filename", "name": "Filename", "className": "dt-body-center", "orderable": false,
                         "mRender": function (data, type, row) {
                             var viewSum = '<a class="summary" data-id="_text_" href="javascript:;"> View Executive Summary </a>'.replace('_text_', row.Id);
                             var viewlink = '<a class="viewpdf" data-id="_id_" data-name="_name_" href="javascript:;"> View File Attachment <a/>'.replace('_id_', row.Id).replace('_name_', data);
@@ -199,7 +202,7 @@
                 myTable.draw();
             });
 
-
+            
         });
 
         function UpdatePopupHeaderText(stype) {

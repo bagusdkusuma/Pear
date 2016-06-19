@@ -1,49 +1,28 @@
-﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplaySecurityViewModel
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKpiInformationViewModel
 
-<td style="background: #6898E1;">
-            <h6>Security</h6> 
-            <h6>Incident Type</h6>
-            <h6>(Act 24H)</h6>
-          </td>
-          <td style="background: #1DA4C2;">
-            <h6>@Model.SecurityViewModels.First(x => x.Position == 1).Value @Model.SecurityViewModels.First(x => x.Position == 1).KpiName</h6> 
-            <h6>@Model.SecurityViewModels.First(x => x.Position == 2).Value @Model.SecurityViewModels.First(x => x.Position == 2).KpiName</h6>
-            <h6>@Model.SecurityViewModels.First(x => x.Position == 3).Value @Model.SecurityViewModels.First(x => x.Position == 3).KpiName</h6>
-          </td>
-          <td style="background: #1DA4C2;">
-            <h6>@Model.SecurityViewModels.First(x => x.Position == 4).Value @Model.SecurityViewModels.First(x => x.Position == 4).KpiName</h6> 
-            <h6>@Model.SecurityViewModels.First(x => x.Position == 5).Value @Model.SecurityViewModels.First(x => x.Position == 5).KpiName</h6>
-            <h6>@Model.SecurityViewModels.First(x => x.Position == 6).Value @Model.SecurityViewModels.First(x => x.Position == 6).KpiName</h6>
-          </td>
-
-<@*table class="der-table">
+<table class="table borderless security-incident">
     <tr>
-        <td rowspan="3" class="der-bg-blue-1" style="text-align: left">Security Incident Type (Act 24H)</td>
-        <td class="der-bg-blue-7" style="text-align: right">@Model.SecurityViewModels.First(x => x.Position == 1).Value
+        <td>
+            <ul class="list-unstyled">
+                <li>Security</li>
+                <li>Incident Type</li>
+                <li>(Act 24H)</li>
+            </ul>
         </td>
-        <td style="width: 50%" class="der-bg-blue-7" style="text-align: left">@Model.SecurityViewModels.First(x => x.Position == 1).KpiName</td>
-    </tr>
-    <tr>
-        <td class="der-bg-blue-7">@Model.SecurityViewModels.First(x => x.Position == 2).Value</td>
-        <td class="der-bg-blue-7">@Model.SecurityViewModels.First(x => x.Position == 2).KpiName</td>
-    </tr>
-    <tr>
-        <td class="der-bg-blue-7">@Model.SecurityViewModels.First(x => x.Position == 3).Value</td>
-        <td class="der-bg-blue-7">@Model.SecurityViewModels.First(x => x.Position == 3).KpiName</td>
+        <td>
+            <ul class="list-unstyled">
+                <li>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value) Mass Gathering</li>
+                <li>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value) Road Blockade</li>
+                <li>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value) Traffic Accident</li>
+            </ul>
+        </td>
+        <td>
+            <ul class="list-unstyled">
+                <li>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value) Theft/Criminal</li>
+                <li>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value) Violence</li>
+                <li>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Value) Prop Destruction</li>
+            </ul>
+        </td>
     </tr>
 </table>
 
-<table class="der-table der-dummy">
-    <tr>
-        <td class="der-bg-blue-7">@Model.SecurityViewModels.First(x => x.Position == 4).Value</td>
-        <td class="der-bg-blue-7">@Model.SecurityViewModels.First(x => x.Position == 4).KpiName</td>
-    </tr>
-    <tr>
-        <td class="der-bg-blue-7">@Model.SecurityViewModels.First(x => x.Position == 5).Value</td>
-        <td class="der-bg-blue-7">@Model.SecurityViewModels.First(x => x.Position == 5).KpiName</td>
-    </tr>
-    <tr>
-        <td class="der-bg-blue-7">@Model.SecurityViewModels.First(x => x.Position == 6).Value</td>
-        <td class="der-bg-blue-7">@Model.SecurityViewModels.First(x => x.Position == 6).KpiName</td>
-    </tr>
-</table>*@

@@ -1,114 +1,244 @@
-﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayLngAndCdsProductionViewModel
-<table class="der-table all-border">
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKpiInformationViewModel
+<table class="table table-bordered top-bottom-border production">
     <thead>
-        <tr style="height: 31px">
-            <th class="der-bg-blue-1">PRODUCTION</th>
-            <th colspan="3" class="der-bg-blue-1">LNG</th>
-            <th colspan="3" class="der-bg-blue-8">
+        <tr>
+            <td style="width: 12.5%">PRODUCTION</td>
+            <td colspan="3">LNG</td>
+            <td colspan="3">
                 CDS
-            </th>
+            </td>
         </tr>
     </thead>
-    @{
-        var pos0 = Model.LngAndCdsProductionViewModels.Single(x => x.Position == 0);
-        var pos1 = Model.LngAndCdsProductionViewModels.Single(x => x.Position == 1);
-        var pos2 = Model.LngAndCdsProductionViewModels.Single(x => x.Position == 2);
-        var pos3 = Model.LngAndCdsProductionViewModels.Single(x => x.Position == 3);
-        var pos4 = Model.LngAndCdsProductionViewModels.Single(x => x.Position == 4);
-        var pos5 = Model.LngAndCdsProductionViewModels.Single(x => x.Position == 5);
-        var pos6 = Model.LngAndCdsProductionViewModels.Single(x => x.Position == 6);
-        var pos7 = Model.LngAndCdsProductionViewModels.Single(x => x.Position == 7);
-        var pos8 = Model.LngAndCdsProductionViewModels.Single(x => x.Position == 8);
+    <tbody>
+        <tr>
+            <td>
+                ACTUAL 24H
+            </td>
+            <td style="width: 12.5%">
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "m3")
+            </td>
+            <td style="width: 17%">
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "tonnes")
+            </td>
+            <td style="width: 17%">
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "mmbtu")
+            </td>
+            <td style="width: 11%">
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiMeasurement, "bbl")
+            </td>
+            <td style="width: 13%">
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).KpiMeasurement, "tonnes")
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Value)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).KpiMeasurement, "mmbtu")
+            </td>
+        </tr>
+        <tr>
+            <td>
+                ACTUAL MTD
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "m3")
+                
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "tonnes")
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Mtd)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "mmbtu")
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Mtd)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiMeasurement, "bbl")
 
-        <tbody>
-            <tr>
-                <td>
-                    ACTUAL 24H
-                </td>
-                <td class="der-bg-yellow">
-                    @pos0.Daily @pos0.Measurement
-                </td>
-                <td class="der-bg-yellow">
-                    @pos1.Daily @pos1.Measurement
-                </td>
-                <td>
-                    @pos2.Daily @pos2.Measurement
-                </td>
-                <td>
-                    @pos3.Daily @pos3.Measurement
-                </td>
-                <td class="der-bg-yellow">
-                    @pos4.Daily @pos4.Measurement
-                </td>
-                <td class="der-bg-yellow">
-                    @pos5.Daily @pos5.Measurement
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    ACTUAL MTD
-                </td>
-                <td>
-                    @pos0.Mtd @pos0.Measurement
-                </td>
-                <td>
-                    @pos1.Mtd @pos1.Measurement
-                </td>
-                <td>
-                    @pos2.Mtd @pos2.Measurement
-                </td>
-                <td>
-                    @pos3.Mtd @pos3.Measurement
-                </td>
-                <td>
-                    @pos4.Mtd @pos4.Measurement
-                </td>
-                <td>
-                    @pos5.Mtd @pos5.Measurement
-                </td>
-            </tr>
-            <tr>
-                <td>ACTUAL YTD</td>
-                <td>
-                    @pos0.Ytd @pos0.Measurement
-                </td>
-                <td>
-                    @pos1.Ytd @pos1.Measurement
-                </td>
-                <td>
-                    @pos2.Ytd @pos2.Measurement
-                </td>
-                <td>
-                    @pos3.Ytd @pos3.Measurement
-                </td>
-                <td>
-                    @pos4.Ytd @pos4.Measurement
-                </td>
-                <td>
-                    @pos5.Ytd @pos5.Measurement
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    MCHE Rundown :
-                </td>
-                <td>
-                    @pos6.Daily @pos6.Measurement
-                </td>
-                <td>
-                    LNG HHV :
-                </td>
-                <td>
-                    @pos7.Daily @pos7.Measurement
-                </td>
-                <td colspan="2">
-                    CDS Reid Vapor Pressure (RVP) :
-                </td>
-                <td>
-                    @pos8.Daily @pos8.Measurement
-                </td>
-            </tr>
-        </tbody>
-    }
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Mtd)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).KpiMeasurement, "tonnes")
+
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Mtd)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).KpiMeasurement, "mmbtu")
+
+            </td>
+        </tr>
+        <tr>
+            <td>ACTUAL YTD</td>
+            <td>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Ytd)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "m3")
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Ytd)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "tonnes")
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Ytd)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "mmbtu")
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Ytd)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiMeasurement, "bbl")
+
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Ytd)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).KpiMeasurement, "tonnes")
+
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Ytd)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).KpiMeasurement, "mmbtu")
+            </td>
+        </tr>
+        <tr>
+            <td>
+                MCHE Rundown :
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Ytd)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 6).KpiMeasurement, "ton/d") 
+            </td>
+            <td>
+                LNG HHV :
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Ytd)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).KpiMeasurement, "btu/scf") 
+            </td>
+            <td colspan="2">
+                CDS Reid Vapor Pressure (RVP) :
+                <span class="indicator right-side"><i class="fa fa-circle"></i></span>
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Ytd)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 8).KpiMeasurement, "Psia") 
+            </td>
+        </tr>
+    </tbody>
 </table>
 
+
+@*
+    @model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayLngAndCdsProductionViewModel
+    <table class="der-table all-border">
+        <thead>
+            <tr style="height: 31px">
+                <th class="der-bg-blue-1">PRODUCTION</th>
+                <th colspan="3" class="der-bg-blue-1">LNG</th>
+                <th colspan="3" class="der-bg-blue-8">
+                    CDS
+                </th>
+            </tr>
+        </thead>
+        @{
+            var pos0 = Model.LngAndCdsProductionViewModels.Single(x => x.Position == 0);
+            var pos1 = Model.LngAndCdsProductionViewModels.Single(x => x.Position == 1);
+            var pos2 = Model.LngAndCdsProductionViewModels.Single(x => x.Position == 2);
+            var pos3 = Model.LngAndCdsProductionViewModels.Single(x => x.Position == 3);
+            var pos4 = Model.LngAndCdsProductionViewModels.Single(x => x.Position == 4);
+            var pos5 = Model.LngAndCdsProductionViewModels.Single(x => x.Position == 5);
+            var pos6 = Model.LngAndCdsProductionViewModels.Single(x => x.Position == 6);
+            var pos7 = Model.LngAndCdsProductionViewModels.Single(x => x.Position == 7);
+            var pos8 = Model.LngAndCdsProductionViewModels.Single(x => x.Position == 8);
+
+            <tbody>
+                <tr>
+                    <td>
+                        ACTUAL 24H
+                    </td>
+                    <td class="der-bg-yellow">
+                        @pos0.Daily @pos0.Measurement
+                    </td>
+                    <td class="der-bg-yellow">
+                        @pos1.Daily @pos1.Measurement
+                    </td>
+                    <td>
+                        @pos2.Daily @pos2.Measurement
+                    </td>
+                    <td>
+                        @pos3.Daily @pos3.Measurement
+                    </td>
+                    <td class="der-bg-yellow">
+                        @pos4.Daily @pos4.Measurement
+                    </td>
+                    <td class="der-bg-yellow">
+                        @pos5.Daily @pos5.Measurement
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        ACTUAL MTD
+                    </td>
+                    <td>
+                        @pos0.Mtd @pos0.Measurement
+                    </td>
+                    <td>
+                        @pos1.Mtd @pos1.Measurement
+                    </td>
+                    <td>
+                        @pos2.Mtd @pos2.Measurement
+                    </td>
+                    <td>
+                        @pos3.Mtd @pos3.Measurement
+                    </td>
+                    <td>
+                        @pos4.Mtd @pos4.Measurement
+                    </td>
+                    <td>
+                        @pos5.Mtd @pos5.Measurement
+                    </td>
+                </tr>
+                <tr>
+                    <td>ACTUAL YTD</td>
+                    <td>
+                        @pos0.Ytd @pos0.Measurement
+                    </td>
+                    <td>
+                        @pos1.Ytd @pos1.Measurement
+                    </td>
+                    <td>
+                        @pos2.Ytd @pos2.Measurement
+                    </td>
+                    <td>
+                        @pos3.Ytd @pos3.Measurement
+                    </td>
+                    <td>
+                        @pos4.Ytd @pos4.Measurement
+                    </td>
+                    <td>
+                        @pos5.Ytd @pos5.Measurement
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        MCHE Rundown :
+                    </td>
+                    <td>
+                        @pos6.Daily @pos6.Measurement
+                    </td>
+                    <td>
+                        LNG HHV :
+                    </td>
+                    <td>
+                        @pos7.Daily @pos7.Measurement
+                    </td>
+                    <td colspan="2">
+                        CDS Reid Vapor Pressure (RVP) :
+                    </td>
+                    <td>
+                        @pos8.Daily @pos8.Measurement
+                    </td>
+                </tr>
+            </tbody>
+        }
+    </table>
+
+*@
