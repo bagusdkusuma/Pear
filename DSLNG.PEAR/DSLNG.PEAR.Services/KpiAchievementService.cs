@@ -759,6 +759,50 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
+        public GetKpiAchievementResponse GetKpiAchievement(int kpiId, DateTime date, PeriodeType periodeType)
+        {
+            var response = new GetKpiAchievementResponse();
+            try
+            {
+                var kpi = DataContext.Kpis.Include(x => x.Measurement).Single(x => x.Id == kpiId);
+                var data = DataContext.KpiAchievements.Include(x => x.Kpi).Where(x => x.Kpi.Id == kpiId && x.Periode == date).AsQueryable();
+                var result = new KpiAchievement();
+                switch (periodeType)
+                {
+                    case PeriodeType.Daily:
+                    {
+                        result = data.FirstOrDefault(x => x.PeriodeType == periodeType);
+                        break;
+                    }
+                }
+
+                var kpiResponse = new GetKpiAchievementResponse.KpiResponse
+                {
+                    Id = kpi.Id,
+                    Measurement = kpi.Measurement.Name,
+                    Name = kpi.Name,
+                    Remark = kpi.Remark,
+                };
+
+                return new GetKpiAchievementResponse
+                {
+                    Value = (result != null) ? result.Value : null,
+                    Mtd = (result != null) ? result.Mtd : null,
+                    Ytd = (result != null) ? result.Ytd : null,
+                    Itd = (result != null) ? result.Itd : null,
+                    Kpi = kpiResponse,
+                    IsSuccess = true
+                };
+            }
+            catch (Exception exception)
+            {
+                response.Message = exception.Message;
+            }
+
+
+            return response;
+        }
+
         public BaseResponse DeleteKpiAchievement(int kpiId, DateTime periode, PeriodeType periodeType)
         {
             var response = new BaseResponse();

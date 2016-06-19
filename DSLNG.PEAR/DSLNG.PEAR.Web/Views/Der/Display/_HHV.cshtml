@@ -1,4 +1,42 @@
-﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayHHVViewModel
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKpiInformationViewModel
+<table class="table table-bordered hhv vertical-space">
+    <thead>
+        <tr>
+            <td colspan="2">
+                HHV
+            </td>
+        </tr>
+        <tr>
+            <td>
+                JOB PMTS
+            </td>
+            <td>
+                MGDP
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value) @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "btu/scf")
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value) @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "N/A")
+            </td>
+        </tr>
+        <tr>
+            <td>
+                min @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value)
+            </td>
+            <td>
+                min @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value)
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+@*-
+@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayHHVViewModel
 
 <table class="der-table all-border">
     <thead>
@@ -35,3 +73,4 @@
         </tbody>
     }
 </table>
+*@

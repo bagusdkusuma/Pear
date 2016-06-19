@@ -178,6 +178,7 @@ using DSLNG.PEAR.Services.Requests.Files;
 using DSLNG.PEAR.Web.ViewModels.RolePrivilege;
 using DSLNG.PEAR.Services.Requests.Privilege;
 using DSLNG.PEAR.Services.Responses.Privilege;
+using DSLNG.PEAR.Web.ViewModels.Der.Display;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -1119,6 +1120,10 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<LineChartViewModel, SaveLayoutItemRequest.LayoutItemArtifactLine>();*/
 
             Mapper.CreateMap<WaveViewModel, SaveWaveRequest>();
+
+            Mapper.CreateMap<GetDerLayoutitemResponse.KpiInformationResponse, DisplayKpiInformationViewModel.KpiInformationViewModel>();
+            Mapper.CreateMap<GetKpiAchievementResponse, DerItemValueViewModel>();
+            Mapper.CreateMap<GetKpiTargetItemResponse, DerItemValueViewModel>();
 
         }
 

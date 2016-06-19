@@ -260,6 +260,10 @@ namespace DSLNG.PEAR.Web.Controllers
                             break;
                         }
                     case "avg-ytd-key-statistic":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 5);
+                            break;
+                        }
                     case "security":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 6);
@@ -292,7 +296,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         }
                     case "lng-and-cds":
                         {
-                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 13);
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 17);
                             break;
                         }
                     case "prepared-by":
@@ -617,7 +621,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "avg-ytd-key-statistic":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(6);
+                        viewModel.KpiInformations = GetKpiInformations(5);
                         return PartialView("LayoutType/_AvgYtdKeyStatistic", viewModel);
                     }
                 case "safety":
@@ -635,7 +639,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "lng-and-cds":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(13);
+                        viewModel.KpiInformations = GetKpiInformations(17);
                         return PartialView("LayoutType/_LngAndCds", viewModel);
                     }
                 case "dafwc":
@@ -683,7 +687,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "weekly-maintenance":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(4);
+                        viewModel.KpiInformations = GetKpiInformations(3);
                         return PartialView("LayoutType/_WeeklyMaintenance", viewModel);
                     }
                 case "critical-pm":
