@@ -8,18 +8,18 @@
     </thead>
     <tbody>
         <tr>
-            <td>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiLabel, "Feed Gas")</td>
-            <td>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiLabel, "MCHE Rundown")</td>
-            <td>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiLabel, "LNG Prod")</td>
-            <td>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiLabel, "CDS Prod")</td>
-            <td>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).KpiLabel, "Fuel Gas")</td>
+            <td>@Html.DisplayDerLabel(Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiLabel, "Feed Gas")</td>
+            <td>@Html.DisplayDerLabel(Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiLabel, "MCHE Rundown")</td>
+            <td>@Html.DisplayDerLabel(Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiLabel, "LNG Prod")</td>
+            <td>@Html.DisplayDerLabel(Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiLabel, "CDS Prod")</td>
+            <td>@Html.DisplayDerLabel(Model.KpiInformationViewModels.Single(x => x.Position == 4).KpiLabel, "Fuel Gas")</td>
         </tr>
         <tr class="avg-stats-value">
-            <td>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Ytd) @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "mmscfd")</td>
-            <td>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Ytd) @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "ton/d")</td>
-            <td>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Ytd) @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "ton/d")</td>
-            <td>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Ytd) @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiMeasurement, "bpcd")</td>
-            <td>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Ytd) @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).KpiMeasurement, "ton/d")</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "mmscfd")</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "ton/d")</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "ton/d")</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiMeasurement, "bpcd")</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 4).KpiMeasurement, "ton/d")</td>
         </tr>
         <tr class="comparison">
             <td><span class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Deviation) fa-lg"></span></td>

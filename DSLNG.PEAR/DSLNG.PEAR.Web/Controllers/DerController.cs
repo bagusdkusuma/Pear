@@ -386,7 +386,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 #region safety
                 case "safety":
                     {
-                        var viewModel = new DisplaySafetyTableViewModel();
+                        /*var viewModel = new DisplaySafetyTableViewModel();
 
                         for (int i = 1; i <= 9; i++)
                         {
@@ -411,7 +411,31 @@ namespace DSLNG.PEAR.Web.Controllers
                             }
 
                             viewModel.SafetyTableViewModels.Add(safetyTableViewModel);
-                        }
+                        }*/
+
+                        var viewModel = GetGeneralDerKpiInformations(11, layout, date, PeriodeType.Daily);
+                        var target0 = layout.KpiInformations.SingleOrDefault(x => x.Position == 0);
+                        var target1 = layout.KpiInformations.SingleOrDefault(x => x.Position == 1);
+                        var target2 = layout.KpiInformations.SingleOrDefault(x => x.Position == 2);
+                        var target3 = layout.KpiInformations.SingleOrDefault(x => x.Position == 3);
+                        var target4 = layout.KpiInformations.SingleOrDefault(x => x.Position == 4);
+                        var target5 = layout.KpiInformations.SingleOrDefault(x => x.Position == 5);
+                        var target6 = layout.KpiInformations.SingleOrDefault(x => x.Position == 6);
+                        var target7 = layout.KpiInformations.SingleOrDefault(x => x.Position == 7);
+                        var target8 = layout.KpiInformations.SingleOrDefault(x => x.Position == 8);
+                        var target9 = layout.KpiInformations.SingleOrDefault(x => x.Position == 9);
+                        var target10 = layout.KpiInformations.SingleOrDefault(x => x.Position == 10);
+                        viewModel.KpiInformationViewModels.Add(AddTarget(11, target0, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(12, target1, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(13, target2, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(14, target3, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(15, target4, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(16, target5, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(17, target6, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(18, target7, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(19, target8, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(20, target9, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(21, target10, date));
 
                         var view = RenderPartialViewToString("~/Views/Der/Display/_SafetyTable.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
@@ -771,7 +795,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 #region procurement
                 case "procurement":
                     {
-                        var viewModel = new DisplayProcurementViewModel();
+                        /*var viewModel = new DisplayProcurementViewModel();
                         for (int i = 0; i <= 3; i++)
                         {
                             var procureMentViewModel = new DisplayProcurementViewModel.ProcurementViewModel();
@@ -800,7 +824,9 @@ namespace DSLNG.PEAR.Web.Controllers
                                                                          : "n/a";
                             }
                             viewModel.ProcurementViewModels.Add(procureMentViewModel);
-                        }
+                        }*/
+
+                        var viewModel = GetGeneralDerKpiInformations(2, layout, date, PeriodeType.Daily);
                         var view = RenderPartialViewToString("~/Views/Der/Display/_Procurement.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
@@ -809,7 +835,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 #region Indicative Commercial Price
                 case "indicative-commercial-price":
                     {
-                        var viewModel = new DisplayIndicativeCommercialPriceViewModel();
+                        /*var viewModel = new DisplayIndicativeCommercialPriceViewModel();
                         for (int i = 0; i <= 3; i++)
                         {
                             var indicativeCommercialPriceViewModel = new DisplayIndicativeCommercialPriceViewModel.IndicativeCommercialPriceViewModel();
@@ -827,7 +853,9 @@ namespace DSLNG.PEAR.Web.Controllers
                                 indicativeCommercialPriceViewModel.Daily = daily.Value.HasValue ? daily.Value.Value.ToString() : "n/a";
                             }
                             viewModel.IndicativeCommercialPriceViewModels.Add(indicativeCommercialPriceViewModel);
-                        }
+                        }*/
+
+                        var viewModel = GetGeneralDerKpiInformations(3, layout, date, PeriodeType.Daily);
                         var view = RenderPartialViewToString("~/Views/Der/Display/_IndicativeCommercialPrice.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);

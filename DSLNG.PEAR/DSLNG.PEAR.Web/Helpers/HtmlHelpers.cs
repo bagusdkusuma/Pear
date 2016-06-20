@@ -78,6 +78,11 @@ namespace DSLNG.PEAR.Web.Helpers
                 : defaultVal;
         }
 
+        public static string DisplayDerLabel(this HtmlHelper htmlHelper, string val, string defaultVal)
+        {
+            return string.IsNullOrEmpty(val) ? defaultVal : val;
+        }
+
         public static string DisplayDerDeviation(this HtmlHelper htmlHelper, string deviation)
         {
             switch (deviation)
