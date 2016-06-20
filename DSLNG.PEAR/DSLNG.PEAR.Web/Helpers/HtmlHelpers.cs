@@ -77,6 +77,11 @@ namespace DSLNG.PEAR.Web.Helpers
                 string.Format("{0} {1}", RoundIt(isRounded, val), string.IsNullOrEmpty(measurement) ? defaultMeasurement : measurement) : defaultVal;
         }
 
+        public static string DisplayDerLabel(this HtmlHelper htmlHelper, string val, string defaultVal)
+        {
+            return string.IsNullOrEmpty(val) ? defaultVal : val;
+        }
+
         public static string DisplayDerDeviation(this HtmlHelper htmlHelper, string deviation)
         {
             switch (deviation)

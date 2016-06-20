@@ -281,6 +281,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             break;
                         }
                     case "economic-indicator":
+                    case "safety":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 11);
                             break;
@@ -627,7 +628,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "safety":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(9);
+                        viewModel.KpiInformations = GetKpiInformations(11);
                         return PartialView("LayoutType/_SafetyTable", viewModel);
                     }
                 case "security":

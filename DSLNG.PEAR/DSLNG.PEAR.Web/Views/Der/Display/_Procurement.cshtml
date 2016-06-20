@@ -1,4 +1,48 @@
-﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayProcurementViewModel
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKpiInformationViewModel
+<table class="table table-bordered procurement">
+    <thead>
+    <tr>
+        <td style="width: 34%">
+            PROCUREMENT
+        </td>
+        <td>
+            PO / SO (Plant Related)
+        </td>
+        <td style="width: 34%">
+            Remarks
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>
+            # Backlog
+        </td>
+        <td>
+            @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, string.Empty, string.Empty)
+        </td>
+        <td>
+           @Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Remark
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Avg Backlog time
+        </td>
+        <td>
+            <span class="indicator absolute"><i class="fa fa-circle"></i></span>
+            @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "day")
+        </td>
+        <td>
+            @Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Remark
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+
+@*
+@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayProcurementViewModel
 
 @{
     var pos0 = Model.ProcurementViewModels.Single(x => x.Position == 0);
@@ -46,3 +90,4 @@
         </tr>
     </tbody>
 </table>
+*@

@@ -1,30 +1,180 @@
-﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplaySafetyTableViewModel
-
-<table class="der-table all-border der-safety-table" style="text-align: center">
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKpiInformationViewModel
+@{
+    string[] label = { "Fatality", "DAFWC", "Env/Spill (>1bbl or >=moderate)", "LOPC", "RWC", "MTC", "First-Aid", "Near-Miss", "Traffic Incident", "Propperty Damage", "Audit/Inspection" };
+}
+<table class="table table-bordered kpi-fatality">
     <thead>
         <tr>
-            <th style="background-color: rgb(183,222,232)">KPI</th>
-            <th style="background-color: rgb(184,204,228)">ACT 24H</th>
-            <th style="background-color: rgb(184,204,228)">MTD</th>
-            <th style="background-color: rgb(184,204,228)">YTD</th>
-            <th style="background-color: rgb(184,204,228)">Annual-Target</th>
-            <th style="background-color: rgb(184,204,228)">ITD</th>
+            <td>KPI</td>
+            <td>ACT 24H</td>
+            <td>MTD</td>
+            <td>YTD</td>
+            <td>Annual-Target</td>
+            <td>ITD</td>
         </tr>
     </thead>
     <tbody>
-        @{
-            foreach (var item in Model.SafetyTableViewModels.OrderBy(x => x.Position))
-            {
-            <tr>
-                <td style="text-align: left">@item.KpiName</td>
-                <td>@item.CurrentDay</td>
-                <td>@item.Mtd</td>
-                <td style="text-align: right">@item.Ytd</td>
-                <td>@item.AnnualTarget</td>
-                <td>@item.Itd</td>
-            </tr>
-            }
-        }
+        <tr>
+            <td>@label.ElementAtOrDefault(0)</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, string.Empty, string.Empty)</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Mtd, string.Empty, string.Empty)</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Ytd, string.Empty, string.Empty)</td>
+            <td><span class="indicator absolute"><i class="fa fa-exclamation-circle" aria-hidden="true"></i></span> 
+            @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 11).DerItemValue.Value, string.Empty, string.Empty)</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Itd, string.Empty, string.Empty)</td>
+        </tr>
+        <tr>
+            <td>@label.ElementAtOrDefault(1)</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, string.Empty, string.Empty)</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Mtd, string.Empty, string.Empty)</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Ytd, string.Empty, string.Empty)</td>
+            <td><span class="indicator absolute"><i class="fa fa-circle" aria-hidden="true"></i></span> 
+            @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 12).DerItemValue.Value, string.Empty, string.Empty)</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Itd, string.Empty, string.Empty)</td>
+        </tr>
+        <tr>
+            <td>
+                @label.ElementAtOrDefault(2)
+            </td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, string.Empty, string.Empty)</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Mtd, string.Empty, string.Empty)</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Ytd, string.Empty, string.Empty)</td>
+            <td><span class="indicator absolute"><i class="fa fa-circle" aria-hidden="true"></i></span> 
+            @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 13).DerItemValue.Value, string.Empty, string.Empty)</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Itd, string.Empty, string.Empty)</td>
+        </tr>
+        <tr>
+            <td>
+                @label.ElementAtOrDefault(3)
+            </td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, string.Empty, string.Empty)</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Mtd, string.Empty, string.Empty)</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Ytd, string.Empty, string.Empty)</td>
+            <td><span class="indicator absolute"><i class="fa fa-circle" aria-hidden="true"></i></span> 
+            @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 14).DerItemValue.Value, string.Empty, string.Empty)</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Itd, string.Empty, string.Empty)</td>
+        </tr>
+        <tr>
+            <td>
+                @label.ElementAtOrDefault(4)
+            </td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value, string.Empty, string.Empty)</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Mtd, string.Empty, string.Empty)</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Ytd, string.Empty, string.Empty)</td>
+            <td><span class="indicator absolute"><i class="fa fa-circle" aria-hidden="true"></i></span> 
+            @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 15).DerItemValue.Value, string.Empty, string.Empty)</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Itd, string.Empty, string.Empty)</td>
+        </tr>
+        <tr>
+            <td>
+                @label.ElementAtOrDefault(5)
+            </td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Value, string.Empty, string.Empty)</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Mtd, string.Empty, string.Empty)</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Ytd, string.Empty, string.Empty)</td>
+            <td>
+                <span class="indicator absolute"><i class="fa fa-circle" aria-hidden="true"></i></span>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 16).DerItemValue.Value, string.Empty, string.Empty)
+            </td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Itd, string.Empty, string.Empty)</td>
+        </tr>
+        <tr>
+            <td>
+                @label.ElementAtOrDefault(6)
+            </td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Value, string.Empty, string.Empty)</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Mtd, string.Empty, string.Empty)</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Ytd, string.Empty, string.Empty)</td>
+            <td>
+                <span class="indicator absolute"><i class="fa fa-circle" aria-hidden="true"></i></span>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 16).DerItemValue.Value, string.Empty, string.Empty)
+            </td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Itd, string.Empty, string.Empty)</td>
+        </tr>
+        <tr>
+            <td>
+                @label.ElementAtOrDefault(7)
+            </td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Value, string.Empty, string.Empty)</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Mtd, string.Empty, string.Empty)</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Ytd, string.Empty, string.Empty)</td>
+            <td>
+                <span class="indicator absolute"><i class="fa fa-circle" aria-hidden="true"></i></span>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 17).DerItemValue.Value, string.Empty, string.Empty)
+            </td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Itd, string.Empty, string.Empty)</td>
+        </tr>
+        <tr>
+            <td>
+                @label.ElementAtOrDefault(8)
+            </td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Value, string.Empty, string.Empty)</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Mtd, string.Empty, string.Empty)</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Ytd, string.Empty, string.Empty)</td>
+            <td>
+                <span class="indicator absolute"><i class="fa fa-circle" aria-hidden="true"></i></span>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 18).DerItemValue.Value, string.Empty, string.Empty)
+            </td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Itd, string.Empty, string.Empty)</td>
+        </tr>
+        <tr>
+            <td>
+                @label.ElementAtOrDefault(9)
+            </td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Value, string.Empty, string.Empty)</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Mtd, string.Empty, string.Empty)</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Ytd, string.Empty, string.Empty)</td>
+            <td>
+                <span class="indicator absolute"><i class="fa fa-circle" aria-hidden="true"></i></span>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 19).DerItemValue.Value, string.Empty, string.Empty)
+            </td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Itd, string.Empty, string.Empty)</td>
+        </tr>
+        <tr>
+            <td>
+                @label.ElementAtOrDefault(10)
+            </td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Value, string.Empty, string.Empty)</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Mtd, string.Empty, string.Empty)</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Ytd, string.Empty, string.Empty)</td>
+            <td>
+                <span class="indicator absolute"><i class="fa fa-circle" aria-hidden="true"></i></span>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 20).DerItemValue.Value, string.Empty, string.Empty)
+            </td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Itd, string.Empty, string.Empty)</td>
+        </tr>
     </tbody>
 </table>
 
+@*
+    @model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplaySafetyTableViewModel
+
+    <table class="der-table all-border der-safety-table" style="text-align: center">
+        <thead>
+            <tr>
+                <th style="background-color: rgb(183,222,232)">KPI</th>
+                <th style="background-color: rgb(184,204,228)">ACT 24H</th>
+                <th style="background-color: rgb(184,204,228)">MTD</th>
+                <th style="background-color: rgb(184,204,228)">YTD</th>
+                <th style="background-color: rgb(184,204,228)">Annual-Target</th>
+                <th style="background-color: rgb(184,204,228)">ITD</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var item in Model.SafetyTableViewModels.OrderBy(x => x.Position))
+                {
+                <tr>
+                    <td style="text-align: left">@item.KpiName</td>
+                    <td>@item.CurrentDay</td>
+                    <td>@item.Mtd</td>
+                    <td style="text-align: right">@item.Ytd</td>
+                    <td>@item.AnnualTarget</td>
+                    <td>@item.Itd</td>
+                </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+*@
