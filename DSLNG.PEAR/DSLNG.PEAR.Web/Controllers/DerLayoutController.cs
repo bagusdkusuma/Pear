@@ -289,7 +289,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     case "table-tank":
                     case "global-stock-market":
                         {
-                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 12);
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 13);
                             var result = _selectService.GetHighlightTypesDropdown();
                             editViewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
                             break;
@@ -736,7 +736,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "global-stock-market":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(12);
+                        viewModel.KpiInformations = GetKpiInformations(13);
                         var result = _selectService.GetHighlightTypesDropdown();
                         viewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
                         return PartialView("LayoutType/_GlobalStockMarket", viewModel);

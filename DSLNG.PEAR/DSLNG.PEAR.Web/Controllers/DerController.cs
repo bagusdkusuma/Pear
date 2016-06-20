@@ -365,7 +365,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
                 #endregion
-                #region nls
+                #region Next Loading Schedule
                 case "nls":
                     {
                         var vesselSchedule = _vesselScheduleService.GetVesselSchedules(new GetVesselSchedulesRequest
@@ -382,7 +382,6 @@ namespace DSLNG.PEAR.Web.Controllers
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
                 #endregion
-                
                 #region safety
                 case "safety":
                     {
@@ -920,47 +919,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 #endregion
                 #region Economic Indicator
                 case "economic-indicator":
-                    {
-                        /*var viewModel = new DisplayEconomicIndicatorViewModel();
-                        for (int i = 0; i <= 10; i++)
-                        {
-                            var EconomicIndicatorViewModel = new DisplayEconomicIndicatorViewModel.EconomicIndicatorViewModel();
-                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
-                                      new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
-                            EconomicIndicatorViewModel.Position = item.Position;
-                            if (item.Kpi != null)
-                            {
-                                var request = new GetKpiValueRequest();
-                                request.ConfigType = item.ConfigType;
-                                request.KpiId = item.Kpi.Id;
-                                request.Periode = date;
-                                request.RangeFilter = RangeFilter.CurrentDay;
-                                var daily = _derService.GetKpiValue(request);
-                                request.Periode = date.AddDays(-1);
-                                var yesterday = _derService.GetKpiValue(request);
-                                if (daily.Value.HasValue && yesterday.Value.HasValue)
-                                {
-                                    if (daily.Value.Value > yesterday.Value.Value)
-                                    {
-                                        EconomicIndicatorViewModel.Progress = "up";
-                                    }
-                                    else if (yesterday.Value.Value > daily.Value.Value)
-                                    {
-                                        EconomicIndicatorViewModel.Progress = "down";
-                                    }
-                                    else
-                                    {
-                                        EconomicIndicatorViewModel.Progress = "non";
-                                    }
-                                }
-                                else
-                                {
-                                    EconomicIndicatorViewModel.Progress = "non";
-                                }
-                                EconomicIndicatorViewModel.Daily = daily.Value.HasValue ? daily.Value.Value.ToString() : "n/a";
-                            }
-                            viewModel.EconomicIndicatorViewModels.Add(EconomicIndicatorViewModel);
-                        }*/
+                    {  
                         var viewModel = GetGeneralDerKpiInformations(15, layout, date, PeriodeType.Daily);
                         var view = RenderPartialViewToString("~/Views/Der/Display/_EconomicIndicator.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
@@ -992,8 +951,16 @@ namespace DSLNG.PEAR.Web.Controllers
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
+                #endregion
+                #region Global Stock Market
+                case "global-stock-market":
+                    {
+                        var viewModel = GetGeneralDerKpiInformations(13, layout, date, PeriodeType.Daily);
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_EconomicIndicator.cshtml", viewModel);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
                     #endregion
-
             }
             return Content("Switch case does not matching");
         }

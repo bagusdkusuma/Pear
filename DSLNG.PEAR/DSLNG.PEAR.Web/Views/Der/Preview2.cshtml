@@ -599,49 +599,40 @@
         </div>
     </div>
 
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="http://code.highcharts.com/highcharts-more.js"></script>
-<script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
 
-<script src="@Url.Content("~/Scripts/der-scripts.js")"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        var currentDate = '02/18/2016';
-        $('.layout-item').each(function () {
-            var that = $(this);
-            $.ajax({
-                url: that.attr('data-url'),
-                data: { currentDate: currentDate },
-                success: function (data) {
-                    if (data.GraphicType !== undefined) {
-                        var callback = window.Der.Artifact;
-                        callback[data.GraphicType](data, that);
-                    }
-                        /*else if (data.type === "highlight") {
-                            var aneh = data.view.replace(/\"/g, "");
-                            that.html(aneh);
-                        } */else if (data.type === "highlight" || data.type === "weather" ||
-                            data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
-                        data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
-                        || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type == "procurement" || data.type == "indicative-commercial-price" ||
-                            data.type === "plant-availability" || data.type === "economic-indicator" || data.type === "mgdp" || data.type === "hhv" || data.type === "lng-and-cds-production"
-                            || data.type === "nls" || data.type === "key-equipment-status" || data.type === "wave" || data.type === "table-tank") {
+    <script src="@Url.Content("~/Scripts/der-scripts.js")"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var currentDate = '02/18/2016';
+            $('.layout-item').each(function () {
+                var that = $(this);
+                $.ajax({
+                    url: that.attr('data-url'),
+                    data: { currentDate: currentDate },
+                    success: function (data) {
+                        if (data.GraphicType !== undefined) {
+                            var callback = window.Der.Artifact;
+                            callback[data.GraphicType](data, that);
+                        } else if (data.type === "highlight" || data.type === "weather" ||
+                                data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
+                            data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
+                            || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type == "procurement" || data.type == "indicative-commercial-price" ||
+                                data.type === "plant-availability" || data.type === "economic-indicator" || data.type === "mgdp" || data.type === "hhv" || data.type === "lng-and-cds-production"
+                                || data.type === "nls" || data.type === "key-equipment-status" || data.type === "wave" || data.type === "table-tank") {
                             that.html(data.view);
                         }
-                    /*else if (data.type === "weather" || data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
-                    data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
-                    || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type === 'mgdp') {
-                        that.html(data.view);
-                    }*/
 
-                }
+                    }
+                });
             });
-        });
-    })
-</script>
+        })
+    </script>
 </body>
 </html>

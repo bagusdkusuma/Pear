@@ -96,6 +96,11 @@ namespace DSLNG.PEAR.Web.Helpers
             }
         }
 
+        public static string DisplayDerValueWithLabelFront(this HtmlHelper htmlHelper, string label, string val)
+        {
+            
+        }
+
         public static string Divide(this HtmlHelper htmlHelper, string val, int number)
         {
             if (string.IsNullOrEmpty(val)) return val;
