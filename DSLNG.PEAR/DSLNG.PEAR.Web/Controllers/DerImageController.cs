@@ -27,14 +27,15 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Preview(string secretNumber)
         {
-            if (DerImageController.SecretNumber != secretNumber) {
-                return HttpNotFound();
-            }
+            //if (DerImageController.SecretNumber != secretNumber) {
+            //    return HttpNotFound();
+            //}
             var activeDer = _derService.GetActiveDer();
             var id = activeDer.Id;
             var response = _derService.GetDerLayout(id);
             var viewModel = response.MapTo<DerDisplayViewModel>();
-            return View(viewModel);
+            return View("Preview2",viewModel);
+            //return View("~/Views/Der/Preview2.cshtml",viewModel);
         }
 	}
 }

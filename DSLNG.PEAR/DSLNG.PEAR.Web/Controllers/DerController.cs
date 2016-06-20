@@ -1076,8 +1076,8 @@ namespace DSLNG.PEAR.Web.Controllers
             }
 
             var htmlToImageConverter = new HtmlToImageConverter();
-            htmlToImageConverter.Height = 2481;
-            htmlToImageConverter.Width = 1754;
+            htmlToImageConverter.Height = Convert.ToInt32(Math.Round(2481 * 0.815));
+            htmlToImageConverter.Width = Convert.ToInt32(Math.Round(1652 * 0.815));
             var imageName = "der_" + DateTime.Now.Ticks + ".png";
             var imagePath = Path.Combine(Server.MapPath(PathConstant.DerPath), imageName);
             htmlToImageConverter.GenerateImageFromFile(displayUrl, ImageFormat.Png, imagePath);
