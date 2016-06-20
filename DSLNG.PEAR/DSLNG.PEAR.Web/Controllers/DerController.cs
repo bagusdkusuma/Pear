@@ -26,6 +26,7 @@ using NReco.PdfGenerator;
 using System.IO;
 using DSLNG.PEAR.Common.Contants;
 using DSLNG.PEAR.Services.Requests.KpiTarget;
+using DSLNG.PEAR.Web.Grid;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -56,18 +57,43 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Index()
         {
-            var response = _derService.GetActiveDer();
-            var viewModel = response.MapTo<DerIndexViewModel>();
-            return View(viewModel);
+            return View();
         }
 
-        public ActionResult Config()
+        public ActionResult Grid(GridParams gridParams)
         {
-            var response = _derService.GetDers();
-            var viewModel = new DerConfigViewModel();
-            viewModel.Ders = response.Ders.MapTo<DerViewModel>();
-            return View(viewModel);
+            var ders = _derService.GetDers(new GetDersRequest
+            {
+                Skip = gridParams.DisplayStart,
+                Take = gridParams.DisplayLength,
+                Search = gridParams.Search,
+                SortingDictionary = gridParams.SortingDictionary
+            });
+            IList<GetDersResponse.Der> DatasResponse = ders.Ders;
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = ders.TotalRecords,
+                iTotalRecords = ders.Ders.Count,
+                aaData = DatasResponse
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
+
+        //public ActionResult Index()
+        //{
+        //    var response = _derService.GetActiveDer();
+        //    var viewModel = response.MapTo<DerIndexViewModel>();
+        //    return View(viewModel);
+        //}
+
+        //public ActionResult Config()
+        //{
+        //    var response = _derService.GetDers();
+        //    var viewModel = new DerConfigViewModel();
+        //    viewModel.Ders = response.Ders.MapTo<DerViewModel>();
+        //    return View(viewModel);
+        //}
 
         public ActionResult Create()
         {

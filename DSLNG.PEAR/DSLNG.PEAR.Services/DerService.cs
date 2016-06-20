@@ -16,6 +16,7 @@ using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Der;
 using DSLNG.PEAR.Services.Responses;
 using DSLNG.PEAR.Services.Responses.Der;
+using System.Data.SqlClient;
 
 namespace DSLNG.PEAR.Services
 {
@@ -30,15 +31,52 @@ namespace DSLNG.PEAR.Services
             _kpiTargetService = kpiTargetService;
         }
 
-        public GetDersResponse GetDers()
+        public GetDersResponse GetDers(GetDersRequest request)
         {
-            var ders = DataContext.Ders.ToList();
+            int totalRecords;
+            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            if (request.Take != -1)
+            {
+                data = data.Skip(request.Skip).Take(request.Take);
+            }
             return new GetDersResponse
             {
-                IsSuccess = true,
-                Ders = ders.ToList().MapTo<GetDerResponse>()
+                TotalRecords = totalRecords,
+                Ders = data.ToList().MapTo<GetDersResponse.Der>()
             };
         }
+
+        public IEnumerable<Der> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        {
+            var data = DataContext.Ders.AsQueryable();
+            data = data.Include(x => x.GenerateBy)
+                .Include(x => x.RevisionBy);
+            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            {
+                data = data.Where(x => x.Title.Contains(search) || x.Filename.Contains(search));
+            }
+
+            foreach (var sortOrder in sortingDictionary)
+            {
+                switch (sortOrder.Key)
+                {
+                    case "Title":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Title).ThenBy(x => x.IsActive)
+                            : data.OrderByDescending(x => x.Title).ThenBy(x => x.IsActive);
+                        break;
+                    case "Date":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Date).ThenBy(x => x.IsActive)
+                            : data.OrderByDescending(x => x.Date).ThenBy(x => x.IsActive);
+                        break;
+                }
+            }
+
+            TotalRecords = data.Count();
+            return data;
+        }
+
 
         public CreateOrUpdateResponse CreateOrUpdate(CreateOrUpdateDerRequest request)
         {

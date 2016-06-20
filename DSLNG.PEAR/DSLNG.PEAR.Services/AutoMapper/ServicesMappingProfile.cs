@@ -936,6 +936,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
         private void ConfigureDer()
         {
+            Mapper.CreateMap<Der, GetDersResponse.Der>()
+                .ForMember(x => x.GenerateBy, o => o.MapFrom(s => s.GenerateBy.FullName))
+                .ForMember(x => x.RevisionBy, o => o.MapFrom(s => s.RevisionBy.FullName));
             Mapper.CreateMap<Der, GetDerResponse>();
             Mapper.CreateMap<DerLayout, GetActiveDerResponse>();
             Mapper.CreateMap<DerLayoutItem, GetActiveDerResponse.DerItem>();
