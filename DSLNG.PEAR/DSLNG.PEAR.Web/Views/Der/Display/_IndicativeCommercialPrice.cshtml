@@ -1,4 +1,40 @@
-﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayIndicativeCommercialPriceViewModel
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKpiInformationViewModel
+
+<table class="table table-bordered indicative">
+    <thead>
+    <tr>
+        <td colspan="3">
+            DSLNG Indicative Commercial Price (JCC based)-USD/mmbtu
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td style="width: 34%">
+            Feed Gas (GSA)
+        </td>
+        <td>
+            JOB @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, string.Empty, string.Empty)
+        </td>
+        <td style="width: 34%;background: #a6a6a6">
+            
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Feed Gas (GSA)
+        </td>
+        <td>
+            JOB @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, string.Empty, string.Empty)
+        </td>
+        <td>
+            DES @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, string.Empty, string.Empty)
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+@*@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayIndicativeCommercialPriceViewModel
 
 <table class="der-table all-border">
     <thead>
@@ -37,4 +73,4 @@
             </tr>
         </tbody>
     }
-</table>
+</table>*@

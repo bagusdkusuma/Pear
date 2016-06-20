@@ -25,7 +25,7 @@
 
 </head>
 <body>
-    <div class="container">
+    <div class="container a3-ratio">
         <div class="row header">
             <div class="header-left col-md-8 text-center">
                 <h5>DAILY EXECUTIVE REPORT</h5>
@@ -136,111 +136,13 @@
         </div>
         <div class="row bordered border-top-none safty-management-row">
             <div class="col-md-5">
-                <table class="table table-bordered kpi-fatality">
-                    <thead>
-                        <tr>
-                            <td>KPI</td>
-                            <td>ACT 24H</td>
-                            <td>MTD</td>
-                            <td>YTD</td>
-                            <td>Annual-Target</td>
-                            <td>ITD</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Fatality</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>Fatality</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Env/Spill (>1bbl or
-                                >=moderate)
-                            </td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>Fatality</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>Fatality</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>Fatality</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>Fatality</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>Fatality</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>Fatality</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>Fatality</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>Fatality</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                    </tbody>
-                </table>
+                @{
+                    var row3Col0 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 0);
+                    if (row3Col0 != null)
+                    {
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row3Col0.Id })" class="layout-item"></div>
+                    }
+                }
             </div>
             <div class="col-md-4">
                 <table class="qhse-remark table table-bordered">
@@ -267,27 +169,29 @@
                 </table>
                 <table class="weekly-alarm table borderless">
                     <thead>
-                    <tr>
-                        <td>
-                            WEEKLY ALARM MANAGEMENT (3 Apr-10 Apr 2016)
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>
+                                WEEKLY ALARM MANAGEMENT (3 Apr-10 Apr 2016)
+                            </td>
+                        </tr>
                     </thead>
 
                     <tbody>
-                    <tr>
-                        <td>@{
-                            var row3Col2 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 2);
-                            if (row3Col2 != null)
-                            {
-                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row3Col2.Id})" class="layout-item"></div>
-                            }
-                        }</td>
-                    </tr>
-                    
+                        <tr>
+                            <td>
+                                @{
+                                    var row3Col2 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 2);
+                                    if (row3Col2 != null)
+                                    {
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row3Col2.Id})" class="layout-item"></div>
+                                    }
+                                }
+                            </td>
+                        </tr>
+
                     </tbody>
                 </table>
-                
+
             </div>
             <div class="col-md-3">
                 <table class="table table-bordered pie">
@@ -328,7 +232,8 @@
                 @{
                     <h5 style="text-decoration: underline;">Security Remarks</h5>
                     var row4Col0 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 0);
-                    if (row4Col0 != null) { 
+                    if (row4Col0 != null)
+                    {
 
                         <div data-url="@Url.Action("LayoutItem", "Der", new {id = row4Col0.Id})" class="layout-item"></div>
                     }
@@ -405,16 +310,14 @@
                 }
                 <table class="table table-bordered tank">
                     <thead>
-                    <tr>
-                        <td colspan="2">tank</td>
-                        <td colspan="2">tank</td>
-                        <td colspan="2">tank</td>
-                        <td>tank</td>
-                    </tr>
+                        <tr>
+                            <td colspan="2">tank</td>
+                            <td colspan="2">tank</td>
+                            <td colspan="2">tank</td>
+                            <td>tank</td>
+                        </tr>
                     </thead>
-                    <tbody>
-
-                    </tbody>
+                    <tbody></tbody>
                 </table>
                 @{
                     var row9Col0 = Model.Items.FirstOrDefault(x => x.Row == 9 && x.Column == 0);
@@ -466,7 +369,7 @@
                         if (row13Col0 != null)
                         {
 
-                            <div data-url="@Url.Action("LayoutItem", "Der" , new {id= row13Col0.Id})" class="layout-item"></div>
+                            <div data-url="@Url.Action("LayoutItem", "Der", new {id = row13Col0.Id})" class="layout-item"></div>
                         }
                     }
                 </div>
@@ -479,7 +382,7 @@
                             if (row5Col1 != null)
                             {
 
-                                <div data-url="@Url.Action("LayoutItem", "Der" , new {id= row5Col1.Id})" class="layout-item"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row5Col1.Id})" class="layout-item"></div>
                             }
                         }
                     </div>
@@ -489,19 +392,19 @@
                             if (row5Col2 != null)
                             {
 
-                                <div data-url="@Url.Action("LayoutItem", "Der" , new {id= row5Col2.Id})" class="layout-item"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row5Col2.Id})" class="layout-item"></div>
                             }
                         }
                     </div>
                 </div>
-               @{
-                   var row6Col2 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 2);
-                   if (row6Col2 != null)
-                   {
+                @{
+                    var row6Col2 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 2);
+                    if (row6Col2 != null)
+                    {
 
-                    <div data-url="@Url.Action("LayoutItem", "Der", new {id = row6Col2.Id})" class="layout-item"></div>
-                   }
-            }
+                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row6Col2.Id})" class="layout-item"></div>
+                    }
+                }
                 @{
                     var row7Col1 = Model.Items.FirstOrDefault(x => x.Row == 7 && x.Column == 1);
                     if (row7Col1 != null)
@@ -519,120 +422,198 @@
                         <div data-url="@Url.Action("LayoutItem", "Der", new {id = row8Col4.Id})" class="layout-item"></div>
                     }
                 }
+            </div>
+        </div>
+        <div class="row bordered border-top-none">
+            <div class="col-md-12 text-center support proper">
+                <label>SUPPORT &amp; ENABLER PERFORMANCE</label>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-5">
+                        @{
+                            var row14Col0 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 0);
+                            if (row14Col0 != null)
+                            {
 
-                @*<table class="table table-bordered nls vertical-space top-bottom-border">
+                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row14Col0.Id})" class="layout-item"></div>
+                            }
+                        }
+
+                        @{
+                            var row15Col0 = Model.Items.FirstOrDefault(x => x.Row == 15 && x.Column == 0);
+                            if (row15Col0 != null)
+                            {
+
+                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row15Col0.Id})" class="layout-item"></div>
+                            }
+                        }
+
+                        <h5 style="text-decoration: underline;margin-top:2px">ICT Infrastructure and System Highlight </h5>
+                        <p>Normal Ops</p>
+                        <table class="table borderless ict-infra">
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td><img src="images/clip_image002_0002.png" alt="" width="52" height="25"></td>
+                                    <td>1</td>
+                                    <td><img src="images/clip_image004.png" alt="" width="52" height="25"></td>
+                                    <td>1</td>
+                                    <td><img src="images/clip_image006.png" alt="" width="52" height="25"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <h5 style="text-decoration: underline;margin-top:2px">GS &amp; FM </h5>
+                                <p>Normal Ops</p>
+                            </div>
+                            <div class="col-md-7" style="padding-top:5px !important">
+                                <u>Person-on-Board</u>: <label>247 personnel</label>
+                            </div>
+                        </div>
+
+                        <table class="table borderless gs-fm">
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td><img src="images/clip_image008.png" alt="" width="52" height="25"></td>
+                                    <td>1</td>
+                                    <td><img src="images/clip_image010.png" alt="" width="52" height="25"></td>
+                                    <td>1</td>
+                                    <td><img src="images/clip_image012.png" alt="" width="52" height="25"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-7">
+                        
+                        <table class="table table-bordered global-stock">
+                            <thead>
+                                <tr>
+                                    <td rowspan="2">Global Stock Market</td>
+                                    <td colspan="3">Forecasted Market Indicator</td>
+                                </tr>
+                                <tr>
+                                    <td>USD/JPY</td>
+                                    <td>BRENT FUT</td>
+                                    <td style="width:30%">USD/IDR</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>JKSE: 4,846.70</td>
+                                    <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>1M:107.94</td>
+                                    <td>Q2-16:39.00 USD/bbl</td>
+                                    <td><span class="comparison left-side"><i class="fa fa-minus"></i></span>1 Month:13,198</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>&gt;DJIA: 17,576.96</td>
+                                    <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>3M:107.72</td>
+                                    <td>Q3-16:41.60 USD/bbl</td>
+                                    <td><span class="comparison left-side"><i class="fa fa-minus"></i></span>3 Month:13,345</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>Nikkei 225: 15,821.52</td>
+                                    <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>6M:107.35</td>
+                                    <td>Avg-2016:40.00 USD/bbl</td>
+                                    <td><span class="comparison left-side"><i class="fa fa-minus"></i></span>6 Month:13,555</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>Shanghai SEC: 2,985.76</td>
+                                    <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>1Yr:106.47</td>
+                                    <td>Avg-2017:54.60 USD/bbl</td>
+                                    <td><span class="comparison left-side"><i class="fa fa-minus"></i></span>1 Year:14,015</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="co-macro-eco">
+                    <div class="community">
+                        <img align="right" src="images/icon-operation.png">
+                        <h5 style="text-decoration: underline;">Community relation and government engagement highlight</h5>
+                        <p>
+                            Normal Ops. CDS Vessel MT Indradi deberthed and switch over with Erawan-1. The later still being
+                            N2 purge before loading. CDS rundown recycle to day-tank.
+                        </p>
+                    </div>
+                    <div class="macro-eco">
+                        <div class="market-tone">
+                            <label>Market Tone:</label>
+                            <span class="comparison">
+                                <i class="fa fa-arrow-up"></i>
+                            </span>
+                        </div>
+                        <h5 style="text-decoration: underline;">Macro Economic/Market Flash</h5>
+                        <p>
+                            Crude reached 2016 high after report said Saudi and Russia agreed to freeze output ahead of Doha
+                            Meeting on 17 Apr with final decision will not LNG Spot DES JKM depend on Iran. Still some analyst
+                            are skeptical because the threat of high inventory and increase output once price rebound continued.
+                        </p>
+                    </div>
+
+                </div>
+                <table class="table table-bordered signature">
                     <thead>
                         <tr>
-                            <td>
-                                NEXT LOADING SCHEDULE
-                            </td>
-                            <td>
-                                Vessel
-                                (capacity)
-                            </td>
-                            <td>
-                                ETA
-                            </td>
-                            <td>
-                                ETD
-                            </td>
-                            <td>
-                                Cargo#
-                            </td>
-                            <td>
-                                Remarks
-                            </td>
+                            <td>Prepared By</td>
+                            <td>Reviewed By</td>
+                            <td>PEAR Document ID#</td>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>
-                                LNG
+                            <td class="signature">
+                                <img src="images/signature1.png">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <span class="nothing">LT07:45</span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Eko P. Yulianto</label>
+                                    </div>
+                                </div>
+                                Business Performance Sr.Specialist
+                            </td>
+                            <td class="signature">
+                                <img src="images/signature2.png">
+                                <label>Marco Maruto</label> Performance &amp; Planning Sr. Manager
                             </td>
                             <td>
-                                Maleo (125,000m3)
-                            </td>
-                            <td>
-                                20/01/2016 (arv)
-                            </td>
-                            <td>
-                                23/01/2016 (dep)
-                            </td>
-                            <td>
-                                3rd
-                            </td>
-                            <td>
-                                ADP/QE/DES at Oita Terminal, loading completed at LT13:00hrs, final COB: 125,987.237m3, sailed off at LT:17:30hrs
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                CDS
-                            </td>
-                            <td>
-                                Arin-8 (54,750bbl)
-                            </td>
-                            <td>
-                                20-Jan-16 (arv)
-                            </td>
-                            <td>
-                                TBA
-                            </td>
-                            <td>
-                                9th
-                            </td>
-                            <td>
-                                PT Titis Sampurna, loading in progress
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                LNG
-                            </td>
-                            <td>
-                                Hyundai Utopia (125,000m3)
-                            </td>
-                            <td>
-                                2-Feb-16
-                            </td>
-                            <td>
-                                TBA
-                            </td>
-                            <td>
-                                4th
-                            </td>
-                            <td>
-                                ADP/CE/DES-Chita Terminal
+                                <img src="images/strictly-sign.png">
                             </td>
                         </tr>
                     </tbody>
-                </table>*@
+                </table>
             </div>
         </div>
     </div>
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="http://code.highcharts.com/highcharts-more.js"></script>
-    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/highcharts-more.js"></script>
+<script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
 
-    <script src="@Url.Content("~/Scripts/der-scripts.js")"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            var currentDate = '02/18/2016';
-            $('.layout-item').each(function () {
-                var that = $(this);
-                $.ajax({
-                    url: that.attr('data-url'),
-                    data: { currentDate: currentDate },
-                    success: function (data) {
-                        if (data.GraphicType !== undefined) {
-                            var callback = window.Der.Artifact;
-                            callback[data.GraphicType](data, that);
-                        }
+<script src="@Url.Content("~/Scripts/der-scripts.js")"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var currentDate = '02/18/2016';
+        $('.layout-item').each(function () {
+            var that = $(this);
+            $.ajax({
+                url: that.attr('data-url'),
+                data: { currentDate: currentDate },
+                success: function (data) {
+                    if (data.GraphicType !== undefined) {
+                        var callback = window.Der.Artifact;
+                        callback[data.GraphicType](data, that);
+                    }
                         /*else if (data.type === "highlight") {
                             var aneh = data.view.replace(/\"/g, "");
                             that.html(aneh);
@@ -641,19 +622,19 @@
                         data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
                         || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type == "procurement" || data.type == "indicative-commercial-price" ||
                             data.type === "plant-availability" || data.type === "economic-indicator" || data.type === "mgdp" || data.type === "hhv" || data.type === "lng-and-cds-production"
-                            || data.type === "nls" || data.type === "key-equipment-status" || data.type === "wave" || data.type==="table-tank") {
+                            || data.type === "nls" || data.type === "key-equipment-status" || data.type === "wave" || data.type === "table-tank") {
                             that.html(data.view);
                         }
-                        /*else if (data.type === "weather" || data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
-                        data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
-                        || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type === 'mgdp') {
-                            that.html(data.view);
-                        }*/
+                    /*else if (data.type === "weather" || data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
+                    data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
+                    || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type === 'mgdp') {
+                        that.html(data.view);
+                    }*/
 
-                    }
-                });
+                }
             });
-        })
-    </script>
+        });
+    })
+</script>
 </body>
 </html>
