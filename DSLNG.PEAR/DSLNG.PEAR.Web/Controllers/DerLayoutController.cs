@@ -280,7 +280,6 @@ namespace DSLNG.PEAR.Web.Controllers
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 10);
                             break;
                         }
-                    case "economic-indicator":
                     case "safety":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 11);
@@ -293,6 +292,11 @@ namespace DSLNG.PEAR.Web.Controllers
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 12);
                             var result = _selectService.GetHighlightTypesDropdown();
                             editViewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                            break;
+                        }
+                    case "economic-indicator":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 15);
                             break;
                         }
                     case "lng-and-cds":
@@ -718,7 +722,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "economic-indicator":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(11);
+                        viewModel.KpiInformations = GetKpiInformations(15);
                         return PartialView("LayoutType/_EconomicIndicator", viewModel);
                     }
                 case "key-equipment-status":

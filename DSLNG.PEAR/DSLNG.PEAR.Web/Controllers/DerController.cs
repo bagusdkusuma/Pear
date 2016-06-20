@@ -921,7 +921,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 #region Economic Indicator
                 case "economic-indicator":
                     {
-                        var viewModel = new DisplayEconomicIndicatorViewModel();
+                        /*var viewModel = new DisplayEconomicIndicatorViewModel();
                         for (int i = 0; i <= 10; i++)
                         {
                             var EconomicIndicatorViewModel = new DisplayEconomicIndicatorViewModel.EconomicIndicatorViewModel();
@@ -960,7 +960,8 @@ namespace DSLNG.PEAR.Web.Controllers
                                 EconomicIndicatorViewModel.Daily = daily.Value.HasValue ? daily.Value.Value.ToString() : "n/a";
                             }
                             viewModel.EconomicIndicatorViewModels.Add(EconomicIndicatorViewModel);
-                        }
+                        }*/
+                        var viewModel = GetGeneralDerKpiInformations(15, layout, date, PeriodeType.Daily);
                         var view = RenderPartialViewToString("~/Views/Der/Display/_EconomicIndicator.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);

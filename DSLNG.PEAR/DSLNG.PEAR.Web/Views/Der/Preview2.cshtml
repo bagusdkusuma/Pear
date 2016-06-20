@@ -487,7 +487,14 @@
                         </table>
                     </div>
                     <div class="col-md-7">
-                        
+                        @{
+                            var row14Col1 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 1);
+                            if (row14Col1 != null)
+                            {
+
+                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row14Col1.Id})" class="layout-item"></div>
+                            }
+                        }
                         <table class="table table-bordered global-stock">
                             <thead>
                                 <tr>
