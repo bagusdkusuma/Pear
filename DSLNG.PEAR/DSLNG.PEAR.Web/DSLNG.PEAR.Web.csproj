@@ -1077,6 +1077,8 @@
     <Content Include="Views\Der\Config.cshtml" />
     <Content Include="Views\Der\Create.cshtml" />
     <Content Include="Views\Der\Index.cshtml" />
+    <Content Include="Views\DerImage\Preview2.cshtml" />
+    <None Include="Views\Der\Index.cshtml.old" />
     <Content Include="Views\Der\_ManageItem.cshtml" />
     <Content Include="Views\Der\_DialogManageItem.cshtml" />
     <Content Include="Views\DerLayout\Index.cshtml" />
@@ -1645,7 +1647,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>2043</DevelopmentServerPort>
+          <DevelopmentServerPort>21297</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:10500/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

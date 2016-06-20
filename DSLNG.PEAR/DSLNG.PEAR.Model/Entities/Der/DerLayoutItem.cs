@@ -29,6 +29,5 @@ namespace DSLNG.PEAR.Data.Entities.Der
         public ICollection<DerKpiInformation> KpiInformations { get; set; }
         public ICollection<DerOriginalData> OriginalData { get; set; } 
         public User SignedBy { get; set; }
-        public int Test { get; set; }
     }
 }

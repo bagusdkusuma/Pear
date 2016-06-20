@@ -74,8 +74,7 @@ namespace DSLNG.PEAR.Web.Helpers
             bool isRounded = true)
         {
             return !string.IsNullOrEmpty(val) ?
-                $"{RoundIt(isRounded, val)} {(string.IsNullOrEmpty(measurement) ? defaultMeasurement : measurement)}"
-                : defaultVal;
+                string.Format("{0} {1}", RoundIt(isRounded, val), string.IsNullOrEmpty(measurement) ? defaultMeasurement : measurement) : defaultVal;
         }
 
         public static string DisplayDerLabel(this HtmlHelper htmlHelper, string val, string defaultVal)
@@ -126,7 +125,7 @@ namespace DSLNG.PEAR.Web.Helpers
             bool isValidDouble = Double.TryParse(val, styles, NumberFormatInfo.InvariantInfo, out x);
             //return isValidDouble ? Str x.ToString("0:0.###") : val;
             //return isValidDouble ? string.Format("{0:0,000.###}", x) : val;
-            return isValidDouble ? $"{x:#,##0.##}" : val;
+            return isValidDouble ? string.Format("{#,##0.##}",x) : val;
         }
     }
 }

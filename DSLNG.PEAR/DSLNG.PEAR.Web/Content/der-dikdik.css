@@ -23,6 +23,7 @@
         .container.a3-ratio{
             width: 1652px;
             height: 2336px;
+            zoom:0.815;
         }
         
         .header {
@@ -851,4 +852,4 @@
             position: absolute;
             top: 5px;
             left: 9px;
-        }
+        }

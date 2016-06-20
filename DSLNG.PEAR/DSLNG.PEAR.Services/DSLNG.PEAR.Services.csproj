@@ -100,6 +100,7 @@
     <Compile Include="MirConfigurationService.cs" />
     <Compile Include="MirDataTableService.cs" />
     <Compile Include="ProcessBlueprintService.cs" />
+    <Compile Include="Requests\Der\GetDersRequest.cs" />
     <Compile Include="Requests\FileManagerRolePrivilege\FilePrivilegeRequest.cs" />
     <Compile Include="Requests\FileManagerRolePrivilege\UpdateFilePrivilegeRequest.cs" />
     <Compile Include="Requests\Files\GetFileRequest.cs" />
