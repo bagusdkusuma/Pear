@@ -982,7 +982,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "global-stock-market":
                     {
                         var viewModel = GetGeneralDerKpiInformations(13, layout, date, PeriodeType.Daily);
-                        var view = RenderPartialViewToString("~/Views/Der/Display/_EconomicIndicator.cshtml", viewModel);
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_GlobalStockMarket.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }

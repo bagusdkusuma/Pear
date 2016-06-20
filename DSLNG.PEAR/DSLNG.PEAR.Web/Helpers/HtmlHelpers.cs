@@ -95,9 +95,10 @@ namespace DSLNG.PEAR.Web.Helpers
             }
         }
 
-        public static string DisplayDerValueWithLabelFront(this HtmlHelper htmlHelper, string label, string val)
+        public static string DisplayDerValueWithLabelAtFront(this HtmlHelper htmlHelper, string measurement, string val, string defaultMeasurement, string defaultVal = "N/A", bool isRounded = true)
         {
-            
+            return !string.IsNullOrEmpty(val) ?
+                string.Format("{1} {0}", RoundIt(isRounded, val), string.IsNullOrEmpty(measurement) ? defaultMeasurement : measurement) : defaultVal;
         }
 
         public static string Divide(this HtmlHelper htmlHelper, string val, int number)

@@ -14,28 +14,81 @@
     </thead>
     <tbody>
         <tr>
-            <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>JKSE: 4,846.70</td>
-            <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>1M:107.94</td>
-            <td>Q2-16:39.00 USD/bbl</td>
-            <td><span class="comparison left-side"><i class="fa fa-minus"></i></span>1 Month:13,198</td>
+            <td>
+                <span class="comparison absolute"><i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Deviation)"></i></span>
+                @Html.DisplayDerValueWithLabelAtFront("JKSE", Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, "JSKE")
+            </td>
+            <td>
+                <span class="comparison absolute">
+                    <i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Deviation)"></i>
+                </span>
+                @Html.DisplayDerValueWithLabelAtFront("1M:", Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value, "1M:")
+            </td>
+            <td rowspan="4">Q2-16:39.00 USD/bbl</td>
+            <td>
+                <span class="comparison left-side">
+                    <i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Deviation)"></i>
+                </span>
+                @Html.DisplayDerValueWithLabelAtFront("1 Month:", Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Value, "1 Month:")
+            </td>
         </tr>
         <tr>
-            <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>&gt;DJIA: 17,576.96</td>
-            <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>3M:107.72</td>
-            <td>Q3-16:41.60 USD/bbl</td>
-            <td><span class="comparison left-side"><i class="fa fa-minus"></i></span>3 Month:13,345</td>
+            <td>
+                <span class="comparison absolute"><i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Deviation)"></i></span>
+                @Html.DisplayDerValueWithLabelAtFront("DJIA", Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, "DJIA")
+            </td>
+            <td>
+                <span class="comparison absolute">
+                    <i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Deviation)"></i>
+                </span>
+                @Html.DisplayDerValueWithLabelAtFront("3M:", Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Value, "3M:")
+            </td>
+            @*<td>Q3-16:41.60 USD/bbl</td>*@
+            <td>
+                <span class="comparison left-side">
+                    <i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Deviation)"></i>
+                </span>
+                @Html.DisplayDerValueWithLabelAtFront("3 Month:", Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Value, "3 Month:")
+            </td>
         </tr>
         <tr>
-            <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>Nikkei 225: 15,821.52</td>
-            <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>6M:107.35</td>
-            <td>Avg-2016:40.00 USD/bbl</td>
-            <td><span class="comparison left-side"><i class="fa fa-minus"></i></span>6 Month:13,555</td>
+            <td>
+                <span class="comparison absolute"><i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Deviation)"></i></span>
+                @Html.DisplayDerValueWithLabelAtFront("Nikkei 225:", Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, "Nikkei 225:")
+            </td>
+            <td>
+                <span class="comparison absolute">
+                    <i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Deviation)"></i>
+                </span>
+                @Html.DisplayDerValueWithLabelAtFront("6M:", Model.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Value, "6M:")
+            </td>
+            @*<td>Avg-2016:40.00 USD/bbl</td>*@
+            <td>
+                <span class="comparison left-side">
+                    <i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 11).DerItemValue.Deviation)"></i>
+                </span>
+                @Html.DisplayDerValueWithLabelAtFront("6 Month:", Model.KpiInformationViewModels.Single(x => x.Position == 11).DerItemValue.Value, "6 Month:")
+            </td>
         </tr>
         <tr>
-            <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>Shanghai SEC: 2,985.76</td>
-            <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>1Yr:106.47</td>
-            <td>Avg-2017:54.60 USD/bbl</td>
-            <td><span class="comparison left-side"><i class="fa fa-minus"></i></span>1 Year:14,015</td>
+            <td>
+                <span class="comparison absolute"><i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Deviation)"></i></span>
+                @Html.DisplayDerValueWithLabelAtFront("Shanghai SEC:", Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, "Shanghai SEC:")
+
+            </td>
+            <td>
+                <span class="comparison absolute">
+                    <i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Deviation)"></i>
+                </span>
+                @Html.DisplayDerValueWithLabelAtFront("1Yr:", Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Value, "1Yr:")
+            </td>
+            @*<td>Avg-2017:54.60 USD/bbl</td>*@
+            <td>
+                <span class="comparison left-side">
+                    <i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 12).DerItemValue.Deviation)"></i>
+                </span>
+                @Html.DisplayDerValueWithLabelAtFront("1 Year:", Model.KpiInformationViewModels.Single(x => x.Position == 12).DerItemValue.Value, "1 Year:")
+            </td>
         </tr>
     </tbody>
 </table>
