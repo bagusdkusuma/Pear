@@ -20,6 +20,8 @@ namespace DSLNG.PEAR.Services.Requests.Select
         public SelectType Type { get; set; }
         public int ParentId { get; set; }
         public int ParentOptionId { get; set; }
+        public bool IsDashBoard { get; set; }
+        public bool IsDer { get; set; }
         public class SelectOption
         {
             public string Value { get; set; }
