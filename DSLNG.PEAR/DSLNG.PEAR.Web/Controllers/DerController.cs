@@ -391,7 +391,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
                 #endregion
-                #region nls
+                #region Next Loading Schedule
                 case "nls":
                     {
                         var vesselSchedule = _vesselScheduleService.GetVesselSchedules(new GetVesselSchedulesRequest
@@ -408,7 +408,6 @@ namespace DSLNG.PEAR.Web.Controllers
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
                 #endregion
-                
                 #region safety
                 case "safety":
                     {
@@ -946,47 +945,8 @@ namespace DSLNG.PEAR.Web.Controllers
                 #endregion
                 #region Economic Indicator
                 case "economic-indicator":
-                    {
-                        var viewModel = new DisplayEconomicIndicatorViewModel();
-                        for (int i = 0; i <= 10; i++)
-                        {
-                            var EconomicIndicatorViewModel = new DisplayEconomicIndicatorViewModel.EconomicIndicatorViewModel();
-                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
-                                      new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
-                            EconomicIndicatorViewModel.Position = item.Position;
-                            if (item.Kpi != null)
-                            {
-                                var request = new GetKpiValueRequest();
-                                request.ConfigType = item.ConfigType;
-                                request.KpiId = item.Kpi.Id;
-                                request.Periode = date;
-                                request.RangeFilter = RangeFilter.CurrentDay;
-                                var daily = _derService.GetKpiValue(request);
-                                request.Periode = date.AddDays(-1);
-                                var yesterday = _derService.GetKpiValue(request);
-                                if (daily.Value.HasValue && yesterday.Value.HasValue)
-                                {
-                                    if (daily.Value.Value > yesterday.Value.Value)
-                                    {
-                                        EconomicIndicatorViewModel.Progress = "up";
-                                    }
-                                    else if (yesterday.Value.Value > daily.Value.Value)
-                                    {
-                                        EconomicIndicatorViewModel.Progress = "down";
-                                    }
-                                    else
-                                    {
-                                        EconomicIndicatorViewModel.Progress = "non";
-                                    }
-                                }
-                                else
-                                {
-                                    EconomicIndicatorViewModel.Progress = "non";
-                                }
-                                EconomicIndicatorViewModel.Daily = daily.Value.HasValue ? daily.Value.Value.ToString() : "n/a";
-                            }
-                            viewModel.EconomicIndicatorViewModels.Add(EconomicIndicatorViewModel);
-                        }
+                    {  
+                        var viewModel = GetGeneralDerKpiInformations(15, layout, date, PeriodeType.Daily);
                         var view = RenderPartialViewToString("~/Views/Der/Display/_EconomicIndicator.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
@@ -998,27 +958,51 @@ namespace DSLNG.PEAR.Web.Controllers
                         var viewModel = new DisplayKeyEquipmentStatusViewModel();
                         for (int i = 0; i <= 23; i++)
                         {
-                            var keyOquipmentViewModel = new DisplayKeyEquipmentStatusViewModel.KeyEquipmentStatusViewModel();
-                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
+                            var keyEquipmentViewModel = new DisplayKeyEquipmentStatusViewModel.KeyEquipmentStatusViewModel();
+                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ?? 
                                 new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
-                            keyOquipmentViewModel.Position = item.Position;
-                            var highlight =
-                           _highlightService.GetHighlightByPeriode(new GetHighlightRequest
-                           {
-                               Date = date,
-                               HighlightTypeId = item.SelectOption.Id
-                           });
-                            keyOquipmentViewModel.highlight = !string.IsNullOrEmpty(highlight.Message)
-                                                                         ? highlight.Message
-                                                                         : "n/a";
-                            viewModel.KeyEquipmentStatusViewModels.Add(keyOquipmentViewModel);
+                            keyEquipmentViewModel.Position = item.Position;
+                            string message = "N/A";
+                            if (item.SelectOption != null)
+                            {
+                                var request = new GetHighlightRequest();
+                                request.Date = date;
+                                request.HighlightTypeId = item.SelectOption.Id;
+
+                                var highlight = _highlightService.GetHighlightByPeriode(request);
+                                if (!string.IsNullOrEmpty(highlight.Message)) message = highlight.Message;
+                            }
+
+                            keyEquipmentViewModel.highlight = message;
+                            viewModel.KeyEquipmentStatusViewModels.Add(keyEquipmentViewModel);
                         }
                         var view = RenderPartialViewToString("~/Views/Der/Display/_KeyEquipmentStatus.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
+                #endregion
+                #region Global Stock Market
+                case "global-stock-market":
+                    {
+                        var viewModel = GetGeneralDerKpiInformations(13, layout, date, PeriodeType.Daily);
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_GlobalStockMarket.cshtml", viewModel);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+                #endregion
+                #region Global Stock Market
+                case "loading-duration":
+                    {
+                        var viewModel = GetGeneralDerKpiInformations(4, layout, date, PeriodeType.Daily);
+                        var target0 = layout.KpiInformations.SingleOrDefault(x => x.Position == 0);
+                        var target2 = layout.KpiInformations.SingleOrDefault(x => x.Position == 2);
+                        viewModel.KpiInformationViewModels.Add(AddTarget(4, target0, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(5, target2, date));
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_LoadingDuration.cshtml", viewModel);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
                     #endregion
-
             }
             return Content("Switch case does not matching");
         }

@@ -1211,14 +1211,25 @@
                 <tr>
                     <td>
                         @{
-                            var row11Col1 = Model.Items.FirstOrDefault(x => x.Row == 11 && x.Column == 1);
-                            if (row11Col1 != null)
+                            var row12Col1 = Model.Items.FirstOrDefault(x => x.Row == 12 && x.Column == 1);
+                            if (row12Col1 != null)
                             {
-                                <a href="@Url.Action("LayoutItem", new { column = 1, row = 11, derLayoutId = Model.DerLayoutId, id = row11Col1.Id })" class="btn btn-default">Manage</a>
+                                <a href="@Url.Action("LayoutItem", new { column = 1, row = 12, derLayoutId = Model.DerLayoutId, id = row12Col1.Id })" class="btn btn-default">Manage</a>
                             }
                             else
                             {
-                                <a href="@Url.Action("LayoutItem", new { column = 1, row = 11, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                <a href="@Url.Action("LayoutItem", new { column = 1, row = 12, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                            }
+                        }
+                        @{
+                            var row11Col1 = Model.Items.FirstOrDefault(x => x.Row == 11 && x.Column == 1);
+                            if (row11Col1 != null)
+                            {
+                                <a href="@Url.Action("LayoutItem", new {column = 1, row = 11, derLayoutId = Model.DerLayoutId, id = row11Col1.Id})" class="btn btn-default">Manage</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("LayoutItem", new {column = 1, row = 11, derLayoutId = Model.DerLayoutId, id = 0})" class="btn btn-default">Manage</a>
                             }
                         }
                     </td>

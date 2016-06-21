@@ -1,7 +1,7 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.DerLayout.DerLayoutItemViewModel
 
 @{
-    var labels = new List<string> { "Dubai ", "Brent FUT (Economic Indicator)", "Nephta FOB Sing (Economic Indicator)", "JCC Crude (Economic Indicator)", "LNG Spot DES JKM(Economic Indicator)", "Nat Gas Henry Hub (Economic Indicator)", "ICP-Ind Crude Prc (Economic Indicator)",  "Dubai Crude (FX rate)", "Brent FUT (FX rate)", "Nephta FOB Sing (FX rate)", "JCC Crude (FX rate)", "LNG Spot DES JKM(FX rate)", "Nat Gas Henry Hub (FX rate)", "ICP-Ind Crude Prc (FX rate)", "LNG Shipping Cost benchmark" };
+    var labels = new List<string> { "Loading Duration (hours)", "Avg Loading Duration (hours)", "Terminal Duration (hours)", "Avg Terminal Duration (hours)" };
     for (int i = 0; i < Model.KpiInformations.Count; i++)
     {
         var posIndex = Model.KpiInformations.FirstOrDefault(x => x.Position == i);
@@ -12,7 +12,7 @@
                 <div class="col-md-10">
                     @Html.DropDownListFor(model => model.KpiInformations[i].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
                     @Html.HiddenFor(model => model.KpiInformations[i].Position)
-                    @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes, new { style = "visibility: hidden" })
+                    @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes, new {@style="visibility: hidden"})
                     
                     <input type="hidden" name="KpiInformations.Index" value="@i" />
                 </div>

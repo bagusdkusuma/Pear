@@ -1078,6 +1078,9 @@
     <Content Include="Views\Der\Create.cshtml" />
     <Content Include="Views\Der\Index.cshtml" />
     <Content Include="Views\DerImage\Preview2.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_LoadingDuration.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_LoadingDuration.Edit.cshtml" />
+    <Content Include="Views\Der\Display\_LoadingDuration.cshtml" />
     <None Include="Views\Der\Index.cshtml.old" />
     <Content Include="Views\Der\_ManageItem.cshtml" />
     <Content Include="Views\Der\_DialogManageItem.cshtml" />
@@ -1172,6 +1175,7 @@
     <Content Include="Views\DerLayout\LayoutType\_Termometer.Edit.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_User.Edit.cshtml" />
     <Content Include="Views\Der\Preview2.cshtml" />
+    <Content Include="Views\Der\Display\_GlobalStockMarket.cshtml" />
     <None Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\SpeedometerChart\_Edit.cshtml" />
     <Content Include="Views\Tabular\_Create.cshtml" />

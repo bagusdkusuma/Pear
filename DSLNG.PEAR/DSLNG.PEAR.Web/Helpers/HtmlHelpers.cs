@@ -95,11 +95,29 @@ namespace DSLNG.PEAR.Web.Helpers
             }
         }
 
+        public static string DisplayDerValueWithLabelAtFront(this HtmlHelper htmlHelper, string measurement, string val, string defaultMeasurement, string defaultVal = "N/A", bool isRounded = true)
+        {
+            return !string.IsNullOrEmpty(val) ?
+                string.Format("{1} {0}", RoundIt(isRounded, val), string.IsNullOrEmpty(measurement) ? defaultMeasurement : measurement) : defaultVal;
+        }
+
         public static string Divide(this HtmlHelper htmlHelper, string val, int number)
         {
             if (string.IsNullOrEmpty(val)) return val;
             double x = double.Parse(val);
             return (x/number).ToString(CultureInfo.InvariantCulture);
+        }
+
+        public static string DisplayDerValueWithHours(this HtmlHelper htmlHelper, string val, string defaultVal = "N/A")
+        {
+            if (!string.IsNullOrEmpty(val))
+            {
+                double v = double.Parse(val);
+                TimeSpan span = TimeSpan.FromMinutes(v);
+                return span.ToString(@"hh\:mm");
+            }
+
+            return defaultVal;
         }
 
         private static string RoundIt(bool isRounded, string val)

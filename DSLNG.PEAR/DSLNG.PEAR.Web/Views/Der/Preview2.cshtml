@@ -428,7 +428,62 @@
                         <div data-url="@Url.Action("LayoutItem", "Der", new {id = row8Col4.Id})" class="layout-item"></div>
                     }
                 }
+
+                @{
+                    var row10Col1 = Model.Items.FirstOrDefault(x => x.Row == 10 && x.Column == 1);
+                    if (row10Col1 != null)
+                    {
+
+                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row10Col1.Id})" class="layout-item"></div>
+                    }
+                }
+
+                <div class="row">
+                    @*<div class="col-md-6">
+                        <label>Marine, Shipping and Cargo Delivery(time in HH:MM):</label>
+                        <div class="row loading-duration">
+                            <div class="col-md-4"><label>Loading Duration</label></div>
+                            <div class="col-md-4">Last Shipping:31:44 <span class="indicator right-side"><i class="fa fa-circle"></i></span></div>
+                            <div class="col-md-4">Avg YTD: 32:26</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row standard-loading">
+                            <div class="col-md-6"><label>Standard Loading time: 34 Hours</label></div>
+                            <div class="col-md-6"><label>Standard Terminal Time: 48 Hours(RTL)</label></div>
+                        </div>
+                        <div class="row ttl-terminal">
+                            <div class="col-md-6"><label>Ttl terminal time (berth-unberth)</label></div>
+                            <div class="col-md-6">Last Shipping:70:45 <span class="indicator left-side"><i class="fa fa-circle"></i></span> Avg YTD:53:36</div>
+                        </div>
+                    </div>*@
+                    @{
+                        var row12Col1 = Model.Items.FirstOrDefault(x => x.Row == 12 && x.Column == 1);
+                        if (row12Col1 != null)
+                        {
+
+                            <div data-url="@Url.Action("LayoutItem", "Der" , new {id= row12Col1.Id})" class="layout-item"></div>
+                        }
+                    }
+                </div>
             </div>
+
+            @{
+                var row11Col1 = Model.Items.FirstOrDefault(x => x.Row == 11 && x.Column == 1);
+                if (row11Col1 != null)
+                {
+
+                    <div data-url="@Url.Action("LayoutItem", "Der" , new {id= row11Col1.Id})" class="layout-item"></div>
+                }
+            }
+            @*<ul class="list-unstyled">
+                    <li><label>LNG Maleo:</label> Sailling, LOB 124,727 m3 (Net-COQ) bound to Naoetsu-Japan ETA 18 Apr 2016</li>
+                    <li><label>LNG HU:</label> Sailling to to DSLNG ETA 15 Apr 2016.</li>
+                    <li>
+                        <label>CDS Vessel:</label> MT Indradi deberthed on LT10:24 with COB 64,484bbls(COQ@15decC), MT Erawan-1
+                        Berthed on LT11:36 N2 inerting in progress.
+                    </li>
+                </ul>*@
         </div>
         <div class="row bordered border-top-none">
             <div class="col-md-12 text-center support proper">
@@ -461,11 +516,11 @@
                             <tbody>
                                 <tr>
                                     <td>1</td>
-                                    <td><img src="images/clip_image002_0002.png" alt="" width="52" height="25"></td>
+                                    <td><img src="@Url.Content("~/content/images/clip_image002.png")" alt="" width="52" height="25"></td>
                                     <td>1</td>
-                                    <td><img src="images/clip_image004.png" alt="" width="52" height="25"></td>
+                                    <td><img src="@Url.Content("~/content/images/clip_image004.png")" alt="" width="52" height="25"></td>
                                     <td>1</td>
-                                    <td><img src="images/clip_image006.png" alt="" width="52" height="25"></td>
+                                    <td><img src="@Url.Content("~/content/images/clip_image006.png")" alt="" width="52" height="25"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -483,67 +538,49 @@
                             <tbody>
                                 <tr>
                                     <td>1</td>
-                                    <td><img src="images/clip_image008.png" alt="" width="52" height="25"></td>
+                                    <td><img src="@Url.Content("~/content/images/clip_image008.png")" alt="" width="52" height="25"></td>
                                     <td>1</td>
-                                    <td><img src="images/clip_image010.png" alt="" width="52" height="25"></td>
+                                    <td><img src="@Url.Content("~/content/images/clip_image010.png")" alt="" width="52" height="25"></td>
                                     <td>1</td>
-                                    <td><img src="images/clip_image012.png" alt="" width="52" height="25"></td>
+                                    <td><img src="@Url.Content("~/content/images/clip_image012.png")" alt="" width="52" height="25"></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="col-md-7">
-                        
-                        <table class="table table-bordered global-stock">
-                            <thead>
-                                <tr>
-                                    <td rowspan="2">Global Stock Market</td>
-                                    <td colspan="3">Forecasted Market Indicator</td>
-                                </tr>
-                                <tr>
-                                    <td>USD/JPY</td>
-                                    <td>BRENT FUT</td>
-                                    <td style="width:30%">USD/IDR</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>JKSE: 4,846.70</td>
-                                    <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>1M:107.94</td>
-                                    <td>Q2-16:39.00 USD/bbl</td>
-                                    <td><span class="comparison left-side"><i class="fa fa-minus"></i></span>1 Month:13,198</td>
-                                </tr>
-                                <tr>
-                                    <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>&gt;DJIA: 17,576.96</td>
-                                    <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>3M:107.72</td>
-                                    <td>Q3-16:41.60 USD/bbl</td>
-                                    <td><span class="comparison left-side"><i class="fa fa-minus"></i></span>3 Month:13,345</td>
-                                </tr>
-                                <tr>
-                                    <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>Nikkei 225: 15,821.52</td>
-                                    <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>6M:107.35</td>
-                                    <td>Avg-2016:40.00 USD/bbl</td>
-                                    <td><span class="comparison left-side"><i class="fa fa-minus"></i></span>6 Month:13,555</td>
-                                </tr>
-                                <tr>
-                                    <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>Shanghai SEC: 2,985.76</td>
-                                    <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>1Yr:106.47</td>
-                                    <td>Avg-2017:54.60 USD/bbl</td>
-                                    <td><span class="comparison left-side"><i class="fa fa-minus"></i></span>1 Year:14,015</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        @{
+                            var row14Col1 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 1);
+                            if (row14Col1 != null)
+                            {
+
+                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row14Col1.Id})" class="layout-item"></div>
+                            }
+                        }
+                        @{
+                            var row16Col1 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 1);
+                            if (row16Col1 != null)
+                            {
+
+                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row16Col1.Id})" class="layout-item"></div>
+                            }
+                        }
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="co-macro-eco">
                     <div class="community">
-                        <img align="right" src="images/icon-operation.png">
+                        <img align="right" src="@Url.Content("~/content/images/icon-operation.png")">
                         <h5 style="text-decoration: underline;">Community relation and government engagement highlight</h5>
                         <p>
-                            Normal Ops. CDS Vessel MT Indradi deberthed and switch over with Erawan-1. The later still being
-                            N2 purge before loading. CDS rundown recycle to day-tank.
+                            @{
+                                var row14Col2 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 2);
+                                if (row14Col2 != null)
+                                {
+
+                                    <div data-url="@Url.Action("LayoutItem", "Der", new {id = row14Col2.Id})" class="layout-item"></div>
+                                }
+                            }
                         </p>
                     </div>
                     <div class="macro-eco">
@@ -555,9 +592,14 @@
                         </div>
                         <h5 style="text-decoration: underline;">Macro Economic/Market Flash</h5>
                         <p>
-                            Crude reached 2016 high after report said Saudi and Russia agreed to freeze output ahead of Doha
-                            Meeting on 17 Apr with final decision will not LNG Spot DES JKM depend on Iran. Still some analyst
-                            are skeptical because the threat of high inventory and increase output once price rebound continued.
+                            @{
+                                var row15Col1 = Model.Items.FirstOrDefault(x => x.Row == 15 && x.Column == 1);
+                                if (row15Col1 != null)
+                                {
+
+                                    <div data-url="@Url.Action("LayoutItem", "Der", new {id = row15Col1.Id})" class="layout-item"></div>
+                                }
+                            }
                         </p>
                     </div>
 
@@ -573,7 +615,7 @@
                     <tbody>
                         <tr>
                             <td class="signature">
-                                <img src="images/signature1.png">
+                                <img src="@Url.Content("~/content/images/signature1.png")">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <span class="nothing">LT07:45</span>
@@ -585,11 +627,11 @@
                                 Business Performance Sr.Specialist
                             </td>
                             <td class="signature">
-                                <img src="images/signature2.png">
+                                <img src="@Url.Content("~/content/images/signature2.png")">
                                 <label>Marco Maruto</label> Performance &amp; Planning Sr. Manager
                             </td>
                             <td>
-                                <img src="images/strictly-sign.png">
+                                <img src="@Url.Content("~/content/images/strictly-sign.png")">
                             </td>
                         </tr>
                     </tbody>
@@ -597,50 +639,42 @@
             </div>
         </div>
     </div>
+    
 
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="http://code.highcharts.com/highcharts-more.js"></script>
-<script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
 
-<script src="@Url.Content("~/Scripts/der-scripts.js")"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        var currentDate = '02/18/2016';
-        $('.layout-item').each(function () {
-            var that = $(this);
-            $.ajax({
-                url: that.attr('data-url'),
-                data: { currentDate: currentDate },
-                success: function (data) {
-                    if (data.GraphicType !== undefined) {
-                        var callback = window.Der.Artifact;
-                        callback[data.GraphicType](data, that);
-                    }
-                        /*else if (data.type === "highlight") {
-                            var aneh = data.view.replace(/\"/g, "");
-                            that.html(aneh);
-                        } */else if (data.type === "highlight" || data.type === "weather" ||
-                            data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
-                        data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
-                        || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type == "procurement" || data.type == "indicative-commercial-price" ||
-                            data.type === "plant-availability" || data.type === "economic-indicator" || data.type === "mgdp" || data.type === "hhv" || data.type === "lng-and-cds-production"
-                            || data.type === "nls" || data.type === "key-equipment-status" || data.type === "wave" || data.type === "table-tank") {
+    <script src="@Url.Content("~/Scripts/der-scripts.js")"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var currentDate = '02/18/2016';
+            $('.layout-item').each(function () {
+                var that = $(this);
+                $.ajax({
+                    url: that.attr('data-url'),
+                    data: { currentDate: currentDate },
+                    success: function (data) {
+                        if (data.GraphicType !== undefined) {
+                            var callback = window.Der.Artifact;
+                            callback[data.GraphicType](data, that);
+                        } else if (data.type === "highlight" || data.type === "weather" ||
+                                data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
+                            data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
+                            || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type == "procurement" || data.type == "indicative-commercial-price" ||
+                                data.type === "plant-availability" || data.type === "economic-indicator" || data.type === "mgdp" || data.type === "hhv" || data.type === "lng-and-cds-production"
+                                || data.type === "nls" || data.type === "key-equipment-status" || data.type === "wave" || data.type === "table-tank" || data.type === "global-stock-market" || data.type === "loading-duration") {
                             that.html(data.view);
                         }
-                    /*else if (data.type === "weather" || data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
-                    data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
-                    || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type === 'mgdp') {
-                        that.html(data.view);
-                    }*/
 
-                }
+                    }
+                });
             });
-        });
-    })
-</script>
+        })
+    </script>
 </body>
 </html>
