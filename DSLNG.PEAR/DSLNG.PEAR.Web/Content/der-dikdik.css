@@ -6,7 +6,23 @@
             background-color: #fff;
             letter-spacing:0.2px;
         }
-        
+        .container.preview {
+            zoom:0.815;
+            margin-top:90px;
+        }
+        .control {
+            height: 73px;
+            text-align: center;
+            padding-top: 19px;
+            background:#01A9E7;
+            position:fixed;
+            top:0;
+            width:100%;
+            z-index:9999;
+        }
+            .control form {
+                display:inline;
+            }
         .row {
             margin: 0;
         }

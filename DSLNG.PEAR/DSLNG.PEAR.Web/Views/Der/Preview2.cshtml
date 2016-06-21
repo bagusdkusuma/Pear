@@ -25,7 +25,13 @@
 
 </head>
 <body>
-    <div class="container a3-ratio">
+    <div class="control">
+        <a  class="btn btn-default" href="@Url.Action("Index","DER")">Back To List</a>
+        <form action="@Url.Action("Generate","DER")" method="post">
+            <input class="btn btn-primary" type="submit" value="Generate" />
+        </form>
+    </div>
+    <div class="container a3-ratio preview">
         <div class="row header">
             <div class="header-left col-md-8 text-center">
                 <h5>DAILY EXECUTIVE REPORT</h5>

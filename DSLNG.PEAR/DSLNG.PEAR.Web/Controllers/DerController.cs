@@ -1063,6 +1063,7 @@ namespace DSLNG.PEAR.Web.Controllers
             return View("Preview2", viewModel);
         }
 
+        [HttpPost]
         public ActionResult Generate()
         {
             var secretNumber = Guid.NewGuid().ToString();

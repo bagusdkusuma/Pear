@@ -293,14 +293,6 @@
     <Content Include="Content\datepicker\css\datepicker.css" />
     <Content Include="Content\datepicker\js\bootstrap-datepicker.js" />
     <Content Include="Content\der-dikdik.css" />
-    <Content Include="Content\der\der_636021013098994923.png" />
-    <Content Include="Content\der\der_636021014105272479.png" />
-    <Content Include="Content\der\der_636021014234869891.png" />
-    <Content Include="Content\der\der_636021032429200548.png" />
-    <Content Include="Content\der\der_636021034947734599.png" />
-    <Content Include="Content\der\der_636021035300784793.png" />
-    <Content Include="Content\der\der_636021035429102132.png" />
-    <Content Include="Content\der\der_636021035966292858.png" />
     <Content Include="Content\images\der\header-logo.png" />
     <Content Include="Content\images\der\icon-food.png" />
     <Content Include="Content\images\der\icon-operation.png" />
@@ -474,9 +466,6 @@
     <Content Include="Content\font-awesome\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\font-awesome\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\font-awesome\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Content\der\der_636021013357579713.pdf" />
-    <Content Include="Content\der\der_636021014211168536.pdf" />
-    <Content Include="Content\der\der_636021014263111507.pdf" />
     <None Include="Scripts\jquery-1.9.0.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.0.js" />
     <Content Include="Scripts\jquery-1.9.0.min.js" />
@@ -1603,6 +1592,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\der\" />
     <Folder Include="Content\FileManager\" />
     <Folder Include="Content\img\signature\" />
     <Folder Include="Content\signature\" />
