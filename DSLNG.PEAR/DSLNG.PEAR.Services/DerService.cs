@@ -39,10 +39,11 @@ namespace DSLNG.PEAR.Services
             {
                 data = data.Skip(request.Skip).Take(request.Take);
             }
+            var respData =  data.ToList();
             return new GetDersResponse
             {
                 TotalRecords = totalRecords,
-                Ders = data.ToList().MapTo<GetDersResponse.Der>()
+                Ders = respData.MapTo<GetDersResponse.Der>()
             };
         }
 
@@ -83,18 +84,28 @@ namespace DSLNG.PEAR.Services
             var response = new CreateOrUpdateResponse();
             try
             {
-                if (request.Id > 0)
+                var existingDer = DataContext.Ders.FirstOrDefault(s => s.Title == request.Title);
+                var user = new User { Id = request.RevisionBy };
+                DataContext.Users.Attach(user);
+                if (existingDer != null)
                 {
-                    var der = DataContext.Ders.Single(x => x.Id == request.Id);
-                    der.IsActive = request.IsActive;
-                    der.Title = request.Title;
-                    DataContext.Entry(der).State = EntityState.Modified;
+                    existingDer.IsActive = request.IsActive;
+                    existingDer.Title = request.Title;
+                    existingDer.Date = request.Date;
+                    existingDer.Filename = request.Filename;
+                    existingDer.RevisionBy = user;
+                    existingDer.Revision = existingDer.Revision + 1;
                 }
                 else
                 {
                     var der = new Der();
                     der.IsActive = request.IsActive;
                     der.Title = request.Title;
+                    der.Date = request.Date;
+                    der.Filename = request.Filename;
+                    der.RevisionBy = user;
+                    der.GenerateBy = user;
+                    der.Revision = 0;
                     DataContext.Ders.Add(der);
                 }
 
@@ -296,7 +307,9 @@ namespace DSLNG.PEAR.Services
             rowAndColumns.Add(new RowAndColumns { Row = 10, Column = 0 });
             rowAndColumns.Add(new RowAndColumns { Row = 10, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 11, Column = 0 });
+            rowAndColumns.Add(new RowAndColumns { Row = 11, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 12, Column = 0 });
+            rowAndColumns.Add(new RowAndColumns { Row = 12, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 13, Column = 0 });
             rowAndColumns.Add(new RowAndColumns { Row = 13, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 13, Column = 2 });
@@ -423,6 +436,8 @@ namespace DSLNG.PEAR.Services
                 case "indicative-commercial-price":
                 case "plant-availability":
                 case "economic-indicator":
+                case "loading-duration":
+                case "key-equipment-status":
                     {
                         try
                         {
@@ -430,7 +445,7 @@ namespace DSLNG.PEAR.Services
                                 .Include(x => x.KpiInformations)
                                 .Include(x => x.DerLayout)
                                 .Single(x => x.Id == id);
-                            var kpiInformations = new DerKpiInformation();
+                            //var kpiInformations = new DerKpiInformation();
                             foreach (var item in derLayoutItem.KpiInformations.ToList())
                             {
                                 var kpiInformation = DataContext.DerKpiInformations.Single(x => x.Id == item.Id);
@@ -529,6 +544,7 @@ namespace DSLNG.PEAR.Services
                 case "global-stock-market":
                 case "dafwc":
                 case "termometer":
+                case "loading-duration":
                     {
                         baseResponse = request.Id > 0 ? UpdateKpiInformations(request) : SaveKpiInformations(request);
                         break;
@@ -1801,5 +1817,16 @@ namespace DSLNG.PEAR.Services
 
                  return response;
              }*/
+
+
+        public GetDerResponse GetDerById(int id)
+        {
+            var der = DataContext.Ders.Single(x => x.Id == id);
+            return new GetDerResponse
+            {
+                Id = der.Id,
+                Title = der.Title
+            };
         }
+    }
 }

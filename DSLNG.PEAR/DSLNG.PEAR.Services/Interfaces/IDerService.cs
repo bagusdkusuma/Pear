@@ -12,6 +12,7 @@ namespace DSLNG.PEAR.Services.Interfaces
     public interface IDerService
     {
         GetDersResponse GetDers(GetDersRequest request);
+        GetDerResponse GetDerById(int id);
         CreateOrUpdateResponse CreateOrUpdate(CreateOrUpdateDerRequest request);
         GetActiveDerResponse GetActiveDer();
         GetDerItemResponse GetDerItem(GetDerItemRequest request);

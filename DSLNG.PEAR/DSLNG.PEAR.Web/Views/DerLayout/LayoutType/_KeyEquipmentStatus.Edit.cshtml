@@ -11,13 +11,13 @@
             <div class="form-group row">
                 <label class="control-label col-md-2">@labels.ElementAtOrDefault(i)</label>
                 <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.KpiInformations[i].HighlightId, Model.Highlights, "Select Highlight", new { style = "width:180px" })
-                    @*@Html.DropDownListFor(model => model.KpiInformations[i].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })*@
+                    @Html.DropDownListFor(model => model.KpiInformations[i].HighlightId, new SelectList(Model.Highlights, "Value", "Text", Model.KpiInformations[i].HighlightId), "Select Highlight", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.KpiInformations[i].HighlightId)
                     @Html.HiddenFor(model => model.KpiInformations[i].Position)
                     @Html.HiddenFor(model => model.KpiInformations[i].Id)
-                    @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes, new { style = "display:none" })
-                    
-                    <input type="hidden" name="KpiInformations.Index" value="@i" />
+                    @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes, new {style = "display:none"})
+
+                    <input type="hidden" name="KpiInformations.Index" value="@i"/>
                 </div>
             </div>
         }
@@ -35,8 +35,8 @@
             <div class="form-group row">
                 <label class="control-label col-md-2">@labels.ElementAtOrDefault(i)</label>
                 <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.KpiInformations[i].HighlightId, Model.Highlights, "Select Highlight", new { style = "width:180px" })
-                    @*@Html.DropDownListFor(model => model.KpiInformations[i].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })*@
+                    @Html.DropDownListFor(model => model.KpiInformations[i].HighlightId, new SelectList(Model.Highlights, "Value", "Text", Model.KpiInformations[i].HighlightId), "Select Highlight", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.KpiInformations[i].HighlightId)
                     @Html.HiddenFor(model => model.KpiInformations[i].Id)
                     @Html.HiddenFor(model => model.KpiInformations[i].Position)
                     @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes, new { style = "display:none"})
@@ -59,8 +59,8 @@
             <div class="form-group row">
                 <label class="control-label col-md-2">@labels.ElementAtOrDefault(i)</label>
                 <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.KpiInformations[i].HighlightId, Model.Highlights, "Select Highlight", new { style = "width:180px" })
-                    @*@Html.DropDownListFor(model => model.KpiInformations[i].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })*@
+                    @Html.DropDownListFor(model => model.KpiInformations[i].HighlightId, new SelectList(Model.Highlights, "Value", "Text", Model.KpiInformations[i].HighlightId), "Select Highlight", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.KpiInformations[i].HighlightId)
                     @Html.HiddenFor(model => model.KpiInformations[i].Id)
                     @Html.HiddenFor(model => model.KpiInformations[i].Position)
                     @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes, new { style = "display:none" })
@@ -83,8 +83,8 @@
             <div class="form-group row">
                 <label class="control-label col-md-2">@labels.ElementAtOrDefault(i)</label>
                 <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.KpiInformations[i].HighlightId, Model.Highlights, "Select Highlight", new { style = "width:180px" })
-                    @*@Html.DropDownListFor(model => model.KpiInformations[i].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })*@
+                    @Html.DropDownListFor(model => model.KpiInformations[i].HighlightId, new SelectList(Model.Highlights, "Value", "Text", Model.KpiInformations[i].HighlightId), "Select Highlight", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.KpiInformations[i].HighlightId)
                     @Html.HiddenFor(model => model.KpiInformations[i].Id)
                     @Html.HiddenFor(model => model.KpiInformations[i].Position)
                     @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes, new { style = "display:none" })

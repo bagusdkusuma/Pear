@@ -10,6 +10,10 @@ namespace DSLNG.PEAR.Services.Requests.Der
     {
         public int Id { get; set; }
         public string Title { get; set; }
+        public DateTime Date { get; set; }
+        public int Revision { get; set; }
+        public string Filename { get; set; }
+        public int RevisionBy { get; set; }
         public bool IsActive { get; set; }
     }
 }

@@ -232,6 +232,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         {
                             var result = _selectService.GetHighlightTypesDropdown();
                             editViewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 24);
                             for (int i = 0; i < response.KpiInformations.Count; i++)
                             {
                                 if (response.KpiInformations[i].SelectOption != null)
@@ -263,6 +264,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     case "total-feed-gas":
                     case "weekly-maintenance":
                     case "critical-pm":
+                    case "loading-duration":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 4);
                             break;
@@ -288,7 +290,6 @@ namespace DSLNG.PEAR.Web.Controllers
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 10);
                             break;
                         }
-                    case "economic-indicator":
                     case "safety":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 11);
@@ -298,9 +299,14 @@ namespace DSLNG.PEAR.Web.Controllers
                     case "table-tank":
                     case "global-stock-market":
                         {
-                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 12);
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 13);
                             var result = _selectService.GetHighlightTypesDropdown();
                             editViewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                            break;
+                        }
+                    case "economic-indicator":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 15);
                             break;
                         }
                     case "lng-and-cds":
@@ -489,6 +495,11 @@ namespace DSLNG.PEAR.Web.Controllers
                     case "11-and-0":
                         {
                             viewModel.Type = "critical-pm";
+                            break;
+                        }
+                    case "12-and-1":
+                        {
+                            viewModel.Type = "loading-duration";
                             break;
                         }
                     case "14-and-0":
@@ -726,7 +737,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "economic-indicator":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(11);
+                        viewModel.KpiInformations = GetKpiInformations(15);
                         return PartialView("LayoutType/_EconomicIndicator", viewModel);
                     }
                 case "key-equipment-status":
@@ -740,7 +751,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "global-stock-market":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(12);
+                        viewModel.KpiInformations = GetKpiInformations(13);
                         var result = _selectService.GetHighlightTypesDropdown();
                         viewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
                         return PartialView("LayoutType/_GlobalStockMarket", viewModel);
@@ -760,6 +771,13 @@ namespace DSLNG.PEAR.Web.Controllers
                         var viewModel = new DerLayoutItemViewModel();
                         viewModel.KpiInformations = GetKpiInformations(1);
                         return PartialView("LayoutType/_Termometer", viewModel);
+
+                    }
+                case "loading-duration":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(4);
+                        return PartialView("LayoutType/_LoadingDuration", viewModel);
 
                     }
             }
@@ -866,6 +884,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "global-stock-market":
                 case "dafwc":
                 case "termometer":
+                case "loading-duration":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();

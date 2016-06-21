@@ -1,11 +1,28 @@
 ﻿body {
             font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
-            font-size: 10px;
+            font-size: 12px;
             line-height: 1;
-            color: #0D0D0D;
+            color: #000;
             background-color: #fff;
+            letter-spacing:0.2px;
         }
-        
+        .container.preview {
+            zoom:0.815;
+            margin-top:90px;
+        }
+        .control {
+            height: 73px;
+            text-align: center;
+            padding-top: 19px;
+            background:#01A9E7;
+            position:fixed;
+            top:0;
+            width:100%;
+            z-index:9999;
+        }
+            .control form {
+                display:inline;
+            }
         .row {
             margin: 0;
         }
@@ -23,7 +40,7 @@
         .container.a3-ratio{
             width: 1652px;
             height: 2336px;
-            zoom:0.815;
+            /*zoom:0.815;*/
         }
         
         .header {

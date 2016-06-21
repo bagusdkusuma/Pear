@@ -293,6 +293,12 @@
     <Content Include="Content\datepicker\css\datepicker.css" />
     <Content Include="Content\datepicker\js\bootstrap-datepicker.js" />
     <Content Include="Content\der-dikdik.css" />
+    <Content Include="Content\images\clip_image002.png" />
+    <Content Include="Content\images\clip_image004.png" />
+    <Content Include="Content\images\clip_image006.png" />
+    <Content Include="Content\images\clip_image008.png" />
+    <Content Include="Content\images\clip_image010.png" />
+    <Content Include="Content\images\clip_image012.png" />
     <Content Include="Content\images\der\header-logo.png" />
     <Content Include="Content\images\der\icon-food.png" />
     <Content Include="Content\images\der\icon-operation.png" />
@@ -305,19 +311,29 @@
     <Content Include="Content\images\back_enabled.png" />
     <Content Include="Content\images\back_enabled_hover.png" />
     <Content Include="Content\images\doc.png" />
+    <Content Include="Content\images\eko-ttd.png" />
     <Content Include="Content\images\excel.png" />
     <Content Include="Content\images\forward_disabled.png" />
     <Content Include="Content\images\forward_enabled.png" />
     <Content Include="Content\images\forward_enabled_hover.png" />
     <Content Include="Content\images\header-logo.png" />
+    <Content Include="Content\images\icon-operation.png" />
     <Content Include="Content\images\image.png" />
+    <Content Include="Content\images\marko-ttd.png" />
     <Content Include="Content\images\pdf.png" />
     <Content Include="Content\images\ppt.png" />
+    <Content Include="Content\images\signature1.png" />
+    <Content Include="Content\images\signature2.png" />
     <Content Include="Content\images\sort_asc.png" />
     <Content Include="Content\images\sort_asc_disabled.png" />
     <Content Include="Content\images\sort_both.png" />
     <Content Include="Content\images\sort_desc.png" />
     <Content Include="Content\images\sort_desc_disabled.png" />
+    <Content Include="Content\images\strictly-sign.png" />
+    <Content Include="Content\images\suhu.png" />
+    <Content Include="Content\images\thermometer.png" />
+    <Content Include="Content\images\water-drop.png" />
+    <Content Include="Content\images\water.png" />
     <Content Include="Content\img\active.png" />
     <Content Include="Content\img\ajax-loader.gif" />
     <Content Include="Content\img\ajax-loader1.gif" />
@@ -1079,6 +1095,10 @@
     <Content Include="Views\Der\Index.cshtml" />
     <Content Include="Views\DerImage\Preview2.cshtml" />
     <Content Include="Views\DerLayout\Config2.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_LoadingDuration.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_LoadingDuration.Edit.cshtml" />
+    <Content Include="Views\Der\Display\_LoadingDuration.cshtml" />
+    <Content Include="Views\Der\Display\_SignedBy.cshtml" />
     <None Include="Views\Der\Index.cshtml.old" />
     <Content Include="Views\Der\_ManageItem.cshtml" />
     <Content Include="Views\Der\_DialogManageItem.cshtml" />
@@ -1173,6 +1193,7 @@
     <Content Include="Views\DerLayout\LayoutType\_Termometer.Edit.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_User.Edit.cshtml" />
     <Content Include="Views\Der\Preview2.cshtml" />
+    <Content Include="Views\Der\Display\_GlobalStockMarket.cshtml" />
     <None Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\SpeedometerChart\_Edit.cshtml" />
     <Content Include="Views\Tabular\_Create.cshtml" />
@@ -1593,6 +1614,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\der\" />
     <Folder Include="Content\FileManager\" />
     <Folder Include="Content\img\signature\" />
     <Folder Include="Content\signature\" />
