@@ -224,6 +224,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         {
                             var result = _selectService.GetHighlightTypesDropdown();
                             editViewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 24);
                             for (int i = 0; i < response.KpiInformations.Count; i++)
                             {
                                 if (response.KpiInformations[i].SelectOption != null)
@@ -255,6 +256,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     case "total-feed-gas":
                     case "weekly-maintenance":
                     case "critical-pm":
+                    case "loading-duration":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 4);
                             break;
@@ -485,6 +487,11 @@ namespace DSLNG.PEAR.Web.Controllers
                     case "11-and-0":
                         {
                             viewModel.Type = "critical-pm";
+                            break;
+                        }
+                    case "12-and-1":
+                        {
+                            viewModel.Type = "loading-duration";
                             break;
                         }
                     case "14-and-0":
@@ -758,6 +765,13 @@ namespace DSLNG.PEAR.Web.Controllers
                         return PartialView("LayoutType/_Termometer", viewModel);
 
                     }
+                case "loading-duration":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(4);
+                        return PartialView("LayoutType/_LoadingDuration", viewModel);
+
+                    }
             }
 
             return Content("Error");
@@ -862,6 +876,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "global-stock-market":
                 case "dafwc":
                 case "termometer":
+                case "loading-duration":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();

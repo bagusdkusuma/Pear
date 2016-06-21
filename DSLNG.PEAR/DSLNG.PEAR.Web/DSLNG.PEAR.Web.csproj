@@ -1078,6 +1078,9 @@
     <Content Include="Views\Der\Create.cshtml" />
     <Content Include="Views\Der\Index.cshtml" />
     <Content Include="Views\DerImage\Preview2.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_LoadingDuration.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_LoadingDuration.Edit.cshtml" />
+    <Content Include="Views\Der\Display\_LoadingDuration.cshtml" />
     <None Include="Views\Der\Index.cshtml.old" />
     <Content Include="Views\Der\_ManageItem.cshtml" />
     <Content Include="Views\Der\_DialogManageItem.cshtml" />

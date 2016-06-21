@@ -296,7 +296,9 @@ namespace DSLNG.PEAR.Services
             rowAndColumns.Add(new RowAndColumns { Row = 10, Column = 0 });
             rowAndColumns.Add(new RowAndColumns { Row = 10, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 11, Column = 0 });
+            rowAndColumns.Add(new RowAndColumns { Row = 11, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 12, Column = 0 });
+            rowAndColumns.Add(new RowAndColumns { Row = 12, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 13, Column = 0 });
             rowAndColumns.Add(new RowAndColumns { Row = 13, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 13, Column = 2 });
@@ -423,6 +425,8 @@ namespace DSLNG.PEAR.Services
                 case "indicative-commercial-price":
                 case "plant-availability":
                 case "economic-indicator":
+                case "loading-duration":
+                case "key-equipment-status":
                     {
                         try
                         {
@@ -430,7 +434,7 @@ namespace DSLNG.PEAR.Services
                                 .Include(x => x.KpiInformations)
                                 .Include(x => x.DerLayout)
                                 .Single(x => x.Id == id);
-                            var kpiInformations = new DerKpiInformation();
+                            //var kpiInformations = new DerKpiInformation();
                             foreach (var item in derLayoutItem.KpiInformations.ToList())
                             {
                                 var kpiInformation = DataContext.DerKpiInformations.Single(x => x.Id == item.Id);
@@ -529,6 +533,7 @@ namespace DSLNG.PEAR.Services
                 case "global-stock-market":
                 case "dafwc":
                 case "termometer":
+                case "loading-duration":
                     {
                         baseResponse = request.Id > 0 ? UpdateKpiInformations(request) : SaveKpiInformations(request);
                         break;

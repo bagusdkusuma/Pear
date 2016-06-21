@@ -958,20 +958,23 @@ namespace DSLNG.PEAR.Web.Controllers
                         var viewModel = new DisplayKeyEquipmentStatusViewModel();
                         for (int i = 0; i <= 23; i++)
                         {
-                            var keyOquipmentViewModel = new DisplayKeyEquipmentStatusViewModel.KeyEquipmentStatusViewModel();
-                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
+                            var keyEquipmentViewModel = new DisplayKeyEquipmentStatusViewModel.KeyEquipmentStatusViewModel();
+                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ?? 
                                 new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
-                            keyOquipmentViewModel.Position = item.Position;
-                            var highlight =
-                           _highlightService.GetHighlightByPeriode(new GetHighlightRequest
-                           {
-                               Date = date,
-                               HighlightTypeId = item.SelectOption.Id
-                           });
-                            keyOquipmentViewModel.highlight = !string.IsNullOrEmpty(highlight.Message)
-                                                                         ? highlight.Message
-                                                                         : "n/a";
-                            viewModel.KeyEquipmentStatusViewModels.Add(keyOquipmentViewModel);
+                            keyEquipmentViewModel.Position = item.Position;
+                            string message = "N/A";
+                            if (item.SelectOption != null)
+                            {
+                                var request = new GetHighlightRequest();
+                                request.Date = date;
+                                request.HighlightTypeId = item.SelectOption.Id;
+
+                                var highlight = _highlightService.GetHighlightByPeriode(request);
+                                if (!string.IsNullOrEmpty(highlight.Message)) message = highlight.Message;
+                            }
+
+                            keyEquipmentViewModel.highlight = message;
+                            viewModel.KeyEquipmentStatusViewModels.Add(keyEquipmentViewModel);
                         }
                         var view = RenderPartialViewToString("~/Views/Der/Display/_KeyEquipmentStatus.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
@@ -983,6 +986,19 @@ namespace DSLNG.PEAR.Web.Controllers
                     {
                         var viewModel = GetGeneralDerKpiInformations(13, layout, date, PeriodeType.Daily);
                         var view = RenderPartialViewToString("~/Views/Der/Display/_GlobalStockMarket.cshtml", viewModel);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+                #endregion
+                #region Global Stock Market
+                case "loading-duration":
+                    {
+                        var viewModel = GetGeneralDerKpiInformations(4, layout, date, PeriodeType.Daily);
+                        var target0 = layout.KpiInformations.SingleOrDefault(x => x.Position == 0);
+                        var target2 = layout.KpiInformations.SingleOrDefault(x => x.Position == 2);
+                        viewModel.KpiInformationViewModels.Add(AddTarget(4, target0, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(5, target2, date));
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_LoadingDuration.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }

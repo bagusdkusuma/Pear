@@ -108,6 +108,18 @@ namespace DSLNG.PEAR.Web.Helpers
             return (x/number).ToString(CultureInfo.InvariantCulture);
         }
 
+        public static string DisplayDerValueWithHours(this HtmlHelper htmlHelper, string val, string defaultVal = "N/A")
+        {
+            if (!string.IsNullOrEmpty(val))
+            {
+                double v = double.Parse(val);
+                TimeSpan span = TimeSpan.FromMinutes(v);
+                return span.ToString(@"hh\:mm");
+            }
+
+            return defaultVal;
+        }
+
         private static string RoundIt(bool isRounded, string val)
         {
             if (isRounded)

@@ -12,6 +12,7 @@
                 <label class="control-label col-md-2">@labels.ElementAtOrDefault(i)</label>
                 <div class="col-md-10">
                     @Html.DropDownListFor(model => model.KpiInformations[i].HighlightId, Model.Highlights, "Select Highlight", new { style = "width:180px" })
+                    @Html.ValidationMessageFor(model => model.KpiInformations[i].HighlightId)
                     @*@Html.DropDownListFor(model => model.KpiInformations[i].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })*@
                     @Html.HiddenFor(model => model.KpiInformations[i].Position)
                     @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes, new { style = "display:none" })
