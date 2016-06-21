@@ -1,9 +1,9 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.DerLayout.DerLayoutItemViewModel
 
 @{
-    string[] label = { "Feed Gas", "MCHE Rundown", "LNG Prod", "CDS Prod", "Fuel Gas", "Loss" };
+    string[] label = { "Feed Gas (mmscfd)", "MCHE Rundown (ton/d)", "LNG Prod (ton/d)", "CDS Prod (bcpd)", "Fuel Gas (ton/d)" };
     var a = 0;
-    for (int i = 0; i <= 6; i++)
+    for (int i = 0; i < 5; i++)
     {
 
         var posIndex = Model.KpiInformations.FirstOrDefault(x => x.Position == i);

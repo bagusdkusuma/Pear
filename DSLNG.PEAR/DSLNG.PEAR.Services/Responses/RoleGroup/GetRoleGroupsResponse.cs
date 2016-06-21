@@ -19,6 +19,15 @@ namespace DSLNG.PEAR.Services.Responses.RoleGroup
             public bool IsActive { get; set; }
             public Level Level { get; set; }
             public string LevelName { get; set; }
+            public IList<RolePrivilege> Privileges { get; set; }
+
+            public class RolePrivilege
+            {
+                public int Id { get; set; }
+                public int RoleGroup_Id { get; set; }
+                public string Name { get; set; }
+                public string Descriptions { get; set; }
+            }
         }
     }
 }

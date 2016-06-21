@@ -1,4 +1,81 @@
-﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayTotalFeedGasViewModel
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKpiInformationViewModel
+<table class="table table-bordered total-feed-gas top-bottom-border vertical-space">
+    <thead>
+        <tr>
+            <td style="width:21%">
+                TOTAL FEED GAS
+            </td>
+            <td style="width:21.5%">
+                ACTUAL 24H
+            </td>
+            <td>
+                ACTUAL MTD
+            </td>
+            <td>
+                ACTUAL YTD
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                Volume
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value) 
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "mmscf")
+            </td>
+            <td>
+               @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Mtd)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "mmscf")
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Ytd)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "mmscf")
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Energy
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "mmbtu")
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Mtd)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "mmbtu")
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Ytd)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "mmbtu") 
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Energy
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "mmbtu")
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Mtd)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "mmbtu")
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Ytd)
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "mmbtu")
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                Feed Gas Pressure (Psig):
+            </td>
+        </tr>
+    </tbody>
+</table>
+@*
 <table class="der-table all-border">
     <thead>
         <tr style="height: 61px">
@@ -74,3 +151,4 @@
     }
 
 </table>
+*@

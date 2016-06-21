@@ -274,12 +274,13 @@ namespace DSLNG.PEAR.Services
 
         public IEnumerable<Dropdown> GetDerItemTypes()
         {
-            return new List<Dropdown>()
+            var dropdowns =  new List<Dropdown>()
                 {
                     new Dropdown {Text = "Highlight", Value = "highlight"},
                     new Dropdown {Text = "Line", Value = "line"},
                     new Dropdown {Text = "Multi Axis", Value = "multiaxis"},
                     new Dropdown {Text = "Speedometer", Value = "speedometer"},
+                    new Dropdown {Text = "Barmeter", Value = "barmeter"},
                     new Dropdown {Text = "Pie", Value = "pie"},
                     new Dropdown {Text = "Tank", Value = "tank"},
                     new Dropdown {Text = "Weather", Value = "weather"},
@@ -304,7 +305,13 @@ namespace DSLNG.PEAR.Services
                     new Dropdown {Text = "Plant Availability", Value = "plant-availability" },
                     new Dropdown {Text = "Economic Indicator", Value = "economic-indicator" },
                     new Dropdown {Text = "Key Equipment Status", Value = "key-equipment-status" },
+                    new Dropdown {Text = "Global Stock Market", Value = "global-stock-market" },
+                    new Dropdown {Text = "Prepared By", Value = "prepared-by" },
+                    new Dropdown {Text = "Reviewed By", Value = "reviewed-by" },
+                    new Dropdown {Text = "Termometer", Value = "termometer" },
                 };
+
+            return dropdowns.OrderBy(x => x.Text);
         }
 
         public IEnumerable<Dropdown> GetConfigTypes(bool isDer)

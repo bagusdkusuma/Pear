@@ -1,0 +1,640 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.DerDisplayViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="@Url.Content("~/content/der-dikdik.css")" />
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+    <div class="container a3-ratio">
+        <div class="row header">
+            <div class="header-left col-md-8 text-center">
+                <h5>DAILY EXECUTIVE REPORT</h5>
+                <h6>The Last 24 Hours Business Perfomance</h6>
+                <h6>FOR THE PERIOD ENDED: @Model.Today until LT24:00 HOURS</h6>
+            </div>
+            <div class="header-right col-md-4">
+            </div>
+        </div>
+        <div class="row bordered">
+            <div class="col-md-5">
+                @{
+                    var row0Col0 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 0);
+                    if (row0Col0 != null)
+                    {
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col0.Id })" class="layout-item"></div>
+                    }
+                }
+            </div>
+            <div class="col-md-7">
+                <div class="row">
+                    <div class="col-md-9 proper">
+                        <h5 style="text-decoration: underline;">Daily Highlight</h5>
+                        @{
+                            var row0Col1 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 1);
+                            if (row0Col1 != null)
+                            {
+                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row0Col1.Id})" class="layout-item"></div>
+                            }
+                        }
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row bordered border-top-none">
+
+            <div class="col-md-3">
+                @{
+                    var row1Col0 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 0);
+                    if (row1Col0 != null)
+                    {
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col0.Id })" class="layout-item"></div>
+                    }
+                }
+            </div>
+            <div class="col-md-3">
+                @{
+                    var row1Col1 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 1);
+                    if (row1Col1 != null)
+                    {
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col1.Id })" class="layout-item"></div>
+                    }
+                }
+            </div>
+            <div class="col-md-3">
+                @{
+                    var row1Col2 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 2);
+                    if (row1Col2 != null)
+                    {
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col2.Id })" class="layout-item"></div>
+                    }
+                }
+            </div>
+            <div class="col-md-3">
+                @{
+                    var row1Col3 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 3);
+                    if (row1Col3 != null)
+                    {
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col3.Id })" class="layout-item"></div>
+                    }
+                }
+            </div>
+
+        </div>
+        <div class="row bordered border-top-none">
+            <div class="col-md-12 text-center safty-management proper"><label>QHSSE & PROCESS SAFETY MANAGEMENT</label></div>
+        </div>
+        <div class="row bordered border-top-none safty-management-row">
+            <div class="col-md-5">
+                @{
+                    var row2Col0 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 0);
+                    if (row2Col0 != null)
+                    {
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row2Col0.Id })" class="layout-item"></div>
+                    }
+                }
+            </div>
+            <div class="col-md-3">
+                @{
+                    var row2Col1 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 1);
+                    if (row2Col1 != null)
+                    {
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row2Col1.Id })" class="layout-item"></div>
+                    }
+                }
+            </div>
+            <div class="col-md-4">
+                @{
+                    var row2Col2 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 2);
+                    if (row2Col2 != null)
+                    {
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row2Col2.Id })" class="layout-item"></div>
+                    }
+                }
+            </div>
+        </div>
+        <div class="row bordered border-top-none safty-management-row">
+            <div class="col-md-5">
+                @{
+                    var row3Col0 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 0);
+                    if (row3Col0 != null)
+                    {
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row3Col0.Id })" class="layout-item"></div>
+                    }
+                }
+            </div>
+            <div class="col-md-4">
+                <table class="qhse-remark table table-bordered">
+                    <thead>
+                        <tr>
+                            <td class="text-center">
+                                QHSE & PSM Remark
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                @{
+                                    var row3Col1 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 1);
+                                    if (row3Col1 != null)
+                                    {
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row3Col1.Id })" class="layout-item"></div>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="weekly-alarm table borderless">
+                    <thead>
+                        <tr>
+                            <td>
+                                WEEKLY ALARM MANAGEMENT (3 Apr-10 Apr 2016)
+                            </td>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>
+                                @{
+                                    var row3Col2 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 2);
+                                    if (row3Col2 != null)
+                                    {
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row3Col2.Id})" class="layout-item"></div>
+                                    }
+                                }
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="col-md-3">
+                <table class="table table-bordered pie">
+                    <thead>
+                        <tr>
+                            <td colspan="2">
+                                PROCESS UPSET / ANOMALY / CONDITION
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="width: 50%">
+                                @{
+                                    var row3Col3 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 3);
+                                    if (row3Col3 != null)
+                                    {
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row3Col3.Id})" class="layout-item"></div>
+                                    }
+                                }
+                            </td>
+                            <td style="width: 50%">
+                                @{
+                                    var row3Col4 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 4);
+                                    if (row3Col4 != null)
+                                    {
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row3Col4.Id})" class="layout-item"></div>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row bordered border-top-none">
+            <div class="col-md-6">
+                @{
+                    <h5 style="text-decoration: underline;">Security Remarks</h5>
+                    var row4Col0 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 0);
+                    if (row4Col0 != null)
+                    {
+
+                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row4Col0.Id})" class="layout-item"></div>
+                    }
+                }
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-9">
+                        @{
+                            var row4Col1 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 1);
+                            if (row4Col1 != null)
+                            {
+
+                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row4Col1.Id})" class="layout-item"></div>
+                            }
+                        }
+                    </div>
+                    <div class="col-md-3">
+                        @{
+                            var row4Col2 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 2);
+                            if (row4Col2 != null)
+                            {
+
+                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row4Col2.Id})" class="layout-item"></div>
+                            }
+                        }
+                        @**@
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row bordered border-top-none">
+            <div class="col-md-12 text-center commercial-operation proper"><label>COMMERCIAL OPERATION & MAINTENANCE PERFORMANCE</label></div>
+        </div>
+        <div class="row bordered border-top-none">
+            &nbsp;
+        </div>
+        <div class="row bordered border-top-none">
+            <div class="col-md-12 text-center feed-gas proper"><label>FEED GAS TO PLANT</label></div>
+        </div>
+        <div class="row bordered border-top-none feed-gas-row">
+            <div class="col-md-6">
+                @{
+                    var row5Col0 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 0);
+                    if (row5Col0 != null)
+                    {
+
+                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row5Col0.Id})" class="layout-item"></div>
+                    }
+                }
+                <div class="row">
+                    <div class="col-md-7">
+                        @{
+                            var row6Col0 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 0);
+                            if (row6Col0 != null)
+                            {
+
+                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row6Col0.Id})" class="layout-item"></div>
+                            }
+                        }
+                    </div>
+                    <div class="col-md-5">
+                        <div class="impurities vertical-space">
+                        </div>
+                    </div>
+                </div>
+                @{
+                    var row7Col0 = Model.Items.FirstOrDefault(x => x.Row == 7 && x.Column == 0);
+                    if (row7Col0 != null)
+                    {
+
+                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row7Col0.Id})" class="layout-item"></div>
+                    }
+                }
+                <table class="table table-bordered tank">
+                    <thead>
+                        <tr>
+                            <td colspan="2">tank</td>
+                            <td colspan="2">tank</td>
+                            <td colspan="2">tank</td>
+                            <td>tank</td>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                @{
+                    var row9Col0 = Model.Items.FirstOrDefault(x => x.Row == 9 && x.Column == 0);
+                    if (row9Col0 != null)
+                    {
+
+                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row9Col0.Id})" class="layout-item"></div>
+                    }
+                }
+
+                @{
+                    var row10Col0 = Model.Items.FirstOrDefault(x => x.Row == 10 && x.Column == 0);
+                    if (row10Col0 != null)
+                    {
+
+                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row10Col0.Id})" class="layout-item"></div>
+                    }
+                }
+                @{
+                    var row11Col0 = Model.Items.FirstOrDefault(x => x.Row == 11 && x.Column == 0);
+                    if (row11Col0 != null)
+                    {
+
+                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row11Col0.Id})" class="layout-item"></div>
+                    }
+                }
+                <div class="row">
+                    <div class="col-md-10">
+                        <h5 style="text-decoration: underline;">Operation Highlight &amp; Immediate Concern :</h5>
+                        @{
+                            var row12Col0 = Model.Items.FirstOrDefault(x => x.Row == 12 && x.Column == 0);
+                            if (row12Col0 != null)
+                            {
+
+                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row12Col0.Id})" class="layout-item"></div>
+                            }
+                        }
+                    </div>
+
+                    <div class="col-md-2" style="padding-top: 14px !important;">
+                        <label>Plant Mode :</label><span class="plant-mode">Holding</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <h5 style="text-decoration: underline;"> Maintenance Highlight &amp; Immediate Concern:</h5>
+                    @{
+                        var row13Col0 = Model.Items.FirstOrDefault(x => x.Row == 13 && x.Column == 0);
+                        if (row13Col0 != null)
+                        {
+
+                            <div data-url="@Url.Action("LayoutItem", "Der", new {id = row13Col0.Id})" class="layout-item"></div>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-9">
+                        @{
+                            var row5Col1 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 1);
+                            if (row5Col1 != null)
+                            {
+
+                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row5Col1.Id})" class="layout-item"></div>
+                            }
+                        }
+                    </div>
+                    <div class="col-md-3">
+                        @{
+                            var row5Col2 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 2);
+                            if (row5Col2 != null)
+                            {
+
+                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row5Col2.Id})" class="layout-item"></div>
+                            }
+                        }
+                    </div>
+                </div>
+                @{
+                    var row6Col2 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 2);
+                    if (row6Col2 != null)
+                    {
+
+                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row6Col2.Id})" class="layout-item"></div>
+                    }
+                }
+                @{
+                    var row7Col1 = Model.Items.FirstOrDefault(x => x.Row == 7 && x.Column == 1);
+                    if (row7Col1 != null)
+                    {
+
+                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row7Col1.Id})" class="layout-item"></div>
+                    }
+                }
+
+                @{
+                    var row8Col4 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 4);
+                    if (row8Col4 != null)
+                    {
+
+                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row8Col4.Id})" class="layout-item"></div>
+                    }
+                }
+            </div>
+        </div>
+        <div class="row bordered border-top-none">
+            <div class="col-md-12 text-center support proper">
+                <label>SUPPORT &amp; ENABLER PERFORMANCE</label>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-5">
+                        @{
+                            var row14Col0 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 0);
+                            if (row14Col0 != null)
+                            {
+
+                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row14Col0.Id})" class="layout-item"></div>
+                            }
+                        }
+
+                        @{
+                            var row15Col0 = Model.Items.FirstOrDefault(x => x.Row == 15 && x.Column == 0);
+                            if (row15Col0 != null)
+                            {
+
+                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row15Col0.Id})" class="layout-item"></div>
+                            }
+                        }
+
+                        <h5 style="text-decoration: underline;margin-top:2px">ICT Infrastructure and System Highlight </h5>
+                        <p>Normal Ops</p>
+                        <table class="table borderless ict-infra">
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td><img src="images/clip_image002_0002.png" alt="" width="52" height="25"></td>
+                                    <td>1</td>
+                                    <td><img src="images/clip_image004.png" alt="" width="52" height="25"></td>
+                                    <td>1</td>
+                                    <td><img src="images/clip_image006.png" alt="" width="52" height="25"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <h5 style="text-decoration: underline;margin-top:2px">GS &amp; FM </h5>
+                                <p>Normal Ops</p>
+                            </div>
+                            <div class="col-md-7" style="padding-top:5px !important">
+                                <u>Person-on-Board</u>: <label>247 personnel</label>
+                            </div>
+                        </div>
+
+                        <table class="table borderless gs-fm">
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td><img src="images/clip_image008.png" alt="" width="52" height="25"></td>
+                                    <td>1</td>
+                                    <td><img src="images/clip_image010.png" alt="" width="52" height="25"></td>
+                                    <td>1</td>
+                                    <td><img src="images/clip_image012.png" alt="" width="52" height="25"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-7">
+                        
+                        <table class="table table-bordered global-stock">
+                            <thead>
+                                <tr>
+                                    <td rowspan="2">Global Stock Market</td>
+                                    <td colspan="3">Forecasted Market Indicator</td>
+                                </tr>
+                                <tr>
+                                    <td>USD/JPY</td>
+                                    <td>BRENT FUT</td>
+                                    <td style="width:30%">USD/IDR</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>JKSE: 4,846.70</td>
+                                    <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>1M:107.94</td>
+                                    <td>Q2-16:39.00 USD/bbl</td>
+                                    <td><span class="comparison left-side"><i class="fa fa-minus"></i></span>1 Month:13,198</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>&gt;DJIA: 17,576.96</td>
+                                    <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>3M:107.72</td>
+                                    <td>Q3-16:41.60 USD/bbl</td>
+                                    <td><span class="comparison left-side"><i class="fa fa-minus"></i></span>3 Month:13,345</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>Nikkei 225: 15,821.52</td>
+                                    <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>6M:107.35</td>
+                                    <td>Avg-2016:40.00 USD/bbl</td>
+                                    <td><span class="comparison left-side"><i class="fa fa-minus"></i></span>6 Month:13,555</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>Shanghai SEC: 2,985.76</td>
+                                    <td><span class="comparison absolute"><i class="fa fa-minus"></i></span>1Yr:106.47</td>
+                                    <td>Avg-2017:54.60 USD/bbl</td>
+                                    <td><span class="comparison left-side"><i class="fa fa-minus"></i></span>1 Year:14,015</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="co-macro-eco">
+                    <div class="community">
+                        <img align="right" src="images/icon-operation.png">
+                        <h5 style="text-decoration: underline;">Community relation and government engagement highlight</h5>
+                        <p>
+                            Normal Ops. CDS Vessel MT Indradi deberthed and switch over with Erawan-1. The later still being
+                            N2 purge before loading. CDS rundown recycle to day-tank.
+                        </p>
+                    </div>
+                    <div class="macro-eco">
+                        <div class="market-tone">
+                            <label>Market Tone:</label>
+                            <span class="comparison">
+                                <i class="fa fa-arrow-up"></i>
+                            </span>
+                        </div>
+                        <h5 style="text-decoration: underline;">Macro Economic/Market Flash</h5>
+                        <p>
+                            Crude reached 2016 high after report said Saudi and Russia agreed to freeze output ahead of Doha
+                            Meeting on 17 Apr with final decision will not LNG Spot DES JKM depend on Iran. Still some analyst
+                            are skeptical because the threat of high inventory and increase output once price rebound continued.
+                        </p>
+                    </div>
+
+                </div>
+                <table class="table table-bordered signature">
+                    <thead>
+                        <tr>
+                            <td>Prepared By</td>
+                            <td>Reviewed By</td>
+                            <td>PEAR Document ID#</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="signature">
+                                <img src="images/signature1.png">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <span class="nothing">LT07:45</span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Eko P. Yulianto</label>
+                                    </div>
+                                </div>
+                                Business Performance Sr.Specialist
+                            </td>
+                            <td class="signature">
+                                <img src="images/signature2.png">
+                                <label>Marco Maruto</label> Performance &amp; Planning Sr. Manager
+                            </td>
+                            <td>
+                                <img src="images/strictly-sign.png">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/highcharts-more.js"></script>
+<script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+
+<script src="@Url.Content("~/Scripts/der-scripts.js")"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var currentDate = '02/18/2016';
+        $('.layout-item').each(function () {
+            var that = $(this);
+            $.ajax({
+                url: that.attr('data-url'),
+                data: { currentDate: currentDate },
+                success: function (data) {
+                    if (data.GraphicType !== undefined) {
+                        var callback = window.Der.Artifact;
+                        callback[data.GraphicType](data, that);
+                    }
+                        /*else if (data.type === "highlight") {
+                            var aneh = data.view.replace(/\"/g, "");
+                            that.html(aneh);
+                        } */else if (data.type === "highlight" || data.type === "weather" ||
+                            data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
+                        data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
+                        || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type == "procurement" || data.type == "indicative-commercial-price" ||
+                            data.type === "plant-availability" || data.type === "economic-indicator" || data.type === "mgdp" || data.type === "hhv" || data.type === "lng-and-cds-production"
+                            || data.type === "nls" || data.type === "key-equipment-status" || data.type === "wave" || data.type === "table-tank") {
+                            that.html(data.view);
+                        }
+                    /*else if (data.type === "weather" || data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
+                    data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
+                    || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type === 'mgdp') {
+                        that.html(data.view);
+                    }*/
+
+                }
+            });
+        });
+    })
+</script>
+</body>
+</html>

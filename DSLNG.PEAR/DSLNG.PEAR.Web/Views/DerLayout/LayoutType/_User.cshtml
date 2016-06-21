@@ -1,0 +1,10 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.DerLayout.DerLayoutItemViewModel
+
+<div class="form-group row">
+    @Html.LabelFor(model => model.SignedBy, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(model => model.SignedBy, Model.Users, "Select User", null)
+        @Html.ValidationMessageFor(model => model.SignedBy)
+    </div>
+</div>
+

@@ -24,6 +24,9 @@
                 case "line":
                     Html.RenderPartial("~/Views/DerLayout/LayoutType/_Line.Edit.cshtml", Model);
                     break;
+                case "dafwc":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_Dafwc.Edit.cshtml", Model);
+                    break;
                 case "pie":
                     Html.RenderPartial("~/Views/DerLayout/LayoutType/_Pie.Edit.cshtml", Model);
                     break;
@@ -34,6 +37,7 @@
                     Html.RenderPartial("~/Views/DerLayout/LayoutType/_Multiaxis.Edit.cshtml", Model);
                     break;
                 case "speedometer":
+                case "barmeter":
                     Html.RenderPartial("~/Views/DerLayout/LayoutType/_Speedometer.Edit.cshtml", Model);
                     break;
                 case "highlight":
@@ -84,6 +88,22 @@
                 case "job-pmts":
                     Html.RenderPartial("~/Views/DerLayout/LayoutType/_JobPmts.Edit.cshtml", Model);
                     break;
+                case "weekly-maintenance":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_WeeklyMaintenance.Edit.cshtml", Model);
+                    break;
+                case "critical-pm":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_CriticalPm.Edit.cshtml", Model);
+                    break;
+                case "global-stock-market":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_GlobalStockMarket.Edit.cshtml", Model);
+                    break;
+                case "termometer":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_GlobalStockMarket.Edit.cshtml", Model);
+                    break;
+                case "reviewed-by":
+                case "prepared-by":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_User.Edit.cshtml", Model);
+                    break;
 
             }
         }
@@ -115,7 +135,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('.der-layout-type').change(function () {
-            alert('as');
             var that = $(this);
             var type = that.val().toLowerCase();
             switch (type) {
@@ -134,7 +153,7 @@
                     });
                     break;
                 case 'speedometer':
-                    console.log('yayyaya');
+                case 'barmeter':
                     $.ajax({
                         url: '@Url.Action("LayoutSetting", "DerLayout", new { type = "_type_" })'.replace('_type_', that.val()),
                         success: function (data) {
@@ -231,6 +250,7 @@
                 }
 
             case "speedometer":
+            case "barmeter":
                 {
                     var $hiddenFields = $('#hidden-fields');
                     var plotTemplate = $hiddenFields.find('.plot-band-template.original');
@@ -308,6 +328,11 @@
             case "economic-indicator":
             case "security":
             case "job-pmts":
+            case "weekly-maintenance":
+            case "critical-pm":
+            case "global-stock-market":
+            case "termometer":
+            case "dafwc":
                 {
                     window.Pear.Artifact.Designer._kpiAutoComplete($('.layout-type-area'));
                     break;

@@ -20,7 +20,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body>
+  <body style="width:1754px">
     <input type="hidden" id="currentDate" value="@Model.Today" />
     <div class="header-der-tbl">
       <div class="container-fluid">
@@ -59,8 +59,16 @@
                 <p>Normal Ops. CDS Vessel MT Indradi deberthed and switch over with Erawan-1. The later still being N2 purge before loading. CDS rundown recycle to day-tank.</p-->
             }
         </div>
-        <div class="col-md-3">
-          <img src="img/daily-rundown.png" />
+        <div class="col-md-3 solid-gauge">
+             @{
+                var row0Col2 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 2);
+                if (row0Col2 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col2.Id })" class="layout-item"></div>
+                }
+                <!--h5 style="margin-top: 40px; text-decoration: underline;">Daily Highlight</!--h5>
+                <p>Normal Ops. CDS Vessel MT Indradi deberthed and switch over with Erawan-1. The later still being N2 purge before loading. CDS rundown recycle to day-tank.</p-->
+            }
         </div>
       </div>
     </div><!-- daily der tbl -->
@@ -70,17 +78,41 @@
 
     <div class="daily-der-chart">
       <div class="col-md-3">
-        <img src="img/daily-chart-1.png" class="img-responsive" />
+         @{
+                var row1Col0 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 0);
+                if (row1Col0 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col0.Id })" class="layout-item"></div>
+                }
+            }
       </div>
-      <div class="col-md-3">
-        <img src="img/daily-chart-2.png" class="img-responsive" style="margin-top: 10px;" />
-      </div>
-      <div class="col-md-3">
-        <img src="img/daily-chart-3.png" class="img-responsive" />
-      </div>
-      <div class="col-md-3">
-        <img src="img/daily-chart-4.png" class="img-responsive" />
-      </div> 
+       <div class="col-md-3">
+            @{
+                var row1Col1 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 1);
+                if (row1Col1 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col1.Id })" class="layout-item"></div>
+                }
+            }
+        </div>
+        <div class="col-md-3">
+            @{
+                var row1Col2 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 2);
+                if (row1Col2 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col2.Id })" class="layout-item"></div>
+                }
+            }
+        </div>
+        <div class="col-md-3">
+            @{
+                var row1Col3 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 3);
+                if (row1Col3 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col3.Id })" class="layout-item"></div>
+                }
+            }
+        </div>
     </div><!-- daily der chart -->
 
     <div class="qhsse-der">
@@ -92,8 +124,15 @@
           </thead>
           <tbody style="font-size: 11px;">
             <tr>
-              <td width="500">
-                <div class="col-md-6">
+              <td width="500" class="uncomplete">
+                   @{
+                var row2Col0 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 0);
+                if (row2Col0 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row2Col0.Id })" class="layout-item"></div>
+                }
+            }
+                @*<div class="col-md-6">
                   <p class="pull-left">
                     <strong>Days without DAFWC:</strong>
                   </p>
@@ -134,9 +173,9 @@
                   <p class="pull-right">
                     12,424,123 Hours
                   </p>
-                </div>
+                </div>*@
               </td>
-              <td>
+              <td class="unproceed">
                 <div class="col-md-4">
                   <p style="margin-top:20px;"><strong>Weather:</strong></p>
                   <p><strong>Ambient Temperature 0C:</strong></p>
@@ -145,7 +184,7 @@
                   <img style="margin-top:25px;" src="img/qhsse-temperature.png" class="img-responsive" />
                 </div>
               </td>
-              <td>
+              <td class="unproceed">
                 <div class="col-md-4">
                   <p style="margin-top:20px;"><strong>Tide / Wave at Jetty :</strong></p>
                   <p><strong>Wind Direction & Speed :</strong></p>
@@ -160,7 +199,7 @@
     </div><!-- qhsse der -->
 
     <div style="margin-top: -20px;" class="qhsse-tbl">
-      <table style="font-size: 12px;" class="table table-bordered">
+      <table style="font-size: 12px;" class="table table-bordered unproceed">
         <tr class="text-center">
           <td style="vertical-align: middle; background: #1DA4C2;"><strong>KPI</strong></td>
           <td style="vertical-align: middle; background: #6898E1;"><strong>ACT 24H</strong></td>
@@ -268,11 +307,18 @@
           <td class="text-center">n/a</td>
         </tr>
       </table>
-      <table style="margin-top: -20px;" class="table table-bordered">
+      <table style="margin-top: -20px;" class="table table-bordered unproceed">
         <tr>
           <td width="600">
-            <h6 style="text-decoration: underline;">SECURITY REMARKS:</h6>
-            <p>Plant and surrounding are condusive (calm and secure).</p>
+              @{
+                var row4Col0 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 0);
+                if (row4Col0 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row4Col0.Id })" class="layout-item"></div>
+                }
+            }
+            @*<h6 style="text-decoration: underline;">SECURITY REMARKS:</h6>
+            <p>Plant and surrounding are condusive (calm and secure).</p>*@
           </td>
           <td style="background: #6898E1;">
             <h6>Security</h6> 
@@ -1527,6 +1573,10 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="~/Scripts/bootstrap.min.js"></script>
    <script type="text/javascript" src="~/Content/datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+    <script src="~/Scripts/der-scripts.js"></script>
     <script type="text/javascript">
     $(document).ready(function () {
         function reloadView() {
@@ -1539,7 +1589,7 @@
                     success: function (data) {
 
                         if (data.GraphicType !== undefined) {
-                            var callback = window.Pear.Artifact.Designer._previewCallbacks;
+                            var callback = window.Der.Artifact;
                             callback[data.GraphicType](data, that);
                         }
                         else if (data.type === "highlight") {

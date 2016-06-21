@@ -139,6 +139,10 @@
       <HintPath>..\packages\NReco.ImageGenerator.1.0.3.0\lib\net20\NReco.ImageGenerator.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NReco.PdfGenerator, Version=1.1.12.0, Culture=neutral, PublicKeyToken=231663d50a41b451, processorArchitecture=MSIL">
+      <HintPath>..\packages\NReco.PdfGenerator.1.1.12.0\lib\net20\NReco.PdfGenerator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="StructureMap, Version=3.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\structuremap.3.1.1.134\lib\net40\StructureMap.dll</HintPath>
       <Private>True</Private>
@@ -288,6 +292,7 @@
     <Content Include="Content\datatables\jquery.dataTables.min.css" />
     <Content Include="Content\datepicker\css\datepicker.css" />
     <Content Include="Content\datepicker\js\bootstrap-datepicker.js" />
+    <Content Include="Content\der-dikdik.css" />
     <Content Include="Content\images\der\header-logo.png" />
     <Content Include="Content\images\der\icon-food.png" />
     <Content Include="Content\images\der\icon-operation.png" />
@@ -304,6 +309,7 @@
     <Content Include="Content\images\forward_disabled.png" />
     <Content Include="Content\images\forward_enabled.png" />
     <Content Include="Content\images\forward_enabled_hover.png" />
+    <Content Include="Content\images\header-logo.png" />
     <Content Include="Content\images\image.png" />
     <Content Include="Content\images\pdf.png" />
     <Content Include="Content\images\ppt.png" />
@@ -430,6 +436,7 @@
     <Content Include="Scripts\calculator.production-yield.js" />
     <Content Include="Scripts\calculator.standard.js" />
     <Content Include="Scripts\calculator.plant-availability.js" />
+    <Content Include="Scripts\der-scripts.js" />
     <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery.freezeheader.js" />
     <Content Include="Scripts\perfect-scrollbar.jquery.min.js" />
@@ -779,10 +786,12 @@
     <Compile Include="Attributes\AuthorizeUserAttribute.cs" />
     <Compile Include="Controllers\ArtifactCloneController.cs" />
     <Compile Include="Controllers\AssumptionDataController.cs" />
+    <Compile Include="Controllers\DerImageController.cs" />
     <Compile Include="Controllers\MirConfigurationController.cs" />
     <Compile Include="Controllers\MIRController.cs" />
     <Compile Include="Controllers\MirDataTableController.cs" />
     <Compile Include="Controllers\MIRUploadControlSettings.cs" />
+    <Compile Include="Controllers\PrivilegeController.cs" />
     <Compile Include="Controllers\ProcessBlueprintController.cs" />
     <Compile Include="Controllers\WaveController.cs" />
     <Compile Include="Extensions\NumberExtension.cs" />
@@ -815,10 +824,12 @@
     <Compile Include="ViewModels\Der\DerIndexViewModel.cs" />
     <Compile Include="ViewModels\Der\DerViewModel.cs" />
     <Compile Include="ViewModels\Der\DisplayOriginalDataViewModel.cs" />
+    <Compile Include="ViewModels\Der\Display\DerItemValueViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayCriticalPmViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayDafwcViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayEconomicIndicatorViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayIndicativeCommercialPriceViewModel.cs" />
+    <Compile Include="ViewModels\Der\Display\DisplayKpiInformationViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayLngAndCdsProductionViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayMGDPViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayPlantAvalabilityViewModel.cs" />
@@ -1066,6 +1077,8 @@
     <Content Include="Views\Der\Config.cshtml" />
     <Content Include="Views\Der\Create.cshtml" />
     <Content Include="Views\Der\Index.cshtml" />
+    <Content Include="Views\DerImage\Preview2.cshtml" />
+    <None Include="Views\Der\Index.cshtml.old" />
     <Content Include="Views\Der\_ManageItem.cshtml" />
     <Content Include="Views\Der\_DialogManageItem.cshtml" />
     <Content Include="Views\DerLayout\Index.cshtml" />
@@ -1149,6 +1162,16 @@
     <Content Include="Views\DerLayout\LayoutType\_Speedometer.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_Speedometer.Edit.cshtml" />
     <Content Include="Views\Der\Preview.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_GlobalStockMarket.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_GlobalStockMarket.Edit.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_Dafwc.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_Dafwc.Edit.cshtml" />
+    <Content Include="Views\DerImage\Preview.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_User.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_Termometer.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_Termometer.Edit.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_User.Edit.cshtml" />
+    <Content Include="Views\Der\Preview2.cshtml" />
     <None Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\SpeedometerChart\_Edit.cshtml" />
     <Content Include="Views\Tabular\_Create.cshtml" />
@@ -1289,6 +1312,15 @@
     <Content Include="Views\MIR\Index.cshtml" />
     <Content Include="Views\MIR\Create.cshtml" />
     <Content Include="Views\MIR\_MirUpload.cshtml" />
+    <Content Include="Views\Shared\_PdfViewerPartial.cshtml" />
+    <Content Include="Views\MIR\_Summary.cshtml" />
+    <Content Include="Views\MIR\_ModalViewPartial.cshtml" />
+    <Content Include="Views\MIR\Edit.cshtml" />
+    <Content Include="Views\Shared\_DocumentViewPartial.cshtml" />
+    <Content Include="Views\Privilege\Index.cshtml" />
+    <Content Include="Views\Shared\_ExSumPartial.cshtml" />
+    <Content Include="Views\Privilege\Edit.cshtml" />
+    <Content Include="Views\Privilege\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -1530,6 +1562,7 @@
     <Compile Include="ViewModels\RoleGroup\IndexRoleGroupViewModel.cs" />
     <Compile Include="ViewModels\RoleGroup\RoleGroupViewModel.cs" />
     <Compile Include="ViewModels\RoleGroup\UpdateRoleGroupViewModel.cs" />
+    <Compile Include="ViewModels\RolePrivilege\RolePrivilegeViewModel.cs" />
     <Compile Include="ViewModels\Scenario\ScenarioDetailViewModel.cs" />
     <Compile Include="ViewModels\Scenario\ScenarioViewModel.cs" />
     <Compile Include="ViewModels\Select\SelectOptionViewModel.cs" />
@@ -1613,7 +1646,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>2043</DevelopmentServerPort>
+          <DevelopmentServerPort>21297</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:10500/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

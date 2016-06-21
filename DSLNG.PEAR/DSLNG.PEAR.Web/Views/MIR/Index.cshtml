@@ -1,9 +1,42 @@
 ﻿@model IEnumerable<DSLNG.PEAR.Web.ViewModels.File.FileRepositoryViewModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Management Information Reports";
 }
 
+<style type="text/css">
+    .dxpc-mainDiv.DetailsPopup {
+        border-width: 0px;
+        display: table; position: absolute;
+        left: 231px; top: -2px; overflow: visible;
+        width : 900px;
+        height :auto;
+    }
+
+    .dxpc-mainDiv.DetailsPopup .dxpc-content {
+        padding: initial;
+    }
+
+        .dxpc-mainDiv.DetailsPopup .dxpc-content > div {
+            margin: auto;
+        }
+
+    .dxpc-mainDiv.DetailsPopup .dxflGroupSys {
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+
+    .dxpc-mainDiv.DetailsPopup, .dxflCaptionCellSys label {
+        color: #929292;
+    }
+    .dxdvControl_DSLNG, .dxdvItem_DSLNG {
+        width:100%;
+    }
+
+    .dx-al > * {
+        width: 100%;
+    }
+</style>
 <h2>Management Information Reports</h2>
 @Html.Partial("_MessageResponse")
 <div class="row">
@@ -15,31 +48,44 @@
 
     </form>
 </div>
-<div class="add-button-wrapper" style = "margin-bottom: -26px; margin-top:4px;">
+<div class="add-button-wrapper" style="margin-bottom: -26px; margin-top:4px;">
     @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
 </div>
-
-
 <table id="mir-table" class="rgw-pop-tbl table-transparent table row-border table-bordered table-responsive" cellspacing="0" width="100%">
     <thead>
         <tr>
             <th>No</th>
             <th>Month</th>
-            <th>View Executive Summary</th>
+            @*    <th>View Executive Summary</th>*@
             <th>File Attachment</th>
             <th style="width: 200px;">Action</th>
         </tr>
     </thead>
 </table>
-
+<div id="modal-container">
+    @Html.Action("Viewer")
+</div>
 @section Scripts{
     <script type="text/javascript">
+
+        function OnPopupEndCallback(s, e) {
+            alert(e);
+        }
+
+
 
         var contentUrl = '@Url.Content("$x$")';
         $(document).ready(function () {
             var year = $('#year').val();
             var myTable;
             myTable = $('#mir-table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [{
+                    text: 'My button',
+                    action: function (e, dt, node, config) {
+                        alert('Button activated');
+                    }
+                }],
                 "bProcessing": true,
                 "bServerSide": true,
                 "sServerMethod": "POST",
@@ -58,12 +104,32 @@
                     });
                 },
                 "order": [[0, "asc"]],
-                "paging":false,
+                "paging": false,
                 "aoColumns": [
                     { "mDataProp": "Id", "name": "Id", "className": "dt-body-left", "orderable": false },
                     { "mDataProp": "MonthName", "name": "MonthName", "className": "dt-body-left", "orderable": false },
-                    { "mDataProp": "Summary", "name": "Summary", "className": "dt-body-left", "orderable": false },
-                    { "mDataProp": "Filename", "name": "Filename", "className": "dt-body-left", "orderable": false },
+                    //{
+                    //    "mDataProp": "Summary", "name": "Summary", "className": "dt-body-left", "orderable": false, "sortable": false,
+                    //    "mRender": function (data, type, row) {
+                    //        if (!data) {
+                    //            return 'N/A';
+                    //        } else {
+                    //            var n = data.indexOf("</p>");
+                    //            var sub = data.substr(0, n).replace('<a>', '').replace('</a>', '');
+                    //            var more = '<a class="summary" data-id="_text_" href="javascript:;"> view </a>'.replace('_text_', row.Id);
+                    //            return sub + ' ' + more;
+                    //        }
+                    //    }
+                    //},
+                    {
+                        "mDataProp": "Filename", "name": "Filename", "className": "dt-body-center", "orderable": false,
+                        "mRender": function (data, type, row) {
+                            var viewSum = '<a class="summary" data-id="_text_" href="javascript:;"> View Executive Summary </a>'.replace('_text_', row.Id);
+                            var viewlink = '<a class="viewpdf" data-id="_id_" data-name="_name_" href="javascript:;"> View File Attachment <a/>'.replace('_id_', row.Id).replace('_name_', data);
+                            var download = '<a class="download" data-id="_id_" href="javascript:;">Download</a>'.replace('_id_', row.Id);
+                            return viewSum + ' | ' + viewlink + ' | ' + download;
+                        }
+                    },
                     //{
                     //    "mDataProp": "Filename", "name": "Filename", "className": "dt-body-left", "orderable": false, "mRender": function (data, type, row) {
                     //        var list = '<ul class="pop-attachments-list">';
@@ -82,6 +148,7 @@
                         "mRender": function (data, type, row) {
                             var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
                             var editLink = '@Html.ActionLink("Edit", "Edit", "MIR", new { id = "_id_" }, null)'.replace('_id_', data.Id);
+
                             return editLink + ' | ' + deleteLink;
                         }
                     }
@@ -105,10 +172,46 @@
                 }
             });
 
+            $('#mir-table').on('click', '.download', function () {
+                var id = $(this).attr('data-id');
+                var url = '@Url.Action("Download","MIR")';
+                var form = $('<form/>');
+                form.attr('action', url);
+                form.attr('method', 'GET');
+                form.html('<input type="hidden" name="id" value="' + id + '"/>');
+                $('body').append(form);
+                form.submit();
+
+            });
+            $('#mir-table').on('click', '.viewpdf', function () {
+                var a = $(this).attr('data-id');
+                var fname = $(this).attr('data-name');
+                popViewer.PerformCallback({ Id: a, type: 'pdf' });
+                UpdatePopupHeaderText(fname);
+                popViewer.Show();
+            });
+
+            $('#mir-table').on('click', '.summary', function () {
+                var a = $(this).attr('data-id');
+                popViewer.PerformCallback({ Id: a, type: 'summary' });
+                UpdatePopupHeaderText('Executive Summary');
+                popViewer.Show();
+            });
             $('#year').on('change', function () {
                 year = $('#year').val();
                 myTable.draw();
             });
+
+            
         });
+
+        function UpdatePopupHeaderText(stype) {
+            var headerText = "View Executive Summary";
+            if (stype != null) {
+                headerText = stype;
+            }
+            popViewer.SetHeaderText(headerText);
+            popViewer.SetFooterText(headerText);
+        }
     </script>
 }

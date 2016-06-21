@@ -121,6 +121,8 @@ using DSLNG.PEAR.Services.Requests.FileManagerRolePrivilege;
 using DSLNG.PEAR.Data.Entities.Files;
 using DSLNG.PEAR.Services.Responses.Files;
 using DSLNG.PEAR.Services.Requests.Files;
+using DSLNG.PEAR.Services.Responses.Privilege;
+using DSLNG.PEAR.Services.Requests.Privilege;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -148,6 +150,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<GetUserRequest, User>();
             Mapper.CreateMap<Data.Entities.RoleGroup, GetUserResponse.RoleGroup>();
             Mapper.CreateMap<Data.Entities.RolePrivilege, GetUserResponse.RolePrivilege>();
+            Mapper.CreateMap<Data.Entities.RolePrivilege, GetRoleGroupResponse.RolePrivilege>();
+            Mapper.CreateMap<Data.Entities.RolePrivilege, GetPrivilegesResponse.RolePrivilege>();
             Mapper.CreateMap<Data.Entities.RoleGroup, GetUsersResponse.RoleGroup>();
             Mapper.CreateMap<Data.Entities.User, GetUserResponse>();
             Mapper.CreateMap<Data.Entities.User, LoginUserResponse>();
@@ -161,8 +165,13 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Data.Entities.RolePrivilege, GetMenuPrivilegeResponse.Privilege>();
             Mapper.CreateMap<Data.Entities.Menu, GetMenuPrivilegeResponse.MenuPrivilege>();
             //Mapper.CreateMap<
-
+            /*
+             * Privilege
+             */
+            Mapper.CreateMap<Data.Entities.RolePrivilege, GetPrivilegeResponse>();
+            Mapper.CreateMap<SaveRolePrivilegeRequest, Data.Entities.RolePrivilege>();
             /*Level*/
+
             Mapper.CreateMap<Data.Entities.Level, GetLevelsResponse.Level>();
             Mapper.CreateMap<Data.Entities.Level, GetLevelResponse>();
             Mapper.CreateMap<CreateLevelRequest, Data.Entities.Level>();
@@ -927,13 +936,17 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
         private void ConfigureDer()
         {
+            Mapper.CreateMap<Der, GetDersResponse.Der>()
+                .ForMember(x => x.GenerateBy, o => o.MapFrom(s => s.GenerateBy.FullName))
+                .ForMember(x => x.RevisionBy, o => o.MapFrom(s => s.RevisionBy.FullName));
             Mapper.CreateMap<Der, GetDerResponse>();
             Mapper.CreateMap<DerLayout, GetActiveDerResponse>();
             Mapper.CreateMap<DerLayoutItem, GetActiveDerResponse.DerItem>();
             Mapper.CreateMap<DerItem, GetDerItemResponse>();
             Mapper.CreateMap<GetDerItemRequest, GetDerItemResponse>();
             Mapper.CreateMap<DerLayoutItem, GetDerLayoutitemResponse>()
-                  .ForMember(x => x.DerLayoutId, y => y.MapFrom(z => z.DerLayout.Id));
+                  .ForMember(x => x.DerLayoutId, y => y.MapFrom(z => z.DerLayout.Id))
+                  .ForMember(x => x.SignedBy, y => y.MapFrom(z => z.SignedBy.Id));
 
             Mapper.CreateMap<DerLayout, GetDerLayoutResponse>();
             Mapper.CreateMap<DerLayoutItem, GetDerLayoutResponse.DerLayoutItem>();

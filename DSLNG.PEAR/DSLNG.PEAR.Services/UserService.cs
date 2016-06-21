@@ -31,9 +31,7 @@ namespace DSLNG.PEAR.Services
             int totalRecords;
             var users = SortData(request.Search, request.SortingDictionary, out totalRecords).Skip(request.Skip).Take(request.Take);
 
-            var response = new GetUsersResponse();
-            response.Users = users.MapTo<GetUsersResponse.User>();
-            response.TotalRecords = totalRecords;
+            var response = new GetUsersResponse() { Users = users.MapTo<GetUsersResponse.User>(), TotalRecords = totalRecords };
             /*var users = DataContext.Users.Include(u => u.Role).ToList();
             var response = new GetUsersResponse();
 
@@ -46,7 +44,8 @@ namespace DSLNG.PEAR.Services
         {
             try
             {
-                var user = DataContext.Users.Include(u => u.Role).First(x => x.Id == request.Id);
+                var user = DataContext.Users.Include(x => x.Role).Include(y => y.RolePrivileges).FirstOrDefault(x => x.Id == request.Id);
+                //var user = DataContext.Users.Include(u => u.Role).First(x => x.Id == request.Id);
                 var response = user.MapTo<GetUserResponse>(); //Mapper.Map<GetUserResponse>(user);
                 //response.RoleName = DataContext.RoleGroups.FirstOrDefault(x => x.Id == user.RoleId).Name.ToString();
 
@@ -55,10 +54,10 @@ namespace DSLNG.PEAR.Services
             catch (System.InvalidOperationException x)
             {
                 return new GetUserResponse
-                    {
-                        IsSuccess = false,
-                        Message = x.Message
-                    };
+                {
+                    IsSuccess = false,
+                    Message = x.Message
+                };
             }
         }
 
@@ -70,7 +69,7 @@ namespace DSLNG.PEAR.Services
 
                 var user = request.MapTo<User>();
                 user.Role = DataContext.RoleGroups.First(x => x.Id == request.RoleId);
-                user.PasswordSalt = crypto.GenerateSalt(crypto.HashIterations,crypto.SaltSize);
+                user.PasswordSalt = crypto.GenerateSalt(crypto.HashIterations, crypto.SaltSize);
                 user.Password = crypto.Compute(request.Password, user.PasswordSalt);
                 //user.Password = _pass.HashPassword(request.Password);
                 DataContext.Users.Add(user);
@@ -145,7 +144,7 @@ namespace DSLNG.PEAR.Services
             try
             {
                 //var user = DataContext.Users.Where(x => x.Username == request.Username).Include(x => x.Role).First();
-                var user = DataContext.Users.Where(x => x.Email == request.Email).Include(x => x.Role).Include(y=>y.RolePrivileges).First();
+                var user = DataContext.Users.Where(x => x.Email == request.Email).Include(x => x.Role).Include(y => y.RolePrivileges).First();
                 if (user != null && user.Password == crypto.Compute(request.Password, user.PasswordSalt))
                 {
                     //Include(x => x.Role).
@@ -173,7 +172,7 @@ namespace DSLNG.PEAR.Services
         {
             try
             {
-                var user = DataContext.Users.Include(u => u.Role).Include(y=>y.RolePrivileges).First(x => x.Username == request.Name);
+                var user = DataContext.Users.Include(u => u.Role).Include(y => y.RolePrivileges).First(x => x.Username == request.Name);
                 var response = user.MapTo<GetUserResponse>(); //Mapper.Map<GetUserResponse>(user);
                 //response.RoleName = DataContext.RoleGroups.FirstOrDefault(x => x.Id == user.RoleId).Name.ToString();
                 response.IsSuccess = true;
@@ -189,18 +188,21 @@ namespace DSLNG.PEAR.Services
             }
         }
 
-        public UpdateUserResponse ChangePassword(ChangePasswordRequest request) {
-            var response = new UpdateUserResponse { IsSuccess = false, Message = "Unknown Error"};
-            
+        public UpdateUserResponse ChangePassword(ChangePasswordRequest request)
+        {
+            var response = new UpdateUserResponse { IsSuccess = false, Message = "Unknown Error" };
+
             if (request.New_Password == null)
             {
                 response.Message = "New Password Could not be null!";
                 return response;
             }
             var user = DataContext.Users.First(x => x.Id == request.Id).MapTo<User>();
-            if (user != null) {
-                
-                if (user.Password != crypto.Compute(request.Old_Password, user.PasswordSalt)) {
+            if (user != null)
+            {
+
+                if (user.Password != crypto.Compute(request.Old_Password, user.PasswordSalt))
+                {
                     response.Message = "Current Password isn't correct!";
                     return response;
                 }
@@ -214,7 +216,7 @@ namespace DSLNG.PEAR.Services
                 response.IsSuccess = true;
                 response.Message = "Password Successfully Changed!";
             }
-            
+
             return response;
         }
 
@@ -258,7 +260,7 @@ namespace DSLNG.PEAR.Services
                 response.ExpireDate = DateTime.Now.AddDays(3);
                 response.Token = crypto.Compute(request.Email, response.Salt);
                 //var entity = new ResetPassword { Email = response.Email, Token = response.Token, Salt = response.Salt, ExpireDate = response.ExpireDate };
-                var entity =  response.MapTo<ResetPassword>();
+                var entity = response.MapTo<ResetPassword>();
                 DataContext.ResetPasswords.Add(entity);
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
@@ -286,7 +288,8 @@ namespace DSLNG.PEAR.Services
         private ResetPasswordResponse GetResetPasswordDetail(ResetPasswordTokenRequest resetPasswordTokenRequest)
         {
             var response = new ResetPasswordResponse();
-            try {
+            try
+            {
                 response = DataContext.ResetPasswords.First(x => x.Token == resetPasswordTokenRequest.Token).MapTo<ResetPasswordResponse>();
 
                 if (response.ExpireDate < DateTime.Now)
@@ -305,7 +308,8 @@ namespace DSLNG.PEAR.Services
                 response.Profile = GetUserByEmail(new GetUserRequest { Email = response.Email }).MapTo<ResetPasswordResponse.User>();
                 response.IsSuccess = true;
             }
-            catch (System.InvalidOperationException x) {
+            catch (System.InvalidOperationException x)
+            {
                 return new ResetPasswordResponse
                 {
                     IsSuccess = false,
@@ -336,7 +340,7 @@ namespace DSLNG.PEAR.Services
 
         private IEnumerable<User> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int totalRecords)
         {
-            var data = DataContext.Users.Include(x => x.Role).AsQueryable();
+            var data = DataContext.Users.Include(x => x.Role).Include(x => x.RolePrivileges).AsQueryable();
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             {
                 data = data.Where(x => x.Username.Contains(search) || x.Email.Contains(search)

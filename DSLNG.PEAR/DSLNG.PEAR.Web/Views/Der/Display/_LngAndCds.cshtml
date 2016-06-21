@@ -1,164 +1,327 @@
-﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayLngAndCdsViewModel
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKpiInformationViewModel
 
-@{
-    var pos0 = Model.DisplayLngAndCds.Single(x => x.Position == 0);
-    var pos1 = Model.DisplayLngAndCds.Single(x => x.Position == 1);
-    var pos2 = Model.DisplayLngAndCds.Single(x => x.Position == 2);
-    var pos3 = Model.DisplayLngAndCds.Single(x => x.Position == 3);
-    var pos4 = Model.DisplayLngAndCds.Single(x => x.Position == 4);
-    var pos5 = Model.DisplayLngAndCds.Single(x => x.Position == 5);
-    var pos6 = Model.DisplayLngAndCds.Single(x => x.Position == 6);
-    var pos7 = Model.DisplayLngAndCds.Single(x => x.Position == 7);
-    var pos8 = Model.DisplayLngAndCds.Single(x => x.Position == 8);
-    var pos9 = Model.DisplayLngAndCds.Single(x => x.Position == 9);
-    var pos10 = Model.DisplayLngAndCds.Single(x => x.Position == 10);
-    var pos11 = Model.DisplayLngAndCds.Single(x => x.Position == 11);
-    var pos12 = Model.DisplayLngAndCds.Single(x => x.Position == 12);
-    var pos13 = Model.DisplayLngAndCds.Single(x => x.Position == 13);
-}
-
-<table class="der-table all-border">
+<table class="table table-bordered lng-loaded top-bottom-border">
     <thead>
         <tr>
-            <th class="der-bg-blue-3">
+            <td style="width: 12%">
                 LNG LOADED
-            </th>
-            <th class="der-bg-blue-3">
+            </td>
+            <td style="width: 13.2%;">
                 m3
-            </th>
-            <th class="der-bg-blue-3">
+            </td>
+            <td style="width: 12.5%;">
                 tonnes
-            </th>
-            <th class="der-bg-blue-3">
+            </td>
+            <td style="width: 12.7%;">
                 mmbtu
-            </th>
-            <th class="der-bg-blue-4">
+            </td>
+            <td style="width: 12.5%;" class="cargo">
                 #Cargo Shipped
-            </th>
-            <th class="der-bg-blue-7">
-                Planned Cargoes
-                (ADP 2016)
-            </th>
-            <th class="der-bg-blue-7">
+            </td>
+            <td class="right-header">
+                Planned Cargoes (ADP 2016)
+            </td>
+            <td style="width: 13%" class="right-header">
                 Remarks
-            </th>
+            </td>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td class="der-bg-blue-4">
+            <td class="vertical-header">
                 ACTUAL MTD
             </td>
             <td>
-                @pos0.Mtd
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Mtd, string.Empty, string.Empty)
             </td>
             <td>
-                @pos1.Mtd
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Mtd, string.Empty, string.Empty)
             </td>
             <td>
-                @pos2.Mtd
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Mtd, string.Empty, string.Empty)
             </td>
             <td>
-                @pos3.Mtd
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Mtd, string.Empty, string.Empty)
             </td>
             <td>
-                @pos4.Remarks
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Mtd, string.Empty, string.Empty)/ @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 15).DerItemValue.Value, string.Empty, string.Empty) QE,
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Mtd, string.Empty, string.Empty)/ @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 13).DerItemValue.Value, string.Empty, string.Empty) KOGAS,
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Mtd, string.Empty, string.Empty)/ @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 16).DerItemValue.Value, string.Empty, string.Empty) Spot;
+                ttl @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Mtd, string.Empty, string.Empty)/ @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 18).DerItemValue.Value, string.Empty, string.Empty)
             </td>
             <td>
-                @pos5.Remarks
+                <span class="indicator left-side"><i class="fa fa-circle"></i></span>
+                @Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Remark
             </td>
         </tr>
         <tr>
-            <td class="der-bg-blue-4">
+            <td class="vertical-header">
                 ACTUAL YTD
             </td>
             <td>
-                @pos0.Ytd
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Ytd, string.Empty, string.Empty)
             </td>
             <td>
-                @pos1.Ytd
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Ytd, string.Empty, string.Empty)
             </td>
             <td>
-                @pos2.Ytd
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Ytd, string.Empty, string.Empty)
             </td>
             <td>
-                @pos3.Ytd
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Ytd, string.Empty, string.Empty)
             </td>
             <td>
-                @pos6.Remarks
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Ytd, string.Empty, string.Empty)/ @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 13).DerItemValue.Value, string.Empty, string.Empty) Kogas,
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Ytd, string.Empty, string.Empty)/ @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 14).DerItemValue.Value, string.Empty, string.Empty) CE,
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Ytd, string.Empty, string.Empty)/ @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 15).DerItemValue.Value, string.Empty, string.Empty) QE,
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Ytd, string.Empty, string.Empty)/ @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 16).DerItemValue.Value, string.Empty, string.Empty) Spot;
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Ytd, string.Empty, string.Empty)/ @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 17).DerItemValue.Value, string.Empty, string.Empty) Cargo Adv;
+                Total @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Ytd, string.Empty, string.Empty)/ @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 18).DerItemValue.Value, string.Empty, string.Empty) cargos
             </td>
             <td>
-                @pos7.Remarks
+                <span class="indicator left-side"><i class="fa fa-circle"></i></span>
+                @Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Remark
             </td>
         </tr>
     </tbody>
 </table>
-<table class="der-table all-border">
+
+<table class="table table-bordered cds-loaded vertical-space">
     <thead>
         <tr>
-            <th class="der-bg-blue-3">
+            <td style="width:12%">
                 CDS LOADED
-            </th>
-            <th class="der-bg-blue-3">
+            </td>
+            <td style="width: 13.2%;">
                 m3
-            </th>
-            <th class="der-bg-blue-3">
+            </td>
+            <td style="width: 12.5%;">
                 tonnes
-            </th>
-            <th>
-                Bbls
-            </th>
-            <th>
+            </td>
+            <td style="width: 12.7%;">
+                mmbtu
+            </td>
+            <td style="width: 12.5%;" class="cargo">
                 #Cargo Shipped
-            </th>
-            <th>
+            </td>
+            <td class="right-header">
                 Note
-            </th>
-            <th>
+            </td>
+            <td style="width:13%" class="right-header">
                 Remarks
-            </th>
+            </td>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td>
+            <td class="vertical-header">
                 ACTUAL MTD
             </td>
             <td>
-                @pos8.Mtd
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Mtd, string.Empty, string.Empty)
             </td>
             <td>
-                @pos9.Mtd
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 11).DerItemValue.Mtd, string.Empty, string.Empty)
             </td>
             <td>
-                @pos10.Mtd
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 12).DerItemValue.Mtd, string.Empty, string.Empty)
             </td>
             <td>
-                @pos11.Mtd
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 13).DerItemValue.Mtd, string.Empty, string.Empty)
             </td>
             <td rowspan="2">
-                @pos12.Remarks
+                @Model.KpiInformationViewModels.Single(x => x.Position == 14).DerItemValue.Remark
             </td>
-            <td rowspan="2">
-                @pos13.Remarks
+            <td>
+                COB: @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 15).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 15).KpiMeasurement, "m3")
             </td>
         </tr>
         <tr>
-            <td>
-                ACTUAL MTD
+            <td class="vertical-header">
+                ACTUAL YTD
             </td>
             <td>
-                @pos8.Ytd
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Ytd, string.Empty, string.Empty)
             </td>
             <td>
-                @pos9.Ytd
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 11).DerItemValue.Ytd, string.Empty, string.Empty)
             </td>
             <td>
-                @pos10.Ytd
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 12).DerItemValue.Ytd, string.Empty, string.Empty)
             </td>
             <td>
-                @pos11.Ytd
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 13).DerItemValue.Ytd, string.Empty, string.Empty)
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 16).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 16).KpiMeasurement, "bbl")
+
             </td>
         </tr>
     </tbody>
 </table>
+@*
+    @model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayLngAndCdsViewModel
+
+    @{
+        var pos0 = Model.DisplayLngAndCds.Single(x => x.Position == 0);
+        var pos1 = Model.DisplayLngAndCds.Single(x => x.Position == 1);
+        var pos2 = Model.DisplayLngAndCds.Single(x => x.Position == 2);
+        var pos3 = Model.DisplayLngAndCds.Single(x => x.Position == 3);
+        var pos4 = Model.DisplayLngAndCds.Single(x => x.Position == 4);
+        var pos5 = Model.DisplayLngAndCds.Single(x => x.Position == 5);
+        var pos6 = Model.DisplayLngAndCds.Single(x => x.Position == 6);
+        var pos7 = Model.DisplayLngAndCds.Single(x => x.Position == 7);
+        var pos8 = Model.DisplayLngAndCds.Single(x => x.Position == 8);
+        var pos9 = Model.DisplayLngAndCds.Single(x => x.Position == 9);
+        var pos10 = Model.DisplayLngAndCds.Single(x => x.Position == 10);
+        var pos11 = Model.DisplayLngAndCds.Single(x => x.Position == 11);
+        var pos12 = Model.DisplayLngAndCds.Single(x => x.Position == 12);
+        var pos13 = Model.DisplayLngAndCds.Single(x => x.Position == 13);
+    }
+
+    <table class="der-table all-border">
+        <thead>
+            <tr>
+                <th class="der-bg-blue-3">
+                    LNG LOADED
+                </th>
+                <th class="der-bg-blue-3">
+                    m3
+                </th>
+                <th class="der-bg-blue-3">
+                    tonnes
+                </th>
+                <th class="der-bg-blue-3">
+                    mmbtu
+                </th>
+                <th class="der-bg-blue-4">
+                    #Cargo Shipped
+                </th>
+                <th class="der-bg-blue-7">
+                    Planned Cargoes
+                    (ADP 2016)
+                </th>
+                <th class="der-bg-blue-7">
+                    Remarks
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="der-bg-blue-4">
+                    ACTUAL MTD
+                </td>
+                <td>
+                    @pos0.Mtd
+                </td>
+                <td>
+                    @pos1.Mtd
+                </td>
+                <td>
+                    @pos2.Mtd
+                </td>
+                <td>
+                    @pos3.Mtd
+                </td>
+                <td>
+                    @pos4.Remarks
+                </td>
+                <td>
+                    @pos5.Remarks
+                </td>
+            </tr>
+            <tr>
+                <td class="der-bg-blue-4">
+                    ACTUAL YTD
+                </td>
+                <td>
+                    @pos0.Ytd
+                </td>
+                <td>
+                    @pos1.Ytd
+                </td>
+                <td>
+                    @pos2.Ytd
+                </td>
+                <td>
+                    @pos3.Ytd
+                </td>
+                <td>
+                    @pos6.Remarks
+                </td>
+                <td>
+                    @pos7.Remarks
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="der-table all-border">
+        <thead>
+            <tr>
+                <th class="der-bg-blue-3">
+                    CDS LOADED
+                </th>
+                <th class="der-bg-blue-3">
+                    m3
+                </th>
+                <th class="der-bg-blue-3">
+                    tonnes
+                </th>
+                <th>
+                    Bbls
+                </th>
+                <th>
+                    #Cargo Shipped
+                </th>
+                <th>
+                    Note
+                </th>
+                <th>
+                    Remarks
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    ACTUAL MTD
+                </td>
+                <td>
+                    @pos8.Mtd
+                </td>
+                <td>
+                    @pos9.Mtd
+                </td>
+                <td>
+                    @pos10.Mtd
+                </td>
+                <td>
+                    @pos11.Mtd
+                </td>
+                <td rowspan="2">
+                    @pos12.Remarks
+                </td>
+                <td rowspan="2">
+                    @pos13.Remarks
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    ACTUAL MTD
+                </td>
+                <td>
+                    @pos8.Ytd
+                </td>
+                <td>
+                    @pos9.Ytd
+                </td>
+                <td>
+                    @pos10.Ytd
+                </td>
+                <td>
+                    @pos11.Ytd
+                </td>
+            </tr>
+        </tbody>
+    </table>
+*@

@@ -1,0 +1,22 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.File.FileRepositoryViewModel
+
+@Html.DevExpress().PopupControl(settings =>
+{
+    settings.Name = "popViewer";
+    settings.CallbackRouteValues = new { Controller = "MIR", Action = "ModalPartialView" };
+    settings.PopupVerticalAlign = PopupVerticalAlign.Middle;
+    settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+    settings.ShowFooter = true;
+    settings.ShowHeader = true;
+    settings.AllowDragging = true;
+    settings.DragElement = DragElement.Header;
+    settings.Width = Unit.Pixel(900);
+    settings.Height = Unit.Pixel(740);
+    settings.ControlStyle.CssClass = "DetailsPopup";
+    settings.ScrollBars = ScrollBars.Auto;
+    //settings.ClientSideEvents.EndCallback = "OnPopupEndCallback";
+    settings.SetContent(() =>
+    {
+        Html.RenderAction("ModalPartialView", new { Id = Model.Id, type = "summary" });
+    });
+}).GetHtml()

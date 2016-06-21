@@ -60,8 +60,16 @@ namespace DSLNG.PEAR.Services
             try
             {
                 var data = DataContext.FileRepositories.Find(request.Id);
-                response = data.MapTo<GetFileRepositoryResponse>();
-                response.IsSuccess = true;
+                if (data != null)
+                {
+                    response = data.MapTo<GetFileRepositoryResponse>();
+                    response.IsSuccess = true;
+                }
+                else
+                {
+                    response.IsSuccess = false;
+                    response.Message = "No Data Found";
+                }
             }
             catch (InvalidOperationException e)
             {
@@ -116,8 +124,8 @@ namespace DSLNG.PEAR.Services
                             break;
                         default:
                             data = sortOrder.Value == SortOrder.Ascending
-                                ? data.OrderBy(x => x.Id).ThenBy(x => x.Year).ThenBy(x => x.Month).ThenBy(x => x.LastWriteTime)
-                                : data.OrderByDescending(x => x.Id).ThenBy(x => x.Year).ThenBy(x => x.Month).ThenBy(x => x.LastWriteTime);
+                                ? data.OrderBy(x => x.Year).ThenBy(x => x.Month).ThenBy(x => x.LastWriteTime)
+                                : data.OrderByDescending(x => x.Year).ThenBy(x => x.Month).ThenBy(x => x.LastWriteTime);
                             break;
                     }
                 }
@@ -135,15 +143,17 @@ namespace DSLNG.PEAR.Services
             var response = new BaseResponse();
             try
             {
-                var file = new FileRepository();
+                var file = request.MapTo<FileRepository>();
+
+                //var file = new FileRepository();
                 var user = DataContext.Users.Find(request.UserId);
-                file.Year = request.Year;
-                file.Month = request.Month;
-                file.Name = request.Name;
-                file.Summary = request.Summary;
-                file.LastWriteTime = request.LastWriteTime;
-                file.Filename = request.Filename;
-                file.Data = request.Data;
+                //file.Year = request.Year;
+                //file.Month = request.Month;
+                //file.Name = request.Name;
+                //file.Summary = request.Summary;
+                //file.LastWriteTime = request.LastWriteTime;
+                //file.Filename = request.Filename;
+                //file.Data = request.Data;
                 if (request.Id > 0)
                 {
                     file.UpdatedDate = DateTime.Now;

@@ -1,0 +1,73 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.RolePrivilege.RolePrivilegeViewModel
+@{
+    ViewBag.Title = "Create";
+}
+
+<section>
+    <div class="row">
+        <div class="title_page" style="border: none!important;">
+            <div class="row">
+                <div class="title">Privilege Management Create</div>
+            </div>
+        </div>
+        <div class="notification"></div>
+    </div>
+    <div>
+        @using (Html.BeginForm("Create", "Privilege", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="col-md-12">
+                @*<div class="title">Management Information Report Entry</div>*@
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-12">
+                <div class="form-inline whitebox">
+                    @Html.HiddenFor(model => model.Id)
+                    <div class="form-group form-list">
+                        @Html.Label("Department")
+                        @Html.DropDownListFor(model => model.RoleGroup_Id, (IEnumerable<SelectListItem>)ViewBag.RoleGroups, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.RoleGroup_Id)
+                    </div>
+
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.Name)
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Name)
+                    </div>
+
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.Descriptions)
+                        @Html.TextAreaFor(model => model.Descriptions, new { @class = "form-control allow-html" })
+                        @Html.ValidationMessageFor(model => model.Descriptions)
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-12 artifact-designer-btns">
+                <button type="submit" class="btn btn-primary btn-lg btn-submit"><span class="fa fa-floppy-o"></span>Save</button>
+                <a href="/Privilege" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+            </div>
+        }
+    </div>
+</section>
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+
+            tinyMCE.init({
+                selector: ".allow-html",
+                menubar: false,
+                plugins: [
+                    "advlist autolink lists link image charmap print preview anchor",
+                    "searchreplace visualblocks code fullscreen",
+                    "insertdatetime media table contextmenu paste"
+                ],
+                toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+            });
+        });
+
+
+    </script>
+}

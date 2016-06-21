@@ -1,28 +1,25 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.DerLayout.DerLayoutItemViewModel
 
 @{
-    var labels = new List<string> { "Plant Availability(hour daily)", "Plant Thermal Efeciency", "Material Balance(Flare Loss-%", "Plant Intake Utilization(Feed/ Max.Cap)", "Total Flared Gas(Wet-Dry-Tankage)", "Refrigerant Prod(C2&C3)", "Material Balance(Loss)", "Total Fuel Gas(GTG-GTC-LP Fuel)" };
+    var labels = new List<string>
+    {
+        "Plant Availability(hour daily)", "Plant Thermal Efeciency", "Material Balance(Flare Loss-%)", "Plant Intake Utilization(Feed/ Max.Cap)", "Total Flared Gas(Wet-Dry-Tankage)", "Refrigerant Prod(C2&C3)", "Material Balance(Loss)", "Target Total Fuel Gas (GTG)"
+    , "Target Total Fuel Gas(GTC)", "Target Total Fuel Gas(LP Fuel)"
+    };
     for (int i = 0; i < Model.KpiInformations.Count; i++)
     {
         var posIndex = Model.KpiInformations.FirstOrDefault(x => x.Position == i);
         if (posIndex != null)
         {
             <div class="form-group row">
-                @if (i >= 7)
-                {
-                    <label class="control-label col-md-2">@labels.ElementAtOrDefault(7)</label>
-                }
-                else
-                {
-                    <label class="control-label col-md-2">@labels.ElementAtOrDefault(i)</label>
-                }
+
+                <label class="control-label col-md-2">@labels.ElementAtOrDefault(i)</label>
+
                 <div class="col-md-10">
                     @Html.DropDownListFor(model => model.KpiInformations[i].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
                     @Html.HiddenFor(model => model.KpiInformations[i].Position)
                     @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes)
-                    <span style="color:white">
-                        @Html.EditorFor(model => model.KpiInformations[i].IsOriginalData) Is Original Data
-                    </span>
+
                     <input type="hidden" name="KpiInformations.Index" value="@i" />
                 </div>
             </div>

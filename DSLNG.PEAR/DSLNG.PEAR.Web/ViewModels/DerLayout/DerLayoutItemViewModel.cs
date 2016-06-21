@@ -40,7 +40,6 @@ namespace DSLNG.PEAR.Web.ViewModels.DerLayout
         public IList<SelectListItem> Highlights { get; set; }
 
         public IList<DerKpiInformationViewModel> KpiInformations { get; set; }
-
         public IList<SelectListItem> ConfigTypes
         {
             get
@@ -50,6 +49,10 @@ namespace DSLNG.PEAR.Web.ViewModels.DerLayout
                                     .ToList();
             }
         }
+
+        [Display(Name = "User")]
+        public int SignedBy { get; set; }
+        public IList<SelectListItem> Users { get; set; }
 
         public class DerKpiInformationViewModel
         {

@@ -1,0 +1,141 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.File.FileRepositoryCreateViewModel
+@{
+    ViewBag.Title = "Management Information Report Update";
+}
+
+<section>
+    <script type="text/javascript">
+        function OnFileUploadComplete(s, e) {
+            var callback;
+            var message;
+            var btnpro;
+            if (e.callbackData !== "") {
+                link = e.callbackData;
+                callback = 'FileUploadComplete : ' + e.callbackData;
+                $('.notification').empty();
+                message = '<div class="alert alert-success" role="alert">' + callback + '</div>';
+                $('.notification').append(message).fadeIn().delay(10000).fadeOut();
+                $('#file-notification').empty();
+                link = link + '  <a href="javascript:;" onclick="deleteUploadedFile()" class="dxbButton"> <span class="glyphicon glyphicon-remove"></span> Remove </a>';
+                $('#file-notification').append(link);
+                var linkText = document.getElementById('Filename');
+                linkText.setAttribute('value', link);
+                //linkText.hidden = false;
+            }
+            else {
+                //btnpro = document.getElementById('btn-proceed');
+                //btnpro.setAttribute('disabled', 'disabled');
+                $('.notification').empty();
+                callback = 'The selected file was not uploaded.';
+                message = '<div class="alert alert-danger" role="alert">' + callback + '</div>';
+                $('.notification').append(message).fadeIn().delay(10000).fadeOut();
+            }
+        }
+        function deleteUploadedFile(s, e) {
+            $('#file-notification').empty();
+        }
+
+        function OnUploadTextChanged(s, e) {
+            mirUpload.Upload();
+        }
+    </script>
+    <style type="text/css">
+        .artifact-designer-btns {
+            margin-top: 0;
+        }
+
+        .artifact-designer-btns {
+            padding-top: 40px;
+            padding-bottom: 40px;
+            text-align: center;
+            border-top: none;
+            margin-top: 40px;
+        }
+    </style>
+
+    <div class="row">
+        <div class="title_page" style="border: none!important;">
+            <div class="row">
+                <div class="title">Management Information Report Update</div>
+            </div>
+        </div>
+        <div class="notification"></div>
+    </div>
+    <div class="pop-dashboard-save">
+
+
+        @using (Html.BeginForm("Edit", "MIR", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="col-md-12">
+                @*<div class="title">Management Information Report Entry</div>*@
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-12">
+                <div class="form-inline whitebox">
+                    @Html.HiddenFor(model => model.Id)
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.Year)
+                        @Html.DropDownListFor(model => model.Year, Model.Years, new { htmlAttributes = new { @class = "form-control" } })
+                        @*@Html.EditorFor(model => model.Year, new { htmlAttributes = new { @class = "form-control" } })*@
+                        @Html.ValidationMessageFor(model => model.Year)
+                    </div>
+
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.Month)
+                        @Html.DropDownListFor(model => model.Month, Model.Months, new { @class = "form-control" })
+                        @*@Html.EditorFor(model => model.Month, new { htmlAttributes = new { @class = "form-control" } })*@
+                        @Html.ValidationMessageFor(model => model.Month)
+                    </div>
+
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.ExSumDefaultPage)
+                        @Html.TextBoxFor(model => model.ExSumDefaultPage, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ExSumDefaultPage)
+                    </div>
+
+                    @*<div class="form-group form-list">
+                            @Html.LabelFor(model => model.Summary)
+                            @Html.TextAreaFor(model => model.Summary, new { @class = "form-control allow-html" })
+                            @Html.ValidationMessageFor(model => model.Summary)
+                        </div>*@
+                    <div class="form-group form-list">
+                        @Html.Label("Attachment")
+                        @Html.Partial("_MirUpload")
+                    </div>
+                    <div class="form-group form-list">
+                        @Html.Label("Filename")
+                        @Html.TextBoxFor(model => model.Filename, new { style = "Display:none;" })
+                        <div id="file-notification">@Model.Filename <a href="javascript:;" onclick="deleteUploadedFile()" class="dxbButton"> <span class="glyphicon glyphicon-remove"></span> Remove </a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 artifact-designer-btns">
+                <button type="submit" class="btn btn-primary btn-lg btn-submit"><span class="fa fa-floppy-o"></span>Save</button>
+                <a href="/MIR" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+            </div>
+        }
+    </div>
+</section>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+
+            tinyMCE.init({
+                selector: ".allow-html",
+                menubar: false,
+                plugins: [
+                    "advlist autolink lists link image charmap print preview anchor",
+                    "searchreplace visualblocks code fullscreen",
+                    "insertdatetime media table contextmenu paste"
+                ],
+                toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+            });
+        });
+
+
+    </script>
+}

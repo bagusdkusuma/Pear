@@ -1,25 +1,31 @@
 ﻿@model IEnumerable<DSLNG.PEAR.Web.ViewModels.Highlight.DailyExecutionReportViewModel.NLSViewModel>
-<table class="der-table all-border">
+<table class="table table-bordered nls vertical-space top-bottom-border">
     <thead>
         <tr>
-            <th>NEXT LOADING SCHEDULE
-            </th>
-            <th>Vessel
+            <td>
+                NEXT LOADING SCHEDULE
+            </td>
+            <td>
+                Vessel
                 (capacity)
-            </th>
-            <th>ETA
-            </th>
-            <th>ETD
-            </th>
-            <th>Cargo#
-            </th>
-            <th>Remarks
-            </th>
+            </td>
+            <td>
+                ETA
+            </td>
+            <td>
+                ETD
+            </td>
+            <td>
+                Cargo#
+            </td>
+            <td>
+                Remarks
+            </td>
         </tr>
     </thead>
     <tbody>
         @foreach (var nls in Model)
-        { 
+        {
             <tr>
                 <td>
                     @nls.VesselType - @nls.SalesType - @nls.Type
@@ -33,3 +39,4 @@
         }
     </tbody>
 </table>
+

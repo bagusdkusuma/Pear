@@ -2,20 +2,17 @@
 
 
 @{
-            string[] label = { "Fatality", "DAFWC", "RIF", "LOPC", "RWC", "MTC", "First-Aid", "Near-Miss", "Audit/Inspection" };
-            var a = 0;
-            for (int i = 0; i < Model.KpiInformations.Count; i++)
-            {
+    string[] label = { "Fatality", "DAFWC", "Env/Spill (>1bbl or >=moderate)", "LOPC", "RWC", "MTC", "First-Aid", "Near-Miss", "Traffic Incident", "Propperty Damage", "Audit/Inspection" };
+    var a = 0;
+    for (int i = 0; i < Model.KpiInformations.Count; i++)
+    {
         <div class="form-group row">
             <label class="control-label col-md-2">@label[i]</label>
             <div class="col-md-2">@Html.DropDownListFor(model => model.KpiInformations[i].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px;margin:0 auto" })</div>
             <div>
                 @Html.HiddenFor(model => model.KpiInformations[i].Position)
                 <span style="padding-left:20px">
-                    @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes)
-                    <span style="color:white">
-                        @Html.EditorFor(model => model.KpiInformations[i].IsOriginalData)  Is  Original Data?
-                    </span>
+                    @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes, new {style="visibility: hidden"})
                 </span>
                 <input type="hidden" name="KpiInformations.Index" value="@a" />
             </div>

@@ -19,11 +19,13 @@ using DevExpress.Spreadsheet;
 using System.Drawing;
 using DSLNG.PEAR.Services.Requests.OperationalData;
 using DSLNG.PEAR.Services.Responses.Operation;
+using DevExpress.Pdf;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
     public class FileController : BaseController
     {
+        public const string SESSION_KEY = "CurrentFile";
         private readonly IKpiAchievementService _kpiAchievementService;
         private readonly IDropdownService _dropdownService;
         private readonly IKpiTargetService _kpiTargetService;
@@ -53,15 +55,15 @@ namespace DSLNG.PEAR.Web.Controllers
                                     : (ConfigType)Enum.Parse(typeof(ConfigType), configType);
 
             var viewModel = new ConfigurationViewModel()
-                {
-                    PeriodeType = "Yearly",
-                    Year = DateTime.Now.Year,
-                    Month = DateTime.Now.Month,
-                    ConfigType = config.ToString(),
-                    Years = _dropdownService.GetYears().MapTo<SelectListItem>(),
-                    Months = _dropdownService.GetMonths().MapTo<SelectListItem>(),
-                    PeriodeTypes = _dropdownService.GetPeriodeTypes().MapTo<SelectListItem>()
-                };
+            {
+                PeriodeType = "Yearly",
+                Year = DateTime.Now.Year,
+                Month = DateTime.Now.Month,
+                ConfigType = config.ToString(),
+                Years = _dropdownService.GetYears().MapTo<SelectListItem>(),
+                Months = _dropdownService.GetMonths().MapTo<SelectListItem>(),
+                PeriodeTypes = _dropdownService.GetPeriodeTypes().MapTo<SelectListItem>()
+            };
 
             return PartialView("_Download", viewModel);
         }
@@ -91,7 +93,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         viewModel = target.MapTo<ConfigurationViewModel>();
                         break;
                     }
-                    
+
                 case ConfigType.KpiAchievement:
                     {
                         var request = new GetKpiAchievementsConfigurationRequest()
@@ -105,7 +107,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         viewModel = achievement.MapTo<ConfigurationViewModel>();
                         break;
                     }
-                    
+
                 case ConfigType.OperationData:
                     {
                         var request = vModel.MapTo<GetOperationDataConfigurationRequest>();
@@ -116,7 +118,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         //return new FileContentResult(null, "application/octet-stream") { FileDownloadName = "as" };
                         break;
                     }
-                     
+
                 default:
                     break;
             }
@@ -185,19 +187,19 @@ namespace DSLNG.PEAR.Web.Controllers
                             foreach (var target in kpi.KpiTargets)
                             {
                                 var item = new ConfigurationViewModel.Item
-                                    {
-                                        Id = target.Id,
-                                        KpiId = kpi.Id,
-                                        Periode = target.Periode,
-                                        Remark = target.Remark,
-                                        Value = target.Value.HasValue ? target.Value.ToString() : string.Empty,
-                                        PeriodeType = pType
-                                    };
+                                {
+                                    Id = target.Id,
+                                    KpiId = kpi.Id,
+                                    Periode = target.Periode,
+                                    Remark = target.Remark,
+                                    Value = target.Value.HasValue ? target.Value.ToString() : string.Empty,
+                                    PeriodeType = pType
+                                };
                                 items.Add(item);
                             }
                             break;
                         }
-                        
+
                     case "KpiAchievement":
                         {
                             foreach (var achievement in kpi.KpiAchievements)
@@ -215,7 +217,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             }
                             break;
                         }
-                        
+
                     case "OperationData":
                         {
                             //items = kpi.OperationData.MapTo<ConfigurationViewModel.Item>();
@@ -329,7 +331,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
         private BaseResponse ReadExcelFile(ProcessFileViewModel viewModel)
         {
-            var response = new BaseResponse(); 
+            var response = new BaseResponse();
 
             try
             {
@@ -383,7 +385,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             }
 
                             workbook.Worksheets.ActiveWorksheet = worksheet;
-                            
+
                             Range range = worksheet.GetUsedRange();
                             int rows = range.RowCount;
                             int column = range.ColumnCount - 2;
@@ -424,7 +426,8 @@ namespace DSLNG.PEAR.Web.Controllers
                                             kpiId = int.Parse(worksheet.Cells[i, j].Value.ToString());
                                             //this will validate authorized KPI based on Role
                                             isAuthorizedKPI = ValidateAuthorizeKPI(kpiId);
-                                            if (!isAuthorizedKPI) {
+                                            if (!isAuthorizedKPI)
+                                            {
                                                 break;
                                             }
                                         }
@@ -442,7 +445,7 @@ namespace DSLNG.PEAR.Web.Controllers
                                                 int operationId = 0;
                                                 if (viewModel.ConfigType.ToLowerInvariant().Equals(ConfigType.OperationData.ToString().ToLowerInvariant()))
                                                 {
-                                                    
+
                                                     var operation = operationIds.KeyOperations.FirstOrDefault(x => x.KpiId == kpiId);
                                                     if (operation != null)
                                                     {
@@ -453,19 +456,19 @@ namespace DSLNG.PEAR.Web.Controllers
                                                 if (!string.IsNullOrEmpty(value))
                                                 {
                                                     var data = new ConfigurationViewModel.Item
-                                                        {
-                                                            Value = value,
-                                                            KpiId = kpiId,
-                                                            Periode = periodData,
-                                                            PeriodeType = pType,
-                                                            OperationId = operationId,
-                                                            ScenarioId = viewModel.ScenarioId
-                                                        };
-                                                    
+                                                    {
+                                                        Value = value,
+                                                        KpiId = kpiId,
+                                                        Periode = periodData,
+                                                        PeriodeType = pType,
+                                                        OperationId = operationId,
+                                                        ScenarioId = viewModel.ScenarioId
+                                                    };
+
                                                     listData.Add(data);
                                                 }
                                             }
-                                        } 
+                                        }
                                     }
                                 }
                                 if (!isAuthorizedKPI) continue;
@@ -512,7 +515,8 @@ namespace DSLNG.PEAR.Web.Controllers
             var response = new DSLNG.PEAR.Services.Responses.Kpi.GetKpiDetailResponse();
             if (this.UserProfile().IsSuperAdmin) return true;
             response = _kpiService.GetKpiDetail(new Services.Requests.Kpi.GetKpiRequest { Id = kpiId });
-            if (response.IsSuccess) {
+            if (response.IsSuccess)
+            {
                 if (response.RoleGroup == this.UserProfile().RoleName)
                 {
                     return true;
@@ -532,16 +536,16 @@ namespace DSLNG.PEAR.Web.Controllers
                 foreach (var data in datas)
                 {
                     var prepare = new UpdateOperationDataRequest()
-                        {
-                            Id = data.Id,
-                            KpiId = data.KpiId,
-                            Periode = data.Periode,
-                            Value = data.Value,
-                            PeriodeType = data.PeriodeType,
-                            Remark = data.Remark,
-                            KeyOperationConfigId = data.OperationId,
-                            ScenarioId = data.ScenarioId
-                        };// data.MapTo<UpdateKpiAchievementItemRequest>();
+                    {
+                        Id = data.Id,
+                        KpiId = data.KpiId,
+                        Periode = data.Periode,
+                        Value = data.Value,
+                        PeriodeType = data.PeriodeType,
+                        Remark = data.Remark,
+                        KeyOperationConfigId = data.OperationId,
+                        ScenarioId = data.ScenarioId
+                    };// data.MapTo<UpdateKpiAchievementItemRequest>();
                     batch.BatchUpdateOperationDataItemRequest.Add(prepare);
                 }
                 response = _operationDataService.BatchUpdateOperationDatas(batch);
@@ -582,5 +586,121 @@ namespace DSLNG.PEAR.Web.Controllers
             return response;
         }
 
+        #region PDF Viewer
+        public ActionResult Preview()
+        {
+            return PartialView("_PdfViewerPartial");
+        }
+        public ActionResult PreviewByFilename(string filename)
+        {
+            if (System.IO.File.Exists(Server.MapPath(filename)))
+            {
+                Session[filename] = System.IO.File.ReadAllBytes(Server.MapPath(filename));
+            }
+            return PartialView("_PdfViewerPartial");
+        }
+        /// <summary>
+        /// Read PDF file with two option, physical file should send full path filename in parameters, other wise will use session cookie using it's filename
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
+        protected MemoryStream GetStream(string filename)
+        {
+            MemoryStream stream = null;
+            if (System.IO.File.Exists(Server.MapPath(filename)))
+            {
+                stream = new MemoryStream(System.IO.File.ReadAllBytes(Server.MapPath(filename)));
+            }
+            else if (Session[filename] != null)
+            {
+                stream = new MemoryStream((byte[])Session[filename]);
+            }
+            else
+            {
+                stream = new MemoryStream();
+            }
+            Session[SESSION_KEY] = ReadAllBytes(stream);
+            return stream;
+        }
+
+        protected static byte[] ReadAllBytes(Stream stream)
+        {
+            byte[] buffer = new byte[16 * 1024];
+            int readCount;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                while ((readCount = stream.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    ms.Write(buffer, 0, readCount);
+                }
+                return ms.ToArray();
+            }
+        }
+        public ActionResult PdfViewer(string filename)
+        {
+            MemoryStream stream = null;//
+
+            if (!string.IsNullOrEmpty(filename))
+            {
+                stream = GetStream(filename);
+            }
+            else if (Session[SESSION_KEY] != null)
+            {
+                stream = new MemoryStream((byte[])Session[SESSION_KEY]);
+            }
+
+            List<PdfPageViewModel> model = new List<PdfPageViewModel>();
+            if (stream != null)
+            {
+                PdfDocumentProcessor documentProcessor = new PdfDocumentProcessor();
+                documentProcessor.LoadDocument(stream);
+
+                for (int pageNumber = 1; pageNumber < documentProcessor.Document.Pages.Count; pageNumber++)
+                {
+                    model.Add(new PdfPageViewModel(documentProcessor)
+                    {
+                        PageNumber = pageNumber
+                    });
+                }
+            }
+            
+            return PartialView("_DocumentViewPartial", model);
+        }
+
+        public ActionResult ExecutiveSummary(string[] ExSumParams)
+        {
+            string filename = string.Empty;
+            int pageNumber = 3;
+            if (ExSumParams != null && ExSumParams.Count() > 0) {
+                filename = ExSumParams[0];
+                pageNumber = int.Parse(ExSumParams[1]);
+            }
+
+            MemoryStream stream = null;//
+
+            if (!string.IsNullOrEmpty(filename))
+            {
+                stream = GetStream(filename);
+            }
+            else if (Session[SESSION_KEY] != null)
+            {
+                stream = new MemoryStream((byte[])Session[SESSION_KEY]);
+            }
+
+            List<PdfPageViewModel> model = new List<PdfPageViewModel>();
+            if (stream != null)
+            {
+                PdfDocumentProcessor documentProcessor = new PdfDocumentProcessor();
+                documentProcessor.LoadDocument(stream);
+
+                model.Add(new PdfPageViewModel(documentProcessor)
+                {
+                    PageNumber = pageNumber
+                });
+            }
+
+            return PartialView("_DocumentViewPartial", model);
+        }
+        #endregion
     }
 }

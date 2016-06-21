@@ -1,58 +1,177 @@
-﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayMGDPViewModel
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKpiInformationViewModel
 
-@helper GetPercentage(string actual, string target, string measurement)
-{
-double actualDouble;
-bool isActualParsed = double.TryParse(actual, out actualDouble);
-
-double targetDouble;
-bool isTargetParsed = double.TryParse(target, out targetDouble);
-
-if (isActualParsed && isTargetParsed)
-{
-    var percentage = actualDouble / targetDouble * 100;
-    var x = string.Format("{0}% of {1} {2}", percentage, target, measurement);
-        @x
-}
-}
-
-<table class="der-table all-border">
+<table class="table table-bordered mgdp vertical-space">
     <thead>
         <tr>
-            <th colspan="6" class="der-bg-purple">MGDP</th>
+            <td colspan="6">MGDP</td>
         </tr>
         <tr>
-            <th colspan="2" class="der-bg-blue-7">ACTUAL 24H</th>
-            <th colspan="2" class="der-bg-blue-4">ACTUAL MTD</th>
-            <th colspan="2" class="der-bg-blue-4">ACTUAL YTD</th>
+            <td colspan="2">ACTUAL 24H</td>
+            <td colspan="2">ACTUAL MTD</td>
+            <td colspan="2">ACTUAL YTD</td>
         </tr>
     </thead>
-    @{
-        var pos0 = Model.MGDPViewModels.Single(x => x.Position == 0);
-        var pos1 = Model.MGDPViewModels.Single(x => x.Position == 1);
-        var pos2 = Model.MGDPViewModels.Single(x => x.Position == 2);
-        var pos3 = Model.MGDPViewModels.Single(x => x.Position == 3);
-        var pos4 = Model.MGDPViewModels.Single(x => x.Position == 4);
-        var pos5 = Model.MGDPViewModels.Single(x => x.Position == 5);
-        <tbody>
-            <tr>
-                <td>@pos0.Daily</td>
-                <td rowspan="2">@pos2.Daily</td>
-                <td>@pos0.Mtd</td>
-                <td rowspan="2">@pos2.Mtd</td>
-                <td>@pos0.Ytd mmscf</td>
-                <td rowspan="2">@pos2.Ytd</td>
-            </tr>
-            <tr>
-                <td>@pos1.Daily</td>
-                <td>@pos1.Mtd</td>
-                <td>@pos1.Ytd</td>
-            </tr>
-            <tr>
-                <td colspan="2">@GetPercentage(pos0.Daily, pos3.Daily, pos0.Measurement)</td>
-                <td colspan="2">@GetPercentage(pos1.Mtd, pos4.Mtd, pos1.Measurement)</td>
-                <td colspan="2">@GetPercentage(pos2.Ytd, pos5.Ytd, pos2.Measurement)</td>
-            </tr>
-        </tbody>
-    }
+    <tbody>
+        <tr>
+            <td>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value) mmscf</td>
+            <td rowspan="2">@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value) tonnes</td>
+            <td>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Mtd) mmscf</td>
+            <td rowspan="2">@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Mtd) tonnes</td>
+            <td>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Ytd) mmscf</td>
+            <td rowspan="2">@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Ytd) tonnes</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value) mmbtu</td>
+            <td>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Mtd)  mmbtu</td>
+            <td>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Ytd)  mmbtu</td>
+        </tr>
+        <tr>
+            <td colspan="2">@GetPercentage(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value) of DCQ @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value) mmbtu</td>
+            <td colspan="2">@GetPercentage(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Mtd) of MGN @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Mtd) bbtu</td>
+            <td colspan="2">@GetPercentage(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Ytd) of ADP @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Ytd) TBtu</td>
+        </tr>
+    </tbody>
 </table>
+
+@helper GetPercentage(string achievement, string target)
+{
+if (string.IsNullOrEmpty(achievement) || string.IsNullOrEmpty(target))
+{
+        <text>N/A</text>
+}
+else
+{
+    var achievementToDouble = double.Parse(achievement);
+    var targetToDouble = double.Parse(target);
+    var percentage = Math.Round((achievementToDouble / targetToDouble) * 100, 2);
+        <text>@percentage %</text>
+}
+}
+
+@*<table class="table table-bordered total-feed-gas top-bottom-border vertical-space">
+    <thead>
+        <tr>
+            <td>
+                TOTAL FEED GAS
+            </td>
+            <td>
+                ACTUAL 24H
+            </td>
+            <td>
+                ACTUAL MTD
+            </td>
+            <td>
+                ACTUAL YTD
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                Volume
+            </td>
+            <td>
+                333.68 mmscf
+            </td>
+            <td>
+                7,058.64 mmscf
+            </td>
+            <td>
+                7,058.64 mmscf
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Energy
+            </td>
+            <td>
+                373,265 mmbtu
+            </td>
+            <td>
+                7,894,592 mmbtu
+            </td>
+            <td>
+                7,894,592 mmbtu
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Energy
+            </td>
+            <td>
+                373,265 mmbtu
+            </td>
+            <td>
+                7,894,592 mmbtu
+            </td>
+            <td>
+                7,894,592 mmbtu
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                Feed Gas Pressure (Psig):
+            </td>
+        </tr>
+    </tbody>
+</table>*@
+@*
+    @model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayMGDPViewModel
+
+    @helper GetPercentage(string actual, string target, string measurement)
+    {
+    double actualDouble;
+    bool isActualParsed = double.TryParse(actual, out actualDouble);
+
+    double targetDouble;
+    bool isTargetParsed = double.TryParse(target, out targetDouble);
+
+    if (isActualParsed && isTargetParsed)
+    {
+        var percentage = actualDouble / targetDouble * 100;
+        var x = string.Format("{0}% of {1} {2}", percentage, target, measurement);
+            @x
+    }
+    }
+
+    <table class="der-table all-border">
+        <thead>
+            <tr>
+                <th colspan="6" class="der-bg-purple">MGDP</th>
+            </tr>
+            <tr>
+                <th colspan="2" class="der-bg-blue-7">ACTUAL 24H</th>
+                <th colspan="2" class="der-bg-blue-4">ACTUAL MTD</th>
+                <th colspan="2" class="der-bg-blue-4">ACTUAL YTD</th>
+            </tr>
+        </thead>
+        @{
+            var pos0 = Model.MGDPViewModels.Single(x => x.Position == 0);
+            var pos1 = Model.MGDPViewModels.Single(x => x.Position == 1);
+            var pos2 = Model.MGDPViewModels.Single(x => x.Position == 2);
+            var pos3 = Model.MGDPViewModels.Single(x => x.Position == 3);
+            var pos4 = Model.MGDPViewModels.Single(x => x.Position == 4);
+            var pos5 = Model.MGDPViewModels.Single(x => x.Position == 5);
+            <tbody>
+                <tr>
+                    <td>@pos0.Daily</td>
+                    <td rowspan="2">@pos2.Daily</td>
+                    <td>@pos0.Mtd</td>
+                    <td rowspan="2">@pos2.Mtd</td>
+                    <td>@pos0.Ytd mmscf</td>
+                    <td rowspan="2">@pos2.Ytd</td>
+                </tr>
+                <tr>
+                    <td>@pos1.Daily</td>
+                    <td>@pos1.Mtd</td>
+                    <td>@pos1.Ytd</td>
+                </tr>
+                <tr>
+                    <td colspan="2">@GetPercentage(pos0.Daily, pos3.Daily, pos0.Measurement)</td>
+                    <td colspan="2">@GetPercentage(pos1.Mtd, pos4.Mtd, pos1.Measurement)</td>
+                    <td colspan="2">@GetPercentage(pos2.Ytd, pos5.Ytd, pos2.Measurement)</td>
+                </tr>
+            </tbody>
+        }
+    </table>
+*@

@@ -11,6 +11,7 @@ using DSLNG.PEAR.Services.Requests.Der;
 using DSLNG.PEAR.Services.Requests.Highlight;
 using DSLNG.PEAR.Services.Requests.Measurement;
 using DSLNG.PEAR.Services.Requests.Select;
+using DSLNG.PEAR.Services.Requests.User;
 using DSLNG.PEAR.Services.Responses.Der;
 using DSLNG.PEAR.Web.ViewModels.Artifact;
 using DSLNG.PEAR.Web.ViewModels.DerLayout;
@@ -25,13 +26,15 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IDerService _derService;
         private readonly IMeasurementService _measurementService;
         private readonly ISelectService _selectService;
+        private readonly IUserService _userService;
 
-        public DerLayoutController(IDropdownService dropdownService, IDerService derService, IMeasurementService measurementService, IHighlightService highlightService, ISelectService selectService)
+        public DerLayoutController(IDropdownService dropdownService, IDerService derService, IMeasurementService measurementService, IHighlightService highlightService, ISelectService selectService, IUserService userService)
         {
             _dropdownService = dropdownService;
             _derService = derService;
             _measurementService = measurementService;
             _selectService = selectService;
+            _userService = userService;
         }
 
         public ActionResult Index()
@@ -189,6 +192,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             break;
                         }
                     case "speedometer":
+                    case "barmeter":
                         {
                             var speedometerChart = new SpeedometerChartViewModel();
                             editViewModel.SpeedometerChart = response.Artifact.MapPropertiesToInstance<SpeedometerChartViewModel>(speedometerChart);
@@ -203,20 +207,19 @@ namespace DSLNG.PEAR.Web.Controllers
                             editViewModel.HighlightId = response.Highlight.SelectOptionId;
                             break;
                         }
-                    case "lng-and-cds":
-                    case "procurement":
-                        {
-                            var result = _selectService.GetHighlightTypesDropdown();
-                            editViewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
-                            for (int i = 0; i < response.KpiInformations.Count; i++)
-                            {
-                                if (response.KpiInformations[i].SelectOption != null)
-                                {
-                                    editViewModel.KpiInformations[i].HighlightId = response.KpiInformations[i].SelectOption.Id;
-                                }
-                            }
-                            break;
-                        }
+                    /* case "procurement":
+                         {
+                             var result = _selectService.GetHighlightTypesDropdown();
+                             editViewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                             for (int i = 0; i < response.KpiInformations.Count; i++)
+                             {
+                                 if (response.KpiInformations[i].SelectOption != null)
+                                 {
+                                     editViewModel.KpiInformations[i].HighlightId = response.KpiInformations[i].SelectOption.Id;
+                                 }
+                             }
+                             break;
+                         }*/
                     case "key-equipment-status":
                         {
                             var result = _selectService.GetHighlightTypesDropdown();
@@ -230,18 +233,84 @@ namespace DSLNG.PEAR.Web.Controllers
                             }
                         }
                         break;
+                    case "termometer":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 1);
+                            break;
+                        }
+                    case "hhv":
+                    case "procurement":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 2);
+                            break;
+                        }
+                    case "mgdp":
+                    case "indicative-commercial-price":
+                    case "dafwc":
+                    case "job-pmts":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 3);
+                            break;
+                        }
+                    case "total-feed-gas":
+                    case "weekly-maintenance":
+                    case "critical-pm":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 4);
+                            break;
+                        }
                     case "avg-ytd-key-statistic":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 5);
+                            break;
+                        }
                     case "security":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 6);
                             break;
                         }
-                    case "job-pmts":
-                    case "mgdp":
+                    case "lng-and-cds-production":
                         {
-                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 3);
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 9);
                             break;
                         }
+
+                    case "plant-availability":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 10);
+                            break;
+                        }
+                    case "economic-indicator":
+                    case "safety":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 11);
+                            break;
+                        }
+
+                    case "table-tank":
+                    case "global-stock-market":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 12);
+                            var result = _selectService.GetHighlightTypesDropdown();
+                            editViewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                            break;
+                        }
+                    case "lng-and-cds":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 17);
+                            break;
+                        }
+                    case "prepared-by":
+                    case "reviewed-by":
+                        {
+                            editViewModel.SignedBy = response.SignedBy;
+                            var result = _userService.GetUsers(new GetUsersRequest { SortingDictionary = new Dictionary<string, SortOrder>(), Take = 1000 });
+                            editViewModel.Users =
+                                result.Users.Select(
+                                    item => new SelectListItem() { Text = item.Username, Value = item.Id.ToString() }).ToList();
+                            break;
+                        }
+
                 }
                 return View("EditLayoutItem", editViewModel);
                 #endregion
@@ -299,7 +368,6 @@ namespace DSLNG.PEAR.Web.Controllers
                     case "3-and-2":
                     case "3-and-3":
                     case "0-and-1":
-                    case "4-and-0":
                     case "11-and-1":
                     case "12-and-0":
                     case "13-and-0":
@@ -313,6 +381,11 @@ namespace DSLNG.PEAR.Web.Controllers
                     case "3-and-4":
                         {
                             viewModel.Type = "pie";
+                            break;
+                        }
+                    case "4-and-0":
+                        {
+                            viewModel.Type = "dafwc";
                             break;
                         }
                     case "4-and-1":
@@ -349,6 +422,23 @@ namespace DSLNG.PEAR.Web.Controllers
                         {
                             viewModel.Type = "plant-availability";
                             break;
+                        }
+                    case "6-and-3":
+                    case "6-and-4":
+                    case "6-and-6":
+                    case "6-and-7":
+                    case "6-and-8":
+                    case "6-and-9":
+                    case "6-and-10":
+                        {
+                            viewModel.Type = "barmeter";
+                            break;
+                        }
+                    case "6-and-5":
+                        {
+                            viewModel.Type = "termometer";
+                            break;
+
                         }
                     case "7-and-0":
                         {
@@ -408,6 +498,21 @@ namespace DSLNG.PEAR.Web.Controllers
                             viewModel.Type = "economic-indicator";
                             break;
                         }
+                    case "16-and-1":
+                        {
+                            viewModel.Type = "global-stock-market";
+                            break;
+                        }
+                    case "16-and-2":
+                        {
+                            viewModel.Type = "prepared-by";
+                            break;
+                        }
+                    case "16-and-3":
+                        {
+                            viewModel.Type = "reviewed-by";
+                            break;
+                        }
                 }
                 return View("LayoutItem", viewModel);
                 #endregion
@@ -433,7 +538,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         viewModel.LineChart.Series.Add(series);
                         return PartialView("LayoutType/_Line", viewModel);
                     }
-
+                case "barmeter":
                 case "speedometer":
                     {
                         var viewModel = new DerLayoutItemViewModel();
@@ -517,13 +622,13 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "avg-ytd-key-statistic":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(6);
+                        viewModel.KpiInformations = GetKpiInformations(5);
                         return PartialView("LayoutType/_AvgYtdKeyStatistic", viewModel);
                     }
                 case "safety":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(9);
+                        viewModel.KpiInformations = GetKpiInformations(11);
                         return PartialView("LayoutType/_SafetyTable", viewModel);
                     }
                 case "security":
@@ -535,15 +640,14 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "lng-and-cds":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(14);
-                        var result = _selectService.GetHighlightTypesDropdown();
-                        viewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                        viewModel.KpiInformations = GetKpiInformations(17);
                         return PartialView("LayoutType/_LngAndCds", viewModel);
                     }
                 case "dafwc":
                     {
-                        //var viewModel = new DerLayoutItemViewModel();
-                        return Content("You have chosen DAFWC and LOPC type");
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(3);
+                        return PartialView("LayoutType/_Dafwc", viewModel);
                     }
                 case "job-pmts":
                     {
@@ -560,7 +664,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "table-tank":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(11);
+                        viewModel.KpiInformations = GetKpiInformations(12);
                         return PartialView("LayoutType/_TableTank", viewModel);
                     }
                 case "mgdp":
@@ -572,7 +676,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "hhv":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(4);
+                        viewModel.KpiInformations = GetKpiInformations(2);
                         return PartialView("LayoutType/_HHV", viewModel);
                     }
                 case "lng-and-cds-production":
@@ -584,31 +688,25 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "weekly-maintenance":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(4);
-                        var result = _selectService.GetHighlightTypesDropdown();
-                        viewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                        viewModel.KpiInformations = GetKpiInformations(3);
                         return PartialView("LayoutType/_WeeklyMaintenance", viewModel);
                     }
                 case "critical-pm":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(5);
-                        var result = _selectService.GetHighlightTypesDropdown();
-                        viewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                        viewModel.KpiInformations = GetKpiInformations(4);
                         return PartialView("LayoutType/_CriticalPm", viewModel);
                     }
                 case "procurement":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(4);
-                        var result = _selectService.GetHighlightTypesDropdown();
-                        viewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                        viewModel.KpiInformations = GetKpiInformations(2);
                         return PartialView("LayoutType/_Procurement", viewModel);
                     }
                 case "indicative-commercial-price":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(4);
+                        viewModel.KpiInformations = GetKpiInformations(3);
                         return PartialView("LayoutType/_IndicativeCommercialPrice", viewModel);
                     }
                 case "plant-availability":
@@ -630,6 +728,31 @@ namespace DSLNG.PEAR.Web.Controllers
                         var result = _selectService.GetHighlightTypesDropdown();
                         viewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
                         return PartialView("LayoutType/_KeyEquipmentStatus", viewModel);
+                    }
+                case "global-stock-market":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(12);
+                        var result = _selectService.GetHighlightTypesDropdown();
+                        viewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                        return PartialView("LayoutType/_GlobalStockMarket", viewModel);
+                    }
+                case "prepared-by":
+                case "reviewed-by":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        var result = _userService.GetUsers(new GetUsersRequest { SortingDictionary = new Dictionary<string, SortOrder>(), Take = 1000 });
+                        viewModel.Users =
+                            result.Users.Select(
+                                item => new SelectListItem() { Text = item.Username, Value = item.Id.ToString() }).ToList();
+                        return PartialView("LayoutType/_User", viewModel);
+                    }
+                case "termometer":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(1);
+                        return PartialView("LayoutType/_Termometer", viewModel);
+
                     }
             }
 
@@ -687,6 +810,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         response = _derService.SaveLayoutItem(request);
                         break;
                     }
+                case "barmeter":
                 case "speedometer":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
@@ -726,46 +850,76 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "critical-pm":
                 case "procurement":
                 case "indicative-commercial-price":
-                case "plant-availability":
                 case "economic-indicator":
                 case "key-equipment-status":
-                    {
-                        request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
-                        request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
-                        response = _derService.SaveLayoutItem(request);
-                        break;
-                    }
+                case "plant-availability":
                 case "job-pmts":
                 case "mgdp":
+                case "global-stock-market":
+                case "dafwc":
+                case "termometer":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
-                        var mbbtuKpi = request.KpiInformations.FirstOrDefault(x => x.Position == 1);
-                        if (mbbtuKpi != null)
+                        response = _derService.SaveLayoutItem(request);
+                        break;
+                    }
+                case "prepared-by":
+                case "reviewed-by":
+                    {
+                        request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
+                        request.SignedBy = layoutItemViewModel.SignedBy;
+                        response = _derService.SaveLayoutItem(request);
+                        break;
+                    }
+                    /*case "job-pmts":
+                    case "mgdp":
                         {
-                            var newMbbtuKpiTarget = new SaveLayoutItemRequest.DerKpiInformationRequest();
-                            newMbbtuKpiTarget.ConfigType = ConfigType.KpiTarget;
-                            newMbbtuKpiTarget.KpiId = mbbtuKpi.KpiId;
-                            newMbbtuKpiTarget.Position = 3;
-                            request.KpiInformations.Add(newMbbtuKpiTarget);
-                        }
-                        response = _derService.SaveLayoutItem(request);
-                        break;
-                    }
-                /*case "lng-and-cds":
+                            request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
+                            request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
+                            var mbbtuKpi = request.KpiInformations.FirstOrDefault(x => x.Position == 1);
+                            if (mbbtuKpi != null)
+                            {
+                                var newMbbtuKpiTarget = new SaveLayoutItemRequest.DerKpiInformationRequest();
+                                newMbbtuKpiTarget.ConfigType = ConfigType.KpiTarget;
+                                newMbbtuKpiTarget.KpiId = mbbtuKpi.KpiId;
+                                newMbbtuKpiTarget.Position = 3;
+                                request.KpiInformations.Add(newMbbtuKpiTarget);
+                            }
+                            response = _derService.SaveLayoutItem(request);
+                            break;
+                        }*/
+                    /*case "lng-and-cds":
+                        {
+                            request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
+                            request.KpiInformations =
+                                layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
+                            response = _derService.SaveLayoutItem(request);
+                            break;
+                        }*/
+                    /*case "dafwc":
+                        {
+                            request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
+                            response = _derService.SaveLayoutItem(request);
+                            break;
+                        }*/
+                    /*case "plant-availability":
                     {
-                        request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
-                        request.KpiInformations =
-                            layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
-                        response = _derService.SaveLayoutItem(request);
-                        break;
-                    }*/
-                case "dafwc":
-                    {
-                        request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
-                        response = _derService.SaveLayoutItem(request);
-                        break;
-                    }
+                            request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
+                            request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
+                            var mbbtuKpi = request.KpiInformations.FirstOrDefault(x => x.Position == 0 || x.Position == 1 || x.Position == 2 ||
+                                x.Position ==3);
+                            if (mbbtuKpi != null)
+                            {
+                                var newMbbtuKpiTarget = new SaveLayoutItemRequest.DerKpiInformationRequest();
+                                newMbbtuKpiTarget.ConfigType = ConfigType.KpiTarget;
+                                newMbbtuKpiTarget.KpiId = mbbtuKpi.KpiId;
+                                newMbbtuKpiTarget.Position = 3;
+                                request.KpiInformations.Add(newMbbtuKpiTarget);
+                            }
+                            response = _derService.SaveLayoutItem(request);
+                            break;
+                        }*/
             }
 
             TempData["IsSuccess"] = response.IsSuccess;
