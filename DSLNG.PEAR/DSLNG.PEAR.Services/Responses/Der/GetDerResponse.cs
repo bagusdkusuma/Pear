@@ -10,6 +10,5 @@ namespace DSLNG.PEAR.Services.Responses.Der
         public int Id { get; set; }
         public string Title { get; set; }
         public bool IsActive { get; set; }
-        public IList<GetDerItemResponse> Items { get; set; }
     }
 }

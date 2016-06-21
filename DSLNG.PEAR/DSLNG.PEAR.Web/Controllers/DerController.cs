@@ -1076,17 +1076,37 @@ namespace DSLNG.PEAR.Web.Controllers
             }
 
             var htmlToImageConverter = new HtmlToImageConverter();
-            htmlToImageConverter.Height = Convert.ToInt32(Math.Round(2481 * 0.815));
-            htmlToImageConverter.Width = Convert.ToInt32(Math.Round(1652 * 0.815));
+            htmlToImageConverter.Height = Convert.ToInt32(Math.Round(2336.16));
+            htmlToImageConverter.Width = Convert.ToInt32(Math.Round(1652.00));
             var imageName = "der_" + DateTime.Now.Ticks + ".png";
             var imagePath = Path.Combine(Server.MapPath(PathConstant.DerPath), imageName);
             htmlToImageConverter.GenerateImageFromFile(displayUrl, ImageFormat.Png, imagePath);
             var htmlContent = String.Format("<body><img src='{0}' /></body>", Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content(PathConstant.DerPath + "/" + imageName));
-
-            var pdfPath = Path.Combine(Server.MapPath(PathConstant.DerPath), "der_" + DateTime.Now.Ticks + ".pdf");
+            var title  = "DER/" + DateTime.Now.Date.ToString("dd-MMM-yyyy");
+            //if (id != 0) {
+            //    title = _derService.GetDerById(id).Title;
+            //}
+            var pdfName =  title.Replace('/','-') + ".pdf";
+            var pdfPath = Path.Combine(Server.MapPath(PathConstant.DerPath), pdfName);
+            htmlToPdf.Margins.Top = 10;
+            htmlToPdf.Margins.Bottom = 10;
+            htmlToPdf.Margins.Left = 10;
+            htmlToPdf.Margins.Right = 10;
             htmlToPdf.GeneratePdf(htmlContent, null, pdfPath);
+            var response = _derService.CreateOrUpdate(new CreateOrUpdateDerRequest { 
+                Filename = PathConstant.DerPath + "/" + pdfName,
+                Title = title,
+                Date = DateTime.Now,
+                RevisionBy = UserProfile().UserId
+            });
+            if (response.IsSuccess)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return base.ErrorPage(response.Message);
             //htmlToPdf.GeneratePdfFromFile(displayUrl, null, pdfPath);
-            return File(pdfPath, "application/pdf");
+            //return File(pdfPath, "application/pdf");
             //var htmlToImageConverter = new HtmlToImageConverter();
             //htmlToImageConverter.Height = 2481;
             //htmlToImageConverter.Width = 1754;
