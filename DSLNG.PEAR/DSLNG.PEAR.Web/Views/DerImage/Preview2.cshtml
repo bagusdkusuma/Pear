@@ -29,11 +29,11 @@
     <div class="control" style="display:none">
         <div style="position:absolute;left:20px;top:20px">
             <div style="position:relative">
-                <input  name="date" class="form-control datepicker" />
+                <input name="date" class="form-control datepicker" />
             </div>
         </div>
         <a class="btn btn-default" href="@Url.Action("Index","DER")">Back To List</a>
-       
+
         <form action="@Url.Action("Generate","DER")" method="post">
             <input class="btn btn-primary generate" type="submit" value="Generate" />
         </form>
@@ -43,18 +43,20 @@
             <div class="header-left col-md-8 text-center">
                 <h5>DAILY EXECUTIVE REPORT</h5>
                 <h6>The Last 24 Hours Business Perfomance</h6>
-                <h6>FOR THE PERIOD ENDED: @{
-                    if (Request.QueryString["date"] != null)
-                    {
-                        var id = DateTime.ParseExact(Request.QueryString["date"], "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture).ToString("dd-MMM-yyyy");
-                                    <text>@id</text>
-                    }
-                    else
-                    {
-                        var id = DateTime.Now.ToString("dd-MMM-yyyy");
-                                    <text>@id</text>
-                    } 
-                            } until LT24:00 HOURS</h6>
+                <h6>
+                    FOR THE PERIOD ENDED: @{
+                        if (Request.QueryString["date"] != null)
+                        {
+                            var id = DateTime.ParseExact(Request.QueryString["date"], "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture).ToString("dd-MMM-yyyy");
+                            <text>@id</text>
+                        }
+                        else
+                        {
+                            var id = DateTime.Now.ToString("dd-MMM-yyyy");
+                            <text>@id</text>
+                        }
+                    } until LT24:00 HOURS
+                </h6>
             </div>
             <div class="header-right col-md-4">
             </div>
@@ -571,7 +573,7 @@
                             if (row12Col2 != null)
                             {
 
-                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row12Col2.Id })" class="layout-item highlight-plant-mode-json"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row12Col2.Id })" class="layout-item highlight-json-plant-mode"></div>
                             }
                         }
                     </div>
@@ -689,7 +691,7 @@
 
             </div>
 
-            
+
             @*<ul class="list-unstyled">
                     <li><label>LNG Maleo:</label> Sailling, LOB 124,727 m3 (Net-COQ) bound to Naoetsu-Japan ETA 18 Apr 2016</li>
                     <li><label>LNG HU:</label> Sailling to to DSLNG ETA 15 Apr 2016.</li>
@@ -730,22 +732,22 @@
                         <p>Normal Ops</p>
                         <table class="table borderless ict-infra">
                             <tbody>
-                            <tr>
-                                @{
-                                    var row16Col4 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 4);
-                                    if (row16Col4 != null)
-                                    {
+                                <tr>
+                                    @{
+                                        var row16Col4 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 4);
+                                        if (row16Col4 != null)
+                                        {
 
-                                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row16Col4.Id })" class="layout-item highlight-json-ict-infra"></div>
+                                            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row16Col4.Id })" class="layout-item highlight-json-ict-infra"></div>
+                                        }
                                     }
-                                }
-                                @*<td>1</td>
-                                    <td><img src="@Url.Content("~/content/images/clip_image002.png")" alt="" width="52" height="25"></td>
-                                    <td>1</td>
-                                    <td><img src="@Url.Content("~/content/images/clip_image004.png")" alt="" width="52" height="25"></td>
-                                    <td>1</td>
-                                    <td><img src="@Url.Content("~/content/images/clip_image006.png")" alt="" width="52" height="25"></td>*@
-                            </tr>
+                                    @*<td>1</td>
+                                        <td><img src="@Url.Content("~/content/images/clip_image002.png")" alt="" width="52" height="25"></td>
+                                        <td>1</td>
+                                        <td><img src="@Url.Content("~/content/images/clip_image004.png")" alt="" width="52" height="25"></td>
+                                        <td>1</td>
+                                        <td><img src="@Url.Content("~/content/images/clip_image006.png")" alt="" width="52" height="25"></td>*@
+                                </tr>
                             </tbody>
                         </table>
                         <div class="row">
@@ -754,7 +756,7 @@
                                 <p>Normal Ops</p>
                             </div>
                             <div class="col-md-7" style="padding-top:5px !important">
-                                <u>Person-on-Board</u>: 
+                                <u>Person-on-Board</u>:
                                 @{
                                     var row15Col3 = Model.Items.FirstOrDefault(x => x.Row == 15 && x.Column == 3);
                                     if (row15Col3 != null)
@@ -826,6 +828,7 @@
                                 {
 
                                     <div data-url="@Url.Action("LayoutItem", "Der", new { id = row15Col2.Id })" class="layout-item highlight-json-market-tone"></div>
+
                                 }
                             }
                         </div>
@@ -848,7 +851,8 @@
                         <tr>
                             <td>Prepared By</td>
                             <td>Reviewed By</td>
-                            <td>@{
+                            <td>
+                                @{
                                 if (Request.QueryString["date"] != null)
                                 {
                                     var id = "DER/" + DateTime.ParseExact(Request.QueryString["date"], "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture).ToString("dd-MMM-yyyy");
@@ -858,228 +862,213 @@
                                 {
                                     var id = "DER/" + DateTime.Now.ToString("dd-MMM-yyyy");
                                     <text>@id</text>
-                                } 
+                                }
                             }
-                                 Generated by PEAR system </td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="signature">
-                                <img src="@Url.Content("~/content/images/signature1.png")">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <span class="nothing">LT07:45</span>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label>Eko P. Yulianto</label>
-                                    </div>
+                            Generated by PEAR system
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="signature">
+                            <img src="@Url.Content("~/content/images/signature1.png")">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <span class="nothing">LT07:45</span>
                                 </div>
-                                Business Performance Sr.Specialist
-                            </td>
-                            <td class="signature">
-                                <img src="@Url.Content("~/content/images/signature2.png")">
-                                <label>Marco Maruto</label> Performance &amp; Planning Sr. Manager
-                            </td>
-                            <td>
-                                <img src="@Url.Content("~/content/images/strictly-sign.png")">
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                                <div class="col-md-6">
+                                    <label>Eko P. Yulianto</label>
+                                </div>
+                            </div>
+                            Business Performance Sr.Specialist
+                        </td>
+                        <td class="signature">
+                            <img src="@Url.Content("~/content/images/signature2.png")">
+                            <label>Marco Maruto</label> Performance &amp; Planning Sr. Manager
+                        </td>
+                        <td>
+                            <img src="@Url.Content("~/content/images/strictly-sign.png")">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
 
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <script src="/Scripts/moment.min.js"></script> 
-    <script src="/Scripts/bootstrap-datetimepicker.min.js"></script>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="http://code.highcharts.com/highcharts-more.js"></script>
-    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
-    <script src="/Scripts/snap.svg.js"></script>
-    <script src="/Scripts/der-tank.js"></script>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script src="/Scripts/moment.min.js"></script>
+<script src="/Scripts/bootstrap-datetimepicker.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/highcharts-more.js"></script>
+<script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+<script src="/Scripts/snap.svg.js"></script>
+<script src="/Scripts/der-tank.js"></script>
 
-    <script src="@Url.Content("~/Scripts/der-scripts.js")"></script>
-    <script type="text/javascript">
-        function getQueryVariable(variable) {
-            var query = window.location.search.substring(1);
-            var vars = query.split('&');
-            for (var i = 0; i < vars.length; i++) {
-                var pair = vars[i].split('=');
-                if (decodeURIComponent(pair[0]) == variable) {
-                    return decodeURIComponent(pair[1]);
+<script src="@Url.Content("~/Scripts/der-scripts.js")"></script>
+<script type="text/javascript">
+    function getQueryVariable(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split('&');
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split('=');
+            if (decodeURIComponent(pair[0]) == variable) {
+                return decodeURIComponent(pair[1]);
+            }
+        }
+        return null;
+    }
+    function updateQueryStringParameter(uri, key, value) {
+        var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+        var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+        if (uri.match(re)) {
+            return uri.replace(re, '$1' + key + "=" + value + '$2');
+        }
+        else {
+            return uri + separator + key + "=" + value;
+        }
+    }
+
+    var reloadView = function () {
+        window.document.location = updateQueryStringParameter(window.location.href, "date", encodeURIComponent($('.datepicker').val()));
+    };
+    $(document).ready(function () {
+        var date = getQueryVariable('date');
+        if (date == null) {
+            $('.datepicker').val($('body').data('date'));
+        } else {
+            $('.datepicker').val(decodeURIComponent(date));
+        }
+        $('.datepicker').datetimepicker({
+            format: "MM/DD/YYYY",
+            focusOnShow: false
+        }).on('dp.change', function (e) {
+            $(".datepicker").blur();
+            reloadView();
+        });
+        var currentDate = $('.datepicker').val();
+        $('.generate').click(function (e) {
+            e.preventDefault();
+            var $input = $('<input />');
+            $input.attr('name', 'date');
+            $input.css('display', 'none');
+            $input.val(currentDate);
+            var $form = $(this).closest('form');
+            $form.prepend($input);
+            $form.submit();
+        });
+
+        var getIcon = function (str) {
+            switch (str) {
+                case 0:
+                    return '<span class="indicator left-side"><i class="fa fa-check" style="color:orange"></i></span>';
+                case 1:
+                    return '<span class="indicator left-side"><i class="fa fa-check" style="color:green"></i></span>';
+                case -1:
+                    return '<span class="indicator left-side"><i class="fa fa-check" style="color:red"></i></span>';
+                default:
+                    return '';
+            }
+
+        }
+        $('.layout-item').each(function () {
+            var that = $(this);
+            $.ajax({
+                url: that.attr('data-url'),
+                data: { currentDate: currentDate },
+                success: function (data) {
+                    if (data.GraphicType !== undefined) {
+                        var callback = window.Der.Artifact;
+                        callback[data.GraphicType](data, that);
+                    } else if (data.type === "highlight" || data.type === "weather" ||
+                            data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
+                        data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type === "total-feed-gas"
+                        || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type === "procurement" || data.type === "indicative-commercial-price" ||
+                            data.type === "plant-availability" || data.type === "economic-indicator" || data.type === "mgdp" || data.type === "hhv" || data.type === "lng-and-cds-production"
+                            || data.type === "nls" || data.type === "key-equipment-status" || data.type === "wave" || data.type === "table-tank" || data.type === "global-stock-market" || data.type === "loading-duration" || data.type === 'person-on-board') {
+                        if (data.type === "highlight" && that.hasClass('highlight-json')) {
+                            var js = { value: 1 };
+                            //var js = data;
+                            switch (js.value) {
+                                case 0:
+                                    that
+                                        .replaceWith('<span class="indicator ' + type + '"><i class="fa fa-exclamation-circle"></i></span>');
+                                    break;
+                                case 1:
+                                    that
+                                        .replaceWith('<span class="indicator ' + type + '"><i class="fa fa-circle"></i></span>');
+                                    break;
+                                case -1:
+                                    that
+                                        .replaceWith('<span class="indicator ' + type + '"><i class="fa fa-times-circle"></i></span>');
+                                    break;
+                                default:
+                                    that.replaceWith('&nbsp;');
+                                    break;
+
+                            }
+                        } else if (data.type === "highlight" && that.hasClass('highlight-json-plant-mode')) {
+
+                            if (data.view.toLowerCase().indexOf('holding') > -1) {
+                                that.replaceWith("<span style='color:green'>Holding</span>");
+                            } else if (data.view.toLowerCase().indexOf('loading') > -1) {
+                                that.replaceWith("<span style='color:blue'>Loading</span>");
+                            } else if (data.view.toLowerCase().indexOf('shutdown') > -1) {
+                                that.replaceWith("<span style='color:red'>Shutdown</span>");
+                            } else {
+                                that.replaceWith('&nbsp;');
+                            }
+
+                        } else if (data.type === "highlight" && that.hasClass('highlight-json-market-tone')) {
+
+                            switch (data.view.toLowerCase()) {
+                                case 'holding':
+                                    that.replaceWith("<span class='comparison'><i class='fa fa-arrow-up' style='color:green'></i></span>");
+                                    break;
+                                case 'loading':
+                                    that.replaceWith("<span class='comparison'><i class='fa fa-minus' style='color:orange'></i></span>");
+                                    break;
+                                case 'shutdown':
+                                    that.replaceWith("<span class='comparison'><i class='fa fa-arrow-down' style='color:red'></i></span>");
+                                    break;
+                                default:
+                                    that.replaceWith('&nbsp;');
+                                    break;
+                            }
+                        } else if (data.type === "highlight" && that.hasClass('highlight-json-ict-infra')) {
+                            var js = { a: 1, b: 1, c: 1 };
+                            var transform = [];
+                            transform['a'] = getIcon(js.a);
+                            transform['b'] = getIcon(js.b);
+                            transform['c'] = getIcon(js.c);
+                            var html =
+                                '<td>' + transform['a'] + '</td><td><img src="@Url.Content("~/content/images/clip_image002.png")" alt="" width="52" height="25"></td><td>' + transform['b'] + '</td><td><img src="@Url.Content("~/content/images/clip_image004.png")" alt="" width="52" height="25"></td><td>' + transform['c'] + '</td><td><img src="@Url.Content("~/content/images/clip_image006.png")" alt="" width="52" height="25"></td>';
+                            that.replaceWith(html);
+                        }
+                        else if (data.type === "highlight" && that.hasClass('highlight-json-gs-fm')) {
+                            var js = { a: 1, b: 1, c: 1 };
+                            var transform = [];
+                            transform['a'] = getIcon(js.a);
+                            transform['b'] = getIcon(js.b);
+                            transform['c'] = getIcon(js.c);
+                            var html =
+                                '<td>' + transform['a'] + '</td><td><img src="@Url.Content("~/content/images/clip_image008.png")" alt="" width="52" height="25"></td><td>' + transform['b'] + '</td><td><img src="@Url.Content("~/content/images/clip_image010.png")" alt="" width="52" height="25"></td><td>' + transform['c'] + '</td><td><img src="@Url.Content("~/content/images/clip_image012.png")" alt="" width="52" height="25"></td>';
+                            that.replaceWith(html);
+                        }
+                        else {
+                            that.html(data.view);
+                        }
+
+    }
+
                 }
-            }
-            return null;
-        }
-        function updateQueryStringParameter(uri, key, value) {
-            var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
-            var separator = uri.indexOf('?') !== -1 ? "&" : "?";
-            if (uri.match(re)) {
-                return uri.replace(re, '$1' + key + "=" + value + '$2');
-            }
-            else {
-                return uri + separator + key + "=" + value;
-            }
-        }
-
-        var reloadView = function () {
-            window.document.location = updateQueryStringParameter(window.location.href, "date", encodeURIComponent($('.datepicker').val()));
-        };
-        $(document).ready(function () {
-            var date = getQueryVariable('date');
-            if (date == null) {
-                $('.datepicker').val($('body').data('date'));
-            } else {
-                $('.datepicker').val(decodeURIComponent(date));
-            }
-            $('.datepicker').datetimepicker({
-                format: "MM/DD/YYYY",
-                focusOnShow: false
-            }).on('dp.change', function (e) {
-                $(".datepicker").blur();
-                reloadView();
             });
-            var currentDate = $('.datepicker').val();
-            $('.generate').click(function (e) {
-                e.preventDefault();
-                var $input = $('<input />');
-                $input.attr('name', 'date');
-                $input.css('display', 'none');
-                $input.val(currentDate);
-                var $form = $(this).closest('form');
-                $form.prepend($input);
-                $form.submit();
-            });
-
-            var getIcon = function (str) {
-                switch (str) {
-                    case 0:
-                        return '<span class="indicator left-side"><i class="fa fa-check" style="color:orange"></i></span>';
-                    case 1:
-                        return '<span class="indicator left-side"><i class="fa fa-check" style="color:green"></i></span>';
-                    case -1:
-                        return '<span class="indicator left-side"><i class="fa fa-check" style="color:red"></i></span>';
-                    default:
-                        return '';
-                }
-            }
-            $('.layout-item').each(function () {
-                var that = $(this);
-                $.ajax({
-                    url: that.attr('data-url'),
-                    data: { currentDate: currentDate },
-                    success: function (data) {
-                        if (data.GraphicType !== undefined) {
-                            var callback = window.Der.Artifact;
-                            console.log(data.GraphicType);
-                            callback[data.GraphicType](data, that);
-                        } else if (data.type === "highlight" || data.type === "weather" ||
-                                data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
-                            data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type === "total-feed-gas"
-                            || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type === "procurement" || data.type === "indicative-commercial-price" ||
-                                data.type === "plant-availability" || data.type === "economic-indicator" || data.type === "mgdp" || data.type === "hhv" || data.type === "lng-and-cds-production"
-                                || data.type === "nls" || data.type === "key-equipment-status" || data.type === "wave" || data.type === "table-tank" || data.type === "global-stock-market" || data.type === "loading-duration" || data.type === 'person-on-board') {
-                            if (data.type === "highlight" && that.hasClass('highlight-json')) {
-                                console.log('sini');
-                                var js = { value: 1 };
-                                var type = 'absolute';
-                                if (that.hasClass('in-left')) {
-                                    type = 'left-side';
-                                } else if (that.hasClass('in-right')) {
-                                    type = 'right-side';
-                                }
-                                //var js = data;
-                                switch (js.value) {
-                                    case 0:
-                                        that
-                                            .replaceWith('<span class="indicator ' + type + '"><i class="fa fa-exclamation-circle"></i></span>');
-                                        break;
-                                    case 1:
-                                        that
-                                            .replaceWith('<span class="indicator ' + type + '"><i class="fa fa-circle"></i></span>');
-                                        break;
-                                    case -1:
-                                        that
-                                            .replaceWith('<span class="indicator ' + type + '"><i class="fa fa-times-circle"></i></span>');
-                                        break;
-                                    default:
-                                        that.replaceWith('&nbsp;');
-                                        break;
-
-                                }
-                            } else if (data.type === "highlight" && that.hasClass('highlight-plant-mode-json')) {
-                                console.log('sini');
-                                var js = { value: 1 };
-                                //var js = data;
-                                switch (js.value) {
-                                    case 0:
-                                        that.replaceWith('<span class="plant-mode" style="color:green">Holding</span>');
-                                        break;
-                                    case 1:
-                                        that.replaceWith('<span class="plant-mode" style="color:blue">Loading</span>');
-                                        break;
-                                    case -1:
-                                        that.replaceWith('<span class="plant-mode" style="color:red">Shut Down</span>');
-                                        break;
-                                    default:
-                                        that.replaceWith('&nbsp;');
-                                        break;
-
-                                }
-                            } else if (data.type === "highlight" && that.hasClass('highlight-json-market-tone')) {
-
-                                switch (data.view.toLowerCase()) {
-                                    case 'holding':
-                                        that.replaceWith("<span class='comparison'><i class='fa fa-arrow-up' style='color:green'></i></span>");
-                                        break;
-                                    case 'loading':
-                                        that.replaceWith("<span class='comparison'><i class='fa fa-minus' style='color:orange'></i></span>");
-                                        break;
-                                    case 'shutdown':
-                                        that.replaceWith("<span class='comparison'><i class='fa fa-arrow-down' style='color:red'></i></span>");
-                                        break;
-                                    default:
-                                        that.replaceWith('&nbsp;');
-                                        break;
-                                }
-                            } else if (data.type === "highlight" && that.hasClass('highlight-json-ict-infra')) {
-                                var js = { a: 1, b: 1, c: 1 };
-                                var transform = [];
-                                transform['a'] = getIcon(js.a);
-                                transform['b'] = getIcon(js.b);
-                                transform['c'] = getIcon(js.c);
-                                console.log(transform);
-                                var html =
-                                    '<td>' + transform['a'] + '</td><td><img src="@Url.Content("~/content/images/clip_image002.png")" alt="" width="52" height="25"></td><td>' + transform['b'] + '</td><td><img src="@Url.Content("~/content/images/clip_image004.png")" alt="" width="52" height="25"></td><td>' + transform['c'] + '</td><td><img src="@Url.Content("~/content/images/clip_image006.png")" alt="" width="52" height="25"></td>';
-                                that.replaceWith(html);
-                            }
-                            else if (data.type === "highlight" && that.hasClass('highlight-json-gs-fm')) {
-                                var js = { a: 1, b: 1, c: 1 };
-                                var transform = [];
-                                transform['a'] = getIcon(js.a);
-                                transform['b'] = getIcon(js.b);
-                                transform['c'] = getIcon(js.c);
-                                console.log(transform);
-                                var html =
-                                    '<td>' + transform['a'] + '</td><td><img src="@Url.Content("~/content/images/clip_image008.png")" alt="" width="52" height="25"></td><td>' + transform['b'] + '</td><td><img src="@Url.Content("~/content/images/clip_image010.png")" alt="" width="52" height="25"></td><td>' + transform['c'] + '</td><td><img src="@Url.Content("~/content/images/clip_image012.png")" alt="" width="52" height="25"></td>';
-                                that.replaceWith(html);
-                            }
-                            else {
-                                that.html(data.view);
-                            }
-
-        }
-
-                    }
-                });
-            });
-        })
-    </script>
+        });
+    })
+</script>
 </body>
 </html>
