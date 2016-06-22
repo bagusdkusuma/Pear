@@ -88,7 +88,15 @@
                             }
                         }
                     </div>
-                    <div class="col-md-3"></div>
+                    <div class="col-md-3">
+                        @{
+                            var row0Col2 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 2);
+                            if (row0Col2 != null)
+                            {
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col2.Id })" class="layout-item"></div>
+                            }
+                        }
+                    </div>
                 </div>
             </div>
 
