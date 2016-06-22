@@ -766,9 +766,14 @@
                     <div class="macro-eco">
                         <div class="market-tone">
                             <label>Market Tone:</label>
-                            <span class="comparison">
-                                <i class="fa fa-arrow-up"></i>
-                            </span>
+                            @{
+                                var row15Col2 = Model.Items.FirstOrDefault(x => x.Row == 15 && x.Column == 2);
+                                if (row15Col2 != null)
+                                {
+
+                                    <div data-url="@Url.Action("LayoutItem", "Der", new {id = row15Col2.Id})" class="layout-item highlight-json-market-tone"></div>
+                                }
+                            }
                         </div>
                         <h5 style="text-decoration: underline;">Macro Economic/Market Flash</h5>
                         <p>
@@ -892,7 +897,20 @@
                                         break;
                                     
                                 }
-                            } else {
+                            } else if (data.type === "highlight" && that.hasClass('highlight-json-market-tone')) {
+                                var js = { value: 1 };
+                                switch (js.value) {
+                                    case 1:
+                                        that.replaceWith("<span class='comparison'><i class='fa fa-arrow-up' style='color:green'></i></span>");
+                                    case 0:
+                                        that.replaceWith("<span class='comparison'><i class='fa fa-minus' style='color:orange'></i></span>");
+                                    case -1:
+                                        that.replaceWith("<span class='comparison'><i class='fa fa-arrow-down' style='color:red'></i></span>");
+                                    default:
+                                        return string.Empty;
+                                }
+                            }
+                            else {
                                 that.html(data.view);
                             }
                             

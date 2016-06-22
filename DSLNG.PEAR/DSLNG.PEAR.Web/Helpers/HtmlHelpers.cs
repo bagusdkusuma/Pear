@@ -130,7 +130,21 @@ namespace DSLNG.PEAR.Web.Helpers
                     return string.Empty;
             }
         }
-        
+
+        public static string DisplayDerRemarkForMarketTone(this HtmlHelper htmlHelper, string deviation)
+        {
+            switch (deviation)
+            {
+                case "1":
+                    return "<span class='comparison'><i class='fa fa-arrow-up' style='color:green'></i></span>";
+                case "0":
+                    return "<span class='comparison'><i class='fa fa-minus' style='color:orange'></i></span>";
+                case "-1":
+                    return "<span class='comparison'><i class='fa fa-arrow-down' style='color:red'></i></span>";
+                default:
+                    return string.Empty;
+            }
+        }
 
         public static string DisplayDerValueWithLabelAtFront(this HtmlHelper htmlHelper, string measurement, string val, string defaultMeasurement, string defaultVal = "N/A", bool isRounded = true)
         {
