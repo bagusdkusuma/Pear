@@ -1033,15 +1033,15 @@
 
                                 }
                             } else if (data.type === "highlight" && that.hasClass('highlight-json-market-tone')) {
-                                var js = { value: 1 };
-                                switch (js.value) {
-                                    case 1:
+                                
+                                switch (data.view.toLowerCase()) {
+                                    case 'holding':
                                         that.replaceWith("<span class='comparison'><i class='fa fa-arrow-up' style='color:green'></i></span>");
                                         break;
-                                    case 0:
+                                    case 'loading':
                                         that.replaceWith("<span class='comparison'><i class='fa fa-minus' style='color:orange'></i></span>");
                                         break;
-                                    case -1:
+                                    case 'shutdown':
                                         that.replaceWith("<span class='comparison'><i class='fa fa-arrow-down' style='color:red'></i></span>");
                                         break;
                                     default:
