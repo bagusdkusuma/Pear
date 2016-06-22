@@ -22,16 +22,14 @@
                 Volume
             </td>
             <td>
-                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value) 
-                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "mmscf")
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value,
+               Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "mmscf") 
             </td>
             <td>
-               @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Mtd)
-                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "mmscf")
+               @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "mmscf")
             </td>
             <td>
-                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Ytd)
-                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "mmscf")
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "mmscf")
             </td>
         </tr>
         <tr>
@@ -39,16 +37,13 @@
                 Energy
             </td>
             <td>
-                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value)
-                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "mmbtu")
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "mmbtu")
             </td>
             <td>
-                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Mtd)
-                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "mmbtu")
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "mmbtu")
             </td>
             <td>
-                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Ytd)
-                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "mmbtu") 
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "mmbtu")
             </td>
         </tr>
         <tr>
@@ -56,16 +51,15 @@
                 Energy
             </td>
             <td>
-                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value)
-                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "mmbtu")
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "mmbtu")
             </td>
             <td>
-                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Mtd)
-                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "mmbtu")
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "mmbtu")
+                
             </td>
             <td>
-                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Ytd)
-                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "mmbtu")
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "mmbtu")
+                
             </td>
         </tr>
         <tr>

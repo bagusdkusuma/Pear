@@ -13,22 +13,22 @@
     </thead>
     <tbody>
         <tr>
-            <td>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value) mmscf</td>
-            <td rowspan="2">@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value) tonnes</td>
-            <td>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Mtd) mmscf</td>
-            <td rowspan="2">@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Mtd) tonnes</td>
-            <td>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Ytd) mmscf</td>
-            <td rowspan="2">@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Ytd) tonnes</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "mmscf") </td>
+            <td rowspan="2">@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "tonnes") </td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "mmscf") </td>
+            <td rowspan="2">@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "tonnes") </td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "mmscf") </td>
+            <td rowspan="2">@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "tonnes") </td>
         </tr>
         <tr>
-            <td>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value) mmbtu</td>
-            <td>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Mtd)  mmbtu</td>
-            <td>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Ytd)  mmbtu</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "mmbtu") </td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "mmbtu")  </td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "mmbtu")  </td>
         </tr>
         <tr>
-            <td colspan="2">@GetPercentage(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value) of DCQ @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value) mmbtu</td>
-            <td colspan="2">@GetPercentage(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Mtd) of MGN @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Mtd) bbtu</td>
-            <td colspan="2">@GetPercentage(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Ytd) of ADP @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Ytd) TBtu</td>
+            <td colspan="2">@GetPercentage(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value) of DCQ @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, string.Empty, "mmbtu") </td>
+            <td colspan="2">@GetPercentage(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Mtd) of MGN @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Mtd, string.Empty, "bbtu") </td>
+            <td colspan="2">@GetPercentage(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Ytd) of ADP @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Ytd, string.Empty, "TBtu") </td>
         </tr>
     </tbody>
 </table>
