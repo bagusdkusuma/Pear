@@ -154,12 +154,25 @@ Number.prototype.format = function (n, x) {
             chart: {
                 zoomType: 'xy',
                 backgroundColor: 'transparent',
+                height: 200,
+                spacingBottom: 5,
+                spacingTop: 5,
+                spacingLeft: 0,
+                spacingRight: 0,
             },
             title: {
                 text: data.LineChart.Title,
+                style:{
+                    fontSize: '11px',
+                    fontWeight:'bold'
+                }
             },
             subtitle: {
                 text: data.LineChart.Subtitle,
+                style: {
+                    fontSize: '10px',
+                    display:'none'
+                }
             },
 
             plotOptions: {
@@ -181,6 +194,11 @@ Number.prototype.format = function (n, x) {
             },
             xAxis: {
                 categories: data.LineChart.Periodes,
+                labels: {
+                    style: {
+                        fontSize: '7px'
+                    }
+                }
             },
             yAxis: {
                 title: {
@@ -193,6 +211,11 @@ Number.prototype.format = function (n, x) {
                 }],
                 tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
                 max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale,
+                labels: {
+                    style: {
+                        fontSize: '7px'
+                    }
+                }
             },
             exporting: {
                 url: '/Chart/Export',
@@ -203,6 +226,7 @@ Number.prototype.format = function (n, x) {
                 enabled: false
             },
             legend: {
+                enabled:false,
                 itemHoverStyle: {
                     color: '#FF0000'
                 }
@@ -233,7 +257,12 @@ Number.prototype.format = function (n, x) {
                 },
                 opposite: data.MultiaxisChart.Charts[i].IsOpposite,
                 tickInterval: data.MultiaxisChart.Charts[i].FractionScale == 0 ? null : data.MultiaxisChart.Charts[i].FractionScale,
-                max: data.MultiaxisChart.Charts[i].MaxFractionScale == 0 ? null : data.MultiaxisChart.Charts[i].MaxFractionScale
+                max: data.MultiaxisChart.Charts[i].MaxFractionScale == 0 ? null : data.MultiaxisChart.Charts[i].MaxFractionScale,
+                labels: {
+                    style: {
+                        fontSize: '7px'
+                    }
+                }
             });
             if (chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType] == 'line') {
                 plotOptions[chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType]] = {
@@ -293,13 +322,26 @@ Number.prototype.format = function (n, x) {
             chart: {
                 zoomType: 'xy',
                 alignTicks: false,
-                backgroundColor: 'transparent'
+                backgroundColor: 'transparent',
+                height: 200,
+                spacingBottom: 5,
+                spacingTop: 5,
+                spacingLeft: 0,
+                spacingRight: 0,
             },
             title: {
                 text: data.MultiaxisChart.Title,
+                style: {
+                    fontSize: '11px',
+                    fontWeight: 'bold'
+                }
             },
             subtitle: {
                 text: data.MultiaxisChart.Subtitle,
+                style: {
+                    fontSize: '10px',
+                    display: 'none'
+                }
             },
             credits: {
                 enabled: false
@@ -308,8 +350,19 @@ Number.prototype.format = function (n, x) {
             xAxis: [{
                 categories: data.MultiaxisChart.Periodes,
                 crosshair: true,
+                labels: {
+                    style: {
+                        fontSize: '7px'
+                    }
+                }
             }],
             yAxis: yAxes,
+            legend: {
+                itemStyle: {
+                    fontSize : '7px'
+                },
+
+            },
             series: series
         });
     };

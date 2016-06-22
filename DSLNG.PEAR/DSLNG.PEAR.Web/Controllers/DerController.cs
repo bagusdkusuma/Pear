@@ -1061,8 +1061,8 @@ namespace DSLNG.PEAR.Web.Controllers
             }
 
             var htmlToImageConverter = new HtmlToImageConverter();
-            htmlToImageConverter.Height = Convert.ToInt32(Math.Round(2336.16));
-            htmlToImageConverter.Width = Convert.ToInt32(Math.Round(1652.00));
+            htmlToImageConverter.Height = Convert.ToInt32(Math.Round(1908.00));
+            htmlToImageConverter.Width = Convert.ToInt32(Math.Round(1349.00));
             var imageName = "der_" + DateTime.Now.Ticks + ".png";
             var imagePath = Path.Combine(Server.MapPath(PathConstant.DerPath), imageName);
             htmlToImageConverter.GenerateImageFromFile(displayUrl, ImageFormat.Png, imagePath);
@@ -1078,6 +1078,7 @@ namespace DSLNG.PEAR.Web.Controllers
             htmlToPdf.Margins.Left = 10;
             htmlToPdf.Margins.Right = 10;
             htmlToPdf.GeneratePdf(htmlContent, null, pdfPath);
+             //htmlToPdf.GeneratePdfFromFile(displayUrl, null, pdfPath);
             var response = _derService.CreateOrUpdate(new CreateOrUpdateDerRequest { 
                 Filename = PathConstant.DerPath + "/" + pdfName,
                 Title = title,

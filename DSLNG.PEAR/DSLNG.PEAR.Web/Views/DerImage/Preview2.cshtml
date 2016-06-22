@@ -24,7 +24,7 @@
     <![endif]-->
 
 </head>
-<body>
+<body class="der-image">
     <div class="container a3-ratio">
         <div class="row header">
             <div class="header-left col-md-8 text-center">
@@ -294,6 +294,18 @@
                                 <div data-url="@Url.Action("LayoutItem", "DerImage", new {id = row6Col0.Id})" class="layout-item"></div>
                             }
                         }
+                         @*@{
+                            var row1Col0 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 0);
+                            if (row1Col0 != null)
+                            {
+                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row1Col0.Id })" class="layout-item"></div>
+                            }
+                        }*@
+                        @*<div class="psig">
+                            Feed Gas Pressure (Psig):
+                            <div class="barmeter">
+                            </div>
+                        </div>*@
                     </div>
                     <div class="col-md-5">
                         <div class="impurities vertical-space">
@@ -667,6 +679,50 @@
 
                     }
                 });
+            });
+
+            $('.barmeter').each(function (i, val) {
+                var $wrapper = $('<div />');
+                $wrapper.addClass('barmeter-wrapper');
+                var $this = $(val);
+                var $canvas = $('<canvas />');
+                var $label = $this.find('label').clone();
+                $this.find('label').css('display', 'none');
+                $canvas.css({
+                    width: '100%',
+                    height: '100%'
+                });
+                $wrapper.append($label);
+                $this.append($wrapper.append($canvas))
+
+                var canvas = $this.find('canvas')[0];
+                if (canvas.getContext) {
+                    var ctx = canvas.getContext("2d");
+                    gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+                    // Add the colors with fixed stops at 1/4 of the width.
+                    gradient.addColorStop("0", "blue");
+                    gradient.addColorStop(".20", "#00FF00");
+                    gradient.addColorStop(".65", "#00FF00");
+                    gradient.addColorStop(".70", "yellow");
+                    gradient.addColorStop(".75", "orange");
+                    gradient.addColorStop("1.0", "red");;
+
+                    // Use the gradient.
+                    ctx.fillStyle = gradient;
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    // ctx.fillRect(250, 300, 600, 500);
+                    ctx.fillStyle = "rgb(0,0,0)";
+                    ctx.fillRect(100, 0, 6, canvas.height - 30);
+
+                    // the triangle
+                    ctx.beginPath();
+                    ctx.moveTo(100, canvas.height - 30);
+                    ctx.lineTo(103, canvas.height);
+                    ctx.lineTo(106, canvas.height - 30);
+                    ctx.closePath();
+                    ctx.fillStyle = "rgb(0,0,0)";
+                    ctx.fill();
+                }
             });
         })
     </script>
