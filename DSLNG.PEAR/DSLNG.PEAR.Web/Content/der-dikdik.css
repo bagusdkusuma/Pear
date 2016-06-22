@@ -1,14 +1,30 @@
 ﻿body {
             font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
-            font-size: 12px;
+            font-size: 10px;
             line-height: 1;
             color: #000;
             background-color: #fff;
-            letter-spacing:0.2px;
+            
+            -webkit-font-smoothing: antialiased;
+	        -moz-osx-font-smoothing: grayscale;
+            /*font-weight:600;*/
         }
+h5 {
+    margin-top: 0px;
+    margin-bottom: 4px;
+    font-size:10px;
+}
+.header-left h5 {
+    margin-top:5px;
+    font-size:12px;
+}
+h6 {
+    margin-top:5px;
+    margin-bottom:5px;
+}
         .container.preview {
-            zoom:0.815;
-            margin-top:90px;
+            /*zoom:0.815;*/
+            margin-top:73px;
         }
         .control {
             height: 73px;
@@ -37,10 +53,17 @@
             overflow: hidden;
             padding: 0;
         }
-        .container.a3-ratio{
-            width: 1652px;
-            height: 2336px;
+        .container.a3-ratio,
+        body.der-image{
+            height: 1908px;
+            width:1349px;
+            
+            /*width: 1101px;
+            height: 1556px;*/
             /*zoom:0.815;*/
+        }
+        body.der-image {
+            letter-spacing:0.8px;
         }
         
         .header {
@@ -50,13 +73,13 @@
         
         .header .header-left {
             background-color: #002060;
-            height: 81px;
+            height: 63px;
         }
         
         .header .header-right {
             background-color: #0D0D0D;
             background-image: url(images/header-logo.png);
-            height: 81px;
+            height: 63px;
             background-size: 91% 100%;
             background-repeat: no-repeat;
         }
@@ -84,7 +107,7 @@
         .table>tfoot>tr>th,
         .table>thead>tr>td,
         .table>thead>tr>th {
-            padding: 4px;
+            padding: 2px;
             line-height: 1;
             vertical-align: top;
             border-top: 1px solid #0D0D0D;
@@ -99,7 +122,7 @@
         }
         
         .row > div.proper {
-            padding: 5px !important;
+            padding: 2px !important;
         }
         
         .avg-stats {
@@ -153,12 +176,12 @@
         
         .weather,
         .tide-wave {
-            height: 54px;
+            height: 42px;
         }
         
         .tide-wave tbody tr:first-child,
         .weather tbody tr:first-child {
-            height: 36px;
+            height: 28px;
         }
         
         label {
@@ -207,9 +230,9 @@
             width: 92px;
         }
         
-        .table.qhse-remark {
-            height: 105px;
-        }
+        /*.table.qhse-remark {
+            height: 72px;
+        }*/
         
         .table.qhse-remark thead td,
         .table.weekly-alarm thead td,
@@ -220,7 +243,7 @@
         .table.qhse-remark tbody td {
             vertical-align: middle;
             text-align: center;
-            height: 86px;
+            height: 70px;
         }
         
         .table.weekly-alarm thead td {
@@ -236,7 +259,7 @@
         }
         
         .table.weekly-alarm > tbody > tr:last-child > td {
-            height: 113px;
+            height: 90px;
         }
         
         .table.weekly-alarm > tbody > tr > td table {
@@ -253,7 +276,7 @@
         }
         
         .table.pie tbody tr td {
-            height: 218px;
+            height: 151px;
         }
         
         .table.security-incident tbody tr td {
@@ -360,7 +383,7 @@
         }
         
         .table.hhv tbody tr:first-child td {
-            height: 38px;
+            height: 30px;
         }
         
         .vertical-space {
@@ -393,7 +416,7 @@
         .impurities {
             width: 100%;
             background-color: #215967;
-            height: 127px;
+            height: 125px;
             border: 1px solid #0D0D0D;
             color:#fff;
         }
@@ -719,7 +742,7 @@
         }
         
         h5 {
-            font-size: 12px;
+           
             font-weight: bold;
         }
         
@@ -733,7 +756,7 @@
         
         .community img {
             height: 29px;
-            margin-top: -10px;
+            margin-top: -3px;
             width: auto;
         }
         
@@ -744,7 +767,7 @@
         }
         
         .fa {
-            font-size: 12px;
+            font-size: 9px;
         }
         
         .market-tone label {
@@ -753,7 +776,7 @@
         
         .co-macro-eco {
             padding: 5px;
-            height: 205px;
+            height: 176px;
             border-bottom: 1px solid #0D0D0D;
         }
         
@@ -762,12 +785,12 @@
         }
         
         .table.signature tbody tr td {
-            height: 95px;
+            height: 80px;
             text-align: center;
         }
         
         .table.signature td img {
-            height: 100%;
+            height: 99%;
         }
         
         .table.signature td.signature {
@@ -775,7 +798,7 @@
         }
         
         .table.signature td.signature img {
-            height: 50px;
+            height: 30px;
             width: auto;
         }
         
@@ -825,12 +848,21 @@
         /*.table.table.kpi-fatality > tbody > tr > td:nth-last-child(2) {
             position: relative;
         }*/
+        .psig {
+                position: relative;
+            height: 19px;
+            border-bottom: 1px solid #0d0d0d;
+            border-right: 1px solid #0d0d0d;
+            width: 100.1%;
+            margin-bottom: 5px;
+           padding-top: 4px;
+        }
         .psig .barmeter{
-            height: 14px;
-            width: 283px;
-            position: absolute;
-            top: 2px;
-            right: 30px;
+              height: 14px;
+                width: 241px;
+                position: absolute;
+                top: 2px;
+                right: 20px;
         }
         .barmeter-wrapper{
             position: relative;
@@ -852,7 +884,7 @@
         .impurities .thermometer{
             height: 100px;
             width:50px;
-            background: url(images/thermometer.png);
+            background: url(/content/images/thermometer.png);
             background-size: 100% 100%;
             margin-top: 2px;
             margin-left: 5px;
@@ -870,3 +902,12 @@
             top: 5px;
             left: 9px;
         }
+.pie-wrapper {
+    position:relative;
+}
+.pie-title {
+    position: absolute;
+    bottom: 54px;
+    width: 100px;
+    font-weight: bold;
+}

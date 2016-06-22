@@ -154,12 +154,25 @@ Number.prototype.format = function (n, x) {
             chart: {
                 zoomType: 'xy',
                 backgroundColor: 'transparent',
+                height: 200,
+                spacingBottom: 5,
+                spacingTop: 5,
+                spacingLeft: 0,
+                spacingRight: 0,
             },
             title: {
                 text: data.LineChart.Title,
+                style:{
+                    fontSize: '11px',
+                    fontWeight:'bold'
+                }
             },
             subtitle: {
                 text: data.LineChart.Subtitle,
+                style: {
+                    fontSize: '10px',
+                    display:'none'
+                }
             },
 
             plotOptions: {
@@ -181,6 +194,11 @@ Number.prototype.format = function (n, x) {
             },
             xAxis: {
                 categories: data.LineChart.Periodes,
+                labels: {
+                    style: {
+                        fontSize: '7px'
+                    }
+                }
             },
             yAxis: {
                 title: {
@@ -193,6 +211,11 @@ Number.prototype.format = function (n, x) {
                 }],
                 tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
                 max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale,
+                labels: {
+                    style: {
+                        fontSize: '7px'
+                    }
+                }
             },
             exporting: {
                 url: '/Chart/Export',
@@ -203,6 +226,7 @@ Number.prototype.format = function (n, x) {
                 enabled: false
             },
             legend: {
+                enabled:false,
                 itemHoverStyle: {
                     color: '#FF0000'
                 }
@@ -233,7 +257,12 @@ Number.prototype.format = function (n, x) {
                 },
                 opposite: data.MultiaxisChart.Charts[i].IsOpposite,
                 tickInterval: data.MultiaxisChart.Charts[i].FractionScale == 0 ? null : data.MultiaxisChart.Charts[i].FractionScale,
-                max: data.MultiaxisChart.Charts[i].MaxFractionScale == 0 ? null : data.MultiaxisChart.Charts[i].MaxFractionScale
+                max: data.MultiaxisChart.Charts[i].MaxFractionScale == 0 ? null : data.MultiaxisChart.Charts[i].MaxFractionScale,
+                labels: {
+                    style: {
+                        fontSize: '7px'
+                    }
+                }
             });
             if (chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType] == 'line') {
                 plotOptions[chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType]] = {
@@ -293,13 +322,26 @@ Number.prototype.format = function (n, x) {
             chart: {
                 zoomType: 'xy',
                 alignTicks: false,
-                backgroundColor: 'transparent'
+                backgroundColor: 'transparent',
+                height: 200,
+                spacingBottom: 5,
+                spacingTop: 5,
+                spacingLeft: 0,
+                spacingRight: 0,
             },
             title: {
                 text: data.MultiaxisChart.Title,
+                style: {
+                    fontSize: '11px',
+                    fontWeight: 'bold'
+                }
             },
             subtitle: {
                 text: data.MultiaxisChart.Subtitle,
+                style: {
+                    fontSize: '10px',
+                    display: 'none'
+                }
             },
             credits: {
                 enabled: false
@@ -308,8 +350,19 @@ Number.prototype.format = function (n, x) {
             xAxis: [{
                 categories: data.MultiaxisChart.Periodes,
                 crosshair: true,
+                labels: {
+                    style: {
+                        fontSize: '7px'
+                    }
+                }
             }],
             yAxis: yAxes,
+            legend: {
+                itemStyle: {
+                    fontSize : '7px'
+                },
+
+            },
             series: series
         });
     };
@@ -380,6 +433,157 @@ Number.prototype.format = function (n, x) {
             }]
         });
     };
+    Der.Artifact.barmeter = function (data, container) {
+        var $wrapper = $('<div />');
+        $wrapper.addClass('barmeter-wrapper');
+        var $this = container;
+        var $canvas = $('<canvas />');
+        var $label = $this.find('label').clone();
+        if ($label.length) {
+            $this.find('label').css('display', 'none');
+            $wrapper.append($label);
+        }
+        var config = data['SpeedometerChart'];
+        $canvas.css({
+            width: $this.width() + 'px',
+            height: $this.height() + 'px'
+        });
+       
+        $this.append($wrapper.append($canvas))
 
+        var canvas = $this.find('canvas')[0];
+        if (canvas.getContext) {
+            var ctx = canvas.getContext("2d");
+            gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+            var last = config.PlotBands.length -1;
+            for (var i in config.PlotBands) {
+                gradient.addColorStop(parseInt(config.PlotBands[i].from) / parseInt(config.PlotBands[last].from), config.PlotBands[i].color);
+            }
+            ctx.fillStyle = gradient;
+            ctx.fillRect(3, 0, canvas.width-3, canvas.height);
+            ctx.fillStyle = "rgb(0,0,0)";
+            var point = parseInt(config.Series.data[0]) / parseInt(config.PlotBands[last].from) * (canvas.width - 6) + 3;
+            ctx.fillRect(point-3, 0, 6, canvas.height - 30);
+
+            // the triangle
+            ctx.beginPath();
+            ctx.moveTo(point-3, canvas.height - 30);
+            ctx.lineTo(point, canvas.height);
+            ctx.lineTo(point + 3, canvas.height - 30);
+            ctx.closePath();
+            ctx.fillStyle = "rgb(0,0,0)";
+            ctx.fill();
+        }
+    }
+    Der.Artifact.termometer = function (data, container) {
+        var $this = container;
+        var $canvas = $('<canvas/>');
+        $canvas.css({
+            width: '100%',
+            height: '100%'
+        });
+        $this.append($canvas);
+        var canvas = $this.find('canvas')[0];
+        if (canvas.getContext) {
+            var ctx = canvas.getContext("2d");
+            var start = (100 - data.Value) * canvas.height / 100;
+            var end = canvas.height;
+            gradient = ctx.createLinearGradient(0, start, 0, end);
+            gradient.addColorStop("0", "#17375E");
+            gradient.addColorStop("1.0", "#8EB4E3");
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, start, canvas.width, data.Value * canvas.height / 100);
+        }
+    }
+    Der.Artifact.pie = function (data, container) {
+        var $title = $('<div />');
+        $title.addClass('pie-title');
+        $title.html(data.Pie.Title);
+        container.highcharts({
+            chart: {
+                type: 'pie',
+                options3d: {
+                    enabled: data.Pie.Is3D,
+                    alpha: 60,
+                    beta: 0
+                },
+                backgroundColor: 'transparent',
+                margin: [0, 0, 0, 0],
+                spacingTop: 0,
+                spacingBottom: 0,
+                spacingLeft: 0,
+                spacingRight: 0,
+                height:170
+            },
+            title: {
+                text: data.Pie.Title,
+                style: {
+                    fontSize: '11px',
+                    fontWeight: 'bold',
+                    display:'none'
+                }
+            },
+            subtitle: {
+                text: data.Pie.Subtitle,
+                style: {
+                    color: '#fff',
+                    display: 'none'
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            plotOptions: {
+                pie: {
+                    size: '100%',
+                    slicedOffset: 30,
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        distance: 2,
+                        formatter: function () {
+                            return this.point.name + ': <br/> ' + this.percentage.toFixed(2) + ' %';
+                        },
+                        shadow: false,
+                        style: {
+                            textShadow: false,
+                            fontSize: '7px',
+                            fontWeight: 'normal'
+                        }
+                    },
+                    showInLegend: data.Pie.ShowLegend,
+                    //innerSize: '40%',
+                    size: '75%',
+                    shadow: false,
+                    depth: 45,
+                    animation:false
+                }
+            },
+            legend: {
+                itemStyle: {
+                    fontSize: '7px'
+                },
+            },
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.point.name + '</b>: ' + this.y.format(2) + ' ' + this.point.measurement + '<br/>' +
+                        '<b>Total</b>: ' + this.total.format(2) + ' ' + this.point.measurement;
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Current selection',
+                data: data.Pie.SeriesResponses
+            }]
+        });
+        container.append($title);
+    };
+    Der.Artifact.tank = function (data, container) {
+        container.tank(data.Tank, {
+            height: container.height(),
+            width: container.width()
+        });
+    };
     window.Der = Der;
 }(window,jQuery));
