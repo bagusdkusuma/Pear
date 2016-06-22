@@ -373,6 +373,8 @@ namespace DSLNG.PEAR.Web.Controllers
                     case "14-and-2":
                     case "15-and-1":
                     case "15-and-2":
+                    case "16-and-4":
+                    case "16-and-5":
                         {
                             viewModel.Type = "highlight";
                             break;

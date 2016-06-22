@@ -1554,12 +1554,25 @@
                         <p>Normal Ops</p>
                         <table class="table borderless ict-infra">
                             <tr>
-                                <td>1</td>
+                                @* <td>1</td>
                                 <td><img src="@Url.Content("~/content/images/clip_image002.png")" alt="" width="52" height="25"></td>
                                 <td>1</td>
                                 <td><img src="@Url.Content("~/content/images/clip_image004.png")" alt="" width="52" height="25"></td>
                                 <td>1</td>
-                                <td><img src="@Url.Content("~/content/images/clip_image006.png")" alt="" width="52" height="25"></td>
+                                <td><img src="@Url.Content("~/content/images/clip_image006.png")" alt="" width="52" height="25"></td>*@
+                                <td>
+                                    @{
+                                        var row16Col4 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 4);
+                                        if (row16Col4 != null)
+                                        {
+                                            <a href="@Url.Action("LayoutItem", new { column = 4, row = 16, derLayoutId = Model.DerLayoutId, id = row16Col4.Id })" class="">Manage</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("LayoutItem", new { column = 4, row = 16, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
+                                        }
+                                    }
+                                </td>
                             </tr>
                         </table>
                         <div class="row">
@@ -1584,12 +1597,25 @@
 
                         <table class="table borderless gs-fm">
                             <tr>
-                                <td>1</td>
+                                <td>
+                                    @{
+                                        var row16Col5 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 5);
+                                        if (row16Col5 != null)
+                                        {
+                                            <a href="@Url.Action("LayoutItem", new { column = 5, row = 16, derLayoutId = Model.DerLayoutId, id = row16Col5.Id })" class="">Manage</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("LayoutItem", new { column = 5, row = 16, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
+                                        }
+                                    }
+                                </td>
+                                @*<td>1</td>
                                 <td><img src="@Url.Content("~/content/images/clip_image008.png")" alt="" width="52" height="25"></td>
                                 <td>1</td>
                                 <td><img src="@Url.Content("~/content/images/clip_image010.png")" alt="" width="52" height="25"></td>
                                 <td>1</td>
-                                <td><img src="@Url.Content("~/content/images/clip_image012.png")" alt="" width="52" height="25"></td>
+                                <td><img src="@Url.Content("~/content/images/clip_image012.png")" alt="" width="52" height="25"></td>*@
                             </tr>
                         </table>
                     </div>
