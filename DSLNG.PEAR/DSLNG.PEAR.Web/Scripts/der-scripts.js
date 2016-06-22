@@ -367,21 +367,39 @@ Number.prototype.format = function (n, x) {
         });
     };
     Der.Artifact.speedometer = function (data, container) {
+        var stops = [];
+        var last = data.SpeedometerChart.PlotBands.length-1;
+        for ( var i in data.SpeedometerChart.PlotBands){
+            stops.push([data.SpeedometerChart.PlotBands[i].from / data.SpeedometerChart.PlotBands[last].to, data.SpeedometerChart.PlotBands[i].color]);
+        }
+        console.log(stops);
         container.highcharts({
             chart: {
                 type: 'solidgauge',
-                height: 135,
-                width:150
+                height: 60,
+                width: 200,
+                margin: [12, 0, 6, 0],
+                spacingTop: 0,
+                spacingBottom: 0,
+                spacingLeft: 0,
+                spacingRight: 0,
             },
 
             title: {
                 text: data.SpeedometerChart.Title,
+                style: {
+                    fontSize:'8px'
+                }
             },
             //subtitle: {
             //    text: data.SpeedometerChart.Subtitle,
             //},
             subtitle: {
-                text: "MCHE Rundown"
+                text: "MCHE Rundown",
+                style: {
+                    fontSize: '10px',
+                    color:'#000'
+                }
             },
             pane: {
                 center: ['50%', '85%'],
@@ -395,7 +413,16 @@ Number.prototype.format = function (n, x) {
                     shape: 'arc'
                 }
             },
-
+            plotOptions: {
+                solidgauge: {
+                    dataLabels: {
+                        y: 5,
+                        borderWidth: 0,
+                        useHTML: true,
+                        enabled:false
+                    }
+                }
+            },
            credits: {
                 enabled: false
             },
@@ -404,11 +431,7 @@ Number.prototype.format = function (n, x) {
                 min: data.SpeedometerChart.PlotBands[0].from,
                 max: data.SpeedometerChart.PlotBands[data.SpeedometerChart.PlotBands.length - 1].to,
 
-                stops: [
-                 [0.0, '#55BF3B'], // green
-                 [0.9, '#DDDF0D'], // yellow
-                 [0.95, 'black'] // red
-                ],
+                stops: stops,
                 lineWidth: 0,
                 minorTickInterval: null,
                 tickPixelInterval: 400,
@@ -417,8 +440,15 @@ Number.prototype.format = function (n, x) {
                     y: -70
                 },
                 labels: {
-                    y: 16
+                    y: 10,
+                    distance: -30,
+                    //style:{
+                    //    margin:'0 30px'
+                    //}
+                    //x: -20,
+                    enabled:false
                 },
+
                 title: {
                     text: data.SpeedometerChart.ValueAxisTitle,
                 },
