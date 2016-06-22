@@ -293,6 +293,7 @@
     <Content Include="Content\datepicker\css\datepicker.css" />
     <Content Include="Content\datepicker\js\bootstrap-datepicker.js" />
     <Content Include="Content\der-dikdik.css" />
+    <Content Include="Content\images\arah-angin.png" />
     <Content Include="Content\images\clip_image002.png" />
     <Content Include="Content\images\clip_image004.png" />
     <Content Include="Content\images\clip_image006.png" />
@@ -1101,7 +1102,6 @@
     <Content Include="Views\Der\Display\_SignedBy.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_PersonOnBoard.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_PersonOnBoard.Edit.cshtml" />
-    <Content Include="Views\Der\Display\_PersonOnBoard.cshtml" />
     <None Include="Views\Der\Index.cshtml.old" />
     <Content Include="Views\Der\_ManageItem.cshtml" />
     <Content Include="Views\Der\_DialogManageItem.cshtml" />
