@@ -18,18 +18,18 @@
     <tbody>
         <tr>
             <td>
-                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value) @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "btu/scf")
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "btu/scf") 
             </td>
             <td>
-                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value) @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "N/A")
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "-")
             </td>
         </tr>
         <tr>
             <td>
-                min @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value)
+                 @Html.DisplayDerValueWithLabelAtFront("min", Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, string.Empty)
             </td>
             <td>
-                min @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value)
+                @Html.DisplayDerValueWithLabelAtFront("min", Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, string.Empty)
             </td>
         </tr>
     </tbody>

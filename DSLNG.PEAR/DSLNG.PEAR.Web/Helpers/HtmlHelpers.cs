@@ -95,6 +95,19 @@ namespace DSLNG.PEAR.Web.Helpers
             }
         }
 
+        public static string DisplayDerRemark(this HtmlHelper htmlHelper, string deviation)
+        {
+            switch (deviation)
+            {
+                case "1":
+                    return "fa-circle";
+                case "-1":
+                    return "fa-times-circle";
+                default:
+                    return "fa-exclamation-circle";
+            }
+        }
+
         public static string DisplayDerValueWithLabelAtFront(this HtmlHelper htmlHelper, string measurement, string val, string defaultMeasurement, string defaultVal = "N/A", bool isRounded = true)
         {
             return !string.IsNullOrEmpty(val) ?
