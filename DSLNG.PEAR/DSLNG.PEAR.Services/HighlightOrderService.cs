@@ -54,7 +54,8 @@ namespace DSLNG.PEAR.Services
             var exception = new string[] { "alert" };
             var data = DataContext.SelectOptions.Include(x => x.Group)
                 .Include(x => x.RoleGroups)
-                .Where(x => x.Select.Name == "highlight-types" && !exception.Contains(x.Value)).Where(x => x.IsDashboard == true);
+                .Where(x => x.Select.Name == "highlight-types" && !exception.Contains(x.Value));
+                //.Where(x => x.Select.Name == "highlight-types" && !exception.Contains(x.Value)).Where(x => x.IsDashboard == true);
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             {
                 data = data.Where(x => x.Text.Contains(search) || x.Value.Contains(search));

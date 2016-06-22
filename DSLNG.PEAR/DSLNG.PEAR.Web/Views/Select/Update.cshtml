@@ -35,7 +35,7 @@
                 @Html.EditorFor(model => model.IsActive, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IsActive)
             </div>
-            <div class="form-group">
+           @* <div class="form-group">
                 @Html.LabelFor(model => model.IsDashBoard, new { @class = "control-label" })
                 @Html.EditorFor(model => model.IsDashBoard, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IsDashBoard)
@@ -44,7 +44,7 @@
                 @Html.LabelFor(model => model.IsDer, new { @class = "control-label" })
                 @Html.EditorFor(model => model.IsDer, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IsDer)
-            </div>
+            </div>*@
              <div class="form-group">
                 @Html.LabelFor(model => model.Type, new { @class = "control-label" })
                 @Html.DropDownListFor(model => model.Type, Model.Types, new { @class = "form-control" })
