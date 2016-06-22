@@ -310,6 +310,7 @@ namespace DSLNG.PEAR.Services
                     new Dropdown {Text = "Reviewed By", Value = "reviewed-by" },
                     new Dropdown {Text = "Termometer", Value = "termometer" },
                     new Dropdown {Text = "Loading Duration", Value = "loading-duration" },
+                    new Dropdown {Text = "Person On Board", Value = "person-on-board" },
                 };
 
             return dropdowns.OrderBy(x => x.Text);

@@ -1099,6 +1099,8 @@
     <Content Include="Views\DerLayout\LayoutType\_LoadingDuration.Edit.cshtml" />
     <Content Include="Views\Der\Display\_LoadingDuration.cshtml" />
     <Content Include="Views\Der\Display\_SignedBy.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_PersonOnBoard.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_PersonOnBoard.Edit.cshtml" />
     <None Include="Views\Der\Index.cshtml.old" />
     <Content Include="Views\Der\_ManageItem.cshtml" />
     <Content Include="Views\Der\_DialogManageItem.cshtml" />
