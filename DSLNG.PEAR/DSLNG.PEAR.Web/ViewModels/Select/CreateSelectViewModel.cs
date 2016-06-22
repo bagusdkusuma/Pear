@@ -18,6 +18,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Select
             Types = new List<SelectListItem>();
             Parents = new List<SelectListItem>();
             ParentOptions = new List<SelectListItem>();
+            IsDashBoard = true;
         }
 
         [Required]
@@ -32,5 +33,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Select
         public int ParentOptionId { get; set; }
         public string Type { get; set; }
         public bool IsActive { get; set; }
+        public bool IsDashBoard { get; set; }
+        public bool IsDer { get; set; }
     }
 }

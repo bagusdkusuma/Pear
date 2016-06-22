@@ -33,5 +33,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Select
         public IList<SelectListItem> ParentOptions { get; set; }
         public string Type { get; set; }
         public bool IsActive { get; set; }
+        public bool IsDashBoard { get; set; }
+        public bool IsDer { get; set; }
     }
 }

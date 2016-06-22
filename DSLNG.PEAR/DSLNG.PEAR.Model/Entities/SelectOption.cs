@@ -25,5 +25,7 @@ namespace DSLNG.PEAR.Data.Entities
         public int Order { get; set; }
         public ICollection<RoleGroup> RoleGroups { get; set; }
         public bool IsActive { get; set; }
+        public bool IsDashboard { get; set; }
+        public bool IsDer { get; set; }
     }
 }
