@@ -115,11 +115,12 @@
             </td>
             <td colspan="2">
                 CDS Reid Vapor Pressure (RVP) :
-                <span class="indicator right-side"><i class="fa fa-circle"></i></span>
+                
             </td>
             <td>
+                <span class="indicator left-side" style="margin-right: 85px;"><i class="fa @Html.DisplayDerRemark(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Remark)"></i></span>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 8).KpiMeasurement, "Psia")
-                 
+
             </td>
         </tr>
     </tbody>

@@ -90,8 +90,10 @@ namespace DSLNG.PEAR.Web.Helpers
                     return "fa-arrow-up";
                 case "-1":
                     return "fa-arrow-down";
-                default:
+                case "0":
                     return "fa-minus";
+                default:
+                    return string.Empty;
             }
         }
 
@@ -103,8 +105,10 @@ namespace DSLNG.PEAR.Web.Helpers
                     return "fa-circle";
                 case "-1":
                     return "fa-times-circle";
-                default:
+                case "0":
                     return "fa-exclamation-circle";
+                default:
+                    return string.Empty;
             }
         }
 
