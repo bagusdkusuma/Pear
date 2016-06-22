@@ -32,9 +32,9 @@
                 <input  name="date" class="form-control datepicker" />
             </div>
         </div>
-        <a class="btn btn-default" href="@Url.Action("Index","DerImage")">Back To List</a>
+        <a class="btn btn-default" href="@Url.Action("Index","DER")">Back To List</a>
        
-        <form action="@Url.Action("Generate","DerImage")" method="post">
+        <form action="@Url.Action("Generate","DER")" method="post">
             <input class="btn btn-primary generate" type="submit" value="Generate" />
         </form>
     </div>
@@ -65,7 +65,7 @@
                     var row0Col0 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 0);
                     if (row0Col0 != null)
                     {
-                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row0Col0.Id })" class="layout-item"></div>
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col0.Id })" class="layout-item"></div>
                     }
                 }
             </div>
@@ -77,14 +77,14 @@
                             var row0Col3 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 1);
                             if (row0Col3 != null)
                             {
-                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row0Col3.Id })" class="layout-item highlight-json"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col3.Id })" class="layout-item highlight-json"></div>
                             }
                         }
                         @{
                             var row0Col1 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 1);
                             if (row0Col1 != null)
                             {
-                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row0Col1.Id })" class="layout-item"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col1.Id })" class="layout-item"></div>
                             }
                         }
                     </div>
@@ -93,7 +93,7 @@
                             var row0Col2 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 2);
                             if (row0Col2 != null)
                             {
-                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row0Col2.Id })" class="layout-item"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col2.Id })" class="layout-item"></div>
                             }
                         }
                     </div>
@@ -108,7 +108,7 @@
                     var row1Col0 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 0);
                     if (row1Col0 != null)
                     {
-                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row1Col0.Id })" class="layout-item"></div>
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col0.Id })" class="layout-item"></div>
                     }
                 }
             </div>
@@ -117,7 +117,7 @@
                     var row1Col1 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 1);
                     if (row1Col1 != null)
                     {
-                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row1Col1.Id })" class="layout-item"></div>
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col1.Id })" class="layout-item"></div>
                     }
                 }
             </div>
@@ -126,7 +126,7 @@
                     var row1Col2 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 2);
                     if (row1Col2 != null)
                     {
-                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row1Col2.Id })" class="layout-item"></div>
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col2.Id })" class="layout-item"></div>
                     }
                 }
             </div>
@@ -135,7 +135,7 @@
                     var row1Col3 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 3);
                     if (row1Col3 != null)
                     {
-                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row1Col3.Id })" class="layout-item"></div>
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col3.Id })" class="layout-item"></div>
                     }
                 }
             </div>
@@ -150,7 +150,7 @@
                     var row2Col0 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 0);
                     if (row2Col0 != null)
                     {
-                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row2Col0.Id })" class="layout-item"></div>
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row2Col0.Id })" class="layout-item"></div>
                     }
                 }
             </div>
@@ -159,7 +159,7 @@
                     var row2Col1 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 1);
                     if (row2Col1 != null)
                     {
-                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row2Col1.Id })" class="layout-item"></div>
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row2Col1.Id })" class="layout-item"></div>
                     }
                 }
             </div>
@@ -168,7 +168,7 @@
                     var row2Col2 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 2);
                     if (row2Col2 != null)
                     {
-                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row2Col2.Id })" class="layout-item"></div>
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row2Col2.Id })" class="layout-item"></div>
                     }
                 }
             </div>
@@ -179,7 +179,7 @@
                     var row3Col0 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 0);
                     if (row3Col0 != null)
                     {
-                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row3Col0.Id })" class="layout-item"></div>
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row3Col0.Id })" class="layout-item"></div>
                     }
                 }
             </div>
@@ -199,7 +199,7 @@
                                     var row3Col1 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 1);
                                     if (row3Col1 != null)
                                     {
-                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row3Col1.Id })" class="layout-item"></div>
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row3Col1.Id })" class="layout-item"></div>
                                     }
                                 }
                             </td>
@@ -214,7 +214,7 @@
                                     var row3Col5 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 5);
                                     if (row3Col5 != null)
                                     {
-                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row3Col5.Id })" class="layout-item highlight-json"></div>
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row3Col5.Id })" class="layout-item highlight-json in-left"></div>
                                     }
                                 }
                                 WEEKLY ALARM MANAGEMENT (3 Apr-10 Apr 2016)
@@ -229,7 +229,7 @@
                                     var row3Col2 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 2);
                                     if (row3Col2 != null)
                                     {
-                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row3Col2.Id })" class="layout-item"></div>
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row3Col2.Id })" class="layout-item"></div>
                                     }
                                 }
                             </td>
@@ -255,7 +255,7 @@
                                     var row3Col3 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 3);
                                     if (row3Col3 != null)
                                     {
-                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row3Col3.Id })" class="layout-item"></div>
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row3Col3.Id })" class="layout-item"></div>
                                     }
                                 }
                             </td>
@@ -264,7 +264,7 @@
                                     var row3Col4 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 4);
                                     if (row3Col4 != null)
                                     {
-                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row3Col4.Id })" class="layout-item pie-wrapper"></div>
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row3Col4.Id })" class="layout-item pie-wrapper"></div>
                                     }
                                 }
                             </td>
@@ -281,7 +281,7 @@
                     if (row4Col0 != null)
                     {
 
-                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row4Col0.Id })" class="layout-item"></div>
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row4Col0.Id })" class="layout-item"></div>
                     }
                 }
             </div>
@@ -293,7 +293,7 @@
                             if (row4Col1 != null)
                             {
 
-                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row4Col1.Id })" class="layout-item"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row4Col1.Id })" class="layout-item"></div>
                             }
                         }
                     </div>
@@ -303,7 +303,7 @@
                             if (row4Col2 != null)
                             {
 
-                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row4Col2.Id })" class="layout-item"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row4Col2.Id })" class="layout-item"></div>
                             }
                         }
                         @**@
@@ -327,7 +327,7 @@
                     if (row5Col0 != null)
                     {
 
-                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row5Col0.Id })" class="layout-item"></div>
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row5Col0.Id })" class="layout-item"></div>
                     }
                 }
                 <div class="row">
@@ -337,7 +337,7 @@
                             if (row6Col0 != null)
                             {
 
-                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col0.Id })" class="layout-item"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col0.Id })" class="layout-item"></div>
                             }
                         }
                         <div class="psig">
@@ -346,7 +346,7 @@
                                 var row6Col3 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 3);
                                 if (row6Col3 != null)
                                 {
-                                    <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col3.Id })" class="layout-item barmeter"></div>
+                                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col3.Id })" class="layout-item barmeter"></div>
                                 }
                             }
                         </div>
@@ -360,7 +360,7 @@
                                         var row6Col4 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 4);
                                         if (row6Col4 != null)
                                         {
-                                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col4.Id })" class="layout-item barmeter">
+                                            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col4.Id })" class="layout-item barmeter">
                                                 <label>H<span style="font-size:8px">2</span>S- ppm</label>
                                             </div>
                                         }
@@ -369,7 +369,7 @@
                                         var row6Col7 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 7);
                                         if (row6Col7 != null)
                                         {
-                                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col7.Id })" class="layout-item barmeter">
+                                            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col7.Id })" class="layout-item barmeter">
                                                 <label>CO<span style="font-size:8px">2</span>S- ppm</label>
                                             </div>
                                         }
@@ -378,7 +378,7 @@
                                         var row6Col9 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 9);
                                         if (row6Col9 != null)
                                         {
-                                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col9.Id })" class="layout-item barmeter">
+                                            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col9.Id })" class="layout-item barmeter">
                                                 <label>H<span style="font-size:8px">2</span>O- ppm</label>
                                             </div>
                                         }
@@ -390,7 +390,7 @@
                                             var row6Col5 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 5);
                                             if (row6Col5 != null)
                                             {
-                                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col5.Id })" class="layout-item bar-thermo">
+                                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col5.Id })" class="layout-item bar-thermo">
                                                     <img src="@Url.Content("~/Content/images/water-drop.png")" />
                                                 </div>
                                             }
@@ -402,7 +402,7 @@
                                         var row6Col6 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 6);
                                         if (row6Col6 != null)
                                         {
-                                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col6.Id })" class="layout-item barmeter">
+                                            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col6.Id })" class="layout-item barmeter">
                                                 <label>BTX-ppm</label>
                                             </div>
                                         }
@@ -411,7 +411,7 @@
                                         var row6Col8 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 8);
                                         if (row6Col8 != null)
                                         {
-                                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col8.Id })" class="layout-item barmeter">
+                                            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col8.Id })" class="layout-item barmeter">
                                                 <label>Ttl Sulphur-ppm</label>
                                             </div>
                                         }
@@ -420,7 +420,7 @@
                                         var row6Col10 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 10);
                                         if (row6Col10 != null)
                                         {
-                                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col10.Id })" class="layout-item barmeter">
+                                            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col10.Id })" class="layout-item barmeter">
                                                 <label>Hg-MRU outlet ng/nm3</label>
                                             </div>
                                         }
@@ -444,7 +444,7 @@
                     if (row7Col0 != null)
                     {
 
-                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row7Col0.Id })" class="layout-item"></div>
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row7Col0.Id })" class="layout-item"></div>
                     }
                 }
                 <table class="table table-bordered tank">
@@ -455,7 +455,7 @@
                                     var row8Col0 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 0);
                                     if (row8Col0 != null)
                                     {
-                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row8Col0.Id })" class="layout-item tank-wrapper" style="width:100px;height:100px"></div>
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col0.Id })" class="layout-item tank-wrapper" style="width:100px;height:100px"></div>
                                     }
                                 }
                             </td>
@@ -464,7 +464,7 @@
                                     var row8Col1 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 1);
                                     if (row8Col1 != null)
                                     {
-                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row8Col1.Id })" class="layout-item tank-wrapper" style="width:100px;height:70px"></div>
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col1.Id })" class="layout-item tank-wrapper" style="width:100px;height:70px"></div>
                                     }
                                 }
                             </td>
@@ -473,7 +473,7 @@
                                     var row8Col2 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 2);
                                     if (row8Col2 != null)
                                     {
-                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row8Col2.Id })" class="layout-item tank-wrapper" style="width:75px;height:70px"></div>
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col2.Id })" class="layout-item tank-wrapper" style="width:75px;height:70px"></div>
                                     }
                                 }
                             </td>
@@ -482,7 +482,7 @@
                                     var row8Col3 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 3);
                                     if (row8Col3 != null)
                                     {
-                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row8Col3.Id })" class="layout-item tank-wrapper" style="width:120px;height:40px" data-type="custom"></div>
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col3.Id })" class="layout-item tank-wrapper" style="width:120px;height:40px" data-type="custom"></div>
                                     }
                                 }
                             </td>
@@ -495,7 +495,7 @@
                     if (row9Col0 != null)
                     {
 
-                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row9Col0.Id })" class="layout-item"></div>
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row9Col0.Id })" class="layout-item"></div>
                     }
                 }
                 <table class="table table-bordered weekly-maintenance">
@@ -507,7 +507,7 @@
                                     if (row10Col2 != null)
                                     {
 
-                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row10Col2.Id })" class="layout-item highlight-json"></div>
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row10Col2.Id })" class="layout-item highlight-json in-left"></div>
                                     }
                                 }
                                 WEEKLY MAINTENANCE BACKLOG (as of 20 Jan 2016)
@@ -520,7 +520,7 @@
                     if (row10Col0 != null)
                     {
 
-                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row10Col0.Id })" class="layout-item"></div>
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row10Col0.Id })" class="layout-item"></div>
                     }
                 }
                 <table class="table table-bordered weekly-critical">
@@ -532,7 +532,7 @@
                                     if (row11Col2 != null)
                                     {
 
-                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row11Col2.Id })" class="layout-item highlight-json"></div>
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row11Col2.Id })" class="layout-item highlight-json in-left"></div>
                                     }
                                 }
                                 WEEKLY CRITICAL-TIER 1 PM COMPLIANCE/OVERDUE (as of 6 Apr 2016)
@@ -546,7 +546,7 @@
                     if (row11Col0 != null)
                     {
 
-                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row11Col0.Id })" class="layout-item"></div>
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row11Col0.Id })" class="layout-item"></div>
                     }
                 }
 
@@ -559,7 +559,7 @@
                             if (row12Col0 != null)
                             {
 
-                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row12Col0.Id })" class="layout-item"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row12Col0.Id })" class="layout-item"></div>
                             }
                         }
                     </div>
@@ -571,7 +571,7 @@
                             if (row12Col2 != null)
                             {
 
-                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row12Col2.Id })" class="layout-item highlight-plant-mode-json"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row12Col2.Id })" class="layout-item highlight-plant-mode-json"></div>
                             }
                         }
                     </div>
@@ -584,7 +584,7 @@
                         if (row13Col0 != null)
                         {
 
-                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row13Col0.Id })" class="layout-item"></div>
+                            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row13Col0.Id })" class="layout-item"></div>
                         }
                     }
                 </div>
@@ -597,7 +597,7 @@
                             if (row5Col1 != null)
                             {
 
-                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row5Col1.Id })" class="layout-item"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row5Col1.Id })" class="layout-item"></div>
                             }
                         }
                     </div>
@@ -607,7 +607,7 @@
                             if (row5Col2 != null)
                             {
 
-                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row5Col2.Id })" class="layout-item"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row5Col2.Id })" class="layout-item"></div>
                             }
                         }
                     </div>
@@ -617,7 +617,7 @@
                     if (row6Col2 != null)
                     {
 
-                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col2.Id })" class="layout-item"></div>
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col2.Id })" class="layout-item"></div>
                     }
                 }
                 @{
@@ -625,7 +625,7 @@
                     if (row7Col1 != null)
                     {
 
-                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row7Col1.Id })" class="layout-item"></div>
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row7Col1.Id })" class="layout-item"></div>
                     }
                 }
 
@@ -634,7 +634,7 @@
                     if (row8Col4 != null)
                     {
 
-                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row8Col4.Id })" class="layout-item"></div>
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col4.Id })" class="layout-item"></div>
                     }
                 }
 
@@ -643,7 +643,7 @@
                     if (row10Col1 != null)
                     {
 
-                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row10Col1.Id })" class="layout-item"></div>
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row10Col1.Id })" class="layout-item"></div>
                     }
                 }
 
@@ -671,7 +671,7 @@
                         if (row12Col1 != null)
                         {
 
-                            <div data-url="@Url.Action("LayoutItem", "DerImage", new {id = row12Col1.Id})" class="layout-item"></div>
+                            <div data-url="@Url.Action("LayoutItem", "Der", new {id = row12Col1.Id})" class="layout-item"></div>
                         }
 
                     }
@@ -682,7 +682,7 @@
                         if (row11Col1 != null)
                         {
 
-                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row11Col1.Id })" class="layout-item">asas</div>
+                            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row11Col1.Id })" class="layout-item">asas</div>
                         }
                     }
                 </div>
@@ -713,7 +713,7 @@
                             if (row14Col0 != null)
                             {
 
-                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row14Col0.Id })" class="layout-item"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row14Col0.Id })" class="layout-item"></div>
                             }
                         }
 
@@ -722,7 +722,7 @@
                             if (row15Col0 != null)
                             {
 
-                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row15Col0.Id })" class="layout-item"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row15Col0.Id })" class="layout-item"></div>
                             }
                         }
 
@@ -736,7 +736,7 @@
                                     if (row16Col4 != null)
                                     {
 
-                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row16Col4.Id })" class="layout-item highlight-json-ict-infra"></div>
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row16Col4.Id })" class="layout-item highlight-json-ict-infra"></div>
                                     }
                                 }
                                 @*<td>1</td>
@@ -760,7 +760,7 @@
                                     if (row15Col3 != null)
                                     {
 
-                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row15Col3.Id })" class="layout-item" style="display: inline"></div>
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row15Col3.Id })" class="layout-item" style="display: inline"></div>
                                     }
                                 }
                             </div>
@@ -774,7 +774,7 @@
                                         if (row16Col5 != null)
                                         {
 
-                                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row16Col5.Id })" class="layout-item highlight-json-gs-fm"></div>
+                                            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row16Col5.Id })" class="layout-item highlight-json-gs-fm"></div>
                                         }
                                     }
                                 </tr>
@@ -787,7 +787,7 @@
                             if (row14Col1 != null)
                             {
 
-                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row14Col1.Id })" class="layout-item"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row14Col1.Id })" class="layout-item"></div>
                             }
                         }
                         @{
@@ -795,7 +795,7 @@
                             if (row16Col1 != null)
                             {
 
-                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row16Col1.Id })" class="layout-item"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row16Col1.Id })" class="layout-item"></div>
                             }
                         }
                     </div>
@@ -812,7 +812,7 @@
                                 if (row14Col2 != null)
                                 {
 
-                                    <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row14Col2.Id })" class="layout-item"></div>
+                                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row14Col2.Id })" class="layout-item"></div>
                                 }
                             }
                         </p>
@@ -825,7 +825,7 @@
                                 if (row15Col2 != null)
                                 {
 
-                                    <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row15Col2.Id })" class="layout-item highlight-json-market-tone"></div>
+                                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row15Col2.Id })" class="layout-item highlight-json-market-tone"></div>
                                 }
                             }
                         </div>
@@ -836,7 +836,7 @@
                                 if (row15Col1 != null)
                                 {
 
-                                    <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row15Col1.Id })" class="layout-item"></div>
+                                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row15Col1.Id })" class="layout-item"></div>
                                 }
                             }
                         </p>
@@ -960,11 +960,11 @@
             var getIcon = function (str) {
                 switch (str) {
                     case 0:
-                        return '<span class="indicator absolute"><i class="fa fa-check" style="color:orange"></i></span>';
+                        return '<span class="indicator left-side"><i class="fa fa-check" style="color:orange"></i></span>';
                     case 1:
-                        return '<span class="indicator absolute"><i class="fa fa-check" style="color:green"></i></span>';
+                        return '<span class="indicator left-side"><i class="fa fa-check" style="color:green"></i></span>';
                     case -1:
-                        return '<span class="indicator absolute"><i class="fa fa-check" style="color:red"></i></span>';
+                        return '<span class="indicator left-side"><i class="fa fa-check" style="color:red"></i></span>';
                     default:
                         return '';
                 }
@@ -988,19 +988,25 @@
                             if (data.type === "highlight" && that.hasClass('highlight-json')) {
                                 console.log('sini');
                                 var js = { value: 1 };
+                                var type = 'absolute';
+                                if (that.hasClass('in-left')) {
+                                    type = 'left-side';
+                                } else if (that.hasClass('in-right')) {
+                                    type = 'right-side';
+                                }
                                 //var js = data;
                                 switch (js.value) {
                                     case 0:
                                         that
-                                            .replaceWith('<span class="indicator absolute"><i class="fa fa-exclamation-circle"></i></span>');
+                                            .replaceWith('<span class="indicator ' + type + '"><i class="fa fa-exclamation-circle"></i></span>');
                                         break;
                                     case 1:
                                         that
-                                            .replaceWith('<span class="indicator absolute"><i class="fa fa-circle"></i></span>');
+                                            .replaceWith('<span class="indicator ' + type + '"><i class="fa fa-circle"></i></span>');
                                         break;
                                     case -1:
                                         that
-                                            .replaceWith('<span class="indicator absolute"><i class="fa fa-times-circle"></i></span>');
+                                            .replaceWith('<span class="indicator ' + type + '"><i class="fa fa-times-circle"></i></span>');
                                         break;
                                     default:
                                         that.replaceWith('&nbsp;');
@@ -1027,15 +1033,15 @@
 
                                 }
                             } else if (data.type === "highlight" && that.hasClass('highlight-json-market-tone')) {
-                                var js = { value: 1 };
-                                switch (js.value) {
-                                    case 1:
+
+                                switch (data.view.toLowerCase()) {
+                                    case 'holding':
                                         that.replaceWith("<span class='comparison'><i class='fa fa-arrow-up' style='color:green'></i></span>");
                                         break;
-                                    case 0:
+                                    case 'loading':
                                         that.replaceWith("<span class='comparison'><i class='fa fa-minus' style='color:orange'></i></span>");
                                         break;
-                                    case -1:
+                                    case 'shutdown':
                                         that.replaceWith("<span class='comparison'><i class='fa fa-arrow-down' style='color:red'></i></span>");
                                         break;
                                     default:
