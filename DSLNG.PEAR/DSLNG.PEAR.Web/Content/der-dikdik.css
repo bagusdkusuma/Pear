@@ -911,3 +911,13 @@ h6 {
     width: 100px;
     font-weight: bold;
 }
+
+.volume {
+    margin-top: 20px;
+}
+.tank-wrapper {
+    display:inline-block;
+}
+.table.tank>thead>tr>td {
+    vertical-align:middle;
+}

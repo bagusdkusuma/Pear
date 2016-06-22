@@ -15,6 +15,7 @@
         var minCapacity = options.MinCapacity;
         var maxCapacity = options.MaxCapacity;
         var volumeInventory = options.VolumeInventory;
+        var volumeInventoryUnit = options.VolumeInventoryUnit;
         
 
         // variable Tank Chart
@@ -64,6 +65,90 @@
 
         var tankHeight = bottomTank - topTank;
 
+        var heightFill = percentFill * tankHeight / 100;
+        var yFill = svgHeight - heightFill - (ellipseRY / 2 + marginBottom);
+        console.log($(this));
+        if ($(this).data('type') == 'custom') {
+            var $volume = $('<div />');
+            $volume.addClass('volume');
+            $volume.html(volumeInventory + ' ' + volumeInventoryUnit);
+            $(this).append($volume);
+            ellipseRX = 14;
+            ellipseRY = svgHeight / 2;
+            var marginLeft = marginTop;
+            var marginRight = marginBottom;
+            var ellipseY = calEllipseX(svgHeight, 0);
+            var leftTank = ellipseRX / 2 + marginLeft;
+            var rightTank = svgWidth - (ellipseRX / 2 + marginRight);
+            var tankWidth = rightTank - leftTank;
+            var footWidth = 10;
+            var chartHeight = svgHeight - 10;
+            var ellipseLeft = s.ellipse(leftTank, ellipseY, ellipseRX, ellipseRY).attr({
+                fill: '#D7D7D7',
+                stroke: 'grey',
+                strokeWidth: 1
+            });
+            var ellipseRight = s.ellipse(rightTank, ellipseY, ellipseRX, ellipseRY).attr({
+                fill: '#D7D7D7',
+                stroke: 'grey',
+                strokeWidth: 1
+            });
+            var rect = s.rect(leftTank, 0, tankWidth, svgHeight).attr({
+                fill: '#D7D7D7',
+                stroke: 'grey',
+                strokeWidth: 0,
+            });
+
+            var topBorder = s.line(leftTank, 0, rightTank, 0).attr({
+                fill: 'none',
+                stroke: 'gray',
+                strokeWidth: 1,
+            });
+            var topBorder = s.line(leftTank, svgHeight, rightTank, svgHeight).attr({
+                fill: 'none',
+                stroke: 'gray',
+                strokeWidth: 1,
+            });
+            var leftFoot = s.line(leftTank, svgHeight, leftTank+ footWidth, svgHeight).attr({
+                fill: 'none',
+                stroke: 'blue',
+                strokeWidth: 4,
+            });
+            var rightFoot = s.line(rightTank - footWidth, svgHeight, rightTank, svgHeight).attr({
+                fill: 'none',
+                stroke: 'blue',
+                strokeWidth: 4,
+            });
+            var leftVertical = s.line(leftTank + footWidth, 0, leftTank + footWidth, svgHeight).attr({
+                fill: 'none',
+                stroke: 'gray',
+                strokeWidth: 1,
+            });
+            var rightVertical = s.line(rightTank - footWidth, 0, rightTank - footWidth, svgHeight).attr({
+                fill: 'none',
+                stroke: 'gray',
+                strokeWidth: 1,
+            });
+            var rect = s.rect(rightTank - footWidth - 20, 5, 10, chartHeight).attr({
+                fill: 'white',
+                stroke: 'white',
+                strokeWidth: 0,
+            });
+            var filledChart = chartHeight * percentFill / 100;
+            var yStart = chartHeight - filledChart + 5;
+            var rect = s.rect(rightTank - footWidth - 20, 5, 10, chartHeight).attr({
+                fill: 'white',
+                stroke: 'white',
+                strokeWidth: 0,
+            });
+            var rect = s.rect(rightTank - footWidth - 20, yStart, 10, filledChart).attr({
+                fill: '#00FF00',
+                stroke: '#00FF00',
+                strokeWidth: 0,
+            });
+            s.text(rightTank - footWidth -50, svgHeight / 2, percentFill + '%');
+            return this;
+        }
         var ellipseTop = s.ellipse(ellipseX, topTank, ellipseRX, ellipseRY).attr({
             stroke: 'grey',
             fill: 'transparent',
@@ -88,8 +173,7 @@
             strokeWidth: 1,
         });
 
-        var heightFill = percentFill * tankHeight /100;
-        var yFill = svgHeight - heightFill -( ellipseRY / 2 + marginBottom);
+      
         //console.log(svgHeight - topTank - (ellipseRY / 2 + marginBottom));
         //console.log(options);
         var rect = s.rect(0, yFill, svgWidth, heightFill).attr({
