@@ -1014,7 +1014,8 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "person-on-board":
                     {
                         var viewModel = GetGeneralDerKpiInformations(1, layout, date, PeriodeType.Daily);
-                        return Json(new { type = layout.Type.ToLowerInvariant(), view = viewModel.KpiInformationViewModels[0].DerItemValue.Value }, JsonRequestBehavior.AllowGet);
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_PersonOnBoard.cshtml", viewModel);
+                        return Json(new { type = layout.Type.ToLowerInvariant(), view = view }, JsonRequestBehavior.AllowGet);
                     }
                     #endregion
             }
