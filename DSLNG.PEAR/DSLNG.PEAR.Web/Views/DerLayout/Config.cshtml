@@ -65,11 +65,11 @@
                                     var row0Col0 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 0);
                                     if (row0Col0 != null)
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 0, derLayoutId = Model.DerLayoutId, id = row0Col0.Id })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 0, derLayoutId = Model.DerLayoutId, id = row0Col0.Id })" class="">Manage</a>
                                     }
                                     else
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 0, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 0, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                     }
                                 }
                             </td>
@@ -80,17 +80,29 @@
             <div class="col-md-7">
                 <div class="row">
                     <div class="col-md-9 proper daily-highlight">
-                        <h5 style="text-decoration: underline;">Daily Highlight</h5> <span class="indicator absolute"><i class="fa fa-circle"></i></span>
+                        <h5 style="text-decoration: underline;">Daily Highlight</h5>
+                        @*<span class="indicator absolute"><i class="fa fa-circle"></i></span>*@
+                        @{
+                            var row0Col3 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 3);
+                            if (row0Col3 != null)
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 3, row = 0, derLayoutId = Model.DerLayoutId, id = row0Col3.Id })">Manage</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 3, row = 0, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
+                            }
+                        }
                         <p>
                             @{
                                 var row0Col1 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 1);
                                 if (row0Col1 != null)
                                 {
-                                    <a href="@Url.Action("LayoutItem", new { column = 1, row = 0, derLayoutId = Model.DerLayoutId, id = row0Col1.Id })" class="btn btn-default">Manage</a>
+                                    <a href="@Url.Action("LayoutItem", new { column = 1, row = 0, derLayoutId = Model.DerLayoutId, id = row0Col1.Id })" class="">Manage</a>
                                 }
                                 else
                                 {
-                                    <a href="@Url.Action("LayoutItem", new { column = 1, row = 0, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                    <a href="@Url.Action("LayoutItem", new { column = 1, row = 0, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                 }
                             }
                         </p>
@@ -98,7 +110,7 @@
                     <div class="col-md-3">
                         @{
                             var row0Col2 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 2);
-                            <a href="@Url.Action("LayoutItem", new { column = 2, row = 0, derLayoutId = Model.DerLayoutId, id = row0Col2 == null? 0 :row0Col2.Id })" class="btn btn-default">Manage</a>
+                            <a href="@Url.Action("LayoutItem", new { column = 2, row = 0, derLayoutId = Model.DerLayoutId, id = row0Col2 == null? 0 :row0Col2.Id })" class="">Manage</a>
                         }
                     </div>
                 </div>
@@ -111,11 +123,11 @@
                     var row1Col0 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 0);
                     if (row1Col0 != null)
                     {
-                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 1, derLayoutId = Model.DerLayoutId, id = row1Col0.Id })" class="btn btn-default">Manage</a>
+                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 1, derLayoutId = Model.DerLayoutId, id = row1Col0.Id })" class="">Manage</a>
                     }
                     else
                     {
-                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 1, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 1, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                     }
                 }
                 <p>chart 1</p>
@@ -125,11 +137,11 @@
                     var row1Col1 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 1);
                     if (row1Col1 != null)
                     {
-                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 1, derLayoutId = Model.DerLayoutId, id = row1Col1.Id })" class="btn btn-default">Manage</a>
+                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 1, derLayoutId = Model.DerLayoutId, id = row1Col1.Id })" class="">Manage</a>
                     }
                     else
                     {
-                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 1, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 1, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                     }
                 }
                 <p>chart 2</p>
@@ -139,11 +151,11 @@
                     var row1Col2 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 2);
                     if (row1Col2 != null)
                     {
-                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 1, derLayoutId = Model.DerLayoutId, id = row1Col2.Id })" class="btn btn-default">Manage</a>
+                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 1, derLayoutId = Model.DerLayoutId, id = row1Col2.Id })" class="">Manage</a>
                     }
                     else
                     {
-                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 1, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 1, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                     }
                 }
                 <p>chart 3</p>
@@ -153,11 +165,11 @@
                     var row1Col3 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 3);
                     if (row1Col3 != null)
                     {
-                        <a href="@Url.Action("LayoutItem", new { column = 3, row = 1, derLayoutId = Model.DerLayoutId, id = row1Col3.Id })" class="btn btn-default">Manage</a>
+                        <a href="@Url.Action("LayoutItem", new { column = 3, row = 1, derLayoutId = Model.DerLayoutId, id = row1Col3.Id })" class="">Manage</a>
                     }
                     else
                     {
-                        <a href="@Url.Action("LayoutItem", new { column = 3, row = 1, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                        <a href="@Url.Action("LayoutItem", new { column = 3, row = 1, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                     }
                 }
                 <p>chart 4</p>
@@ -179,11 +191,11 @@
                                     var row2Col0 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 0);
                                     if (row2Col0 != null)
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 2, derLayoutId = Model.DerLayoutId, id = row2Col0.Id })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 2, derLayoutId = Model.DerLayoutId, id = row2Col0.Id })" class="">Manage</a>
                                     }
                                     else
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 2, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 2, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                     }
                                 }
                             </td>
@@ -214,11 +226,11 @@
                                     var row2Col1 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 1);
                                     if (row2Col1 != null)
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 2, derLayoutId = Model.DerLayoutId, id = row2Col1.Id })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 2, derLayoutId = Model.DerLayoutId, id = row2Col1.Id })" class="">Manage</a>
                                     }
                                     else
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 2, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 2, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                     }
                                 }
                             </td>
@@ -243,11 +255,11 @@
                                     var row2Col2 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 2);
                                     if (row2Col2 != null)
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 2, derLayoutId = Model.DerLayoutId, id = row2Col2.Id })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 2, derLayoutId = Model.DerLayoutId, id = row2Col2.Id })" class="">Manage</a>
                                     }
                                     else
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 2, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 2, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                     }
                                 }
                             </td>
@@ -283,11 +295,11 @@
                                     var row3Col0 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 0);
                                     if (row3Col0 != null)
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 3, derLayoutId = Model.DerLayoutId, id = row3Col0.Id })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 3, derLayoutId = Model.DerLayoutId, id = row3Col0.Id })" class="">Manage</a>
                                     }
                                     else
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 3, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 3, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                     }
                                 }
                             </td>
@@ -343,11 +355,11 @@
                                     var row3Col1 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 1);
                                     if (row3Col1 != null)
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 3, derLayoutId = Model.DerLayoutId, id = row3Col1.Id })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 3, derLayoutId = Model.DerLayoutId, id = row3Col1.Id })" class="">Manage</a>
                                     }
                                     else
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 3, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 3, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                     }
                                 }
                             </td>
@@ -358,7 +370,17 @@
                     <thead>
                         <tr>
                             <td>
-                                <span class="indicator left-side"><i class="fa fa-exclamation-circle" aria-hidden="true"></i></span> WEEKLY ALARM MANAGEMENT (3 Apr-10 Apr 2016)
+                                @{
+                                    var row3Col5 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column ==5);
+                                    if (row3Col5 != null)
+                                    {
+                                        <a href="@Url.Action("LayoutItem", new { column = 5, row = 3, derLayoutId = Model.DerLayoutId, id = row3Col5.Id })" class="">Manage</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("LayoutItem", new { column = 5, row = 3, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
+                                    }
+                                } WEEKLY ALARM MANAGEMENT (3 Apr-10 Apr 2016)
                             </td>
                         </tr>
                     </thead>
@@ -375,11 +397,11 @@
                                                         var row3Col2 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 2);
                                                         if (row3Col2 != null)
                                                         {
-                                                            <a href="@Url.Action("LayoutItem", new { column = 2, row = 3, derLayoutId = Model.DerLayoutId, id = row3Col2.Id })" class="btn btn-default">Manage</a>
+                                                            <a href="@Url.Action("LayoutItem", new { column = 2, row = 3, derLayoutId = Model.DerLayoutId, id = row3Col2.Id })" class="">Manage</a>
                                                         }
                                                         else
                                                         {
-                                                            <a href="@Url.Action("LayoutItem", new { column = 2, row = 3, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                                            <a href="@Url.Action("LayoutItem", new { column = 2, row = 3, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                                         }
                                                     }
                                                 </td>
@@ -433,11 +455,11 @@
                                     var row3Col3 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 3);
                                     if (row3Col3 != null)
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 3, row = 3, derLayoutId = Model.DerLayoutId, id = row3Col3.Id })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 3, row = 3, derLayoutId = Model.DerLayoutId, id = row3Col3.Id })" class="">Manage</a>
                                     }
                                     else
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 3, row = 3, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 3, row = 3, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                     }
                                 }
                             </td>
@@ -446,11 +468,11 @@
                                     var row3Col4 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 4);
                                     if (row3Col4 != null)
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 4, row = 3, derLayoutId = Model.DerLayoutId, id = row3Col4.Id })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 4, row = 3, derLayoutId = Model.DerLayoutId, id = row3Col4.Id })" class="">Manage</a>
                                     }
                                     else
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 4, row = 3, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 4, row = 3, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                     }
                                 }
                             </td>
@@ -466,11 +488,11 @@
                     var row4Col0 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 0);
                     if (row4Col0 != null)
                     {
-                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 4, derLayoutId = Model.DerLayoutId, id = row4Col0.Id })" class="btn btn-default">Manage</a>
+                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 4, derLayoutId = Model.DerLayoutId, id = row4Col0.Id })" class="">Manage</a>
                     }
                     else
                     {
-                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 4, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 4, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                     }
                 }
             </div>
@@ -491,11 +513,11 @@
                                         var row4Col1 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 1);
                                         if (row4Col1 != null)
                                         {
-                                            <a href="@Url.Action("LayoutItem", new { column = 1, row = 4, derLayoutId = Model.DerLayoutId, id = row4Col1.Id })" class="btn btn-default">Manage</a>
+                                            <a href="@Url.Action("LayoutItem", new { column = 1, row = 4, derLayoutId = Model.DerLayoutId, id = row4Col1.Id })" class="">Manage</a>
                                         }
                                         else
                                         {
-                                            <a href="@Url.Action("LayoutItem", new { column = 1, row = 4, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                            <a href="@Url.Action("LayoutItem", new { column = 1, row = 4, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                         }
                                     }
                                 </td>
@@ -525,11 +547,11 @@
                                             var row4Col2 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 2);
                                             if (row4Col2 != null)
                                             {
-                                                <a href="@Url.Action("LayoutItem", new { column = 2, row = 4, derLayoutId = Model.DerLayoutId, id = row4Col2.Id })" class="btn btn-default">Manage</a>
+                                                <a href="@Url.Action("LayoutItem", new { column = 2, row = 4, derLayoutId = Model.DerLayoutId, id = row4Col2.Id })" class="">Manage</a>
                                             }
                                             else
                                             {
-                                                <a href="@Url.Action("LayoutItem", new { column = 2, row = 4, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                                <a href="@Url.Action("LayoutItem", new { column = 2, row = 4, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                             }
                                         }
                                     </td>
@@ -587,11 +609,11 @@
                                     var row5Col0 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 0);
                                     if (row5Col0 != null)
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 5, derLayoutId = Model.DerLayoutId, id = row5Col0.Id })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 5, derLayoutId = Model.DerLayoutId, id = row5Col0.Id })" class="">Manage</a>
                                     }
                                     else
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 5, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 5, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                     }
                                 }
                             </td>
@@ -627,11 +649,11 @@
                                             var row6Col0 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 0);
                                             if (row6Col0 != null)
                                             {
-                                                <a href="@Url.Action("LayoutItem", new { column = 0, row = 6, derLayoutId = Model.DerLayoutId, id = row6Col0.Id })" class="btn btn-default">Manage</a>
+                                                <a href="@Url.Action("LayoutItem", new { column = 0, row = 6, derLayoutId = Model.DerLayoutId, id = row6Col0.Id })" class="">Manage</a>
                                             }
                                             else
                                             {
-                                                <a href="@Url.Action("LayoutItem", new { column = 0, row = 6, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                                <a href="@Url.Action("LayoutItem", new { column = 0, row = 6, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                             }
                                         }
                                     </td>
@@ -656,11 +678,11 @@
                                             var row6Col3 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 3);
                                             if (row6Col3 != null)
                                             {
-                                                <a href="@Url.Action("LayoutItem", new { column = 3, row = 6, derLayoutId = Model.DerLayoutId, id = row6Col3.Id })" class="btn btn-default">Manage</a>
+                                                <a href="@Url.Action("LayoutItem", new { column = 3, row = 6, derLayoutId = Model.DerLayoutId, id = row6Col3.Id })" class="">Manage</a>
                                             }
                                             else
                                             {
-                                                <a href="@Url.Action("LayoutItem", new { column = 3, row = 6, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                                <a href="@Url.Action("LayoutItem", new { column = 3, row = 6, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                             }
                                         }
                                     </td>
@@ -678,11 +700,11 @@
                                             var row6Col4 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 4);
                                             if (row6Col4 != null)
                                             {
-                                                <a href="@Url.Action("LayoutItem", new {column = 4, row = 6, derLayoutId = Model.DerLayoutId, id = row6Col4.Id})" class="btn btn-default">Manage</a>
+                                                <a href="@Url.Action("LayoutItem", new {column = 4, row = 6, derLayoutId = Model.DerLayoutId, id = row6Col4.Id})" class="">Manage</a>
                                             }
                                             else
                                             {
-                                                <a href="@Url.Action("LayoutItem", new {column = 4, row = 6, derLayoutId = Model.DerLayoutId, id = 0})" class="btn btn-default">Manage</a>
+                                                <a href="@Url.Action("LayoutItem", new {column = 4, row = 6, derLayoutId = Model.DerLayoutId, id = 0})" class="">Manage</a>
                                             }
                                         }
                                     </div>
@@ -691,11 +713,11 @@
                                             var row6Col7 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 7);
                                             if (row6Col7 != null)
                                             {
-                                                <a href="@Url.Action("LayoutItem", new {column = 7, row = 6, derLayoutId = Model.DerLayoutId, id = row6Col7.Id})" class="btn btn-default">Manage</a>
+                                                <a href="@Url.Action("LayoutItem", new {column = 7, row = 6, derLayoutId = Model.DerLayoutId, id = row6Col7.Id})" class="">Manage</a>
                                             }
                                             else
                                             {
-                                                <a href="@Url.Action("LayoutItem", new {column = 7, row = 6, derLayoutId = Model.DerLayoutId, id = 0})" class="btn btn-default">Manage</a>
+                                                <a href="@Url.Action("LayoutItem", new {column = 7, row = 6, derLayoutId = Model.DerLayoutId, id = 0})" class="">Manage</a>
                                             }
                                         }
                                     </div>
@@ -704,11 +726,11 @@
                                             var row6Col9 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 9);
                                             if (row6Col9 != null)
                                             {
-                                                <a href="@Url.Action("LayoutItem", new {column = 9, row = 6, derLayoutId = Model.DerLayoutId, id = row6Col9.Id})" class="btn btn-default">Manage</a>
+                                                <a href="@Url.Action("LayoutItem", new {column = 9, row = 6, derLayoutId = Model.DerLayoutId, id = row6Col9.Id})" class="">Manage</a>
                                             }
                                             else
                                             {
-                                                <a href="@Url.Action("LayoutItem", new {column = 9, row = 6, derLayoutId = Model.DerLayoutId, id = 0})" class="btn btn-default">Manage</a>
+                                                <a href="@Url.Action("LayoutItem", new {column = 9, row = 6, derLayoutId = Model.DerLayoutId, id = 0})" class="">Manage</a>
                                             }
                                         }
                                     </div>
@@ -720,11 +742,11 @@
                                                 var row6Col5 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 5);
                                                 if (row6Col5 != null)
                                                 {
-                                                    <a href="@Url.Action("LayoutItem", new {column = 5, row = 6, derLayoutId = Model.DerLayoutId, id = row6Col5.Id})" class="btn btn-default">Manage</a>
+                                                    <a href="@Url.Action("LayoutItem", new {column = 5, row = 6, derLayoutId = Model.DerLayoutId, id = row6Col5.Id})" class="">Manage</a>
                                                 }
                                                 else
                                                 {
-                                                    <a href="@Url.Action("LayoutItem", new {column = 5, row = 6, derLayoutId = Model.DerLayoutId, id = 0})" class="btn btn-default">Manage</a>
+                                                    <a href="@Url.Action("LayoutItem", new {column = 5, row = 6, derLayoutId = Model.DerLayoutId, id = 0})" class="">Manage</a>
                                                 }
                                             }
                                         </div>
@@ -736,11 +758,11 @@
                                             var row6Col6 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 6);
                                             if (row6Col6 != null)
                                             {
-                                                <a href="@Url.Action("LayoutItem", new {column = 6, row = 6, derLayoutId = Model.DerLayoutId, id = row6Col6.Id})" class="btn btn-default">Manage</a>
+                                                <a href="@Url.Action("LayoutItem", new {column = 6, row = 6, derLayoutId = Model.DerLayoutId, id = row6Col6.Id})" class="">Manage</a>
                                             }
                                             else
                                             {
-                                                <a href="@Url.Action("LayoutItem", new {column = 6, row = 6, derLayoutId = Model.DerLayoutId, id = 0})" class="btn btn-default">Manage</a>
+                                                <a href="@Url.Action("LayoutItem", new {column = 6, row = 6, derLayoutId = Model.DerLayoutId, id = 0})" class="">Manage</a>
                                             }
                                         }
                                     </div>
@@ -749,11 +771,11 @@
                                             var row6Col8 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 8);
                                             if (row6Col8 != null)
                                             {
-                                                <a href="@Url.Action("LayoutItem", new {column = 8, row = 6, derLayoutId = Model.DerLayoutId, id = row6Col8.Id})" class="btn btn-default">Manage</a>
+                                                <a href="@Url.Action("LayoutItem", new {column = 8, row = 6, derLayoutId = Model.DerLayoutId, id = row6Col8.Id})" class="">Manage</a>
                                             }
                                             else
                                             {
-                                                <a href="@Url.Action("LayoutItem", new {column = 8, row = 6, derLayoutId = Model.DerLayoutId, id = 0})" class="btn btn-default">Manage</a>
+                                                <a href="@Url.Action("LayoutItem", new {column = 8, row = 6, derLayoutId = Model.DerLayoutId, id = 0})" class="">Manage</a>
                                             }
                                         }
                                     </div>
@@ -762,11 +784,11 @@
                                             var row6Col10 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 10);
                                             if (row6Col10 != null)
                                             {
-                                                <a href="@Url.Action("LayoutItem", new {column = 10, row = 6, derLayoutId = Model.DerLayoutId, id = row6Col10.Id})" class="btn btn-default">Manage</a>
+                                                <a href="@Url.Action("LayoutItem", new {column = 10, row = 6, derLayoutId = Model.DerLayoutId, id = row6Col10.Id})" class="">Manage</a>
                                             }
                                             else
                                             {
-                                                <a href="@Url.Action("LayoutItem", new {column = 10, row = 6, derLayoutId = Model.DerLayoutId, id = 0})" class="btn btn-default">Manage</a>
+                                                <a href="@Url.Action("LayoutItem", new {column = 10, row = 6, derLayoutId = Model.DerLayoutId, id = 0})" class="">Manage</a>
                                             }
                                         }
                                     </div>
@@ -795,11 +817,11 @@
                                     var row7Col0 = Model.Items.FirstOrDefault(x => x.Row == 7 && x.Column == 0);
                                     if (row7Col0 != null)
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 7, derLayoutId = Model.DerLayoutId, id = row7Col0.Id })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 7, derLayoutId = Model.DerLayoutId, id = row7Col0.Id })" class="">Manage</a>
                                     }
                                     else
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 7, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 7, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                     }
                                 }
                             </td>
@@ -843,11 +865,11 @@
                                     var row8Col0 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 0);
                                     if (row8Col0 != null)
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 8, derLayoutId = Model.DerLayoutId, id = row8Col0.Id })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 8, derLayoutId = Model.DerLayoutId, id = row8Col0.Id })" class="">Manage</a>
                                     }
                                     else
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 8, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 8, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                     }
                                 }
                             </td>
@@ -856,11 +878,11 @@
                                     var row8Col1 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 1);
                                     if (row8Col1 != null)
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 8, derLayoutId = Model.DerLayoutId, id = row8Col1.Id })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 8, derLayoutId = Model.DerLayoutId, id = row8Col1.Id })" class="">Manage</a>
                                     }
                                     else
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 8, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 8, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                     }
                                 }
                             </td>
@@ -869,11 +891,11 @@
                                     var row8Col2 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 2);
                                     if (row8Col2 != null)
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 8, derLayoutId = Model.DerLayoutId, id = row8Col2.Id })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 8, derLayoutId = Model.DerLayoutId, id = row8Col2.Id })" class="">Manage</a>
                                     }
                                     else
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 8, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 8, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                     }
                                 }
                             </td>
@@ -882,11 +904,11 @@
                                     var row8Col3 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 3);
                                     if (row8Col3 != null)
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 3, row = 8, derLayoutId = Model.DerLayoutId, id = row8Col3.Id })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 3, row = 8, derLayoutId = Model.DerLayoutId, id = row8Col3.Id })" class="">Manage</a>
                                     }
                                     else
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 3, row = 8, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 3, row = 8, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                     }
                                 }
                             </td>
@@ -913,11 +935,11 @@
                                     var row9Col0 = Model.Items.FirstOrDefault(x => x.Row == 9 && x.Column == 0);
                                     if (row9Col0 != null)
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 9, derLayoutId = Model.DerLayoutId, id = row9Col0.Id })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 9, derLayoutId = Model.DerLayoutId, id = row9Col0.Id })" class="">Manage</a>
                                     }
                                     else
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 9, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 9, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                     }
                                 }
                             </td>
@@ -928,7 +950,17 @@
                     <thead>
                         <tr>
                             <td colspan="6">
-                                <span class="indicator left-side"><i class="fa fa-circle"></i></span>
+                                @{
+                                    var row10Col2 = Model.Items.FirstOrDefault(x => x.Row == 10 && x.Column == 2);
+                                    if (row10Col2 != null)
+                                    {
+                                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 10, derLayoutId = Model.DerLayoutId, id = row10Col2.Id })" class="">Manage</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 10, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
+                                    }
+                                }
                                 WEEKLY MAINTENANCE BACKLOG (as of 20 Jan 2016)
                             </td>
                         </tr>
@@ -957,11 +989,11 @@
                                     var row10Col0 = Model.Items.FirstOrDefault(x => x.Row == 10 && x.Column == 0);
                                     if (row10Col0 != null)
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 10, derLayoutId = Model.DerLayoutId, id = row10Col0.Id })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 10, derLayoutId = Model.DerLayoutId, id = row10Col0.Id })" class="">Manage</a>
                                     }
                                     else
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 10, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 10, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                     }
                                 }
                             </td>
@@ -972,7 +1004,17 @@
                     <thead>
                         <tr>
                             <td colspan="6">
-                                <span class="indicator left-side"><i class="fa fa-circle"></i></span>
+                                @{
+                                    var row11Col2 = Model.Items.FirstOrDefault(x => x.Row == 11 && x.Column == 2);
+                                    if (row11Col2 != null)
+                                    {
+                                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 11, derLayoutId = Model.DerLayoutId, id = row11Col2.Id })" class="">Manage</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 11, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
+                                    }
+                                }
                                 WEEKLY CRITICAL-TIER 1 PM COMPLIANCE/OVERDUE (as of 6 Apr 2016)
                             </td>
                         </tr>
@@ -1004,11 +1046,11 @@
                                     var row11Col0 = Model.Items.FirstOrDefault(x => x.Row == 11 && x.Column == 0);
                                     if (row11Col0 != null)
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 11, derLayoutId = Model.DerLayoutId, id = row11Col0.Id })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 11, derLayoutId = Model.DerLayoutId, id = row11Col0.Id })" class="">Manage</a>
                                     }
                                     else
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 11, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 0, row = 11, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                     }
                                 }
                             </td>
@@ -1023,17 +1065,28 @@
                                 var row12Col0 = Model.Items.FirstOrDefault(x => x.Row == 12 && x.Column == 0);
                                 if (row12Col0 != null)
                                 {
-                                    <a href="@Url.Action("LayoutItem", new { column = 0, row = 12, derLayoutId = Model.DerLayoutId, id = row12Col0.Id })" class="btn btn-default">Manage</a>
+                                    <a href="@Url.Action("LayoutItem", new { column = 0, row = 12, derLayoutId = Model.DerLayoutId, id = row12Col0.Id })" class="">Manage</a>
                                 }
                                 else
                                 {
-                                    <a href="@Url.Action("LayoutItem", new { column = 0, row = 12, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                    <a href="@Url.Action("LayoutItem", new { column = 0, row = 12, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                 }
                             }
                         </p>
                     </div>
                     <div class="col-md-2" style="padding-top: 14px !important;">
-                        <label>Plant Mode :</label><span class="plant-mode">Holding</span>
+                        <label>Plant Mode :</label>
+                        @{
+                            var row12Col2 = Model.Items.FirstOrDefault(x => x.Row == 12 && x.Column == 2);
+                            if (row12Col2 != null)
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 2, row = 12, derLayoutId = Model.DerLayoutId, id = row12Col2.Id })" class="">Manage</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("LayoutItem", new { column = 2, row = 12, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
+                            }
+                        }
                     </div>
                 </div>
                 <div class="row">
@@ -1043,11 +1096,11 @@
                             var row13Col0 = Model.Items.FirstOrDefault(x => x.Row == 13 && x.Column == 0);
                             if (row13Col0 != null)
                             {
-                                <a href="@Url.Action("LayoutItem", new { column = 0, row = 13, derLayoutId = Model.DerLayoutId, id = row13Col0.Id })" class="btn btn-default">Manage</a>
+                                <a href="@Url.Action("LayoutItem", new { column = 0, row = 13, derLayoutId = Model.DerLayoutId, id = row13Col0.Id })" class="">Manage</a>
                             }
                             else
                             {
-                                <a href="@Url.Action("LayoutItem", new { column = 0, row = 13, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                <a href="@Url.Action("LayoutItem", new { column = 0, row = 13, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                             }
                         }
                     </p>
@@ -1092,11 +1145,11 @@
                                             var row5Col1 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 1);
                                             if (row5Col1 != null)
                                             {
-                                                <a href="@Url.Action("LayoutItem", new { column = 1, row = 5, derLayoutId = Model.DerLayoutId, id = row5Col1.Id })" class="btn btn-default">Manage</a>
+                                                <a href="@Url.Action("LayoutItem", new { column = 1, row = 5, derLayoutId = Model.DerLayoutId, id = row5Col1.Id })" class="">Manage</a>
                                             }
                                             else
                                             {
-                                                <a href="@Url.Action("LayoutItem", new { column = 1, row = 5, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                                <a href="@Url.Action("LayoutItem", new { column = 1, row = 5, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                             }
                                         }
                                     </td>
@@ -1144,11 +1197,11 @@
                                             var row5Col2 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 2);
                                             if (row5Col2 != null)
                                             {
-                                                <a href="@Url.Action("LayoutItem", new { column = 2, row = 5, derLayoutId = Model.DerLayoutId, id = row5Col2.Id })" class="btn btn-default">Manage</a>
+                                                <a href="@Url.Action("LayoutItem", new { column = 2, row = 5, derLayoutId = Model.DerLayoutId, id = row5Col2.Id })" class="">Manage</a>
                                             }
                                             else
                                             {
-                                                <a href="@Url.Action("LayoutItem", new { column = 2, row = 5, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                                <a href="@Url.Action("LayoutItem", new { column = 2, row = 5, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                             }
                                         }
                                     </td>
@@ -1192,11 +1245,11 @@
                                     var row6Col2 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 2);
                                     if (row6Col2 != null)
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 6, derLayoutId = Model.DerLayoutId, id = row6Col2.Id })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 6, derLayoutId = Model.DerLayoutId, id = row6Col2.Id })" class="">Manage</a>
                                     }
                                     else
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 6, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 6, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                     }
                                 }
                             </td>
@@ -1257,11 +1310,11 @@
                                     var row7Col1 = Model.Items.FirstOrDefault(x => x.Row == 7 && x.Column == 1);
                                     if (row7Col1 != null)
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 7, derLayoutId = Model.DerLayoutId, id = row7Col1.Id })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 7, derLayoutId = Model.DerLayoutId, id = row7Col1.Id })" class="">Manage</a>
                                     }
                                     else
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 7, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 7, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                     }
                                 }
                             </td>
@@ -1323,11 +1376,11 @@
                                     var row8Col4 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 4);
                                     if (row8Col4 != null)
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 4, row = 8, derLayoutId = Model.DerLayoutId, id = row8Col4.Id })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 4, row = 8, derLayoutId = Model.DerLayoutId, id = row8Col4.Id })" class="">Manage</a>
                                     }
                                     else
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 4, row = 8, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 4, row = 8, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                     }
                                 }
                             </td>
@@ -1369,11 +1422,11 @@
                                     var row10Col1 = Model.Items.FirstOrDefault(x => x.Row == 10 && x.Column == 1);
                                     if (row10Col1 != null)
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 10, derLayoutId = Model.DerLayoutId, id = row10Col1.Id })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 10, derLayoutId = Model.DerLayoutId, id = row10Col1.Id })" class="">Manage</a>
                                     }
                                     else
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 10, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 1, row = 10, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                     }
                                 }
                             </td>
@@ -1387,11 +1440,11 @@
                             var row11Col1 = Model.Items.FirstOrDefault(x => x.Row == 11 && x.Column == 1);
                             if (row11Col1 != null)
                             {
-                                <a href="@Url.Action("LayoutItem", new { column = 1, row = 11, derLayoutId = Model.DerLayoutId, id = row11Col1.Id })" class="btn btn-default">Manage</a>
+                                <a href="@Url.Action("LayoutItem", new { column = 1, row = 11, derLayoutId = Model.DerLayoutId, id = row11Col1.Id })" class="">Manage</a>
                             }
                             else
                             {
-                                <a href="@Url.Action("LayoutItem", new { column = 1, row = 11, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                <a href="@Url.Action("LayoutItem", new { column = 1, row = 11, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                             }
                         }
                     </div>
@@ -1446,11 +1499,11 @@
                                             var row14Col0 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 0);
                                             if (row14Col0 != null)
                                             {
-                                                <a href="@Url.Action("LayoutItem", new { column = 0, row = 14, derLayoutId = Model.DerLayoutId, id = row14Col0.Id })" class="btn btn-default">Manage</a>
+                                                <a href="@Url.Action("LayoutItem", new { column = 0, row = 14, derLayoutId = Model.DerLayoutId, id = row14Col0.Id })" class="">Manage</a>
                                             }
                                             else
                                             {
-                                                <a href="@Url.Action("LayoutItem", new { column = 0, row = 14, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                                <a href="@Url.Action("LayoutItem", new { column = 0, row = 14, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                             }
                                         }
                                     </td>
@@ -1470,11 +1523,11 @@
                                             var row15Col0 = Model.Items.FirstOrDefault(x => x.Row == 15 && x.Column == 0);
                                             if (row15Col0 != null)
                                             {
-                                                <a href="@Url.Action("LayoutItem", new { column = 0, row = 15, derLayoutId = Model.DerLayoutId, id = row15Col0.Id })" class="btn btn-default">Manage</a>
+                                                <a href="@Url.Action("LayoutItem", new { column = 0, row = 15, derLayoutId = Model.DerLayoutId, id = row15Col0.Id })" class="">Manage</a>
                                             }
                                             else
                                             {
-                                                <a href="@Url.Action("LayoutItem", new { column = 0, row = 15, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                                <a href="@Url.Action("LayoutItem", new { column = 0, row = 15, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                             }
                                         }
                                     </td>
@@ -1531,11 +1584,11 @@
                                             var row14Col1 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 1);
                                             if (row14Col1 != null)
                                             {
-                                                <a href="@Url.Action("LayoutItem", new { column = 1, row = 14, derLayoutId = Model.DerLayoutId, id = row14Col1.Id })" class="btn btn-default">Manage</a>
+                                                <a href="@Url.Action("LayoutItem", new { column = 1, row = 14, derLayoutId = Model.DerLayoutId, id = row14Col1.Id })" class="">Manage</a>
                                             }
                                             else
                                             {
-                                                <a href="@Url.Action("LayoutItem", new { column = 1, row = 14, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                                <a href="@Url.Action("LayoutItem", new { column = 1, row = 14, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                             }
                                         }
                                     </td>
@@ -1561,11 +1614,11 @@
                                             var row16Col1 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 1);
                                             if (row16Col1 != null)
                                             {
-                                                <a href="@Url.Action("LayoutItem", new {column = 1, row = 16, derLayoutId = Model.DerLayoutId, id = row16Col1.Id})" class="btn btn-default">Manage</a>
+                                                <a href="@Url.Action("LayoutItem", new {column = 1, row = 16, derLayoutId = Model.DerLayoutId, id = row16Col1.Id})" class="">Manage</a>
                                             }
                                             else
                                             {
-                                                <a href="@Url.Action("LayoutItem", new {column = 1, row = 16, derLayoutId = Model.DerLayoutId, id = 0})" class="btn btn-default">Manage</a>
+                                                <a href="@Url.Action("LayoutItem", new {column = 1, row = 16, derLayoutId = Model.DerLayoutId, id = 0})" class="">Manage</a>
                                             }
                                         }
                                     </td>
@@ -1585,11 +1638,11 @@
                                 var row14Col2 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 2);
                                 if (row14Col2 != null)
                                 {
-                                    <a href="@Url.Action("LayoutItem", new { column = 2, row = 14, derLayoutId = Model.DerLayoutId, id = row14Col2.Id })" class="btn btn-default">Manage</a>
+                                    <a href="@Url.Action("LayoutItem", new { column = 2, row = 14, derLayoutId = Model.DerLayoutId, id = row14Col2.Id })" class="">Manage</a>
                                 }
                                 else
                                 {
-                                    <a href="@Url.Action("LayoutItem", new { column = 2, row = 14, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                    <a href="@Url.Action("LayoutItem", new { column = 2, row = 14, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                 }
                             }
                         </p>
@@ -1602,11 +1655,11 @@
                                     var row15Col2 = Model.Items.FirstOrDefault(x => x.Row == 15 && x.Column == 2);
                                     if (row15Col2 != null)
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 15, derLayoutId = Model.DerLayoutId, id = row15Col2.Id })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 15, derLayoutId = Model.DerLayoutId, id = row15Col2.Id })" class="">Manage</a>
                                     }
                                     else
                                     {
-                                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 15, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                        <a href="@Url.Action("LayoutItem", new { column = 2, row = 15, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                     }
                                 }
                             </span>
@@ -1617,11 +1670,11 @@
                                 var row15Col1 = Model.Items.FirstOrDefault(x => x.Row == 15 && x.Column == 1);
                                 if (row15Col1 != null)
                                 {
-                                    <a href="@Url.Action("LayoutItem", new { column = 1, row = 15, derLayoutId = Model.DerLayoutId, id = row15Col1.Id })" class="btn btn-default">Manage</a>
+                                    <a href="@Url.Action("LayoutItem", new { column = 1, row = 15, derLayoutId = Model.DerLayoutId, id = row15Col1.Id })" class="">Manage</a>
                                 }
                                 else
                                 {
-                                    <a href="@Url.Action("LayoutItem", new { column = 1, row = 15, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                    <a href="@Url.Action("LayoutItem", new { column = 1, row = 15, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                 }
                             }
                         </p>
@@ -1645,11 +1698,11 @@
                                         var row16Col2 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 2);
                                         if (row16Col2 != null)
                                         {
-                                            <a href="@Url.Action("LayoutItem", new {column = 2, row = 16, derLayoutId = Model.DerLayoutId, id = row16Col2.Id})" class="btn btn-default">Manage</a>
+                                            <a href="@Url.Action("LayoutItem", new {column = 2, row = 16, derLayoutId = Model.DerLayoutId, id = row16Col2.Id})" class="">Manage</a>
                                         }
                                         else
                                         {
-                                            <a href="@Url.Action("LayoutItem", new {column = 2, row = 16, derLayoutId = Model.DerLayoutId, id = 0})" class="btn btn-default">Manage</a>
+                                            <a href="@Url.Action("LayoutItem", new {column = 2, row = 16, derLayoutId = Model.DerLayoutId, id = 0})" class="">Manage</a>
                                         }
                                     }
                                 </div>
@@ -1662,11 +1715,11 @@
                                         var row16Col3 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 3);
                                         if (row16Col3 != null)
                                         {
-                                            <a href="@Url.Action("LayoutItem", new { column = 3, row = 16, derLayoutId = Model.DerLayoutId, id = row16Col3.Id })" class="btn btn-default">Manage</a>
+                                            <a href="@Url.Action("LayoutItem", new { column = 3, row = 16, derLayoutId = Model.DerLayoutId, id = row16Col3.Id })" class="">Manage</a>
                                         }
                                         else
                                         {
-                                            <a href="@Url.Action("LayoutItem", new { column = 3, row = 16, derLayoutId = Model.DerLayoutId, id = 0 })" class="btn btn-default">Manage</a>
+                                            <a href="@Url.Action("LayoutItem", new { column = 3, row = 16, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                         }
                                     }
                                 </div>

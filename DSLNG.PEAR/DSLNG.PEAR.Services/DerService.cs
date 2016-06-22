@@ -265,6 +265,7 @@ namespace DSLNG.PEAR.Services
             rowAndColumns.Add(new RowAndColumns { Row = 0, Column = 0 });
             rowAndColumns.Add(new RowAndColumns { Row = 0, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 0, Column = 2 });
+            rowAndColumns.Add(new RowAndColumns { Row = 0, Column = 3 });
             rowAndColumns.Add(new RowAndColumns { Row = 1, Column = 0 });
             rowAndColumns.Add(new RowAndColumns { Row = 1, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 1, Column = 2 });
@@ -277,6 +278,7 @@ namespace DSLNG.PEAR.Services
             rowAndColumns.Add(new RowAndColumns { Row = 3, Column = 2 });
             rowAndColumns.Add(new RowAndColumns { Row = 3, Column = 3 });
             rowAndColumns.Add(new RowAndColumns { Row = 3, Column = 4 });
+            rowAndColumns.Add(new RowAndColumns { Row = 3, Column = 5 });
             rowAndColumns.Add(new RowAndColumns { Row = 4, Column = 0 });
             rowAndColumns.Add(new RowAndColumns { Row = 4, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 4, Column = 2 });
@@ -306,10 +308,13 @@ namespace DSLNG.PEAR.Services
             rowAndColumns.Add(new RowAndColumns { Row = 9, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 10, Column = 0 });
             rowAndColumns.Add(new RowAndColumns { Row = 10, Column = 1 });
+            rowAndColumns.Add(new RowAndColumns { Row = 10, Column = 2 });
             rowAndColumns.Add(new RowAndColumns { Row = 11, Column = 0 });
             rowAndColumns.Add(new RowAndColumns { Row = 11, Column = 1 });
+            rowAndColumns.Add(new RowAndColumns { Row = 11, Column = 2 });
             rowAndColumns.Add(new RowAndColumns { Row = 12, Column = 0 });
             rowAndColumns.Add(new RowAndColumns { Row = 12, Column = 1 });
+            rowAndColumns.Add(new RowAndColumns { Row = 12, Column = 2 });
             rowAndColumns.Add(new RowAndColumns { Row = 13, Column = 0 });
             rowAndColumns.Add(new RowAndColumns { Row = 13, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 13, Column = 2 });

@@ -207,19 +207,6 @@ namespace DSLNG.PEAR.Web.Controllers
                             editViewModel.HighlightId = response.Highlight.SelectOptionId;
                             break;
                         }
-                    /* case "procurement":
-                         {
-                             var result = _selectService.GetHighlightTypesDropdown();
-                             editViewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
-                             for (int i = 0; i < response.KpiInformations.Count; i++)
-                             {
-                                 if (response.KpiInformations[i].SelectOption != null)
-                                 {
-                                     editViewModel.KpiInformations[i].HighlightId = response.KpiInformations[i].SelectOption.Id;
-                                 }
-                             }
-                             break;
-                         }*/
                     case "key-equipment-status":
                         {
                             var result = _selectService.GetHighlightTypesDropdown();
@@ -374,8 +361,13 @@ namespace DSLNG.PEAR.Web.Controllers
                     case "3-and-2":
                     case "3-and-3":
                     case "0-and-1":
+                    case "0-and-3":
+                    case "3-and-5":
+                    case "10-and-2":
+                    case "11-and-2":
                     case "11-and-1":
                     case "12-and-0":
+                    case "12-and-2":
                     case "13-and-0":
                     case "14-and-2":
                     case "15-and-1":

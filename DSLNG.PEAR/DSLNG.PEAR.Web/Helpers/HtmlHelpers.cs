@@ -112,6 +112,26 @@ namespace DSLNG.PEAR.Web.Helpers
             }
         }
 
+        public static string DisplayDerRemarkWithValue(this HtmlHelper htmlHelper, string deviation)
+        {
+            switch (deviation)
+            {
+                case "4":
+                    return "<span class='indicator left-side'><i class='fa fa-check' style='color:green'></i></span>Fulfilled";
+                case "3":
+                    return "<span class='indicator left-side'><i class='fa fa-circle' style='color:green'></i></span>On-track";
+                case "2":
+                    return "<span class='indicator left-side'><i class='fa fa-arrow-right' style='color:grey'></i></span>Loading";
+                case "1":
+                    return "<span class='indicator left-side'><i class='fa fa-circle' style='color:orange'></i></span>Need attention";
+                case "0":
+                    return "<span class='indicator left-side'><i class='fa fa-circle' style='color:red'></i></span>Unfulfilled";
+                default:
+                    return string.Empty;
+            }
+        }
+        
+
         public static string DisplayDerValueWithLabelAtFront(this HtmlHelper htmlHelper, string measurement, string val, string defaultMeasurement, string defaultVal = "N/A", bool isRounded = true)
         {
             return !string.IsNullOrEmpty(val) ?

@@ -31,27 +31,29 @@
                 ACTUAL 24H
             </td>
             <td>
-                <span class="indicator absolute"><i class="fa fa-circle"></i></span>
+                @Html.DisplayDerRemark(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Remark)
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "%")
                 
             </td>
             <td>
-                <span class="indicator absolute"><i class="fa fa-circle"></i></span>
+                @Html.DisplayDerRemark(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Remark)
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "%")
                 
             </td>
             <td>
-                <span class="indicator absolute"><i class="fa fa-circle"></i></span>
+                @Html.DisplayDerRemark(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Remark)
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "%")
                 
             </td>
             <td>
+                @Html.DisplayDerRemark(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Remark)
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiMeasurement, "%")
-                
+
             </td>
             <td>
+                @Html.DisplayDerRemark(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Remark)
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 4).KpiMeasurement, "nm3")
-                
+
             </td>
             <td rowspan="2" class="text-center" style="vertical-align:middle">
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 5).KpiMeasurement, "mmscf")
@@ -67,27 +69,27 @@
                 ACTUAL MTD
             </td>
             <td>
-                <span class="indicator absolute"><i class="fa fa-circle"></i></span>
+                @Html.DisplayDerRemark(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Remark)
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "%")
-                
             </td>
             <td>
-                <span class="indicator absolute"><i class="fa fa-circle"></i></span>
+                @Html.DisplayDerRemark(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Remark)
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "%")
                 
             </td>
             <td>
-                <span class="indicator absolute"><i class="fa fa-circle"></i></span>
+                @Html.DisplayDerRemark(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Remark)
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "%")
                 
             </td>
             <td>
+                @Html.DisplayDerRemark(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Remark)
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiMeasurement, "%")
-                
+
             </td>
             <td>
+                @Html.DisplayDerRemark(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Remark)
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 4).KpiMeasurement, "mmscf")
-                
             </td>
         </tr>
         <tr>
@@ -95,23 +97,24 @@
                 Actual-YTD
             </td>
             <td>
-                <span class="indicator absolute"><i class="fa fa-circle"></i></span>
+                @Html.DisplayDerRemark(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Remark)
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "%")
                 
             </td>
             <td>
-                <span class="indicator absolute"><i class="fa fa-circle"></i></span>
+                @Html.DisplayDerRemark(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Remark)
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "%")
                 
             </td>
             <td>
-                <span class="indicator absolute"><i class="fa fa-circle"></i></span>
+                @Html.DisplayDerRemark(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Remark)
                 &lt; @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "%")
                 
             </td>
             <td class="na-value">
+                @Html.DisplayDerRemark(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Remark)
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiMeasurement, "%")
-                
+
             </td>
             <td colspan="3" class="text-center second-header">
                 Total Fuel Gas (GTG-GTC-LP Fuel)
