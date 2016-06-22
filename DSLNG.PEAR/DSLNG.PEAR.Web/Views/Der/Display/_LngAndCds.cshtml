@@ -80,7 +80,7 @@
             </td>
             <td>
                 <span class="indicator left-side"><i class="fa fa-circle"></i></span>
-                @Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Remark
+                @Html.DisplayDerRemarkWithValue(Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Remark)
             </td>
         </tr>
     </tbody>
