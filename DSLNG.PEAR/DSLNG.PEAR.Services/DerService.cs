@@ -328,6 +328,8 @@ namespace DSLNG.PEAR.Services
             rowAndColumns.Add(new RowAndColumns { Row = 16, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 16, Column = 2 });
             rowAndColumns.Add(new RowAndColumns { Row = 16, Column = 3 });
+            rowAndColumns.Add(new RowAndColumns { Row = 16, Column = 4 });
+            rowAndColumns.Add(new RowAndColumns { Row = 16, Column = 5 });
 
             foreach (var rowAndColumn in rowAndColumns)
             {
