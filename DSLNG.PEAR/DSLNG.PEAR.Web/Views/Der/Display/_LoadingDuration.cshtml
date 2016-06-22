@@ -27,7 +27,7 @@
             <label>Ttl terminal time (berth-unberth)</label>
         </div>
         <div class="col-md-6">
-            Last Shipping:@Html.DisplayDerValueWithHours(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value) <span class="indicator left-side"><i class="fa fa-circle"></i></span> Avg YTD:@Html.DisplayDerValueWithHours(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value)
+            Last Shipping:@Html.DisplayDerValueWithHours(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value) <span class="indicator @Html.DisplayDerRemark(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Remark)"><i class="fa @Html.DisplayDerRemark(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Remark)"></i></span> Avg YTD:@Html.DisplayDerValueWithHours(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value)
         </div>
     </div>
 </div>

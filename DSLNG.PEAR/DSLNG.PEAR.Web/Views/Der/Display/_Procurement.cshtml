@@ -30,7 +30,7 @@
             Avg Backlog time
         </td>
         <td>
-            <span class="indicator absolute"><i class="fa fa-circle"></i></span>
+            <span class="indicator absolute"><i class="fa @Html.DisplayDerRemark(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Remark)"></i></span>
             @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "day")
         </td>
         <td>

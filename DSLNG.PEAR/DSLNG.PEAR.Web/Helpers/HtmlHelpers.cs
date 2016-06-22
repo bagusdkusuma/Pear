@@ -90,8 +90,10 @@ namespace DSLNG.PEAR.Web.Helpers
                     return "fa-arrow-up";
                 case "-1":
                     return "fa-arrow-down";
-                default:
+                case "0":
                     return "fa-minus";
+                default:
+                    return string.Empty;
             }
         }
 
@@ -103,8 +105,44 @@ namespace DSLNG.PEAR.Web.Helpers
                     return "fa-circle";
                 case "-1":
                     return "fa-times-circle";
-                default:
+                case "0":
                     return "fa-exclamation-circle";
+                default:
+                    return string.Empty;
+            }
+        }
+
+        public static string DisplayDerRemarkWithValue(this HtmlHelper htmlHelper, string deviation)
+        {
+            switch (deviation)
+            {
+                case "4":
+                    return "<span class='indicator left-side'><i class='fa fa-check' style='color:green'></i></span>Fulfilled";
+                case "3":
+                    return "<span class='indicator left-side'><i class='fa fa-circle' style='color:green'></i></span>On-track";
+                case "2":
+                    return "<span class='indicator left-side'><i class='fa fa-arrow-right' style='color:grey'></i></span>Loading";
+                case "1":
+                    return "<span class='indicator left-side'><i class='fa fa-circle' style='color:orange'></i></span>Need attention";
+                case "0":
+                    return "<span class='indicator left-side'><i class='fa fa-circle' style='color:red'></i></span>Unfulfilled";
+                default:
+                    return string.Empty;
+            }
+        }
+
+        public static string DisplayDerRemarkForMarketTone(this HtmlHelper htmlHelper, string deviation)
+        {
+            switch (deviation)
+            {
+                case "1":
+                    return "<span class='comparison'><i class='fa fa-arrow-up' style='color:green'></i></span>";
+                case "0":
+                    return "<span class='comparison'><i class='fa fa-minus' style='color:orange'></i></span>";
+                case "-1":
+                    return "<span class='comparison'><i class='fa fa-arrow-down' style='color:red'></i></span>";
+                default:
+                    return string.Empty;
             }
         }
 

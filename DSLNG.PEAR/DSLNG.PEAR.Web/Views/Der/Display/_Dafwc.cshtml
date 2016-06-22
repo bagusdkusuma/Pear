@@ -7,7 +7,8 @@
             <label>Days without DAFWC :</label>
         </td>
         <td>
-            @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value) days
+            @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value,
+           Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "days") 
         </td>
         <td>
             since :
@@ -21,7 +22,8 @@
             <label>Days without LOPC (tier 1 & 2):</label>
         </td>
         <td>
-            @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value) days
+            @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value,
+           Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "days")
         </td>
         <td>
             since :
@@ -35,70 +37,8 @@
             Safe Man-hours since Last DAFWC (as of @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Remark)) :
         </td>
         <td class="text-right">
-            @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value) hours
+            @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "hours") 
         </td>
     </tr>
     </tbody>
 </table>
-
-@*<div class="col-md-6">
-    <p class="pull-left">
-        <strong>Days without DAFWC:</strong>
-    </p>
-    <p class="pull-right">
-        @Model.DaysWithoutDafwc
-    </p>
-    <div style="clear: both;">
-    </div>
-    <p class="pull-left">
-        <strong>Days without LOPC (tier 1 & 2):</strong>
-    </p>
-    <p class="pull-right">
-        @Model.DaysWithoutLopc
-    </p>
-    <div style="clear: both;">
-    </div>
-    <p class="pull-left">
-        <strong>Safe Man-hours since Last DAFWC (as of 6 Apr 2016):</strong>
-    </p>
-</div>
-<div class="col-md-6">
-    <p class="pull-left">
-        <strong>Since:</strong>
-    </p>
-    <p class="pull-right">
-        @Model.DaysWithoutDafwcSince
-    </p>
-    <div style="clear: both;">
-    </div>
-    <p class="pull-left">
-        <strong>Since:</strong>
-    </p>
-    <p class="pull-right">
-        @Model.DaysWithoutLopcSince
-    </p>
-    <div style="clear: both;">
-    </div>
-    <p class="pull-right">
-        12,424,123 Hours
-    </p>
-</div>*@
-
-@*<table class="der-table der-qhsse-row-1">
-        <tr>
-            <td style="font-weight: bold">Days Without DAFWC:</td>
-            <td>@Model.DaysWithoutDafwc</td>
-            <td style="text-align: right">since:</td>
-            <td style="text-align: right; background-color: yellow">@Model.DaysWithoutDafwcSince</td>
-        </tr>
-        <tr>
-            <td style="font-weight: bold">Days Without LOPC(tier 1 & 2):</td>
-            <td>@Model.DaysWithoutLopc</td>
-            <td style="text-align: right">since:</td>
-            <td style="text-align: right; background-color: yellow">@Model.DaysWithoutLopcSince</td>
-        </tr>
-        <tr>
-            <td colspan="3" style="font-weight: bold">Safe Man-hours since Last DAFWC<span style="font-weight: normal">(as of 20 Jan 2016):</span></td>
-            <td style="text-align: right">15742853 hours</td>
-        </tr>
-    </table>*@
