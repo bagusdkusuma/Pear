@@ -1057,10 +1057,10 @@ namespace DSLNG.PEAR.Web.Controllers
         [HttpPost]
         public ActionResult Generate(string date)
         {
-            var theDate = DateTime.ParseExact(date, "dd/MM/yyyy",CultureInfo.InvariantCulture);
+            var theDate = DateTime.ParseExact(date, "MM/dd/yyyy",CultureInfo.InvariantCulture);
             var secretNumber = Guid.NewGuid().ToString();
             DerImageController.SecretNumber = secretNumber;
-            var displayUrl = Url.Action("Preview", "DerImage", new { secretNumber = secretNumber, date = theDate.ToString("dd/MM/yyyy") }, this.Request.Url.Scheme);
+            var displayUrl = Url.Action("Preview", "DerImage", new { secretNumber = secretNumber, date = theDate.ToString("MM/dd/yyyy") }, this.Request.Url.Scheme);
             var htmlToPdf = new HtmlToPdfConverter();
             htmlToPdf.Size = PageSize.A3;
             if (!Directory.Exists(Server.MapPath(PathConstant.DerPath)))

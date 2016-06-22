@@ -14,6 +14,7 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="@Url.Content("~/content/bootstrap-datetimepicker.min.css")" />
     <link rel="stylesheet" href="@Url.Content("~/content/der-dikdik.css")" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -24,13 +25,19 @@
     <![endif]-->
 
 </head>
-<body class="der-image">
- @*   <div class="control">
+<body data-date="@DateTime.Now.ToString("MM/dd/yyyy")" class="der-image">
+    <div class="control" style="display:none">
+        <div style="position:absolute;left:20px;top:20px">
+            <div style="position:relative">
+                <input  name="date" class="form-control datepicker" />
+            </div>
+        </div>
         <a class="btn btn-default" href="@Url.Action("Index","DerImage")">Back To List</a>
+       
         <form action="@Url.Action("Generate","DerImage")" method="post">
-            <input class="btn btn-primary" type="submit" value="Generate" />
+            <input class="btn btn-primary generate" type="submit" value="Generate" />
         </form>
-    </div>*@
+    </div>
     <div class="container a3-ratio">
         <div class="row header">
             <div class="header-left col-md-8 text-center">
@@ -53,8 +60,15 @@
             </div>
             <div class="col-md-7">
                 <div class="row">
-                    <div class="col-md-9 proper">
+                    <div class="col-md-9 proper daily-highlight">
                         <h5 style="text-decoration: underline;">Daily Highlight</h5>
+                        @{
+                            var row0Col3 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 1);
+                            if (row0Col3 != null)
+                            {
+                                <div data-url="@Url.Action("LayoutItem", "DerImage", new {id = row0Col3.Id})" class="layout-item highlight-json"></div>
+                            }
+                        }
                         @{
                             var row0Col1 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 1);
                             if (row0Col1 != null)
@@ -177,6 +191,13 @@
                     <thead>
                         <tr>
                             <td>
+                                @{
+                                    var row3Col5 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 5);
+                                    if (row3Col5 != null)
+                                    {
+                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row3Col5.Id })" class="layout-item highlight-json"></div>
+                                    }
+                                }
                                 WEEKLY ALARM MANAGEMENT (3 Apr-10 Apr 2016)
                             </td>
                         </tr>
@@ -302,13 +323,13 @@
                         }
                         <div class="psig">
                             Feed Gas Pressure (Psig):
-                        @{
-                            var row6Col3 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 3);
-                             if (row6Col3 != null)
-                            {
-                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col3.Id })" class="layout-item barmeter"></div>
+                            @{
+                                var row6Col3 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 3);
+                                if (row6Col3 != null)
+                                {
+                                    <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col3.Id })" class="layout-item barmeter"></div>
+                                }
                             }
-                        }
                         </div>
                     </div>
                     <div class="col-md-5">
@@ -316,84 +337,84 @@
                             <label>Impurities (24H Avg-GSA spec)</label>
                             <div class="row">
                                 <div class="col-md-5">
-                                     @{
-                                            var row6Col4 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 4);
-                                            if (row6Col4 != null)
-                                            {
-                                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col4.Id })" class="layout-item barmeter">
-                                                     <label>H<span style="font-size:8px">2</span>S- ppm</label>
-                                                </div>
-                                            }
-                                        }
                                     @{
-                                            var row6Col7 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 7);
-                                            if (row6Col7 != null)
-                                            {
-                                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col7.Id })" class="layout-item barmeter">
-                                                     <label>CO<span style="font-size:8px">2</span>S- ppm</label>
-                                                </div>
-                                            }
+                                        var row6Col4 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 4);
+                                        if (row6Col4 != null)
+                                        {
+                                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col4.Id })" class="layout-item barmeter">
+                                                <label>H<span style="font-size:8px">2</span>S- ppm</label>
+                                            </div>
                                         }
-                                       @{
-                                            var row6Col9 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 9);
-                                            if (row6Col9 != null)
-                                            {
-                                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col9.Id })" class="layout-item barmeter">
-                                                      <label>H<span style="font-size:8px">2</span>O- ppm</label>
-                                                </div>
-                                            }
+                                    }
+                                    @{
+                                        var row6Col7 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 7);
+                                        if (row6Col7 != null)
+                                        {
+                                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col7.Id })" class="layout-item barmeter">
+                                                <label>CO<span style="font-size:8px">2</span>S- ppm</label>
+                                            </div>
                                         }
+                                    }
+                                    @{
+                                        var row6Col9 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 9);
+                                        if (row6Col9 != null)
+                                        {
+                                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col9.Id })" class="layout-item barmeter">
+                                                <label>H<span style="font-size:8px">2</span>O- ppm</label>
+                                            </div>
+                                        }
+                                    }
                                 </div>
                                 <div class="col-md-2">
-                                     <div class="thermometer">
-                                           @{
-                                                var row6Col5 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 5);
-                                                if (row6Col5 != null)
-                                                {
-                                                    <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col5.Id })" class="layout-item bar-thermo">
-                                                        <img src="@Url.Content("~/Content/images/water-drop.png")" />
-                                                    </div>
-                                                }
+                                    <div class="thermometer">
+                                        @{
+                                            var row6Col5 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 5);
+                                            if (row6Col5 != null)
+                                            {
+                                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col5.Id })" class="layout-item bar-thermo">
+                                                    <img src="@Url.Content("~/Content/images/water-drop.png")" />
+                                                </div>
                                             }
-                                     </div>
+                                        }
+                                    </div>
                                 </div>
                                 <div class="col-md-5">
-                                        @{
-                                            var row6Col6 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 6);
-                                            if (row6Col6 != null)
-                                            {
-                                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col6.Id })" class="layout-item barmeter">
-                                                     <label>BTX-ppm</label>
-                                                </div>
-                                            }
-                                        }
                                     @{
-                                            var row6Col8 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 8);
-                                            if (row6Col8 != null)
-                                            {
-                                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col8.Id })" class="layout-item barmeter">
-                                                     <label>Ttl Sulphur-ppm</label>
-                                                </div>
-                                            }
+                                        var row6Col6 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 6);
+                                        if (row6Col6 != null)
+                                        {
+                                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col6.Id })" class="layout-item barmeter">
+                                                <label>BTX-ppm</label>
+                                            </div>
                                         }
-                                       @{
-                                            var row6Col10 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 10);
-                                            if (row6Col10 != null)
-                                            {
-                                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col10.Id })" class="layout-item barmeter">
-                                                      <label>Hg-MRU outlet ng/nm3</label>
-                                                </div>
-                                            }
+                                    }
+                                    @{
+                                        var row6Col8 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 8);
+                                        if (row6Col8 != null)
+                                        {
+                                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col8.Id })" class="layout-item barmeter">
+                                                <label>Ttl Sulphur-ppm</label>
+                                            </div>
                                         }
-                                     @*<div class="barmeter">
-                                         <label>BTX-ppm</label>
-                                    </div>
-                                    <div class="barmeter">
-                                        <label>Ttl Sulphur-ppm</label>
-                                    </div>
-                                    <div class="barmeter">
-                                        <label>Hg-MRU outlet ng/nm3</label>
-                                    </div>*@
+                                    }
+                                    @{
+                                        var row6Col10 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 10);
+                                        if (row6Col10 != null)
+                                        {
+                                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col10.Id })" class="layout-item barmeter">
+                                                <label>Hg-MRU outlet ng/nm3</label>
+                                            </div>
+                                        }
+                                    }
+                                    @*<div class="barmeter">
+                                             <label>BTX-ppm</label>
+                                        </div>
+                                        <div class="barmeter">
+                                            <label>Ttl Sulphur-ppm</label>
+                                        </div>
+                                        <div class="barmeter">
+                                            <label>Hg-MRU outlet ng/nm3</label>
+                                        </div>*@
                                 </div>
                             </div>
                         </div>
@@ -410,33 +431,42 @@
                 <table class="table table-bordered tank">
                     <thead>
                         <tr>
-                            <td colspan="2">
-                                 @{
+                            <td colspan="2" style="width:25%">
+                                @{
                                     var row8Col0 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 0);
                                     if (row8Col0 != null)
                                     {
-
-                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new {id = row8Col0.Id})" class="layout-item" style="width:100px;height:100px"></div>
+                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new {id = row8Col0.Id})" class="layout-item tank-wrapper" style="width:100px;height:100px"></div>
                                     }
                                 }
                             </td>
-                            <td colspan="2">    @{
+                            <td colspan="2" style="width:34%">
+                                @{
                                     var row8Col1 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 1);
                                     if (row8Col1 != null)
                                     {
-
-                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new {id = row8Col1.Id})" class="layout-item" style="width:100px;height:70px"></div>
+                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new {id = row8Col1.Id})" class="layout-item tank-wrapper" style="width:100px;height:70px"></div>
                                     }
-                                }</td>
-                            <td colspan="2">    @{
-                                var row8Col2 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 2);
-                                if (row8Col2 != null)
+                                }
+                            </td>
+                            <td colspan="2" style="width:24%">
+                                @{
+                                    var row8Col2 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 2);
+                                    if (row8Col2 != null)
                                     {
-
-                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new {id = row8Col2.Id})" class="layout-item" style="width:75px;height:70px"></div>
+                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new {id = row8Col2.Id})" class="layout-item tank-wrapper" style="width:75px;height:70px"></div>
                                     }
-                                }</td>
-                            <td>//Not Implemented</td>
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var row8Col3 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 3);
+                                    if (row8Col3 != null)
+                                    {
+                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new {id = row8Col3.Id})" class="layout-item tank-wrapper" style="width:120px;height:40px" data-type="custom"></div>
+                                    }
+                                }
+                            </td>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -449,7 +479,23 @@
                         <div data-url="@Url.Action("LayoutItem", "DerImage", new {id = row9Col0.Id})" class="layout-item"></div>
                     }
                 }
+                <table class="table table-bordered weekly-maintenance">
+                    <thead>
+                        <tr>
+                            <td colspan="6" style="border: none">
+                                @{
+                                    var row10Col2 = Model.Items.FirstOrDefault(x => x.Row == 10 && x.Column == 2);
+                                    if (row10Col2 != null)
+                                    {
 
+                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new {id = row10Col2.Id})" class="layout-item highlight-json"></div>
+                                    }
+                                }
+                                WEEKLY MAINTENANCE BACKLOG (as of 20 Jan 2016)
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
                 @{
                     var row10Col0 = Model.Items.FirstOrDefault(x => x.Row == 10 && x.Column == 0);
                     if (row10Col0 != null)
@@ -458,6 +504,24 @@
                         <div data-url="@Url.Action("LayoutItem", "DerImage", new {id = row10Col0.Id})" class="layout-item"></div>
                     }
                 }
+                <table class="table table-bordered weekly-critical">
+                    <thead>
+                        <tr>
+                            <td colspan="6" style="border: none">
+                                @{
+                                    var row11Col2 = Model.Items.FirstOrDefault(x => x.Row == 11 && x.Column == 2);
+                                    if (row11Col2 != null)
+                                    {
+
+                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new {id = row11Col2.Id})" class="layout-item highlight-json"></div>
+                                    }
+                                }
+                                WEEKLY CRITICAL-TIER 1 PM COMPLIANCE/OVERDUE (as of 6 Apr 2016)
+
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
                 @{
                     var row11Col0 = Model.Items.FirstOrDefault(x => x.Row == 11 && x.Column == 0);
                     if (row11Col0 != null)
@@ -466,6 +530,8 @@
                         <div data-url="@Url.Action("LayoutItem", "DerImage", new {id = row11Col0.Id})" class="layout-item"></div>
                     }
                 }
+
+
                 <div class="row">
                     <div class="col-md-10">
                         <h5 style="text-decoration: underline;">Operation Highlight &amp; Immediate Concern :</h5>
@@ -480,7 +546,15 @@
                     </div>
 
                     <div class="col-md-2" style="padding-top: 14px !important;">
-                        <label>Plant Mode :</label><span class="plant-mode">Holding</span>
+                        <label>Plant Mode :</label>
+                        @{
+                            var row12Col2 = Model.Items.FirstOrDefault(x => x.Row == 12 && x.Column == 2);
+                            if (row12Col2 != null)
+                            {
+
+                                <div data-url="@Url.Action("LayoutItem", "DerImage" , new {id=row12Col2.Id})" class="layout-item highlight-plant-mode-json"></div>
+                            }
+                        }
                     </div>
                 </div>
 
@@ -607,7 +681,7 @@
             </div>
         </div>
         <div class="row bordered border-top-none">
-             <div class="col-md-6">
+            <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-5">
                         @{
@@ -704,9 +778,14 @@
                     <div class="macro-eco">
                         <div class="market-tone">
                             <label>Market Tone:</label>
-                            <span class="comparison">
-                                <i class="fa fa-arrow-up"></i>
-                            </span>
+                            @{
+                                var row15Col2 = Model.Items.FirstOrDefault(x => x.Row == 15 && x.Column == 2);
+                                if (row15Col2 != null)
+                                {
+
+                                    <div data-url="@Url.Action("LayoutItem", "DerImage", new {id = row15Col2.Id})" class="layout-item highlight-json-market-tone"></div>
+                                }
+                            }
                         </div>
                         <h5 style="text-decoration: underline;">Macro Economic/Market Flash</h5>
                         <p>
@@ -727,7 +806,19 @@
                         <tr>
                             <td>Prepared By</td>
                             <td>Reviewed By</td>
-                            <td>PEAR Document ID#</td>
+                            <td>@{
+                                if (Request.QueryString["date"] != null)
+                                {
+                                    var id = "DER/" + DateTime.ParseExact(Request.QueryString["date"], "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture).ToString("dd-MMM-yyyy");
+                                    <text>@id</text>
+                                }
+                                else
+                                {
+                                    var id = "DER/" + DateTime.Now.ToString("dd-MMM-yyyy");
+                                    <text>@id</text>
+                                } 
+                            }
+                                 Generated by PEAR system </td>
                         </tr>
                     </thead>
                     <tbody>
@@ -763,16 +854,65 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="/Scripts/moment.min.js"></script> 
+    <script src="/Scripts/bootstrap-datetimepicker.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="http://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
     <script src="/Scripts/snap.svg.js"></script>
-      <script src="/Scripts/der-tank.js"></script>
+    <script src="/Scripts/der-tank.js"></script>
 
     <script src="@Url.Content("~/Scripts/der-scripts.js")"></script>
     <script type="text/javascript">
+        function getQueryVariable(variable) {
+            var query = window.location.search.substring(1);
+            var vars = query.split('&');
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split('=');
+                if (decodeURIComponent(pair[0]) == variable) {
+                    return decodeURIComponent(pair[1]);
+                }
+            }
+            return null;
+        }
+        function updateQueryStringParameter(uri, key, value) {
+            var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+            var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+            if (uri.match(re)) {
+                return uri.replace(re, '$1' + key + "=" + value + '$2');
+            }
+            else {
+                return uri + separator + key + "=" + value;
+            }
+        }
+
+        var reloadView = function () {
+            window.document.location = updateQueryStringParameter(window.location.href, "date", encodeURIComponent($('.datepicker').val()));
+        };
         $(document).ready(function () {
-            var currentDate = '02/18/2016';
+            var date = getQueryVariable('date');
+            if (date == null) {
+                $('.datepicker').val($('body').data('date'));
+            } else {
+                $('.datepicker').val(decodeURIComponent(date));
+            }
+            $('.datepicker').datetimepicker({
+                format: "MM/DD/YYYY",
+                focusOnShow: false
+            }).on('dp.change', function (e) {
+                $(".datepicker").blur();
+                reloadView();
+            });
+            var currentDate = $('.datepicker').val();
+            $('.generate').click(function (e) {
+                e.preventDefault();
+                var $input = $('<input />');
+                $input.attr('name', 'date');
+                $input.val(currentDate);
+                var $form = $(this).closest('form');
+                $form.prepend($input);
+                $form.submit();
+            });
             $('.layout-item').each(function () {
                 var that = $(this);
                 $.ajax({
@@ -789,7 +929,64 @@
                             || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type == "procurement" || data.type == "indicative-commercial-price" ||
                                 data.type === "plant-availability" || data.type === "economic-indicator" || data.type === "mgdp" || data.type === "hhv" || data.type === "lng-and-cds-production"
                                 || data.type === "nls" || data.type === "key-equipment-status" || data.type === "wave" || data.type === "table-tank" || data.type === "global-stock-market" || data.type === "loading-duration") {
-                            that.html(data.view);
+                            if (data.type === "highlight" && that.hasClass('highlight-json')) {
+                                console.log('sini');
+                                var js = { value: 1 };
+                                //var js = data;
+                                switch (js.value) {
+                                    case 0:
+                                        that
+                                            .replaceWith('<span class="indicator absolute"><i class="fa fa-exclamation-circle"></i></span>');
+                                        break;
+                                    case 1:
+                                        that
+                                            .replaceWith('<span class="indicator absolute"><i class="fa fa-circle"></i></span>');
+                                        break;
+                                    case -1:
+                                        that
+                                            .replaceWith('<span class="indicator absolute"><i class="fa fa-times-circle"></i></span>');
+                                        break;
+                                    default:
+                                        that.replaceWith('&nbsp;');
+                                        break;
+
+                                }
+                            } else if (data.type === "highlight" && that.hasClass('highlight-plant-mode-json')) {
+                                console.log('sini');
+                                var js = { value: 1 };
+                                //var js = data;
+                                switch (js.value) {
+                                    case 0:
+                                        that.replaceWith('<span class="plant-mode" style="color:green">Holding</span>');
+                                        break;
+                                    case 1:
+                                        that.replaceWith('<span class="plant-mode" style="color:blue">Loading</span>');
+                                        break;
+                                    case -1:
+                                        that.replaceWith('<span class="plant-mode" style="color:red">Shut Down</span>');
+                                        break;
+                                    default:
+                                        that.replaceWith('&nbsp;');
+                                        break;
+
+                                }
+                            } else if (data.type === "highlight" && that.hasClass('highlight-json-market-tone')) {
+                                var js = { value: 1 };
+                                switch (js.value) {
+                                    case 1:
+                                        that.replaceWith("<span class='comparison'><i class='fa fa-arrow-up' style='color:green'></i></span>");
+                                    case 0:
+                                        that.replaceWith("<span class='comparison'><i class='fa fa-minus' style='color:orange'></i></span>");
+                                    case -1:
+                                        that.replaceWith("<span class='comparison'><i class='fa fa-arrow-down' style='color:red'></i></span>");
+                                    default:
+                                        return string.Empty;
+                                }
+                            }
+                            else {
+                                that.html(data.view);
+                            }
+
                         }
 
                     }
