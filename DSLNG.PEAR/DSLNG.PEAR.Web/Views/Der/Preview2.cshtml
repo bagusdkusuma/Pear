@@ -14,6 +14,7 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="@Url.Content("~/content/bootstrap-datetimepicker.min.css")" />
     <link rel="stylesheet" href="@Url.Content("~/content/der-dikdik.css")" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -24,11 +25,17 @@
     <![endif]-->
 
 </head>
-<body>
+<body data-date="@DateTime.Now.ToString("MM/dd/yyyy")">
     <div class="control">
+        <div style="position:absolute;left:20px;top:20px">
+            <div style="position:relative">
+                <input  name="date" class="form-control datepicker" />
+            </div>
+        </div>
         <a class="btn btn-default" href="@Url.Action("Index","DER")">Back To List</a>
+       
         <form action="@Url.Action("Generate","DER")" method="post">
-            <input class="btn btn-primary" type="submit" value="Generate" />
+            <input class="btn btn-primary generate" type="submit" value="Generate" />
         </form>
     </div>
     <div class="container a3-ratio preview">
@@ -772,6 +779,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="/Scripts/moment.min.js"></script> 
+    <script src="/Scripts/bootstrap-datetimepicker.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="http://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
@@ -780,8 +789,55 @@
 
     <script src="@Url.Content("~/Scripts/der-scripts.js")"></script>
     <script type="text/javascript">
+        function getQueryVariable(variable) {
+            var query = window.location.search.substring(1);
+            var vars = query.split('&');
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split('=');
+                if (decodeURIComponent(pair[0]) == variable) {
+                    return decodeURIComponent(pair[1]);
+                }
+            }
+            return null;
+        }
+        function updateQueryStringParameter(uri, key, value) {
+            var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+            var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+            if (uri.match(re)) {
+                return uri.replace(re, '$1' + key + "=" + value + '$2');
+            }
+            else {
+                return uri + separator + key + "=" + value;
+            }
+        }
+        
+        var reloadView = function () {
+           window.document.location = updateQueryStringParameter(window.location.href, "date", encodeURIComponent($('.datepicker').val()));
+        };
         $(document).ready(function () {
-            var currentDate = '02/18/2016';
+            var date = getQueryVariable('date');
+            if (date == null) {
+                $('.datepicker').val($('body').data('date'));
+            } else {
+                $('.datepicker').val(decodeURIComponent(date));
+            }
+            $('.datepicker').datetimepicker({
+                format: "MM/DD/YYYY",
+                focusOnShow: false
+            }).on('dp.change', function (e) {
+                $(".datepicker").blur();
+                reloadView();
+            });
+            var currentDate = $('.datepicker').val();
+            $('.generate').click(function (e) {
+                e.preventDefault();
+                var $input = $('<input />');
+                $input.attr('name', 'date');
+                $input.val(currentDate);
+                var $form = $(this).closest('form');
+                $form.prepend($input);
+                $form.submit();
+            });
             $('.layout-item').each(function () {
                 var that = $(this);
                 $.ajax({
