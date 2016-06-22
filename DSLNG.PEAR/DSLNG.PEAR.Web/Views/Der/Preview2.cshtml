@@ -993,6 +993,12 @@
                         if (data.type === "highlight" && that.hasClass('highlight-json')) {
                             var js = { value: 1 };
                             //var js = data;
+                            var type = "absolute";
+                            if (that.hasClass('in-left')) {
+                                type = 'left-side';
+                            } else if (that.hasClass('in-right')) {
+                                type = 'right-side';
+                            }
                             switch (js.value) {
                                 case 0:
                                     that
