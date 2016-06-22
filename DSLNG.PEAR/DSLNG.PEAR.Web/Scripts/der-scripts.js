@@ -471,7 +471,11 @@ Number.prototype.format = function (n, x) {
         var $label = $this.find('label').clone();
         if ($label.length) {
             $this.find('label').css('display', 'none');
+            console.log(data);
+            $label.append('<span style="margin-left:30px">' + data['SpeedometerChart'].Series.data[0] + '</span>');
             $wrapper.append($label);
+        } else {
+            $wrapper.append('<label>' + data['SpeedometerChart'].Series.data[0] + '</label>');
         }
         var config = data['SpeedometerChart'];
         $canvas.css({
@@ -487,12 +491,12 @@ Number.prototype.format = function (n, x) {
             gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
             var last = config.PlotBands.length -1;
             for (var i in config.PlotBands) {
-                gradient.addColorStop(parseInt(config.PlotBands[i].from) / parseInt(config.PlotBands[last].from), config.PlotBands[i].color);
+                gradient.addColorStop(config.PlotBands[i].from / config.PlotBands[last].from, config.PlotBands[i].color);
             }
             ctx.fillStyle = gradient;
             ctx.fillRect(3, 0, canvas.width-3, canvas.height);
             ctx.fillStyle = "rgb(0,0,0)";
-            var point = parseInt(config.Series.data[0]) / parseInt(config.PlotBands[last].from) * (canvas.width - 6) + 3;
+            var point = config.Series.data[0] / config.PlotBands[last].from * (canvas.width - 6) + 3;
             ctx.fillRect(point-3, 0, 6, canvas.height - 30);
 
             // the triangle

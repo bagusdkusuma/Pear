@@ -214,7 +214,7 @@
                                     var row3Col5 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 5);
                                     if (row3Col5 != null)
                                     {
-                                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row3Col5.Id })" class="layout-item highlight-json"></div>
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row3Col5.Id })" class="layout-item highlight-json in-left"></div>
                                     }
                                 }
                                 WEEKLY ALARM MANAGEMENT (3 Apr-10 Apr 2016)
@@ -507,7 +507,7 @@
                                     if (row10Col2 != null)
                                     {
 
-                                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row10Col2.Id })" class="layout-item highlight-json"></div>
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row10Col2.Id })" class="layout-item highlight-json in-left"></div>
                                     }
                                 }
                                 WEEKLY MAINTENANCE BACKLOG (as of 20 Jan 2016)
@@ -532,7 +532,7 @@
                                     if (row11Col2 != null)
                                     {
 
-                                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row11Col2.Id })" class="layout-item highlight-json"></div>
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row11Col2.Id })" class="layout-item highlight-json in-left"></div>
                                     }
                                 }
                                 WEEKLY CRITICAL-TIER 1 PM COMPLIANCE/OVERDUE (as of 6 Apr 2016)
@@ -988,19 +988,25 @@
                             if (data.type === "highlight" && that.hasClass('highlight-json')) {
                                 console.log('sini');
                                 var js = { value: 1 };
+                                var type = 'absolute';
+                                if (that.hasClass('in-left')) {
+                                    type = 'left-side';
+                                } else if (that.hasClass('in-right')) {
+                                    type = 'right-side';
+                                }
                                 //var js = data;
                                 switch (js.value) {
                                 case 0:
                                     that
-                                        .replaceWith('<span class="indicator absolute"><i class="fa fa-exclamation-circle"></i></span>');
+                                        .replaceWith('<span class="indicator '+type+'"><i class="fa fa-exclamation-circle"></i></span>');
                                     break;
                                 case 1:
                                     that
-                                        .replaceWith('<span class="indicator absolute"><i class="fa fa-circle"></i></span>');
+                                        .replaceWith('<span class="indicator ' + type + '"><i class="fa fa-circle"></i></span>');
                                     break;
                                 case -1:
                                     that
-                                        .replaceWith('<span class="indicator absolute"><i class="fa fa-times-circle"></i></span>');
+                                        .replaceWith('<span class="indicator ' + type + '"><i class="fa fa-times-circle"></i></span>');
                                     break;
                                 default:
                                     that.replaceWith('&nbsp;');

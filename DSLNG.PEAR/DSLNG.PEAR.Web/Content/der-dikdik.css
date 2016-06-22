@@ -320,6 +320,18 @@ h6 {
             height: 38px;
             font-weight: bold;
         }
+            .table.alert-condition tbody tr td.alert-low {
+                background-color: #00FF00;
+            }
+             .table.alert-condition tbody tr td.alert-eleveted {
+                background-color: yellow;
+            }
+              .table.alert-condition tbody tr td.alert-high {
+                background-color: orange;
+            }
+               .table.alert-condition tbody tr td.alert-severe {
+                background-color: red;
+            }
         
         .commercial-operation {
             background-color: #8DB4E2;
@@ -843,7 +855,7 @@ h6 {
 
         .daily-highlight .indicator.absolute{
             left: 100px;
-            top: 15px;
+            top: 3px;
         }
         /*.table.table.kpi-fatality > tbody > tr > td:nth-last-child(2) {
             position: relative;
@@ -873,7 +885,7 @@ h6 {
         .barmeter-wrapper label{
             position: absolute;
             color:#000;
-            top:5px;
+            top:16%;
             left: 20px;
         }
         .impurities .barmeter{
