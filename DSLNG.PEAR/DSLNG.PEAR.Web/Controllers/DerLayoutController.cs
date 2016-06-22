@@ -110,14 +110,6 @@ namespace DSLNG.PEAR.Web.Controllers
             return View(viewModel);
         }
 
-        public ActionResult Config2(int id)
-        {
-            var reponse = _derService.GetDerLayoutItems(id);
-            var viewModel = reponse.MapTo<DerLayoutConfigViewModel>();
-            viewModel.DerLayoutId = id;
-            return View(viewModel);
-        }
-
         public ActionResult LayoutItem(DerLayoutItemViewModel viewModel)
         {
             if (viewModel.Id > 0)
