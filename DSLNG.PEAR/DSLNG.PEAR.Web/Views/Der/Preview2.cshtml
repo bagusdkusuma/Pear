@@ -14,6 +14,7 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="@Url.Content("~/content/bootstrap-datetimepicker.min.css")" />
     <link rel="stylesheet" href="@Url.Content("~/content/der-dikdik.css")" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -24,11 +25,17 @@
     <![endif]-->
 
 </head>
-<body>
+<body data-date="@DateTime.Now.ToString("MM/dd/yyyy")">
     <div class="control">
+        <div style="position:absolute;left:20px;top:20px">
+            <div style="position:relative">
+                <input  name="date" class="form-control datepicker" />
+            </div>
+        </div>
         <a class="btn btn-default" href="@Url.Action("Index","DER")">Back To List</a>
+       
         <form action="@Url.Action("Generate","DER")" method="post">
-            <input class="btn btn-primary" type="submit" value="Generate" />
+            <input class="btn btn-primary generate" type="submit" value="Generate" />
         </form>
     </div>
     <div class="container a3-ratio preview">
@@ -36,7 +43,18 @@
             <div class="header-left col-md-8 text-center">
                 <h5>DAILY EXECUTIVE REPORT</h5>
                 <h6>The Last 24 Hours Business Perfomance</h6>
-                <h6>FOR THE PERIOD ENDED: @Model.Today until LT24:00 HOURS</h6>
+                <h6>FOR THE PERIOD ENDED: @{
+                    if (Request.QueryString["date"] != null)
+                    {
+                        var id = DateTime.ParseExact(Request.QueryString["date"], "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture).ToString("dd-MMM-yyyy");
+                                    <text>@id</text>
+                    }
+                    else
+                    {
+                        var id = DateTime.Now.ToString("dd-MMM-yyyy");
+                                    <text>@id</text>
+                    } 
+                            } until LT24:00 HOURS</h6>
             </div>
             <div class="header-right col-md-4">
             </div>
@@ -59,14 +77,14 @@
                             var row0Col3 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 1);
                             if (row0Col3 != null)
                             {
-                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row0Col3.Id})" class="layout-item highlight-json"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col3.Id })" class="layout-item highlight-json"></div>
                             }
                         }
                         @{
                             var row0Col1 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 1);
                             if (row0Col1 != null)
                             {
-                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row0Col1.Id})" class="layout-item"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col1.Id })" class="layout-item"></div>
                             }
                         }
                     </div>
@@ -203,7 +221,7 @@
                                     var row3Col2 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 2);
                                     if (row3Col2 != null)
                                     {
-                                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row3Col2.Id})" class="layout-item"></div>
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row3Col2.Id })" class="layout-item"></div>
                                     }
                                 }
                             </td>
@@ -229,7 +247,7 @@
                                     var row3Col3 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 3);
                                     if (row3Col3 != null)
                                     {
-                                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row3Col3.Id})" class="layout-item"></div>
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row3Col3.Id })" class="layout-item"></div>
                                     }
                                 }
                             </td>
@@ -238,7 +256,7 @@
                                     var row3Col4 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 4);
                                     if (row3Col4 != null)
                                     {
-                                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row3Col4.Id})" class="layout-item pie-wrapper"></div>
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row3Col4.Id })" class="layout-item pie-wrapper"></div>
                                     }
                                 }
                             </td>
@@ -255,7 +273,7 @@
                     if (row4Col0 != null)
                     {
 
-                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row4Col0.Id})" class="layout-item"></div>
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row4Col0.Id })" class="layout-item"></div>
                     }
                 }
             </div>
@@ -267,7 +285,7 @@
                             if (row4Col1 != null)
                             {
 
-                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row4Col1.Id})" class="layout-item"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row4Col1.Id })" class="layout-item"></div>
                             }
                         }
                     </div>
@@ -277,7 +295,7 @@
                             if (row4Col2 != null)
                             {
 
-                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row4Col2.Id})" class="layout-item"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row4Col2.Id })" class="layout-item"></div>
                             }
                         }
                         @**@
@@ -301,7 +319,7 @@
                     if (row5Col0 != null)
                     {
 
-                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row5Col0.Id})" class="layout-item"></div>
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row5Col0.Id })" class="layout-item"></div>
                     }
                 }
                 <div class="row">
@@ -311,7 +329,7 @@
                             if (row6Col0 != null)
                             {
 
-                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row6Col0.Id})" class="layout-item"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col0.Id })" class="layout-item"></div>
                             }
                         }
                         <div class="psig">
@@ -418,7 +436,7 @@
                     if (row7Col0 != null)
                     {
 
-                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row7Col0.Id})" class="layout-item"></div>
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row7Col0.Id })" class="layout-item"></div>
                     }
                 }
                 <table class="table table-bordered tank">
@@ -429,7 +447,7 @@
                                     var row8Col0 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 0);
                                     if (row8Col0 != null)
                                     {
-                                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row8Col0.Id})" class="layout-item tank-wrapper" style="width:100px;height:100px"></div>
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col0.Id })" class="layout-item tank-wrapper" style="width:100px;height:100px"></div>
                                     }
                                 }
                             </td>
@@ -438,7 +456,7 @@
                                     var row8Col1 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 1);
                                     if (row8Col1 != null)
                                     {
-                                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row8Col1.Id})" class="layout-item tank-wrapper" style="width:100px;height:70px"></div>
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col1.Id })" class="layout-item tank-wrapper" style="width:100px;height:70px"></div>
                                     }
                                 }
                             </td>
@@ -447,7 +465,7 @@
                                     var row8Col2 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 2);
                                     if (row8Col2 != null)
                                     {
-                                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row8Col2.Id})" class="layout-item tank-wrapper" style="width:75px;height:70px"></div>
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col2.Id })" class="layout-item tank-wrapper" style="width:75px;height:70px"></div>
                                     }
                                 }
                             </td>
@@ -456,7 +474,7 @@
                                     var row8Col3 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 3);
                                     if (row8Col3 != null)
                                     {
-                                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row8Col3.Id})" class="layout-item tank-wrapper" style="width:120px;height:40px" data-type="custom"></div>
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col3.Id })" class="layout-item tank-wrapper" style="width:120px;height:40px" data-type="custom"></div>
                                     }
                                 }
                             </td>
@@ -469,7 +487,7 @@
                     if (row9Col0 != null)
                     {
 
-                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row9Col0.Id})" class="layout-item"></div>
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row9Col0.Id })" class="layout-item"></div>
                     }
                 }
                 <table class="table table-bordered weekly-maintenance">
@@ -481,7 +499,7 @@
                                     if (row10Col2 != null)
                                     {
 
-                                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row10Col2.Id})" class="layout-item highlight-json"></div>
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row10Col2.Id })" class="layout-item highlight-json"></div>
                                     }
                                 }
                                 WEEKLY MAINTENANCE BACKLOG (as of 20 Jan 2016)
@@ -494,7 +512,7 @@
                     if (row10Col0 != null)
                     {
 
-                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row10Col0.Id})" class="layout-item"></div>
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row10Col0.Id })" class="layout-item"></div>
                     }
                 }
                 <table class="table table-bordered weekly-critical">
@@ -506,7 +524,7 @@
                                     if (row11Col2 != null)
                                     {
 
-                                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row11Col2.Id})" class="layout-item highlight-json"></div>
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row11Col2.Id })" class="layout-item highlight-json"></div>
                                     }
                                 }
                                 WEEKLY CRITICAL-TIER 1 PM COMPLIANCE/OVERDUE (as of 6 Apr 2016)
@@ -520,7 +538,7 @@
                     if (row11Col0 != null)
                     {
 
-                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row11Col0.Id})" class="layout-item"></div>
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row11Col0.Id })" class="layout-item"></div>
                     }
                 }
 
@@ -533,7 +551,7 @@
                             if (row12Col0 != null)
                             {
 
-                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row12Col0.Id})" class="layout-item"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row12Col0.Id })" class="layout-item"></div>
                             }
                         }
                     </div>
@@ -545,7 +563,7 @@
                             if (row12Col2 != null)
                             {
 
-                                <div data-url="@Url.Action("LayoutItem", "Der" , new {id=row12Col2.Id})" class="layout-item highlight-plant-mode-json"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row12Col2.Id })" class="layout-item highlight-plant-mode-json"></div>
                             }
                         }
                     </div>
@@ -558,7 +576,7 @@
                         if (row13Col0 != null)
                         {
 
-                            <div data-url="@Url.Action("LayoutItem", "Der", new {id = row13Col0.Id})" class="layout-item"></div>
+                            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row13Col0.Id })" class="layout-item"></div>
                         }
                     }
                 </div>
@@ -571,7 +589,7 @@
                             if (row5Col1 != null)
                             {
 
-                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row5Col1.Id})" class="layout-item"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row5Col1.Id })" class="layout-item"></div>
                             }
                         }
                     </div>
@@ -581,7 +599,7 @@
                             if (row5Col2 != null)
                             {
 
-                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row5Col2.Id})" class="layout-item"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row5Col2.Id })" class="layout-item"></div>
                             }
                         }
                     </div>
@@ -591,7 +609,7 @@
                     if (row6Col2 != null)
                     {
 
-                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row6Col2.Id})" class="layout-item"></div>
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col2.Id })" class="layout-item"></div>
                     }
                 }
                 @{
@@ -599,7 +617,7 @@
                     if (row7Col1 != null)
                     {
 
-                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row7Col1.Id})" class="layout-item"></div>
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row7Col1.Id })" class="layout-item"></div>
                     }
                 }
 
@@ -608,7 +626,7 @@
                     if (row8Col4 != null)
                     {
 
-                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row8Col4.Id})" class="layout-item"></div>
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col4.Id })" class="layout-item"></div>
                     }
                 }
 
@@ -617,7 +635,7 @@
                     if (row10Col1 != null)
                     {
 
-                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row10Col1.Id})" class="layout-item"></div>
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row10Col1.Id })" class="layout-item"></div>
                     }
                 }
 
@@ -645,7 +663,7 @@
                         if (row12Col1 != null)
                         {
 
-                            <div data-url="@Url.Action("LayoutItem", "Der" , new {id= row12Col1.Id})" class="layout-item"></div>
+                            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row12Col1.Id })" class="layout-item"></div>
                         }
                     }
                 </div>
@@ -656,7 +674,7 @@
                 if (row11Col1 != null)
                 {
 
-                    <div data-url="@Url.Action("LayoutItem", "Der" , new {id= row11Col1.Id})" class="layout-item"></div>
+                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row11Col1.Id })" class="layout-item"></div>
                 }
             }
             @*<ul class="list-unstyled">
@@ -682,7 +700,7 @@
                             if (row14Col0 != null)
                             {
 
-                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row14Col0.Id})" class="layout-item"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row14Col0.Id })" class="layout-item"></div>
                             }
                         }
 
@@ -691,7 +709,7 @@
                             if (row15Col0 != null)
                             {
 
-                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row15Col0.Id})" class="layout-item"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row15Col0.Id })" class="layout-item"></div>
                             }
                         }
 
@@ -738,7 +756,7 @@
                             if (row14Col1 != null)
                             {
 
-                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row14Col1.Id})" class="layout-item"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row14Col1.Id })" class="layout-item"></div>
                             }
                         }
                         @{
@@ -746,7 +764,7 @@
                             if (row16Col1 != null)
                             {
 
-                                <div data-url="@Url.Action("LayoutItem", "Der", new {id = row16Col1.Id})" class="layout-item"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row16Col1.Id })" class="layout-item"></div>
                             }
                         }
                     </div>
@@ -763,7 +781,7 @@
                                 if (row14Col2 != null)
                                 {
 
-                                    <div data-url="@Url.Action("LayoutItem", "Der", new {id = row14Col2.Id})" class="layout-item"></div>
+                                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row14Col2.Id })" class="layout-item"></div>
                                 }
                             }
                         </p>
@@ -776,7 +794,7 @@
                                 if (row15Col2 != null)
                                 {
 
-                                    <div data-url="@Url.Action("LayoutItem", "Der", new {id = row15Col2.Id})" class="layout-item highlight-json-market-tone"></div>
+                                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row15Col2.Id })" class="layout-item highlight-json-market-tone"></div>
                                 }
                             }
                         </div>
@@ -787,7 +805,7 @@
                                 if (row15Col1 != null)
                                 {
 
-                                    <div data-url="@Url.Action("LayoutItem", "Der", new {id = row15Col1.Id})" class="layout-item"></div>
+                                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row15Col1.Id })" class="layout-item"></div>
                                 }
                             }
                         </p>
@@ -799,7 +817,19 @@
                         <tr>
                             <td>Prepared By</td>
                             <td>Reviewed By</td>
-                            <td>PEAR Document ID#</td>
+                            <td>@{
+                                if (Request.QueryString["date"] != null)
+                                {
+                                    var id = "DER/" + DateTime.ParseExact(Request.QueryString["date"], "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture).ToString("dd-MMM-yyyy");
+                                    <text>@id</text>
+                                }
+                                else
+                                {
+                                    var id = "DER/" + DateTime.Now.ToString("dd-MMM-yyyy");
+                                    <text>@id</text>
+                                } 
+                            }
+                                 Generated by PEAR system </td>
                         </tr>
                     </thead>
                     <tbody>
@@ -835,6 +865,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="/Scripts/moment.min.js"></script> 
+    <script src="/Scripts/bootstrap-datetimepicker.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="http://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
@@ -843,8 +875,56 @@
 
     <script src="@Url.Content("~/Scripts/der-scripts.js")"></script>
     <script type="text/javascript">
+        function getQueryVariable(variable) {
+            var query = window.location.search.substring(1);
+            var vars = query.split('&');
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split('=');
+                if (decodeURIComponent(pair[0]) == variable) {
+                    return decodeURIComponent(pair[1]);
+                }
+            }
+            return null;
+        }
+        function updateQueryStringParameter(uri, key, value) {
+            var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+            var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+            if (uri.match(re)) {
+                return uri.replace(re, '$1' + key + "=" + value + '$2');
+            }
+            else {
+                return uri + separator + key + "=" + value;
+            }
+        }
+        
+        var reloadView = function () {
+           window.document.location = updateQueryStringParameter(window.location.href, "date", encodeURIComponent($('.datepicker').val()));
+        };
         $(document).ready(function () {
-            var currentDate = '02/18/2016';
+            var date = getQueryVariable('date');
+            if (date == null) {
+                $('.datepicker').val($('body').data('date'));
+            } else {
+                $('.datepicker').val(decodeURIComponent(date));
+            }
+            $('.datepicker').datetimepicker({
+                format: "MM/DD/YYYY",
+                focusOnShow: false
+            }).on('dp.change', function (e) {
+                $(".datepicker").blur();
+                reloadView();
+            });
+            var currentDate = $('.datepicker').val();
+            $('.generate').click(function (e) {
+                e.preventDefault();
+                var $input = $('<input />');
+                $input.attr('name', 'date');
+                $input.css('display', 'none');
+                $input.val(currentDate);
+                var $form = $(this).closest('form');
+                $form.prepend($input);
+                $form.submit();
+            });
             $('.layout-item').each(function () {
                 var that = $(this);
                 $.ajax({

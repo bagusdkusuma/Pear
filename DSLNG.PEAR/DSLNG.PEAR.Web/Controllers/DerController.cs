@@ -1062,11 +1062,12 @@ namespace DSLNG.PEAR.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Generate()
+        public ActionResult Generate(string date)
         {
+            var theDate = DateTime.ParseExact(date, "MM/dd/yyyy",CultureInfo.InvariantCulture);
             var secretNumber = Guid.NewGuid().ToString();
             DerImageController.SecretNumber = secretNumber;
-            var displayUrl = Url.Action("Preview", "DerImage", new { secretNumber = secretNumber }, this.Request.Url.Scheme);
+            var displayUrl = Url.Action("Preview", "DerImage", new { secretNumber = secretNumber, date = theDate.ToString("MM/dd/yyyy") }, this.Request.Url.Scheme);
             var htmlToPdf = new HtmlToPdfConverter();
             htmlToPdf.Size = PageSize.A3;
             if (!Directory.Exists(Server.MapPath(PathConstant.DerPath)))
@@ -1077,11 +1078,11 @@ namespace DSLNG.PEAR.Web.Controllers
             var htmlToImageConverter = new HtmlToImageConverter();
             htmlToImageConverter.Height = Convert.ToInt32(Math.Round(1908.00));
             htmlToImageConverter.Width = Convert.ToInt32(Math.Round(1349.00));
-            var imageName = "der_" + DateTime.Now.Ticks + ".png";
+            var imageName = "der_" + theDate.Ticks + ".png";
             var imagePath = Path.Combine(Server.MapPath(PathConstant.DerPath), imageName);
             htmlToImageConverter.GenerateImageFromFile(displayUrl, ImageFormat.Png, imagePath);
             var htmlContent = String.Format("<body><img src='{0}' /></body>", Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content(PathConstant.DerPath + "/" + imageName));
-            var title  = "DER/" + DateTime.Now.Date.ToString("dd-MMM-yyyy");
+            var title = "DER/" + theDate.ToString("dd-MMM-yyyy");
             //if (id != 0) {
             //    title = _derService.GetDerById(id).Title;
             //}
