@@ -324,6 +324,7 @@ namespace DSLNG.PEAR.Services
             rowAndColumns.Add(new RowAndColumns { Row = 15, Column = 0 });
             rowAndColumns.Add(new RowAndColumns { Row = 15, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 15, Column = 2 });
+            rowAndColumns.Add(new RowAndColumns { Row = 15, Column = 3 });
             rowAndColumns.Add(new RowAndColumns { Row = 16, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 16, Column = 2 });
             rowAndColumns.Add(new RowAndColumns { Row = 16, Column = 3 });
@@ -550,6 +551,7 @@ namespace DSLNG.PEAR.Services
                 case "dafwc":
                 case "termometer":
                 case "loading-duration":
+                case "person-on-board":
                     {
                         baseResponse = request.Id > 0 ? UpdateKpiInformations(request) : SaveKpiInformations(request);
                         break;

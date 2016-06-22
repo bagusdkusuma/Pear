@@ -222,6 +222,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         }
                         break;
                     case "termometer":
+                    case "person-on-board":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 1);
                             break;
@@ -516,6 +517,11 @@ namespace DSLNG.PEAR.Web.Controllers
                             viewModel.Type = "reviewed-by";
                             break;
                         }
+                    case "15-and-3":
+                        {
+                            viewModel.Type = "person-on-board";
+                            break;
+                        }
                 }
                 return View("LayoutItem", viewModel);
                 #endregion
@@ -764,6 +770,13 @@ namespace DSLNG.PEAR.Web.Controllers
                         return PartialView("LayoutType/_LoadingDuration", viewModel);
 
                     }
+                case "person-on-board":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(1);
+                        return PartialView("LayoutType/_PersonOnBoard", viewModel);
+
+                    }
             }
 
             return Content("Error");
@@ -869,6 +882,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "dafwc":
                 case "termometer":
                 case "loading-duration":
+                case "person-on-board":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();

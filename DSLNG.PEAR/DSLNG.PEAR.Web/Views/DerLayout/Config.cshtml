@@ -1513,7 +1513,7 @@
                         <table class="table table-bordered indicative">
                             <thead>
                                 <tr>
-                                    <td colspan="3">DSLNG Indicative Commercial Price (JCC based)-USD/mmbtu</th>
+                                    <td colspan="3">DSLNG Indicative Commercial Price (JCC based)-USD/mmbtu</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -1539,11 +1539,11 @@
                         <table class="table borderless ict-infra">
                             <tr>
                                 <td>1</td>
-                                <td><img src="images/clip_image002_0002.png" alt="" width="52" height="25"></td>
+                                <td><img src="@Url.Content("~/content/images/clip_image002.png")" alt="" width="52" height="25"></td>
                                 <td>1</td>
-                                <td><img src="images/clip_image004.png" alt="" width="52" height="25"></td>
+                                <td><img src="@Url.Content("~/content/images/clip_image004.png")" alt="" width="52" height="25"></td>
                                 <td>1</td>
-                                <td><img src="images/clip_image006.png" alt="" width="52" height="25"></td>
+                                <td><img src="@Url.Content("~/content/images/clip_image006.png")" alt="" width="52" height="25"></td>
                             </tr>
                         </table>
                         <div class="row">
@@ -1552,18 +1552,28 @@
                                 <p>Normal Ops</p>
                             </div>
                             <div class="col-md-7" style="padding-top:5px !important">
-                                <u>Person-on-Board</u>: <label>247 personnel</label>
+                                <u>Person-on-Board</u>: @{
+                                    var row15Col3 = Model.Items.FirstOrDefault(x => x.Row == 15 && x.Column == 3);
+                                    if (row15Col3 != null)
+                                    {
+                                        <a href="@Url.Action("LayoutItem", new { column = 3, row = 15, derLayoutId = Model.DerLayoutId, id = row15Col3.Id })" class="">Manage</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("LayoutItem", new { column = 3, row = 15, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
+                                    }
+                                }
                             </div>
                         </div>
 
                         <table class="table borderless gs-fm">
                             <tr>
                                 <td>1</td>
-                                <td><img src="images/clip_image008.png" alt="" width="52" height="25"></td>
+                                <td><img src="@Url.Content("~/content/images/clip_image008.png")" alt="" width="52" height="25"></td>
                                 <td>1</td>
-                                <td><img src="images/clip_image010.png" alt="" width="52" height="25"></td>
+                                <td><img src="@Url.Content("~/content/images/clip_image010.png")" alt="" width="52" height="25"></td>
                                 <td>1</td>
-                                <td><img src="images/clip_image012.png" alt="" width="52" height="25"></td>
+                                <td><img src="@Url.Content("~/content/images/clip_image012.png")" alt="" width="52" height="25"></td>
                             </tr>
                         </table>
                     </div>
@@ -1631,7 +1641,7 @@
             <div class="col-md-6">
                 <div class="co-macro-eco">
                     <div class="community">
-                        <img align="right" src="images/icon-operation.png" />
+                        <img align="right" src="@Url.Content("~/content/images/icon-operation.png")" />
                         <h5 style="text-decoration: underline;">Community relation and government engagement highlight</h5>
                         <p>
                             @{
@@ -1692,7 +1702,6 @@
                     <tbody>
                         <tr>
                             <td class="signature">
-                                <img src="images/signature1.png" />
                                 <div class="row">
                                     @{
                                         var row16Col2 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 2);
@@ -1709,7 +1718,6 @@
                                 Business Performance Sr.Specialist
                             </td>
                             <td class="signature">
-                                <img src="images/signature2.png" />
                                 <div class="row">
                                     @{
                                         var row16Col3 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 3);
@@ -1726,7 +1734,7 @@
                                 Performance & Planning Sr. Manager
                             </td>
                             <td>
-                                <img src="images/strictly-sign.png" />
+                                <img src="@Url.Content("~/content/images/strictly-sign.png")" />
                             </td>
                         </tr>
                     </tbody>
