@@ -663,20 +663,25 @@
                         if (row12Col1 != null)
                         {
 
-                            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row12Col1.Id })" class="layout-item"></div>
+                            <div data-url="@Url.Action("LayoutItem", "Der", new {id = row12Col1.Id})" class="layout-item"></div>
+                        }
+
+                    }
+                </div>
+                <div class="proper">
+                    @{
+                        var row11Col1 = Model.Items.FirstOrDefault(x => x.Row == 11 && x.Column == 1);
+                        if (row11Col1 != null)
+                        {
+
+                            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row11Col1.Id })" class="layout-item">asas</div>
                         }
                     }
                 </div>
+
             </div>
 
-            @{
-                var row11Col1 = Model.Items.FirstOrDefault(x => x.Row == 11 && x.Column == 1);
-                if (row11Col1 != null)
-                {
-
-                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row11Col1.Id })" class="layout-item"></div>
-                }
-            }
+            
             @*<ul class="list-unstyled">
                     <li><label>LNG Maleo:</label> Sailling, LOB 124,727 m3 (Net-COQ) bound to Naoetsu-Japan ETA 18 Apr 2016</li>
                     <li><label>LNG HU:</label> Sailling to to DSLNG ETA 15 Apr 2016.</li>
@@ -733,7 +738,14 @@
                                 <p>Normal Ops</p>
                             </div>
                             <div class="col-md-7" style="padding-top:5px !important">
-                                <u>Person-on-Board</u>: <label>247 personnel</label>
+                                <u>Person-on-Board</u>: @{
+                                    var row15Col3 = Model.Items.FirstOrDefault(x => x.Row == 15 && x.Column == 3);
+                                    if (row15Col3 != null)
+                                    {
+
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row15Col3.Id })" class="layout-item" style="display: inline"></div>
+                                    }
+                                }
                             </div>
                         </div>
 
@@ -940,7 +952,7 @@
                             data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type === "total-feed-gas"
                             || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type === "procurement" || data.type === "indicative-commercial-price" ||
                                 data.type === "plant-availability" || data.type === "economic-indicator" || data.type === "mgdp" || data.type === "hhv" || data.type === "lng-and-cds-production"
-                                || data.type === "nls" || data.type === "key-equipment-status" || data.type === "wave" || data.type === "table-tank" || data.type === "global-stock-market" || data.type === "loading-duration") {
+                                || data.type === "nls" || data.type === "key-equipment-status" || data.type === "wave" || data.type === "table-tank" || data.type === "global-stock-market" || data.type === "loading-duration" || data.type === 'person-on-board') {
                             if (data.type === "highlight" && that.hasClass('highlight-json')) {
                                 console.log('sini');
                                 var js = { value: 1 };
