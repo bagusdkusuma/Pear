@@ -5,7 +5,7 @@
         <div class="col-md-4">
             <label>Loading Duration</label>
         </div>
-        <div class="col-md-4">Last Shipping: @Html.DisplayDerValueWithHours(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value) <span class="indicator right-side"><i class="fa fa-circle"></i></span></div>
+        <div class="col-md-4">Last Shipping: @Html.DisplayDerValueWithHours(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value) <span class="indicator right-side"><i class="fa @Html.DisplayDerRemark(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Remark)"></i></span></div>
         <div class="col-md-4">Avg YTD: @Html.DisplayDerValueWithHours(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value)</div>
     </div>
 </div>
