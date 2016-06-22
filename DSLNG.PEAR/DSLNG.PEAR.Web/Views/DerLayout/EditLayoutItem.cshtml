@@ -107,6 +107,9 @@
                 case "loading-duration":
                     Html.RenderPartial("~/Views/DerLayout/LayoutType/_LoadingDuration.Edit.cshtml", Model);
                     break;
+                case "person-on-board":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_PersonOnBoard.Edit.cshtml", Model);
+                    break;
             }
         }
     </div>
@@ -336,6 +339,7 @@
             case "termometer":
             case "dafwc":
             case "loading-duration":
+            case "person-on-board":
                 {
                     window.Pear.Artifact.Designer._kpiAutoComplete($('.layout-type-area'));
                     break;

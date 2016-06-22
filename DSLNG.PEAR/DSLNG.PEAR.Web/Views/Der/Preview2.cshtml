@@ -937,8 +937,8 @@
                             callback[data.GraphicType](data, that);
                         } else if (data.type === "highlight" || data.type === "weather" ||
                                 data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
-                            data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
-                            || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type == "procurement" || data.type == "indicative-commercial-price" ||
+                            data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type === "total-feed-gas"
+                            || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type === "procurement" || data.type === "indicative-commercial-price" ||
                                 data.type === "plant-availability" || data.type === "economic-indicator" || data.type === "mgdp" || data.type === "hhv" || data.type === "lng-and-cds-production"
                                 || data.type === "nls" || data.type === "key-equipment-status" || data.type === "wave" || data.type === "table-tank" || data.type === "global-stock-market" || data.type === "loading-duration") {
                             if (data.type === "highlight" && that.hasClass('highlight-json')) {
@@ -987,12 +987,16 @@
                                 switch (js.value) {
                                     case 1:
                                         that.replaceWith("<span class='comparison'><i class='fa fa-arrow-up' style='color:green'></i></span>");
+                                        break;
                                     case 0:
                                         that.replaceWith("<span class='comparison'><i class='fa fa-minus' style='color:orange'></i></span>");
+                                        break;
                                     case -1:
                                         that.replaceWith("<span class='comparison'><i class='fa fa-arrow-down' style='color:red'></i></span>");
+                                        break;
                                     default:
-                                        return string.Empty;
+                                        that.replaceWith('&nbsp;');
+                                        break;
                                 }
                             }
                             else {

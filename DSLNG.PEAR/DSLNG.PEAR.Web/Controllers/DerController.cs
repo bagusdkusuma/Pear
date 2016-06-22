@@ -991,7 +991,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
                 #endregion
-                #region Global Stock Market
+                #region Loading Duration
                 case "loading-duration":
                     {
                         var viewModel = GetGeneralDerKpiInformations(4, layout, date, PeriodeType.Daily);
@@ -1004,12 +1004,19 @@ namespace DSLNG.PEAR.Web.Controllers
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
                     #endregion
-                #region
+                #region Termometer
                 case "termometer": {
                     var viewModel = GetGeneralDerKpiInformations(1, layout, date, PeriodeType.Daily);
                     return Json(new { GraphicType = "termometer", Value = viewModel.KpiInformationViewModels[0].DerItemValue.Value }, JsonRequestBehavior.AllowGet);
                 }
                 #endregion
+                #region Person On Board
+                case "person-on-board":
+                    {
+                        var viewModel = GetGeneralDerKpiInformations(1, layout, date, PeriodeType.Daily);
+                        return Json(new { type = layout.Type.ToLowerInvariant(), view = viewModel.KpiInformationViewModels[0].DerItemValue.Value }, JsonRequestBehavior.AllowGet);
+                    }
+                    #endregion
             }
             return Content("Switch case does not matching");
         }
