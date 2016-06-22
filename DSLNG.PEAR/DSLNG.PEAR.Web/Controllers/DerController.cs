@@ -295,6 +295,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     }
                 #endregion
                 #region speedometer
+                case "barmeter":
                 case "speedometer":
                     {
                         var request = new GetSpeedometerChartDataRequest();
@@ -1003,6 +1004,12 @@ namespace DSLNG.PEAR.Web.Controllers
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
                     #endregion
+                #region
+                case "termometer": {
+                    var viewModel = GetGeneralDerKpiInformations(1, layout, date, PeriodeType.Daily);
+                    return Json(new { GraphicType = "termometer", Value = viewModel.KpiInformationViewModels[0].DerItemValue.Value }, JsonRequestBehavior.AllowGet);
+                }
+                #endregion
             }
             return Content("Switch case does not matching");
         }

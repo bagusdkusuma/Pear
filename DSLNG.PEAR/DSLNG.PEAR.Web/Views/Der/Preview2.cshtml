@@ -70,7 +70,7 @@
         </div>
         <div class="row bordered border-top-none">
 
-            <div class="col-md-3">
+            <div class="col-md-3" style="width:25%">
                 @{
                     var row1Col0 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 0);
                     if (row1Col0 != null)
@@ -79,7 +79,7 @@
                     }
                 }
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3" style="width:25%">
                 @{
                     var row1Col1 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 1);
                     if (row1Col1 != null)
@@ -88,7 +88,7 @@
                     }
                 }
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3" style="width:25%">
                 @{
                     var row1Col2 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 2);
                     if (row1Col2 != null)
@@ -97,7 +97,7 @@
                     }
                 }
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3" style="width:25%">
                 @{
                     var row1Col3 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 3);
                     if (row1Col3 != null)
@@ -210,7 +210,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="width: 50%">
+                            <td style="width: 30%; border-right:none; vertical-align:middle;padding-right:20px">
                                 @{
                                     var row3Col3 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 3);
                                     if (row3Col3 != null)
@@ -219,12 +219,12 @@
                                     }
                                 }
                             </td>
-                            <td style="width: 50%">
+                            <td style="width: 70%;border-left:none">
                                 @{
                                     var row3Col4 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 4);
                                     if (row3Col4 != null)
                                     {
-                                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row3Col4.Id})" class="layout-item"></div>
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row3Col4.Id})" class="layout-item pie-wrapper"></div>
                                     }
                                 }
                             </td>
@@ -300,9 +300,102 @@
                                 <div data-url="@Url.Action("LayoutItem", "Der", new {id = row6Col0.Id})" class="layout-item"></div>
                             }
                         }
+                        <div class="psig">
+                            Feed Gas Pressure (Psig):
+                        @{
+                            var row6Col3 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 3);
+                             if (row6Col3 != null)
+                            {
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col3.Id })" class="layout-item barmeter"></div>
+                            }
+                        }
+                        </div>
                     </div>
                     <div class="col-md-5">
-                        <div class="impurities vertical-space">
+                        <div class="impurities vertical-space text-center">
+                            <label>Impurities (24H Avg-GSA spec)</label>
+                            <div class="row">
+                                <div class="col-md-5">
+                                     @{
+                                            var row6Col4 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 4);
+                                            if (row6Col4 != null)
+                                            {
+                                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col4.Id })" class="layout-item barmeter">
+                                                     <label>H<span style="font-size:8px">2</span>S- ppm</label>
+                                                </div>
+                                            }
+                                        }
+                                    @{
+                                            var row6Col7 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 7);
+                                            if (row6Col7 != null)
+                                            {
+                                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col7.Id })" class="layout-item barmeter">
+                                                     <label>CO<span style="font-size:8px">2</span>S- ppm</label>
+                                                </div>
+                                            }
+                                        }
+                                       @{
+                                            var row6Col9 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 9);
+                                            if (row6Col9 != null)
+                                            {
+                                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col9.Id })" class="layout-item barmeter">
+                                                      <label>H<span style="font-size:8px">2</span>O- ppm</label>
+                                                </div>
+                                            }
+                                        }
+                                </div>
+                                <div class="col-md-2">
+                                     <div class="thermometer">
+                                           @{
+                                                var row6Col5 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 5);
+                                                if (row6Col5 != null)
+                                                {
+                                                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col5.Id })" class="layout-item bar-thermo">
+                                                        <img src="@Url.Content("~/Content/images/water-drop.png")" />
+                                                    </div>
+                                                }
+                                            }
+                                     </div>
+                                </div>
+                                <div class="col-md-5">
+                                        @{
+                                            var row6Col6 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 6);
+                                            if (row6Col6 != null)
+                                            {
+                                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col6.Id })" class="layout-item barmeter">
+                                                     <label>BTX-ppm</label>
+                                                </div>
+                                            }
+                                        }
+                                    @{
+                                            var row6Col8 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 8);
+                                            if (row6Col8 != null)
+                                            {
+                                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col8.Id })" class="layout-item barmeter">
+                                                     <label>Ttl Sulphur-ppm</label>
+                                                </div>
+                                            }
+                                        }
+                                       @{
+                                            var row6Col10 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 10);
+                                            if (row6Col10 != null)
+                                            {
+                                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col10.Id })" class="layout-item barmeter">
+                                                      <label>Hg-MRU outlet ng/nm3</label>
+                                                </div>
+                                            }
+                                        }
+                                     @*<div class="barmeter">
+                                         <label>BTX-ppm</label>
+                                    </div>
+                                    <div class="barmeter">
+                                        <label>Ttl Sulphur-ppm</label>
+                                    </div>
+                                    <div class="barmeter">
+                                        <label>Hg-MRU outlet ng/nm3</label>
+                                    </div>*@
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -317,10 +410,33 @@
                 <table class="table table-bordered tank">
                     <thead>
                         <tr>
-                            <td colspan="2">tank</td>
-                            <td colspan="2">tank</td>
-                            <td colspan="2">tank</td>
-                            <td>tank</td>
+                            <td colspan="2">
+                                 @{
+                                    var row8Col0 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 0);
+                                    if (row8Col0 != null)
+                                    {
+
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row8Col0.Id})" class="layout-item" style="width:100px;height:100px"></div>
+                                    }
+                                }
+                            </td>
+                            <td colspan="2">    @{
+                                    var row8Col1 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 1);
+                                    if (row8Col1 != null)
+                                    {
+
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row8Col1.Id})" class="layout-item" style="width:100px;height:70px"></div>
+                                    }
+                                }</td>
+                            <td colspan="2">    @{
+                                var row8Col2 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 2);
+                                if (row8Col2 != null)
+                                    {
+
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new {id = row8Col2.Id})" class="layout-item" style="width:75px;height:70px"></div>
+                                    }
+                                }</td>
+                            <td>//Not Implemented</td>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -489,7 +605,9 @@
             <div class="col-md-12 text-center support proper">
                 <label>SUPPORT &amp; ENABLER PERFORMANCE</label>
             </div>
-            <div class="col-md-6">
+        </div>
+        <div class="row bordered border-top-none">
+             <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-5">
                         @{
@@ -648,6 +766,8 @@
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="http://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+    <script src="/Scripts/snap.svg.js"></script>
+      <script src="/Scripts/der-tank.js"></script>
 
     <script src="@Url.Content("~/Scripts/der-scripts.js")"></script>
     <script type="text/javascript">
@@ -661,6 +781,7 @@
                     success: function (data) {
                         if (data.GraphicType !== undefined) {
                             var callback = window.Der.Artifact;
+                            console.log(data.GraphicType);
                             callback[data.GraphicType](data, that);
                         } else if (data.type === "highlight" || data.type === "weather" ||
                                 data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||

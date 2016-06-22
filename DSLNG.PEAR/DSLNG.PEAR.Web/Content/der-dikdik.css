@@ -4,7 +4,7 @@
             line-height: 1;
             color: #000;
             background-color: #fff;
-            letter-spacing:0.5px;
+            
             -webkit-font-smoothing: antialiased;
 	        -moz-osx-font-smoothing: grayscale;
             /*font-weight:600;*/
@@ -24,7 +24,7 @@ h6 {
 }
         .container.preview {
             /*zoom:0.815;*/
-            margin-top:90px;
+            margin-top:73px;
         }
         .control {
             height: 73px;
@@ -57,9 +57,13 @@ h6 {
         body.der-image{
             height: 1908px;
             width:1349px;
+            
             /*width: 1101px;
             height: 1556px;*/
             /*zoom:0.815;*/
+        }
+        body.der-image {
+            letter-spacing:0.8px;
         }
         
         .header {
@@ -172,12 +176,12 @@ h6 {
         
         .weather,
         .tide-wave {
-            height: 36px;
+            height: 42px;
         }
         
         .tide-wave tbody tr:first-child,
         .weather tbody tr:first-child {
-            height: 24px;
+            height: 28px;
         }
         
         label {
@@ -226,9 +230,9 @@ h6 {
             width: 92px;
         }
         
-        .table.qhse-remark {
+        /*.table.qhse-remark {
             height: 72px;
-        }
+        }*/
         
         .table.qhse-remark thead td,
         .table.weekly-alarm thead td,
@@ -239,7 +243,7 @@ h6 {
         .table.qhse-remark tbody td {
             vertical-align: middle;
             text-align: center;
-            height: 60px;
+            height: 70px;
         }
         
         .table.weekly-alarm thead td {
@@ -255,7 +259,7 @@ h6 {
         }
         
         .table.weekly-alarm > tbody > tr:last-child > td {
-            height: 78px;
+            height: 90px;
         }
         
         .table.weekly-alarm > tbody > tr > td table {
@@ -313,7 +317,7 @@ h6 {
             background-color: #00FF00;
             font-size: 16px;
             vertical-align: middle;
-            height: 34px;
+            height: 38px;
             font-weight: bold;
         }
         
@@ -379,7 +383,7 @@ h6 {
         }
         
         .table.hhv tbody tr:first-child td {
-            height: 26px;
+            height: 30px;
         }
         
         .vertical-space {
@@ -412,7 +416,7 @@ h6 {
         .impurities {
             width: 100%;
             background-color: #215967;
-            height: 115px;
+            height: 125px;
             border: 1px solid #0D0D0D;
             color:#fff;
         }
@@ -752,7 +756,7 @@ h6 {
         
         .community img {
             height: 29px;
-            margin-top: -10px;
+            margin-top: -3px;
             width: auto;
         }
         
@@ -844,12 +848,21 @@ h6 {
         /*.table.table.kpi-fatality > tbody > tr > td:nth-last-child(2) {
             position: relative;
         }*/
+        .psig {
+                position: relative;
+            height: 19px;
+            border-bottom: 1px solid #0d0d0d;
+            border-right: 1px solid #0d0d0d;
+            width: 100.1%;
+            margin-bottom: 5px;
+           padding-top: 4px;
+        }
         .psig .barmeter{
-            height: 14px;
-            width: 283px;
-            position: absolute;
-            top: 2px;
-            right: 30px;
+              height: 14px;
+                width: 241px;
+                position: absolute;
+                top: 2px;
+                right: 20px;
         }
         .barmeter-wrapper{
             position: relative;
@@ -871,7 +884,7 @@ h6 {
         .impurities .thermometer{
             height: 100px;
             width:50px;
-            background: url(images/thermometer.png);
+            background: url(/content/images/thermometer.png);
             background-size: 100% 100%;
             margin-top: 2px;
             margin-left: 5px;
@@ -889,3 +902,12 @@ h6 {
             top: 5px;
             left: 9px;
         }
+.pie-wrapper {
+    position:relative;
+}
+.pie-title {
+    position: absolute;
+    bottom: 54px;
+    width: 100px;
+    font-weight: bold;
+}
