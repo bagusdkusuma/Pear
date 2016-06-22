@@ -19,7 +19,7 @@
                 link = link + '  <a href="javascript:;" onclick="deleteUploadedFile()" class="dxbButton"> <span class="glyphicon glyphicon-remove"></span> Remove </a>';
                 $('#file-notification').append(link);
                 var linkText = document.getElementById('Filename');
-                linkText.setAttribute('value', link);
+                linkText.setAttribute('value', e.callbackData);
                 //linkText.hidden = false;
             }
             else {
