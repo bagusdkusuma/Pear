@@ -1038,7 +1038,11 @@
                                     break;
                             }
                         } else if (data.type === "highlight" && that.hasClass('highlight-json-ict-infra')) {
-                            var js = JSON.parse(data.view.replace('<p>', '').replace('</p>', ''));
+                            var pattern = /[^{}]*(?=\})/g;
+                            var parsed = "{" + (data.view.match(pattern)[0]) + "}";
+                            console.log('ict infra');
+                            console.log(parsed);
+                            var js = JSON.parse(parsed);
                             var transform = [];
                             transform['a'] = getIcon(js.a);
                             transform['b'] = getIcon(js.b);
@@ -1048,7 +1052,11 @@
                             that.replaceWith(html);
                         }
                         else if (data.type === "highlight" && that.hasClass('highlight-json-gs-fm')) {
-                            var js = JSON.parse(data.view.replace('<p>', '').replace('</p>', ''));
+                            var pattern = /[^{}]*(?=\})/g;
+                            var parsed = "{" + (data.view.match(pattern)[0]) + "}";
+                            console.log('gs fm');
+                            console.log(parsed);
+                            var js = JSON.parse(parsed);
                             var transform = [];
                             transform['a'] = getIcon(js.a);
                             transform['b'] = getIcon(js.b);
