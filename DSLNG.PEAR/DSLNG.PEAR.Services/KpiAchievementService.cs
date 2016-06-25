@@ -790,6 +790,7 @@ namespace DSLNG.PEAR.Services
                     Mtd = (result != null) ? result.Mtd : null,
                     Ytd = (result != null) ? result.Ytd : null,
                     Itd = (result != null) ? result.Itd : null,
+                    Remark = (result != null) ? result.Remark : null,
                     Kpi = kpiResponse,
                     IsSuccess = true
                 };

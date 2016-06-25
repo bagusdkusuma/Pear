@@ -3,6 +3,9 @@
 using System;
 using System.Globalization;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
+using Newtonsoft.Json;
+
 namespace DSLNG.PEAR.Web.Helpers
 {
     public static class HtmlHelpers
@@ -64,9 +67,9 @@ namespace DSLNG.PEAR.Web.Helpers
             return ParseToNumber(val);
         }
 
-        public static string DisplayDerValue(this HtmlHelper htmlHelper, string val, string defaultVal = "N/A", bool isRounded=true)
+        public static string DisplayDerValue(this HtmlHelper htmlHelper, string val, string defaultVal = "N/A", bool isRounded = true)
         {
-           
+
             return !string.IsNullOrEmpty(val) ? RoundIt(isRounded, val) : defaultVal;
         }
 
@@ -97,18 +100,27 @@ namespace DSLNG.PEAR.Web.Helpers
             }
         }
 
-        public static string DisplayDerRemark(this HtmlHelper htmlHelper, string deviation)
+        public static string DisplayDerRemark(this HtmlHelper htmlHelper, string remark)
         {
-            switch (deviation)
+            return RemarkToIcon(remark);
+        }
+
+        public static MvcHtmlString DisplayDerRemarkJson(this HtmlHelper htmlHelper, string remarkJson, string type)
+        {
+            if (string.IsNullOrEmpty(remarkJson)) return new MvcHtmlString(string.Empty);
+            var jsonRemark = JsonConvert.DeserializeObject<JsonRemark>(remarkJson);
+            
+            switch (type.ToLowerInvariant())
             {
-                case "1":
-                    return "fa-circle";
-                case "-1":
-                    return "fa-times-circle";
-                case "0":
-                    return "fa-exclamation-circle";
+                case "daily":
+                case "as of":
+                    return RemarkToMvcHtmlString(jsonRemark.Daily);
+                case "mtd":
+                    return RemarkToMvcHtmlString(jsonRemark.Mtd);
+                case "ytd":
+                    return RemarkToMvcHtmlString(jsonRemark.Ytd);
                 default:
-                    return string.Empty;
+                    return new MvcHtmlString(string.Empty);
             }
         }
 
@@ -156,7 +168,7 @@ namespace DSLNG.PEAR.Web.Helpers
         {
             if (string.IsNullOrEmpty(val)) return val;
             double x = double.Parse(val);
-            return (x/number).ToString(CultureInfo.InvariantCulture);
+            return (x / number).ToString(CultureInfo.InvariantCulture);
         }
 
         public static string DisplayDerValueWithHours(this HtmlHelper htmlHelper, string val, string defaultVal = "N/A")
@@ -189,7 +201,44 @@ namespace DSLNG.PEAR.Web.Helpers
             bool isValidDouble = Double.TryParse(val, styles, NumberFormatInfo.InvariantInfo, out x);
             //return isValidDouble ? Str x.ToString("0:0.###") : val;
             //return isValidDouble ? string.Format("{0:0,000.###}", x) : val;
-            return isValidDouble ? string.Format("{#,##0.##}",x) : val;
+            return isValidDouble ? string.Format("{#,##0.##}", x) : val;
         }
+
+        private static string RemarkToIcon(string s)
+        {
+            switch (s)
+            {
+                case "1":
+                    return "fa-circle";
+                case "-1":
+                    return "fa-times-circle";
+                case "0":
+                    return "fa-exclamation-circle";
+                default:
+                    return string.Empty;
+            }
+        }
+
+        private static MvcHtmlString RemarkToMvcHtmlString(string s)
+        {
+            switch (s)
+            {
+                case "1":
+                    return new MvcHtmlString("<span class='indicator absolute'><i class='fa fa-circle'></i></span>");
+                case "-1":
+                    return new MvcHtmlString("<span class='indicator absolute'><i class='fa fa-times-circle'></i></span>");
+                case "0":
+                    return new MvcHtmlString("<span class='indicator absolute'><i class='fa fa-exclamation-circle'></i></span>");
+                default:
+                    return new MvcHtmlString(string.Empty);
+            }
+        }
+    }
+
+    public class JsonRemark
+    {
+        public string Daily { get; set; }
+        public string Mtd { get; set; }
+        public string Ytd { get; set; }
     }
 }
