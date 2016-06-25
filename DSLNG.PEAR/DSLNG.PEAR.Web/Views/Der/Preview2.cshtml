@@ -76,7 +76,7 @@
                     <div class="col-md-9 proper daily-highlight">
                         <h5 style="text-decoration: underline;">Daily Highlight</h5>
                         @{
-                            var row0Col3 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 1);
+                            var row0Col3 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 3);
                             if (row0Col3 != null)
                             {
                                 <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col3.Id })" class="layout-item highlight-json"></div>
@@ -992,32 +992,23 @@
                             data.type === "plant-availability" || data.type === "economic-indicator" || data.type === "mgdp" || data.type === "hhv" || data.type === "lng-and-cds-production"
                             || data.type === "nls" || data.type === "key-equipment-status" || data.type === "wave" || data.type === "table-tank" || data.type === "global-stock-market" || data.type === "loading-duration" || data.type === 'person-on-board') {
                         if (data.type === "highlight" && that.hasClass('highlight-json')) {
-                            var js = { value: 1 };
-                            //var js = data;
                             var type = "absolute";
                             if (that.hasClass('in-left')) {
                                 type = 'left-side';
                             } else if (that.hasClass('in-right')) {
                                 type = 'right-side';
                             }
-                            switch (js.value) {
-                                case 0:
-                                    that
-                                        .replaceWith('<span class="indicator '+type+'"><i class="fa fa-exclamation-circle"></i></span>');
-                                    break;
-                                case 1:
-                                    that
-                                        .replaceWith('<span class="indicator ' + type + '"><i class="fa fa-circle"></i></span>');
-                                    break;
-                                case -1:
-                                    that
-                                        .replaceWith('<span class="indicator ' + type + '"><i class="fa fa-times-circle"></i></span>');
-                                    break;
-                                default:
-                                    that.replaceWith('&nbsp;');
-                                    break;
 
+                            if (data.view.toLowerCase().indexOf('0') > -1) {
+                                that.replaceWith('<span class="indicator ' + type + '"><i class="fa fa-exclamation-circle"></i></span>');
+                            } else if (data.view.toLowerCase().indexOf('1') > -1) {
+                                that.replaceWith('<span class="indicator ' + type + '"><i class="fa fa-circle"></i></span>');
+                            } else if (data.view.toLowerCase().indexOf('-1') > -1) {
+                                that.replaceWith('<span class="indicator ' + type + '"><i class="fa fa-times-circle"></i></span>');
+                            } else {
+                                that.replaceWith('&nbsp;');
                             }
+                           
                         } else if (data.type === "highlight" && that.hasClass('highlight-json-plant-mode')) {
 
                             if (data.view.toLowerCase().indexOf('holding') > -1) {
