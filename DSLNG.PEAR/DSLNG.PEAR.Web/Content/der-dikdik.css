@@ -890,7 +890,7 @@ h6 {
         }
         .impurities .barmeter{
             height: 30px;
-            width:100%;
+            width:116px;
             margin-top:6px;
         }
         .impurities .thermometer{
@@ -933,3 +933,17 @@ h6 {
 .table.tank>thead>tr>td {
     vertical-align:middle;
 }
+.speedo-wrapper {
+    text-align:center;
+    position:relative;
+}
+.speedo-wrapper .canvas-container {
+    display:inline-block;
+}
+    .speedo-wrapper .value {
+        position: absolute;
+    bottom: 0;
+    /* left: 45%; */
+    width: 100%;
+    left: 0;
+    }

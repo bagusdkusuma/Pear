@@ -38,7 +38,7 @@
             <input class="btn btn-primary generate" type="submit" value="Generate" />
         </form>
     </div>
-    <div class="container a3-ratio">
+    <div class="container a3-ratio preview">
         <div class="row header">
             <div class="header-left col-md-8 text-center">
                 <h5>DAILY EXECUTIVE REPORT</h5>
@@ -86,7 +86,7 @@
                             var row0Col1 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 1);
                             if (row0Col1 != null)
                             {
-                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row0Col1.Id })" class="layout-item"></div>
+                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row0Col1.Id })" class="layout-item "></div>
                             }
                         }
                     </div>
@@ -95,7 +95,7 @@
                             var row0Col2 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 2);
                             if (row0Col2 != null)
                             {
-                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row0Col2.Id })" class="layout-item"></div>
+                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row0Col2.Id })" class="layout-item speedo-wrapper"></div>
                             }
                         }
                     </div>
@@ -792,6 +792,7 @@
                                 <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row14Col1.Id })" class="layout-item"></div>
                             }
                         }
+                        
                         @{
                             var row16Col1 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 1);
                             if (row16Col1 != null)
@@ -908,7 +909,7 @@
 <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
 <script src="/Scripts/snap.svg.js"></script>
 <script src="/Scripts/der-tank.js"></script>
-
+<script src="/Scripts/fabricjs.js"></script>
 <script src="@Url.Content("~/Scripts/der-scripts.js")"></script>
 <script type="text/javascript">
     function getQueryVariable(variable) {

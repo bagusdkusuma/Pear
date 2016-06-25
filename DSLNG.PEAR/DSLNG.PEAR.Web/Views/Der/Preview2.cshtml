@@ -86,7 +86,7 @@
                             var row0Col1 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 1);
                             if (row0Col1 != null)
                             {
-                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col1.Id })" class="layout-item"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col1.Id })" class="layout-item "></div>
                             }
                         }
                     </div>
@@ -95,7 +95,7 @@
                             var row0Col2 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 2);
                             if (row0Col2 != null)
                             {
-                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col2.Id })" class="layout-item"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col2.Id })" class="layout-item speedo-wrapper"></div>
                             }
                         }
                     </div>
@@ -909,7 +909,7 @@
 <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
 <script src="/Scripts/snap.svg.js"></script>
 <script src="/Scripts/der-tank.js"></script>
-
+<script src="/Scripts/fabricjs.js"></script>
 <script src="@Url.Content("~/Scripts/der-scripts.js")"></script>
 <script type="text/javascript">
     function getQueryVariable(variable) {

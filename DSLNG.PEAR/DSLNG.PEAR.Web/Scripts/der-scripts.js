@@ -366,102 +366,190 @@ Number.prototype.format = function (n, x) {
             series: series
         });
     };
+
     Der.Artifact.speedometer = function (data, container) {
-        var stops = [];
-        var last = data.SpeedometerChart.PlotBands.length-1;
-        for ( var i in data.SpeedometerChart.PlotBands){
-            stops.push([data.SpeedometerChart.PlotBands[i].from / data.SpeedometerChart.PlotBands[last].to, data.SpeedometerChart.PlotBands[i].color]);
-        }
-        console.log(stops);
-        container.highcharts({
-            chart: {
-                type: 'solidgauge',
-                height: 60,
-                width: 200,
-                margin: [12, 0, 6, 0],
-                spacingTop: 0,
-                spacingBottom: 0,
-                spacingLeft: 0,
-                spacingRight: 0,
-            },
-
-            title: {
-                text: data.SpeedometerChart.Title,
-                style: {
-                    fontSize:'8px'
-                }
-            },
-            //subtitle: {
-            //    text: data.SpeedometerChart.Subtitle,
-            //},
-            subtitle: {
-                text: "MCHE Rundown",
-                style: {
-                    fontSize: '10px',
-                    color:'#000'
-                }
-            },
-            pane: {
-                center: ['50%', '85%'],
-                size: '140%',
-                startAngle: -90,
-                endAngle: 90,
-                background: {
-                    backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
-                    innerRadius: '60%',
-                    outerRadius: '100%',
-                    shape: 'arc'
-                }
-            },
-            plotOptions: {
-                solidgauge: {
-                    dataLabels: {
-                        y: 5,
-                        borderWidth: 0,
-                        useHTML: true,
-                        enabled:false
-                    }
-                }
-            },
-           credits: {
-                enabled: false
-            },
-            // the value axis
-            yAxis: {
-                min: data.SpeedometerChart.PlotBands[0].from,
-                max: data.SpeedometerChart.PlotBands[data.SpeedometerChart.PlotBands.length - 1].to,
-
-                stops: stops,
-                lineWidth: 0,
-                minorTickInterval: null,
-                tickPixelInterval: 400,
-                tickWidth: 0,
-                title: {
-                    y: -70
-                },
-                labels: {
-                    y: 10,
-                    distance: -30,
-                    //style:{
-                    //    margin:'0 30px'
-                    //}
-                    //x: -20,
-                    enabled:false
-                },
-
-                title: {
-                    text: data.SpeedometerChart.ValueAxisTitle,
-                },
-                //plotBands: data.SpeedometerChart.PlotBands
-            },
-            series: [{
-                name: data.SpeedometerChart.Series.name,
-                data: data.SpeedometerChart.Series.data,
-                tooltip: {
-                    valueSuffix: ' ' + data.SpeedometerChart.ValueAxisTitle
-                }
-            }]
+        var $this = container;
+        $this.append('<h5>MCHE Rundown</h5>');
+        var $canvas = $('<canvas />');
+        $canvas.css({
+            width: '100px',
+            height: '40px'
         });
+        $canvas.attr('id', 'speedometer_rainbow');
+        $this.append($canvas);
+        var canvas = new fabric.Canvas('speedometer_rainbow');
+        canvas.setHeight(40);
+        canvas.setWidth(100);
+        canvas.selection = false;
+        var thickness = 14;
+        function drawMultiRadiantCircle(xc, yc, r, plotBands) {
+            //var partLength = (Math.PI) / (radientColors.length - 1);
+            var start = Math.PI;
+            var gradient = null;
+            var startColor = null,
+                endColor = null;
+            var centerPoint;
+            for (var i = 0; i < plotBands.length - 1; i++) {
+                startColor = plotBands[i].color;
+                endColor = plotBands[(i + 1)].color;
+                var partLength = plotBands[i].to / plotBands[plotBands.length - 1].to * Math.PI;
+                // x start / end of the next arc to draw
+                var xStart = Math.cos(start) * r;
+                var xEnd = Math.cos(start + partLength) * r;
+                // y start / end of the next arc to draw
+                var yStart = Math.sin(start) * r;
+                var yEnd = Math.sin(start + partLength) * r;
+
+                var circle = new fabric.Circle({
+                    radius: r,
+                    left: 20,
+                    top: 7,
+                    angle: 0,
+                    startAngle: start,
+                    endAngle: start + partLength,
+                    stroke: plotBands[i].color,
+                    strokeWidth: thickness,
+                    fill:''
+                });
+                circle.setGradient('stroke', {
+                    type: 'linear',
+                    x1: xStart,
+                    y1: yStart,
+                    x2: xEnd,
+                    y2: yEnd,
+                    colorStops: {
+                        0: startColor,
+                        1: endColor
+                    }
+                });
+                circle.set('selectable', false)
+                canvas.add(circle);
+                //ctx.beginPath();
+
+                //gradient = ctx.createLinearGradient(xStart, yStart, xEnd, yEnd);
+                //gradient.addColorStop(0, startColor);
+                //gradient.addColorStop(1.0, endColor);
+
+                //ctx.strokeStyle = gradient;
+                //ctx.arc(xc, yc, r, start, start + partLength);
+                //ctx.lineWidth = start + partLength;
+                //ctx.stroke();
+                //ctx.closePath();
+                centerPoint = circle.getCenterPoint();
+                start += partLength;
+            }
+
+            var point = Math.PI + (data.SpeedometerChart.Series.data[0] * Math.PI);
+            var relateiveR = r - thickness / 2;
+            var relativeR2 = r + thickness / 2;
+            var xPoint = centerPoint.x + Math.cos(point) * (relateiveR);
+            var yPoint = centerPoint.y + Math.sin(point) * (relateiveR);
+
+            var M = 'M ' + xPoint + ' ' + yPoint;
+            var L1 = ' L ' + (centerPoint.x + Math.cos(point * 0.98) * (relativeR2)) + ' ' + (centerPoint.y + Math.sin(point * 0.98) * (relativeR2));
+            var L2 = ' L ' + (centerPoint.x + Math.cos(point * 1.02) * (relativeR2)) + ' ' + (centerPoint.y + Math.sin(point * 1.02) * (relativeR2));
+            var path = new fabric.Path(M + L1 + L2 + ' z');
+            console.log(centerPoint);
+            console.log(M + L1 + L2 + ' z');
+            path.set({ fill: 'black' });
+            canvas.add(path);
+            //var triangle = new fabric.Triangle({
+            //    width: 5, height: 14, fill: 'black', left: xPoint, top: yPoint, angle : 180
+            //});
+
+            //canvas.add(triangle);
+            //var point = Math.PI + (data.SpeedometerChart.Series.data[0] * Math.PI);
+
+            //// the triangle
+            //ctx.beginPath();
+            //ctx.moveTo(xc + Math.cos(point) * (r - thickness / 2), yc + Math.sin(point) * (r - thickness / 2));
+            //ctx.lineTo(xc + Math.cos(point * 0.97) * (r + thickness / 2), yc + Math.sin(point * 0.97) * (r + thickness / 2));
+            //ctx.lineTo(xc + Math.cos(point * 1.03) * (r + thickness / 2), yc + Math.sin(point * 1.03) * (r + thickness / 2));
+            //ctx.closePath();
+
+            //// the fill color
+            //ctx.fillStyle = "#000";
+            //ctx.fill();
+        }
+        drawMultiRadiantCircle(50, 35, 23, data.SpeedometerChart.PlotBands);
+
+        var zero = new fabric.Text('0%', { left: 7, top: canvas.getHeight() - 10, fontSize: 7 });
+        canvas.add(zero);
+        var helf = new fabric.Text('50%', { left: canvas.getWidth() / 2 - 5, top: 0, fontSize: 7 });
+        canvas.add(helf);
+        var full = new fabric.Text('100%', { left: canvas.getWidth()-20, top: canvas.getHeight() - 10, fontSize: 7 });
+        canvas.add(full);
+        //ctx.font = "30px serif";
+        //ctx.fillText("0%", 0, canvas.height - 20);
+        //ctx.fillText("100%", canvas.width - 45, canvas.height - 20);
+        //ctx.fillText("50%", canvas.width / 2 - 20, 20);
+        $this.append('<span class="value">' + data.SpeedometerChart.Series.data[0] + '%</span>');
+    };
+
+    Der.Artifact.altspeedometer = function (data, container) {
+        var $this = container;
+        $this.append('<h5>MCHE Rundown</h5>');
+        var $canvas = $('<canvas />');
+        $canvas.css({
+            width: '100px',
+            height : '40px'
+        });
+        $this.append($canvas);
+        var canvas = $this.find("canvas")[0];
+        var ctx = canvas.getContext("2d");
+        var thickness = 50;
+        function drawMultiRadiantCircle(xc, yc, r, plotBands) {
+            //var partLength = (Math.PI) / (radientColors.length - 1);
+            var start = Math.PI;
+            var gradient = null;
+            var startColor = null,
+                endColor = null;
+           
+            for (var i = 0; i < plotBands.length - 1; i++) {
+                startColor = plotBands[i].color;
+                endColor = plotBands[(i + 1)].color;
+                var partLength = plotBands[i].to / plotBands[plotBands.length - 1].to * Math.PI;
+                // x start / end of the next arc to draw
+                var xStart = xc + Math.cos(start) * r;
+                var xEnd = xc + Math.cos(start + partLength) * r;
+                // y start / end of the next arc to draw
+                var yStart = yc + Math.sin(start) * r;
+                var yEnd = yc + Math.sin(start + partLength) * r;
+
+                ctx.beginPath();
+
+                gradient = ctx.createLinearGradient(xStart, yStart, xEnd, yEnd);
+                gradient.addColorStop(0, startColor);
+                gradient.addColorStop(1.0, endColor);
+
+                ctx.strokeStyle = gradient;
+                ctx.arc(xc, yc, r, start, start + partLength);
+                ctx.lineWidth = thickness;
+                ctx.stroke();
+                ctx.closePath();
+
+                start += partLength;
+            }
+
+            var point = Math.PI + (data.SpeedometerChart.Series.data[0] * Math.PI);
+
+            // the triangle
+            ctx.beginPath();
+            ctx.moveTo(xc + Math.cos(point) * (r - thickness / 2), yc + Math.sin(point) * (r - thickness/2));
+            ctx.lineTo(xc + Math.cos(point * 0.97) * (r + thickness / 2), yc + Math.sin(point * 0.97) * (r + thickness/2));
+            ctx.lineTo(xc + Math.cos(point * 1.03) * (r + thickness / 2), yc + Math.sin(point * 1.03) * (r + thickness/2));
+            ctx.closePath();
+
+            // the fill color
+            ctx.fillStyle = "#000";
+            ctx.fill();
+        }
+        drawMultiRadiantCircle(canvas.width / 2, canvas.height - 10, canvas.height - 40 - thickness / 2, data.SpeedometerChart.PlotBands);
+        ctx.font = "30px serif";
+        ctx.fillText("0%", 0, canvas.height-20);
+        ctx.fillText("100%", canvas.width-45, canvas.height-20);
+        ctx.fillText("50%", canvas.width / 2 - 20, 20);
+
     };
     Der.Artifact.barmeter = function (data, container) {
         var $wrapper = $('<div />');
@@ -471,7 +559,6 @@ Number.prototype.format = function (n, x) {
         var $label = $this.find('label').clone();
         if ($label.length) {
             $this.find('label').css('display', 'none');
-            console.log(data);
             $label.append('<span style="margin-left:30px">' + data['SpeedometerChart'].Series.data[0] + '</span>');
             $wrapper.append($label);
         } else {

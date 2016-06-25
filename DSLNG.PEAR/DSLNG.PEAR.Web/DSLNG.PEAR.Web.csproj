@@ -453,8 +453,10 @@
     <Content Include="Scripts\calculator.production-yield.js" />
     <Content Include="Scripts\calculator.standard.js" />
     <Content Include="Scripts\calculator.plant-availability.js" />
+    <Content Include="Scripts\canvas-getsvg.js" />
     <Content Include="Scripts\der-tank.js" />
     <Content Include="Scripts\der-scripts.js" />
+    <Content Include="Scripts\fabricjs.js" />
     <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery.freezeheader.js" />
     <Content Include="Scripts\perfect-scrollbar.jquery.min.js" />
