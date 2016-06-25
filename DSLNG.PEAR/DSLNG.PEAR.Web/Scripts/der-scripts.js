@@ -392,7 +392,7 @@ Number.prototype.format = function (n, x) {
             for (var i = 0; i < plotBands.length - 1; i++) {
                 startColor = plotBands[i].color;
                 endColor = plotBands[(i + 1)].color;
-                var partLength = plotBands[i].to / plotBands[plotBands.length - 1].to * Math.PI;
+                var partLength = (plotBands[i+1].from - plotBands[i].from) / plotBands[plotBands.length - 1].from * Math.PI;
                 // x start / end of the next arc to draw
                 var xStart = Math.cos(start) * r;
                 var xEnd = Math.cos(start + partLength) * r;
@@ -583,6 +583,10 @@ Number.prototype.format = function (n, x) {
             ctx.fillStyle = gradient;
             ctx.fillRect(3, 0, canvas.width-3, canvas.height);
             ctx.fillStyle = "rgb(0,0,0)";
+            console.log(container[0]);
+            console.log($label.html());
+            console.log(config.PlotBands);
+            console.log(last);
             var point = config.Series.data[0] / config.PlotBands[last].from * (canvas.width - 6) + 3;
             ctx.fillRect(point-3, 0, 6, canvas.height - 30);
 
@@ -682,6 +686,7 @@ Number.prototype.format = function (n, x) {
                 }
             },
             legend: {
+                enabled:false,
                 itemStyle: {
                     fontSize: '7px'
                 },

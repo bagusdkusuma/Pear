@@ -154,7 +154,7 @@ h6 {
              left: 4px;
          }
         .avg-stats-value {
-            background-color: #92D050;
+            /*background-color: #92D050;*/
         }
         
         .row.border-top-none {
@@ -320,16 +320,16 @@ h6 {
             height: 38px;
             font-weight: bold;
         }
-            .table.alert-condition tbody tr td.alert-low {
+            .table.alert-condition tbody tr td.the-alert.low {
                 background-color: #00FF00;
             }
-             .table.alert-condition tbody tr td.alert-eleveted {
+             .table.alert-condition tbody tr td.the-alert.eleveted {
                 background-color: yellow;
             }
-              .table.alert-condition tbody tr td.alert-high {
+              .table.alert-condition tbody tr td.the-alert.high {
                 background-color: orange;
             }
-               .table.alert-condition tbody tr td.alert-severe {
+               .table.alert-condition tbody tr td.the-alert.severe {
                 background-color: red;
             }
         
@@ -890,8 +890,9 @@ h6 {
         }
         .impurities .barmeter{
             height: 30px;
-            width:116px;
+            width:100px;
             margin-top:6px;
+            margin-left:10px;
         }
         .impurities .thermometer{
             height: 100px;

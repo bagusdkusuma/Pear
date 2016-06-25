@@ -557,7 +557,8 @@ namespace DSLNG.PEAR.Services
                 if ((request.PeriodeType == PeriodeType.Hourly && request.RangeFilter == RangeFilter.CurrentHour) ||
                       (request.PeriodeType == PeriodeType.Daily && request.RangeFilter == RangeFilter.CurrentDay) ||
                       (request.PeriodeType == PeriodeType.Monthly && request.RangeFilter == RangeFilter.CurrentMonth) ||
-                      (request.PeriodeType == PeriodeType.Yearly && request.RangeFilter == RangeFilter.CurrentYear))
+                      (request.PeriodeType == PeriodeType.Yearly && request.RangeFilter == RangeFilter.CurrentYear) ||
+                     (request.Start.Value == request.End.Value))
                 {
                     var actual = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType &&
                   x.Periode <= end && x.Kpi.Id == request.Series.KpiId && (x.Value != null && x.Value.Value != 0))
@@ -578,7 +579,8 @@ namespace DSLNG.PEAR.Services
                 if ((request.PeriodeType == PeriodeType.Hourly && request.RangeFilter == RangeFilter.CurrentHour) ||
                       (request.PeriodeType == PeriodeType.Daily && request.RangeFilter == RangeFilter.CurrentDay) ||
                       (request.PeriodeType == PeriodeType.Monthly && request.RangeFilter == RangeFilter.CurrentMonth) ||
-                      (request.PeriodeType == PeriodeType.Yearly && request.RangeFilter == RangeFilter.CurrentYear))
+                      (request.PeriodeType == PeriodeType.Yearly && request.RangeFilter == RangeFilter.CurrentYear) ||
+                     (request.Start.Value == request.End.Value))
                 {
                     var target = DataContext.KpiTargets.Where(x => x.PeriodeType == request.PeriodeType &&
                   x.Periode == latestActual.Periode && x.Kpi.Id == request.Series.KpiId)
@@ -598,7 +600,8 @@ namespace DSLNG.PEAR.Services
                 if ((request.PeriodeType == PeriodeType.Hourly && request.RangeFilter == RangeFilter.CurrentHour) ||
                       (request.PeriodeType == PeriodeType.Daily && request.RangeFilter == RangeFilter.CurrentDay) ||
                       (request.PeriodeType == PeriodeType.Monthly && request.RangeFilter == RangeFilter.CurrentMonth) ||
-                      (request.PeriodeType == PeriodeType.Yearly && request.RangeFilter == RangeFilter.CurrentYear))
+                      (request.PeriodeType == PeriodeType.Yearly && request.RangeFilter == RangeFilter.CurrentYear) ||
+                     (request.Start.Value == request.End.Value))
                 {
                     var scenarioId = 0;
                     var scenario = DataContext.Scenarios.FirstOrDefault(x => x.IsDashboard == true);

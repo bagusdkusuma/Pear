@@ -299,7 +299,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "speedometer":
                     {
                         var request = new GetSpeedometerChartDataRequest();
-                        request.Start = date.AddDays(-7);
+                        request.Start = date;
                         request.End = date;
                         request.PeriodeType = PeriodeType.Daily;
                         request.RangeFilter = RangeFilter.Interval;

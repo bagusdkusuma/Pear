@@ -14,7 +14,7 @@
     </thead>
     <tbody>
         <tr>
-            <td class="alert-@SplitAlert(Model.Message)">
+            <td class="the-alert @ClassAlert()">
                 @SplitAlert(Model.Message)
             </td>
         </tr>
@@ -28,5 +28,26 @@ if (!string.IsNullOrEmpty(Model.Message))
         <text>@Model.Message.Replace(".jpg", "")</text>
 
 }
+}
+
+
+@helper ClassAlert()
+{
+    if (Model.Message.ToUpperInvariant().Contains("LOW"))
+    {
+    <text>low</text>
+    }
+    else  if (Model.Message.ToUpperInvariant().Contains("ELEVETED"))
+    {
+    <text>eleveted</text>
+    }
+    else  if (Model.Message.ToUpperInvariant().Contains("HIGH"))
+    {
+    <text>high</text>
+    }
+     if (Model.Message.ToUpperInvariant().Contains("SEVERE"))
+    {
+    <text>severe</text>
+    }
 }
 
