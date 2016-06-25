@@ -1047,7 +1047,7 @@
                                     break;
                             }
                         } else if (data.type === "highlight" && that.hasClass('highlight-json-ict-infra')) {
-                            var js = { a: 1, b: 1, c: 1 };
+                            var js = JSON.parse(data.view.replace('<p>', '').replace('</p>', ''));
                             var transform = [];
                             transform['a'] = getIcon(js.a);
                             transform['b'] = getIcon(js.b);
@@ -1057,7 +1057,7 @@
                             that.replaceWith(html);
                         }
                         else if (data.type === "highlight" && that.hasClass('highlight-json-gs-fm')) {
-                            var js = { a: 1, b: 1, c: 1 };
+                            var js = JSON.parse(data.view.replace('<p>', '').replace('</p>', ''));
                             var transform = [];
                             transform['a'] = getIcon(js.a);
                             transform['b'] = getIcon(js.b);
