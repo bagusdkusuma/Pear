@@ -280,7 +280,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         var request = new GetTankDataRequest();
                         request.PeriodeType = PeriodeType.Daily;
                         request.RangeFilter = RangeFilter.Interval;
-                        request.Start = date.AddDays(-7);
+                        request.Start = date;
                         request.End = date;
                         request.Tank = layout.Artifact.Tank.MapTo<GetTankDataRequest.TankRequest>();
                         var previewViewModel = new ArtifactPreviewViewModel();

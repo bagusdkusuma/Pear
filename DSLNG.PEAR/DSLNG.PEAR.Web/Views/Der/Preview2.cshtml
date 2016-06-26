@@ -998,14 +998,14 @@
                             } else if (that.hasClass('in-right')) {
                                 type = 'right-side';
                             }
-
-                            if (data.view.toLowerCase().indexOf('0') > -1) {
-                                that.replaceWith('<span class="indicator ' + type + '"><i class="fa fa-exclamation-circle"></i></span>');
-                            } else if (data.view.toLowerCase().indexOf('1') > -1) {
-                                that.replaceWith('<span class="indicator ' + type + '"><i class="fa fa-circle"></i></span>');
-                            } else if (data.view.toLowerCase().indexOf('-1') > -1) {
+                            if (data.view.toLowerCase().indexOf('-1') > -1) {
                                 that.replaceWith('<span class="indicator ' + type + '"><i class="fa fa-times-circle"></i></span>');
-                            } else {
+                            } 
+                           else if (data.view.toLowerCase().indexOf('1') > -1) {
+                                that.replaceWith('<span class="indicator ' + type + '"><i class="fa fa-circle"></i></span>');
+                           } else if (data.view.toLowerCase().indexOf('0') > -1) {
+                               that.replaceWith('<span class="indicator ' + type + '"><i class="fa fa-exclamation-circle"></i></span>');
+                           } else {
                                 that.replaceWith('&nbsp;');
                             }
                            
