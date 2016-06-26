@@ -964,7 +964,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Kpi, GetDerLayoutitemResponse.KpiResponse>()
                 .ForMember(x => x.MeasurementName, o => o.MapFrom(s => s.Measurement.Name));
             Mapper.CreateMap<SaveLayoutItemRequest, DerLayoutItem>()
-                .ForMember(x => x.Artifact, y => y.Ignore());
+                .ForMember(x => x.Artifact, y => y.Ignore())
+                .ForMember(x => x.SignedBy, o => o.Ignore());
             Mapper.CreateMap<SaveLayoutItemRequest, DerArtifact>()
                 .ForMember(x => x.GraphicType, y => y.MapFrom(z => z.Type))
                 .ForMember(x => x.HeaderTitle, y => y.MapFrom(z => z.Artifact.HeaderTitle));
