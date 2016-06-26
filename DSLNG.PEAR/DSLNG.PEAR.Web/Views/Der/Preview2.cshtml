@@ -729,7 +729,15 @@
                         }
 
                         <h5 style="text-decoration: underline;margin-top:2px">ICT Infrastructure and System Highlight </h5>
-                        <p>Normal Ops</p>
+                        <p>@{
+                            var row16Col6 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 6);
+                            if (row16Col6 != null)
+                            {
+
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row16Col6.Id })" class="layout-item"></div>
+
+                            }
+                        }</p>
                         <table class="table borderless ict-infra">
                             <tbody>
                                 <tr>
@@ -753,7 +761,15 @@
                         <div class="row">
                             <div class="col-md-5">
                                 <h5 style="text-decoration: underline;margin-top:2px">GS &amp; FM </h5>
-                                <p>Normal Ops</p>
+                                <p>@{
+                                    var row16Col7 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 7);
+                                    if (row16Col7 != null)
+                                    {
+
+                                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row16Col7.Id })" class="layout-item"></div>
+
+                                    }
+                                }</p>
                             </div>
                             <div class="col-md-7" style="padding-top:5px !important">
                                 <u>Person-on-Board</u>:
