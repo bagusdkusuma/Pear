@@ -1,9 +1,21 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKpiInformationViewModel
 
+<style>
+    .lng-loaded,.cds-loaded {
+        border-collapse: separate;
+        
+    }
+
+    .lng-loaded  tr td,
+    .cds-loaded  tr td{
+        border-right: none !important;
+        border-bottom: none !important;
+    }
+</style>
 <table class="table table-bordered lng-loaded top-bottom-border">
     <thead>
         <tr>
-            <td style="width: 12%">
+            <td style="width: 12%; text-align: left">
                 LNG LOADED
             </td>
             <td style="width: 13.2%;">
@@ -87,7 +99,7 @@
 <table class="table table-bordered cds-loaded vertical-space">
     <thead>
         <tr>
-            <td style="width:12%">
+            <td style="width: 12%; text-align: left">
                 CDS LOADED
             </td>
             <td style="width: 13.2%;">

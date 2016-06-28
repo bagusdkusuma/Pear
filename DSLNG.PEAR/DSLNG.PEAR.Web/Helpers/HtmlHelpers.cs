@@ -187,8 +187,9 @@ namespace DSLNG.PEAR.Web.Helpers
         {
             if (isRounded)
             {
-                double v = double.Parse(val);
-                val = Math.Round(v, 2).ToString(CultureInfo.InvariantCulture);
+                /*double v = double.Parse(val);
+                val = Math.Round(v, 2).ToString(CultureInfo.InvariantCulture);*/
+                return ParseToNumber(val);
             }
 
             return val;
@@ -201,7 +202,7 @@ namespace DSLNG.PEAR.Web.Helpers
             bool isValidDouble = Double.TryParse(val, styles, NumberFormatInfo.InvariantInfo, out x);
             //return isValidDouble ? Str x.ToString("0:0.###") : val;
             //return isValidDouble ? string.Format("{0:0,000.###}", x) : val;
-            return isValidDouble ? string.Format("{#,##0.##}", x) : val;
+            return isValidDouble ? string.Format("{0:#,##0.##}", x) : val;
         }
 
         private static string RemarkToIcon(string s)
