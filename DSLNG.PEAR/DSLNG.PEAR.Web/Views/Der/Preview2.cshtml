@@ -74,7 +74,7 @@
             <div class="col-md-7">
                 <div class="row">
                     <div class="col-md-9 proper daily-highlight">
-                        <h5 style="text-decoration: underline;">Daily Highlight</h5>
+                        <h5 style="text-decoration: underline;">Daily Highlight : </h5>
                         @{
                             var row0Col3 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 3);
                             if (row0Col3 != null)
@@ -245,7 +245,7 @@
                 <table class="table table-bordered pie">
                     <thead>
                         <tr>
-                            <td colspan="2">
+                            <td colspan="2" style="text-align:center">
                                 PROCESS UPSET / ANOMALY / CONDITION
                             </td>
                         </tr>
@@ -278,7 +278,7 @@
         <div class="row bordered border-top-none">
             <div class="col-md-6 proper">
                 @{
-                    <h5 style="text-decoration: underline;">Security Remarks</h5>
+                    <h5 style="text-decoration: underline;">Security Remarks : </h5>
                     var row4Col0 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 0);
                     if (row4Col0 != null)
                     {

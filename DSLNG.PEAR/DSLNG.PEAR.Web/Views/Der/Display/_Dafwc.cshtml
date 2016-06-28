@@ -34,8 +34,8 @@
     </tr>
     <tr>
         <td colspan="3">
-            Safe Man-hours since Last DAFWC (as of @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Remark)) :
-        </td>
+            <label> Safe Man-hours since Last DAFWC (as of @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Remark)) : </label>
+</td>
         <td class="text-right">
             @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "hours") 
         </td>
