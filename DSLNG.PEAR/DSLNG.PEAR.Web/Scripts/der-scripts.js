@@ -178,7 +178,7 @@ Number.prototype.format = function (n, x) {
             plotOptions: {
                 line: {
                     marker: {
-                        enabled: false,
+                        enabled: true,
                         //radius:2,
                         states: {
                             hover: {
@@ -203,6 +203,14 @@ Number.prototype.format = function (n, x) {
             yAxis: {
                 title: {
                     text: data.LineChart.ValueAxisTitle,
+                    align: 'high',
+                    rotation: 0,
+                    y: -10,
+                    offset: 15,
+                    style: {
+                        fontSize: '9px',
+                        fontWeight: 'bold'
+                    }
                 },
                 plotLines: [{
                     value: 0,
@@ -215,7 +223,8 @@ Number.prototype.format = function (n, x) {
                     style: {
                         fontSize: '7px'
                     }
-                }
+                },
+                lineWidth: 1
             },
             exporting: {
                 url: '/Chart/Export',
@@ -253,7 +262,16 @@ Number.prototype.format = function (n, x) {
         for (var i in data.MultiaxisChart.Charts) {
             yAxes.push({
                 title: {
-                    text: data.MultiaxisChart.Charts[i].Measurement, //data.MultiaxisChart.Charts[i].ValueAxisTitle + ' (' + data.MultiaxisChart.Charts[i].Measurement + ')',
+                    text: data.MultiaxisChart.Charts[i].Measurement,
+                    align: 'high',
+                    rotation: 0,
+                    y: -10,
+                    offset: 15,
+                    style: {
+                        fontSize: '9px',
+                        fontWeight: 'bold'
+                    }
+                    //data.MultiaxisChart.Charts[i].ValueAxisTitle + ' (' + data.MultiaxisChart.Charts[i].Measurement + ')',
                 },
                 opposite: data.MultiaxisChart.Charts[i].IsOpposite,
                 tickInterval: data.MultiaxisChart.Charts[i].FractionScale == 0 ? null : data.MultiaxisChart.Charts[i].FractionScale,
@@ -267,7 +285,7 @@ Number.prototype.format = function (n, x) {
             if (chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType] == 'line') {
                 plotOptions[chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType]] = {
                     marker: {
-                        enabled: false,
+                        enabled: true,
                         states: {
                             hover: {
                                 radius: 4
@@ -287,7 +305,7 @@ Number.prototype.format = function (n, x) {
                     marker: {
                         lineWidth: 1,
                         lineColor: '#666666',
-                        enabled: false,
+                        enabled: true,
                         states: {
                             hover: {
                                 radius: 4
@@ -337,6 +355,7 @@ Number.prototype.format = function (n, x) {
                 }
             },
             subtitle: {
+
                 text: data.MultiaxisChart.Subtitle,
                 style: {
                     fontSize: '10px',

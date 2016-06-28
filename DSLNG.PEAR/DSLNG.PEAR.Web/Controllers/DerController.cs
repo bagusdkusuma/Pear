@@ -164,7 +164,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     {
 
                         var request = new GetCartesianChartDataRequest();
-                        request.Start = date.AddDays(-7);
+                        request.Start = date.AddDays(-6);
                         request.End = date;
                         request.HeaderTitle = layout.Artifact.HeaderTitle;
                         request.MeasurementId = layout.Artifact.MeasurementId;

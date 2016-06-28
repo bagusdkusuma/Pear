@@ -15,7 +15,7 @@
     </tr>
     <tr>
         <td>
-            <label>Ambient Temperature 0C:</label>
+            <label>Ambient Temperature 0C&#176;:</label>
         </td>
         <td>
             Low:@GetTemperature(Model.Temperature, 0)
@@ -42,25 +42,3 @@
         <text>-</text>
     }
 }
-@*
-@if (Model.ValueId > 0)
-{
-    <table class="der-table">
-        <tr>
-            <td style="font-weight: bold">Weather</td>
-            <td rowspan="3">[[logo temperature]]</td>
-            <td style="text-align: right">@Model.Text</td>
-            <td rowspan="3">
-                <img height="60" width="60" src="@Url.Content("/content/img/select/" + Model.Value)"></td>
-        </tr>
-        <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr>
-            <td style="font-weight: bold">Outside Temperature</td>
-            <td style="text-align: right">@Model.Temperature</td>
-        </tr>
-    </table>
-}*@
-
