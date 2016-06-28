@@ -665,14 +665,14 @@ Number.prototype.format = function (n, x) {
                     fontSize: '11px',
                     fontWeight: 'bold',
                     display:'none'
-                }
+                },
             },
             subtitle: {
                 text: data.Pie.Subtitle,
                 style: {
                     color: '#fff',
                     display: 'none'
-                }
+                },
             },
             credits: {
                 enabled: false
@@ -685,7 +685,7 @@ Number.prototype.format = function (n, x) {
                     cursor: 'pointer',
                     dataLabels: {
                         enabled: true,
-                        distance: 2,
+                        distance: 20,
                         formatter: function () {
                             return this.point.name + ': <br/> ' + this.percentage.toFixed(2) + ' %';
                         },

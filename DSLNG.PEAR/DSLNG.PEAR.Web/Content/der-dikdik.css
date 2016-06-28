@@ -920,8 +920,9 @@ h6 {
 }
 .pie-title {
     position: absolute;
-    bottom: 54px;
-    width: 100px;
+    bottom: -10px;
+    left: 100px;
+    width: 150px;
     font-weight: bold;
 }
 
