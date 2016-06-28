@@ -1,8 +1,13 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKpiInformationViewModel
+<style>
+    .commodities tbody > tr >td:first-child {
+        text-align: right;
+    }
+</style>
 <table class="table table-bordered commodities">
     <thead>
         <tr>
-            <td colspan="2">Commodities Market Indicator</td>
+            <td colspan="2">Economic Indicator</td>
             <td>
                 FX rate SDR:IMF major ccy basket
             </td>
@@ -90,7 +95,7 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2">
+            <td colspan="2" style="text-align: center">
                 LNG Shipping Cost benchmark (Jap-Kor-Aus)
             </td>
             <td>

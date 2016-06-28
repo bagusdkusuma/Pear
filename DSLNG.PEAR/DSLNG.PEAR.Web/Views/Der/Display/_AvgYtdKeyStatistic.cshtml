@@ -8,11 +8,11 @@
     </thead>
     <tbody>
         <tr>
-            <td>@Html.DisplayDerLabel(Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiLabel, "Feed Gas")</td>
-            <td>@Html.DisplayDerLabel(Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiLabel, "MCHE Rundown")</td>
-            <td>@Html.DisplayDerLabel(Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiLabel, "LNG Prod")</td>
-            <td>@Html.DisplayDerLabel(Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiLabel, "CDS Prod")</td>
-            <td>@Html.DisplayDerLabel(Model.KpiInformationViewModels.Single(x => x.Position == 4).KpiLabel, "Fuel Gas")</td>
+            <td style="text-decoration: underline">@Html.DisplayDerLabel(Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiLabel, "Feed Gas")</td>
+            <td style="text-decoration: underline">@Html.DisplayDerLabel(Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiLabel, "MCHE Rundown")</td>
+            <td style="text-decoration: underline">@Html.DisplayDerLabel(Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiLabel, "LNG Prod")</td>
+            <td style="text-decoration: underline">@Html.DisplayDerLabel(Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiLabel, "CDS Prod")</td>
+            <td style="text-decoration: underline">@Html.DisplayDerLabel(Model.KpiInformationViewModels.Single(x => x.Position == 4).KpiLabel, "Fuel Gas")</td>
         </tr>
         <tr class="avg-stats-value">
             <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "mmscfd")</td>
@@ -30,32 +30,6 @@
         </tr>
     </tbody>
 </table>
-
-@*<table class="text-center table table-bordered uncomplete">
-        <tr>
-            <td colspan="6">Avg YTD-Key Statistics (compare to prior day)</td>
-        </tr>
-        <tr>
-            @for (var i = 1; i <= 6; i++)
-                {
-                <td>@Model.AvgYtdKeyStatistics.Single(x => x.Position == i).KpiName</td>
-            }
-        </tr>
-        <tr>
-            @for (var i = 1; i <= 6; i++)
-                {
-                <td>@Model.AvgYtdKeyStatistics.Single(x => x.Position == i).Ytd</td>
-            }
-        </tr>
-        <tr>
-            <td><span class="fa fa-arrow-up fa-lg"></span></td>
-            <td><span class="fa fa-arrow-up fa-lg"></span></td>
-            <td><span class="fa fa-arrow-up fa-lg"></span></td>
-            <td><span class="fa fa-arrow-up fa-lg"></span></td>
-            <td><span class="fa fa-arrow-up fa-lg"></span></td>
-            <td><span class="fa fa-arrow-up fa-lg"></span></td>
-        </tr>
-    </table>*@
 
 
 
