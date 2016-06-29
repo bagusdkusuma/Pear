@@ -770,7 +770,6 @@ namespace DSLNG.PEAR.Services
                 switch (periodeType)
                 {
                     case PeriodeType.Daily:
-                    case PeriodeType.Monthly:
                     {
                         result = data.FirstOrDefault(x => x.PeriodeType == periodeType);
                         break;
