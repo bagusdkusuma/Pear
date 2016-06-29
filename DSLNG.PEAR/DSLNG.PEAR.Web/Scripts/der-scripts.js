@@ -426,6 +426,7 @@ Number.prototype.format = function (n, x) {
             var startColor = null,
                 endColor = null;
             var centerPoint;
+            console.log('speedo bands',plotBands);
             for (var i = 0; i < plotBands.length - 1; i++) {
                 startColor = plotBands[i].color;
                 endColor = plotBands[(i + 1)].color;
