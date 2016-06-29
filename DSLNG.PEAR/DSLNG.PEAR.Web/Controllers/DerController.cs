@@ -746,15 +746,15 @@ namespace DSLNG.PEAR.Web.Controllers
                 #region Plant Availability
                 case "plant-availability":
                     {
-                        var viewModel = GetGeneralDerKpiInformations(10, layout, date, PeriodeType.Daily);
+                        var viewModel = GetGeneralDerKpiInformations(11, layout, date, PeriodeType.Daily);
                         var target0 = layout.KpiInformations.SingleOrDefault(x => x.Position == 0);
                         var target1 = layout.KpiInformations.SingleOrDefault(x => x.Position == 1);
                         var target2 = layout.KpiInformations.SingleOrDefault(x => x.Position == 2);
                         var target3 = layout.KpiInformations.SingleOrDefault(x => x.Position == 3);
-                        viewModel.KpiInformationViewModels.Add(AddTarget(10, target0, date));
-                        viewModel.KpiInformationViewModels.Add(AddTarget(11, target1, date));
-                        viewModel.KpiInformationViewModels.Add(AddTarget(12, target2, date));
-                        viewModel.KpiInformationViewModels.Add(AddTarget(13, target3, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(11, target0, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(12, target1, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(13, target2, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(14, target3, date));
                         var view = RenderPartialViewToString("~/Views/Der/Display/_PlantAvalability.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);

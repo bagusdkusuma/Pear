@@ -62,12 +62,12 @@
                 ttl @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Mtd, string.Empty, string.Empty, "-") / @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 22).DerItemValue.Mtd, string.Empty, string.Empty, "-")
             </td>
             <td>
-                @Html.DisplayDerRemarkJsonForLngAndCds(Model.KpiInformationViewModels.Single(x => x.Position == 22).DerItemValue.Remark, "mtd")
+                @Html.DisplayDerRemarkJsonForLngAndCds(Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Remark, "mtd")
             </td>
         </tr>
         <tr>
             <td class="vertical-header">
-                ACTUAL YTD @Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Ytd
+                ACTUAL YTD 
             </td>
             <td>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Ytd, string.Empty, string.Empty)
@@ -90,7 +90,7 @@
                 Total @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Ytd, string.Empty, string.Empty, "-") / @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 22).DerItemValue.Ytd, string.Empty, string.Empty, "-") cargos
             </td>
             <td>
-                @Html.DisplayDerRemarkJsonForLngAndCds(Model.KpiInformationViewModels.Single(x => x.Position == 22).DerItemValue.Remark, "ytd")
+                @Html.DisplayDerRemarkJsonForLngAndCds(Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Remark, "ytd")
             </td>
         </tr>
     </tbody>
