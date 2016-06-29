@@ -152,7 +152,6 @@
         }
 
         if (title.toLowerCase().indexOf('cds') > -1) {
-            alert('asas');
             tankColor = 'lawngreen';
         }
         var ellipseTop = s.ellipse(ellipseX, topTank, ellipseRX, ellipseRY).attr({
