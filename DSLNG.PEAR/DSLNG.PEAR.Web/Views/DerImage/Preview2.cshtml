@@ -38,9 +38,9 @@
     <div class="container a3-ratio">
         <div class="row header">
             <div class="header-left col-md-8 text-center">
-                <h5>DAILY EXECUTIVE REPORT</h5>
-                <h6>The Last 24 Hours Business Perfomance</h6>
-                <h6>
+                <h4>DAILY EXECUTIVE REPORT</h4>
+                <h5>The Last 24 Hours Business Perfomance</h5>
+                <h5>
                     FOR THE PERIOD ENDED: @{
                         if (Request.QueryString["date"] != null)
                         {
@@ -53,7 +53,7 @@
                             <text>@id</text>
                         }
                     } until LT24:00 HOURS
-                </h6>
+                </h5>
             </div>
             <div class="header-right col-md-4">
             </div>
@@ -76,7 +76,7 @@
                             var row0Col3 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 3);
                             if (row0Col3 != null)
                             {
-                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row0Col3.Id })" class="layout-item highlight-json"></div>
+                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row0Col3.Id })" class="layout-item daily-highlight"></div>
                             }
                         }
                         @{
@@ -125,7 +125,7 @@
                     var row1Col2 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 2);
                     if (row1Col2 != null)
                     {
-                        <div data-fraction="1" data-url="@Url.Action("LayoutItem", "DerImage", new { id = row1Col2.Id })" class="layout-item"></div>
+                        <div  data-fraction="1" data-url="@Url.Action("LayoutItem", "DerImage", new { id = row1Col2.Id })" class="layout-item"></div>
                     }
                 }
             </div>
@@ -134,7 +134,7 @@
                     var row1Col3 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 3);
                     if (row1Col3 != null)
                     {
-                        <div data-fraction="0.5" data-url="@Url.Action("LayoutItem", "DerImage", new { id = row1Col3.Id })" class="layout-item"></div>
+                        <div  data-fraction="0.5" data-url="@Url.Action("LayoutItem", "DerImage", new { id = row1Col3.Id })" class="layout-item"></div>
                     }
                 }
             </div>
@@ -410,7 +410,7 @@
                                         var row6Col8 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 8);
                                         if (row6Col8 != null)
                                         {
-                                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col8.Id })" class="layout-item barmeter">
+                                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col8.Id })" class="layout-item barmeter" data-break="true">
                                                 <label>Ttl Sulphur-ppm</label>
                                             </div>
                                         }
@@ -419,7 +419,7 @@
                                         var row6Col10 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 10);
                                         if (row6Col10 != null)
                                         {
-                                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col10.Id })" class="layout-item barmeter">
+                                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col10.Id })" class="layout-item barmeter" >
                                                 <label>Hg-MRU outlet ng/nm3</label>
                                             </div>
                                         }
@@ -449,7 +449,7 @@
                 <table class="table table-bordered tank">
                     <thead>
                         <tr>
-                            <td colspan="2" style="width:25%">
+                            <td colspan="2" style="width:24.8%">
                                 @{
                                     var row8Col0 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 0);
                                     if (row8Col0 != null)
@@ -458,7 +458,7 @@
                                     }
                                 }
                             </td>
-                            <td colspan="2" style="width:34%">
+                            <td colspan="2" style="width:33.8%">
                                 @{
                                     var row8Col1 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 1);
                                     if (row8Col1 != null)
@@ -481,7 +481,7 @@
                                     var row8Col3 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 3);
                                     if (row8Col3 != null)
                                     {
-                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row8Col3.Id })" class="layout-item tank-wrapper" style="width:120px;height:40px" data-type="custom"></div>
+                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row8Col3.Id })" class="layout-item tank-wrapper" style="width:100px;height:40px" data-type="custom"></div>
                                     }
                                 }
                             </td>
@@ -902,6 +902,7 @@
                         </td>
                         <td>
                             <img src="@Url.Content("~/content/images/strictly-sign.png")">
+                            <span style="display: inline-block">Not for custody/commercial (information purpose only)</span>
                         </td>
                     </tr>
                 </tbody>
@@ -977,6 +978,12 @@
             }
 
         }
+
+        var getNum = function (str) {
+            var numb = str.match(/\d/g);
+            numb = numb.join("");
+            return parseInt(numb);
+        }
         $('.layout-item').each(function () {
             var that = $(this);
             $.ajax({
@@ -992,7 +999,26 @@
                         || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type === "procurement" || data.type === "indicative-commercial-price" ||
                             data.type === "plant-availability" || data.type === "economic-indicator" || data.type === "mgdp" || data.type === "hhv" || data.type === "lng-and-cds-production"
                             || data.type === "nls" || data.type === "key-equipment-status" || data.type === "wave" || data.type === "table-tank" || data.type === "global-stock-market" || data.type === "loading-duration" || data.type === 'person-on-board') {
-                        if (data.type === "highlight" && that.hasClass('highlight-json')) {
+                        if (data.type === "highlight" && that.hasClass('daily-highlight')) {
+                            var type = "absolute";
+                            if (that.hasClass('in-left')) {
+                                type = 'left-side';
+                            } else if (that.hasClass('in-right')) {
+                                type = 'right-side';
+                            }
+                            if (parseInt(data.view) < 2) {
+                                that.replaceWith('<span class="indicator ' + type + ' black"><i class="fa fa-circle"></i></span>');
+                            } else if (parseInt(data.view) == 2) {
+                                that.replaceWith('<span class="indicator ' + type + ' gray"><i class="fa fa-circle"></i></span>');
+                            } else if (parseInt(data.view) == 3) {
+                                that.replaceWith('<span class="indicator ' + type + ' red"><i class="fa fa-circle"></i></span>');
+                            } else if (parseInt(data.view) == 4) {
+                                that.replaceWith('<span class="indicator ' + type + ' orange"><i class="fa fa-circle"></i></span>');
+                            } else if (parseInt(data.view) > 4) {
+                                that.replaceWith('<span class="indicator ' + type + ' green"><i class="fa fa-circle"></i></span>');
+                            }
+                        }
+                        else if (data.type === "highlight" && that.hasClass('highlight-json')) {
                             var type = "absolute";
                             if (that.hasClass('in-left')) {
                                 type = 'left-side';
@@ -1070,7 +1096,7 @@
                             that.html(data.view);
                         }
 
-    }
+}
 
                 }
             });
