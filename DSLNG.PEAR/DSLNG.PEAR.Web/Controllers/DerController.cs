@@ -402,7 +402,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             Skip = 0,
                             Take = 3,
                         });
-                        var schedules = vesselSchedule.VesselSchedules.OrderBy(x => x.ETA).Take(3).ToList();
+                        var schedules = vesselSchedule.VesselSchedules.OrderByDescending(x => x.ETA).Take(3).ToList();
                         var nls = schedules.MapTo<DailyExecutionReportViewModel.NLSViewModel>();
 
                         var view = RenderPartialViewToString("~/Views/Der/Display/_Nls.cshtml", nls);
