@@ -12,6 +12,13 @@
  * The date defaults to the current date/time.
  * The mask defaults to dateFormat.masks.default.
  */
+//Array.prototype.max = function () {
+//    return Math.max.apply(null, this);
+//};
+
+//Array.prototype.min = function () {
+//    return Math.min.apply(null, this);
+//};
 
 var dateFormat = function () {
     var token = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g,
@@ -149,7 +156,8 @@ Number.prototype.format = function (n, x) {
 (function window(window,$,undefined){
     var Der = {};
     Der.Artifact = {};
-    Der.Artifact.line = function(data,container){
+    Der.Artifact.line = function (data, container) {
+        console.log('data-fractioin', container.data('fraction'));
         container.highcharts({
             chart: {
                 zoomType: 'xy',
@@ -217,8 +225,9 @@ Number.prototype.format = function (n, x) {
                     width: 1,
                     color: '#808080'
                 }],
-                tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
+                tickInterval: parseFloat(container.data('fraction')),
                 max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale,
+                min : container.data('min'),
                 labels: {
                     style: {
                         fontSize: '7px'
@@ -278,7 +287,7 @@ Number.prototype.format = function (n, x) {
                     //data.MultiaxisChart.Charts[i].ValueAxisTitle + ' (' + data.MultiaxisChart.Charts[i].Measurement + ')',
                 },
                 opposite: data.MultiaxisChart.Charts[i].IsOpposite,
-                tickInterval: data.MultiaxisChart.Charts[i].FractionScale == 0 ? null : data.MultiaxisChart.Charts[i].FractionScale,
+                tickInterval: data.MultiaxisChart.Charts[i].FractionScale == 0 ? container.data('fraction') : data.MultiaxisChart.Charts[i].FractionScale,
                 max: data.MultiaxisChart.Charts[i].MaxFractionScale == 0 ? null : data.MultiaxisChart.Charts[i].MaxFractionScale,
                 labels: {
                     style: {
@@ -288,7 +297,8 @@ Number.prototype.format = function (n, x) {
                         var x = this.value;
                         return x.format();
                     }
-                }
+                },
+                min: container.data('min') != '' && container.data('min') != null ? container.data('min') : null,
             });
             if (chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType] == 'line') {
                 plotOptions[chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType]] = {
@@ -466,7 +476,7 @@ Number.prototype.format = function (n, x) {
                 start += partLength;
             }
 
-            var point = Math.PI + (data.SpeedometerChart.Series.data[0] * Math.PI / plotBands[plotBands.length - 1].to);
+            var point = Math.PI + (data.SpeedometerChart.Series.data[0] * Math.PI / plotBands[plotBands.length - 1].from);
             var relateiveR = r - thickness / 2;
             var relativeR2 = r + thickness / 2;
             var xPoint = centerPoint.x + Math.cos(point) * (relateiveR);
@@ -651,6 +661,28 @@ Number.prototype.format = function (n, x) {
         var $title = $('<div />');
         $title.addClass('pie-title');
         $title.html(data.Pie.Title);
+
+        var maxSeries;
+        var values = []
+        for (var i in data.Pie.SeriesResponses) {
+            console.log(i);
+            if (parseFloat(data.Pie.SeriesResponses[i].y) < 0) {
+                continue;
+            }
+            values.push(parseFloat(data.Pie.SeriesResponses[i].y));
+        }
+        var maxValue = Math.max.apply(null, values);;
+        var minValue = Math.min.apply(null, values);;
+        for (var i in data.Pie.SeriesResponses) {
+            if (parseFloat(data.Pie.SeriesResponses[i].y) != maxValue) {
+                data.Pie.SeriesResponses[i].sliced = true;
+                data.Pie.SeriesResponses[i].selected = true;
+            };
+            //if (parseFloat(data.Pie.SeriesResponses[i].y) == minValue) {
+            //    //data.Pie.SeriesResponses[i].sliced = true;
+            //    data.Pie.SeriesResponses[i].selected = true;
+            //}
+        }
         container.highcharts({
             chart: {
                 type: 'pie',
@@ -688,7 +720,7 @@ Number.prototype.format = function (n, x) {
             plotOptions: {
                 pie: {
                     size: '100%',
-                    slicedOffset: 30,
+                    //slicedOffset: 30,
                     allowPointSelect: true,
                     cursor: 'pointer',
                     dataLabels: {
