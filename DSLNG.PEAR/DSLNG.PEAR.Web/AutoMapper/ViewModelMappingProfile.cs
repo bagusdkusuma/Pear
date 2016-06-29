@@ -1106,7 +1106,8 @@ namespace DSLNG.PEAR.Web.AutoMapper
             //Der KpiInformations
             Mapper.CreateMap<DerLayoutItemViewModel.DerKpiInformationViewModel, SaveLayoutItemRequest.DerKpiInformationRequest>()
                 .ForMember(x => x.ConfigType, y => y.MapFrom(z => (ConfigType)Enum.Parse(typeof(ConfigType), z.ConfigType)));
-            Mapper.CreateMap<GetDerLayoutitemResponse.KpiInformationResponse, DerLayoutItemViewModel.DerKpiInformationViewModel>();
+            Mapper.CreateMap<GetDerLayoutitemResponse.KpiInformationResponse, DerLayoutItemViewModel.DerKpiInformationViewModel>()
+                .ForMember(x => x.HighlightId, y => y.MapFrom(z => z.SelectOption.Id));
 
             //DER original data
             Mapper.CreateMap<GetOriginalDataResponse, DisplayOriginalDataViewModel>();

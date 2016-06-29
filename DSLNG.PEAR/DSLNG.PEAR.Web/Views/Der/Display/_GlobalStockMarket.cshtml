@@ -24,7 +24,7 @@
                 </span>
                 @Html.DisplayDerValueWithLabelAtFront("1M:", Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value, "1M:")
             </td>
-            <td rowspan="4" style="border-bottom:none">Q2-16:39.00 USD/bbl</td>
+            <td rowspan="4" style="border-bottom:none">@Html.Raw(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Value)</td>
             <td>
                 <span class="comparison left-side">
                     <i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Deviation)"></i>

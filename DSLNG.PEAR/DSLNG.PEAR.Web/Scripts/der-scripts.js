@@ -625,10 +625,11 @@ Number.prototype.format = function (n, x) {
             ctx.fillStyle = gradient;
             ctx.fillRect(3, 0, canvas.width-3, canvas.height);
             ctx.fillStyle = "rgb(0,0,0)";
-            console.log(container[0]);
+            
+            /*console.log(container[0]);
             console.log($label.html());
             console.log(config.PlotBands);
-            console.log(last);
+            console.log(last);*/
             var point = config.Series.data[0] / config.PlotBands[last].from * (canvas.width - 6) + 3;
             ctx.fillRect(point-3, 0, 6, canvas.height - 30);
 
