@@ -183,6 +183,16 @@ namespace DSLNG.PEAR.Web.Helpers
             return defaultVal;
         }
 
+        public static string GetCssClassByDerValue(this HtmlHelper htmlHelper, string val, bool isCss=false)
+        {
+            if (!string.IsNullOrEmpty(val))
+            {
+                string x = val.Replace("<p>", "").Replace("</p>", "");
+                return (isCss) ? x.Replace(' ', '-') : x;
+            }
+
+            return string.Empty;
+        } 
         private static string RoundIt(bool isRounded, string val)
         {
             if (isRounded)
