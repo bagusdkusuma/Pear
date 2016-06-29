@@ -87,6 +87,7 @@ namespace DSLNG.PEAR.Web.Helpers
 
         public static string DisplayDerDeviation(this HtmlHelper htmlHelper, string deviation)
         {
+            if (string.IsNullOrEmpty(deviation)) return string.Empty;
             switch (deviation)
             {
                 case "1":
@@ -124,19 +125,44 @@ namespace DSLNG.PEAR.Web.Helpers
             }
         }
 
+        public static MvcHtmlString DisplayDerRemarkJsonForLngAndCds(this HtmlHelper htmlHelper, string remarkJson, string type)
+        {
+            if (string.IsNullOrEmpty(remarkJson)) return new MvcHtmlString(string.Empty);
+            var jsonRemark = JsonConvert.DeserializeObject<JsonRemark>(remarkJson);
+
+            switch (type.ToLowerInvariant())
+            {
+                case "daily":
+                case "as of":
+                    return RemarkToMvcHtmlStringForLngAndCds(jsonRemark.Daily);
+                case "mtd":
+                    return RemarkToMvcHtmlStringForLngAndCds(jsonRemark.Mtd);
+                case "ytd":
+                    return RemarkToMvcHtmlStringForLngAndCds(jsonRemark.Ytd);
+                default:
+                    return new MvcHtmlString(string.Empty);
+            }
+        }
+
         public static string DisplayDerRemarkWithValue(this HtmlHelper htmlHelper, string deviation)
         {
-            switch (deviation)
+            if (string.IsNullOrEmpty(deviation)) return string.Empty;
+            switch (deviation.ToLowerInvariant())
             {
                 case "4":
+                case "fulfilled":
                     return "<span class='indicator left-side'><i class='fa fa-check' style='color:green'></i></span>Fulfilled";
                 case "3":
+                case "on-track":
                     return "<span class='indicator left-side'><i class='fa fa-circle' style='color:green'></i></span>On-track";
                 case "2":
+                case "loading":
                     return "<span class='indicator left-side'><i class='fa fa-arrow-right' style='color:grey'></i></span>Loading";
                 case "1":
+                case "need attention":
                     return "<span class='indicator left-side'><i class='fa fa-circle' style='color:orange'></i></span>Need attention";
                 case "0":
+                case "unfulfilled":
                     return "<span class='indicator left-side'><i class='fa fa-circle' style='color:red'></i></span>Unfulfilled";
                 default:
                     return string.Empty;
@@ -145,6 +171,7 @@ namespace DSLNG.PEAR.Web.Helpers
 
         public static string DisplayDerRemarkForMarketTone(this HtmlHelper htmlHelper, string deviation)
         {
+            if (string.IsNullOrEmpty(deviation)) return string.Empty;
             switch (deviation)
             {
                 case "1":
@@ -217,6 +244,7 @@ namespace DSLNG.PEAR.Web.Helpers
 
         private static string RemarkToIcon(string s)
         {
+            if (string.IsNullOrEmpty(s)) return string.Empty;
             switch (s)
             {
                 case "1":
@@ -232,6 +260,7 @@ namespace DSLNG.PEAR.Web.Helpers
 
         private static MvcHtmlString RemarkToMvcHtmlString(string s)
         {
+            if(string.IsNullOrEmpty(s)) return new MvcHtmlString(string.Empty);
             switch (s)
             {
                 case "1":
@@ -240,6 +269,33 @@ namespace DSLNG.PEAR.Web.Helpers
                     return new MvcHtmlString("<span class='indicator absolute'><i class='fa fa-times-circle'></i></span>");
                 case "0":
                     return new MvcHtmlString("<span class='indicator absolute'><i class='fa fa-exclamation-circle'></i></span>");
+                default:
+                    return new MvcHtmlString(string.Empty);
+            }
+        }
+
+        private static MvcHtmlString RemarkToMvcHtmlStringForLngAndCds(string s)
+        {
+            if (string.IsNullOrEmpty(s)) return new MvcHtmlString(string.Empty);
+            switch (s.ToLowerInvariant())
+            {
+                case "4":
+                case "fulfilled":
+                    return new MvcHtmlString("<span class='indicator left-side'><i class='fa fa-check' style='color:green'></i></span>Fulfilled");
+                case "3":
+                case "on-track":
+                    return new MvcHtmlString("<span class='indicator left-side'><i class='fa fa-circle' style='color:green'></i></span>On-track");
+                case "2":
+                case "loading":
+                    return new MvcHtmlString("<span class='indicator left-side'><i class='fa fa-arrow-right' style='color:grey'></i></span>Loading");
+                case "1":
+                case "need attention":
+                    return new MvcHtmlString("<span class='indicator left-side'><i class='fa fa-circle' style='color:orange'></i></span>Need attention");
+                    
+                case "0":
+                case "unfulfilled":
+                    return new MvcHtmlString("<span class='indicator left-side'><i class='fa fa-circle' style='color:red'></i></span>Unfulfilled");
+                    
                 default:
                     return new MvcHtmlString(string.Empty);
             }

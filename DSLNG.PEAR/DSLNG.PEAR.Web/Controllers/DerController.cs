@@ -24,6 +24,7 @@ using DSLNG.PEAR.Web.ViewModels.Highlight;
 using NReco.ImageGenerator;
 using NReco.PdfGenerator;
 using System.IO;
+using System.Web.Script.Serialization;
 using DSLNG.PEAR.Common.Contants;
 using DSLNG.PEAR.Services.Requests.KpiTarget;
 using DSLNG.PEAR.Web.Grid;
@@ -412,33 +413,6 @@ namespace DSLNG.PEAR.Web.Controllers
                 #region safety
                 case "safety":
                     {
-                        /*var viewModel = new DisplaySafetyTableViewModel();
-
-                        for (int i = 1; i <= 9; i++)
-                        {
-                            var safetyTableViewModel = new DisplaySafetyTableViewModel.SafetyTableViewModel();
-                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
-                                       new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
-
-                            safetyTableViewModel.Position = item.Position;
-                            if (item.Kpi != null)
-                            {
-                                var currentDay = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.CurrentDay);
-                                var mtd = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.MTD);
-                                var ytd = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.YTD);
-                                var targetYearly = _kpiTargetService.GetKpiTarget(item.Kpi.Id, date, RangeFilter.CurrentYear);
-                                var itd = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, RangeFilter.AllExistingYears);
-                                safetyTableViewModel.KpiName = item.Kpi.Name;
-                                safetyTableViewModel.CurrentDay = GetDoubleToString(currentDay.Value);
-                                safetyTableViewModel.Mtd = GetDoubleToString(mtd.Value);
-                                safetyTableViewModel.Ytd = GetDoubleToString(ytd.Value);
-                                safetyTableViewModel.AnnualTarget = GetDoubleToString(targetYearly.Value);
-                                safetyTableViewModel.Itd = GetDoubleToString(itd.Value);
-                            }
-
-                            viewModel.SafetyTableViewModels.Add(safetyTableViewModel);
-                        }*/
-
                         var viewModel = GetGeneralDerKpiInformations(11, layout, date, PeriodeType.Daily);
                         var target0 = layout.KpiInformations.SingleOrDefault(x => x.Position == 0);
                         var target1 = layout.KpiInformations.SingleOrDefault(x => x.Position == 1);
@@ -772,46 +746,6 @@ namespace DSLNG.PEAR.Web.Controllers
                 #region Plant Availability
                 case "plant-availability":
                     {
-                        /*var viewModel = new DisplayPlantAvailabilityViewModel();
-
-                        for (int i = 0; i < 10; i++)
-                        {
-                            var MGDPViewModel = new DisplayPlantAvailabilityViewModel.PlantAvailabilityViewModel();
-                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
-                                       new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
-
-                            MGDPViewModel.Position = item.Position;
-                            if (item.Kpi != null)
-                            {
-                                var request = new GetKpiValueRequest();
-                                request.KpiId = item.Kpi.Id;
-                                request.ConfigType = item.ConfigType;
-                                request.Periode = date;
-                                request.RangeFilter = RangeFilter.CurrentDay;
-                                var daily = _derService.GetKpiValue(request);
-                                MGDPViewModel.KpiName = item.Kpi.Name;
-                                MGDPViewModel.Measurement = item.Kpi.MeasurementName;
-                                MGDPViewModel.Daily = daily.Value.HasValue ? daily.Value.Value.ToString() : "n/a";
-
-                                request.RangeFilter = RangeFilter.MTD;
-                                var mtd = _derService.GetKpiValue(request);
-                                MGDPViewModel.Mtd = mtd.Value.HasValue ? mtd.Value.Value.ToString() : "n/a";
-
-                                request.RangeFilter = RangeFilter.YTD;
-                                var ytd = _derService.GetKpiValue(request);
-                                MGDPViewModel.Ytd = ytd.Value.HasValue ? ytd.Value.Value.ToString() : "n/a";
-
-
-                                /*double dailyValue = (daily.Value.HasValue) ? daily.Value.Value : 0;
-                                double mtdValue = (mtd.Value.HasValue) ? mtd.Value.Value : 0;
-                                double ytdValue = (ytd.Value.HasValue) ? ytd.Value.Value : 0;#1#
-
-
-                            }
-
-                            viewModel.PlantAvailabilityViewModels.Add(MGDPViewModel);
-                        }*/
-
                         var viewModel = GetGeneralDerKpiInformations(10, layout, date, PeriodeType.Daily);
                         var target0 = layout.KpiInformations.SingleOrDefault(x => x.Position == 0);
                         var target1 = layout.KpiInformations.SingleOrDefault(x => x.Position == 1);
@@ -1054,27 +988,36 @@ namespace DSLNG.PEAR.Web.Controllers
             if (target != null)
             {
                 kpiInformationVm.DerItemValue = new DerItemValueViewModel();
-                kpiInformationVm.DerItemValue.Value =
-                    _kpiTargetService.GetKpiTargetByValue(new GetKpiTargetRequestByValue
-                    {
-                        Kpi_Id = target.Kpi.Id,
-                        periode = date,
-                        PeriodeType = PeriodeType.Daily.ToString()
-                    }).Value.ToString();
-                kpiInformationVm.DerItemValue.Mtd =
-                    (_kpiTargetService.GetKpiTargetByValue(new GetKpiTargetRequestByValue
-                    {
-                        Kpi_Id = target.Kpi.Id,
-                        periode = new DateTime(date.Year, date.Month, 1),
-                        PeriodeType = PeriodeType.Monthly.ToString()
-                    }).Value).ToString();
-                kpiInformationVm.DerItemValue.Ytd =
-                    (_kpiTargetService.GetKpiTargetByValue(new GetKpiTargetRequestByValue
-                    {
-                        Kpi_Id = target.Kpi.Id,
-                        periode = new DateTime(date.Year, 1, 1),
-                        PeriodeType = PeriodeType.Yearly.ToString()
-                    }).Value).ToString();
+                var daily = _kpiTargetService.GetKpiTargetByValue(new GetKpiTargetRequestByValue
+                {
+                    Kpi_Id = target.Kpi.Id,
+                    periode = date,
+                    PeriodeType = PeriodeType.Daily.ToString()
+                });
+                var mtd = _kpiTargetService.GetKpiTargetByValue(new GetKpiTargetRequestByValue
+                {
+                    Kpi_Id = target.Kpi.Id,
+                    periode = new DateTime(date.Year, date.Month, 1),
+                    PeriodeType = PeriodeType.Monthly.ToString()
+                });
+
+                var ytd = _kpiTargetService.GetKpiTargetByValue(new GetKpiTargetRequestByValue
+                {
+                    Kpi_Id = target.Kpi.Id,
+                    periode = new DateTime(date.Year, 1, 1),
+                    PeriodeType = PeriodeType.Yearly.ToString()
+                });
+                kpiInformationVm.DerItemValue.Value = daily.Value.ToString(); ;
+                kpiInformationVm.DerItemValue.Mtd = mtd.Value.ToString(); ;
+                kpiInformationVm.DerItemValue.Ytd = ytd.Value.ToString(); ;
+                var obj = new
+                {
+                    daily = daily.Remark,
+                    mtd = mtd.Remark,
+                    ytd = ytd.Remark
+                };
+                var json = new JavaScriptSerializer().Serialize(obj);
+                kpiInformationVm.DerItemValue.Remark = json;
 
             }
 
