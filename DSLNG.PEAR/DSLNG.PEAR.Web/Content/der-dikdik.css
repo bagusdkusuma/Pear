@@ -810,7 +810,7 @@ h6 {
         }
         
         .table.signature td img {
-            height: 99%;
+            height: 83%;
         }
         
         .table.signature td.signature {
@@ -1003,3 +1003,15 @@ td.percentage-wrapper {
     width: 100%;
     text-align: center;
 }
+.brentfut-col ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+.brentfut-col ul li {
+    border-bottom: 1px solid #0d0d0d;
+    padding: 2px 0;
+}
+    .brentfut-col ul li:last-child {
+        border:none;
+    }
