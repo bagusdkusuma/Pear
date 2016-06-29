@@ -267,7 +267,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
                     case "plant-availability":
                         {
-                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 10);
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 11);
                             break;
                         }
                     case "safety":
@@ -725,7 +725,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "plant-availability":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(10);
+                        viewModel.KpiInformations = GetKpiInformations(11);
                         return PartialView("LayoutType/_PlantAvailability", viewModel);
                     }
                 case "economic-indicator":
