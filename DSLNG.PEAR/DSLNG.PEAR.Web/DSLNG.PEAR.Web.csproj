@@ -457,6 +457,8 @@
     <Content Include="Scripts\der-tank.js" />
     <Content Include="Scripts\der-scripts.js" />
     <Content Include="Scripts\fabricjs.js" />
+    <Content Include="Scripts\jquery-1.11.3.js" />
+    <Content Include="Scripts\jquery-1.11.3.min.js" />
     <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery.freezeheader.js" />
     <Content Include="Scripts\perfect-scrollbar.jquery.min.js" />

@@ -12,10 +12,7 @@
     <title>DER Preview</title>
 
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="@Url.Content("~/content/bootstrap-datetimepicker.min.css")" />
-    <link rel="stylesheet" href="@Url.Content("~/content/der-dikdik.css")" />
+   @Styles.Render("~/Content/der_preview")
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -915,19 +912,7 @@
 </div>
 
 
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-<script src="/Scripts/moment.min.js"></script>
-<script src="/Scripts/bootstrap-datetimepicker.min.js"></script>
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="http://code.highcharts.com/highcharts-more.js"></script>
-<script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
-<script src="/Scripts/snap.svg.js"></script>
-<script src="/Scripts/der-tank.js"></script>
-<script src="/Scripts/fabricjs.js"></script>
-<script src="@Url.Content("~/Scripts/der-scripts.js")"></script>
+ @Scripts.Render("~/bundles/der_preview_js")
 <script type="text/javascript">
     function getQueryVariable(variable) {
         var query = window.location.search.substring(1);
