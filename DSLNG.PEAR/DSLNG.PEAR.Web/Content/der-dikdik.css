@@ -262,7 +262,7 @@ h6 {
         }
         
         .table.weekly-alarm > tbody > tr:last-child > td {
-            height: 90px;
+            height: 120px;
         }
         
         .table.weekly-alarm > tbody > tr > td table {
@@ -677,6 +677,7 @@ h6 {
         }
         .table.commodities tr td{
             text-align: center;
+             vertical-align:middle;
         }
         .table.commodities tr td:last-child{
             text-align: left;
@@ -692,6 +693,7 @@ h6 {
         .table.procurement thead tr td {
             background-color: #B7DEE8;
             text-align: center;
+            vertical-align:middle;
         }
         .table.procurement tbody tr td{
             text-align: center;
@@ -705,7 +707,7 @@ h6 {
         }
         
         .table.procurement tbody tr:first-child td {
-            height: 29px;
+            height: 24px;
         }
         
         .table.commodities thead tr td,
