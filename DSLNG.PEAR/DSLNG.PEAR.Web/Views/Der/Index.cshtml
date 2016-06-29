@@ -34,7 +34,7 @@
                     {
                         "mDataProp": "Title", "name": "Title", "className": "dt-body-left",
                         "mRender": function (data, type, row) {
-                            return '<a href="' + row.Filename.replace('~/','') + '">' + data + '</a>';
+                            return '<a href="' + row.Filename.replace('~/', window.location.protocol + "//" + window.location.host + "/") + '">' + data + '</a>';
                      }
                     },
                     { "mDataProp": "Revision", "name": "Description", "className": "dt-body-left" },
