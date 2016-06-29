@@ -73,13 +73,13 @@ h6 {
         
         .header .header-left {
             background-color: #002060;
-            height: 63px;
+            height: 90px;
         }
         
         .header .header-right {
             background-color: #0D0D0D;
             background-image: url(images/header-logo.png);
-            height: 63px;
+            height: 90px;
             background-size: 91% 100%;
             background-repeat: no-repeat;
         }
