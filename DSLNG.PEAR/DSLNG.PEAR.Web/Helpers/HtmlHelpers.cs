@@ -109,38 +109,60 @@ namespace DSLNG.PEAR.Web.Helpers
         public static MvcHtmlString DisplayDerRemarkJson(this HtmlHelper htmlHelper, string remarkJson, string type)
         {
             if (string.IsNullOrEmpty(remarkJson)) return new MvcHtmlString(string.Empty);
-            var jsonRemark = JsonConvert.DeserializeObject<JsonRemark>(remarkJson);
-            
-            switch (type.ToLowerInvariant())
+            try
             {
-                case "daily":
-                case "as of":
-                    return RemarkToMvcHtmlString(jsonRemark.Daily);
-                case "mtd":
-                    return RemarkToMvcHtmlString(jsonRemark.Mtd);
-                case "ytd":
-                    return RemarkToMvcHtmlString(jsonRemark.Ytd);
-                default:
-                    return new MvcHtmlString(string.Empty);
+                var jsonRemark = JsonConvert.DeserializeObject<JsonRemark>(remarkJson);
+
+                switch (type.ToLowerInvariant())
+                {
+                    case "daily":
+                    case "as of":
+                        return RemarkToMvcHtmlString(jsonRemark.Daily);
+                    case "mtd":
+                        return RemarkToMvcHtmlString(jsonRemark.Mtd);
+                    case "ytd":
+                        return RemarkToMvcHtmlString(jsonRemark.Ytd);
+                    default:
+                        return new MvcHtmlString(string.Empty);
+                }
+            }
+            catch (JsonSerializationException exception)
+            {
+                return new MvcHtmlString(string.Empty);
+            }
+            catch (Exception exception)
+            {
+                return new MvcHtmlString(string.Empty);
             }
         }
 
         public static MvcHtmlString DisplayDerRemarkJsonForLngAndCds(this HtmlHelper htmlHelper, string remarkJson, string type)
         {
             if (string.IsNullOrEmpty(remarkJson)) return new MvcHtmlString(string.Empty);
-            var jsonRemark = JsonConvert.DeserializeObject<JsonRemark>(remarkJson);
-
-            switch (type.ToLowerInvariant())
+            try
             {
-                case "daily":
-                case "as of":
-                    return RemarkToMvcHtmlStringForLngAndCds(jsonRemark.Daily);
-                case "mtd":
-                    return RemarkToMvcHtmlStringForLngAndCds(jsonRemark.Mtd);
-                case "ytd":
-                    return RemarkToMvcHtmlStringForLngAndCds(jsonRemark.Ytd);
-                default:
-                    return new MvcHtmlString(string.Empty);
+                var jsonRemark = JsonConvert.DeserializeObject<JsonRemark>(remarkJson);
+
+                switch (type.ToLowerInvariant())
+                {
+                    case "daily":
+                    case "as of":
+                        return RemarkToMvcHtmlStringForLngAndCds(jsonRemark.Daily);
+                    case "mtd":
+                        return RemarkToMvcHtmlStringForLngAndCds(jsonRemark.Mtd);
+                    case "ytd":
+                        return RemarkToMvcHtmlStringForLngAndCds(jsonRemark.Ytd);
+                    default:
+                        return new MvcHtmlString(string.Empty);
+                }
+            }
+            catch (JsonSerializationException exception)
+            {
+                return new MvcHtmlString(string.Empty);
+            }
+            catch (Exception exception)
+            {
+                return new MvcHtmlString(string.Empty);
             }
         }
 
@@ -210,7 +232,7 @@ namespace DSLNG.PEAR.Web.Helpers
             return defaultVal;
         }
 
-        public static string GetCssClassByDerValue(this HtmlHelper htmlHelper, string val, bool isCss=false)
+        public static string GetCssClassByDerValue(this HtmlHelper htmlHelper, string val, bool isCss = false)
         {
             if (!string.IsNullOrEmpty(val))
             {
@@ -219,7 +241,7 @@ namespace DSLNG.PEAR.Web.Helpers
             }
 
             return string.Empty;
-        } 
+        }
         private static string RoundIt(bool isRounded, string val)
         {
             if (isRounded)
@@ -260,7 +282,7 @@ namespace DSLNG.PEAR.Web.Helpers
 
         private static MvcHtmlString RemarkToMvcHtmlString(string s)
         {
-            if(string.IsNullOrEmpty(s)) return new MvcHtmlString(string.Empty);
+            if (string.IsNullOrEmpty(s)) return new MvcHtmlString(string.Empty);
             switch (s)
             {
                 case "1":
@@ -291,11 +313,11 @@ namespace DSLNG.PEAR.Web.Helpers
                 case "1":
                 case "need attention":
                     return new MvcHtmlString("<span class='indicator left-side'><i class='fa fa-circle' style='color:orange'></i></span>Need attention");
-                    
+
                 case "0":
                 case "unfulfilled":
                     return new MvcHtmlString("<span class='indicator left-side'><i class='fa fa-circle' style='color:red'></i></span>Unfulfilled");
-                    
+
                 default:
                     return new MvcHtmlString(string.Empty);
             }
