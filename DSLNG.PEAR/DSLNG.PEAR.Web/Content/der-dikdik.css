@@ -956,3 +956,24 @@ h6 {
     width: 100%;
     left: 0;
     }
+.bar-percentage {
+    height: 18px;
+    z-index: -1;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width:98%;
+}
+.bar-percentage > div {
+    background: #538DD5; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(left,#538DD5, #E3EBF7); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(right,#538DD5, #E3EBF7); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(right,#538DD5, #E3EBF7); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to right,#538DD5, #E3EBF7); /* Standard syntax */
+    /*width:100%;*/
+    height:100%;
+}
+td.percentage-wrapper {
+    padding:6px !important;
+    position:relative
+}
