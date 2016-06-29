@@ -38,9 +38,9 @@
     <div class="container a3-ratio preview">
         <div class="row header">
             <div class="header-left col-md-8 text-center">
-                <h5>DAILY EXECUTIVE REPORT</h5>
-                <h6>The Last 24 Hours Business Perfomance</h6>
-                <h6>
+                <h4>DAILY EXECUTIVE REPORT</h4>
+                <h5>The Last 24 Hours Business Perfomance</h5>
+                <h5>
                     FOR THE PERIOD ENDED: @{
                         if (Request.QueryString["date"] != null)
                         {
@@ -53,7 +53,7 @@
                             <text>@id</text>
                         }
                     } until LT24:00 HOURS
-                </h6>
+                </h5>
             </div>
             <div class="header-right col-md-4">
             </div>
@@ -902,6 +902,7 @@
                         </td>
                         <td>
                             <img src="@Url.Content("~/content/images/strictly-sign.png")">
+                            <span style="display: inline-block">Not for custody/commercial (information purpose only)</span>
                         </td>
                     </tr>
                 </tbody>
