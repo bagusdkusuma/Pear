@@ -351,7 +351,7 @@ namespace DSLNG.PEAR.Services
                 var user = DataContext.Users.First(x => x.Id == request.UserId);
                 var kpiAchievement = request.MapTo<KpiAchievement>();
 
-                if ( request.Id > 0)
+                if (request.Id > 0)
                 {
                     if (string.IsNullOrEmpty(request.Value) || request.Value == "-" || request.Value.ToLowerInvariant() == "null")
                     {
@@ -387,7 +387,7 @@ namespace DSLNG.PEAR.Services
                     }
                 }
 
-                
+
                 DataContext.SaveChanges();
                 response.Id = request.Id > 0 ? request.Id : kpiAchievement.Id;
                 response.IsSuccess = true;
@@ -683,12 +683,12 @@ namespace DSLNG.PEAR.Services
                                     (x.Periode.Month >= 1 && x.Periode.Month <= date.Month && x.Periode.Year == date.Year)).AsQueryable();
                             double? kpiAchievement = ytdFormula == YtdFormula.Average ? data.Average(x => x.Value) : data.Sum(x => x.Value);
                             var kpiResponse = new GetKpiAchievementResponse.KpiResponse
-                                {
-                                    Id = kpi.Id,
-                                    Measurement = kpi.Measurement.Name,
-                                    Name = kpi.Name,
-                                    Remark = kpi.Remark,
-                                };
+                            {
+                                Id = kpi.Id,
+                                Measurement = kpi.Measurement.Name,
+                                Name = kpi.Name,
+                                Remark = kpi.Remark,
+                            };
 
                             return new GetKpiAchievementResponse
                             {
@@ -770,6 +770,7 @@ namespace DSLNG.PEAR.Services
                 switch (periodeType)
                 {
                     case PeriodeType.Daily:
+                    case PeriodeType.Monthly:
                     {
                         result = data.FirstOrDefault(x => x.PeriodeType == periodeType);
                         break;
