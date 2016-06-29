@@ -596,6 +596,10 @@ h6 {
         .table.key-equipment thead tr td {
             text-align: center;
         }
+
+        .table.key-equipment td.tripped {
+            background-color: yellow;
+        }
         
         .table.key-equipment td.running,
         .table.key-equipment td.normal-ops {
