@@ -986,6 +986,19 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "global-stock-market":
                     {
                         var viewModel = GetGeneralDerKpiInformations(13, layout, date, PeriodeType.Daily);
+                        int highlightId = 0;
+                        if (layout.KpiInformations.SingleOrDefault(x => x.Position == 8) != null && layout.KpiInformations.Single(x => x.Position == 8).SelectOption != null)
+                        {
+                            highlightId = layout.KpiInformations.Single(x => x.Position == 8).SelectOption.Id;
+                        }
+                        var highlight =
+                            _highlightService.GetHighlightByPeriode(new GetHighlightRequest
+                            {
+                                Date = date,
+                                HighlightTypeId = highlightId
+                            });
+                        viewModel.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Value =
+                            highlight.Message;
                         var view = RenderPartialViewToString("~/Views/Der/Display/_GlobalStockMarket.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
