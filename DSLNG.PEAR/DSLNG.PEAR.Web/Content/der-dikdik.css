@@ -749,7 +749,7 @@ h6 {
         }
         .table.ict-infra {
             border-bottom: 1px solid #0D0D0D;
-            margin-top:26px;
+            /*margin-top:26px;*/
         }
         
         .table.ict-infra td,
@@ -1016,4 +1016,8 @@ td.percentage-wrapper {
 }
     .brentfut-col ul li:last-child {
         border:none;
+    }
+
+    .table.ict-infra{
+        margin-top: 20px;
     }
