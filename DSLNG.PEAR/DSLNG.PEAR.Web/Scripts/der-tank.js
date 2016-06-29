@@ -16,6 +16,7 @@
         var maxCapacity = options.MaxCapacity;
         var volumeInventory = options.VolumeInventory;
         var volumeInventoryUnit = options.VolumeInventoryUnit;
+        var daysToTankTop = options.DaysToTankTop;
         var tankColor = 'aqua';
         
         this.append(title);
@@ -26,7 +27,7 @@
         var marginTop = 10;
         var marginBottom = 10;
 
-        var percentFill = Math.round((volumeInventory / maxCapacity) * 100);
+        var percentFill = Math.round((daysToTankTop / maxCapacity) * 100);
         var percentMin = Math.round((minCapacity / maxCapacity) * 100);
 
         //var tankHeight = svgHeight;
@@ -72,7 +73,7 @@
         if ($(this).data('type') == 'custom') {
             var $volume = $('<div />');
             $volume.addClass('volume');
-            $volume.html(volumeInventory + ' ' + volumeInventoryUnit);
+            $volume.html(volumeInventory.format(2) + ' ' + volumeInventoryUnit);
             $(this).append($volume);
             ellipseRX = 14;
             ellipseRY = svgHeight / 2;
