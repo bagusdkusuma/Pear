@@ -973,6 +973,11 @@ h6 {
     /*width:100%;*/
     height:100%;
 }
+.bar-percentage > div.mgdp {
+    background: #FFC000; /* For browsers that do not support gradients */
+    /*width:100%;*/
+    height:100%;
+}
 td.percentage-wrapper {
     padding:6px !important;
     position:relative
