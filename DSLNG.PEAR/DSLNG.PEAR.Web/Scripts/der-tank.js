@@ -110,16 +110,16 @@
                 stroke: 'gray',
                 strokeWidth: 1,
             });
-            /*var leftFoot = s.line(leftTank, svgHeight, leftTank+ footWidth, svgHeight).attr({
+            var leftFoot = s.line(leftTank, svgHeight, leftTank+ footWidth, svgHeight).attr({
                 fill: 'none',
-                stroke: 'blue',
+                stroke: 'transparent',
                 strokeWidth: 4,
-            });*/
-            /*var rightFoot = s.line(rightTank - footWidth, svgHeight, rightTank, svgHeight).attr({
+            });
+            var rightFoot = s.line(rightTank - footWidth, svgHeight, rightTank, svgHeight).attr({
                 fill: 'none',
-                stroke: 'blue',
+                stroke: 'transparent',
                 strokeWidth: 4,
-            });*/
+            });
             var leftVertical = s.line(leftTank + footWidth, 0, leftTank + footWidth, svgHeight).attr({
                 fill: 'none',
                 stroke: 'gray',
