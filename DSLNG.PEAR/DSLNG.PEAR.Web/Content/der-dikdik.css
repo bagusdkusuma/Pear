@@ -832,7 +832,8 @@ h6 {
             background-color: #a6a6a6;
         }
 
-        span.indicator .fa-circle {
+        span.indicator .fa-circle,
+        span.indicator.green {
             color: #5bbb75;
         } 
         /*td > span > .fa-circle, td > span > .fa-times-circle, td > span > .fa-exclamation-circle {
@@ -847,6 +848,18 @@ h6 {
          span.indicator .fa-exclamation-circle {
             color: #FDD545;
         }
+         span.indicator.black {
+            color: black;
+        } 
+         span.indicator.gray {
+            color: gray;
+        } 
+         span.indicator.red {
+            color: red;
+        } 
+         span.indicator.orange {
+            color: orange;
+        } 
         .table tbody tr td {
             position: relative;
         }
