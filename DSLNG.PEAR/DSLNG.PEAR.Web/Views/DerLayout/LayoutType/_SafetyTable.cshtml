@@ -2,7 +2,7 @@
 
 
 @{
-    string[] label = { "Fatality", "DAFWC", "Env/Spill (>1bbl or >=moderate)", "LOPC", "RWC", "MTC", "First-Aid", "Near-Miss", "Traffic Incident", "Propperty Damage", "Prop Dmg (<$50k or minor)" };
+    string[] label = { "Fatality", "DAFWC", "Env LOPC (>1bbl or >=moderate)", "Env LOPC (<1bbl or minor)", "RWC", "MTC", "First-Aid (FAC)", "Near-Miss", "Traffic Incident", "Prop Dmg (>$50K or >=moderate)", "Prop Dmg (<$50k or minor)" };
     var a = 0;
     for (int i = 0; i < Model.KpiInformations.Count; i++)
     {
