@@ -1007,15 +1007,15 @@
                                 type = 'right-side';
                             }
                             if (parseInt(data.view) < 2) {
-                                that.replaceWith('<span class="indicator ' + type + ' black"><i class="fa fa-times-circle"></i></span>');
+                                that.replaceWith('<span class="indicator ' + type + ' black"><i class="fa fa-circle"></i></span>');
                             } else if (parseInt(data.view) == 2) {
-                                that.replaceWith('<span class="indicator ' + type + ' gray"><i class="fa fa-times-circle"></i></span>');
+                                that.replaceWith('<span class="indicator ' + type + ' gray"><i class="fa fa-circle"></i></span>');
                             } else if (parseInt(data.view) == 3) {
-                                that.replaceWith('<span class="indicator ' + type + ' red"><i class="fa fa-times-circle"></i></span>');
+                                that.replaceWith('<span class="indicator ' + type + ' red"><i class="fa fa-circle"></i></span>');
                             } else if (parseInt(data.view) == 4) {
-                                that.replaceWith('<span class="indicator ' + type + ' orange"><i class="fa fa-times-circle"></i></span>');
+                                that.replaceWith('<span class="indicator ' + type + ' orange"><i class="fa fa-circle"></i></span>');
                             } else if (parseInt(data.view) > 4) {
-                                that.replaceWith('<span class="indicator ' + type + ' green"><i class="fa fa-times-circle"></i></span>');
+                                that.replaceWith('<span class="indicator ' + type + ' green"><i class="fa fa-circle"></i></span>');
                             }
                         }
                         else if (data.type === "highlight" && that.hasClass('highlight-json')) {
