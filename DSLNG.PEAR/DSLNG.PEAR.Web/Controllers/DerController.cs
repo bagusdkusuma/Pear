@@ -208,7 +208,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         var request = new GetMultiaxisChartDataRequest();
                         request.PeriodeType = PeriodeType.Daily;
                         request.RangeFilter = RangeFilter.Interval;
-                        request.Start = date.AddDays(-7);
+                        request.Start = date.AddDays(-6);
                         request.End = date;
 
                         var previewViewModel = new ArtifactPreviewViewModel();
