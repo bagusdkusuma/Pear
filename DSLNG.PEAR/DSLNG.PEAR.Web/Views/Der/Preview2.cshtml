@@ -76,7 +76,7 @@
                             var row0Col3 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 3);
                             if (row0Col3 != null)
                             {
-                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col3.Id })" class="layout-item highlight-json"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col3.Id })" class="layout-item daily-highlight"></div>
                             }
                         }
                         @{
@@ -978,6 +978,12 @@
             }
 
         }
+
+        var getNum = function (str) {
+            var numb = str.match(/\d/g);
+            numb = numb.join("");
+            return parseInt(numb);
+        }
         $('.layout-item').each(function () {
             var that = $(this);
             $.ajax({
@@ -993,7 +999,26 @@
                         || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type === "procurement" || data.type === "indicative-commercial-price" ||
                             data.type === "plant-availability" || data.type === "economic-indicator" || data.type === "mgdp" || data.type === "hhv" || data.type === "lng-and-cds-production"
                             || data.type === "nls" || data.type === "key-equipment-status" || data.type === "wave" || data.type === "table-tank" || data.type === "global-stock-market" || data.type === "loading-duration" || data.type === 'person-on-board') {
-                        if (data.type === "highlight" && that.hasClass('highlight-json')) {
+                        if (data.type === "highlight" && that.hasClass('daily-highlight')) {
+                            var type = "absolute";
+                            if (that.hasClass('in-left')) {
+                                type = 'left-side';
+                            } else if (that.hasClass('in-right')) {
+                                type = 'right-side';
+                            }
+                            if (parseInt(data.view) < 2) {
+                                that.replaceWith('<span class="indicator ' + type + ' black"><i class="fa fa-circle"></i></span>');
+                            } else if (parseInt(data.view) == 2) {
+                                that.replaceWith('<span class="indicator ' + type + ' gray"><i class="fa fa-circle"></i></span>');
+                            } else if (parseInt(data.view) == 3) {
+                                that.replaceWith('<span class="indicator ' + type + ' red"><i class="fa fa-circle"></i></span>');
+                            } else if (parseInt(data.view) == 4) {
+                                that.replaceWith('<span class="indicator ' + type + ' orange"><i class="fa fa-circle"></i></span>');
+                            } else if (parseInt(data.view) > 4) {
+                                that.replaceWith('<span class="indicator ' + type + ' green"><i class="fa fa-circle"></i></span>');
+                            }
+                        }
+                        else if (data.type === "highlight" && that.hasClass('highlight-json')) {
                             var type = "absolute";
                             if (that.hasClass('in-left')) {
                                 type = 'left-side';

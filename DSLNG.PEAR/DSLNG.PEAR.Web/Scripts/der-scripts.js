@@ -426,6 +426,7 @@ Number.prototype.format = function (n, x) {
             var startColor = null,
                 endColor = null;
             var centerPoint;
+            console.log('speedo bands',plotBands);
             for (var i = 0; i < plotBands.length - 1; i++) {
                 startColor = plotBands[i].color;
                 endColor = plotBands[(i + 1)].color;
@@ -670,9 +671,15 @@ Number.prototype.format = function (n, x) {
         $title.html(data.Pie.Title);
 
         var maxSeries;
-        var values = []
+        var values = [];
+        var displayName = {
+            'MB-MTD-LNG': 'LNG',
+            'MB-MTD-CDS': 'CDS',
+            'MB-MTD-FUEL-Refrg': 'Fuel-Refgr',
+            'MB-MTD-LOSS' : 'Loss'
+        }
         for (var i in data.Pie.SeriesResponses) {
-            console.log(i);
+            
             if (parseFloat(data.Pie.SeriesResponses[i].y) < 0) {
                 continue;
             }
@@ -689,6 +696,7 @@ Number.prototype.format = function (n, x) {
             //    //data.Pie.SeriesResponses[i].sliced = true;
             //    data.Pie.SeriesResponses[i].selected = true;
             //}
+            data.Pie.SeriesResponses[i].name = displayName[data.Pie.SeriesResponses[i].name.trim()];
         }
         container.highcharts({
             chart: {
