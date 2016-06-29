@@ -4,7 +4,7 @@
         var id = "tank_" + options.Id + Date.now();
         
         this.html('<svg class="svg" id="' + id + '" style="margin:auto;display:block"></svg>');
-
+        
         var s = Snap('#' + id).attr({
             width: dimension.width,
             height: dimension.height
@@ -16,12 +16,13 @@
         var maxCapacity = options.MaxCapacity;
         var volumeInventory = options.VolumeInventory;
         var volumeInventoryUnit = options.VolumeInventoryUnit;
+        var tankColor = 'aqua';
         
-
+        this.append(title);
         // variable Tank Chart
 
-        var svgWidth = dimension.width
-        var svgHeight = dimension.height
+        var svgWidth = dimension.width;
+        var svgHeight = dimension.height;
         var marginTop = 10;
         var marginBottom = 10;
 
@@ -67,7 +68,7 @@
 
         var heightFill = percentFill * tankHeight / 100;
         var yFill = svgHeight - heightFill - (ellipseRY / 2 + marginBottom);
-        console.log($(this));
+        
         if ($(this).data('type') == 'custom') {
             var $volume = $('<div />');
             $volume.addClass('volume');
@@ -109,16 +110,16 @@
                 stroke: 'gray',
                 strokeWidth: 1,
             });
-            var leftFoot = s.line(leftTank, svgHeight, leftTank+ footWidth, svgHeight).attr({
+            /*var leftFoot = s.line(leftTank, svgHeight, leftTank+ footWidth, svgHeight).attr({
                 fill: 'none',
                 stroke: 'blue',
                 strokeWidth: 4,
-            });
-            var rightFoot = s.line(rightTank - footWidth, svgHeight, rightTank, svgHeight).attr({
+            });*/
+            /*var rightFoot = s.line(rightTank - footWidth, svgHeight, rightTank, svgHeight).attr({
                 fill: 'none',
                 stroke: 'blue',
                 strokeWidth: 4,
-            });
+            });*/
             var leftVertical = s.line(leftTank + footWidth, 0, leftTank + footWidth, svgHeight).attr({
                 fill: 'none',
                 stroke: 'gray',
@@ -149,12 +150,17 @@
             s.text(rightTank - footWidth -50, svgHeight / 2, percentFill + '%');
             return this;
         }
+
+        if (title.toLowerCase().indexOf('cds') > -1) {
+            alert('asas');
+            tankColor = 'lawngreen';
+        }
         var ellipseTop = s.ellipse(ellipseX, topTank, ellipseRX, ellipseRY).attr({
             stroke: 'grey',
             fill: 'transparent',
             strokeWidth: 1
         });
-        s.text(ellipseX - 25, topTank, title);
+        //s.text(ellipseX - 25, topTank, title);
         var ellipseBottom = s.ellipse(ellipseX, bottomTank, ellipseRX, ellipseRY).attr({
             stroke: 'grey',
             fill: 'grey',
@@ -177,22 +183,22 @@
         //console.log(svgHeight - topTank - (ellipseRY / 2 + marginBottom));
         //console.log(options);
         var rect = s.rect(0, yFill, svgWidth, heightFill).attr({
-            fill: 'aqua',
-            stroke: 'aqua',
+            fill: tankColor,
+            stroke: tankColor,
             strokeWidth: 0,
         });
 
         var borderEclipse = s.ellipse(svgWidth/2, yFill, ellipseRX, ellipseRY).attr({
             stroke: 'grey',
-            fill: 'aqua',
+            fill: tankColor,
             strokeWidth: 1,
             strokeDasharray: 1
         });
 
         if (percentFill != 0) {
             var ellipseBottomFilled = s.ellipse(ellipseX, bottomTank, ellipseRX, ellipseRY).attr({
-                stroke: 'aqua',
-                fill: 'aqua',
+                stroke: tankColor,
+                fill: tankColor,
                 strokeWidth: 0
             });
             s.text(svgWidth / 2 - 10, yFill, percentFill + '%');
