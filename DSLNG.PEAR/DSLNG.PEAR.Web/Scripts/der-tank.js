@@ -27,7 +27,7 @@
         var marginTop = 10;
         var marginBottom = 10;
 
-        var percentFill = Math.round((daysToTankTop / maxCapacity) * 100);
+        var percentFill = Math.round((volumeInventory / maxCapacity) * 100);
         var percentMin = Math.round((minCapacity / maxCapacity) * 100);
 
         //var tankHeight = svgHeight;
@@ -71,6 +71,7 @@
         var yFill = svgHeight - heightFill - (ellipseRY / 2 + marginBottom);
         
         if ($(this).data('type') == 'custom') {
+            percentFill = Math.round((daysToTankTop / maxCapacity) * 100);
             var $volume = $('<div />');
             $volume.addClass('volume');
             $volume.html(volumeInventory.format(2) + ' ' + volumeInventoryUnit);
