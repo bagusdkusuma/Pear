@@ -833,7 +833,7 @@ h6 {
         }
 
         span.indicator .fa-circle,
-        span.indicator.green {
+        span.indicator.green fa-circle{
             color: #5bbb75;
         } 
         /*td > span > .fa-circle, td > span > .fa-times-circle, td > span > .fa-exclamation-circle {
@@ -848,16 +848,16 @@ h6 {
          span.indicator .fa-exclamation-circle {
             color: #FDD545;
         }
-         span.indicator.black {
+         span.indicator.black fa-circle{
             color: black;
         } 
-         span.indicator.gray {
+         span.indicator.gray fa-circle{
             color: gray;
         } 
-         span.indicator.red {
+         span.indicator.red fa-circle{
             color: red;
         } 
-         span.indicator.orange {
+         span.indicator.orange .fa-circle{
             color: orange;
         } 
         .table tbody tr td {
