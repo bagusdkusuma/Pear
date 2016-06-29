@@ -38,6 +38,17 @@ namespace DSLNG.PEAR.Web.App_Start
                         "~/Scripts/jquery.dataTables.min.js",
                         "~/Scripts/tableHeadFixer.js"
                        ));
+            bundles.Add(new ScriptBundle("~/bundles/der_preview_js").Include(
+                    "~/Scripts/jquery-1.11.3.js",
+                    "~/Content/bootstrap/js/bootstrap.js",
+                    "~/Scripts/moment.js",
+                     "~/Scripts/bootstrap-datetimepicker.js",
+                      "~/Scripts/highcharts.js",
+                       "~/Scripts/snap.svg.js",
+                        "~/Scripts/der-tank.js",
+                         "~/Scripts/fabricjs.js",
+                          "~/Scripts/der-scripts.js"
+                ));
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/bootstrap/css/bootstrap.css",
                 "~/Content/font-awesome/css/font-awesome.css",
                 //"~/Content/datepicker/css/datepicker.css",
@@ -61,6 +72,14 @@ namespace DSLNG.PEAR.Web.App_Start
             bundles.Add(new StyleBundle("~/Content/der_css").Include("~/Content/bootstrap/css/bootstrap.css",
               "~/Content/font-awesome/css/font-awesome.css",
                 "~/Content/style-der.css"));
+
+            bundles.Add(new StyleBundle("~/Content/der_preview").Include("~/Content/bootstrap/css/bootstrap.css",
+                   "~/Content/font-awesome/css/font-awesome.css",
+                   "~/Content/bootstrap/css/bootstrap.css",
+                   "~/Content/der-dikdik.css"));
+
+
+
         }
     }
 }
