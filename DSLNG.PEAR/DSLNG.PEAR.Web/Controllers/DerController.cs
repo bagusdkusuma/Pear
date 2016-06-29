@@ -1065,14 +1065,14 @@ namespace DSLNG.PEAR.Web.Controllers
                     (_kpiTargetService.GetKpiTargetByValue(new GetKpiTargetRequestByValue
                     {
                         Kpi_Id = target.Kpi.Id,
-                        periode = date,
+                        periode = new DateTime(date.Year, date.Month, 1),
                         PeriodeType = PeriodeType.Monthly.ToString()
                     }).Value).ToString();
                 kpiInformationVm.DerItemValue.Ytd =
                     (_kpiTargetService.GetKpiTargetByValue(new GetKpiTargetRequestByValue
                     {
                         Kpi_Id = target.Kpi.Id,
-                        periode = date,
+                        periode = new DateTime(date.Year, 1, 1),
                         PeriodeType = PeriodeType.Yearly.ToString()
                     }).Value).ToString();
 
