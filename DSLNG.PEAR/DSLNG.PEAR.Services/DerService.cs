@@ -1610,6 +1610,46 @@ namespace DSLNG.PEAR.Services
                     if (kpiInformation != null)
                     {
                         DataContext.DerKpiInformations.Remove(kpiInformation);
+                    }
+
+                    if (item.KpiId > 0)
+                    {
+                        var kpi = new Kpi { Id = item.KpiId };
+                        if (DataContext.Kpis.Local.FirstOrDefault(x => x.Id == kpi.Id) == null)
+                        {
+                            DataContext.Kpis.Attach(kpi);
+                        }
+                        else
+                        {
+                            kpi = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == kpi.Id);
+                        }
+                        var newKpiInformation = item.MapTo<DerKpiInformation>();
+                        newKpiInformation.Kpi = kpi;
+                        kpiInformations.Add(newKpiInformation);
+                    }
+                    else if (item.HighlightId > 0)
+                    {
+                        var selectOption = new SelectOption { Id = item.HighlightId };
+                        if (DataContext.SelectOptions.Local.FirstOrDefault(x => x.Id == selectOption.Id) == null)
+                        {
+                            DataContext.SelectOptions.Attach(selectOption);
+                        }
+                        else
+                        {
+                            selectOption =
+                                DataContext.SelectOptions.Local.FirstOrDefault(x => x.Id == selectOption.Id);
+                        }
+                        kpiInformations.Add(new DerKpiInformation
+                        {
+                            SelectOption = selectOption,
+                            Position = item.Position,
+                            ConfigType = item.ConfigType
+                        });
+                    }
+
+                    /*if (kpiInformation != null)
+                    {
+                        DataContext.DerKpiInformations.Remove(kpiInformation);
                         if (item.KpiId > 0)
                         {
                             var kpi = new Kpi { Id = item.KpiId };
@@ -1663,8 +1703,26 @@ namespace DSLNG.PEAR.Services
                             kpiInformations.Add(newKpiInformation);
                             //kpiInformations.Add(new DerKpiInformation { Kpi = kpi, Position = item.Position, ConfigType = item.ConfigType, KpiLabel = item.KpiLabel, KpiMeasurement = item.KpiMeasurement});
                         }
-
-                    }
+                        else if (item.HighlightId > 0)
+                        {
+                            var selectOption = new SelectOption { Id = item.HighlightId };
+                            if (DataContext.SelectOptions.Local.FirstOrDefault(x => x.Id == selectOption.Id) == null)
+                            {
+                                DataContext.SelectOptions.Attach(selectOption);
+                            }
+                            else
+                            {
+                                selectOption =
+                                    DataContext.SelectOptions.Local.FirstOrDefault(x => x.Id == selectOption.Id);
+                            }
+                            kpiInformations.Add(new DerKpiInformation
+                            {
+                                SelectOption = selectOption,
+                                Position = item.Position,
+                                ConfigType = item.ConfigType
+                            });
+                        }
+                    }*/
 
                 }
                 derLayoutItem.KpiInformations = kpiInformations;

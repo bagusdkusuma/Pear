@@ -1,4 +1,5 @@
-﻿@model DSLNG.PEAR.Services.Responses.Highlight.GetHighlightResponse
+﻿@using DevExpress.XtraScheduler.Services
+@model DSLNG.PEAR.Services.Responses.Highlight.GetHighlightResponse
 <style>
     .alert-condition tbody tr td:first-letter {
         text-transform: uppercase;
@@ -33,21 +34,24 @@ if (!string.IsNullOrEmpty(Model.Message))
 
 @helper ClassAlert()
 {
-    if (Model.Message.ToUpperInvariant().Contains("LOW"))
+    if (!string.IsNullOrEmpty(Model.Message))
     {
-    <text>low</text>
-    }
-    else  if (Model.Message.ToUpperInvariant().Contains("ELEVETED"))
-    {
-    <text>eleveted</text>
-    }
-    else  if (Model.Message.ToUpperInvariant().Contains("HIGH"))
-    {
-    <text>high</text>
-    }
-     if (Model.Message.ToUpperInvariant().Contains("SEVERE"))
-    {
-    <text>severe</text>
+        if (Model.Message.ToUpperInvariant().Contains("LOW"))
+        {
+            <text>low</text>
+        }
+        else if (Model.Message.ToUpperInvariant().Contains("ELEVETED"))
+        {
+            <text>eleveted</text>
+        }
+        else if (Model.Message.ToUpperInvariant().Contains("HIGH"))
+        {
+            <text>high</text>
+        }
+        if (Model.Message.ToUpperInvariant().Contains("SEVERE"))
+        {
+            <text>severe</text>
+        }
     }
 }
 

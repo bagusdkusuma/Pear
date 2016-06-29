@@ -222,6 +222,10 @@ Number.prototype.format = function (n, x) {
                 labels: {
                     style: {
                         fontSize: '7px'
+                    },
+                    formatter: function () {
+                        var x = this.value;
+                        return x.format();
                     }
                 },
                 lineWidth: 1
@@ -279,6 +283,10 @@ Number.prototype.format = function (n, x) {
                 labels: {
                     style: {
                         fontSize: '7px'
+                    },
+                    formatter: function () {
+                        var x = this.value;
+                        return x.format();
                     }
                 }
             });
