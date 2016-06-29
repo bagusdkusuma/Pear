@@ -87,6 +87,7 @@ namespace DSLNG.PEAR.Web.Helpers
 
         public static string DisplayDerDeviation(this HtmlHelper htmlHelper, string deviation)
         {
+            if (string.IsNullOrEmpty(deviation)) return string.Empty;
             switch (deviation)
             {
                 case "1":
@@ -145,7 +146,7 @@ namespace DSLNG.PEAR.Web.Helpers
 
         public static string DisplayDerRemarkWithValue(this HtmlHelper htmlHelper, string deviation)
         {
-
+            if (string.IsNullOrEmpty(deviation)) return string.Empty;
             switch (deviation.ToLowerInvariant())
             {
                 case "4":
@@ -170,6 +171,7 @@ namespace DSLNG.PEAR.Web.Helpers
 
         public static string DisplayDerRemarkForMarketTone(this HtmlHelper htmlHelper, string deviation)
         {
+            if (string.IsNullOrEmpty(deviation)) return string.Empty;
             switch (deviation)
             {
                 case "1":
@@ -242,6 +244,7 @@ namespace DSLNG.PEAR.Web.Helpers
 
         private static string RemarkToIcon(string s)
         {
+            if (string.IsNullOrEmpty(s)) return string.Empty;
             switch (s)
             {
                 case "1":
@@ -257,6 +260,7 @@ namespace DSLNG.PEAR.Web.Helpers
 
         private static MvcHtmlString RemarkToMvcHtmlString(string s)
         {
+            if(string.IsNullOrEmpty(s)) return new MvcHtmlString(string.Empty);
             switch (s)
             {
                 case "1":
@@ -272,6 +276,7 @@ namespace DSLNG.PEAR.Web.Helpers
 
         private static MvcHtmlString RemarkToMvcHtmlStringForLngAndCds(string s)
         {
+            if (string.IsNullOrEmpty(s)) return new MvcHtmlString(string.Empty);
             switch (s.ToLowerInvariant())
             {
                 case "4":
