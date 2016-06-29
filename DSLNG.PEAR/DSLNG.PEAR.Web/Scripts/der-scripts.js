@@ -476,7 +476,7 @@ Number.prototype.format = function (n, x) {
                 start += partLength;
             }
 
-            var point = Math.PI + (data.SpeedometerChart.Series.data[0] * Math.PI / plotBands[plotBands.length - 1].to);
+            var point = Math.PI + (data.SpeedometerChart.Series.data[0] * Math.PI / plotBands[plotBands.length - 1].from);
             var relateiveR = r - thickness / 2;
             var relativeR2 = r + thickness / 2;
             var xPoint = centerPoint.x + Math.cos(point) * (relateiveR);
