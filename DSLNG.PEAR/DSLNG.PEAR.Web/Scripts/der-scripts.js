@@ -719,7 +719,7 @@ Number.prototype.format = function (n, x) {
             },
             plotOptions: {
                 pie: {
-                    size: '100%',
+                    //size: '70%',
                     //slicedOffset: 30,
                     allowPointSelect: true,
                     cursor: 'pointer',
