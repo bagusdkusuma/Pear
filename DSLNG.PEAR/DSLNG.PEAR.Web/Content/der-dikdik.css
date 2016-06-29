@@ -431,13 +431,14 @@ h6 {
         .impurities {
             width: 100%;
             background-color: #215967;
-            height: 125px;
+            height: 115px;
             border: 1px solid #0D0D0D;
             color:#fff;
         }
         
         .table.plant-availability {
             border-left: 1px solid #0D0D0D;
+            margin-bottom: 8px;
         }
         
         .table.plant-availability thead tr td {
@@ -893,10 +894,11 @@ h6 {
             position: absolute;
             color:#000;
             top:16%;
-            left: 20px;
+            left: 9px;
+            text-align:left;
         }
         .impurities .barmeter{
-            height: 30px;
+            height: 25px;
             width:100px;
             margin-top:6px;
             margin-left:10px;
@@ -981,4 +983,10 @@ h6 {
 td.percentage-wrapper {
     padding:6px !important;
     position:relative
+}
+.termo-label {
+    position: absolute;
+    font-size: 7px;
+    width: 100%;
+    text-align: center;
 }

@@ -237,7 +237,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         var request = new GetPieDataRequest();
                         request.PeriodeType = PeriodeType.Daily;
                         request.RangeFilter = RangeFilter.Interval;
-                        request.Start = date.AddDays(-7);
+                        request.Start = date;
                         request.End = date;
                         request.HeaderTitle = layout.Artifact.HeaderTitle;
 

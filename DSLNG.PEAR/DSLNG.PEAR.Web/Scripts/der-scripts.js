@@ -596,7 +596,11 @@ Number.prototype.format = function (n, x) {
         var $label = $this.find('label').clone();
         if ($label.length) {
             $this.find('label').css('display', 'none');
-            $label.append('<span style="margin-left:30px">' + data['SpeedometerChart'].Series.data[0] + '</span>');
+            if ($this.data('break')) {
+                $label.append('<div style="margin-left:15px">' + data['SpeedometerChart'].Series.data[0] + '</div>');
+            } else {
+                $label.append('<span style="margin-left:15px">' + data['SpeedometerChart'].Series.data[0] + '</span>');
+            }
             $wrapper.append($label);
         } else {
             $wrapper.append('<label>' + data['SpeedometerChart'].Series.data[0] + '</label>');
@@ -639,6 +643,7 @@ Number.prototype.format = function (n, x) {
     }
     Der.Artifact.termometer = function (data, container) {
         var $this = container;
+        $this.append('<span style="top:'+ (100-data.Value + 5) + '%' +'" class="termo-label">' + data.Value + '%' + '</span>');
         var $canvas = $('<canvas/>');
         $canvas.css({
             width: '100%',
@@ -655,6 +660,7 @@ Number.prototype.format = function (n, x) {
             gradient.addColorStop("1.0", "#8EB4E3");
             ctx.fillStyle = gradient;
             ctx.fillRect(0, start, canvas.width, data.Value * canvas.height / 100);
+            
         }
     }
     Der.Artifact.pie = function (data, container) {

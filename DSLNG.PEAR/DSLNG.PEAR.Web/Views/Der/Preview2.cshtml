@@ -410,7 +410,7 @@
                                         var row6Col8 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 8);
                                         if (row6Col8 != null)
                                         {
-                                            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col8.Id })" class="layout-item barmeter">
+                                            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col8.Id })" class="layout-item barmeter" data-break="true">
                                                 <label>Ttl Sulphur-ppm</label>
                                             </div>
                                         }
@@ -419,7 +419,7 @@
                                         var row6Col10 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 10);
                                         if (row6Col10 != null)
                                         {
-                                            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col10.Id })" class="layout-item barmeter">
+                                            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col10.Id })" class="layout-item barmeter" >
                                                 <label>Hg-MRU outlet ng/nm3</label>
                                             </div>
                                         }
