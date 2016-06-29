@@ -614,8 +614,8 @@ namespace DSLNG.PEAR.Web.Controllers
                             viewModel.KpiInformationViewModels.Add(kpiInformationVm);
                         }*/
                         var viewModel = GetGeneralDerKpiInformations(3, layout, date, PeriodeType.Daily);
-                        var target0 = layout.KpiInformations.SingleOrDefault(x => x.Position == 1);
-                        viewModel.KpiInformationViewModels.Add(AddTarget(3, target0, date));
+                        var target1 = layout.KpiInformations.SingleOrDefault(x => x.Position == 1);
+                        viewModel.KpiInformationViewModels.Add(AddTarget(3, target1, date));
                         var view = RenderPartialViewToString("~/Views/Der/Display/_JobPmts.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
