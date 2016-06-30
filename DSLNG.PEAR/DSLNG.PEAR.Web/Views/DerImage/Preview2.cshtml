@@ -726,39 +726,35 @@
                         }
 
                         <h5 style="text-decoration: underline;margin-top:2px">ICT Infrastructure and System Highlight </h5>
-                        <p>@{
+                        @{
                             var row16Col6 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 6);
                             if (row16Col6 != null)
                             {
 
-                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row16Col6.Id })" class="layout-item"></div>
+                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row16Col6.Id })" class="layout-item" style="height: 12px;"></div>
 
                             }
-                        }</p>
-                        <table class="table borderless ict-infra">
+                        }
+                        @*<table class="table borderless ict-infra">
                             <tbody>
                                 <tr>
-                                    @{
-                                        var row16Col4 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 4);
-                                        if (row16Col4 != null)
-                                        {
-
-                                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row16Col4.Id })" class="layout-item highlight-json-ict-infra"></div>
-                                        }
-                                    }
-                                    @*<td>1</td>
-                                        <td><img src="@Url.Content("~/content/images/clip_image002.png")" alt="" width="52" height="25"></td>
-                                        <td>1</td>
-                                        <td><img src="@Url.Content("~/content/images/clip_image004.png")" alt="" width="52" height="25"></td>
-                                        <td>1</td>
-                                        <td><img src="@Url.Content("~/content/images/clip_image006.png")" alt="" width="52" height="25"></td>*@
+                                   
+                                   
                                 </tr>
                             </tbody>
-                        </table>
+                        </table>*@
+                        @{
+                            var row16Col4 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 4);
+                            if (row16Col4 != null)
+                            {
+
+                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row16Col4.Id })" class="layout-item highlight-json-ict-infra"></div>
+                            }
+                        }
                         <div class="row">
                             <div class="col-md-5">
                                 <h5 style="text-decoration: underline;margin-top:2px">GS &amp; FM </h5>
-                                <p>@{
+                                @{
                                     var row16Col7 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 7);
                                     if (row16Col7 != null)
                                     {
@@ -766,7 +762,7 @@
                                         <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row16Col7.Id })" class="layout-item"></div>
 
                                     }
-                                }</p>
+                                }
                             </div>
                             <div class="col-md-7" style="padding-top:5px !important">
                                 <u>Person-on-Board</u>:
@@ -780,21 +776,15 @@
                                 }
                             </div>
                         </div>
+                        @{
+                            var row16Col5 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 5);
+                            if (row16Col5 != null)
+                            {
 
-                        <table class="table borderless gs-fm">
-                            <tbody>
-                                <tr>
-                                    @{
-                                        var row16Col5 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 5);
-                                        if (row16Col5 != null)
-                                        {
-
-                                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row16Col5.Id })" class="layout-item highlight-json-gs-fm"></div>
-                                        }
-                                    }
-                                </tr>
-                            </tbody>
-                        </table>
+                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row16Col5.Id })" class="layout-item highlight-json-gs-fm"></div>
+                            }
+                        }
+                        
                     </div>
                     <div class="col-md-7">
                         @{
@@ -1074,8 +1064,10 @@
                             transform['a'] = getIcon(js.a);
                             transform['b'] = getIcon(js.b);
                             transform['c'] = getIcon(js.c);
-                            var html =
+                            var html = '<table class="table borderless ict-infra"><tbody>';
+                            html +=
                                 '<td>' + transform['a'] + '</td><td><img src="@Url.Content("~/content/images/clip_image002.png")" alt="" width="52" height="25"></td><td>' + transform['b'] + '</td><td><img src="@Url.Content("~/content/images/clip_image004.png")" alt="" width="52" height="25"></td><td>' + transform['c'] + '</td><td><img src="@Url.Content("~/content/images/clip_image006.png")" alt="" width="52" height="25"></td>';
+                            html += '</tbody></table>';
                             that.replaceWith(html);
                         }
                         else if (data.type === "highlight" && that.hasClass('highlight-json-gs-fm')) {
@@ -1088,8 +1080,10 @@
                             transform['a'] = getIcon(js.a);
                             transform['b'] = getIcon(js.b);
                             transform['c'] = getIcon(js.c);
-                            var html =
+                            var html = '<table class="table borderless gs-fm"><tbody>';
+                            html +=
                                 '<td>' + transform['a'] + '</td><td><img src="@Url.Content("~/content/images/clip_image008.png")" alt="" width="52" height="25"></td><td>' + transform['b'] + '</td><td><img src="@Url.Content("~/content/images/clip_image010.png")" alt="" width="52" height="25"></td><td>' + transform['c'] + '</td><td><img src="@Url.Content("~/content/images/clip_image012.png")" alt="" width="52" height="25"></td>';
+                            html += '</tbody></table>';
                             that.replaceWith(html);
                         }
                         else {
