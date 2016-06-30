@@ -380,6 +380,15 @@
     <Content Include="Content\img\remark_sign.png" />
     <Content Include="Content\img\report-bg.jpg" />
     <Content Include="Content\img\report.png" />
+    <Content Include="Content\img\select\cloudy.png" />
+    <Content Include="Content\img\select\heavy_rain.png" />
+    <Content Include="Content\img\select\hospital-marker.png" />
+    <Content Include="Content\img\select\light_rain.png" />
+    <Content Include="Content\img\select\low.jpg" />
+    <Content Include="Content\img\select\partly_cloudy.png" />
+    <Content Include="Content\img\select\rain.png" />
+    <Content Include="Content\img\select\Sunny-icon.png" />
+    <Content Include="Content\img\select\sunny.png" />
     <Content Include="Content\img\setting.png" />
     <Content Include="Content\img\throbber.gif" />
     <Content Include="Content\img\tick.png" />
