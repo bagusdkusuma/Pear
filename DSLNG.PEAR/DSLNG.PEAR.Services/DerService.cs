@@ -1897,5 +1897,13 @@ namespace DSLNG.PEAR.Services
                 Title = der.Title
             };
         }
+
+        public bool IsDerExisted(DateTime date, out int revision)
+        {
+            bool isExisted = false;
+            var der = DataContext.Ders.FirstOrDefault(x => x.Date.Year == date.Year && date.Month == date.Month && date.Day == date.Day);
+            revision = der!=null ?  der.Revision : 0;
+            return isExisted = der != null;
+        }
     }
 }

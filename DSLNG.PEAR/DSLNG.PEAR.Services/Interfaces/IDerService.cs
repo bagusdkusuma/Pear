@@ -28,6 +28,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         DeleteDerLayoutItemResponse DeleteLayoutItem(int id, string type );
         BaseResponse DeleteLayout(int id);
         GetKpiValueResponse GetKpiValue(GetKpiValueRequest request);
+        bool IsDerExisted(DateTime date, out int revision);
     }
 
     

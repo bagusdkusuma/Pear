@@ -453,7 +453,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 #region lng and cds
                 case "lng-and-cds":
                     {
-                        
+
                         var viewModel = GetGeneralDerKpiInformations(17, layout, date, PeriodeType.Daily);
                         var target4 = layout.KpiInformations.SingleOrDefault(x => x.Position == 4);
                         var target5 = layout.KpiInformations.SingleOrDefault(x => x.Position == 5);
@@ -507,7 +507,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 #region job pmts
                 case "job-pmts":
                     {
-                        
+
                         var viewModel = GetGeneralDerKpiInformations(3, layout, date, PeriodeType.Daily);
                         var target1 = layout.KpiInformations.SingleOrDefault(x => x.Position == 1);
                         viewModel.KpiInformationViewModels.Add(AddTarget(3, target1, date));
@@ -555,7 +555,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 #endregion
                 #region MGDP
                 case "mgdp":
-                    {   
+                    {
                         var viewModel = GetGeneralDerKpiInformations(3, layout, date, PeriodeType.Daily);// new DisplayKpiInformationViewModel();
                         var target = layout.KpiInformations.SingleOrDefault(x => x.Position == 1);
                         viewModel.KpiInformationViewModels.Add(AddTarget(3, target, date));
@@ -580,9 +580,9 @@ namespace DSLNG.PEAR.Web.Controllers
                 #region LNG and CDS Production
                 case "lng-and-cds-production":
                     {
-                        
+
                         var viewModel = GetGeneralDerKpiInformations(9, layout, date, PeriodeType.Daily);
-                        
+
                         var view = RenderPartialViewToString("~/Views/Der/Display/_LngAndCdsProduction.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
@@ -762,7 +762,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 #endregion
                 #region Economic Indicator
                 case "economic-indicator":
-                    {  
+                    {
                         var viewModel = GetGeneralDerKpiInformations(15, layout, date, PeriodeType.Daily);
                         var view = RenderPartialViewToString("~/Views/Der/Display/_EconomicIndicator.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
@@ -776,7 +776,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         for (int i = 0; i <= 23; i++)
                         {
                             var keyEquipmentViewModel = new DisplayKeyEquipmentStatusViewModel.KeyEquipmentStatusViewModel();
-                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ?? 
+                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
                                 new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
                             keyEquipmentViewModel.Position = item.Position;
                             string message = "N/A";
@@ -832,12 +832,12 @@ namespace DSLNG.PEAR.Web.Controllers
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
-                    #endregion
+                #endregion
                 #region Termometer
                 case "termometer": {
-                    var viewModel = GetGeneralDerKpiInformations(1, layout, date, PeriodeType.Daily);
-                    return Json(new { GraphicType = "termometer", Value = viewModel.KpiInformationViewModels[0].DerItemValue.Value }, JsonRequestBehavior.AllowGet);
-                }
+                        var viewModel = GetGeneralDerKpiInformations(1, layout, date, PeriodeType.Daily);
+                        return Json(new { GraphicType = "termometer", Value = viewModel.KpiInformationViewModels[0].DerItemValue.Value }, JsonRequestBehavior.AllowGet);
+                    }
                 #endregion
                 #region Person On Board
                 case "person-on-board":
@@ -894,7 +894,7 @@ namespace DSLNG.PEAR.Web.Controllers
         [HttpPost]
         public ActionResult Generate(string date)
         {
-            var theDate = DateTime.ParseExact(date, "MM/dd/yyyy",CultureInfo.InvariantCulture);
+            var theDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
             var secretNumber = Guid.NewGuid().ToString();
             DerImageController.SecretNumber = secretNumber;
             var displayUrl = Url.Action("Preview", "DerImage", new { secretNumber = secretNumber, date = theDate.ToString("MM/dd/yyyy") }, this.Request.Url.Scheme);
@@ -916,15 +916,15 @@ namespace DSLNG.PEAR.Web.Controllers
             //if (id != 0) {
             //    title = _derService.GetDerById(id).Title;
             //}
-            var pdfName =  title.Replace('/','-') + ".pdf";
+            var pdfName = title.Replace('/', '-') + ".pdf";
             var pdfPath = Path.Combine(Server.MapPath(PathConstant.DerPath), pdfName);
             htmlToPdf.Margins.Top = 10;
             htmlToPdf.Margins.Bottom = 10;
             htmlToPdf.Margins.Left = 10;
             htmlToPdf.Margins.Right = 10;
             htmlToPdf.GeneratePdf(htmlContent, null, pdfPath);
-             //htmlToPdf.GeneratePdfFromFile(displayUrl, null, pdfPath);
-            var response = _derService.CreateOrUpdate(new CreateOrUpdateDerRequest { 
+            //htmlToPdf.GeneratePdfFromFile(displayUrl, null, pdfPath);
+            var response = _derService.CreateOrUpdate(new CreateOrUpdateDerRequest {
                 Filename = PathConstant.DerPath + "/" + pdfName,
                 Title = title,
                 Date = DateTime.Now,
@@ -942,6 +942,40 @@ namespace DSLNG.PEAR.Web.Controllers
             //htmlToImageConverter.Height = 2481;
             //htmlToImageConverter.Width = 1754;
             //return File(htmlToImageConverter.GenerateImageFromFile(displayUrl, ImageFormat.Png), "image/png", "TheGraph.png");
+        }
+
+        [HttpPost]
+        public ActionResult Upload(HttpPostedFileBase derFile, string date)
+        {
+            var theDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+            int revision = 0;
+            var title = "DER/" + theDate.ToString("dd-MMM-yyyy");
+            string filename = title.Replace('/', '-');
+            var isExisted = _derService.IsDerExisted(theDate, out revision);
+            revision = isExisted ? (revision+1) : revision;
+            //if (_derService.IsDerExisted(theDate, out revision))
+            //{
+            //    filename = title + "_" + revision;
+            //}
+
+            //var pdfName = title.Replace('/', '-') + ".pdf";
+
+
+
+            if (derFile.ContentLength > 0)
+            {
+                var path = Path.Combine(Server.MapPath(PathConstant.DerPath), string.Format("{0}_{1}.pdf", filename, revision));
+                derFile.SaveAs(path);
+
+                var response = _derService.CreateOrUpdate(new CreateOrUpdateDerRequest
+                {
+                    Filename = filename,
+                    Title = title,
+                    Date = DateTime.Now,
+                    RevisionBy = UserProfile().UserId
+                });
+            }
+            return RedirectToAction("Index");
         }
 
         private DisplayKpiInformationViewModel GetGeneralDerKpiInformations(int numberOfKpi, GetDerLayoutitemResponse layout, DateTime date, PeriodeType periodeType)
