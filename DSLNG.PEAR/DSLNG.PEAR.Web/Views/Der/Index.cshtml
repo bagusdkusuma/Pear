@@ -6,6 +6,7 @@
 @Html.Partial("_MessageResponse")
 <div class="add-button-wrapper">
     @Html.ActionLink("Generate", "Preview", null, new { @class = "btn-master-rgw btn btn-primary" })
+    <a class="btn-master-rgw btn btn-primary" id="upload-der" data-toggle="modal" data-target="#der-upload-modal">Upload</a>
     @*@Html.ActionLink("Input", "Input", null, new { @class = "btn-master-rgw btn btn-primary" })*@
 </div>
 <table id="der-table" class="rgw-tbl-bp rgw-tbl table-transparent table table-responsive" cellspacing="0" width="100%">
@@ -17,10 +18,62 @@
         </tr>
     </thead>
 </table>
+
+<div id="der-upload-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <form name="upload-der-form" action="@Url.Action("Upload", "Der")" enctype="multipart/form-data" method="post">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Upload DER File</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group form-list">
+                        <label>File</label>
+                        <input class="form-control" type="file" name="derFile" required>
+                        <span class="field-validation-valid" data-valmsg-for="Weight" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-group form-list">
+                        <label>Date</label>
+                        <input name="date" class="form-control datepicker" />
+                    </div>
+                </div>
+                
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary" value="Upload"></input>
+                        <button type="button" class="btn btn-darkblue" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+        </form>
+    </div>
+</div>
+
+<div id="der-versions-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <form name="upload-der-form" action="@Url.Action("Upload", "Der")" enctype="multipart/form-data" method="post">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">DER Versions</h4>
+                </div>
+                <div class="modal-body">
+                </div>
+
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" value="Upload"></input>
+                    <button type="button" class="btn btn-darkblue" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#der-table').DataTable({
+            var table = $('#der-table').DataTable({
                 "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
                 "iDisplayLength": -1,
                 "bProcessing": true,
@@ -34,8 +87,14 @@
                         "mRender": function (data, type, row) {
                             return moment(new Date(data.match(/\d+/)[0] * 1)).format('DD MMM YYYY');
                      }
+
                     },
-                    { "mDataProp": "Revision", "name": "Revision", "className": "dt-body-left" },
+                    {
+                        "mDataProp": "Revision", "name": "Revision", "className": "dt-body-left",
+                        "mRender": function (data, type, row, pos) {
+                            return '<a href="#"  id="der-versions" data-toggle="modal" data-target="#der-versions-modal" data-pos="'+pos.row+'">' + data + '</a>';
+                        }
+                    },
                       {
                         "orderable": false,
                         "data": null,
@@ -57,19 +116,55 @@
                 }
             });
 
-            $('#planningBlueprints-table').on('click', '.delete', function () {
-                var id = $(this).attr('data-id');
-                if (confirm('Are you sure want to delete this item?' + id)) {
-                    var url = '@Url.Action("Delete", "PlanningBlueprint")';
+            $(document).on('click', '.delete', function () {
+                var filename = $(this).attr('data-filename');
+                if (confirm('Are you sure want to delete this item?' + filename)) {
+                    var url = '@Url.Action("Delete", "Der")';
                     var form = $('<form />');
                     form.attr('action', url);
                     form.attr('method', 'POST');
-                    form.html('<input type="hidden" name="id" value="' + id + '" />');
+                    form.html('<input type="hidden" name="filename" value="' + filename + '" />');
                     $('body').append(form);
                     form.submit();
                 }
             });
 
+            $('.datepicker').datetimepicker({
+                format: "MM/DD/YYYY",
+                focusOnShow: false
+            });
+            
+
+            //$('#upload-der').click(function () {
+            //    alert('asasas');
+            //});
+            $(document).on('click', '#der-versions', function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var row = $this.data('pos');
+                var rows = table.rows().data();
+                var rowData = rows[row];
+                var $table = $('<table />');
+                $table.addClass('table table-bordered der-versions-table');
+                $table.attr('style', 'color:#fff !important');
+                $table.append('<thead><tr><th>Version</th><th>File Attachment</th><th>Action</th></th></thead>');
+                $table.append('<tbody></tbody>');
+                var files = rowData.Filename.split(';');
+                var $tableBody = $table.find('tbody');
+                for (var i in files) {
+                    var version = parseInt(files[i].split('_')[1].replace('.pdf', ''));
+                    var $tr = $('<tr />');
+                    $tr.append('<td>' + version + '</td>');
+                    var view = '<a href="' + files[i].replace('~/', window.location.protocol + "//" + window.location.host + "/") + '">View File Attachment</a> |' +
+                                    '<a download href="' + files[i].replace('~/', window.location.protocol + "//" + window.location.host + "/") + '">Download</a>';
+                    $tr.append('<td>' + view + '</td>');
+                    var arrFilenames = files[i].split('/');
+                    var filename = arrFilenames[arrFilenames.length - 1];
+                    $tr.append('<td><a href="#" class="delete" data-filename="'+filename+'">Delete</a></td>');
+                    $tableBody.append($tr);
+                }
+                $('#der-versions-modal .modal-body').html($table);
+            });
 
         });
     </script>

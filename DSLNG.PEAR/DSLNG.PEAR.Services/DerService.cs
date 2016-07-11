@@ -92,7 +92,7 @@ namespace DSLNG.PEAR.Services
                     existingDer.IsActive = request.IsActive;
                     existingDer.Title = request.Title;
                     existingDer.Date = request.Date;
-                    existingDer.Filename = request.Filename;
+                    existingDer.Filename += ";" + request.Filename;
                     existingDer.RevisionBy = user;
                     existingDer.Revision = existingDer.Revision + 1;
                 }
@@ -1896,6 +1896,38 @@ namespace DSLNG.PEAR.Services
                 Id = der.Id,
                 Title = der.Title
             };
+        }
+
+        public bool IsDerExisted(DateTime date, out int revision)
+        {
+            bool isExisted = false;
+            var der = DataContext.Ders.FirstOrDefault(x => x.Date.Year == date.Year && date.Month == date.Month && date.Day == date.Day);
+            revision = der!=null ?  der.Revision : 0;
+            return isExisted = der != null;
+        }
+
+        public BaseResponse DeleteFilename(string filename, DateTime date)
+        {
+            var response = new CreateOrUpdateResponse();
+            try
+            {
+                var existingDer = DataContext.Ders.FirstOrDefault(s => s.Date == date);
+                var filenames = existingDer.Filename.Split(';').ToList();
+                var fileToRemove = filenames.FirstOrDefault(x => x.Contains(filename));
+                filenames.Remove(fileToRemove);
+                existingDer.Filename = string.Join(";", filenames);
+
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = "File Attachment has been added successfully";
+            }
+            catch (Exception exception)
+            {
+                response.IsSuccess = false;
+                response.Message = exception.Message;
+            }
+
+            return response;
         }
     }
 }
