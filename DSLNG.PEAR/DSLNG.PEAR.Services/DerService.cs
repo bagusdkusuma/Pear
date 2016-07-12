@@ -17,6 +17,7 @@ using DSLNG.PEAR.Services.Requests.Der;
 using DSLNG.PEAR.Services.Responses;
 using DSLNG.PEAR.Services.Responses.Der;
 using System.Data.SqlClient;
+using System.Text.RegularExpressions;
 
 namespace DSLNG.PEAR.Services
 {
@@ -54,7 +55,10 @@ namespace DSLNG.PEAR.Services
                 .Include(x => x.RevisionBy);
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             {
-                data = data.Where(x => x.Title.Contains(search) || x.Filename.Contains(search));
+                var dates = search.Split('-');
+                var year = int.Parse(dates[1].Trim());
+                var month = int.Parse(dates[0].Trim());
+                data = data.Where(x => x.Date.Year == year && x.Date.Month == month);
             }
 
             foreach (var sortOrder in sortingDictionary)
@@ -1901,7 +1905,7 @@ namespace DSLNG.PEAR.Services
         public bool IsDerExisted(DateTime date, out int revision)
         {
             bool isExisted = false;
-            var der = DataContext.Ders.FirstOrDefault(x => x.Date.Year == date.Year && date.Month == date.Month && date.Day == date.Day);
+            var der = DataContext.Ders.FirstOrDefault(x => x.Date.Year == date.Year && x.Date.Month == date.Month && x.Date.Day == date.Day);
             revision = der!=null ?  der.Revision : 0;
             return isExisted = der != null;
         }
@@ -1915,6 +1919,19 @@ namespace DSLNG.PEAR.Services
                 var filenames = existingDer.Filename.Split(';').ToList();
                 var fileToRemove = filenames.FirstOrDefault(x => x.Contains(filename));
                 filenames.Remove(fileToRemove);
+                if (filenames.Count == 0) {
+                    DataContext.Ders.Remove(existingDer);
+                    DataContext.SaveChanges();
+                    response.IsSuccess = true;
+                    response.Message = "File Attachment has been added successfully";
+                    return response;
+                }
+                var lastFile = filenames.Last();
+                var regex = new Regex(@"_(\d+)\.pdf");
+                Match match = regex.Match(lastFile);
+                Regex versionRegex = new Regex(@"\d+");
+                Match versionMatch = versionRegex.Match(match.Value);
+                existingDer.Revision = int.Parse(versionMatch.Value);
                 existingDer.Filename = string.Join(";", filenames);
 
                 DataContext.SaveChanges();

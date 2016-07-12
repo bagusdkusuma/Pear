@@ -59,7 +59,25 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            var viewModel = new DerIndexViewModel();
+            if (Request.QueryString["month"] == null)
+            {
+                viewModel.Month = DateTime.Now.Month;
+            }
+            else {
+                viewModel.Month = int.Parse(Request.QueryString["month"]);
+            }
+            if (Request.QueryString["year"] == null)
+            {
+                viewModel.Year = DateTime.Now.Year;
+            }
+            else {
+                viewModel.Year = int.Parse(Request.QueryString["year"]);
+            }
+            for (var i = 2011; i < 2030; i++) {
+                viewModel.YearList.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+            }
+            return View(viewModel);
         }
 
         public ActionResult Grid(GridParams gridParams)
