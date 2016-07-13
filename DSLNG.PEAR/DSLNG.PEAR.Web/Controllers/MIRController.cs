@@ -27,7 +27,7 @@ namespace DSLNG.PEAR.Web.Controllers
         // GET: MIR
         public ActionResult Index()
         {
-            ViewBag.Years = _dropDownService.GetYears().MapTo<SelectListItem>();
+            ViewBag.Years = _dropDownService.GetYears(2011, 2030).MapTo<SelectListItem>();
             ViewBag.Year = DateTime.Now.Year;
             return View();
         }
@@ -64,7 +64,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 ExSumDefaultPage = 3,
                 Year = DateTime.Now.Year,
                 Month = DateTime.Now.Month - 1,
-                Years = _dropDownService.GetYears().MapTo<SelectListItem>(),
+                Years = _dropDownService.GetYears(2011,2030).MapTo<SelectListItem>(),
                 Months = _dropDownService.GetMonths().MapTo<SelectListItem>()
             };
             return View(model);
@@ -73,7 +73,7 @@ namespace DSLNG.PEAR.Web.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult Create(FileRepositoryCreateViewModel model)
         {
-            model.Years = _dropDownService.GetYears().MapTo<SelectListItem>();
+            model.Years = _dropDownService.GetYears(2011,2030).MapTo<SelectListItem>();
             model.Months = _dropDownService.GetMonths().MapTo<SelectListItem>();
 
             if (ModelState.IsValid)
@@ -104,7 +104,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Edit(int Id)
         {
             var model = _fileRepositoryService.GetFile(new GetFileRequest { Id = Id }).MapTo<FileRepositoryCreateViewModel>();
-            model.Years = _dropDownService.GetYears().MapTo<SelectListItem>();
+            model.Years = _dropDownService.GetYears(2011,2030).MapTo<SelectListItem>();
             model.Months = _dropDownService.GetMonths().MapTo<SelectListItem>();
             return View(model);
         }
@@ -112,7 +112,7 @@ namespace DSLNG.PEAR.Web.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult Edit(FileRepositoryCreateViewModel model)
         {
-            model.Years = _dropDownService.GetYears().MapTo<SelectListItem>();
+            model.Years = _dropDownService.GetYears(2011, 2030).MapTo<SelectListItem>();
             model.Months = _dropDownService.GetMonths().MapTo<SelectListItem>();
 
             if (ModelState.IsValid)
