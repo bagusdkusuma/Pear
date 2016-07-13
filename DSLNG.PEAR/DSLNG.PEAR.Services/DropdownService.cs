@@ -115,20 +115,6 @@ namespace DSLNG.PEAR.Services
             });
         }
 
-        public IEnumerable<Dropdown> GetYearsForMir()
-        {
-            var years = new List<int>();
-            for (int i = 2011; i <= 2030; i++)
-            {
-                years.Add(i);
-            }
-            return years.Select(x => new Dropdown
-            {
-                Value = x.ToString(),
-                Text = x.ToString()
-            });
-        }
-
         public IEnumerable<Dropdown> GetYearsForOperationData()
         {
             var years = new List<int>();
@@ -338,6 +324,20 @@ namespace DSLNG.PEAR.Services
                 return (from configType in config.ToList() where configType == ConfigType.KpiAchievement || configType == ConfigType.KpiTarget select new Dropdown { Text = configType.ToString(), Value = configType.ToString() }).ToList();
             }
             return GetConfigTypes();
+        }
+
+        public IEnumerable<Dropdown> GetYears(int startYear, int endYear)
+        {
+            var years = new List<int>();
+            for (int i = startYear; i <= endYear; i++)
+            {
+                years.Add(i);
+            }
+            return years.Select(x => new Dropdown
+            {
+                Value = x.ToString(),
+                Text = x.ToString()
+            });
         }
     }
 }
