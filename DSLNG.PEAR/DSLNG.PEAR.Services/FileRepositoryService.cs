@@ -99,7 +99,7 @@ namespace DSLNG.PEAR.Services
             var data = DataContext.FileRepositories.Where(x => x.Year == year).AsQueryable();
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             {
-                data = data.Where(x => x.Name.Contains(search) || x.Summary.Contains(search));
+                data = data.Where(x => x.Name.Contains(search) || x.Summary.Contains(search) || x.Filename.Contains(search));
             }
             if (sortingDictionary != null && sortingDictionary.Count > 0)
             {
