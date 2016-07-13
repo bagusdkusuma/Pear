@@ -115,6 +115,20 @@ namespace DSLNG.PEAR.Services
             });
         }
 
+        public IEnumerable<Dropdown> GetYearsForMir()
+        {
+            var years = new List<int>();
+            for (int i = 2011; i <= 2030; i++)
+            {
+                years.Add(i);
+            }
+            return years.Select(x => new Dropdown
+            {
+                Value = x.ToString(),
+                Text = x.ToString()
+            });
+        }
+
         public IEnumerable<Dropdown> GetYearsForOperationData()
         {
             var years = new List<int>();
