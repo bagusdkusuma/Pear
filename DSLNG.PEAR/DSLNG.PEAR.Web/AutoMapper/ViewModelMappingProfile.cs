@@ -748,7 +748,8 @@ namespace DSLNG.PEAR.Web.AutoMapper
         {
             Mapper.CreateMap<GetFileRepositoryResponse, FileRepositoryViewModel>();
             Mapper.CreateMap<GetFileRepositoryResponse, FileRepositoryCreateViewModel>();
-            Mapper.CreateMap<GetFilesRepositoryResponse.FileRepository, FileRepositoryViewModel>();
+            Mapper.CreateMap<GetFilesRepositoryResponse.FileRepository, FileRepositoryViewModel>()
+                .ForMember(x => x.Data, y => y.Ignore());
             Mapper.CreateMap<GetFilesRepositoryResponse.FileRepository, FileRepositoryGridViewModel.FileRepository>();
             Mapper.CreateMap<FileRepositoryGridViewModel.FileRepository, FileRepositoryViewModel>();
             Mapper.CreateMap<FileRepositoryViewModel, FileRepositoryGridViewModel.FileRepository>();
