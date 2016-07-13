@@ -979,7 +979,10 @@ namespace DSLNG.PEAR.Web.Controllers
 
             //var pdfName = title.Replace('/', '-') + ".pdf";
 
-
+            if (!Directory.Exists(Server.MapPath(PathConstant.DerPath)))
+            {
+                Directory.CreateDirectory(Server.MapPath(PathConstant.DerPath));
+            }
 
             if (derFile.ContentLength > 0)
             {
