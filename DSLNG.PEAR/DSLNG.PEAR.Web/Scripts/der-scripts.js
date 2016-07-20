@@ -153,11 +153,21 @@ Number.prototype.format = function (n, x) {
     return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,');
 };
 
-(function window(window,$,undefined){
+(function window(window, $, undefined) {
+    
     var Der = {};
     Der.Artifact = {};
     Der.Artifact.line = function (data, container) {
-        console.log('data-fractioin', container.data('fraction'));
+        console.log(data);
+        var symbol = 'circle';
+        var fillColor = 'red';
+        if (data.LineChart.Title.toLowerCase().indexOf('cds') > -1) {
+            symbol = 'triangle';            
+        } else if (data.LineChart.Title.toLowerCase().indexOf('thermal') > -1) {
+            symbol = 'square';
+        } else if (data.LineChart.Title.toLowerCase().indexOf('loss') > -1) {            
+            fillColor = '#403152';
+        }
         container.highcharts({
             chart: {
                 zoomType: 'xy',
@@ -187,6 +197,8 @@ Number.prototype.format = function (n, x) {
                 line: {
                     marker: {
                         enabled: true,
+                        symbol: symbol,
+                        fillColor: fillColor,
                         //radius:2,
                         states: {
                             hover: {
@@ -273,6 +285,10 @@ Number.prototype.format = function (n, x) {
         };
         var series = [];
         for (var i in data.MultiaxisChart.Charts) {
+            
+            var symbol = i % 2 == 0 ? 'triangle' : 'square';
+            var fillColor = i % 2 == 0 ? '#31587f' : '#fff000';
+            
             yAxes.push({
                 title: {
                     text: data.MultiaxisChart.Charts[i].Measurement,
@@ -299,11 +315,14 @@ Number.prototype.format = function (n, x) {
                     }
                 },
                 min: container.data('min') != '' && container.data('min') != null ? container.data('min') : null,
+                lineWidth: 1
             });
-            if (chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType] == 'line') {
+            if (chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType] == 'line') {                
+                var symbol = i % 2 == 0 ? 'triangle' : 'square';
                 plotOptions[chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType]] = {
                     marker: {
                         enabled: true,
+                        symbol: symbol,
                         states: {
                             hover: {
                                 radius: 4
@@ -324,6 +343,7 @@ Number.prototype.format = function (n, x) {
                         lineWidth: 1,
                         lineColor: '#666666',
                         enabled: true,
+                        symbol: 'triangle',
                         states: {
                             hover: {
                                 radius: 4
@@ -338,12 +358,20 @@ Number.prototype.format = function (n, x) {
                 plotOptions[chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType]] = { stacking: 'normal' };
             }
             for (var j in data.MultiaxisChart.Charts[i].Series) {
+                
+
                 if (seriesNames.indexOf(data.MultiaxisChart.Charts[i].Series[j].name) < 0) {
                     seriesNames.push(data.MultiaxisChart.Charts[i].Series[j].name);
                 } else {
                     data.MultiaxisChart.Charts[i].Series[j].showInLegend = false;
                 }
                 data.MultiaxisChart.Charts[i].Series[j].type = chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType];
+                data.MultiaxisChart.Charts[i].Series[j].marker = {
+                    enabled: true,
+                    radius: 3,
+                    symbol: symbol,
+                    fillColor: fillColor
+                };
                 if (data.MultiaxisChart.Charts[i].Series[j].type != 'spline' && data.MultiaxisChart.Charts[i].SeriesType == 'single-stack') {
                     data.MultiaxisChart.Charts[i].Series[j].stack = data.MultiaxisChart.Charts[i].Series[j].name;
                 }
@@ -383,7 +411,7 @@ Number.prototype.format = function (n, x) {
             credits: {
                 enabled: false
             },
-            plotOptions: plotOptions,
+            //plotOptions: plotOptions,
             xAxis: [{
                 categories: data.MultiaxisChart.Periodes,
                 crosshair: true,
@@ -426,7 +454,7 @@ Number.prototype.format = function (n, x) {
             var startColor = null,
                 endColor = null;
             var centerPoint;
-            console.log('speedo bands',plotBands);
+            //console.log('speedo bands',plotBands);
             for (var i = 0; i < plotBands.length - 1; i++) {
                 startColor = plotBands[i].color;
                 endColor = plotBands[(i + 1)].color;
@@ -487,8 +515,8 @@ Number.prototype.format = function (n, x) {
             var L1 = ' L ' + (centerPoint.x + Math.cos(point * 0.98) * (relativeR2)) + ' ' + (centerPoint.y + Math.sin(point * 0.98) * (relativeR2));
             var L2 = ' L ' + (centerPoint.x + Math.cos(point * 1.02) * (relativeR2)) + ' ' + (centerPoint.y + Math.sin(point * 1.02) * (relativeR2));
             var path = new fabric.Path(M + L1 + L2 + ' z');
-            console.log(centerPoint);
-            console.log(M + L1 + L2 + ' z');
+            //console.log(centerPoint);
+            //console.log(M + L1 + L2 + ' z');
             path.set({ fill: 'black' });
             canvas.add(path);
             //var triangle = new fabric.Triangle({

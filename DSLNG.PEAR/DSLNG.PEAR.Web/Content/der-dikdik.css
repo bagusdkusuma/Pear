@@ -431,7 +431,7 @@ h6 {
         .impurities {
             width: 100%;
             background-color: #215967;
-            height: 115px;
+            height: 121px;
             border: 1px solid #0D0D0D;
             color:#fff;
         }
@@ -1021,3 +1021,72 @@ td.percentage-wrapper {
     .table.ict-infra{
         margin-top: 20px;
     }
+
+    .table.alert-condition tbody tr td {
+        font-size: 22px;
+    }
+
+    .safty-management,
+    .commercial-operation {
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .daily-highlight h5,
+    .avg-stats thead tr td:first-child,
+    .feed-gas,
+    .job-pmts thead tr:first-child,
+    .mgdp thead tr:first-child,
+    .hhv thead tr:first-child {
+        font-size: 13px;
+    }
+
+    .daily-highlight,
+    .kpi-fatality thead tr td,
+    .qhse-remark thead tr td,
+    .weekly-alarm thead,
+    .pie thead,
+    .security-remarks h5,
+    .security-incident > tbody > tr > td:first-child > ul,
+    .alert-condition thead,
+    .total-feed-gas thead,
+    .total-feed-gas tbody > tr > td:first-child,
+    .impurities > label,
+    .production thead tr td,
+    .production tbody tr:first-child td
+    {
+        font-size: 12px;
+    }
+
+    .avg-stats,
+    .dafwc,
+    .weather,
+    .tide-wave,
+    .qhse-remark tbody,
+    .weekly-alarm tbody,
+    .pie tbody,
+    .security-remarks div,
+    .job-pmts thead tr:last-child,
+    .mgdp thead tr:last-child,
+    .hhv thead tr:last-child ,
+    .psig,
+    .production tbody tr:last-child td
+    {
+        font-size: 11px;
+    }
+
+    .total-feed-gas tbody > tr > td:first-child,
+    .plant-availability tbody tr > td:first-child,
+    .production tbody tr > td:first-child,
+    .psig
+    {
+        font-weight: bold;
+    }
+
+    
+
+    
+
+    
+
+    
