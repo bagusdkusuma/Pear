@@ -17,7 +17,7 @@
 h5 {
     margin-top: 0px;
     margin-bottom: 4px;
-    font-size:10px;
+    font-size:13px;
 }
 .header-left h5 {
     margin-top:5px;
@@ -60,8 +60,8 @@ h6 {
         }
         .container.a3-ratio,
         body.der-image{
-            height: 1908px;
-            width:1349px;
+            height: auto;
+            width:98%;
 
             /*width:1686px;
             height:2385px;*/
@@ -178,10 +178,10 @@ h6 {
             border: none;
         }
         
-        .dafwc,
+        /*.dafwc,
         .weather {
             border-right: 1px solid #0D0D0D;
-        }
+        }*/
         
         .weather,
         .tide-wave {
@@ -190,8 +190,19 @@ h6 {
         
         .tide-wave tbody tr:first-child,
         .weather tbody tr:first-child {
-            height: 28px;
+            height: 33px;
         }
+        .weather tbody tr:last-child td,
+        .weather tbody tr:last-child td img,
+        .tide-wave tbody tr:last-child td,
+        .tide-wave tbody tr:last-child img
+        {
+            vertical-align:bottom;
+        }
+            .tide-wave tbody tr:last-child {
+               height:30px; 
+            }
+        
         
         label {
             margin-bottom: 0;
@@ -227,7 +238,7 @@ h6 {
         }
         
         .table.kpi-fatality {
-            border-right: 1px solid #0D0D0D;
+            /*border-right: 1px solid #0D0D0D;*/
             text-align: center;
         }
         
@@ -252,7 +263,8 @@ h6 {
         .table.qhse-remark tbody td {
             vertical-align: middle;
             text-align: center;
-            height: 70px;
+             padding: 0;
+            height: 103px;
         }
         
         .table.weekly-alarm thead td {
@@ -262,13 +274,13 @@ h6 {
         
         .table.qhse-remark,
         .table.weekly-alarm {
-            border-right: 1px solid #0D0D0D;
+            /*border-right: 1px solid #0D0D0D;*/
             border-collapse: collapse;
             border-spacing: 0;
         }
         
         .table.weekly-alarm > tbody > tr:last-child > td {
-            height: 120px;
+            /*height: 145px   ;*/
         }
         
         .table.weekly-alarm > tbody > tr > td table {
@@ -289,8 +301,9 @@ h6 {
         }
         
         .table.security-incident tbody tr td {
-            border-left: 1px solid #0D0D0D;
-            background-clip: padding-box;
+            border: 1px solid #444;
+            border-top:none;
+            border-bottom:none;
         }
         
         .table.table.security-incident tbody tr td {
@@ -303,7 +316,7 @@ h6 {
         }
         
         .table.table.security-incident tbody tr td:first-child + td {
-            width: 32%;
+            width: 42%;
         }
         
         .table.security-incident ul {
@@ -314,9 +327,9 @@ h6 {
             padding: 3px 0;
         }
         
-        .table.alert-condition {
+        /*.table.alert-condition {
             border-left: 1px solid #0D0D0D;
-        }
+        }*/
         
         .table.alert-condition thead tr td {
             background-color: #92CDDC;
@@ -326,7 +339,7 @@ h6 {
             background-color: #00FF00;
             font-size: 16px;
             vertical-align: middle;
-            height: 38px;
+            height: 42px;
             font-weight: bold;
         }
             .table.alert-condition tbody tr td.the-alert.low {
@@ -404,11 +417,14 @@ h6 {
         }
         
         .table.hhv tbody tr:first-child td {
-            height: 30px;
+            height: 42px;
         }
+            .table.hhv .special-height {
+                height:23px;
+            }
         
         .vertical-space {
-            margin-bottom: 5px;
+            margin-bottom: 10px;
         }
         
         .table.top-bottom-border {
@@ -437,14 +453,14 @@ h6 {
         .impurities {
             width: 100%;
             background-color: #215967;
-            height: 121px;
+            height: 139px;
             border: 1px solid #0D0D0D;
             color:#fff;
         }
         
         .table.plant-availability {
             border-left: 1px solid #0D0D0D;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
         
         .table.plant-availability thead tr td {
@@ -795,7 +811,7 @@ h6 {
         }
         
         .fa {
-            font-size: 9px;
+            font-size: 12px;
         }
         
         .market-tone label {
@@ -881,10 +897,12 @@ h6 {
             position: absolute;
             left:5px;
         }
-
+.daily-highlight {
+    position:relative;
+}
         .daily-highlight .indicator.absolute{
             left: 100px;
-            top: 3px;
+            top: 5px;
         }
         /*.table.table.kpi-fatality > tbody > tr > td:nth-last-child(2) {
             position: relative;
@@ -917,12 +935,13 @@ h6 {
             top:16%;
             left: 9px;
             text-align:left;
+            z-index:2;
         }
         .impurities .barmeter{
             height: 25px;
-            width:100px;
-            margin-top:6px;
-            margin-left:10px;
+            width:130px;
+            margin-top:11px;
+            margin-left:0;
         }
         .impurities .thermometer{
             height: 100px;
@@ -931,15 +950,19 @@ h6 {
             background-size: 100% 100%;
             margin-top: 2px;
             margin-left: 5px;
+            position:relative;
+            zoom: 1.1;
         }
         .impurities .thermometer .bar-thermo{
             width: 27px;
             height: 80px;
-            top: 17px;
-            left: 22px;
+            /*top: 17px;
+            left: 22px;*/
+            top: 15px;
+            left: 17px;
             position: absolute;
         }
-        .bar-thermo img{
+        .bar-thermo img.drop{
             width: 10px;
             position: absolute;
             top: 5px;
@@ -974,7 +997,7 @@ h6 {
 }
     .speedo-wrapper .value {
         position: absolute;
-    bottom: 0;
+    bottom: -11px;
     /* left: 45%; */
     width: 100%;
     left: 0;
@@ -1091,3 +1114,35 @@ td.percentage-wrapper {
     {
         font-weight: bold;
     }
+.main-table tr td {
+    vertical-align:top;
+}
+.main-table table table tr td {
+    padding:5px;
+}
+.proper {
+    padding: 5px;
+}
+table.main-table {
+    width: 100%;
+}
+
+.header .header-left {
+    width: 65%;
+}
+
+.header .header-right-wrapper {
+    width: 35%;
+    height: 90px;
+}
+
+.header .header-right {
+    width: 100%;
+    height: 100%;
+}
+table.security-incident-wrapper > tbody > tr > td {
+    padding:0;
+}
+.security-remarks-wrapper{
+    padding:5px;
+}

@@ -20,25 +20,6 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <style>
-        table.main-table {
-            width: 100%;
-        }
-
-        .header .header-left {
-            width: 70%;
-        }
-
-        .header .header-right-wrapper {
-            width: 30%;
-            height: 90px;
-        }
-
-        .header .header-right {
-            width: 100%;
-            height: 100%;
-        }
-    </style>
 </head>
 <body data-date="@DateTime.Now.ToString("MM/dd/yyyy")">
     <div class="control">
@@ -56,7 +37,7 @@
     <div class="container a3-ratio preview">
         <table class="main-table" style="width:100%">
             <tr class="header">
-                <td class="header-left text-center">
+                <td class="header-left text-center" style="width:65%">
                     <h4>DAILY EXECUTIVE REPORT</h4>
                     <h5>The Last 24 Hours Business Perfomance</h5>
                     <h5>
@@ -74,8 +55,9 @@
                         } until LT24:00 HOURS
                     </h5>
                 </td>
-                <td class="header-right-wrapper">
-                    <div class="header-right">
+                <td class="header-right-wrapper" style="width:35%">
+                    <div class="header-right" style="text-indent:-7000px">
+                        <p style="width:200px">header-background</p>
                     </div>
                 </td>
             </tr>
@@ -95,7 +77,7 @@
                             <td>
                                 <table style="width:100%">
                                     <tr>
-                                        <td style="width:85%">
+                                        <td style="width:85%" class="daily-highlight">
                                             <h5 style="text-decoration: underline;">Daily Highlight : </h5>
                                             @{
                                                 var row0Col3 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 3);
@@ -180,8 +162,8 @@
             <tr>
                 <td colspan="2">
                     <table style="width:100%">
-                        <tr>
-                            <td style="width:40%">
+                        <tr class="safty-management-row">
+                            <td style="width:40%;border-right:1px solid #444">
                                 @{
                                     var row2Col0 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 0);
                                     if (row2Col0 != null)
@@ -190,7 +172,7 @@
                                     }
                                 }
                             </td>
-                            <td style="width:30%">
+                            <td style="width:30%;border-right:1px solid #444">
                                 @{
                                     var row2Col1 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 1);
                                     if (row2Col1 != null)
@@ -216,7 +198,7 @@
                 <td colspan="2">
                     <table style="width:100%">
                         <tr>
-                            <td style="width:40%">
+                            <td style="width:40%;border-right:1px solid #444">
                                 @{
                                     var row3Col0 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 0);
                                     if (row3Col0 != null)
@@ -225,7 +207,7 @@
                                     }
                                 }
                             </td>
-                            <td style="width:30%">
+                            <td style="width:30%;border-right:1px solid #444">
                                 <table class="qhse-remark table table-bordered">
                                     <thead>
                                         <tr>
@@ -251,7 +233,7 @@
                                 <table class="weekly-alarm table borderless">
                                     <thead>
                                         <tr>
-                                            <td>
+                                            <td style="padding:4px  ">
                                                 @{
                                                     var row3Col5 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 5);
                                                     if (row3Col5 != null)
@@ -321,7 +303,7 @@
                 <td colspan="2">
                     <table style="width:100%">
                         <tr>
-                            <td style="width:50%">
+                            <td style="width:50%" class="security-remarks-wrapper">
                                 @{
                                     <h5 style="text-decoration: underline;">Security Remarks : </h5>
                                     var row4Col0 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 0);
@@ -333,9 +315,9 @@
                                 }
                             </td>
                             <td style="width:50%">
-                                <table style="width:100%">
+                                <table style="width:100%" class="security-incident-wrapper">
                                     <tr>
-                                        <td style="width:80%">
+                                        <td style="width:75%">
                                             @{
                                             var row4Col1 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 1);
                                             if (row4Col1 != null)
@@ -345,7 +327,7 @@
                                             }
                                             }
                                         </td>
-                                        <td>
+                                        <td style="width:25%">
                                             @{
                                                 var row4Col2 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 2);
                                                 if (row4Col2 != null)
@@ -378,10 +360,10 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="2">
+                <td colspan="2" class="feed-gas-row">
                     <table style="width:100%">
                         <tr>
-                            <td style="width:50%">
+                            <td style="width:50%;padding-right:5px;">
                                 @{
                                     var row5Col0 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 0);
                                     if (row5Col0 != null)
@@ -392,7 +374,7 @@
                                 }
                                 <table style="width:100%">
                                     <tr>
-                                        <td style="width:60%">
+                                        <td style="width:60%;padding:0">
                                             @{
                                                 var row6Col0 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 0);
                                                 if (row6Col0 != null)
@@ -412,7 +394,7 @@
                                                 }
                                             </div>
                                         </td>
-                                        <td style="width:40%">
+                                        <td style="width:40%;padding:0">
                                             <div class="impurities vertical-space text-center">
                                                 <label>Impurities (24H Avg-GSA spec)</label>
                                                 <table style="width:100%">
@@ -446,14 +428,14 @@
                                                                 }
                                                             }
                                                         </td>
-                                                        <td>
+                                                        <td style="position:relative;">
                                                             <div class="thermometer">
                                                                 @{
                                                                     var row6Col5 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 5);
                                                                     if (row6Col5 != null)
                                                                     {
                                                                         <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col5.Id })" class="layout-item bar-thermo">
-                                                                            <img src="@Url.Content("~/Content/images/water-drop.png")" />
+                                                                            <img class="drop" src="@Url.Content("~/Content/images/water-drop.png")" />
                                                                         </div>
                                                                     }
                                                                 }
@@ -642,10 +624,10 @@
                                     }
                                 }
                             </td>
-                            <td style="width:50%">
+                            <td style="width:50%;padding-left:5px;">
                                 <table style="width:100%">
                                     <tr>
-                                        <td style="width:80%">
+                                        <td style="width:75%;padding:0">
                                             @{
                                                 var row5Col1 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 1);
                                                 if (row5Col1 != null)
@@ -655,7 +637,7 @@
                                                 }
                                             }
                                         </td>
-                                        <td style="width:20%">
+                                        <td style="width:25%;padding:0">
                                             @{
                                                 var row5Col2 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 2);
                                                 if (row5Col2 != null)

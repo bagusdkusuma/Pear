@@ -717,6 +717,11 @@ Number.prototype.format = function (n, x) {
             ctx.fillRect(0, start, canvas.width, data.Value * canvas.height / 100);
             
         }
+        var $image = $('<img />');
+        $image.attr('src', $this.find('canvas')[0].toDataURL());
+        $image.width($this.find('canvas').width());
+        $image.height($this.find('canvas').height());
+        $this.find('canvas').replaceWith($image);
     }
     Der.Artifact.pie = function (data, container) {
         var $title = $('<div />');
