@@ -99,9 +99,9 @@ namespace DSLNG.PEAR.Services
             var data = DataContext.FileRepositories.Where(x => x.Year == year).AsQueryable();
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             {
-                data = data.Where(x => x.Name.Contains(search) || x.Summary.Contains(search));
+                data = data.Where(x => x.Name.Contains(search) || x.Summary.Contains(search) || x.Filename.Contains(search));
             }
-            if (sortingDictionary != null)
+            if (sortingDictionary != null && sortingDictionary.Count > 0)
             {
                 foreach (var sortOrder in sortingDictionary)
                 {
@@ -132,7 +132,7 @@ namespace DSLNG.PEAR.Services
             }
             else
             {
-                data = data.OrderBy(x => x.Year).ThenBy(x => x.Month).ThenBy(x => x.Id).ThenBy(x => x.LastWriteTime);
+                data = data.OrderByDescending(x => x.Year).ThenByDescending(x => x.Month).ThenByDescending(x => x.Id).ThenByDescending(x => x.LastWriteTime);
             }
             TotalRecords = data.Count();
             return data;

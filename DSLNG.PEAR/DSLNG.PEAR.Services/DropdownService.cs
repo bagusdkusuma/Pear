@@ -325,5 +325,19 @@ namespace DSLNG.PEAR.Services
             }
             return GetConfigTypes();
         }
+
+        public IEnumerable<Dropdown> GetYears(int startYear, int endYear)
+        {
+            var years = new List<int>();
+            for (int i = startYear; i <= endYear; i++)
+            {
+                years.Add(i);
+            }
+            return years.Select(x => new Dropdown
+            {
+                Value = x.ToString(),
+                Text = x.ToString()
+            });
+        }
     }
 }
