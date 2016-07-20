@@ -2,29 +2,29 @@
 <table class="table table-bordered nls vertical-space top-bottom-border">
     <thead>
                         <tr>
-                            <td style="width:12%">
+                            <td style="width:12%;font-size:12px">
                                 NEXT LOADING SCHEDULE
                             </td>
-                            <td style="width: 13.2%;">
-                                Vessel (capacity)
+                            <td style="width: 13.2%;font-size:11px;vertical-align:middle">
+                                Vessel <span style="display:inline-block"> (capacity)</span>
                             </td>
-                            <td style="width: 12.5%;">
+                            <td style="width: 12.5%;font-size:11px;vertical-align:middle">
                                 ETA
                             </td>
-                            <td style="width: 12.7%;">
+                            <td style="width: 12.7%;font-size:11px;vertical-align:middle">
                                 ETD
                             </td>
-                            <td style="width: 12.5%;" class="cargo">
+                            <td style="width: 12.5%;font-size:11px;vertical-align:middle" class="cargo">
                                 Cargo#
                             </td>
-                            <td>Remarks</td>
+                            <td style="font-size:11px;vertical-align:middle">Remarks</td>
                         </tr>
                     </thead>
     <tbody>
         @foreach (var nls in Model)
         {
             <tr>
-                <td>
+                <td style="font-size:11px">
                     @nls.VesselType - @nls.SalesType - @nls.Type
                 </td>
                 <td>@nls.Vessel (@nls.Capacity @nls.Measurement)</td>
