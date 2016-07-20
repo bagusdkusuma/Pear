@@ -9,6 +9,11 @@
 	        -moz-osx-font-smoothing: grayscale;
             /*font-weight:600;*/
         }
+         @media print{
+            @page {
+              size: A3;
+            }
+          }
 h5 {
     margin-top: 0px;
     margin-bottom: 4px;
@@ -82,9 +87,10 @@ h6 {
         .header .header-right {
             background-color: #0D0D0D;
             background-image: url(images/header-logo.png);
-            height: 90px;
-            background-size: 91% 100%;
+             height: 90px;
+            background-size: 91% 99%;
             background-repeat: no-repeat;
+            background-position:1% 0;
         }
         
         .table {
@@ -1021,3 +1027,6 @@ td.percentage-wrapper {
     .table.ict-infra{
         margin-top: 20px;
     }
+.main-table > tbody > tr > td {
+    border:1px solid #444;
+}

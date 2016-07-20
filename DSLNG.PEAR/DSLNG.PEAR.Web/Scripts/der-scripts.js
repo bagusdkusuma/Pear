@@ -255,6 +255,23 @@ Number.prototype.format = function (n, x) {
             },
             series: data.LineChart.Series
         });
+        //setTimeout(function () {
+            //var svg = container.find('.highcharts-container').html();
+            ////console.log(svg);   
+            //var $canvas = $('<canvas />');
+            //$canvas.width(container.width());
+            //$canvas.height(container.height());
+            //container.hide();
+            //container.parent().append($canvas);
+            //console.log(container.parent().find('canvas')[0]);
+            //canvg(container.parent().find('canvas')[0], svg);
+            //var canvas = container.parent().find('canvas')[0];
+            //var $img = $('<img />');
+            //$img.attr('src', canvas.toDataURL());
+            //container.parent().find('canvas').replaceWith($img);
+            //container.remove();
+        //}, 1000);
+       
     }
     Der.Artifact.multiaxis =  function (data, container) {
         var yAxes = [];
@@ -522,6 +539,9 @@ Number.prototype.format = function (n, x) {
         //ctx.fillText("100%", canvas.width - 45, canvas.height - 20);
         //ctx.fillText("50%", canvas.width / 2 - 20, 20);
         $this.append('<span class="value">' + data.SpeedometerChart.Series.data[0] + '%</span>');
+        var $image = $('<img />');
+        $image.attr('src', canvas.toDataURL());
+        $this.find('.canvas-container').html($image);
     };
 
     Der.Artifact.altspeedometer = function (data, container) {
@@ -642,6 +662,11 @@ Number.prototype.format = function (n, x) {
             ctx.fillStyle = "rgb(0,0,0)";
             ctx.fill();
         }
+        var $image = $('<img />');
+        $image.attr('src', $this.find('canvas')[0].toDataURL());
+        $image.width($this.find('canvas').width());
+        $image.height($this.find('canvas').height());
+        $this.find('canvas').replaceWith($image);
     }
     Der.Artifact.termometer = function (data, container) {
         var $this = container;

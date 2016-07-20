@@ -43,6 +43,7 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IKpiTargetService _kpiTargetService;
         private readonly IVesselScheduleService _vesselScheduleService;
         private readonly IWaveService _waveService;
+        public static IDictionary<string,string> Contents { get; set; }
 
         public DerController(IDerService derService, IDropdownService dropdownService, IArtifactService artifactService, IHighlightService highlightService, IWeatherService weatherService, IKpiAchievementService kpiAchievementService, IKpiTargetService kpiTargetService, IVesselScheduleService vesselScheduleService, IWaveService waveService)
         {
@@ -907,49 +908,95 @@ namespace DSLNG.PEAR.Web.Controllers
             var id = activeDer.Id;
             var response = _derService.GetDerLayout(id);
             var viewModel = response.MapTo<DerDisplayViewModel>();
-            return View("Preview2", viewModel);
+            return View("Preview3", viewModel);
         }
 
+        //[HttpPost]
+        //public ActionResult Generate(string date)
+        //{
+        //    var theDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+        //    var secretNumber = Guid.NewGuid().ToString();
+        //    DerImageController.SecretNumber = secretNumber;
+        //    var displayUrl = Url.Action("Preview", "DerImage", new { secretNumber = secretNumber, date = theDate.ToString("MM/dd/yyyy") }, this.Request.Url.Scheme);
+        //    var htmlToPdf = new HtmlToPdfConverter();
+        //    htmlToPdf.Size = PageSize.A3;
+        //    if (!Directory.Exists(Server.MapPath(PathConstant.DerPath)))
+        //    {
+        //        Directory.CreateDirectory(Server.MapPath(PathConstant.DerPath));
+        //    }
+
+        //    //var htmlToImageConverter = new HtmlToImageConverter();
+        //    //htmlToImageConverter.Height = Convert.ToInt32(Math.Round(1908.00));
+        //    //htmlToImageConverter.Width = Convert.ToInt32(Math.Round(1349.00));
+        //    //var imageName = "der_" + theDate.Ticks + ".png";
+        //    //var imagePath = Path.Combine(Server.MapPath(PathConstant.DerPath), imageName);
+        //    //htmlToImageConverter.GenerateImageFromFile(displayUrl, ImageFormat.Png, imagePath);
+        //    //var htmlContent = String.Format("<body><img src='{0}' /></body>", Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content(PathConstant.DerPath + "/" + imageName));
+        //    int revision = 0;
+        //    var isExisted = _derService.IsDerExisted(theDate, out revision);
+        //    revision = isExisted ? (revision + 1) : revision;
+        //    var title = "DER/" + theDate.ToString("dd-MMM-yyyy");
+        //    var pdfName = string.Format("{0}_{1}.pdf", title.Replace('/', '-'), revision);
+        //    var pdfPath = Path.Combine(Server.MapPath(PathConstant.DerPath), pdfName);
+        //    htmlToPdf.Margins.Top = 10;
+        //    htmlToPdf.Margins.Bottom = 10;
+        //    htmlToPdf.Margins.Left = 10;
+        //    htmlToPdf.Margins.Right = 10;
+        //    //htmlToPdf.GeneratePdf(htmlContent, null, pdfPath);
+        //    htmlToPdf.GeneratePdfFromFile(displayUrl, null, pdfPath);
+        //    var response = _derService.CreateOrUpdate(new CreateOrUpdateDerRequest {
+        //        Filename = PathConstant.DerPath + "/" + pdfName,
+        //        Title = title,
+        //        Date = theDate,
+        //        RevisionBy = UserProfile().UserId
+        //    });
+        //    if (response.IsSuccess)
+        //    {
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    return base.ErrorPage(response.Message);
+        //    //htmlToPdf.GeneratePdfFromFile(displayUrl, null, pdfPath);
+        //    //return File(pdfPath, "application/pdf");
+        //    //var htmlToImageConverter = new HtmlToImageConverter();
+        //    //htmlToImageConverter.Height = 2481;
+        //    //htmlToImageConverter.Width = 1754;
+        //    //return File(htmlToImageConverter.GenerateImageFromFile(displayUrl, ImageFormat.Png), "image/png", "TheGraph.png");
+        //}
+
         [HttpPost]
-        public ActionResult Generate(string date)
+        public ActionResult Generate(GenerateViewModel viewModel)
         {
-            var theDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
-            var secretNumber = Guid.NewGuid().ToString();
-            DerImageController.SecretNumber = secretNumber;
-            var displayUrl = Url.Action("Preview", "DerImage", new { secretNumber = secretNumber, date = theDate.ToString("MM/dd/yyyy") }, this.Request.Url.Scheme);
+            var theDate = DateTime.ParseExact(viewModel.Date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
             var htmlToPdf = new HtmlToPdfConverter();
             htmlToPdf.Size = PageSize.A3;
             if (!Directory.Exists(Server.MapPath(PathConstant.DerPath)))
             {
                 Directory.CreateDirectory(Server.MapPath(PathConstant.DerPath));
             }
-
-            var htmlToImageConverter = new HtmlToImageConverter();
-            htmlToImageConverter.Height = Convert.ToInt32(Math.Round(1908.00));
-            htmlToImageConverter.Width = Convert.ToInt32(Math.Round(1349.00));
-            var imageName = "der_" + theDate.Ticks + ".png";
-            var imagePath = Path.Combine(Server.MapPath(PathConstant.DerPath), imageName);
-            htmlToImageConverter.GenerateImageFromFile(displayUrl, ImageFormat.Png, imagePath);
-            var htmlContent = String.Format("<body><img src='{0}' /></body>", Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content(PathConstant.DerPath + "/" + imageName));
             int revision = 0;
             var isExisted = _derService.IsDerExisted(theDate, out revision);
             revision = isExisted ? (revision + 1) : revision;
             var title = "DER/" + theDate.ToString("dd-MMM-yyyy");
             var pdfName = string.Format("{0}_{1}.pdf", title.Replace('/', '-'), revision);
             var pdfPath = Path.Combine(Server.MapPath(PathConstant.DerPath), pdfName);
+            var secretNumber = Guid.NewGuid().ToString();
+            var secretPath = Path.Combine(Server.MapPath(PathConstant.DerPath), secretNumber + ".txt");
+            System.IO.File.WriteAllText(secretPath, viewModel.Content);
+            var displayUrl = Url.Action("Preview", "DerImage", new { secretNumber = secretNumber  }, this.Request.Url.Scheme);
             htmlToPdf.Margins.Top = 10;
             htmlToPdf.Margins.Bottom = 10;
             htmlToPdf.Margins.Left = 10;
             htmlToPdf.Margins.Right = 10;
-            htmlToPdf.GeneratePdf(htmlContent, null, pdfPath);
-            //htmlToPdf.GeneratePdfFromFile(displayUrl, null, pdfPath);
-            var response = _derService.CreateOrUpdate(new CreateOrUpdateDerRequest {
+            htmlToPdf.GeneratePdfFromFile(displayUrl, null, pdfPath);
+            var response = _derService.CreateOrUpdate(new CreateOrUpdateDerRequest
+            {
                 Filename = PathConstant.DerPath + "/" + pdfName,
                 Title = title,
                 Date = theDate,
                 RevisionBy = UserProfile().UserId
             });
-            if (response.IsSuccess)
+            if (response.IsSuccess) 
             {
                 return RedirectToAction("Index");
             }

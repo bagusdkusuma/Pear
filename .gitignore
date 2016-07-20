@@ -197,7 +197,7 @@ FakesAssemblies/
 # Visual Studio 6 workspace options file
 *.opt
 /DSLNG.PEAR/DSLNG.PEAR.Web/App_Data/dslng_pear.sdf
-Web.config
+Web.config	
 /DSLNG.PEAR/DSLNG.PEAR.Web/Web.config
 DSLNG.PEAR/DSLNG.PEAR.Web/Content/TemplateFiles/*
 /DSLNG.PEAR/DSLNG.PEAR.Web/Content/popfile
