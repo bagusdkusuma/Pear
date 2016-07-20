@@ -134,7 +134,7 @@
                     var row1Col3 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 3);
                     if (row1Col3 != null)
                     {
-                        <div  data-fraction="0.5" data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col3.Id })" class="layout-item"></div>
+                        <div  data-fraction="1" data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col3.Id })" class="layout-item"></div>
                     }
                 }
             </div>
@@ -273,7 +273,7 @@
             </div>
         </div>
         <div class="row bordered border-top-none">
-            <div class="col-md-6 proper">
+            <div class="col-md-6 proper security-remarks">
                 @{
                     <h5 style="text-decoration: underline;">Security Remarks : </h5>
                     var row4Col0 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 0);
