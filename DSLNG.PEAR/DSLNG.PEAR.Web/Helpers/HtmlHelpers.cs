@@ -76,8 +76,46 @@ namespace DSLNG.PEAR.Web.Helpers
         public static string DisplayCompleteDerValue(this HtmlHelper htmlHelper, string val, string measurement, string defaultMeasurement, string defaultVal = "N/A",
             bool isRounded = true)
         {
+            if ((!string.IsNullOrEmpty(measurement) && measurement.ToLowerInvariant() == "mmbtu") ||
+                (!string.IsNullOrEmpty(defaultMeasurement) && defaultMeasurement.ToLowerInvariant() == "mmbtu"))
+            {
+                if (string.IsNullOrEmpty(val))
+                {
+                    return defaultVal;
+                }
+                else
+                {
+                    return string.Format("{0} {1}", RoundIt(isRounded, val, 0), "mmbtu");
+                }
+            }
+
             return !string.IsNullOrEmpty(val) ?
                 string.Format("{0} {1}", RoundIt(isRounded, val), string.IsNullOrEmpty(measurement) ? defaultMeasurement : measurement) : defaultVal;
+        }
+
+
+        public static string DisplayCompleteDerValueForMmbtu(this HtmlHelper htmlHelper, string val, string defaultVal = "N/A")
+        {
+            if (string.IsNullOrEmpty(val))
+            {
+                return defaultVal;
+            }
+            else
+            {
+                return string.Format("{0} {1}", RoundIt(true, val, 0), "mmbtu");
+            }
+        }
+
+        public static string DisplayCompleteDerValueForPlantAvailability(this HtmlHelper htmlHelper, string val, string defaultVal = "N/A")
+        {
+            if (string.IsNullOrEmpty(val))
+            {
+                return defaultVal;
+            }
+            else
+            {
+                return string.Format("{0} {1}", RoundIt(true, val, 1), "%");
+            }
         }
 
         public static string DisplayDerLabel(this HtmlHelper htmlHelper, string val, string defaultVal)
@@ -242,25 +280,35 @@ namespace DSLNG.PEAR.Web.Helpers
 
             return string.Empty;
         }
-        private static string RoundIt(bool isRounded, string val)
+        private static string RoundIt(bool isRounded, string val, int number = 2)
         {
             if (isRounded)
             {
                 /*double v = double.Parse(val);
                 val = Math.Round(v, 2).ToString(CultureInfo.InvariantCulture);*/
-                return ParseToNumber(val);
+                return ParseToNumber(val, number);
             }
 
             return val;
         }
 
-        private static string ParseToNumber(string val)
+        private static string ParseToNumber(string val, int number = 2)
         {
             double x;
             var styles = NumberStyles.AllowParentheses | NumberStyles.AllowTrailingSign | NumberStyles.Float | NumberStyles.AllowDecimalPoint;
             bool isValidDouble = Double.TryParse(val, styles, NumberFormatInfo.InvariantInfo, out x);
+
+
             //return isValidDouble ? Str x.ToString("0:0.###") : val;
             //return isValidDouble ? string.Format("{0:0,000.###}", x) : val;
+            if (number == 0)
+            {
+                return isValidDouble ? Math.Round(x).ToString("#,#", CultureInfo.InvariantCulture) : val;
+            }
+            else if (number == 1)
+            {
+                return isValidDouble ? Math.Round(x,1).ToString("#,#.#", CultureInfo.InvariantCulture) : val;
+            }
             return isValidDouble ? string.Format("{0:#,##0.##}", x) : val;
         }
 
