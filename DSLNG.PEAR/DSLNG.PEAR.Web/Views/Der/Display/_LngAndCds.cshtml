@@ -15,32 +15,32 @@
 <table class="table table-bordered lng-loaded top-bottom-border">
     <thead>
         <tr>
-            <td style="width: 12%; text-align: left">
+            <td style="width: 12%; text-align: left;font-size:12px">
                 LNG LOADED
             </td>
-            <td style="width: 13.2%;">
+            <td style="width: 13.2%;font-size:12px">
                 m3
             </td>
-            <td style="width: 12.5%;">
+            <td style="width: 12.5%;font-size:12px">
                 tonnes
             </td>
-            <td style="width: 12.7%;">
+            <td style="width: 12.7%;font-size:12px">
                 mmbtu
             </td>
-            <td style="width: 12.5%;" class="cargo">
+            <td style="width: 12.5%;font-size:12px" class="cargo">
                 #Cargo Shipped
             </td>
-            <td class="right-header">
+            <td class="right-header" style="font-size:12px">
                 Planned Cargoes (ADP 2016)
             </td>
-            <td style="width: 13%" class="right-header">
+            <td style="width: 13%;font-size:12px" class="right-header">
                 Remarks
             </td>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td class="vertical-header">
+            <td class="vertical-header" style="font-size:11px;font-weight:bold">
                 ACTUAL MTD
             </td>
             <td>
@@ -66,7 +66,7 @@
             </td>
         </tr>
         <tr>
-            <td class="vertical-header">
+            <td class="vertical-header" style="font-size:11px;font-weight:bold">
                 ACTUAL YTD 
             </td>
             <td>
@@ -99,32 +99,32 @@
 <table class="table table-bordered cds-loaded vertical-space">
     <thead>
         <tr>
-            <td style="width: 12%; text-align: left">
+            <td style="width: 12%; text-align: left;font-size:12px;font-weight:bold">
                 CDS LOADED
             </td>
-            <td style="width: 13.2%;">
+            <td style="width: 13.2%;font-size:12px;">
                 m3
             </td>
-            <td style="width: 12.5%;">
+            <td style="width: 12.5%;font-size:12px;">
                 tonnes
             </td>
-            <td style="width: 12.7%;">
+            <td style="width: 12.7%;font-size:12px;">
                 mmbtu
             </td>
-            <td style="width: 12.5%;" class="cargo">
+            <td style="width: 12.5%;font-size:12px;" class="cargo">
                 #Cargo Shipped
             </td>
-            <td class="right-header">
+            <td class="right-header" style="font-size:12px;">
                 Note
             </td>
-            <td style="width:13%" class="right-header">
+            <td style="width:13%;font-size:12px;" class="right-header">
                 Remarks
             </td>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td class="vertical-header">
+            <td class="vertical-header" style="font-size:11px;font-weight:bold">
                 ACTUAL MTD
             </td>
             <td>
@@ -147,7 +147,7 @@
             </td>
         </tr>
         <tr>
-            <td class="vertical-header">
+            <td class="vertical-header" style="font-size:11px;font-weight:bold">
                 ACTUAL YTD
             </td>
             <td>
@@ -169,169 +169,3 @@
         </tr>
     </tbody>
 </table>
-@*
-    @model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayLngAndCdsViewModel
-
-    @{
-        var pos0 = Model.DisplayLngAndCds.Single(x => x.Position == 0);
-        var pos1 = Model.DisplayLngAndCds.Single(x => x.Position == 1);
-        var pos2 = Model.DisplayLngAndCds.Single(x => x.Position == 2);
-        var pos3 = Model.DisplayLngAndCds.Single(x => x.Position == 3);
-        var pos4 = Model.DisplayLngAndCds.Single(x => x.Position == 4);
-        var pos5 = Model.DisplayLngAndCds.Single(x => x.Position == 5);
-        var pos6 = Model.DisplayLngAndCds.Single(x => x.Position == 6);
-        var pos7 = Model.DisplayLngAndCds.Single(x => x.Position == 7);
-        var pos8 = Model.DisplayLngAndCds.Single(x => x.Position == 8);
-        var pos9 = Model.DisplayLngAndCds.Single(x => x.Position == 9);
-        var pos10 = Model.DisplayLngAndCds.Single(x => x.Position == 10);
-        var pos11 = Model.DisplayLngAndCds.Single(x => x.Position == 11);
-        var pos12 = Model.DisplayLngAndCds.Single(x => x.Position == 12);
-        var pos13 = Model.DisplayLngAndCds.Single(x => x.Position == 13);
-    }
-
-    <table class="der-table all-border">
-        <thead>
-            <tr>
-                <th class="der-bg-blue-3">
-                    LNG LOADED
-                </th>
-                <th class="der-bg-blue-3">
-                    m3
-                </th>
-                <th class="der-bg-blue-3">
-                    tonnes
-                </th>
-                <th class="der-bg-blue-3">
-                    mmbtu
-                </th>
-                <th class="der-bg-blue-4">
-                    #Cargo Shipped
-                </th>
-                <th class="der-bg-blue-7">
-                    Planned Cargoes
-                    (ADP 2016)
-                </th>
-                <th class="der-bg-blue-7">
-                    Remarks
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="der-bg-blue-4">
-                    ACTUAL MTD
-                </td>
-                <td>
-                    @pos0.Mtd
-                </td>
-                <td>
-                    @pos1.Mtd
-                </td>
-                <td>
-                    @pos2.Mtd
-                </td>
-                <td>
-                    @pos3.Mtd
-                </td>
-                <td>
-                    @pos4.Remarks
-                </td>
-                <td>
-                    @pos5.Remarks
-                </td>
-            </tr>
-            <tr>
-                <td class="der-bg-blue-4">
-                    ACTUAL YTD
-                </td>
-                <td>
-                    @pos0.Ytd
-                </td>
-                <td>
-                    @pos1.Ytd
-                </td>
-                <td>
-                    @pos2.Ytd
-                </td>
-                <td>
-                    @pos3.Ytd
-                </td>
-                <td>
-                    @pos6.Remarks
-                </td>
-                <td>
-                    @pos7.Remarks
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="der-table all-border">
-        <thead>
-            <tr>
-                <th class="der-bg-blue-3">
-                    CDS LOADED
-                </th>
-                <th class="der-bg-blue-3">
-                    m3
-                </th>
-                <th class="der-bg-blue-3">
-                    tonnes
-                </th>
-                <th>
-                    Bbls
-                </th>
-                <th>
-                    #Cargo Shipped
-                </th>
-                <th>
-                    Note
-                </th>
-                <th>
-                    Remarks
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>
-                    ACTUAL MTD
-                </td>
-                <td>
-                    @pos8.Mtd
-                </td>
-                <td>
-                    @pos9.Mtd
-                </td>
-                <td>
-                    @pos10.Mtd
-                </td>
-                <td>
-                    @pos11.Mtd
-                </td>
-                <td rowspan="2">
-                    @pos12.Remarks
-                </td>
-                <td rowspan="2">
-                    @pos13.Remarks
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    ACTUAL MTD
-                </td>
-                <td>
-                    @pos8.Ytd
-                </td>
-                <td>
-                    @pos9.Ytd
-                </td>
-                <td>
-                    @pos10.Ytd
-                </td>
-                <td>
-                    @pos11.Ytd
-                </td>
-            </tr>
-        </tbody>
-    </table>
-*@

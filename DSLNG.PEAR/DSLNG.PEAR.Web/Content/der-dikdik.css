@@ -1053,7 +1053,11 @@ td.percentage-wrapper {
     .total-feed-gas tbody > tr > td:first-child,
     .impurities > label,
     .production thead tr td,
-    .production tbody tr > td:first-child
+    .production tbody tr > td:first-child,
+    .operation-highlight,
+    .operation-highlight h5,
+    .maintenance-highlight,
+    .maintenance-highlight h5    
     {
         font-size: 12px;
     }
@@ -1069,10 +1073,8 @@ td.percentage-wrapper {
     .job-pmts thead tr:last-child,
     .mgdp thead tr:last-child,
     .hhv thead tr:last-child ,
-    .psig,
-    .production tbody tr:last-child td,
-    .production tbody tr:last-child td:nth-child(3),
-    .production tbody tr:last-child td:nth-child(5)
+    .psig,  
+    .production tbody tr:last-child td:nth-child(1)
     {
         font-size: 11px;
     }

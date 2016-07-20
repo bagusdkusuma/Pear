@@ -1,15 +1,15 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKpiInformationViewModel
-<div class="col-md-6" style="padding: 0">
-    <label>Marine, Shipping and Cargo Delivery(time in HH:MM):</label>
+<div class="col-md-6 loading-duration" style="padding: 0; font-size:11px">
+    <label style="font-size:12px">Marine, Shipping and Cargo Delivery(time in HH:MM):</label>
     <div class="row loading-duration">
         <div class="col-md-4">
-            <label>Loading Duration</label>
+            <label style="font-size:11px">Loading Duration</label>
         </div>
         <div class="col-md-4">Last Shipping: @Html.DisplayDerValueWithHours(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value) <span class="indicator right-side"><i class="fa @Html.DisplayDerRemark(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Remark)"></i></span></div>
         <div class="col-md-4">Avg YTD: @Html.DisplayDerValueWithHours(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value)</div>
     </div>
 </div>
-<div class="col-md-6" style="padding: 0">
+<div class="col-md-6" style="padding: 0; font-size:11px">
     <div class="row standard-loading">
         <div class="col-md-6">
             <label>Standard Loading time: @Html.DisplayDerValueWithHours(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value) @if (!string.IsNullOrEmpty(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value))
