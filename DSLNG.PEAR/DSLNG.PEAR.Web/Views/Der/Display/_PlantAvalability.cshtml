@@ -42,7 +42,7 @@
             </td>
             <td>
                 @Html.DisplayDerRemarkJson(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Remark, "daily")
-                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "%")
+                @Html.DisplayCompleteDerValueForPlantAvailability(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value)
                 
             </td>
             <td>
@@ -79,7 +79,7 @@
             </td>
             <td>
                 @Html.DisplayDerRemarkJson(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Remark, "mtd")
-                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "%")
+                @Html.DisplayCompleteDerValueForPlantAvailability(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Mtd)
             </td>
             <td>
                 @Html.DisplayDerRemarkJson(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Remark, "mtd")
@@ -106,7 +106,7 @@
             </td>
             <td>
                 @Html.DisplayDerRemarkJson(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Remark, "ytd")
-                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "%")
+                @Html.DisplayCompleteDerValueForPlantAvailability(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Ytd)
                 
             </td>
             <td>
@@ -134,7 +134,7 @@
                 2016 Target
             </td>
             <td>
-                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 10).KpiMeasurement, "%")
+                @Html.DisplayCompleteDerValueForPlantAvailability(Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Value)
                 
             </td>
             <td>
