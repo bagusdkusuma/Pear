@@ -701,13 +701,13 @@
                             }
                         }
 
-                        <h5 style="text-decoration: underline;margin-top:2px">ICT Infrastructure and System Highlight </h5>
+                        <h5 style="text-decoration: underline;margin-top:2px;font-size:11px">ICT Infrastructure and System Highlight </h5>
                         @{
                             var row16Col6 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 6);
                             if (row16Col6 != null)
                             {
 
-                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row16Col6.Id })" class="layout-item" style="height: 12px;"></div>
+                                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row16Col6.Id })" class="layout-item" style="height: 12px;font-size:11px"></div>
 
                             }
                         }
@@ -729,7 +729,7 @@
                         }
                         <div class="row">
                             <div class="col-md-5">
-                                <h5 style="text-decoration: underline;margin-top:2px">GS &amp; FM </h5>
+                                <h5 style="text-decoration: underline;margin-top:2px;font-size:11px">GS &amp; FM </h5>
                                 @{
                                     var row16Col7 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 7);
                                     if (row16Col7 != null)
@@ -784,10 +784,10 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="co-macro-eco">
-                    <div class="community">
+                <div class="co-macro-eco" style="font-size:12px">
+                    <div class="community" >
                         <img align="right" src="@Url.Content("~/content/images/icon-operation.png")">
-                        <h5 style="text-decoration: underline;">Community relation and government engagement highlight</h5>
+                        <h5 style="text-decoration: underline;font-size:12px">Community relation and government engagement highlight</h5>
                         <p>
                             @{
                                 var row14Col2 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 2);
@@ -801,7 +801,7 @@
                     </div>
                     <div class="macro-eco">
                         <div class="market-tone">
-                            <label>Market Tone:</label>
+                            <label style="font-size:12px">Market Tone:</label>
                             @{
                                 var row15Col2 = Model.Items.FirstOrDefault(x => x.Row == 15 && x.Column == 2);
                                 if (row15Col2 != null)
@@ -812,7 +812,7 @@
                                 }
                             }
                         </div>
-                        <h5 style="text-decoration: underline;">Macro Economic/Market Flash</h5>
+                        <h5 style="text-decoration: underline;font-size:12px">Macro Economic/Market Flash</h5>
                         <p>
                             @{
                                 var row15Col1 = Model.Items.FirstOrDefault(x => x.Row == 15 && x.Column == 1);
@@ -829,9 +829,9 @@
                 <table class="table table-bordered signature">
                     <thead>
                         <tr>
-                            <td>Prepared By</td>
-                            <td>Reviewed By</td>
-                            <td>
+                            <td style="text-align:center">Prepared By</td>
+                            <td style="text-align:center">Reviewed By</td>
+                            <td style="text-align:center">
                                 @{
                                 if (Request.QueryString["date"] != null)
                                 {
