@@ -1053,7 +1053,7 @@ td.percentage-wrapper {
     .total-feed-gas tbody > tr > td:first-child,
     .impurities > label,
     .production thead tr td,
-    .production tbody tr:first-child td
+    .production tbody tr > td:first-child
     {
         font-size: 12px;
     }
@@ -1070,7 +1070,9 @@ td.percentage-wrapper {
     .mgdp thead tr:last-child,
     .hhv thead tr:last-child ,
     .psig,
-    .production tbody tr:last-child td
+    .production tbody tr:last-child td,
+    .production tbody tr:last-child td:nth-child(3),
+    .production tbody tr:last-child td:nth-child(5)
     {
         font-size: 11px;
     }
@@ -1078,7 +1080,9 @@ td.percentage-wrapper {
     .total-feed-gas tbody > tr > td:first-child,
     .plant-availability tbody tr > td:first-child,
     .production tbody tr > td:first-child,
-    .psig
+    .psig,
+    .production tbody tr:last-child td:nth-child(3),
+    .production tbody tr:last-child td:nth-child(5)
     {
         font-weight: bold;
     }
