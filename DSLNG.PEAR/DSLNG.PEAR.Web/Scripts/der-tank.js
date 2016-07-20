@@ -122,11 +122,11 @@
                 stroke: 'transparent',
                 strokeWidth: 4,
             });
-            var leftVertical = s.line(leftTank + footWidth, 0, leftTank + footWidth, svgHeight).attr({
-                fill: 'none',
-                stroke: 'gray',
-                strokeWidth: 1,
-            });
+            //var leftVertical = s.line(leftTank + footWidth, 0, leftTank + footWidth, svgHeight).attr({
+            //    fill: 'none',
+            //    stroke: 'gray',
+            //    strokeWidth: 1,
+            //});
             var rightVertical = s.line(rightTank - footWidth, 0, rightTank - footWidth, svgHeight).attr({
                 fill: 'none',
                 stroke: 'gray',
@@ -156,11 +156,7 @@
         if (title.toLowerCase().indexOf('cds') > -1) {
             tankColor = 'lawngreen';
         }
-        var ellipseTop = s.ellipse(ellipseX, topTank, ellipseRX, ellipseRY).attr({
-            stroke: 'grey',
-            fill: 'transparent',
-            strokeWidth: 1
-        });
+        
         //s.text(ellipseX - 25, topTank, title);
         var ellipseBottom = s.ellipse(ellipseX, bottomTank, ellipseRX, ellipseRY).attr({
             stroke: 'grey',
@@ -168,6 +164,27 @@
             strokeWidth: 1
         });
 
+
+        
+
+        var rect = s.rect(0, yFill, svgWidth, heightFill).attr({
+            fill: tankColor,
+            stroke: tankColor,
+            strokeWidth: 0,
+        });
+
+        var borderEclipse = s.ellipse(svgWidth / 2, yFill, ellipseRX, ellipseRY).attr({
+            stroke: 'grey',
+            fill: tankColor,
+            strokeWidth: 1,
+            strokeDasharray: 1
+        });
+
+        var ellipseTop = s.ellipse(ellipseX, topTank, ellipseRX, ellipseRY).attr({
+            stroke: 'grey',
+            fill: 'none',
+            strokeWidth: 1
+        });
 
         var leftBorder = s.line(0, topTank, 0, bottomTank).attr({
             fill: 'none',
@@ -178,22 +195,6 @@
             fill: 'none',
             stroke: 'gray',
             strokeWidth: 1,
-        });
-
-      
-        //console.log(svgHeight - topTank - (ellipseRY / 2 + marginBottom));
-        //console.log(options);
-        var rect = s.rect(0, yFill, svgWidth, heightFill).attr({
-            fill: tankColor,
-            stroke: tankColor,
-            strokeWidth: 0,
-        });
-
-        var borderEclipse = s.ellipse(svgWidth/2, yFill, ellipseRX, ellipseRY).attr({
-            stroke: 'grey',
-            fill: tankColor,
-            strokeWidth: 1,
-            strokeDasharray: 1
         });
 
         if (percentFill != 0) {
