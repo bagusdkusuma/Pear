@@ -1059,7 +1059,9 @@ td.percentage-wrapper {
     }
 
     .safty-management,
-    .commercial-operation {
+    .commercial-operation,
+    .support
+    {
         font-size: 14px;
         font-weight: bold;
     }
@@ -1085,7 +1087,11 @@ td.percentage-wrapper {
     .total-feed-gas tbody > tr > td:first-child,
     .impurities > label,
     .production thead tr td,
-    .production tbody tr:first-child td
+    .production tbody tr > td:first-child,
+    .operation-highlight,
+    .operation-highlight h5,
+    .maintenance-highlight,
+    .maintenance-highlight h5    
     {
         font-size: 12px;
     }
@@ -1101,8 +1107,8 @@ td.percentage-wrapper {
     .job-pmts thead tr:last-child,
     .mgdp thead tr:last-child,
     .hhv thead tr:last-child ,
-    .psig,
-    .production tbody tr:last-child td
+    .psig,  
+    .production tbody tr:last-child td:nth-child(1)
     {
         font-size: 11px;
     }
@@ -1110,7 +1116,10 @@ td.percentage-wrapper {
     .total-feed-gas tbody > tr > td:first-child,
     .plant-availability tbody tr > td:first-child,
     .production tbody tr > td:first-child,
-    .psig
+    .psig,
+    .production tbody tr:last-child td:nth-child(3),
+    .production tbody tr:last-child td:nth-child(5),
+    .commodities tbody tr td:first-child
     {
         font-weight: bold;
     }
