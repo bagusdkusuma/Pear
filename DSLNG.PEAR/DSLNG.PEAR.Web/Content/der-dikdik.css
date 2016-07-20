@@ -1027,7 +1027,9 @@ td.percentage-wrapper {
     }
 
     .safty-management,
-    .commercial-operation {
+    .commercial-operation,
+    .support
+    {
         font-size: 14px;
         font-weight: bold;
     }
@@ -1084,7 +1086,8 @@ td.percentage-wrapper {
     .production tbody tr > td:first-child,
     .psig,
     .production tbody tr:last-child td:nth-child(3),
-    .production tbody tr:last-child td:nth-child(5)
+    .production tbody tr:last-child td:nth-child(5),
+    .commodities tbody tr td:first-child
     {
         font-weight: bold;
     }
