@@ -517,7 +517,7 @@ h6 {
         
         .table.tank {
             border-right: 1px solid #0D0D0D;
-            border-bottom: 1px solid #0D0D0D;
+            /*border-bottom: 1px solid #0D0D0D;*/
         }
         
         .table.tank thead tr td {
@@ -525,17 +525,21 @@ h6 {
             background-color: #DBEEF4;
             text-align: center;
         }
+        .table.tank-table {
+            border-right:1px solid #444;
+            border-bottom:1px solid #444;
+        }
         
-        .table.tank tbody tr:first-child td {
+        .table.tank-table tbody tr:first-child td {
             background-color: #95B3D7;
             text-align: center;
         }
-         .table.tank tbody tr td{
+         .table.tank-table tbody tr td{
              text-align: right;
          }
-          .table.tank tbody tr td:nth-child(2),
-          .table.tank tbody tr td:nth-child(3),
-          .table.tank tbody tr td:nth-child(5){
+          .table.tank-table tbody tr td:nth-child(2),
+          .table.tank-table tbody tr td:nth-child(3),
+          .table.tank-table tbody tr td:nth-child(5){
               text-align: left;
           }
         
@@ -659,11 +663,13 @@ h6 {
         .table.weekly-maintenance {
             border-right: 1px solid #0D0D0D;
             text-align: center;
+            border-bottom:none;
         }
         
         .table.weekly-critical {
             border-right: 1px solid #0D0D0D;
             border-bottom: 1px solid #0D0D0D;
+                border-top: 1px solid #444;
             text-align: center;
         }
         
@@ -890,7 +896,11 @@ h6 {
         } 
         .table tbody tr td {
             position: relative;
+            background-clip: padding-box
         }
+.table thead tr td {
+    background-clip: padding-box
+}
         span.indicator.left-side{
             margin-right:10px;
         }

@@ -356,7 +356,7 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <div class="col-md-12 text-center feed-gas proper"><label>FEED GAS TO PLANT</label></div>
+                    <div class="text-center feed-gas proper"><label>FEED GAS TO PLANT</label></div>
                 </td>
             </tr>
             <tr>
@@ -538,7 +538,7 @@
                                 <table class="table table-bordered weekly-maintenance" style="border:1px solid #444;border-bottom:none;border-left:none;">
                                     <thead>
                                         <tr>
-                                            <td colspan="6" style="border-top: 1px solid #444;border-bottom: none;">
+                                            <td colspan="6" style="border: 1px solid #444;border-bottom: none;border-left: none;position:initial;">
                                                 @{
                                                     var row10Col2 = Model.Items.FirstOrDefault(x => x.Row == 10 && x.Column == 2);
                                                     if (row10Col2 != null)
@@ -560,10 +560,10 @@
                                         <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row10Col0.Id })" class="layout-item"></div>
                                     }
                                 }
-                                <table class="table table-bordered weekly-critical">
+                                <table class="table table-bordered weekly-critical"  style="border:1px solid #444;border-bottom:none;border-left:none;">
                                     <thead>
                                         <tr>
-                                            <td colspan="6" style="border: none">
+                                            <td colspan="6"  style="border: 1px solid #444;border-bottom: none;border-left: none;position:initial;">
                                                 @{
                                                     var row11Col2 = Model.Items.FirstOrDefault(x => x.Row == 11 && x.Column == 2);
                                                     if (row11Col2 != null)
