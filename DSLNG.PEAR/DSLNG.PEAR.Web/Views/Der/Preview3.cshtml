@@ -172,7 +172,7 @@
                                     }
                                 }
                             </td>
-                            <td style="width:30%;border-right:1px solid #444">
+                            <td style="width:29%;border-right:1px solid #444">
                                 @{
                                     var row2Col1 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 1);
                                     if (row2Col1 != null)
@@ -181,7 +181,7 @@
                                     }
                                 }
                             </td>
-                            <td style="width:30%">
+                            <td style="width:31%">
                                 @{
                                     var row2Col2 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 2);
                                     if (row2Col2 != null)
@@ -207,7 +207,7 @@
                                     }
                                 }
                             </td>
-                            <td style="width:30%;border-right:1px solid #444">
+                            <td style="width:29%;border-right:1px solid #444">
                                 <table class="qhse-remark table table-bordered">
                                     <thead>
                                         <tr>
@@ -262,7 +262,7 @@
                                     </tbody>
                                 </table>
                             </td>
-                            <td style="width:30%">
+                            <td style="width:31%">
                                 <table class="table table-bordered pie">
                                     <thead>
                                         <tr>
@@ -310,7 +310,7 @@
                                     if (row4Col0 != null)
                                     {
 
-                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row4Col0.Id })" class="layout-item"></div>
+                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row4Col0.Id })" class="layout-item"></div>
                                     }
                                 }
                             </td>
@@ -319,12 +319,12 @@
                                     <tr>
                                         <td style="width:75%">
                                             @{
-                                            var row4Col1 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 1);
-                                            if (row4Col1 != null)
-                                            {
+                                                var row4Col1 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 1);
+                                                if (row4Col1 != null)
+                                                {
 
-                                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row4Col1.Id })" class="layout-item"></div>
-                                            }
+                                                    <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row4Col1.Id })" class="layout-item"></div>
+                                                }
                                             }
                                         </td>
                                         <td style="width:25%">
@@ -333,7 +333,7 @@
                                                 if (row4Col2 != null)
                                                 {
 
-                                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row4Col2.Id })" class="layout-item"></div>
+                                                    <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row4Col2.Id })" class="layout-item"></div>
                                                 }
                                             }
                                         </td>
@@ -374,7 +374,7 @@
                                 }
                                 <table style="width:100%">
                                     <tr>
-                                        <td style="width:60%;padding:0">
+                                        <td style="width:58.5%;padding:0">
                                             @{
                                                 var row6Col0 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 0);
                                                 if (row6Col0 != null)
@@ -394,7 +394,7 @@
                                                 }
                                             </div>
                                         </td>
-                                        <td style="width:40%;padding:0">
+                                        <td style="width:41.5%;padding:0">
                                             <div class="impurities vertical-space text-center">
                                                 <label>Impurities (24H Avg-GSA spec)</label>
                                                 <table style="width:100%">
@@ -487,7 +487,7 @@
                                 <table class="table table-bordered tank">
                                     <thead>
                                         <tr>
-                                            <td colspan="2" style="width:24.8%">
+                                            <td colspan="2" style="width:24.9%">
                                                 @{
                                                     var row8Col0 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 0);
                                                     if (row8Col0 != null)
@@ -496,7 +496,7 @@
                                                     }
                                                 }
                                             </td>
-                                            <td colspan="2" style="width:33.8%">
+                                            <td colspan="2" style="width:34%">
                                                 @{
                                                     var row8Col1 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 1);
                                                     if (row8Col1 != null)
@@ -505,7 +505,7 @@
                                                     }
                                                 }
                                             </td>
-                                            <td colspan="2" style="width:24%">
+                                            <td colspan="2" style="width:23.9%">
                                                 @{
                                                     var row8Col2 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 2);
                                                     if (row8Col2 != null)
@@ -535,10 +535,10 @@
                                         <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row9Col0.Id })" class="layout-item"></div>
                                     }
                                 }
-                                <table class="table table-bordered weekly-maintenance">
+                                <table class="table table-bordered weekly-maintenance" style="border:1px solid #444;border-bottom:none;border-left:none;">
                                     <thead>
                                         <tr>
-                                            <td colspan="6" style="border: none">
+                                            <td colspan="6" style="border-top: 1px solid #444;border-bottom: none;">
                                                 @{
                                                     var row10Col2 = Model.Items.FirstOrDefault(x => x.Row == 10 && x.Column == 2);
                                                     if (row10Col2 != null)
@@ -587,42 +587,50 @@
                                     }
                                 }
 
-                                <table style="width:100%">
+                                <table style="width:100%;height:80px;">
                                     <tr>
                                         <td style="width:80%">
                                             <h5 style="text-decoration: underline;">Operation Highlight &amp; Immediate Concern :</h5>
                                             @{
-                                            var row12Col0 = Model.Items.FirstOrDefault(x => x.Row == 12 && x.Column == 0);
-                                            if (row12Col0 != null)
-                                            {
+                                                var row12Col0 = Model.Items.FirstOrDefault(x => x.Row == 12 && x.Column == 0);
+                                                if (row12Col0 != null)
+                                                {
 
-                                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row12Col0.Id })" class="layout-item"></div>
-                                            }
+                                                    <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row12Col0.Id })" class="layout-item"></div>
+                                                }
                                             }
                                         </td>
 
                                         <td style="width:82%">
                                             <label>Plant Mode :</label>
                                             @{
-                                            var row12Col2 = Model.Items.FirstOrDefault(x => x.Row == 12 && x.Column == 2);
-                                            if (row12Col2 != null)
-                                            {
+                                                var row12Col2 = Model.Items.FirstOrDefault(x => x.Row == 12 && x.Column == 2);
+                                                if (row12Col2 != null)
+                                                {
 
-                                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row12Col2.Id })" class="layout-item highlight-json-plant-mode"></div>
-                                            }
+                                                    <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row12Col2.Id })" class="layout-item highlight-json-plant-mode"></div>
+                                                }
                                             }
                                         </td>
                                     </tr>
                                 </table>
-                                <h5 style="text-decoration: underline;"> Maintenance Highlight &amp; Immediate Concern:</h5>
-                                @{
-                                    var row13Col0 = Model.Items.FirstOrDefault(x => x.Row == 13 && x.Column == 0);
-                                    if (row13Col0 != null)
-                                    {
 
-                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row13Col0.Id })" class="layout-item"></div>
-                                    }
-                                }
+                                <table style="width:100%;height:80px;">
+                                    <tr>
+                                        <td>
+                                            <h5 style="text-decoration: underline;"> Maintenance Highlight &amp; Immediate Concern:</h5>
+                                            @{
+                                                var row13Col0 = Model.Items.FirstOrDefault(x => x.Row == 13 && x.Column == 0);
+                                                if (row13Col0 != null)
+                                                {
+
+                                                    <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row13Col0.Id })" class="layout-item"></div>
+                                                }
+                                            }
+                                        </td>
+                                    </tr>
+                                </table>
+
                             </td>
                             <td style="width:50%;padding-left:5px;">
                                 <table style="width:100%">
@@ -704,10 +712,9 @@
                         </tr>
                     </table>
                 </td>
-
             </tr>
             <tr>
-                <td colspan="2">
+                <td colspan="2" style="background-color: #8db4e2;">
                     <div class="text-center support proper">
                         <label>SUPPORT &amp; ENABLER PERFORMANCE</label>
                     </div>
@@ -717,10 +724,10 @@
                 <td colspan="2">
                     <table style="width:100%">
                         <tr>
-                            <td style="width:50%">
+                            <td style="width:50%;padding:0">
                                 <table style="width:100%">
                                     <tr>
-                                        <td style="width:40%">
+                                        <td style="width:40%;padding:0">
                                             @{
                                                 var row14Col0 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 0);
                                                 if (row14Col0 != null)
@@ -793,7 +800,7 @@
                                                 }
                                             }
                                         </td>
-                                        <td style="width:60%">
+                                        <td style="width:60%;padding:0">
                                             @{
                                                 var row14Col1 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 1);
                                                 if (row14Col1 != null)
@@ -815,7 +822,7 @@
                                     </tr>
                                 </table>
                             </td>
-                            <td style="width:50%">
+                            <td style="width:50%;padding:0">
                                 <div class="co-macro-eco">
                                     <div class="community">
                                         <img align="right" src="@Url.Content("~/content/images/icon-operation.png")">

@@ -61,7 +61,9 @@ h6 {
         .container.a3-ratio,
         body.der-image{
             height: auto;
-            width:98%;
+            width:1721px;
+            /*width:1170px;
+            width:98%;*/
 
             /*width:1686px;
             height:2385px;*/
@@ -421,6 +423,7 @@ h6 {
         }
             .table.hhv .special-height {
                 height:23px;
+               
             }
         
         .vertical-space {
@@ -597,6 +600,7 @@ h6 {
         
         .table.key-equipment {
             border-left: 1px solid #0D0D0D;
+            margin-top: 45px;
         }
         
         .table.key-equipment thead tr td {
@@ -729,7 +733,7 @@ h6 {
         }
         
         .table.procurement tbody tr:first-child td {
-            height: 24px;
+            height: 31px;
         }
         
         .table.commodities thead tr td,
@@ -820,7 +824,7 @@ h6 {
         
         .co-macro-eco {
             padding: 5px;
-            height: 172px;
+            height: 251px;
             border-bottom: 1px solid #0D0D0D;
         }
         
@@ -829,7 +833,7 @@ h6 {
         }
         
         .table.signature tbody tr td {
-            height: 76px;
+            height: 84px;
             text-align: center;
         }
         
@@ -884,9 +888,9 @@ h6 {
          span.indicator.orange .fa-circle{
             color: orange;
         } 
-        .table tbody tr td {
+        /*.table tbody tr td {
             position: relative;
-        }
+        }*/
         span.indicator.left-side{
             margin-right:10px;
         }
@@ -1041,7 +1045,7 @@ td.percentage-wrapper {
 }
 .brentfut-col ul li {
     border-bottom: 1px solid #0d0d0d;
-    padding: 2px 0;
+    padding: 5px 0;
 }
     .brentfut-col ul li:last-child {
         border:none;
