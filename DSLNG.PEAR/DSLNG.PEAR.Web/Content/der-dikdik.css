@@ -888,9 +888,9 @@ h6 {
          span.indicator.orange .fa-circle{
             color: orange;
         } 
-        /*.table tbody tr td {
+        .table tbody tr td {
             position: relative;
-        }*/
+        }
         span.indicator.left-side{
             margin-right:10px;
         }
