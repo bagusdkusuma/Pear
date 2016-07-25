@@ -22,18 +22,64 @@
     <![endif]-->
     <style>
         body {
-             height: auto;
-            width:1721px;
+            height: auto;
+            width: 1721px;
         }
+
         .table.hhv tbody tr:first-child td {
             height: 31px;
         }
+
         .table.hhv .special-height {
             height: 12px;
+        }
+
+        .table.alert-condition tbody tr td {
+            height: 31px;
+        }
+        /*.table.alert-condition {
+            border-left:1px solid #444;
+        }*/
+        .impurities {
+            height: 150px;
+        }
+
+        .table.security-incident {
+            border: 1px solid #444;
+            border-top: none;
+            border-bottom: none;
+        }
+
+        .table.plant-availability {
+            border: 1px solid #444;
+            border-right: none;
+        }
+
+            .table.alert-condition tbody tr td,
+            .table.security-incident tbody tr td,
+            .table.hhv tbody tr td,
+            .table.hhv thead tr td,
+            .table.plant-availability thead tr td,
+            .table.plant-availability tbody tr td:first-child,
+            .table.lng-loaded tbody tr td,
+            .table.cds-loaded tbody tr td,
+            .table.tank-table tbody tr td,
+            .table.weekly-maintenance tbody tr td,
+            .table.weekly-critical tbody tr td,
+            .table.key-equipment tbody tr td,
+             .table.procurement tbody tr td,
+            .table.indicative tbody tr td
+            
+             {
+                position: initial;
+            }
+
+        .table.procurement tbody tr:first-child td {
+            height:21px;
         }
     </style>
 </head>
 <body>
-   @Html.Raw(Model.Content)
+    @Html.Raw(Model.Content)
 </body>
 </html>
