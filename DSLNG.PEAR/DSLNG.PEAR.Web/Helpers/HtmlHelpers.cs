@@ -76,8 +76,12 @@ namespace DSLNG.PEAR.Web.Helpers
         public static string DisplayCompleteDerValue(this HtmlHelper htmlHelper, string val, string measurement, string defaultMeasurement, string defaultVal = "N/A",
             bool isRounded = true)
         {
-            if ((!string.IsNullOrEmpty(measurement) && measurement.ToLowerInvariant() == "mmbtu") ||
-                (!string.IsNullOrEmpty(defaultMeasurement) && defaultMeasurement.ToLowerInvariant() == "mmbtu"))
+            if (
+                (!string.IsNullOrEmpty(measurement) && measurement.ToLowerInvariant() == "mmbtu") ||
+                (!string.IsNullOrEmpty(measurement) && measurement.ToLowerInvariant() == "bbtu") ||
+                (!string.IsNullOrEmpty(defaultMeasurement) && defaultMeasurement.ToLowerInvariant() == "mmbtu") ||
+                (!string.IsNullOrEmpty(defaultMeasurement) && defaultMeasurement.ToLowerInvariant() == "bbtu")
+                )
             {
                 if (string.IsNullOrEmpty(val))
                 {
@@ -85,7 +89,7 @@ namespace DSLNG.PEAR.Web.Helpers
                 }
                 else
                 {
-                    return string.Format("{0} {1}", RoundIt(isRounded, val, 0), "mmbtu");
+                    return string.Format("{0} {1}", RoundIt(isRounded, val, 0), string.IsNullOrEmpty(measurement) ? defaultMeasurement : measurement);
                 }
             }
 
