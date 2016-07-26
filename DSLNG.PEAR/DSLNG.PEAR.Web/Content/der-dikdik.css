@@ -21,7 +21,12 @@ h5 {
 }
 .header-left h5 {
     margin-top:5px;
-    font-size:12px;
+    font-size:14px;
+     font-weight:bold;
+}
+.header-left h4 {
+    font-size:20px;
+    font-weight:bold;
 }
 h6 {
     margin-top:5px;
@@ -60,8 +65,8 @@ h6 {
         }
         .container.a3-ratio,
         body.der-image{
-            height: auto;
-            width:1721px;
+            height: 2200px;
+            width:1532px;
             /*width:1170px;
             width:98%;*/
 
@@ -299,7 +304,7 @@ h6 {
         }
         
         .table.pie tbody tr td {
-            height: 151px;
+            height: 250px;
         }
         
         .table.security-incident tbody tr td {
@@ -986,11 +991,12 @@ h6 {
     position:relative;
 }
 .pie-title {
-    position: absolute;
-    bottom: -10px;
-    left: 100px;
+      position: absolute;
+    bottom: 80px;
+    left: 123px;
     width: 150px;
     font-weight: bold;
+    color: #fff;
 }
 
 .volume {
@@ -1168,4 +1174,22 @@ table.security-incident-wrapper > tbody > tr > td {
 }
 .security-remarks-wrapper{
     padding:5px;
+}
+.avg-stats-value td {
+    text-decoration:underline;
+}
+.zero-val {
+    position:absolute;
+    left:0;
+    bottom:0;
+}
+.half-val {
+    position:absolute;
+    left:41%;
+    top:0;
+}
+.full-val {
+    position:absolute;
+    right:0;
+    bottom:0;
 }

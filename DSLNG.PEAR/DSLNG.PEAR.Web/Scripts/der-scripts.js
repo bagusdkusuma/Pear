@@ -485,7 +485,7 @@ Number.prototype.format = function (n, x) {
 
                 var circle = new fabric.Circle({
                     radius: r,
-                    left: 20,
+                    left: 18,
                     top: 7,
                     angle: 0,
                     startAngle: start,
@@ -556,20 +556,27 @@ Number.prototype.format = function (n, x) {
         }
         drawMultiRadiantCircle(50, 35, 23, data.SpeedometerChart.PlotBands);
 
-        var zero = new fabric.Text('0%', { left: 7, top: canvas.getHeight() - 10, fontSize: 7 });
-        canvas.add(zero);
-        var helf = new fabric.Text('50%', { left: canvas.getWidth() / 2 - 5, top: 0, fontSize: 7 });
-        canvas.add(helf);
-        var full = new fabric.Text('100%', { left: canvas.getWidth()-20, top: canvas.getHeight() - 10, fontSize: 7 });
-        canvas.add(full);
+        //var zero = new fabric.Text('0%', { left: 7, top: canvas.getHeight() - 10, fontSize: 8, fontWeight:'bold' });
+        //canvas.add(zero);
+        //var helf = new fabric.Text('50%', { left: canvas.getWidth() / 2 - 5, top: 0, fontSize: 8, fontWeight: 'bold' });
+        //canvas.add(helf);
+        //var full = new fabric.Text('100%', { left: canvas.getWidth() - 20, top: canvas.getHeight() - 10, fontSize: 8, fontWeight: 'bold' });
+        //canvas.add(full);
         //ctx.font = "30px serif";
         //ctx.fillText("0%", 0, canvas.height - 20);
         //ctx.fillText("100%", canvas.width - 45, canvas.height - 20);
         //ctx.fillText("50%", canvas.width / 2 - 20, 20);
+      
         $this.append('<span class="value">' + data.SpeedometerChart.Series.data[0] + '%</span>');
         var $image = $('<img />');
-        $image.attr('src', canvas.toDataURL());
+        $image.attr('src', canvas.toDataURL({
+            format: 'png',
+            quality: 1
+        }));
         $this.find('.canvas-container').html($image);
+        $this.find('.canvas-container').append('<span class="zero-val">0%</span>');
+        $this.find('.canvas-container').append('<span class="half-val">50%</span>');
+        $this.find('.canvas-container').append('<span class="full-val">100%</span>');
     };
 
     Der.Artifact.altspeedometer = function (data, container) {
@@ -770,7 +777,7 @@ Number.prototype.format = function (n, x) {
                 spacingBottom: 0,
                 spacingLeft: 0,
                 spacingRight: 0,
-                height:170
+                height:250
             },
             title: {
                 text: data.Pie.Title,

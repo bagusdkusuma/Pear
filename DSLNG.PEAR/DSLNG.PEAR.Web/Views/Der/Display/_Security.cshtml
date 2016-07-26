@@ -1,26 +1,26 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKpiInformationViewModel
 
-<table class="table borderless security-incident">
+<table class="table borderless security-incident" style="border-right:1px solid #444">
     <tr>
-        <td style="width:13%">
+        <td style="width:15%">
             <ul class="list-unstyled">
-                <li>Security</li>
-                <li>Incident Type</li>
-                <li>(Act 24H)</li>
+                <li><strong>Security</strong></li>
+                <li><strong>Incident Type</strong></li>
+                <li><strong>(Act 24H)</strong></li>
             </ul>
         </td>
-        <td style="text-align: right;width:37.8%">
+        <td style="text-align: right;width:35.8%">
             <ul class="list-unstyled">
-                <li>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value) <span style="display: inline-block;min-width: 68px;">Mass Gathering</span></li>
-                <li>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value) <span style="display: inline-block;min-width: 68px;">Road Blockade</span></li>
-                <li>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value) <span style="display: inline-block;min-width: 68px;">Traffic Accident</span></li>
+                <li>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value) <span style="display: inline-block;min-width: 68px;font-weight:bold">Mass Gathering</span></li>
+                <li>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value) <span style="display: inline-block;min-width: 68px;font-weight:bold">Road Blockade</span></li>
+                <li>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value) <span style="display: inline-block;min-width: 68px;font-weight:bold">Traffic Accident</span></li>
             </ul>
         </td>
         <td style="text-align: right;width:59.2%">
             <ul class="list-unstyled">
-                <li>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value) <span style="display: inline-block;min-width: 129px;">Theft/Criminal</span></li>
-                <li>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value) <span style="display: inline-block;min-width: 129px;">Violence</span></li>
-                <li>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Value) <span style="display: inline-block;min-width: 129px;">Prop Destruction/Vandalism</span></li>
+                <li>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value) <span style="display: inline-block;min-width: 129px;font-weight:bold">Theft/Criminal</span></li>
+                <li>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value) <span style="display: inline-block;min-width: 129px;font-weight:bold">Violence</span></li>
+                <li>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Value) <span style="display: inline-block;min-width: 129px;font-weight:bold">Prop Destruction/Vandalism</span></li>
             </ul>
         </td>
     </tr>
