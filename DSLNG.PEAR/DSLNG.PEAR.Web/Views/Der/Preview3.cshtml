@@ -824,9 +824,9 @@
                             </td>
                             <td style="width:50%;padding:0">
                                 <div class="co-macro-eco">
-                                    <div class="community">
+                                    <div class="community highlight-style-12">
                                         <img align="right" src="@Url.Content("~/content/images/icon-operation.png")">
-                                        <h5 style="text-decoration: underline;">Community relation and government engagement highlight</h5>
+                                        <h5 style="text-decoration: underline;font-size:12px">Community relation and government engagement highlight</h5>
                                         <p>
                                             @{
                                                 var row14Col2 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 2);
@@ -838,9 +838,9 @@
                                             }
                                         </p>
                                     </div>
-                                    <div class="macro-eco">
+                                    <div class="macro-eco highlight-style-12">
                                         <div class="market-tone">
-                                            <label>Market Tone:</label>
+                                            <label style="font-size:12px">Market Tone:</label>
                                             @{
                                                 var row15Col2 = Model.Items.FirstOrDefault(x => x.Row == 15 && x.Column == 2);
                                                 if (row15Col2 != null)
@@ -851,7 +851,7 @@
                                                 }
                                             }
                                         </div>
-                                        <h5 style="text-decoration: underline;">Macro Economic/Market Flash</h5>
+                                        <h5 style="text-decoration: underline;font-size:12px">Macro Economic/Market Flash</h5>
                                         <p>
                                             @{
                                                 var row15Col1 = Model.Items.FirstOrDefault(x => x.Row == 15 && x.Column == 1);
@@ -868,9 +868,9 @@
                                 <table class="table table-bordered signature">
                                     <thead>
                                         <tr>
-                                            <td>Prepared By</td>
-                                            <td>Reviewed By</td>
-                                            <td>
+                                            <td style="text-align:center">Prepared By</td>
+                                            <td style="text-align:center">Reviewed By</td>
+                                            <td style="text-align:center">
                                                 @{
                                                     if (Request.QueryString["date"] != null)
                                                     {
@@ -1092,7 +1092,7 @@
                                 transform['c'] = getIcon(js.c);
                                 var html = '<table class="table borderless ict-infra"><tbody>';
                                 html +=
-                                    '<td>' + transform['a'] + '</td><td><img src="@Url.Content("~/content/images/clip_image002.png")" alt="" width="52" height="25"></td><td>' + transform['b'] + '</td><td><img src="@Url.Content("~/content/images/clip_image004.png")" alt="" width="52" height="25"></td><td>' + transform['c'] + '</td><td><img src="@Url.Content("~/content/images/clip_image006.png")" alt="" width="52" height="25"></td>';
+                                    '<td style="width:10px">' + transform['a'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image002.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['b'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image004.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['c'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image006.png")" alt="" width="52" height="25"></td>';
                                 html += '</tbody></table>';
                                 that.replaceWith(html);
                             }
@@ -1108,7 +1108,7 @@
                                 transform['c'] = getIcon(js.c);
                                 var html = '<table class="table borderless gs-fm"><tbody>';
                                 html +=
-                                    '<td>' + transform['a'] + '</td><td><img src="@Url.Content("~/content/images/clip_image008.png")" alt="" width="52" height="25"></td><td>' + transform['b'] + '</td><td><img src="@Url.Content("~/content/images/clip_image010.png")" alt="" width="52" height="25"></td><td>' + transform['c'] + '</td><td><img src="@Url.Content("~/content/images/clip_image012.png")" alt="" width="52" height="25"></td>';
+                                    '<td style="width:10px">' + transform['a'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image008.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['b'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image010.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['c'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image012.png")" alt="" width="52" height="25"></td>';
                                 html += '</tbody></table>';
                                 that.replaceWith(html);
                             }

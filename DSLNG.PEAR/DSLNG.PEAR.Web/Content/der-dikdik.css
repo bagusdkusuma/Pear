@@ -1193,3 +1193,7 @@ table.security-incident-wrapper > tbody > tr > td {
     right:0;
     bottom:0;
 }
+
+.highlight-style-12 {
+    font-size:12px;letter-spacing:0.5px
+}
