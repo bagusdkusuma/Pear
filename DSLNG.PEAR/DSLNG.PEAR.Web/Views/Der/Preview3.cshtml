@@ -984,15 +984,70 @@
             var getIcon = function (str) {
                 switch (str) {
                     case 0:
-                        return '<span class="indicator left-side"><i class="fa fa-check" style="color:orange"></i></span>';
+                        return '<span class="indicator left-side"><i class="fa fa-check" style="color:#fee17e"></i></span>';
                     case 1:
-                        return '<span class="indicator left-side"><i class="fa fa-check" style="color:green"></i></span>';
+                        return '<span class="indicator left-side"><i class="fa fa-check-circle" style="color:#6eab75"></i></span>';
                     case -1:
-                        return '<span class="indicator left-side"><i class="fa fa-check" style="color:red"></i></span>';
+                        return '<span class="indicator left-side"><i class="fa fa-remove" style="color:#e25b5b"></i></span>';
                     default:
                         return '';
                 }
 
+            }
+
+            var getIconForIctInfraFirstColumn = function (str) {
+                switch (str) {
+                    case 0:
+                        return '<span class="indicator left-side"><i class="fa fa-exclamation" style="color:#fee17e"></i></span>';
+                    case 1:
+                        return '<span class="indicator left-side"><i class="fa fa-check-circle" style="color:#6eab75"></i></span>';
+                    case -1:
+                        return '<span class="indicator left-side"><i class="fa fa-times-circle" style="color:#e25b5b"></i></span>';
+                    default:
+                        return '';
+                }
+
+            }
+                       
+
+            var getIconForIctInfraSecondColumn = function (str) {
+                switch (str) {
+                    case 0:
+                        return '<span class="indicator left-side"><i class="fa fa-circle" style="color:#fee17e"></i></span>';
+                    case 1:
+                        return '<span class="indicator left-side"><i class="fa fa-check-circle" style="color:#6eab75"></i></span>';
+                    case -1:
+                        return '<span class="indicator left-side"><i class="fa fa-times-circle" style="color:#e25b5b"></i></span>';
+                    default:
+                        return '';
+                }
+
+            }
+
+            var getIconForIctInfraThirdColumn = function (str) {
+                switch (str) {
+                    case 0:
+                        return '<span class="indicator left-side"><i class="fa fa-signal" style="color:#396694"></i></span>';
+                    case 1:
+                        return '<span class="indicator left-side"><i class="fa fa-check-circle" style="color:#6eab75"></i></span>';
+                    case -1:
+                        return '<span class="indicator left-side"><i class="fa fa-times-circle" style="color:#e25b5b"></i></span>';
+                    default:
+                        return '';
+                }
+            }
+
+            var getIconForGsFm = function (str) {
+                switch (str) {
+                    case 0:
+                        return '<span class="indicator left-side"><i class="fa fa-exclamation-circle" style="color:#fee17e"></i></span>';
+                    case 1:
+                        return '<span class="indicator left-side"><i class="fa fa-check-circle" style="color:#6eab75"></i></span>';
+                    case -1:
+                        return '<span class="indicator left-side"><i class="fa fa-times-circle" style="color:#e25b5b"></i></span>';
+                    default:
+                        return '';
+                }
             }
 
             var getNum = function (str) {
@@ -1087,9 +1142,9 @@
                                 console.log(parsed);
                                 var js = JSON.parse(parsed);
                                 var transform = [];
-                                transform['a'] = getIcon(js.a);
-                                transform['b'] = getIcon(js.b);
-                                transform['c'] = getIcon(js.c);
+                                transform['a'] = getIconForIctInfraFirstColumn(js.a);
+                                transform['b'] = getIconForIctInfraSecondColumn(js.b);
+                                transform['c'] = getIconForIctInfraThirdColumn(js.c);
                                 var html = '<table class="table borderless ict-infra"><tbody>';
                                 html +=
                                     '<td style="width:10px">' + transform['a'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image002.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['b'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image004.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['c'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image006.png")" alt="" width="52" height="25"></td>';
@@ -1103,9 +1158,9 @@
                                 console.log(parsed);
                                 var js = JSON.parse(parsed);
                                 var transform = [];
-                                transform['a'] = getIcon(js.a);
-                                transform['b'] = getIcon(js.b);
-                                transform['c'] = getIcon(js.c);
+                                transform['a'] = getIconForGsFm(js.a);
+                                transform['b'] = getIconForGsFm(js.b);
+                                transform['c'] = getIconForGsFm(js.c);
                                 var html = '<table class="table borderless gs-fm"><tbody>';
                                 html +=
                                     '<td style="width:10px">' + transform['a'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image008.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['b'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image010.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['c'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image012.png")" alt="" width="52" height="25"></td>';
