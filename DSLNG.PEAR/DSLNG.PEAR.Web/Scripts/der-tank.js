@@ -98,7 +98,6 @@
             });
             var rect = s.rect(leftTank, 0, tankWidth, svgHeight).attr({
                 fill: '#D7D7D7',
-                stroke: 'grey',
                 strokeWidth: 0,
             });
 
@@ -164,7 +163,13 @@
             strokeWidth: 1
         });
 
-
+        if (percentFill != 0) {
+            var ellipseBottomFilled = s.ellipse(ellipseX, bottomTank, ellipseRX, ellipseRY).attr({
+                stroke: 'gray',
+                fill: tankColor,
+                strokeWidth: 1
+            });
+        }
         
 
         var rect = s.rect(0, yFill, svgWidth, heightFill).attr({
@@ -198,11 +203,11 @@
         });
 
         if (percentFill != 0) {
-            var ellipseBottomFilled = s.ellipse(ellipseX, bottomTank, ellipseRX, ellipseRY).attr({
-                stroke: tankColor,
-                fill: tankColor,
-                strokeWidth: 0
-            });
+            //var ellipseBottomFilled = s.ellipse(ellipseX, bottomTank, ellipseRX, ellipseRY).attr({
+            //    stroke: 'gray',
+            //    fill: tankColor,
+            //    strokeWidth: 1
+            //});
             s.text(svgWidth / 2 - 10, yFill, percentFill + '%');
         } else {
             s.text(svgWidth / 2 - 10, bottomTank, percentFill + '%');
