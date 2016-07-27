@@ -724,7 +724,7 @@
                 <td colspan="2">
                     <table style="width:100%">
                         <tr>
-                            <td style="width:50%;padding:0">
+                            <td style="width:50%;padding:0;border-right:1px solid #444">
                                 <table style="width:100%">
                                     <tr>
                                         <td style="width:40%;padding:0">
@@ -745,17 +745,18 @@
                                                     <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row15Col0.Id })" class="layout-item"></div>
                                                 }
                                             }
+                                            <div style="padding:5px">
+                                                <h5 style="text-decoration: underline;margin-top:2px">ICT Infrastructure and System Highlight </h5>
+                                                @{
+                                                    var row16Col6 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 6);
+                                                    if (row16Col6 != null)
+                                                    {
 
-                                            <h5 style="text-decoration: underline;margin-top:2px">ICT Infrastructure and System Highlight </h5>
-                                            @{
-                                                var row16Col6 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 6);
-                                                if (row16Col6 != null)
-                                                {
+                                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row16Col6.Id })" class="layout-item" style="height: 12px;"></div>
 
-                                                    <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row16Col6.Id })" class="layout-item" style="height: 12px;"></div>
-
+                                                    }
                                                 }
-                                            }
+                                            </div>
                                             @{
                                                 var row16Col4 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 4);
                                                 if (row16Col4 != null)
@@ -824,9 +825,9 @@
                             </td>
                             <td style="width:50%;padding:0">
                                 <div class="co-macro-eco">
-                                    <div class="community">
+                                    <div class="community highlight-style-12">
                                         <img align="right" src="@Url.Content("~/content/images/icon-operation.png")">
-                                        <h5 style="text-decoration: underline;">Community relation and government engagement highlight</h5>
+                                        <h5 style="text-decoration: underline;font-size:12px">Community relation and government engagement highlight</h5>
                                         <p>
                                             @{
                                                 var row14Col2 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 2);
@@ -838,9 +839,9 @@
                                             }
                                         </p>
                                     </div>
-                                    <div class="macro-eco">
+                                    <div class="macro-eco highlight-style-12">
                                         <div class="market-tone">
-                                            <label>Market Tone:</label>
+                                            <label style="font-size:12px">Market Tone:</label>
                                             @{
                                                 var row15Col2 = Model.Items.FirstOrDefault(x => x.Row == 15 && x.Column == 2);
                                                 if (row15Col2 != null)
@@ -851,7 +852,7 @@
                                                 }
                                             }
                                         </div>
-                                        <h5 style="text-decoration: underline;">Macro Economic/Market Flash</h5>
+                                        <h5 style="text-decoration: underline;font-size:12px">Macro Economic/Market Flash</h5>
                                         <p>
                                             @{
                                                 var row15Col1 = Model.Items.FirstOrDefault(x => x.Row == 15 && x.Column == 1);
@@ -868,9 +869,9 @@
                                 <table class="table table-bordered signature">
                                     <thead>
                                         <tr>
-                                            <td>Prepared By</td>
-                                            <td>Reviewed By</td>
-                                            <td>
+                                            <td style="text-align:center">Prepared By</td>
+                                            <td style="text-align:center">Reviewed By</td>
+                                            <td style="text-align:center">
                                                 @{
                                                     if (Request.QueryString["date"] != null)
                                                     {
@@ -891,14 +892,12 @@
                                         <tr>
                                             <td class="signature">
                                                 <img src="@Url.Content("~/content/images/signature1.png")">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <span class="nothing">LT07:45</span>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label>Eko P. Yulianto</label>
-                                                    </div>
-                                                </div>
+                                                <table style="width:100%">
+                                                    <tr>
+                                                        <td style="width:50%;padding:0"><span class="nothing">LT07:45</span></td>
+                                                        <td style="width:50%;padding:0"><label>Eko P. Yulianto</label></td>
+                                                    </tr>
+                                                </table>
                                                 Business Performance Sr.Specialist
                                             </td>
                                             <td class="signature">
@@ -907,7 +906,7 @@
                                             </td>
                                             <td>
                                                 <img src="@Url.Content("~/content/images/strictly-sign.png")">
-                                                <span style="display: inline-block">Not for custody/commercial (information purpose only)</span>
+                                                <span style="display:block">Not for custody/commercial (information purpose only)</span>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -1092,7 +1091,7 @@
                                 transform['c'] = getIcon(js.c);
                                 var html = '<table class="table borderless ict-infra"><tbody>';
                                 html +=
-                                    '<td>' + transform['a'] + '</td><td><img src="@Url.Content("~/content/images/clip_image002.png")" alt="" width="52" height="25"></td><td>' + transform['b'] + '</td><td><img src="@Url.Content("~/content/images/clip_image004.png")" alt="" width="52" height="25"></td><td>' + transform['c'] + '</td><td><img src="@Url.Content("~/content/images/clip_image006.png")" alt="" width="52" height="25"></td>';
+                                    '<td style="width:10px">' + transform['a'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image002.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['b'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image004.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['c'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image006.png")" alt="" width="52" height="25"></td>';
                                 html += '</tbody></table>';
                                 that.replaceWith(html);
                             }
@@ -1108,7 +1107,7 @@
                                 transform['c'] = getIcon(js.c);
                                 var html = '<table class="table borderless gs-fm"><tbody>';
                                 html +=
-                                    '<td>' + transform['a'] + '</td><td><img src="@Url.Content("~/content/images/clip_image008.png")" alt="" width="52" height="25"></td><td>' + transform['b'] + '</td><td><img src="@Url.Content("~/content/images/clip_image010.png")" alt="" width="52" height="25"></td><td>' + transform['c'] + '</td><td><img src="@Url.Content("~/content/images/clip_image012.png")" alt="" width="52" height="25"></td>';
+                                    '<td style="width:10px">' + transform['a'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image008.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['b'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image010.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['c'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image012.png")" alt="" width="52" height="25"></td>';
                                 html += '</tbody></table>';
                                 that.replaceWith(html);
                             }

@@ -41,7 +41,7 @@
             border-left:1px solid #444;
         }*/
         .impurities {
-            height: 150px;
+            height: 153px;
         }
 
         .table.security-incident {
@@ -68,7 +68,8 @@
             .table.weekly-critical tbody tr td,
             .table.key-equipment tbody tr td,
              .table.procurement tbody tr td,
-            .table.indicative tbody tr td
+            .table.indicative tbody tr td,
+            .table.production tbody tr td
             
              {
                 position: initial;
@@ -78,7 +79,52 @@
             height:21px;
         }
         .table.indicative thead tr td {
-            padding:13px !important;
+            padding:6px !important;
+        }
+        .table.ict-infra {
+    margin-top: 31px;
+}
+        .co-macro-eco {
+            height:255px;
+        }
+        .psig {
+            height:23px;
+        }
+        .table.production {
+            border-bottom:none !important;
+        }
+        .table.tank,
+        .table.tank thead tr td {
+            border-top:1px solid #444;
+        }
+        .table.security-incident,
+        .table.security-incident tbody tr td:last-child {
+            border-right:none !important;
+        }
+        .table.alert-condition,
+        .table.alert-condition tr td {
+            border-left:1px solid #444;
+        }
+        .table.signature,
+        .table.signature thead tr td {
+            border-top:1px solid #444;
+              background-clip: padding-box
+        }
+            .table.signature > tbody > tr > td {
+                height:74px;
+            }
+
+        /*.table.global-stock tr td:last-child {
+             border-right:1px solid #444 !important;
+        }*/
+        .co-macro-eco {
+            border-bottom:none;
+        }
+        .table.security-incident tr td:first-child + td {
+            width:35.7% !important;
+        }
+        .table.security-incident tr td:last-child {
+            width:59.3% !important;
         }
     </style>
 </head>
