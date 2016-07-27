@@ -1,4 +1,26 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKpiInformationViewModel
+    <script type="text/javascript">
+        $('document').ready(function () {
+            setTimeout(function () {
+                if ($('#weekly-maintenance-backlog-highlight').length) {
+                    var x = $('#weekly-maintenance-backlog-highlight').html();
+                    $('#weekly-maintenance-backlog-highlight').remove();
+                    $('#weekly-maintenance-backlog-highlight-container').prepend(x);
+                }
+            }, 500); 
+        });
+    </script>
+<table class="table table-bordered weekly-maintenance" style="border:1px solid #444;border-bottom:none;border-left:none;">
+    <thead>
+        <tr>
+            <td colspan="6" style="border: 1px solid #444;border-bottom: none;border-left: none;position:initial;" id="weekly-maintenance-backlog-highlight-container">                
+                WEEKLY MAINTENANCE BACKLOG @Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Remark
+            </td>
+        </tr>
+    </thead>
+</table>
+
+
 <table class="table table-bordered weekly-maintenance top-bottom-border">
     <thead>
         
