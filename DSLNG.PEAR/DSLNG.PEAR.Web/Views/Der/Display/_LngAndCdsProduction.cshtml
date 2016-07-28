@@ -19,23 +19,23 @@
             </td>
             <td style="width: 17%">
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "tonnes")
-                
+
             </td>
             <td style="width: 17%">
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "mmbtu")
-                
+
             </td>
             <td style="width: 11%">
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiMeasurement, "bbl")
-                
+
             </td>
             <td style="width: 13%">
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 4).KpiMeasurement, "tonnes")
-                
+
             </td>
             <td>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 5).KpiMeasurement, "mmbtu")
-                
+
             </td>
         </tr>
         <tr>
@@ -44,28 +44,28 @@
             </td>
             <td>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "m3")
-                
+
             </td>
             <td>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "tonnes")
             </td>
             <td>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "mmbtu")
-                
+
             </td>
             <td>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiMeasurement, "bbl")
-                
+
 
             </td>
             <td>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 4).KpiMeasurement, "tonnes")
-                
+
 
             </td>
             <td>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 5).KpiMeasurement, "mmbtu")
-                
+
 
             </td>
         </tr>
@@ -73,29 +73,29 @@
             <td>ACTUAL YTD</td>
             <td>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "m3")
-                
+
             </td>
             <td>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "tonnes")
-                
+
             </td>
             <td>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "mmbtu")
-                
+
             </td>
             <td>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiMeasurement, "bbl")
-                
+
 
             </td>
             <td>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 4).KpiMeasurement, "tonnes")
-                
+
 
             </td>
             <td>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 5).KpiMeasurement, "mmbtu")
-                
+
             </td>
         </tr>
         <tr>
@@ -103,19 +103,22 @@
                 MCHE Rundown :
             </td>
             <td>
+
+
+                @McheRundownPercentage(Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Value)
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 6).KpiMeasurement, "ton/d")
-                 
+
             </td>
             <td style="text-align:right">
                 LNG HHV :
             </td>
             <td>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 7).KpiMeasurement, "btu/scf")
-                 
+
             </td>
             <td colspan="2" style="text-align:right">
                 CDS Reid Vapor Pressure (RVP) :
-                
+
             </td>
             <td>
                 <span class="indicator left-side" style="margin-right: 50px;"><i class="fa @Html.DisplayDerRemark(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Remark)"></i></span>
@@ -125,3 +128,14 @@
         </tr>
     </tbody>
 </table>
+
+@helper McheRundownPercentage(string val)
+{
+    if (!string.IsNullOrEmpty(val)) {
+        var parsed = double.Parse(val);
+        if (parsed > 100) { parsed = 100; }
+        <div class="bar-percentage">
+            <div style="width:@string.Format(@"{0}%", parsed.ToString())">&nbsp;</div>
+        </div>
+    }
+} 
