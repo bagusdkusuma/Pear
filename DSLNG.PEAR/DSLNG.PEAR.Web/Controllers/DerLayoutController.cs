@@ -269,16 +269,16 @@ namespace DSLNG.PEAR.Web.Controllers
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 11);
                             break;
-                        }
-
-                    case "table-tank":
+                        }                    
                     case "global-stock-market":
+                    case "table-tank":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 13);
                             var result = _selectService.GetHighlightTypesDropdown();
                             editViewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
                             break;
-                        }
+                        }                    
+                        
                     case "economic-indicator":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 15);
@@ -672,7 +672,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "table-tank":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(12);
+                        viewModel.KpiInformations = GetKpiInformations(13);
                         return PartialView("LayoutType/_TableTank", viewModel);
                     }
                 case "mgdp":

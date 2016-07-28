@@ -567,7 +567,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             }
                             viewModel.TableTankViewModels.Add(totalTableTankViewModel);
                         }*/
-                        var viewModel = GetGeneralDerKpiInformations(12, layout, date, PeriodeType.Daily);
+                        var viewModel = GetGeneralDerKpiInformations(13, layout, date, PeriodeType.Daily);
                         var view = RenderPartialViewToString("~/Views/Der/Display/_TableTank.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);

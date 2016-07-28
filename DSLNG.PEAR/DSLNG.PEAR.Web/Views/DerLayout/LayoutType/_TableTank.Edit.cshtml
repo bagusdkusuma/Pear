@@ -4,7 +4,7 @@
 @{
     var labels = new List<string>
     {
-        "tonnes", "m3", "mmbtu", "days to tank top", "tonnes", "m3","days to tank top","tonnes", "m3","days to tank top","tonnes", "mmbtu"
+        "tonnes", "m3", "mmbtu", "days to tank top", "tonnes", "m3","days to tank top","tonnes", "m3","days to tank top","tonnes", "mmbtu", "days to tank top (bar)"
     };
     for (int i = 0; i < 4; i++)
     {
@@ -20,6 +20,26 @@
                     @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes, new { style = "visibility:hidden" })
                     @Html.HiddenFor(model => model.KpiInformations[i].Id)
                     
+                    <input type="hidden" name="KpiInformations.Index" value="@i" />
+                </div>
+            </div>
+        }
+    }
+
+    for (int i = 12; i < 13; i++)
+    {
+        var posIndex = Model.KpiInformations.FirstOrDefault(x => x.Position == i);
+        if (posIndex != null)
+        {
+            <div class="form-group row">
+                <label class="control-label col-md-2">@labels.ElementAtOrDefault(i)</label>
+
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.KpiInformations[i].KpiId, new List<SelectListItem> { new SelectListItem { Value = Model.KpiInformations[i].KpiId.ToString(), Text = Model.KpiInformations[i].KpiName } }, new { @class = "kpi-list form-control", style = "width:180px" })
+                    @Html.HiddenFor(model => model.KpiInformations[i].Position)
+                    @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes, new { style = "visibility:hidden" })
+                    @Html.HiddenFor(model => model.KpiInformations[i].Id)
+
                     <input type="hidden" name="KpiInformations.Index" value="@i" />
                 </div>
             </div>
