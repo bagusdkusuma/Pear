@@ -710,7 +710,7 @@ h6 {
         
         .table.commodities {
             border-left: 1px solid #0D0D0D;
-            border-right: 1px solid #0D0D0D;
+            /*border-right: 1px solid #0D0D0D;*/
         }
         .table.commodities tr td{
             text-align: center;
@@ -767,6 +767,7 @@ h6 {
         .table.global-stock {
             border: 1px solid #0D0D0D;
             border-bottom: none;
+            border-right:none;
         }
         
         .table.global-stock thead tr td {
@@ -826,7 +827,7 @@ h6 {
         }
         
         .fa {
-            font-size: 12px;
+            font-size: 11px;
         }
         
         .market-tone label {
@@ -835,7 +836,7 @@ h6 {
         
         .co-macro-eco {
             padding: 5px;
-            height: 251px;
+            height: 245px;
             border-bottom: 1px solid #0D0D0D;
         }
         
@@ -843,7 +844,7 @@ h6 {
             background-color: #DAEEF3;
         }
         
-        .table.signature tbody tr td {
+        .table.signature > tbody > tr > td {
             height: 84px;
             text-align: center;
         }
@@ -1068,7 +1069,7 @@ td.percentage-wrapper {
     }
 
     .table.ict-infra{
-        margin-top: 20px;
+        margin-top: 19px;
     }
 .main-table > tbody > tr > td {
     border:1px solid #444;
@@ -1193,7 +1194,10 @@ table.security-incident-wrapper > tbody > tr > td {
     right:0;
     bottom:0;
 }
+ p {
+    margin: 0 0 5px;
+}
 
 .highlight-style-12 {
-    font-size:12px;letter-spacing:0.5px
+    font-size:12px;letter-spacing:0.5px;
 }
