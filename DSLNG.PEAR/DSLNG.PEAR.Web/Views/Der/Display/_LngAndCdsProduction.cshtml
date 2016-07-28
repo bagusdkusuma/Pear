@@ -1,4 +1,9 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKpiInformationViewModel
+        <style>
+            .mche-rundown-bar-wrapper .bar-percentage {
+                height:17px;
+            }
+        </style>
 <table class="table table-bordered top-bottom-border production">
     <thead>
         <tr>
@@ -102,9 +107,7 @@
             <td>
                 MCHE Rundown :
             </td>
-            <td style="position:relative">
-
-
+            <td style="position:relative" class="mche-rundown-bar-wrapper">
                 @McheRundownPercentage(Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Value)
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 6).KpiMeasurement, "ton/d")
 
