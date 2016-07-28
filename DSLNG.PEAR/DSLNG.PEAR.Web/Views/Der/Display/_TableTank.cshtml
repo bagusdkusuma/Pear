@@ -45,7 +45,7 @@
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "mmbtu")
 
             </td>
-            <td style="text-align:right">
+            <td style="text-align:right;position:relative;">
                 @LngInventoryLevel(Model.KpiInformationViewModels.Single(x => x.Position == 12).DerItemValue.Value)
                 Days to tank top @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, string.Empty, string.Empty)
             </td>
