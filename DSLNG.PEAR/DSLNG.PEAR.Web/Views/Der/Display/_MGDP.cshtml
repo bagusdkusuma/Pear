@@ -14,20 +14,20 @@
     </thead>
     <tbody>
         <tr>
-            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "mmscf") </td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "MMscf") </td>
             <td rowspan="2" style="text-align:center;vertical-align:middle">@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "tonnes") </td>
-            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "mmscf") </td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "MMscf") </td>
             <td rowspan="2" style="text-align:center;vertical-align:middle">@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "tonnes") </td>
-            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "mmscf") </td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "MMscf") </td>
             <td rowspan="2" style="text-align:center;vertical-align:middle">@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "tonnes") </td>
         </tr>
         <tr>
-            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "mmbtu") </td>
-            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "mmbtu")  </td>
-            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "mmbtu")  </td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "MMbtu") </td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "MMbtu")  </td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "MMbtu")  </td>
         </tr>
         <tr>
-            <td colspan="2">@GetPercentage(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value) of DCQ @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, string.Empty, "mmbtu") </td>
+            <td colspan="2">@GetPercentage(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value) of DCQ @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, string.Empty, "MMbtu") </td>
             <td colspan="2"  class="percentage-wrapper" ><div class="bar-percentage"><div class="mgdp" style="width:@GetPercentage(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Mtd).ToHtmlString().Replace(" ","")"></div></div>@GetPercentage(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Mtd) of MGN @Html.DisplayCompleteDerValue(Html.Divide(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Mtd, 1000), string.Empty, "bbtu") </td>
             <td colspan="2">@GetPercentage(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Ytd) of ADP @Html.DisplayCompleteDerValue(Html.Divide(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Ytd, 1000000), string.Empty, "TBtu") </td>
         </tr>
@@ -72,27 +72,13 @@
                 Volume
             </td>
             <td>
-                333.68 mmscf
+                333.68 MMscf
             </td>
             <td>
-                7,058.64 mmscf
+                7,058.64 MMscf
             </td>
             <td>
-                7,058.64 mmscf
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Energy
-            </td>
-            <td>
-                373,265 mmbtu
-            </td>
-            <td>
-                7,894,592 mmbtu
-            </td>
-            <td>
-                7,894,592 mmbtu
+                7,058.64 MMscf
             </td>
         </tr>
         <tr>
@@ -100,13 +86,27 @@
                 Energy
             </td>
             <td>
-                373,265 mmbtu
+                373,265 MMbtu
             </td>
             <td>
-                7,894,592 mmbtu
+                7,894,592 MMbtu
             </td>
             <td>
-                7,894,592 mmbtu
+                7,894,592 MMbtu
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Energy
+            </td>
+            <td>
+                373,265 MMbtu
+            </td>
+            <td>
+                7,894,592 MMbtu
+            </td>
+            <td>
+                7,894,592 MMbtu
             </td>
         </tr>
         <tr>
@@ -159,7 +159,7 @@
                     <td rowspan="2">@pos2.Daily</td>
                     <td>@pos0.Mtd</td>
                     <td rowspan="2">@pos2.Mtd</td>
-                    <td>@pos0.Ytd mmscf</td>
+                    <td>@pos0.Ytd MMscf</td>
                     <td rowspan="2">@pos2.Ytd</td>
                 </tr>
                 <tr>
