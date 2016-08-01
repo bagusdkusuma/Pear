@@ -290,7 +290,7 @@
                     <tbody>
                         <tr>
                             <td>Fatality</td>
-                            <td rowspan="11" colspan="5" style="vertical-align:middle">
+                            <td rowspan="11" colspan="5" style="vertical-align:middle;    border-bottom: none;">
                                 @{
                                     var row3Col0 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 0);
                                     if (row3Col0 != null)
@@ -339,7 +339,9 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4" style="border-top: 1px solid #000;
+    border-right: 1px solid #000;
+    border-left: 1px solid #000;">
                 <table class="qhse-remark table table-bordered">
                     <thead>
                         <tr>
