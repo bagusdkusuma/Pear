@@ -1756,7 +1756,7 @@ a.see-more {
 }
 
 .form-inline label {
-    width: 180px;
+    /*width: 180px;*/
 }
 
 .scenario-template.original {

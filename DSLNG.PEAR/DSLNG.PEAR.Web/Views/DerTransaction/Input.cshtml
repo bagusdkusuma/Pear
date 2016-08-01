@@ -19,8 +19,8 @@
     <div class="row der-display">
         <div class="col-sm-12">
             <form class="form-inline">
-                <div class="form-group form-list">
-                    <font color="#FFFFFF">Date : </font>
+                <div class="form-group">
+                    <label>Date : </label>
                     <input id="currentDate" class="form-control datepicker" type="text">
                     <span class="field-validation-valid" data-valmsg-for="StartInDisplay" data-valmsg-replace="true"></span>
                 </div>
@@ -207,24 +207,12 @@
                     </div>
                 </div>
                 <div class="col-md-12" style="margin-top: 30px;">
-                    <div class="col-md-6">
-                        <table border="0">
-                            <tr>
-                                <td><label class="control-label">Macro Economic/Market Flash</label></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <textarea class="form-control allow-html"></textarea>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
                     <div class="col-md-3">
                         <table border="0">
                             <tr>
                                 <td align="left"><label class="control-label">Market Tone</label></td>
                                 <td align="left">
-                                    <select name="select" option="option">
+                                    <select name="select" option="option" class="form-control">
                                         <option value="Bullish">Bullish</option>
                                         <option value="Mixed">Mixed</option>
                                         <option value="Bearish">Bearish</option>
@@ -243,6 +231,21 @@
                             </tr>
                         </table>
                     </div>
+                </div>
+                <div class="col-md-12" style="margin-top: 30px;">
+                    <div class="col-md-6">
+                        <table border="0">
+                            <tr>
+                                <td><label class="control-label">Macro Economic/Market Flash</label></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <textarea class="form-control allow-html"></textarea>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -733,7 +736,7 @@
                             <tr>
                                 <td>
                                     <span class="col-sm-8">
-                                        <select>
+                                        <select class="form-control">
                                             <option>Select Option</option>
                                             <option>Option 1</option>
                                             <option>Option 2</option>
@@ -1433,7 +1436,7 @@
                         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
                             <tr>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -1442,7 +1445,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -1554,7 +1557,7 @@
                             <tr>
                                 <td>
                                     <span class="col-sm-8">
-                                        <select>
+                                        <select class="form-control">
                                             <option>Select Option</option>
                                             <option>Option 1</option>
                                             <option>Option 2</option>
@@ -1603,7 +1606,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select>
+                                        <select class="form-control">
                                             <option>Select Option</option>
                                             <option>Option 1</option>
                                             <option>Option 2</option>
@@ -1612,7 +1615,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select>
+                                        <select class="form-control">
                                             <option>Select Option</option>
                                             <option>Option 1</option>
                                             <option>Option 2</option>
@@ -1621,7 +1624,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select>
+                                        <select class="form-control">
                                             <option>Select Option</option>
                                             <option>Option 1</option>
                                             <option>Option 2</option>
@@ -1630,7 +1633,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select>
+                                        <select class="form-control">
                                             <option>Select Option</option>
                                             <option>Option 1</option>
                                             <option>Option 2</option>
@@ -1646,7 +1649,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select>
+                                        <select class="form-control">
                                             <option>Select Option</option>
                                             <option>Option 1</option>
                                             <option>Option 2</option>
@@ -1655,7 +1658,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select>
+                                        <select class="form-control">
                                             <option>Select Option</option>
                                             <option>Option 1</option>
                                             <option>Option 2</option>
@@ -1664,7 +1667,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select>
+                                        <select class="form-control">
                                             <option>Select Option</option>
                                             <option>Option 1</option>
                                             <option>Option 2</option>
@@ -1673,7 +1676,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select>
+                                        <select class="form-control">
                                             <option>Select Option</option>
                                             <option>Option 1</option>
                                             <option>Option 2</option>
@@ -2040,7 +2043,7 @@
                             <tr>
                                 <td><label class="control-label">EDG-A</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -2050,7 +2053,7 @@
                             <tr>
                                 <td><label class="control-label">EDG-B</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -2060,7 +2063,7 @@
                             <tr>
                                 <td><label class="control-label">EDG-C</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -2070,7 +2073,7 @@
                             <tr>
                                 <td><label class="control-label">GTG-A</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -2080,7 +2083,7 @@
                             <tr>
                                 <td><label class="control-label">GTG-B</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -2090,7 +2093,7 @@
                             <tr>
                                 <td><label class="control-label">GTG-C</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -2104,7 +2107,7 @@
                             <tr>
                                 <td><label class="control-label">Hot Oil Syst</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -2114,7 +2117,7 @@
                             <tr>
                                 <td><label class="control-label">Fuel Gas syst</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -2124,7 +2127,7 @@
                             <tr>
                                 <td><label class="control-label">Water Syst</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -2134,7 +2137,7 @@
                             <tr>
                                 <td><label class="control-label">Air Compr A</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -2144,7 +2147,7 @@
                             <tr>
                                 <td><label class="control-label">Air Compr B</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -2170,7 +2173,7 @@
                             <tr>
                                 <td><label class="control-label">N2 Syst</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control" class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -2180,7 +2183,7 @@
                             <tr>
                                 <td><label class="control-label">Fire Syst</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control" class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -2190,7 +2193,7 @@
                             <tr>
                                 <td><label class="control-label">LNG Tank</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control" class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -2200,7 +2203,7 @@
                             <tr>
                                 <td><label class="control-label">BOG Compr</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control" class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -2210,7 +2213,7 @@
                             <tr>
                                 <td><label class="control-label">LNG Jetty</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control" class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -2220,7 +2223,7 @@
                             <tr>
                                 <td><label class="control-label">C2/C3 strg tank</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control" class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -2234,7 +2237,7 @@
                             <tr>
                                 <td><label class="control-label">CDS tank</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control" class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -2244,7 +2247,7 @@
                             <tr>
                                 <td><label class="control-label">Diesel Oil tank</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control" class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -2254,7 +2257,7 @@
                             <tr>
                                 <td><label class="control-label">Flare Syst</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control" class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -2264,7 +2267,7 @@
                             <tr>
                                 <td><label class="control-label">Waste Syst</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control" class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -2348,7 +2351,7 @@
                             <tr>
                                 <td><label class="control-label">Weather</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -2358,7 +2361,7 @@
                             <tr>
                                 <td><label class="control-label">Tide/Wave</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -2368,7 +2371,7 @@
                             <tr>
                                 <td><label class="control-label">Wind Direct</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -2592,7 +2595,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -2685,7 +2688,7 @@
                                 <td>
                                     <label for="" style="margin-top: 20px;">Application</label>
                                     <br />
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -2696,7 +2699,7 @@
                                 <td>
                                     <label for="" style="margin-top: 20px;">Colaboration</label>
                                     <br />
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -2707,7 +2710,7 @@
                                 <td>
                                     <label for="" style="margin-top: 20px;">Telco</label>
                                     <br />
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -2741,7 +2744,7 @@
                                 <td>
                                     <label for="" style="margin-top: 20px;">F&B</label>
                                     <br />
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -2752,7 +2755,7 @@
                                 <td>
                                     <label for="" style="margin-top: 20px;">Camp</label>
                                     <br />
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -2763,7 +2766,7 @@
                                 <td>
                                     <label for="" style="margin-top: 20px;">Transp</label>
                                     <br />
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -2814,12 +2817,12 @@
     <hr />
     <div class="col-md-12" style="margin-bottom: 30px;">
         <div class="col-md-3">
-            <table width="900" border="0" cellpadding="2" cellspacing="2">
+            <table  border="0" cellpadding="2" cellspacing="2">
                 <tr>
                     <td>
                         <label for="">Prepared By-L</label>
                         <br />
-                        <select>
+                        <select class="form-control">
                             <option>Select Option</option>
                             <option>Option 1</option>
                             <option>Option 2</option>
@@ -2829,12 +2832,12 @@
             </table>
         </div>
         <div class="col-md-3">
-            <table width="900" border="0" cellpadding="2" cellspacing="2">
+            <table  border="0" cellpadding="2" cellspacing="2">
                 <tr>
                     <td>
                         <label for="">Reviewed By-M</label>
                         <br />
-                        <select>
+                        <select class="form-control">
                             <option>Select Option</option>
                             <option>Option 1</option>
                             <option>Option 2</option>
