@@ -19,8 +19,8 @@
     <div class="row der-display">
         <div class="col-sm-12">
             <form class="form-inline">
-                <div class="form-group form-list">
-                    <font color="#FFFFFF">Date : </font>
+                <div class="form-group">
+                    <label>Date : </label>
                     <input id="currentDate" class="form-control datepicker" type="text">
                     <span class="field-validation-valid" data-valmsg-for="StartInDisplay" data-valmsg-replace="true"></span>
                 </div>
@@ -32,9 +32,9 @@
     <div class="row economic-indicators" style="margin-bottom: 20px;">
         <div class="col-md-12">
             <a class="btn" role="button" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample">
-                <h3 style="margin-left: -16px;">Economic Indicator Section-B</h3>
+                <h4 style="margin-left: -16px;">Economic Indicator Section-B</h4>
             </a>
-            <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
+            <span class="pull-right" style="border: 1px solid white; border-radius: 5px; ">
                 <a class="btn btn-input-slide" role="button" data-toggle="collapse" href="#collapseEconomic" aria-expanded="false" aria-controls="collapseExample">
                     +
                 </a>
@@ -207,24 +207,12 @@
                     </div>
                 </div>
                 <div class="col-md-12" style="margin-top: 30px;">
-                    <div class="col-md-6">
-                        <table border="0">
-                            <tr>
-                                <td><label class="control-label">Macro Economic/Market Flash</label></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <textarea class="form-control allow-html"></textarea>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
                     <div class="col-md-3">
                         <table border="0">
                             <tr>
                                 <td align="left"><label class="control-label">Market Tone</label></td>
                                 <td align="left">
-                                    <select name="select" option="option">
+                                    <select name="select" option="option" class="form-control">
                                         <option value="Bullish">Bullish</option>
                                         <option value="Mixed">Mixed</option>
                                         <option value="Bearish">Bearish</option>
@@ -244,6 +232,21 @@
                         </table>
                     </div>
                 </div>
+                <div class="col-md-12" style="margin-top: 30px;">
+                    <div class="col-md-6">
+                        <table border="0">
+                            <tr>
+                                <td><label class="control-label">Macro Economic/Market Flash</label></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <textarea class="form-control allow-html"></textarea>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
@@ -251,7 +254,7 @@
     <div class="row forecasted" style="margin-bottom: 20px;">
         <div class="col-md-12">
             <a class="btn" role="button" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample">
-                <h3 style="margin-left: -16px;">Forecasted Market Indicator-B</h3>
+                <h4 style="margin-left: -16px;">Forecasted Market Indicator-B</h4>
             </a>
             <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
                 <a class="btn btn-input-slide" role="button" data-toggle="collapse" href="#collapseForecasted" aria-expanded="false" aria-controls="collapseExample">
@@ -401,7 +404,7 @@
     <div class="row operation" style="margin-bottom: 20px;">
         <div class="col-md-12">
             <a class="btn" role="button" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample">
-                <h3 style="margin-left: -16px;">Operation & Engineering Section-J</h3>
+                <h4 style="margin-left: -16px;">Operation & Engineering Section-J</h4>
             </a>
             <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
                 <a class="btn btn-input-slide" role="button" data-toggle="collapse" href="#collapseOperation" aria-expanded="false" aria-controls="collapseExample">
@@ -732,11 +735,12 @@
                         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
                             <tr>
                                 <td>
-                                    <span class="col-sm-8">
-                                        <select>
+                                    <span class="col-sm-9">
+                                        <select class="form-control">
                                             <option>Select Option</option>
-                                            <option>Option 1</option>
-                                            <option>Option 2</option>
+                                            <option>Normal/Other</option>
+                                            <option>Unplanned</option>
+                                            <option>Planned SD</option>                                        
                                         </select>
                                     </span>
                                 </td>
@@ -1433,7 +1437,7 @@
                         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
                             <tr>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -1442,7 +1446,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
@@ -1553,11 +1557,10 @@
                         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
                             <tr>
                                 <td>
-                                    <span class="col-sm-8">
-                                        <select>
+                                    <span class="col-sm-9">
+                                        <select class="form-control">
                                             <option>Select Option</option>
-                                            <option>Option 1</option>
-                                            <option>Option 2</option>
+                                            <option>y-115</option>
                                         </select>
                                     </span>
                                 </td>
@@ -1586,7 +1589,7 @@
     <div class="row marine" style="margin-bottom: 20px;">
         <div class="col-md-12">
             <a class="btn" role="button" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample">
-                <h3 style="margin-left: -16px;">Marine, Shipping, Cargo Delivery section-C</h3>
+                <h4 style="margin-left: -16px;">Marine, Shipping, Cargo Delivery section-C</h4>
             </a>
             <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
                 <a class="btn btn-input-slide" role="button" data-toggle="collapse" href="#collapseMarine" aria-expanded="false" aria-controls="collapseExample">
@@ -1603,7 +1606,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select>
+                                        <select class="form-control">
                                             <option>Select Option</option>
                                             <option>Option 1</option>
                                             <option>Option 2</option>
@@ -1612,7 +1615,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select>
+                                        <select class="form-control">
                                             <option>Select Option</option>
                                             <option>Option 1</option>
                                             <option>Option 2</option>
@@ -1621,7 +1624,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select>
+                                        <select class="form-control">
                                             <option>Select Option</option>
                                             <option>Option 1</option>
                                             <option>Option 2</option>
@@ -1630,7 +1633,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select>
+                                        <select class="form-control">
                                             <option>Select Option</option>
                                             <option>Option 1</option>
                                             <option>Option 2</option>
@@ -1646,7 +1649,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select>
+                                        <select class="form-control">
                                             <option>Select Option</option>
                                             <option>Option 1</option>
                                             <option>Option 2</option>
@@ -1655,7 +1658,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select>
+                                        <select class="form-control">
                                             <option>Select Option</option>
                                             <option>Option 1</option>
                                             <option>Option 2</option>
@@ -1664,7 +1667,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select>
+                                        <select class="form-control">
                                             <option>Select Option</option>
                                             <option>Option 1</option>
                                             <option>Option 2</option>
@@ -1673,7 +1676,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select>
+                                        <select class="form-control">
                                             <option>Select Option</option>
                                             <option>Option 1</option>
                                             <option>Option 2</option>
@@ -1691,22 +1694,22 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="date" class="" placeholder="text date" required />
+                                        <input type="date" class="form-control" placeholder="text date" required />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="date" class="" placeholder="text date" required />
+                                        <input type="date" class="form-control" placeholder="text date" required />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="date" class="" placeholder="text date" required />
+                                        <input type="date" class="form-control" placeholder="text date" required />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="date" class="" placeholder="text date" required />
+                                        <input type="date" class="form-control" placeholder="text date" required />
                                     </td>
                                 </tr>
                             </table>
@@ -1718,22 +1721,22 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="date" class="" placeholder="text date" required />
+                                        <input type="date" class="form-control" placeholder="text date" required />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="date" class="" placeholder="text date" required />
+                                        <input type="date" class="form-control" placeholder="text date" required />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="date" class="" placeholder="text date" required />
+                                        <input type="date" class="form-control" placeholder="text date" required />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="date" class="" placeholder="text date" required />
+                                        <input type="date" class="form-control" placeholder="text date" required />
                                     </td>
                                 </tr>
                             </table>
@@ -1747,22 +1750,22 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" class="" placeholder="free text" required />
+                                        <input type="text" class="form-control" placeholder="free text" required />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" class="" placeholder="free text" required />
+                                        <input type="text" class="form-control" placeholder="free text" required />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" class="" placeholder="free text" required />
+                                        <input type="text" class="form-control" placeholder="free text" required />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" class="" placeholder="free text" required />
+                                        <input type="text" class="form-control" placeholder="free text" required />
                                     </td>
                                 </tr>
                             </table>
@@ -1774,22 +1777,22 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" class="" placeholder="free text" required />
+                                        <input type="text" class="form-control" placeholder="free text" required />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" class="" placeholder="free text" required />
+                                        <input type="text" class="form-control" placeholder="free text" required />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" class="" placeholder="free text" required />
+                                        <input type="text" class="form-control placeholder="free text" required />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" class="" placeholder="free text" required />
+                                        <input type="text" class="form-control placeholder="free text" required />
                                     </td>
                                 </tr>
                             </table>
@@ -1875,7 +1878,7 @@
     <div class="row maintanance" style="margin-bottom: 20px;">
         <div class="col-md-12">
             <a class="btn" role="button" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample">
-                <h3 style="margin-left: -16px;">Maintenance section-D</h3>
+                <h4 style="margin-left: -16px;">Maintenance section-D</h4>
             </a>
             <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
                 <a class="btn btn-input-slide" role="button" data-toggle="collapse" href="#collapseMaintanance" aria-expanded="false" aria-controls="collapseExample">
@@ -1986,50 +1989,63 @@
                             <tr>
                                 <td><label class="control-label">Feed Inlet Syst</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Normal Ops</option>
+                                        <option>Anomaly</option>
+                                        <option>Tripped</option>
+                                        <option>Not Available</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">C3 Compr</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Running</option>
+                                        <option>Not Running</option>
+                                        <option>Standby</option>
+                                        <option>Tripped</option>
+                                        <option>Not Available</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">LP-MR Compr</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Running</option>
+                                        <option>Not Running</option>
+                                        <option>Standby</option>
+                                        <option>Tripped</option>
+                                        <option>Not Available</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">HP-MR Compr</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Running</option>
+                                        <option>Not Running</option>
+                                        <option>Standby</option>
+                                        <option>Tripped</option>
+                                        <option>Not Available</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">MCHE</label></td>
                                 <td>
-                                    <select>
+                                     <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Normal Ops</option>
+                                        <option>Anomaly</option>
+                                        <option>Tripped</option>
+                                        <option>Not Available</option>
                                     </select>
                                 </td>
                             </tr>
@@ -2040,60 +2056,78 @@
                             <tr>
                                 <td><label class="control-label">EDG-A</label></td>
                                 <td>
-                                    <select>
+                                     <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Running</option>
+                                        <option>Not Running</option>
+                                        <option>Standby</option>
+                                        <option>Tripped</option>
+                                        <option>Not Available</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">EDG-B</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Running</option>
+                                        <option>Not Running</option>
+                                        <option>Standby</option>
+                                        <option>Tripped</option>
+                                        <option>Not Available</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">EDG-C</label></td>
                                 <td>
-                                    <select>
+                                     <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Running</option>
+                                        <option>Not Running</option>
+                                        <option>Standby</option>
+                                        <option>Tripped</option>
+                                        <option>Not Available</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">GTG-A</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Running</option>
+                                        <option>Not Running</option>
+                                        <option>Standby</option>
+                                        <option>Tripped</option>
+                                        <option>Not Available</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">GTG-B</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Running</option>
+                                        <option>Not Running</option>
+                                        <option>Standby</option>
+                                        <option>Tripped</option>
+                                        <option>Not Available</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">GTG-C</label></td>
                                 <td>
-                                    <select>
+                                     <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Running</option>
+                                        <option>Not Running</option>
+                                        <option>Standby</option>
+                                        <option>Tripped</option>
+                                        <option>Not Available</option>
                                     </select>
                                 </td>
                             </tr>
@@ -2104,60 +2138,75 @@
                             <tr>
                                 <td><label class="control-label">Hot Oil Syst</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Normal Ops</option>
+                                        <option>Anomaly</option>
+                                        <option>Tripped</option>
+                                        <option>Not Available</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Fuel Gas syst</label></td>
                                 <td>
-                                    <select>
+                                     <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Normal Ops</option>
+                                        <option>Anomaly</option>
+                                        <option>Tripped</option>
+                                        <option>Not Available</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Water Syst</label></td>
                                 <td>
-                                    <select>
+                                     <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Normal Ops</option>
+                                        <option>Anomaly</option>
+                                        <option>Tripped</option>
+                                        <option>Not Available</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Air Compr A</label></td>
                                 <td>
-                                    <select>
+                                      <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Running</option>
+                                        <option>Not Running</option>
+                                        <option>Standby</option>
+                                        <option>Tripped</option>
+                                        <option>Not Available</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Air Compr B</label></td>
                                 <td>
-                                    <select>
+                                      <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Running</option>
+                                        <option>Not Running</option>
+                                        <option>Standby</option>
+                                        <option>Tripped</option>
+                                        <option>Not Available</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Air Compr C</label></td>
                                 <td>
-                                    <select>
+                                      <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Running</option>
+                                        <option>Not Running</option>
+                                        <option>Standby</option>
+                                        <option>Tripped</option>
+                                        <option>Not Available</option>
                                     </select>
                                 </td>
                             </tr>
@@ -2170,60 +2219,73 @@
                             <tr>
                                 <td><label class="control-label">N2 Syst</label></td>
                                 <td>
-                                    <select>
+                                     <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Normal Ops</option>
+                                        <option>Anomaly</option>
+                                        <option>Tripped</option>
+                                        <option>Not Available</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Fire Syst</label></td>
                                 <td>
-                                    <select>
+                                     <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Normal Ops</option>
+                                        <option>Anomaly</option>
+                                        <option>Tripped</option>
+                                        <option>Not Available</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">LNG Tank</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Normal Ops</option>
+                                        <option>Anomaly</option>
+                                        <option>Tripped</option>
+                                        <option>Not Available</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">BOG Compr</label></td>
                                 <td>
-                                    <select>
+                                     <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Running</option>
+                                        <option>Not Running</option>
+                                        <option>Standby</option>
+                                        <option>Tripped</option>
+                                        <option>Not Available</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">LNG Jetty</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Normal Ops</option>
+                                        <option>Anomaly</option>
+                                        <option>Tripped</option>
+                                        <option>Not Available</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">C2/C3 strg tank</label></td>
                                 <td>
-                                    <select>
+                                     <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Normal Ops</option>
+                                        <option>Anomaly</option>
+                                        <option>Tripped</option>
+                                        <option>Not Available</option>
                                     </select>
                                 </td>
                             </tr>
@@ -2234,40 +2296,48 @@
                             <tr>
                                 <td><label class="control-label">CDS tank</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Normal Ops</option>
+                                        <option>Anomaly</option>
+                                        <option>Tripped</option>
+                                        <option>Not Available</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Diesel Oil tank</label></td>
                                 <td>
-                                    <select>
+                                     <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Normal Ops</option>
+                                        <option>Anomaly</option>
+                                        <option>Tripped</option>
+                                        <option>Not Available</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Flare Syst</label></td>
                                 <td>
-                                    <select>
+                                     <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Normal Ops</option>
+                                        <option>Anomaly</option>
+                                        <option>Tripped</option>
+                                        <option>Not Available</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Waste Syst</label></td>
                                 <td>
-                                    <select>
+                                     <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Normal Ops</option>
+                                        <option>Anomaly</option>
+                                        <option>Tripped</option>
+                                        <option>Not Available</option>
                                     </select>
                                 </td>
                             </tr>
@@ -2295,7 +2365,7 @@
     <div class="row qhsse" style="margin-bottom: 20px;">
         <div class="col-md-12">
             <a class="btn" role="button" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample">
-                <h3 style="margin-left: -16px;">QHSSE Section-I</h3>
+                <h4 style="margin-left: -16px;">QHSSE Section-I</h4>
             </a>
             <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
                 <a class="btn btn-input-slide" role="button" data-toggle="collapse" href="#collapseQhsse" aria-expanded="false" aria-controls="collapseExample">
@@ -2309,7 +2379,7 @@
                             <tr>
                                 <td><label class="control-label">Last DAFWC</label></td>
                                 <td>
-                                    <span class="col-sm-8">
+                                    <span class="col-sm-12">
                                         <input type="date" class="form-control" id="text" placeholder="text date" />
                                     </span>
                                 </td>
@@ -2317,7 +2387,7 @@
                             <tr>
                                 <td><label class="control-label">Last Plant LOPC (Tier-1 &2)</label></td>
                                 <td>
-                                    <span class="col-sm-8">
+                                    <span class="col-sm-12">
                                         <input type="date" class="form-control" id="text" placeholder="text date" />
                                     </span>
                                 </td>
@@ -2348,30 +2418,43 @@
                             <tr>
                                 <td><label class="control-label">Weather</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Sunny</option>
+                                        <option>Party Cloudly</option>
+                                        <option>Cloudly</option>
+                                        <option>Light Rain</option>
+                                        <option>Rain</option>
+                                        <option>Heavy Rain</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Tide/Wave</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>0-0.25 meter</option>
+                                        <option>0.25-0.5 meter</option>
+                                        <option>0.5-0.75</option>
+                                        <option>0.75-1.0 meter</option>
+                                        <option>1-1.25 meter</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Wind Direct</label></td>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>N</option>
+                                        <option>NE</option>
+                                        <option>E</option>
+                                        <option>SE</option>
+                                        <option>S</option>
+                                        <option>SW</option>
+                                        <option>W</option>
+                                        <option>NW</option>
                                     </select>
                                 </td>
                             </tr>
@@ -2592,10 +2675,12 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Low</option>
+                                        <option>Elevated</option>
+                                        <option>High</option>
+                                        <option>Severe</option>
                                     </select>
                                 </td>
                             </tr>
@@ -2635,17 +2720,17 @@
     <div class="row others">
         <div class="col-md-12">
             <a class="btn" role="button" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample">
-                <h3 style="margin-left: -16px;">Enabler Section</h3>
+                <h4 style="margin-left: -16px;">Enabler Section</h4>
             </a>
             <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
-                <a class="btn" role="button" data-toggle="collapse" href="#collapseOthers" aria-expanded="false" aria-controls="collapseExample">
+                <a class="btn btn-input-slide" role="button" data-toggle="collapse" href="#collapseOthers" aria-expanded="false" aria-controls="collapseExample">
                     +
                 </a>
             </span>
             <div class="collapse" id="collapseOthers" style="margin-top: 15px; margin-bottom: 15px;">
                 <div class="col-md-12">
                     <div class="col-md-4">
-                        <table width="900" border="0" cellpadding="2" cellspacing="2" style="margin-top: 15px; margin-bottom: 15px;">
+                        <table  border="0" cellpadding="2" cellspacing="2" style="margin-top: 15px; margin-bottom: 15px;">
                             <tr>
                                 <td>
                                     <h4 style="margin-top: 20px;">Procurement Section-E</h4>
@@ -2655,27 +2740,27 @@
                                 <td>
                                     <label for="" style="margin-top: 20px;">#backlog</label>
                                     <br />
-                                    <input type="number" name="" id="" placeholder="number" />
+                                    <input type="number" class="form-control" name="" id="" placeholder="number" />
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label for="" style="margin-top: 20px;">Avg backlog</label>
                                     <br />
-                                    <input type="number" name="" id="" placeholder="number" />
+                                    <input type="number" class="form-control" name="" id="" placeholder="number" />
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label for="" style="margin-top: 20px;">Remark</label>
                                     <br />
-                                    <input type="text" name="" id="" placeholder="free text" />
+                                    <input type="text" class="form-control" name="" id="" placeholder="free text" />
                                 </td>
                             </tr>
                         </table>
                     </div>
                     <div class="col-md-4">
-                        <table width="900" border="0" cellpadding="2" cellspacing="2" style="margin-top: 15px; margin-bottom: 15px;">
+                        <table border="0" cellpadding="2" cellspacing="2" style="margin-top: 15px; margin-bottom: 15px;">
                             <tr>
                                 <td>
                                     <h4 for="" style="margin-top: 20px;">ICT Infrastructure and System Highlight:-F</h4>
@@ -2685,10 +2770,11 @@
                                 <td>
                                     <label for="" style="margin-top: 20px;">Application</label>
                                     <br />
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Normal</option>
+                                        <option>Interrupted</option>
+                                        <option>Not Avail</option>
                                     </select>
                                 </td>
                             </tr>
@@ -2696,10 +2782,11 @@
                                 <td>
                                     <label for="" style="margin-top: 20px;">Colaboration</label>
                                     <br />
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Normal</option>
+                                        <option>Interrupted</option>
+                                        <option>Not Avail</option>
                                     </select>
                                 </td>
                             </tr>
@@ -2707,10 +2794,11 @@
                                 <td>
                                     <label for="" style="margin-top: 20px;">Telco</label>
                                     <br />
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Normal</option>
+                                        <option>Interrupted</option>
+                                        <option>Not Avail</option>
                                     </select>
                                 </td>
                             </tr>
@@ -2718,13 +2806,13 @@
                                 <td>
                                     <label for="" style="margin-top: 20px;">Remark</label>
                                     <br />
-                                    <input type="text" name="" id="" placeholder="free text" />
+                                    <input type="text" class="form-control" name="" id="" placeholder="free text" />
                                 </td>
                             </tr>
                         </table>
                     </div>
                     <div class="col-md-4">
-                        <table width="900" border="0" cellpadding="2" cellspacing="2" style="margin-top: 15px; margin-bottom: 15px;">
+                        <table border="0" cellpadding="2" cellspacing="2" style="margin-top: 15px; margin-bottom: 15px;">
                             <tr>
                                 <td>
                                     <h4 for="" style="margin-top: 20px;">GS & FM-G</h4>
@@ -2734,17 +2822,18 @@
                                 <td>
                                     <label for="" style="margin-top: 20px;">POB</label>
                                     <br />
-                                    <input type="number" placeholder="number" />
+                                    <input type="number" placeholder="number" class="form-control"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label for="" style="margin-top: 20px;">F&B</label>
                                     <br />
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Normal</option>
+                                        <option>Interrupted</option>
+                                        <option>Closed</option>
                                     </select>
                                 </td>
                             </tr>
@@ -2752,10 +2841,11 @@
                                 <td>
                                     <label for="" style="margin-top: 20px;">Camp</label>
                                     <br />
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Normal</option>
+                                        <option>Interrupted</option>
+                                        <option>Closed</option>
                                     </select>
                                 </td>
                             </tr>
@@ -2763,10 +2853,11 @@
                                 <td>
                                     <label for="" style="margin-top: 20px;">Transp</label>
                                     <br />
-                                    <select>
+                                    <select class="form-control">
                                         <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
+                                        <option>Normal</option>
+                                        <option>Interrupted</option>
+                                        <option>Closed</option>
                                     </select>
                                 </td>
                             </tr>
@@ -2774,7 +2865,7 @@
                                 <td>
                                     <label for="" style="margin-top: 20px;">Remark</label>
                                     <br />
-                                    <input type="text" name="" id="" placeholder="free text" />
+                                    <input type="text" class="form-control" name="" id="" placeholder="free text" />
                                 </td>
                             </tr>
                         </table>
@@ -2814,30 +2905,32 @@
     <hr />
     <div class="col-md-12" style="margin-bottom: 30px;">
         <div class="col-md-3">
-            <table width="900" border="0" cellpadding="2" cellspacing="2">
+            <table  border="0" cellpadding="2" cellspacing="2">
                 <tr>
                     <td>
                         <label for="">Prepared By-L</label>
                         <br />
-                        <select>
+                        <select class="form-control">
                             <option>Select Option</option>
-                            <option>Option 1</option>
-                            <option>Option 2</option>
+                            <option>Trisaptio Aji N</option>
+                            <option>Eko P Yulianto</option>
+                            <option>Marco Maruto</option>
                         </select>
                     </td>
                 </tr>
             </table>
         </div>
         <div class="col-md-3">
-            <table width="900" border="0" cellpadding="2" cellspacing="2">
+            <table  border="0" cellpadding="2" cellspacing="2">
                 <tr>
                     <td>
                         <label for="">Reviewed By-M</label>
                         <br />
-                        <select>
-                            <option>Select Option</option>
-                            <option>Option 1</option>
-                            <option>Option 2</option>
+                        <select class="form-control">
+                             <option>Select Option</option>
+                            <option>Trisaptio Aji N</option>
+                            <option>Eko P Yulianto</option>
+                            <option>Marco Maruto</option>
                         </select>
                     </td>
                 </tr>

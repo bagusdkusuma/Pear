@@ -3,7 +3,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="artifact-list">
-    <h2>List</h2>
+    <div class="page-header">
+        <h3>List</h3>
+    </div>
     @Html.Partial("_MessageResponse")
     <div class="add-button-wrapper">
         @Html.ActionLink("Create New", "Designer", null, new { @class = "btn btn-primary" })

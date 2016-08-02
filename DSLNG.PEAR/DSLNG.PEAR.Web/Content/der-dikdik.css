@@ -1,6 +1,6 @@
 ﻿body {
-            font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
-            font-size: 10px;
+            /*font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+            font-size: 10px;*/
             line-height: 1;
             color: #000;
             background-color: #fff;
@@ -103,30 +103,33 @@ h6 {
         .table {
             margin-bottom: 0;
         }
-        
+        /*Override Tables style by aan*/
         .table-bordered {
-            border: 1px solid #0D0D0D;
+            border: 1px solid #fff;
         }
-        
+        .table-bordered>tbody>tr>td, 
+        .table-bordered>tbody>tr>th {
+            vertical-align: middle !important;
+        }
         .table-bordered>tbody>tr>td,
         .table-bordered>tbody>tr>th,
         .table-bordered>tfoot>tr>td,
         .table-bordered>tfoot>tr>th,
         .table-bordered>thead>tr>td,
         .table-bordered>thead>tr>th {
-            border: 1px solid #0D0D0D;
+            border: 1px solid #fff;
         }
-        
+        /*Override Tables style by aan*/
         .table>tbody>tr>td,
         .table>tbody>tr>th,
         .table>tfoot>tr>td,
         .table>tfoot>tr>th,
         .table>thead>tr>td,
         .table>thead>tr>th {
-            padding: 2px;
-            line-height: 1;
+            /*padding: 2px;
+            line-height: 1;*/
             vertical-align: top;
-            border-top: 1px solid #0D0D0D;
+            border-top: 1px solid #fff;
         }
         
         .avg-stats > tbody > tr > td {
@@ -227,17 +230,17 @@ h6 {
         .table.table-bordered {
             border: none;
         }
-        
+        /*Override Tables style by aan*/
         .table.table-bordered tr td:first-child {
-            border-left: none;
+            /*border-left: none;*/
         }
         
         .table.table-bordered tr td:last-child {
-            border-right: none;
+            /*border-right: none;*/
         }
         
         .table.table-bordered tbody tr:last-child td {
-            border-bottom: none;
+            /*border-bottom: none;*/
         }
         
         .table thead tr td {
@@ -1201,3 +1204,41 @@ table.security-incident-wrapper > tbody > tr > td {
 .highlight-style-12 {
     font-size:12px;letter-spacing:0.5px;
 }
+
+/*Original style css
+.table-bordered {
+            border: 1px solid #0D0D0D;
+        }
+        
+        .table-bordered>tbody>tr>td,
+        .table-bordered>tbody>tr>th,
+        .table-bordered>tfoot>tr>td,
+        .table-bordered>tfoot>tr>th,
+        .table-bordered>thead>tr>td,
+        .table-bordered>thead>tr>th {
+            border: 1px solid #0D0D0D;
+        }
+        
+        .table>tbody>tr>td,
+        .table>tbody>tr>th,
+        .table>tfoot>tr>td,
+        .table>tfoot>tr>th,
+        .table>thead>tr>td,
+        .table>thead>tr>th {
+            padding: 2px;
+            line-height: 1;
+            vertical-align: top;
+            border-top: 1px solid #0D0D0D;
+        }
+
+          .table.table-bordered tr td:first-child {
+            border-left: none;
+        }
+        
+        .table.table-bordered tr td:last-child {
+            border-right: none;
+        }
+        
+        .table.table-bordered tbody tr:last-child td {
+            border-bottom: none;
+        }*/
