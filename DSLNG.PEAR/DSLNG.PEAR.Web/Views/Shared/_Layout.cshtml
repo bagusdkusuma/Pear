@@ -8,6 +8,8 @@
     @*<link href="@Url.Content("~/Content/login.css")" rel="stylesheet" type="text/css" />*@
 
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/der_preview")
+
     @Html.DevExpress().GetStyleSheets(
         new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
         new StyleSheet { ExtensionSuite = ExtensionSuite.Editors },

@@ -3,7 +3,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="template-list">
-    <h2>List</h2>
+    <div class="page-header">
+        <h3>List</h3>
+    </div>
     @Html.Partial("_MessageResponse")
     <div class="add-button-wrapper">
         @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
@@ -49,7 +51,7 @@
                             "mRender": function (data, type, row) {
                                 var viewLink = '@Html.ActionLink("View", "View", "Template", new { id = "_id_" }, null)'.replace('_id_', data.Id);
                                 var editLink = '@Html.ActionLink("Edit", "Update", "Template", new { id = "_id_" }, null)'.replace('_id_', data.Id);
-                                var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
+                                var deleteLink = '<a class="delete btn-action" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
                                 return editLink + ' | ' + viewLink + ' | ' + deleteLink;
                         }
                     }
