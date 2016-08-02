@@ -258,143 +258,7 @@
                     +
                 </a>
             </span>
-            <div class="collapse" id="collapseForecasted" style="margin-top: 15px; margin-bottom: 15px;">
-                <div class="col-md-12">
-                    <div class="col-md-3">
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">USD/JPY</label></td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">1m</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" value="$3200" class="der-text-yesterday form-control" id="text" placeholder="rate" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">3m</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="rate" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">6m</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="rate" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">1yr</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="rate" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col-md-4">
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">BRENT Forecast</label></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>
-                                        <input type="text" class="form-control" id="text" placeholder="text period" />
-                                    </span>
-                                </td>
-                                <td>
-                                    <span>
-                                        <input type="text" class="form-control" id="text" placeholder="usd/bbl" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>
-                                        <input type="text" class="form-control" id="text" placeholder="text period" />
-                                    </span>
-                                </td>
-                                <td>
-                                    <span>
-                                        <input type="text" class="form-control" id="text" placeholder="usd/bbl" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>
-                                        <input type="text" class="form-control" id="text" placeholder="text period" />
-                                    </span>
-                                </td>
-                                <td>
-                                    <span>
-                                        <input type="text" class="form-control" id="text" placeholder="usd/bbl" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>
-                                        <input type="text" class="form-control" id="text" placeholder="text period" />
-                                    </span>
-                                </td>
-                                <td>
-                                    <span>
-                                        <input type="text" class="form-control" id="text" placeholder="usd/bbl" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col-md-4">
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">USD/IDR</label></td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">1m</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" value="$3200" class="der-text-yesterday form-control" id="text" placeholder="rate" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">3m</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="rate" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">6m</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="rate" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">1yr</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="rate" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
+            <div class="layout-item" data-url="@Url.Action("GetGlobalStockMarket")"></div>
         </div>
     </div>
 
@@ -2854,56 +2718,31 @@
 <script type="text/javascript" src="~/Content/datepicker/js/bootstrap-datepicker.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        //$('.usdxdr').change(function (e) {
+        var currentDate = $('#currentDate').val();
+        currentDate = '06/13/2016';
+        $('.layout-item').each(function () {
+            var that = $(this);
+            $.ajax({
+                url: that.attr('data-url'),
+                data: { currentDate: currentDate },
+                success: function (data) {
+                    console.log(data);
+                    that.html(data);
+                }
+            });
+        });
 
-        //});
-        function reloadView() {
-            var currentDate = $('#currentDate').val();
-            $('.layout-item').each(function () {
-                var that = $(this);
+        $('.layout-item').on('keypress', '.der-value', function (e) {
+            if (e.which == 13) {
+
                 $.ajax({
-                    url: that.attr('data-url'),
-                    data: { currentDate: currentDate },
-                    success: function (data) {
+                    url: '@Url.Action("Update","DerTransaction")',
 
-                        if (data.GraphicType !== undefined) {
-                            var callback = window.Pear.Artifact.Designer._previewCallbacks;
-                            callback[data.GraphicType](data, that);
-                        }
-                        else if (data.type === "highlight") {
-                            var aneh = data.view.replace(/\"/g, "");
-                            console.log(aneh);
-                            that.html(aneh);
-                        } else if (data.type === "highlight" || data.type === "weather" ||
-                            data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
-                        data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
-                        || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type == "procurement" || data.type == "indicative-commercial-price" ||
-                            data.type === "plant-availability" || data.type === "economic-indicator" || data.type === "mgdp" || data.type === "hhv" || data.type === "lng-and-cds-production"
-                            || data.type === "nls" || data.type === "key-equipment-status") {
-                            that.html(data.view);
-                        }
-                        /*else if (data.type === "weather" || data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
-                        data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
-                        || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type === 'mgdp') {
-                            that.html(data.view);
-                        }*/
-
-                    }
                 });
-            });
-        }
 
-        $('#currentDate').val('02/18/2016');
-        reloadView();
-        if ($('.der-display').length) {
-            $('.datepicker').datetimepicker({
-                format: "MM/DD/YYYY",
-                focusOnShow: false
-            }).on('dp.change', function (e) {
-                $("#currentDate").blur();
-                reloadView();
-            });
-        };
+                alert('You pressed enter!');
+            }
+        })
     });
 
     function moveFieldTo(event, fieldId) {

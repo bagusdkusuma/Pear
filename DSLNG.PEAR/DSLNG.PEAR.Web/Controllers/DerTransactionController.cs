@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
-    public class DerTransactionController : Controller
+    public class DerTransactionController : BaseController
     {
         // GET: DerTransaction
         public ActionResult Index()
@@ -17,6 +17,11 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Input()
         {
             return View();
+        }
+
+        public ActionResult GetGlobalStockMarket()
+        {            
+            return PartialView("LayoutType/_GLobalStockMarket");
         }
 
     }
