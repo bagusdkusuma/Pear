@@ -8,7 +8,6 @@
     @*<link href="@Url.Content("~/Content/login.css")" rel="stylesheet" type="text/css" />*@
 
     @Styles.Render("~/Content/css")
-    @Styles.Render("~/Content/der_preview")
 
     @Html.DevExpress().GetStyleSheets(
         new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
@@ -54,7 +53,7 @@
             @Html.Action("SiteMap", "Menu")
             <div class="widget-menu">
                 <a href="@Url.Action("Index", "Calculator")" target="_blank">
-                    <i class="fa fa-calculator" style="margin-left: 7px;margin-top: 7px;"></i>
+                    <i class="fa fa-calculator"></i>
                 </a>
             </div>
             
