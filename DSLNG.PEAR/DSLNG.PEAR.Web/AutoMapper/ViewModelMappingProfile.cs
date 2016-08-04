@@ -179,6 +179,8 @@ using DSLNG.PEAR.Web.ViewModels.RolePrivilege;
 using DSLNG.PEAR.Services.Requests.Privilege;
 using DSLNG.PEAR.Services.Responses.Privilege;
 using DSLNG.PEAR.Web.ViewModels.Der.Display;
+using DSLNG.PEAR.Services.Responses.DerTransaction;
+using DSLNG.PEAR.Web.ViewModels.DerTransaction;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -741,6 +743,13 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<DownloadTemplateViewModel, GetOperationDataConfigurationRequest>();
 
             Mapper.CreateMap<SaveMirDataTableViewModel, SaveMirDataTableRequest>();
+            Mapper.CreateMap<GetDerLayoutItemsResponse, DerValuesViewModel>();
+            Mapper.CreateMap<GetDerLayoutItemsResponse.DerLayoutItem, DerValuesViewModel.DerLayoutItemViewModel>();
+            Mapper.CreateMap<GetDerLayoutItemsResponse.DerHighlight, DerValuesViewModel.DerHighlightValuesViewModel>();
+            Mapper.CreateMap<GetDerLayoutItemsResponse.KpiInformation, DerValuesViewModel.KpiInformationValuesViewModel>();
+            Mapper.CreateMap<GetKpiInformationValuesResponse.KpiInformation, DerValuesViewModel.KpiInformationValuesViewModel>();
+            Mapper.CreateMap<GetKpiInformationValuesResponse.KpiValue, DerValuesViewModel.KpiValueViewModel>();
+            Mapper.CreateMap<GetHighlightValuesResponse.DerHighlight, DerValuesViewModel.DerHighlightValuesViewModel>();
             base.Configure();
         }
 

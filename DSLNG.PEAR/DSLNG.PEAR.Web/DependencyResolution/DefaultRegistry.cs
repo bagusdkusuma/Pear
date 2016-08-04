@@ -92,6 +92,7 @@ namespace DSLNG.PEAR.Web.DependencyResolution {
             For<IProcessBlueprintService>().Use<ProcessBlueprintService>();
             For<IRolePrivilegeService>().Use<RolePrivilegeService>();
             For<IFileRepositoryService>().Use<FileRepositoryService>();
+            For<IDerTransactionService>().Use<DerTransactionService>();
         }
 
         #endregion

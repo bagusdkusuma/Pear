@@ -1,0 +1,143 @@
+﻿@{
+    Layout = null;
+}
+@model DSLNG.PEAR.Web.ViewModels.DerTransaction.DerValuesViewModel
+<div class="col-md-12">
+    @{
+        var layoutItem = Model.DerLayoutItems.First(x => x.Column == 1 && x.Row == 16);
+    }
+    <div class="col-md-3">
+        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
+            <tr>
+                <td><label class="control-label">USD/JPY</label></td>
+            </tr>
+            <tr>
+                <td><label class="control-label">1m</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 4, "daily-actual", "A-25", "A-26")
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">3m</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 5, "daily-actual", "A-26", "A-27")
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">6m</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 6, "daily-actual", "A-27", "A-28")
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">1yr</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 7, "daily-actual", "A-28", "A-29")
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-4">
+        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
+            <tr>
+                <td><label class="control-label">BRENT Forecast</label></td>
+            </tr>
+            <tr>
+                <td>
+                    <span>
+                        <input type="text" class="form-control" id="text" placeholder="text period" />
+                    </span>
+                </td>
+                <td>
+                    <span>
+                        <input type="text" class="form-control" id="text" placeholder="usd/bbl" />
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>
+                        <input type="text" class="form-control" id="text" placeholder="text period" />
+                    </span>
+                </td>
+                <td>
+                    <span>
+                        <input type="text" class="form-control" id="text" placeholder="usd/bbl" />
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>
+                        <input type="text" class="form-control" id="text" placeholder="text period" />
+                    </span>
+                </td>
+                <td>
+                    <span>
+                        <input type="text" class="form-control" id="text" placeholder="usd/bbl" />
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>
+                        <input type="text" class="form-control" id="text" placeholder="text period" />
+                    </span>
+                </td>
+                <td>
+                    <span>
+                        <input type="text" class="form-control" id="text" placeholder="usd/bbl" />
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-4">
+        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
+            <tr>
+                <td><label class="control-label">USD/IDR</label></td>
+            </tr>
+            <tr>
+                <td><label class="control-label">1m</label></td>
+                <td>
+                    <span class="col-sm-8">
+                            <!-- 37 -->
+                        @Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 9, "daily-actual", "A-37", "A-38")
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">3m</label></td>
+                <td>
+                    <span class="col-sm-8">
+                       @Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 10, "daily-actual", "A-38", "A-39")
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">6m</label></td>
+                <td>
+                    <span class="col-sm-8">
+                      @Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 11, "daily-actual", "A-39", "A-40")
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">1yr</label></td>
+                <td>
+                    <span class="col-sm-8">
+                       @Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 12, "daily-actual", "A-40", "A-41")
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

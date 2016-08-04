@@ -5,6 +5,9 @@ using System.Globalization;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using Newtonsoft.Json;
+using DSLNG.PEAR.Web.ViewModels.DerTransaction;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DSLNG.PEAR.Web.Helpers
 {
@@ -373,6 +376,25 @@ namespace DSLNG.PEAR.Web.Helpers
                 default:
                     return new MvcHtmlString(string.Empty);
             }
+        }
+
+        public static MvcHtmlString DisplayKpiInformationInput(this HtmlHelper htmlHelper, IList<DerValuesViewModel.KpiInformationValuesViewModel> kpiInformations,int position, string type, string id, string next, string placeholder = "rate", bool previousValue = true, string defaultValue = "") {
+            string value = defaultValue;
+            var kpiInformation = kpiInformations.First(x => x.Position == position);
+            if (previousValue)
+            {
+                switch (type)
+                {
+                    case "daily-actual":
+                        value = kpiInformation.DailyActual == null ? value : kpiInformation.DailyActual.Value.ToString();
+                        break;
+                    case "daily-target":
+                        value = kpiInformation.DailyTarget == null ? value : kpiInformation.DailyTarget.Value.ToString();
+                        break;
+
+                }
+            }
+            return new MvcHtmlString(string.Format("<input onkeypress=\"moveFieldTo(event, '{1}');\" type=\"text\" value=\"{0}\" class=\"der-text-yesterday form-control\" id=\"{2}\"  placeholder=\"{3}\" />", value, next, id, placeholder));
         }
     }
 

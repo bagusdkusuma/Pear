@@ -19,8 +19,8 @@
     <div class="row der-display">
         <div class="col-sm-12">
             <form class="form-inline">
-                <div class="form-group">
-                    <label>Date : </label>
+                <div class="form-group form-list">
+                    <font color="#FFFFFF">Date : </font>
                     <input id="currentDate" class="form-control datepicker" type="text">
                     <span class="field-validation-valid" data-valmsg-for="StartInDisplay" data-valmsg-replace="true"></span>
                 </div>
@@ -32,1420 +32,44 @@
     <div class="row economic-indicators" style="margin-bottom: 20px;">
         <div class="col-md-12">
             <a class="btn" role="button" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample">
-                <h4 style="margin-left: -16px;">Economic Indicator Section-B</h4>
+                <h3 style="margin-left: -16px;">Economic Indicator Section-B</h3>
             </a>
-            <span class="pull-right" style="border: 1px solid white; border-radius: 5px; ">
-                <a class="btn btn-input-slide" role="button" data-toggle="collapse" href="#collapseEconomic" aria-expanded="false" aria-controls="collapseExample">
+            <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
+                <a class="btn btn-input-slide" role="button" data-content-url="@Url.Action("EconomicIndicator",new { date="__date__" })" data-toggle="collapse" href="#collapseEconomic" aria-expanded="false" aria-controls="collapseExample">
                     +
                 </a>
             </span>
             <div class="collapse" id="collapseEconomic" style="margin-top: 15px; margin-bottom: 15px;">
-                <div class="col-md-12">
-                    <div class="col-md-4">
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">USDXDR</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input onkeypress="moveFieldTo(event, 'A-2');" type="text" value="$3200" class="der-text-yesterday form-control" id="text" placeholder="rate" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">USD/IDR</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input onkeypress="moveFieldTo(event, 'A-3');" type="text" class="form-control" id="A-2" placeholder="rate" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">JPY/IDR</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input onkeypress="moveFieldTo(event, 'A-4');" type="text" class="form-control" id="A-3" placeholder="rate" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">USD/JPY</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="A-4" placeholder="rate" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">EUR/USD</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="rate" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">EUR/IDR</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="rate" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">USD/KRW</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="rate" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col-md-4">
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">Dubai crude</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="der-input-error form-control" id="text" placeholder="usd/bbl" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">Brent</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="usd/bbl" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">Henry Hub</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="usd/mmbtu" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">Naptha</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="usd/bbl" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">ICP</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="usd/bbl" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">Applied JCC</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="usd/bbl" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">LNG Spot</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="usd/mmbtu" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">Shipping</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="usd/mmbtu" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col-md-4">
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">JKSE</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" value="$3200" class="der-text-yesterday form-control" id="text" placeholder="indeks" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">DJIA</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="indeks" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">Nikkei</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="indeks" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">SSEC</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="indeks" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-md-12" style="margin-top: 30px;">
-                    <div class="col-md-3">
-                        <table border="0">
-                            <tr>
-                                <td align="left"><label class="control-label">Market Tone</label></td>
-                                <td align="left">
-                                    <select name="select" option="option" class="form-control">
-                                        <option value="Bullish">Bullish</option>
-                                        <option value="Mixed">Mixed</option>
-                                        <option value="Bearish">Bearish</option>
-                                    </select>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col-md-3">
-                        <table border="0">
-                            <tr>
-                                <td align="left"><label class="control-label">Monthly Bunker Price</label></td>
-                                <td align="left">
-                                    <input type="text" class="form-control" id="text19" placeholder="usd/bbl" size="15" maxlength="15" />
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-md-12" style="margin-top: 30px;">
-                    <div class="col-md-6">
-                        <table border="0">
-                            <tr>
-                                <td><label class="control-label">Macro Economic/Market Flash</label></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <textarea class="form-control allow-html"></textarea>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-
-                </div>
             </div>
         </div>
     </div>
 
     <div class="row forecasted" style="margin-bottom: 20px;">
         <div class="col-md-12">
-            <a class="btn" role="button" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample">
-                <h4 style="margin-left: -16px;">Forecasted Market Indicator-B</h4>
+            <a class="btn" role="button" data-toggle="collapse"  href="#" aria-expanded="false" aria-controls="collapseExample">
+                <h3 style="margin-left: -16px;">Forecasted Market Indicator-B</h3>
             </a>
             <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
-                <a class="btn btn-input-slide" role="button" data-toggle="collapse" href="#collapseForecasted" aria-expanded="false" aria-controls="collapseExample">
+                <a class="btn btn-input-slide" role="button" data-toggle="collapse" data-content-url="@Url.Action("ForcastedIndicator",new { date="__date__" })" href="#collapseForecasted" aria-expanded="false" aria-controls="collapseExample">
                     +
                 </a>
             </span>
-            <div class="layout-item" data-url="@Url.Action("GetGlobalStockMarket")"></div>
+            <div class="collapse" id="collapseForecasted" style="margin-top: 15px; margin-bottom: 15px;">
+            </div>
         </div>
     </div>
 
     <div class="row operation" style="margin-bottom: 20px;">
         <div class="col-md-12">
             <a class="btn" role="button" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample">
-                <h4 style="margin-left: -16px;">Operation & Engineering Section-J</h4>
+                <h3 style="margin-left: -16px;">Operation & Engineering Section-J</h3>
             </a>
             <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
-                <a class="btn btn-input-slide" role="button" data-toggle="collapse" href="#collapseOperation" aria-expanded="false" aria-controls="collapseExample">
+                <a class="btn btn-input-slide" role="button" data-toggle="collapse" data-content-url="@Url.Action("OperationSection",new { date="__date__" })" href="#collapseOperation" aria-expanded="false" aria-controls="collapseExample">
                     +
                 </a>
             </span>
             <div class="collapse" id="collapseOperation" style="margin-top: 15px; margin-bottom: 15px;">
-                <div class="col-md-12">
-                    <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                        <tr>
-                            <td><label class="control-label">Plant Performance Corp KPI Target-Annual</label></td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="col-md-12">
-                    <div class="col-md-6">
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">PAV</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="%" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">PTE</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="%" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">Refrigerant Storage (C2 & C3)</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="ton" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">USM Feed Gas Pressure</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="psig" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">USM Feed Gas Temp</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="&#8451;" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col-md-6">
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">MTB</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="%" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">PUT</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="%" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">MCHE Rundown</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="ton/d" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">min HHV JOB PMTS</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="btu/scf" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">min HHV MGDP</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="btu/scf" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-md-12" style="margin-top: 30px;">
-                    <table border="0">
-                        <tr>
-                            <td><label class="control-label">Process Anomaly Highlight</label></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <textarea class="form-control allow-html"></textarea>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="col-md-12" style="margin-top: 30px;">
-                    <div class="col-md-3">
-                        <label class="control-label">Feed Gas USM</label>
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">24H</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" value="$3200" class="der-text-yesterday form-control" id="text" placeholder="mmscfd" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">24H</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="tonnes" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">24H</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="btu/scf" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">24H</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="mmbtud" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col-md-3">
-                        <label class="control-label">Feed Gas JOB PMTS-CPP</label>
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">24H</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" value="$3200" class="der-text-yesterday form-control" id="text" placeholder="mmscfd" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">24H</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="tonnes" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">24H</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="btu/scf" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">24H</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="mmbtud" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col-md-3">
-                        <label class="control-label">Feed Gas MGDP-Donggi CPP</label>
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">24H</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" value="$3200" class="der-text-yesterday form-control" id="text" placeholder="mmscfd" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">24H</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="tonnes" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">24H</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="btu/scf" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">24H</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="mmbtud" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col-md-3">
-                        <label class="control-label">Feed Gas MGDP-Matindok CPP</label>
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">24H</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" value="$3200" class="der-text-yesterday form-control" id="text" placeholder="mmscfd" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">24H</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="tonnes" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">24H</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="btu/scf" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">24H</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="mmbtud" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-md-12" style="margin-top: 30px;">
-                    <div class="col-md-4">
-                        <label class="control-label">Commitments JOB PMTS</label>
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">DCQ</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="mmbtu" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">MGN</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="bbtu" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">ADP</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="Tbtu" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="control-label">Commitments MGDP</label>
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">DCQ</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="mmbtu" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">MGN</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="bbtu" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">ADP</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="Tbtu" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="control-label">Plant Utilization daily code</label>
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td>
-                                    <span class="col-sm-9">
-                                        <select class="form-control">
-                                            <option>Select Option</option>
-                                            <option>Normal/Other</option>
-                                            <option>Unplanned</option>
-                                            <option>Planned SD</option>                                        
-                                        </select>
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                        <label class="control-label">Plant Availability (24H)</label>
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="hours" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-md-12" style="margin-top: 30px;">
-                    <div class="col-md-4">
-                        <label class="control-label">Feed Gas Impurities</label>
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">H2S</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="ppm" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">CO2</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="ppm" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">H2O</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="ppm" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">Dew Point</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="oF" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">Ttl Sulphur</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="ppm" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">BTX</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="ppm" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">MRU-Outlet Hg</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="ng/Nm3" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="control-label">Product Quality</label>
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">CDS-RVP</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="psia" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">LNG HHV</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="btu/scf" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">LNG-C1</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="mol%" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">LNG-C2</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="mol%" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">LNG-C3</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="mol%" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">LNG-iC4</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="mol%" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">LNG-nC4</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="mol%" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">LNG-C5+</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="mol%" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">N2</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="mol%" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-md-12" style="margin-top: 30px;">
-                    <div class="col-md-3">
-                        <label class="control-label">Enviro Quality-C3 Compr</label>
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">NO2</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="ppmV" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr></tr>
-                            <tr>
-                                <td><label class="control-label">SO2</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="ppmV" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">CO</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="%vol" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">CO2</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="%vol" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">O2</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="%vol" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">Opacity</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="%" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">Particulate</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="mg/Nm3" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col-md-3">
-                        <label class="control-label">Enviro Quality-LP MR Compr</label>
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">NO2</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="ppmV" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">SO2</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="ppmV" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">CO</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="%vol" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">CO2</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="%vol" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">O2</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="%vol" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">Opacity</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="%" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">Particulate</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="mg/Nm3" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col-md-3">
-                        <label class="control-label">Enviro Quality-HP MR Compr</label>
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">NO2</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="ppmV" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">SO2</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="ppmV" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">CO</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="%vol" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">CO2</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="%vol" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">O2</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="%vol" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">Opacity</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="%" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">Particulate</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="mg/Nm3" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col-md-3">
-                        <label class="control-label">Enviro Quality-HP MR Compr</label>
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">Wet Flare</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="Nm3/h" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">Dry Flare</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="Nm3/h" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">Tankage Flare</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="Nm3/h" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-md-12" style="margin-top: 30px;">
-                    <div class="col-md-6">
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">Corrugated Plate Interceptor</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="m3/h" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-md-12" style="margin-top: 30px;">
-                    <div class="col-md-4">
-                        <label class="control-label">Inventory-LNG Tank</label>
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">Level</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="%" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">Vol</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="m3" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">Vol</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="ton" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">Vol</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="MMbtu" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="control-label">Inventory-CDS Loading Tank</label>
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">Level</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="%" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">Vol</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="m3" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">Vol</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="ton" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">Vol</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="MMbtu" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="control-label">Inventory-CDS Buffer Tank</label>
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">Level</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="%" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">Vol</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="m3" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">Vol</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="ton" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">Vol</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="MMbtu" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-md-12" style="margin-top: 30px;">
-                    <div class="col-md-4">
-                        <label class="control-label">Inventory-CDS Day Tank</label>
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">Level</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="%" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">Vol</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="m3" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="control-label">Ambient Temp</label>
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">Hi</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="&#8451;" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">Low</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="&#8451;" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-md-12" style="margin-top: 30px;">
-                    <div class="col-md-4">
-                        <label class="control-label">LNG Production</label>
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">24H</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="m3" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">24H</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="ton" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">24H</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="mmbtu" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="control-label">CDS Production</label>
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">24H</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="m3" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">24H</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="ton" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">24H</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="mmbtu" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="control-label">Fuel Gas</label>
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">24H</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="m3" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">24H</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="ton" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">24H</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="mmbtu" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-md-12" style="margin-top: 30px;">
-                    <div class="col-md-4">
-                        <label class="control-label">LNG Loaded</label>
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">24H</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="m3" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">24H</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="ton" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">24H</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="mmbtu" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="control-label">LNG Planned Cargo</label>
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">ADP</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="free text" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">MDP</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="free text" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">YTD</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="free text" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="control-label">LNG Loaded Remark</label>
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td>
-                                    <select class="form-control">
-                                        <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <select class="form-control">
-                                        <option>Select Option</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
-                                    </select>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-md-12" style="margin-top: 30px;">
-                    <div class="col-md-4">
-                        <label class="control-label">CDS Loaded</label>
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">24H</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="m3" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">24H</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="ton" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">24H</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="mmbtu" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="control-label">CDS Cargo shipped</label>
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">MDP</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="free text" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">YTD</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="free text" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="control-label">CDS Loaded-Note</label>
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">CDS Loaded-Note</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="free text" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">CDS Loaded-Remark</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="free text" />
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-md-12" style="margin-top: 30px;">
-                    <div class="col-md-4">
-                        <label class="control-label">Flared Gas</label>
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td><label class="control-label">24H</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="Nm3" />
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">24H</label></td>
-                                <td>
-                                    <span class="col-sm-8">
-                                        <input type="text" class="form-control" id="text" placeholder="Mmscf" />
-                                    </span>
-                                </td>
-                            </tr>
-
-                        </table>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="control-label">Plant Mode</label>
-                        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-                            <tr>
-                                <td>
-                                    <span class="col-sm-9">
-                                        <select class="form-control">
-                                            <option>Select Option</option>
-                                            <option>y-115</option>
-                                        </select>
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-
-                </div>
-
-                <div class="col-md-12" style="margin-top: 30px;">
-                    <table border="0">
-                        <tr>
-                            <td><label class="control-label">Operation Highlight</label></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <textarea class="form-control allow-html"></textarea>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
             </div>
         </div>
     </div>
@@ -1453,7 +77,7 @@
     <div class="row marine" style="margin-bottom: 20px;">
         <div class="col-md-12">
             <a class="btn" role="button" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample">
-                <h4 style="margin-left: -16px;">Marine, Shipping, Cargo Delivery section-C</h4>
+                <h3 style="margin-left: -16px;">Marine, Shipping, Cargo Delivery section-C</h3>
             </a>
             <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
                 <a class="btn btn-input-slide" role="button" data-toggle="collapse" href="#collapseMarine" aria-expanded="false" aria-controls="collapseExample">
@@ -1470,7 +94,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select class="form-control">
+                                        <select>
                                             <option>Select Option</option>
                                             <option>Option 1</option>
                                             <option>Option 2</option>
@@ -1479,7 +103,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select class="form-control">
+                                        <select>
                                             <option>Select Option</option>
                                             <option>Option 1</option>
                                             <option>Option 2</option>
@@ -1488,7 +112,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select class="form-control">
+                                        <select>
                                             <option>Select Option</option>
                                             <option>Option 1</option>
                                             <option>Option 2</option>
@@ -1497,7 +121,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select class="form-control">
+                                        <select>
                                             <option>Select Option</option>
                                             <option>Option 1</option>
                                             <option>Option 2</option>
@@ -1513,7 +137,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select class="form-control">
+                                        <select>
                                             <option>Select Option</option>
                                             <option>Option 1</option>
                                             <option>Option 2</option>
@@ -1522,7 +146,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select class="form-control">
+                                        <select>
                                             <option>Select Option</option>
                                             <option>Option 1</option>
                                             <option>Option 2</option>
@@ -1531,7 +155,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select class="form-control">
+                                        <select>
                                             <option>Select Option</option>
                                             <option>Option 1</option>
                                             <option>Option 2</option>
@@ -1540,7 +164,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select class="form-control">
+                                        <select>
                                             <option>Select Option</option>
                                             <option>Option 1</option>
                                             <option>Option 2</option>
@@ -1558,22 +182,22 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="date" class="form-control" placeholder="text date" required />
+                                        <input type="date" class="" placeholder="text date" required />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="date" class="form-control" placeholder="text date" required />
+                                        <input type="date" class="" placeholder="text date" required />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="date" class="form-control" placeholder="text date" required />
+                                        <input type="date" class="" placeholder="text date" required />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="date" class="form-control" placeholder="text date" required />
+                                        <input type="date" class="" placeholder="text date" required />
                                     </td>
                                 </tr>
                             </table>
@@ -1585,22 +209,22 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="date" class="form-control" placeholder="text date" required />
+                                        <input type="date" class="" placeholder="text date" required />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="date" class="form-control" placeholder="text date" required />
+                                        <input type="date" class="" placeholder="text date" required />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="date" class="form-control" placeholder="text date" required />
+                                        <input type="date" class="" placeholder="text date" required />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="date" class="form-control" placeholder="text date" required />
+                                        <input type="date" class="" placeholder="text date" required />
                                     </td>
                                 </tr>
                             </table>
@@ -1614,22 +238,22 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" class="form-control" placeholder="free text" required />
+                                        <input type="text" class="" placeholder="free text" required />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" class="form-control" placeholder="free text" required />
+                                        <input type="text" class="" placeholder="free text" required />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" class="form-control" placeholder="free text" required />
+                                        <input type="text" class="" placeholder="free text" required />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" class="form-control" placeholder="free text" required />
+                                        <input type="text" class="" placeholder="free text" required />
                                     </td>
                                 </tr>
                             </table>
@@ -1641,22 +265,22 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" class="form-control" placeholder="free text" required />
+                                        <input type="text" class="" placeholder="free text" required />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" class="form-control" placeholder="free text" required />
+                                        <input type="text" class="" placeholder="free text" required />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" class="form-control placeholder="free text" required />
+                                        <input type="text" class="" placeholder="free text" required />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" class="form-control placeholder="free text" required />
+                                        <input type="text" class="" placeholder="free text" required />
                                     </td>
                                 </tr>
                             </table>
@@ -1742,7 +366,7 @@
     <div class="row maintanance" style="margin-bottom: 20px;">
         <div class="col-md-12">
             <a class="btn" role="button" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample">
-                <h4 style="margin-left: -16px;">Maintenance section-D</h4>
+                <h3 style="margin-left: -16px;">Maintenance section-D</h3>
             </a>
             <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
                 <a class="btn btn-input-slide" role="button" data-toggle="collapse" href="#collapseMaintanance" aria-expanded="false" aria-controls="collapseExample">
@@ -1853,63 +477,50 @@
                             <tr>
                                 <td><label class="control-label">Feed Inlet Syst</label></td>
                                 <td>
-                                    <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Normal Ops</option>
-                                        <option>Anomaly</option>
-                                        <option>Tripped</option>
-                                        <option>Not Available</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">C3 Compr</label></td>
                                 <td>
-                                    <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Running</option>
-                                        <option>Not Running</option>
-                                        <option>Standby</option>
-                                        <option>Tripped</option>
-                                        <option>Not Available</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">LP-MR Compr</label></td>
                                 <td>
-                                    <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Running</option>
-                                        <option>Not Running</option>
-                                        <option>Standby</option>
-                                        <option>Tripped</option>
-                                        <option>Not Available</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">HP-MR Compr</label></td>
                                 <td>
-                                    <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Running</option>
-                                        <option>Not Running</option>
-                                        <option>Standby</option>
-                                        <option>Tripped</option>
-                                        <option>Not Available</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">MCHE</label></td>
                                 <td>
-                                     <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Normal Ops</option>
-                                        <option>Anomaly</option>
-                                        <option>Tripped</option>
-                                        <option>Not Available</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
@@ -1920,78 +531,60 @@
                             <tr>
                                 <td><label class="control-label">EDG-A</label></td>
                                 <td>
-                                     <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Running</option>
-                                        <option>Not Running</option>
-                                        <option>Standby</option>
-                                        <option>Tripped</option>
-                                        <option>Not Available</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">EDG-B</label></td>
                                 <td>
-                                    <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Running</option>
-                                        <option>Not Running</option>
-                                        <option>Standby</option>
-                                        <option>Tripped</option>
-                                        <option>Not Available</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">EDG-C</label></td>
                                 <td>
-                                     <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Running</option>
-                                        <option>Not Running</option>
-                                        <option>Standby</option>
-                                        <option>Tripped</option>
-                                        <option>Not Available</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">GTG-A</label></td>
                                 <td>
-                                    <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Running</option>
-                                        <option>Not Running</option>
-                                        <option>Standby</option>
-                                        <option>Tripped</option>
-                                        <option>Not Available</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">GTG-B</label></td>
                                 <td>
-                                    <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Running</option>
-                                        <option>Not Running</option>
-                                        <option>Standby</option>
-                                        <option>Tripped</option>
-                                        <option>Not Available</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">GTG-C</label></td>
                                 <td>
-                                     <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Running</option>
-                                        <option>Not Running</option>
-                                        <option>Standby</option>
-                                        <option>Tripped</option>
-                                        <option>Not Available</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
@@ -2002,75 +595,60 @@
                             <tr>
                                 <td><label class="control-label">Hot Oil Syst</label></td>
                                 <td>
-                                    <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Normal Ops</option>
-                                        <option>Anomaly</option>
-                                        <option>Tripped</option>
-                                        <option>Not Available</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Fuel Gas syst</label></td>
                                 <td>
-                                     <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Normal Ops</option>
-                                        <option>Anomaly</option>
-                                        <option>Tripped</option>
-                                        <option>Not Available</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Water Syst</label></td>
                                 <td>
-                                     <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Normal Ops</option>
-                                        <option>Anomaly</option>
-                                        <option>Tripped</option>
-                                        <option>Not Available</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Air Compr A</label></td>
                                 <td>
-                                      <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Running</option>
-                                        <option>Not Running</option>
-                                        <option>Standby</option>
-                                        <option>Tripped</option>
-                                        <option>Not Available</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Air Compr B</label></td>
                                 <td>
-                                      <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Running</option>
-                                        <option>Not Running</option>
-                                        <option>Standby</option>
-                                        <option>Tripped</option>
-                                        <option>Not Available</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Air Compr C</label></td>
                                 <td>
-                                      <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Running</option>
-                                        <option>Not Running</option>
-                                        <option>Standby</option>
-                                        <option>Tripped</option>
-                                        <option>Not Available</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
@@ -2083,73 +661,60 @@
                             <tr>
                                 <td><label class="control-label">N2 Syst</label></td>
                                 <td>
-                                     <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Normal Ops</option>
-                                        <option>Anomaly</option>
-                                        <option>Tripped</option>
-                                        <option>Not Available</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Fire Syst</label></td>
                                 <td>
-                                     <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Normal Ops</option>
-                                        <option>Anomaly</option>
-                                        <option>Tripped</option>
-                                        <option>Not Available</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">LNG Tank</label></td>
                                 <td>
-                                    <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Normal Ops</option>
-                                        <option>Anomaly</option>
-                                        <option>Tripped</option>
-                                        <option>Not Available</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">BOG Compr</label></td>
                                 <td>
-                                     <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Running</option>
-                                        <option>Not Running</option>
-                                        <option>Standby</option>
-                                        <option>Tripped</option>
-                                        <option>Not Available</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">LNG Jetty</label></td>
                                 <td>
-                                    <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Normal Ops</option>
-                                        <option>Anomaly</option>
-                                        <option>Tripped</option>
-                                        <option>Not Available</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">C2/C3 strg tank</label></td>
                                 <td>
-                                     <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Normal Ops</option>
-                                        <option>Anomaly</option>
-                                        <option>Tripped</option>
-                                        <option>Not Available</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
@@ -2160,48 +725,40 @@
                             <tr>
                                 <td><label class="control-label">CDS tank</label></td>
                                 <td>
-                                    <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Normal Ops</option>
-                                        <option>Anomaly</option>
-                                        <option>Tripped</option>
-                                        <option>Not Available</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Diesel Oil tank</label></td>
                                 <td>
-                                     <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Normal Ops</option>
-                                        <option>Anomaly</option>
-                                        <option>Tripped</option>
-                                        <option>Not Available</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Flare Syst</label></td>
                                 <td>
-                                     <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Normal Ops</option>
-                                        <option>Anomaly</option>
-                                        <option>Tripped</option>
-                                        <option>Not Available</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Waste Syst</label></td>
                                 <td>
-                                     <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Normal Ops</option>
-                                        <option>Anomaly</option>
-                                        <option>Tripped</option>
-                                        <option>Not Available</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
@@ -2229,7 +786,7 @@
     <div class="row qhsse" style="margin-bottom: 20px;">
         <div class="col-md-12">
             <a class="btn" role="button" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample">
-                <h4 style="margin-left: -16px;">QHSSE Section-I</h4>
+                <h3 style="margin-left: -16px;">QHSSE Section-I</h3>
             </a>
             <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
                 <a class="btn btn-input-slide" role="button" data-toggle="collapse" href="#collapseQhsse" aria-expanded="false" aria-controls="collapseExample">
@@ -2243,7 +800,7 @@
                             <tr>
                                 <td><label class="control-label">Last DAFWC</label></td>
                                 <td>
-                                    <span class="col-sm-12">
+                                    <span class="col-sm-8">
                                         <input type="date" class="form-control" id="text" placeholder="text date" />
                                     </span>
                                 </td>
@@ -2251,7 +808,7 @@
                             <tr>
                                 <td><label class="control-label">Last Plant LOPC (Tier-1 &2)</label></td>
                                 <td>
-                                    <span class="col-sm-12">
+                                    <span class="col-sm-8">
                                         <input type="date" class="form-control" id="text" placeholder="text date" />
                                     </span>
                                 </td>
@@ -2282,43 +839,30 @@
                             <tr>
                                 <td><label class="control-label">Weather</label></td>
                                 <td>
-                                    <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Sunny</option>
-                                        <option>Party Cloudly</option>
-                                        <option>Cloudly</option>
-                                        <option>Light Rain</option>
-                                        <option>Rain</option>
-                                        <option>Heavy Rain</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Tide/Wave</label></td>
                                 <td>
-                                    <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>0-0.25 meter</option>
-                                        <option>0.25-0.5 meter</option>
-                                        <option>0.5-0.75</option>
-                                        <option>0.75-1.0 meter</option>
-                                        <option>1-1.25 meter</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Wind Direct</label></td>
                                 <td>
-                                    <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>N</option>
-                                        <option>NE</option>
-                                        <option>E</option>
-                                        <option>SE</option>
-                                        <option>S</option>
-                                        <option>SW</option>
-                                        <option>W</option>
-                                        <option>NW</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
@@ -2539,12 +1083,10 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Low</option>
-                                        <option>Elevated</option>
-                                        <option>High</option>
-                                        <option>Severe</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
@@ -2584,17 +1126,17 @@
     <div class="row others">
         <div class="col-md-12">
             <a class="btn" role="button" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample">
-                <h4 style="margin-left: -16px;">Enabler Section</h4>
+                <h3 style="margin-left: -16px;">Enabler Section</h3>
             </a>
             <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
-                <a class="btn btn-input-slide" role="button" data-toggle="collapse" href="#collapseOthers" aria-expanded="false" aria-controls="collapseExample">
+                <a class="btn" role="button" data-toggle="collapse" href="#collapseOthers" aria-expanded="false" aria-controls="collapseExample">
                     +
                 </a>
             </span>
             <div class="collapse" id="collapseOthers" style="margin-top: 15px; margin-bottom: 15px;">
                 <div class="col-md-12">
                     <div class="col-md-4">
-                        <table  border="0" cellpadding="2" cellspacing="2" style="margin-top: 15px; margin-bottom: 15px;">
+                        <table width="900" border="0" cellpadding="2" cellspacing="2" style="margin-top: 15px; margin-bottom: 15px;">
                             <tr>
                                 <td>
                                     <h4 style="margin-top: 20px;">Procurement Section-E</h4>
@@ -2604,27 +1146,27 @@
                                 <td>
                                     <label for="" style="margin-top: 20px;">#backlog</label>
                                     <br />
-                                    <input type="number" class="form-control" name="" id="" placeholder="number" />
+                                    <input type="number" name="" id="" placeholder="number" />
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label for="" style="margin-top: 20px;">Avg backlog</label>
                                     <br />
-                                    <input type="number" class="form-control" name="" id="" placeholder="number" />
+                                    <input type="number" name="" id="" placeholder="number" />
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label for="" style="margin-top: 20px;">Remark</label>
                                     <br />
-                                    <input type="text" class="form-control" name="" id="" placeholder="free text" />
+                                    <input type="text" name="" id="" placeholder="free text" />
                                 </td>
                             </tr>
                         </table>
                     </div>
                     <div class="col-md-4">
-                        <table border="0" cellpadding="2" cellspacing="2" style="margin-top: 15px; margin-bottom: 15px;">
+                        <table width="900" border="0" cellpadding="2" cellspacing="2" style="margin-top: 15px; margin-bottom: 15px;">
                             <tr>
                                 <td>
                                     <h4 for="" style="margin-top: 20px;">ICT Infrastructure and System Highlight:-F</h4>
@@ -2634,11 +1176,10 @@
                                 <td>
                                     <label for="" style="margin-top: 20px;">Application</label>
                                     <br />
-                                    <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Normal</option>
-                                        <option>Interrupted</option>
-                                        <option>Not Avail</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
@@ -2646,11 +1187,10 @@
                                 <td>
                                     <label for="" style="margin-top: 20px;">Colaboration</label>
                                     <br />
-                                    <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Normal</option>
-                                        <option>Interrupted</option>
-                                        <option>Not Avail</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
@@ -2658,11 +1198,10 @@
                                 <td>
                                     <label for="" style="margin-top: 20px;">Telco</label>
                                     <br />
-                                    <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Normal</option>
-                                        <option>Interrupted</option>
-                                        <option>Not Avail</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
@@ -2670,13 +1209,13 @@
                                 <td>
                                     <label for="" style="margin-top: 20px;">Remark</label>
                                     <br />
-                                    <input type="text" class="form-control" name="" id="" placeholder="free text" />
+                                    <input type="text" name="" id="" placeholder="free text" />
                                 </td>
                             </tr>
                         </table>
                     </div>
                     <div class="col-md-4">
-                        <table border="0" cellpadding="2" cellspacing="2" style="margin-top: 15px; margin-bottom: 15px;">
+                        <table width="900" border="0" cellpadding="2" cellspacing="2" style="margin-top: 15px; margin-bottom: 15px;">
                             <tr>
                                 <td>
                                     <h4 for="" style="margin-top: 20px;">GS & FM-G</h4>
@@ -2686,18 +1225,17 @@
                                 <td>
                                     <label for="" style="margin-top: 20px;">POB</label>
                                     <br />
-                                    <input type="number" placeholder="number" class="form-control"/>
+                                    <input type="number" placeholder="number" />
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label for="" style="margin-top: 20px;">F&B</label>
                                     <br />
-                                    <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Normal</option>
-                                        <option>Interrupted</option>
-                                        <option>Closed</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
@@ -2705,11 +1243,10 @@
                                 <td>
                                     <label for="" style="margin-top: 20px;">Camp</label>
                                     <br />
-                                    <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Normal</option>
-                                        <option>Interrupted</option>
-                                        <option>Closed</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
@@ -2717,11 +1254,10 @@
                                 <td>
                                     <label for="" style="margin-top: 20px;">Transp</label>
                                     <br />
-                                    <select class="form-control">
+                                    <select>
                                         <option>Select Option</option>
-                                        <option>Normal</option>
-                                        <option>Interrupted</option>
-                                        <option>Closed</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
                                     </select>
                                 </td>
                             </tr>
@@ -2729,7 +1265,7 @@
                                 <td>
                                     <label for="" style="margin-top: 20px;">Remark</label>
                                     <br />
-                                    <input type="text" class="form-control" name="" id="" placeholder="free text" />
+                                    <input type="text" name="" id="" placeholder="free text" />
                                 </td>
                             </tr>
                         </table>
@@ -2769,32 +1305,30 @@
     <hr />
     <div class="col-md-12" style="margin-bottom: 30px;">
         <div class="col-md-3">
-            <table  border="0" cellpadding="2" cellspacing="2">
+            <table width="900" border="0" cellpadding="2" cellspacing="2">
                 <tr>
                     <td>
                         <label for="">Prepared By-L</label>
                         <br />
-                        <select class="form-control">
+                        <select>
                             <option>Select Option</option>
-                            <option>Trisaptio Aji N</option>
-                            <option>Eko P Yulianto</option>
-                            <option>Marco Maruto</option>
+                            <option>Option 1</option>
+                            <option>Option 2</option>
                         </select>
                     </td>
                 </tr>
             </table>
         </div>
         <div class="col-md-3">
-            <table  border="0" cellpadding="2" cellspacing="2">
+            <table width="900" border="0" cellpadding="2" cellspacing="2">
                 <tr>
                     <td>
                         <label for="">Reviewed By-M</label>
                         <br />
-                        <select class="form-control">
-                             <option>Select Option</option>
-                            <option>Trisaptio Aji N</option>
-                            <option>Eko P Yulianto</option>
-                            <option>Marco Maruto</option>
+                        <select>
+                            <option>Select Option</option>
+                            <option>Option 1</option>
+                            <option>Option 2</option>
                         </select>
                     </td>
                 </tr>
@@ -2811,31 +1345,56 @@
 <script type="text/javascript" src="~/Content/datepicker/js/bootstrap-datepicker.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        var currentDate = $('#currentDate').val();
-        currentDate = '06/13/2016';
-        $('.layout-item').each(function () {
-            var that = $(this);
-            $.ajax({
-                url: that.attr('data-url'),
-                data: { currentDate: currentDate },
-                success: function (data) {
-                    console.log(data);
-                    that.html(data);
-                }
-            });
-        });
+        //$('.usdxdr').change(function (e) {
 
-        $('.layout-item').on('keypress', '.der-value', function (e) {
-            if (e.which == 13) {
-
+        //});
+        function reloadView() {
+            var currentDate = $('#currentDate').val();
+            $('.layout-item').each(function () {
+                var that = $(this);
                 $.ajax({
-                    url: '@Url.Action("Update","DerTransaction")',
+                    url: that.attr('data-url'),
+                    data: { currentDate: currentDate },
+                    success: function (data) {
 
+                        if (data.GraphicType !== undefined) {
+                            var callback = window.Pear.Artifact.Designer._previewCallbacks;
+                            callback[data.GraphicType](data, that);
+                        }
+                        else if (data.type === "highlight") {
+                            var aneh = data.view.replace(/\"/g, "");
+                            console.log(aneh);
+                            that.html(aneh);
+                        } else if (data.type === "highlight" || data.type === "weather" ||
+                            data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
+                        data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
+                        || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type == "procurement" || data.type == "indicative-commercial-price" ||
+                            data.type === "plant-availability" || data.type === "economic-indicator" || data.type === "mgdp" || data.type === "hhv" || data.type === "lng-and-cds-production"
+                            || data.type === "nls" || data.type === "key-equipment-status") {
+                            that.html(data.view);
+                        }
+                        /*else if (data.type === "weather" || data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
+                        data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
+                        || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type === 'mgdp') {
+                            that.html(data.view);
+                        }*/
+
+                    }
                 });
+            });
+        }
 
-                alert('You pressed enter!');
-            }
-        })
+        $('#currentDate').val('02/18/2016');
+        reloadView();
+        if ($('.der-display').length) {
+            $('.datepicker').datetimepicker({
+                format: "MM/DD/YYYY",
+                focusOnShow: false
+            }).on('dp.change', function (e) {
+                $("#currentDate").blur();
+                reloadView();
+            });
+        };
     });
 
     function moveFieldTo(event, fieldId) {
@@ -2875,6 +1434,29 @@
             $('.collapse').on('show.bs.collapse', function () {
                 var tombol = $(this).attr("id");
                 tombol = $("a[href='#" + tombol + "']").text("-");
+            });
+
+            $('.btn-input-slide').click(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var target = $this.attr('href');
+                if (!$(target).children().length) {
+                    var contentUrl = $this.data('content-url');
+                    contentUrl = contentUrl.replace('__date__', encodeURIComponent( $('#currentDate').val()));
+                    $.get(contentUrl, function (data) {
+                        $(target).html(data);
+                        tinyMCE.init({
+                            selector: ".allow-html",
+                            menubar: false,
+                            plugins: [
+                                "advlist autolink lists link image charmap print preview anchor",
+                                "searchreplace visualblocks code fullscreen",
+                                "insertdatetime media table contextmenu paste"
+                            ],
+                            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+                        });
+                    })
+                }
             });
 
         });
