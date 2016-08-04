@@ -16,13 +16,13 @@
         <td>
             JOB @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, string.Empty, string.Empty)
         </td>
-        <td style="width: 34%;background: #a6a6a6">
-            
+        <td style="width: 34%;">
+            MGDP @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, string.Empty, string.Empty)
         </td>
     </tr>
     <tr>
         <td>
-            Feed Gas (GSA)
+            LNG Price (SPA)
         </td>
         <td>
             FOB @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, string.Empty, string.Empty)
