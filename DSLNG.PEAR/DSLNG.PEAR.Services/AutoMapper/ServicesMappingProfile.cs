@@ -123,6 +123,7 @@ using DSLNG.PEAR.Services.Responses.Files;
 using DSLNG.PEAR.Services.Requests.Files;
 using DSLNG.PEAR.Services.Responses.Privilege;
 using DSLNG.PEAR.Services.Requests.Privilege;
+using DSLNG.PEAR.Services.Responses.DerTransaction;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -739,6 +740,14 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.KpiIds, o => o.MapFrom(s => s.Kpis.Select(y => y.Id).ToArray()));
             Mapper.CreateMap<Kpi, GetMirConfigurationsResponse.MirDataTable.Kpi>();
             Mapper.CreateMap<SaveMirDataTableRequest, MirDataTable>();
+
+            Mapper.CreateMap<DerLayoutItem, GetDerLayoutItemsResponse.DerLayoutItem>();
+            Mapper.CreateMap<DerHighlight, GetDerLayoutItemsResponse.DerHighlight>()
+                .ForMember(x => x.Value, o => o.MapFrom(s => s.SelectOption.Value))
+                .ForMember(x => x.Text, o => o.MapFrom(s => s.SelectOption.Text))
+                .ForMember(x => x.HighlightTypeId, o => o.MapFrom(s => s.SelectOption.Id));
+            Mapper.CreateMap<DerKpiInformation, GetDerLayoutItemsResponse.KpiInformation>()
+                .ForMember(x => x.KpiId, o => o.MapFrom(s => s.Kpi.Id));
             base.Configure();
         }
 

@@ -168,6 +168,7 @@
     <Compile Include="Entities\Weather.cs" />
     <Compile Include="Enums\ConfigType.cs" />
     <Compile Include="Enums\ConversionType.cs" />
+    <Compile Include="Enums\DerLayoutItemType.cs" />
     <Compile Include="Enums\EnvirontmentType.cs" />
     <Compile Include="Enums\Formula.cs" />
     <Compile Include="Enums\MirArtifactType.cs" />

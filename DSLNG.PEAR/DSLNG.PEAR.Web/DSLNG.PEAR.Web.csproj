@@ -851,6 +851,7 @@
     <Compile Include="ViewModels\DerLayout\LayoutType\DerLayoutMultiAxisViewModel.cs" />
     <Compile Include="ViewModels\DerLayout\LayoutType\DerLayoutLineViewModel.cs" />
     <Compile Include="ViewModels\DerLayout\SaveLayoutItemViewModel.cs" />
+    <Compile Include="ViewModels\DerTransaction\DerValuesViewModel.cs" />
     <Compile Include="ViewModels\Der\DerConfigViewModel.cs" />
     <Compile Include="ViewModels\Der\DerDisplayIndexViewModel.cs" />
     <Compile Include="ViewModels\Der\DerIndexViewModel.cs" />
@@ -1120,6 +1121,9 @@
     <Content Include="Views\Der\Display\_PersonOnBoard.cshtml" />
     <Content Include="Views\DerImage\Preview3.cshtml" />
     <Content Include="Views\DerTransaction\Input.cshtml" />
+    <Content Include="Views\DerTransaction\EconomicIndicator.cshtml" />
+    <Content Include="Views\DerTransaction\ForcastedIndicator.cshtml" />
+    <Content Include="Views\DerTransaction\OperationSection.cshtml" />
     <None Include="Views\Der\Index.cshtml.old" />
     <Content Include="Views\Der\_ManageItem.cshtml" />
     <Content Include="Views\Der\_DialogManageItem.cshtml" />

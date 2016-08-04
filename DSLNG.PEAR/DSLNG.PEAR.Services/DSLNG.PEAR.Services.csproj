@@ -43,6 +43,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="LinqKit, Version=1.1.7.1, Culture=neutral, PublicKeyToken=bc217f8844052a91, processorArchitecture=MSIL">
+      <HintPath>..\packages\LinqKit.1.1.7.1\lib\net45\LinqKit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -83,6 +87,7 @@
     <Compile Include="ConstantUsageService.cs" />
     <Compile Include="ConversionService.cs" />
     <Compile Include="DerService.cs" />
+    <Compile Include="DerTransactionService.cs" />
     <Compile Include="DropdownService.cs" />
     <Compile Include="EconomicSummaryService.cs" />
     <Compile Include="EnvironmentScanningService.cs" />
@@ -92,6 +97,7 @@
     <Compile Include="HighlightOrderService.cs" />
     <Compile Include="HighlightService.cs" />
     <Compile Include="Interfaces\GetDerLayoutResponse.cs" />
+    <Compile Include="Interfaces\IDerTransactionService.cs" />
     <Compile Include="Interfaces\IFileRepositoryService.cs" />
     <Compile Include="Interfaces\IMirConfigurationService.cs" />
     <Compile Include="Interfaces\IMirDataTableService.cs" />
@@ -100,6 +106,9 @@
     <Compile Include="MirConfigurationService.cs" />
     <Compile Include="MirDataTableService.cs" />
     <Compile Include="ProcessBlueprintService.cs" />
+    <Compile Include="Requests\DerTransaction\GetDerLayoutItemsRequest.cs" />
+    <Compile Include="Requests\DerTransaction\GetHighlightValuesRequest.cs" />
+    <Compile Include="Requests\DerTransaction\GetKpiInformationValuesRequest.cs" />
     <Compile Include="Requests\Der\GetDersRequest.cs" />
     <Compile Include="Requests\FileManagerRolePrivilege\FilePrivilegeRequest.cs" />
     <Compile Include="Requests\FileManagerRolePrivilege\UpdateFilePrivilegeRequest.cs" />
@@ -130,6 +139,9 @@
     <Compile Include="Requests\Wave\GetWaveRequest.cs" />
     <Compile Include="Requests\Wave\GetWavesRequest.cs" />
     <Compile Include="Requests\Wave\SaveWaveRequest.cs" />
+    <Compile Include="Responses\DerTransaction\GetDerLayoutItemsResponse.cs" />
+    <Compile Include="Responses\DerTransaction\GetHighlightValuesResponse.cs" />
+    <Compile Include="Responses\DerTransaction\GetKpiInformationValuesResponse.cs" />
     <Compile Include="Responses\Der\GetDafwcDataResponse.cs" />
     <Compile Include="Responses\Der\GetKpiValueResponse.cs" />
     <Compile Include="Responses\Der\GetOriginalDataResponse.cs" />
