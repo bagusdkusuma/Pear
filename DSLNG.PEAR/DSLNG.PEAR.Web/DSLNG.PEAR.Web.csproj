@@ -1121,6 +1121,7 @@
     <Content Include="Views\Der\Display\_PersonOnBoard.cshtml" />
     <Content Include="Views\DerImage\Preview3.cshtml" />
     <Content Include="Views\DerTransaction\Input.cshtml" />
+    <Content Include="Views\DerTransaction\LayoutType\_GlobalStockMarket.cshtml" />
     <Content Include="Views\DerTransaction\EconomicIndicator.cshtml" />
     <Content Include="Views\DerTransaction\ForcastedIndicator.cshtml" />
     <Content Include="Views\DerTransaction\OperationSection.cshtml" />
