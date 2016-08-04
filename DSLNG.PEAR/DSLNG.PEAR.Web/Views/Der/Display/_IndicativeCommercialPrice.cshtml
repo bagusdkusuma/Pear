@@ -25,52 +25,11 @@
             Feed Gas (GSA)
         </td>
         <td>
-            JOB @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, string.Empty, string.Empty)
+            FOB @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, string.Empty, string.Empty)
         </td>
         <td>
-            DES @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, string.Empty, string.Empty)
+            DES @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, string.Empty, string.Empty)
         </td>
     </tr>
     </tbody>
 </table>
-
-@*@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayIndicativeCommercialPriceViewModel
-
-<table class="der-table all-border">
-    <thead>
-        <tr>
-            <th colspan="3" style="height: 32px">DSLNG Indicative Commercial Price (JCC based)-USD/MMbtu</th>
-        </tr>
-    </thead>
-    @{
-        var pos0 = Model.IndicativeCommercialPriceViewModels.Single(x => x.Position == 0);
-        var pos1 = Model.IndicativeCommercialPriceViewModels.Single(x => x.Position == 1);
-        var pos2 = Model.IndicativeCommercialPriceViewModels.Single(x => x.Position == 2);
-        var pos3 = Model.IndicativeCommercialPriceViewModels.Single(x => x.Position == 3);
-
-        <tbody>
-            <tr>
-                <td>
-                    Feed Gas (GSA)
-                </td>
-                <td>
-                    @pos0.Daily @pos0.Measurement
-                </td>
-                <td>
-                    @pos1.Daily @pos1.Measurement
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Feed Gas (GSA)
-                </td>
-                <td>
-                    @pos2.Daily @pos2.Measurement
-                </td>
-                <td>
-                    @pos3.Daily @pos3.Measurement
-                </td>
-            </tr>
-        </tbody>
-    }
-</table>*@
