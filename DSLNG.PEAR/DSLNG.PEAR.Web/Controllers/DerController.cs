@@ -737,27 +737,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 #region Indicative Commercial Price
                 case "indicative-commercial-price":
                     {
-                        /*var viewModel = new DisplayIndicativeCommercialPriceViewModel();
-                        for (int i = 0; i <= 3; i++)
-                        {
-                            var indicativeCommercialPriceViewModel = new DisplayIndicativeCommercialPriceViewModel.IndicativeCommercialPriceViewModel();
-                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
-                                      new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
-                            indicativeCommercialPriceViewModel.Position = item.Position;
-                            if (item.Kpi != null)
-                            {
-                                var request = new GetKpiValueRequest();
-                                request.ConfigType = item.ConfigType;
-                                request.KpiId = item.Kpi.Id;
-                                request.Periode = date;
-                                request.RangeFilter = RangeFilter.CurrentDay;
-                                var daily = _derService.GetKpiValue(request);
-                                indicativeCommercialPriceViewModel.Daily = daily.Value.HasValue ? daily.Value.Value.ToString() : "n/a";
-                            }
-                            viewModel.IndicativeCommercialPriceViewModels.Add(indicativeCommercialPriceViewModel);
-                        }*/
-
-                        var viewModel = GetGeneralDerKpiInformations(3, layout, date, PeriodeType.Daily);
+                        var viewModel = GetGeneralDerKpiInformations(4, layout, date, PeriodeType.Daily);
                         var view = RenderPartialViewToString("~/Views/Der/Display/_IndicativeCommercialPrice.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
