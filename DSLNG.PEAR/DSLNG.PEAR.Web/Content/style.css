@@ -1183,13 +1183,34 @@ table.tabular {
         width: 100%;
     }
 
+/* Custom Bootstrap CSS dari aan*/
+.page-header {
+    color: #fff;
+    font-weight: bold !important;
+    border-bottom: none !important;
+}
+.page-header small {
+    color: #fff;
+}
+.modal-content {
+    background-size: cover !important;
+}
+.text-button a {
+    float: none !important;
+    color: #fff !important;
+    /* background: #eee; */
+    padding: 6px 14px;
+}
+ 
+        
+
 /*Tambahan dari inez*/
 
 .title {
     font-size: 22px;
     font-weight: bold;
     color: #fff;
-    margin-bottom: 7px;
+    margin-bottom: 45px;
 }
 
 .btn_small_darkblue {
@@ -1756,7 +1777,7 @@ a.see-more {
 }
 
 .form-inline label {
-    width: 180px;
+    /*width: 180px;*/
 }
 
 .scenario-template.original {
@@ -3181,7 +3202,15 @@ input.control-form.assumption-input {
     border-top: 1px solid white;
     border-radius: 10px 10px 0 0;
 }
+.btn-input-slide {
+    color : #fff;
+}
 
+.btn-input-slide:hover,
+.btn-input-slide:focus {
+    color: #005588;
+    background-color: #eee;
+}
 .btn-clear-rgw .fa {
     color: #f1c40f;
 }

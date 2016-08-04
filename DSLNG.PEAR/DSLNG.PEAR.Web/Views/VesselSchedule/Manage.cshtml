@@ -9,55 +9,58 @@
     {
         @Html.AntiForgeryToken()
         <div class="col-md-12">
-            <div class="title">Vessel Schedule</div>
+            <div class="page-header">
+              <h1>Vessel Schedule <small>Manage</small></h1>
+            </div>
+           <!--  <div class="page-title">Vessel Schedule</div>
             <div class="description_year">Manage</div>
-            <div>@Html.ValidationSummary(true)</div>
+ -->            <div>@Html.ValidationSummary(true)</div>
             @Html.HiddenFor(x => x.Id)
         </div>
         <div class="col-md-12">
             <div class="form-inline whitebox">
                 <div class="form-group form-list">
-                    @Html.LabelFor(model => model.VesselId)
+                    @Html.LabelFor(model => model.VesselId, new {@class = "control-label col-md-1"})
                     @Html.DropDownListFor(model => model.VesselId, new List<SelectListItem> { new SelectListItem { Value = Model.VesselId.ToString(), Text = Model.VesselName } }, new { @class = "form-control", data_url = Url.Action("VesselList"), style = "width:200px" })
-                    @Html.ValidationMessageFor(model => model.VesselId)
+                    @Html.ValidationMessageFor(model => model.VesselId)                     
                 </div>
                 <div class="form-group form-list">
-                    @Html.LabelFor(model => model.ETA)
+                    @Html.LabelFor(model => model.ETA, new {@class = "control-label col-md-1"})
                     @Html.TextBoxFor(model => model.ETA, new { @class = "form-control datepicker" })
                     @Html.ValidationMessageFor(model => model.ETA)
                 </div>
                 <div class="form-group form-list">
-                    @Html.LabelFor(model => model.ETD)
+                    @Html.LabelFor(model => model.ETD, new {@class = "control-label col-md-1"})
                     @Html.TextBoxFor(model => model.ETD, new { @class = "form-control datepicker" })
                     @Html.ValidationMessageFor(model => model.ETD)
                 </div>
                 <div class="form-group form-list">
-                    @Html.LabelFor(model => model.BuyerId)
+                    @Html.LabelFor(model => model.BuyerId, new {@class = "control-label col-md-1"})
                     @Html.DropDownListFor(model => model.BuyerId, new List<SelectListItem> { new SelectListItem { Value = Model.BuyerId.ToString(), Text = Model.BuyerName } }, new { @class = "form-control", data_url = Url.Action("BuyerList"), style = "width:200px" })
                     @Html.ValidationMessageFor(model => model.BuyerId)
                 </div>
                 <div class="form-group form-list">
-                    @Html.LabelFor(model => model.Location)
+                    @Html.LabelFor(model => model.Location, new {@class = "control-label col-md-1"})
                     @Html.TextAreaFor(model => model.Location, 5, 50, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Location)
                 </div>
                 <div class="form-group form-list">
-                    @Html.LabelFor(model => model.SalesType)
+                    @Html.LabelFor(model => model.SalesType, new {@class = "control-label col-md-1"})
                     @Html.DropDownListFor(model => model.SalesType, Model.SalesTypes, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.SalesType)
                 </div>
                 <div class="form-group form-list">
-                    @Html.LabelFor(model => model.Type)
+                    @Html.LabelFor(model => model.Type, new {@class = "control-label col-md-1"})
                     @Html.DropDownListFor(model => model.Type, Model.Types, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Type)
                 </div>
                 <div class="form-group form-list">
-                    @Html.LabelFor(model => model.Cargo)
+                    @Html.LabelFor(model => model.Cargo, new {@class = "control-label col-md-1"})
                     @Html.TextBoxFor(model => model.Cargo, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Cargo)
                 </div>
                 <div class="form-group form-list">
-                    @Html.LabelFor(model => model.IsActive)
+                    @Html.LabelFor(model => model.IsActive, new {@class = "control-label col-md-1"})
                     @Html.CheckBoxFor(model => model.IsActive, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.IsActive)
                 </div>
