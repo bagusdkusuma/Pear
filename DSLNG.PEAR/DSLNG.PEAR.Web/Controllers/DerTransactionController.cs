@@ -130,7 +130,10 @@ namespace DSLNG.PEAR.Web.Controllers
                 LayoutId = _derService.GetActiveDer().Id,
                 Positions = new List<GetDerLayoutItemsRequest.Position> {
                     new GetDerLayoutItemsRequest.Position {Row= 6, Column=2 },
-                    new GetDerLayoutItemsRequest.Position {Row= 5, Column=2 }
+                    new GetDerLayoutItemsRequest.Position {Row= 5, Column=2 },
+                    new GetDerLayoutItemsRequest.Position {Row= 5, Column = 0},
+                    new GetDerLayoutItemsRequest.Position {Row=5, Column = 1},
+                    new GetDerLayoutItemsRequest.Position {Row = 7, Column = 0}
                 },
                 DerLayoutItemTypes = new List<DerLayoutItemType> {
                     DerLayoutItemType.KpiInformations,

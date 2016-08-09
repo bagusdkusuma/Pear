@@ -19,11 +19,11 @@ namespace DSLNG.PEAR.Services
 
         public GetDerLayoutItemsResponse GetDerLayoutItems(GetDerLayoutItemsRequest request)
         {
-            var predicate = PredicateBuilder.New<DerLayoutItem>();
+            var predicate = PredicateBuilder.False<DerLayoutItem>();
             foreach (var position in request.Positions) {
                 var row = position.Row;
                 var col = position.Column;
-                var inner = PredicateBuilder.New<DerLayoutItem>();
+                var inner = PredicateBuilder.True<DerLayoutItem>();
                 inner = inner.And(p => p.Row == row);
                 inner = inner.And(p => p.Column == col);
                 predicate  = predicate.Or(inner);
@@ -78,7 +78,8 @@ namespace DSLNG.PEAR.Services
                             {
                                 Date = actual.Periode,
                                 Value = actual.Value.Value,
-                                Remark = actual.Remark
+                                Remark = actual.Remark,
+                                Type = "now"
                             };
                         }
                         else {
@@ -89,7 +90,8 @@ namespace DSLNG.PEAR.Services
                                 {
                                     Date = todayValue.Periode,
                                     Value = todayValue.Value.Value,
-                                    Remark = todayValue.Remark
+                                    Remark = todayValue.Remark,
+                                    Type = "now"
                                 };
 
                             }
@@ -99,7 +101,8 @@ namespace DSLNG.PEAR.Services
                                 {
                                     Date = actual.Periode,
                                     Value = actual.Value.Value,
-                                    Remark = actual.Remark
+                                    Remark = actual.Remark,
+                                    Type = "prev"
                                 };
                             }
                         }
