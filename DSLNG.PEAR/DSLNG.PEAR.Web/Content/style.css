@@ -174,7 +174,7 @@ aside.left-content > * {
     font-style: italic;
 }
 
-    .sub-nav ul li.active a {
+    .sub-nav ul li.active > a {
         color: #ff0000;
     }
 

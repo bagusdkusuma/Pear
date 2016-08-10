@@ -133,7 +133,8 @@ namespace DSLNG.PEAR.Web.Controllers
                     new GetDerLayoutItemsRequest.Position {Row= 5, Column=2 },
                     new GetDerLayoutItemsRequest.Position {Row= 5, Column = 0},
                     new GetDerLayoutItemsRequest.Position {Row=5, Column = 1},
-                    new GetDerLayoutItemsRequest.Position {Row = 7, Column = 0}
+                    new GetDerLayoutItemsRequest.Position {Row = 7, Column = 0},
+                    new GetDerLayoutItemsRequest.Position {Row=7, Column = 1}
                 },
                 DerLayoutItemTypes = new List<DerLayoutItemType> {
                     DerLayoutItemType.KpiInformations,

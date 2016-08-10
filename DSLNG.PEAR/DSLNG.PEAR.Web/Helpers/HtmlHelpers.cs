@@ -395,16 +395,16 @@ namespace DSLNG.PEAR.Web.Helpers
             switch (type)
             {
                 case "daily-actual":
-                    value = kpiInformation.DailyActual == null ? value : (defaultValueDefined == "prev" && kpiInformation.DailyActual.Type == "prev" ? kpiInformation.DailyActual.Value.ToString() : value);
+                    value = kpiInformation.DailyActual == null ? value : (defaultValueDefined == "prev" ? kpiInformation.DailyActual.Value.ToString() : ( kpiInformation.DailyActual.Type == "now" ?  kpiInformation.DailyActual.Value.ToString() : value));
                     existValue = kpiInformation.DailyActual == null ?existValue: kpiInformation.DailyActual.Type;
                     break;
                 case "daily-target":
-                    value = kpiInformation.DailyTarget == null ? value : (defaultValueDefined == "prev" && kpiInformation.DailyTarget.Type == "prev" ? kpiInformation.DailyTarget.Value.ToString() : value);
+                    value = kpiInformation.DailyTarget == null ? value : (defaultValueDefined == "prev" ? kpiInformation.DailyTarget.Value.ToString() : (kpiInformation.DailyTarget.Type == "now" ? kpiInformation.DailyTarget.Value.ToString() : value));
                     existValue = kpiInformation.DailyTarget == null ? existValue : kpiInformation.DailyTarget.Type;
                     break;
 
                 }
-            return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control\"   placeholder=\"{2}\" tabindex=\"{3}\" />", value, existValue, placeholder, tabIndex));
+            return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" />", value, existValue, placeholder, tabIndex, type));
         }
     }
 
