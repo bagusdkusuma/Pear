@@ -125,7 +125,7 @@ namespace DSLNG.PEAR.Web.Controllers
         [AllowAnonymous]
         public ActionResult LogOff()
         {
-            FormsAuthentication.SignOut();
+            Session.Abandon();
             Session.Abandon();
             return RedirectToAction("Login", "Account");
         }
