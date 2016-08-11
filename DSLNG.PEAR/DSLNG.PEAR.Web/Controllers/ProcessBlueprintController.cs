@@ -16,7 +16,7 @@ using DSLNG.PEAR.Services.Requests.FileManagerRolePrivilege;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
-    public class ProcessBlueprintController : Controller
+    public class ProcessBlueprintController : BaseController
     {
         //
         // GET: /ProcessBlueprint/
