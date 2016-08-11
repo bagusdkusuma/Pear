@@ -1,6 +1,6 @@
 ﻿@model  DSLNG.PEAR.Web.ViewModels.Der.DerIndexViewModel
 @{
-    ViewBag.Title = "DER";
+    ViewBag.Title = "Daily Executive Report";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <style>
@@ -11,8 +11,20 @@ display: none;
 <h2>DER (Daily Executive Report)</h2>
 @Html.Partial("_MessageResponse")
 <div class="add-button-wrapper pull-left">
-    @Html.ActionLink("Generate", "Preview", null, new { @class = "btn-master-rgw btn btn-primary" })
-    <a class="btn-master-rgw btn btn-primary" id="upload-der" data-toggle="modal" data-target="#der-upload-modal">Upload</a>
+    
+    @if (Session["DER"] != null)
+    {
+        var privilege = Session["DER"] as List<string>;
+        if (privilege.Contains("AllowCreate"))
+        {
+            @Html.ActionLink("Generate", "Preview", null, new { @class = "btn-master-rgw btn btn-primary" })
+        }
+        if (privilege.Contains("AllowUpload"))
+        {
+            <a class="btn-master-rgw btn btn-primary" id="upload-der" data-toggle="modal" data-target="#der-upload-modal">Upload</a>
+        }
+    }
+
     @*@Html.ActionLink("Input", "Input", null, new { @class = "btn-master-rgw btn btn-primary" })*@
 </div>
 <div class="pull-right">
