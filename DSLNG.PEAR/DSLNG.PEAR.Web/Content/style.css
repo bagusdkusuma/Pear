@@ -3397,3 +3397,7 @@ ul.pop-attachments-list {
 #popDashboard-table tbody tr:not(:first-child) td{
     vertical-align:top;
 }
+
+.dxtvControl_DSLNG .dxtv-ndSel {
+    background:purple !important;
+}
