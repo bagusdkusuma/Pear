@@ -29,6 +29,7 @@ using DSLNG.PEAR.Common.Contants;
 using DSLNG.PEAR.Services.Requests.KpiTarget;
 using DSLNG.PEAR.Web.Grid;
 using System.Text.RegularExpressions;
+using DSLNG.PEAR.Web.Attributes;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -58,6 +59,7 @@ namespace DSLNG.PEAR.Web.Controllers
             _waveService = waveService;
         }
 
+        [AuthorizeUser(AccessLevel ="AllowView")]
         public ActionResult Index()
         {
             var viewModel = new DerIndexViewModel();
@@ -945,6 +947,7 @@ namespace DSLNG.PEAR.Web.Controllers
         //}
 
         [HttpPost]
+        [AuthorizeUser(AccessLevel = "AllowCreate")]
         public ActionResult Generate(GenerateViewModel viewModel)
         {
             var theDate = DateTime.ParseExact(viewModel.Date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
@@ -991,6 +994,7 @@ namespace DSLNG.PEAR.Web.Controllers
         }
 
         [HttpPost]
+        [AuthorizeUser(AccessLevel = "AllowUpload")]
         public ActionResult Upload(HttpPostedFileBase derFile, string date)
         {
             var theDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
