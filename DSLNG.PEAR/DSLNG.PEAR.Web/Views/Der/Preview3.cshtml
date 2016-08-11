@@ -44,12 +44,12 @@
                         FOR THE PERIOD ENDED: @{
                             if (Request.QueryString["date"] != null)
                             {
-                                var id = DateTime.ParseExact(Request.QueryString["date"], "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture).ToString("dd-MMM-yyyy");
+                                var id = DateTime.ParseExact(Request.QueryString["date"], "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture).AddDays(-1).ToString("dd-MMM-yyyy");
                                 <text>@id</text>
                             }
                             else
                             {
-                                var id = DateTime.Now.ToString("dd-MMM-yyyy");
+                                var id = DateTime.Now.AddDays(-1).ToString("dd-MMM-yyyy");
                                 <text>@id</text>
                             }
                         } until LT24:00 HOURS
@@ -952,7 +952,10 @@
                 $(".datepicker").blur();
                 reloadView();
             });
-            var currentDate = $('.datepicker').val();
+            var currentDate = $('.datepicker').val();            
+            currentDate = moment(currentDate, "MM/DD/YYYY");
+            currentDate = currentDate.subtract(1, 'day').format("MM/DD/YYYY");
+            
             $('.generate').click(function (e) {
                 e.preventDefault();
                 var $input = $('<input />');
