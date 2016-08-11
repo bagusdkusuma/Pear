@@ -25,6 +25,45 @@
         .dxpc-mainDiv.DetailsPopup .dxflCaptionCellSys label {
             color: #929292;
         }
+
+    .dxfmControl_DSLNG .dxsplControl_DSLNG {
+        border: 1px solid silver;
+        background-color: transparent;
+    }
+
+    .dxfmControl_DSLNG .dxfm-toolbar .dxsplLCC {
+        padding: 5px;
+        background-color: transparent;
+    }
+
+    .dxfmControl_DSLNG .dxsplPane_DSLNG {
+        border-width: 0px;
+        background-color: transparent;
+    }
+
+    .dxfmControl_DSLNG .dxfm-uploadPanel.dxsplPane_DSLNG .dxucTextBox_DSLNG {
+        padding: 0px 2px;
+        background-color: transparent;
+    }
+
+    .dxfmControl_DSLNG .dxfm-uploadPanel.dxsplPane_DSLNG table.dxfm-uploadPanelTable td.dxfm-uploadPanelTableBCell a.dxfm-uploadDisable {
+        color: white;
+        text-decoration: none;
+        cursor: default;
+    }
+
+    .dxucNullText_DSLNG .dxucEditArea_DSLNG {
+        color: white;
+    }
+
+    .dxtvControl_DSLNG {
+        font: 14px 'Segoe UI', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+        color: white;
+    }
+
+    .dxmLite_DSLNG, .dxmLite_DSLNG .dxm-item a.dx {
+        color: white;
+    }
 </style>
 
 <script>
@@ -59,6 +98,8 @@
 
 @using (Html.BeginForm())
 {
+    <h3>Process Blueprint</h3>
+    <br />
     @Html.Partial("_ProcessBlueprintPartial", Model)
     @Html.Action("ProcessConfigPartial")
     <p class="Note">
