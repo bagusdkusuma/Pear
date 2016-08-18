@@ -398,13 +398,82 @@ namespace DSLNG.PEAR.Web.Helpers
                     value = kpiInformation.DailyActual == null ? value : (defaultValueDefined == "prev" ? kpiInformation.DailyActual.Value.ToString() : ( kpiInformation.DailyActual.Type == "now" ?  kpiInformation.DailyActual.Value.ToString() : value));
                     existValue = kpiInformation.DailyActual == null ?existValue: kpiInformation.DailyActual.Type;
                     break;
+                case "monthly-actual":
+                    value = kpiInformation.MonthlyActual == null ? value : (defaultValueDefined == "prev" ? kpiInformation.MonthlyActual.Value.ToString() : (kpiInformation.MonthlyActual.Type == "now" ? kpiInformation.MonthlyActual.Value.ToString() : value));
+                    existValue = kpiInformation.MonthlyActual == null ? existValue : kpiInformation.MonthlyActual.Type;
+                    break;
+                case "yearly-actual":
+                    value = kpiInformation.YearlyActual == null ? value : (defaultValueDefined == "prev" ? kpiInformation.YearlyActual.Value.ToString() : (kpiInformation.YearlyActual.Type == "now" ? kpiInformation.YearlyActual.Value.ToString() : value));
+                    existValue = kpiInformation.YearlyActual == null ? existValue : kpiInformation.YearlyActual.Type;
+                    break;
                 case "daily-target":
                     value = kpiInformation.DailyTarget == null ? value : (defaultValueDefined == "prev" ? kpiInformation.DailyTarget.Value.ToString() : (kpiInformation.DailyTarget.Type == "now" ? kpiInformation.DailyTarget.Value.ToString() : value));
                     existValue = kpiInformation.DailyTarget == null ? existValue : kpiInformation.DailyTarget.Type;
                     break;
+                case "monthly-target":
+                    value = kpiInformation.MonthlyTarget == null ? value : (defaultValueDefined == "prev" ? kpiInformation.MonthlyTarget.Value.ToString() : (kpiInformation.MonthlyTarget.Type == "now" ? kpiInformation.MonthlyTarget.Value.ToString() : value));
+                    existValue = kpiInformation.MonthlyTarget == null ? existValue : kpiInformation.MonthlyTarget.Type;
+                    break;
+                case "yearly-target":
+                    value = kpiInformation.YearlyTarget == null ? value : (defaultValueDefined == "prev" ? kpiInformation.YearlyTarget.Value.ToString() : (kpiInformation.YearlyTarget.Type == "now" ? kpiInformation.YearlyTarget.Value.ToString() : value));
+                    existValue = kpiInformation.YearlyTarget == null ? existValue : kpiInformation.YearlyTarget.Type;
+                    break;
 
                 }
             return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" />", value, existValue, placeholder, tabIndex, type));
+        }
+
+        public static MvcHtmlString DisplayKpiInformationList(this HtmlHelper htmlHelper, IList<DerValuesViewModel.KpiInformationValuesViewModel> kpiInformations, int kpiId, int tabIndex, IList<SelectListItem> options, string defaultValueDefined = "empty", string type = "daily-actual")
+        {
+            string value;
+            switch (defaultValueDefined)
+            {
+                case "empty":
+                case "prev":
+                    value = "";
+                    break;
+                default:
+                    value = defaultValueDefined;
+                    break;
+            }
+            var kpiInformation = kpiInformations.First(x => x.KpiId == kpiId);
+            var existValue = "empty";
+            switch (type)
+            {
+                case "daily-actual":
+                    value = kpiInformation.DailyActual == null ? value : (defaultValueDefined == "prev" ? kpiInformation.DailyActual.Remark.ToString() : (kpiInformation.DailyActual.Type == "now" ? kpiInformation.DailyActual.Remark.ToString() : value));
+                    existValue = kpiInformation.DailyActual == null ? existValue : kpiInformation.DailyActual.Type;
+                    break;
+                case "monthly-actual":
+                    value = kpiInformation.MonthlyActual == null ? value : (defaultValueDefined == "prev" ? kpiInformation.MonthlyActual.Remark.ToString() : (kpiInformation.MonthlyActual.Type == "now" ? kpiInformation.MonthlyActual.Remark.ToString() : value));
+                    existValue = kpiInformation.MonthlyActual == null ? existValue : kpiInformation.MonthlyActual.Type;
+                    break;
+                case "yearly-actual":
+                    value = kpiInformation.YearlyActual == null ? value : (defaultValueDefined == "prev" ? kpiInformation.YearlyActual.Remark.ToString() : (kpiInformation.YearlyActual.Type == "now" ? kpiInformation.YearlyActual.Remark.ToString() : value));
+                    existValue = kpiInformation.YearlyActual == null ? existValue : kpiInformation.YearlyActual.Type;
+                    break;
+                case "daily-target":
+                    value = kpiInformation.DailyTarget == null ? value : (defaultValueDefined == "prev" ? kpiInformation.DailyTarget.Remark.ToString() : (kpiInformation.DailyTarget.Type == "now" ? kpiInformation.DailyTarget.Remark.ToString() : value));
+                    existValue = kpiInformation.DailyTarget == null ? existValue : kpiInformation.DailyTarget.Type;
+                    break;
+                case "monthly-target":
+                    value = kpiInformation.MonthlyTarget == null ? value : (defaultValueDefined == "prev" ? kpiInformation.MonthlyTarget.Remark.ToString() : (kpiInformation.MonthlyTarget.Type == "now" ? kpiInformation.MonthlyTarget.Remark.ToString() : value));
+                    existValue = kpiInformation.MonthlyTarget == null ? existValue : kpiInformation.MonthlyTarget.Type;
+                    break;
+                case "yearly-target":
+                    value = kpiInformation.YearlyTarget == null ? value : (defaultValueDefined == "prev" ? kpiInformation.YearlyTarget.Remark.ToString() : (kpiInformation.YearlyTarget.Type == "now" ? kpiInformation.YearlyTarget.Remark.ToString() : value));
+                    existValue = kpiInformation.YearlyTarget == null ? existValue : kpiInformation.YearlyTarget.Type;
+                    break;
+
+            }
+            var selectInput = string.Format("<select class=\"der-value-{0} form-control\" tabindex=\"{1}\" data-type=\"{2}\" >", existValue, tabIndex, type);
+            foreach (var option in options) {
+                var selected = string.Equals(option.Value, value, StringComparison.InvariantCultureIgnoreCase) ? "selected=\"selected\"" : "selected";
+                selectInput += string.Format("<option {2} value=\"{0}\">{1}</option>", option.Value, option.Text, selected);
+            }
+            selectInput += "</select>";
+            return new MvcHtmlString(selectInput);
+
         }
     }
 
