@@ -7,7 +7,10 @@ namespace DSLNG.PEAR.Services.Requests.DerTransaction
 {
     public class GetHighlightValuesRequest
     {
+        public GetHighlightValuesRequest() {
+            HighlightTypeIds = new int[] { };
+        }
         public DateTime Date { get; set; }
-        public IList<GetDerLayoutItemsResponse.DerHighlight> DerHighlights { get; set; }
+        public IEnumerable<int> HighlightTypeIds { get; set; }
     }
 }

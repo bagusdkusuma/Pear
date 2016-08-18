@@ -7,17 +7,12 @@ namespace DSLNG.PEAR.Web.ViewModels.DerTransaction
 {
     public class DerValuesViewModel
     {
-        public IList<DerLayoutItemViewModel> DerLayoutItems { get; set; }
-        public class DerLayoutItemViewModel
-        {
-            public int Id { get; set; }
-            public int Column { get; set; }
-            public int Row { get; set; }
-            public string Type { get; set; }
-            public DerHighlightValuesViewModel Highlight { get; set; }
-            public IList<KpiInformationValuesViewModel> KpiInformations { get; set; }
+        public DerValuesViewModel() {
+            Highlights = new List<DerHighlightValuesViewModel>();
+            KpiInformations = new List<KpiInformationValuesViewModel>();
         }
-
+        public IList<DerHighlightValuesViewModel> Highlights { get; set; }
+        public IList<KpiInformationValuesViewModel> KpiInformations { get; set; }
         public class DerHighlightValuesViewModel
         {
             public int Id { get; set; }

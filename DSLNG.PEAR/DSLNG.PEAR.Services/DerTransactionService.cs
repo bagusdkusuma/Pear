@@ -43,19 +43,16 @@ namespace DSLNG.PEAR.Services
         }
 
         public GetKpiInformationValuesResponse GetKpiInformationValues(GetKpiInformationValuesRequest request) {
+            //var kpiIds = 
             //achievement section
-            var kpiIdsForActual = request.KpiInformations
-                .Where(x => x.ConfigType == ConfigType.KpiAchievement)
-                .Select(x => x.KpiId).Distinct().ToArray();
+            var kpiIdsForActual = request.ActualKpiIds;
             var previousDate = request.Date.AddDays(-1);
             var achievements = DataContext.KpiAchievements.Include(x => x.Kpi)
                 .Where(x => kpiIdsForActual.Contains(x.Kpi.Id) &&
                 (((x.Periode == request.Date || x.Periode == previousDate) && x.PeriodeType == PeriodeType.Daily) ||
                 (x.PeriodeType == PeriodeType.Yearly && x.Periode.Year == request.Date.Year) ||
                 (x.PeriodeType == PeriodeType.Monthly && x.Periode.Month == request.Date.Month))).ToList();
-            var kpiIdsForTarget = request.KpiInformations
-                .Where(x => x.ConfigType == ConfigType.KpiTarget)
-                .Select(x => x.KpiId).Distinct().ToArray();
+            var kpiIdsForTarget = request.TargetKpiIds;
             var targets = DataContext.KpiTargets.Include(x => x.Kpi)
                .Where(x => kpiIdsForActual.Contains(x.Kpi.Id) &&
                (((x.Periode == request.Date || x.Periode == previousDate) && x.PeriodeType == PeriodeType.Daily) ||
@@ -63,11 +60,15 @@ namespace DSLNG.PEAR.Services
                (x.PeriodeType == PeriodeType.Monthly && x.Periode.Month == request.Date.Month))).ToList();
 
             var response = new GetKpiInformationValuesResponse();
-            foreach (var actual in achievements) {
-                var kpiInformation = response.KpiInformations.FirstOrDefault(x => x.KpiId == actual.Kpi.Id);
+            foreach (var kpiId in kpiIdsForActual) {
+                var kpiInformation = response.KpiInformations.FirstOrDefault(x => x.KpiId == kpiId);
                 if (kpiInformation == null) {
-                    kpiInformation = new GetKpiInformationValuesResponse.KpiInformation { KpiId = actual.Kpi.Id };
+                    kpiInformation = new GetKpiInformationValuesResponse.KpiInformation { KpiId = kpiId };
                     response.KpiInformations.Add(kpiInformation);
+                }
+                var actual = achievements.FirstOrDefault(x => x.Kpi.Id == kpiId);
+                if (actual == null) {
+                    continue;
                 }
                 if (actual.PeriodeType == PeriodeType.Daily) {
                     if (kpiInformation.DailyActual == null) {
@@ -123,13 +124,17 @@ namespace DSLNG.PEAR.Services
                 }
                
             }
-            foreach (var target in targets)
+            foreach (var kpiId in kpiIdsForTarget)
             {
-                var kpiInformation = response.KpiInformations.FirstOrDefault(x => x.KpiId == target.Kpi.Id);
+                var kpiInformation = response.KpiInformations.FirstOrDefault(x => x.KpiId == kpiId);
                 if (kpiInformation == null)
                 {
-                    kpiInformation = new GetKpiInformationValuesResponse.KpiInformation { KpiId = target.Kpi.Id };
+                    kpiInformation = new GetKpiInformationValuesResponse.KpiInformation { KpiId = kpiId };
                     response.KpiInformations.Add(kpiInformation);
+                }
+                var target = targets.FirstOrDefault(x => x.Kpi.Id == kpiId);
+                if (target == null) {
+                    continue;
                 }
                 if (target.PeriodeType == PeriodeType.Daily)
                 {
@@ -194,7 +199,7 @@ namespace DSLNG.PEAR.Services
         }
 
         public GetHighlightValuesResponse GetHighlightValues(GetHighlightValuesRequest request) {
-            var derHighlights = request.DerHighlights.Select(y => y.HighlightTypeId).ToList();
+            var derHighlights = request.HighlightTypeIds;
             var highlights = DataContext.Highlights.Include(x => x.HighlightType)
                 .Where(x => derHighlights.Contains(x.HighlightType.Id) && x.PeriodeType == PeriodeType.Daily).ToList();
             var response = new GetHighlightValuesResponse();
