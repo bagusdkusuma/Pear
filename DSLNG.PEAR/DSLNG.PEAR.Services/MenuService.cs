@@ -605,7 +605,7 @@ namespace DSLNG.PEAR.Services
                 item.Collection("RoleGroups").Load();
 
                 //set IsRoot if no menu as parent
-                menu.IsRoot = request.ParentId <= 0;
+                menu.IsRoot = request.ParentId <= 0 || request.ParentId == null;
                 menu.ParentId = menu.IsRoot ? null : menu.ParentId;
                 //clear RoleGroups collection first
                 menu.RoleGroups.Clear();

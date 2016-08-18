@@ -7,7 +7,7 @@
         color: #000000;
     }
 </style>
-<section>
+<section id="der-transaction" data-date="@DateTime.Now.ToString("MM/dd/yyyy")">
     <div class="row">
         <div class="title_page" style="border: none!important;">
             <div class="row">
@@ -16,7 +16,7 @@
         </div>
         <div class="notification"></div>
     </div>
-    <div class="row der-display">
+    <div class="row">
         <div class="col-sm-12">
             <form class="form-inline">
                 <div class="form-group form-list">
@@ -1344,58 +1344,18 @@
 
 <script type="text/javascript" src="~/Content/datepicker/js/bootstrap-datepicker.js"></script>
 <script type="text/javascript">
-    $(document).ready(function () {
-        //$('.usdxdr').change(function (e) {
-
-        //});
-        function reloadView() {
-            var currentDate = $('#currentDate').val();
-            $('.layout-item').each(function () {
-                var that = $(this);
-                $.ajax({
-                    url: that.attr('data-url'),
-                    data: { currentDate: currentDate },
-                    success: function (data) {
-
-                        if (data.GraphicType !== undefined) {
-                            var callback = window.Pear.Artifact.Designer._previewCallbacks;
-                            callback[data.GraphicType](data, that);
-                        }
-                        else if (data.type === "highlight") {
-                            var aneh = data.view.replace(/\"/g, "");
-                            console.log(aneh);
-                            that.html(aneh);
-                        } else if (data.type === "highlight" || data.type === "weather" ||
-                            data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
-                        data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
-                        || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type == "procurement" || data.type == "indicative-commercial-price" ||
-                            data.type === "plant-availability" || data.type === "economic-indicator" || data.type === "mgdp" || data.type === "hhv" || data.type === "lng-and-cds-production"
-                            || data.type === "nls" || data.type === "key-equipment-status") {
-                            that.html(data.view);
-                        }
-                        /*else if (data.type === "weather" || data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
-                        data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
-                        || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type === 'mgdp') {
-                            that.html(data.view);
-                        }*/
-
-                    }
-                });
-            });
-        }
-
-        $('#currentDate').val('02/18/2016');
-        reloadView();
-        if ($('.der-display').length) {
-            $('.datepicker').datetimepicker({
-                format: "MM/DD/YYYY",
-                focusOnShow: false
-            }).on('dp.change', function (e) {
-                $("#currentDate").blur();
-                reloadView();
-            });
-        };
-    });
+    //$(document).ready(function () {
+    //    $('#currentDate').val('02/18/2016');
+    //    if ($('.der-display').length) {
+    //        $('.datepicker').datetimepicker({
+    //            format: "MM/DD/YYYY",
+    //            focusOnShow: false
+    //        }).on('dp.change', function (e) {
+    //            $("#currentDate").blur();
+    //            reloadView();
+    //        });
+    //    };
+    //});
 
     function moveFieldTo(event, fieldId) {
         var inputid = $(event.target).attr("id");
@@ -1411,10 +1371,46 @@
 
 @section Scripts {
     <script type="text/javascript">
+        function getQueryVariable(variable) {
+            var query = window.location.search.substring(1);
+            var vars = query.split('&');
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split('=');
+                if (decodeURIComponent(pair[0]) == variable) {
+                    return decodeURIComponent(pair[1]);
+                }
+            }
+            return null;
+        }
+        function updateQueryStringParameter(uri, key, value) {
+            var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+            var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+            if (uri.match(re)) {
+                return uri.replace(re, '$1' + key + "=" + value + '$2');
+            }
+            else {
+                return uri + separator + key + "=" + value;
+            }
+        }
+
+        var reloadView = function () {
+            window.document.location = updateQueryStringParameter(window.location.href, "date", encodeURIComponent($('.datepicker').val()));
+        };
         $(document).ready(function () {
-
-
-
+            var date = getQueryVariable('date');
+            if (date == null) {
+                $('.datepicker').val($('#der-transaction').data('date'));
+            } else {
+                $('.datepicker').val(decodeURIComponent(date));
+            }
+            $('.datepicker').datetimepicker({
+                format: "MM/DD/YYYY",
+                focusOnShow: false
+            }).on('dp.change', function (e) {
+                $(".datepicker").blur();
+                reloadView();
+            });
+            var currentDate = $('.datepicker').val();
             tinyMCE.init({
                 selector: ".allow-html",
                 menubar: false,
@@ -1442,7 +1438,7 @@
                 var target = $this.attr('href');
                 if (!$(target).children().length) {
                     var contentUrl = $this.data('content-url');
-                    contentUrl = contentUrl.replace('__date__', encodeURIComponent( $('#currentDate').val()));
+                    contentUrl = contentUrl.replace('__date__', encodeURIComponent(currentDate));
                     $.get(contentUrl, function (data) {
                         $(target).html(data);
                         tinyMCE.init({

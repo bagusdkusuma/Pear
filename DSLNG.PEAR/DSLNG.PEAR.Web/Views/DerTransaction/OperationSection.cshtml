@@ -21,7 +21,7 @@
                 <td><label class="control-label">PAV</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 0, "daily-actual", "A-41", "A-42", "%")
+                        @Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 0,  37, "%","prev")
                     </span>
                 </td>
             </tr>
@@ -29,7 +29,7 @@
                 <td><label class="control-label">PTE</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 1, "daily-actual", "A-42", "A-43", "%")
+                        @Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 1, 38, "%","prev")
                     </span>
                 </td>
             </tr>
@@ -37,7 +37,7 @@
                 <td><label class="control-label">Refrigerant Storage (C2 & C3)</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 6, "daily-actual", "A-45", "A-46", "ton", false)
+                        @Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 6, 39, "ton","prev")
                     </span>
                 </td>
             </tr>
@@ -65,7 +65,7 @@
                 <td><label class="control-label">MTB</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 2, "daily-actual", "A-43", "A-44", "%")
+                        @Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 2, 39, "%","prev")
                     </span>
                 </td>
             </tr>
@@ -73,7 +73,7 @@
                 <td><label class="control-label">PUT</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 3, "daily-actual", "A-44", "A-45", "%")
+                        @Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 3, 39, "%","prev")
                     </span>
                 </td>
             </tr>
@@ -89,7 +89,7 @@
                 <td><label class="control-label">min HHV JOB PMTS</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(layoutItem2.KpiInformations, 0, "daily-target", "A-44", "A-45", "btu/scf", true, "1111")
+                        @Html.DisplayKpiInformationInput(layoutItem2.KpiInformations, 0,  39, "btu/scf","1111")
                     </span>
                 </td>
             </tr>
@@ -97,7 +97,7 @@
                 <td><label class="control-label">min HHV MGDP</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(layoutItem2.KpiInformations, 1, "daily-target", "A-44", "A-45", "btu/scf", true, "1050")
+                        @Html.DisplayKpiInformationInput(layoutItem2.KpiInformations, 1, 39, "btu/scf","1050")
                     </span>
                 </td>
             </tr>
@@ -155,13 +155,16 @@
         </table>
     </div>
     <div class="col-md-3">
+         @{
+            var pmtsLayout = Model.DerLayoutItems.First(x => x.Row == 5 && x.Column == 0);
+        }
         <label class="control-label">Feed Gas JOB PMTS-CPP</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 <td><label class="control-label">24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        <input type="text" value="$3200" class="der-text-yesterday form-control" id="text" placeholder="mmscfd" />
+                        @Html.DisplayKpiInformationInput(pmtsLayout.KpiInformations, 0,  39, "mmscfd")
                     </span>
                 </td>
             </tr>
@@ -169,7 +172,7 @@
                 <td><label class="control-label">24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        <input type="text" class="form-control" id="text" placeholder="tonnes" />
+                         @Html.DisplayKpiInformationInput(pmtsLayout.KpiInformations, 0,  39, "tonnes")
                     </span>
                 </td>
             </tr>
@@ -177,7 +180,7 @@
                 <td><label class="control-label">24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        <input type="text" class="form-control" id="text" placeholder="btu/scf" />
+                         @Html.DisplayKpiInformationInput(pmtsLayout.KpiInformations, 0,  39, "btu/scf")
                     </span>
                 </td>
             </tr>
@@ -185,13 +188,16 @@
                 <td><label class="control-label">24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        <input type="text" class="form-control" id="text" placeholder="mmbtud" />
+                         @Html.DisplayKpiInformationInput(pmtsLayout.KpiInformations, 0,  39, "mmbtud")
                     </span>
                 </td>
             </tr>
         </table>
     </div>
     <div class="col-md-3">
+        @{
+            var mgdpLayout = Model.DerLayoutItems.First(x => x.Row == 5 && x.Column == 1);
+        }
         <label class="control-label">Feed Gas MGDP-Donggi CPP</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
@@ -303,6 +309,7 @@
                 <td><label class="control-label">DCQ</label></td>
                 <td>
                     <span class="col-sm-8">
+                        @*@Html.DisplayKpiInformationInput(mgdpLayout.KpiInformations, 0,  39, "mmbtu","prev")*@
                         <input type="text" class="form-control" id="text" placeholder="mmbtu" />
                     </span>
                 </td>
@@ -415,13 +422,16 @@
         </table>
     </div>
     <div class="col-md-4">
+        @{
+            var productionLayout = Model.DerLayoutItems.First(x => x.Row == 7 && x.Column == 0);
+        }
         <label class="control-label">Product Quality</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 <td><label class="control-label">CDS-RVP</label></td>
                 <td>
                     <span class="col-sm-8">
-                        <input type="text" class="form-control" id="text" placeholder="psia" />
+                        @Html.DisplayKpiInformationInput(productionLayout.KpiInformations, 7,  39, "psia")
                     </span>
                 </td>
             </tr>
@@ -429,7 +439,7 @@
                 <td><label class="control-label">LNG HHV</label></td>
                 <td>
                     <span class="col-sm-8">
-                        <input type="text" class="form-control" id="text" placeholder="btu/scf" />
+                        @Html.DisplayKpiInformationInput(productionLayout.KpiInformations, 8,  39, "btu/scf")
                     </span>
                 </td>
             </tr>
@@ -886,7 +896,7 @@
                 <td><label class="control-label">24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        <input type="text" class="form-control" id="text" placeholder="m3" />
+                         @Html.DisplayKpiInformationInput(productionLayout.KpiInformations, 0, 39, "m3")
                     </span>
                 </td>
             </tr>
@@ -894,7 +904,7 @@
                 <td><label class="control-label">24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        <input type="text" class="form-control" id="text" placeholder="ton" />
+                          @Html.DisplayKpiInformationInput(productionLayout.KpiInformations, 1, 39, "ton")
                     </span>
                 </td>
             </tr>
@@ -902,7 +912,7 @@
                 <td><label class="control-label">24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        <input type="text" class="form-control" id="text" placeholder="mmbtu" />
+                          @Html.DisplayKpiInformationInput(productionLayout.KpiInformations, 2, 39, "mmbtu")
                     </span>
                 </td>
             </tr>
@@ -915,7 +925,7 @@
                 <td><label class="control-label">24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        <input type="text" class="form-control" id="text" placeholder="m3" />
+                         @Html.DisplayKpiInformationInput(productionLayout.KpiInformations, 3, 39, "m3")
                     </span>
                 </td>
             </tr>
@@ -923,7 +933,7 @@
                 <td><label class="control-label">24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        <input type="text" class="form-control" id="text" placeholder="ton" />
+                          @Html.DisplayKpiInformationInput(productionLayout.KpiInformations, 4, 39, "ton")
                     </span>
                 </td>
             </tr>
@@ -931,7 +941,7 @@
                 <td><label class="control-label">24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        <input type="text" class="form-control" id="text" placeholder="mmbtu" />
+                          @Html.DisplayKpiInformationInput(productionLayout.KpiInformations, 5, 39, "mmbtu")
                     </span>
                 </td>
             </tr>
@@ -969,13 +979,16 @@
 </div>
 <div class="col-md-12" style="margin-top: 30px;">
     <div class="col-md-4">
+         @{
+            var lngLoadedLayout = Model.DerLayoutItems.First(x => x.Row == 7 && x.Column == 1);
+        }
         <label class="control-label">LNG Loaded</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 <td><label class="control-label">24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        <input type="text" class="form-control" id="text" placeholder="m3" />
+                         @Html.DisplayKpiInformationInput(lngLoadedLayout.KpiInformations, 0, 39, "m3")
                     </span>
                 </td>
             </tr>
@@ -983,7 +996,7 @@
                 <td><label class="control-label">24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        <input type="text" class="form-control" id="text" placeholder="ton" />
+                        @Html.DisplayKpiInformationInput(lngLoadedLayout.KpiInformations, 1, 39, "ton")
                     </span>
                 </td>
             </tr>
@@ -991,7 +1004,7 @@
                 <td><label class="control-label">24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        <input type="text" class="form-control" id="text" placeholder="mmbtu" />
+                        @Html.DisplayKpiInformationInput(lngLoadedLayout.KpiInformations, 2, 39, "mbtu")
                     </span>
                 </td>
             </tr>
@@ -1054,11 +1067,11 @@
     <div class="col-md-4">
         <label class="control-label">CDS Loaded</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
-            <tr>
+             <tr>
                 <td><label class="control-label">24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        <input type="text" class="form-control" id="text" placeholder="m3" />
+                         @Html.DisplayKpiInformationInput(lngLoadedLayout.KpiInformations, 10, 39, "m3")
                     </span>
                 </td>
             </tr>
@@ -1066,7 +1079,7 @@
                 <td><label class="control-label">24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        <input type="text" class="form-control" id="text" placeholder="ton" />
+                        @Html.DisplayKpiInformationInput(lngLoadedLayout.KpiInformations, 11, 39, "ton")
                     </span>
                 </td>
             </tr>
@@ -1074,7 +1087,7 @@
                 <td><label class="control-label">24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        <input type="text" class="form-control" id="text" placeholder="mmbtu" />
+                        @Html.DisplayKpiInformationInput(lngLoadedLayout.KpiInformations, 12, 39, "mbtu")
                     </span>
                 </td>
             </tr>

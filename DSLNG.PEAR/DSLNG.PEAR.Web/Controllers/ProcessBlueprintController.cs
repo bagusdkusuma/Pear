@@ -16,7 +16,7 @@ using DSLNG.PEAR.Services.Requests.FileManagerRolePrivilege;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
-    public class ProcessBlueprintController : Controller
+    public class ProcessBlueprintController : BaseController
     {
         //
         // GET: /ProcessBlueprint/
@@ -134,7 +134,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public static readonly object RootFolder = "~/Content/FileManager";
         public static readonly object ImagesRootFolder = "~/Content/images";
         public static readonly string[] AllowedFileExtensions = new string[] {
-            ".jpg", ".jpeg", ".gif", ".rtf", ".txt", ".avi", ".png", ".mp3", ".xml", ".doc", ".pdf"
+            ".jpg", ".jpeg", ".gif", ".rtf", ".txt", ".png", ".doc",".docx", ".pdf",".xls",".xlsx", ".vsd", ".mpp", ".ppt", ".pptx"
         };
 
         static UserProfileSessionData sessionData = (UserProfileSessionData)HttpContext.Current.Session["LoginUser"];

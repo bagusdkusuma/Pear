@@ -378,23 +378,33 @@ namespace DSLNG.PEAR.Web.Helpers
             }
         }
 
-        public static MvcHtmlString DisplayKpiInformationInput(this HtmlHelper htmlHelper, IList<DerValuesViewModel.KpiInformationValuesViewModel> kpiInformations,int position, string type, string id, string next, string placeholder = "rate", bool previousValue = true, string defaultValue = "") {
-            string value = defaultValue;
-            var kpiInformation = kpiInformations.First(x => x.Position == position);
-            if (previousValue)
+        public static MvcHtmlString DisplayKpiInformationInput(this HtmlHelper htmlHelper, IList<DerValuesViewModel.KpiInformationValuesViewModel> kpiInformations, int kpiId, int tabIndex, string placeholder = "rate",string defaultValueDefined = "empty", string type = "daily-actual")
+        {
+            string value;
+            switch (defaultValueDefined) { 
+                case "empty" : 
+                case "prev":
+                    value = "";
+                    break;
+                default:
+                    value = defaultValueDefined;
+                    break;
+            }
+            var kpiInformation = kpiInformations.First(x => x.KpiId == kpiId);
+            var existValue = "empty";
+            switch (type)
             {
-                switch (type)
-                {
-                    case "daily-actual":
-                        value = kpiInformation.DailyActual == null ? value : kpiInformation.DailyActual.Value.ToString();
-                        break;
-                    case "daily-target":
-                        value = kpiInformation.DailyTarget == null ? value : kpiInformation.DailyTarget.Value.ToString();
-                        break;
+                case "daily-actual":
+                    value = kpiInformation.DailyActual == null ? value : (defaultValueDefined == "prev" ? kpiInformation.DailyActual.Value.ToString() : ( kpiInformation.DailyActual.Type == "now" ?  kpiInformation.DailyActual.Value.ToString() : value));
+                    existValue = kpiInformation.DailyActual == null ?existValue: kpiInformation.DailyActual.Type;
+                    break;
+                case "daily-target":
+                    value = kpiInformation.DailyTarget == null ? value : (defaultValueDefined == "prev" ? kpiInformation.DailyTarget.Value.ToString() : (kpiInformation.DailyTarget.Type == "now" ? kpiInformation.DailyTarget.Value.ToString() : value));
+                    existValue = kpiInformation.DailyTarget == null ? existValue : kpiInformation.DailyTarget.Type;
+                    break;
 
                 }
-            }
-            return new MvcHtmlString(string.Format("<input onkeypress=\"moveFieldTo(event, '{1}');\" type=\"text\" value=\"{0}\" class=\"der-text-yesterday form-control\" id=\"{2}\"  placeholder=\"{3}\" />", value, next, id, placeholder));
+            return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" />", value, existValue, placeholder, tabIndex, type));
         }
     }
 

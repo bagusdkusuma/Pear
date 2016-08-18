@@ -744,7 +744,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<SaveMirDataTableViewModel, SaveMirDataTableRequest>();
             Mapper.CreateMap<GetDerLayoutItemsResponse, DerValuesViewModel>();
-            Mapper.CreateMap<GetDerLayoutItemsResponse.DerLayoutItem, DerValuesViewModel.DerLayoutItemViewModel>();
+            //Mapper.CreateMap<GetDerLayoutItemsResponse.DerLayoutItem, DerValuesViewModel.DerLayoutItemViewModel>();
             Mapper.CreateMap<GetDerLayoutItemsResponse.DerHighlight, DerValuesViewModel.DerHighlightValuesViewModel>();
             Mapper.CreateMap<GetDerLayoutItemsResponse.KpiInformation, DerValuesViewModel.KpiInformationValuesViewModel>();
             Mapper.CreateMap<GetKpiInformationValuesResponse.KpiInformation, DerValuesViewModel.KpiInformationValuesViewModel>();

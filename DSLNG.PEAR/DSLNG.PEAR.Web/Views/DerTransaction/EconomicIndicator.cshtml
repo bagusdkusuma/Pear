@@ -4,15 +4,15 @@
 @model DSLNG.PEAR.Web.ViewModels.DerTransaction.DerValuesViewModel
 <div class="col-md-12">
     <div class="col-md-4">
-        @{ 
+        @*@{ 
             var layoutItem = Model.DerLayoutItems.First(x => x.Column == 1 && x.Row == 14);
-        }
+        }*@
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 <td><label class="control-label">USDXDR</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 7, "daily-actual", "text", "A-2" )
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 386, 1, "rate","prev")
                     </span>
                 </td>
             </tr>
@@ -20,7 +20,7 @@
                 <td><label class="control-label">USD/IDR</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 8, "daily-actual", "A-2", "A-3")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 79, 2, "rate","prev")
                     </span>
                 </td>
             </tr>
@@ -28,7 +28,7 @@
                 <td><label class="control-label">JPY/IDR</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 9, "daily-actual", "A-3", "A-4")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 80, 3, "rate","prev")
                     </span>
                 </td>
             </tr>
@@ -36,7 +36,7 @@
                 <td><label class="control-label">USD/JPY</label></td>
                 <td>
                     <span class="col-sm-8">
-                       @Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 10, "daily-actual", "A-4", "A-5")
+                       @Html.DisplayKpiInformationInput(Model.KpiInformations, 128, 4, "rate","prev")
                     </span>
                 </td>
             </tr>
@@ -44,7 +44,7 @@
                 <td><label class="control-label">EUR/USD</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 11, "daily-actual", "A-5", "A-6")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 388,5, "rate","prev")
                     </span>
                 </td>
             </tr>
@@ -52,7 +52,7 @@
                 <td><label class="control-label">EUR/IDR</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 12, "daily-actual", "A-6", "A-7")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 389, 6, "rate","prev")
                     </span>
                 </td>
             </tr>
@@ -60,7 +60,7 @@
                 <td><label class="control-label">USD/KRW</label></td>
                 <td>
                     <span class="col-sm-8">
-                       @Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 13, "daily-actual", "A-7", "A-8")
+                       @Html.DisplayKpiInformationInput(Model.KpiInformations, 390, 7, "rate","prev")
                     </span>
                 </td>
             </tr>
@@ -72,7 +72,7 @@
                 <td><label class="control-label">Dubai crude</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 0, "daily-actual", "A-8", "A-9", "usd/bbl")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 383, 8,"usd/bbl","prev")
                     </span>
                 </td>
             </tr>
@@ -80,7 +80,7 @@
                 <td><label class="control-label">Brent</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 1, "daily-actual", "A-9", "A-10", "usd/bbl")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 64,9,"usd/bbl","prev")
                     </span>
                 </td>
             </tr>
@@ -88,7 +88,7 @@
                 <td><label class="control-label">Henry Hub</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 2, "daily-actual", "A-10", "A-11", "usd/mmbtu")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 384,10,"usd/bbl","prev")
                     </span>
                 </td>
             </tr>
@@ -96,7 +96,7 @@
                 <td><label class="control-label">Naptha</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 3, "daily-actual", "A-11", "A-12", "usd/bbl")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 65,11,"usd/bbl","prev")
                     </span>
                 </td>
             </tr>
@@ -104,7 +104,7 @@
                 <td><label class="control-label">ICP</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 4, "daily-actual", "A-12", "A-13", "usd/bbl")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 385,12,"usd/bbl","prev")
                     </span>
                 </td>
             </tr>
@@ -112,7 +112,7 @@
                 <td><label class="control-label">Applied JCC</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 5, "daily-actual", "A-13", "A-14", "usd/bbl")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 62,13,"usd/bbl","prev")
                     </span>
                 </td>
             </tr>
@@ -120,7 +120,7 @@
                 <td><label class="control-label">LNG Spot</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 6, "daily-actual", "A-14", "A-15", "usd/mmbtu")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 63, 14,"usd/mmbtu","prev")
                     </span>
                 </td>
             </tr>
@@ -128,22 +128,22 @@
                 <td><label class="control-label">Shipping</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 7, "daily-actual", "A-15", "A-16", "usd/mmbtu")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 391, 15,"usd/mmbtu","prev")
                     </span>
                 </td>
             </tr>
         </table>
     </div>
     <div class="col-md-4">
-        @{
+        @*@{
             var layoutItem2 = Model.DerLayoutItems.First(x => x.Column == 1 && x.Row == 16);
-        }
+        }*@
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 <td><label class="control-label">JKSE</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(layoutItem2.KpiInformations, 0, "daily-actual", "A-16", "A-17", "index")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 392, 16,"index","prev")
                     </span>
                 </td>
             </tr>
@@ -151,7 +151,7 @@
                 <td><label class="control-label">DJIA</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(layoutItem2.KpiInformations, 1, "daily-actual", "A-17", "A-18", "index")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 393, 17,"index","prev")
                     </span>
                 </td>
             </tr>
@@ -159,7 +159,7 @@
                 <td><label class="control-label">Nikkei</label></td>
                 <td>
                     <span class="col-sm-8">
-                       @Html.DisplayKpiInformationInput(layoutItem2.KpiInformations, 2, "daily-actual", "A-18", "A-19", "index")
+                       @Html.DisplayKpiInformationInput(Model.KpiInformations, 394, 18,"index","prev")
                     </span>
                 </td>
             </tr>
@@ -167,7 +167,7 @@
                 <td><label class="control-label">SSEC</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(layoutItem2.KpiInformations, 3, "daily-actual", "A-19", "A-20", "index")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 395, 19,"index","prev")
                     </span>
                 </td>
             </tr>
@@ -176,33 +176,33 @@
 </div>
 <div class="col-md-12" style="margin-top: 30px;">
     <div class="col-md-6">
-        @{
+        @*@{
             var layoutItem3 = Model.DerLayoutItems.First(x => x.Column == 1 && x.Row == 15);
-        }
+        }*@
         <table border="0">
             <tr>
                 <td><label class="control-label">Macro Economic/Market Flash</label></td>
             </tr>
             <tr>
                 <td>
-                    <textarea class="form-control allow-html">@layoutItem3.Highlight.HighlightMessage</textarea>
+                    <textarea class="form-control allow-html">@*@layoutItem3.Highlight.HighlightMessage*@</textarea>
                 </td>
             </tr>
         </table>
     </div>
     <div class="col-md-3">
-        @{
+        @*@{
             var layoutItem4 = Model.DerLayoutItems.First(x => x.Column == 2 && x.Row == 15);
-        }
+        }*@
         <table border="0">
             <tr>
                 <td align="left"><label class="control-label">Market Tone</label></td>
                 <td align="left">
-                    @Html.DropDownListFor(x => layoutItem4.Highlight.HighlightMessage,new List<SelectListItem> {
+                    @*@Html.DropDownListFor(x => layoutItem4.Highlight.HighlightMessage,new List<SelectListItem> {
                         new SelectListItem { Text = "Bullish", Value = "Bullish" },
                         new SelectListItem { Text = "Mixed", Value = "Mixed" },
                         new SelectListItem { Text = "Bearish", Value = "Bearish" },
-                    })
+                    })*@
                     @*<select name="select" option="option">
                         <option value="Bullish">Bullish</option>
                         <option value="Mixed">Mixed</option>
@@ -217,7 +217,7 @@
             <tr>
                 <td align="left"><label class="control-label">Monthly Bunker Price</label></td>
                 <td align="left">
-                    <input type="text" class="form-control" id="text19" placeholder="usd/bbl" size="15" maxlength="15" />
+                    @Html.DisplayKpiInformationInput(Model.KpiInformations, 397, 19, "usd/bbl", "prev")
                 </td>
             </tr>
         </table>

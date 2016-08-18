@@ -36,7 +36,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var theDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
             var kpiInformationValuesRequest = new GetKpiInformationValuesRequest {
                 Date = theDate,
-                ActualKpiIds = new int[] {384,65,385,62,63,391,392,393,394,395,397 }
+                ActualKpiIds = new int[] {386,79,80,128,388,389,390,383,64,384,65,385,62,63,391,392,393,394,395,397 }
             };
             var kpiInformationValuesResponse = _derTransactionService.GetKpiInformationValues(kpiInformationValuesRequest);
             var highlightValuesRequest = new GetHighlightValuesRequest {

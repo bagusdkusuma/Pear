@@ -174,7 +174,7 @@ aside.left-content > * {
     font-style: italic;
 }
 
-    .sub-nav ul li.active a {
+    .sub-nav ul li.active > a {
         color: #ff0000;
     }
 
@@ -3397,3 +3397,9 @@ ul.pop-attachments-list {
 #popDashboard-table tbody tr:not(:first-child) td{
     vertical-align:top;
 }
+
+.dxtvControl_DSLNG .dxtv-ndSel,
+.dxmLite_DSLNG .dxm-main .dxm-checked, .dxmLite_DSLNG .dxm-main .dxm-selected {
+    background:blueviolet !important;
+}
+
