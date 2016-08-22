@@ -1,0 +1,411 @@
+﻿@{
+    Layout = null;
+}
+@model DSLNG.PEAR.Web.ViewModels.DerTransaction.DerValuesViewModel
+<div class="col-md-12">
+    <div class="col-md-6">
+        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
+            <tr>
+                <!--192-->
+                <td><label class="control-label">Weekly Maintenance Backlog</label></td>
+            </tr>
+            <tr>
+                <td><label class="control-label">as of</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 59, 192, "text date", "prev","daily-actual", "remark")
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">PM</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 60, 193, "hrs", "prev")
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">CM</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 61, 194, "hrs", "prev")
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">remark-target</label></td>
+                <td>
+                    <span class="col-sm-8">
+                       @Html.DisplayKpiInformationInput(Model.KpiInformations, 59, 195, "text", "prev","daily-target")
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">remarks</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 59, 196, "text", "nothing to concern", "daily-target", "remark")
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
+            <tr>
+                <td><label class="control-label">Weekly Critical-Tier 1 PM Compliance/overdue</label></td>
+            </tr>
+            <tr>
+                <td><label class="control-label">as of</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 374, 197, "text date", "prev", "daily-actual", "remark")
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">Rlv Valve</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 371, 198, "number", "prev")
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">SIF</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 372, 199, "number", "prev")
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">Other</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 373, 200, "number", "prev")
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">Remark</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 374, 201, "text date", "prev", "daily-actual", "remark")
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div style="margin-top: 30px;" class="col-md-12">
+    <p style="color: white;">Key Equipment Status</p>
+    <div class="col-md-4">
+        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
+            <tr>
+                <td><label class="control-label">Feed Inlet Syst</label></td>
+                <td>
+                    <select>
+                        <option>Select Option</option>
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">C3 Compr</label></td>
+                <td>
+                    <select>
+                        <option>Select Option</option>
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">LP-MR Compr</label></td>
+                <td>
+                    <select>
+                        <option>Select Option</option>
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">HP-MR Compr</label></td>
+                <td>
+                    <select>
+                        <option>Select Option</option>
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">MCHE</label></td>
+                <td>
+                    <select>
+                        <option>Select Option</option>
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-4">
+        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
+            <tr>
+                <td><label class="control-label">EDG-A</label></td>
+                <td>
+                    <select>
+                        <option>Select Option</option>
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">EDG-B</label></td>
+                <td>
+                    <select>
+                        <option>Select Option</option>
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">EDG-C</label></td>
+                <td>
+                    <select>
+                        <option>Select Option</option>
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">GTG-A</label></td>
+                <td>
+                    <select>
+                        <option>Select Option</option>
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">GTG-B</label></td>
+                <td>
+                    <select>
+                        <option>Select Option</option>
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">GTG-C</label></td>
+                <td>
+                    <select>
+                        <option>Select Option</option>
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-4">
+        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
+            <tr>
+                <td><label class="control-label">Hot Oil Syst</label></td>
+                <td>
+                    <select>
+                        <option>Select Option</option>
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">Fuel Gas syst</label></td>
+                <td>
+                    <select>
+                        <option>Select Option</option>
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">Water Syst</label></td>
+                <td>
+                    <select>
+                        <option>Select Option</option>
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">Air Compr A</label></td>
+                <td>
+                    <select>
+                        <option>Select Option</option>
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">Air Compr B</label></td>
+                <td>
+                    <select>
+                        <option>Select Option</option>
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">Air Compr C</label></td>
+                <td>
+                    <select>
+                        <option>Select Option</option>
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div style="margin-top: 30px;" class="col-md-12">
+    <div class="col-md-4">
+        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
+            <tr>
+                <td><label class="control-label">N2 Syst</label></td>
+                <td>
+                    <select>
+                        <option>Select Option</option>
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">Fire Syst</label></td>
+                <td>
+                    <select>
+                        <option>Select Option</option>
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">LNG Tank</label></td>
+                <td>
+                    <select>
+                        <option>Select Option</option>
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">BOG Compr</label></td>
+                <td>
+                    <select>
+                        <option>Select Option</option>
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">LNG Jetty</label></td>
+                <td>
+                    <select>
+                        <option>Select Option</option>
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">C2/C3 strg tank</label></td>
+                <td>
+                    <select>
+                        <option>Select Option</option>
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-4">
+        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
+            <tr>
+                <td><label class="control-label">CDS tank</label></td>
+                <td>
+                    <select>
+                        <option>Select Option</option>
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">Diesel Oil tank</label></td>
+                <td>
+                    <select>
+                        <option>Select Option</option>
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">Flare Syst</label></td>
+                <td>
+                    <select>
+                        <option>Select Option</option>
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">Waste Syst</label></td>
+                <td>
+                    <select>
+                        <option>Select Option</option>
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="col-md-12" style="margin-top: 30px;">
+    <div class="col-md-6">
+        <table border="0">
+            <tr>
+                <td><label class="control-label">Maintenance Highlight & Immediate Concern:</label></td>
+            </tr>
+            <tr>
+                <!--229-->
+                <td>
+                    <textarea class="form-control allow-html"></textarea>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

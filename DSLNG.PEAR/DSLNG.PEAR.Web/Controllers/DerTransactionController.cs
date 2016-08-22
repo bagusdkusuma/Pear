@@ -61,6 +61,31 @@ namespace DSLNG.PEAR.Web.Controllers
                 ));
         }
 
+        public ActionResult MarineShipping(string date)
+        {
+            return View(GetDerValuesPerSection(date,
+                new int[] { 375, 376, 377, 378 }, //actual KpiIds 
+                new int[] { 375, 377 }, //target KpiIds
+                new int[] { }  //highlightTypeIds
+                ));
+        }
+
+        public ActionResult MaintenanceSection(string date) {
+            return View(GetDerValuesPerSection(date,
+               new int[] { 59, 60, 61,371,372,373,374 }, //actual KpiIds 
+               new int[] { 59}, //target KpiIds
+               new int[] { }  //highlightTypeIds
+               ));
+        }
+
+        public ActionResult QhsseSection(string date) {
+            return View(GetDerValuesPerSection(date,
+               new int[] { 273, 274,275,276,1,177,278,277,285,356,4,359,286,292 }, //actual KpiIds 
+               new int[] { 1, 177,278,277,276,285}, //target KpiIds
+               new int[] { }  //highlightTypeIds
+               ));
+        }
+
         //public ActionResult ForcastedIndicator(string date) {
         //    var theDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
         //    var previousDate = theDate.AddDays(-1);
