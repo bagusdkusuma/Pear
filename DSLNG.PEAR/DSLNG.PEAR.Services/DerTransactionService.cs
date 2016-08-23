@@ -150,7 +150,8 @@ namespace DSLNG.PEAR.Services
                             {
                                 Date = target.Periode,
                                 Value = target.Value.Value,
-                                Remark = target.Remark
+                                Remark = target.Remark,
+                                Type = "now"
                             };
                         }
                         else
@@ -162,7 +163,8 @@ namespace DSLNG.PEAR.Services
                                 {
                                     Date = todayValue.Periode,
                                     Value = todayValue.Value.Value,
-                                    Remark = todayValue.Remark
+                                    Remark = todayValue.Remark,
+                                    Type = "now"
                                 };
 
                             }
@@ -173,7 +175,8 @@ namespace DSLNG.PEAR.Services
                                 {
                                     Date = target.Periode,
                                     Value = target.Value.Value,
-                                    Remark = target.Remark
+                                    Remark = target.Remark,
+                                    Type = "prev"
                                 };
                             }
                         }
@@ -221,6 +224,7 @@ namespace DSLNG.PEAR.Services
                     highlightResp.HighlightMessage = highlight.Message;
                     highlightResp.HighlightTitle = highlight.Title;
                     highlightResp.Date = highlight.Date;
+                    highlightResp.Type = "now";
                 }
                 else
                 {
@@ -231,7 +235,7 @@ namespace DSLNG.PEAR.Services
                         highlightResp.HighlightMessage = todayValue.Message;
                         highlightResp.HighlightTitle = todayValue.Title;
                         highlightResp.Date = todayValue.Date;
-
+                        highlightResp.Type = "now";
                     }
                     else
                     {
@@ -240,6 +244,7 @@ namespace DSLNG.PEAR.Services
                         highlightResp.HighlightMessage = highlight.Message;
                         highlightResp.HighlightTitle = highlight.Title;
                         highlightResp.Date = highlight.Date;
+                        highlightResp.Type = "prev";
                     }
                 }
             }

@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using DSLNG.PEAR.Web.ViewModels.DerTransaction;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace DSLNG.PEAR.Web.Helpers
 {
@@ -509,6 +510,86 @@ namespace DSLNG.PEAR.Web.Helpers
             }
             selectInput += "</select>";
             return new MvcHtmlString(selectInput);
+
+        }
+
+        public static MvcHtmlString DisplayHighlightTextarea(this HtmlHelper htmlHelper, IList<DerValuesViewModel.DerHighlightValuesViewModel> highlights, int highlightTypeId, int tabIndex, string defaultValueDefined = "empty") {
+            string value;
+            switch (defaultValueDefined)
+            {
+                case "empty":
+                case "prev":
+                    value = "";
+                    break;
+                default:
+                    value = defaultValueDefined;
+                    break;
+            }
+            var existValue = "empty";
+            var highlight = highlights.FirstOrDefault(x => x.HighlightTypeId == highlightTypeId);
+            value = highlight == null ? value : (defaultValueDefined == "prev" ? highlight.HighlightMessage : (highlight.Type == "now" ? highlight.HighlightMessage : value));
+            existValue = highlight == null ? existValue : highlight.Type;
+            var textarea = string.Format("<textarea class=\"der-value-{0} form-control allow-html\">{1}</textarea>", existValue, value);
+            return new MvcHtmlString(textarea);
+
+
+        }
+        public static MvcHtmlString DisplayHighlightDropdownList(this HtmlHelper htmlHelper, IList<DerValuesViewModel.DerHighlightValuesViewModel> highlights, int highlightTypeId, IList<SelectListItem> options, int tabIndex, string defaultValueDefined = "empty")
+        {
+            string value;
+            switch (defaultValueDefined)
+            {
+                case "empty":
+                case "prev":
+                    value = "";
+                    break;
+                default:
+                    value = defaultValueDefined;
+                    break;
+            }
+            var existValue = "empty";
+            var highlight = highlights.FirstOrDefault(x => x.HighlightTypeId == highlightTypeId);
+            value = highlight == null ? value : (defaultValueDefined == "prev" ? highlight.HighlightMessage : (highlight.Type == "now" ? highlight.HighlightMessage : value));
+            existValue = highlight == null ? existValue : highlight.Type;
+            var selectInput = string.Format("<select class=\"der-value-{0} form-control\" tabindex=\"{1}\" >", existValue, tabIndex);
+            foreach (var option in options)
+            {
+                var selected = string.Equals(option.Value, value, StringComparison.InvariantCultureIgnoreCase) ? "selected=\"selected\"" : "";
+                selectInput += string.Format("<option {2} value=\"{0}\">{1}</option>", option.Value, option.Text, selected);
+            }
+            selectInput += "</select>";
+            return new MvcHtmlString(selectInput);
+        }
+        public static MvcHtmlString DisplayBrenfutHighlight(this HtmlHelper htmlHelper, IList<DerValuesViewModel.DerHighlightValuesViewModel> highlights, int highlightTypeId, int tabIndex, int position, string type = "value") {
+            string value = "";
+            var defaultValueDefined = "prev";
+            string existValue = "empty";
+            var highlight = highlights.FirstOrDefault(x => x.HighlightTypeId == highlightTypeId);
+            value = highlight == null ? value : (defaultValueDefined == "prev" ? highlight.HighlightMessage : (highlight.Type == "now" ? highlight.HighlightMessage : value));
+            existValue = highlight == null ? existValue : highlight.Type;
+            if (value.Contains("<li>")) {
+                //Regex regex = new Regex(@"<li.*?>(.*?)<\\/li>");
+                MatchCollection matches = Regex.Matches(value, @"<li>(.*?)</li>");
+                if (matches.Count > 0) {
+                    var splitResult = matches[position].Groups[1].Value.Split(':');
+                    if (type == "label")
+                    {
+                        value = splitResult[0];
+                    }
+                    else {
+                        var regex = new Regex("usd/bbl", RegexOptions.IgnoreCase);
+                        value = string.IsNullOrEmpty(splitResult[1]) ? splitResult[1] : regex.Replace(splitResult[1], "");
+                    }
+                }
+
+            }
+            if (type == "label")
+            {
+                return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" />", value, existValue, "text period", tabIndex, type));
+            }
+            else {
+                return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" />", value, existValue, "usd/bbl", tabIndex, type));
+            }
 
         }
     }

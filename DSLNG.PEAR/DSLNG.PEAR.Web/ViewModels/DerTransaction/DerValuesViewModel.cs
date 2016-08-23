@@ -22,6 +22,7 @@ namespace DSLNG.PEAR.Web.ViewModels.DerTransaction
             public DateTime Date { get; set; }
             public string HighlightMessage { get; set; }
             public string HighlightTitle { get; set; }
+            public string Type { get; set; }
         }
 
         public class KpiInformationValuesViewModel

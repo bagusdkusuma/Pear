@@ -16,6 +16,7 @@ namespace DSLNG.PEAR.Services.Responses.DerTransaction
             public string HighlightMessage { get; set; }
             public string HighlightTitle { get; set; }
             public int HighlightTypeId { get; set; }
+            public string Type { get; set; }
         }
     }
 }

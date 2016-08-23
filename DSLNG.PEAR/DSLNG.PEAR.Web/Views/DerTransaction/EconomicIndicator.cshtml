@@ -185,7 +185,7 @@
             </tr>
             <tr>
                 <td>
-                    <textarea class="form-control allow-html">@*@layoutItem3.Highlight.HighlightMessage*@</textarea>
+                    @Html.DisplayHighlightTextarea(Model.Highlights,15,20)
                 </td>
             </tr>
         </table>
@@ -198,16 +198,11 @@
             <tr>
                 <td align="left"><label class="control-label">Market Tone</label></td>
                 <td align="left">
-                    @*@Html.DropDownListFor(x => layoutItem4.Highlight.HighlightMessage,new List<SelectListItem> {
+                    @Html.DisplayHighlightDropdownList(Model.Highlights,68, new List<SelectListItem> {
                         new SelectListItem { Text = "Bullish", Value = "Bullish" },
                         new SelectListItem { Text = "Mixed", Value = "Mixed" },
                         new SelectListItem { Text = "Bearish", Value = "Bearish" },
-                    })*@
-                    @*<select name="select" option="option">
-                        <option value="Bullish">Bullish</option>
-                        <option value="Mixed">Mixed</option>
-                        <option value="Bearish">Bearish</option>
-                    </select>*@
+                    },21)
                 </td>
             </tr>
         </table>
@@ -217,7 +212,7 @@
             <tr>
                 <td align="left"><label class="control-label">Monthly Bunker Price</label></td>
                 <td align="left">
-                    @Html.DisplayKpiInformationInput(Model.KpiInformations, 397, 19, "usd/bbl", "prev")
+                    @Html.DisplayKpiInformationInput(Model.KpiInformations, 397, 22, "usd/bbl", "prev")
                 </td>
             </tr>
         </table>
