@@ -9,6 +9,7 @@ using DSLNG.PEAR.Web.ViewModels.DerTransaction;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json.Linq;
 
 namespace DSLNG.PEAR.Web.Helpers
 {
@@ -591,6 +592,91 @@ namespace DSLNG.PEAR.Web.Helpers
                 return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" />", value, existValue, "usd/bbl", tabIndex, type));
             }
 
+        }
+        public static MvcHtmlString DisplayIctInfraOrGsfmHighlight(this HtmlHelper helper, IList<DerValuesViewModel.DerHighlightValuesViewModel> highlights, int highlightTypeId, IList<SelectListItem> options, int tabIndex, string property) {
+            string value = "";
+            var defaultValueDefined = "prev";
+            string existValue = "empty";
+            var highlight = highlights.FirstOrDefault(x => x.HighlightTypeId == highlightTypeId);
+            value = highlight == null ? value : (defaultValueDefined == "prev" ? highlight.HighlightMessage : (highlight.Type == "now" ? highlight.HighlightMessage : value));
+            existValue = highlight == null ? existValue : highlight.Type;
+            JToken obj;
+            if (!string.IsNullOrEmpty(value) && IsValidJson(value,out obj)) {
+                switch (property) {
+                    case "a":
+                        value = (string)obj.SelectToken("a");
+                        break;
+                    case "b":
+                        value = (string)obj.SelectToken("b");
+                        break;
+                    default: //c
+                        value = (string)obj.SelectToken("c");
+                        break;
+                    //default:
+                    //    value = (string)obj.SelectToken("remark");
+                    //    break;
+                }
+            }
+            //if(property == "remark")
+            //{
+            //    return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control\"   placeholder=\"{2}\" tabindex=\"{3}\" />", value, existValue, "text period", tabIndex));
+            //}
+            var selectInput = string.Format("<select class=\"der-value-{0} form-control\" tabindex=\"{1}\" >", existValue, tabIndex);
+            foreach (var option in options)
+            {
+                var selected = string.Equals(option.Value, value, StringComparison.InvariantCultureIgnoreCase) ? "selected=\"selected\"" : "";
+                selectInput += string.Format("<option {2} value=\"{0}\">{1}</option>", option.Value, option.Text, selected);
+            }
+            selectInput += "</select>";
+            return new MvcHtmlString(selectInput);
+        }
+
+        public static MvcHtmlString DisplayHighlightInput(this HtmlHelper helper, IList<DerValuesViewModel.DerHighlightValuesViewModel> highlights, int highlightTypeId, int tabIndex, string placeHolder, string defaultValueDefined="empty") {
+            string value;
+            switch (defaultValueDefined)
+            {
+                case "empty":
+                case "prev":
+                    value = "";
+                    break;
+                default:
+                    value = defaultValueDefined;
+                    break;
+            }
+            var existValue = "empty";
+            var highlight = highlights.FirstOrDefault(x => x.HighlightTypeId == highlightTypeId);
+            value = highlight == null ? value : (defaultValueDefined == "prev" ? highlight.HighlightMessage : (highlight.Type == "now" ? highlight.HighlightMessage : value));
+            existValue = highlight == null ? existValue : highlight.Type;
+            return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" />", value, existValue, placeHolder, tabIndex));
+        }
+
+        private static bool IsValidJson(string strInput, out JToken obj)
+        {
+            strInput = strInput.Trim();
+            if ((strInput.StartsWith("{") && strInput.EndsWith("}")) || //For object
+                (strInput.StartsWith("[") && strInput.EndsWith("]"))) //For array
+            {
+                try
+                {
+                    obj = JObject.Parse(strInput);
+                    return true;
+                }
+                catch (JsonReaderException jex)
+                {
+                    obj = null;
+                    return false;
+                }
+                catch (Exception ex) //some other exception
+                {
+                    obj = null;
+                    return false;
+                }
+            }
+            else
+            {
+                obj = null;
+                return false;
+            }
         }
     }
 

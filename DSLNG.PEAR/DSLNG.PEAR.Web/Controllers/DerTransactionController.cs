@@ -82,8 +82,16 @@ namespace DSLNG.PEAR.Web.Controllers
             return View(GetDerValuesPerSection(date,
                new int[] { 273, 274,275,276,1,177,278,277,285,356,4,359,286,292 }, //actual KpiIds 
                new int[] { 1, 177,278,277,276,285}, //target KpiIds
-               new int[] { }  //highlightTypeIds
+               new int[] { 18, 13}  //highlightTypeIds
                ));
+        }
+
+        public ActionResult EnablerSection(string date) {
+            return View(GetDerValuesPerSection(date,
+           new int[] { 379,380,36 }, //actual KpiIds 
+           new int[] { }, //target KpiIds
+           new int[] { 66,53,14,8 }  //highlightTypeIds
+           ));
         }
 
         //public ActionResult ForcastedIndicator(string date) {
