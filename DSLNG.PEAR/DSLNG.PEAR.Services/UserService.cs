@@ -166,7 +166,6 @@ namespace DSLNG.PEAR.Services
                     }
                     //Include(x => x.Role).
                     response = user.MapTo<LoginUserResponse>();
-                    response.Message = "Your Password is :" + crypto.Compute(request.Password, user.PasswordSalt);
                     response.IsSuccess = true;
                 }
                 else
