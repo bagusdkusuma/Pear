@@ -97,9 +97,18 @@ namespace DSLNG.PEAR.Services
             try
             {
                 //var user = request.MapTo<User>();
-                var user = DataContext.Users.Include(u => u.Role).First(x => x.Id == request.Id).MapTo<User>();
+                var user = DataContext.Users.Include(u => u.Role).Include(r=>r.RolePrivileges).First(x => x.Id == request.Id).MapTo<User>();
                 user.Role = DataContext.RoleGroups.First(x => x.Id == request.RoleId);
                 user.FullName = request.FullName;
+                user.RolePrivileges.Clear();
+                if (request.RolePrivilegeIds.Count > 0)
+                {
+                    foreach (var role in request.RolePrivilegeIds)
+                    {
+                        var rolePrivilege = DataContext.RolePrivileges.Find(role);
+                        user.RolePrivileges.Add(rolePrivilege);
+                    }
+                }
                 user.SignatureImage = request.SignatureImage;
                 user.Username = request.Username;
                 user.IsActive = request.IsActive;

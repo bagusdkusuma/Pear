@@ -1,0 +1,32 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.RolePrivilege.AddRolePrivilegeViewModel
+@{
+    ViewBag.Title = "Add Role Privilege";
+}
+
+<h2>Add Privilege</h2>
+@Html.Partial("_MessageResponse")
+<div class="row">
+    <div class="col-md-4">
+        <form action="@Url.Action("Create")" method="POST">
+            <div class="form-group">
+                @Html.LabelFor(model => model.RoleGroup_Id, new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.RoleGroup_Id, Model.RoleGroupList,  new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.RoleGroup_Id)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Descriptions, new { @class = "control-label" })
+                @Html.TextAreaFor(model => model.Descriptions, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Descriptions)
+            </div>
+            
+            <button type="submit" class="btn btn-default">Submit</button>
+            <a href="@Url.Action("Index")" class="btn btn-default">Cancel</a>
+
+        </form>
+    </div>
+</div>

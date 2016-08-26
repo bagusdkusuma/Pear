@@ -10,6 +10,8 @@ using System.Linq;
 using DSLNG.PEAR.Web.Attributes;
 using System.Data.SqlClient;
 using System.IO;
+using DSLNG.PEAR.Web.ViewModels.RolePrivilege;
+using System;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -259,6 +261,33 @@ namespace DSLNG.PEAR.Web.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
 
         }
+         
+        public ActionResult AddPrivilege(int? RoleId)
+        {
+            var model = new AddRolePrivilegeViewModel();
+            if (RoleId.HasValue)
+            {
+                model.RoleGroup_Id = RoleId.Value;
+            }
+            model.RoleGroupList = GetRoleGroupOptionList(RoleId);
+            return View(model);
+        }
 
+        private List<SelectListItem> GetRoleGroupOptionList(int? roleId)
+        {
+            List<SelectListItem> roles = _roleGroupService.GetRoleGroups(new Services.Requests.RoleGroup.GetRoleGroupsRequest
+            {
+                Take = -1,
+                SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+            })
+                .RoleGroups.Select(x => new SelectListItem
+                {
+                    Text = x.Name,
+                    Value = x.Id.ToString(),
+                    Selected = roleId == x.Id ? true : false
+                }).ToList();
+
+            return roles;
+        }
     }
 }
