@@ -20,19 +20,22 @@ namespace DSLNG.PEAR.Services
         public GetDerLayoutItemsResponse GetDerLayoutItems(GetDerLayoutItemsRequest request)
         {
             var predicate = PredicateBuilder.False<DerLayoutItem>();
-            foreach (var position in request.Positions) {
+            foreach (var position in request.Positions)
+            {
                 var row = position.Row;
                 var col = position.Column;
                 var inner = PredicateBuilder.True<DerLayoutItem>();
                 inner = inner.And(p => p.Row == row);
                 inner = inner.And(p => p.Column == col);
-                predicate  = predicate.Or(inner);
+                predicate = predicate.Or(inner);
             }
             var query = DataContext.DerLayoutItems.AsQueryable();
-            if (request.DerLayoutItemTypes.Contains(DerLayoutItemType.Highlight)){
+            if (request.DerLayoutItemTypes.Contains(DerLayoutItemType.Highlight))
+            {
                 query = query.Include(x => x.Highlight).Include(x => x.Highlight.SelectOption);
             }
-            if (request.DerLayoutItemTypes.Contains(DerLayoutItemType.KpiInformations)) {
+            if (request.DerLayoutItemTypes.Contains(DerLayoutItemType.KpiInformations))
+            {
                 query = query.Include(x => x.KpiInformations).Include(x => x.KpiInformations.Select(y => y.Kpi));
             }
             return new GetDerLayoutItemsResponse
@@ -42,7 +45,8 @@ namespace DSLNG.PEAR.Services
             };
         }
 
-        public GetKpiInformationValuesResponse GetKpiInformationValues(GetKpiInformationValuesRequest request) {
+        public GetKpiInformationValuesResponse GetKpiInformationValues(GetKpiInformationValuesRequest request)
+        {
             //var kpiIds = 
             //achievement section
             var kpiIdsForActual = request.ActualKpiIds;
@@ -60,18 +64,31 @@ namespace DSLNG.PEAR.Services
                (x.PeriodeType == PeriodeType.Monthly && x.Periode.Month == request.Date.Month))).ToList();
 
             var response = new GetKpiInformationValuesResponse();
-            foreach (var kpiId in kpiIdsForActual) {
+            foreach (var kpiId in kpiIdsForActual)
+            {
                 var kpiInformation = response.KpiInformations.FirstOrDefault(x => x.KpiId == kpiId);
-                if (kpiInformation == null) {
+                if (kpiInformation == null)
+                {
                     kpiInformation = new GetKpiInformationValuesResponse.KpiInformation { KpiId = kpiId };
                     response.KpiInformations.Add(kpiInformation);
                 }
-                var actual = achievements.FirstOrDefault(x => x.Kpi.Id == kpiId);
-                if (actual == null) {
+            }
+            foreach (var actual in achievements)
+            {
+                var kpiInformation = response.KpiInformations.FirstOrDefault(x => x.KpiId == actual.Kpi.Id);
+                //if (kpiInformation == null) {
+                //    kpiInformation = new GetKpiInformationValuesResponse.KpiInformation { KpiId = actual.Kpi.Id };
+                //    response.KpiInformations.Add(kpiInformation);
+                //}
+                //var actual = achievements.FirstOrDefault(x => x.Kpi.Id == achievement.Kpi.Id);
+                if (actual == null)
+                {
                     continue;
                 }
-                if (actual.PeriodeType == PeriodeType.Daily) {
-                    if (kpiInformation.DailyActual == null) {
+                if (actual.PeriodeType == PeriodeType.Daily)
+                {
+                    if (kpiInformation.DailyActual == null)
+                    {
                         var isTodayValue = actual.Periode == request.Date;
                         if (isTodayValue)
                         {
@@ -80,10 +97,12 @@ namespace DSLNG.PEAR.Services
                                 Date = actual.Periode,
                                 Value = actual.Value.Value,
                                 Remark = actual.Remark,
+                                Id = actual.Id,
                                 Type = "now"
                             };
                         }
-                        else {
+                        else
+                        {
                             var todayValue = achievements.FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode == request.Date);
                             if (todayValue != null)
                             {
@@ -92,11 +111,13 @@ namespace DSLNG.PEAR.Services
                                     Date = todayValue.Periode,
                                     Value = todayValue.Value.Value,
                                     Remark = todayValue.Remark,
+                                    Id = todayValue.Id,
                                     Type = "now"
                                 };
 
                             }
-                            else {
+                            else
+                            {
                                 //yesterday value selected
                                 kpiInformation.DailyActual = new GetKpiInformationValuesResponse.KpiValue
                                 {
@@ -109,23 +130,27 @@ namespace DSLNG.PEAR.Services
                         }
                     }
                 }
-                if (actual.PeriodeType == PeriodeType.Monthly) {
+                if (actual.PeriodeType == PeriodeType.Monthly)
+                {
                     kpiInformation.MonthlyActual = new GetKpiInformationValuesResponse.KpiValue
                     {
                         Date = actual.Periode,
                         Value = actual.Value.Value,
-                        Remark = actual.Remark
+                        Remark = actual.Remark,
+                        Id = actual.Id
                     };
                 }
-                if (actual.PeriodeType == PeriodeType.Yearly) {
+                if (actual.PeriodeType == PeriodeType.Yearly)
+                {
                     kpiInformation.YearlyActual = new GetKpiInformationValuesResponse.KpiValue
                     {
                         Date = actual.Periode,
                         Value = actual.Value.Value,
-                        Remark = actual.Remark
+                        Remark = actual.Remark,
+                        Id = actual.Id
                     };
                 }
-               
+
             }
             foreach (var kpiId in kpiIdsForTarget)
             {
@@ -135,8 +160,20 @@ namespace DSLNG.PEAR.Services
                     kpiInformation = new GetKpiInformationValuesResponse.KpiInformation { KpiId = kpiId };
                     response.KpiInformations.Add(kpiInformation);
                 }
-                var target = targets.FirstOrDefault(x => x.Kpi.Id == kpiId);
-                if (target == null) {
+                //kpiInformation = new GetKpiInformationValuesResponse.KpiInformation { KpiId = kpiId };
+                //response.KpiInformations.Add(kpiInformation);
+            }
+            foreach (var target in targets)
+            {
+                var kpiInformation = response.KpiInformations.FirstOrDefault(x => x.KpiId == target.Kpi.Id);
+                //if (kpiInformation == null)
+                //{
+                //    kpiInformation = new GetKpiInformationValuesResponse.KpiInformation { KpiId = target.Kpi.Id };
+                //    response.KpiInformations.Add(kpiInformation);
+                //}
+                //var target = targets.FirstOrDefault(x => x.Kpi.Id == kpiId);
+                if (target == null)
+                {
                     continue;
                 }
                 if (target.PeriodeType == PeriodeType.Daily)
@@ -204,12 +241,13 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-        public GetHighlightValuesResponse GetHighlightValues(GetHighlightValuesRequest request) {
+        public GetHighlightValuesResponse GetHighlightValues(GetHighlightValuesRequest request)
+        {
             var derHighlights = request.HighlightTypeIds;
             var highlights = DataContext.Highlights.Include(x => x.HighlightType)
                 .Where(x => derHighlights.Contains(x.HighlightType.Id) && x.PeriodeType == PeriodeType.Daily).ToList();
             var response = new GetHighlightValuesResponse();
-            foreach(var highlight in highlights)
+            foreach (var highlight in highlights)
             {
                 var highlightResp = response.Highlights.FirstOrDefault(x => x.HighlightTypeId == highlight.HighlightType.Id);
                 if (highlightResp == null)

@@ -394,12 +394,14 @@ namespace DSLNG.PEAR.Web.Helpers
             }
             var kpiInformation = kpiInformations.First(x => x.KpiId == kpiId);
             var existValue = "empty";
+            var id = 0;
             switch (type)
             {
                 case "daily-actual":
                     {
                         var valueObject = GetValue(kpiInformation.DailyActual, value, defaultValueDefined, valueType, existValue);
                         value = valueObject.Value;
+                        id = valueObject.Id;
                         existValue = valueObject.ExistValue;
                     }
                     break;
@@ -408,6 +410,7 @@ namespace DSLNG.PEAR.Web.Helpers
                         var valueObject = GetValue(kpiInformation.MonthlyActual, value, defaultValueDefined, valueType, existValue);
                         value = valueObject.Value;
                         existValue = valueObject.ExistValue;
+                        id = valueObject.Id;
                     }
                     break;
                 case "yearly-actual":
@@ -415,6 +418,7 @@ namespace DSLNG.PEAR.Web.Helpers
                         var valueObject = GetValue(kpiInformation.YearlyActual, value, defaultValueDefined, valueType, existValue);
                         value = valueObject.Value;
                         existValue = valueObject.ExistValue;
+                        id = valueObject.Id;
                     }
                     break;
                 case "daily-target":
@@ -422,6 +426,7 @@ namespace DSLNG.PEAR.Web.Helpers
                         var valueObject = GetValue(kpiInformation.DailyTarget, value, defaultValueDefined, valueType, existValue);
                         value = valueObject.Value;
                         existValue = valueObject.ExistValue;
+                        id = valueObject.Id;
                     }
                     break;
                 case "monthly-target":
@@ -429,6 +434,7 @@ namespace DSLNG.PEAR.Web.Helpers
                         var valueObject = GetValue(kpiInformation.MonthlyTarget, value, defaultValueDefined, valueType, existValue);
                         value = valueObject.Value;
                         existValue = valueObject.ExistValue;
+                        id = valueObject.Id;
                     }
                     break;
                 case "yearly-target":
@@ -436,16 +442,18 @@ namespace DSLNG.PEAR.Web.Helpers
                         var valueObject = GetValue(kpiInformation.YearlyTarget, value, defaultValueDefined, valueType, existValue);
                         value = valueObject.Value;
                         existValue = valueObject.ExistValue;
+                        id = valueObject.Id;
                     }
                     break;
 
                 }
-            return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" />", value, existValue, placeholder, tabIndex, type));
+            return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control der-kpi\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" data-kpi-id=\"{5}\" data-id=\"{6}\" data-value-type=\"{7}\" />", value, existValue, placeholder, tabIndex, type, kpiId, id, valueType));
         }
 
         public class ValueObject {
             public string Value { get; set; }
             public string ExistValue { get; set; }
+            public int Id { get; set; }
         }
 
         private static ValueObject GetValue(DerValuesViewModel.KpiValueViewModel kpiValue, string value, string defaultValueDefined, string valueType, string existValue) {
@@ -458,7 +466,7 @@ namespace DSLNG.PEAR.Web.Helpers
                 value = kpiValue == null ? value : (defaultValueDefined == "prev" ? kpiValue.Remark : (kpiValue.Type == "now" ? kpiValue.Remark : value));
                 existValue = kpiValue == null ? existValue : kpiValue.Type;
             }
-            return new ValueObject { Value = value, ExistValue = existValue };
+            return new ValueObject { Value = value, ExistValue = existValue, Id = kpiValue == null ? 0 : kpiValue.Id };
         }
 
         public static MvcHtmlString DisplayKpiInformationList(this HtmlHelper htmlHelper, IList<DerValuesViewModel.KpiInformationValuesViewModel> kpiInformations, int kpiId, int tabIndex, IList<SelectListItem> options, string defaultValueDefined = "empty", string type = "daily-actual")

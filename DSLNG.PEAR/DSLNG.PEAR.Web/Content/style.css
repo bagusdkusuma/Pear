@@ -3403,3 +3403,12 @@ ul.pop-attachments-list {
     background:blueviolet !important;
 }
 
+input.der-value-prev {
+  color : gray;
+}
+input.der-value-now {
+  color : green;
+}
+input.in-progress {
+    color : yellow !important;
+}

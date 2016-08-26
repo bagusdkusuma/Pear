@@ -41,6 +41,7 @@ namespace DSLNG.PEAR.Web.ViewModels.DerTransaction
         }
         public class KpiValueViewModel
         {
+            public int Id { get; set; }
             public DateTime Date { get; set; }
             public double Value { get; set; }
             public string Remark { get; set; }
