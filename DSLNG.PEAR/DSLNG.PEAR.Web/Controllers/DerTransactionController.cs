@@ -8,6 +8,8 @@ using System.Linq;
 using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Web.ViewModels.DerTransaction;
+using DSLNG.PEAR.Services.Requests.KpiAchievement;
+using DSLNG.PEAR.Services.Requests.KpiTarget;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -15,10 +17,14 @@ namespace DSLNG.PEAR.Web.Controllers
     {
         private readonly IDerService _derService;
         private readonly IDerTransactionService _derTransactionService;
+        private readonly IKpiAchievementService _kpiAchievementService;
+        private readonly IKpiTargetService _kpiTargetService;
 
-        public DerTransactionController(IDerService derService,IDerTransactionService derTransactionService) {
+        public DerTransactionController(IDerService derService,IDerTransactionService derTransactionService, IKpiAchievementService kpiAchievementService, IKpiTargetService kpiTargetService) {
             _derService = derService;
             _derTransactionService = derTransactionService;
+            _kpiAchievementService = kpiAchievementService;
+            _kpiTargetService = kpiTargetService;
         }
         // GET: DerTransaction
         public ActionResult Index()
@@ -92,6 +98,48 @@ namespace DSLNG.PEAR.Web.Controllers
            new int[] { }, //target KpiIds
            new int[] { 66,53,14,8 }  //highlightTypeIds
            ));
+        }
+        
+        [HttpPost]
+        public ActionResult UpdateKpi(UpdateKpiOriginalViewModel viewModel) {
+            var sPeriodeType = viewModel.Type.Split('-')[0];
+            var periodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), sPeriodeType, true);
+            var theDate = DateTime.ParseExact(viewModel.Date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+            switch (viewModel.Type) {
+                case "daily-actual":
+                case "monthly-actual":
+                case "yearly-actual":
+                    {
+                        var request = new UpdateKpiAchievementItemRequest
+                        {
+                            Periode = theDate,
+                            PeriodeType = periodeType,
+                            Id = viewModel.Id,
+                            KpiId = viewModel.KpiId,
+                            UserId = UserProfile().UserId,
+                            Value = viewModel.ValueType == "value" ? viewModel.Value : null,
+                            Remark = viewModel.ValueType == "remark" ? viewModel.Value : null
+                        };
+                        var resp = _kpiAchievementService.UpdateOriginalData(request);
+                        return Json(resp);
+                    }
+                default:
+                    {
+                        var request = new SaveKpiTargetRequest
+                        {
+                            Periode = theDate,
+                            PeriodeType = periodeType,
+                            Id = viewModel.Id,
+                            KpiId = viewModel.KpiId,
+                            UserId = UserProfile().UserId,
+                            Value = viewModel.ValueType == "value" ? viewModel.Value : null,
+                            Remark = viewModel.ValueType == "remark" ? viewModel.Value : null
+                        };
+                        var resp = _kpiTargetService.UpdateOriginalData(request);
+                        return Json(resp);
+                    }
+            }
+            
         }
 
         //public ActionResult ForcastedIndicator(string date) {

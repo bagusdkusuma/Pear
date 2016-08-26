@@ -857,6 +857,7 @@
     <Compile Include="ViewModels\DerLayout\LayoutType\DerLayoutLineViewModel.cs" />
     <Compile Include="ViewModels\DerLayout\SaveLayoutItemViewModel.cs" />
     <Compile Include="ViewModels\DerTransaction\DerValuesViewModel.cs" />
+    <Compile Include="ViewModels\DerTransaction\UpdateKpiViewModel.cs" />
     <Compile Include="ViewModels\Der\DerConfigViewModel.cs" />
     <Compile Include="ViewModels\Der\DerDisplayIndexViewModel.cs" />
     <Compile Include="ViewModels\Der\DerIndexViewModel.cs" />
