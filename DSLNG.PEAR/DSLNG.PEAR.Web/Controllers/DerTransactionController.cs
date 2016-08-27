@@ -10,6 +10,9 @@ using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Web.ViewModels.DerTransaction;
 using DSLNG.PEAR.Services.Requests.KpiAchievement;
 using DSLNG.PEAR.Services.Requests.KpiTarget;
+using DSLNG.PEAR.Web.ViewModels.Highlight;
+using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Services.Requests.Highlight;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -19,12 +22,14 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IDerTransactionService _derTransactionService;
         private readonly IKpiAchievementService _kpiAchievementService;
         private readonly IKpiTargetService _kpiTargetService;
+        private readonly IHighlightService _highlightService;
 
-        public DerTransactionController(IDerService derService,IDerTransactionService derTransactionService, IKpiAchievementService kpiAchievementService, IKpiTargetService kpiTargetService) {
+        public DerTransactionController(IDerService derService,IDerTransactionService derTransactionService, IKpiAchievementService kpiAchievementService, IKpiTargetService kpiTargetService, IHighlightService highlightService) {
             _derService = derService;
             _derTransactionService = derTransactionService;
             _kpiAchievementService = kpiAchievementService;
             _kpiTargetService = kpiTargetService;
+            _highlightService = highlightService;
         }
         // GET: DerTransaction
         public ActionResult Index()
@@ -140,6 +145,12 @@ namespace DSLNG.PEAR.Web.Controllers
                     }
             }
             
+        }
+
+        public ActionResult UpdateHighlight(HighlightViewModel viewModel) {
+            var req = viewModel.MapTo<SaveHighlightRequest>();
+            var resp = _highlightService.SaveHighlight(req);
+            return Json(resp);
         }
 
         //public ActionResult ForcastedIndicator(string date) {

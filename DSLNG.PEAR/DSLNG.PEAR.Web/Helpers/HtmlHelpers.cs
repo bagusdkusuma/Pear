@@ -538,7 +538,9 @@ namespace DSLNG.PEAR.Web.Helpers
             var highlight = highlights.FirstOrDefault(x => x.HighlightTypeId == highlightTypeId);
             value = highlight == null ? value : (defaultValueDefined == "prev" ? highlight.HighlightMessage : (highlight.Type == "now" ? highlight.HighlightMessage : value));
             existValue = highlight == null ? existValue : highlight.Type;
-            var textarea = string.Format("<textarea class=\"der-value-{0} form-control allow-html\">{1}</textarea>", existValue, value);
+            var highlightId = highlight == null ? 0 : highlight.Id;
+            var title = highlight == null ? null : (string.IsNullOrEmpty(highlight.HighlightTitle) ? highlight.HighlightTypeValue : highlight.HighlightTitle);
+            var textarea = string.Format("<textarea class=\"der-value-{0} form-control allow-html der-highlight\" data-highlight-type-id=\"{2}\" data-id=\"{3}\" id=\"highlight_{4}\" tabindex=\"{4}\" data-title=\"{5}\">{1}</textarea>", existValue, value, highlightTypeId,highlightId, tabIndex, title);
             return new MvcHtmlString(textarea);
 
 

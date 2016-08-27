@@ -19,6 +19,7 @@ namespace DSLNG.PEAR.Web.ViewModels.DerTransaction
             public string Value { get; set; }
             public string Text { get; set; }
             public int HighlightTypeId { get; set; }
+            public string HighlightTypeValue { get; set; }
             public DateTime Date { get; set; }
             public string HighlightMessage { get; set; }
             public string HighlightTitle { get; set; }

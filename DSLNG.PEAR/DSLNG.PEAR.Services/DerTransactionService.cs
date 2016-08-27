@@ -259,10 +259,12 @@ namespace DSLNG.PEAR.Services
                 if (isTodayValue)
                 {
                     highlightResp.HighlightTypeId = highlight.HighlightType.Id;
+                    highlightResp.HighlightTypeValue = highlight.HighlightType.Value;
                     highlightResp.HighlightMessage = highlight.Message;
                     highlightResp.HighlightTitle = highlight.Title;
                     highlightResp.Date = highlight.Date;
                     highlightResp.Type = "now";
+                    highlightResp.Id = highlight.Id;
                 }
                 else
                 {
@@ -270,19 +272,23 @@ namespace DSLNG.PEAR.Services
                     if (todayValue != null)
                     {
                         highlightResp.HighlightTypeId = todayValue.HighlightType.Id;
+                        highlightResp.HighlightTypeValue = todayValue.HighlightType.Value;
                         highlightResp.HighlightMessage = todayValue.Message;
                         highlightResp.HighlightTitle = todayValue.Title;
                         highlightResp.Date = todayValue.Date;
                         highlightResp.Type = "now";
+                        highlightResp.Id = todayValue.Id;
                     }
                     else
                     {
                         //yesterday value selected
                         highlightResp.HighlightTypeId = highlight.HighlightType.Id;
+                        highlightResp.HighlightTypeValue = highlight.HighlightType.Value;
                         highlightResp.HighlightMessage = highlight.Message;
                         highlightResp.HighlightTitle = highlight.Title;
                         highlightResp.Date = highlight.Date;
                         highlightResp.Type = "prev";
+                        highlightResp.Id = highlight.Id;
                     }
                 }
             }

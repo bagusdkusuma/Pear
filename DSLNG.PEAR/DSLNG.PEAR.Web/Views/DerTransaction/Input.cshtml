@@ -252,7 +252,23 @@
                     "searchreplace visualblocks code fullscreen",
                     "insertdatetime media table contextmenu paste"
                 ],
-                toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+                toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+                setup: function (editor) {
+                    editor.on('keydown', function (e) {
+                        console.log('testttt');
+                        var key = e.keyCode || e.which;
+
+                        // do nothing on tab key
+                        if (key == 9) {
+                            e.preventDefault();
+                           
+                            return;
+                        }
+
+                    }).on('keyup', function (e) {
+                        console.log('keyup event fired');
+                    });
+                }
             });
 
             $('.collapse').on('hide.bs.collapse', function () {
@@ -290,8 +306,18 @@
                             var valueType = $this.data('value-type');
                             $this.addClass('in-progress');
                             $.post("/dertransaction/updatekpi", { kpiId: kpiId, type: type, date: currentDate, id: id, value: value, valueType: valueType }, function () {
-                                $('[tabindex=' + nextTabindex + ']').focus();
+                                var $next = $('[tabindex=' + nextTabindex + ']');
+                                if ($next.is("textarea")) {
+                                    tinymce.execCommand('mceFocus', false, $next.attr('id'));
+                                } else {
+                                    $next.focus();
+                                }
+                                
                                 $this.removeClass('in-progress');
+                                if ($this.hasClass('der-value-prev')) {
+                                    $this.removeClass('der-value-prev');
+                                    $this.addClass('der-value-now');
+                                }
                             })
                         })
                         tinyMCE.init({
@@ -302,7 +328,36 @@
                                 "searchreplace visualblocks code fullscreen",
                                 "insertdatetime media table contextmenu paste"
                             ],
-                            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+                            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+                            setup: function (editor) {
+                                editor.on('keydown', function (e) {
+                                    var key = e.keyCode || e.which;
+
+                                    // on tab key
+                                    if (key == 9) {
+                                        e.preventDefault();
+                                        return;
+                                    }
+
+                                }).on('keyup', function (e) {
+                                    var key = e.keyCode || e.which;
+                                    var $textarea = $('#' + editor.id);
+                                    var nextTab = parseInt($textarea.attr('tabindex')) + 1;
+                                    if (key == 9) {
+                                        var highlightTypeId = $textarea.data('highlight-type-id');
+                                        var id = $textarea.data('id');
+                                        var value = editor.getContent();
+                                        $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType : "Daily" }, function () {
+                                            var $next = $('[tabindex=' + nextTab + ']');
+                                            if ($next.is("textarea")) {
+                                                tinymce.execCommand('mceFocus', false, $next.attr('id'));
+                                            } else {
+                                                $next.focus();
+                                            }
+                                        });
+                                    }
+                                });
+                            }
                         });
                     })
                 }
