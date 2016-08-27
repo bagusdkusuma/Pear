@@ -18,7 +18,7 @@ using DSLNG.PEAR.Web.Grid;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
-    public class VesselScheduleController : Controller
+    public class VesselScheduleController : BaseController
     {
         private readonly IVesselScheduleService _vesselScheduleService;
         private readonly IVesselService _vesselService;
