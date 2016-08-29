@@ -58,7 +58,7 @@ namespace DSLNG.PEAR.Services
                 (x.PeriodeType == PeriodeType.Monthly && x.Periode.Month == request.Date.Month))).ToList();
             var kpiIdsForTarget = request.TargetKpiIds;
             var targets = DataContext.KpiTargets.Include(x => x.Kpi)
-               .Where(x => kpiIdsForActual.Contains(x.Kpi.Id) &&
+               .Where(x => kpiIdsForTarget.Contains(x.Kpi.Id) &&
                (((x.Periode == request.Date || x.Periode == previousDate) && x.PeriodeType == PeriodeType.Daily) ||
                (x.PeriodeType == PeriodeType.Yearly && x.Periode.Year == request.Date.Year) ||
                (x.PeriodeType == PeriodeType.Monthly && x.Periode.Month == request.Date.Month))).ToList();
@@ -137,6 +137,7 @@ namespace DSLNG.PEAR.Services
                         Date = actual.Periode,
                         Value = actual.Value.Value,
                         Remark = actual.Remark,
+                        Type = "now",
                         Id = actual.Id
                     };
                 }
@@ -147,6 +148,7 @@ namespace DSLNG.PEAR.Services
                         Date = actual.Periode,
                         Value = actual.Value.Value,
                         Remark = actual.Remark,
+                        Type = "now",
                         Id = actual.Id
                     };
                 }
@@ -188,7 +190,8 @@ namespace DSLNG.PEAR.Services
                                 Date = target.Periode,
                                 Value = target.Value.Value,
                                 Remark = target.Remark,
-                                Type = "now"
+                                Type = "now",
+                                Id = target.Id
                             };
                         }
                         else
@@ -201,7 +204,8 @@ namespace DSLNG.PEAR.Services
                                     Date = todayValue.Periode,
                                     Value = todayValue.Value.Value,
                                     Remark = todayValue.Remark,
-                                    Type = "now"
+                                    Type = "now",
+                                    Id = todayValue.Id
                                 };
 
                             }
@@ -213,7 +217,8 @@ namespace DSLNG.PEAR.Services
                                     Date = target.Periode,
                                     Value = target.Value.Value,
                                     Remark = target.Remark,
-                                    Type = "prev"
+                                    Type = "prev",
+                                    Id = target.Id
                                 };
                             }
                         }
@@ -225,7 +230,9 @@ namespace DSLNG.PEAR.Services
                     {
                         Date = target.Periode,
                         Value = target.Value.Value,
-                        Remark = target.Remark
+                        Remark = target.Remark,
+                        Type = "now",
+                        Id = target.Id
                     };
                 }
                 if (target.PeriodeType == PeriodeType.Yearly)
@@ -234,7 +241,9 @@ namespace DSLNG.PEAR.Services
                     {
                         Date = target.Periode,
                         Value = target.Value.Value,
-                        Remark = target.Remark
+                        Remark = target.Remark,
+                        Type = "now",
+                        Id = target.Id
                     };
                 }
             }

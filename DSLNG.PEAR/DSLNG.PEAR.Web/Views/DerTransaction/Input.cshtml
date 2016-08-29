@@ -305,7 +305,7 @@
                             var value = $this.val();
                             var valueType = $this.data('value-type');
                             $this.addClass('in-progress');
-                            $.post("/dertransaction/updatekpi", { kpiId: kpiId, type: type, date: currentDate, id: id, value: value, valueType: valueType }, function () {
+                            $.post("/dertransaction/updatekpi", { kpiId: kpiId, type: type, date: currentDate, id: id, value: value, valueType: valueType }, function (resp) {
                                 var $next = $('[tabindex=' + nextTabindex + ']');
                                 if ($next.is("textarea")) {
                                     tinymce.execCommand('mceFocus', false, $next.attr('id'));
@@ -316,7 +316,13 @@
                                 $this.removeClass('in-progress');
                                 if ($this.hasClass('der-value-prev')) {
                                     $this.removeClass('der-value-prev');
-                                    $this.addClass('der-value-now');
+                                }
+                                if ($this.hasClass('der-value-empty')) {
+                                    $this.removeClass('der-value-empty');
+                                }
+                                $this.addClass('der-value-now');
+                                if (parseInt($this.data('id')) == 0) {
+                                    $this.attr('data-id', resp.Id);
                                 }
                             })
                         })

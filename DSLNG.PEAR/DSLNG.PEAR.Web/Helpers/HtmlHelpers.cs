@@ -598,10 +598,10 @@ namespace DSLNG.PEAR.Web.Helpers
             }
             if (type == "label")
             {
-                return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" />", value, existValue, "text period", tabIndex, type));
+                return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control brent-forecast-label\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" data-position=\"\" />", value, existValue, "text period", tabIndex, type));
             }
             else {
-                return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" />", value, existValue, "usd/bbl", tabIndex, type));
+                return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control brent-forecast-value\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" data-position=\"\" />", value, existValue, "usd/bbl", tabIndex, type));
             }
 
         }

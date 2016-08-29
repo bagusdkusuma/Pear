@@ -110,6 +110,14 @@ namespace DSLNG.PEAR.Web.Controllers
             var sPeriodeType = viewModel.Type.Split('-')[0];
             var periodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), sPeriodeType, true);
             var theDate = DateTime.ParseExact(viewModel.Date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+            switch (periodeType) {
+                case PeriodeType.Monthly:
+                    theDate = new DateTime(theDate.Year, theDate.Month, 1);
+                    break;
+                case PeriodeType.Yearly:
+                    theDate = new DateTime(theDate.Year, 1, 1);
+                    break;
+            }
             switch (viewModel.Type) {
                 case "daily-actual":
                 case "monthly-actual":
