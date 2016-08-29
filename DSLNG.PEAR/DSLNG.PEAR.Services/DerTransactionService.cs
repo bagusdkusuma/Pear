@@ -95,7 +95,7 @@ namespace DSLNG.PEAR.Services
                             kpiInformation.DailyActual = new GetKpiInformationValuesResponse.KpiValue
                             {
                                 Date = actual.Periode,
-                                Value = actual.Value.Value,
+                                Value = actual.Value.HasValue? actual.Value: null,
                                 Remark = actual.Remark,
                                 Id = actual.Id,
                                 Type = "now"
@@ -109,7 +109,7 @@ namespace DSLNG.PEAR.Services
                                 kpiInformation.DailyActual = new GetKpiInformationValuesResponse.KpiValue
                                 {
                                     Date = todayValue.Periode,
-                                    Value = todayValue.Value.Value,
+                                    Value = todayValue.Value.HasValue? todayValue.Value: null,
                                     Remark = todayValue.Remark,
                                     Id = todayValue.Id,
                                     Type = "now"
@@ -122,7 +122,7 @@ namespace DSLNG.PEAR.Services
                                 kpiInformation.DailyActual = new GetKpiInformationValuesResponse.KpiValue
                                 {
                                     Date = actual.Periode,
-                                    Value = actual.Value.Value,
+                                    Value = actual.Value.HasValue? actual.Value: null,
                                     Remark = actual.Remark,
                                     Type = "prev"
                                 };
@@ -135,7 +135,7 @@ namespace DSLNG.PEAR.Services
                     kpiInformation.MonthlyActual = new GetKpiInformationValuesResponse.KpiValue
                     {
                         Date = actual.Periode,
-                        Value = actual.Value.Value,
+                        Value = actual.Value.HasValue? actual.Value: null,
                         Remark = actual.Remark,
                         Type = "now",
                         Id = actual.Id
@@ -146,7 +146,7 @@ namespace DSLNG.PEAR.Services
                     kpiInformation.YearlyActual = new GetKpiInformationValuesResponse.KpiValue
                     {
                         Date = actual.Periode,
-                        Value = actual.Value.Value,
+                        Value = actual.Value.HasValue? actual.Value: null,
                         Remark = actual.Remark,
                         Type = "now",
                         Id = actual.Id
@@ -188,7 +188,7 @@ namespace DSLNG.PEAR.Services
                             kpiInformation.DailyTarget = new GetKpiInformationValuesResponse.KpiValue
                             {
                                 Date = target.Periode,
-                                Value = target.Value.Value,
+                                Value = target.Value.HasValue? target.Value: null,
                                 Remark = target.Remark,
                                 Type = "now",
                                 Id = target.Id
@@ -202,7 +202,7 @@ namespace DSLNG.PEAR.Services
                                 kpiInformation.DailyTarget = new GetKpiInformationValuesResponse.KpiValue
                                 {
                                     Date = todayValue.Periode,
-                                    Value = todayValue.Value.Value,
+                                    Value = todayValue.Value.HasValue? todayValue.Value: null,
                                     Remark = todayValue.Remark,
                                     Type = "now",
                                     Id = todayValue.Id
@@ -215,7 +215,7 @@ namespace DSLNG.PEAR.Services
                                 kpiInformation.DailyTarget = new GetKpiInformationValuesResponse.KpiValue
                                 {
                                     Date = target.Periode,
-                                    Value = target.Value.Value,
+                                    Value = target.Value.HasValue? target.Value: null,
                                     Remark = target.Remark,
                                     Type = "prev",
                                     Id = target.Id
@@ -229,7 +229,7 @@ namespace DSLNG.PEAR.Services
                     kpiInformation.MonthlyTarget = new GetKpiInformationValuesResponse.KpiValue
                     {
                         Date = target.Periode,
-                        Value = target.Value.Value,
+                        Value = target.Value.HasValue? target.Value: null,
                         Remark = target.Remark,
                         Type = "now",
                         Id = target.Id
@@ -240,7 +240,7 @@ namespace DSLNG.PEAR.Services
                     kpiInformation.YearlyTarget = new GetKpiInformationValuesResponse.KpiValue
                     {
                         Date = target.Periode,
-                        Value = target.Value.Value,
+                        Value = target.Value.HasValue? target.Value: null,
                         Remark = target.Remark,
                         Type = "now",
                         Id = target.Id
@@ -254,7 +254,7 @@ namespace DSLNG.PEAR.Services
         {
             var derHighlights = request.HighlightTypeIds;
             var highlights = DataContext.Highlights.Include(x => x.HighlightType)
-                .Where(x => derHighlights.Contains(x.HighlightType.Id) && x.PeriodeType == PeriodeType.Daily).ToList();
+                .Where(x => derHighlights.Contains(x.HighlightType.Id) && x.PeriodeType == PeriodeType.Daily && x.Date == request.Date).ToList();
             var response = new GetHighlightValuesResponse();
             foreach (var highlight in highlights)
             {

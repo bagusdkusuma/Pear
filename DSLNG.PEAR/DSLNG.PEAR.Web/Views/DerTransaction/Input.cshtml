@@ -332,7 +332,7 @@
                                             $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function () {
                                                 var $next = $('[tabindex=' + nextTab + ']');
                                                 if ($next.is("textarea")) {
-                                                    tinymce.execCommand('mceFocus', false, $next.attr('id'));
+                                                    tinyMCE.get($next.attr('id')).focus()
                                                 } else {
                                                     $next.focus();
                                                 }
@@ -352,12 +352,32 @@
                             $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function () {
                                 var $next = $('[tabindex=' + nextTab + ']');
                                 if ($next.is("textarea")) {
-                                    tinymce.execCommand('mceFocus', false, $next.attr('id'));
+                                    tinyMCE.get($next.attr('id')).focus()
                                 } else {
                                     $next.focus();
                                 }
                             });
-                        })
+                        });
+                        $('.datepicker', target).datetimepicker({
+                            format: "DD MMM YYYY",
+                            focusOnShow: false
+                        });
+                        $(target).on('change', 'select.der-highlight-infragsm', function (e) {
+                            var $this = $(this);
+                            var nextTab = parseInt($this.attr('tabindex')) + 1;
+                            var highlightTypeId = $this.data('highlight-type-id');
+                            var id = $this.data('id');
+                            var value = $this.val();
+                            var property = $this.data('property');
+                            $.post("/dertransaction/updateinfragsm", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property : property }, function () {
+                                var $next = $('[tabindex=' + nextTab + ']');
+                                if ($next.is("textarea")) {
+                                    tinyMCE.get($next.attr('id')).focus()
+                                } else {
+                                    $next.focus();
+                                }
+                            });
+                        });
                     })
                 }
             });

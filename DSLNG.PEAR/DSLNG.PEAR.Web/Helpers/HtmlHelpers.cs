@@ -380,7 +380,7 @@ namespace DSLNG.PEAR.Web.Helpers
             }
         }
 
-        public static MvcHtmlString DisplayKpiInformationInput(this HtmlHelper htmlHelper, IList<DerValuesViewModel.KpiInformationValuesViewModel> kpiInformations, int kpiId, int tabIndex, string placeholder = "rate",string defaultValueDefined = "empty", string type = "daily-actual", string valueType="value")
+        public static MvcHtmlString DisplayKpiInformationInput(this HtmlHelper htmlHelper, IList<DerValuesViewModel.KpiInformationValuesViewModel> kpiInformations, int kpiId, int tabIndex, string placeholder = "rate",string defaultValueDefined = "empty", string type = "daily-actual", string valueType="value", string additionalClass = "")
         {
             string value;
             switch (defaultValueDefined) { 
@@ -447,7 +447,7 @@ namespace DSLNG.PEAR.Web.Helpers
                     break;
 
                 }
-            return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control der-kpi\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" data-kpi-id=\"{5}\" data-id=\"{6}\" data-value-type=\"{7}\" />", value, existValue, placeholder, tabIndex, type, kpiId, id, valueType));
+            return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control der-kpi {8}\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" data-kpi-id=\"{5}\" data-id=\"{6}\" data-value-type=\"{7}\" />", value, existValue, placeholder, tabIndex, type, kpiId, id, valueType, additionalClass));
         }
 
         public class ValueObject {
@@ -612,6 +612,8 @@ namespace DSLNG.PEAR.Web.Helpers
             var highlight = highlights.FirstOrDefault(x => x.HighlightTypeId == highlightTypeId);
             value = highlight == null ? value : (defaultValueDefined == "prev" ? highlight.HighlightMessage : (highlight.Type == "now" ? highlight.HighlightMessage : value));
             existValue = highlight == null ? existValue : highlight.Type;
+            var highlightId = highlight == null ? 0 : highlight.Id;
+            var title = highlight == null ? null : (string.IsNullOrEmpty(highlight.HighlightTitle) ? highlight.HighlightTypeValue : highlight.HighlightTitle);
             JToken obj;
             if (!string.IsNullOrEmpty(value) && IsValidJson(value,out obj)) {
                 switch (property) {
@@ -633,7 +635,7 @@ namespace DSLNG.PEAR.Web.Helpers
             //{
             //    return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control\"   placeholder=\"{2}\" tabindex=\"{3}\" />", value, existValue, "text period", tabIndex));
             //}
-            var selectInput = string.Format("<select class=\"der-value-{0} form-control\" tabindex=\"{1}\" >", existValue, tabIndex);
+            var selectInput = string.Format("<select class=\"der-value-{0} form-control der-highlight-infragsm\" tabindex=\"{1}\" data-property=\"{2}\" data-id=\"{3}\" data-highlight-type-id=\"{4}\" data-title=\"{5}\" >", existValue, tabIndex,property,highlightId,highlightTypeId,title);
             foreach (var option in options)
             {
                 var selected = string.Equals(option.Value, value, StringComparison.InvariantCultureIgnoreCase) ? "selected=\"selected\"" : "";

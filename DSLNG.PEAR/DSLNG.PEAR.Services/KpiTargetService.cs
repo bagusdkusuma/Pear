@@ -943,7 +943,7 @@ namespace DSLNG.PEAR.Services
                 var user = DataContext.Users.First(x => x.Id == request.UserId);
                 if (request.Id != 0)
                 {
-                    if ((string.IsNullOrEmpty(request.Value) && request.Remark == null) || request.Value == "-" || request.Value.ToLowerInvariant() == "null")
+                    if ((string.IsNullOrEmpty(request.Value) && request.Remark == null) || request.Value == "-" || (!string.IsNullOrEmpty(request.Value) && request.Value.ToLowerInvariant() == "null"))
                     {
                         kpiTarget = DataContext.KpiTargets.Single(x => x.Id == request.Id);
                         DataContext.KpiTargets.Remove(kpiTarget);
@@ -970,7 +970,7 @@ namespace DSLNG.PEAR.Services
                 else
                 {
                     if (((string.IsNullOrEmpty(request.Value) && request.Remark == null) || request.Value == "-" ||
-                         request.Value.ToLowerInvariant() == "null") && request.Id == 0)
+                         (!string.IsNullOrEmpty(request.Value) && request.Value.ToLowerInvariant() == "null")) && request.Id == 0)
                     {
                         response.IsSuccess = false;
                         response.Message = "You can not update this item because it is not existed";

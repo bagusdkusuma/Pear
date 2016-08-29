@@ -888,7 +888,7 @@ namespace DSLNG.PEAR.Services
 
                 if (request.Id > 0)
                 {
-                    if ((string.IsNullOrEmpty(request.Value) && request.Remark == null) || request.Value == "-" || request.Value.ToLowerInvariant() == "null")
+                    if ((string.IsNullOrEmpty(request.Value) && request.Remark == null) || request.Value == "-" || (!string.IsNullOrEmpty(request.Value) && request.Value.Equals("null",StringComparison.InvariantCultureIgnoreCase)))
                     {
                         kpiAchievement = DataContext.KpiAchievements.Single(x => x.Id == request.Id);
                         DataContext.KpiAchievements.Remove(kpiAchievement);
@@ -913,7 +913,7 @@ namespace DSLNG.PEAR.Services
                 else if (request.Id == 0)
                 {
                     if (((string.IsNullOrEmpty(request.Value) && request.Remark == null) || request.Value == "-" ||
-                         request.Value.ToLowerInvariant() == "null") && request.Id == 0)
+                          (!string.IsNullOrEmpty(request.Value) && request.Value.Equals("null", StringComparison.InvariantCultureIgnoreCase))) && request.Id == 0)
                     {
                         response.IsSuccess = false;
                         response.Message = "You can not update this item because it is not existed";

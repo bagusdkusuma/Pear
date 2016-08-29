@@ -13,6 +13,7 @@ using DSLNG.PEAR.Services.Requests.KpiTarget;
 using DSLNG.PEAR.Web.ViewModels.Highlight;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Requests.Highlight;
+using Newtonsoft.Json;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -161,101 +162,31 @@ namespace DSLNG.PEAR.Web.Controllers
             return Json(resp);
         }
 
-        //public ActionResult ForcastedIndicator(string date) {
-        //    var theDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
-        //    var previousDate = theDate.AddDays(-1);
-        //    var request = new GetDerLayoutItemsRequest
-        //    {
-        //        LayoutId = _derService.GetActiveDer().Id,
-        //        Positions = new List<GetDerLayoutItemsRequest.Position> {
-        //            new GetDerLayoutItemsRequest.Position {Row= 16, Column=1 }
-        //        },
-        //        DerLayoutItemTypes = new List<DerLayoutItemType> {
-        //            DerLayoutItemType.KpiInformations,
-        //            DerLayoutItemType.Highlight
-        //        }
-        //    };
-        //    var layoutItems = _derTransactionService.GetDerLayoutItems(request);
-        //    var kpiInformationValuesRequest = new GetKpiInformationValuesRequest
-        //    {
-        //        Date = theDate,
-        //        KpiInformations = layoutItems.DerLayoutItems.SelectMany(x => x.KpiInformations).ToList()
-        //    };
-        //    var kpiInformationValuesResponse = _derTransactionService.GetKpiInformationValues(kpiInformationValuesRequest);
-        //    var highlightValuesRequest = new GetHighlightValuesRequest
-        //    {
-        //        Date = theDate,
-        //        DerHighlights = layoutItems.DerLayoutItems.Where(x => x.Highlight != null).Select(x => x.Highlight).ToList()
-        //    };
-        //    var highlightValuesResponse = _derTransactionService.GetHighlightValues(highlightValuesRequest);
-        //    var viewModel = layoutItems.MapTo<DerValuesViewModel>();
-        //    foreach (var layoutItem in viewModel.DerLayoutItems)
-        //    {
-        //        foreach (var kpiInformation in layoutItem.KpiInformations)
-        //        {
-        //            var kpiInformationValue = kpiInformationValuesResponse.KpiInformations.FirstOrDefault(x => x.KpiId == kpiInformation.KpiId);
-        //            if (kpiInformationValue != null)
-        //                kpiInformationValue.MapPropertiesToInstance(kpiInformation);
-        //        }
-        //        if (layoutItem.Highlight != null)
-        //        {
-        //            var highlightValue = highlightValuesResponse.Highlights.FirstOrDefault(x => x.HighlightTypeId == layoutItem.Highlight.HighlightTypeId);
-        //            if (highlightValue != null)
-        //                highlightValue.MapPropertiesToInstance(layoutItem.Highlight);
-        //        }
-        //    }
-        //    return View(viewModel);
-        //}
+        public ActionResult UpdateInfraGSM(HighlightViewModel viewModel)
+        {
+            var existingHighlight = _highlightService.GetHighlightByPeriode(new GetHighlightRequest {
+                Date = viewModel.Date,
+                HighlightTypeId = viewModel.TypeId
+            });
+            SaveHighlightRequest req = new SaveHighlightRequest();
+            req.PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType, true);
+            req.Date = viewModel.Date.Value;
+            req.TypeId = viewModel.TypeId;
+            if (existingHighlight.Id == 0)
+            {
+                req.Message = "{\"a\" : \"\",\"b\" : \"\",\"c\" : \"\",\"d\" : \"\" }";
+            }
+            else {
+                req.Message = existingHighlight.Message;
+                req.Id = existingHighlight.Id;
+            }
+            dynamic jsonObj = JsonConvert.DeserializeObject(req.Message);
+            jsonObj[viewModel.Property] = viewModel.Message;
+            req.Message = JsonConvert.SerializeObject(jsonObj, Formatting.Indented);
+            var resp = _highlightService.SaveHighlight(req);
+            return Json(resp);
+        }
 
-        //public ActionResult OperationSection(string date) {
-        //    var theDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
-        //    var previousDate = theDate.AddDays(-1);
-        //    var request = new GetDerLayoutItemsRequest
-        //    {
-        //        LayoutId = _derService.GetActiveDer().Id,
-        //        Positions = new List<GetDerLayoutItemsRequest.Position> {
-        //            new GetDerLayoutItemsRequest.Position {Row= 6, Column=2 },
-        //            new GetDerLayoutItemsRequest.Position {Row= 5, Column=2 },
-        //            new GetDerLayoutItemsRequest.Position {Row= 3, Column= 3 },
-        //            new GetDerLayoutItemsRequest.Position {Row=5, Column = 0 },
-        //            new GetDerLayoutItemsRequest.Position {Row=5, Column = 1 }
-        //        },
-        //        DerLayoutItemTypes = new List<DerLayoutItemType> {
-        //            DerLayoutItemType.KpiInformations,
-        //            DerLayoutItemType.Highlight
-        //        }
-        //    };
-        //    var layoutItems = _derTransactionService.GetDerLayoutItems(request);
-        //    var kpiInformationValuesRequest = new GetKpiInformationValuesRequest
-        //    {
-        //        Date = theDate,
-        //        KpiInformations = layoutItems.DerLayoutItems.SelectMany(x => x.KpiInformations).ToList()
-        //    };
-        //    var kpiInformationValuesResponse = _derTransactionService.GetKpiInformationValues(kpiInformationValuesRequest);
-        //    var highlightValuesRequest = new GetHighlightValuesRequest
-        //    {
-        //        Date = theDate,
-        //        DerHighlights = layoutItems.DerLayoutItems.Where(x => x.Highlight != null).Select(x => x.Highlight).ToList()
-        //    };
-        //    var highlightValuesResponse = _derTransactionService.GetHighlightValues(highlightValuesRequest);
-        //    var viewModel = layoutItems.MapTo<DerValuesViewModel>();
-        //    foreach (var layoutItem in viewModel.DerLayoutItems)
-        //    {
-        //        foreach (var kpiInformation in layoutItem.KpiInformations)
-        //        {
-        //            var kpiInformationValue = kpiInformationValuesResponse.KpiInformations.FirstOrDefault(x => x.KpiId == kpiInformation.KpiId);
-        //            if (kpiInformationValue != null)
-        //                kpiInformationValue.MapPropertiesToInstance(kpiInformation);
-        //        }
-        //        if (layoutItem.Highlight != null)
-        //        {
-        //            var highlightValue = highlightValuesResponse.Highlights.FirstOrDefault(x => x.HighlightTypeId == layoutItem.Highlight.HighlightTypeId);
-        //            if (highlightValue != null)
-        //                highlightValue.MapPropertiesToInstance(layoutItem.Highlight);
-        //        }
-        //    }
-        //    return View(viewModel);
-        //}
         private DerValuesViewModel GetDerValuesPerSection(string date, int[] actualKpiIds, int[] targetKpiIds, int[] highlightTypeIds) {
             var theDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
             var kpiInformationValuesRequest = new GetKpiInformationValuesRequest
