@@ -359,6 +359,21 @@
                                 });
                             }
                         });
+                        $(target).on('change', 'select.der-highlight', function (e) {
+                            var $this = $(this);
+                            var nextTab = parseInt($this.attr('tabindex')) + 1;
+                            var highlightTypeId = $this.data('highlight-type-id');
+                            var id = $this.data('id');
+                            var value = $this.val();
+                            $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function () {
+                                var $next = $('[tabindex=' + nextTab + ']');
+                                if ($next.is("textarea")) {
+                                    tinymce.execCommand('mceFocus', false, $next.attr('id'));
+                                } else {
+                                    $next.focus();
+                                }
+                            });
+                        })
                     })
                 }
             });

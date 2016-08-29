@@ -562,7 +562,9 @@ namespace DSLNG.PEAR.Web.Helpers
             var highlight = highlights.FirstOrDefault(x => x.HighlightTypeId == highlightTypeId);
             value = highlight == null ? value : (defaultValueDefined == "prev" ? highlight.HighlightMessage : (highlight.Type == "now" ? highlight.HighlightMessage : value));
             existValue = highlight == null ? existValue : highlight.Type;
-            var selectInput = string.Format("<select class=\"der-value-{0} form-control\" tabindex=\"{1}\" >", existValue, tabIndex);
+            var highlightId = highlight == null ? 0 : highlight.Id;
+            var title = highlight == null ? null : (string.IsNullOrEmpty(highlight.HighlightTitle) ? highlight.HighlightTypeValue : highlight.HighlightTitle);
+            var selectInput = string.Format("<select class=\"der-value-{0} form-control der-highlight\" tabindex=\"{1}\"  data-highlight-type-id=\"{2}\" data-id=\"{3}\" id=\"highlight_{4}\" data-title=\"{5}\" >", existValue, tabIndex,highlightTypeId,highlightId,tabIndex,title);
             foreach (var option in options)
             {
                 var selected = string.Equals(option.Value, value, StringComparison.InvariantCultureIgnoreCase) ? "selected=\"selected\"" : "";
