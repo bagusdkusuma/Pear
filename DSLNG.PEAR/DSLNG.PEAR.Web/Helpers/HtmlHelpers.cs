@@ -487,27 +487,27 @@ namespace DSLNG.PEAR.Web.Helpers
             switch (type)
             {
                 case "daily-actual":
-                    value = kpiInformation.DailyActual == null ? value : (defaultValueDefined == "prev" ? kpiInformation.DailyActual.Remark.ToString() : (kpiInformation.DailyActual.Type == "now" ? kpiInformation.DailyActual.Remark.ToString() : value));
+                    value = kpiInformation.DailyActual == null ? value : (defaultValueDefined == "prev" ? kpiInformation.DailyActual.Remark : (kpiInformation.DailyActual.Type == "now" ? kpiInformation.DailyActual.Remark : value));
                     existValue = kpiInformation.DailyActual == null ? existValue : kpiInformation.DailyActual.Type;
                     break;
                 case "monthly-actual":
-                    value = kpiInformation.MonthlyActual == null ? value : (defaultValueDefined == "prev" ? kpiInformation.MonthlyActual.Remark.ToString() : (kpiInformation.MonthlyActual.Type == "now" ? kpiInformation.MonthlyActual.Remark.ToString() : value));
+                    value = kpiInformation.MonthlyActual == null ? value : (defaultValueDefined == "prev" ? kpiInformation.MonthlyActual.Remark : (kpiInformation.MonthlyActual.Type == "now" ? kpiInformation.MonthlyActual.Remark : value));
                     existValue = kpiInformation.MonthlyActual == null ? existValue : kpiInformation.MonthlyActual.Type;
                     break;
                 case "yearly-actual":
-                    value = kpiInformation.YearlyActual == null ? value : (defaultValueDefined == "prev" ? kpiInformation.YearlyActual.Remark.ToString() : (kpiInformation.YearlyActual.Type == "now" ? kpiInformation.YearlyActual.Remark.ToString() : value));
+                    value = kpiInformation.YearlyActual == null ? value : (defaultValueDefined == "prev" ? kpiInformation.YearlyActual.Remark : (kpiInformation.YearlyActual.Type == "now" ? kpiInformation.YearlyActual.Remark : value));
                     existValue = kpiInformation.YearlyActual == null ? existValue : kpiInformation.YearlyActual.Type;
                     break;
                 case "daily-target":
-                    value = kpiInformation.DailyTarget == null ? value : (defaultValueDefined == "prev" ? kpiInformation.DailyTarget.Remark.ToString() : (kpiInformation.DailyTarget.Type == "now" ? kpiInformation.DailyTarget.Remark.ToString() : value));
+                    value = kpiInformation.DailyTarget == null ? value : (defaultValueDefined == "prev" ? kpiInformation.DailyTarget.Remark : (kpiInformation.DailyTarget.Type == "now" ? kpiInformation.DailyTarget.Remark : value));
                     existValue = kpiInformation.DailyTarget == null ? existValue : kpiInformation.DailyTarget.Type;
                     break;
                 case "monthly-target":
-                    value = kpiInformation.MonthlyTarget == null ? value : (defaultValueDefined == "prev" ? kpiInformation.MonthlyTarget.Remark.ToString() : (kpiInformation.MonthlyTarget.Type == "now" ? kpiInformation.MonthlyTarget.Remark.ToString() : value));
+                    value = kpiInformation.MonthlyTarget == null ? value : (defaultValueDefined == "prev" ? kpiInformation.MonthlyTarget.Remark : (kpiInformation.MonthlyTarget.Type == "now" ? kpiInformation.MonthlyTarget.Remark : value));
                     existValue = kpiInformation.MonthlyTarget == null ? existValue : kpiInformation.MonthlyTarget.Type;
                     break;
                 case "yearly-target":
-                    value = kpiInformation.YearlyTarget == null ? value : (defaultValueDefined == "prev" ? kpiInformation.YearlyTarget.Remark.ToString() : (kpiInformation.YearlyTarget.Type == "now" ? kpiInformation.YearlyTarget.Remark.ToString() : value));
+                    value = kpiInformation.YearlyTarget == null ? value : (defaultValueDefined == "prev" ? kpiInformation.YearlyTarget.Remark : (kpiInformation.YearlyTarget.Type == "now" ? kpiInformation.YearlyTarget.Remark : value));
                     existValue = kpiInformation.YearlyTarget == null ? existValue : kpiInformation.YearlyTarget.Type;
                     break;
 
