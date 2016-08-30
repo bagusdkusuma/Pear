@@ -186,6 +186,32 @@ namespace DSLNG.PEAR.Web.Controllers
             var resp = _highlightService.SaveHighlight(req);
             return Json(resp);
         }
+        public ActionResult UpdateBrenfut(HighlightViewModel viewModel)
+        {
+            var existingHighlight = _highlightService.GetHighlightByPeriode(new GetHighlightRequest
+            {
+                Date = viewModel.Date,
+                HighlightTypeId = viewModel.TypeId
+            });
+            SaveHighlightRequest req = new SaveHighlightRequest();
+            req.PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType, true);
+            req.Date = viewModel.Date.Value;
+            req.TypeId = viewModel.TypeId;
+            if (existingHighlight.Id == 0)
+            {
+                req.Message = "{\"a\" : { \"label\" : \"\", \"value\" : \"\" },\"b\" : { \"label\" : \"\", \"value\" : \"\" },\"c\" : { \"label\" : \"\", \"value\" : \"\" },\"d\" : { \"label\" : \"\", \"value\" : \"\" } }";
+            }
+            else
+            {
+                req.Message = existingHighlight.Message;
+                req.Id = existingHighlight.Id;
+            }
+            dynamic jsonObj = JsonConvert.DeserializeObject(req.Message);
+            jsonObj[viewModel.Property][viewModel.ValueType] = viewModel.Message;
+            req.Message = JsonConvert.SerializeObject(jsonObj, Formatting.Indented);
+            var resp = _highlightService.SaveHighlight(req);
+            return Json(resp);
+        }
 
         private DerValuesViewModel GetDerValuesPerSection(string date, int[] actualKpiIds, int[] targetKpiIds, int[] highlightTypeIds) {
             var theDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);

@@ -580,28 +580,39 @@ namespace DSLNG.PEAR.Web.Helpers
             var highlight = highlights.FirstOrDefault(x => x.HighlightTypeId == highlightTypeId);
             value = highlight == null ? value : (defaultValueDefined == "prev" ? highlight.HighlightMessage : (highlight.Type == "now" ? highlight.HighlightMessage : value));
             existValue = highlight == null ? existValue : highlight.Type;
-            if (value.Contains("<li>")) {
-                //Regex regex = new Regex(@"<li.*?>(.*?)<\\/li>");
-                MatchCollection matches = Regex.Matches(value, @"<li>(.*?)</li>");
-                if (matches.Count > 0) {
-                    var splitResult = matches[position].Groups[1].Value.Split(':');
-                    if (type == "label")
-                    {
-                        value = splitResult[0];
-                    }
-                    else {
-                        var regex = new Regex("usd/bbl", RegexOptions.IgnoreCase);
-                        value = string.IsNullOrEmpty(splitResult[1]) ? splitResult[1] : regex.Replace(splitResult[1], "");
-                    }
-                }
-
-            }
-            if (type == "label")
+            var highlightId = highlight == null ? 0 : highlight.Id;
+            var title = highlight == null ? null : (string.IsNullOrEmpty(highlight.HighlightTitle) ? highlight.HighlightTypeValue : highlight.HighlightTitle);
+            JToken obj;
+            var properties = new string[]{ "a","b","c","d" };
+            if (IsValidJson(value, out obj))
             {
-                return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control brent-forecast-label\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" data-position=\"\" />", value, existValue, "text period", tabIndex, type));
+                value = obj[properties[position]][type].Value<string>();
             }
             else {
-                return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control brent-forecast-value\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" data-position=\"\" />", value, existValue, "usd/bbl", tabIndex, type));
+                value = "";
+            }
+            //if (value.Contains("<li>")) {
+            //    //Regex regex = new Regex(@"<li.*?>(.*?)<\\/li>");
+            //    MatchCollection matches = Regex.Matches(value, @"<li>(.*?)</li>");
+            //    if (matches.Count > 0) {
+            //        var splitResult = matches[position].Groups[1].Value.Split(':');
+            //        if (type == "label")
+            //        {
+            //            value = splitResult[0];
+            //        }
+            //        else {
+            //            var regex = new Regex("usd/bbl", RegexOptions.IgnoreCase);
+            //            value = string.IsNullOrEmpty(splitResult[1]) ? splitResult[1] : regex.Replace(splitResult[1], "");
+            //        }
+            //    }
+
+            //}
+            if (type == "label")
+            {
+                return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control der-highlight-brenfut\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" data-property=\"{5}\" data-highlight-type-id=\"{6}\" data-id=\"{7}\" data-title=\"{8}\" />", value, existValue, "text period", tabIndex, type, properties[position],highlightTypeId,highlightId,title));
+            }
+            else {
+                return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control der-highlight-brenfut\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" data-property=\"{5}\" data-highlight-type-id=\"{6}\" data-id=\"{7}\" data-title=\"{8}\" />", value, existValue, "usd/bbl", tabIndex, type, properties[position], highlightTypeId, highlightId, title));
             }
 
         }

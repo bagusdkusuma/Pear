@@ -93,5 +93,6 @@ namespace DSLNG.PEAR.Web.ViewModels.Highlight
         public string Message { get; set; }
         public bool IsActive { get; set; }
         public string Property { get; set; }
+        public string ValueType { get; set; }
     }
 }
