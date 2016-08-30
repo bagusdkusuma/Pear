@@ -339,7 +339,7 @@
             <tr>
                 <td>
                     <span class="col-sm-8">
-                        <strong style="color:red">ini dia nih remark jalan gak ya? oh belum kerana ini change</strong>
+                        @*<strong style="color:red">ini dia nih remark jalan gak ya? oh belum kerana ini change</strong>*@
                         @Html.DisplayKpiInformationList(Model.KpiInformations, 11, 70, new List<SelectListItem>() {
                         new SelectListItem { Value = "Normal/Other", Text="Normal/Other" },
                         new SelectListItem { Value = "Unplanned",  Text="Unplanned"},
@@ -1060,9 +1060,9 @@
             <tr>
                 <td><label class="control-label">ADP</label></td>
                 <td>
-                    <span class="col-sm-8">
+                    @*<span class="col-sm-8">
                         <input type="text" class="form-control" id="text" placeholder="free text" />
-                    </span>
+                    </span>*@
                 </td>
             </tr>
             <tr>
@@ -1076,9 +1076,9 @@
             <tr>
                 <td><label class="control-label">YTD</label></td>
                 <td>
-                    <span class="col-sm-8">
+                    @*<span class="col-sm-8">
                         <input type="text" class="form-control" id="text" placeholder="free text" />
-                    </span>
+                    </span>*@
                 </td>
             </tr>
         </table>
@@ -1088,20 +1088,18 @@
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 <td>
-                    <select>
-                        <option>Select Option</option>
-                        <option>Option 1</option>
-                        <option>Option 2</option>
-                    </select>
+                    @Html.DisplayKpiInformationList(Model.KpiInformations, 72, 149, new List<SelectListItem>() {
+                        new SelectListItem { Value = "Option 1", Text="Option 1" },
+                        new SelectListItem { Value = "Option 2",  Text="Option 2"}
+                   }, "prev")
                 </td>
             </tr>
             <tr>
                 <td>
-                    <select>
-                        <option>Select Option</option>
-                        <option>Option 1</option>
-                        <option>Option 2</option>
-                    </select>
+                    @Html.DisplayKpiInformationList(Model.KpiInformations, 73, 150, new List<SelectListItem>() {
+                        new SelectListItem { Value = "Option 1", Text="Option 1" },
+                        new SelectListItem { Value = "Option 2",  Text="Option 2"}
+                   }, "prev")
                 </td>
             </tr>
         </table>
@@ -1151,9 +1149,9 @@
             <tr>
                 <td><label class="control-label">YTD</label></td>
                 <td>
-                    <span class="col-sm-8">
+                    @*<span class="col-sm-8">
                         <input type="text" class="form-control" id="text" placeholder="free text" />
-                    </span>
+                    </span>*@
                 </td>
             </tr>
         </table>

@@ -484,37 +484,74 @@ namespace DSLNG.PEAR.Web.Helpers
             }
             var kpiInformation = kpiInformations.First(x => x.KpiId == kpiId);
             var existValue = "empty";
+            var id = 0;
             switch (type)
             {
                 case "daily-actual":
-                    value = kpiInformation.DailyActual == null ? value : (defaultValueDefined == "prev" ? kpiInformation.DailyActual.Remark : (kpiInformation.DailyActual.Type == "now" ? kpiInformation.DailyActual.Remark : value));
-                    existValue = kpiInformation.DailyActual == null ? existValue : kpiInformation.DailyActual.Type;
+                    {
+                        var valueObject = GetValue(kpiInformation.DailyActual, value, defaultValueDefined, "remark", existValue);
+                        value = valueObject.Value;
+                        id = valueObject.Id;
+                        existValue = valueObject.ExistValue;
+                    }
+                    //value = kpiInformation.DailyActual == null ? value : (defaultValueDefined == "prev" ? kpiInformation.DailyActual.Remark : (kpiInformation.DailyActual.Type == "now" ? kpiInformation.DailyActual.Remark : value));
+                    //existValue = kpiInformation.DailyActual == null ? existValue : kpiInformation.DailyActual.Type;
                     break;
                 case "monthly-actual":
-                    value = kpiInformation.MonthlyActual == null ? value : (defaultValueDefined == "prev" ? kpiInformation.MonthlyActual.Remark : (kpiInformation.MonthlyActual.Type == "now" ? kpiInformation.MonthlyActual.Remark : value));
-                    existValue = kpiInformation.MonthlyActual == null ? existValue : kpiInformation.MonthlyActual.Type;
+                    {
+                        var valueObject = GetValue(kpiInformation.MonthlyActual, value, defaultValueDefined, "remark", existValue);
+                        value = valueObject.Value;
+                        id = valueObject.Id;
+                        existValue = valueObject.ExistValue;
+                    }
+                    //value = kpiInformation.MonthlyActual == null ? value : (defaultValueDefined == "prev" ? kpiInformation.MonthlyActual.Remark : (kpiInformation.MonthlyActual.Type == "now" ? kpiInformation.MonthlyActual.Remark : value));
+                    //existValue = kpiInformation.MonthlyActual == null ? existValue : kpiInformation.MonthlyActual.Type;
                     break;
                 case "yearly-actual":
-                    value = kpiInformation.YearlyActual == null ? value : (defaultValueDefined == "prev" ? kpiInformation.YearlyActual.Remark : (kpiInformation.YearlyActual.Type == "now" ? kpiInformation.YearlyActual.Remark : value));
-                    existValue = kpiInformation.YearlyActual == null ? existValue : kpiInformation.YearlyActual.Type;
+                    {
+                        var valueObject = GetValue(kpiInformation.YearlyActual, value, defaultValueDefined, "remark", existValue);
+                        value = valueObject.Value;
+                        id = valueObject.Id;
+                        existValue = valueObject.ExistValue;
+                    }
+                    //value = kpiInformation.YearlyActual == null ? value : (defaultValueDefined == "prev" ? kpiInformation.YearlyActual.Remark : (kpiInformation.YearlyActual.Type == "now" ? kpiInformation.YearlyActual.Remark : value));
+                    //existValue = kpiInformation.YearlyActual == null ? existValue : kpiInformation.YearlyActual.Type;
                     break;
                 case "daily-target":
-                    value = kpiInformation.DailyTarget == null ? value : (defaultValueDefined == "prev" ? kpiInformation.DailyTarget.Remark : (kpiInformation.DailyTarget.Type == "now" ? kpiInformation.DailyTarget.Remark : value));
-                    existValue = kpiInformation.DailyTarget == null ? existValue : kpiInformation.DailyTarget.Type;
+                    {
+                        var valueObject = GetValue(kpiInformation.DailyTarget, value, defaultValueDefined, "remark", existValue);
+                        value = valueObject.Value;
+                        id = valueObject.Id;
+                        existValue = valueObject.ExistValue;
+                    }
+                    //value = kpiInformation.DailyTarget == null ? value : (defaultValueDefined == "prev" ? kpiInformation.DailyTarget.Remark : (kpiInformation.DailyTarget.Type == "now" ? kpiInformation.DailyTarget.Remark : value));
+                    //existValue = kpiInformation.DailyTarget == null ? existValue : kpiInformation.DailyTarget.Type;
                     break;
                 case "monthly-target":
-                    value = kpiInformation.MonthlyTarget == null ? value : (defaultValueDefined == "prev" ? kpiInformation.MonthlyTarget.Remark : (kpiInformation.MonthlyTarget.Type == "now" ? kpiInformation.MonthlyTarget.Remark : value));
-                    existValue = kpiInformation.MonthlyTarget == null ? existValue : kpiInformation.MonthlyTarget.Type;
+                    {
+                        var valueObject = GetValue(kpiInformation.MonthlyTarget, value, defaultValueDefined, "remark", existValue);
+                        value = valueObject.Value;
+                        id = valueObject.Id;
+                        existValue = valueObject.ExistValue;
+                    }
+                    //value = kpiInformation.MonthlyTarget == null ? value : (defaultValueDefined == "prev" ? kpiInformation.MonthlyTarget.Remark : (kpiInformation.MonthlyTarget.Type == "now" ? kpiInformation.MonthlyTarget.Remark : value));
+                    //existValue = kpiInformation.MonthlyTarget == null ? existValue : kpiInformation.MonthlyTarget.Type;
                     break;
                 case "yearly-target":
-                    value = kpiInformation.YearlyTarget == null ? value : (defaultValueDefined == "prev" ? kpiInformation.YearlyTarget.Remark : (kpiInformation.YearlyTarget.Type == "now" ? kpiInformation.YearlyTarget.Remark : value));
-                    existValue = kpiInformation.YearlyTarget == null ? existValue : kpiInformation.YearlyTarget.Type;
+                    {
+                        var valueObject = GetValue(kpiInformation.YearlyTarget, value, defaultValueDefined, "remark", existValue);
+                        value = valueObject.Value;
+                        id = valueObject.Id;
+                        existValue = valueObject.ExistValue;
+                    }
+                    //value = kpiInformation.YearlyTarget == null ? value : (defaultValueDefined == "prev" ? kpiInformation.YearlyTarget.Remark : (kpiInformation.YearlyTarget.Type == "now" ? kpiInformation.YearlyTarget.Remark : value));
+                    //existValue = kpiInformation.YearlyTarget == null ? existValue : kpiInformation.YearlyTarget.Type;
                     break;
 
             }
-            var selectInput = string.Format("<select class=\"der-value-{0} form-control\" tabindex=\"{1}\" data-type=\"{2}\" >", existValue, tabIndex, type);
+            var selectInput = string.Format("<select class=\"der-value-{0} form-control der-kpi\" tabindex=\"{1}\" data-type=\"{2}\"  data-kpi-id=\"{3}\" data-id=\"{4}\" data-value-type=\"{5}\" >", existValue, tabIndex, type,kpiId,id,"remark");
             foreach (var option in options) {
-                var selected = string.Equals(option.Value, value, StringComparison.InvariantCultureIgnoreCase) ? "selected=\"selected\"" : "selected";
+                var selected = string.Equals(option.Value, value, StringComparison.InvariantCultureIgnoreCase) ? "selected=\"selected\"" : "";
                 selectInput += string.Format("<option {2} value=\"{0}\">{1}</option>", option.Value, option.Text, selected);
             }
             selectInput += "</select>";
