@@ -15,6 +15,8 @@ using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Requests.Highlight;
 using Newtonsoft.Json;
 using DSLNG.PEAR.Web.ViewModels.Wave;
+using DSLNG.PEAR.Services.Requests.Select;
+using DSLNG.PEAR.Services.Requests.Wave;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -25,13 +27,17 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IKpiAchievementService _kpiAchievementService;
         private readonly IKpiTargetService _kpiTargetService;
         private readonly IHighlightService _highlightService;
+        private readonly ISelectService _selectService;
+        private readonly IWaveService _waveService;
 
-        public DerTransactionController(IDerService derService,IDerTransactionService derTransactionService, IKpiAchievementService kpiAchievementService, IKpiTargetService kpiTargetService, IHighlightService highlightService) {
+        public DerTransactionController(IDerService derService,IDerTransactionService derTransactionService, IKpiAchievementService kpiAchievementService, IKpiTargetService kpiTargetService, IHighlightService highlightService, ISelectService selectService, IWaveService waveService) {
             _derService = derService;
             _derTransactionService = derTransactionService;
             _kpiAchievementService = kpiAchievementService;
             _kpiTargetService = kpiTargetService;
             _highlightService = highlightService;
+            _selectService = selectService;
+            _waveService = waveService;
         }
         // GET: DerTransaction
         public ActionResult Index()
@@ -92,11 +98,37 @@ namespace DSLNG.PEAR.Web.Controllers
         }
 
         public ActionResult QhsseSection(string date) {
-            return View(GetDerValuesPerSection(date,
-               new int[] { 273, 274,275,276,1,177,278,277,285,356,4,359,286,292 }, //actual KpiIds 
-               new int[] { 1, 177,278,277,276,285}, //target KpiIds
-               new int[] { 18, 13, 20}  //highlightTypeIds
-               ));
+            var viewModel = GetDerValuesPerSection(date,
+               new int[] { 273, 274, 275, 276, 1, 177, 278, 277, 285, 356, 4, 359, 286, 292 }, //actual KpiIds 
+               new int[] { 1, 177, 278, 277, 276, 285 }, //target KpiIds
+               new int[] { 18, 13, 20 }  //highlightTypeIds
+               );
+            var wave = _waveService.GetWave(new GetWaveRequest
+            {
+                Date = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture),
+                ByDate = true
+            });
+            if (wave.Id != 0)
+            {
+                viewModel.Wave = wave.MapTo<WaveViewModel>();
+                viewModel.Wave.DerValueType = "now";
+            }
+            else {
+                wave = _waveService.GetWave(new GetWaveRequest
+                {
+                    Date = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture).AddDays(-1),
+                    ByDate = true
+                });
+                if (wave.Id != 0)
+                {
+                    viewModel.Wave = wave.MapTo<WaveViewModel>();
+                    viewModel.Wave.DerValueType = "prev";
+                }
+            }
+            if (viewModel.Wave == null) viewModel.Wave = new WaveViewModel();
+            viewModel.Wave.Values = _selectService.GetSelect(new GetSelectRequest { Name = "wave-values" }).Options
+                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Text }).ToList();
+            return View(viewModel);
         }
 
         public ActionResult EnablerSection(string date) {
@@ -215,7 +247,26 @@ namespace DSLNG.PEAR.Web.Controllers
         }
         public ActionResult UpdateWave(WaveViewModel viewModel)
         {
-            throw new NotImplementedException();
+            var wave = _waveService.GetWave(new GetWaveRequest
+            {
+                Date = viewModel.Date,
+                ByDate = true
+            });
+            if (wave.Id == 0)
+            {
+                var request = viewModel.MapTo<SaveWaveRequest>();
+                var resp = _waveService.SaveWave(request);
+                return Json(resp);
+            }
+            else {
+                var request = viewModel.MapTo<SaveWaveRequest>();
+                request.Id = wave.Id;
+                request.Tide = viewModel.Property == "tide" ? viewModel.Tide : wave.Tide;
+                request.ValueId = viewModel.Property == "wind-direction" ? viewModel.ValueId : wave.ValueId;
+                request.Speed = viewModel.Property == "speed" ? viewModel.Speed : wave.Speed;
+                var resp = _waveService.SaveWave(request);
+                return Json(resp);
+            }
         }
         public ActionResult UpdateWeeklyAlarm(HighlightViewModel viewModel)
         {

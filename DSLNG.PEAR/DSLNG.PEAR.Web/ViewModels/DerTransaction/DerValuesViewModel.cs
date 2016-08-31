@@ -1,5 +1,6 @@
 ﻿
 using DSLNG.PEAR.Data.Enums;
+using DSLNG.PEAR.Web.ViewModels.Wave;
 using System;
 using System.Collections.Generic;
 
@@ -48,5 +49,6 @@ namespace DSLNG.PEAR.Web.ViewModels.DerTransaction
             public string Remark { get; set; }
             public string Type { get; set; }
         }
+        public WaveViewModel Wave { get; set; }
     }
 }

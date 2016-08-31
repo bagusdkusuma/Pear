@@ -59,28 +59,26 @@
             <tr>
                 <td><label class="control-label">Tide/Wave</label></td>
                 <td>
-                    <select>
-                        <option>Select Option</option>
-                        <option>Option 1</option>
-                        <option>Option 2</option>
-                    </select>
+                   @Html.DisplayWaveList(Model.Wave, new List<SelectListItem> {
+                  new SelectListItem { Value="0-0.25 meter",Text="0-0.25 meter" },
+                   new SelectListItem { Value="0.25-0.5 meter",Text="0.25-0.5 meter" },
+                    new SelectListItem { Value="0.5-0.75 meter",Text="0.5-0.75 meter" },
+                     new SelectListItem { Value="0.75-1.0 meter",Text="0.75-1.0 meter" },
+                      new SelectListItem { Value="1-1.25 meter",Text="1-1.25 meter" },
+              },"tide",235)
                 </td>
             </tr>
             <tr>
                 <td><label class="control-label">Wind Direct</label></td>
                 <td>
-                    <select>
-                        <option>Select Option</option>
-                        <option>Option 1</option>
-                        <option>Option 2</option>
-                    </select>
+                    @Html.DisplayWaveList(Model.Wave, Model.Wave.Values, "wind-direction", 236)
                 </td>
             </tr>
             <tr>
                 <td><label class="control-label">Wind Speed</label></td>
                 <td>
                     <span class="col-sm-8">
-                        <input type="text" class="form-control" id="text" placeholder="km/h" />
+                        @Html.DisplayWaveList(Model.Wave, Model.Wave.Values, "speed", 237)
                     </span>
                 </td>
             </tr>

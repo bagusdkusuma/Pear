@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
+using DSLNG.PEAR.Web.ViewModels.Wave;
 
 namespace DSLNG.PEAR.Web.Helpers
 {
@@ -746,7 +747,38 @@ namespace DSLNG.PEAR.Web.Helpers
             existValue = highlight == null ? existValue : highlight.Type;
             return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" />", value, existValue, placeHolder, tabIndex));
         }
-
+        public static MvcHtmlString DisplayWaveList(this HtmlHelper htmlHelper, WaveViewModel viewModel, IList<SelectListItem> options, string property, int tabIndex) {
+            var value = "";
+            var id = 0;
+            var derValueType = "empty";
+            if (viewModel != null)
+            {
+                if (property == "wind-direction")
+                {
+                    value = viewModel.ValueId.ToString();
+                }
+                else if (property == "tide")
+                {
+                    value = viewModel.Tide;
+                }
+                else {
+                    value = viewModel.Speed;
+                }
+                id = viewModel.Id;
+                derValueType = viewModel.DerValueType;
+            }
+            if (property == "speed") {
+                return new MvcHtmlString(string.Format("<input value=\"{4}\" class=\"der-value-{0} form-control der-highlight-wave\" tabindex=\"{1}\" data-property=\"{2}\" data-id=\"{3}\" placeholder=\"km/h\"  />", derValueType, tabIndex, property, id,value));
+            }
+            var selectInput = string.Format("<select class=\"der-value-{0} form-control der-highlight-wave\" tabindex=\"{1}\" data-property=\"{2}\" data-id=\"{3}\" >", derValueType, tabIndex, property, id);
+            foreach (var option in options)
+            {
+                var selected = string.Equals(option.Value, value, StringComparison.InvariantCultureIgnoreCase) ? "selected=\"selected\"" : "";
+                selectInput += string.Format("<option {2} value=\"{0}\">{1}</option>", option.Value, option.Text, selected);
+            }
+            selectInput += "</select>";
+            return new MvcHtmlString(selectInput);
+        }
         private static bool IsValidJson(string strInput, out JToken obj)
         {
             strInput = strInput.Trim();

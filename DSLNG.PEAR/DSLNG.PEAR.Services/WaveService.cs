@@ -65,16 +65,29 @@ namespace DSLNG.PEAR.Services
                 {
                     var wave = DataContext.Waves.First(x => x.Id == request.Id);
                     request.MapPropertiesToInstance<Wave>(wave);
-                    var value = new SelectOption { Id = request.ValueId };
-                    DataContext.SelectOptions.Attach(value);
-                    wave.Value = value;
+                    
+                    if (request.ValueId != 0)
+                    {
+                        var value = DataContext.SelectOptions.Local.FirstOrDefault(x => x.Id == request.ValueId);
+                        if (value == null) {
+                            value = new SelectOption { Id = request.ValueId };
+                            DataContext.SelectOptions.Attach(value);
+                        }
+                        wave.Value = value;
+                    }
                 }
                 else
                 {
                     var wave = request.MapTo<Wave>();
-                    var value = new SelectOption { Id = request.ValueId };
-                    DataContext.SelectOptions.Attach(value);
-                    wave.Value = value;
+                    if (request.ValueId != 0)
+                    {
+                        var value = DataContext.SelectOptions.Local.FirstOrDefault(x => x.Id == request.ValueId);
+                        if (value == null)
+                        {
+                            value = new SelectOption { Id = request.ValueId };
+                            DataContext.SelectOptions.Attach(value);
+                        }
+                    }
                     DataContext.Waves.Add(wave);
                 }
                 DataContext.SaveChanges();
@@ -102,7 +115,7 @@ namespace DSLNG.PEAR.Services
                 if (wave != null)
                 {
                     var resp = wave.MapTo<GetWaveResponse>();
-                    resp.ValueId = wave.Value.Id;
+                    resp.ValueId = wave.Value == null ? 0 : wave.Value.Id;
                     return resp;
                 }
                 return new GetWaveResponse();
