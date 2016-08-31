@@ -428,6 +428,24 @@
                                 }
                             })
                         });
+                        $(target).on('keyup', 'input.der-highlight-weekly-alarm', function (e) {
+                            if (e.keyCode == 13) {
+                                var $this = $(this);
+                                var nextTab = parseInt($this.attr('tabindex')) + 1;
+                                var highlightTypeId = $this.data('highlight-type-id');
+                                var id = $this.data('id');
+                                var value = $this.val();
+                                var property = $this.data('property');
+                                $.post("/dertransaction/updateweeklyalarm", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property: property}, function () {
+                                    var $next = $('[tabindex=' + nextTab + ']');
+                                    if ($next.is("textarea")) {
+                                        tinyMCE.get($next.attr('id')).focus()
+                                    } else {
+                                        $next.focus();
+                                    }
+                                });
+                            }
+                        });
                     })
                 }
             });

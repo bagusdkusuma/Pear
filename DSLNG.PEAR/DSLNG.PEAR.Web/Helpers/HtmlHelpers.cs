@@ -692,7 +692,42 @@ namespace DSLNG.PEAR.Web.Helpers
             selectInput += "</select>";
             return new MvcHtmlString(selectInput);
         }
+        public static MvcHtmlString DisplayWeeklyAlarmInput(this HtmlHelper htmlHelper, IList<DerValuesViewModel.DerHighlightValuesViewModel> highlights, int highlightTypeId, int tabIndex, string label, string property) {
+            string value = "";
+            var defaultValueDefined = "prev";
+            string existValue = "empty";
+            var highlight = highlights.FirstOrDefault(x => x.HighlightTypeId == highlightTypeId);
+            value = highlight == null ? value : (defaultValueDefined == "prev" ? highlight.HighlightMessage : (highlight.Type == "now" ? highlight.HighlightMessage : value));
+            existValue = highlight == null ? existValue : highlight.Type;
+            var highlightId = highlight == null ? 0 : highlight.Id;
+            var title = highlight == null ? null : (string.IsNullOrEmpty(highlight.HighlightTitle) ? highlight.HighlightTypeValue : highlight.HighlightTitle);
+            JToken obj;
+            if (IsValidJson(value, out obj))
+            {
+                value = obj[property].Value<string>();
+            }
+            else
+            {
+                value = "";
+            }
+            //if (value.Contains("<li>")) {
+            //    //Regex regex = new Regex(@"<li.*?>(.*?)<\\/li>");
+            //    MatchCollection matches = Regex.Matches(value, @"<li>(.*?)</li>");
+            //    if (matches.Count > 0) {
+            //        var splitResult = matches[position].Groups[1].Value.Split(':');
+            //        if (type == "label")
+            //        {
+            //            value = splitResult[0];
+            //        }
+            //        else {
+            //            var regex = new Regex("usd/bbl", RegexOptions.IgnoreCase);
+            //            value = string.IsNullOrEmpty(splitResult[1]) ? splitResult[1] : regex.Replace(splitResult[1], "");
+            //        }
+            //    }
 
+            //}
+            return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control der-highlight-weekly-alarm\"   placeholder=\"{2}\" tabindex=\"{3}\" data-property=\"{4}\" data-highlight-type-id=\"{5}\" data-id=\"{6}\" data-title=\"{7}\" />", value, existValue, label, tabIndex, property, highlightTypeId, highlightId, title));
+        }
         public static MvcHtmlString DisplayHighlightInput(this HtmlHelper helper, IList<DerValuesViewModel.DerHighlightValuesViewModel> highlights, int highlightTypeId, int tabIndex, string placeHolder, string defaultValueDefined="empty") {
             string value;
             switch (defaultValueDefined)

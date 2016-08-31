@@ -14,6 +14,7 @@ using DSLNG.PEAR.Web.ViewModels.Highlight;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Requests.Highlight;
 using Newtonsoft.Json;
+using DSLNG.PEAR.Web.ViewModels.Wave;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -94,7 +95,7 @@ namespace DSLNG.PEAR.Web.Controllers
             return View(GetDerValuesPerSection(date,
                new int[] { 273, 274,275,276,1,177,278,277,285,356,4,359,286,292 }, //actual KpiIds 
                new int[] { 1, 177,278,277,276,285}, //target KpiIds
-               new int[] { 18, 13}  //highlightTypeIds
+               new int[] { 18, 13, 20}  //highlightTypeIds
                ));
         }
 
@@ -208,6 +209,36 @@ namespace DSLNG.PEAR.Web.Controllers
             }
             dynamic jsonObj = JsonConvert.DeserializeObject(req.Message);
             jsonObj[viewModel.Property][viewModel.ValueType] = viewModel.Message;
+            req.Message = JsonConvert.SerializeObject(jsonObj, Formatting.Indented);
+            var resp = _highlightService.SaveHighlight(req);
+            return Json(resp);
+        }
+        public ActionResult UpdateWave(WaveViewModel viewModel)
+        {
+            throw new NotImplementedException();
+        }
+        public ActionResult UpdateWeeklyAlarm(HighlightViewModel viewModel)
+        {
+            var existingHighlight = _highlightService.GetHighlightByPeriode(new GetHighlightRequest
+            {
+                Date = viewModel.Date,
+                HighlightTypeId = viewModel.TypeId
+            });
+            SaveHighlightRequest req = new SaveHighlightRequest();
+            req.PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType, true);
+            req.Date = viewModel.Date.Value;
+            req.TypeId = viewModel.TypeId;
+            if (existingHighlight.Id == 0)
+            {
+                req.Message = "{\"period\" : \"\",\"processtrain\" : \"\",\"utilities\" : \"\",\"remark\" : \"\" }";
+            }
+            else
+            {
+                req.Message = existingHighlight.Message;
+                req.Id = existingHighlight.Id;
+            }
+            dynamic jsonObj = JsonConvert.DeserializeObject(req.Message);
+            jsonObj[viewModel.Property] = viewModel.Message;
             req.Message = JsonConvert.SerializeObject(jsonObj, Formatting.Indented);
             var resp = _highlightService.SaveHighlight(req);
             return Json(resp);
