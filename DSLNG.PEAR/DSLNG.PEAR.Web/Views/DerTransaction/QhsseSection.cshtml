@@ -282,7 +282,6 @@
 </div>
 <div class="col-md-12" style="margin-top: 30px;">
     <div class="col-md-6">
-        <strong style="color:red">sedang dikerjakan lewat saja</strong>
         <table border="0">
             <tr>
                 <td><label class="control-label">Alert Condition</label></td>
@@ -290,11 +289,7 @@
             <tr>
                 <td>
                     <!--260-->
-                    <select>
-                        <option>Select Option</option>
-                        <option>Option 1</option>
-                        <option>Option 2</option>
-                    </select>
+                    @Html.DisplayHighlightDropdownList(Model.Highlights,7,Model.AlertOptions,260,"prev")
                 </td>
             </tr>
         </table>

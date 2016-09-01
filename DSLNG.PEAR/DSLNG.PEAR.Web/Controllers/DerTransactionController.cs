@@ -105,7 +105,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var viewModel = GetDerValuesPerSection(date,
                new int[] { 273, 274, 275, 276, 1, 177, 278, 277, 285, 356, 4, 359, 286, 292 }, //actual KpiIds 
                new int[] { 1, 177, 278, 277, 276, 285 }, //target KpiIds
-               new int[] { 18, 13, 20 }  //highlightTypeIds
+               new int[] { 18, 13, 20, 7 }  //highlightTypeIds
                );
             var theDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
             var wave = _waveService.GetWave(new GetWaveRequest
@@ -158,6 +158,8 @@ namespace DSLNG.PEAR.Web.Controllers
             }
             if (viewModel.Weather == null) viewModel.Weather = new WeatherViewModel();
             viewModel.Weather.Values = _selectService.GetSelect(new GetSelectRequest { Name = "weather-values" }).Options
+                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Text }).ToList();
+            viewModel.AlertOptions = _selectService.GetSelect(new GetSelectRequest { ParentName = "highlight-types", ParentOptionId = 7 }).Options
                 .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Text }).ToList();
             return View(viewModel);
         }
