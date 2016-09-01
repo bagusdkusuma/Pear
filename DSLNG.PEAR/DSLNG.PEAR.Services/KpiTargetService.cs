@@ -933,5 +933,66 @@ namespace DSLNG.PEAR.Services
             }
             return response;
         }
+
+        public UpdateKpiTargetItemResponse UpdateOriginalData(SaveKpiTargetRequest request)
+        {
+            var response = new UpdateKpiTargetItemResponse();
+            try
+            {
+                var kpiTarget = request.MapTo<KpiTarget>();
+                var user = DataContext.Users.First(x => x.Id == request.UserId);
+                if (request.Id != 0)
+                {
+                    if ((string.IsNullOrEmpty(request.Value) && request.Remark == null) || request.Value == "-" || (!string.IsNullOrEmpty(request.Value) && request.Value.ToLowerInvariant() == "null"))
+                    {
+                        kpiTarget = DataContext.KpiTargets.Single(x => x.Id == request.Id);
+                        DataContext.KpiTargets.Remove(kpiTarget);
+                    }
+                    else {
+                        kpiTarget = DataContext.KpiTargets
+                                          .Include(x => x.Kpi)
+                                          .Include(x => x.UpdatedBy)
+                                          .Single(x => x.Id == request.Id);
+                        if (request.Value != null)
+                        {
+                            kpiTarget.Value = request.RealValue;
+                        }
+                        if (request.Remark != null)
+                        {
+                            kpiTarget.Remark = request.Remark;
+                        }
+                        //request.MapPropertiesToInstance<KpiAchievement>(kpiAchievement);
+                        kpiTarget.UpdatedBy = user;
+                        kpiTarget.Kpi = DataContext.Kpis.Single(x => x.Id == request.KpiId);
+                    }
+                 
+                }
+                else
+                {
+                    if (((string.IsNullOrEmpty(request.Value) && request.Remark == null) || request.Value == "-" ||
+                         (!string.IsNullOrEmpty(request.Value) && request.Value.ToLowerInvariant() == "null")) && request.Id == 0)
+                    {
+                        response.IsSuccess = false;
+                        response.Message = "You can not update this item because it is not existed";
+                        return response;
+                    }
+                    else {
+                        kpiTarget.CreatedBy = user;
+                        kpiTarget.UpdatedBy = user;
+                        kpiTarget.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == request.KpiId);
+                        DataContext.KpiTargets.Add(kpiTarget);
+                    }
+                }
+                DataContext.SaveChanges();
+                response.Id = kpiTarget.Id;
+                response.IsSuccess = true;
+                response.Message = "KPI Target item has been updated successfully";
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
+            return response;
+        }
     }
 }

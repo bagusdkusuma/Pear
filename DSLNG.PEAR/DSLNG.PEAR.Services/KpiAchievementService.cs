@@ -877,5 +877,308 @@ namespace DSLNG.PEAR.Services
 
             return response;
         }
+
+        public UpdateKpiAchievementItemResponse UpdateOriginalData(UpdateKpiAchievementItemRequest request)
+        {
+            var response = new UpdateKpiAchievementItemResponse();
+            try
+            {
+                var user = DataContext.Users.First(x => x.Id == request.UserId);
+                var kpiAchievement = request.MapTo<KpiAchievement>();
+
+                if (request.Id > 0)
+                {
+                    if ((string.IsNullOrEmpty(request.Value) && request.Remark == null) || request.Value == "-" || (!string.IsNullOrEmpty(request.Value) && request.Value.Equals("null",StringComparison.InvariantCultureIgnoreCase)))
+                    {
+                        kpiAchievement = DataContext.KpiAchievements.Single(x => x.Id == request.Id);
+                        DataContext.KpiAchievements.Remove(kpiAchievement);
+                    }
+                    else
+                    {
+                        kpiAchievement = DataContext.KpiAchievements
+                                                .Include(x => x.Kpi)
+                                                .Include(x => x.UpdatedBy)
+                                                .Single(x => x.Id == request.Id);
+                        if (request.Value != null) {
+                            kpiAchievement.Value = request.RealValue;
+                        }
+                        if (request.Remark != null) {
+                            kpiAchievement.Remark = request.Remark;
+                        }
+                        //request.MapPropertiesToInstance<KpiAchievement>(kpiAchievement);
+                        kpiAchievement.UpdatedBy = user;
+                        kpiAchievement.Kpi = DataContext.Kpis.Single(x => x.Id == request.KpiId);
+                    }
+                }
+                else if (request.Id == 0)
+                {
+                    if (((string.IsNullOrEmpty(request.Value) && request.Remark == null) || request.Value == "-" ||
+                          (!string.IsNullOrEmpty(request.Value) && request.Value.Equals("null", StringComparison.InvariantCultureIgnoreCase))) && request.Id == 0)
+                    {
+                        response.IsSuccess = false;
+                        response.Message = "You can not update this item because it is not existed";
+                        return response;
+                    }
+                    else
+                    {
+                        kpiAchievement.CreatedBy = user;
+                        kpiAchievement.UpdatedBy = user;
+                        kpiAchievement.Kpi = DataContext.Kpis.Single(x => x.Id == request.KpiId);
+                        DataContext.KpiAchievements.Add(kpiAchievement);
+                    }
+                }
+
+
+                DataContext.SaveChanges();
+
+                if (request.Remark == null) {
+                    switch (request.PeriodeType) {
+                        case PeriodeType.Yearly:
+                            if (kpiAchievement.Kpi.YtdFormula == YtdFormula.Sum)
+                            {
+                                var itdValue = DataContext.KpiAchievements.Where(x => x.PeriodeType == PeriodeType.Yearly
+                                  && x.Periode.Year <= request.Periode.Year
+                                  && x.Kpi.Id == kpiAchievement.Kpi.Id).Sum(x => x.Value);
+                                kpiAchievement.Itd = itdValue;
+
+                                DataContext.SaveChanges();
+                            }
+                            else
+                            {
+                                var itdValue = DataContext.KpiAchievements.Where(x => x.PeriodeType == PeriodeType.Yearly
+                                  && x.Periode.Year <= request.Periode.Year
+                                  && x.Kpi.Id == kpiAchievement.Kpi.Id).Average(x => x.Value);
+
+                                kpiAchievement.Itd = itdValue;
+
+                                DataContext.SaveChanges();
+                            }
+
+                            break;
+                        case PeriodeType.Monthly:
+                            if (kpiAchievement.Kpi.YtdFormula == YtdFormula.Sum)
+                            {
+                                var ytdValue = DataContext.KpiAchievements.Where(x => x.PeriodeType == PeriodeType.Monthly
+                            && x.Periode.Year == request.Periode.Year
+                            && x.Periode.Month <= request.Periode.Month
+                            && x.Kpi.Id == kpiAchievement.Kpi.Id).Sum(x => x.Value);
+                                var yearly = DataContext.KpiAchievements.FirstOrDefault(x => x.Kpi.Id == kpiAchievement.Kpi.Id && x.Periode.Month == request.Periode.Year && x.PeriodeType == PeriodeType.Yearly);
+                                if (yearly != null)
+                                {
+                                    yearly.Value = ytdValue;
+                                }
+                                else
+                                {
+                                    yearly = new KpiAchievement
+                                    {
+                                        Value = ytdValue,
+                                        Periode = new DateTime(request.Periode.Year, 1, 1),
+                                        PeriodeType = PeriodeType.Yearly,
+                                        Kpi = kpiAchievement.Kpi,
+                                        CreatedBy = user,
+                                        UpdatedBy = user
+                                    };
+                                    DataContext.KpiAchievements.Add(yearly);
+                                }
+                                DataContext.SaveChanges();
+
+                                var itdValue = DataContext.KpiAchievements.Where(x => x.PeriodeType == PeriodeType.Yearly
+                                  && x.Periode.Year <= request.Periode.Year
+                                  && x.Kpi.Id == kpiAchievement.Kpi.Id).Sum(x => x.Value);
+
+                                yearly.Itd = itdValue;
+
+                                kpiAchievement.Ytd = ytdValue;
+                                kpiAchievement.Itd = itdValue;
+
+                                DataContext.SaveChanges();
+                            }
+                            else {
+                                var ytdValue = DataContext.KpiAchievements.Where(x => x.PeriodeType == PeriodeType.Monthly
+                            && x.Periode.Year == request.Periode.Year
+                            && x.Periode.Month <= request.Periode.Month
+                            && x.Kpi.Id == kpiAchievement.Kpi.Id).Average(x => x.Value);
+                                var yearly = DataContext.KpiAchievements.FirstOrDefault(x => x.Kpi.Id == kpiAchievement.Kpi.Id && x.Periode.Month == request.Periode.Year && x.PeriodeType == PeriodeType.Yearly);
+                                if (yearly != null)
+                                {
+                                    yearly.Value = ytdValue;
+                                }
+                                else
+                                {
+                                    yearly = new KpiAchievement
+                                    {
+                                        Value = ytdValue,
+                                        Periode = new DateTime(request.Periode.Year, 1, 1),
+                                        PeriodeType = PeriodeType.Yearly,
+                                        Kpi = kpiAchievement.Kpi,
+                                        CreatedBy = user,
+                                        UpdatedBy = user
+                                    };
+                                    DataContext.KpiAchievements.Add(yearly);
+                                }
+                                DataContext.SaveChanges();
+
+                                var itdValue = DataContext.KpiAchievements.Where(x => x.PeriodeType == PeriodeType.Yearly
+                                  && x.Periode.Year <= request.Periode.Year
+                                  && x.Kpi.Id == kpiAchievement.Kpi.Id).Average(x => x.Value);
+
+                                yearly.Itd = itdValue;
+
+                                kpiAchievement.Ytd = ytdValue;
+                                kpiAchievement.Itd = itdValue;
+
+                                DataContext.SaveChanges();
+                            }
+                                break;
+                        default:
+                            if (kpiAchievement.Kpi.YtdFormula == YtdFormula.Sum) {
+                                var mtdValue = DataContext.KpiAchievements.Where(x => x.PeriodeType == PeriodeType.Daily
+                                && x.Periode.Year == request.Periode.Year && x.Periode.Month == request.Periode.Month
+                                && x.Periode <= request.Periode
+                                && x.Kpi.Id == kpiAchievement.Kpi.Id).Sum(x => x.Value);
+                                kpiAchievement.Mtd = mtdValue;
+                                var monthly = DataContext.KpiAchievements.FirstOrDefault(x => x.Kpi.Id == kpiAchievement.Kpi.Id && x.Periode.Month == request.Periode.Month && x.PeriodeType == PeriodeType.Monthly);
+                                if (monthly != null)
+                                {
+                                    monthly.Value = mtdValue;
+                                }
+                                else {
+                                    monthly = new KpiAchievement
+                                    {
+                                        Value = mtdValue,
+                                        Periode = new DateTime(request.Periode.Year, request.Periode.Month, 1),
+                                        PeriodeType = PeriodeType.Monthly,
+                                        Kpi = kpiAchievement.Kpi,
+                                        CreatedBy = user,
+                                        UpdatedBy = user
+                                    };
+                                    DataContext.KpiAchievements.Add(monthly);
+                                }
+                                DataContext.SaveChanges();
+
+                                var ytdValue = DataContext.KpiAchievements.Where(x => x.PeriodeType == PeriodeType.Monthly
+                                && x.Periode.Year == request.Periode.Year
+                                && x.Periode.Month <= request.Periode.Month
+                                && x.Kpi.Id == kpiAchievement.Kpi.Id).Sum(x => x.Value);
+                                var yearly = DataContext.KpiAchievements.FirstOrDefault(x => x.Kpi.Id == kpiAchievement.Kpi.Id && x.Periode.Month == request.Periode.Year && x.PeriodeType == PeriodeType.Yearly);
+                                if (yearly != null)
+                                {
+                                    yearly.Value = ytdValue;
+                                }
+                                else
+                                {
+                                    yearly = new KpiAchievement
+                                    {
+                                        Value = ytdValue,
+                                        Periode = new DateTime(request.Periode.Year, 1, 1),
+                                        PeriodeType = PeriodeType.Yearly,
+                                        Kpi = kpiAchievement.Kpi,
+                                        CreatedBy = user,
+                                        UpdatedBy = user
+                                    };
+                                    DataContext.KpiAchievements.Add(yearly);
+                                }
+                                DataContext.SaveChanges();
+
+                                var itdValue = DataContext.KpiAchievements.Where(x => x.PeriodeType == PeriodeType.Yearly
+                                  && x.Periode.Year <= request.Periode.Year
+                                  && x.Kpi.Id == kpiAchievement.Kpi.Id).Sum(x => x.Value);
+
+                                yearly.Itd = itdValue;
+
+                                monthly.Ytd = ytdValue;
+                                monthly.Itd = itdValue;
+
+                                kpiAchievement.Mtd = mtdValue;
+                                kpiAchievement.Ytd = ytdValue;
+                                kpiAchievement.Itd = itdValue;
+
+                                DataContext.SaveChanges();
+
+                            } else {
+                                var mtdValue = DataContext.KpiAchievements.Where(x => x.PeriodeType == PeriodeType.Daily
+                               && x.Periode.Year == request.Periode.Year && x.Periode.Month == request.Periode.Month
+                               && x.Periode <= request.Periode
+                               && x.Kpi.Id == kpiAchievement.Kpi.Id).Average(x => x.Value);
+                                kpiAchievement.Mtd = mtdValue;
+                                var monthly = DataContext.KpiAchievements.FirstOrDefault(x => x.Kpi.Id == kpiAchievement.Kpi.Id && x.Periode.Month == request.Periode.Month && x.PeriodeType == PeriodeType.Monthly);
+                                if (monthly != null)
+                                {
+                                    monthly.Value = mtdValue;
+                                }
+                                else
+                                {
+                                    monthly = new KpiAchievement
+                                    {
+                                        Value = mtdValue,
+                                        Periode = new DateTime(request.Periode.Year, request.Periode.Month, 1),
+                                        PeriodeType = PeriodeType.Monthly,
+                                        Kpi = kpiAchievement.Kpi,
+                                        CreatedBy = user,
+                                        UpdatedBy = user
+                                    };
+                                    DataContext.KpiAchievements.Add(monthly);
+                                }
+                                DataContext.SaveChanges();
+
+                                var ytdValue = DataContext.KpiAchievements.Where(x => x.PeriodeType == PeriodeType.Monthly
+                                && x.Periode.Year == request.Periode.Year
+                                && x.Periode.Month <= request.Periode.Month
+                                && x.Kpi.Id == kpiAchievement.Kpi.Id).Average(x => x.Value);
+                                var yearly = DataContext.KpiAchievements.FirstOrDefault(x => x.Kpi.Id == kpiAchievement.Kpi.Id && x.Periode.Month == request.Periode.Year && x.PeriodeType == PeriodeType.Yearly);
+                                if (yearly != null)
+                                {
+                                    yearly.Value = ytdValue;
+                                }
+                                else
+                                {
+                                    yearly = new KpiAchievement
+                                    {
+                                        Value = ytdValue,
+                                        Periode = new DateTime(request.Periode.Year, 1, 1),
+                                        PeriodeType = PeriodeType.Yearly,
+                                        Kpi = kpiAchievement.Kpi,
+                                        CreatedBy = user,
+                                        UpdatedBy = user
+                                    };
+                                    DataContext.KpiAchievements.Add(yearly);
+                                }
+                                DataContext.SaveChanges();
+
+                                var itdValue = DataContext.KpiAchievements.Where(x => x.PeriodeType == PeriodeType.Yearly
+                                  && x.Periode.Year <= request.Periode.Year
+                                  && x.Kpi.Id == kpiAchievement.Kpi.Id).Average(x => x.Value);
+
+                                yearly.Itd = itdValue;
+
+                                monthly.Ytd = ytdValue;
+                                monthly.Itd = itdValue;
+
+                                kpiAchievement.Mtd = mtdValue;
+                                kpiAchievement.Ytd = ytdValue;
+                                kpiAchievement.Itd = itdValue;
+
+                                DataContext.SaveChanges();
+                            }
+                             
+                            break;
+                    }
+                }
+              
+                response.Id = request.Id > 0 ? request.Id : kpiAchievement.Id;
+                response.IsSuccess = true;
+                response.Message = "KPI Achievement item has been updated successfully";
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                response.Message = invalidOperationException.Message;
+            }
+            catch (ArgumentNullException argumentNullException)
+            {
+                response.Message = argumentNullException.Message;
+            }
+
+            return response;
+        }
     }
 }

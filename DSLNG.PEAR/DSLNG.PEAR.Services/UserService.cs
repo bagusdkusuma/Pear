@@ -20,10 +20,12 @@ namespace DSLNG.PEAR.Services
     {
         //private PasswordHasher _pass = new PasswordHasher();
         private PBKDF2 crypto = new PBKDF2();
+        
 
         public UserService(IDataContext dataContext)
             : base(dataContext)
         {
+            
         }
 
         public GetUsersResponse GetUsers(GetUsersRequest request)
@@ -66,6 +68,8 @@ namespace DSLNG.PEAR.Services
             var response = new CreateUserResponse();
             try
             {
+                crypto.HashIterations = 10;
+                crypto.SaltSize = 12;
 
                 var user = request.MapTo<User>();
                 user.Role = DataContext.RoleGroups.First(x => x.Id == request.RoleId);
@@ -87,20 +91,31 @@ namespace DSLNG.PEAR.Services
 
         public UpdateUserResponse Update(UpdateUserRequest request)
         {
+            crypto.HashIterations = 10;
+            crypto.SaltSize = 12;
             var response = new UpdateUserResponse();
             try
             {
                 //var user = request.MapTo<User>();
-                var user = DataContext.Users.Include(u => u.Role).First(x => x.Id == request.Id).MapTo<User>();
+                var user = DataContext.Users.Include(u => u.Role).Include(r=>r.RolePrivileges).First(x => x.Id == request.Id).MapTo<User>();
                 user.Role = DataContext.RoleGroups.First(x => x.Id == request.RoleId);
                 user.FullName = request.FullName;
+                user.RolePrivileges.Clear();
+                if (request.RolePrivilegeIds.Count > 0)
+                {
+                    foreach (var role in request.RolePrivilegeIds)
+                    {
+                        var rolePrivilege = DataContext.RolePrivileges.Find(role);
+                        user.RolePrivileges.Add(rolePrivilege);
+                    }
+                }
                 user.SignatureImage = request.SignatureImage;
                 user.Username = request.Username;
                 user.IsActive = request.IsActive;
                 user.ChangeModel = request.ChangeModel;
                 if (request.ChangePassword && request.Password != null)
                 {
-                    user.PasswordSalt = crypto.Salt != null ? crypto.Salt : crypto.GenerateSalt(crypto.HashIterations, crypto.SaltSize);
+                    user.PasswordSalt = crypto.GenerateSalt(crypto.HashIterations, crypto.SaltSize);
                     user.Password = crypto.Compute(request.Password, user.PasswordSalt);
                 }
                 DataContext.Users.Attach(user);
@@ -147,6 +162,17 @@ namespace DSLNG.PEAR.Services
                 var user = DataContext.Users.Where(x => x.Email == request.Email).Include(x => x.Role).Include(y => y.RolePrivileges).First();
                 if (user != null && user.Password == crypto.Compute(request.Password, user.PasswordSalt))
                 {
+                    //Add For Update Password
+                    int HashIteration = int.Parse(user.PasswordSalt.Substring(0, user.PasswordSalt.IndexOf('.')),System.Globalization.NumberStyles.Number);
+                    if (HashIteration > 10)
+                    {
+                        ChangePassword(new ChangePasswordRequest
+                        {
+                            Id = user.Id,
+                            Old_Password = request.Password,
+                            New_Password = request.Password
+                        });
+                    }
                     //Include(x => x.Role).
                     response = user.MapTo<LoginUserResponse>();
                     response.IsSuccess = true;
@@ -200,14 +226,19 @@ namespace DSLNG.PEAR.Services
             var user = DataContext.Users.First(x => x.Id == request.Id).MapTo<User>();
             if (user != null)
             {
-
+                
                 if (user.Password != crypto.Compute(request.Old_Password, user.PasswordSalt))
                 {
                     response.Message = "Current Password isn't correct!";
                     return response;
                 }
 
-                user.PasswordSalt = crypto.Salt != null ? crypto.Salt : crypto.GenerateSalt(crypto.HashIterations, crypto.SaltSize);
+                // change to lesser crypto
+                crypto.HashIterations = 10;
+                crypto.SaltSize = 12;
+
+                //user.PasswordSalt = crypto.Salt != null ? crypto.Salt : crypto.GenerateSalt(crypto.HashIterations, crypto.SaltSize);
+                user.PasswordSalt = crypto.GenerateSalt(crypto.HashIterations, crypto.SaltSize);
                 user.Password = crypto.Compute(request.New_Password, user.PasswordSalt);
 
                 DataContext.Users.Attach(user);

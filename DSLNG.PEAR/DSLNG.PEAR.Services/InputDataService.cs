@@ -36,6 +36,11 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
+        public SaveOrUpdateResponse SaveOrUpdateInputData(SaveOrUpdateInputDataRequest request)
+        {
+            
+        }
+
         private IEnumerable<InputData> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int totalRecords)
         {
             var data = DataContext.InputData

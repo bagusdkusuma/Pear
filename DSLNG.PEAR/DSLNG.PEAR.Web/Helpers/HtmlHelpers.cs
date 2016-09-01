@@ -8,6 +8,9 @@ using Newtonsoft.Json;
 using DSLNG.PEAR.Web.ViewModels.DerTransaction;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
+using Newtonsoft.Json.Linq;
+using DSLNG.PEAR.Web.ViewModels.Wave;
 
 namespace DSLNG.PEAR.Web.Helpers
 {
@@ -378,7 +381,7 @@ namespace DSLNG.PEAR.Web.Helpers
             }
         }
 
-        public static MvcHtmlString DisplayKpiInformationInput(this HtmlHelper htmlHelper, IList<DerValuesViewModel.KpiInformationValuesViewModel> kpiInformations, int kpiId, int tabIndex, string placeholder = "rate",string defaultValueDefined = "empty", string type = "daily-actual")
+        public static MvcHtmlString DisplayKpiInformationInput(this HtmlHelper htmlHelper, IList<DerValuesViewModel.KpiInformationValuesViewModel> kpiInformations, int kpiId, int tabIndex, string placeholder = "rate",string defaultValueDefined = "empty", string type = "daily-actual", string valueType="value", string additionalClass = "")
         {
             string value;
             switch (defaultValueDefined) { 
@@ -392,35 +395,79 @@ namespace DSLNG.PEAR.Web.Helpers
             }
             var kpiInformation = kpiInformations.First(x => x.KpiId == kpiId);
             var existValue = "empty";
+            var id = 0;
             switch (type)
             {
                 case "daily-actual":
-                    value = kpiInformation.DailyActual == null ? value : (defaultValueDefined == "prev" ? kpiInformation.DailyActual.Value.ToString() : ( kpiInformation.DailyActual.Type == "now" ?  kpiInformation.DailyActual.Value.ToString() : value));
-                    existValue = kpiInformation.DailyActual == null ?existValue: kpiInformation.DailyActual.Type;
+                    {
+                        var valueObject = GetValue(kpiInformation.DailyActual, value, defaultValueDefined, valueType, existValue);
+                        value = valueObject.Value;
+                        id = valueObject.Id;
+                        existValue = valueObject.ExistValue;
+                    }
                     break;
                 case "monthly-actual":
-                    value = kpiInformation.MonthlyActual == null ? value : (defaultValueDefined == "prev" ? kpiInformation.MonthlyActual.Value.ToString() : (kpiInformation.MonthlyActual.Type == "now" ? kpiInformation.MonthlyActual.Value.ToString() : value));
-                    existValue = kpiInformation.MonthlyActual == null ? existValue : kpiInformation.MonthlyActual.Type;
+                    {
+                        var valueObject = GetValue(kpiInformation.MonthlyActual, value, defaultValueDefined, valueType, existValue);
+                        value = valueObject.Value;
+                        existValue = valueObject.ExistValue;
+                        id = valueObject.Id;
+                    }
                     break;
                 case "yearly-actual":
-                    value = kpiInformation.YearlyActual == null ? value : (defaultValueDefined == "prev" ? kpiInformation.YearlyActual.Value.ToString() : (kpiInformation.YearlyActual.Type == "now" ? kpiInformation.YearlyActual.Value.ToString() : value));
-                    existValue = kpiInformation.YearlyActual == null ? existValue : kpiInformation.YearlyActual.Type;
+                    {
+                        var valueObject = GetValue(kpiInformation.YearlyActual, value, defaultValueDefined, valueType, existValue);
+                        value = valueObject.Value;
+                        existValue = valueObject.ExistValue;
+                        id = valueObject.Id;
+                    }
                     break;
                 case "daily-target":
-                    value = kpiInformation.DailyTarget == null ? value : (defaultValueDefined == "prev" ? kpiInformation.DailyTarget.Value.ToString() : (kpiInformation.DailyTarget.Type == "now" ? kpiInformation.DailyTarget.Value.ToString() : value));
-                    existValue = kpiInformation.DailyTarget == null ? existValue : kpiInformation.DailyTarget.Type;
+                    {
+                        var valueObject = GetValue(kpiInformation.DailyTarget, value, defaultValueDefined, valueType, existValue);
+                        value = valueObject.Value;
+                        existValue = valueObject.ExistValue;
+                        id = valueObject.Id;
+                    }
                     break;
                 case "monthly-target":
-                    value = kpiInformation.MonthlyTarget == null ? value : (defaultValueDefined == "prev" ? kpiInformation.MonthlyTarget.Value.ToString() : (kpiInformation.MonthlyTarget.Type == "now" ? kpiInformation.MonthlyTarget.Value.ToString() : value));
-                    existValue = kpiInformation.MonthlyTarget == null ? existValue : kpiInformation.MonthlyTarget.Type;
+                    {
+                        var valueObject = GetValue(kpiInformation.MonthlyTarget, value, defaultValueDefined, valueType, existValue);
+                        value = valueObject.Value;
+                        existValue = valueObject.ExistValue;
+                        id = valueObject.Id;
+                    }
                     break;
                 case "yearly-target":
-                    value = kpiInformation.YearlyTarget == null ? value : (defaultValueDefined == "prev" ? kpiInformation.YearlyTarget.Value.ToString() : (kpiInformation.YearlyTarget.Type == "now" ? kpiInformation.YearlyTarget.Value.ToString() : value));
-                    existValue = kpiInformation.YearlyTarget == null ? existValue : kpiInformation.YearlyTarget.Type;
+                    {
+                        var valueObject = GetValue(kpiInformation.YearlyTarget, value, defaultValueDefined, valueType, existValue);
+                        value = valueObject.Value;
+                        existValue = valueObject.ExistValue;
+                        id = valueObject.Id;
+                    }
                     break;
 
                 }
-            return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" />", value, existValue, placeholder, tabIndex, type));
+            return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control der-kpi {8}\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" data-kpi-id=\"{5}\" data-id=\"{6}\" data-value-type=\"{7}\" />", value, existValue, placeholder, tabIndex, type, kpiId, id, valueType, additionalClass));
+        }
+
+        public class ValueObject {
+            public string Value { get; set; }
+            public string ExistValue { get; set; }
+            public int Id { get; set; }
+        }
+
+        private static ValueObject GetValue(DerValuesViewModel.KpiValueViewModel kpiValue, string value, string defaultValueDefined, string valueType, string existValue) {
+            if (valueType == "value")
+            {
+                value = kpiValue == null ? value : (defaultValueDefined == "prev" ? kpiValue.Value.ToString() : (kpiValue.Type == "now" ? kpiValue.Value.ToString() : value));
+                existValue = kpiValue == null ? existValue : kpiValue.Type;
+            }
+            else {
+                value = kpiValue == null ? value : (defaultValueDefined == "prev" ? kpiValue.Remark : (kpiValue.Type == "now" ? kpiValue.Remark : value));
+                existValue = kpiValue == null ? existValue : kpiValue.Type;
+            }
+            return new ValueObject { Value = value, ExistValue = existValue, Id = kpiValue == null ? 0 : kpiValue.Id };
         }
 
         public static MvcHtmlString DisplayKpiInformationList(this HtmlHelper htmlHelper, IList<DerValuesViewModel.KpiInformationValuesViewModel> kpiInformations, int kpiId, int tabIndex, IList<SelectListItem> options, string defaultValueDefined = "empty", string type = "daily-actual")
@@ -438,42 +485,327 @@ namespace DSLNG.PEAR.Web.Helpers
             }
             var kpiInformation = kpiInformations.First(x => x.KpiId == kpiId);
             var existValue = "empty";
+            var id = 0;
             switch (type)
             {
                 case "daily-actual":
-                    value = kpiInformation.DailyActual == null ? value : (defaultValueDefined == "prev" ? kpiInformation.DailyActual.Remark.ToString() : (kpiInformation.DailyActual.Type == "now" ? kpiInformation.DailyActual.Remark.ToString() : value));
-                    existValue = kpiInformation.DailyActual == null ? existValue : kpiInformation.DailyActual.Type;
+                    {
+                        var valueObject = GetValue(kpiInformation.DailyActual, value, defaultValueDefined, "remark", existValue);
+                        value = valueObject.Value;
+                        id = valueObject.Id;
+                        existValue = valueObject.ExistValue;
+                    }
+                    //value = kpiInformation.DailyActual == null ? value : (defaultValueDefined == "prev" ? kpiInformation.DailyActual.Remark : (kpiInformation.DailyActual.Type == "now" ? kpiInformation.DailyActual.Remark : value));
+                    //existValue = kpiInformation.DailyActual == null ? existValue : kpiInformation.DailyActual.Type;
                     break;
                 case "monthly-actual":
-                    value = kpiInformation.MonthlyActual == null ? value : (defaultValueDefined == "prev" ? kpiInformation.MonthlyActual.Remark.ToString() : (kpiInformation.MonthlyActual.Type == "now" ? kpiInformation.MonthlyActual.Remark.ToString() : value));
-                    existValue = kpiInformation.MonthlyActual == null ? existValue : kpiInformation.MonthlyActual.Type;
+                    {
+                        var valueObject = GetValue(kpiInformation.MonthlyActual, value, defaultValueDefined, "remark", existValue);
+                        value = valueObject.Value;
+                        id = valueObject.Id;
+                        existValue = valueObject.ExistValue;
+                    }
+                    //value = kpiInformation.MonthlyActual == null ? value : (defaultValueDefined == "prev" ? kpiInformation.MonthlyActual.Remark : (kpiInformation.MonthlyActual.Type == "now" ? kpiInformation.MonthlyActual.Remark : value));
+                    //existValue = kpiInformation.MonthlyActual == null ? existValue : kpiInformation.MonthlyActual.Type;
                     break;
                 case "yearly-actual":
-                    value = kpiInformation.YearlyActual == null ? value : (defaultValueDefined == "prev" ? kpiInformation.YearlyActual.Remark.ToString() : (kpiInformation.YearlyActual.Type == "now" ? kpiInformation.YearlyActual.Remark.ToString() : value));
-                    existValue = kpiInformation.YearlyActual == null ? existValue : kpiInformation.YearlyActual.Type;
+                    {
+                        var valueObject = GetValue(kpiInformation.YearlyActual, value, defaultValueDefined, "remark", existValue);
+                        value = valueObject.Value;
+                        id = valueObject.Id;
+                        existValue = valueObject.ExistValue;
+                    }
+                    //value = kpiInformation.YearlyActual == null ? value : (defaultValueDefined == "prev" ? kpiInformation.YearlyActual.Remark : (kpiInformation.YearlyActual.Type == "now" ? kpiInformation.YearlyActual.Remark : value));
+                    //existValue = kpiInformation.YearlyActual == null ? existValue : kpiInformation.YearlyActual.Type;
                     break;
                 case "daily-target":
-                    value = kpiInformation.DailyTarget == null ? value : (defaultValueDefined == "prev" ? kpiInformation.DailyTarget.Remark.ToString() : (kpiInformation.DailyTarget.Type == "now" ? kpiInformation.DailyTarget.Remark.ToString() : value));
-                    existValue = kpiInformation.DailyTarget == null ? existValue : kpiInformation.DailyTarget.Type;
+                    {
+                        var valueObject = GetValue(kpiInformation.DailyTarget, value, defaultValueDefined, "remark", existValue);
+                        value = valueObject.Value;
+                        id = valueObject.Id;
+                        existValue = valueObject.ExistValue;
+                    }
+                    //value = kpiInformation.DailyTarget == null ? value : (defaultValueDefined == "prev" ? kpiInformation.DailyTarget.Remark : (kpiInformation.DailyTarget.Type == "now" ? kpiInformation.DailyTarget.Remark : value));
+                    //existValue = kpiInformation.DailyTarget == null ? existValue : kpiInformation.DailyTarget.Type;
                     break;
                 case "monthly-target":
-                    value = kpiInformation.MonthlyTarget == null ? value : (defaultValueDefined == "prev" ? kpiInformation.MonthlyTarget.Remark.ToString() : (kpiInformation.MonthlyTarget.Type == "now" ? kpiInformation.MonthlyTarget.Remark.ToString() : value));
-                    existValue = kpiInformation.MonthlyTarget == null ? existValue : kpiInformation.MonthlyTarget.Type;
+                    {
+                        var valueObject = GetValue(kpiInformation.MonthlyTarget, value, defaultValueDefined, "remark", existValue);
+                        value = valueObject.Value;
+                        id = valueObject.Id;
+                        existValue = valueObject.ExistValue;
+                    }
+                    //value = kpiInformation.MonthlyTarget == null ? value : (defaultValueDefined == "prev" ? kpiInformation.MonthlyTarget.Remark : (kpiInformation.MonthlyTarget.Type == "now" ? kpiInformation.MonthlyTarget.Remark : value));
+                    //existValue = kpiInformation.MonthlyTarget == null ? existValue : kpiInformation.MonthlyTarget.Type;
                     break;
                 case "yearly-target":
-                    value = kpiInformation.YearlyTarget == null ? value : (defaultValueDefined == "prev" ? kpiInformation.YearlyTarget.Remark.ToString() : (kpiInformation.YearlyTarget.Type == "now" ? kpiInformation.YearlyTarget.Remark.ToString() : value));
-                    existValue = kpiInformation.YearlyTarget == null ? existValue : kpiInformation.YearlyTarget.Type;
+                    {
+                        var valueObject = GetValue(kpiInformation.YearlyTarget, value, defaultValueDefined, "remark", existValue);
+                        value = valueObject.Value;
+                        id = valueObject.Id;
+                        existValue = valueObject.ExistValue;
+                    }
+                    //value = kpiInformation.YearlyTarget == null ? value : (defaultValueDefined == "prev" ? kpiInformation.YearlyTarget.Remark : (kpiInformation.YearlyTarget.Type == "now" ? kpiInformation.YearlyTarget.Remark : value));
+                    //existValue = kpiInformation.YearlyTarget == null ? existValue : kpiInformation.YearlyTarget.Type;
                     break;
 
             }
-            var selectInput = string.Format("<select class=\"der-value-{0} form-control\" tabindex=\"{1}\" data-type=\"{2}\" >", existValue, tabIndex, type);
+            var selectInput = string.Format("<select class=\"der-value-{0} form-control der-kpi\" tabindex=\"{1}\" data-type=\"{2}\"  data-kpi-id=\"{3}\" data-id=\"{4}\" data-value-type=\"{5}\" >", existValue, tabIndex, type,kpiId,id,"remark");
             foreach (var option in options) {
-                var selected = string.Equals(option.Value, value, StringComparison.InvariantCultureIgnoreCase) ? "selected=\"selected\"" : "selected";
+                var selected = string.Equals(option.Value, value, StringComparison.InvariantCultureIgnoreCase) ? "selected=\"selected\"" : "";
                 selectInput += string.Format("<option {2} value=\"{0}\">{1}</option>", option.Value, option.Text, selected);
             }
             selectInput += "</select>";
             return new MvcHtmlString(selectInput);
 
+        }
+
+        public static MvcHtmlString DisplayHighlightTextarea(this HtmlHelper htmlHelper, IList<DerValuesViewModel.DerHighlightValuesViewModel> highlights, int highlightTypeId, int tabIndex, string defaultValueDefined = "empty") {
+            string value;
+            switch (defaultValueDefined)
+            {
+                case "empty":
+                case "prev":
+                    value = "";
+                    break;
+                default:
+                    value = defaultValueDefined;
+                    break;
+            }
+            var existValue = "empty";
+            var highlight = highlights.FirstOrDefault(x => x.HighlightTypeId == highlightTypeId);
+            value = highlight == null ? value : (defaultValueDefined == "prev" ? highlight.HighlightMessage : (highlight.Type == "now" ? highlight.HighlightMessage : value));
+            existValue = highlight == null ? existValue : highlight.Type;
+            var highlightId = highlight == null ? 0 : highlight.Id;
+            var title = highlight == null ? null : (string.IsNullOrEmpty(highlight.HighlightTitle) ? highlight.HighlightTypeValue : highlight.HighlightTitle);
+            var textarea = string.Format("<textarea class=\"der-value-{0} form-control allow-html der-highlight\" data-highlight-type-id=\"{2}\" data-id=\"{3}\" id=\"highlight_{4}\" tabindex=\"{4}\" data-title=\"{5}\">{1}</textarea>", existValue, value, highlightTypeId,highlightId, tabIndex, title);
+            return new MvcHtmlString(textarea);
+
+
+        }
+        public static MvcHtmlString DisplayHighlightDropdownList(this HtmlHelper htmlHelper, IList<DerValuesViewModel.DerHighlightValuesViewModel> highlights, int highlightTypeId, IList<SelectListItem> options, int tabIndex, string defaultValueDefined = "empty")
+        {
+            string value;
+            switch (defaultValueDefined)
+            {
+                case "empty":
+                case "prev":
+                    value = "";
+                    break;
+                default:
+                    value = defaultValueDefined;
+                    break;
+            }
+            var existValue = "empty";
+            var highlight = highlights.FirstOrDefault(x => x.HighlightTypeId == highlightTypeId);
+            value = highlight == null ? value : (defaultValueDefined == "prev" ? highlight.HighlightMessage : (highlight.Type == "now" ? highlight.HighlightMessage : value));
+            existValue = highlight == null ? existValue : highlight.Type;
+            var highlightId = highlight == null ? 0 : highlight.Id;
+            var title = highlight == null ? null : (string.IsNullOrEmpty(highlight.HighlightTitle) ? highlight.HighlightTypeValue : highlight.HighlightTitle);
+            var selectInput = string.Format("<select class=\"der-value-{0} form-control der-highlight\" tabindex=\"{1}\"  data-highlight-type-id=\"{2}\" data-id=\"{3}\" id=\"highlight_{4}\" data-title=\"{5}\" >", existValue, tabIndex,highlightTypeId,highlightId,tabIndex,title);
+            foreach (var option in options)
+            {
+                var selected = string.Equals(option.Value, value, StringComparison.InvariantCultureIgnoreCase) ? "selected=\"selected\"" : "";
+                selectInput += string.Format("<option {2} value=\"{0}\">{1}</option>", option.Value, option.Text, selected);
+            }
+            selectInput += "</select>";
+            return new MvcHtmlString(selectInput);
+        }
+        public static MvcHtmlString DisplayBrenfutHighlight(this HtmlHelper htmlHelper, IList<DerValuesViewModel.DerHighlightValuesViewModel> highlights, int highlightTypeId, int tabIndex, int position, string type = "value") {
+            string value = "";
+            var defaultValueDefined = "prev";
+            string existValue = "empty";
+            var highlight = highlights.FirstOrDefault(x => x.HighlightTypeId == highlightTypeId);
+            value = highlight == null ? value : (defaultValueDefined == "prev" ? highlight.HighlightMessage : (highlight.Type == "now" ? highlight.HighlightMessage : value));
+            existValue = highlight == null ? existValue : highlight.Type;
+            var highlightId = highlight == null ? 0 : highlight.Id;
+            var title = highlight == null ? null : (string.IsNullOrEmpty(highlight.HighlightTitle) ? highlight.HighlightTypeValue : highlight.HighlightTitle);
+            JToken obj;
+            var properties = new string[]{ "a","b","c","d" };
+            if (IsValidJson(value, out obj))
+            {
+                value = obj[properties[position]][type].Value<string>();
+            }
+            else {
+                value = "";
+            }
+            //if (value.Contains("<li>")) {
+            //    //Regex regex = new Regex(@"<li.*?>(.*?)<\\/li>");
+            //    MatchCollection matches = Regex.Matches(value, @"<li>(.*?)</li>");
+            //    if (matches.Count > 0) {
+            //        var splitResult = matches[position].Groups[1].Value.Split(':');
+            //        if (type == "label")
+            //        {
+            //            value = splitResult[0];
+            //        }
+            //        else {
+            //            var regex = new Regex("usd/bbl", RegexOptions.IgnoreCase);
+            //            value = string.IsNullOrEmpty(splitResult[1]) ? splitResult[1] : regex.Replace(splitResult[1], "");
+            //        }
+            //    }
+
+            //}
+            if (type == "label")
+            {
+                return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control der-highlight-brenfut\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" data-property=\"{5}\" data-highlight-type-id=\"{6}\" data-id=\"{7}\" data-title=\"{8}\" />", value, existValue, "text period", tabIndex, type, properties[position],highlightTypeId,highlightId,title));
+            }
+            else {
+                return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control der-highlight-brenfut\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" data-property=\"{5}\" data-highlight-type-id=\"{6}\" data-id=\"{7}\" data-title=\"{8}\" />", value, existValue, "usd/bbl", tabIndex, type, properties[position], highlightTypeId, highlightId, title));
+            }
+
+        }
+        public static MvcHtmlString DisplayIctInfraOrGsfmHighlight(this HtmlHelper helper, IList<DerValuesViewModel.DerHighlightValuesViewModel> highlights, int highlightTypeId, IList<SelectListItem> options, int tabIndex, string property) {
+            string value = "";
+            var defaultValueDefined = "prev";
+            string existValue = "empty";
+            var highlight = highlights.FirstOrDefault(x => x.HighlightTypeId == highlightTypeId);
+            value = highlight == null ? value : (defaultValueDefined == "prev" ? highlight.HighlightMessage : (highlight.Type == "now" ? highlight.HighlightMessage : value));
+            existValue = highlight == null ? existValue : highlight.Type;
+            var highlightId = highlight == null ? 0 : highlight.Id;
+            var title = highlight == null ? null : (string.IsNullOrEmpty(highlight.HighlightTitle) ? highlight.HighlightTypeValue : highlight.HighlightTitle);
+            JToken obj;
+            if (!string.IsNullOrEmpty(value) && IsValidJson(value,out obj)) {
+                switch (property) {
+                    case "a":
+                        value = (string)obj.SelectToken("a");
+                        break;
+                    case "b":
+                        value = (string)obj.SelectToken("b");
+                        break;
+                    default: //c
+                        value = (string)obj.SelectToken("c");
+                        break;
+                    //default:
+                    //    value = (string)obj.SelectToken("remark");
+                    //    break;
+                }
+            }
+            //if(property == "remark")
+            //{
+            //    return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control\"   placeholder=\"{2}\" tabindex=\"{3}\" />", value, existValue, "text period", tabIndex));
+            //}
+            var selectInput = string.Format("<select class=\"der-value-{0} form-control der-highlight-infragsm\" tabindex=\"{1}\" data-property=\"{2}\" data-id=\"{3}\" data-highlight-type-id=\"{4}\" data-title=\"{5}\" >", existValue, tabIndex,property,highlightId,highlightTypeId,title);
+            foreach (var option in options)
+            {
+                var selected = string.Equals(option.Value, value, StringComparison.InvariantCultureIgnoreCase) ? "selected=\"selected\"" : "";
+                selectInput += string.Format("<option {2} value=\"{0}\">{1}</option>", option.Value, option.Text, selected);
+            }
+            selectInput += "</select>";
+            return new MvcHtmlString(selectInput);
+        }
+        public static MvcHtmlString DisplayWeeklyAlarmInput(this HtmlHelper htmlHelper, IList<DerValuesViewModel.DerHighlightValuesViewModel> highlights, int highlightTypeId, int tabIndex, string label, string property) {
+            string value = "";
+            var defaultValueDefined = "prev";
+            string existValue = "empty";
+            var highlight = highlights.FirstOrDefault(x => x.HighlightTypeId == highlightTypeId);
+            value = highlight == null ? value : (defaultValueDefined == "prev" ? highlight.HighlightMessage : (highlight.Type == "now" ? highlight.HighlightMessage : value));
+            existValue = highlight == null ? existValue : highlight.Type;
+            var highlightId = highlight == null ? 0 : highlight.Id;
+            var title = highlight == null ? null : (string.IsNullOrEmpty(highlight.HighlightTitle) ? highlight.HighlightTypeValue : highlight.HighlightTitle);
+            JToken obj;
+            if (IsValidJson(value, out obj))
+            {
+                value = obj[property].Value<string>();
+            }
+            else
+            {
+                value = "";
+            }
+            //if (value.Contains("<li>")) {
+            //    //Regex regex = new Regex(@"<li.*?>(.*?)<\\/li>");
+            //    MatchCollection matches = Regex.Matches(value, @"<li>(.*?)</li>");
+            //    if (matches.Count > 0) {
+            //        var splitResult = matches[position].Groups[1].Value.Split(':');
+            //        if (type == "label")
+            //        {
+            //            value = splitResult[0];
+            //        }
+            //        else {
+            //            var regex = new Regex("usd/bbl", RegexOptions.IgnoreCase);
+            //            value = string.IsNullOrEmpty(splitResult[1]) ? splitResult[1] : regex.Replace(splitResult[1], "");
+            //        }
+            //    }
+
+            //}
+            return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control der-highlight-weekly-alarm\"   placeholder=\"{2}\" tabindex=\"{3}\" data-property=\"{4}\" data-highlight-type-id=\"{5}\" data-id=\"{6}\" data-title=\"{7}\" />", value, existValue, label, tabIndex, property, highlightTypeId, highlightId, title));
+        }
+        public static MvcHtmlString DisplayHighlightInput(this HtmlHelper helper, IList<DerValuesViewModel.DerHighlightValuesViewModel> highlights, int highlightTypeId, int tabIndex, string placeHolder, string defaultValueDefined="empty") {
+            string value;
+            switch (defaultValueDefined)
+            {
+                case "empty":
+                case "prev":
+                    value = "";
+                    break;
+                default:
+                    value = defaultValueDefined;
+                    break;
+            }
+            var existValue = "empty";
+            var highlight = highlights.FirstOrDefault(x => x.HighlightTypeId == highlightTypeId);
+            value = highlight == null ? value : (defaultValueDefined == "prev" ? highlight.HighlightMessage : (highlight.Type == "now" ? highlight.HighlightMessage : value));
+            existValue = highlight == null ? existValue : highlight.Type;
+            return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" />", value, existValue, placeHolder, tabIndex));
+        }
+        public static MvcHtmlString DisplayWaveList(this HtmlHelper htmlHelper, WaveViewModel viewModel, IList<SelectListItem> options, string property, int tabIndex) {
+            var value = "";
+            var id = 0;
+            var derValueType = "empty";
+            if (viewModel != null)
+            {
+                if (property == "wind-direction")
+                {
+                    value = viewModel.ValueId.ToString();
+                }
+                else if (property == "tide")
+                {
+                    value = viewModel.Tide;
+                }
+                else {
+                    value = viewModel.Speed;
+                }
+                id = viewModel.Id;
+                derValueType = viewModel.DerValueType;
+            }
+            if (property == "speed") {
+                return new MvcHtmlString(string.Format("<input value=\"{4}\" class=\"der-value-{0} form-control der-highlight-wave\" tabindex=\"{1}\" data-property=\"{2}\" data-id=\"{3}\" placeholder=\"km/h\"  />", derValueType, tabIndex, property, id,value));
+            }
+            var selectInput = string.Format("<select class=\"der-value-{0} form-control der-highlight-wave\" tabindex=\"{1}\" data-property=\"{2}\" data-id=\"{3}\" >", derValueType, tabIndex, property, id);
+            foreach (var option in options)
+            {
+                var selected = string.Equals(option.Value, value, StringComparison.InvariantCultureIgnoreCase) ? "selected=\"selected\"" : "";
+                selectInput += string.Format("<option {2} value=\"{0}\">{1}</option>", option.Value, option.Text, selected);
+            }
+            selectInput += "</select>";
+            return new MvcHtmlString(selectInput);
+        }
+        private static bool IsValidJson(string strInput, out JToken obj)
+        {
+            strInput = strInput.Trim();
+            if ((strInput.StartsWith("{") && strInput.EndsWith("}")) || //For object
+                (strInput.StartsWith("[") && strInput.EndsWith("]"))) //For array
+            {
+                try
+                {
+                    obj = JObject.Parse(strInput);
+                    return true;
+                }
+                catch (JsonReaderException jex)
+                {
+                    obj = null;
+                    return false;
+                }
+                catch (Exception ex) //some other exception
+                {
+                    obj = null;
+                    return false;
+                }
+            }
+            else
+            {
+                obj = null;
+                return false;
+            }
         }
     }
 

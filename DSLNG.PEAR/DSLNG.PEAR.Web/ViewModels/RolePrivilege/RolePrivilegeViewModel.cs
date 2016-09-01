@@ -24,4 +24,28 @@ namespace DSLNG.PEAR.Web.ViewModels.RolePrivilege
             public string Name { get; set; }
         }
     }
+
+    public class AddRolePrivilegeViewModel
+    {
+        public AddRolePrivilegeViewModel()
+        {
+            RoleGroupList = new List<SelectListItem>();
+        }
+        public int Id { get; set; }
+        [Required]
+        public int RoleGroup_Id { get; set; }
+        [Required]
+        public string Name { get; set; }
+        [AllowHtml]
+        public string Descriptions { get; set; }
+        public RoleGroup Department { get; set; }
+
+        public List<SelectListItem> RoleGroupList { get; set; }
+
+        public class RoleGroup
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+        }
+    }
 }

@@ -23,5 +23,6 @@ namespace DSLNG.PEAR.Services.Requests.KpiTarget
         }
         public string Remark { get; set; }
         public Data.Enums.PeriodeType PeriodeType { get; set; }
+        public int UserId { get; set; }
     }
 }

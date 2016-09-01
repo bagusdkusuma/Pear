@@ -61,5 +61,11 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.Kpis = _kpiService.GetKpis(new Services.Requests.Kpi.GetKpisRequest { }).Kpis.MapTo<CreateInputDataViewModel.Kpi>();
             return View(viewModel);
         }
+
+        [HttpPost]
+        public ActionResult Create(CreateInputDataViewModel viewModel, FormCollection form)
+        {
+            
+        }
     }
 }

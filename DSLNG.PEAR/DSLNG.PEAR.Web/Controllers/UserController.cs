@@ -10,6 +10,8 @@ using System.Linq;
 using DSLNG.PEAR.Web.Attributes;
 using System.Data.SqlClient;
 using System.IO;
+using DSLNG.PEAR.Web.ViewModels.RolePrivilege;
+using System;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -17,11 +19,13 @@ namespace DSLNG.PEAR.Web.Controllers
     {
         private readonly IUserService _userService;
         private readonly IRoleGroupService _roleGroupService;
+        private readonly IRolePrivilegeService _rolePrivilegeService;
 
-        public UserController(IUserService userService, IRoleGroupService roleGroupService)
+        public UserController(IUserService userService, IRoleGroupService roleGroupService, IRolePrivilegeService rolePrivilegeService)
         {
             _userService = userService;
             _roleGroupService = roleGroupService;
+            _rolePrivilegeService = rolePrivilegeService;
         }
 
         public ActionResult Login()
@@ -147,6 +151,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public UpdateUserViewModel UpdateViewModel(UpdateUserViewModel viewModel)
         {
+            
             viewModel.RoleGroupList = _roleGroupService.GetRoleGroups(new Services.Requests.RoleGroup.GetRoleGroupsRequest
             {
                 Take = -1,
@@ -158,8 +163,11 @@ namespace DSLNG.PEAR.Web.Controllers
                     Value = x.Id.ToString(),
                     Selected = viewModel.RoleId == x.Id ? true : false
                 }).ToList();
-
-            
+            viewModel.RolePrivilegeOption = _rolePrivilegeService.GetRolePrivileges(new Services.Requests.Privilege.GetPrivilegeByRoleRequest { RoleId = viewModel.RoleId }).Privileges.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }).ToList();
             return viewModel;
         }
 
@@ -167,9 +175,8 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             var response = _userService.GetUser(new GetUserRequest { Id = id });
             var viewModel = response.MapTo<UpdateUserViewModel>();
-
             viewModel = UpdateViewModel(viewModel);
-            viewModel.RolePrivilegeOption = _roleGroupService.GetRoleGroup(new Services.Requests.RoleGroup.GetRoleGroupRequest { Id = viewModel.RoleId }).Privileges.MapTo<SelectListItem>();
+           // viewModel.RolePrivilegeOption = _roleGroupService.GetRoleGroup(new Services.Requests.RoleGroup.GetRoleGroupRequest { Id = viewModel.RoleId }).Privileges.MapTo<SelectListItem>();
             return View(viewModel);
         }
 
@@ -254,6 +261,33 @@ namespace DSLNG.PEAR.Web.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
 
         }
+         
+        public ActionResult AddPrivilege(int? RoleId)
+        {
+            var model = new AddRolePrivilegeViewModel();
+            if (RoleId.HasValue)
+            {
+                model.RoleGroup_Id = RoleId.Value;
+            }
+            model.RoleGroupList = GetRoleGroupOptionList(RoleId);
+            return View(model);
+        }
 
+        private List<SelectListItem> GetRoleGroupOptionList(int? roleId)
+        {
+            List<SelectListItem> roles = _roleGroupService.GetRoleGroups(new Services.Requests.RoleGroup.GetRoleGroupsRequest
+            {
+                Take = -1,
+                SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+            })
+                .RoleGroups.Select(x => new SelectListItem
+                {
+                    Text = x.Name,
+                    Value = x.Id.ToString(),
+                    Selected = roleId == x.Id ? true : false
+                }).ToList();
+
+            return roles;
+        }
     }
 }

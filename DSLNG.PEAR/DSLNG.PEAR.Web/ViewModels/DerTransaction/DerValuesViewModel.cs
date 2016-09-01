@@ -1,5 +1,6 @@
 ﻿
 using DSLNG.PEAR.Data.Enums;
+using DSLNG.PEAR.Web.ViewModels.Wave;
 using System;
 using System.Collections.Generic;
 
@@ -19,9 +20,11 @@ namespace DSLNG.PEAR.Web.ViewModels.DerTransaction
             public string Value { get; set; }
             public string Text { get; set; }
             public int HighlightTypeId { get; set; }
+            public string HighlightTypeValue { get; set; }
             public DateTime Date { get; set; }
             public string HighlightMessage { get; set; }
             public string HighlightTitle { get; set; }
+            public string Type { get; set; }
         }
 
         public class KpiInformationValuesViewModel
@@ -40,10 +43,12 @@ namespace DSLNG.PEAR.Web.ViewModels.DerTransaction
         }
         public class KpiValueViewModel
         {
+            public int Id { get; set; }
             public DateTime Date { get; set; }
             public double Value { get; set; }
             public string Remark { get; set; }
             public string Type { get; set; }
         }
+        public WaveViewModel Wave { get; set; }
     }
 }

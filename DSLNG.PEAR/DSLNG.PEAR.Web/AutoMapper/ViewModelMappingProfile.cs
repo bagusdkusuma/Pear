@@ -181,6 +181,7 @@ using DSLNG.PEAR.Services.Responses.Privilege;
 using DSLNG.PEAR.Web.ViewModels.Der.Display;
 using DSLNG.PEAR.Services.Responses.DerTransaction;
 using DSLNG.PEAR.Web.ViewModels.DerTransaction;
+using DSLNG.PEAR.Services.Responses.Wave;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -750,6 +751,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetKpiInformationValuesResponse.KpiInformation, DerValuesViewModel.KpiInformationValuesViewModel>();
             Mapper.CreateMap<GetKpiInformationValuesResponse.KpiValue, DerValuesViewModel.KpiValueViewModel>();
             Mapper.CreateMap<GetHighlightValuesResponse.DerHighlight, DerValuesViewModel.DerHighlightValuesViewModel>();
+            Mapper.CreateMap<GetWaveResponse, WaveViewModel>();
             base.Configure();
         }
 

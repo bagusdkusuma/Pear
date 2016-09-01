@@ -23,7 +23,7 @@ namespace DSLNG.PEAR.Services
         public MenuService(IDataContext dataContext)
             : base(dataContext)
         {
-            
+
         }
 
         public GetSiteMenusResponse GetSiteMenus(GetSiteMenusRequest request)
@@ -668,8 +668,16 @@ namespace DSLNG.PEAR.Services
             {
                 var response = new GetMenuResponse();
                 var menu = DataContext.Menus.AsNoTracking().Include(x => x.RoleGroups).FirstOrDefault(x => x.RoleGroups.Select(y => y.Id).Contains(request.RoleId) && x.Url.Contains(request.Url));
-                response = menu.MapTo<GetMenuResponse>();
-                response.IsSuccess = true;
+                if (menu != null)
+                {
+                    response = menu.MapTo<GetMenuResponse>();
+                    response.IsSuccess = true;
+                }
+                else
+                {
+                    response.IsSuccess = false;
+                    response.Message = "No Menu Found";
+                }
                 return response;
             }
             catch (System.InvalidOperationException x)
