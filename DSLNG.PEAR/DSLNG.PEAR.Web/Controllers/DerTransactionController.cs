@@ -17,6 +17,8 @@ using Newtonsoft.Json;
 using DSLNG.PEAR.Web.ViewModels.Wave;
 using DSLNG.PEAR.Services.Requests.Select;
 using DSLNG.PEAR.Services.Requests.Wave;
+using DSLNG.PEAR.Services.Requests.Weather;
+using DSLNG.PEAR.Web.ViewModels.Weather;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -29,8 +31,9 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IHighlightService _highlightService;
         private readonly ISelectService _selectService;
         private readonly IWaveService _waveService;
+        private readonly IWeatherService _weatherService;
 
-        public DerTransactionController(IDerService derService,IDerTransactionService derTransactionService, IKpiAchievementService kpiAchievementService, IKpiTargetService kpiTargetService, IHighlightService highlightService, ISelectService selectService, IWaveService waveService) {
+        public DerTransactionController(IDerService derService,IDerTransactionService derTransactionService, IKpiAchievementService kpiAchievementService, IKpiTargetService kpiTargetService, IHighlightService highlightService, ISelectService selectService, IWaveService waveService, IWeatherService weatherService) {
             _derService = derService;
             _derTransactionService = derTransactionService;
             _kpiAchievementService = kpiAchievementService;
@@ -38,6 +41,7 @@ namespace DSLNG.PEAR.Web.Controllers
             _highlightService = highlightService;
             _selectService = selectService;
             _waveService = waveService;
+            _weatherService = weatherService;
         }
         // GET: DerTransaction
         public ActionResult Index()
@@ -103,9 +107,10 @@ namespace DSLNG.PEAR.Web.Controllers
                new int[] { 1, 177, 278, 277, 276, 285 }, //target KpiIds
                new int[] { 18, 13, 20 }  //highlightTypeIds
                );
+            var theDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
             var wave = _waveService.GetWave(new GetWaveRequest
             {
-                Date = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture),
+                Date = theDate,
                 ByDate = true
             });
             if (wave.Id != 0)
@@ -116,7 +121,7 @@ namespace DSLNG.PEAR.Web.Controllers
             else {
                 wave = _waveService.GetWave(new GetWaveRequest
                 {
-                    Date = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture).AddDays(-1),
+                    Date = theDate.AddDays(-1),
                     ByDate = true
                 });
                 if (wave.Id != 0)
@@ -127,6 +132,32 @@ namespace DSLNG.PEAR.Web.Controllers
             }
             if (viewModel.Wave == null) viewModel.Wave = new WaveViewModel();
             viewModel.Wave.Values = _selectService.GetSelect(new GetSelectRequest { Name = "wave-values" }).Options
+                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Text }).ToList();
+            var weather = _weatherService.GetWeather(new GetWeatherRequest
+            {
+                Date = theDate,
+                ByDate = true
+            });
+            if (weather.Id != 0)
+            {
+                viewModel.Weather = weather.MapTo<WeatherViewModel>();
+                viewModel.Weather.DerValueType = "now";
+            }
+            else
+            {
+                weather = _weatherService.GetWeather(new GetWeatherRequest
+                {
+                    Date = theDate.AddDays(-1),
+                    ByDate = true
+                });
+                if (wave.Id != 0)
+                {
+                    viewModel.Weather = weather.MapTo<WeatherViewModel>();
+                    viewModel.Weather.DerValueType = "prev";
+                }
+            }
+            if (viewModel.Weather == null) viewModel.Weather = new WeatherViewModel();
+            viewModel.Weather.Values = _selectService.GetSelect(new GetSelectRequest { Name = "weather-values" }).Options
                 .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Text }).ToList();
             return View(viewModel);
         }
@@ -294,7 +325,29 @@ namespace DSLNG.PEAR.Web.Controllers
             var resp = _highlightService.SaveHighlight(req);
             return Json(resp);
         }
-
+        public ActionResult UpdateWeather(WeatherViewModel viewModel)
+        {
+            var weather = _weatherService.GetWeather(new GetWeatherRequest
+            {
+                Date = viewModel.Date,
+                ByDate = true
+            });
+            if (weather.Id == 0)
+            {
+                var request = viewModel.MapTo<SaveWeatherRequest>();
+                var resp = _weatherService.SaveWeather(request);
+                return Json(resp);
+            }
+            else
+            {
+                var request = viewModel.MapTo<SaveWeatherRequest>();
+                request.Id = weather.Id;
+                request.Temperature = weather.Temperature;
+                request.ValueId = viewModel.ValueId;
+                var resp = _weatherService.SaveWeather(request);
+                return Json(resp);
+            }
+        }
         private DerValuesViewModel GetDerValuesPerSection(string date, int[] actualKpiIds, int[] targetKpiIds, int[] highlightTypeIds) {
             var theDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
             var kpiInformationValuesRequest = new GetKpiInformationValuesRequest

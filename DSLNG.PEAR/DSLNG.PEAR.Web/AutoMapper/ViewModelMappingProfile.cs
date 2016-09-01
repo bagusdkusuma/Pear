@@ -752,6 +752,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetKpiInformationValuesResponse.KpiValue, DerValuesViewModel.KpiValueViewModel>();
             Mapper.CreateMap<GetHighlightValuesResponse.DerHighlight, DerValuesViewModel.DerHighlightValuesViewModel>();
             Mapper.CreateMap<GetWaveResponse, WaveViewModel>();
+            Mapper.CreateMap<GetWeatherResponse, WeatherViewModel>();
             base.Configure();
         }
 

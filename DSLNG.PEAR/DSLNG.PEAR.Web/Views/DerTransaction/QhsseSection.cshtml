@@ -43,17 +43,12 @@
         </table>
     </div>
     <div class="col-md-4">
-        <strong style="color:red">sedang dikerjakan lewat saja</strong>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 <td><label class="control-label">Weather</label></td>
                 <td>
                     <!--234-->
-                    <select>
-                        <option>Select Option</option>
-                        <option>Option 1</option>
-                        <option>Option 2</option>
-                    </select>
+                        @Html.DisplayWeatherList(Model.Weather, 234)
                 </td>
             </tr>
             <tr>

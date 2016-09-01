@@ -84,5 +84,6 @@ namespace DSLNG.PEAR.Web.ViewModels.Weather
         public IList<SelectListItem> Values { get; set; }
         [Required]
         public string Temperature { get; set; }
+        public string DerValueType { get; set; }
     }
 }
