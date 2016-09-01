@@ -142,6 +142,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             ConfigureDer();
             ConfigureProcessBlueprint();
             ConfigureFileRepository();
+            ConfigureInputData();
 
             Mapper.CreateMap<Data.Entities.User, GetUsersResponse.User>();
             Mapper.CreateMap<GetUsersResponse.User, Data.Entities.User>();
@@ -749,6 +750,11 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<DerKpiInformation, GetDerLayoutItemsResponse.KpiInformation>()
                 .ForMember(x => x.KpiId, o => o.MapFrom(s => s.Kpi.Id));
             base.Configure();
+        }
+
+        private void ConfigureInputData()
+        {
+            
         }
 
         private void ConfigureFileRepository()

@@ -121,6 +121,8 @@
     <Compile Include="Entities\FileManagerRolePrivilege.cs" />
     <Compile Include="Entities\Files\FileRepository.cs" />
     <Compile Include="Entities\HighlightGroup.cs" />
+    <Compile Include="Entities\InputOriginalData\GroupInputData.cs" />
+    <Compile Include="Entities\InputOriginalData\InputData.cs" />
     <Compile Include="Entities\MenuRolePrivilege.cs" />
     <Compile Include="Entities\Mir\MirArtifact.cs" />
     <Compile Include="Entities\Mir\MirConfiguration.cs" />
@@ -162,6 +164,7 @@
     <Compile Include="Entities\NLSHistory.cs" />
     <Compile Include="Entities\Periode.cs" />
     <Compile Include="Entities\StaticHighlightPrivilege.cs" />
+    <Compile Include="Entities\TransactionConfig.cs" />
     <Compile Include="Entities\Vessel.cs" />
     <Compile Include="Entities\VesselSchedule.cs" />
     <Compile Include="Entities\Wave.cs" />

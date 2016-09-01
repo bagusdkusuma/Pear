@@ -8,6 +8,7 @@ using DSLNG.PEAR.Data.Entities.Blueprint;
 using DSLNG.PEAR.Data.Entities.Pop;
 using DSLNG.PEAR.Data.Entities.Mir;
 using DSLNG.PEAR.Data.Entities.Files;
+using DSLNG.PEAR.Data.Entities.InputOriginalData;
 
 namespace DSLNG.PEAR.Data.Persistence
 {
@@ -121,6 +122,11 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<MenuRolePrivilege> MenuRolePrivileges { get; set; }
 
         public IDbSet<FileRepository> FileRepositories { get; set; }
+        public IDbSet<TransactionConfig> TransactionConfigs { get; set; }
+
+        public IDbSet<InputData> InputData { get; set; }
+
+        public IDbSet<GroupInputData> GroupInputData { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

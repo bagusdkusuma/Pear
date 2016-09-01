@@ -5,6 +5,8 @@ using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Web.App_Start;
 using DSLNG.PEAR.Web.AutoMapper;
 using DSLNG.PEAR.Web.DependencyResolution;
+using DSLNG.PEAR.Web.Scheduler;
+using FluentScheduler;
 using StructureMap;
 using System;
 using System.Collections.Generic;
@@ -43,6 +45,9 @@ namespace DSLNG.PEAR.Web
             AuthConfig.RegisterAuth();
             
             ModelBinders.Binders.DefaultBinder = new DevExpress.Web.Mvc.DevExpressEditorsBinder();
+
+            JobManager.JobFactory = new StructureMapJobFactory();
+            JobManager.Initialize(new ScenarioScheduler());
 
             DevExpress.Web.ASPxWebControl.CallbackError += Application_Error;
         }

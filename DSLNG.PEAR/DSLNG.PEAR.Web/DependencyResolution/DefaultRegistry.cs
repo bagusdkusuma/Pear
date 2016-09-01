@@ -93,6 +93,7 @@ namespace DSLNG.PEAR.Web.DependencyResolution {
             For<IRolePrivilegeService>().Use<RolePrivilegeService>();
             For<IFileRepositoryService>().Use<FileRepositoryService>();
             For<IDerTransactionService>().Use<DerTransactionService>();
+            For<IInputDataService>().Use<InputDataService>();
         }
 
         #endregion
