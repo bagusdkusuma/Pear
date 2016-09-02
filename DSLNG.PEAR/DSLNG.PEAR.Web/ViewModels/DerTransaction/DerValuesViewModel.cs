@@ -1,7 +1,10 @@
 ﻿
 using DSLNG.PEAR.Data.Enums;
+using DSLNG.PEAR.Web.ViewModels.Wave;
+using DSLNG.PEAR.Web.ViewModels.Weather;
 using System;
 using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace DSLNG.PEAR.Web.ViewModels.DerTransaction
 {
@@ -48,5 +51,8 @@ namespace DSLNG.PEAR.Web.ViewModels.DerTransaction
             public string Remark { get; set; }
             public string Type { get; set; }
         }
+        public WaveViewModel Wave { get; set; }
+        public WeatherViewModel Weather { get; set; }
+        public IList<SelectListItem> AlertOptions { get; set; }
     }
 }

@@ -380,6 +380,65 @@
                                 }
                             });
                         });
+                        $(target).on('change', 'select.der-highlight-wave', function (e) {
+                            var $this = $(this);
+                            var nextTab = parseInt($this.attr('tabindex')) + 1;
+                            var id = $this.data('id');
+                            var value = $this.val();
+                            var property = $this.data('property');
+                            var data = { DateInDisplay: currentDate, id: id, PeriodeType: "Daily", property : property };
+                            if (property == 'wind-direction') {
+                                data.ValueId = value;
+                            } else {
+                                data.Tide = value;
+                            }
+                            $.post("/dertransaction/updatewave", data, function () {
+                                var $next = $('[tabindex=' + nextTab + ']');
+                                if ($next.is("textarea")) {
+                                    tinyMCE.get($next.attr('id')).focus()
+                                } else {
+                                    $next.focus();
+                                }
+                            });
+                        });
+                        $(target).on('change', 'select.der-highlight-weather', function (e) {
+                            var $this = $(this);
+                            var nextTab = parseInt($this.attr('tabindex')) + 1;
+                            var id = $this.data('id');
+                            var value = $this.val();
+                            var data = { DateInDisplay: currentDate, id: id, PeriodeType: "Daily", ValueId : value};
+                            $.post("/dertransaction/updateweather", data, function () {
+                                var $next = $('[tabindex=' + nextTab + ']');
+                                if ($next.is("textarea")) {
+                                    tinyMCE.get($next.attr('id')).focus()
+                                } else {
+                                    $next.focus();
+                                }
+                            });
+                        });
+                        $(target).on('keyup', 'input.der-highlight-wave', function (e) {
+                            if (e.keyCode == 13) {
+                                var $this = $(this);
+                                var nextTab = parseInt($this.attr('tabindex')) + 1;
+                                var id = $this.data('id');
+                                var value = $this.val();
+                                var property = $this.data('property');
+                                var data = { DateInDisplay: currentDate, id: id, PeriodeType: "Daily", property: property, Speed : value };
+                                //if (property == 'wind-direction') {
+                                //    data.ValueId = value;
+                                //} else if{
+                                //    data.Tide = value;
+                                //}
+                                $.post("/dertransaction/updatewave", data, function () {
+                                    var $next = $('[tabindex=' + nextTab + ']');
+                                    if ($next.is("textarea")) {
+                                        tinyMCE.get($next.attr('id')).focus()
+                                    } else {
+                                        $next.focus();
+                                    }
+                                });
+                            }
+                        });
                         $(target).on('keyup', 'input.der-highlight-brenfut', function (e) {
                             if (e.keyCode == 13) {
                                 var $this = $(this);
@@ -429,6 +488,24 @@
                                     $this.attr('data-id', resp.Id);
                                 }
                             })
+                        });
+                        $(target).on('keyup', 'input.der-highlight-weekly-alarm', function (e) {
+                            if (e.keyCode == 13) {
+                                var $this = $(this);
+                                var nextTab = parseInt($this.attr('tabindex')) + 1;
+                                var highlightTypeId = $this.data('highlight-type-id');
+                                var id = $this.data('id');
+                                var value = $this.val();
+                                var property = $this.data('property');
+                                $.post("/dertransaction/updateweeklyalarm", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property: property}, function () {
+                                    var $next = $('[tabindex=' + nextTab + ']');
+                                    if ($next.is("textarea")) {
+                                        tinyMCE.get($next.attr('id')).focus()
+                                    } else {
+                                        $next.focus();
+                                    }
+                                });
+                            }
                         });
                     })
                 }

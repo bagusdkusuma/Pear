@@ -87,5 +87,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Wave
         public string Tide { get; set; }
         [Display(Name = "Wind Speed")]
         public string Speed { get; set; }
+        public string DerValueType { get; set; }
+        public string Property { get; set; }
     }
 }

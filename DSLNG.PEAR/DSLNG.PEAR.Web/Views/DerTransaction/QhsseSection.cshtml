@@ -43,44 +43,37 @@
         </table>
     </div>
     <div class="col-md-4">
-        <strong style="color:red">sedang dikerjakan lewat saja</strong>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 <td><label class="control-label">Weather</label></td>
                 <td>
                     <!--234-->
-                    <select>
-                        <option>Select Option</option>
-                        <option>Option 1</option>
-                        <option>Option 2</option>
-                    </select>
+                        @Html.DisplayWeatherList(Model.Weather, 234)
                 </td>
             </tr>
             <tr>
                 <td><label class="control-label">Tide/Wave</label></td>
                 <td>
-                    <select>
-                        <option>Select Option</option>
-                        <option>Option 1</option>
-                        <option>Option 2</option>
-                    </select>
+                   @Html.DisplayWaveList(Model.Wave, new List<SelectListItem> {
+                  new SelectListItem { Value="0-0.25 meter",Text="0-0.25 meter" },
+                   new SelectListItem { Value="0.25-0.5 meter",Text="0.25-0.5 meter" },
+                    new SelectListItem { Value="0.5-0.75 meter",Text="0.5-0.75 meter" },
+                     new SelectListItem { Value="0.75-1.0 meter",Text="0.75-1.0 meter" },
+                      new SelectListItem { Value="1-1.25 meter",Text="1-1.25 meter" },
+              },"tide",235)
                 </td>
             </tr>
             <tr>
                 <td><label class="control-label">Wind Direct</label></td>
                 <td>
-                    <select>
-                        <option>Select Option</option>
-                        <option>Option 1</option>
-                        <option>Option 2</option>
-                    </select>
+                    @Html.DisplayWaveList(Model.Wave, Model.Wave.Values, "wind-direction", 236)
                 </td>
             </tr>
             <tr>
                 <td><label class="control-label">Wind Speed</label></td>
                 <td>
                     <span class="col-sm-8">
-                        <input type="text" class="form-control" id="text" placeholder="km/h" />
+                        @Html.DisplayWaveList(Model.Wave, Model.Wave.Values, "speed", 237)
                     </span>
                 </td>
             </tr>
@@ -88,13 +81,12 @@
     </div>
     <div class="col-md-4">
         <p style="color: white;">Weekly Alarm Management System</p>
-        <strong style="color:red">sedang dikerjakan lewat saja</strong>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 <td><label class="control-label">Period</label></td>
                 <td>
                     <span class="col-sm-8">
-                        <input type="text" class="form-control" id="text" placeholder="free text" />
+                        @Html.DisplayWeeklyAlarmInput(Model.Highlights,20,238,"free text","period")
                     </span>
                 </td>
             </tr>
@@ -102,7 +94,7 @@
                 <td><label class="control-label">Process Train</label></td>
                 <td>
                     <span class="col-sm-8">
-                        <input type="number" class="form-control" id="text" placeholder="number" />
+                        @Html.DisplayWeeklyAlarmInput(Model.Highlights, 20, 239, "number", "processtrain")
                     </span>
                 </td>
             </tr>
@@ -110,7 +102,7 @@
                 <td><label class="control-label">Utilities-off site</label></td>
                 <td>
                     <span class="col-sm-8">
-                        <input type="number" class="form-control" id="text" placeholder="number" />
+                        @Html.DisplayWeeklyAlarmInput(Model.Highlights, 20, 240, "number", "utilities")
                     </span>
                 </td>
             </tr>
@@ -118,7 +110,7 @@
                 <td><label class="control-label">Remark</label></td>
                 <td>
                     <span class="col-sm-8">
-                        <input type="text" class="form-control" id="text" placeholder="free text" />
+                        @Html.DisplayWeeklyAlarmInput(Model.Highlights, 20, 241, "free text", "remark")
                     </span>
                 </td>
             </tr>
@@ -290,7 +282,6 @@
 </div>
 <div class="col-md-12" style="margin-top: 30px;">
     <div class="col-md-6">
-        <strong style="color:red">sedang dikerjakan lewat saja</strong>
         <table border="0">
             <tr>
                 <td><label class="control-label">Alert Condition</label></td>
@@ -298,11 +289,7 @@
             <tr>
                 <td>
                     <!--260-->
-                    <select>
-                        <option>Select Option</option>
-                        <option>Option 1</option>
-                        <option>Option 2</option>
-                    </select>
+                    @Html.DisplayHighlightDropdownList(Model.Highlights,7,Model.AlertOptions,260,"prev")
                 </td>
             </tr>
         </table>
