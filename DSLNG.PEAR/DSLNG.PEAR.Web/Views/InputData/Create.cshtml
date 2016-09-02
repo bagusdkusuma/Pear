@@ -78,10 +78,11 @@
 <table>
     <tr class="kpi-original">
         <td>1</td>
-        <td><select name="GroupInputDatas[0].InputDataAndKpiOrders[0].Id" class="kpi-list form-control" style="width:280px" required data-index="0"></select></td>
         <td>
-            <input type="number" name="GroupInputDatas[0].InputDataAndKpiOrders[0].Order" class="kpi-order" style="color:#000" />
-            <input type="number" class="kpi-index" name="GroupInputDatas[0].InputDataAndKpiOrders.Index" style="color:#000" />
+            <select name="GroupInputDatas[0].InputDataAndKpiOrders[0].KpiId" class="kpi-list form-control" style="width:280px" required data-index="0"></select></td>
+        <td>
+            <input type="number" name="GroupInputDatas[0].InputDataKpiAndOrders[0].Order" class="kpi-order" style="color:#000" />
+            <input type="number" class="kpi-index" name="GroupInputDatas[0].InputDataKpiAndOrders.Index" style="color:#000" />
         </td>
         <td><a href="javascript:;" class="delete-kpi">Delete</a></td>
     </tr>
@@ -141,24 +142,20 @@
                 groupFormClone.find('.group-form-area').on('click', '.add-kpi', function () {
                     var trClone = originalTrClone.clone();
                     var kpiNumber = groupFormClone.find('.group-form-area').find('#kpi-number').val();
-
-                    trClone.find('select').attr('name', 'GroupInputDatas[' + groupNumber + '].InputDataAndKpiOrders[' + parseInt(kpiNumber) + '].KpiId');
-                    trClone.find('.kpi-order').attr('name', 'GroupInputDatas[' + groupNumber + '].InputDataAndKpiOrders[' + parseInt(kpiNumber) + '].Order');
-                    //var pear = window.Pear;
-                    //pear.Artifact.Designer._kpiAutoComplete(trClone);
+                    trClone.find('select').attr('name', 'GroupInputDatas[' + groupNumber + '].InputDataKpiAndOrders[' + parseInt(kpiNumber) + '].KpiId');
+                    trClone.find('.kpi-order').attr('name', 'GroupInputDatas[' + groupNumber + '].InputDataKpiAndOrders[' + parseInt(kpiNumber) + '].Order');
+                    
                     groupFormClone.find('.group-form-area').find('table > tbody').append(trClone);
                     groupFormClone.find('.group-form-area').find('#kpi-number').val(parseInt(kpiNumber) + 1);
-                    trClone.find('.kpi-index').attr('name', 'GroupInputDatas[' + groupNumber + '].InputDataAndKpiOrders.Index').val(kpiNumber);
+                    trClone.find('.kpi-index').attr('name', 'GroupInputDatas[' + groupNumber + '].InputDataKpiAndOrders.Index').val(kpiNumber);
                     
                     pear.Artifact.Designer._kpiAutoComplete(trClone);
                     $(this).parent().find('tbody > tr').each(function (i, val) {
-                        $(val).find('td').first().html(i);
+                        $(val).find('td').first().html(i+1);
                     })
                 });
 
-                groupFormClone.find('.group-form-area').on('click', '.remove-group', function () {
-                    console.log($(this).parent());
-                    console.log($(this).parent().parent());
+                groupFormClone.find('.group-form-area').on('click', '.remove-group', function () {                    
                     $(this).css('color', 'red');
                     $(this).parent().remove();
                 });

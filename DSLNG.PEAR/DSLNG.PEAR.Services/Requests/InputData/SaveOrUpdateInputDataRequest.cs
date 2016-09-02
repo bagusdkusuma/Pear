@@ -10,7 +10,7 @@ namespace DSLNG.PEAR.Services.Requests.InputData
     {
         public SaveOrUpdateInputDataRequest()
         {
-            GroupInputs = new List<GroupInputData>();
+            GroupInputDatas = new List<GroupInputData>();
         }
 
         public int Id { get; set; }
@@ -20,21 +20,21 @@ namespace DSLNG.PEAR.Services.Requests.InputData
         
         public int AccountabilityId { get; set; }
         public int Order { get; set; }
-        public IList<GroupInputData> GroupInputs { get; set; }
+        public IList<GroupInputData> GroupInputDatas { get; set; }
 
         public class GroupInputData
         {
             public GroupInputData()
             {
-                InputDataAndKpiOrders = new List<InputDataAndKpiOrder>();
+                InputDataKpiAndOrders = new List<InputDataKpiAndOrder>();
             }
 
             public string Name { get; set; }
-            public IList<InputDataAndKpiOrder> InputDataAndKpiOrders { get; set; }
+            public IList<InputDataKpiAndOrder> InputDataKpiAndOrders { get; set; }
             public int Order { get; set; }
         }
 
-        public class InputDataAndKpiOrder
+        public class InputDataKpiAndOrder
         {
             public int KpiId { get; set; }
             public string KpiName { get; set; }

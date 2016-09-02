@@ -118,6 +118,7 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<TransactionConfig> TransactionConfigs { get; set; }
         IDbSet<InputData> InputData { get; set; }
         IDbSet<GroupInputData> GroupInputData { get; set; }
+        IDbSet<InputDataKpiAndOrder> InputDataKpiAndOrder { get; set; }
 
         Database Database { get; }
         int SaveChanges();

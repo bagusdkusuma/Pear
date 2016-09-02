@@ -127,6 +127,7 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<InputData> InputData { get; set; }
 
         public IDbSet<GroupInputData> GroupInputData { get; set; }
+        public IDbSet<InputDataKpiAndOrder> InputDataKpiAndOrder { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

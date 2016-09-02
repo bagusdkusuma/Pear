@@ -1059,6 +1059,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.KpiName, y => y.MapFrom(z => z.Kpi.Name))
                 .ForMember(x => x.Order, y => y.MapFrom(z => z.Order));
 
+            //Mapper.CreateMap<SaveOrUpdateInputDataRequest.GroupInputData, GroupInputData>();
+            //Mapper.CreateMap<SaveOrUpdateInputDataRequest.InputDataKpiAndOrder, InputDataKpiAndOrder>();
+            
             //Mapper.CreateMap<SaveOrUpdateInputDataRequest.GroupInput, GroupInputData>();
             //Mapper.CreateMap<SaveOrUpdateInputDataRequest.Kpi, Kpi>()
             //    .ForMember(x => x.Id, y => y.MapFrom(z => z.Id))

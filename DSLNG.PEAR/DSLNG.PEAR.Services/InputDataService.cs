@@ -62,36 +62,84 @@ namespace DSLNG.PEAR.Services
 
         public SaveOrUpdateInputDataResponse SaveOrUpdateInputData(SaveOrUpdateInputDataRequest request)
         {
-            if (request.Id > 0)
+            var response = new SaveOrUpdateInputDataResponse();
+            try
             {
-                return new SaveOrUpdateInputDataResponse();
-            }
-            else
-            {
-                var inputData = request.MapTo<InputData>();
-                inputData.Accountability = DataContext.RoleGroups.Single(x => x.Id == request.AccountabilityId);
-                inputData.LastInput = DateTime.Now;
-                inputData.UpdatedBy = DataContext.Users.Single(x => x.Id == request.UpdatedById);
-                var groupInputDatas = new List<GroupInputData>();
-                foreach (var item in request.GroupInputs)
+                if (request.Id > 0)
                 {
-                    var groupInputData = new GroupInputData();
-                    groupInputData.Name = item.Name;
-                    groupInputData.Order = item.Order;
-                    var kpiAndOrders = new List<InputDataKpiAndOrder>();
-                    foreach (var kpi in item.InputDataAndKpiOrders)
+                    var inputData = DataContext.InputData
+                        .Include(x => x.GroupInputDatas)
+                        .Include(x => x.GroupInputDatas.Select(y => y.InputDataKpiAndOrders))
+                        .Include(x => x.GroupInputDatas.Select(y => y.InputDataKpiAndOrders.Select(z => z.Kpi)))
+                        .Single(x => x.Id == request.Id);
+                    inputData.Name = request.Name;
+                    inputData.Accountability = DataContext.RoleGroups.Single(x => x.Id == request.AccountabilityId);
+                    inputData.LastInput = DateTime.Now;
+                    inputData.UpdatedBy = DataContext.Users.Single(x => x.Id == request.UpdatedById);
+                    foreach (var groupInputData in inputData.GroupInputDatas.ToList())
                     {
-                        kpiAndOrders.Add(new InputDataKpiAndOrder { Kpi = DataContext.Kpis.Single(x => x.Id == kpi.KpiId), Order = kpi.Order });
+                        foreach(var inputDataKpiAndOrder in groupInputData.InputDataKpiAndOrders.ToList())
+                        {
+                            DataContext.InputDataKpiAndOrder.Remove(inputDataKpiAndOrder);
+                        }
+                        DataContext.GroupInputData.Remove(groupInputData);
                     }
-                    groupInputData.InputDataKpiAndOrders = kpiAndOrders;
-                    groupInputDatas.Add(groupInputData);
-                }
 
-                inputData.GroupInputDatas = groupInputDatas;
-                DataContext.InputData.Add(inputData);
-                DataContext.SaveChanges();
-                return new SaveOrUpdateInputDataResponse();
+                    var groupInputDatas = new List<GroupInputData>();
+                    foreach (var item in request.GroupInputDatas.ToList())
+                    {
+                        var groupInputData = new GroupInputData();
+                        groupInputData.Name = item.Name;
+                        groupInputData.Order = item.Order;
+                        var kpiAndOrders = new List<InputDataKpiAndOrder>();
+                        foreach (var kpi in item.InputDataKpiAndOrders.ToList())
+                        {
+                            kpiAndOrders.Add(new InputDataKpiAndOrder { Kpi = DataContext.Kpis.Single(x => x.Id == kpi.KpiId), Order = kpi.Order });
+                        }
+                        groupInputData.InputDataKpiAndOrders = kpiAndOrders;
+                        groupInputDatas.Add(groupInputData);
+                    }
+
+                    inputData.GroupInputDatas = groupInputDatas;
+                    DataContext.Entry(inputData).State = EntityState.Modified;
+                    DataContext.SaveChanges();
+
+                    response.IsSuccess = true;
+                }
+                else
+                {
+                    var inputData = request.MapTo<InputData>();
+                    inputData.Accountability = DataContext.RoleGroups.Single(x => x.Id == request.AccountabilityId);
+                    inputData.LastInput = DateTime.Now;
+                    inputData.UpdatedBy = DataContext.Users.Single(x => x.Id == request.UpdatedById);
+                    var groupInputDatas = new List<GroupInputData>();
+                    foreach (var item in request.GroupInputDatas)
+                    {
+                        var groupInputData = new GroupInputData();
+                        groupInputData.Name = item.Name;
+                        groupInputData.Order = item.Order;
+                        var kpiAndOrders = new List<InputDataKpiAndOrder>();
+                        foreach (var kpi in item.InputDataKpiAndOrders)
+                        {
+                            kpiAndOrders.Add(new InputDataKpiAndOrder { Kpi = DataContext.Kpis.Single(x => x.Id == kpi.KpiId), Order = kpi.Order });
+                        }
+                        groupInputData.InputDataKpiAndOrders = kpiAndOrders;
+                        groupInputDatas.Add(groupInputData);
+                    }
+
+                    inputData.GroupInputDatas = groupInputDatas;
+                    DataContext.InputData.Add(inputData);
+                    DataContext.SaveChanges();
+                    response.IsSuccess = true;
+                }
             }
+            catch(Exception exception)
+            {                
+                response.Message = exception.Message;
+            }
+
+            return response;
+            
 
         }
 

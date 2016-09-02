@@ -77,15 +77,22 @@ namespace DSLNG.PEAR.Web.Controllers
             if(response.IsSuccess)
             {
                 var viewModel = response.MapTo<CreateInputDataViewModel>();
-                //viewModel.GroupInputDatas = response.GroupInputDatas.MapTo<CreateInputDataViewModel.GroupInputData>();
                 viewModel.Accountabilities = _dropdownService.GetRoleGroups().MapTo<SelectListItem>();
                 viewModel.PeriodeTypes = _dropdownService.GetPeriodeTypesDailyMonthlyYearly().MapTo<SelectListItem>();
-                viewModel.GroupInputDatas = new List<CreateInputDataViewModel.GroupInputData>();
                 viewModel.Kpis = _kpiService.GetKpis(new Services.Requests.Kpi.GetKpisRequest { }).Kpis.MapTo<CreateInputDataViewModel.Kpi>();
                 return View(viewModel);
             }
 
             return base.ErrorPage("Error when loaded input data");            
+        }
+
+        [HttpPost]
+        public ActionResult Update(CreateInputDataViewModel viewModel)
+        {
+            var request = viewModel.MapTo<SaveOrUpdateInputDataRequest>();
+            request.UpdatedById = UserProfile().UserId;
+            var response = _inputDataService.SaveOrUpdateInputData(request);
+            return RedirectToAction("Index");
         }
     }
 }

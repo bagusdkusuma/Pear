@@ -8,7 +8,8 @@
 @Html.Partial("_MessageResponse")
 <div class="row">
     <div class="col-md-10 input-data-create">
-        <form action="@Url.Action("Create")" method="POST">
+        <form action="@Url.Action("Update")" method="POST">
+            @Html.HiddenFor(x => x.Id)
             <div class="form-group">
                 @Html.LabelFor(model => model.Name, new { @class = "control-label" })<span>(*)</span>
                 @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
@@ -36,18 +37,58 @@
 
             <hr />
             <div class="row group-form">
-                <div class="col-md-12 group-form-area">
-                    
-                </div>
-            </div>
+                @for (int i = 0; i < Model.GroupInputDatas.Count; i++)
+                {
+                    <div class="row group-existed">
+                        <div class="col-md-12 group-form-area">
+                            <a class="add-kpi btn btn-primary" style="margin-bottom:10px">Add KPI</a>
+                            <a class="remove-group btn btn-primary" style="margin-bottom:10px">Remove Group</a>
+                            <input type="text" name="GroupInputDatas.Index" value="@i" class="group-index" />
+                            Group Name : <input type="text" class="group-name" name="GroupInputDatas[@i].Name" value="@Model.GroupInputDatas[i].Name" />
+                            Order : <input type="text" class="group-order" name="GroupInputDatas[@i].Order" value="@Model.GroupInputDatas[i].Order" />
+                            <input type="text" id="kpi-number" value="@Model.GroupInputDatas[i].InputDataKpiAndOrders.Count" />
+                            <table class="table table-hover table-transparent table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>KPI Name</th>
+                                        <th>Order</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        int kpiNumber = 0;
+                                    }
+                                    @for (int j = 0; j < Model.GroupInputDatas[i].InputDataKpiAndOrders.Count; j++)
+                                    {
+                                        kpiNumber = kpiNumber + 1;
+                                        <tr>
+                                            <th>@(kpiNumber)</th>
+                                            <th>
+                                                @Html.DropDownListFor(model => model.GroupInputDatas[i].InputDataKpiAndOrders[j].KpiId, new List<SelectListItem> { new SelectListItem { Value = Model.GroupInputDatas[i].InputDataKpiAndOrders[j].KpiId.ToString(), Text = Model.GroupInputDatas[i].InputDataKpiAndOrders[j].KpiName } }, new { @class = "kpi-list form-control", style = "width:280px;margin:0 auto" })
+                                            </th>
+                                            <th>
+                                                @Html.TextBoxFor(x => x.GroupInputDatas[i].InputDataKpiAndOrders[j].Order)
 
+                                            </th>
+                                            <th><a href="javascript:;" class="delete-kpi">Delete</a></th>
+                                        </tr>
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                                        }
+            </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-default">Submit</button>
                 <a href="@Url.Action("Index")" class="btn btn-default">Cancel</a>
             </div>
         </form>
-        
-        
+
+
     </div>
 </div>
 
@@ -78,10 +119,10 @@
 <table>
     <tr class="kpi-original">
         <td>1</td>
-        <td><select name="GroupInputDatas[0].InputDataAndKpiOrders[0].Id" class="kpi-list form-control" style="width:280px" required data-index="0"></select></td>
+        <td><select name="GroupInputDatas[0].InputDataKpiAndOrders[0].Id" class="kpi-list form-control" style="width:280px" required data-index="0"></select></td>
         <td>
-            <input type="number" name="GroupInputDatas[0].InputDataAndKpiOrders[0].Order" class="kpi-order" style="color:#000" />
-            <input type="number" class="kpi-index" name="GroupInputDatas[0].InputDataAndKpiOrders.Index" style="color:#000" />
+            <input type="number" name="GroupInputDatas[0].InputDataKpiAndOrders[0].Order" class="kpi-order" style="color:#000" />
+            <input type="number" class="kpi-index" name="GroupInputDatas[0].InputDataKpiAndOrders.Index" style="color:#000" />
         </td>
         <td><a href="javascript:;" class="delete-kpi">Delete</a></td>
     </tr>
@@ -91,7 +132,7 @@
     <div class="col-md-12 group-form-area">
         <a class="add-kpi btn btn-primary" style="margin-bottom:10px">Add KPI</a>
         <a class="remove-group btn btn-primary" style="margin-bottom:10px">Remove Group</a>
-        <input type="text" name="GroupInputDatas.Index" value="0" class="group-index"/>
+        <input type="text" name="GroupInputDatas.Index" value="0" class="group-index" />
         Group Name : <input type="text" class="group-name" name="GroupInputDatas[0].Name" />
         Order : <input type="text" class="group-order" name="GroupInputDatas[0].Order" value="0" />
         <input type="text" id="kpi-number" value="0" />
@@ -108,7 +149,7 @@
         </table>
     </div>
 </div>
-<input type="text" value="0" id="group-number" />
+<input type="text" value="@Model.GroupInputDatas.Count" id="group-number" />
 
 @section Scripts {
     <script>
@@ -116,10 +157,28 @@
             var pear = window.Pear;
             var originalTrClone = $('tr.kpi-original').first().clone();
             var originalGroupFormClone = $('.group-original').first().clone();
-            console.log(originalTrClone.html());
-            console.log(originalGroupFormClone.html());
+            pear.Artifact.Designer._kpiAutoComplete($('.group-form'));
             $('tr.kpi-original').remove();
             $('.group-original').remove();
+
+            var addKpi = function (context, btnAddKpi) {
+                var groupNumber = $('#group-number').val();
+                var groupFormClone = context;
+                var trClone = originalTrClone.clone();
+                var kpiNumber = groupFormClone.find('.group-form-area').find('#kpi-number').val();
+
+                trClone.find('select').attr('name', 'GroupInputDatas[' + groupNumber + '].InputDataKpiAndOrders[' + parseInt(kpiNumber) + '].KpiId');
+                trClone.find('.kpi-order').attr('name', 'GroupInputDatas[' + groupNumber + '].InputDataKpiAndOrders[' + parseInt(kpiNumber) + '].Order');
+
+                groupFormClone.find('.group-form-area').find('table > tbody').append(trClone);
+                groupFormClone.find('.group-form-area').find('#kpi-number').val(parseInt(kpiNumber) + 1);
+                trClone.find('.kpi-index').attr('name', 'GroupInputDatas[' + groupNumber + '].InputDataKpiAndOrders.Index').val(kpiNumber);
+
+                pear.Artifact.Designer._kpiAutoComplete(trClone);
+                btnAddKpi.parent().find('tbody > tr').each(function (i, val) {
+                    $(val).find('td').first().html(i + 1);
+                })
+            };
 
             $('#btn-add-group').click(function () {
                 var $form = $(this);
@@ -139,41 +198,30 @@
                 $('.group-form').append(groupFormClone);
 
                 groupFormClone.find('.group-form-area').on('click', '.add-kpi', function () {
-                    var trClone = originalTrClone.clone();
-                    var kpiNumber = groupFormClone.find('.group-form-area').find('#kpi-number').val();
-
-                    trClone.find('select').attr('name', 'GroupInputDatas[' + groupNumber + '].InputDataAndKpiOrders[' + parseInt(kpiNumber) + '].KpiId');
-                    trClone.find('.kpi-order').attr('name', 'GroupInputDatas[' + groupNumber + '].InputDataAndKpiOrders[' + parseInt(kpiNumber) + '].Order');
-                    //var pear = window.Pear;
-                    //pear.Artifact.Designer._kpiAutoComplete(trClone);
-                    groupFormClone.find('.group-form-area').find('table > tbody').append(trClone);
-                    groupFormClone.find('.group-form-area').find('#kpi-number').val(parseInt(kpiNumber) + 1);
-                    trClone.find('.kpi-index').attr('name', 'GroupInputDatas[' + groupNumber + '].InputDataAndKpiOrders.Index').val(kpiNumber);
-                    
-                    pear.Artifact.Designer._kpiAutoComplete(trClone);
-                    $(this).parent().find('tbody > tr').each(function (i, val) {
-                        $(val).find('td').first().html(i);
-                    })
+                    addKpi(groupFormClone, $(this));
                 });
 
                 groupFormClone.find('.group-form-area').on('click', '.remove-group', function () {
-                    console.log($(this).parent());
-                    console.log($(this).parent().parent());
-                    $(this).css('color', 'red');
                     $(this).parent().remove();
                 });
 
                 groupFormClone.find('.group-form-area').on('click', '.delete-kpi', function () {
-                    $(this).css('color', 'red');
                     $(this).parent().parent().remove();
                 });
-                
-
-                //pear.Artifact.Designer._kpiAutoComplete(groupFormClone);
             });
 
 
-            //$('.add-kpi').click(function () {
+            $('.group-existed').on('click', '.add-kpi', function () {
+                addKpi($(this).closest('.group-existed'), $(this));
+            });
+
+            $('.group-existed').on('click', '.delete-kpi', function () {
+                $(this).parent().parent().remove();
+            });
+
+            $('.group-existed').on('click', '.remove-group', function () {
+                $(this).parent().remove();
+            });
 
         });
     </script>
