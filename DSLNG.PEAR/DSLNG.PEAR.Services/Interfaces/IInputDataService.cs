@@ -11,6 +11,7 @@ namespace DSLNG.PEAR.Services.Interfaces
     public interface IInputDataService
     {
         GetInputDatasResponse GetInputData(GetInputDatasRequest request);
-        SaveOrUpdateResponse SaveOrUpdateInputData(SaveOrUpdateInputDataRequest request);
+        GetInputDataResponse GetInputData(int Id);
+        SaveOrUpdateInputDataResponse SaveOrUpdateInputData(SaveOrUpdateInputDataRequest request);
     }
 }

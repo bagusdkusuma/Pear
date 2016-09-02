@@ -18,5 +18,6 @@ namespace DSLNG.PEAR.Data.Entities.InputOriginalData
         public RoleGroup Accountability { get; set; }
         public string Name { get; set; }
         public DateTime LastInput { get; set; }
+        public IList<GroupInputData> GroupInputDatas { get; set; }
     }
 }

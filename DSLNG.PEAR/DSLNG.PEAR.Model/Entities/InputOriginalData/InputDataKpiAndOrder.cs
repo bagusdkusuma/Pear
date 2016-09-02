@@ -8,14 +8,12 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Data.Entities.InputOriginalData
 {
-    public class GroupInputData
+    public class InputDataKpiAndOrder
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string Name { get; set; }
-        public IList<InputDataKpiAndOrder> InputDataKpiAndOrders {get;set;}
+        public Kpi Kpi { get; set; }
         public int Order { get; set; }
-        public InputData InputData { get; set; }
     }
 }

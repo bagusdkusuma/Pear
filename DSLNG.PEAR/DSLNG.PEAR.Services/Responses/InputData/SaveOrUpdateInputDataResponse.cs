@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Responses.InputData
 {
-    public class SaveOrUpdateResponse : BaseResponse
+    public class SaveOrUpdateInputDataResponse : BaseResponse
     {
 
     }

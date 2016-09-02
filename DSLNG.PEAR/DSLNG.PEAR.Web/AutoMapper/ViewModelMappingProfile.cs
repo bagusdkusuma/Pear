@@ -182,6 +182,9 @@ using DSLNG.PEAR.Web.ViewModels.Der.Display;
 using DSLNG.PEAR.Services.Responses.DerTransaction;
 using DSLNG.PEAR.Web.ViewModels.DerTransaction;
 using DSLNG.PEAR.Services.Responses.Wave;
+using DSLNG.PEAR.Services.Requests.InputData;
+using DSLNG.PEAR.Web.ViewModels.InputData;
+using DSLNG.PEAR.Services.Responses.InputData;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -200,7 +203,13 @@ namespace DSLNG.PEAR.Web.AutoMapper
             ConfigureDerViewModel();
             ConfigureProcessBlueprint();
             ConfigureFileRepository();
+            ConfigureInputDataViewModel();
+            ConfigureMixed();
+            base.Configure();
+        }
 
+        private void ConfigureMixed()
+        {
             Mapper.CreateMap<Dropdown, SelectListItem>();
             Mapper.CreateMap<SearchKpiViewModel, GetKpiToSeriesRequest>();
             Mapper.CreateMap<GetKpiToSeriesResponse, KpiToSeriesViewModel>();
@@ -752,7 +761,6 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetKpiInformationValuesResponse.KpiValue, DerValuesViewModel.KpiValueViewModel>();
             Mapper.CreateMap<GetHighlightValuesResponse.DerHighlight, DerValuesViewModel.DerHighlightValuesViewModel>();
             Mapper.CreateMap<GetWaveResponse, WaveViewModel>();
-            base.Configure();
         }
 
         private void ConfigureFileRepository()
@@ -1138,6 +1146,17 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetKpiAchievementResponse, DerItemValueViewModel>();
             Mapper.CreateMap<GetKpiTargetItemResponse, DerItemValueViewModel>();
 
+        }
+
+        private void ConfigureInputDataViewModel()
+        {
+            Mapper.CreateMap<CreateInputDataViewModel, SaveOrUpdateInputDataRequest>();
+            Mapper.CreateMap<CreateInputDataViewModel.GroupInputData, SaveOrUpdateInputDataRequest.GroupInputData>();
+            Mapper.CreateMap<CreateInputDataViewModel.InputDataKpiAndOrder, SaveOrUpdateInputDataRequest.InputDataAndKpiOrder>();
+
+            Mapper.CreateMap<GetInputDataResponse, CreateInputDataViewModel>();
+            Mapper.CreateMap<GetInputDataResponse.GroupInputData, CreateInputDataViewModel.GroupInputData>();
+            Mapper.CreateMap<GetInputDataResponse.InputDataKpiAndOrder, CreateInputDataViewModel.InputDataKpiAndOrder>();
         }
 
     }

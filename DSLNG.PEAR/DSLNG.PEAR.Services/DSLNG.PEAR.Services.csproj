@@ -123,6 +123,7 @@
     <Compile Include="Requests\Files\GetFilesRequest.cs" />
     <Compile Include="Requests\Files\SaveFileRepositoryRequest.cs" />
     <Compile Include="Requests\InputData\GetInputDatasRequest.cs" />
+    <Compile Include="Requests\InputData\SaveOrUpdateInputDataRequest.cs" />
     <Compile Include="Requests\Menu\GetMenuPrivilegeRequest.cs" />
     <Compile Include="Requests\MirConfiguration\GetMirConfigurationsRequest.cs" />
     <Compile Include="Requests\MirConfiguration\SaveMirConfigurationRequest.cs" />
@@ -259,7 +260,9 @@
     <Compile Include="Responses\HighlightGroup\DeleteHighlightGroupResponse.cs" />
     <Compile Include="Responses\HighlightOrder\GetStaticHighlightOrdersResponse.cs" />
     <Compile Include="Responses\HighlightOrder\SaveStaticHighlightOrderResponse.cs" />
+    <Compile Include="Responses\InputData\GetInputDataResponse.cs" />
     <Compile Include="Responses\InputData\GetInputDatasResponse.cs" />
+    <Compile Include="Responses\InputData\SaveOrUpdateInputDataResponse.cs" />
     <Compile Include="Responses\Kpi\GetKpiDetailResponse.cs" />
     <Compile Include="Responses\Menu\GetMenuPrivilegeResponse.cs" />
     <Compile Include="Responses\MidtermFormulation\AddDefinitionResponse.cs" />

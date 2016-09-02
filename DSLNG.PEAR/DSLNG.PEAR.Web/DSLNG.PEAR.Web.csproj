@@ -1388,6 +1388,7 @@
     <Content Include="Views\InputData\Index.cshtml" />
     <Content Include="Views\InputData\Create.cshtml" />
     <Content Include="Views\User\AddPrivilege.cshtml" />
+    <Content Include="Views\InputData\Update.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

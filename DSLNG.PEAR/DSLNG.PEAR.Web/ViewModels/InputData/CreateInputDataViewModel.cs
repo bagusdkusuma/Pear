@@ -13,30 +13,38 @@ namespace DSLNG.PEAR.Web.ViewModels.InputData
         {
             Accountabilities = new List<SelectListItem>();
             PeriodeTypes = new List<SelectListItem>();
-            GroupInputs = new List<GroupInput>();
+            GroupInputDatas = new List<GroupInputData>();
             Kpis = new List<Kpi>();
         }
 
+        public int Id { get; set; }
         public string Name { get; set; }
         public string PeriodeType { get; set; }
         [Display(Name="Accountability")]
-        public int Accountability { get; set; }
+        public int AccountabilityId { get; set; }
         public int  Order { get; set; }
         public IList<SelectListItem> Accountabilities { get; set; }        
         public IList<SelectListItem> PeriodeTypes { get; set; }
-        public IList<GroupInput> GroupInputs { get; set; }
+        public IList<GroupInputData> GroupInputDatas { get; set; }
         public IList<Kpi> Kpis { get; set; }
-
-
-        public class GroupInput
+        
+        public class GroupInputData
         {
-            public GroupInput()
+            public GroupInputData()
             {
-                Kpis = new List<Kpi>();
+                InputDataKpiAndOrders = new List<InputDataKpiAndOrder>();
             }
 
             public string Name { get; set; }
-            public IList<Kpi> Kpis { get; set; }
+            public IList<InputDataKpiAndOrder> InputDataKpiAndOrders { get; set; }
+            public int Order { get; set; }
+        }
+
+        public class InputDataKpiAndOrder
+        {
+            public int Id { get; set; }
+            public int KpiId { get; set; }
+            public string KpiName { get; set; }
             public int Order { get; set; }
         }
 
@@ -44,7 +52,6 @@ namespace DSLNG.PEAR.Web.ViewModels.InputData
         {
             public int Id { get; set; }
             public string Name { get; set; }
-            public int Order { get; set; }
         }
 
 
