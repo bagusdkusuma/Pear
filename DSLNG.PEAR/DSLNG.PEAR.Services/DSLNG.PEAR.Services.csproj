@@ -101,9 +101,11 @@
     <Compile Include="HighlightGroupService.cs" />
     <Compile Include="HighlightOrderService.cs" />
     <Compile Include="HighlightService.cs" />
+    <Compile Include="InputDataService.cs" />
     <Compile Include="Interfaces\GetDerLayoutResponse.cs" />
     <Compile Include="Interfaces\IDerTransactionService.cs" />
     <Compile Include="Interfaces\IFileRepositoryService.cs" />
+    <Compile Include="Interfaces\IInputDataService.cs" />
     <Compile Include="Interfaces\IKpiTransformationService.cs" />
     <Compile Include="Interfaces\IMirConfigurationService.cs" />
     <Compile Include="Interfaces\IMirDataTableService.cs" />
@@ -122,6 +124,8 @@
     <Compile Include="Requests\Files\GetFileRequest.cs" />
     <Compile Include="Requests\Files\GetFilesRequest.cs" />
     <Compile Include="Requests\Files\SaveFileRepositoryRequest.cs" />
+    <Compile Include="Requests\InputData\GetInputDatasRequest.cs" />
+    <Compile Include="Requests\InputData\SaveOrUpdateInputDataRequest.cs" />
     <Compile Include="Requests\KpiTransformation\GetKpiTransformationsRequest.cs" />
     <Compile Include="Requests\KpiTransformation\SaveKpiTransformationRequest.cs" />
     <Compile Include="Requests\Menu\GetMenuPrivilegeRequest.cs" />
@@ -260,6 +264,9 @@
     <Compile Include="Responses\HighlightGroup\DeleteHighlightGroupResponse.cs" />
     <Compile Include="Responses\HighlightOrder\GetStaticHighlightOrdersResponse.cs" />
     <Compile Include="Responses\HighlightOrder\SaveStaticHighlightOrderResponse.cs" />
+    <Compile Include="Responses\InputData\GetInputDataResponse.cs" />
+    <Compile Include="Responses\InputData\GetInputDatasResponse.cs" />
+    <Compile Include="Responses\InputData\SaveOrUpdateInputDataResponse.cs" />
     <Compile Include="Responses\KpiInformation\GetKpiTransformationResponse.cs" />
     <Compile Include="Responses\KpiInformation\GetKpiTransformationsResponse.cs" />
     <Compile Include="Responses\KpiInformation\SaveKpiTransformationResponse.cs" />

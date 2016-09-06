@@ -221,6 +221,16 @@ namespace DSLNG.PEAR.Services
                 };
         }
 
+        public IEnumerable<Dropdown> GetPeriodeTypesDailyMonthlyYearly()
+        {
+            return new List<Dropdown>()
+                {
+                new Dropdown {Text = PeriodeType.Daily.ToString(), Value = PeriodeType.Daily.ToString()},
+                    new Dropdown {Text = PeriodeType.Monthly.ToString(), Value = PeriodeType.Monthly.ToString()},
+                    new Dropdown {Text = PeriodeType.Yearly.ToString(), Value = PeriodeType.Yearly.ToString()}
+                };
+        }
+
         public IEnumerable<Dropdown> GetKpisForPmsConfigDetailsUpdate(int pmsConfigId, int id)
         {
             var pmsConfig = DataContext.PmsConfigs.Include(x => x.Pillar)
