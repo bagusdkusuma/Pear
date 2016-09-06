@@ -1157,6 +1157,12 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetInputDataResponse, CreateInputDataViewModel>();
             Mapper.CreateMap<GetInputDataResponse.GroupInputData, CreateInputDataViewModel.GroupInputData>();
             Mapper.CreateMap<GetInputDataResponse.InputDataKpiAndOrder, CreateInputDataViewModel.InputDataKpiAndOrder>();
+
+            Mapper.CreateMap<GetInputDatasResponse.InputData, IndexInputDataViewModel.InputDataViewModel>();
+
+            Mapper.CreateMap<GetInputDataResponse, FormInputDataViewModel>();
+            Mapper.CreateMap<GetInputDataResponse.GroupInputData, FormInputDataViewModel.GroupInputData>();
+            Mapper.CreateMap<GetInputDataResponse.InputDataKpiAndOrder, FormInputDataViewModel.GroupInputData.InputDataKpiAndOrder>();
         }
 
     }

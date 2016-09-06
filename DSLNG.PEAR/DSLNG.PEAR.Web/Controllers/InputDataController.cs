@@ -1,11 +1,14 @@
 ﻿using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Interfaces;
+using DSLNG.PEAR.Services.Requests.DerTransaction;
 using DSLNG.PEAR.Services.Requests.InputData;
 using DSLNG.PEAR.Services.Responses.InputData;
 using DSLNG.PEAR.Web.Grid;
+using DSLNG.PEAR.Web.ViewModels.DerTransaction;
 using DSLNG.PEAR.Web.ViewModels.InputData;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -17,17 +20,22 @@ namespace DSLNG.PEAR.Web.Controllers
         private IInputDataService _inputDataService;
         private IDropdownService _dropdownService;
         private IKpiService _kpiService;
+        private IDerTransactionService _derTransactionService;
 
-        public InputDataController(IInputDataService inputDataService, IDropdownService dropdownService, IKpiService kpiService)
+        public InputDataController(IInputDataService inputDataService, IDropdownService dropdownService, IKpiService kpiService,
+            IDerTransactionService derTransactionService)
         {
             _inputDataService = inputDataService;
             _dropdownService = dropdownService;
             _kpiService = kpiService;
+            _derTransactionService = derTransactionService;
         }
 
         public ActionResult Index()
         {
-            return View();
+            var viewModel = new IndexInputDataViewModel();
+            viewModel.InputDatas = _inputDataService.GetInputDatas().InputDatas.MapTo<IndexInputDataViewModel.InputDataViewModel>();
+            return View(viewModel);
         }
 
         public ActionResult Grid(GridParams gridParams)
@@ -93,6 +101,38 @@ namespace DSLNG.PEAR.Web.Controllers
             request.UpdatedById = UserProfile().UserId;
             var response = _inputDataService.SaveOrUpdateInputData(request);
             return RedirectToAction("Index");
+        }
+        
+        public ActionResult FormInputData(int id, string date)
+        {
+            DateTime theDate = DateTime.Now;
+            if (!string.IsNullOrEmpty(date)) theDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+            var inputData = _inputDataService.GetInputData(id);
+            FormInputDataViewModel viewModel = inputData.MapTo<FormInputDataViewModel>();
+            viewModel.Date = theDate;
+            IList<int> kpiIds = new List<int>();
+            foreach (var group in viewModel.GroupInputDatas)
+            {
+                foreach(var item in group.InputDataKpiAndOrders)
+                {
+                    if(!kpiIds.Contains(item.KpiId)) kpiIds.Add(item.KpiId);
+                }
+            }
+
+            viewModel.KpiInformationValues = GetKpisValue(theDate, kpiIds.ToArray(), new int[] { });
+            return View(viewModel);
+        }
+
+        private IList<DerValuesViewModel.KpiInformationValuesViewModel> GetKpisValue(DateTime date, int[] actualKpiIds, int[] targetKpiIds)
+        {
+            var kpiInformationValuesRequest = new GetKpiInformationValuesRequest
+            {
+                Date = date,
+                ActualKpiIds = actualKpiIds,
+                TargetKpiIds = targetKpiIds
+            };
+            var kpiInformationValuesResponse = _derTransactionService.GetKpiInformationValues(kpiInformationValuesRequest);
+            return kpiInformationValuesResponse.KpiInformations.MapTo<DerValuesViewModel.KpiInformationValuesViewModel>();
         }
     }
 }

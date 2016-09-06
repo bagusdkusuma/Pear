@@ -11,6 +11,7 @@ using System.Data.SqlClient;
 using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Common.Extensions;
 using System.Data.Entity;
+using DSLNG.PEAR.Data.Enums;
 
 namespace DSLNG.PEAR.Services
 {
@@ -28,8 +29,10 @@ namespace DSLNG.PEAR.Services
             {
                 var inputData = DataContext.InputData
                     .Include(x => x.GroupInputDatas)
+                    .Include(x => x.Accountability)
                     .Include(x => x.GroupInputDatas.Select(y => y.InputDataKpiAndOrders))
                     .Include(x => x.GroupInputDatas.Select(y => y.InputDataKpiAndOrders.Select(z => z.Kpi)))
+                    .Include(x => x.GroupInputDatas.Select(y => y.InputDataKpiAndOrders.Select(z => z.Kpi.Measurement)))
                     .Single(x => x.Id == id);
 
                 response = inputData.MapTo<GetInputDataResponse>();
@@ -60,6 +63,27 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
+        public GetInputDatasResponse GetInputDatas()
+        {
+            var response = new GetInputDatasResponse();
+            try
+            {
+                var inputData = DataContext.InputData
+                    .Include(x => x.Accountability)
+                   .Include(x => x.GroupInputDatas).ToList();
+
+                response.InputDatas = inputData.MapTo<GetInputDatasResponse.InputData>();
+                response.IsSuccess = true;
+            }
+            catch (Exception exception)
+            {
+                response.Message = exception.Message;
+
+            }
+
+            return response;
+        }
+
         public SaveOrUpdateInputDataResponse SaveOrUpdateInputData(SaveOrUpdateInputDataRequest request)
         {
             var response = new SaveOrUpdateInputDataResponse();
@@ -73,9 +97,9 @@ namespace DSLNG.PEAR.Services
                         .Include(x => x.GroupInputDatas.Select(y => y.InputDataKpiAndOrders.Select(z => z.Kpi)))
                         .Single(x => x.Id == request.Id);
                     inputData.Name = request.Name;
-                    inputData.Accountability = DataContext.RoleGroups.Single(x => x.Id == request.AccountabilityId);
-                    inputData.LastInput = DateTime.Now;
+                    inputData.Accountability = DataContext.RoleGroups.Single(x => x.Id == request.AccountabilityId);                    
                     inputData.UpdatedBy = DataContext.Users.Single(x => x.Id == request.UpdatedById);
+                    inputData.LastInput = DateTime.Now;
                     foreach (var groupInputData in inputData.GroupInputDatas.ToList())
                     {
                         foreach(var inputDataKpiAndOrder in groupInputData.InputDataKpiAndOrders.ToList())
@@ -109,9 +133,9 @@ namespace DSLNG.PEAR.Services
                 else
                 {
                     var inputData = request.MapTo<InputData>();
-                    inputData.Accountability = DataContext.RoleGroups.Single(x => x.Id == request.AccountabilityId);
-                    inputData.LastInput = DateTime.Now;
+                    inputData.Accountability = DataContext.RoleGroups.Single(x => x.Id == request.AccountabilityId);                    
                     inputData.UpdatedBy = DataContext.Users.Single(x => x.Id == request.UpdatedById);
+                    inputData.LastInput = DateTime.Now;
                     var groupInputDatas = new List<GroupInputData>();
                     foreach (var item in request.GroupInputDatas)
                     {

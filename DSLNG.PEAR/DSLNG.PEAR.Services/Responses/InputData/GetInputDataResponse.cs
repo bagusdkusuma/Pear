@@ -38,6 +38,8 @@ namespace DSLNG.PEAR.Services.Responses.InputData
             public int Id { get; set; }
             public int KpiId { get; set; }
             public string KpiName { get; set; }
+            public string KpiMeasurement{ get; set; }
+            public string Val { get; set; }
             public int Order { get; set; }
         }
         

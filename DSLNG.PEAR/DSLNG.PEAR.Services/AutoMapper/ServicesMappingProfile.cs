@@ -1048,7 +1048,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
         private void ConfigureInputData()
         {
             Mapper.CreateMap<SaveOrUpdateInputDataRequest, InputData>()
-                .ForMember(x => x.PeriodeType, y => y.MapFrom(z => Enum.Parse(typeof(PeriodeType), z.PeriodeType)));
+                .ForMember(x => x.PeriodeType, y => y.MapFrom(z => Enum.Parse(typeof(PeriodeType), z.PeriodeType)))
+                .ForMember(x => x.GroupInputDatas, y => y.Ignore());
             Mapper.CreateMap<InputData, GetInputDataResponse>()
                 .ForMember(x => x.PeriodeType, y => y.MapFrom(z => z.PeriodeType.ToString()))
                 .ForMember(x => x.AccountabilityId, y => y.MapFrom(z => z.Accountability.Id));
@@ -1057,7 +1058,12 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<InputDataKpiAndOrder, GetInputDataResponse.InputDataKpiAndOrder>()
                 .ForMember(x => x.KpiId, y => y.MapFrom(z => z.Kpi.Id))
                 .ForMember(x => x.KpiName, y => y.MapFrom(z => z.Kpi.Name))
+                .ForMember(x => x.KpiMeasurement, y => y.MapFrom(z => z.Kpi.Measurement.Name))
                 .ForMember(x => x.Order, y => y.MapFrom(z => z.Order));
+
+            Mapper.CreateMap<InputData, GetInputDatasResponse.InputData>()
+                .ForMember(x => x.Accountability, y => y.MapFrom(z => z.Accountability.Name))
+                .ForMember(x => x.PeriodeType, y => y.MapFrom(z => z.PeriodeType.ToString()));
 
             //Mapper.CreateMap<SaveOrUpdateInputDataRequest.GroupInputData, GroupInputData>();
             //Mapper.CreateMap<SaveOrUpdateInputDataRequest.InputDataKpiAndOrder, InputDataKpiAndOrder>();

@@ -1,4 +1,5 @@
-﻿@{
+﻿@model DSLNG.PEAR.Web.ViewModels.InputData.IndexInputDataViewModel
+@{
     ViewBag.Title = "Input Data";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -9,7 +10,6 @@
     @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
 </div>
 
-@*@Html.Action("IndexPartial")*@
 <table id="input-data-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
     <thead>
         <tr>
@@ -20,59 +20,38 @@
             <th>Action</th>
         </tr>
     </thead>
+    <tbody>
+        <tr style="border-bottom:none">
+            <td>Input Data DER</td>
+            <td>Daily</td>
+            <td>CPD</td>
+            <td></td>
+            <td></td>
+        </tr>
+        @foreach(var item in Model.InputDatas)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.PeriodeType
+                </td>
+                <td>
+                    @item.Accountability
+                </td>
+                <td>
+                    @item.LastInput.ToString()
+                </td>
+                <td>
+                    <a href="@Url.Action("FormInputData", new { id = item.Id })">Input</a> | 
+                    <a href="@Url.Action("Update", new { id = item.Id })">Configure</a>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
 
 @section Scripts{
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#input-data-table').DataTable({
-                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-                "iDisplayLength": -1,
-                "bProcessing": true,
-                "bServerSide": true,
-                "sServerMethod": "POST",
-                "sAjaxSource": '@Url.Action("Grid", "InputData")',
-                "order": [[1, "asc"]],
-                "aoColumns": [
-                    { "mDataProp": "Name", "name": "Name", "className": "text-align-left" },
-                    { "mDataProp": "PeriodeType", "name": "PeriodeType", "className": "text-align-left" },
-                    {
-                        "mDataProp": "Accountability", "name": "Accountability", "className": "text-align-left"
-                    },
-                    { "mDataProp": "LastInput", "name": "LastInput", "className": "text-align-left" },
-                    //{ "mDataProp": "Order", "name": "Order" },                    
-                    {
-                        "orderable": false,
-                        "data": null,
-                        "defaultContent": '',
-                        "mRender": function (data, type, row) {
-                            var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
-                            var editLink = '@Html.ActionLink("Edit", "Update", "Kpi", new { id = "_id_" }, null)'.replace('_id_', data.Id);
-                            return editLink + ' | ' + deleteLink;
-                        }
-                    }
-                ],
-                rowCallback: function (row, data) {
-                    // Set the checked state of the checkbox in the table
-                    //$('input.is-active', row).prop('checked', data.IsActive == 1);
-                    //$('input.is-economic', row).prop('checked', data.IsEconomic == 1);
-                }
-            });
-
-            @*$('#kpi-table').on('click', '.delete', function () {
-                var id = $(this).attr('data-id');
-                if (confirm('Are you sure want to delete this item?' + id)) {
-                    var url = '@Url.Action("Delete", "Kpi")';
-                    var form = $('<form />');
-                    form.attr('action', url);
-                    form.attr('method', 'POST');
-                    form.html('<input type="hidden" name="id" value="' + id + '" />');
-                    $('body').append(form);
-                    form.submit();
-                }
-            });*@
-
-
-        });
-    </script>
+    
 }

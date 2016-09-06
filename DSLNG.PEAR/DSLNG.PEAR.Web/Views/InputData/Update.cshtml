@@ -1,7 +1,7 @@
 ﻿@using DSLNG.PEAR.Common.Contants
 @model DSLNG.PEAR.Web.ViewModels.InputData.CreateInputDataViewModel
 @{
-    ViewBag.Title = "Create New Input Data Category";
+    ViewBag.Title = "Update Input Data";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -42,11 +42,12 @@
                     <div class="row group-existed">
                         <div class="col-md-12 group-form-area">
                             <a class="add-kpi btn btn-primary" style="margin-bottom:10px">Add KPI</a>
-                            <a class="remove-group btn btn-primary" style="margin-bottom:10px">Remove Group</a>
-                            <input type="text" name="GroupInputDatas.Index" value="@i" class="group-index" />
-                            Group Name : <input type="text" class="group-name" name="GroupInputDatas[@i].Name" value="@Model.GroupInputDatas[i].Name" />
-                            Order : <input type="text" class="group-order" name="GroupInputDatas[@i].Order" value="@Model.GroupInputDatas[i].Order" />
-                            <input type="text" id="kpi-number" value="@Model.GroupInputDatas[i].InputDataKpiAndOrders.Count" />
+                            <input type="hidden" name="GroupInputDatas.Index" value="@i" class="group-index" />
+                            <label class="control-label" style="margin-left:220px;">Group Name : </label> <input type="text" class="group-name" name="GroupInputDatas[@i].Name" value="@Model.GroupInputDatas[i].Name" />
+                            <label class="control-label">Order</label>
+                            <input type="text" class="group-order" name="GroupInputDatas[@i].Order" value="@Model.GroupInputDatas[i].Order" />
+                            <input type="hidden" id="kpi-number" value="@Model.GroupInputDatas[i].InputDataKpiAndOrders.Count" />
+                            <a class="remove-group btn btn-primary" style="margin-bottom: 4px;margin-left: 180px;">Remove Group</a>
                             <table class="table table-hover table-transparent table-bordered">
                                 <thead>
                                     <tr>
@@ -69,6 +70,7 @@
                                                 @Html.DropDownListFor(model => model.GroupInputDatas[i].InputDataKpiAndOrders[j].KpiId, new List<SelectListItem> { new SelectListItem { Value = Model.GroupInputDatas[i].InputDataKpiAndOrders[j].KpiId.ToString(), Text = Model.GroupInputDatas[i].InputDataKpiAndOrders[j].KpiName } }, new { @class = "kpi-list form-control", style = "width:280px;margin:0 auto" })
                                             </th>
                                             <th>
+                                                <input type="hidden" name="GroupInputDatas[@i].InputDataKpiAndOrders.Index" value="@j" class="kpi-index" />
                                                 @Html.TextBoxFor(x => x.GroupInputDatas[i].InputDataKpiAndOrders[j].Order)
 
                                             </th>
@@ -122,7 +124,7 @@
         <td><select name="GroupInputDatas[0].InputDataKpiAndOrders[0].Id" class="kpi-list form-control" style="width:280px" required data-index="0"></select></td>
         <td>
             <input type="number" name="GroupInputDatas[0].InputDataKpiAndOrders[0].Order" class="kpi-order" style="color:#000" />
-            <input type="number" class="kpi-index" name="GroupInputDatas[0].InputDataKpiAndOrders.Index" style="color:#000" />
+            <input type="hidden" class="kpi-index" name="GroupInputDatas[0].InputDataKpiAndOrders.Index" style="color:#000" />
         </td>
         <td><a href="javascript:;" class="delete-kpi">Delete</a></td>
     </tr>
@@ -131,11 +133,13 @@
 <div class="row group-original">
     <div class="col-md-12 group-form-area">
         <a class="add-kpi btn btn-primary" style="margin-bottom:10px">Add KPI</a>
-        <a class="remove-group btn btn-primary" style="margin-bottom:10px">Remove Group</a>
-        <input type="text" name="GroupInputDatas.Index" value="0" class="group-index" />
-        Group Name : <input type="text" class="group-name" name="GroupInputDatas[0].Name" />
-        Order : <input type="text" class="group-order" name="GroupInputDatas[0].Order" value="0" />
-        <input type="text" id="kpi-number" value="0" />
+        <input type="hidden" name="GroupInputDatas.Index" value="0" class="group-index" />
+        <label class="control-label" style="margin-left:220px;">Group Name : </label>
+        <input type="text" class="group-name" name="GroupInputDatas[0].Name" />
+        <label class="control-label">Order</label>
+        <input type="text" class="group-order" name="GroupInputDatas[0].Order" value="0" />
+        <a class="remove-group btn btn-primary" style="margin-bottom: 4px;margin-left: 180px;">Remove Group</a>
+        <input type="hidden" id="kpi-number" value="0" />
         <table class="table table-hover table-transparent table-bordered">
             <thead>
                 <tr>
@@ -149,7 +153,7 @@
         </table>
     </div>
 </div>
-<input type="text" value="@Model.GroupInputDatas.Count" id="group-number" />
+<input type="hidden" value="@Model.GroupInputDatas.Count" id="group-number" />
 
 @section Scripts {
     <script>
@@ -166,13 +170,14 @@
                 var groupFormClone = context;
                 var trClone = originalTrClone.clone();
                 var kpiNumber = groupFormClone.find('.group-form-area').find('#kpi-number').val();
+                var groupIndex = context.find('.group-index').attr('name', 'GroupInputDatas.Index').val();  
 
-                trClone.find('select').attr('name', 'GroupInputDatas[' + groupNumber + '].InputDataKpiAndOrders[' + parseInt(kpiNumber) + '].KpiId');
-                trClone.find('.kpi-order').attr('name', 'GroupInputDatas[' + groupNumber + '].InputDataKpiAndOrders[' + parseInt(kpiNumber) + '].Order');
+                trClone.find('select').attr('name', 'GroupInputDatas[' + groupIndex + '].InputDataKpiAndOrders[' + parseInt(kpiNumber) + '].KpiId');
+                trClone.find('.kpi-order').attr('name', 'GroupInputDatas[' + groupIndex + '].InputDataKpiAndOrders[' + parseInt(kpiNumber) + '].Order');
 
                 groupFormClone.find('.group-form-area').find('table > tbody').append(trClone);
                 groupFormClone.find('.group-form-area').find('#kpi-number').val(parseInt(kpiNumber) + 1);
-                trClone.find('.kpi-index').attr('name', 'GroupInputDatas[' + groupNumber + '].InputDataKpiAndOrders.Index').val(kpiNumber);
+                trClone.find('.kpi-index').attr('name', 'GroupInputDatas[' + groupIndex + '].InputDataKpiAndOrders.Index').val(kpiNumber);
 
                 pear.Artifact.Designer._kpiAutoComplete(trClone);
                 btnAddKpi.parent().find('tbody > tr').each(function (i, val) {

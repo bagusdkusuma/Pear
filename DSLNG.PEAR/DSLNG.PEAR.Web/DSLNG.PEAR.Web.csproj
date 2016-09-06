@@ -912,6 +912,8 @@
     <Compile Include="ViewModels\File\ProcessFileViewModel.cs" />
     <Compile Include="ViewModels\HighlightGroup\HighlightGroupViewModel.cs" />
     <Compile Include="ViewModels\InputData\CreateInputDataViewModel.cs" />
+    <Compile Include="ViewModels\InputData\FormInputDataViewModel.cs" />
+    <Compile Include="ViewModels\InputData\IndexInputDataViewModel.cs" />
     <Compile Include="ViewModels\Kpi\DetailKpiViewModel.cs" />
     <Compile Include="ViewModels\Kpi\UploadViewModel.cs" />
     <Compile Include="ViewModels\Menu\MenuPrivilegeViewModel.cs" />
@@ -1389,6 +1391,7 @@
     <Content Include="Views\InputData\Create.cshtml" />
     <Content Include="Views\User\AddPrivilege.cshtml" />
     <Content Include="Views\InputData\Update.cshtml" />
+    <Content Include="Views\InputData\FormInputData.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

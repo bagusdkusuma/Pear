@@ -13,5 +13,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetInputDatasResponse GetInputData(GetInputDatasRequest request);
         GetInputDataResponse GetInputData(int Id);
         SaveOrUpdateInputDataResponse SaveOrUpdateInputData(SaveOrUpdateInputDataRequest request);
+        GetInputDatasResponse GetInputDatas();
     }
 }

@@ -82,7 +82,7 @@
             <select name="GroupInputDatas[0].InputDataAndKpiOrders[0].KpiId" class="kpi-list form-control" style="width:280px" required data-index="0"></select></td>
         <td>
             <input type="number" name="GroupInputDatas[0].InputDataKpiAndOrders[0].Order" class="kpi-order" style="color:#000" />
-            <input type="number" class="kpi-index" name="GroupInputDatas[0].InputDataKpiAndOrders.Index" style="color:#000" />
+            <input type="hidden" class="kpi-index" name="GroupInputDatas[0].InputDataKpiAndOrders.Index" style="color:#000" />
         </td>
         <td><a href="javascript:;" class="delete-kpi">Delete</a></td>
     </tr>
@@ -90,12 +90,12 @@
 
 <div class="row group-original">
     <div class="col-md-12 group-form-area">
-        <a class="add-kpi btn btn-primary" style="margin-bottom:10px">Add KPI</a>
-        <a class="remove-group btn btn-primary" style="margin-bottom:10px">Remove Group</a>
-        <input type="text" name="GroupInputDatas.Index" value="0" class="group-index"/>
-        Group Name : <input type="text" class="group-name" name="GroupInputDatas[0].Name" />
-        Order : <input type="text" class="group-order" name="GroupInputDatas[0].Order" value="0" />
-        <input type="text" id="kpi-number" value="0" />
+        <a class="add-kpi btn btn-primary" style="margin-bottom:10px">Add KPI</a>        
+        <input type="hidden" name="GroupInputDatas.Index" value="0" class="group-index"/>
+        <label class="control-label" style="margin-left:220px;">Group Name : </label><input type="text" class="group-name" name="GroupInputDatas[0].Name" />
+        <label class="control-label">Order : </label> <input type="text" class="group-order" name="GroupInputDatas[0].Order" value="0" />
+        <a class="remove-group btn btn-primary" style="margin-bottom: 4px;margin-left: 180px;">Remove Group</a>
+        <input type="hidden" id="kpi-number" value="0" />
         <table class="table table-hover table-transparent table-bordered">
             <thead>
                 <tr>
@@ -109,16 +109,14 @@
         </table>
     </div>
 </div>
-<input type="text" value="0" id="group-number" />
+<input type="hidden" value="0" id="group-number" />
 
 @section Scripts {
     <script>
         $(document).ready(function () {
             var pear = window.Pear;
             var originalTrClone = $('tr.kpi-original').first().clone();
-            var originalGroupFormClone = $('.group-original').first().clone();
-            console.log(originalTrClone.html());
-            console.log(originalGroupFormClone.html());
+            var originalGroupFormClone = $('.group-original').first().clone();            
             $('tr.kpi-original').remove();
             $('.group-original').remove();
 
