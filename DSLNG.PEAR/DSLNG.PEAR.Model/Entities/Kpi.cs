@@ -7,6 +7,7 @@ using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Data.Entities.EconomicModel;
 using DSLNG.PEAR.Data.Entities.Blueprint;
 using DSLNG.PEAR.Data.Entities.Mir;
+using DSLNG.PEAR.Data.Entities.KpiTransformationEngine;
 
 namespace DSLNG.PEAR.Data.Entities
 {
@@ -53,5 +54,6 @@ namespace DSLNG.PEAR.Data.Entities
         public ICollection<KeyOutputConfiguration> KeyOutputConfigurations { get; set; }
         public IList<MidtermStrategicPlanning> MidtermStrategicPlannings { get; set; }
         public IList<MirDataTable> MirDataTables { get; set;  }
+        public ICollection<KpiTransformation> KpiTransformations { get; set; }
     }
 }

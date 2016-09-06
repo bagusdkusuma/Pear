@@ -121,6 +121,10 @@
     <Compile Include="Entities\FileManagerRolePrivilege.cs" />
     <Compile Include="Entities\Files\FileRepository.cs" />
     <Compile Include="Entities\HighlightGroup.cs" />
+    <Compile Include="Entities\KpiTransformationEngine\KpiTransformation.cs" />
+    <Compile Include="Entities\KpiTransformationEngine\KpiTransformationLog.cs" />
+    <Compile Include="Entities\KpiTransformationEngine\KpiTransformationSchedule.cs" />
+    <Compile Include="Entities\KpiTransformationEngine\KpiTransformationPeriod.cs" />
     <Compile Include="Entities\MenuRolePrivilege.cs" />
     <Compile Include="Entities\Mir\MirArtifact.cs" />
     <Compile Include="Entities\Mir\MirConfiguration.cs" />
@@ -171,6 +175,7 @@
     <Compile Include="Enums\DerLayoutItemType.cs" />
     <Compile Include="Enums\EnvirontmentType.cs" />
     <Compile Include="Enums\Formula.cs" />
+    <Compile Include="Enums\KpiTransformationStatus.cs" />
     <Compile Include="Enums\MirArtifactType.cs" />
     <Compile Include="Enums\MirHighlightType.cs" />
     <Compile Include="Enums\MirTableType.cs" />
@@ -188,6 +193,7 @@
     <Compile Include="Enums\PopInformationType.cs" />
     <Compile Include="Enums\PostureType.cs" />
     <Compile Include="Enums\Privilege.cs" />
+    <Compile Include="Enums\ProcessingType.cs" />
     <Compile Include="Enums\RangeFilter.cs" />
     <Compile Include="Enums\ScoringType.cs" />
     <Compile Include="Enums\SelectType.cs" />

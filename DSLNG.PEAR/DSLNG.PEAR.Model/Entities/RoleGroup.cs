@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DSLNG.PEAR.Data.Entities.KpiTransformationEngine;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -28,5 +29,6 @@ namespace DSLNG.PEAR.Data.Entities
         public ICollection<StaticHighlightPrivilege> StaticHighlightPrivileges { get; set; }
         public virtual ICollection<FileManagerRolePrivilege> FileManagerRolePrivileges { get; set; }
         public virtual ICollection<RolePrivilege> RolePrivileges { get; set; }
+        public ICollection<KpiTransformation> KpiTransformations { get; set; }
     }
 }

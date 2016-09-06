@@ -1,0 +1,80 @@
+﻿@*@model DSLNG.PEAR.Web.ViewModels.KpiTransformation.KpiTransformationsViewModel*@
+<h2>Kpi Transformations</h2>
+@Html.Partial("_MessageResponse")
+<div class="add-button-wrapper">
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+</div>
+<table id="kpi-transformation-table" class="rgw-tbl-bp rgw-tbl table-transparent table table-responsive" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>Category</th>
+            <th>Accountability</th>
+            <th>Last Processing</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+</table>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#kpi-transformation-table").DataTable({
+                "bFilter": false,
+                "bPaginate": false,
+                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                "iDisplayLength": -1,
+                "bProcessing": true,
+                "bServerSide": true,
+                "sServerMethod": "POST",
+                "sAjaxSource": '@Url.Action("Grid", "KpiTransformation")',
+                "aoColumns": [
+                     {
+                         "orderable": false, "data": null, "defaultContent": '', "mRender": function (data, type, row, x) {
+                             return x.row + 1;
+                         }
+                     },
+                       {
+                           "orderable": true,
+                           "mDataProp": "Name", "name": "Name"
+                       },
+                       {
+                           "orderable": false,
+                           "mDataProp": "RoleGroups", "name": "RoleGroups",
+                           render: function (data, type, row) {
+                               console.log(row);
+                               var accountability = "";
+                               for (var i in data) {
+                                   accountability += data[i].Name;
+                                   if (i != data.length - 1) {
+                                       accountability += ',';
+                                   }
+                               }
+                               return accountability;
+                               //return data;
+                           }
+                       },
+                        {
+                            "orderable": true,
+                            "mDataProp": "LastProcessing", "name": "LastProcessing",
+                            render: function (data, type, row) {
+                                if (data == null) return "";
+                                return moment(new Date(data.match(/\d+/)[0] * 1)).format('DD-MMM-YY HH:mm');
+                            }
+                        },
+                       {
+                           "orderable": false,
+                           "data": null,
+                           "defaultContent": '',
+                           "mRender": function (data, type, row) {
+                               var processLink = '@Html.ActionLink("Process", "Process", new { id = "_id_" })'.replace('_id_', data.Id);
+                               var logLink = '@Html.ActionLink("Log", "Log", new { id = "_id_" })'.replace('_id_', data.Id);
+                               var editLink = '@Html.ActionLink("Edit", "Edit", new { id = "_id_" })'.replace('_id_', data.Id);
+                               return processLink + ' | ' + editLink + ' | ' + logLink;
+                           }
+                       }
+                ]
+            });
+        })
+    </script>
+}
