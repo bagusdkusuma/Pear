@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
 using DSLNG.PEAR.Web.ViewModels.Wave;
+using DSLNG.PEAR.Web.ViewModels.Weather;
 
 namespace DSLNG.PEAR.Web.Helpers
 {
@@ -779,6 +780,27 @@ namespace DSLNG.PEAR.Web.Helpers
             selectInput += "</select>";
             return new MvcHtmlString(selectInput);
         }
+
+        public static MvcHtmlString DisplayWeatherList(this HtmlHelper htmlHelper, WeatherViewModel viewModel, int tabIndex) {
+            var value = "";
+            var id = 0;
+            var derValueType = "empty";
+            if (viewModel != null)
+            {
+                value = viewModel.ValueId.ToString();
+                id = viewModel.Id;
+                derValueType = viewModel.DerValueType;
+            }
+            var selectInput = string.Format("<select class=\"der-value-{0} form-control der-highlight-weather\" tabindex=\"{1}\"  data-id=\"{2}\" >", derValueType, tabIndex, id);
+            foreach (var option in viewModel.Values)
+            {
+                var selected = string.Equals(option.Value, value, StringComparison.InvariantCultureIgnoreCase) ? "selected=\"selected\"" : "";
+                selectInput += string.Format("<option {2} value=\"{0}\">{1}</option>", option.Value, option.Text, selected);
+            }
+            selectInput += "</select>";
+            return new MvcHtmlString(selectInput);
+        }
+
         private static bool IsValidJson(string strInput, out JToken obj)
         {
             strInput = strInput.Trim();

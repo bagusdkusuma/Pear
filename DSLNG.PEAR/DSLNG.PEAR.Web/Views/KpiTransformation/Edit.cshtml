@@ -1,0 +1,114 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.KpiTransformation.KpiTransformationViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Create</h2>
+<style>
+    .kpi-container:first-child:last-child .btn-remove-kpi {
+        display: none;
+    }
+
+    .kpi-container .btn-add-kpi {
+        display: none;
+    }
+
+    .kpi-container:last-child .btn-add-kpi {
+        display: inline-block;
+    }
+</style>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>KpiTransformationViewModel</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RoleGroupIds, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.ListBoxFor(model => model.RoleGroupIds, Model.RoleGroupOptions, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.RoleGroupIds, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.KpiIds, new { @class = "control-label col-md-2" })
+            <div class="col-md-10 kpis-wrapper">
+                <div class="kpi-container">
+                    @Html.DropDownList("KpiIds[]", new List<SelectListItem>(), new { @class = "kpi-list  form-control", style = "width:180px"}) <button class="btn btn-default btn-remove-kpi">Remove</button><button class="btn btn-default btn-add-kpi">Add</button>
+                </div>
+                    @foreach (var kpi in Model.Kpis)
+                    {
+                        <div class="kpi-container">
+                            @Html.DropDownList("KpiIds[]", new List<SelectListItem> { new SelectListItem { Value = kpi.Id.ToString(), Text = kpi.Name } }, new { @class = "kpi-list  form-control", style = "width:180px"}) <button class="btn btn-default btn-remove-kpi">Remove</button><button class="btn btn-default btn-add-kpi">Add</button>
+                        </div>
+                    }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+                    }
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script>
+    $(document).ready(function () {
+        var $kpiContainerTemp = $('.kpi-container:first-child').clone();
+        if ($('.kpi-container').length > 1) {
+            $('.kpi-container:first-child').remove();
+        }
+        $(document).on('click', '.btn-add-kpi', function (e) {
+            e.preventDefault();
+            var $kpiContainer = $kpiContainerTemp.clone();
+            ToAutoCompleteKpi($kpiContainer.find('.kpi-list'));
+            $('.kpis-wrapper').append($kpiContainer);
+        });
+        $(document).on('click', '.btn-remove-kpi', function (e) {
+            e.preventDefault();
+            var $kpiContainer = $(this).parent();
+            $kpiContainer.remove();
+        });
+        function ToAutoCompleteKpi($el) {
+            $el.select2({
+                ajax: {
+                    url: "@Url.Action("KpiList", "Artifact")",
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                        return {
+                            term: params.term, // search term
+                        };
+                    },
+                    processResults: function (data, page) {
+                        return data;
+                    },
+                    cache: true
+                },
+                escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                minimumInputLength: 1,
+                templateResult: Pear.Artifact.Designer._formatKpi, // omitted for brevity, see the source of this page
+                templateSelection: Pear.Artifact.Designer._formatKpiSelection // omitted for brevity, see the source of this page
+            });
+        }
+        ToAutoCompleteKpi($('.kpi-list'));
+
+    });
+</script>

@@ -9,6 +9,7 @@ using DSLNG.PEAR.Data.Entities.Pop;
 using DSLNG.PEAR.Data.Entities.Mir;
 using DSLNG.PEAR.Data.Entities.Files;
 using DSLNG.PEAR.Data.Entities.InputOriginalData;
+using DSLNG.PEAR.Data.Entities.KpiTransformationEngine;
 
 namespace DSLNG.PEAR.Data.Persistence
 {
@@ -123,11 +124,10 @@ namespace DSLNG.PEAR.Data.Persistence
 
         public IDbSet<FileRepository> FileRepositories { get; set; }
         public IDbSet<TransactionConfig> TransactionConfigs { get; set; }
-
         public IDbSet<InputData> InputData { get; set; }
-
         public IDbSet<GroupInputData> GroupInputData { get; set; }
         public IDbSet<InputDataKpiAndOrder> InputDataKpiAndOrder { get; set; }
+        public IDbSet<KpiTransformation> KpiTransformations { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -334,6 +334,10 @@ namespace DSLNG.PEAR.Data.Persistence
                     cs.MapRightKey("RolePrivilege_Id");
                     cs.ToTable("UserRolePrivileges");
                 });
+
+            //modelBuilder.Entity<KpiTransformation>()
+            //  .HasOptional(s => s.Schedule)
+            //  .WithRequired(ad => ad.KpiTransformation).Map(x => x.MapKey("KpiTransformationId"));
             ////modelBuilder.Entity<ProcessBlueprint>()
             //    .HasMany(x => x.FileManagerRolePrivileges)
             //    .WithOptional()

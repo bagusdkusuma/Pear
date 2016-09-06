@@ -9,6 +9,7 @@ using DSLNG.PEAR.Data.Entities.Pop;
 using DSLNG.PEAR.Data.Entities.Mir;
 using DSLNG.PEAR.Data.Entities.Files;
 using DSLNG.PEAR.Data.Entities.InputOriginalData;
+using DSLNG.PEAR.Data.Entities.KpiTransformationEngine;
 
 namespace DSLNG.PEAR.Data.Persistence
 {
@@ -119,6 +120,7 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<InputData> InputData { get; set; }
         IDbSet<GroupInputData> GroupInputData { get; set; }
         IDbSet<InputDataKpiAndOrder> InputDataKpiAndOrder { get; set; }
+        IDbSet<KpiTransformation> KpiTransformations { get; set; }
 
         Database Database { get; }
         int SaveChanges();

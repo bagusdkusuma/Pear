@@ -185,6 +185,9 @@ using DSLNG.PEAR.Services.Responses.Wave;
 using DSLNG.PEAR.Services.Requests.InputData;
 using DSLNG.PEAR.Web.ViewModels.InputData;
 using DSLNG.PEAR.Services.Responses.InputData;
+using DSLNG.PEAR.Web.ViewModels.KpiTransformation;
+using DSLNG.PEAR.Services.Requests.KpiTransformation;
+using DSLNG.PEAR.Services.Responses.KpiInformation;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -761,6 +764,13 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetKpiInformationValuesResponse.KpiValue, DerValuesViewModel.KpiValueViewModel>();
             Mapper.CreateMap<GetHighlightValuesResponse.DerHighlight, DerValuesViewModel.DerHighlightValuesViewModel>();
             Mapper.CreateMap<GetWaveResponse, WaveViewModel>();
+            Mapper.CreateMap<GetWeatherResponse, WeatherViewModel>();
+            Mapper.CreateMap<KpiTransformationViewModel, SaveKpiTransformationRequest>();
+            Mapper.CreateMap<GetKpiTransformationResponse, KpiTransformationViewModel>()
+               .ForMember(x => x.RoleGroupIds, o => o.MapFrom(s => s.RoleGroups.Select(x => x.Id).ToList()))
+               .ForMember(x => x.KpiIds, o => o.MapFrom(s => s.Kpis.Select(x => x.Id).ToList()));
+            Mapper.CreateMap<GetKpiTransformationResponse.KpiResponse, KpiTransformationViewModel.KpiViewModel>();
+            base.Configure();
         }
 
         private void ConfigureFileRepository()

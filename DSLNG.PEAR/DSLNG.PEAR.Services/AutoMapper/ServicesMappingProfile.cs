@@ -127,6 +127,9 @@ using DSLNG.PEAR.Services.Responses.DerTransaction;
 using DSLNG.PEAR.Data.Entities.InputOriginalData;
 using DSLNG.PEAR.Services.Requests.InputData;
 using DSLNG.PEAR.Services.Responses.InputData;
+using DSLNG.PEAR.Services.Requests.KpiTransformation;
+using DSLNG.PEAR.Data.Entities.KpiTransformationEngine;
+using DSLNG.PEAR.Services.Responses.KpiInformation;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -757,6 +760,12 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.HighlightTypeId, o => o.MapFrom(s => s.SelectOption.Id));
             Mapper.CreateMap<DerKpiInformation, GetDerLayoutItemsResponse.KpiInformation>()
                 .ForMember(x => x.KpiId, o => o.MapFrom(s => s.Kpi.Id));
+            Mapper.CreateMap<KpiTransformation, GetKpiTransformationsResponse.KpiTransformationResponse>();
+            Mapper.CreateMap<DSLNG.PEAR.Data.Entities.RoleGroup, GetKpiTransformationsResponse.RoleGroupResponse>();
+            Mapper.CreateMap<KpiTransformation, GetKpiTransformationResponse>();
+            Mapper.CreateMap<DSLNG.PEAR.Data.Entities.RoleGroup, GetKpiTransformationResponse.RoleGroupResponse>();
+            Mapper.CreateMap<Kpi, GetKpiTransformationResponse.KpiResponse>();
+            base.Configure();
         }
 
         private void ConfigureFileRepository()

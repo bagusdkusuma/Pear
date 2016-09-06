@@ -94,6 +94,7 @@ namespace DSLNG.PEAR.Web.DependencyResolution {
             For<IFileRepositoryService>().Use<FileRepositoryService>();
             For<IDerTransactionService>().Use<DerTransactionService>();
             For<IInputDataService>().Use<InputDataService>();
+            For<IKpiTransformationService>().Use<KpiTransformationService>();
         }
 
         #endregion
