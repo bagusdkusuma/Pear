@@ -1,0 +1,233 @@
+﻿@using DSLNG.PEAR.Common.Contants
+@model DSLNG.PEAR.Web.ViewModels.InputData.CreateInputDataViewModel
+@{
+    ViewBag.Title = "Update Input Data";
+}
+
+<h2>@ViewBag.Title</h2>
+@Html.Partial("_MessageResponse")
+<div class="row">
+    <div class="col-md-10 input-data-create">
+        <form action="@Url.Action("Update")" method="POST">
+            @Html.HiddenFor(x => x.Id)
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, new { @class = "control-label" })<span>(*)</span>
+                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.AccountabilityId, new { @class = "control-label" })<span>(*)</span>
+                @Html.DropDownListFor(model => model.AccountabilityId, Model.Accountabilities, "Select Accountability", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AccountabilityId)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PeriodeType, new { @class = "control-label" })<span>(*)</span>
+                @Html.DropDownListFor(model => model.PeriodeType, Model.PeriodeTypes, "Select Accountability", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PeriodeType)
+            </div>
+
+            <div style="position:relative">
+                <h3>Configuration</h3>
+                <div class="form-group">
+                    <a class="add-group btn btn-primary" style="position:absolute;right:0;top:-1px" data-toggle="modal" data-target="#add-group-modal">Add Group</a>
+                </div>
+            </div>
+
+            <hr />
+            <div class="row group-form">
+                @for (int i = 0; i < Model.GroupInputDatas.Count; i++)
+                {
+                    <div class="row group-existed">
+                        <div class="col-md-12 group-form-area">
+                            <a class="add-kpi btn btn-primary" style="margin-bottom:10px">Add KPI</a>
+                            <input type="hidden" name="GroupInputDatas.Index" value="@i" class="group-index" />
+                            <label class="control-label" style="margin-left:220px;">Group Name : </label> <input type="text" class="group-name" name="GroupInputDatas[@i].Name" value="@Model.GroupInputDatas[i].Name" />
+                            <label class="control-label">Order</label>
+                            <input type="text" class="group-order" name="GroupInputDatas[@i].Order" value="@Model.GroupInputDatas[i].Order" />
+                            <input type="hidden" id="kpi-number" value="@Model.GroupInputDatas[i].InputDataKpiAndOrders.Count" />
+                            <a class="remove-group btn btn-primary" style="margin-bottom: 4px;margin-left: 180px;">Remove Group</a>
+                            <table class="table table-hover table-transparent table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>KPI Name</th>
+                                        <th>Order</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        int kpiNumber = 0;
+                                    }
+                                    @for (int j = 0; j < Model.GroupInputDatas[i].InputDataKpiAndOrders.Count; j++)
+                                    {
+                                        kpiNumber = kpiNumber + 1;
+                                        <tr>
+                                            <th>@(kpiNumber)</th>
+                                            <th>
+                                                @Html.DropDownListFor(model => model.GroupInputDatas[i].InputDataKpiAndOrders[j].KpiId, new List<SelectListItem> { new SelectListItem { Value = Model.GroupInputDatas[i].InputDataKpiAndOrders[j].KpiId.ToString(), Text = Model.GroupInputDatas[i].InputDataKpiAndOrders[j].KpiName } }, new { @class = "kpi-list form-control", style = "width:280px;margin:0 auto" })
+                                            </th>
+                                            <th>
+                                                <input type="hidden" name="GroupInputDatas[@i].InputDataKpiAndOrders.Index" value="@j" class="kpi-index" />
+                                                @Html.TextBoxFor(x => x.GroupInputDatas[i].InputDataKpiAndOrders[j].Order)
+
+                                            </th>
+                                            <th><a href="javascript:;" class="delete-kpi">Delete</a></th>
+                                        </tr>
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                                        }
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-default">Submit</button>
+                <a href="@Url.Action("Index")" class="btn btn-default">Cancel</a>
+            </div>
+        </form>
+
+
+    </div>
+</div>
+
+<div id="add-group-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Group</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Group Name</label>
+                    <input type="text" class="group-name-form" required />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="btn-add-group">Add</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="hidden-fields-holder" data-kpi-url="@Url.Action("KpiList", "Artifact")"></div>
+<table>
+    <tr class="kpi-original">
+        <td>1</td>
+        <td><select name="GroupInputDatas[0].InputDataKpiAndOrders[0].Id" class="kpi-list form-control" style="width:280px" required data-index="0"></select></td>
+        <td>
+            <input type="number" name="GroupInputDatas[0].InputDataKpiAndOrders[0].Order" class="kpi-order" style="color:#000" />
+            <input type="hidden" class="kpi-index" name="GroupInputDatas[0].InputDataKpiAndOrders.Index" style="color:#000" />
+        </td>
+        <td><a href="javascript:;" class="delete-kpi">Delete</a></td>
+    </tr>
+</table>
+
+<div class="row group-original">
+    <div class="col-md-12 group-form-area">
+        <a class="add-kpi btn btn-primary" style="margin-bottom:10px">Add KPI</a>
+        <input type="hidden" name="GroupInputDatas.Index" value="0" class="group-index" />
+        <label class="control-label" style="margin-left:220px;">Group Name : </label>
+        <input type="text" class="group-name" name="GroupInputDatas[0].Name" />
+        <label class="control-label">Order</label>
+        <input type="text" class="group-order" name="GroupInputDatas[0].Order" value="0" />
+        <a class="remove-group btn btn-primary" style="margin-bottom: 4px;margin-left: 180px;">Remove Group</a>
+        <input type="hidden" id="kpi-number" value="0" />
+        <table class="table table-hover table-transparent table-bordered">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>KPI Name</th>
+                    <th>Order</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+<input type="hidden" value="@Model.GroupInputDatas.Count" id="group-number" />
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            var pear = window.Pear;
+            var originalTrClone = $('tr.kpi-original').first().clone();
+            var originalGroupFormClone = $('.group-original').first().clone();
+            pear.Artifact.Designer._kpiAutoComplete($('.group-form'));
+            $('tr.kpi-original').remove();
+            $('.group-original').remove();
+
+            var addKpi = function (context, btnAddKpi) {
+                var groupNumber = $('#group-number').val();
+                var groupFormClone = context;
+                var trClone = originalTrClone.clone();
+                var kpiNumber = groupFormClone.find('.group-form-area').find('#kpi-number').val();
+                var groupIndex = context.find('.group-index').attr('name', 'GroupInputDatas.Index').val();  
+
+                trClone.find('select').attr('name', 'GroupInputDatas[' + groupIndex + '].InputDataKpiAndOrders[' + parseInt(kpiNumber) + '].KpiId');
+                trClone.find('.kpi-order').attr('name', 'GroupInputDatas[' + groupIndex + '].InputDataKpiAndOrders[' + parseInt(kpiNumber) + '].Order');
+
+                groupFormClone.find('.group-form-area').find('table > tbody').append(trClone);
+                groupFormClone.find('.group-form-area').find('#kpi-number').val(parseInt(kpiNumber) + 1);
+                trClone.find('.kpi-index').attr('name', 'GroupInputDatas[' + groupIndex + '].InputDataKpiAndOrders.Index').val(kpiNumber);
+
+                pear.Artifact.Designer._kpiAutoComplete(trClone);
+                btnAddKpi.parent().find('tbody > tr').each(function (i, val) {
+                    $(val).find('td').first().html(i + 1);
+                })
+            };
+
+            $('#btn-add-group').click(function () {
+                var $form = $(this);
+                var groupNumber = $('#group-number').val();
+                var groupFormClone = originalGroupFormClone.clone();
+
+                groupFormClone.find('.group-form-area').find('.group-name').val($('.group-name-form').val());
+                groupFormClone.css('display', 'block');
+
+                var groupNumber = $('#group-number').val();
+                groupFormClone.find('.group-name').attr('name', 'GroupInputDatas[' + groupNumber + '].Name');
+                groupFormClone.find('.group-order').attr('name', 'GroupInputDatas[' + groupNumber + '].Order');
+                groupFormClone.find('.group-index').attr('name', 'GroupInputDatas.Index').val(groupNumber);
+                $('#group-number').val(parseInt(groupNumber) + 1);
+
+
+                $('.group-form').append(groupFormClone);
+
+                groupFormClone.find('.group-form-area').on('click', '.add-kpi', function () {
+                    addKpi(groupFormClone, $(this));
+                });
+
+                groupFormClone.find('.group-form-area').on('click', '.remove-group', function () {
+                    $(this).parent().remove();
+                });
+
+                groupFormClone.find('.group-form-area').on('click', '.delete-kpi', function () {
+                    $(this).parent().parent().remove();
+                });
+            });
+
+
+            $('.group-existed').on('click', '.add-kpi', function () {
+                addKpi($(this).closest('.group-existed'), $(this));
+            });
+
+            $('.group-existed').on('click', '.delete-kpi', function () {
+                $(this).parent().parent().remove();
+            });
+
+            $('.group-existed').on('click', '.remove-group', function () {
+                $(this).parent().remove();
+            });
+
+        });
+    </script>
+}

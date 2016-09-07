@@ -124,6 +124,9 @@ using DSLNG.PEAR.Services.Requests.Files;
 using DSLNG.PEAR.Services.Responses.Privilege;
 using DSLNG.PEAR.Services.Requests.Privilege;
 using DSLNG.PEAR.Services.Responses.DerTransaction;
+using DSLNG.PEAR.Data.Entities.InputOriginalData;
+using DSLNG.PEAR.Services.Requests.InputData;
+using DSLNG.PEAR.Services.Responses.InputData;
 using DSLNG.PEAR.Services.Requests.KpiTransformation;
 using DSLNG.PEAR.Data.Entities.KpiTransformationEngine;
 using DSLNG.PEAR.Services.Responses.KpiInformation;
@@ -145,7 +148,13 @@ namespace DSLNG.PEAR.Services.AutoMapper
             ConfigureDer();
             ConfigureProcessBlueprint();
             ConfigureFileRepository();
+            ConfigureInputData();
+            ConfigureMixed();
+            base.Configure();
+        }
 
+        private void ConfigureMixed()
+        {
             Mapper.CreateMap<Data.Entities.User, GetUsersResponse.User>();
             Mapper.CreateMap<GetUsersResponse.User, Data.Entities.User>();
             //.ForMember(x => x.RoleName, o => o.MapFrom(m => m.Role.Name));
@@ -609,7 +618,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.Category, o => o.MapFrom(s => s.ESCategory.Name));
             Mapper.CreateMap<Challenge, GetBusinessPostureResponse.EnvironmentScanning.Challenge>()
                 .ForMember(x => x.Category, o => o.MapFrom(s => s.ESCategory.Name));
-            
+
 
 
             Mapper.CreateMap<SaveDesiredStateRequest, DesiredState>();
@@ -664,7 +673,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<MidtermPhaseDescription, GetVoyagePlanResponse.MidtermPhaseDescription>();
             Mapper.CreateMap<MidtermPhaseKeyDriver, GetVoyagePlanResponse.MidtermPhaseKeyDriver>();
             Mapper.CreateMap<Constraint, GetConstraintResponse>()
-                .ForMember(x =>x.ThreatIds, y => y.MapFrom(z => z.Relations.Where(o =>o.ThreatHost != null)))
+                .ForMember(x => x.ThreatIds, y => y.MapFrom(z => z.Relations.Where(o => o.ThreatHost != null)))
                 .ForMember(x => x.Opportunitys, y => y.MapFrom(z => z.Relations.Where(o => o.OpportunityHost != null)))
                 .ForMember(x => x.WeaknessIds, y => y.MapFrom(z => z.Relations.Where(o => o.WeaknessHost != null)))
                 .ForMember(x => x.StrengthIds, y => y.MapFrom(z => z.Relations.Where(o => o.StrengthHost != null)));
@@ -707,7 +716,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<AddMidtermPlanningRequest, MidtermStrategicPlanning>();
 
             Mapper.CreateMap<KeyOutputCategory, GetActiveOutputCategoriesResponse.OutputCategoryResponse>()
-                .ForMember(x => x.KeyOutputs, o => o.MapFrom(s => 
+                .ForMember(x => x.KeyOutputs, o => o.MapFrom(s =>
                     s.KeyOutputs.Where(x => x.IsActive).MapTo<GetActiveOutputCategoriesResponse.KeyOutputResponse>()));
             Mapper.CreateMap<KeyOutputConfiguration, GetActiveOutputCategoriesResponse.KeyOutputResponse>()
                 .ForMember(x => x.KeyAssumptions, o => o.Ignore())
@@ -1043,6 +1052,42 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Wave, GetWaveResponse>()
                 .ForMember(x => x.Value, o => o.MapFrom(s => s.Value.Value))
                 .ForMember(x => x.Text, o => o.MapFrom(s => s.Value.Text));
+        }
+
+        private void ConfigureInputData()
+        {
+            Mapper.CreateMap<SaveOrUpdateInputDataRequest, InputData>()
+                .ForMember(x => x.PeriodeType, y => y.MapFrom(z => Enum.Parse(typeof(PeriodeType), z.PeriodeType)))
+                .ForMember(x => x.GroupInputDatas, y => y.Ignore());
+            Mapper.CreateMap<InputData, GetInputDataResponse>()
+                .ForMember(x => x.PeriodeType, y => y.MapFrom(z => z.PeriodeType.ToString()))
+                .ForMember(x => x.AccountabilityId, y => y.MapFrom(z => z.Accountability.Id));
+
+            Mapper.CreateMap<GroupInputData, GetInputDataResponse.GroupInputData>();
+            Mapper.CreateMap<InputDataKpiAndOrder, GetInputDataResponse.InputDataKpiAndOrder>()
+                .ForMember(x => x.KpiId, y => y.MapFrom(z => z.Kpi.Id))
+                .ForMember(x => x.KpiName, y => y.MapFrom(z => z.Kpi.Name))
+                .ForMember(x => x.KpiMeasurement, y => y.MapFrom(z => z.Kpi.Measurement.Name))
+                .ForMember(x => x.Order, y => y.MapFrom(z => z.Order));
+
+            Mapper.CreateMap<InputData, GetInputDatasResponse.InputData>()
+                .ForMember(x => x.Accountability, y => y.MapFrom(z => z.Accountability.Name))
+                .ForMember(x => x.PeriodeType, y => y.MapFrom(z => z.PeriodeType.ToString()));
+
+            //Mapper.CreateMap<SaveOrUpdateInputDataRequest.GroupInputData, GroupInputData>();
+            //Mapper.CreateMap<SaveOrUpdateInputDataRequest.InputDataKpiAndOrder, InputDataKpiAndOrder>();
+            
+            //Mapper.CreateMap<SaveOrUpdateInputDataRequest.GroupInput, GroupInputData>();
+            //Mapper.CreateMap<SaveOrUpdateInputDataRequest.Kpi, Kpi>()
+            //    .ForMember(x => x.Id, y => y.MapFrom(z => z.Id))
+            //    .ForMember(x => x.Order, y => y.Ignore())
+            //    .ForMember(x => x.Type, y => y.Ignore());
+            //Mapper.CreateMap<SaveOrUpdateInputDataRequest.GroupInput, InputDataKpiAndOrder>()
+            //    .ForMember(x => x.Order, y => y.MapFrom(z => z.Kpis.));
+            //Mapper.CreateMap<SaveOrUpdateInputDataRequest.Kpi, Kpi>()
+            //    .for;
+            //Mapper.CreateMap<SaveOrUpdateInputDataRequest.Kpi, Kpi>()
+            //    .ForMember(x => x.Type, y => y.Ignore());
 
 
         }
