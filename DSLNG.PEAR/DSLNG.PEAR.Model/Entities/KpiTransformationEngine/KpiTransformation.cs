@@ -20,6 +20,6 @@ namespace DSLNG.PEAR.Data.Entities.KpiTransformationEngine
         public ICollection<RoleGroup> RoleGroups { get; set; }
         public ICollection<Kpi> Kpis { get; set; }
         public DateTime? LastProcessing { get; set; }
-        public KpiTransformationSchedule Schedule {get;set;}
+        public ICollection<KpiTransformationSchedule> Schedules {get;set;}
     }
 }

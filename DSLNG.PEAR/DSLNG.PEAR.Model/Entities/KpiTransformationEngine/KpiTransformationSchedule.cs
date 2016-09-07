@@ -14,14 +14,15 @@ namespace DSLNG.PEAR.Data.Entities.KpiTransformationEngine
             Periods = new List<KpiTransformationPeriod>();
         }
         [Key]
-        //public int Id { get; set; }
-        [ForeignKey("KpiTransformation")]
-        public int KpiTransFormationId { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
         public KpiTransformation KpiTransformation { get; set; }
         public ICollection<Kpi> SelectedKpis { get; set; }
         public DateTime ProcessingDate { get; set; }
         public ProcessingType ProcessingType { get; set; }
+        public KpiTransformationStatus Status { get; set; }
         public ICollection<KpiTransformationPeriod> Periods { get; set; }
+        public ICollection<KpiTransformationLog> Logs { get; set; }
       
     }
 }

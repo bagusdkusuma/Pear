@@ -3412,3 +3412,7 @@ input.der-value-now {
 input.in-progress {
     color : yellow !important;
 }
+.picker-switch a,
+.timepicker-picker a {
+  color:#337ab7;
+}

@@ -116,6 +116,8 @@ namespace DSLNG.PEAR.Data.Persistence
 
         IDbSet<FileRepository> FileRepositories { get; set; }
         IDbSet<KpiTransformation> KpiTransformations { get; set; }
+        IDbSet<KpiTransformationSchedule> KpiTransformationSchedules { get; set; }
+        IDbSet<KpiTransformationLog> KpiTransformationLogs { get; set; }
 
         Database Database { get; }
         int SaveChanges();

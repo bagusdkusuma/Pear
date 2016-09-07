@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Requests.KpiTransformation;
 using DSLNG.PEAR.Web.Grid;
+using DSLNG.PEAR.Data.Enums;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -81,6 +82,13 @@ namespace DSLNG.PEAR.Web.Controllers
             return Save(viewModel);
         }
 
+        public ActionResult Process(int id) {
+            var viewModel = _kpiTransformationService.Get(id).MapTo<KpiTransformationViewModel>();
+            SetPeriodeTypes(viewModel.PeriodeTypes);
+            SetProcessingTypes(viewModel.ProcessingTypes);
+            return View(viewModel);
+        }
+
         private ActionResult Save(KpiTransformationViewModel viewModel) {
             var req = viewModel.MapTo<SaveKpiTransformationRequest>();
             var resp = _kpiTransformationService.Save(req);
@@ -88,5 +96,24 @@ namespace DSLNG.PEAR.Web.Controllers
             TempData["Message"] = resp.Message;
             return RedirectToAction("Index");
         }
+
+        private void SetPeriodeTypes(IList<SelectListItem> periodeTypes)
+        {
+            foreach (var name in Enum.GetNames(typeof(PeriodeType)))
+            {
+                if (!name.Equals("Hourly") && !name.Equals("Weekly") && !name.Equals("Itd"))
+                {
+                    periodeTypes.Add(new SelectListItem { Text = name, Value = name });
+                }
+            }
+        }
+        private void SetProcessingTypes(IList<SelectListItem> processingTypes)
+        {
+            foreach (var name in Enum.GetNames(typeof(ProcessingType)))
+            {
+                processingTypes.Add(new SelectListItem { Text = name, Value = name });
+            }
+        }
+
     }
 }

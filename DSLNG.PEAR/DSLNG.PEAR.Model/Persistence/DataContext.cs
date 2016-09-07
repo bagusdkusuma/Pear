@@ -123,6 +123,8 @@ namespace DSLNG.PEAR.Data.Persistence
 
         public IDbSet<FileRepository> FileRepositories { get; set; }
         public IDbSet<KpiTransformation> KpiTransformations { get; set; }
+        public IDbSet<KpiTransformationSchedule> KpiTransformationSchedules { get; set; }
+        public IDbSet<KpiTransformationLog> KpiTransformationLogs { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

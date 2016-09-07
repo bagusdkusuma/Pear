@@ -14,6 +14,10 @@ namespace DSLNG.PEAR.Data.Entities.KpiTransformationEngine
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        public KpiTransformationSchedule Schedule { get; set; }
+        public Kpi Kpi { get; set; }
+        public DateTime Periode { get; set; }
+        public PeriodeType PeriodeType { get; set; }
         public KpiTransformationStatus Status { get; set; }
     }
 }

@@ -473,6 +473,7 @@
     <Content Include="Scripts\jquery-1.10.0.min.js" />
     <Content Include="Scripts\jquery-1.11.3.js" />
     <Content Include="Scripts\jquery-1.11.3.min.js" />
+    <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery.freezeheader.js" />
     <Content Include="Scripts\perfect-scrollbar.jquery.min.js" />
@@ -1386,6 +1387,7 @@
     <Content Include="Views\KpiTransformation\Create.cshtml" />
     <Content Include="Views\KpiTransformation\Index.cshtml" />
     <Content Include="Views\KpiTransformation\Edit.cshtml" />
+    <Content Include="Views\KpiTransformation\Process.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

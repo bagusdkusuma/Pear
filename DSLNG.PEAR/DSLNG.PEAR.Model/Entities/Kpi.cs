@@ -55,5 +55,6 @@ namespace DSLNG.PEAR.Data.Entities
         public IList<MidtermStrategicPlanning> MidtermStrategicPlannings { get; set; }
         public IList<MirDataTable> MirDataTables { get; set;  }
         public ICollection<KpiTransformation> KpiTransformations { get; set; }
+        public ICollection<KpiTransformationSchedule> KpiTransformationSchedules { get; set; }
     }
 }

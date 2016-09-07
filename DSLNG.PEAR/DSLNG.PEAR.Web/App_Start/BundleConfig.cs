@@ -13,7 +13,7 @@ namespace DSLNG.PEAR.Web.App_Start
         {
             BundleTable.EnableOptimizations = true;
             bundles.Add(new ScriptBundle("~/bundles/js").Include(
-                //"~/Scripts/jquery-ui-{version}.js",
+                "~/Scripts/jquery-ui.js",
                          "~/Scripts/moment.js",
                         "~/Content/bootstrap/js/bootstrap.js",
                 //"~/Content/datepicker/js/bootstrap-datepicker.js",
