@@ -788,7 +788,7 @@
                 <td><label class="control-label">Level</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @*@Html.DisplayKpiInformationInput(Model.KpiInformations, 58, 118, "%")*@
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 365, 118, "%")
                     </span>
                 </td>
             </tr>
@@ -796,7 +796,7 @@
                 <td><label class="control-label">Vol</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @*@Html.DisplayKpiInformationInput(Model.KpiInformations, 57, 119, "m3")*@
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 433, 119, "m3")
                     </span>
                 </td>
             </tr>
@@ -804,7 +804,7 @@
                 <td><label class="control-label">Vol</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @*@Html.DisplayKpiInformationInput(Model.KpiInformations, 56, 120, "ton")*@
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 366, 120, "ton")
                     </span>
                 </td>
             </tr>
@@ -812,7 +812,7 @@
                 <td><label class="control-label">Vol</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @*@Html.DisplayKpiInformationInput(Model.KpiInformations, 369, 121, "mmbtu")*@
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 367, 121, "mmbtu")
                     </span>
                 </td>
             </tr>
@@ -820,7 +820,7 @@
                 <td><label class="control-label">Days To Tank Top</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 70, 122, "Days")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 369, 122, "Days")
                     </span>
                 </td>
             </tr>
@@ -1089,16 +1089,22 @@
             <tr>
                 <td>
                     @Html.DisplayKpiInformationList(Model.KpiInformations, 72, 149, new List<SelectListItem>() {
-                        new SelectListItem { Value = "Option 1", Text="Option 1" },
-                        new SelectListItem { Value = "Option 2",  Text="Option 2"}
+                        new SelectListItem { Value = "1", Text="Unfulfilled" },
+                        new SelectListItem { Value = "2",  Text="Need Attention"},
+                        new SelectListItem { Value = "3", Text="On Track" },
+                        new SelectListItem { Value = "4",  Text="Loading"},
+                        new SelectListItem { Value = "5",  Text="Fulfilled"}
                    }, "prev")
                 </td>
             </tr>
             <tr>
                 <td>
                     @Html.DisplayKpiInformationList(Model.KpiInformations, 73, 150, new List<SelectListItem>() {
-                        new SelectListItem { Value = "Option 1", Text="Option 1" },
-                        new SelectListItem { Value = "Option 2",  Text="Option 2"}
+                          new SelectListItem { Value = "1", Text="Unfulfilled" },
+                        new SelectListItem { Value = "2",  Text="Need Attention"},
+                        new SelectListItem { Value = "3", Text="On Track" },
+                        new SelectListItem { Value = "4",  Text="Loading"},
+                        new SelectListItem { Value = "5",  Text="Fulfilled"}
                    }, "prev")
                 </td>
             </tr>
@@ -1210,8 +1216,9 @@
                 <td>
                     <span class="col-sm-8">
                         @Html.DisplayHighlightDropdownList(Model.Highlights, 26, new List<SelectListItem> {
-                        new SelectListItem { Text = "Option 1", Value = "Option 1" },
-                        new SelectListItem { Text = "Option 2", Value = "Option 2" },
+                        new SelectListItem { Text = "Holding", Value = "Holding" },
+                        new SelectListItem { Text = "Loading", Value = "Loading" },
+                                 new SelectListItem { Text = "Shutdown", Value = "Shutdown" },
                     }, 160)
                     </span>
                 </td>
