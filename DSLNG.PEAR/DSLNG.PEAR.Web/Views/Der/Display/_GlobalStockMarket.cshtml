@@ -24,7 +24,7 @@
                 </span>
                 @Html.DisplayDerValueWithLabelAtFront("1M:", Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value, "1M:")
             </td>
-            <td rowspan="4" class="brentfut-col" style="border-bottom:none;padding:0 !important;">@Html.Raw(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Value)</td>
+            <td class="brentfut-col brenfut-first" style="border-bottom:none;"></td>
             <td>
                 <span class="comparison left-side">
                     <i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Deviation)"></i>
@@ -43,7 +43,7 @@
                 </span>
                 @Html.DisplayDerValueWithLabelAtFront("3M:", Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Value, "3M:")
             </td>
-            @*<td>Q3-16:41.60 USD/bbl</td>*@
+            <td class="brentfut-col brenfut-second" style="border-bottom:none;">
             <td>
                 <span class="comparison left-side">
                     <i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Deviation)"></i>
@@ -62,7 +62,7 @@
                 </span>
                 @Html.DisplayDerValueWithLabelAtFront("6M:", Model.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Value, "6M:")
             </td>
-            @*<td>Avg-2016:40.00 USD/bbl</td>*@
+            <td class="brentfut-col brenfut-third" style="border-bottom:none;">
             <td>
                 <span class="comparison left-side">
                     <i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 11).DerItemValue.Deviation)"></i>
@@ -82,7 +82,7 @@
                 </span>
                 @Html.DisplayDerValueWithLabelAtFront("1Yr:", Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Value, "1Yr:")
             </td>
-            @*<td>Avg-2017:54.60 USD/bbl</td>*@
+            <td class="brentfut-col brenfut-fourth" style="border-bottom:none;">
             <td>
                 <span class="comparison left-side">
                     <i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 12).DerItemValue.Deviation)"></i>
@@ -92,3 +92,16 @@
         </tr>
     </tbody>
 </table>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var brenfut = '@Html.Raw(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Value)'.replace('<p>', '').replace('</p>', '');
+        //var brenfut = '{ "a": { "label": "Q3-16", "value": "45.60 USD/BBL" }, "b": { "label": "asdfsdf", "value": "45" }, "c": { "label": "asfsdf", "value": "23" }, "d": { "label": "asdfsdf", "value": "234" } }';
+        var parsed = JSON.parse(brenfut);
+        $('.brenfut-first').append(parsed.a.label + ':' + parsed.a.value);
+        $('.brenfut-second').append(parsed.b.label + ':' + parsed.b.value);
+        $('.brenfut-third').append(parsed.c.label + ':' + parsed.c.value);
+        $('.brenfut-fourth').append(parsed.d.label + ':' + parsed.d.value);
+        
+    });
+</script>
