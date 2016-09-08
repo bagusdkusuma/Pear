@@ -95,13 +95,12 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        var brenfut = '@Html.Raw(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Value)'.replace('<p>', '').replace('</p>', '');
-        //var brenfut = '{ "a": { "label": "Q3-16", "value": "45.60 USD/BBL" }, "b": { "label": "asdfsdf", "value": "45" }, "c": { "label": "asfsdf", "value": "23" }, "d": { "label": "asdfsdf", "value": "234" } }';
-        var parsed = JSON.parse(brenfut);
-        $('.brenfut-first').append(parsed.a.label + ':' + parsed.a.value);
-        $('.brenfut-second').append(parsed.b.label + ':' + parsed.b.value);
-        $('.brenfut-third').append(parsed.c.label + ':' + parsed.c.value);
-        $('.brenfut-fourth').append(parsed.d.label + ':' + parsed.d.value);
-        
+
+        var brenfut = @Html.Raw(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Value);        
+        $('.brenfut-first').append(brenfut.a.label + ':' + brenfut.a.value);
+        $('.brenfut-second').append(brenfut.b.label + ':' + brenfut.b.value);
+        $('.brenfut-third').append(brenfut.c.label + ':' + brenfut.c.value);
+        $('.brenfut-fourth').append(brenfut.d.label + ':' + brenfut.d.value);
+
     });
 </script>
