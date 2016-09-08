@@ -314,10 +314,7 @@ namespace DSLNG.PEAR.Services
                         }
                         else if (request.ValueAxis == ValueAxis.KpiActual)
                         {
-                            seriesResponse.y = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType
-                                && x.Periode >= start && x.Periode <= end && x.Kpi.Id == kpi.Id)
-                                .GroupBy(x => x.Kpi.Id)
-                                .Select(x => x.Sum(y => (double?)y.Value ?? 0)).FirstOrDefault();
+                            seriesResponse.y = SumSeries(request.ValueInformation, request.PeriodeType, start, end, kpi.Id);
                         }
                         else if (request.ValueAxis == ValueAxis.KpiEconomic)
                         {
@@ -344,10 +341,7 @@ namespace DSLNG.PEAR.Services
                         }
                         else if (request.ValueAxis == ValueAxis.KpiActual)
                         {
-                            seriesResponse.y = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType
-                                && x.Periode >= start && x.Periode <= end && x.Kpi.Id == kpi.Id)
-                                .GroupBy(x => x.Kpi.Id)
-                                .Select(x => x.Average(y => (double?)y.Value ?? 0)).FirstOrDefault();
+                            seriesResponse.y = AverageSeries(request.ValueInformation, request.PeriodeType, start, end, kpi.Id);
                         }
                         else if (request.ValueAxis == ValueAxis.KpiEconomic)
                         {
@@ -453,6 +447,52 @@ namespace DSLNG.PEAR.Services
             response.Subtitle = timeInformation;
             response.Title = request.HeaderTitle;
             return response;
+        }
+
+        private double? SumSeries(ArtifactValueInformation valueInformation, PeriodeType periodEType, DateTime start, DateTime end, int kpiId) {
+            switch (valueInformation) {
+                case ArtifactValueInformation.Ytd:
+                    return
+                        DataContext.KpiAchievements.Where(x => x.PeriodeType == periodEType
+                                && x.Periode >= start && x.Periode <= end && x.Kpi.Id == kpiId)
+                                .GroupBy(x => x.Kpi.Id)
+                                .Select(x => x.Sum(y => (double?)y.Ytd ?? 0)).FirstOrDefault();
+                case ArtifactValueInformation.Mtd:
+                    return
+                        DataContext.KpiAchievements.Where(x => x.PeriodeType == periodEType
+                                && x.Periode >= start && x.Periode <= end && x.Kpi.Id == kpiId)
+                                .GroupBy(x => x.Kpi.Id)
+                                .Select(x => x.Sum(y => (double?)y.Mtd ?? 0)).FirstOrDefault();
+                default:
+                    return DataContext.KpiAchievements.Where(x => x.PeriodeType == periodEType
+                                && x.Periode >= start && x.Periode <= end && x.Kpi.Id == kpiId)
+                                .GroupBy(x => x.Kpi.Id)
+                                .Select(x => x.Sum(y => (double?)y.Value ?? 0)).FirstOrDefault();
+            }
+        }
+
+        private double? AverageSeries(ArtifactValueInformation valueInformation, PeriodeType periodEType, DateTime start, DateTime end, int kpiId)
+        {
+            switch (valueInformation)
+            {
+                case ArtifactValueInformation.Ytd:
+                    return
+                        DataContext.KpiAchievements.Where(x => x.PeriodeType == periodEType
+                                && x.Periode >= start && x.Periode <= end && x.Kpi.Id == kpiId)
+                                .GroupBy(x => x.Kpi.Id)
+                                .Select(x => x.Average(y => (double?)y.Ytd ?? 0)).FirstOrDefault();
+                case ArtifactValueInformation.Mtd:
+                    return
+                        DataContext.KpiAchievements.Where(x => x.PeriodeType == periodEType
+                                && x.Periode >= start && x.Periode <= end && x.Kpi.Id == kpiId)
+                                .GroupBy(x => x.Kpi.Id)
+                                .Select(x => x.Average(y => (double?)y.Mtd ?? 0)).FirstOrDefault();
+                default:
+                    return DataContext.KpiAchievements.Where(x => x.PeriodeType == periodEType
+                                && x.Periode >= start && x.Periode <= end && x.Kpi.Id == kpiId)
+                                .GroupBy(x => x.Kpi.Id)
+                                .Select(x => x.Average(y => (double?)y.Value ?? 0)).FirstOrDefault();
+            }
         }
 
         public GetSpeedometerChartDataResponse GetSpeedometerChartData(GetSpeedometerChartDataRequest request)

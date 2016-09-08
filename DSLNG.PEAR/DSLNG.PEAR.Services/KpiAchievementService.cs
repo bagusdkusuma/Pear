@@ -982,8 +982,8 @@ namespace DSLNG.PEAR.Services
                                 }
                                 DataContext.SaveChanges();
 
-                                var itdValue = DataContext.KpiAchievements.Where(x => x.PeriodeType == PeriodeType.Yearly
-                                  && x.Periode.Year <= request.Periode.Year
+                                var itdValue = DataContext.KpiAchievements.Where(x => x.PeriodeType == PeriodeType.Monthly
+                                 && x.Periode.Year <= request.Periode.Year
                                   && x.Kpi.Id == kpiAchievement.Kpi.Id).Sum(x => x.Value);
 
                                 yearly.Itd = itdValue;
@@ -1018,8 +1018,8 @@ namespace DSLNG.PEAR.Services
                                 }
                                 DataContext.SaveChanges();
 
-                                var itdValue = DataContext.KpiAchievements.Where(x => x.PeriodeType == PeriodeType.Yearly
-                                  && x.Periode.Year <= request.Periode.Year
+                                var itdValue = DataContext.KpiAchievements.Where(x => x.PeriodeType == PeriodeType.Monthly
+                                 && x.Periode.Year <= request.Periode.Year
                                   && x.Kpi.Id == kpiAchievement.Kpi.Id).Average(x => x.Value);
 
                                 yearly.Itd = itdValue;
@@ -1056,9 +1056,9 @@ namespace DSLNG.PEAR.Services
                                 }
                                 DataContext.SaveChanges();
 
-                                var ytdValue = DataContext.KpiAchievements.Where(x => x.PeriodeType == PeriodeType.Monthly
+                                var ytdValue = DataContext.KpiAchievements.Where(x => x.PeriodeType == PeriodeType.Daily
+                                 && x.Periode.Month <= request.Periode.Month
                                 && x.Periode.Year == request.Periode.Year
-                                && x.Periode.Month <= request.Periode.Month
                                 && x.Kpi.Id == kpiAchievement.Kpi.Id).Sum(x => x.Value);
                                 var yearly = DataContext.KpiAchievements.FirstOrDefault(x => x.Kpi.Id == kpiAchievement.Kpi.Id && x.Periode.Month == request.Periode.Year && x.PeriodeType == PeriodeType.Yearly);
                                 if (yearly != null)
@@ -1080,8 +1080,8 @@ namespace DSLNG.PEAR.Services
                                 }
                                 DataContext.SaveChanges();
 
-                                var itdValue = DataContext.KpiAchievements.Where(x => x.PeriodeType == PeriodeType.Yearly
-                                  && x.Periode.Year <= request.Periode.Year
+                                var itdValue = DataContext.KpiAchievements.Where(x => x.PeriodeType == PeriodeType.Daily
+                                 && x.Periode.Year <= request.Periode.Year
                                   && x.Kpi.Id == kpiAchievement.Kpi.Id).Sum(x => x.Value);
 
                                 yearly.Itd = itdValue;
@@ -1121,9 +1121,9 @@ namespace DSLNG.PEAR.Services
                                 }
                                 DataContext.SaveChanges();
 
-                                var ytdValue = DataContext.KpiAchievements.Where(x => x.PeriodeType == PeriodeType.Monthly
-                                && x.Periode.Year == request.Periode.Year
+                                var ytdValue = DataContext.KpiAchievements.Where(x => x.PeriodeType == PeriodeType.Daily
                                 && x.Periode.Month <= request.Periode.Month
+                                && x.Periode.Year == request.Periode.Year
                                 && x.Kpi.Id == kpiAchievement.Kpi.Id).Average(x => x.Value);
                                 var yearly = DataContext.KpiAchievements.FirstOrDefault(x => x.Kpi.Id == kpiAchievement.Kpi.Id && x.Periode.Month == request.Periode.Year && x.PeriodeType == PeriodeType.Yearly);
                                 if (yearly != null)
@@ -1145,8 +1145,8 @@ namespace DSLNG.PEAR.Services
                                 }
                                 DataContext.SaveChanges();
 
-                                var itdValue = DataContext.KpiAchievements.Where(x => x.PeriodeType == PeriodeType.Yearly
-                                  && x.Periode.Year <= request.Periode.Year
+                                var itdValue = DataContext.KpiAchievements.Where(x => x.PeriodeType == PeriodeType.Daily
+                                 && x.Periode.Year <= request.Periode.Year
                                   && x.Kpi.Id == kpiAchievement.Kpi.Id).Average(x => x.Value);
 
                                 yearly.Itd = itdValue;

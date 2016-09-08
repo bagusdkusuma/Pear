@@ -52,14 +52,13 @@
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">Tide/Wave</label></td>
+                <td><label class="control-label">Sea Condition and Jetty Status</label></td>
                 <td>
                    @Html.DisplayWaveList(Model.Wave, new List<SelectListItem> {
-                  new SelectListItem { Value="0-0.25 meter",Text="0-0.25 meter" },
-                   new SelectListItem { Value="0.25-0.5 meter",Text="0.25-0.5 meter" },
-                    new SelectListItem { Value="0.5-0.75 meter",Text="0.5-0.75 meter" },
-                     new SelectListItem { Value="0.75-1.0 meter",Text="0.75-1.0 meter" },
-                      new SelectListItem { Value="1-1.25 meter",Text="1-1.25 meter" },
+                  new SelectListItem { Value="Calm wave & Accessible",Text="Calm wave & Accessible" },
+                   new SelectListItem { Value="Slight wave & Accessible",Text="Slight wave & Accessible" },
+                    new SelectListItem { Value="Moderate wave and Caution",Text="Moderate wave and Caution" },
+                     new SelectListItem { Value="Rough wave & Closed Acces",Text="Rough wave & Closed Acces" }
               },"tide",235)
                 </td>
             </tr>
@@ -139,6 +138,22 @@
                 </td>
             </tr>
             <tr>
+                <td><label class="control-label">Env LOPC (&gt;1bbl or &gt;=moderate)</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 421, 300, "number")
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">Env LOPC (&lt;1bbl or minor)</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 422, 301, "number")
+                    </span>
+                </td>
+            </tr>
+            <tr>
                 <td><label class="control-label">RWC 24 H</label></td>
                 <td>
                     <span class="col-sm-8">
@@ -170,6 +185,30 @@
                     </span>
                 </td>
             </tr>
+            <tr>
+                <td><label class="control-label">Trafic Incident 24H</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 284, 303, "number")
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">Prop Dmg (&gt;$50K or &gt;=moderate)</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 357, 304, "number")
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">Prop Dmg (&lt;$50k or minor)</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 358, 305, "number")
+                    </span>
+                </td>
+            </tr>
         </table>
     </div>
     <div class="col-md-4">
@@ -188,6 +227,22 @@
                 <td>
                     <span class="col-sm-8">
                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 177, 249, "number", "empty", "yearly-target")
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">Env LOPC (&gt;1bbl or &gt;=moderate)</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 421, 300, "number", "empty", "yearly-target")
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">Env LOPC (&lt;1bbl or minor)</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 422, 301, "number", "empty", "yearly-target")
                     </span>
                 </td>
             </tr>
@@ -223,6 +278,30 @@
                     </span>
                 </td>
             </tr>
+            <tr>
+                <td><label class="control-label">Trafic Incident 24H</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 284, 303, "number", "empty", "yearly-target")
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">Prop Dmg (&gt;$50K or &gt;=moderate)</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 357, 304, "number", "empty", "yearly-target")
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">Prop Dmg (&lt;$50k or minor)</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 358, 305, "number", "empty", "yearly-target")
+                    </span>
+                </td>
+            </tr>
         </table>
     </div>
     <div class="col-md-4">
@@ -233,7 +312,7 @@
                 <td>
                     <!--254-->
                     <span class="col-sm-8">
-                        <input type="number" class="form-control" id="text" placeholder="number" />
+                       @Html.DisplayKpiInformationInput(Model.KpiInformations, 435, 254, "number")
                     </span>
                 </td>
             </tr>

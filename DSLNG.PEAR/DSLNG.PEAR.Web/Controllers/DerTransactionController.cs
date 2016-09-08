@@ -103,8 +103,8 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult QhsseSection(string date) {
             var viewModel = GetDerValuesPerSection(date,
-               new int[] { 273, 274, 275, 276, 1, 177, 278, 277, 285, 356, 4, 359, 286, 292 }, //actual KpiIds 
-               new int[] { 1, 177, 278, 277, 276, 285 }, //target KpiIds
+               new int[] { 273, 274, 275, 276, 1, 177, 278, 277, 285, 356, 4, 359, 286, 292, 421, 422, 284, 357, 358, 435 }, //actual KpiIds 
+               new int[] { 1, 177, 278, 277, 276, 285, 421, 422, 284, 357, 358 }, //target KpiIds
                new int[] { 18, 13, 20, 7 }  //highlightTypeIds
                );
             var theDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
@@ -160,7 +160,7 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.Weather.Values = _selectService.GetSelect(new GetSelectRequest { Name = "weather-values" }).Options
                 .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Text }).ToList();
             viewModel.AlertOptions = _selectService.GetSelect(new GetSelectRequest { ParentName = "highlight-types", ParentOptionId = 7 }).Options
-                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Text }).ToList();
+                .Select(x => new SelectListItem { Value = x.Value, Text = x.Text }).ToList();
             return View(viewModel);
         }
 
@@ -168,7 +168,7 @@ namespace DSLNG.PEAR.Web.Controllers
             return View(GetDerValuesPerSection(date,
            new int[] { 379,380,36 }, //actual KpiIds 
            new int[] { }, //target KpiIds
-           new int[] { 66,53,14,8 }  //highlightTypeIds
+           new int[] { 66,53,14,8,58 }  //highlightTypeIds
            ));
         }
         

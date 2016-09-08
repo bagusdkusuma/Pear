@@ -567,7 +567,7 @@ Number.prototype.format = function (n, x) {
         //ctx.fillText("100%", canvas.width - 45, canvas.height - 20);
         //ctx.fillText("50%", canvas.width / 2 - 20, 20);
       
-        $this.append('<span class="value">' + data.SpeedometerChart.Series.data[0] + '%</span>');
+        $this.append('<span class="value">' + data.SpeedometerChart.Series.data[0].format(2) + '%</span>');
         var $image = $('<img />');
         $image.attr('src', canvas.toDataURL({
             format: 'png',

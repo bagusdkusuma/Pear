@@ -167,6 +167,20 @@
                     @Html.DisplayHighlightTextarea(Model.Highlights, 8, 276)
                 </td>
             </tr>
+            <tr>
+                <td><h4 class="control-label">Daily Indicator</h4></td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayHighlightDropdownList(Model.Highlights,58,new List<SelectListItem> {
+                   new SelectListItem {Value = "1", Text = "1" },
+                   new SelectListItem {Value = "2", Text = "2" },
+                   new SelectListItem {Value = "3", Text = "3" },
+                   new SelectListItem {Value = "4", Text = "4" },
+                   new SelectListItem {Value = "5", Text = "5" }
+               },277,"prev" )
+                </td>
+            </tr>
         </table>
     </div>
 </div>
