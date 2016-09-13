@@ -4,7 +4,7 @@
 @model DSLNG.PEAR.Web.ViewModels.DerTransaction.DerValuesViewModel
 <div class="col-md-12">
     @*@{
-        var layoutItem = Model.DerLayoutItems.First(x => x.Column == 1 && x.Row == 16);
+        var Model = Model.DerModels.First(x => x.Column == 1 && x.Row == 16);
     }*@
     <div class="col-md-3">
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
@@ -15,7 +15,7 @@
                 <td><label class="control-label">1m</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @*@Html.DisplayKpiInformationInput(Model.KpiInformations, 4, 23, "rate","prev")*@
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 409, 23, "rate","prev")
                     </span>
                 </td>
             </tr>
@@ -23,7 +23,7 @@
                 <td><label class="control-label">3m</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @*@Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 5,  24, "rate","prev")*@
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 410,  24, "rate","prev")
                     </span>
                 </td>
             </tr>
@@ -31,7 +31,7 @@
                 <td><label class="control-label">6m</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @*@Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 6,  25, "rate","prev")*@
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 411,  25, "rate","prev")
                     </span>
                 </td>
             </tr>
@@ -39,7 +39,7 @@
                 <td><label class="control-label">1yr</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @*@Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 7,  26, "rate","prev")*@
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 412,  26, "rate","prev")
                     </span>
                 </td>
             </tr>
@@ -53,48 +53,48 @@
             <tr>
                 <td>
                     <span>
-                        @Html.DisplayBrenfutHighlight(Model.Highlights,63,20,0,"label")
+                        @Html.DisplayBrenfutHighlight(Model.Highlights,63,27,0,"label")
                     </span>
                 </td>
                 <td>
                     <span>
-                        @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 21,0)
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <span>
-                        @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 22, 1, "label")
-                    </span>
-                </td>
-                <td>
-                    <span>
-                        @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 23, 1)
+                        @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 28,0)
                     </span>
                 </td>
             </tr>
             <tr>
                 <td>
                     <span>
-                        @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 24, 2, "label")
+                        @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 29, 1, "label")
                     </span>
                 </td>
                 <td>
                     <span>
-                        @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 25, 2)
+                        @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 30, 1)
                     </span>
                 </td>
             </tr>
             <tr>
                 <td>
                     <span>
-                        @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 26, 3, "label")
+                        @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 31, 2, "label")
                     </span>
                 </td>
                 <td>
                     <span>
-                        @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 27, 3)
+                        @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 32, 2)
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>
+                        @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 33, 3, "label")
+                    </span>
+                </td>
+                <td>
+                    <span>
+                        @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 34, 3)
                     </span>
                 </td>
             </tr>
@@ -110,7 +110,7 @@
                 <td>
                     <span class="col-sm-8">
                             <!-- 37 -->
-                        @*@Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 9,  33, "rate","prev")*@
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 413,  35, "rate","prev")
                     </span>
                 </td>
             </tr>
@@ -118,7 +118,7 @@
                 <td><label class="control-label">3m</label></td>
                 <td>
                     <span class="col-sm-8">
-                       @*@Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 10,  34, "rate","prev")*@
+                       @Html.DisplayKpiInformationInput(Model.KpiInformations, 414  ,36, "rate","prev")
                     </span>
                 </td>
             </tr>
@@ -126,7 +126,7 @@
                 <td><label class="control-label">6m</label></td>
                 <td>
                     <span class="col-sm-8">
-                      @*@Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 11,  35, "rate","prev")*@
+                      @Html.DisplayKpiInformationInput(Model.KpiInformations, 415,  37, "rate","prev")
                     </span>
                 </td>
             </tr>
@@ -134,7 +134,7 @@
                 <td><label class="control-label">1yr</label></td>
                 <td>
                     <span class="col-sm-8">
-                       @*@Html.DisplayKpiInformationInput(layoutItem.KpiInformations, 12,  36, "rate","prev")*@
+                       @Html.DisplayKpiInformationInput(Model.KpiInformations, 416,  38, "rate","prev")
                     </span>
                 </td>
             </tr>

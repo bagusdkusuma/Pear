@@ -20,6 +20,13 @@
             </tr>
             <tr>
                 <td>
+                    <label for="" style="margin-top: 20px;">Remark</label>
+                    <br />
+                    @Html.DisplayKpiInformationInput(Model.KpiInformations, 379, 265, "free text", "prev", "daily-actual", "remark")
+                </td>
+            </tr>
+            <tr>
+                <td>
                     <label for="" style="margin-top: 20px;">Avg backlog</label>
                     <br />
                     @Html.DisplayKpiInformationInput(Model.KpiInformations, 380, 264, "number", "prev")
@@ -29,7 +36,7 @@
                 <td>
                     <label for="" style="margin-top: 20px;">Remark</label>
                     <br />
-                   @Html.DisplayKpiInformationInput(Model.KpiInformations, 379, 265, "free text", "prev", "daily-actual", "remark")
+                   @Html.DisplayKpiInformationInput(Model.KpiInformations, 380, 265, "free text", "prev", "daily-actual", "remark")
                 </td>
             </tr>
         </table>
@@ -46,8 +53,9 @@
                     <label for="" style="margin-top: 20px;">Application</label>
                     <br />
                     @Html.DisplayIctInfraOrGsfmHighlight(Model.Highlights,66,new List<SelectListItem>{
-                    new SelectListItem { Text = "Option 1", Value = "Option 1" },
-                        new SelectListItem { Text = "Option 2", Value = "Option 2" },
+                    new SelectListItem { Text = "-1", Value = "-1" },
+                        new SelectListItem { Text = "0", Value = "0" },
+                         new SelectListItem { Text = "1", Value = "1" },
                },266,"a")
                     @*<select>
                         <option>Select Option</option>
@@ -61,8 +69,9 @@
                     <label for="" style="margin-top: 20px;">Colaboration</label>
                     <br />
                     @Html.DisplayIctInfraOrGsfmHighlight(Model.Highlights, 66, new List<SelectListItem>{
-                    new SelectListItem { Text = "Option 1", Value = "Option 1" },
-                        new SelectListItem { Text = "Option 2", Value = "Option 2" },
+                  new SelectListItem { Text = "-1", Value = "-1" },
+                        new SelectListItem { Text = "0", Value = "0" },
+                         new SelectListItem { Text = "1", Value = "1" },
                }, 267, "b")
                 </td>
             </tr>
@@ -71,8 +80,9 @@
                     <label for="" style="margin-top: 20px;">Telco</label>
                     <br />
                     @Html.DisplayIctInfraOrGsfmHighlight(Model.Highlights, 66, new List<SelectListItem>{
-                    new SelectListItem { Text = "Option 1", Value = "Option 1" },
-                        new SelectListItem { Text = "Option 2", Value = "Option 2" },
+                  new SelectListItem { Text = "-1", Value = "-1" },
+                        new SelectListItem { Text = "0", Value = "0" },
+                         new SelectListItem { Text = "1", Value = "1" },
                }, 268, "c")
                 </td>
             </tr>
@@ -108,9 +118,10 @@
                     <label for="" style="margin-top: 20px;">F&B</label>
                     <br />
                     @Html.DisplayIctInfraOrGsfmHighlight(Model.Highlights, 53, new List<SelectListItem>{
-                    new SelectListItem { Text = "Option 1", Value = "Option 1" },
-                        new SelectListItem { Text = "Option 2", Value = "Option 2" },
-               }, 271, "c")
+                 new SelectListItem { Text = "-1", Value = "-1" },
+                        new SelectListItem { Text = "0", Value = "0" },
+                         new SelectListItem { Text = "1", Value = "1" },
+               }, 271, "a")
                 </td>
             </tr>
             <tr>
@@ -118,9 +129,10 @@
                     <label for="" style="margin-top: 20px;">Camp</label>
                     <br />
                     @Html.DisplayIctInfraOrGsfmHighlight(Model.Highlights, 53, new List<SelectListItem>{
-                    new SelectListItem { Text = "Option 1", Value = "Option 1" },
-                        new SelectListItem { Text = "Option 2", Value = "Option 2" },
-               }, 272, "c")
+                   new SelectListItem { Text = "-1", Value = "-1" },
+                        new SelectListItem { Text = "0", Value = "0" },
+                         new SelectListItem { Text = "1", Value = "1" },
+               }, 272, "b")
                 </td>
             </tr>
             <tr>
@@ -128,8 +140,9 @@
                     <label for="" style="margin-top: 20px;">Transp</label>
                     <br />
                     @Html.DisplayIctInfraOrGsfmHighlight(Model.Highlights, 53, new List<SelectListItem>{
-                    new SelectListItem { Text = "Option 1", Value = "Option 1" },
-                        new SelectListItem { Text = "Option 2", Value = "Option 2" },
+                  new SelectListItem { Text = "-1", Value = "-1" },
+                        new SelectListItem { Text = "0", Value = "0" },
+                         new SelectListItem { Text = "1", Value = "1" },
                }, 273, "c")
                 </td>
             </tr>

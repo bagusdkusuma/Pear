@@ -750,6 +750,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "plant-availability":
                     {
                         var viewModel = GetGeneralDerKpiInformations(11, layout, date, PeriodeType.Daily);
+                        viewModel.DateInfo = date;
                         var target0 = layout.KpiInformations.SingleOrDefault(x => x.Position == 0);
                         var target1 = layout.KpiInformations.SingleOrDefault(x => x.Position == 1);
                         var target2 = layout.KpiInformations.SingleOrDefault(x => x.Position == 2);
@@ -951,7 +952,7 @@ namespace DSLNG.PEAR.Web.Controllers
         [AuthorizeUser(AccessLevel = "AllowCreate")]
         public ActionResult Generate(GenerateViewModel viewModel)
         {
-            var theDate = DateTime.ParseExact(viewModel.Date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+            var theDate = DateTime.ParseExact(viewModel.Date, "MM/dd/yyyy", CultureInfo.InvariantCulture).AddDays(1);
             var htmlToPdf = new HtmlToPdfConverter();
             htmlToPdf.Size = PageSize.A3;
             if (!Directory.Exists(Server.MapPath(PathConstant.DerPath)))

@@ -397,58 +397,45 @@ namespace DSLNG.PEAR.Web.Helpers
             var kpiInformation = kpiInformations.First(x => x.KpiId == kpiId);
             var existValue = "empty";
             var id = 0;
+            ValueObject valueObject;
             switch (type)
             {
                 case "daily-actual":
                     {
-                        var valueObject = GetValue(kpiInformation.DailyActual, value, defaultValueDefined, valueType, existValue);
-                        value = valueObject.Value;
-                        id = valueObject.Id;
-                        existValue = valueObject.ExistValue;
+                        valueObject = GetValue(kpiInformation.DailyActual, value, defaultValueDefined, valueType, existValue);
+                     
                     }
                     break;
                 case "monthly-actual":
                     {
-                        var valueObject = GetValue(kpiInformation.MonthlyActual, value, defaultValueDefined, valueType, existValue);
-                        value = valueObject.Value;
-                        existValue = valueObject.ExistValue;
-                        id = valueObject.Id;
+                        valueObject = GetValue(kpiInformation.MonthlyActual, value, defaultValueDefined, valueType, existValue);
                     }
                     break;
                 case "yearly-actual":
                     {
-                        var valueObject = GetValue(kpiInformation.YearlyActual, value, defaultValueDefined, valueType, existValue);
-                        value = valueObject.Value;
-                        existValue = valueObject.ExistValue;
-                        id = valueObject.Id;
+                        valueObject = GetValue(kpiInformation.YearlyActual, value, defaultValueDefined, valueType, existValue);
                     }
                     break;
                 case "daily-target":
                     {
-                        var valueObject = GetValue(kpiInformation.DailyTarget, value, defaultValueDefined, valueType, existValue);
-                        value = valueObject.Value;
-                        existValue = valueObject.ExistValue;
-                        id = valueObject.Id;
+                        valueObject = GetValue(kpiInformation.DailyTarget, value, defaultValueDefined, valueType, existValue);
                     }
                     break;
                 case "monthly-target":
                     {
-                        var valueObject = GetValue(kpiInformation.MonthlyTarget, value, defaultValueDefined, valueType, existValue);
-                        value = valueObject.Value;
-                        existValue = valueObject.ExistValue;
-                        id = valueObject.Id;
+                        valueObject = GetValue(kpiInformation.MonthlyTarget, value, defaultValueDefined, valueType, existValue);
                     }
                     break;
-                case "yearly-target":
+                default:
                     {
-                        var valueObject = GetValue(kpiInformation.YearlyTarget, value, defaultValueDefined, valueType, existValue);
-                        value = valueObject.Value;
-                        existValue = valueObject.ExistValue;
-                        id = valueObject.Id;
+                        valueObject = GetValue(kpiInformation.YearlyTarget, value, defaultValueDefined, valueType, existValue);
                     }
                     break;
 
                 }
+            value = valueObject.Value;
+            id = valueObject.ExistValue == "now" ? valueObject.Id : 0;
+            existValue = valueObject.ExistValue;
             return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control der-kpi {8}\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" data-kpi-id=\"{5}\" data-id=\"{6}\" data-value-type=\"{7}\" />", value, existValue, placeholder, tabIndex, type, kpiId, id, valueType, additionalClass));
         }
 

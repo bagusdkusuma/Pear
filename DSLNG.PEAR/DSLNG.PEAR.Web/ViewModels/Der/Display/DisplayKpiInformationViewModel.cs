@@ -12,6 +12,8 @@ namespace DSLNG.PEAR.Web.ViewModels.Der.Display
             KpiInformationViewModels = new List<KpiInformationViewModel>();
         }
 
+        public DateTime DateInfo { get; set; }
+
         public IList<KpiInformationViewModel> KpiInformationViewModels { get; set; }
 
         public class KpiInformationViewModel
