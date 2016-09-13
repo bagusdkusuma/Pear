@@ -26,14 +26,14 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.GroupInputDatas)
+        @foreach (var item in Model.GroupInputDatas.OrderBy(x => x.Order))
         {
             <tr style="border-bottom:none; border-right:1px solid #fff">
                 <td><span style="font-weight:bold">@item.Name</span></td>
                 <td colspan="3"></td>
             </tr>
 
-            foreach (var kpi in item.InputDataKpiAndOrders)
+            foreach (var kpi in item.InputDataKpiAndOrders.OrderBy(x => x.Order))
             {
                 <tr>
                     <td></td>
@@ -82,7 +82,7 @@
         $(document).ready(function () {
             var date = getQueryVariable('date');
             if (date == null) {
-                $('.datepicker').val($('#der-transaction').data('date'));
+                $('.datepicker').val("@DateTime.Now.ToString("MM/dd/yyyy")");
             } else {
                 $('.datepicker').val(decodeURIComponent(date));
             }
@@ -96,13 +96,16 @@
             var currentDate = $('.datepicker').val();
 
             $('input.der-kpi').keyup(function (e) {
+                var $this = $(this);
                 if (e.keyCode == 13) {
-                    var $this = $(this);
+                    console.log($this);
                     var kpiId = $this.data('kpi-id');
+                    console.log(kpiId);
                     var type = $this.data('type');
                     var tabindex = $this.attr('tabindex');
                     var nextTabindex = parseInt(tabindex) + 1;
-                    var id = $this.data('id');
+                    var id = $this.attr('data-id');
+                    console.log(id);
                     var value = $this.val();
                     var valueType = $this.data('value-type');
                     $this.addClass('in-progress');

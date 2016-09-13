@@ -32,9 +32,11 @@ namespace DSLNG.PEAR.Web.Controllers
         }
 
         public ActionResult Index()
-        {
-            var viewModel = new IndexInputDataViewModel();
+        {   
+            var viewModel = new IndexInputDataViewModel();            
             viewModel.InputDatas = _inputDataService.GetInputDatas().InputDatas.MapTo<IndexInputDataViewModel.InputDataViewModel>();
+            ViewBag.Role = UserProfile().RoleName;
+            ViewBag.IsSuperAdmin = UserProfile().IsSuperAdmin;
             return View(viewModel);
         }
 
@@ -118,7 +120,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     if(!kpiIds.Contains(item.KpiId)) kpiIds.Add(item.KpiId);
                 }
             }
-
+            
             viewModel.KpiInformationValues = GetKpisValue(theDate, kpiIds.ToArray(), new int[] { });
             return View(viewModel);
         }

@@ -1,7 +1,7 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.InputData.IndexInputDataViewModel
 @{
     ViewBag.Title = "Input Data";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";    
 }
 
 <h2>Input Data</h2>
@@ -28,26 +28,30 @@
             <td></td>
             <td><a href="@Url.Action("Input" ,"DerTransaction", null)">Input</a></td>
         </tr>
-        @foreach(var item in Model.InputDatas)
+        @foreach (var item in Model.InputDatas)
         {
-            <tr>
-                <td>
-                    @item.Name
-                </td>
-                <td>
-                    @item.PeriodeType
-                </td>
-                <td>
-                    @item.Accountability
-                </td>
-                <td>
-                    @item.LastInput.ToString()
-                </td>
-                <td>
-                    <a href="@Url.Action("FormInputData", new { id = item.Id })">Input</a> | 
-                    <a href="@Url.Action("Update", new { id = item.Id })">Configure</a>
-                </td>
-            </tr>
+            if (ViewBag.IsSuperAdmin || item.Accountability == ViewBag.Role)
+            {
+                <tr>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.PeriodeType
+                    </td>
+                    <td>
+                        @item.Accountability
+                    </td>
+                    <td>
+                        @item.LastInput.ToString()
+                    </td>
+                    <td>
+                        <a href="@Url.Action("FormInputData", new { id = item.Id })">Input</a> |
+                        <a href="@Url.Action("Update", new { id = item.Id })">Configure</a>
+                    </td>
+                </tr>
+            }
+
         }
     </tbody>
 </table>
