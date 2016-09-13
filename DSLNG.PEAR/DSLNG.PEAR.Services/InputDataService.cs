@@ -32,7 +32,7 @@ namespace DSLNG.PEAR.Services
                     .Include(x => x.Accountability)
                     .Include(x => x.GroupInputDatas.Select(y => y.InputDataKpiAndOrders))
                     .Include(x => x.GroupInputDatas.Select(y => y.InputDataKpiAndOrders.Select(z => z.Kpi)))
-                    .Include(x => x.GroupInputDatas.Select(y => y.InputDataKpiAndOrders.Select(z => z.Kpi.Measurement)))
+                    .Include(x => x.GroupInputDatas.Select(y => y.InputDataKpiAndOrders.Select(z => z.Kpi.Measurement)))                    
                     .Single(x => x.Id == id);
 
                 response = inputData.MapTo<GetInputDataResponse>();
@@ -70,7 +70,8 @@ namespace DSLNG.PEAR.Services
             {
                 var inputData = DataContext.InputData
                     .Include(x => x.Accountability)
-                   .Include(x => x.GroupInputDatas).ToList();
+                    .Include(x => x.GroupInputDatas)                    
+                    .ToList();
 
                 response.InputDatas = inputData.MapTo<GetInputDatasResponse.InputData>();
                 response.IsSuccess = true;

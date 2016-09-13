@@ -241,7 +241,8 @@
                                                         <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row3Col5.Id })" class="layout-item highlight-json in-left"></div>
                                                     }
                                                 }
-                                                WEEKLY ALARM MANAGEMENT (3 Apr-10 Apr 2016)
+                                                WEEKLY ALARM MANAGEMENT (<span class="weekly-alarm-period"></span>)
+
                                             </td>
                                         </tr>
                                     </thead>
@@ -249,11 +250,24 @@
                                     <tbody>
                                         <tr>
                                             <td>
+                                                <table style="height: 64px;" width="608">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Train Areas</td>
+                                                            <td class="weekly-alarm-processtrain" style="text-align: right;"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Utilities-Off Site Areas</td>
+                                                            <td class="weekly-alarm-utilities" style="text-align: right;"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <p class="weekly-alarm-note"></p>
                                                 @{
                                                     var row3Col2 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 2);
                                                     if (row3Col2 != null)
                                                     {
-                                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row3Col2.Id })" class="layout-item"></div>
+                                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row3Col2.Id })" class="layout-item highlight-json-weekly-alarm"></div>
                                                     }
                                                 }
                                             </td>
@@ -1157,6 +1171,13 @@
                                     '<td style="width:10px">' + transform['a'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image008.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['b'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image010.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['c'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image012.png")" alt="" width="52" height="25"></td>';
                                 html += '</tbody></table>';
                                 that.replaceWith(html);
+                            } else if (data.type === "highlight" && that.hasClass('highlight-json-weekly-alarm')) {
+                                var parsed = JSON.parse(data.view);
+                                $('.weekly-alarm-processtrain').html(parsed.processtrain);
+                                $('.weekly-alarm-period').html(parsed.period);
+                                $('.weekly-alarm-note').html(parsed.remark);
+                                $('.weekly-alarm-utilities').html(parsed.utilities);
+
                             }
                             else {
                                 that.html(data.view);
