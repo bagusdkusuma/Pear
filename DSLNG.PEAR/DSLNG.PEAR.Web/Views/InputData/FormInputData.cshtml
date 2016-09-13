@@ -26,14 +26,14 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.GroupInputDatas)
+        @foreach (var item in Model.GroupInputDatas.OrderBy(x => x.Order))
         {
             <tr style="border-bottom:none; border-right:1px solid #fff">
                 <td><span style="font-weight:bold">@item.Name</span></td>
                 <td colspan="3"></td>
             </tr>
 
-            foreach (var kpi in item.InputDataKpiAndOrders)
+            foreach (var kpi in item.InputDataKpiAndOrders.OrderBy(x => x.Order))
             {
                 <tr>
                     <td></td>
