@@ -199,9 +199,9 @@
                 <td align="left"><label class="control-label">Market Tone</label></td>
                 <td align="left">
                     @Html.DisplayHighlightDropdownList(Model.Highlights,68, new List<SelectListItem> {
-                        new SelectListItem { Text = "1", Value = "Bullish" },
-                        new SelectListItem { Text = "0", Value = "Mixed" },
-                        new SelectListItem { Text = "-1", Value = "Bearish" },
+                        new SelectListItem { Value = "1", Text = "Bullish" },
+                        new SelectListItem { Value = "0", Text = "Mixed" },
+                        new SelectListItem { Value = "-1", Text = "Bearish" },
                     },21)
                 </td>
             </tr>
