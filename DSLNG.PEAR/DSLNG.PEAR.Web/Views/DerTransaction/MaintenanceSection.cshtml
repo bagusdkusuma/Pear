@@ -341,11 +341,12 @@
             <tr>
                 <td><label class="control-label">LNG Tank</label></td>
                 <td>
-                    @*<select>
-                        <option>Select Option</option>
-                        <option>Option 1</option>
-                        <option>Option 2</option>
-                    </select>*@
+                    @Html.DisplayHighlightDropdownList(Model.Highlights, 77, new List<SelectListItem> {
+                        new SelectListItem { Text = "Normal Ops", Value = "Normal Ops" },
+                        new SelectListItem { Text = "Anomaly", Value = "Anomaly" },
+                        new SelectListItem { Text = "Tripped", Value = "Tripped" },
+                        new SelectListItem { Text = "Not Available", Value = "Not Available" },
+                    }, 209)
                 </td>
             </tr>
             <tr>
@@ -390,21 +391,23 @@
             <tr>
                 <td><label class="control-label">CDS tank</label></td>
                 <td>
-                    @*<select>
-                        <option>Select Option</option>
-                        <option>Option 1</option>
-                        <option>Option 2</option>
-                    </select>*@
+                    @Html.DisplayHighlightDropdownList(Model.Highlights, 78, new List<SelectListItem> {
+                        new SelectListItem { Text = "Normal Ops", Value = "Normal Ops" },
+                        new SelectListItem { Text = "Anomaly", Value = "Anomaly" },
+                        new SelectListItem { Text = "Tripped", Value = "Tripped" },
+                        new SelectListItem { Text = "Not Available", Value = "Not Available" },
+                    }, 213)
                 </td>
             </tr>
             <tr>
                 <td><label class="control-label">Diesel Oil tank</label></td>
                 <td>
-                    @*<select>
-                        <option>Select Option</option>
-                        <option>Option 1</option>
-                        <option>Option 2</option>
-                    </select>*@
+                    @Html.DisplayHighlightDropdownList(Model.Highlights, 79, new List<SelectListItem> {
+                        new SelectListItem { Text = "Normal Ops", Value = "Normal Ops" },
+                        new SelectListItem { Text = "Anomaly", Value = "Anomaly" },
+                        new SelectListItem { Text = "Tripped", Value = "Tripped" },
+                        new SelectListItem { Text = "Not Available", Value = "Not Available" },
+                    }, 214)
                 </td>
             </tr>
             <tr>

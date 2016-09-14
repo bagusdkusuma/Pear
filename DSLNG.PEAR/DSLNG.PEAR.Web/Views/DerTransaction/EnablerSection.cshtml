@@ -90,6 +90,8 @@
                 <td>
                     <label for="" style="margin-top: 20px;">Remark</label>
                     <br />
+                    @*@Html.DisplayHighlightTextarea(Model.Highlights, 21, 268)*@
+                    @Html.DisplayHighlightInput(Model.Highlights,21,268,"free text","prev" )
                     @*<input type="text" name="" id="" placeholder="free text" />*@
                     @*@Html.DisplayIctInfraOrGsfmHighlight(Model.Highlights, 66, new List<SelectListItem>{
                     new SelectListItem { Text = "Option 1", Value = "Option 1" },
@@ -150,6 +152,8 @@
                 <td>
                     <label for="" style="margin-top: 20px;">Remark</label>
                     <br />
+                    @*@Html.DisplayHighlightTextarea(Model.Highlights, 53, 273)*@
+                    @Html.DisplayHighlightInput(Model.Highlights, 53, 273, "free text", "prev")
                     @*<input type="text" name="" id="" placeholder="free text" />*@
                 </td>
             </tr>

@@ -733,7 +733,9 @@ namespace DSLNG.PEAR.Web.Helpers
             var highlight = highlights.FirstOrDefault(x => x.HighlightTypeId == highlightTypeId);
             value = highlight == null ? value : (defaultValueDefined == "prev" ? highlight.HighlightMessage : (highlight.Type == "now" ? highlight.HighlightMessage : value));
             existValue = highlight == null ? existValue : highlight.Type;
-            return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" />", value, existValue, placeHolder, tabIndex));
+            var id = highlight == null ? 0 : highlight.Id;
+            var title = highlight == null ? "Der Highlight" : highlight.HighlightTitle;
+            return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control der-highlight-input\"   placeholder=\"{2}\" tabindex=\"{3}\" data-id=\"{4}\" data-highlight-type-id=\"{5}\" data-title=\"{6}\"  />", value, existValue, placeHolder, tabIndex, id,highlightTypeId, title));
         }
         public static MvcHtmlString DisplayWaveList(this HtmlHelper htmlHelper, WaveViewModel viewModel, IList<SelectListItem> options, string property, int tabIndex) {
             var value = "";
