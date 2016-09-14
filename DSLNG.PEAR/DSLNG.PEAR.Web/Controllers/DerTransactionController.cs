@@ -105,7 +105,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var viewModel = GetDerValuesPerSection(date,
                new int[] { 273, 274, 275, 276, 1, 177, 278, 277, 285, 356, 4, 359, 286, 292, 421, 422, 284, 357, 358, 435 }, //actual KpiIds 
                new int[] { 1, 177, 278, 277, 276, 285, 421, 422, 284, 357, 358 }, //target KpiIds
-               new int[] { 18, 13, 20, 7 }  //highlightTypeIds
+               new int[] { 18, 13, 20, 7,80 }  //highlightTypeIds
                );
             var theDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
             var wave = _waveService.GetWave(new GetWaveRequest
