@@ -1,0 +1,61 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.InputData.IndexInputDataViewModel
+@{
+    ViewBag.Title = "Input Data";
+    Layout = "~/Views/Shared/_Layout.cshtml";    
+}
+
+<h2>Input Data</h2>
+@Html.Partial("_MessageResponse")
+<div class="add-button-wrapper">
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+</div>
+
+<table id="input-data-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Period</th>
+            <th>Accountability</th>
+            <th>Last Input</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr style="border-bottom:none">
+            <td>Input Data DER</td>
+            <td>Daily</td>
+            <td>CPD</td>
+            <td></td>
+            <td><a href="@Url.Action("Input" ,"DerTransaction", null)">Input</a></td>
+        </tr>
+        @foreach (var item in Model.InputDatas)
+        {
+            if (ViewBag.IsSuperAdmin || item.Accountability == ViewBag.Role)
+            {
+                <tr>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.PeriodeType
+                    </td>
+                    <td>
+                        @item.Accountability
+                    </td>
+                    <td>
+                        @item.LastInput.ToString()
+                    </td>
+                    <td>
+                        <a href="@Url.Action("FormInputData", new { id = item.Id })">Input</a> |
+                        <a href="@Url.Action("Update", new { id = item.Id })">Configure</a>
+                    </td>
+                </tr>
+            }
+
+        }
+    </tbody>
+</table>
+
+@section Scripts{
+    
+}

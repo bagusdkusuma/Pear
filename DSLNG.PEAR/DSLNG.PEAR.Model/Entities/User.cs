@@ -37,5 +37,6 @@ namespace DSLNG.PEAR.Data.Entities
 
         public ICollection<RolePrivilege> RolePrivileges { get; set; }
         public IList<Signature> Signatures { get; set; }
+        //public int MyProperty { get; set; }
     }
 }

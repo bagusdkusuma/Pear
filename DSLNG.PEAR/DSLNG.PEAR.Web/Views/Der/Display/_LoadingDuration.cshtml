@@ -27,13 +27,13 @@
                 <tr class="standard-loading">
                     <td style="width:50%;padding:3px">
                         <label>
-                            Standard Loading time: @Html.DisplayDerValueWithHours(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value) @if (!string.IsNullOrEmpty(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value))
+                            Standard Loading time: @Html.DisplayDerValueWithHours(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Ytd ) @if (!string.IsNullOrEmpty(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Ytd))
                             {<text>Hours</text>}
                         </label>
                     </td>
                     <td style="width:50%;padding:3px">
                         <label>
-                            Standard Terminal Time: @Html.DisplayDerValueWithHours(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value) @if (!string.IsNullOrEmpty(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Value))
+                            Standard Terminal Time: @Html.DisplayDerValueWithHours(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Ytd) @if (!string.IsNullOrEmpty(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Ytd))
                             {<text>Hours(RTL)</text>}
                         </label>
                     </td>

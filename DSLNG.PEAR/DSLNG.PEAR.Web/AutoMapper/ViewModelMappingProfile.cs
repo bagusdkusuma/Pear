@@ -182,6 +182,12 @@ using DSLNG.PEAR.Web.ViewModels.Der.Display;
 using DSLNG.PEAR.Services.Responses.DerTransaction;
 using DSLNG.PEAR.Web.ViewModels.DerTransaction;
 using DSLNG.PEAR.Services.Responses.Wave;
+using DSLNG.PEAR.Services.Requests.InputData;
+using DSLNG.PEAR.Web.ViewModels.InputData;
+using DSLNG.PEAR.Services.Responses.InputData;
+using DSLNG.PEAR.Web.ViewModels.KpiTransformation;
+using DSLNG.PEAR.Services.Requests.KpiTransformation;
+using DSLNG.PEAR.Services.Responses.KpiInformation;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -200,7 +206,13 @@ namespace DSLNG.PEAR.Web.AutoMapper
             ConfigureDerViewModel();
             ConfigureProcessBlueprint();
             ConfigureFileRepository();
+            ConfigureInputDataViewModel();
+            ConfigureMixed();
+            base.Configure();
+        }
 
+        private void ConfigureMixed()
+        {
             Mapper.CreateMap<Dropdown, SelectListItem>();
             Mapper.CreateMap<SearchKpiViewModel, GetKpiToSeriesRequest>();
             Mapper.CreateMap<GetKpiToSeriesResponse, KpiToSeriesViewModel>();
@@ -753,6 +765,11 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetHighlightValuesResponse.DerHighlight, DerValuesViewModel.DerHighlightValuesViewModel>();
             Mapper.CreateMap<GetWaveResponse, WaveViewModel>();
             Mapper.CreateMap<GetWeatherResponse, WeatherViewModel>();
+            Mapper.CreateMap<KpiTransformationViewModel, SaveKpiTransformationRequest>();
+            Mapper.CreateMap<GetKpiTransformationResponse, KpiTransformationViewModel>()
+               .ForMember(x => x.RoleGroupIds, o => o.MapFrom(s => s.RoleGroups.Select(x => x.Id).ToList()))
+               .ForMember(x => x.KpiIds, o => o.MapFrom(s => s.Kpis.Select(x => x.Id).ToList()));
+            Mapper.CreateMap<GetKpiTransformationResponse.KpiResponse, KpiTransformationViewModel.KpiViewModel>();
             base.Configure();
         }
 
@@ -1139,6 +1156,23 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetKpiAchievementResponse, DerItemValueViewModel>();
             Mapper.CreateMap<GetKpiTargetItemResponse, DerItemValueViewModel>();
 
+        }
+
+        private void ConfigureInputDataViewModel()
+        {
+            Mapper.CreateMap<CreateInputDataViewModel, SaveOrUpdateInputDataRequest>();
+            Mapper.CreateMap<CreateInputDataViewModel.GroupInputData, SaveOrUpdateInputDataRequest.GroupInputData>();
+            Mapper.CreateMap<CreateInputDataViewModel.InputDataKpiAndOrder, SaveOrUpdateInputDataRequest.InputDataKpiAndOrder>();
+
+            Mapper.CreateMap<GetInputDataResponse, CreateInputDataViewModel>();
+            Mapper.CreateMap<GetInputDataResponse.GroupInputData, CreateInputDataViewModel.GroupInputData>();
+            Mapper.CreateMap<GetInputDataResponse.InputDataKpiAndOrder, CreateInputDataViewModel.InputDataKpiAndOrder>();
+
+            Mapper.CreateMap<GetInputDatasResponse.InputData, IndexInputDataViewModel.InputDataViewModel>();
+
+            Mapper.CreateMap<GetInputDataResponse, FormInputDataViewModel>();
+            Mapper.CreateMap<GetInputDataResponse.GroupInputData, FormInputDataViewModel.GroupInputData>();
+            Mapper.CreateMap<GetInputDataResponse.InputDataKpiAndOrder, FormInputDataViewModel.GroupInputData.InputDataKpiAndOrder>();
         }
 
     }

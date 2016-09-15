@@ -30,6 +30,7 @@ using DSLNG.PEAR.Services.Requests.KpiTarget;
 using DSLNG.PEAR.Web.Grid;
 using System.Text.RegularExpressions;
 using DSLNG.PEAR.Web.Attributes;
+using Newtonsoft.Json.Linq;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -44,7 +45,7 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IKpiTargetService _kpiTargetService;
         private readonly IVesselScheduleService _vesselScheduleService;
         private readonly IWaveService _waveService;
-        public static IDictionary<string,string> Contents { get; set; }
+        public static IDictionary<string, string> Contents { get; set; }
 
         public DerController(IDerService derService, IDropdownService dropdownService, IArtifactService artifactService, IHighlightService highlightService, IWeatherService weatherService, IKpiAchievementService kpiAchievementService, IKpiTargetService kpiTargetService, IVesselScheduleService vesselScheduleService, IWaveService waveService)
         {
@@ -59,7 +60,7 @@ namespace DSLNG.PEAR.Web.Controllers
             _waveService = waveService;
         }
 
-        [AuthorizeUser(AccessLevel ="AllowView")]
+        [AuthorizeUser(AccessLevel = "AllowView")]
         public ActionResult Index()
         {
             var viewModel = new DerIndexViewModel();
@@ -67,17 +68,20 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 viewModel.Month = DateTime.Now.Month;
             }
-            else {
+            else
+            {
                 viewModel.Month = int.Parse(Request.QueryString["month"]);
             }
             if (Request.QueryString["year"] == null)
             {
                 viewModel.Year = DateTime.Now.Year;
             }
-            else {
+            else
+            {
                 viewModel.Year = int.Parse(Request.QueryString["year"]);
             }
-            for (var i = 2011; i < 2030; i++) {
+            for (var i = 2011; i < 2030; i++)
+            {
                 viewModel.YearList.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
             }
             return View(viewModel);
@@ -182,6 +186,14 @@ namespace DSLNG.PEAR.Web.Controllers
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
                 #endregion
+                #region temperature
+                case "temperature":
+                    {
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_Temperature.cshtml", GetGeneralDerKpiInformations(2, layout, date, PeriodeType.Daily));
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+                #endregion
                 #region line
                 case "line":
                     {
@@ -260,6 +272,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         var request = new GetPieDataRequest();
                         request.PeriodeType = PeriodeType.Daily;
                         request.RangeFilter = RangeFilter.Interval;
+                        request.ValueInformation = ArtifactValueInformation.Mtd;
                         request.Start = date;
                         request.End = date;
                         request.HeaderTitle = layout.Artifact.HeaderTitle;
@@ -370,7 +383,18 @@ namespace DSLNG.PEAR.Web.Controllers
                                 Date = date,
                                 HighlightTypeId = layout.Highlight.SelectOptionId
                             });
-                        var view = RenderPartialViewToString("~/Views/Der/Display/_Highlight.cshtml", highlight);
+                        JToken obj;
+                        string view;
+                        if (!Helpers.HtmlHelpers.IsValidJson(highlight.Message, out obj))
+                        {
+                            view = RenderPartialViewToString("~/Views/Der/Display/_Highlight.cshtml", highlight);
+                        }
+                        else
+                        {
+                            view = highlight.Message.Replace(System.Environment.NewLine, "");
+                        }
+
+
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
@@ -749,6 +773,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "plant-availability":
                     {
                         var viewModel = GetGeneralDerKpiInformations(11, layout, date, PeriodeType.Daily);
+                        viewModel.DateInfo = date;
                         var target0 = layout.KpiInformations.SingleOrDefault(x => x.Position == 0);
                         var target1 = layout.KpiInformations.SingleOrDefault(x => x.Position == 1);
                         var target2 = layout.KpiInformations.SingleOrDefault(x => x.Position == 2);
@@ -836,7 +861,8 @@ namespace DSLNG.PEAR.Web.Controllers
                     }
                 #endregion
                 #region Termometer
-                case "termometer": {
+                case "termometer":
+                    {
                         var viewModel = GetGeneralDerKpiInformations(1, layout, date, PeriodeType.Daily);
                         return Json(new { GraphicType = "termometer", Value = viewModel.KpiInformationViewModels[0].DerItemValue.Value }, JsonRequestBehavior.AllowGet);
                     }
@@ -950,7 +976,7 @@ namespace DSLNG.PEAR.Web.Controllers
         [AuthorizeUser(AccessLevel = "AllowCreate")]
         public ActionResult Generate(GenerateViewModel viewModel)
         {
-            var theDate = DateTime.ParseExact(viewModel.Date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+            var theDate = DateTime.ParseExact(viewModel.Date, "MM/dd/yyyy", CultureInfo.InvariantCulture).AddDays(1);
             var htmlToPdf = new HtmlToPdfConverter();
             htmlToPdf.Size = PageSize.A3;
             if (!Directory.Exists(Server.MapPath(PathConstant.DerPath)))
@@ -966,7 +992,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var secretNumber = Guid.NewGuid().ToString();
             var secretPath = Path.Combine(Server.MapPath(PathConstant.DerPath), secretNumber + ".txt");
             System.IO.File.WriteAllText(secretPath, viewModel.Content);
-            var displayUrl = Url.Action("Preview", "DerImage", new { secretNumber = secretNumber  }, this.Request.Url.Scheme);
+            var displayUrl = Url.Action("Preview", "DerImage", new { secretNumber = secretNumber }, this.Request.Url.Scheme);
             htmlToPdf.Margins.Top = 20;
             htmlToPdf.Margins.Bottom = 20;
             htmlToPdf.Margins.Left = 20;
@@ -979,7 +1005,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 Date = theDate,
                 RevisionBy = UserProfile().UserId
             });
-            if (response.IsSuccess) 
+            if (response.IsSuccess)
             {
                 return RedirectToAction("Index");
             }
@@ -1002,7 +1028,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var title = "DER/" + theDate.ToString("dd-MMM-yyyy");
             string filename = title.Replace('/', '-');
             var isExisted = _derService.IsDerExisted(theDate, out revision);
-            revision = isExisted ? (revision+1) : revision;
+            revision = isExisted ? (revision + 1) : revision;
             //if (_derService.IsDerExisted(theDate, out revision))
             //{
             //    filename = title + "_" + revision;
@@ -1068,7 +1094,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     }
                     else if (item.ConfigType.Equals(ConfigType.KpiTarget))
                     {
-                        var target = _kpiTargetService.GetKpiTargetByValue(new GetKpiTargetRequestByValue {Kpi_Id = item.Kpi.Id, periode = date, PeriodeType = periodeType.ToString()} );
+                        var target = _kpiTargetService.GetKpiTargetByValue(new GetKpiTargetRequestByValue { Kpi_Id = item.Kpi.Id, periode = date, PeriodeType = periodeType.ToString() });
                         kpiInformationVm.DerItemValue = target.MapTo<DerItemValueViewModel>();
                     }
                 }

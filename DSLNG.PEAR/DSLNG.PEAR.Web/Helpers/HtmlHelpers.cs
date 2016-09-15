@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
 using DSLNG.PEAR.Web.ViewModels.Wave;
 using DSLNG.PEAR.Web.ViewModels.Weather;
+using DSLNG.PEAR.Web.ViewModels.Der.Display;
 
 namespace DSLNG.PEAR.Web.Helpers
 {
@@ -185,22 +186,149 @@ namespace DSLNG.PEAR.Web.Helpers
             }
         }
 
+        public static MvcHtmlString DisplayPlantAvailablityIndicator(this HtmlHelper htmlHelper, DisplayKpiInformationViewModel.KpiInformationViewModel kpiInformation, DisplayKpiInformationViewModel.KpiInformationViewModel kpiInformationTarget, string section) {
+            try
+            {
+                int value;
+                switch (section)
+                {
+                    case "ytd":
+                        value = PlantAvailabilityIndicator(kpiInformation.DerItemValue.Ytd, kpiInformationTarget.DerItemValue.Ytd);
+                        break;
+                    case "mtd":
+                        value = PlantAvailabilityIndicator(kpiInformation.DerItemValue.Mtd, kpiInformationTarget.DerItemValue.Mtd);
+                        break;
+                    default:
+                        value = PlantAvailabilityIndicator(kpiInformation.DerItemValue.Value, kpiInformationTarget.DerItemValue.Value);
+                        break;
+                }
+                return  RemarkToMvcHtmlString(value.ToString());
+            }
+            catch (Exception e)
+            {
+                return new MvcHtmlString(string.Empty);
+            }
+        }
+
+        private static int PlantAvailabilityIndicator(string Value, string TargetVale) {
+            int value;
+            if (double.Parse(Value) >= double.Parse(TargetVale))
+            {
+                value = 1;
+            }
+            else if (double.Parse(Value) < 85)
+            {
+                value = -1;
+            }
+            else
+            {
+                value = 0;
+            }
+            return value;
+        }
+
+        public static MvcHtmlString DisplayPlantThermalIndicator(this HtmlHelper htmlHelper, DisplayKpiInformationViewModel.KpiInformationViewModel kpiInformation, DisplayKpiInformationViewModel.KpiInformationViewModel kpiInformationTarget, string section)
+        {
+            try
+            {
+                int value;
+                switch (section)
+                {
+                    case "ytd":
+                        value = PlantThermalIndicator(kpiInformation.DerItemValue.Ytd, kpiInformationTarget.DerItemValue.Ytd);
+                        break;
+                    case "mtd":
+                        value = PlantThermalIndicator(kpiInformation.DerItemValue.Mtd, kpiInformationTarget.DerItemValue.Mtd);
+                        break;
+                    default:
+                        value = PlantThermalIndicator(kpiInformation.DerItemValue.Value, kpiInformationTarget.DerItemValue.Value);
+                        break;
+                }
+                return RemarkToMvcHtmlString(value.ToString());
+            }
+            catch (Exception e)
+            {
+                return new MvcHtmlString(string.Empty);
+            }
+        }
+
+        private static int PlantThermalIndicator(string Value, string TargetVale)
+        {
+            int value;
+            if (double.Parse(Value) >= double.Parse(TargetVale))
+            {
+                value = 1;
+            }
+            else if (double.Parse(Value) < 80)
+            {
+                value = -1;
+            }
+            else
+            {
+                value = 0;
+            }
+            return value;
+        }
+
+        public static MvcHtmlString DisplayMaterialBalanceIndicator(this HtmlHelper htmlHelper, DisplayKpiInformationViewModel.KpiInformationViewModel kpiInformation, DisplayKpiInformationViewModel.KpiInformationViewModel kpiInformationTarget, string section)
+        {
+            try
+            {
+                int value;
+                switch (section)
+                {
+                    case "ytd":
+                        value = MaterialBalanceIndicator(kpiInformation.DerItemValue.Ytd, kpiInformationTarget.DerItemValue.Ytd);
+                        break;
+                    case "mtd":
+                        value = MaterialBalanceIndicator(kpiInformation.DerItemValue.Mtd, kpiInformationTarget.DerItemValue.Mtd);
+                        break;
+                    default:
+                        value = MaterialBalanceIndicator(kpiInformation.DerItemValue.Value, kpiInformationTarget.DerItemValue.Value);
+                        break;
+                }
+                return RemarkToMvcHtmlString(value.ToString());
+            }
+            catch (Exception e)
+            {
+                return new MvcHtmlString(string.Empty);
+            }
+        }
+
+        private static int MaterialBalanceIndicator(string Value, string TargetVale)
+        {
+            int value;
+            if (double.Parse(Value) < double.Parse(TargetVale))
+            {
+                value = 1;
+            }
+            else if (double.Parse(Value) >= double.Parse(TargetVale) && double.Parse(Value) <  2.2)
+            {
+                value = 0;
+            }
+            else
+            {
+                value = -1;
+            }
+            return value;
+        }
+
         public static MvcHtmlString DisplayDerRemarkJsonForLngAndCds(this HtmlHelper htmlHelper, string remarkJson, string type)
         {
             if (string.IsNullOrEmpty(remarkJson)) return new MvcHtmlString(string.Empty);
             try
             {
-                var jsonRemark = JsonConvert.DeserializeObject<JsonRemark>(remarkJson);
+                //var jsonRemark = JsonConvert.DeserializeObject<JsonRemark>(remarkJson);
 
                 switch (type.ToLowerInvariant())
                 {
                     case "daily":
                     case "as of":
-                        return RemarkToMvcHtmlStringForLngAndCds(jsonRemark.Daily);
+                        return RemarkToMvcHtmlStringForLngAndCds(remarkJson);
                     case "mtd":
-                        return RemarkToMvcHtmlStringForLngAndCds(jsonRemark.Mtd);
+                        return RemarkToMvcHtmlStringForLngAndCds(remarkJson);
                     case "ytd":
-                        return RemarkToMvcHtmlStringForLngAndCds(jsonRemark.Ytd);
+                        return RemarkToMvcHtmlStringForLngAndCds(remarkJson);
                     default:
                         return new MvcHtmlString(string.Empty);
                 }
@@ -274,8 +402,8 @@ namespace DSLNG.PEAR.Web.Helpers
             if (!string.IsNullOrEmpty(val))
             {
                 double v = double.Parse(val);
-                TimeSpan span = TimeSpan.FromMinutes(v);
-                return span.ToString(@"hh\:mm");
+                TimeSpan span = TimeSpan.FromDays(v);
+                return string.Format("{0}:{1}", Math.Floor(span.TotalHours), span.Minutes);
             }
 
             return defaultVal;
@@ -364,7 +492,7 @@ namespace DSLNG.PEAR.Web.Helpers
                 case "fulfilled":
                     return new MvcHtmlString("<span class='indicator left-side'><i class='fa fa-check' style='color:green'></i></span>Fulfilled");
                 case "3":
-                case "on-track":
+                case "on track":
                     return new MvcHtmlString("<span class='indicator left-side'><i class='fa fa-circle' style='color:green'></i></span>On-track");
                 case "2":
                 case "loading":
@@ -397,58 +525,45 @@ namespace DSLNG.PEAR.Web.Helpers
             var kpiInformation = kpiInformations.First(x => x.KpiId == kpiId);
             var existValue = "empty";
             var id = 0;
+            ValueObject valueObject;
             switch (type)
             {
                 case "daily-actual":
                     {
-                        var valueObject = GetValue(kpiInformation.DailyActual, value, defaultValueDefined, valueType, existValue);
-                        value = valueObject.Value;
-                        id = valueObject.Id;
-                        existValue = valueObject.ExistValue;
+                        valueObject = GetValue(kpiInformation.DailyActual, value, defaultValueDefined, valueType, existValue);
+                     
                     }
                     break;
                 case "monthly-actual":
                     {
-                        var valueObject = GetValue(kpiInformation.MonthlyActual, value, defaultValueDefined, valueType, existValue);
-                        value = valueObject.Value;
-                        existValue = valueObject.ExistValue;
-                        id = valueObject.Id;
+                        valueObject = GetValue(kpiInformation.MonthlyActual, value, defaultValueDefined, valueType, existValue);
                     }
                     break;
                 case "yearly-actual":
                     {
-                        var valueObject = GetValue(kpiInformation.YearlyActual, value, defaultValueDefined, valueType, existValue);
-                        value = valueObject.Value;
-                        existValue = valueObject.ExistValue;
-                        id = valueObject.Id;
+                        valueObject = GetValue(kpiInformation.YearlyActual, value, defaultValueDefined, valueType, existValue);
                     }
                     break;
                 case "daily-target":
                     {
-                        var valueObject = GetValue(kpiInformation.DailyTarget, value, defaultValueDefined, valueType, existValue);
-                        value = valueObject.Value;
-                        existValue = valueObject.ExistValue;
-                        id = valueObject.Id;
+                        valueObject = GetValue(kpiInformation.DailyTarget, value, defaultValueDefined, valueType, existValue);
                     }
                     break;
                 case "monthly-target":
                     {
-                        var valueObject = GetValue(kpiInformation.MonthlyTarget, value, defaultValueDefined, valueType, existValue);
-                        value = valueObject.Value;
-                        existValue = valueObject.ExistValue;
-                        id = valueObject.Id;
+                        valueObject = GetValue(kpiInformation.MonthlyTarget, value, defaultValueDefined, valueType, existValue);
                     }
                     break;
-                case "yearly-target":
+                default:
                     {
-                        var valueObject = GetValue(kpiInformation.YearlyTarget, value, defaultValueDefined, valueType, existValue);
-                        value = valueObject.Value;
-                        existValue = valueObject.ExistValue;
-                        id = valueObject.Id;
+                        valueObject = GetValue(kpiInformation.YearlyTarget, value, defaultValueDefined, valueType, existValue);
                     }
                     break;
 
                 }
+            value = valueObject.Value;
+            id = valueObject.ExistValue == "now" ? valueObject.Id : 0;
+            existValue = valueObject.ExistValue;
             return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control der-kpi {8}\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" data-kpi-id=\"{5}\" data-id=\"{6}\" data-value-type=\"{7}\" />", value, existValue, placeholder, tabIndex, type, kpiId, id, valueType, additionalClass));
         }
 
@@ -746,7 +861,9 @@ namespace DSLNG.PEAR.Web.Helpers
             var highlight = highlights.FirstOrDefault(x => x.HighlightTypeId == highlightTypeId);
             value = highlight == null ? value : (defaultValueDefined == "prev" ? highlight.HighlightMessage : (highlight.Type == "now" ? highlight.HighlightMessage : value));
             existValue = highlight == null ? existValue : highlight.Type;
-            return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" />", value, existValue, placeHolder, tabIndex));
+            var id = highlight == null ? 0 : highlight.Id;
+            var title = highlight == null ? "Der Highlight" : highlight.HighlightTitle;
+            return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control der-highlight-input\"   placeholder=\"{2}\" tabindex=\"{3}\" data-id=\"{4}\" data-highlight-type-id=\"{5}\" data-title=\"{6}\"  />", value, existValue, placeHolder, tabIndex, id,highlightTypeId, title));
         }
         public static MvcHtmlString DisplayWaveList(this HtmlHelper htmlHelper, WaveViewModel viewModel, IList<SelectListItem> options, string property, int tabIndex) {
             var value = "";
@@ -801,23 +918,31 @@ namespace DSLNG.PEAR.Web.Helpers
             return new MvcHtmlString(selectInput);
         }
 
-        private static bool IsValidJson(string strInput, out JToken obj)
+        public static bool IsValidJson(string strInput, out JToken obj)
         {
-            strInput = strInput.Trim();
-            if ((strInput.StartsWith("{") && strInput.EndsWith("}")) || //For object
-                (strInput.StartsWith("[") && strInput.EndsWith("]"))) //For array
+            if (!string.IsNullOrEmpty(strInput))
             {
-                try
+                strInput = strInput.Trim();
+                if ((strInput.StartsWith("{") && strInput.EndsWith("}")) || //For object
+                    (strInput.StartsWith("[") && strInput.EndsWith("]"))) //For array
                 {
-                    obj = JObject.Parse(strInput);
-                    return true;
+                    try
+                    {
+                        obj = JObject.Parse(strInput);
+                        return true;
+                    }
+                    catch (JsonReaderException jex)
+                    {
+                        obj = null;
+                        return false;
+                    }
+                    catch (Exception ex) //some other exception
+                    {
+                        obj = null;
+                        return false;
+                    }
                 }
-                catch (JsonReaderException jex)
-                {
-                    obj = null;
-                    return false;
-                }
-                catch (Exception ex) //some other exception
+                else
                 {
                     obj = null;
                     return false;

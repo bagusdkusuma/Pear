@@ -1,0 +1,13 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKpiInformationViewModel
+<tr>
+    <td>
+        <label>Ambient Temperature 0C&#176;:</label>
+    </td>
+    <td>
+        Low:@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "oC")
+        <img height="20" src="@Url.Content("/content/images/suhu.png")" />
+    </td>
+    <td colspan="2" class="text-right">
+        High:@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "oC")
+    </td>
+</tr>

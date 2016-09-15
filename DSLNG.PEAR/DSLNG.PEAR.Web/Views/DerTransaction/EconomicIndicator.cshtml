@@ -69,7 +69,7 @@
     <div class="col-md-4">
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
-                <td><label class="control-label">Dubai crude</label></td>
+                <td><label class="control-label">Dubai crude (usd/bbl)</label></td>
                 <td>
                     <span class="col-sm-8">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 383, 8,"usd/bbl","prev")
@@ -77,7 +77,7 @@
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">Brent</label></td>
+                <td><label class="control-label">Brent (usd/bbl)</label></td>
                 <td>
                     <span class="col-sm-8">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 64,9,"usd/bbl","prev")
@@ -85,7 +85,7 @@
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">Henry Hub</label></td>
+                <td><label class="control-label">Henry Hub (usd/bbl)</label></td>
                 <td>
                     <span class="col-sm-8">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 384,10,"usd/bbl","prev")
@@ -93,7 +93,7 @@
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">Naptha</label></td>
+                <td><label class="control-label">Naptha (usd/bbl)</label></td>
                 <td>
                     <span class="col-sm-8">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 65,11,"usd/bbl","prev")
@@ -101,7 +101,7 @@
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">ICP</label></td>
+                <td><label class="control-label">ICP (usd/bbl)</label></td>
                 <td>
                     <span class="col-sm-8">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 385,12,"usd/bbl","prev")
@@ -109,7 +109,7 @@
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">Applied JCC</label></td>
+                <td><label class="control-label">Applied JCC (usd/bbl)</label></td>
                 <td>
                     <span class="col-sm-8">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 62,13,"usd/bbl","prev","monthly-actual")
@@ -117,7 +117,7 @@
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">LNG Spot</label></td>
+                <td><label class="control-label">LNG Spot (usd/mmbtu)</label></td>
                 <td>
                     <span class="col-sm-8">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 63, 14,"usd/mmbtu","prev")
@@ -125,7 +125,7 @@
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">Shipping</label></td>
+                <td><label class="control-label">Shipping (usd/mmbtu)</label></td>
                 <td>
                     <span class="col-sm-8">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 391, 15,"usd/mmbtu","prev")
@@ -199,9 +199,9 @@
                 <td align="left"><label class="control-label">Market Tone</label></td>
                 <td align="left">
                     @Html.DisplayHighlightDropdownList(Model.Highlights,68, new List<SelectListItem> {
-                        new SelectListItem { Text = "Bullish", Value = "Bullish" },
-                        new SelectListItem { Text = "Mixed", Value = "Mixed" },
-                        new SelectListItem { Text = "Bearish", Value = "Bearish" },
+                        new SelectListItem { Value = "1", Text = "Bullish" },
+                        new SelectListItem { Value = "0", Text = "Mixed" },
+                        new SelectListItem { Value = "-1", Text = "Bearish" },
                     },21)
                 </td>
             </tr>
@@ -210,7 +210,7 @@
     <div class="col-md-3">
         <table border="0">
             <tr>
-                <td align="left"><label class="control-label">Monthly Bunker Price</label></td>
+                <td align="left"><label class="control-label">Monthly Bunker Price (usd/bbl)</label></td>
                 <td align="left">
                     @Html.DisplayKpiInformationInput(Model.KpiInformations, 397, 22, "usd/bbl", "prev")
                 </td>

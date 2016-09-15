@@ -9,6 +9,9 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
 {
     public class GetPieDataRequest
     {
+        public GetPieDataRequest() {
+            ValueInformation = ArtifactValueInformation.AsOf;
+        }
         public DateTime? Start { get; set; }
         public DateTime? End { get; set; }
         public PeriodeType PeriodeType { get; set; }
@@ -18,6 +21,7 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
         public string HeaderTitle { get; set; }
         public bool Is3D { get; set; }
         public bool ShowLegend { get; set; }
+        public ArtifactValueInformation ValueInformation { get; set; }
         public class SeriesRequest
         {
 
