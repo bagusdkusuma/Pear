@@ -402,8 +402,8 @@ namespace DSLNG.PEAR.Web.Helpers
             if (!string.IsNullOrEmpty(val))
             {
                 double v = double.Parse(val);
-                TimeSpan span = TimeSpan.FromMinutes(v);
-                return span.ToString(@"hh\:mm");
+                TimeSpan span = TimeSpan.FromDays(v);
+                return string.Format("{0}:{1}", Math.Floor(span.TotalHours), span.Minutes);
             }
 
             return defaultVal;
