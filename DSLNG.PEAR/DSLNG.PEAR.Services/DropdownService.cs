@@ -294,6 +294,7 @@ namespace DSLNG.PEAR.Services
                     new Dropdown {Text = "Pie", Value = "pie"},
                     new Dropdown {Text = "Tank", Value = "tank"},
                     new Dropdown {Text = "Weather", Value = "weather"},
+                    new Dropdown {Text = "Temperature", Value = "temperature"},
                     new Dropdown {Text = "Alert", Value = "alert"},
                     new Dropdown {Text = "Wave", Value = "wave"},
                     new Dropdown {Text = "Avg Ytd-Key Statistic", Value = "avg-ytd-key-statistic"},

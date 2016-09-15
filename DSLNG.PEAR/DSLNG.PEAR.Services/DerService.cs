@@ -277,6 +277,7 @@ namespace DSLNG.PEAR.Services
             rowAndColumns.Add(new RowAndColumns { Row = 2, Column = 0 });
             rowAndColumns.Add(new RowAndColumns { Row = 2, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 2, Column = 2 });
+            rowAndColumns.Add(new RowAndColumns { Row = 2, Column = 3 });
             rowAndColumns.Add(new RowAndColumns { Row = 3, Column = 0 });
             rowAndColumns.Add(new RowAndColumns { Row = 3, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 3, Column = 2 });
@@ -438,6 +439,7 @@ namespace DSLNG.PEAR.Services
                 case "security":
                 case "job-pmts":
                 case "avg-ytd-key-statistic":
+                case "temperature":
                 case "lng-and-cds":
                 case "total-feed-gas":
                 case "table-tank":
@@ -539,6 +541,7 @@ namespace DSLNG.PEAR.Services
                         break;
                     }
                 case "avg-ytd-key-statistic":
+                case "temperature":
                 case "safety":
                 case "lng-and-cds":
                 case "security":

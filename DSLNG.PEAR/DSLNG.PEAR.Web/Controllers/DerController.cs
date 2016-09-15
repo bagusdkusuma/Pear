@@ -182,6 +182,14 @@ namespace DSLNG.PEAR.Web.Controllers
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
                 #endregion
+                #region temperature
+                case "temperature":
+                    {
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_Temperature.cshtml", GetGeneralDerKpiInformations(2, layout, date, PeriodeType.Daily));
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+                #endregion
                 #region line
                 case "line":
                     {

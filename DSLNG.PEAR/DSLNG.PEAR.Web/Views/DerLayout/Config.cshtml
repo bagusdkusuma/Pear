@@ -239,6 +239,19 @@
                             <td>
                                 <label>Ambient Temperature 0C:</label>
                             </td>
+                            <td colspan="2">
+                                @{
+                                    var row2Col3 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 3);
+                                    if (row2Col3 != null)
+                                    {
+                                        <a href="@Url.Action("LayoutItem", new { column = 3, row = 2, derLayoutId = Model.DerLayoutId, id = row2Col3.Id })" class="">Manage</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("LayoutItem", new { column = 3, row = 2, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
+                                    }
+                                }
+                            </td>
                         </tr>
                     </tbody>
                 </table>
