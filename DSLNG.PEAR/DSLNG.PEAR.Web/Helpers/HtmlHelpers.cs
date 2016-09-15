@@ -318,17 +318,17 @@ namespace DSLNG.PEAR.Web.Helpers
             if (string.IsNullOrEmpty(remarkJson)) return new MvcHtmlString(string.Empty);
             try
             {
-                var jsonRemark = JsonConvert.DeserializeObject<JsonRemark>(remarkJson);
+                //var jsonRemark = JsonConvert.DeserializeObject<JsonRemark>(remarkJson);
 
                 switch (type.ToLowerInvariant())
                 {
                     case "daily":
                     case "as of":
-                        return RemarkToMvcHtmlStringForLngAndCds(jsonRemark.Daily);
+                        return RemarkToMvcHtmlStringForLngAndCds(remarkJson);
                     case "mtd":
-                        return RemarkToMvcHtmlStringForLngAndCds(jsonRemark.Mtd);
+                        return RemarkToMvcHtmlStringForLngAndCds(remarkJson);
                     case "ytd":
-                        return RemarkToMvcHtmlStringForLngAndCds(jsonRemark.Ytd);
+                        return RemarkToMvcHtmlStringForLngAndCds(remarkJson);
                     default:
                         return new MvcHtmlString(string.Empty);
                 }
@@ -492,7 +492,7 @@ namespace DSLNG.PEAR.Web.Helpers
                 case "fulfilled":
                     return new MvcHtmlString("<span class='indicator left-side'><i class='fa fa-check' style='color:green'></i></span>Fulfilled");
                 case "3":
-                case "on-track":
+                case "on track":
                     return new MvcHtmlString("<span class='indicator left-side'><i class='fa fa-circle' style='color:green'></i></span>On-track");
                 case "2":
                 case "loading":

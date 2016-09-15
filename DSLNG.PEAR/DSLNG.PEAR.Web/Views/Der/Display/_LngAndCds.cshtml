@@ -63,7 +63,7 @@
                 ttl @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Mtd, string.Empty, string.Empty, "-") / @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 22).DerItemValue.Mtd, string.Empty, string.Empty, "-")
             </td>
             <td>
-                @Html.DisplayDerRemarkJsonForLngAndCds(Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Remark, "mtd")
+                @Html.DisplayDerRemarkJsonForLngAndCds(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Remark, "daily")
             </td>
         </tr>
         <tr>
@@ -91,7 +91,7 @@
                 Total @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Ytd, string.Empty, string.Empty, "-") / @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 22).DerItemValue.Ytd, string.Empty, string.Empty, "-") cargos
             </td>
             <td>
-                @Html.DisplayDerRemarkJsonForLngAndCds(Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Remark, "ytd")
+                @Html.DisplayDerRemarkJsonForLngAndCds(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Remark, "daily")
             </td>
         </tr>
     </tbody>
