@@ -790,23 +790,31 @@ namespace DSLNG.PEAR.Web.Helpers
             return new MvcHtmlString(selectInput);
         }
 
-        private static bool IsValidJson(string strInput, out JToken obj)
+        public static bool IsValidJson(string strInput, out JToken obj)
         {
-            strInput = strInput.Trim();
-            if ((strInput.StartsWith("{") && strInput.EndsWith("}")) || //For object
-                (strInput.StartsWith("[") && strInput.EndsWith("]"))) //For array
+            if (!string.IsNullOrEmpty(strInput))
             {
-                try
+                strInput = strInput.Trim();
+                if ((strInput.StartsWith("{") && strInput.EndsWith("}")) || //For object
+                    (strInput.StartsWith("[") && strInput.EndsWith("]"))) //For array
                 {
-                    obj = JObject.Parse(strInput);
-                    return true;
+                    try
+                    {
+                        obj = JObject.Parse(strInput);
+                        return true;
+                    }
+                    catch (JsonReaderException jex)
+                    {
+                        obj = null;
+                        return false;
+                    }
+                    catch (Exception ex) //some other exception
+                    {
+                        obj = null;
+                        return false;
+                    }
                 }
-                catch (JsonReaderException jex)
-                {
-                    obj = null;
-                    return false;
-                }
-                catch (Exception ex) //some other exception
+                else
                 {
                     obj = null;
                     return false;
