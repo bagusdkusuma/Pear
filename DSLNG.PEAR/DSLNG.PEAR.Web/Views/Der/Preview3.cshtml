@@ -1023,10 +1023,13 @@
             var getIcon = function (str) {
                 switch (str) {
                     case 0:
+                    case "0":
                         return '<span class="indicator left-side"><i class="fa fa-check" style="color:#fee17e"></i></span>';
                     case 1:
+                    case "1":
                         return '<span class="indicator left-side"><i class="fa fa-check-circle" style="color:#6eab75"></i></span>';
                     case -1:
+                    case "-1":
                         return '<span class="indicator left-side"><i class="fa fa-remove" style="color:#e25b5b"></i></span>';
                     default:
                         return '';
@@ -1037,10 +1040,13 @@
             var getIconForIctInfraFirstColumn = function (str) {
                 switch (str) {
                     case 0:
+                    case "0":
                         return '<span class="indicator left-side"><i class="fa fa-exclamation" style="color:#fee17e"></i></span>';
                     case 1:
+                    case "1":
                         return '<span class="indicator left-side"><i class="fa fa-check-circle" style="color:#6eab75"></i></span>';
                     case -1:
+                    case "-1":
                         return '<span class="indicator left-side"><i class="fa fa-times-circle" style="color:#e25b5b"></i></span>';
                     default:
                         return '';
@@ -1052,10 +1058,13 @@
             var getIconForIctInfraSecondColumn = function (str) {
                 switch (str) {
                     case 0:
+                    case "0":
                         return '<span class="indicator left-side"><i class="fa fa-circle" style="color:#fee17e"></i></span>';
                     case 1:
+                    case "1":
                         return '<span class="indicator left-side"><i class="fa fa-check-circle" style="color:#6eab75"></i></span>';
                     case -1:
+                    case "-1":
                         return '<span class="indicator left-side"><i class="fa fa-times-circle" style="color:#e25b5b"></i></span>';
                     default:
                         return '';
@@ -1066,10 +1075,13 @@
             var getIconForIctInfraThirdColumn = function (str) {
                 switch (str) {
                     case 0:
+                    case "0":
                         return '<span class="indicator left-side"><i class="fa fa-signal" style="color:#396694"></i></span>';
                     case 1:
+                    case "1":
                         return '<span class="indicator left-side"><i class="fa fa-check-circle" style="color:#6eab75"></i></span>';
                     case -1:
+                    case "-1":
                         return '<span class="indicator left-side"><i class="fa fa-times-circle" style="color:#e25b5b"></i></span>';
                     default:
                         return '';
@@ -1079,10 +1091,13 @@
             var getIconForGsFm = function (str) {
                 switch (str) {
                     case 0:
+                    case "0":
                         return '<span class="indicator left-side"><i class="fa fa-exclamation-circle" style="color:#fee17e"></i></span>';
                     case 1:
+                    case "1":
                         return '<span class="indicator left-side"><i class="fa fa-check-circle" style="color:#6eab75"></i></span>';
                     case -1:
+                    case "-1":
                         return '<span class="indicator left-side"><i class="fa fa-times-circle" style="color:#e25b5b"></i></span>';
                     default:
                         return '';
@@ -1175,11 +1190,14 @@
                                         break;
                                 }
                             } else if (data.type === "highlight" && that.hasClass('highlight-json-ict-infra')) {
-                                var pattern = /[^{}]*(?=\})/g;
-                                var parsed = "{" + (data.view.match(pattern)[0]) + "}";
+                                
+                               // var pattern = /[^{}]*(?=\})/g;
+                                //var parsed = "{" + (data.view.match(pattern)[0]) + "}";
                                 console.log('ict infra');
-                                console.log(parsed);
-                                var js = JSON.parse(parsed);
+                                //console.log(data.view)
+                                //console.log(parsed);
+                                var js = JSON.parse(data.view);
+                                console.log(js);
                                 var transform = [];
                                 transform['a'] = getIconForIctInfraFirstColumn(js.a);
                                 transform['b'] = getIconForIctInfraSecondColumn(js.b);
@@ -1191,11 +1209,16 @@
                                 that.replaceWith(html);
                             }
                             else if (data.type === "highlight" && that.hasClass('highlight-json-gs-fm')) {
-                                var pattern = /[^{}]*(?=\})/g;
-                                var parsed = "{" + (data.view.match(pattern)[0]) + "}";
-                                console.log('gs fm');
-                                console.log(parsed);
-                                var js = JSON.parse(parsed);
+                                console.log("highlight-json-gs-fm ================");
+                                console.log(data);
+                                console.log(data.view);
+                                //console.log(data);
+                                //var pattern = /[^{}]*(?=\})/g;
+                                //var parsed = "{" + (data.view.match(pattern)[0]) + "}";
+                                //console.log('gs fm');
+                                //console.log(parsed);
+                                var js = JSON.parse(data.view);
+                                console.log(js);
                                 var transform = [];
                                 transform['a'] = getIconForGsFm(js.a);
                                 transform['b'] = getIconForGsFm(js.b);
