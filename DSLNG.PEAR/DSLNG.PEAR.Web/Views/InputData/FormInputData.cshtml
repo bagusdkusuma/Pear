@@ -39,7 +39,7 @@
                     <td></td>
                     <td>@kpi.KpiName</td>
                     <td style="border-right:1px solid #fff">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformationValues, kpi.KpiId, 1, kpi.KpiMeasurement, "prev")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformationValues, kpi.KpiId, 1, kpi.KpiMeasurement, "prev", string.Format(@"{0}-actual", Model.PeriodeType.ToLowerInvariant()))
                     </td>
                     @*<td><input type="text" /></td>*@
                 </tr>
