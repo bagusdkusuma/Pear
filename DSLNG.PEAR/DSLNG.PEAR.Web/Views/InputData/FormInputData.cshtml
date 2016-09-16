@@ -50,6 +50,7 @@
 </table>
 
 <a href="@Url.Action("Index")">Back</a>
+<div id="format-input-data" data-periode-type="@Model.PeriodeType.ToLowerInvariant()"></div>
 
 @section Scripts {
     <script type="text/javascript">
@@ -80,14 +81,27 @@
         };
 
         $(document).ready(function () {
+            var dateFormat = 'MM/DD/YYYY';
+            var periodeType = $('#format-input-data').data('periode-type');
+            var existedDate = "@DateTime.Now.ToString("MM/dd/yyyy")";
+            switch (periodeType) {
+                case "yearly":
+                    dateFormat = 'YYYY';
+                    existedDate = "@DateTime.Now.ToString("yyyy")";
+                    break;
+                case "monthly":
+                    existedDate = "@DateTime.Now.ToString("MM/yyyy")";
+                    dateFormat = 'MM/YYYY';
+                    break;
+            }
             var date = getQueryVariable('date');
             if (date == null) {
-                $('.datepicker').val("@DateTime.Now.ToString("MM/dd/yyyy")");
+                $('.datepicker').val(existedDate);
             } else {
                 $('.datepicker').val(decodeURIComponent(date));
             }
             $('.datepicker').datetimepicker({
-                format: "MM/DD/YYYY",
+                format: dateFormat,
                 focusOnShow: false
             }).on('dp.change', function (e) {
                 $(".datepicker").blur();
@@ -105,7 +119,6 @@
                     var tabindex = $this.attr('tabindex');
                     var nextTabindex = parseInt(tabindex) + 1;
                     var id = $this.attr('data-id');
-                    console.log(id);
                     var value = $this.val();
                     var valueType = $this.data('value-type');
                     $this.addClass('in-progress');
