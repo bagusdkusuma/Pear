@@ -55,13 +55,13 @@ namespace DSLNG.PEAR.Services
                 .Where(x => kpiIdsForActual.Contains(x.Kpi.Id) &&
                 (((x.Periode == request.Date || x.Periode == previousDate) && x.PeriodeType == PeriodeType.Daily) ||
                 (x.PeriodeType == PeriodeType.Yearly && x.Periode.Year == request.Date.Year) ||
-                (x.PeriodeType == PeriodeType.Monthly && x.Periode.Month == request.Date.Month))).ToList();
+                (x.PeriodeType == PeriodeType.Monthly && x.Periode.Month == request.Date.Month && x.Periode.Year == request.Date.Year))).ToList();
             var kpiIdsForTarget = request.TargetKpiIds;
             var targets = DataContext.KpiTargets.Include(x => x.Kpi)
                .Where(x => kpiIdsForTarget.Contains(x.Kpi.Id) &&
                (((x.Periode == request.Date || x.Periode == previousDate) && x.PeriodeType == PeriodeType.Daily) ||
                (x.PeriodeType == PeriodeType.Yearly && x.Periode.Year == request.Date.Year) ||
-               (x.PeriodeType == PeriodeType.Monthly && x.Periode.Month == request.Date.Month))).ToList();
+               (x.PeriodeType == PeriodeType.Monthly && x.Periode.Month == request.Date.Month && x.Periode.Year == request.Date.Year))).ToList();
 
             var response = new GetKpiInformationValuesResponse();
             foreach (var kpiId in kpiIdsForActual)
