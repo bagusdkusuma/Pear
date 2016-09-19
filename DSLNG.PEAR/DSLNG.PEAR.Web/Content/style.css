@@ -30,7 +30,28 @@ body {
         background-color: #000000;
         background-image: none;
     }
+.lbl {
+    margin-left: 23px;
+}
+.text-title-section {
+     font-size: 15px;
+    font-weight: bold;
 
+}
+.input-custom .form-control {
+    width: 260% !important;
+}
+.input-sty input {
+    margin-top: 9px;
+    margin-bottom: 10px;
+}
+.input-long .form-control {
+    width: 100% !important;
+}
+.input-no-lbl input,
+.input-no-lbl select {
+    margin-left: -22px;
+}
 fieldset legend {
     float: left;
 }
