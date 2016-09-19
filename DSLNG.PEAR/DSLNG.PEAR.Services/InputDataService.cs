@@ -100,6 +100,7 @@ namespace DSLNG.PEAR.Services
                     inputData.Name = request.Name;
                     inputData.Accountability = DataContext.RoleGroups.Single(x => x.Id == request.AccountabilityId);                    
                     inputData.UpdatedBy = DataContext.Users.Single(x => x.Id == request.UpdatedById);
+                    inputData.PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), request.PeriodeType);
                     inputData.LastInput = DateTime.Now;
                     foreach (var groupInputData in inputData.GroupInputDatas.ToList())
                     {
@@ -136,6 +137,7 @@ namespace DSLNG.PEAR.Services
                     var inputData = request.MapTo<InputData>();
                     inputData.Accountability = DataContext.RoleGroups.Single(x => x.Id == request.AccountabilityId);                    
                     inputData.UpdatedBy = DataContext.Users.Single(x => x.Id == request.UpdatedById);
+                    inputData.PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), request.PeriodeType);
                     inputData.LastInput = DateTime.Now;
                     var groupInputDatas = new List<GroupInputData>();
                     foreach (var item in request.GroupInputDatas)
