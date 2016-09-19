@@ -1303,6 +1303,8 @@
             <tr>
                 <td>
                     <span class="col-sm-8 input-no-lbl">
+                        @Html.DisplayHighlightDropdownList(Model.Highlights, 26, new List<SelectListItem> {
+                    <span class="col-sm-8">
                         @Html.DisplayHighlightDropdownList(Model.Highlights, 69, new List<SelectListItem> {
                         new SelectListItem { Text = "Holding", Value = "Holding" },
                         new SelectListItem { Text = "Loading", Value = "Loading" },
