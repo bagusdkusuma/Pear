@@ -1,4 +1,6 @@
 ﻿
+using DSLNG.PEAR.Data.Enums;
+
 namespace DSLNG.PEAR.Services.Requests.KpiTransformation
 {
     public class SaveKpiTransformationRequest
@@ -7,5 +9,6 @@ namespace DSLNG.PEAR.Services.Requests.KpiTransformation
         public string Name { get; set; }
         public int[] RoleGroupIds { get; set; }
         public int[] KpiIds { get; set; }
+        public PeriodeType PeriodeType { get; set; }
     }
 }

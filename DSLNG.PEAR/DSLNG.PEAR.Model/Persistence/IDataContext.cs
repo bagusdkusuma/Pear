@@ -123,6 +123,7 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<KpiTransformation> KpiTransformations { get; set; }
         IDbSet<KpiTransformationSchedule> KpiTransformationSchedules { get; set; }
         IDbSet<KpiTransformationLog> KpiTransformationLogs { get; set; }
+        IDbSet<DerLoadingSchedule> DerLoadingSchedules { get; set; }
 
         Database Database { get; }
         int SaveChanges();

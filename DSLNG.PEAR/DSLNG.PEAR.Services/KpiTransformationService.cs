@@ -73,7 +73,7 @@ namespace DSLNG.PEAR.Services
             {
                 if (request.Id == 0)
                 {
-                    var kpiTransformation = new KpiTransformation { Name = request.Name };
+                    var kpiTransformation = new KpiTransformation { Name = request.Name, PeriodeType = request.PeriodeType };
                     foreach (var roleId in request.RoleGroupIds.Distinct().ToArray())
                     {
                         var role = new RoleGroup { Id = roleId };
@@ -91,8 +91,9 @@ namespace DSLNG.PEAR.Services
                 }
                 else
                 {
-                    var kpiTransformation = DataContext.KpiTransformations.Single(x => x.Id == request.Id);
+                    var kpiTransformation = DataContext.KpiTransformations.Include(x => x.RoleGroups).Include(x => x.Kpis).Single(x => x.Id == request.Id);
                     kpiTransformation.Name = request.Name;
+                    kpiTransformation.PeriodeType = request.PeriodeType;
                     foreach (var role in kpiTransformation.RoleGroups.ToList())
                     {
                         kpiTransformation.RoleGroups.Remove(role);
@@ -106,7 +107,7 @@ namespace DSLNG.PEAR.Services
                         var role = DataContext.RoleGroups.Local.FirstOrDefault(x => x.Id == roleId);
                         if (role == null)
                         {
-                            new RoleGroup { Id = roleId };
+                            role = new RoleGroup { Id = roleId };
                             DataContext.RoleGroups.Attach(role);
 
                         }

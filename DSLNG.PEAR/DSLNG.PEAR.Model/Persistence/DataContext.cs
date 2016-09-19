@@ -130,6 +130,7 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<KpiTransformation> KpiTransformations { get; set; }
         public IDbSet<KpiTransformationSchedule> KpiTransformationSchedules { get; set; }
         public IDbSet<KpiTransformationLog> KpiTransformationLogs { get; set; }
+        public IDbSet<DerLoadingSchedule> DerLoadingSchedules { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

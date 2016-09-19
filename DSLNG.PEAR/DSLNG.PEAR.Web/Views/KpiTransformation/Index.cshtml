@@ -10,6 +10,7 @@
             <th>No</th>
             <th>Category</th>
             <th>Accountability</th>
+            <th>Periode Type</th>
             <th>Last Processing</th>
             <th>Actions</th>
         </tr>
@@ -53,6 +54,10 @@
                                return accountability;
                                //return data;
                            }
+                       },
+                       {
+                           "orderable": true,
+                           "mDataProp": "PeriodeTypeName", "name": "PeriodeTypeName"
                        },
                         {
                             "orderable": true,

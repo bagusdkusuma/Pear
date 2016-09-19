@@ -48,6 +48,7 @@ namespace DSLNG.PEAR.Web
 
             JobManager.JobFactory = new StructureMapJobFactory();
             JobManager.Initialize(new ScenarioScheduler());
+            //JobManager.Initialize(new Registry());
 
             DevExpress.Web.ASPxWebControl.CallbackError += Application_Error;
         }

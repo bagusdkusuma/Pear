@@ -17,7 +17,7 @@ namespace DSLNG.PEAR.Data.Entities.KpiTransformationEngine
         public KpiTransformationSchedule Schedule { get; set; }
         public Kpi Kpi { get; set; }
         public DateTime Periode { get; set; }
-        public PeriodeType PeriodeType { get; set; }
         public KpiTransformationStatus Status { get; set; }
+        public string Notes { get; set; }
     }
 }

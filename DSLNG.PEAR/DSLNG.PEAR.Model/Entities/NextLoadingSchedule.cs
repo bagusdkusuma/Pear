@@ -1,5 +1,7 @@
 ﻿
+using DSLNG.PEAR.Data.Entities.Der;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,5 +18,6 @@ namespace DSLNG.PEAR.Data.Entities
         public VesselSchedule VesselSchedule { get; set; }
         public string Remark { get; set; }
         public DateTime CreatedAt { get; set; }
+        public IList<DerLoadingSchedule> DerLoadingSchedules { get; set; }
     }
 }

@@ -11,7 +11,8 @@ namespace DSLNG.PEAR.Data.Entities.KpiTransformationEngine
     public class KpiTransformationSchedule
     {
         public KpiTransformationSchedule() {
-            Periods = new List<KpiTransformationPeriod>();
+            ProcessingType = ProcessingType.Instant;
+            SelectedKpis = new List<Kpi>();
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -21,7 +22,8 @@ namespace DSLNG.PEAR.Data.Entities.KpiTransformationEngine
         public DateTime ProcessingDate { get; set; }
         public ProcessingType ProcessingType { get; set; }
         public KpiTransformationStatus Status { get; set; }
-        public ICollection<KpiTransformationPeriod> Periods { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
         public ICollection<KpiTransformationLog> Logs { get; set; }
       
     }

@@ -21,7 +21,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
+    @Html.HiddenFor(m => m.Id)
     <div class="form-horizontal">
         <h4>KpiTransformationViewModel</h4>
         <hr />
@@ -31,6 +31,13 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Name, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.PeriodeType, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.PeriodeType, Model.PeriodeTypes, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PeriodeType, "", new { @class = "text-danger" })
             </div>
         </div>
 

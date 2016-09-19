@@ -10,6 +10,8 @@ using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Requests.KpiTransformation;
 using DSLNG.PEAR.Web.Grid;
 using DSLNG.PEAR.Data.Enums;
+using DSLNG.PEAR.Services.Requests.KpiTransformationSchedule;
+using DSLNG.PEAR.Web.Scheduler;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -17,10 +19,17 @@ namespace DSLNG.PEAR.Web.Controllers
     {
         private readonly IRoleGroupService _roleService;
         private readonly IKpiTransformationService _kpiTransformationService;
+        private readonly IKpiTransformationScheduleService _kpiTransformationScheduleService;
+        private readonly IKpiTransformationJob _kpiTransformationJob;
 
-        public KpiTransformationController(IRoleGroupService roleService, IKpiTransformationService kpiTransformationService) {
+        public KpiTransformationController(IRoleGroupService roleService, 
+            IKpiTransformationService kpiTransformationService, 
+            IKpiTransformationScheduleService kpiTransformationScheduleService,
+            IKpiTransformationJob kpiTransformationJob) {
             _roleService = roleService;
             _kpiTransformationService = kpiTransformationService;
+            _kpiTransformationScheduleService = kpiTransformationScheduleService;
+            _kpiTransformationJob = kpiTransformationJob;
         }
         // GET: KpiTransformation
         public ActionResult Index()
@@ -57,7 +66,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 Take = -1,
                 SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
             }).RoleGroups, "Id", "Name");
-
+              SetPeriodeTypes(viewModel.PeriodeTypes);
             return View(viewModel);
         }
 
@@ -73,6 +82,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 Take = -1,
                 SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
             }).RoleGroups, "Id", "Name", viewModel.RoleGroupIds);
+            SetPeriodeTypes(viewModel.PeriodeTypes);
             return View(viewModel);
         }
 
@@ -89,6 +99,15 @@ namespace DSLNG.PEAR.Web.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
+        public ActionResult Process(KpiTransformationScheduleViewModel viewModel) {
+            var request = viewModel.MapTo<SaveKpiTransformationScheduleRequest>();
+            request.UserId = UserProfile().UserId;
+            var response = _kpiTransformationScheduleService.Save(request);
+            _kpiTransformationJob.Process(response);
+            return RedirectToAction("Index");
+        }
+
         private ActionResult Save(KpiTransformationViewModel viewModel) {
             var req = viewModel.MapTo<SaveKpiTransformationRequest>();
             var resp = _kpiTransformationService.Save(req);
@@ -97,13 +116,17 @@ namespace DSLNG.PEAR.Web.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Log(int id) {
+            throw new NotImplementedException();
+        }
+
         private void SetPeriodeTypes(IList<SelectListItem> periodeTypes)
         {
             foreach (var name in Enum.GetNames(typeof(PeriodeType)))
             {
                 if (!name.Equals("Hourly") && !name.Equals("Weekly") && !name.Equals("Itd"))
                 {
-                    periodeTypes.Add(new SelectListItem { Text = name, Value = name });
+                    periodeTypes.Add(new SelectListItem { Text = name, Value = ((int)(PeriodeType)Enum.Parse(typeof (PeriodeType),name)).ToString() });
                 }
             }
         }
@@ -111,7 +134,7 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             foreach (var name in Enum.GetNames(typeof(ProcessingType)))
             {
-                processingTypes.Add(new SelectListItem { Text = name, Value = name });
+                processingTypes.Add(new SelectListItem { Text = name, Value = ((int)(ProcessingType)Enum.Parse(typeof(ProcessingType), name)).ToString() });
             }
         }
 

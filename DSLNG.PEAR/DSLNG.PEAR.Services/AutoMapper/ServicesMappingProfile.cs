@@ -130,6 +130,8 @@ using DSLNG.PEAR.Services.Responses.InputData;
 using DSLNG.PEAR.Services.Requests.KpiTransformation;
 using DSLNG.PEAR.Data.Entities.KpiTransformationEngine;
 using DSLNG.PEAR.Services.Responses.KpiInformation;
+using DSLNG.PEAR.Services.Requests.KpiTransformationSchedule;
+using DSLNG.PEAR.Services.Responses.KpiTransformationSchedule;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -765,6 +767,11 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<KpiTransformation, GetKpiTransformationResponse>();
             Mapper.CreateMap<DSLNG.PEAR.Data.Entities.RoleGroup, GetKpiTransformationResponse.RoleGroupResponse>();
             Mapper.CreateMap<Kpi, GetKpiTransformationResponse.KpiResponse>();
+            Mapper.CreateMap<SaveKpiTransformationScheduleRequest, KpiTransformationSchedule>();
+            Mapper.CreateMap<KpiTransformationSchedule, SaveKpiTransformationScheduleResponse>()
+                .ForMember(x => x.KpiTransformationId, o => o.MapFrom(s => s.KpiTransformation.Id))
+                .ForMember(x => x.PeriodeType, o => o.MapFrom(s => s.KpiTransformation.PeriodeType));
+            Mapper.CreateMap<Kpi, SaveKpiTransformationScheduleResponse.KpiResponse>();
             base.Configure();
         }
 
