@@ -925,14 +925,14 @@ namespace DSLNG.PEAR.Services
                         if (prevAchievement != null) {
                             if (kpiAchievement.Value > prevAchievement.Value)
                             {
-                                kpiAchievement.Deviation = "fa-arrow-up";
+                                kpiAchievement.Deviation = "1";
                             }
                             else if (kpiAchievement.Value < prevAchievement.Value)
                             {
-                                kpiAchievement.Deviation = "fa-arrow-down";
+                                kpiAchievement.Deviation = "-1";
                             }
                             else {
-                                kpiAchievement.Deviation = "fa-minus";
+                                kpiAchievement.Deviation = "0";
                             }
                         }
                         
@@ -956,15 +956,15 @@ namespace DSLNG.PEAR.Services
                         {
                             if (kpiAchievement.Value > prevAchievement.Value)
                             {
-                                kpiAchievement.Deviation = "fa-arrow-up";
+                                kpiAchievement.Deviation = "1";
                             }
                             else if (kpiAchievement.Value < prevAchievement.Value)
                             {
-                                kpiAchievement.Deviation = "fa-arrow-down";
+                                kpiAchievement.Deviation = "-1";
                             }
                             else
                             {
-                                kpiAchievement.Deviation = "fa-minus";
+                                kpiAchievement.Deviation = "0";
                             }
                         }
                         DataContext.KpiAchievements.Add(kpiAchievement);
