@@ -132,6 +132,8 @@ using DSLNG.PEAR.Data.Entities.KpiTransformationEngine;
 using DSLNG.PEAR.Services.Responses.KpiInformation;
 using DSLNG.PEAR.Services.Requests.KpiTransformationSchedule;
 using DSLNG.PEAR.Services.Responses.KpiTransformationSchedule;
+using DSLNG.PEAR.Services.Responses.KpiTransformationLog;
+using DSLNG.PEAR.Services.Requests.KpiTransformationLog;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -772,6 +774,13 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.KpiTransformationId, o => o.MapFrom(s => s.KpiTransformation.Id))
                 .ForMember(x => x.PeriodeType, o => o.MapFrom(s => s.KpiTransformation.PeriodeType));
             Mapper.CreateMap<Kpi, SaveKpiTransformationScheduleResponse.KpiResponse>();
+            Mapper.CreateMap<KpiTransformationSchedule, GetKpiTransformationSchedulesResponse.KpiTransformationScheduleResponse>()
+                .ForMember(x => x.PeriodeType, o => o.MapFrom(s => s.KpiTransformation.PeriodeType));
+            Mapper.CreateMap<KpiTransformationLog, GetKpiTransformationLogsResponse.KpiTransformationLogResponse>()
+                .ForMember(x => x.KpiName, o => o.MapFrom(s => s.Kpi.Name))
+                .ForMember(x => x.KpiMeasurement, o => o.MapFrom(s => s.Kpi.Measurement.Name))
+                .ForMember(x => x.PeriodeType, o => o.MapFrom(s => s.Schedule.KpiTransformation.PeriodeType));
+            Mapper.CreateMap<SaveKpiTransformationLogRequest, KpiTransformationLog>();
             base.Configure();
         }
 

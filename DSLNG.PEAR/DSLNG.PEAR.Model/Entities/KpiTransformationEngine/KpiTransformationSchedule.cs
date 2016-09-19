@@ -12,6 +12,7 @@ namespace DSLNG.PEAR.Data.Entities.KpiTransformationEngine
     {
         public KpiTransformationSchedule() {
             ProcessingType = ProcessingType.Instant;
+            Status = KpiTransformationStatus.WaitingSchedule;
             SelectedKpis = new List<Kpi>();
         }
         [Key]

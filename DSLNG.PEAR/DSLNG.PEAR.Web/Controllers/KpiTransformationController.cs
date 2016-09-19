@@ -12,6 +12,7 @@ using DSLNG.PEAR.Web.Grid;
 using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Services.Requests.KpiTransformationSchedule;
 using DSLNG.PEAR.Web.Scheduler;
+using DSLNG.PEAR.Services.Requests.KpiTransformationLog;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -21,15 +22,18 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IKpiTransformationService _kpiTransformationService;
         private readonly IKpiTransformationScheduleService _kpiTransformationScheduleService;
         private readonly IKpiTransformationJob _kpiTransformationJob;
+        private readonly IKpiTransformationLogService _kpiTransformationLogService;
 
         public KpiTransformationController(IRoleGroupService roleService, 
             IKpiTransformationService kpiTransformationService, 
             IKpiTransformationScheduleService kpiTransformationScheduleService,
-            IKpiTransformationJob kpiTransformationJob) {
+            IKpiTransformationJob kpiTransformationJob,
+            IKpiTransformationLogService kpiTransformationLogService) {
             _roleService = roleService;
             _kpiTransformationService = kpiTransformationService;
             _kpiTransformationScheduleService = kpiTransformationScheduleService;
             _kpiTransformationJob = kpiTransformationJob;
+            _kpiTransformationLogService = kpiTransformationLogService;
         }
         // GET: KpiTransformation
         public ActionResult Index()
@@ -117,9 +121,58 @@ namespace DSLNG.PEAR.Web.Controllers
         }
 
         public ActionResult Log(int id) {
-            throw new NotImplementedException();
+            ViewBag.Id = id;
+            return View();
         }
 
+        public ActionResult LogGrid(int id, GridParams gridParams)
+        {
+            var templates = _kpiTransformationScheduleService.Get(new GetKpiTransformationSchedulesRequest
+            {
+                Skip = gridParams.DisplayStart,
+                Take = gridParams.DisplayLength,
+                SortingDictionary = gridParams.SortingDictionary,
+                Search = gridParams.Search,
+                KpiTransformationId = id
+            });
+
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalRecords = templates.Schedules.Count,
+                iTotalDisplayRecords = templates.TotalRecords,
+                aaData = templates.Schedules
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
+
+        }
+        public ActionResult LogDetails(int id)
+        {
+            ViewBag.Id = id;
+            return View();
+        }
+
+        public ActionResult LogDetailsGrid(int id, GridParams gridParams)
+        {
+            var templates = _kpiTransformationLogService.Get(new GetKpiTransformationLogsRequest
+            {
+                Skip = gridParams.DisplayStart,
+                Take = gridParams.DisplayLength,
+                SortingDictionary = gridParams.SortingDictionary,
+                Search = gridParams.Search,
+                ScheduleId = id
+            });
+
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalRecords = templates.Logs.Count,
+                iTotalDisplayRecords = templates.TotalRecords,
+                aaData = templates.Logs
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
+
+        }
         private void SetPeriodeTypes(IList<SelectListItem> periodeTypes)
         {
             foreach (var name in Enum.GetNames(typeof(PeriodeType)))

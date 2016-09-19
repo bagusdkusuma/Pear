@@ -6,5 +6,6 @@ namespace DSLNG.PEAR.Services.Interfaces
     public interface IKpiTransformationLogService
     {
         SaveKpiTransformationLogResponse Save(SaveKpiTransformationLogRequest request);
+        GetKpiTransformationLogsResponse Get(GetKpiTransformationLogsRequest request);
     }
 }

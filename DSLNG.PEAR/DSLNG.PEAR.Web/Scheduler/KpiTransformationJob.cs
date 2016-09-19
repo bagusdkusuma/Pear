@@ -22,10 +22,12 @@ namespace DSLNG.PEAR.Web.Scheduler
                var kpiPattern = @"k(\d+)";
                 JobManager.AddJob(() =>
                 {
+                    var complete = true;
                     using (var dataContext = new DataContext())
                     {
                         var kpiAchievementService = new KpiAchievementService(dataContext);
                         var logService = new KpiTransformationLogService(dataContext);
+                        var kpiTransformationScheduleService = new KpiTransformationScheduleService(dataContext);
                         for (var date = kpiTransformationSchedule.Start; date <= kpiTransformationSchedule.End; date = Increment(kpiTransformationSchedule, date))
                         {
                             foreach (var kpi in kpiTransformationSchedule.SelectedKpis)
@@ -45,7 +47,7 @@ namespace DSLNG.PEAR.Web.Scheduler
                                         Group g = m.Groups[1];
                                         var relatedKpiId = int.Parse(g.Value);
                                         var relatedKpiActual = kpiAchievementService.GetKpiAchievement(relatedKpiId, date, kpiTransformationSchedule.PeriodeType);
-                                        if (relatedKpiActual.Id != 0)
+                                        if (relatedKpiActual.IsSuccess && relatedKpiActual.Value.HasValue)
                                         {
                                             kpiTransformed = Regex.Replace(kpiTransformed, "k" + g.Value, relatedKpiActual.Value.ToString(), RegexOptions.IgnoreCase);
                                             if (kpi.YtdFormula == YtdFormula.Custom && relatedKpiActual.Mtd.HasValue && relatedKpiActual.Ytd.HasValue && relatedKpiActual.Itd.HasValue)
@@ -66,6 +68,7 @@ namespace DSLNG.PEAR.Web.Scheduler
                                                 };
                                                 logService.Save(logRequest);
                                                 meetRequirements = false;
+                                                complete = false;
                                             }
                                         }
                                         else {
@@ -79,6 +82,7 @@ namespace DSLNG.PEAR.Web.Scheduler
                                             };
                                             logService.Save(logRequest);
                                             meetRequirements = false;
+                                            complete = false;
                                         }
                                         m = m.NextMatch();
                                     }
@@ -119,6 +123,7 @@ namespace DSLNG.PEAR.Web.Scheduler
                                                 Notes = resp.Message
                                             };
                                             logService.Save(logRequest);
+                                            complete = false;
                                         }
                                         
                                     }
@@ -157,6 +162,7 @@ namespace DSLNG.PEAR.Web.Scheduler
                                                     Notes = resp.Message
                                                 };
                                                 logService.Save(logRequest);
+                                                complete = false;
                                             }
                                         }
                                         else {
@@ -170,6 +176,7 @@ namespace DSLNG.PEAR.Web.Scheduler
                                             };
                                             logService.Save(logRequest);
                                             meetRequirements = false;
+                                            complete = false;
                                         }
                                     }
                                     
@@ -208,9 +215,17 @@ namespace DSLNG.PEAR.Web.Scheduler
                                             Notes = resp.Message
                                         };
                                         logService.Save(logRequest);
+                                        complete = false;
                                     }
                                 }
                                 
+                            }
+                            if (complete)
+                            {
+                                kpiTransformationScheduleService.UpdateStatus(kpiTransformationSchedule.Id, KpiTransformationStatus.Complete);
+                            }
+                            else {
+                                kpiTransformationScheduleService.UpdateStatus(kpiTransformationSchedule.Id, KpiTransformationStatus.Error);
                             }
                         }
                     }
