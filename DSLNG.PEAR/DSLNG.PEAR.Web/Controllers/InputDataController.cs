@@ -4,6 +4,7 @@ using DSLNG.PEAR.Services.Requests.DerTransaction;
 using DSLNG.PEAR.Services.Requests.InputData;
 using DSLNG.PEAR.Services.Responses.InputData;
 using DSLNG.PEAR.Web.Grid;
+using DSLNG.PEAR.Web.Helpers;
 using DSLNG.PEAR.Web.ViewModels.DerTransaction;
 using DSLNG.PEAR.Web.ViewModels.InputData;
 using System;
@@ -106,10 +107,11 @@ namespace DSLNG.PEAR.Web.Controllers
         }
         
         public ActionResult FormInputData(int id, string date)
-        {
-            DateTime theDate = DateTime.Now;
-            if (!string.IsNullOrEmpty(date)) theDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+        {            
             var inputData = _inputDataService.GetInputData(id);
+
+            DateTime theDate = DateTimeHelper.Parse(inputData.PeriodeType, date);
+            //if (!string.IsNullOrEmpty(date)) theDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
             FormInputDataViewModel viewModel = inputData.MapTo<FormInputDataViewModel>();
             viewModel.Date = theDate;
             IList<int> kpiIds = new List<int>();
