@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
 using DSLNG.PEAR.Web.ViewModels.Wave;
 using DSLNG.PEAR.Web.ViewModels.Weather;
+using DSLNG.PEAR.Web.ViewModels.Der.Display;
 
 namespace DSLNG.PEAR.Web.Helpers
 {
@@ -185,22 +186,149 @@ namespace DSLNG.PEAR.Web.Helpers
             }
         }
 
+        public static MvcHtmlString DisplayPlantAvailablityIndicator(this HtmlHelper htmlHelper, DisplayKpiInformationViewModel.KpiInformationViewModel kpiInformation, DisplayKpiInformationViewModel.KpiInformationViewModel kpiInformationTarget, string section) {
+            try
+            {
+                int value;
+                switch (section)
+                {
+                    case "ytd":
+                        value = PlantAvailabilityIndicator(kpiInformation.DerItemValue.Ytd, kpiInformationTarget.DerItemValue.Ytd);
+                        break;
+                    case "mtd":
+                        value = PlantAvailabilityIndicator(kpiInformation.DerItemValue.Mtd, kpiInformationTarget.DerItemValue.Mtd);
+                        break;
+                    default:
+                        value = PlantAvailabilityIndicator(kpiInformation.DerItemValue.Value, kpiInformationTarget.DerItemValue.Value);
+                        break;
+                }
+                return  RemarkToMvcHtmlString(value.ToString());
+            }
+            catch (Exception e)
+            {
+                return new MvcHtmlString(string.Empty);
+            }
+        }
+
+        private static int PlantAvailabilityIndicator(string Value, string TargetVale) {
+            int value;
+            if (double.Parse(Value) >= double.Parse(TargetVale))
+            {
+                value = 1;
+            }
+            else if (double.Parse(Value) < 85)
+            {
+                value = -1;
+            }
+            else
+            {
+                value = 0;
+            }
+            return value;
+        }
+
+        public static MvcHtmlString DisplayPlantThermalIndicator(this HtmlHelper htmlHelper, DisplayKpiInformationViewModel.KpiInformationViewModel kpiInformation, DisplayKpiInformationViewModel.KpiInformationViewModel kpiInformationTarget, string section)
+        {
+            try
+            {
+                int value;
+                switch (section)
+                {
+                    case "ytd":
+                        value = PlantThermalIndicator(kpiInformation.DerItemValue.Ytd, kpiInformationTarget.DerItemValue.Ytd);
+                        break;
+                    case "mtd":
+                        value = PlantThermalIndicator(kpiInformation.DerItemValue.Mtd, kpiInformationTarget.DerItemValue.Mtd);
+                        break;
+                    default:
+                        value = PlantThermalIndicator(kpiInformation.DerItemValue.Value, kpiInformationTarget.DerItemValue.Value);
+                        break;
+                }
+                return RemarkToMvcHtmlString(value.ToString());
+            }
+            catch (Exception e)
+            {
+                return new MvcHtmlString(string.Empty);
+            }
+        }
+
+        private static int PlantThermalIndicator(string Value, string TargetVale)
+        {
+            int value;
+            if (double.Parse(Value) >= double.Parse(TargetVale))
+            {
+                value = 1;
+            }
+            else if (double.Parse(Value) < 80)
+            {
+                value = -1;
+            }
+            else
+            {
+                value = 0;
+            }
+            return value;
+        }
+
+        public static MvcHtmlString DisplayMaterialBalanceIndicator(this HtmlHelper htmlHelper, DisplayKpiInformationViewModel.KpiInformationViewModel kpiInformation, DisplayKpiInformationViewModel.KpiInformationViewModel kpiInformationTarget, string section)
+        {
+            try
+            {
+                int value;
+                switch (section)
+                {
+                    case "ytd":
+                        value = MaterialBalanceIndicator(kpiInformation.DerItemValue.Ytd, kpiInformationTarget.DerItemValue.Ytd);
+                        break;
+                    case "mtd":
+                        value = MaterialBalanceIndicator(kpiInformation.DerItemValue.Mtd, kpiInformationTarget.DerItemValue.Mtd);
+                        break;
+                    default:
+                        value = MaterialBalanceIndicator(kpiInformation.DerItemValue.Value, kpiInformationTarget.DerItemValue.Value);
+                        break;
+                }
+                return RemarkToMvcHtmlString(value.ToString());
+            }
+            catch (Exception e)
+            {
+                return new MvcHtmlString(string.Empty);
+            }
+        }
+
+        private static int MaterialBalanceIndicator(string Value, string TargetVale)
+        {
+            int value;
+            if (double.Parse(Value) < double.Parse(TargetVale))
+            {
+                value = 1;
+            }
+            else if (double.Parse(Value) >= double.Parse(TargetVale) && double.Parse(Value) <  2.2)
+            {
+                value = 0;
+            }
+            else
+            {
+                value = -1;
+            }
+            return value;
+        }
+
         public static MvcHtmlString DisplayDerRemarkJsonForLngAndCds(this HtmlHelper htmlHelper, string remarkJson, string type)
         {
             if (string.IsNullOrEmpty(remarkJson)) return new MvcHtmlString(string.Empty);
             try
             {
-                var jsonRemark = JsonConvert.DeserializeObject<JsonRemark>(remarkJson);
+                //var jsonRemark = JsonConvert.DeserializeObject<JsonRemark>(remarkJson);
 
                 switch (type.ToLowerInvariant())
                 {
                     case "daily":
                     case "as of":
-                        return RemarkToMvcHtmlStringForLngAndCds(jsonRemark.Daily);
+                        return RemarkToMvcHtmlStringForLngAndCds(remarkJson);
                     case "mtd":
-                        return RemarkToMvcHtmlStringForLngAndCds(jsonRemark.Mtd);
+                        return RemarkToMvcHtmlStringForLngAndCds(remarkJson);
                     case "ytd":
-                        return RemarkToMvcHtmlStringForLngAndCds(jsonRemark.Ytd);
+                        return RemarkToMvcHtmlStringForLngAndCds(remarkJson);
                     default:
                         return new MvcHtmlString(string.Empty);
                 }
@@ -274,8 +402,8 @@ namespace DSLNG.PEAR.Web.Helpers
             if (!string.IsNullOrEmpty(val))
             {
                 double v = double.Parse(val);
-                TimeSpan span = TimeSpan.FromMinutes(v);
-                return span.ToString(@"hh\:mm");
+                TimeSpan span = TimeSpan.FromDays(v);
+                return string.Format("{0}:{1}", Math.Floor(span.TotalHours), span.Minutes);
             }
 
             return defaultVal;
@@ -364,7 +492,7 @@ namespace DSLNG.PEAR.Web.Helpers
                 case "fulfilled":
                     return new MvcHtmlString("<span class='indicator left-side'><i class='fa fa-check' style='color:green'></i></span>Fulfilled");
                 case "3":
-                case "on-track":
+                case "on track":
                     return new MvcHtmlString("<span class='indicator left-side'><i class='fa fa-circle' style='color:green'></i></span>On-track");
                 case "2":
                 case "loading":

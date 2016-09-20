@@ -46,6 +46,9 @@
                 case "avg-ytd-key-statistic":
                     Html.RenderPartial("~/Views/DerLayout/LayoutType/_AvgYtdKeyStatistic.Edit.cshtml", Model);
                     break;
+                case "temperature":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_Temperature.Edit.cshtml", Model);
+                    break;
                 case "total-feed-gas":
                     Html.RenderPartial("~/Views/DerLayout/LayoutType/_TotalFeedGas.Edit.cshtml", Model);
                     break;
@@ -320,6 +323,7 @@
                     break;
                 }
             case "avg-ytd-key-statistic":
+            case "temperature":
             case "total-feed-gas":
             case "table-tank":
             case "mgdp":

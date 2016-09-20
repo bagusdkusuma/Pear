@@ -173,13 +173,47 @@
                                 }
                             </td>
                             <td style="width:29%;border-right:1px solid #444">
-                                @{
-                                    var row2Col1 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 1);
-                                    if (row2Col1 != null)
-                                    {
-                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row2Col1.Id })" class="layout-item"></div>
-                                    }
-                                }
+                                <table class="table borderless weather">
+                                    <tbody>
+                                        @{
+                                            var row2Col1 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 1);
+                                            if (row2Col1 != null)
+                                            {
+                                                <tr data-url="@Url.Action("LayoutItem", "Der", new { id = row2Col1.Id })" class="layout-item"></tr>
+                                            }
+                                        }
+                                        @{
+                                            var row2Col3 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 3);
+                                            if (row2Col3 != null)
+                                            {
+                                                <tr data-url="@Url.Action("LayoutItem", "Der", new { id = row2Col3.Id })" class="layout-item"></tr>
+                                            }
+                                        }
+                                        @*<tr rowspan="2">
+                    <td colspan="2">
+                        <label>Weather:</label>
+                    </td>
+                    <td>
+                        @Model.Text
+                    </td>
+                    <td class="text-right">
+                        <img height="20" src="@Url.Content("/content/img/select/" + Model.Value)">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Ambient Temperature 0C&#176;:</label>
+                    </td>
+                    <td>
+                        Low:@GetTemperature(Model.Temperature, 0)
+                        <img height="20" src="@Url.Content("/content/images/suhu.png")" />
+                    </td>
+                    <td colspan="2" class="text-right">
+                        High:@GetTemperature(Model.Temperature, 1)
+                    </td>
+                </tr>*@
+                                    </tbody>
+                                </table>
                             </td>
                             <td style="width:31%">
                                 @{
@@ -1084,7 +1118,7 @@
                         if (data.GraphicType !== undefined) {
                             var callback = window.Der.Artifact;
                             callback[data.GraphicType](data, that);
-                        } else if (data.type === "highlight" || data.type === "weather" ||
+                        } else if (data.type === "highlight" || data.type === "weather" || data.type === 'temperature' ||
                                 data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
                             data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type === "total-feed-gas"
                             || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type === "procurement" || data.type === "indicative-commercial-price" ||
@@ -1201,6 +1235,9 @@
                                 $('.weekly-alarm-note').html(parsed.remark);
                                 $('.weekly-alarm-utilities').html(parsed.utilities);
 
+                            }
+                            else if (data.type == 'weather' || data.type == 'temperature') {
+                                that.replaceWith(data.view);
                             }
                             else {
                                 that.html(data.view);

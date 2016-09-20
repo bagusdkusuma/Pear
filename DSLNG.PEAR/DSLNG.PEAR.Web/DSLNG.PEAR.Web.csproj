@@ -837,6 +837,8 @@
     <Compile Include="Controllers\WaveController.cs" />
     <Compile Include="DependencyResolution\SctructureMapJobFactory.cs" />
     <Compile Include="Extensions\NumberExtension.cs" />
+    <Compile Include="Scheduler\IKpiTransformationJob.cs" />
+    <Compile Include="Scheduler\KpiTransformationJob.cs" />
     <Compile Include="Helpers\DateTimeHelper.cs" />
     <Compile Include="ViewModels\DerLayout\CreateDerLayoutViewModel.cs" />
     <Compile Include="Controllers\DerController.cs" />
@@ -917,6 +919,7 @@
     <Compile Include="ViewModels\InputData\CreateInputDataViewModel.cs" />
     <Compile Include="ViewModels\InputData\FormInputDataViewModel.cs" />
     <Compile Include="ViewModels\InputData\IndexInputDataViewModel.cs" />
+    <Compile Include="ViewModels\KpiTransformation\KpiTransformationScheduleViewModel.cs" />
     <Compile Include="ViewModels\KpiTransformation\KpiTransformationViewModel.cs" />
     <Compile Include="ViewModels\Kpi\DetailKpiViewModel.cs" />
     <Compile Include="ViewModels\Kpi\UploadViewModel.cs" />
@@ -1145,6 +1148,9 @@
     <Content Include="Views\DerTransaction\MaintenanceSection.cshtml" />
     <Content Include="Views\DerTransaction\QhsseSection.cshtml" />
     <Content Include="Views\DerTransaction\EnablerSection.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_Temperature.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_Temperature.Edit.cshtml" />
+    <Content Include="Views\Der\Display\_Temperature.cshtml" />
     <None Include="Views\Der\Index.cshtml.old" />
     <Content Include="Views\Der\_ManageItem.cshtml" />
     <Content Include="Views\Der\_DialogManageItem.cshtml" />
@@ -1400,6 +1406,8 @@
     <Content Include="Views\KpiTransformation\Index.cshtml" />
     <Content Include="Views\KpiTransformation\Edit.cshtml" />
     <Content Include="Views\KpiTransformation\Process.cshtml" />
+    <Content Include="Views\KpiTransformation\Log.cshtml" />
+    <Content Include="Views\KpiTransformation\LogDetails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

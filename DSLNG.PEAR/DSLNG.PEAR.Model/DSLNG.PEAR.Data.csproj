@@ -105,6 +105,7 @@
     <Compile Include="Entities\Der\DerArtifactPlot.cs" />
     <Compile Include="Entities\Der\DerArtifactSerie.cs" />
     <Compile Include="Entities\Der\DerArtifactTank.cs" />
+    <Compile Include="Entities\Der\DerLoadingSchedule.cs" />
     <Compile Include="Entities\Der\DerOriginalData.cs" />
     <Compile Include="Entities\Der\DerStaticHighlight.cs" />
     <Compile Include="Entities\Der\DerHighlight.cs" />
@@ -127,7 +128,6 @@
     <Compile Include="Entities\KpiTransformationEngine\KpiTransformation.cs" />
     <Compile Include="Entities\KpiTransformationEngine\KpiTransformationLog.cs" />
     <Compile Include="Entities\KpiTransformationEngine\KpiTransformationSchedule.cs" />
-    <Compile Include="Entities\KpiTransformationEngine\KpiTransformationPeriod.cs" />
     <Compile Include="Entities\MenuRolePrivilege.cs" />
     <Compile Include="Entities\Mir\MirArtifact.cs" />
     <Compile Include="Entities\Mir\MirConfiguration.cs" />

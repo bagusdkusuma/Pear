@@ -13,6 +13,9 @@ namespace DSLNG.PEAR.Services.Requests.KpiAchievement
         public int KpiId { get; set; }
         public DateTime Periode { get; set; }
         public string Value { get; set; }
+        public double? Mtd { get; set; }
+        public double? Ytd { get; set; }
+        public double? Itd { get; set; }
         public double? RealValue
         {
             get

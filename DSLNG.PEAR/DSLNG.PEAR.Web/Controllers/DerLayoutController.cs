@@ -254,6 +254,11 @@ namespace DSLNG.PEAR.Web.Controllers
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 5);
                             break;
                         }
+                    case "temperature":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 2);
+                            break;
+                        }
                     case "security":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 6);
@@ -346,6 +351,11 @@ namespace DSLNG.PEAR.Web.Controllers
                     case "2-and-2":
                         {
                             viewModel.Type = "wave";
+                            break;
+                        }
+                    case "2-and-3":
+                        {
+                            viewModel.Type = "temperature";
                             break;
                         }
                     case "3-and-0":
@@ -626,6 +636,12 @@ namespace DSLNG.PEAR.Web.Controllers
                         viewModel.Type = type;
                         return PartialView("LayoutType/_StaticHighlight", viewModel);
                     }
+                case "temperature":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(2);
+                        return PartialView("LayoutType/_Temperature", viewModel);
+                    }
 
                 case "avg-ytd-key-statistic":
                     {
@@ -863,6 +879,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "safety":
                 case "security":
                 case "avg-ytd-key-statistic":
+                case "temperature":
                 case "lng-and-cds":
                 case "total-feed-gas":
                 case "table-tank":

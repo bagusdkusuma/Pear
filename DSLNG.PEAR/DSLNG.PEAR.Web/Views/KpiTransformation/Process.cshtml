@@ -34,11 +34,11 @@
     }
 
     .periode-container .btn-add-periode {
-        display: none  !important;
+        display: none !important;
     }
 
     .periode-container:last-child .btn-add-periode {
-        display: inline-block  !important;
+        display: inline-block !important;
     }
 </style>
 <div class="row">
@@ -46,23 +46,23 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="add-button-wrapper">
-                    <button class="btn btn-default">Move All</button>
-                    <button class="btn btn-default">Move Selected Kpis</button>
+                    <button class="btn btn-default move-all">Move All</button>
+                    <button class="btn btn-default move-selected">Move Selected Kpis</button>
                 </div>
-                <ul id="available-kpis" class="connectedSortable">
+                <ul id="available-kpis" class="connectedSortable"></ul>
+            </div>
+            <div class="col-md-6">
+                <div class="add-button-wrapper">
+                    <button class="btn btn-default return-all">Return All</button>
+                    <button class="btn btn-default return-selected">Return Selected Kpis</button>
+                    <button class="btn btn-primary pull-right" style="padding:10px 30px" data-toggle="modal" data-target="#scheduleProcess">Process</button>
+                </div>
+                <ul id="selected-kpis" class="connectedSortable">
                     @foreach (var kpi in Model.Kpis)
                     {
                         <li class="ui-state-default" data-kpi-id="@kpi.Id"><input type="checkbox" /> @kpi.Name</li>
                     }
                 </ul>
-            </div>
-            <div class="col-md-6">
-                <div class="add-button-wrapper">
-                    <button class="btn btn-default">Return All</button>
-                    <button class="btn btn-default">Return Selected Kpis</button>
-                    <button class="btn btn-primary pull-right" style="padding:10px 30px" data-toggle="modal" data-target="#scheduleProcess">Process</button>
-                </div>
-                <ul id="selected-kpis" class="connectedSortable"></ul>
             </div>
         </div>
 
@@ -79,37 +79,35 @@
             </div>
             <div class="modal-body">
                 <div class="form-horizontal">
-                    @using (Html.BeginForm("Process","KpiInformation",FormMethod.Post))
+                    @using (Html.BeginForm("Process", "KpiTransformation", FormMethod.Post))
                     {
+                        <input type="hidden" name="PeriodeType" value="@Model.PeriodeType" />
+                        <input type="hidden" name="KpiTransformationId" value="@Model.Id" />
+                        <input type="hidden" name="ProcessingType" value="0" />
                         <div class="form-group">
-                            <label class="control-label col-md-3">Periods</label>
+                            <label class="control-label col-md-3">Start</label>
                             <div class="col-md-9">
                                 <div class="periods-wrapper">
                                     <div class="periode-container">
-                                        @Html.DropDownList("Periods[x].PeriodeType", Model.PeriodeTypes, new { @class = "form-control periode-type", style = "display:inline" })
-                                        <input class="form-control datepicker start" name="Periods[x].Start" style="display:inline" />
-                                        <input class="form-control datepicker end" name="Periods[x].End" style="display:inline" />
-                                        <button class="btn btn-default btn-remove-periode" style="display:inline">Remove</button><button class="btn btn-default btn-add-periode" style="display:inline">Add</button>
+                                        <input class="form-control datepicker start" name="StartInDisplay" />
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3">ProcessingType</label>
+                            <label class="control-label col-md-3">End</label>
                             <div class="col-md-9">
-                                @Html.DropDownList("ProcessingType", Model.ProcessingTypes, new { @class = "form-control processing-type" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3">Schedule Time</label>
-                            <div class="col-md-9">
-                                <input class="form-control schedule-time" disabled name="sDateProcessing" />
+                                <div class="periods-wrapper">
+                                    <div class="periode-container">
+                                        <input class="form-control datepicker end" name="EndInDisplay" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-offset-3 col-md-9">
                                 <button type="submit" class="btn btn-default submit-process">Ok</button>
-                                <button type="button" class="btn btn-default"  data-dismiss="modal" aria-label="Close">Cancel</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close">Cancel</button>
                             </div>
                         </div>
                     }
@@ -125,117 +123,102 @@
             connectWith: ".connectedSortable"
         }).disableSelection();
 
-        var $periodeTemmplate = $('.periode-container').clone();
-        $(document).on('click', '.btn-add-periode', function (e) {
-            e.preventDefault();
-            var $priodeContainer = $periodeTemmplate.clone();
-            $('.periods-wrapper').append($priodeContainer);
-            $priodeContainer.find('.periode-type').change();
+        $(document).on('click', '.move-all', function (e) {
+            var $availables = $('#available-kpis').children('li');
+            if ($availables.length) {
+                $('#selected-kpis').append($availables.clone(true));
+                $availables.remove();
+            }
         });
-        $(document).on('click', '.btn-remove-periode', function (e) {
-            e.preventDefault();
-            var $priodeContainer = $(this).parent();
-            $priodeContainer.remove();
+        $(document).on('click', '.return-all', function (e) {
+            var $selected = $('#selected-kpis').children('li');
+            if ($selected.length) {
+                $('#available-kpis').append($selected.clone(true));
+                $selected.remove();
+            }
         });
-
-        $(document).on('change', '.periode-type', function (e) {
-            e.preventDefault();
-            var $this = $(this);
-            var $scope = $this.closest('.periode-container');
-            var clearValue = $scope.find('.datepicker').each(function (i, val) {
-                $(val).val('');
-                if ($(val).data("DateTimePicker") !== undefined) {
-                    $(val).data("DateTimePicker").destroy();
+        $(document).on('click', '.move-selected', function (e) {
+            var $availables = $('#available-kpis').children('li');
+            var $selectedList = $('#selected-kpis')
+            $availables.each(function (i, val) {
+                if ($(val).find('input').is(':checked')) {
+                    var clone = $(val).clone();
+                    clone.find('input').prop('checked', false);
+                    $selectedList.append(clone);
+                    $(val).remove();
                 }
-            });
-            switch ($this.val().toLowerCase().trim()) {
-                case 'hourly':
-                    $scope.find('.datepicker').each(function (i, val) {
-                        $(val).datetimepicker({
-                            format: "MM/DD/YYYY hh:00 A"
-                        });
+            })
+        });
+        $(document).on('click', '.return-selected', function (e) {
+            var $availables = $('#selected-kpis').children('li');
+            var $selectedList = $('#available-kpis')
+            $availables.each(function (i, val) {
+                if ($(val).find('input').is(':checked')) {
+                    var clone = $(val).clone();
+                    clone.find('input').prop('checked', false);
+                    $selectedList.append(clone);
+                    $(val).remove();
+                }
+            })
+        });
+        $scope = $('#scheduleProcess');
+        switch ( $('input[name="PeriodeType"]').val().trim().toLowerCase()) {
+            case 'hourly':
+                $scope.find('.datepicker').each(function (i, val) {
+                    $(val).datetimepicker({
+                        format: "MM/DD/YYYY hh:00 A"
                     });
-                    
-                    break;
-                case 'daily':
-                    $scope.find('.datepicker').each(function (i, val) {
-                        $(val).datetimepicker({
-                            format: "MM/DD/YYYY"
-                        });
-                    });
-                    //$('.datepicker').datetimepicker({
-                    //    format: "MM/DD/YYYY"
-                    //});
-                    break;
-                case 'weekly':
-                    $scope.find('.datepicker').each(function (i, val) {
-                        $(val).datetimepicker({
-                            format: "MM/DD/YYYY",
-                            daysOfWeekDisabled: [0, 2, 3, 4, 5, 6]
-                        });
-                    });
-                    //$('.datepicker').datetimepicker({
-                    //    format: "MM/DD/YYYY",
-                    //    daysOfWeekDisabled: [0, 2, 3, 4, 5, 6]
-                    //});
-                    break;
-                case 'monthly':
-                    $scope.find('.datepicker').each(function (i, val) {
-                        $(val).datetimepicker({
-                            format: "MM/YYYY"
-                        });
-                    });
-                    //$('.datepicker').datetimepicker({
-                    //    format: "MM/YYYY"
-                    //});
-                    break;
-                case 'yearly':
-                    $scope.find('.datepicker').each(function (i, val) {
-                        $(val).datetimepicker({
-                            format: "YYYY"
-                        });
-                    });
-                    break;
-                default:
+                });
 
-            }
-        });
-        $('.periode-type').change();
-        $('.processing-type').change(function () {
-            var $this = $(this);
-            if ($this.val().toLowerCase() == 'scheduled') {
-                $('.schedule-time').prop('disabled', false)
-            } else {
-                $('.schedule-time').prop('disabled', true)
-            }
-        });
-        $('.schedule-time').datetimepicker({
-            format: "MM/DD/YYYY HH:mm"
-        });
-        $('form').submit(function (e) {
+                break;
+            case 'daily':
+                $scope.find('.datepicker').each(function (i, val) {
+                    $(val).datetimepicker({
+                        format: "MM/DD/YYYY"
+                    });
+                });
+                break;
+            case 'weekly':
+                $scope.find('.datepicker').each(function (i, val) {
+                    $(val).datetimepicker({
+                        format: "MM/DD/YYYY",
+                        daysOfWeekDisabled: [0, 2, 3, 4, 5, 6]
+                    });
+                });
+                break;
+            case 'monthly':
+                $scope.find('.datepicker').each(function (i, val) {
+                    $(val).datetimepicker({
+                        format: "MM/YYYY"
+                    });
+                });
+                break;
+            case 'yearly':
+                $scope.find('.datepicker').each(function (i, val) {
+                    $(val).datetimepicker({
+                        format: "YYYY"
+                    });
+                });
+                break;
+            default:
+                break;
+        }
+        $(document).on('click', '.submit-process', function (e) {
             e.preventDefault();
-            var $this = $(this);
-            $this.find('input[name="SelectedKpis[]"]').each(function (i, val) {
+            var $form = $(this).closest('form');
+            $form.find('input[name="SelectedKpis[]"]').each(function (i, val) {
                 $(val).remove();
             })
             $('#selected-kpis li').each(function (i, val) {
                 var kpiId = $(val).data('kpi-id');
                 var $input = $('<input />');
-                $input.attr('name', 'SelectedKpis[]');
+                $input.attr('name', 'KpiIds[]');
                 $input.attr('type', 'hidden');
                 $input.val(kpiId);
-                $this.prepend($input);
+                console.log($input);
+                $form.prepend($input);
             });
-            $this.find('.periode-container').each(function (i, val) {
-                var $container = $(val);
-                //periodeType
-                var $periodeType = $container.find('.periode-type');
-                $periodeType.attr('name', 'Periodes[' + i + '].PeriodeType');
-                var $start = $container.find('.start');
-                $start.attr('name', 'Periodes[' + i + '].sStart');
-                var $end = $container.find('.end');
-                $end.attr('name', 'Periodes[' + i + '].sEnd');
-            })
-        })
+            $form.submit();
+        });
     });
 </script>

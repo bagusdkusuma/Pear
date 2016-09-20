@@ -1,0 +1,94 @@
+﻿@*@model DSLNG.PEAR.Web.ViewModels.KpiTransformation.KpiTransformationsViewModel*@
+<h2>Kpi Transformation Logs <small>TEst</small></h2>
+@Html.Partial("_MessageResponse")
+<table id="kpi-transformation-table" class="rgw-tbl-bp rgw-tbl table-transparent table table-responsive" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>Processing Date</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+</table>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#kpi-transformation-table").DataTable({
+                "bFilter": false,
+                "bPaginate": true,
+                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                "iDisplayLength": -1,
+                "bProcessing": true,
+                "bServerSide": true,
+                "order": [[ 1, "desc" ]],
+                "sServerMethod": "POST",
+                "sAjaxSource": '@Url.Action("LogGrid", "KpiTransformation", new { id = ViewBag.Id})',
+                "aoColumns": [
+                     {
+                         "orderable": false, "data": null, "defaultContent": '', "mRender": function (data, type, row, x) {
+                             return x.row + 1;
+                         }
+                     },
+                       {
+                           "orderable": true,
+                           "mDataProp": "ProcessingDate", "name": "ProcessingDate",
+                           render: function (data, type, row) {
+                               if (data == null) return "";
+                               return moment(new Date(data.match(/\d+/)[0] * 1)).format('DD MMM YYYY HH:mm');
+                           }
+                       },
+                        {
+                            "orderable": true,
+                            "mDataProp": "Start", "name": "Start",
+                            render: function (data, type, row) {
+                                if (data == null) return "";
+                                switch(parseInt(row.PeriodeType)){
+                                    case 4:
+                                        return moment(new Date(data.match(/\d+/)[0] * 1)).format('YYYY');
+                                    case 3:
+                                        return moment(new Date(data.match(/\d+/)[0] * 1)).format('MMM YYYY');
+                                    default:
+                                        return moment(new Date(data.match(/\d+/)[0] * 1)).format('DD MMM YYYY');
+                                }
+                            }
+                        },
+                         {
+                             "orderable": true,
+                             "mDataProp": "End", "name": "End",
+                             render: function (data, type, row) {
+                                 if (data == null) return "";
+                                 switch (parseInt(row.PeriodeType)) {
+                                     case 4:
+                                         return moment(new Date(data.match(/\d+/)[0] * 1)).format('YYYY');
+                                     case 3:
+                                         return moment(new Date(data.match(/\d+/)[0] * 1)).format('MMM YYYY');
+                                     default:
+                                         return moment(new Date(data.match(/\d+/)[0] * 1)).format('DD MMM YYYY');
+                                 }
+                             }
+                         },
+                         {
+                             "orderable": true,
+                             "mDataProp": "Status", "name": "Status",
+                             render: function (data, type, row) {
+                                 return row.StatusName;
+                             }
+                         },
+                       {
+                           "orderable": false,
+                           "data": null,
+                           "defaultContent": '',
+                           "mRender": function (data, type, row) {
+                               var processLink = '@Html.ActionLink("Details", "LogDetails", new { id = "_id_" })'.replace('_id_', data.Id);
+                               return processLink;
+                           }
+                       }
+                ]
+            });
+        })
+    </script>
+}

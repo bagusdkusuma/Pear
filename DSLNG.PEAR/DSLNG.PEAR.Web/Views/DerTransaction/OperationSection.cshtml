@@ -94,18 +94,18 @@
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">HHV JOB PMTS (btu/scf)</label></td>
+                <td><label class="control-label">min HHV JOB PMTS (btu/scf)</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 169, 48, "btu/scf", "1111")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 169, 48, "btu/scf", "1111", "yearly-target")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">HHV MGDP (btu/scf)</label></td>
+                <td><label class="control-label">min HHV MGDP (btu/scf)</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 174, 49, "btu/scf", "1050")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 174, 49, "btu/scf", "1050", "yearly-target")
                     </span>
                 </td>
             </tr>
@@ -163,80 +163,80 @@
             </tr>
         </table>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3" style="padding-left: 55px;">
         @*@{
                 var pmtsLayout = Model.DerLayoutItems.First(x => x.Row == 5 && x.Column == 0);
             }*@
-        <label class="control-label">Feed Gas JOB PMTS-CPP</label>
+        <label class="control-label lbl">Feed Gas JOB PMTS-CPP</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
-                <td><label class="control-label">24H (mmscfd)</label></td>
+                @* <td><label class="control-label">24H (mmscfd)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-sty">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 165, 55, "mmscfd")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">24H (tonnes)</label></td>
+                @* <td><label class="control-label">24H (tonnes)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-sty">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 168, 56, "tonnes")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">24H (btu/scf)</label></td>
+                @* <td><label class="control-label">24H (btu/scf)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-sty">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 169, 57, "btu/scf")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">24H (mmbtud)</label></td>
+                @* <td><label class="control-label">24H (mmbtud)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-sty">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 166, 58, "mmbtud")
                     </span>
                 </td>
             </tr>
         </table>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3" style="padding-left: 38px;">
         @*@{
                 var mgdpLayout = Model.DerLayoutItems.First(x => x.Row == 5 && x.Column == 1);
             }*@
-        <label class="control-label">Feed Gas MGDP-Donggi CPP</label>
+        <label class="control-label lbl">Feed Gas MGDP-Donggi CPP</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
-                <td><label class="control-label">24H (mmscfd)</label></td>
+                @* <td><label class="control-label">24H (mmscfd)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-sty">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 170, 59, "mmscfd")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">24H (tonnes)</label></td>
+                @* <td><label class="control-label">24H (tonnes)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-sty">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 173, 60, "tonnes")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">24H (btu/scf)</label></td>
+                @* <td><label class="control-label">24H (btu/scf)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-sty">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 174, 61, "btu/scf")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">24H (mmbtud)</label></td>
+                @* <td><label class="control-label">24H (mmbtud)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-sty">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 171, 62, "mmbtud")
                     </span>
                 </td>
@@ -245,36 +245,36 @@
         </table>
     </div>
     <div class="col-md-3">
-        <label class="control-label">Feed Gas MGDP-Matindok CPP</label>
+        <label class="control-label lbl">Feed Gas MGDP-Matindok CPP</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
-                <td><label class="control-label">24H (mmscfd)</label></td>
+                @* <td><label class="control-label">24H (mmscfd)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-sty">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 398, 63, "mmscfd")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">24H (tonnes)</label></td>
+                @* <td><label class="control-label">24H (tonnes)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-sty">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 401, 64, "tonnes")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">24H (btu/scf)</label></td>
+                @* <td><label class="control-label">24H (btu/scf)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-sty">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 402, 65, "btu/scf")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">24H (mmbutd)</label></td>
+                @* <td><label class="control-label">24H (mmbutd)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-sty">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 399, 66, "mmbtud")
                     </span>
                 </td>
@@ -312,29 +312,29 @@
             </tr>
         </table>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <label class="control-label">Commitments MGDP</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
-                <td><label class="control-label">DCQ (mmbtu)</label></td>
+                @* <td><label class="control-label">DCQ (mmbtu)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 171, 70, "mmbtu", "prev", "daily-target")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">MGN (bbtu)</label></td>
+                @* <td><label class="control-label">MGN (bbtu)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 171, 71, "bbtu", "prev", "monthly-target")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">ADP (Tbtu)</label></td>
+                @* <td><label class="control-label">ADP (Tbtu)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 171, 72, "Tbtu", "prev", "yearly-target")
                     </span>
                 </td>
@@ -346,7 +346,7 @@
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @*<strong style="color:red">ini dia nih remark jalan gak ya? oh belum kerana ini change</strong>*@
                         @Html.DisplayKpiInformationList(Model.KpiInformations, 11, 73, new List<SelectListItem>() {
                         new SelectListItem { Value = "Normal/Other", Text="Normal/Other" },
@@ -361,7 +361,7 @@
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 11, 74, "hours")
                     </span>
                 </td>
@@ -550,7 +550,7 @@
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">O2 (mol%)</label></td>
+                <td><label class="control-label">O2 <br> (mol%)</label></td>
                 <td>
                     <span class="col-sm-8">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 255, 95, "mol%")
@@ -575,62 +575,62 @@
             </tr>
         </table>
     </div>
-    <div class="col-md-3">
-        <label class="control-label">Enviro Quality-LP MR Compr</label>
+    <div class="col-md-3" style="padding-left: 55px;">
+        <label class="control-label lbl">Enviro Quality-LP MR Compr</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
-                <td><label class="control-label">NO2 (mg/Nm3)</label></td>
+                @* <td><label class="control-label">NO2 (mg/Nm3)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-sty">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 258, 98, "mg/Nm3")
                     </span>
                 </td>
             </tr>
             <tr></tr>
             <tr>
-                <td><label class="control-label">SO2 (mg/Nm3)</label></td>
+                @* <td><label class="control-label">SO2 (mg/Nm3)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-sty">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 259, 99, "mg/Nm3")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">CO (mg/Nm3)</label></td>
+                @* <td><label class="control-label">CO (mg/Nm3)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-sty">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 260, 100, "mg/Nm3")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">CO2 (mol%)</label></td>
+                @* <td><label class="control-label">CO2 (mol%)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-sty">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 261, 101, "mol%")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">O2 (mol%)</label></td>
+                @* <td><label class="control-label">O2 (mol%)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-sty">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 262, 102, "mol%")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">Opacity (%)</label></td>
+                @* <td><label class="control-label">Opacity (%)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-sty">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 263, 103, "%")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">Particulate (mg/Nm3)</label></td>
+                @* <td><label class="control-label">Particulate (mg/Nm3)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-sty">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 264, 104, "mg/Nm3")
                     </span>
                 </td>
@@ -638,61 +638,61 @@
         </table>
     </div>
     <div class="col-md-3">
-        <label class="control-label">Enviro Quality-HP MR Compr</label>
+        <label class="control-label lbl">Enviro Quality-HP MR Compr</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
-                <td><label class="control-label">NO2 (mg/Nm3)</label></td>
+                @* <td><label class="control-label">NO2 (mg/Nm3)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-sty">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 265, 105, "mg/Nm3")
                     </span>
                 </td>
             </tr>
             <tr></tr>
             <tr>
-                <td><label class="control-label">SO2 (mg/Nm3)</label></td>
+                @* <td><label class="control-label">SO2 (mg/Nm3)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-sty">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 266, 106, "mg/Nm3")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">CO (mg/Nm3)</label></td>
+                @* <td><label class="control-label">CO (mg/Nm3)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-sty">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 267, 107, "mg/Nm3")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">CO2 (mol%)</label></td>
+                @* <td><label class="control-label">CO2 (mol%)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-sty">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 268, 108, "mol%")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">O2 (mol%)</label></td>
+                @* <td><label class="control-label">O2 (mol%)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-sty">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 269, 109, "mol%")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">Opacity (%)</label></td>
+                @* <td><label class="control-label">Opacity (%)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-sty">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 270, 110, "%")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">Particulate (mg/Nm3)</label></td>
+                @* <td><label class="control-label">Particulate (mg/Nm3)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-sty">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 271, 111, "mg/Nm3")
                     </span>
                 </td>
@@ -789,45 +789,45 @@
             </tr>
         </table>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3" style="padding-left: 55px">
         <label class="control-label">Inventory-CDS Loading Tank</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
-                <td><label class="control-label">Level (%)</label></td>
+                @* <td><label class="control-label">Level (%)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 365, 121, "%")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">Vol (m3)</label></td>
+                @* <td><label class="control-label">Vol (m3)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 433, 122, "m3")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">Vol (tonnes)</label></td>
+                @* <td><label class="control-label">Vol (tonnes)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 366, 123, "tonnes")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">Vol (mmbtu)</label></td>
+                @* <td><label class="control-label">Vol (mmbtu)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 367, 124, "mmbtu")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">Days To Tank Top (Days)</label></td>
+                @* <td><label class="control-label">Days To Tank Top (Days)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-sty input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 369, 125, "Days")
                     </span>
                 </td>
@@ -838,41 +838,41 @@
         <label class="control-label">Inventory-CDS Buffer Tank</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
-                <td><label class="control-label">Level (%)</label></td>
+                @* <td><label class="control-label">Level (%)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 360, 126, "%")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">Vol (m3)</label></td>
+                @* <td><label class="control-label">Vol (m3)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 361, 127, "m3")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">Vol (tonnes)</label></td>
+                @* <td><label class="control-label">Vol (tonnes)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 362, 128, "tonnes")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">Vol (mmbtu)</label></td>
+                @* <td><label class="control-label">Vol (mmbtu)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 363, 129, "mmbtu")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">Days To Tank Top (Days)</label></td>
+                @* <td><label class="control-label">Days To Tank Top (Days)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-sty input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 364, 130, "Days")
                     </span>
                 </td>
@@ -1034,7 +1034,7 @@
         @*@{
                 var lngLoadedLayout = Model.DerLayoutItems.First(x => x.Row == 7 && x.Column == 1);
             }*@
-        <label class="control-label">LNG Loaded</label>
+        <label class="control-label" style="margin-bottom: 24px;">LNG Loaded</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 <td><label class="control-label">24H (m3)</label></td>
@@ -1065,12 +1065,12 @@
     <div class="col-md-7">
         <div class="row">
             <div class="col-md-4">
-                <label class="control-label">LNG Planned Cargo</label>
+                <label class="control-label" style="margin-bottom: 24px;">LNG Planned Cargo</label> 
                 <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
                     <tr>
                         <td><label class="control-label">Spot Cargo</label></td>
                         <td>
-                            <span class="col-sm-8">
+                            <span class="col-sm-8 input-custom">
                                 @Html.DisplayKpiInformationInput(Model.KpiInformations, 15, 149, "free-text", "prev")
                             </span>
                         </td>
@@ -1078,7 +1078,7 @@
                     <tr>
                         <td><label class="control-label">Kogas Cargo</label></td>
                         <td>
-                            <span class="col-sm-8">
+                            <span class="col-sm-8 input-custom">
                                 @Html.DisplayKpiInformationInput(Model.KpiInformations, 241, 150, "free-text", "prev")
                             </span>
                         </td>
@@ -1086,7 +1086,7 @@
                     <tr>
                         <td><label class="control-label">QE Cargo</label></td>
                         <td>
-                            <span class="col-sm-8">
+                            <span class="col-sm-8 input-custom">
                                 @Html.DisplayKpiInformationInput(Model.KpiInformations, 239, 151, "free-text", "prev")
                             </span>
                         </td>
@@ -1094,7 +1094,7 @@
                     <tr>
                         <td><label class="control-label">JER Cargo</label></td>
                         <td>
-                            <span class="col-sm-8">
+                            <span class="col-sm-8 input-custom">
                                 @Html.DisplayKpiInformationInput(Model.KpiInformations, 20, 152, "free-text", "prev")
                             </span>
                         </td>
@@ -1102,36 +1102,36 @@
                 </table>
             </div>
             <div class="col-md-4">
-                <label class="control-label">LNG Planned Cargo Monthly Target</label>
+                <label class="control-label lbl">LNG Planned Cargo Monthly Target</label>
                 <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
                     <tr>
-                        <td><label class="control-label">Spot Cargo</label></td>
+                        @* <td><label class="control-label">Spot Cargo</label></td> *@
                         <td>
-                            <span class="col-sm-8">
+                            <span class="col-sm-8 input-sty">
                                 @Html.DisplayKpiInformationInput(Model.KpiInformations, 15, 153, "free-text", "empty","monthly-target" )
                             </span>
                         </td>
                     </tr>
                     <tr>
-                        <td><label class="control-label">Kogas Cargo</label></td>
+                        @* <td><label class="control-label">Kogas Cargo</label></td> *@
                         <td>
-                            <span class="col-sm-8">
+                            <span class="col-sm-8 input-sty">
                                 @Html.DisplayKpiInformationInput(Model.KpiInformations, 241, 154, "free-text", "empty", "monthly-target")
                             </span>
                         </td>
                     </tr>
                     <tr>
-                        <td><label class="control-label">QE Cargo</label></td>
+                        @* <td><label class="control-label">QE Cargo</label></td> *@
                         <td>
-                            <span class="col-sm-8">
+                            <span class="col-sm-8 input-sty">
                                 @Html.DisplayKpiInformationInput(Model.KpiInformations, 239, 155, "free-text", "empty", "monthly-target")
                             </span>
                         </td>
                     </tr>
                     <tr>
-                        <td><label class="control-label">JER Cargo</label></td>
+                        @* <td><label class="control-label">JER Cargo</label></td> *@
                         <td>
-                            <span class="col-sm-8">
+                            <span class="col-sm-8 input-sty">
                                 @Html.DisplayKpiInformationInput(Model.KpiInformations, 20, 156, "free-text", "empty", "monthly-target")
                             </span>
                         </td>
@@ -1139,36 +1139,36 @@
                 </table>
             </div>
             <div class="col-md-4">
-                <label class="control-label">LNG Planned Cargo Yearly Target</label>
+                <label class="control-label lbl">LNG Planned Cargo Yearly Target</label>
                 <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
                     <tr>
-                        <td><label class="control-label">Spot Cargo</label></td>
+                        @* <td><label class="control-label">Spot Cargo</label></td> *@
                         <td>
-                            <span class="col-sm-8">
+                            <span class="col-sm-8 input-sty">
                                 @Html.DisplayKpiInformationInput(Model.KpiInformations, 15, 157, "free-text", "empty", "yearly-target")
                             </span>
                         </td>
                     </tr>
                     <tr>
-                        <td><label class="control-label">Kogas Cargo</label></td>
+                        @* <td><label class="control-label">Kogas Cargo</label></td> *@
                         <td>
-                            <span class="col-sm-8">
+                            <span class="col-sm-8 input-sty">
                                 @Html.DisplayKpiInformationInput(Model.KpiInformations, 241, 158, "free-text", "empty", "yearly-target")
                             </span>
                         </td>
                     </tr>
                     <tr>
-                        <td><label class="control-label">QE Cargo</label></td>
+                        @* <td><label class="control-label">QE Cargo</label></td> *@
                         <td>
-                            <span class="col-sm-8">
+                            <span class="col-sm-8 input-sty">
                                 @Html.DisplayKpiInformationInput(Model.KpiInformations, 239, 159, "free-text", "empty", "yearly-target")
                             </span>
                         </td>
                     </tr>
                     <tr>
-                        <td><label class="control-label">JER Cargo</label></td>
+                        @* <td><label class="control-label">JER Cargo</label></td> *@
                         <td>
-                            <span class="col-sm-8">
+                            <span class="col-sm-8 input-sty">
                                 @Html.DisplayKpiInformationInput(Model.KpiInformations, 20, 160, "free-text", "empty", "yearly-target")
                             </span>
                         </td>
@@ -1179,7 +1179,7 @@
       
     </div>
     <div class="col-md-2">
-        <label class="control-label">LNG Loaded Remark</label>
+        <label class="control-label " style="margin-bottom: 32px;">LNG Loaded Remark</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 <td>
@@ -1302,8 +1302,8 @@
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 <td>
-                    <span class="col-sm-8">
-                        @Html.DisplayHighlightDropdownList(Model.Highlights, 26, new List<SelectListItem> {
+                    <span class="col-sm-8 input-no-lbl">
+                        @Html.DisplayHighlightDropdownList(Model.Highlights, 69, new List<SelectListItem> {
                         new SelectListItem { Text = "Holding", Value = "Holding" },
                         new SelectListItem { Text = "Loading", Value = "Loading" },
                                  new SelectListItem { Text = "Shutdown", Value = "Shutdown" },

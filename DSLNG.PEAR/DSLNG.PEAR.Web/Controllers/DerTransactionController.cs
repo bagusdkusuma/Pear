@@ -81,7 +81,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     45,46,47,49,50,48,71,72,73,77,74,75,76,82,7,8,82,76,365,433,366,367,369,15,241,239,20,423
                 }, //actual KpiIds 
                 new int[] { 10, 9, 53, 12, 169, 174, 166, 171 }, //target KpiIds
-                new int[] { 19, 12, 26 }  //highlightTypeIds
+                new int[] { 19, 12, 69 }  //highlightTypeIds
                 ));
         }
 

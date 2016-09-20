@@ -7,6 +7,7 @@ namespace DSLNG.PEAR.Data.Enums
     {
         Sum,
         Average,
-        Custom
+        Custom,
+        NaN
     }
 }

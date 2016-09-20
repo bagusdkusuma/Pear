@@ -106,11 +106,15 @@
     <Compile Include="Interfaces\IDerTransactionService.cs" />
     <Compile Include="Interfaces\IFileRepositoryService.cs" />
     <Compile Include="Interfaces\IInputDataService.cs" />
+    <Compile Include="Interfaces\IKpiTransformationLogService.cs" />
+    <Compile Include="Interfaces\IKpiTransformationScheduleService.cs" />
     <Compile Include="Interfaces\IKpiTransformationService.cs" />
     <Compile Include="Interfaces\IMirConfigurationService.cs" />
     <Compile Include="Interfaces\IMirDataTableService.cs" />
     <Compile Include="Interfaces\IProcessBlueprintService.cs" />
     <Compile Include="Interfaces\IRolePrivilegeService.cs" />
+    <Compile Include="KpiTransformationLogService.cs" />
+    <Compile Include="KpiTransformationScheduleService.cs" />
     <Compile Include="KpiTransformationService.cs" />
     <Compile Include="MirConfigurationService.cs" />
     <Compile Include="MirDataTableService.cs" />
@@ -126,6 +130,10 @@
     <Compile Include="Requests\Files\SaveFileRepositoryRequest.cs" />
     <Compile Include="Requests\InputData\GetInputDatasRequest.cs" />
     <Compile Include="Requests\InputData\SaveOrUpdateInputDataRequest.cs" />
+    <Compile Include="Requests\KpiTransformationLog\GetKpiTransformationLogsRequest.cs" />
+    <Compile Include="Requests\KpiTransformationLog\SaveKpiTransformationLogRequest.cs" />
+    <Compile Include="Requests\KpiTransformationSchedule\GetKpiTransformationSchedulesRequest.cs" />
+    <Compile Include="Requests\KpiTransformationSchedule\SaveKpiTransformationScheduleRequest.cs" />
     <Compile Include="Requests\KpiTransformation\GetKpiTransformationsRequest.cs" />
     <Compile Include="Requests\KpiTransformation\SaveKpiTransformationRequest.cs" />
     <Compile Include="Requests\Menu\GetMenuPrivilegeRequest.cs" />
@@ -270,6 +278,10 @@
     <Compile Include="Responses\KpiInformation\GetKpiTransformationResponse.cs" />
     <Compile Include="Responses\KpiInformation\GetKpiTransformationsResponse.cs" />
     <Compile Include="Responses\KpiInformation\SaveKpiTransformationResponse.cs" />
+    <Compile Include="Responses\KpiTransformationLog\GetKpiTransformationLogsResponse.cs" />
+    <Compile Include="Responses\KpiTransformationLog\SaveKpiTransformationLogResponse.cs" />
+    <Compile Include="Responses\KpiTransformationSchedule\GetKpiTransformationSchedulesResponse.cs" />
+    <Compile Include="Responses\KpiTransformationSchedule\SaveKpiTransformationScheduleResponse.cs" />
     <Compile Include="Responses\Kpi\GetKpiDetailResponse.cs" />
     <Compile Include="Responses\Menu\GetMenuPrivilegeResponse.cs" />
     <Compile Include="Responses\MidtermFormulation\AddDefinitionResponse.cs" />

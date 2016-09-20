@@ -41,17 +41,17 @@
                 ACTUAL 24H
             </td>
             <td>
-                @Html.DisplayDerRemarkJson(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Remark, "daily")
+                @Html.DisplayPlantAvailablityIndicator(Model.KpiInformationViewModels.Single(x => x.Position == 0), Model.KpiInformationViewModels.Single(x => x.Position == 11),"asof")
                 @Html.DisplayCompleteDerValueForPlantAvailability(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value)
                 
             </td>
             <td>
-                @Html.DisplayDerRemarkJson(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Remark, "daily")
+               @Html.DisplayPlantThermalIndicator(Model.KpiInformationViewModels.Single(x => x.Position == 1), Model.KpiInformationViewModels.Single(x => x.Position == 12), "asof")
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "%")
                 
             </td>
             <td>
-                @Html.DisplayDerRemarkJson(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Remark, "daily")
+               @Html.DisplayMaterialBalanceIndicator(Model.KpiInformationViewModels.Single(x => x.Position == 2), Model.KpiInformationViewModels.Single(x => x.Position == 13), "asof")
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "%")
                 
             </td>
@@ -78,16 +78,16 @@
                 ACTUAL MTD
             </td>
             <td>
-                @Html.DisplayDerRemarkJson(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Remark, "mtd")
+                @Html.DisplayPlantAvailablityIndicator(Model.KpiInformationViewModels.Single(x => x.Position == 0), Model.KpiInformationViewModels.Single(x => x.Position == 11), "mtd")
                 @Html.DisplayCompleteDerValueForPlantAvailability(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Mtd)
             </td>
             <td>
-                @Html.DisplayDerRemarkJson(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Remark, "mtd")
+                @Html.DisplayPlantThermalIndicator(Model.KpiInformationViewModels.Single(x => x.Position == 1), Model.KpiInformationViewModels.Single(x => x.Position == 12), "mtd")
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "%")
                 
             </td>
             <td>
-                @Html.DisplayDerRemarkJson(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Remark, "mtd")
+               @Html.DisplayMaterialBalanceIndicator(Model.KpiInformationViewModels.Single(x => x.Position == 2), Model.KpiInformationViewModels.Single(x => x.Position == 13), "mtd")
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "%")
                 
             </td>
@@ -105,17 +105,17 @@
                 Actual-YTD
             </td>
             <td>
-                @Html.DisplayDerRemarkJson(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Remark, "ytd")
+                @Html.DisplayPlantAvailablityIndicator(Model.KpiInformationViewModels.Single(x => x.Position == 0), Model.KpiInformationViewModels.Single(x => x.Position == 11), "ytd")
                 @Html.DisplayCompleteDerValueForPlantAvailability(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Ytd)
                 
             </td>
             <td>
-                @Html.DisplayDerRemarkJson(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Remark, "ytd")
+                @Html.DisplayPlantThermalIndicator(Model.KpiInformationViewModels.Single(x => x.Position == 1), Model.KpiInformationViewModels.Single(x => x.Position == 12), "ytd")
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "%")
                 
             </td>
             <td>
-                @Html.DisplayDerRemarkJson(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Remark, "ytd")
+               @Html.DisplayMaterialBalanceIndicator(Model.KpiInformationViewModels.Single(x => x.Position == 2), Model.KpiInformationViewModels.Single(x => x.Position == 13), "ytd")
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "%")
                 
             </td>

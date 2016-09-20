@@ -85,19 +85,20 @@
                 @Html.DropDownListFor(model => model.MethodId, Model.MethodList, "Select Method", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.MethodId)
             </div>
+            <div class="form-group custom-formula">
+                @if (Model.MethodId == 1)
+                {
+                    @Html.LabelFor(model => model.CustomFormula, new { @class = "control-label" })<span>(*)</span>
+                    @Html.TextBoxFor(model => model.CustomFormula, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CustomFormula)
+                }
+            </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.YtdFormulaValue, new { @class = "control-label" })<span>(*)</span>
                 @Html.DropDownListFor(model => model.YtdFormulaValue, Model.YtdFormulaList, "Select Aggregation Formula", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.YtdFormulaValue)
             </div>
-            <div class="form-group custom-formula">
-                @if(Model.YtdFormula == DSLNG.PEAR.Web.ViewModels.Kpi.YtdFormula.Custom)
-                {
-                    @Html.LabelFor(model => model.CustomFormula, new { @class = "control-label"})<span>(*)</span>
-                    @Html.TextBoxFor(model => model.CustomFormula,  new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.CustomFormula)
-                }
-            </div>
+            
             <div class="form-group">
                 @Html.LabelFor(model => model.IsEconomic, new { @class = "control-label" })
                 @Html.EditorFor(model => model.IsEconomic, new { @class = "form-control" })
@@ -223,10 +224,10 @@
             }
         });
 
-        $('#YtdFormulaValue').change(function () {
+        $('#MethodId').change(function () {
             $this = $(this);
             var value = $this.val();
-            if (value == 'Custom') {
+            if (value == 1) {
                 var input = '<label class="control-label" for="custom-formula">Custom Formula (*)</label>'
                 input += '<input type="text" class="form-control" name="CustomFormula"/>'
                 $('.custom-formula').append(input);

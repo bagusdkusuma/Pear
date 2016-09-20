@@ -1,7 +1,4 @@
 ﻿@model DSLNG.PEAR.Services.Responses.Weather.GetWeatherResponse
-        
-<table class="table borderless weather">
-    <tbody>
     <tr rowspan="2">
         <td colspan="2">
             <label>Weather:</label>
@@ -13,33 +10,3 @@
             <img height="20"  src="@Url.Content("/content/img/select/" + Model.Value)">
         </td>
     </tr>
-    <tr>
-        <td>
-            <label>Ambient Temperature 0C&#176;:</label>
-        </td>
-        <td>
-            Low:@GetTemperature(Model.Temperature, 0)
-            <img height="20" src="@Url.Content("/content/images/suhu.png")" />
-        </td>
-        <td colspan="2" class="text-right">
-            High:@GetTemperature(Model.Temperature, 1)
-        </td>
-    </tr>
-    </tbody>
-</table>
-
-@helper GetTemperature(string text, int index)
-{
-    if (!string.IsNullOrEmpty(text))
-    {
-        var splitted = text.Split('-');
-        if (splitted.Length > 1)
-        {
-            <text>@splitted[index]</text>
-        }
-    }
-    else
-    {
-        <text>-</text>
-    }
-}

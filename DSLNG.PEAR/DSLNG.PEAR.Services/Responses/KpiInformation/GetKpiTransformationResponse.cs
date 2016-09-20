@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DSLNG.PEAR.Data.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ namespace DSLNG.PEAR.Services.Responses.KpiInformation
         }
         public int Id { get; set; }
         public string Name { get; set; }
+        public PeriodeType PeriodeType { get; set; }
         public ICollection<RoleGroupResponse> RoleGroups { get; set; }
         public ICollection<KpiResponse> Kpis { get; set; }
         public DateTime? LastProcessing { get; set; }
