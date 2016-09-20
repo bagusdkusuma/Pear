@@ -112,9 +112,15 @@
             $('input.der-kpi').keyup(function (e) {
                 var $this = $(this);
                 if (e.keyCode == 13) {
-                    console.log($this);
+                    var splitDate = currentDate.split('/');
+                    console.log(splitDate);
+                    if (splitDate.length == 1) {
+                        currentDate = "01/01/" + splitDate[0];
+                    } else if (splitDate.length == 2) {
+                        currentDate = splitDate[0] + "/01/" + splitDate[1];
+                    }
+                    console.log(currentDate);
                     var kpiId = $this.data('kpi-id');
-                    console.log(kpiId);
                     var type = $this.data('type');
                     var tabindex = $this.attr('tabindex');
                     var nextTabindex = parseInt(tabindex) + 1;

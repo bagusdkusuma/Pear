@@ -51,11 +51,13 @@ namespace DSLNG.PEAR.Services
             //achievement section
             var kpiIdsForActual = request.ActualKpiIds;
             var previousDate = request.Date.AddDays(-1);
+            var previousMonth = request.Date.AddMonths(-1);
+            var previousYear = request.Date.AddYears(-1);
             var achievements = DataContext.KpiAchievements.Include(x => x.Kpi)
                 .Where(x => kpiIdsForActual.Contains(x.Kpi.Id) &&
                 (((x.Periode == request.Date || x.Periode == previousDate) && x.PeriodeType == PeriodeType.Daily) ||
-                (x.PeriodeType == PeriodeType.Yearly && x.Periode.Year == request.Date.Year) ||
-                (x.PeriodeType == PeriodeType.Monthly && x.Periode.Month == request.Date.Month && x.Periode.Year == request.Date.Year))).ToList();
+                (x.PeriodeType == PeriodeType.Yearly && (x.Periode.Year == request.Date.Year || x.Periode.Year == previousYear.Year)) ||
+                (x.PeriodeType == PeriodeType.Monthly && (x.Periode.Month == request.Date.Month && x.Periode.Year == request.Date.Year || x.Periode.Month == previousMonth.Month && x.Periode.Year == previousMonth.Year)))).ToList();
             var kpiIdsForTarget = request.TargetKpiIds;
             var targets = DataContext.KpiTargets.Include(x => x.Kpi)
                .Where(x => kpiIdsForTarget.Contains(x.Kpi.Id) &&
@@ -95,7 +97,7 @@ namespace DSLNG.PEAR.Services
                             kpiInformation.DailyActual = new GetKpiInformationValuesResponse.KpiValue
                             {
                                 Date = actual.Periode,
-                                Value = actual.Value.HasValue? actual.Value: null,
+                                Value = actual.Value.HasValue ? actual.Value : null,
                                 Remark = actual.Remark,
                                 Id = actual.Id,
                                 Type = "now"
@@ -109,7 +111,7 @@ namespace DSLNG.PEAR.Services
                                 kpiInformation.DailyActual = new GetKpiInformationValuesResponse.KpiValue
                                 {
                                     Date = todayValue.Periode,
-                                    Value = todayValue.Value.HasValue? todayValue.Value: null,
+                                    Value = todayValue.Value.HasValue ? todayValue.Value : null,
                                     Remark = todayValue.Remark,
                                     Id = todayValue.Id,
                                     Type = "now"
@@ -122,7 +124,7 @@ namespace DSLNG.PEAR.Services
                                 kpiInformation.DailyActual = new GetKpiInformationValuesResponse.KpiValue
                                 {
                                     Date = actual.Periode,
-                                    Value = actual.Value.HasValue? actual.Value: null,
+                                    Value = actual.Value.HasValue ? actual.Value : null,
                                     Remark = actual.Remark,
                                     Type = "prev"
                                 };
@@ -130,30 +132,102 @@ namespace DSLNG.PEAR.Services
                         }
                     }
                 }
+
+                #region if monthly
                 if (actual.PeriodeType == PeriodeType.Monthly)
                 {
-                    kpiInformation.MonthlyActual = new GetKpiInformationValuesResponse.KpiValue
+                    if (kpiInformation.MonthlyActual == null)
                     {
-                        Date = actual.Periode,
-                        Value = actual.Value.HasValue? actual.Value: null,
-                        Remark = actual.Remark,
-                        Type = "now",
-                        Id = actual.Id
-                    };
-                }
-                if (actual.PeriodeType == PeriodeType.Yearly)
-                {
-                    kpiInformation.YearlyActual = new GetKpiInformationValuesResponse.KpiValue
-                    {
-                        Date = actual.Periode,
-                        Value = actual.Value.HasValue? actual.Value: null,
-                        Remark = actual.Remark,
-                        Type = "now",
-                        Id = actual.Id
-                    };
+                        var isCurrentMonthValue = actual.Periode.Month == request.Date.Month && actual.Periode.Year == request.Date.Year;
+                        if (isCurrentMonthValue)
+                        {
+                            kpiInformation.MonthlyActual = new GetKpiInformationValuesResponse.KpiValue
+                            {
+                                Date = actual.Periode,
+                                Value = actual.Value.HasValue ? actual.Value : null,
+                                Remark = actual.Remark,
+                                Type = "now",
+                                Id = actual.Id
+                            };
+                        }
+                        else
+                        {
+                            var currentMonthValue = achievements.FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode.Month == request.Date.Month && x.Periode.Year == request.Date.Year);
+                            if (currentMonthValue != null)
+                            {
+                                kpiInformation.MonthlyActual = new GetKpiInformationValuesResponse.KpiValue
+                                {
+                                    Date = currentMonthValue.Periode,
+                                    Value = currentMonthValue.Value.HasValue ? currentMonthValue.Value : null,
+                                    Remark = currentMonthValue.Remark,
+                                    Id = currentMonthValue.Id,
+                                    Type = "now"
+                                };
+                            }
+                            else
+                            {
+                                kpiInformation.MonthlyActual = new GetKpiInformationValuesResponse.KpiValue
+                                {
+                                    Date = actual.Periode,
+                                    Value = actual.Value.HasValue ? actual.Value : null,
+                                    Remark = actual.Remark,
+                                    Type = "prev"
+                                };
+                            }
+                        }
+                    }
                 }
 
+                #endregion
+
+                #region if yearly
+                if (actual.PeriodeType == PeriodeType.Yearly)
+                {
+                    if (kpiInformation.YearlyActual == null)
+                    {
+                        var isCurrentYearValue = actual.Periode.Year == request.Date.Year;
+                        if (isCurrentYearValue)
+                        {
+                            kpiInformation.YearlyActual = new GetKpiInformationValuesResponse.KpiValue
+                            {
+                                Date = actual.Periode,
+                                Value = actual.Value.HasValue ? actual.Value : null,
+                                Remark = actual.Remark,
+                                Type = "now",
+                                Id = actual.Id
+                            };
+                        }
+                        else
+                        {
+                            var currentYearValue = achievements.FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode.Year == request.Date.Year);
+                            if (currentYearValue != null)
+                            {
+                                kpiInformation.YearlyActual = new GetKpiInformationValuesResponse.KpiValue
+                                {
+                                    Date = currentYearValue.Periode,
+                                    Value = currentYearValue.Value.HasValue ? currentYearValue.Value : null,
+                                    Remark = currentYearValue.Remark,
+                                    Id = currentYearValue.Id,
+                                    Type = "now"
+                                };
+                            }
+                            else
+                            {
+                                kpiInformation.YearlyActual = new GetKpiInformationValuesResponse.KpiValue
+                                {
+                                    Date = actual.Periode,
+                                    Value = actual.Value.HasValue ? actual.Value : null,
+                                    Remark = actual.Remark,
+                                    Type = "prev"
+                                };
+                            }
+                        }
+                    }
+
+                }
+                #endregion
             }
+
             foreach (var kpiId in kpiIdsForTarget)
             {
                 var kpiInformation = response.KpiInformations.FirstOrDefault(x => x.KpiId == kpiId);
@@ -188,7 +262,7 @@ namespace DSLNG.PEAR.Services
                             kpiInformation.DailyTarget = new GetKpiInformationValuesResponse.KpiValue
                             {
                                 Date = target.Periode,
-                                Value = target.Value.HasValue? target.Value: null,
+                                Value = target.Value.HasValue ? target.Value : null,
                                 Remark = target.Remark,
                                 Type = "now",
                                 Id = target.Id
@@ -202,7 +276,7 @@ namespace DSLNG.PEAR.Services
                                 kpiInformation.DailyTarget = new GetKpiInformationValuesResponse.KpiValue
                                 {
                                     Date = todayValue.Periode,
-                                    Value = todayValue.Value.HasValue? todayValue.Value: null,
+                                    Value = todayValue.Value.HasValue ? todayValue.Value : null,
                                     Remark = todayValue.Remark,
                                     Type = "now",
                                     Id = todayValue.Id
@@ -215,7 +289,7 @@ namespace DSLNG.PEAR.Services
                                 kpiInformation.DailyTarget = new GetKpiInformationValuesResponse.KpiValue
                                 {
                                     Date = target.Periode,
-                                    Value = target.Value.HasValue? target.Value: null,
+                                    Value = target.Value.HasValue ? target.Value : null,
                                     Remark = target.Remark,
                                     Type = "prev",
                                     Id = target.Id
@@ -229,7 +303,7 @@ namespace DSLNG.PEAR.Services
                     kpiInformation.MonthlyTarget = new GetKpiInformationValuesResponse.KpiValue
                     {
                         Date = target.Periode,
-                        Value = target.Value.HasValue? target.Value: null,
+                        Value = target.Value.HasValue ? target.Value : null,
                         Remark = target.Remark,
                         Type = "now",
                         Id = target.Id
@@ -240,7 +314,7 @@ namespace DSLNG.PEAR.Services
                     kpiInformation.YearlyTarget = new GetKpiInformationValuesResponse.KpiValue
                     {
                         Date = target.Periode,
-                        Value = target.Value.HasValue? target.Value: null,
+                        Value = target.Value.HasValue ? target.Value : null,
                         Remark = target.Remark,
                         Type = "now",
                         Id = target.Id
