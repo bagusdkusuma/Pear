@@ -49,6 +49,18 @@
                     </span>
                 </td>
             </tr>
+            <tr>
+                <td><label class="control-label">Indicator</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayHighlightDropdownList(Model.Highlights, 60, new List<SelectListItem> {
+                   new SelectListItem {Value = "-1", Text = "-1" },
+                   new SelectListItem {Value = "0", Text = "0" },
+                   new SelectListItem {Value = "1", Text = "1" }
+               }, 184, "prev")
+                    </span>
+                </td>
+            </tr>
         </table>
     </div>
     <div class="col-md-6">
@@ -93,6 +105,18 @@
                 <td>
                     <span class="col-sm-8">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 374, 189, "text", "target is zero", "daily-actual", "remark")
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">Indicator</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayHighlightDropdownList(Model.Highlights, 61, new List<SelectListItem> {
+                   new SelectListItem {Value = "-1", Text = "-1" },
+                   new SelectListItem {Value = "0", Text = "0" },
+                   new SelectListItem {Value = "1", Text = "1" }
+               }, 189, "prev")
                     </span>
                 </td>
             </tr>

@@ -48,18 +48,18 @@
                 <td><label class="control-label">Weather</label></td>
                 <td>
                     <!--234-->
-                        @Html.DisplayWeatherList(Model.Weather, 222)
+                    @Html.DisplayWeatherList(Model.Weather, 222)
                 </td>
             </tr>
             <tr>
                 <td><label class="control-label">Sea Condition and Jetty Status</label></td>
                 <td>
-                   @Html.DisplayWaveList(Model.Wave, new List<SelectListItem> {
+                    @Html.DisplayWaveList(Model.Wave, new List<SelectListItem> {
                   new SelectListItem { Value="Calm wave & Accessible",Text="Calm wave & Accessible" },
                    new SelectListItem { Value="Slight wave & Accessible",Text="Slight wave & Accessible" },
                     new SelectListItem { Value="Moderate wave and Caution",Text="Moderate wave and Caution" },
                      new SelectListItem { Value="Rough wave & Closed Acces",Text="Rough wave & Closed Acces" }
-              },"tide",223)
+              }, "tide", 223)
                 </td>
             </tr>
             <tr>
@@ -85,7 +85,7 @@
                 <td><label class="control-label">Period</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayWeeklyAlarmInput(Model.Highlights,80,226,"free text","period")
+                        @Html.DisplayWeeklyAlarmInput(Model.Highlights, 80, 226, "free text", "period")
                     </span>
                 </td>
             </tr>
@@ -110,6 +110,18 @@
                 <td>
                     <span class="col-sm-8">
                         @Html.DisplayWeeklyAlarmInput(Model.Highlights, 80, 229, "free text", "remark")
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">Indicator</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayHighlightDropdownList(Model.Highlights, 59, new List<SelectListItem> {
+                   new SelectListItem {Value = "-1", Text = "-1" },
+                   new SelectListItem {Value = "0", Text = "0" },
+                   new SelectListItem {Value = "1", Text = "1" }
+               }, 229, "prev")
                     </span>
                 </td>
             </tr>
@@ -226,7 +238,7 @@
                 <td><label class="control-label">DAFWC target</label></td>
                 <td>
                     <span class="col-sm-8">
-                       @Html.DisplayKpiInformationInput(Model.KpiInformations, 177, 242, "number", "empty", "yearly-target")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 177, 242, "number", "empty", "yearly-target")
                     </span>
                 </td>
             </tr>
@@ -312,7 +324,7 @@
                 <td>
                     <!--254-->
                     <span class="col-sm-8">
-                       @Html.DisplayKpiInformationInput(Model.KpiInformations, 435, 252, "number")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 435, 252, "number")
                     </span>
                 </td>
             </tr>
@@ -328,7 +340,7 @@
                 <td><label class="control-label">Theft/Criminal</label></td>
                 <td>
                     <span class="col-sm-8">
-                       @Html.DisplayKpiInformationInput(Model.KpiInformations, 4, 254, "number")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 4, 254, "number")
                     </span>
                 </td>
             </tr>
@@ -336,7 +348,7 @@
                 <td><label class="control-label">Violence</label></td>
                 <td>
                     <span class="col-sm-8">
-                       @Html.DisplayKpiInformationInput(Model.KpiInformations, 359, 255, "number")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 359, 255, "number")
                     </span>
                 </td>
             </tr>
@@ -344,7 +356,7 @@
                 <td><label class="control-label">Prop Dest/Vandalism</label></td>
                 <td>
                     <span class="col-sm-8">
-                       @Html.DisplayKpiInformationInput(Model.KpiInformations, 286, 256, "number")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 286, 256, "number")
                     </span>
                 </td>
             </tr>
@@ -368,7 +380,7 @@
             <tr>
                 <td>
                     <!--260-->
-                    @Html.DisplayHighlightDropdownList(Model.Highlights,7,Model.AlertOptions,258,"prev")
+                    @Html.DisplayHighlightDropdownList(Model.Highlights, 7, Model.AlertOptions, 258, "prev")
                 </td>
             </tr>
         </table>
