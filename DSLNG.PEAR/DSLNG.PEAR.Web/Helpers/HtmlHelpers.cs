@@ -431,6 +431,21 @@ namespace DSLNG.PEAR.Web.Helpers
             return val;
         }
 
+        public static MvcHtmlString DisplaySaftyIndicator(this HtmlHelper htmlHelper, string valueYtd, string valueTarget) {
+            if (string.IsNullOrEmpty(valueYtd) || string.IsNullOrEmpty(valueTarget)) {
+                return new MvcHtmlString(string.Empty);
+            }
+            var ytd = double.Parse(valueYtd);
+            var target = double.Parse(valueTarget);
+            if (ytd > target)
+            {
+                return new MvcHtmlString("<span class='indicator absolute'><i class='fa fa-times-circle'></i></span>");
+            }
+            else {
+                return new MvcHtmlString("<span class='indicator absolute'><i class='fa fa-circle'></i></span>");
+            }
+        }
+
         private static string ParseToNumber(string val, int number = 2)
         {
             double x;
