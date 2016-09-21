@@ -50,39 +50,43 @@ namespace DSLNG.PEAR.Web.Scheduler
                                     if (relatedKpiActual.IsSuccess && relatedKpiActual.Value.HasValue)
                                     {
                                         kpiTransformed = Regex.Replace(kpiTransformed, "k" + g.Value, relatedKpiActual.Value.ToString(), RegexOptions.IgnoreCase);
-                                        if (kpi.YtdFormula == YtdFormula.Custom && relatedKpiActual.Mtd.HasValue && relatedKpiActual.Ytd.HasValue && relatedKpiActual.Itd.HasValue)
+                                        if (kpi.YtdFormula == YtdFormula.Custom )
                                         {
-                                            switch (kpiTransformationSchedule.PeriodeType) {
-                                                case PeriodeType.Daily:
-                                                    mtdTransformed = Regex.Replace(mtdTransformed, "k" + g.Value, relatedKpiActual.Mtd.ToString(), RegexOptions.IgnoreCase);
-                                                    ytdTransformed = Regex.Replace(ytdTransformed, "k" + g.Value, relatedKpiActual.Ytd.ToString(), RegexOptions.IgnoreCase);
-                                                    itdTransformed = Regex.Replace(itdTransformed, "k" + g.Value, relatedKpiActual.Itd.ToString(), RegexOptions.IgnoreCase);
-                                                    break;
-                                                case PeriodeType.Monthly:
-                                                    ytdTransformed = Regex.Replace(ytdTransformed, "k" + g.Value, relatedKpiActual.Ytd.ToString(), RegexOptions.IgnoreCase);
-                                                    itdTransformed = Regex.Replace(itdTransformed, "k" + g.Value, relatedKpiActual.Itd.ToString(), RegexOptions.IgnoreCase);
-                                                    break;
-                                                case PeriodeType.Yearly:
-                                                    itdTransformed = Regex.Replace(itdTransformed, "k" + g.Value, relatedKpiActual.Itd.ToString(), RegexOptions.IgnoreCase);
-                                                    break;
-                                                default:
-                                                    break;
+                                            if (relatedKpiActual.Mtd.HasValue && relatedKpiActual.Ytd.HasValue && relatedKpiActual.Itd.HasValue)
+                                            {
+                                                switch (kpiTransformationSchedule.PeriodeType)
+                                                {
+                                                    case PeriodeType.Daily:
+                                                        mtdTransformed = Regex.Replace(mtdTransformed, "k" + g.Value, relatedKpiActual.Mtd.ToString(), RegexOptions.IgnoreCase);
+                                                        ytdTransformed = Regex.Replace(ytdTransformed, "k" + g.Value, relatedKpiActual.Ytd.ToString(), RegexOptions.IgnoreCase);
+                                                        itdTransformed = Regex.Replace(itdTransformed, "k" + g.Value, relatedKpiActual.Itd.ToString(), RegexOptions.IgnoreCase);
+                                                        break;
+                                                    case PeriodeType.Monthly:
+                                                        ytdTransformed = Regex.Replace(ytdTransformed, "k" + g.Value, relatedKpiActual.Ytd.ToString(), RegexOptions.IgnoreCase);
+                                                        itdTransformed = Regex.Replace(itdTransformed, "k" + g.Value, relatedKpiActual.Itd.ToString(), RegexOptions.IgnoreCase);
+                                                        break;
+                                                    case PeriodeType.Yearly:
+                                                        itdTransformed = Regex.Replace(itdTransformed, "k" + g.Value, relatedKpiActual.Itd.ToString(), RegexOptions.IgnoreCase);
+                                                        break;
+                                                    default:
+                                                        break;
+                                                }
                                             }
-                                        }
-                                        else
-                                        {
+                                            else {
                                                 //log here for dependency error
                                                 var logRequest = new SaveKpiTransformationLogRequest
-                                            {
-                                                KpiId = kpi.Id,
-                                                KpiTransformationScheduleId = kpiTransformationSchedule.Id,
-                                                Periode = date,
-                                                Status = KpiTransformationStatus.Error,
-                                                Notes = "The aggregation for <strong>" + relatedKpiActual.Kpi.Name + " (" + relatedKpiActual.Kpi.Measurement + ")</strong> has not been proceed"
-                                            };
-                                            logService.Save(logRequest);
-                                            meetRequirements = false;
-                                            complete = false;
+                                                {
+                                                    KpiId = kpi.Id,
+                                                    KpiTransformationScheduleId = kpiTransformationSchedule.Id,
+                                                    Periode = date,
+                                                    Status = KpiTransformationStatus.Error,
+                                                    Notes = "The aggregation for <strong>" + relatedKpiActual.Kpi.Name + " (" + relatedKpiActual.Kpi.Measurement + ")</strong> has not been proceed"
+                                                };
+                                                logService.Save(logRequest);
+                                                meetRequirements = false;
+                                                complete = false;
+                                            }
+                                            
                                         }
                                     }
                                     else
