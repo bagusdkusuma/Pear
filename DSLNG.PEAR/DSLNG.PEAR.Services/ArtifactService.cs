@@ -357,6 +357,32 @@ namespace DSLNG.PEAR.Services
                                .Select(x => x.Average(y => (double?)y.Value ?? 0)).FirstOrDefault();
                         }
                         break;
+                    default: //nan or custom:
+                        if (request.ValueAxis == ValueAxis.KpiTarget)
+                        {
+                            seriesResponse.y = DataContext.KpiTargets.Where(x => x.PeriodeType == request.PeriodeType
+                                && x.Periode >= start && x.Periode <= end && x.Kpi.Id == kpi.Id)
+                                .GroupBy(x => x.Kpi.Id)
+                                .Select(x => x.Sum(y => (double?)y.Value ?? 0)).FirstOrDefault();
+                        }
+                        else if (request.ValueAxis == ValueAxis.KpiActual)
+                        {
+                            seriesResponse.y = SumSeries(request.ValueInformation, request.PeriodeType, start, end, kpi.Id);
+                        }
+                        else if (request.ValueAxis == ValueAxis.KpiEconomic)
+                        {
+                            var scenarioId = 0;
+                            var scenario = DataContext.Scenarios.FirstOrDefault(x => x.IsDashboard == true);
+                            if (scenario != null)
+                            {
+                                scenarioId = scenario.Id;
+                            }
+                            seriesResponse.y = DataContext.KeyOperationDatas.Where(x => x.PeriodeType == request.PeriodeType
+                               && x.Periode >= start && x.Periode <= end && x.Kpi.Id == kpi.Id && x.Scenario.Id == scenarioId)
+                               .GroupBy(x => x.Kpi.Id)
+                               .Select(x => x.Sum(y => (double?)y.Value ?? 0)).FirstOrDefault();
+                        }
+                        break;
                 }
                 #endregion
 
