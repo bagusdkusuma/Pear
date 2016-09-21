@@ -189,6 +189,7 @@ using DSLNG.PEAR.Web.ViewModels.KpiTransformation;
 using DSLNG.PEAR.Services.Requests.KpiTransformation;
 using DSLNG.PEAR.Services.Responses.KpiInformation;
 using DSLNG.PEAR.Services.Requests.KpiTransformationSchedule;
+using DSLNG.PEAR.Web.ViewModels.DerLoadingSchedule;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -772,6 +773,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
                .ForMember(x => x.KpiIds, o => o.MapFrom(s => s.Kpis.Select(x => x.Id).ToList()));
             Mapper.CreateMap<GetKpiTransformationResponse.KpiResponse, KpiTransformationViewModel.KpiViewModel>();
             Mapper.CreateMap<KpiTransformationScheduleViewModel, SaveKpiTransformationScheduleRequest>();
+            Mapper.CreateMap<GetVesselSchedulesResponse.VesselScheduleResponse, LoadingSchedulesViewModel.LoadingScheduleViewModel>();
             base.Configure();
         }
 

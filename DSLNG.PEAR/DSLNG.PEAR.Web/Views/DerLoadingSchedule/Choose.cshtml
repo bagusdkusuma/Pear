@@ -1,0 +1,33 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.DerLoadingSchedule.LoadingSchedulesViewModel
+
+<div class="panel panel-default der-panel">
+    <table class="der table-bordered">
+        <tr>
+            <th style="width:15px"></th>
+            <th style="width:150px">Next Loading Schedule</th>
+            <th style="width:150px">Vessel (Capacity)</th>
+            <th style="width:150px">Customer</th>
+            <th style="width:150px">ETA</th>
+            <th style="width:150px">ETD</th>
+            <th style="width:20px">Cargo#</th>
+            <th>Remarks</th>
+        </tr>
+        @foreach (var nls in Model.Schedules)
+        {
+            <tr>
+                <td><input type="checkbox" class="check-this" /></td>
+                <td>
+                    <a href="/VesselSchedule/Manage/@nls.Id">@nls.VesselType - @nls.SalesType - @nls.Type</a>
+                </td>
+                <td>@nls.Vessel (@nls.Capacity @nls.Measurement)</td>
+                <td>@nls.Buyer</td>
+                <td>@nls.ETA.ToString("dd-MM-yyyy")</td>
+                <td>@nls.ETD.ToString("dd-MM-yyyy")</td>
+                <td>@nls.Cargo</td>
+                <td>@nls.RemarkDate.ToString("dd-MM-yyyy");@nls.Remark</td>
+            </tr>
+        }
+    </table>
+</div>
+
+
