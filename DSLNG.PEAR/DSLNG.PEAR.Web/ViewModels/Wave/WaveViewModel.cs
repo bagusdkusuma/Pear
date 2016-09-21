@@ -83,7 +83,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Wave
         public int ValueId { get; set; }
         public IList<SelectListItem> Values { get; set; }
         [Required]
-        [Display(Name = "Tide / Wave at Jetty")]
+        [Display(Name = "Sea Condition and Jetty Status")]
         public string Tide { get; set; }
         [Display(Name = "Wind Speed")]
         public string Speed { get; set; }
