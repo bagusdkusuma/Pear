@@ -738,10 +738,10 @@ Number.prototype.format = function (n, x) {
         var maxSeries;
         var values = [];
         var displayName = {
-            'MB-MTD-LNG': 'LNG',
-            'MB-MTD-CDS': 'CDS',
-            'MB-MTD-FUEL-Refrg': 'Fuel-Refgr',
-            'MB-MTD-LOSS' : 'Loss'
+            'LNG/Feed yield': 'LNG',
+            'CDS/Feed Yield': 'CDS',
+            'Refrigerant Yield': 'Fuel-Refgr',
+            'Flare Loss' : 'Loss'
         }
         for (var i in data.Pie.SeriesResponses) {
             
