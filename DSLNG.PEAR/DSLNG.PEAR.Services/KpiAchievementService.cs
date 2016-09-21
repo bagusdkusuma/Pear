@@ -166,6 +166,30 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
+        public UpdateKpiAchievementItemResponse UpdateKpiAchievementItem(int kpiId, PeriodeType periodeType, DateTime periode, double? value, int userId) {
+            var user = DataContext.Users.First(x => x.Id == userId);
+            var kpiAchievement = DataContext.KpiAchievements.FirstOrDefault(x => x.PeriodeType == periodeType && x.Periode == periode && x.Kpi.Id == kpiId);
+            if (kpiAchievement == null)
+            {
+                var kpi = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == kpiId);
+                if (kpi == null)
+                {
+                    DataContext.Kpis.Attach(kpi);
+                }
+                kpiAchievement = new KpiAchievement { Periode = periode, PeriodeType = periodeType, Value = value, CreatedBy = user, UpdatedBy = user };
+                kpiAchievement.Kpi = kpi;
+                DataContext.KpiAchievements.Add(kpiAchievement);
+            }
+            else {
+                kpiAchievement.Value = value;
+            }
+            DataContext.SaveChanges();
+            var response = new UpdateKpiAchievementItemResponse();
+            response.Id = kpiAchievement.Id;
+            response.IsSuccess = true;
+            response.Message = "KPI Achievement item has been updated successfully";
+            return response;
+        }
 
         public AllKpiAchievementsResponse GetAllKpiAchievements()
         {
@@ -786,6 +810,7 @@ namespace DSLNG.PEAR.Services
 
                 return new GetKpiAchievementResponse
                 {
+                    Id = result.Id,
                     Value = (result != null) ? result.Value : null,
                     Mtd = (result != null) ? result.Mtd : null,
                     Ytd = (result != null) ? result.Ytd : null,

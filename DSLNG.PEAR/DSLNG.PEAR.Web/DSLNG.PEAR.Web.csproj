@@ -824,6 +824,7 @@
     <Compile Include="Controllers\ArtifactCloneController.cs" />
     <Compile Include="Controllers\AssumptionDataController.cs" />
     <Compile Include="Controllers\DerImageController.cs" />
+    <Compile Include="Controllers\DerLoadingScheduleController.cs" />
     <Compile Include="Controllers\DerTransactionController.cs" />
     <Compile Include="Controllers\InputDataController.cs" />
     <Compile Include="Controllers\KpiTransformationController.cs" />
@@ -864,6 +865,7 @@
     <Compile Include="ViewModels\DerLayout\LayoutType\DerLayoutMultiAxisViewModel.cs" />
     <Compile Include="ViewModels\DerLayout\LayoutType\DerLayoutLineViewModel.cs" />
     <Compile Include="ViewModels\DerLayout\SaveLayoutItemViewModel.cs" />
+    <Compile Include="ViewModels\DerLoadingSchedule\LoadingSchedulesViewModel.cs" />
     <Compile Include="ViewModels\DerTransaction\DerValuesViewModel.cs" />
     <Compile Include="ViewModels\DerTransaction\UpdateKpiViewModel.cs" />
     <Compile Include="ViewModels\Der\DerConfigViewModel.cs" />
@@ -1151,6 +1153,7 @@
     <Content Include="Views\DerLayout\LayoutType\_Temperature.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_Temperature.Edit.cshtml" />
     <Content Include="Views\Der\Display\_Temperature.cshtml" />
+    <Content Include="Views\DerLoadingSchedule\Choose.cshtml" />
     <None Include="Views\Der\Index.cshtml.old" />
     <Content Include="Views\Der\_ManageItem.cshtml" />
     <Content Include="Views\Der\_DialogManageItem.cshtml" />

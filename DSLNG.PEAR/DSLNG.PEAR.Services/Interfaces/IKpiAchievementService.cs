@@ -18,6 +18,7 @@ namespace DSLNG.PEAR.Services.Interfaces
 
         GetAchievementsResponse GetAchievements(GetKpiAchievementsConfigurationRequest request);
         UpdateKpiAchievementItemResponse UpdateKpiAchievementItem(UpdateKpiAchievementItemRequest request);
+        UpdateKpiAchievementItemResponse UpdateKpiAchievementItem(int kpiId, PeriodeType periodeType, DateTime periode, double? value, int userId);
         GetKpiAchievementResponse GetKpiAchievementByValue(GetKpiAchievementRequestByValue request);
         BaseResponse BatchUpdateKpiAchievements(BatchUpdateKpiAchievementRequest request);
         GetKpiAchievementResponse GetKpiAchievement(int kpiId, DateTime date, RangeFilter rangeFilter);
