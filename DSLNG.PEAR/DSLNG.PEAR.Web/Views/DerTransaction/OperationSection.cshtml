@@ -34,6 +34,9 @@
                 </td>
             </tr>
             <tr>
+                <td><br /></td>
+            </tr>
+            <tr>
                 <td><label class="control-label">Refrigerant Storage (C2 & C3) (tonnes)</label></td>
                 <td>
                     <span class="col-sm-8">
@@ -54,6 +57,26 @@
                 <td>
                     <span class="col-sm-8">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 99, 43, "oC")
+                    </span>
+                </td>
+            </tr>
+
+            <tr>
+                <td><br /></td>
+            </tr>
+            <tr>
+                <td><label class="control-label">min HHV JOB PMTS (btu/scf)</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 169, 48, "btu/scf", "1111", "yearly-target")
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">min HHV MGDP (btu/scf)</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 174, 49, "btu/scf", "1050", "yearly-target")
                     </span>
                 </td>
             </tr>
@@ -78,6 +101,9 @@
                 </td>
             </tr>
             <tr>
+                <td><br /></td>
+            </tr>
+            <tr>
                 <td><label class="control-label">MCHE Rundown (ton/d)</label></td>
                 <td>
                     <span class="col-sm-8">
@@ -92,23 +118,7 @@
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 423, 47, "oC")
                     </span>
                 </td>
-            </tr>
-            <tr>
-                <td><label class="control-label">min HHV JOB PMTS (btu/scf)</label></td>
-                <td>
-                    <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 169, 48, "btu/scf", "1111", "yearly-target")
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td><label class="control-label">min HHV MGDP (btu/scf)</label></td>
-                <td>
-                    <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 174, 49, "btu/scf", "1050", "yearly-target")
-                    </span>
-                </td>
-            </tr>
+            </tr>          
         </table>
     </div>
 </div>
