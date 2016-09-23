@@ -196,10 +196,9 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 viewModel.RelationModels.Add(new ViewModels.Kpi.KpiRelationModel { KpiId = 0, Method = "" });
             }
-
+            viewModel.YtdFormulaValue = viewModel.YtdFormula.ToString();
             viewModel.Icon = response.Icon;
             viewModel.Icons = Directory.EnumerateFiles(Server.MapPath(PathConstant.KpiPath)).ToList();
-
             return View(viewModel);
         }
 
@@ -209,7 +208,10 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.YtdFormula = (ViewModels.Kpi.YtdFormula)Enum.Parse(typeof(Data.Enums.YtdFormula), viewModel.YtdFormulaValue);
             viewModel.Periode = (ViewModels.Kpi.PeriodeType)Enum.Parse(typeof(Data.Enums.PeriodeType), viewModel.PeriodeValue);
             viewModel.Code = string.Format("{0}{1}{2}{3}", viewModel.CodeFromPillar, viewModel.CodeFromLevel, viewModel.Code, viewModel.CodeFromRoleGroup);
-
+            if(viewModel.YtdFormula != ViewModels.Kpi.YtdFormula.Custom)
+            {
+                viewModel.CustomFormula = null;
+            }
             var request = viewModel.MapTo<UpdateKpiRequest>();
 
             if (!ModelState.IsValid)
