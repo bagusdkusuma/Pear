@@ -11,18 +11,31 @@
         </td>
         <td style="text-align: right;width:35.8%">
             <ul class="list-unstyled">
-                <li>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value) <span style="display: inline-block;min-width: 68px;font-weight:bold">Mass Gathering</span></li>
-                <li>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value) <span style="display: inline-block;min-width: 68px;font-weight:bold">Road Blockade</span></li>
-                <li>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value) <span style="display: inline-block;min-width: 68px;font-weight:bold">Traffic Accident</span></li>
+                <li value="@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value)">@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value) <span style="display: inline-block;min-width: 68px;font-weight:bold">Mass Gathering</span></li>
+                <li value="@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value)">@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value) <span style="display: inline-block;min-width: 68px;font-weight:bold">Road Blockade</span></li>
+                <li value="@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value)">@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value) <span style="display: inline-block;min-width: 68px;font-weight:bold">Traffic Accident</span></li>
             </ul>
         </td>
         <td style="text-align: right;width:59.2%">
             <ul class="list-unstyled">
-                <li>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value) <span style="display: inline-block;min-width: 129px;font-weight:bold">Theft/Criminal</span></li>
-                <li>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value) <span style="display: inline-block;min-width: 129px;font-weight:bold">Violence</span></li>
-                <li>@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Value) <span style="display: inline-block;min-width: 129px;font-weight:bold">Prop Destruction/Vandalism</span></li>
+                <li value="@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value)">@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value) <span style="display: inline-block;min-width: 129px;font-weight:bold">Theft/Criminal</span></li>
+                <li value="@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value)">@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value) <span style="display: inline-block;min-width: 129px;font-weight:bold">Violence</span></li>
+                <li value="@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Value)">@Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Value) <span style="display: inline-block;min-width: 129px;font-weight:bold">Prop Destruction/Vandalism</span></li>
             </ul>
         </td>
     </tr>
 </table>
-
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.security-incident').find('li').map(function () {
+            var $this = $(this);
+            var nilai = $this.attr('value');
+            if (nilai == '0' || nilai == undefined) {
+                $this.find('span').css('color', 'black')
+            } else {
+                $this.find('span').css('color', 'red')
+            }
+            console.log($this.find('span'));
+        });
+    });
+</script>

@@ -1174,8 +1174,6 @@
                                 }
 
                             } else if (data.type === "highlight" && that.hasClass('highlight-json-market-tone')) {
-                                console.log(data);
-                                //that.replaceWith(data.view);
                                 switch (data.view.trim()) {
                                     case 'Bullish':
                                         that.replaceWith("<span class='comparison'><i class='fa fa-arrow-up' style='color:green'></i></span>");
@@ -1192,13 +1190,7 @@
                                 }
                             } else if (data.type === "highlight" && that.hasClass('highlight-json-ict-infra')) {
                                 
-                               // var pattern = /[^{}]*(?=\})/g;
-                                //var parsed = "{" + (data.view.match(pattern)[0]) + "}";
-                                //console.log('ict infra');
-                                //console.log(data.view)
-                                //console.log(parsed);
                                 var js = JSON.parse(data.view);
-                                //console.log(js);
                                 var transform = [];
                                 transform['a'] = getIconForIctInfraFirstColumn(js.a);
                                 transform['b'] = getIconForIctInfraSecondColumn(js.b);
@@ -1210,16 +1202,7 @@
                                 that.replaceWith(html);
                             }
                             else if (data.type === "highlight" && that.hasClass('highlight-json-gs-fm')) {
-                                //console.log("highlight-json-gs-fm ================");
-                                //console.log(data);
-                                //console.log(data.view);
-                                //console.log(data);
-                                //var pattern = /[^{}]*(?=\})/g;
-                                //var parsed = "{" + (data.view.match(pattern)[0]) + "}";
-                                //console.log('gs fm');
-                                //console.log(parsed);
                                 var js = JSON.parse(data.view);
-                                //console.log(js);
                                 var transform = [];
                                 transform['a'] = getIconForGsFm(js.a);
                                 transform['b'] = getIconForGsFm(js.b);
@@ -1240,6 +1223,21 @@
                             else if (data.type == 'weather' || data.type == 'temperature') {
                                 that.replaceWith(data.view);
                             }
+                            //else if (data.type === 'security') {
+                            //    var html = data.view;
+                            //    $(html).find('li').map(function () {
+                            //        var $this = $(this);
+                            //        var nilai = $this.attr('value');
+                            //        if (nilai == '0' || nilai == undefined) {
+                            //            $this.find('span').css('color', 'red')
+                            //        } else {
+                            //            $this.find('span').css('color', 'black')
+                            //        }
+                            //        console.log($this.find('span'));
+                            //    });
+                            //    console.log(html);
+                            //    that.replaceWith(html);
+                            //}
                             else {
                                 that.html(data.view);
                             }
