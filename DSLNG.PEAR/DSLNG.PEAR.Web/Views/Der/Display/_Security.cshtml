@@ -30,12 +30,11 @@
         $('.security-incident').find('li').map(function () {
             var $this = $(this);
             var nilai = $this.attr('value');
-            if (nilai == '0' || nilai == undefined) {
+            if (nilai == '0' || nilai == undefined || nilai == 'N/A') {
                 $this.find('span').css('color', 'black')
             } else {
                 $this.find('span').css('color', 'red')
             }
-            console.log($this.find('span'));
         });
     });
 </script>
