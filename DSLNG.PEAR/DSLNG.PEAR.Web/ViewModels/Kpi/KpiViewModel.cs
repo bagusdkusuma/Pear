@@ -41,7 +41,8 @@ namespace DSLNG.PEAR.Web.ViewModels.Kpi
         {
             Sum,
             Average,
-            Custom
+            Custom,
+            NaN
         }
 
         public enum FormatInput
