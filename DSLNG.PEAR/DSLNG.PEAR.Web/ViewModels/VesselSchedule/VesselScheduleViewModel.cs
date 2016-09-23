@@ -32,6 +32,8 @@ namespace DSLNG.PEAR.Web.ViewModels.VesselSchedule
         public int BuyerId { get; set; }
         public string BuyerName { get; set; }
         public IList<SelectListItem> SalesTypes { get; set; }
+        public IList<SelectListItem> Buyers { get; set; }
+        public IList<SelectListItem> Vessels { get; set; }
         [DataType(DataType.MultilineText)]
         public string Location { get; set; }
         [Display(Name = "Sales Type")]

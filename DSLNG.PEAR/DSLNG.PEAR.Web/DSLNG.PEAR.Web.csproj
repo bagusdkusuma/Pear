@@ -1154,6 +1154,7 @@
     <Content Include="Views\DerLayout\LayoutType\_Temperature.Edit.cshtml" />
     <Content Include="Views\Der\Display\_Temperature.cshtml" />
     <Content Include="Views\DerLoadingSchedule\Choose.cshtml" />
+    <Content Include="Views\DerLoadingSchedule\Create.cshtml" />
     <None Include="Views\Der\Index.cshtml.old" />
     <Content Include="Views\Der\_ManageItem.cshtml" />
     <Content Include="Views\Der\_DialogManageItem.cshtml" />

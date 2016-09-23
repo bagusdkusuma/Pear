@@ -1,0 +1,83 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.VesselSchedule.VesselScheduleViewModel
+
+<style>
+    .vessel-schedule-save label{width:100px}
+</style>
+<div class="vessel-schedule-save">
+    <div class="row">
+        @using (Html.BeginForm("Create","DerLoadingSchedule",FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="col-md-12">
+                <div>@Html.ValidationSummary(true)</div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-inline whitebox">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.VesselId)
+                        @Html.DropDownListFor(model => model.VesselId, Model.Vessels, "Select Vessel", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.VesselId)
+                    </div>
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.ETA)
+                        @Html.TextBoxFor(model => model.ETA, new { @class = "form-control datepicker" })
+                        @Html.ValidationMessageFor(model => model.ETA)
+                    </div>
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.ETD)
+                        @Html.TextBoxFor(model => model.ETD, new { @class = "form-control datepicker" })
+                        @Html.ValidationMessageFor(model => model.ETD)
+                    </div>
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.BuyerId)
+                        @Html.DropDownListFor(model => model.BuyerId, Model.Buyers, "Select Buyer", new { @class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.BuyerId)
+                    </div>
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.Location)
+                        @Html.TextAreaFor(model => model.Location, 5, 50, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Location)
+                    </div>
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.SalesType)
+                        @Html.DropDownListFor(model => model.SalesType, Model.SalesTypes, "Select Sales Type", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.SalesType)
+                    </div>
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.Type)
+                        @Html.DropDownListFor(model => model.Type, Model.Types, "Select Type", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Type)
+                    </div>
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.Cargo)
+                        @Html.TextBoxFor(model => model.Cargo, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Cargo)
+                    </div>
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.IsActive)
+                        @Html.CheckBoxFor(model => model.IsActive, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.IsActive)
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 artifact-designer-btns">
+                <button type="submit" class="btn btn-primary btn-lg save"><span class="fa fa-floppy-o"></span>Save</button>
+                <a href="@Url.Action("Index")" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+            </div>
+        }
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('.datepicker').datetimepicker({
+            format: "MM/DD/YYYY"
+        });
+        $('.save').click(function (e) {
+            e.preventDefault();
+            $form = $(this).closest('form');
+            $.post($form.attr('action'), $form.serialize(), function (data) {
+                console.log(data);
+            })
+        })
+    });
+</script>

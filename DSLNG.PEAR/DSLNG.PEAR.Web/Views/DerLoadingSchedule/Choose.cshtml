@@ -1,7 +1,9 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.DerLoadingSchedule.LoadingSchedulesViewModel
-
+<div class="add-button-wrapper">
+   <btn class="btn btn-primary choose-schedule">Choose</btn>
+</div>
 <div class="panel panel-default der-panel">
-    <table class="der table-bordered">
+    <table class="der table-bordered nls-schedules">
         <tr>
             <th style="width:15px"></th>
             <th style="width:150px">Next Loading Schedule</th>
@@ -15,7 +17,7 @@
         @foreach (var nls in Model.Schedules)
         {
             <tr>
-                <td><input type="checkbox" class="check-this" /></td>
+                <td><input type="checkbox" class="check-this" /><input type="hidden" class="id" name="id" value="@nls.Id" /></td>
                 <td>
                     <a href="/VesselSchedule/Manage/@nls.Id">@nls.VesselType - @nls.SalesType - @nls.Type</a>
                 </td>
@@ -30,4 +32,25 @@
     </table>
 </div>
 
-
+<script>
+    $(document).ready(function () {
+        $(document).on('click', '.check-this', function (e) {
+            var $this = $(this);
+            if ($this.is(':checked')) {
+                $this.closest('tr').addClass('choosen');
+            } else {
+                $this.closest('tr').removeClass('choosen');
+            }
+        });
+        $(document).on('click', '.choose-schedule', function(e){
+            var choosenRow = $('.nls-schedules').find('tr.choosen').clone(true);
+            choosenRow.each(function (i, val) {
+                $val = $(val);
+                $val.find('td:first-child').hide();
+                $val.append('<td><button class="btn btn-default remove-schedule">remove</button></td>');
+            })
+            $('.choosen-schedules').append(choosenRow);
+            $('#loadingScheduleModal').modal('hide')
+        });
+    })
+</script>
