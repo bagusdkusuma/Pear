@@ -134,19 +134,19 @@
                 @Model.DateInfo.Year Target
             </td>
             <td>
-                @Html.DisplayCompleteDerValueForPlantAvailability(Model.KpiInformationViewModels.Single(x => x.Position == 11).DerItemValue.Value)
+                @Html.DisplayCompleteDerValueForPlantAvailability(Model.KpiInformationViewModels.Single(x => x.Position == 11).DerItemValue.Ytd)
 
             </td>
             <td>
-                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 12).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 11).KpiMeasurement, "%")
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 12).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 11).KpiMeasurement, "%")
                 
             </td>
             <td>
-                &lt; @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 13).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 12).KpiMeasurement, "%")
+                &lt; @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 13).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 12).KpiMeasurement, "%")
                 
             </td>
             <td>
-                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 14).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 13).KpiMeasurement, "%")
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 14).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 13).KpiMeasurement, "%")
                 
             </td>
             <td>
