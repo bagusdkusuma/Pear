@@ -1174,15 +1174,16 @@
                                 }
 
                             } else if (data.type === "highlight" && that.hasClass('highlight-json-market-tone')) {
-
-                                switch (data.view.toLowerCase()) {
-                                    case 'holding':
+                                console.log(data);
+                                //that.replaceWith(data.view);
+                                switch (data.view.trim()) {
+                                    case 'Bullish':
                                         that.replaceWith("<span class='comparison'><i class='fa fa-arrow-up' style='color:green'></i></span>");
                                         break;
-                                    case 'loading':
+                                    case 'Mixed':
                                         that.replaceWith("<span class='comparison'><i class='fa fa-minus' style='color:orange'></i></span>");
                                         break;
-                                    case 'shutdown':
+                                    case 'Bearish':
                                         that.replaceWith("<span class='comparison'><i class='fa fa-arrow-down' style='color:red'></i></span>");
                                         break;
                                     default:
@@ -1193,11 +1194,11 @@
                                 
                                // var pattern = /[^{}]*(?=\})/g;
                                 //var parsed = "{" + (data.view.match(pattern)[0]) + "}";
-                                console.log('ict infra');
+                                //console.log('ict infra');
                                 //console.log(data.view)
                                 //console.log(parsed);
                                 var js = JSON.parse(data.view);
-                                console.log(js);
+                                //console.log(js);
                                 var transform = [];
                                 transform['a'] = getIconForIctInfraFirstColumn(js.a);
                                 transform['b'] = getIconForIctInfraSecondColumn(js.b);
@@ -1209,16 +1210,16 @@
                                 that.replaceWith(html);
                             }
                             else if (data.type === "highlight" && that.hasClass('highlight-json-gs-fm')) {
-                                console.log("highlight-json-gs-fm ================");
-                                console.log(data);
-                                console.log(data.view);
+                                //console.log("highlight-json-gs-fm ================");
+                                //console.log(data);
+                                //console.log(data.view);
                                 //console.log(data);
                                 //var pattern = /[^{}]*(?=\})/g;
                                 //var parsed = "{" + (data.view.match(pattern)[0]) + "}";
                                 //console.log('gs fm');
                                 //console.log(parsed);
                                 var js = JSON.parse(data.view);
-                                console.log(js);
+                                //console.log(js);
                                 var transform = [];
                                 transform['a'] = getIconForGsFm(js.a);
                                 transform['b'] = getIconForGsFm(js.b);
