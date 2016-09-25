@@ -14,7 +14,7 @@
     <thead>
         <tr>
             <td colspan="6" style="border: 1px solid #444;border-bottom: none;border-left: none;position:initial;" id="weekly-maintenance-backlog-highlight-container">                
-                WEEKLY MAINTENANCE BACKLOG @Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Remark
+                WEEKLY MAINTENANCE BACKLOG (as of @Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Remark )
             </td>
         </tr>
     </thead>
@@ -61,7 +61,8 @@
                 &lt;@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiMeasurement, "hr")
             </td>
             <td>
-                @Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Remark
+                @Html.DisplayDerRemarkJson(@Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Remark,"daily")
+                
             </td>
         </tr>
     </tbody>
