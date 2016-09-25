@@ -494,7 +494,7 @@ namespace DSLNG.PEAR.Web.Helpers
                 case "0":
                     return new MvcHtmlString("<span class='indicator absolute'><i class='fa fa-exclamation-circle'></i></span>");
                 default:
-                    return new MvcHtmlString(string.Empty);
+                    return new MvcHtmlString(s);
             }
         }
 

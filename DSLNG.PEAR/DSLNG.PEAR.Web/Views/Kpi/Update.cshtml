@@ -231,13 +231,11 @@
             var value = $this.val();
             if (value == 1) {
                 var input = '<label class="control-label" for="custom-formula">Custom Formula (*)</label>'
-                input += '<input type="text" class="form-control" name="CustomFormula"/>'
+                input += '<input type="text" class="form-control" name="CustomFormula" value="@Model.CustomFormula"/>'
                 $('.custom-formula').append(input);
-                $('#YtdFormulaValue').val('Custom');
             }
             else {
                 $('.custom-formula').empty();
-                $('#YtdFormulaValue').val('');
             }
         });
 
@@ -247,7 +245,7 @@
             if (value == 'Custom') {
                 $('#MethodId').val(1);
                 var input = '<label class="control-label" for="custom-formula">Custom Formula (*)</label>'
-                input += '<input type="text" class="form-control" name="CustomFormula"/>'
+                input += '<input type="text" class="form-control" name="CustomFormula" value="@Model.CustomFormula"/>'
                 $('.custom-formula').append(input);
             } else {
                 $('#MethodId').val(3);
