@@ -1007,6 +1007,11 @@ namespace DSLNG.PEAR.Services
                 {
                     oldArtifact = DataContext.DerArtifacts.Local.FirstOrDefault(x => x.Id == oldArtifact.Id);
                 }
+                
+                foreach(var plot in oldArtifact.Plots.ToList())
+                {
+                    DataContext.DerArtifactPlots.Remove(plot);
+                }
 
                 DataContext.DerArtifacts.Remove(oldArtifact);
 
@@ -1502,6 +1507,7 @@ namespace DSLNG.PEAR.Services
                     oldArtifact = DataContext.DerArtifacts.Local.FirstOrDefault(x => x.Id == oldArtifact.Id);
                 }
 
+                if(oldArtifact.Tank != null) DataContext.DerArtifactTanks.Remove(oldArtifact.Tank);
                 DataContext.DerArtifacts.Remove(oldArtifact);
 
                 DataContext.SaveChanges();

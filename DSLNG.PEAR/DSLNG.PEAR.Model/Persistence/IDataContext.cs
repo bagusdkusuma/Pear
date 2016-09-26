@@ -75,6 +75,7 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<DerArtifact> DerArtifacts { get; set; }
         IDbSet<DerKpiInformation> DerKpiInformations { get; set; }
         IDbSet<DerArtifactChart> DerArtifactCharts { get; set; }
+        IDbSet<DerArtifactPlot> DerArtifactPlots { get; set; }
         IDbSet<DerArtifactSerie> DerArtifactSeries { get; set; }
         IDbSet<DerArtifactTank> DerArtifactTanks { get; set; }
         IDbSet<DerOriginalData> DerOriginalDatas { get; set; }
