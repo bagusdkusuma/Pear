@@ -1158,6 +1158,8 @@
     <Content Include="Views\DerLoadingSchedule\AddVessel.cshtml" />
     <Content Include="Views\DerLoadingSchedule\AddBuyer.cshtml" />
     <Content Include="Views\DerLoadingSchedule\Edit.cshtml" />
+    <Content Include="Views\DerLoadingSchedule\Remarks.cshtml" />
+    <Content Include="Views\DerLoadingSchedule\ManageRemark.cshtml" />
     <None Include="Views\Der\Index.cshtml.old" />
     <Content Include="Views\Der\_ManageItem.cshtml" />
     <Content Include="Views\Der\_DialogManageItem.cshtml" />

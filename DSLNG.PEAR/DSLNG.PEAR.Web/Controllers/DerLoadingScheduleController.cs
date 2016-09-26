@@ -15,6 +15,10 @@ using System.Data.SqlClient;
 using DSLNG.PEAR.Services.Requests.Measurement;
 using DSLNG.PEAR.Web.ViewModels.Vessel;
 using DSLNG.PEAR.Web.ViewModels.Buyer;
+using DSLNG.PEAR.Services.Requests.NLS;
+using DSLNG.PEAR.Services.Requests.HighlightOrder;
+using DSLNG.PEAR.Web.ViewModels.NLS;
+using System.Globalization;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -26,23 +30,35 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IBuyerService _buyerService;
         private readonly ISelectService _selectService;
         private readonly IMeasurementService _measurementService;
+        private readonly INLSService _nlsService;
+        private readonly IHighlightOrderService _highlightOrderService;
 
-        public DerLoadingScheduleController(IVesselScheduleService vesselScheduleService, IVesselService vesselService, IBuyerService buyerService, ISelectService selectService, IMeasurementService measurementService)
+        public DerLoadingScheduleController(IVesselScheduleService vesselScheduleService, 
+            IVesselService vesselService, 
+            IBuyerService buyerService, 
+            ISelectService selectService, 
+            IMeasurementService measurementService,
+            INLSService nlsService,
+            IHighlightOrderService highlightOrderService)
         {
             _vesselScheduleService = vesselScheduleService;
             _vesselService = vesselService;
             _buyerService = buyerService;
             _selectService = selectService;
             _measurementService = measurementService;
+            _nlsService = nlsService;
+            _highlightOrderService = highlightOrderService;
         }
         // GET: DerLoadingSchedule
-        public ActionResult Choose()
+        public ActionResult Choose(string date)
         {
+            var remarkDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
             var vesselSchedules = _vesselScheduleService.GetVesselSchedules(new GetVesselSchedulesRequest
             {
                 allActiveList = true,
                 Skip = 0,
                 Take = 20,
+                RemarkDate = remarkDate
             });
             var viewModel = new LoadingSchedulesViewModel();
             viewModel.Schedules = vesselSchedules.VesselSchedules.MapTo<LoadingSchedulesViewModel.LoadingScheduleViewModel>();
@@ -206,5 +222,40 @@ namespace DSLNG.PEAR.Web.Controllers
                 return Json(new { IsSuccess = false, Message = errorList });
             }
         }
+
+        public ActionResult Remarks(int id) {
+            var nlsList = _nlsService.GetNLSList(new GetNLSListRequest { VesselScheduleId = id });
+            var staticHighlightResp = _highlightOrderService.GetStaticHighlights(new GetStaticHighlightOrdersRequest { Take = -1 });
+            ViewBag.IsAllowedToManage = staticHighlightResp.HighlightOrders.First(x => x.Name == "Vessel Schedule").RoleGroupIds.Contains(UserProfile().RoleId);
+            ViewBag.VesselScheduleId = id;
+            return PartialView(nlsList.NLSList.MapTo<NLSViewModel>());
+        }
+
+        public ActionResult ManageRemark() {
+
+            var viewModel = new NLSViewModel();
+            var id = string.IsNullOrEmpty(Request.QueryString["nlsId"]) ? 0 : int.Parse(Request.QueryString["nlsId"]);
+            if (id != 0)
+            {
+                var nls = _nlsService.GetNLS(new GetNLSRequest { Id = id });
+                viewModel = nls.MapTo<NLSViewModel>();
+            }
+            else
+            {
+                var vesselScheduleId = int.Parse(Request.QueryString["vsId"]);
+                viewModel.VesselScheduleId = vesselScheduleId;
+                viewModel.VesselName = _vesselScheduleService.GetVesselSchedule(new GetVesselScheduleRequest { Id = vesselScheduleId }).VesselName;
+            }
+            return PartialView(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult ManageRemark(NLSViewModel viewModel)
+        {
+            var req = viewModel.MapTo<SaveNLSRequest>();
+            var response = _nlsService.SaveNLS(req);
+            return Json(response);
+        }
+
     }
 }

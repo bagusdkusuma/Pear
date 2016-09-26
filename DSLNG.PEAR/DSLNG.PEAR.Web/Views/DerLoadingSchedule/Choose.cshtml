@@ -27,7 +27,15 @@
                 <td>@nls.ETA.ToString("dd-MM-yyyy")</td>
                 <td>@nls.ETD.ToString("dd-MM-yyyy")</td>
                 <td>@nls.Cargo</td>
-                <td>@nls.RemarkDate.ToString("dd-MM-yyyy");@nls.Remark</td>
+                @if (nls.RemarkDate.HasValue)
+                {
+                    <td>@nls.RemarkDate.Value.ToString("dd-MM-yyyy");@nls.Remark</td>
+                }
+                else
+                {
+                    <td></td>
+                }
+
             </tr>
         }
     </table>

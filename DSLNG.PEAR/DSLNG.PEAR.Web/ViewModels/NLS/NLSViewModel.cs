@@ -31,6 +31,18 @@ namespace DSLNG.PEAR.Web.ViewModels.NLS
                 this._createdAtDisplay = value;
             }
         }
+        public DateTime? DerTransactionDate { get; set; }
+        public string DerTransactionDateInput
+        {
+            get
+            {
+                return this.DerTransactionDate.HasValue ? this.DerTransactionDate.Value.ToString("MM/dd/yyyy") : null;
+            }
+            set
+            {
+                this.DerTransactionDate = DateTime.ParseExact(value, "MM/dd/yyyy", CultureInfo.InvariantCulture); ;
+            }
+        }
 
         [DataType(DataType.MultilineText)]
         public string Remark { get; set; }

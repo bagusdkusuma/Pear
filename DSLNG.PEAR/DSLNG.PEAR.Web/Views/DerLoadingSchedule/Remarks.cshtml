@@ -1,0 +1,44 @@
+﻿@model IEnumerable<DSLNG.PEAR.Web.ViewModels.NLS.NLSViewModel>
+
+    <div class="panel panel-default der-panel">
+        <table class="der table-bordered">
+            <tr>
+                <th style="width: 50px">
+                    @Html.DisplayNameFor(model => model.CreatedAtDisplay)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Remark)
+                </th>
+                @if (ViewBag.IsAllowedToManage)
+                {
+                    <th>
+                        Action
+                    </th>
+                }
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedAtDisplay)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Remark)
+                    </td>
+                    @if (ViewBag.IsAllowedToManage)
+                    {
+                        <td>
+                            @Html.ActionLink("Edit", "ManageRemark", "DerLoadingSchedule", new { nlsId = item.Id }, new { @class = "manage-remark" })
+                        </td>
+                    }
+                </tr>
+            }
+
+        </table>
+    </div>
+    @if (ViewBag.IsAllowedToManage)
+    {
+        @Html.ActionLink("Add New", "ManageRemark", "DerLoadingSchedule", new { vsId = ViewBag.VesselScheduleId }, new { @class = "btn btn-primary manage-remark" })
+    }
+

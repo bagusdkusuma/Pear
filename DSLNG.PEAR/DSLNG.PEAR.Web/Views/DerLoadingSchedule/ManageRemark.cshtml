@@ -1,0 +1,81 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.NLS.NLSViewModel
+<div class="nls-save">
+    @using (Html.BeginForm("ManageRemark", "DerLoadingSchedule", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-md-12">
+                <div><ul class="validation-summary" style="color:red"></ul></div>
+                <div><ul class="success-message" style="color:green"></ul></div>
+                @Html.HiddenFor(x => x.Id)
+                @Html.Hidden("DerTransactionDateInput", "",new { id = "DerTransactionDateInput"})
+            </div>
+            <div class="col-md-12">
+                <div class="form-inline whitebox">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.VesselScheduleId)
+                        @Html.DropDownListFor(model => model.VesselScheduleId, new List<SelectListItem> { new SelectListItem { Value = Model.VesselScheduleId.ToString(), Text = Model.VesselName } }, new { @class = "form-control", data_url = Url.Action("VesselScheduleList"), style = "width:200px" })
+                        @Html.ValidationMessageFor(model => model.VesselScheduleId)
+                    </div>
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.CreatedAtDisplay)
+                        @Html.TextBoxFor(model => model.CreatedAtDisplay, new { @class = "form-control datepicker" })
+                        @Html.ValidationMessageFor(model => model.CreatedAtDisplay)
+                    </div>
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.Remark)
+                        @Html.TextAreaFor(model => model.Remark, 5, 100, new { @class = "form-control highlight-message" })
+                        @Html.ValidationMessageFor(model => model.Remark)
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 artifact-designer-btns">
+                <button type="submit" class="btn btn-primary btn-lg save-remark"><span class="fa fa-floppy-o"></span>Save</button>
+                <a href="javascript:;" class="btn btn-primary btn-lg close-modal"><span class="fa fa-times"></span>Cancel</a>
+            </div>
+        </div>
+    }
+</div>
+<script>
+    $(document).ready(function () {
+        if ($("#CreatedAtDisplay").val() == "") {
+            $("#CreatedAtDisplay").val($('#currentDate').val());
+        }
+        $('#DerTransactionDateInput').val($('#currentDate').val());
+        $('.datepicker').datetimepicker({
+            format: "MM/DD/YYYY"
+        });
+        $('.save-remark').click(function (e) {
+            e.preventDefault();
+            $form = $(this).closest('form');
+            $.post($form.attr('action'), $form.serialize(), function (data) {
+                if (data.IsSuccess) {
+                    $('.success-message').html('<p>You haven been successfully saved new remark</p>');
+                    setTimeout(function () {
+                        $('#loadingScheduleModal').modal('hide');
+                        console.log(window.remarkColumn);
+                        if (data.RemarkDate != null) {
+                            var remarksButton = window.remarkColumn.find('.see-remarks');
+                            console.log(window.remarkColumn.html());
+                            if (remarksButton.length) {
+                                var cloneButton = remarksButton.clone(true);
+                                window.remarkColumn.html(data.RemarkDate + ';' + data.Remark + ' | ');
+                                window.remarkColumn.append(cloneButton);
+                            }
+                        }
+                        
+                    }, 1000);
+
+                } else {
+                    if (data.Message.length) {
+                        $valSummary = $('.validation-summary');
+                        $valSummary.html('');
+                        for (var i in data.message) {
+                            $valSummary.append('<li>' + data.message[i] + '</li>');
+                        }
+                    }
+                }
+            })
+        })
+    });
+</script>

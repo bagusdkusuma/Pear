@@ -80,11 +80,20 @@ namespace DSLNG.PEAR.Services
                     }
                 }
                 DataContext.SaveChanges();
-                return new SaveNLSResponse
+                var response = new SaveNLSResponse
                 {
                     IsSuccess = true,
                     Message = "Next Loading Schedule has been saved"
                 };
+                if (request.DerTransactionDate.HasValue) {
+                    var nls = DataContext.NextLoadingSchedules.Where(x => x.VesselSchedule.Id == request.VesselScheduleId && x.CreatedAt <= request.DerTransactionDate)
+                   .OrderByDescending(x => x.CreatedAt).FirstOrDefault();
+                    if (nls != null) {
+                        response.RemarkDate = nls.CreatedAt.ToString("dd-MM-yyyy");
+                        response.Remark = nls.Remark;
+                    }
+                }
+                return response;
             }
             catch (InvalidOperationException e)
             {

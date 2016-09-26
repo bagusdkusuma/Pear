@@ -54,6 +54,29 @@ namespace DSLNG.PEAR.Services
                         Measurement = x.Vessel.Measurement.Name,
                         Capacity = x.Vessel.Capacity
                     });
+                if (request.RemarkDate.HasValue) {
+                    query = DataContext.VesselSchedules
+                    .Include(x => x.Buyer)
+                    .Include(x => x.Vessel)
+                    .Include(x => x.Vessel.Measurement)
+                    .Select(x => new
+                    {
+                        id = x.Id,
+                        NextLoadingSchedules = x.NextLoadingSchedules.Where(y => y.CreatedAt <= request.RemarkDate.Value).OrderByDescending(y => y.CreatedAt).Take(1).ToList(),
+                        Buyer = x.Buyer,
+                        Vessel = x.Vessel,
+                        ETA = x.ETA,
+                        ETD = x.ETD,
+                        Location = x.Location,
+                        SalesType = x.SalesType,
+                        Type = x.Type,
+                        VesselType = x.Vessel.Type,
+                        IsActive = x.IsActive,
+                        Cargo = x.Cargo,
+                        Measurement = x.Vessel.Measurement.Name,
+                        Capacity = x.Vessel.Capacity
+                    });
+                }
                 return new GetVesselSchedulesResponse
                 {
                     VesselSchedules = query.Where(x => x.IsActive == true).Select(
@@ -137,13 +160,17 @@ namespace DSLNG.PEAR.Services
                     .Include(x => x.Vessel.Measurement)
                     .Single(x => x.Id == vesselSchedule.Id);
                 vesselSchedule.MapPropertiesToInstance(response);
-                var latestRemark = DataContext.NextLoadingSchedules.Where(x => x.VesselSchedule.Id == vesselSchedule.Id)
-                    .OrderByDescending(x => x.CreatedAt)
-                    .FirstOrDefault();
-                if (latestRemark != null) {
-                    response.RemarkDate = latestRemark.CreatedAt.ToString("dd-MM-yyyy");
-                    response.Remark = latestRemark.Remark;
+                if (request.DerTransactionDate.HasValue) {
+                    var latestRemark = DataContext.NextLoadingSchedules.Where(x => x.VesselSchedule.Id == vesselSchedule.Id && x.CreatedAt <= request.DerTransactionDate)
+                   .OrderByDescending(x => x.CreatedAt)
+                   .FirstOrDefault();
+                    if (latestRemark != null)
+                    {
+                        response.RemarkDate = latestRemark.CreatedAt.ToString("dd-MM-yyyy");
+                        response.Remark = latestRemark.Remark;
+                    }
                 }
+               
                 return response;
             }
             catch (InvalidOperationException e)

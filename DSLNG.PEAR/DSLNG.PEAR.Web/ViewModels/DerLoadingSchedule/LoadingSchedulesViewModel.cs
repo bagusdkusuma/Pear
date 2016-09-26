@@ -20,7 +20,7 @@ namespace DSLNG.PEAR.Web.ViewModels.DerLoadingSchedule
             public string Cargo { get; set; }
             public string Remark { get; set; }
             public string Buyer { get; set; }
-            public DateTime RemarkDate { get; set; }
+            public DateTime? RemarkDate { get; set; }
             public string Measurement { get; set; }
             public string SalesType { get; set; }
         }

@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Web.Mvc;
 namespace DSLNG.PEAR.Web.ViewModels.VesselSchedule
 {
@@ -41,5 +42,17 @@ namespace DSLNG.PEAR.Web.ViewModels.VesselSchedule
         public string Type { get; set; }
         public string Cargo { get; set; }
         public bool AsNew { get; set; }
+        public DateTime? DerTransactionDate { get; set; }
+        public string DerTransactionDateInput
+        {
+            get
+            {
+                return this.DerTransactionDate.HasValue ? this.DerTransactionDate.Value.ToString("MM/dd/yyyy") : null;
+            }
+            set
+            {
+                this.DerTransactionDate = DateTime.ParseExact(value, "MM/dd/yyyy", CultureInfo.InvariantCulture); ;
+            }
+        }
     }
 }

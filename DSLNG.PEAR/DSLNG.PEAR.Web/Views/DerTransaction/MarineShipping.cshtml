@@ -133,7 +133,7 @@
                 choosenIds.push(parseInt($row.find('.id').val()));
             });
             console.log(choosenIds);
-            $.get('@Url.Action("Choose","DerLoadingSchedule")', function (data) {
+            $.get('@Url.Action("Choose","DerLoadingSchedule", new { date = "_date_" })'.replace("_date_", encodeURI($('#currentDate').val())), function (data) {
                 var $data = $(data);
                 $data.find('.nls-schedules tr:not(:first-child)').each(function (i, val) {
                     var $row = $(val);
@@ -208,13 +208,39 @@
         $(document).on('click', '.choose-schedule', function (e) {
             var choosenRow = $('.nls-schedules').find('tr.choosen').clone(true);
             choosenRow.each(function (i, val) {
-                $val = $(val);
+                var $val = $(val);
+                var id = $val.find('.id').val();
                 $val.find('td:first-child').hide();
                 $val.find('.edit-schedule').removeClass('prevent');
+                $val.find(':last-child').append(' | <a href="/DerLoadingSchedule/Remarks/'+id+'" class="see-remarks">See All</a>')
                 $val.append('<td><button class="btn btn-default remove-schedule">remove</button></td>');
             })
             $('.choosen-schedules').append(choosenRow);
             $('#loadingScheduleModal').modal('hide')
+        });
+        $(document).on('click', '.see-remarks', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            window.remarkColumn = $this.closest('td');
+            var $modal = $('#loadingScheduleModal');
+            $modal.find('.modal-dialog').width(900);
+            $modal.find('.modal-title').html('Remarks');
+            $('#loadingScheduleModal').modal('show')
+            $.get($this.attr('href'), function (data) {
+                $modal.find('.modal-body').html(data);
+            })
+        });
+
+        $(document).on('click', '.manage-remark', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var $modal = $('#loadingScheduleModal');
+            $modal.find('.modal-dialog').width(900);
+            $modal.find('.modal-title').html('Add New Remark');
+            $('#loadingScheduleModal').modal('show')
+            $.get($this.attr('href'), function (data) {
+                $modal.find('.modal-body').html(data);
+            })
         });
     })
 </script>

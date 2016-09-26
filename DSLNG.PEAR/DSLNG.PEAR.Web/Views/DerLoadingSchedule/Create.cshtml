@@ -90,9 +90,9 @@
                         $tr.append('<td>' + data.ETD + '</td>');
                         $tr.append('<td>' + data.Cargo + '</td>');
                         if (data.RemarkDate == null) {
-                            $tr.append('<td></td>');
+                            $tr.append('<td><a href="/DerLoadingSchedule/Remarks/' + data.Id + '" class="see-remarks">See All</a></td>');
                         } else {
-                            $tr.append('<td>' + data.RemarkDate + ';' + data.Remark + '</td>');
+                            $tr.append('<td>' + data.RemarkDate + ';' + data.Remark + '  | <a href="/DerLoadingSchedule/Remarks/' + data.Id + '" class="see-remarks">See All</a></td>');
                         }
                         
                         $tr.append('<td><button class="btn btn-default remove-schedule">remove</button></td>');
