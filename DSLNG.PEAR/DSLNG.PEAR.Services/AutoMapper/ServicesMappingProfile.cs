@@ -781,6 +781,16 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.KpiMeasurement, o => o.MapFrom(s => s.Kpi.Measurement.Name))
                 .ForMember(x => x.PeriodeType, o => o.MapFrom(s => s.Schedule.KpiTransformation.PeriodeType));
             Mapper.CreateMap<SaveKpiTransformationLogRequest, KpiTransformationLog>();
+            Mapper.CreateMap<VesselSchedule, SaveVesselScheduleResponse>()
+                .ForMember(x => x.VesselId, o => o.MapFrom(s => s.Vessel.Id))
+                .ForMember(x => x.VesselCapacity, o => o.MapFrom(s => s.Vessel.Capacity))
+                .ForMember(x => x.VesselType, o => o.MapFrom(s => s.Vessel.Type))
+                .ForMember(x => x.VesselName, o => o.MapFrom(s => s.Vessel.Name))
+                .ForMember(x => x.VesselMeasuremant, o => o.MapFrom(s => s.Vessel.Measurement.Name))
+                .ForMember(x => x.BuyerId, o => o.MapFrom(s => s.Buyer.Id))
+                .ForMember(x => x.BuyerName, o => o.MapFrom(s => s.Buyer.Name))
+                .ForMember(x => x.ETA, o => o.MapFrom(s => s.ETA.ToString("dd-MM-yyyy")))
+                .ForMember(x => x.ETD, o => o.MapFrom(s => s.ETD.ToString("dd-MM-yyyy")));
             base.Configure();
         }
 

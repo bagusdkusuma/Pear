@@ -10,8 +10,10 @@ namespace DSLNG.PEAR.Services.Responses.VesselSchedule
         public int VesselId { get; set; }
         public string VesselName { get; set; }
         public string VesselCapacity { get; set; }
-        public DateTime ETA { get; set; }
-        public DateTime ETD { get; set; }
+        public string VesselType { get; set; }
+        public string VesselMeasuremant { get; set; }
+        public string ETA { get; set; }
+        public string ETD { get; set; }
         public bool IsActive { get; set; }
         public int BuyerId { get; set; }
         public string BuyerName { get; set; }
@@ -20,5 +22,7 @@ namespace DSLNG.PEAR.Services.Responses.VesselSchedule
         public string Type { get; set; }
         public string Cargo { get; set; }
         public string CargoType { get; set; }
+        public string RemarkDate { get; set; }
+        public string Remark { get; set; }
     }
 }

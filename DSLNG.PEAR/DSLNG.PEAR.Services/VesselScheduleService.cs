@@ -98,9 +98,10 @@ namespace DSLNG.PEAR.Services
         {
             try
             {
+                var vesselSchedule = request.MapTo<VesselSchedule>();
                 if (request.Id == 0)
                 {
-                    var vesselSchedule = request.MapTo<VesselSchedule>();
+                   
                     var buyer = DataContext.Buyers.First(x => x.Id == request.BuyerId);// new Buyer { Id = request.BuyerId };
                     //DataContext.Buyers.Attach(buyer);
                     var vessel = DataContext.Vessels.First(x => x.Id == request.VesselId);// new Vessel { Id = request.VesselId };
@@ -112,7 +113,7 @@ namespace DSLNG.PEAR.Services
                 }
                 else
                 {
-                    var vesselSchedule = DataContext.VesselSchedules.FirstOrDefault(x => x.Id == request.Id);
+                    vesselSchedule = DataContext.VesselSchedules.FirstOrDefault(x => x.Id == request.Id);
                     if (vesselSchedule != null)
                     {
                         request.MapPropertiesToInstance<VesselSchedule>(vesselSchedule);
@@ -126,11 +127,24 @@ namespace DSLNG.PEAR.Services
                     }
                 }
                 DataContext.SaveChanges();
-                return new SaveVesselScheduleResponse
+                var response = new SaveVesselScheduleResponse
                 {
                     IsSuccess = true,
                     Message = "Vessel Schedule has been saved"
                 };
+                vesselSchedule = DataContext.VesselSchedules.Include(x => x.Buyer)
+                    .Include(x => x.Vessel)
+                    .Include(x => x.Vessel.Measurement)
+                    .Single(x => x.Id == vesselSchedule.Id);
+                vesselSchedule.MapPropertiesToInstance(response);
+                var latestRemark = DataContext.NextLoadingSchedules.Where(x => x.VesselSchedule.Id == vesselSchedule.Id)
+                    .OrderByDescending(x => x.CreatedAt)
+                    .FirstOrDefault();
+                if (latestRemark != null) {
+                    response.RemarkDate = latestRemark.CreatedAt.ToString("dd-MM-yyyy");
+                    response.Remark = latestRemark.Remark;
+                }
+                return response;
             }
             catch (InvalidOperationException e)
             {

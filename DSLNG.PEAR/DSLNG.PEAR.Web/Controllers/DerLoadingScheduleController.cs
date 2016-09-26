@@ -93,13 +93,13 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 var req = viewModel.MapTo<SaveVesselScheduleRequest>();
                 var resp = _vesselScheduleService.SaveVesselSchedule(req);
-                return Json(new { isSuccess = true, data= resp });
+                return Json(resp);
             }
             else {
                 var errorList = (from item in ModelState
                                  where item.Value.Errors.Any()
                                  select item.Value.Errors[0].ErrorMessage).ToList();
-                return Json(new { isSuccess = false, message = errorList });
+                return Json(new { IsSuccess = false, Message = errorList });
             }
         }
     }

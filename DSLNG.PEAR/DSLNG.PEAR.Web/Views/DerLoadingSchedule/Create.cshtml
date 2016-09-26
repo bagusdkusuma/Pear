@@ -9,7 +9,8 @@
         {
             @Html.AntiForgeryToken()
             <div class="col-md-12">
-                <div>@Html.ValidationSummary(true)</div>
+                <div><ul class="validation-summary" style="color:red"></ul></div>
+                <div><ul class="success-message" style="color:green"></ul></div>
             </div>
             <div class="col-md-12">
                 <div class="form-inline whitebox">
@@ -76,7 +77,38 @@
             e.preventDefault();
             $form = $(this).closest('form');
             $.post($form.attr('action'), $form.serialize(), function (data) {
-                console.log(data);
+                if (data.IsSuccess) {
+                    $('.success-message').html('<p>You haven been successfully saved new schedule</p>');
+                    setTimeout(function () {
+                        $('#loadingScheduleModal').modal('hide');
+                        var $tr = $('<tr/>');
+                        $tr.append('<td style="display:none"><input type="checkbox" class="check-this" /><input type="hidden" class="id" name="id" value="' + data.Id + '" /></td>');
+                        $tr.append('<td><a href="/DerLoadingSchedule/Edit/' + data.Id + '">' + data.VesselType + ' - ' + data.SalesType + ' - ' + data.Type + '</a></td>');
+                        $tr.append('<td>' + data.VesselName + ' ' + data.VesselCapacity + ' (' + data.VesseMeasuremant + ')</td>');
+                        $tr.append('<td>' + data.BuyerName + '</td>');
+                        $tr.append('<td>' + data.ETA + '</td>');
+                        $tr.append('<td>' + data.ETD + '</td>');
+                        $tr.append('<td>' + data.Cargo + '</td>');
+                        if (data.RemarkDate == null) {
+                            $tr.append('<td></td>');
+                        } else {
+                            $tr.append('<td>' + data.RemarkDate + ';' + data.Remark + '</td>');
+                        }
+                        
+                        $tr.append('<td><button class="btn btn-default remove-schedule">remove</button></td>');
+                        $('.choosen-schedules').append($tr);
+                    }, 1000);
+                    
+                } else {
+                    console.log(data);  
+                    if (data.Message.length) {
+                        $valSummary = $('.validation-summary');
+                        $valSummary.html('');
+                        for (var i in data.message) {
+                            $valSummary.append('<li>' + data.message[i] + '</li>');
+                        }
+                    }
+                }
             })
         })
     });
