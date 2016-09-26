@@ -39,7 +39,9 @@ namespace DSLNG.PEAR.Services
             var end = dateTimePeriodes[dateTimePeriodes.Count - 1];
             switch (volumeInventory.YtdFormula)
             {
+                
                 case YtdFormula.Sum:
+                default:
                     {
                         response.VolumeInventory = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType &&
                                 x.Periode >= start && x.Periode <= end && x.Kpi.Id == volumeInventory.Id)
@@ -59,6 +61,7 @@ namespace DSLNG.PEAR.Services
             switch (daysToTankTop.YtdFormula)
             {
                 case YtdFormula.Sum:
+                default:
                     {
                         response.DaysToTankTop = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType &&
                                 x.Periode >= start && x.Periode <= end && x.Kpi.Id == daysToTankTop.Id)
