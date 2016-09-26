@@ -1,22 +1,20 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.VesselSchedule.VesselScheduleViewModel
 
-<style>
-    .vessel-schedule-save label{width:100px}
-</style>
 <div class="vessel-schedule-save">
-    <div class="row">
-        @using (Html.BeginForm("Create","DerLoadingSchedule",FormMethod.Post))
-        {
-            @Html.AntiForgeryToken()
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
             <div class="col-md-12">
                 <div><ul class="validation-summary" style="color:red"></ul></div>
                 <div><ul class="success-message" style="color:green"></ul></div>
+                @Html.HiddenFor(x => x.Id)
             </div>
             <div class="col-md-12">
                 <div class="form-inline whitebox">
                     <div class="form-group form-list">
                         @Html.LabelFor(model => model.VesselId)
-                        @Html.DropDownListFor(model => model.VesselId, Model.Vessels, "Select Vessel", new { @class = "form-control" })
+                        @Html.DropDownListFor(model => model.VesselId, Model.Vessels, new { @class = "form-control"})
                         @Html.ValidationMessageFor(model => model.VesselId)
                     </div>
                     <div class="form-group form-list">
@@ -31,7 +29,7 @@
                     </div>
                     <div class="form-group form-list">
                         @Html.LabelFor(model => model.BuyerId)
-                        @Html.DropDownListFor(model => model.BuyerId, Model.Buyers, "Select Buyer", new { @class = "form-control"})
+                        @Html.DropDownListFor(model => model.BuyerId, Model.Buyers, new { @class = "form-control"})
                         @Html.ValidationMessageFor(model => model.BuyerId)
                     </div>
                     <div class="form-group form-list">
@@ -41,12 +39,12 @@
                     </div>
                     <div class="form-group form-list">
                         @Html.LabelFor(model => model.SalesType)
-                        @Html.DropDownListFor(model => model.SalesType, Model.SalesTypes, "Select Sales Type", new { @class = "form-control" })
+                        @Html.DropDownListFor(model => model.SalesType, Model.SalesTypes, new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.SalesType)
                     </div>
                     <div class="form-group form-list">
                         @Html.LabelFor(model => model.Type)
-                        @Html.DropDownListFor(model => model.Type, Model.Types, "Select Type", new { @class = "form-control" })
+                        @Html.DropDownListFor(model => model.Type, Model.Types, new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.Type)
                     </div>
                     <div class="form-group form-list">
@@ -65,8 +63,8 @@
                 <button type="submit" class="btn btn-primary btn-lg save"><span class="fa fa-floppy-o"></span>Save</button>
                 <a href="javascript:;" class="btn btn-primary btn-lg close-modal"><span class="fa fa-times"></span>Cancel</a>
             </div>
-        }
-    </div>
+        </div>
+    }
 </div>
 <script>
     $(document).ready(function () {
@@ -94,13 +92,12 @@
                         } else {
                             $tr.append('<td>' + data.RemarkDate + ';' + data.Remark + '</td>');
                         }
-                        
+
                         $tr.append('<td><button class="btn btn-default remove-schedule">remove</button></td>');
-                        $('.choosen-schedules').append($tr);
+                        window.currentRowInEdit.replaceWith($tr);
                     }, 1000);
-                    
+
                 } else {
-                    console.log(data);  
                     if (data.Message.length) {
                         $valSummary = $('.validation-summary');
                         $valSummary.html('');
@@ -113,3 +110,4 @@
         })
     });
 </script>
+

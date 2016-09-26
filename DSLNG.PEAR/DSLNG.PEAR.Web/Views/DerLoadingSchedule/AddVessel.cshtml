@@ -1,0 +1,66 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Vessel.VesselViewModel
+
+<div class="highlight-save">
+    @using (Html.BeginForm("AddVessel","DerLoadingSchedule",FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-md-12">
+                <div><ul class="validation-summary" style="color:red"></ul></div>
+                <div><ul class="success-message" style="color:green"></ul></div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-inline whitebox">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.Name)
+                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Name)
+                    </div>
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.Capacity)
+                        @Html.TextBoxFor(model => model.Capacity, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Capacity)
+                    </div>
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.Type)
+                        @Html.DropDownListFor(model => model.Type, Model.Types, "Select Type", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Type)
+                    </div>
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.MeasurementId)
+                        @Html.DropDownListFor(model => model.MeasurementId, Model.Measurements, "Select Measurement", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.MeasurementId)
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 artifact-designer-btns">
+                <button type="submit" class="btn btn-primary btn-lg save-vessel"><span class="fa fa-floppy-o"></span>Save</button>
+                <button type="button" class="btn btn-primary btn-lg close-modal"><span class="fa fa-times"></span>Cancel</button>
+            </div>
+        </div>
+    }
+</div>
+<script>
+ $('.save-vessel').click(function (e) {
+            e.preventDefault();
+            $form = $(this).closest('form');
+            $.post($form.attr('action'), $form.serialize(), function (data) {
+                if (data.IsSuccess) {
+                    $('.success-message').html('<p>You haven been successfully saved new vessel</p>');
+                    setTimeout(function () {
+                        $('#loadingScheduleModal').modal('hide');
+                    }, 1000);
+
+                } else {
+                    if (data.Message.length) {
+                        $valSummary = $('.validation-summary');
+                        $valSummary.html('');
+                        for (var i in data.message) {
+                            $valSummary.append('<li>' + data.message[i] + '</li>');
+                        }
+                    }
+                }
+            })
+        })
+
+</script>

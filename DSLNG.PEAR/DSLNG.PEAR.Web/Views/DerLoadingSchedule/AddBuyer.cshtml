@@ -1,0 +1,61 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Buyer.BuyerViewModel
+<div class="highlight-save">
+    @using (Html.BeginForm("AddBuyer","DerLoadingSchedule", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-md-12">
+                <div><ul class="validation-summary" style="color:red"></ul></div>
+                <div><ul class="success-message" style="color:green"></ul></div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-inline whitebox">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.Name)
+                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Name)
+                    </div>
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.Address)
+                        @Html.TextAreaFor(model => model.Address, 5, 100, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Address)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.IsActive, new { @class = "control-label" })
+                        @Html.EditorFor(model => model.IsActive, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.IsActive)
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 artifact-designer-btns">
+                <button type="submit" class="btn btn-primary btn-lg save-buyer"><span class="fa fa-floppy-o"></span>Save</button>
+                <a href="javascript:;" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+            </div>
+        </div>
+    }
+</div>
+<script>
+ $('.save-buyer').click(function (e) {
+            e.preventDefault();
+            $form = $(this).closest('form');
+            $.post($form.attr('action'), $form.serialize(), function (data) {
+                if (data.IsSuccess) {
+                    $('.success-message').html('<p>You haven been successfully saved new buyer</p>');
+                    setTimeout(function () {
+                        $('#loadingScheduleModal').modal('hide');
+                    }, 1000);
+
+                } else {
+                    if (data.Message.length) {
+                        $valSummary = $('.validation-summary');
+                        $valSummary.html('');
+                        for (var i in data.message) {
+                            $valSummary.append('<li>' + data.message[i] + '</li>');
+                        }
+                    }
+                }
+            })
+        })
+
+</script>
+

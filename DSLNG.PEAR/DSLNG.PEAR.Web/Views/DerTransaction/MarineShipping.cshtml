@@ -124,11 +124,24 @@
         $(document).on('click', '.choose-loading-schedule', function (e) {
             var $this = $(this);
             var $modal = $('#loadingScheduleModal');
-            $modal.find('.modal-dialog').width(1200); 
+            $modal.find('.modal-dialog').width(1200);
             $modal.find('.modal-title').html('Choose Schedules');
-            $('#loadingScheduleModal').modal('show')
+            $('#loadingScheduleModal').modal('show');
+            var choosenIds = [];
+            $('.choosen-schedules tr:not(:first-child)').each(function (i, val) {
+                var $row = $(val);
+                choosenIds.push(parseInt($row.find('.id').val()));
+            });
+            console.log(choosenIds);
             $.get('@Url.Action("Choose","DerLoadingSchedule")', function (data) {
-                $modal.find('.modal-body').html(data);
+                var $data = $(data);
+                $data.find('.nls-schedules tr:not(:first-child)').each(function (i, val) {
+                    var $row = $(val);
+                    if (choosenIds.indexOf(parseInt($row.find('.id').val())) > -1) {
+                        $row.remove();
+                    }
+                });
+                $modal.find('.modal-body').html($data);
             })
         });
         $(document).on('click', '.add-new-schedule', function (e) {
@@ -140,6 +153,68 @@
             $.get('@Url.Action("Create","DerLoadingSchedule")', function (data) {
                 $modal.find('.modal-body').html(data);
             })
+        });
+        $(document).on('click', '.add-vessel', function (e) {
+            var $this = $(this);
+            var $modal = $('#loadingScheduleModal');
+            $modal.find('.modal-dialog').width(900);
+            $modal.find('.modal-title').html('Add New Vessel');
+            $('#loadingScheduleModal').modal('show')
+            $.get('@Url.Action("AddVessel","DerLoadingSchedule")', function (data) {
+                $modal.find('.modal-body').html(data);
+            })
+        });
+        $(document).on('click', '.add-buyer', function (e) {
+            var $this = $(this);
+            var $modal = $('#loadingScheduleModal');
+            $modal.find('.modal-dialog').width(900);
+            $modal.find('.modal-title').html('Add New Buyer');
+            $('#loadingScheduleModal').modal('show')
+            $.get('@Url.Action("AddBuyer","DerLoadingSchedule")', function (data) {
+                $modal.find('.modal-body').html(data);
+            })
+        });
+        $(document).on('click', '.edit-schedule', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            if ($this.hasClass('prevent')) return;
+            window.currentRowInEdit = $this.closest('tr');
+            var $modal = $('#loadingScheduleModal');
+            $modal.find('.modal-dialog').width(900);
+            $modal.find('.modal-title').html('Add New Buyer');
+            $('#loadingScheduleModal').modal('show')
+            var url = $this.attr('href');
+            $.get(url, function (data) {
+                $modal.find('.modal-body').html(data);
+            })
+        });
+        $(document).on('click', '.close-modal', function (e) {
+            $('#loadingScheduleModal').modal('hide');
+        });
+
+        $(document).on('click', '.remove-schedule', function (e) {
+            e.preventDefault();
+            $(this).closest('tr').remove();
+        });
+
+        $(document).on('click', '.check-this', function (e) {
+            var $this = $(this);
+            if ($this.is(':checked')) {
+                $this.closest('tr').addClass('choosen');
+            } else {
+                $this.closest('tr').removeClass('choosen');
+            }
+        });
+        $(document).on('click', '.choose-schedule', function (e) {
+            var choosenRow = $('.nls-schedules').find('tr.choosen').clone(true);
+            choosenRow.each(function (i, val) {
+                $val = $(val);
+                $val.find('td:first-child').hide();
+                $val.find('.edit-schedule').removeClass('prevent');
+                $val.append('<td><button class="btn btn-default remove-schedule">remove</button></td>');
+            })
+            $('.choosen-schedules').append(choosenRow);
+            $('#loadingScheduleModal').modal('hide')
         });
     })
 </script>
