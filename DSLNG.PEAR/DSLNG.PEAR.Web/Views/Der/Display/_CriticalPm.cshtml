@@ -16,7 +16,7 @@
     <thead>
         <tr>
             <td colspan="6" style="border: 1px solid #444;border-bottom: none;border-left: none;position:initial;" id="weekly-critical-highlight-container">
-                WEEKLY CRITICAL-TIER 1 PM COMPLIANCE/OVERDUE @Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Remark
+                WEEKLY CRITICAL-TIER 1 PM COMPLIANCE/OVERDUE (as of @Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Remark)
             </td>
         </tr>
     </thead>
@@ -58,13 +58,13 @@
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, string.Empty, string.Empty)
             </td>
             <td>
-                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "hours")
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, string.Empty)
             </td>
             <td style="width: 12%">
-                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiMeasurement, "hr")
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiMeasurement, string.Empty)
             </td>
             <td>
-                @Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Remark
+                @Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Remark
             </td>
         </tr>
     </tbody>
