@@ -60,6 +60,11 @@
             @*<form action="@Url.Action("Update")" method="POST">*@
             @Html.HiddenFor(model => model.Id)
             <div class="form-group form-list">
+                @Html.LabelFor(model => model.Position, new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.Position, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Position)
+            </div>
+            <div class="form-group form-list">
                 @Html.LabelFor(model => model.FullName, new { @class = "control-label" })
                 @Html.TextBoxFor(model => model.FullName, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.FullName)
@@ -107,7 +112,8 @@
             </div>
             <div class="form-group form-list">
                 @Html.LabelFor(model => model.SignatureImage, new { @class = "control-label" })
-                <input type="file" name="file" id="SignatureImage" />
+                <input type="file" name="file" id="SignatureImage" value="@Model.SignatureImage" />
+                @Html.TextBoxFor(model =>model.SignatureImage, new { style = "visibility: hidden" })
                 @Html.ValidationMessageFor(model => model.SignatureImage)
             </div>
             <div class="form-group form-list">

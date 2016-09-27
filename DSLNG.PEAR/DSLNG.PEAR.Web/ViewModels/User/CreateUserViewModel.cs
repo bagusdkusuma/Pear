@@ -28,6 +28,13 @@ namespace DSLNG.PEAR.Web.ViewModels.User
         [Display(Name="Role")]
         public int RoleId { get; set; }
         public bool IsSuperAdmin { get; set; }
+        [Display(Name = "Full Name")]
+        [MaxLength(150)]
+        public string FullName { get; set; }
+        public string SignatureImage { get; set; }
+        [Display(Name ="Position")]
+        [MaxLength(150)]
+        public string Position { get; set; }
         public List<SelectListItem> RoleGroupList { get; set; }
     }
 }
