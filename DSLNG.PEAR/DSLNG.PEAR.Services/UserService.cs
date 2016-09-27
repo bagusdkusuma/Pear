@@ -110,6 +110,7 @@ namespace DSLNG.PEAR.Services
                     }
                 }
                 user.SignatureImage = request.SignatureImage;
+                user.Position = request.Position;
                 user.Username = request.Username;
                 user.IsActive = request.IsActive;
                 user.ChangeModel = request.ChangeModel;

@@ -7,7 +7,17 @@
 @Html.Partial("_MessageResponse")
 <div class="row">
     <div class="col-md-4">
-        <form action="@Url.Action("Create")" method="POST">
+        <form action="@Url.Action("Create")" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Position, new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.Position, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Position)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.FullName, new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.FullName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.FullName)
+            </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.Username, new { @class = "control-label" })
                 @Html.TextBoxFor(model => model.Username, new { @class = "form-control" })
@@ -38,6 +48,11 @@
                 @Html.LabelFor(model => model.IsSuperAdmin, new { @class = "control-label" })
                 @Html.EditorFor(model => model.IsSuperAdmin, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IsSuperAdmin)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.SignatureImage, new { @class = "control-label" })
+                <input type="file" name="SignatureImage" id="SignatureImage"/>
+                @Html.ValidationMessageFor(model => model.SignatureImage)
             </div>
             <button type="submit" class="btn btn-default">Submit</button>
             <a href="@Url.Action("Index")" class="btn btn-default">Cancel</a>

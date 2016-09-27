@@ -22,6 +22,7 @@ namespace DSLNG.PEAR.Data.Entities
         public string PasswordSalt { get; set; }
         public string FullName { get; set; }
         public string SignatureImage { get; set; }
+        public string Position { get; set; }
 
         [MaxLength(100)]
         [Index(IsUnique = true)]

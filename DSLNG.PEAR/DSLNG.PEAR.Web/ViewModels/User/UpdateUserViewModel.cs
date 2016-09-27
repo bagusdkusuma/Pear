@@ -37,7 +37,12 @@ namespace DSLNG.PEAR.Web.ViewModels.User
         public string ChangeModel { get; set; }
         [Display(Name="User Is Superadmin")]
         public bool IsSuperAdmin { get; set; }
+        [Display(Name = "Full Name")]
+        [MaxLength(150)]
         public string FullName { get; set; }
         public string SignatureImage { get; set; }
+        [Display(Name = "Position")]
+        [MaxLength(150)]
+        public string Position { get; set; }
     }
 }

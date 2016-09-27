@@ -19,6 +19,7 @@ namespace DSLNG.PEAR.Services.Requests.User
         public bool IsSuperAdmin { get; set; }
         public string FullName { get; set; }
         public string SignatureImage { get; set; }
+        public string Position { get; set; }
         public List<int> RolePrivilegeIds { get; set; }
     }
 }

@@ -137,6 +137,21 @@ namespace DSLNG.PEAR.Web.Controllers
         [HttpPost]
         public ActionResult Create(CreateUserViewModel viewModel)
         {
+            if (Request.Files.Count > 0)
+            {
+                var file = Request.Files[0];
+
+                if (file != null && file.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(file.FileName);
+
+                    var path = Path.Combine(Server.MapPath("~/Content/signature/"), fileName);
+                    var url = "/Content/signature/" + fileName;
+
+                    file.SaveAs(path);
+                    viewModel.SignatureImage = url;
+                }
+            }
             var request = viewModel.MapTo<CreateUserRequest>();
             var response = _userService.Create(request);
             TempData["IsSuccess"] = response.IsSuccess;
@@ -204,22 +219,26 @@ namespace DSLNG.PEAR.Web.Controllers
         [HttpPost]
         public ActionResult Update(UpdateUserViewModel viewModel)
         {
-            if (Request.Files.Count > 0)
+            if (viewModel.SignatureImage == null)
             {
-                var file = Request.Files[0];
 
-                if (file != null && file.ContentLength > 0)
+
+                if (Request.Files.Count > 0)
                 {
-                    var fileName = Path.GetFileName(file.FileName);
+                    var file = Request.Files[0];
 
-                    var path = Path.Combine(Server.MapPath("~/Content/signature/"), fileName);
-                    var url = "/Content/signature/" + fileName;
+                    if (file != null && file.ContentLength > 0)
+                    {
+                        var fileName = Path.GetFileName(file.FileName);
 
-                    file.SaveAs(path);
-                    viewModel.SignatureImage = url;
+                        var path = Path.Combine(Server.MapPath("~/Content/signature/"), fileName);
+                        var url = "/Content/signature/" + fileName;
+
+                        file.SaveAs(path);
+                        viewModel.SignatureImage = url;
+                    }
                 }
             }
-
             var request = viewModel.MapTo<UpdateUserRequest>();
             var response = _userService.Update(request);
             TempData["IsSuccess"] = response.IsSuccess;
