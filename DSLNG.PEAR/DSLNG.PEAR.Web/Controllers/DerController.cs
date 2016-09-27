@@ -46,6 +46,7 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IKpiTargetService _kpiTargetService;
         private readonly IVesselScheduleService _vesselScheduleService;
         private readonly IWaveService _waveService;
+        private readonly IUserService _userService;
         private readonly IDerLoadingScheduleService _derLoadingScheduleService;
         public static IDictionary<string, string> Contents { get; set; }
 
@@ -58,7 +59,8 @@ namespace DSLNG.PEAR.Web.Controllers
             IKpiTargetService kpiTargetService, 
             IVesselScheduleService vesselScheduleService, 
             IWaveService waveService,
-            IDerLoadingScheduleService derLoadingScheduleService)
+            IDerLoadingScheduleService derLoadingScheduleService,
+            IUserService userService)
         {
             _derService = derService;
             _dropdownService = dropdownService;
@@ -70,6 +72,7 @@ namespace DSLNG.PEAR.Web.Controllers
             _vesselScheduleService = vesselScheduleService;
             _waveService = waveService;
             _derLoadingScheduleService = derLoadingScheduleService;
+            _userService = userService;
         }
 
         [AuthorizeUser(AccessLevel = "AllowView")]
@@ -879,6 +882,29 @@ namespace DSLNG.PEAR.Web.Controllers
                     {
                         var viewModel = GetGeneralDerKpiInformations(1, layout, date, PeriodeType.Daily);
                         var view = RenderPartialViewToString("~/Views/Der/Display/_PersonOnBoard.cshtml", viewModel);
+                        return Json(new { type = layout.Type.ToLowerInvariant(), view = view }, JsonRequestBehavior.AllowGet);
+                    }
+                #endregion
+                #region Prepared By
+                case "prepared-by":
+                    {
+                        var viewModel = new DisplaySignedByViewModel();
+                        var user = _userService.GetUser(new Services.Requests.User.GetUserRequest { Id = layout.SignedBy });
+                        viewModel.FullName = user.FullName;
+                        viewModel.SignatureImage = user.SignatureImage;
+                        viewModel.Time = "LT07:45";
+                        viewModel.Position = "Business Performance Sr.Specialist";
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_PreparedBy.cshtml", viewModel);
+                        return Json(new { type = layout.Type.ToLowerInvariant(), view = view }, JsonRequestBehavior.AllowGet);
+                    }
+                case "reviewed-by":
+                    {
+                        var viewModel = new DisplaySignedByViewModel();
+                        var user = _userService.GetUser(new Services.Requests.User.GetUserRequest { Id = layout.SignedBy });
+                        viewModel.FullName = user.FullName;
+                        viewModel.SignatureImage = user.SignatureImage;
+                        viewModel.Position = "Performance & Planning Sr. Manager";
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_ReviewedBy.cshtml", viewModel);
                         return Json(new { type = layout.Type.ToLowerInvariant(), view = view }, JsonRequestBehavior.AllowGet);
                     }
                     #endregion

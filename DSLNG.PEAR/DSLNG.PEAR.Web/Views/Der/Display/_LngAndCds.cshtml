@@ -60,8 +60,8 @@
             <td>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Mtd, string.Empty, string.Empty, "-") / @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 18).DerItemValue.Mtd, string.Empty, string.Empty, "-") Spot,
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Mtd, string.Empty, string.Empty, "-") / @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 17).DerItemValue.Mtd, string.Empty, string.Empty, "-") Kogas,
-                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Mtd, string.Empty, string.Empty, "-") / @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 19).DerItemValue.Mtd, string.Empty, string.Empty, "-") QE,
-                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Mtd, string.Empty, string.Empty, "-") / @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 21).DerItemValue.Mtd, string.Empty, string.Empty, "-") Adv;
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Mtd, string.Empty, string.Empty, "-") / @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 19).DerItemValue.Mtd, string.Empty, string.Empty, "-") QE;
+                @*@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Mtd, string.Empty, string.Empty, "-") / @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 21).DerItemValue.Mtd, string.Empty, string.Empty, "-") Adv;*@
                 ttl @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Mtd, string.Empty, string.Empty, "-") / @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 22).DerItemValue.Mtd, string.Empty, string.Empty, "-")
             </td>
             <td>
@@ -90,7 +90,7 @@
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Ytd, string.Empty, string.Empty, "-") / @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 18).DerItemValue.Ytd, string.Empty, string.Empty, "-") JER,
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Ytd, string.Empty, string.Empty, "-") / @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 19).DerItemValue.Ytd, string.Empty, string.Empty, "-") QE,
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Ytd, string.Empty, string.Empty, "-") / @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 20).DerItemValue.Ytd, string.Empty, string.Empty, "-") Spot;
-                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Ytd, string.Empty, string.Empty, "-") / @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 21).DerItemValue.Ytd, string.Empty, string.Empty, "-") Cargo Adv;
+                @*@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Ytd, string.Empty, string.Empty, "-") / @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 21).DerItemValue.Ytd, string.Empty, string.Empty, "-") Cargo Adv;*@
                 Total @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Ytd, string.Empty, string.Empty, "-") / @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 22).DerItemValue.Ytd, string.Empty, string.Empty, "-") cargos
             </td>
             <td>
@@ -146,8 +146,8 @@
             <td rowspan="2">
                 @Model.KpiInformationViewModels.Single(x => x.Position == 13).DerItemValue.Remark
             </td>
-            <td>
-                COB: @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 15).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 15).KpiMeasurement, "m3")
+            <td rowspan="2">
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 15).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 15).KpiMeasurement, "m3")
             </td>
         </tr>
         <tr>
@@ -166,10 +166,10 @@
             <td>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 13).DerItemValue.Ytd, string.Empty, string.Empty)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 16).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 16).KpiMeasurement, "bbl")
 
-            </td>
+            </td>*@
         </tr>
     </tbody>
 </table>
