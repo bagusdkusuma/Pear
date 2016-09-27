@@ -1299,7 +1299,8 @@
                 <td>
                     <span class="col-sm-8">
                         <!-- remark -->
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 82, 170, "cargo")
+                        @*@Html.DisplayKpiInformationInput(Model.KpiInformations, 82, 170, "cargo","remark")*@
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 82, 170, "free text", "prev", "daily-actual", "remark")
                     </span>
                 </td>
             </tr>
@@ -1308,7 +1309,8 @@
                 <td>
                     <span class="col-sm-8">
                         <!-- remark -->
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 76, 171, "bbl")
+                        @*@Html.DisplayKpiInformationInput(Model.KpiInformations, 76, 171, "bbl", "remark")*@
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 76, 171, "free text", "prev", "daily-actual", "remark")
                     </span>
                 </td>
             </tr>
