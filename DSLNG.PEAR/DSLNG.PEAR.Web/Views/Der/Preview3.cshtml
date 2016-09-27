@@ -1175,12 +1175,15 @@
 
                             } else if (data.type === "highlight" && that.hasClass('highlight-json-market-tone')) {
                                 switch (data.view.trim()) {
+                                    case '1':
                                     case 'Bullish':
                                         that.replaceWith("<span class='comparison'><i class='fa fa-arrow-up' style='color:green'></i></span>");
                                         break;
+                                    case '0':
                                     case 'Mixed':
                                         that.replaceWith("<span class='comparison'><i class='fa fa-minus' style='color:orange'></i></span>");
                                         break;
+                                    case '-1':
                                     case 'Bearish':
                                         that.replaceWith("<span class='comparison'><i class='fa fa-arrow-down' style='color:red'></i></span>");
                                         break;
