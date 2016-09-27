@@ -884,6 +884,7 @@
     <Compile Include="ViewModels\Der\Display\DisplayPlantAvalabilityViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayHHVViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayKeyEquipmentStatusViewModel.cs" />
+    <Compile Include="ViewModels\Der\Display\DisplaySignedByViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayTableTankViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayTotalFeedGasViewModel.cs" />
     <Compile Include="ViewModels\Der\Display\DisplayJobPmtsViewModel.cs" />
@@ -1136,7 +1137,7 @@
     <Content Include="Views\DerLayout\LayoutType\_LoadingDuration.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_LoadingDuration.Edit.cshtml" />
     <Content Include="Views\Der\Display\_LoadingDuration.cshtml" />
-    <Content Include="Views\Der\Display\_SignedBy.cshtml" />
+    <Content Include="Views\Der\Display\_PreparedBy.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_PersonOnBoard.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_PersonOnBoard.Edit.cshtml" />
     <Content Include="Views\Der\Display\_PersonOnBoard.cshtml" />
@@ -1160,6 +1161,7 @@
     <Content Include="Views\DerLoadingSchedule\Edit.cshtml" />
     <Content Include="Views\DerLoadingSchedule\Remarks.cshtml" />
     <Content Include="Views\DerLoadingSchedule\ManageRemark.cshtml" />
+    <Content Include="Views\Der\Display\_ReviewedBy.cshtml" />
     <None Include="Views\Der\Index.cshtml.old" />
     <Content Include="Views\Der\_ManageItem.cshtml" />
     <Content Include="Views\Der\_DialogManageItem.cshtml" />

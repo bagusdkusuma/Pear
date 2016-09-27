@@ -190,28 +190,28 @@
                                             }
                                         }
                                         @*<tr rowspan="2">
-                    <td colspan="2">
-                        <label>Weather:</label>
-                    </td>
-                    <td>
-                        @Model.Text
-                    </td>
-                    <td class="text-right">
-                        <img height="20" src="@Url.Content("/content/img/select/" + Model.Value)">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>Ambient Temperature 0C&#176;:</label>
-                    </td>
-                    <td>
-                        Low:@GetTemperature(Model.Temperature, 0)
-                        <img height="20" src="@Url.Content("/content/images/suhu.png")" />
-                    </td>
-                    <td colspan="2" class="text-right">
-                        High:@GetTemperature(Model.Temperature, 1)
-                    </td>
-                </tr>*@
+                                                <td colspan="2">
+                                                    <label>Weather:</label>
+                                                </td>
+                                                <td>
+                                                    @Model.Text
+                                                </td>
+                                                <td class="text-right">
+                                                    <img height="20" src="@Url.Content("/content/img/select/" + Model.Value)">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>Ambient Temperature 0C&#176;:</label>
+                                                </td>
+                                                <td>
+                                                    Low:@GetTemperature(Model.Temperature, 0)
+                                                    <img height="20" src="@Url.Content("/content/images/suhu.png")" />
+                                                </td>
+                                                <td colspan="2" class="text-right">
+                                                    High:@GetTemperature(Model.Temperature, 1)
+                                                </td>
+                                            </tr>*@
                                     </tbody>
                                 </table>
                             </td>
@@ -614,7 +614,7 @@
                                         }
                                     }
                                 </div>
-                                
+
                                 @{
                                     var row11Col0 = Model.Items.FirstOrDefault(x => x.Row == 11 && x.Column == 0);
                                     if (row11Col0 != null)
@@ -927,21 +927,29 @@
                                     </thead>
                                     <tbody>
                                         <tr>
+                                            <td class="signature">@{
+                                                var row16Col2 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 2);
+                                                if (row16Col2 != null)
+                                                {
+
+                                                    <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row16Col2.Id })" class="layout-item"></div>
+                                                }
+
+                                            }</td>
                                             <td class="signature">
-                                                <img src="@Url.Content("~/content/images/signature1.png")">
-                                                <table style="width:100%">
-                                                    <tr>
-                                                        <td style="width:50%;padding:0"><span class="nothing">LT07:45</span></td>
-                                                        <td style="width:50%;padding:0"><label>Eko P. Yulianto</label></td>
-                                                    </tr>
-                                                </table>
-                                                Business Performance Sr.Specialist
-                                            </td>
-                                            <td class="signature">
-                                                <img src="@Url.Content("~/content/images/signature2.png")">
-                                                <label>Marco Maruto</label> Performance &amp; Planning Sr. Manager
+                                                @{
+                                                    var row16Col3 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 3);
+                                                    if (row16Col3 != null)
+                                                    {
+
+                                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row16Col3.Id })" class="layout-item"></div>
+                                                    }
+
+                                                }
+                                              
                                             </td>
                                             <td>
+                                                
                                                 <img src="@Url.Content("~/content/images/strictly-sign.png")">
                                                 <span style="display:block">Not for custody/commercial (information purpose only)</span>
                                             </td>
@@ -1000,10 +1008,10 @@
                 $(".datepicker").blur();
                 reloadView();
             });
-            var currentDate = $('.datepicker').val();            
+            var currentDate = $('.datepicker').val();
             currentDate = moment(currentDate, "MM/DD/YYYY");
             currentDate = currentDate.subtract(1, 'day').format("MM/DD/YYYY");
-            
+
             $('.generate').click(function (e) {
                 e.preventDefault();
                 var $input = $('<input />');
@@ -1115,15 +1123,17 @@
                     url: that.attr('data-url'),
                     data: { currentDate: currentDate },
                     success: function (data) {
+                        
                         if (data.GraphicType !== undefined) {
                             var callback = window.Der.Artifact;
                             callback[data.GraphicType](data, that);
-                        } else if (data.type === "highlight" || data.type === "weather" || data.type === 'temperature' ||
+                        } else if (data.type == 'reviewed-by' || data.type == 'prepared-by' || data.type === "highlight" || data.type === "weather" || data.type === 'temperature' ||
                                 data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
                             data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type === "total-feed-gas"
                             || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type === "procurement" || data.type === "indicative-commercial-price" ||
                                 data.type === "plant-availability" || data.type === "economic-indicator" || data.type === "mgdp" || data.type === "hhv" || data.type === "lng-and-cds-production"
                                 || data.type === "nls" || data.type === "key-equipment-status" || data.type === "wave" || data.type === "table-tank" || data.type === "global-stock-market" || data.type === "loading-duration" || data.type === 'person-on-board') {
+
                             if (data.type === "highlight" && that.hasClass('daily-highlight')) {
                                 var type = "absolute";
                                 if (that.hasClass('in-left')) {
@@ -1161,7 +1171,8 @@
                                     that.replaceWith('&nbsp;');
                                 }
 
-                            } else if (data.type === "highlight" && that.hasClass('highlight-json-plant-mode')) {
+                            }
+                            else if (data.type === "highlight" && that.hasClass('highlight-json-plant-mode')) {
 
                                 if (data.view.toLowerCase().indexOf('holding') > -1) {
                                     that.replaceWith("<span style='color:green'>Holding</span>");
@@ -1173,7 +1184,8 @@
                                     that.replaceWith('&nbsp;');
                                 }
 
-                            } else if (data.type === "highlight" && that.hasClass('highlight-json-market-tone')) {
+                            }
+                            else if (data.type === "highlight" && that.hasClass('highlight-json-market-tone')) {
                                 switch (data.view.trim()) {
                                     case 'Bullish':
                                         that.replaceWith("<span class='comparison'><i class='fa fa-arrow-up' style='color:green'></i></span>");
@@ -1188,8 +1200,9 @@
                                         that.replaceWith('&nbsp;');
                                         break;
                                 }
-                            } else if (data.type === "highlight" && that.hasClass('highlight-json-ict-infra')) {
-                                
+                            }
+                            else if (data.type === "highlight" && that.hasClass('highlight-json-ict-infra')) {
+
                                 var js = JSON.parse(data.view);
                                 var transform = [];
                                 transform['a'] = getIconForIctInfraFirstColumn(js.a);
@@ -1223,21 +1236,21 @@
                             else if (data.type == 'weather' || data.type == 'temperature') {
                                 that.replaceWith(data.view);
                             }
-                            //else if (data.type === 'security') {
-                            //    var html = data.view;
-                            //    $(html).find('li').map(function () {
-                            //        var $this = $(this);
-                            //        var nilai = $this.attr('value');
-                            //        if (nilai == '0' || nilai == undefined) {
-                            //            $this.find('span').css('color', 'red')
-                            //        } else {
-                            //            $this.find('span').css('color', 'black')
-                            //        }
-                            //        console.log($this.find('span'));
-                            //    });
-                            //    console.log(html);
-                            //    that.replaceWith(html);
-                            //}
+                                //else if (data.type === 'security') {
+                                //    var html = data.view;
+                                //    $(html).find('li').map(function () {
+                                //        var $this = $(this);
+                                //        var nilai = $this.attr('value');
+                                //        if (nilai == '0' || nilai == undefined) {
+                                //            $this.find('span').css('color', 'red')
+                                //        } else {
+                                //            $this.find('span').css('color', 'black')
+                                //        }
+                                //        console.log($this.find('span'));
+                                //    });
+                                //    console.log(html);
+                                //    that.replaceWith(html);
+                                //}
                             else {
                                 that.html(data.view);
                             }

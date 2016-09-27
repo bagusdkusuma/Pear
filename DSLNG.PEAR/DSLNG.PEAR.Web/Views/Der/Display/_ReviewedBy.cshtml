@@ -1,0 +1,15 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplaySignedByViewModel
+
+@if (!string.IsNullOrEmpty(Model.SignatureImage))
+{
+    <img src="@Url.Content(Model.SignatureImage)" />
+}
+<table style="width:100%">
+    <tr>
+        <td class="signature">
+            <label>@Model.FullName</label> @Model.Position
+        </td>
+    </tr>
+</table>
+
+
