@@ -1,4 +1,12 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKpiInformationViewModel
+    @*@{ 
+        var dateTime = new DateTime();
+        string month = dateTime.Now
+        if(Request.Params["currentDate"] != null)
+        {
+            month = DateTime.Parse(Request.Params["currentDate"]).Month.ToString("MMM", System.Globalization.CultureInfo.InvariantCulture);
+        }
+    }*@
 <style>
     .commodities tbody > tr >td:first-child {
         text-align: right;
@@ -51,7 +59,7 @@
             </td>
         </tr>
         <tr>
-            <td>Applied JCC Crude (Apr)</td>
+            <td>Applied JCC Crude ( @TempData["month"])</td>
             <td>
                 <span class="comparison left-side"><i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Deviation)"></i></span>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiMeasurement, "USD/bbl")

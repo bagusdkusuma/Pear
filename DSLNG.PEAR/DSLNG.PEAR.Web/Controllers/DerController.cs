@@ -793,6 +793,19 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "economic-indicator":
                     {
                         var viewModel = GetGeneralDerKpiInformations(15, layout, date, PeriodeType.Daily);
+
+                        var jccPrice = layout.KpiInformations.Where(x => x.Position == 3).FirstOrDefault();
+                        if(jccPrice != null)
+                        {
+                            var monhtlyDate = new DateTime(date.Year, date.Month, 1);
+                            var monthly = _kpiAchievementService.GetKpiAchievement(jccPrice.Kpi.Id, monhtlyDate, PeriodeType.Monthly);
+                            if(monthly.Value.HasValue)
+                            {
+                                viewModel.KpiInformationViewModels.First(x => x.Position == 3).DerItemValue.Value = monthly.Value.Value.ToString();
+                            }
+                        }
+                        
+                        TempData["month"] = date.ToString("MMM", CultureInfo.InvariantCulture);
                         var view = RenderPartialViewToString("~/Views/Der/Display/_EconomicIndicator.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);

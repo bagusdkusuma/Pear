@@ -794,10 +794,12 @@ namespace DSLNG.PEAR.Services
                 switch (periodeType)
                 {
                     case PeriodeType.Daily:
+                    case PeriodeType.Monthly:
                         {
                             result = data.FirstOrDefault(x => x.PeriodeType == periodeType);
                             break;
                         }
+
                 }
 
                 var kpiResponse = new GetKpiAchievementResponse.KpiResponse
@@ -811,7 +813,7 @@ namespace DSLNG.PEAR.Services
                 return new GetKpiAchievementResponse
                 {
                     Id = result.Id,
-                    Value = (result != null) ? result.Value : null,
+                    Value = (result != null) ? result.Value : null,                    
                     Mtd = (result != null) ? result.Mtd : null,
                     Ytd = (result != null) ? result.Ytd : null,
                     Itd = (result != null) ? result.Itd : null,
