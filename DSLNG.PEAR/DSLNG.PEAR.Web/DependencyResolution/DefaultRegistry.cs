@@ -97,6 +97,7 @@ namespace DSLNG.PEAR.Web.DependencyResolution {
             For<IKpiTransformationService>().Use<KpiTransformationService>();
             For<IKpiTransformationScheduleService>().Use<KpiTransformationScheduleService>();
             For<IKpiTransformationLogService>().Use<KpiTransformationLogService>();
+            For<IDerLoadingScheduleService>().Use<DerLoadingScheduleService>();
         }
 
         #endregion

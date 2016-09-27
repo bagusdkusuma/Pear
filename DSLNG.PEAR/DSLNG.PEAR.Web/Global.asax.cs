@@ -30,7 +30,7 @@ namespace DSLNG.PEAR.Web
             AutoMapperConfiguration.Configure();
             //Database.SetInitializer<DataContext>(new DataInitializer());
             Database.SetInitializer<DataContext>(null);
-            
+
             //StructureMap Container
             IContainer container = IoC.Initialize();
             DependencyResolver.SetResolver(new StructureMapDependencyResolver(container));

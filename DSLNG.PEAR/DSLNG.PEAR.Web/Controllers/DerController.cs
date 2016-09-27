@@ -31,6 +31,7 @@ using DSLNG.PEAR.Web.Grid;
 using System.Text.RegularExpressions;
 using DSLNG.PEAR.Web.Attributes;
 using Newtonsoft.Json.Linq;
+using DSLNG.PEAR.Services.Requests.DerLoadingSchedule;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -45,9 +46,19 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IKpiTargetService _kpiTargetService;
         private readonly IVesselScheduleService _vesselScheduleService;
         private readonly IWaveService _waveService;
+        private readonly IDerLoadingScheduleService _derLoadingScheduleService;
         public static IDictionary<string, string> Contents { get; set; }
 
-        public DerController(IDerService derService, IDropdownService dropdownService, IArtifactService artifactService, IHighlightService highlightService, IWeatherService weatherService, IKpiAchievementService kpiAchievementService, IKpiTargetService kpiTargetService, IVesselScheduleService vesselScheduleService, IWaveService waveService)
+        public DerController(IDerService derService, 
+            IDropdownService dropdownService, 
+            IArtifactService artifactService, 
+            IHighlightService highlightService, 
+            IWeatherService weatherService, 
+            IKpiAchievementService kpiAchievementService, 
+            IKpiTargetService kpiTargetService, 
+            IVesselScheduleService vesselScheduleService, 
+            IWaveService waveService,
+            IDerLoadingScheduleService derLoadingScheduleService)
         {
             _derService = derService;
             _dropdownService = dropdownService;
@@ -58,6 +69,7 @@ namespace DSLNG.PEAR.Web.Controllers
             _kpiTargetService = kpiTargetService;
             _vesselScheduleService = vesselScheduleService;
             _waveService = waveService;
+            _derLoadingScheduleService = derLoadingScheduleService;
         }
 
         [AuthorizeUser(AccessLevel = "AllowView")]
@@ -442,13 +454,8 @@ namespace DSLNG.PEAR.Web.Controllers
                 #region Next Loading Schedule
                 case "nls":
                     {
-                        var vesselSchedule = _vesselScheduleService.GetVesselSchedules(new GetVesselSchedulesRequest
-                        {
-                            allActiveList = true,
-                            Skip = 0,
-                            Take = 3,
-                        });
-                        var schedules = vesselSchedule.VesselSchedules.OrderByDescending(x => x.ETA).Take(3).ToList().OrderBy(x => x.ETA).ToList();
+                        var vesselSchedule = _derLoadingScheduleService.Get(new GetDerLoadingSchedulesRequest { Periode = date, StrictDate = true });
+                        var schedules = vesselSchedule.VesselSchedules;
                         var nls = schedules.MapTo<DailyExecutionReportViewModel.NLSViewModel>();
 
                         var view = RenderPartialViewToString("~/Views/Der/Display/_Nls.cshtml", nls);

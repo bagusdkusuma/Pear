@@ -91,6 +91,7 @@
     <Compile Include="Constants\Type.cs" />
     <Compile Include="ConstantUsageService.cs" />
     <Compile Include="ConversionService.cs" />
+    <Compile Include="DerLoadingScheduleService.cs" />
     <Compile Include="DerService.cs" />
     <Compile Include="DerTransactionService.cs" />
     <Compile Include="DropdownService.cs" />
@@ -103,6 +104,7 @@
     <Compile Include="HighlightService.cs" />
     <Compile Include="InputDataService.cs" />
     <Compile Include="Interfaces\GetDerLayoutResponse.cs" />
+    <Compile Include="Interfaces\IDerLoadingScheduleService.cs" />
     <Compile Include="Interfaces\IDerTransactionService.cs" />
     <Compile Include="Interfaces\IFileRepositoryService.cs" />
     <Compile Include="Interfaces\IInputDataService.cs" />
@@ -119,6 +121,7 @@
     <Compile Include="MirConfigurationService.cs" />
     <Compile Include="MirDataTableService.cs" />
     <Compile Include="ProcessBlueprintService.cs" />
+    <Compile Include="Requests\DerLoadingSchedule\GetDerLoadingSchedulesRequest.cs" />
     <Compile Include="Requests\DerTransaction\GetDerLayoutItemsRequest.cs" />
     <Compile Include="Requests\DerTransaction\GetHighlightValuesRequest.cs" />
     <Compile Include="Requests\DerTransaction\GetKpiInformationValuesRequest.cs" />
@@ -160,6 +163,7 @@
     <Compile Include="Requests\Wave\GetWaveRequest.cs" />
     <Compile Include="Requests\Wave\GetWavesRequest.cs" />
     <Compile Include="Requests\Wave\SaveWaveRequest.cs" />
+    <Compile Include="Responses\DerLoadingSchedule\GetDerLoadingSchedulesResponse.cs" />
     <Compile Include="Responses\DerTransaction\GetDerLayoutItemsResponse.cs" />
     <Compile Include="Responses\DerTransaction\GetHighlightValuesResponse.cs" />
     <Compile Include="Responses\DerTransaction\GetKpiInformationValuesResponse.cs" />

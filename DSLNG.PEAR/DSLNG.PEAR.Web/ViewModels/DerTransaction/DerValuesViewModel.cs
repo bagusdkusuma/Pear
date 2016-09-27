@@ -54,5 +54,32 @@ namespace DSLNG.PEAR.Web.ViewModels.DerTransaction
         public WaveViewModel Wave { get; set; }
         public WeatherViewModel Weather { get; set; }
         public IList<SelectListItem> AlertOptions { get; set; }
+        public DerLoadingScheduleViewModel DerLoadingSchedule {get;set;}
+        public class DerLoadingScheduleViewModel {
+            public string ExistValueTime { get; set; }
+            public IList<VesselScheduleViewModel> VesselSchedules { get; set; }
+            public class VesselScheduleViewModel
+            {
+                public VesselScheduleViewModel()
+                {
+                }
+                public int id { get; set; }
+                public string Vessel { get; set; }
+                public string Name { get; set; }
+                public DateTime? ETA { get; set; }
+                public DateTime? ETD { get; set; }
+                public bool IsActive { get; set; }
+                public string Buyer { get; set; }
+                public string Location { get; set; }
+                public string SalesType { get; set; }
+                public string Type { get; set; }
+                public string VesselType { get; set; }
+                public string Cargo { get; set; }
+                public string Remark { get; set; }
+                public DateTime? RemarkDate { get; set; }
+                public string Measurement { get; set; }
+                public double Capacity { get; set; }
+            }
+        }
     }
 }

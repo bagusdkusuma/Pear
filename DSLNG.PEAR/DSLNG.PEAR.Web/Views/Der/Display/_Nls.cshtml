@@ -1,39 +1,73 @@
 ﻿@model IEnumerable<DSLNG.PEAR.Web.ViewModels.Highlight.DailyExecutionReportViewModel.NLSViewModel>
 <table class="table table-bordered nls vertical-space top-bottom-border">
     <thead>
-                        <tr>
-                            <td style="width:12%;font-size:12px">
-                                NEXT LOADING SCHEDULE
-                            </td>
-                            <td style="width: 13.2%;font-size:11px;vertical-align:middle">
-                                Vessel <span style="display:inline-block"> (capacity)</span>
-                            </td>
-                            <td style="width: 12.5%;font-size:11px;vertical-align:middle">
-                                ETA
-                            </td>
-                            <td style="width: 12.7%;font-size:11px;vertical-align:middle">
-                                ETD
-                            </td>
-                            <td style="width: 12.5%;font-size:11px;vertical-align:middle" class="cargo">
-                                Cargo#
-                            </td>
-                            <td style="font-size:11px;vertical-align:middle">Remarks</td>
-                        </tr>
-                    </thead>
+        <tr>
+            <td style="width:12%;font-size:12px">
+                NEXT LOADING SCHEDULE
+            </td>
+            <td style="width: 13.2%;font-size:11px;vertical-align:middle">
+                Vessel <span style="display:inline-block"> (capacity)</span>
+            </td>
+            <td style="width: 12.5%;font-size:11px;vertical-align:middle">
+                ETA
+            </td>
+            <td style="width: 12.7%;font-size:11px;vertical-align:middle">
+                ETD
+            </td>
+            <td style="width: 12.5%;font-size:11px;vertical-align:middle" class="cargo">
+                Cargo#
+            </td>
+            <td style="font-size:11px;vertical-align:middle">Remarks</td>
+        </tr>
+    </thead>
     <tbody>
-        @foreach (var nls in Model)
+        @{
+            var listCount = Model.Count();
+        }
+        @for (var i = 0; i < 4; i++)
         {
-            <tr>
-                <td style="font-size:11px">
-                    @nls.VesselType - @nls.SalesType - @nls.Type
-                </td>
-                <td>@nls.Vessel (@nls.Capacity @nls.Measurement)</td>
-                <td>@nls.ETA.ToString("dd-MMM-yyyy")</td>
-                <td>@nls.ETD.ToString("dd-MMM-yyyy")</td>
-                <td>@nls.Cargo</td>
-                <td>@nls.Remark</td>
-            </tr>
+            if (i < listCount)
+            {
+                var nls = Model.ElementAt(i);
+                <tr>
+                    <td style="font-size:11px">
+                        @nls.VesselType - @nls.SalesType - @nls.Type
+                    </td>
+                    <td>@nls.Vessel (@nls.Capacity @nls.Measurement)</td>
+                    @if (nls.ETA.HasValue)
+                    {
+                        <td>@nls.ETA.Value.ToString("dd-MMM-yyyy")</td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+
+                    @if (nls.ETD.HasValue)
+                    {
+                        <td>@nls.ETD.Value.ToString("dd-MMM-yyyy")</td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                    <td>@nls.Cargo</td>
+                    <td>@nls.Remark</td>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <td style="font-size:11px">
+                        &nbsp;
+                    </td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+            }
         }
     </tbody>
 </table>
-

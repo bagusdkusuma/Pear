@@ -18,6 +18,5 @@ namespace DSLNG.PEAR.Data.Entities
         public VesselSchedule VesselSchedule { get; set; }
         public string Remark { get; set; }
         public DateTime CreatedAt { get; set; }
-        public IList<DerLoadingSchedule> DerLoadingSchedules { get; set; }
     }
 }

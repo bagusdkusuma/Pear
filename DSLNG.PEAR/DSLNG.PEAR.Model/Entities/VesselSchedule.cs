@@ -1,5 +1,6 @@
 ﻿
 
+using DSLNG.PEAR.Data.Entities.Der;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -28,5 +29,6 @@ namespace DSLNG.PEAR.Data.Entities
         public string Type { get; set; }
         public string Cargo { get; set; }
         public ICollection<NextLoadingSchedule> NextLoadingSchedules { get; set; }
+        public IList<DerLoadingSchedule> DerLoadingSchedules { get; set; }
     }
 }

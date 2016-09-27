@@ -19,6 +19,7 @@ using DSLNG.PEAR.Services.Requests.Select;
 using DSLNG.PEAR.Services.Requests.Wave;
 using DSLNG.PEAR.Services.Requests.Weather;
 using DSLNG.PEAR.Web.ViewModels.Weather;
+using DSLNG.PEAR.Services.Requests.DerLoadingSchedule;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -32,8 +33,17 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly ISelectService _selectService;
         private readonly IWaveService _waveService;
         private readonly IWeatherService _weatherService;
+        private readonly IDerLoadingScheduleService _derLoadingScheduleService;
 
-        public DerTransactionController(IDerService derService, IDerTransactionService derTransactionService, IKpiAchievementService kpiAchievementService, IKpiTargetService kpiTargetService, IHighlightService highlightService, ISelectService selectService, IWaveService waveService, IWeatherService weatherService)
+        public DerTransactionController(IDerService derService, 
+            IDerTransactionService derTransactionService, 
+            IKpiAchievementService kpiAchievementService, 
+            IKpiTargetService kpiTargetService, 
+            IHighlightService highlightService, 
+            ISelectService selectService, 
+            IWaveService waveService, 
+            IWeatherService weatherService,
+            IDerLoadingScheduleService derLoadingScheduleService)
         {
             _derService = derService;
             _derTransactionService = derTransactionService;
@@ -43,6 +53,7 @@ namespace DSLNG.PEAR.Web.Controllers
             _selectService = selectService;
             _waveService = waveService;
             _weatherService = weatherService;
+            _derLoadingScheduleService = derLoadingScheduleService;
         }
         // GET: DerTransaction
         public ActionResult Index()
@@ -87,11 +98,14 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult MarineShipping(string date)
         {
-            return View(GetDerValuesPerSection(date,
+            var dateTime = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+            var viewModel = GetDerValuesPerSection(date,
                 new int[] { 375, 376, 377, 378 }, //actual KpiIds 
                 new int[] { 375, 377 }, //target KpiIds
                 new int[] { 52 }  //highlightTypeIds
-                ));
+                );
+            viewModel.DerLoadingSchedule = _derLoadingScheduleService.Get(new GetDerLoadingSchedulesRequest { Periode = dateTime }).MapTo<DerValuesViewModel.DerLoadingScheduleViewModel>();
+            return View(viewModel);
         }
 
         public ActionResult MaintenanceSection(string date)

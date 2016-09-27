@@ -2,16 +2,26 @@
     Layout = null;
 }
 @model DSLNG.PEAR.Web.ViewModels.DerTransaction.DerValuesViewModel
+    <style>
+        .choosen-schedules.prev td,
+                .choosen-schedules.prev td a{
+            color: #A2CD5A !important;
+        }
+    </style>
+<div class="col-md-12 marine-shipping-message">
+    <div><ul class="validation-summary" style="color:red"></ul></div>
+    <div><ul class="success-message" style="color:green"></ul></div>
+</div>
 <div class="col-md-12">
     <p>
         <button class="btn btn-default choose-loading-schedule">Add From Existing</button>
         <button class="btn btn-default add-new-schedule">Add New</button>
         <button class="btn btn-default add-vessel">Add Vessel</button>
         <button class="btn btn-default add-buyer">Add Buyer</button>
-        <button class="btn btn-primary pull-right">Save</button>
+        <button class="btn btn-primary pull-right save-schedules">Save</button>
     </p>
     <div style="margin-top:20px" class="panel panel-default der-panel">
-        <table class="der table-bordered choosen-schedules">
+        <table class="der table-bordered choosen-schedules @Model.DerLoadingSchedule.ExistValueTime">
             <tr>
                 <th style="width:15px;display:none"></th>
                 <th style="width:150px">Next Loading Schedule</th>
@@ -23,6 +33,46 @@
                 <th>Remarks</th>
                 <th>Action</th>
             </tr>
+            @foreach (var nls in Model.DerLoadingSchedule.VesselSchedules)
+            {
+                <tr>
+                    <td style="display:none">
+                        <input type="checkbox"  class="check-this"/><input type="hidden" name="id" class="id" value="@nls.id" />
+                    </td>
+                    <td>
+                        <a href="/DerLoadingSchedule/Edit/@nls.id" class="edit-schedule">@nls.VesselType - @nls.SalesType - @nls.Type</a>
+                    </td>
+                    <td>@nls.Vessel (@nls.Capacity @nls.Measurement)</td>
+                    <td>@nls.Buyer</td>
+                    @if (nls.ETA.HasValue)
+                    {
+                        <td>@nls.ETA.Value.ToString("dd-MM-yyyy")</td>
+                    }
+                    else
+                    {
+                        <td>&nbsp;</td>
+                    }
+
+                    @if (nls.ETD.HasValue)
+                    {
+                        <td>@nls.ETD.Value.ToString("dd-MM-yyyy")</td>
+                    }
+                    else
+                    {
+                        <td>&nbsp;</td>
+                    }
+                    <td>@nls.Cargo</td>
+                    @if (nls.RemarkDate.HasValue)
+                    {
+                        <td>@nls.RemarkDate.Value.ToString("dd-MM-yyyy");@nls.Remark | @Html.ActionLink("See All", "Remarks", "DerLoadingSchedule", new { id = nls.id }, new { @class = "see-remarks" })</td>
+                    }
+                    else
+                    {
+                        <td>@Html.ActionLink("See All", "Remarks", "DerLoadingSchedule", new { id = nls.id }, new { @class = "see-remarks" })</td>
+                    }
+                    <td><button class="btn btn-default remove-schedule">remove</button></td>
+                </tr>
+            }
         </table>
     </div>
 </div>
@@ -242,5 +292,32 @@
                 $modal.find('.modal-body').html(data);
             })
         });
+        $(document).on('click', '.save-schedules', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var ids = [];
+           $('.choosen-schedules tr:not(:first-child)').each(function (i, val) {
+                var id = parseInt($(val).find('.id').val());
+                ids.push(id);
+            });
+           var currentDate = $('#currentDate').val();
+           console.log(ids);
+            $.post('@Url.Action("SaveSchedules", "DerLoadingSchedule")', { ids: ids, date: currentDate }, function (data) {
+                if (data.IsSuccess) {
+                    $('.marine-shipping-message .success-message').html('<p>' + data.Message + '</p>');
+                    if ($('.choosen-schedules').hasClass('prev')) {
+                        $('.choosen-schedules').removeClass('prev');
+                    }
+                    setTimeout(function () {
+                        $('.marine-shipping-message .success-message').html('');
+                    }, 1000)
+                } else {
+                    $('.marine-shipping-message .validation-summary').html('<p>' + data.Message + '</p>');
+                    setTimeout(function () {
+                        $('.marine-shipping-message .validation-summary').html('');
+                    }, 1000)
+                }
+            });
+        })
     })
 </script>

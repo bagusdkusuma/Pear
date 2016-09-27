@@ -32,6 +32,7 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IMeasurementService _measurementService;
         private readonly INLSService _nlsService;
         private readonly IHighlightOrderService _highlightOrderService;
+        private readonly IDerLoadingScheduleService _derLoadingScheduleService;
 
         public DerLoadingScheduleController(IVesselScheduleService vesselScheduleService, 
             IVesselService vesselService, 
@@ -39,7 +40,8 @@ namespace DSLNG.PEAR.Web.Controllers
             ISelectService selectService, 
             IMeasurementService measurementService,
             INLSService nlsService,
-            IHighlightOrderService highlightOrderService)
+            IHighlightOrderService highlightOrderService,
+            IDerLoadingScheduleService derLoadingScheduleService)
         {
             _vesselScheduleService = vesselScheduleService;
             _vesselService = vesselService;
@@ -48,6 +50,7 @@ namespace DSLNG.PEAR.Web.Controllers
             _measurementService = measurementService;
             _nlsService = nlsService;
             _highlightOrderService = highlightOrderService;
+            _derLoadingScheduleService = derLoadingScheduleService;
         }
         // GET: DerLoadingSchedule
         public ActionResult Choose(string date)
@@ -255,6 +258,12 @@ namespace DSLNG.PEAR.Web.Controllers
             var req = viewModel.MapTo<SaveNLSRequest>();
             var response = _nlsService.SaveNLS(req);
             return Json(response);
+        }
+
+        [HttpPost]
+        public ActionResult SaveSchedules(int[] ids, string date) {
+            var dateTime = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+            return Json(_derLoadingScheduleService.SaveSchedules(ids, dateTime));
         }
 
     }
