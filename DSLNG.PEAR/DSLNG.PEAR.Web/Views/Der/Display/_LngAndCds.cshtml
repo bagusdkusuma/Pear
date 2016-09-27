@@ -146,8 +146,8 @@
             <td rowspan="2">
                 @Model.KpiInformationViewModels.Single(x => x.Position == 13).DerItemValue.Remark
             </td>
-            <td>
-                COB: @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 15).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 15).KpiMeasurement, "m3")
+            <td rowspan="2">
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 15).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 15).KpiMeasurement, "m3")
             </td>
         </tr>
         <tr>
@@ -166,10 +166,10 @@
             <td>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 13).DerItemValue.Ytd, string.Empty, string.Empty)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 16).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 16).KpiMeasurement, "bbl")
 
-            </td>
+            </td>*@
         </tr>
     </tbody>
 </table>
