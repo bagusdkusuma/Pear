@@ -441,10 +441,20 @@
                                                     }
                                                 }
                                             </div>
+                                            <div class="hhv-bar">
+                                                Feed Gas HHV@USM (btu/scf):
+                                                @{
+                                                    var row6Col11 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 11);
+                                                    if (row6Col11 != null)
+                                                    {
+                                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col11.Id })" class="layout-item barmeter"></div>
+                                                    }
+                                                }
+                                            </div>
                                         </td>
                                         <td style="width:41.5%;padding:0">
                                             <div class="impurities vertical-space text-center">
-                                                <label>Impurities (24H Avg-GSA spec)</label>
+                                                <label style="margin-top:10px">Impurities (24H Avg-GSA spec)</label>
                                                 <table style="width:100%">
                                                     <tr>
                                                         <td style="width:40%">

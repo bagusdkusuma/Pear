@@ -461,7 +461,7 @@ h6 {
         .impurities {
             width: 100%;
             background-color: #215967;
-            height: 139px;
+            height: 158px;
             border: 1px solid #0D0D0D;
             color:#fff;
         }
@@ -926,16 +926,19 @@ h6 {
         /*.table.table.kpi-fatality > tbody > tr > td:nth-last-child(2) {
             position: relative;
         }*/
-        .psig {
+.hhv-bar {
+    margin-bottom:5px;
+}
+        .psig,.hhv-bar {
                 position: relative;
             height: 19px;
             border-bottom: 1px solid #0d0d0d;
             border-right: 1px solid #0d0d0d;
-            width: 100.1%;
-            margin-bottom: 5px;
+            width: 100.3%;
            padding-top: 4px;
         }
-        .psig .barmeter{
+        .psig .barmeter,
+        .hhv-bar .barmeter{
               height: 14px;
                 width: 241px;
                 position: absolute;
@@ -1127,7 +1130,8 @@ td.percentage-wrapper {
     .job-pmts thead tr:last-child,
     .mgdp thead tr:last-child,
     .hhv thead tr:last-child ,
-    .psig,  
+    .psig,
+    .hhv-bar,  
     .production tbody tr:last-child td:nth-child(1)
     {
         font-size: 11px;
@@ -1137,6 +1141,7 @@ td.percentage-wrapper {
     .plant-availability tbody tr > td:first-child,
     .production tbody tr > td:first-child,
     .psig,
+    .hhv-bar,
     .production tbody tr:last-child td:nth-child(3),
     .production tbody tr:last-child td:nth-child(5),
     .commodities tbody tr td:first-child

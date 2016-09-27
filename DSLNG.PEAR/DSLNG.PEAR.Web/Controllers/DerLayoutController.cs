@@ -438,6 +438,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     case "6-and-8":
                     case "6-and-9":
                     case "6-and-10":
+                    case "6-and-11":
                         {
                             viewModel.Type = "barmeter";
                             break;

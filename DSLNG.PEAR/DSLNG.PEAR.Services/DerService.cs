@@ -301,6 +301,7 @@ namespace DSLNG.PEAR.Services
             rowAndColumns.Add(new RowAndColumns { Row = 6, Column = 8 });
             rowAndColumns.Add(new RowAndColumns { Row = 6, Column = 9 });
             rowAndColumns.Add(new RowAndColumns { Row = 6, Column = 10 });
+            rowAndColumns.Add(new RowAndColumns { Row = 6, Column = 11 });
             rowAndColumns.Add(new RowAndColumns { Row = 7, Column = 0 });
             rowAndColumns.Add(new RowAndColumns { Row = 7, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 7, Column = 2 });

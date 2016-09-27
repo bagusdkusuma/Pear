@@ -702,6 +702,24 @@
                                         }
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td colspan="4" class="psig">
+                                        Feed Gas HHV@USM (btu/scf):
+                                        @*<div class="barmeter">
+                </div>*@
+                                        @{
+                                            var row6Col11 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 11);
+                                            if (row6Col11 != null)
+                                            {
+                                                <a href="@Url.Action("LayoutItem", new { column = 11, row = 6, derLayoutId = Model.DerLayoutId, id = row6Col11.Id })" class="">Manage</a>
+                                            }
+                                            else
+                                            {
+                                                <a href="@Url.Action("LayoutItem", new { column = 11, row = 6, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
+                                            }
+                                        }
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
