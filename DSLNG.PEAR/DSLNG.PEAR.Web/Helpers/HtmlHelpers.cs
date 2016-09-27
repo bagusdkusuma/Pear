@@ -503,20 +503,20 @@ namespace DSLNG.PEAR.Web.Helpers
             if (string.IsNullOrEmpty(s)) return new MvcHtmlString(string.Empty);
             switch (s.ToLowerInvariant())
             {
-                case "4":
+                case "5":
                 case "fulfilled":
                     return new MvcHtmlString("<span class='indicator left-side'><i class='fa fa-check' style='color:green'></i></span>Fulfilled");
                 case "3":
                 case "on track":
                     return new MvcHtmlString("<span class='indicator left-side'><i class='fa fa-circle' style='color:green'></i></span>On-track");
-                case "2":
+                case "4":
                 case "loading":
                     return new MvcHtmlString("<span class='indicator left-side'><i class='fa fa-arrow-right' style='color:grey'></i></span>Loading");
-                case "1":
+                case "2":
                 case "need attention":
                     return new MvcHtmlString("<span class='indicator left-side'><i class='fa fa-circle' style='color:orange'></i></span>Need attention");
 
-                case "0":
+                case "1":
                 case "unfulfilled":
                     return new MvcHtmlString("<span class='indicator left-side'><i class='fa fa-circle' style='color:red'></i></span>Unfulfilled");
 

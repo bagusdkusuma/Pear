@@ -1,5 +1,8 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.DerLayout.DerLayoutItemViewModel
-<h3>DER Layout Item Configuration</h3>
+@{
+    ViewBag.Title = "DER Layout Item Configuration " + Model.Type.ToString();
+}
+<h4>DER Layout Item Configuration</h4>
 
 @using (Html.BeginForm("SaveLayoutItem", "DerLayout", FormMethod.Post))
 {
@@ -12,7 +15,7 @@
     <div class="form-group row">
         @Html.LabelFor(model => model.Type, new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.Type, Model.Types, "Select Type", new { style = "color:#000", @class = "der-layout-type" })
+            @Html.DropDownListFor(model => model.Type, Model.Types, "Select Type", new { style = "color:#000", @class = "der-layout-type", @disabled = "disabled" })
             @*@Html.HiddenFor(model => model.Type)*@
             @Html.ValidationMessageFor(model => model.Row)
         </div>
