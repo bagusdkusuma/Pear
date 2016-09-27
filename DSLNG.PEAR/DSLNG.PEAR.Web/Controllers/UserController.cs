@@ -166,7 +166,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public UpdateUserViewModel UpdateViewModel(UpdateUserViewModel viewModel)
         {
-            
+
             viewModel.RoleGroupList = _roleGroupService.GetRoleGroups(new Services.Requests.RoleGroup.GetRoleGroupsRequest
             {
                 Take = -1,
@@ -191,7 +191,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var response = _userService.GetUser(new GetUserRequest { Id = id });
             var viewModel = response.MapTo<UpdateUserViewModel>();
             viewModel = UpdateViewModel(viewModel);
-           // viewModel.RolePrivilegeOption = _roleGroupService.GetRoleGroup(new Services.Requests.RoleGroup.GetRoleGroupRequest { Id = viewModel.RoleId }).Privileges.MapTo<SelectListItem>();
+            // viewModel.RolePrivilegeOption = _roleGroupService.GetRoleGroup(new Services.Requests.RoleGroup.GetRoleGroupRequest { Id = viewModel.RoleId }).Privileges.MapTo<SelectListItem>();
             return View(viewModel);
         }
 
@@ -201,7 +201,7 @@ namespace DSLNG.PEAR.Web.Controllers
             List<SelectListItem> data = new List<SelectListItem>();
             if (roleId > 0)
             {
-                var role =  _roleGroupService.GetRoleGroup(new Services.Requests.RoleGroup.GetRoleGroupRequest { Id = roleId });
+                var role = _roleGroupService.GetRoleGroup(new Services.Requests.RoleGroup.GetRoleGroupRequest { Id = roleId });
                 if (role.IsSuccess && role.Privileges != null)
                 {
                     foreach (var privilege in role.Privileges)
@@ -219,24 +219,19 @@ namespace DSLNG.PEAR.Web.Controllers
         [HttpPost]
         public ActionResult Update(UpdateUserViewModel viewModel)
         {
-            if (viewModel.SignatureImage == null)
+            if (Request.Files.Count > 0)
             {
+                var file = Request.Files[0];
 
-
-                if (Request.Files.Count > 0)
+                if (file != null && file.ContentLength > 0)
                 {
-                    var file = Request.Files[0];
+                    var fileName = Path.GetFileName(file.FileName);
 
-                    if (file != null && file.ContentLength > 0)
-                    {
-                        var fileName = Path.GetFileName(file.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Content/signature/"), fileName);
+                    var url = "/Content/signature/" + fileName;
 
-                        var path = Path.Combine(Server.MapPath("~/Content/signature/"), fileName);
-                        var url = "/Content/signature/" + fileName;
-
-                        file.SaveAs(path);
-                        viewModel.SignatureImage = url;
-                    }
+                    file.SaveAs(path);
+                    viewModel.SignatureImage = url;
                 }
             }
             var request = viewModel.MapTo<UpdateUserRequest>();
@@ -280,7 +275,7 @@ namespace DSLNG.PEAR.Web.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
 
         }
-         
+
         public ActionResult AddPrivilege(int? RoleId)
         {
             var model = new AddRolePrivilegeViewModel();
