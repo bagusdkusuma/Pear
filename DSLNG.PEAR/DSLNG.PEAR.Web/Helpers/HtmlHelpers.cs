@@ -439,7 +439,7 @@ namespace DSLNG.PEAR.Web.Helpers
             var target = double.Parse(valueTarget);
             if (ytd > target)
             {
-                return new MvcHtmlString("<span class='indicator absolute'><i class='fa fa-times-circle'></i></span>");
+                return new MvcHtmlString("<span class='indicator absolute'><i class='fa fa-circle' style='color:red'></i></span>");
             }
             else {
                 return new MvcHtmlString("<span class='indicator absolute'><i class='fa fa-circle'></i></span>");
@@ -461,11 +461,61 @@ namespace DSLNG.PEAR.Web.Helpers
             else if (actual == target)
             {
                 //kuning
-                return new MvcHtmlString("<i class='fa fa-exclamation-circle'></i>");
+                return new MvcHtmlString("<i class='fa fa-circle' style='color: orange'></i>");
             }
             else {
                 //merah
-                return new MvcHtmlString("<i class='fa fa-times-circle'></i>");
+                return new MvcHtmlString("<i class='fa fa-circle' style='color:red'></i>");
+            }
+        }
+
+        public static MvcHtmlString DisplayKpiIndicatorType3(this HtmlHelper htmlHelper, string actualValue, string targetValue)
+        {
+            if (string.IsNullOrEmpty(actualValue) || string.IsNullOrEmpty(targetValue))
+            {
+                return new MvcHtmlString(string.Empty);
+            }
+            var actual = double.Parse(actualValue);
+            var target = double.Parse(targetValue);
+            if (actual > target)
+            {
+                //hijau
+                return new MvcHtmlString("<i class='fa fa-circle'></i>");
+            }
+            else if (actual == target)
+            {
+                //kuning
+                return new MvcHtmlString("<i class='fa fa-circle' style='color: orange'></i>");
+            }
+            else
+            {
+                //merah
+                return new MvcHtmlString("<i class='fa fa-circle' style='color: red'></i>");
+            }
+        }
+
+        public static MvcHtmlString DisplayKpiIndicatorType4(this HtmlHelper htmlHelper, string actualValue)
+        {
+            if (string.IsNullOrEmpty(actualValue))
+            {
+                return new MvcHtmlString(string.Empty);
+            }
+            var actual = double.Parse(actualValue);
+            
+            if (actual < 2)
+            {
+                //hijau
+                return new MvcHtmlString("<i class='fa fa-circle'></i>");
+            }
+            else if (actual > 2.2)
+            {
+                //merah jika 
+                return new MvcHtmlString("<i class='fa fa-circle' style='color:red'></i>");
+            }
+            else
+            {
+                //kuning
+                return new MvcHtmlString("<i class='fa fa-circle' style='color: orange'></i>");
             }
         }
 
@@ -477,7 +527,7 @@ namespace DSLNG.PEAR.Web.Helpers
             }
             var actual = double.Parse(actualValue);
             var target = double.Parse(targetValue);
-            if (actual <= target)
+            if (actual < target)
             {
                 //hijau
                 return new MvcHtmlString("<i class='fa fa-circle'></i>");
@@ -485,7 +535,7 @@ namespace DSLNG.PEAR.Web.Helpers
             else
             {
                 //merah
-                return new MvcHtmlString("<i class='fa fa-times-circle'></i>");
+                return new MvcHtmlString("<i class='fa fa-circle' style='color: red' ></i>");
             }
         }
 
@@ -517,9 +567,9 @@ namespace DSLNG.PEAR.Web.Helpers
                 case "1":
                     return "fa-circle";
                 case "-1":
-                    return "fa-times-circle";
+                    return "fa-circle style='color:red'";
                 case "0":
-                    return "fa-exclamation-circle";
+                    return "fa-circle style='color: orange'";
                 default:
                     return string.Empty;
             }
@@ -533,9 +583,9 @@ namespace DSLNG.PEAR.Web.Helpers
                 case "1":
                     return new MvcHtmlString("<span class='indicator absolute'><i class='fa fa-circle'></i></span>");
                 case "-1":
-                    return new MvcHtmlString("<span class='indicator absolute'><i class='fa fa-times-circle'></i></span>");
+                    return new MvcHtmlString("<span class='indicator absolute'><i class='fa fa-circle style='color:red'></i></span>");
                 case "0":
-                    return new MvcHtmlString("<span class='indicator absolute'><i class='fa fa-exclamation-circle'></i></span>");
+                    return new MvcHtmlString("<span class='indicator absolute'><i class='fa fa-circle' style='color: orange'></i></span>");
                 default:
                     return new MvcHtmlString(s);
             }
