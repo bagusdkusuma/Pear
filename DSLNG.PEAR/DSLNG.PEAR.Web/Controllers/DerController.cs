@@ -908,7 +908,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         viewModel.FullName = user.FullName;
                         viewModel.SignatureImage = user.SignatureImage;
                         viewModel.Time = "LT07:45";
-                        viewModel.Position = "Business Performance Sr.Specialist";
+                        viewModel.Position = user.Position;
                         var view = RenderPartialViewToString("~/Views/Der/Display/_PreparedBy.cshtml", viewModel);
                         return Json(new { type = layout.Type.ToLowerInvariant(), view = view }, JsonRequestBehavior.AllowGet);
                     }
@@ -918,7 +918,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         var user = _userService.GetUser(new Services.Requests.User.GetUserRequest { Id = layout.SignedBy });
                         viewModel.FullName = user.FullName;
                         viewModel.SignatureImage = user.SignatureImage;
-                        viewModel.Position = "Performance & Planning Sr. Manager";
+                        viewModel.Position = user.Position;
                         var view = RenderPartialViewToString("~/Views/Der/Display/_ReviewedBy.cshtml", viewModel);
                         return Json(new { type = layout.Type.ToLowerInvariant(), view = view }, JsonRequestBehavior.AllowGet);
                     }
