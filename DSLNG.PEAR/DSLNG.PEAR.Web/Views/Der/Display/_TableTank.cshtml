@@ -26,7 +26,7 @@
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 4).KpiMeasurement, "tonnes")
             </td>
             <td style="width:17%;text-align:right">
-                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 5).KpiMeasurement, "m3")
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 5).KpiMeasurement, "bbls")
             </td>
             <td style="width:12%;text-align:right">
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 7).KpiMeasurement, "tonnes")
@@ -34,7 +34,7 @@
 
             <td style="width:11.9%;text-align:right">
 
-                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 8).KpiMeasurement, "m3")
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 8).KpiMeasurement, "bbls")
             </td>
             <td style="text-align:right">
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 10).KpiMeasurement, "tonnes")
@@ -46,20 +46,20 @@
 
             </td>
             <td style="text-align:right;position:relative;">
-                @LngInventoryLevel(Model.KpiInformationViewModels.Single(x => x.Position == 12).DerItemValue.Value)
+                @*@LngInventoryLevel(Model.KpiInformationViewModels.Single(x => x.Position == 12).DerItemValue.Value)*@
                 Days to tank top @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, string.Empty, string.Empty)
             </td>
             <td style="text-align:center">
-                Days to tank top
+               @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 13).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 13).KpiMeasurement, "MMbtu")
             </td>
-            <td class="na-value" style="text-align:right">
-                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Value, string.Empty, string.Empty)
+            <td style="text-align:right">
+                Days to tank top @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Value, string.Empty, string.Empty)
             </td>
             <td style="text-align:center">
-                Days to tank top
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 14).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 14).KpiMeasurement, "MMbtu")
             </td>
-            <td class="na-value" style="text-align:right">
-                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Value, string.Empty, string.Empty)
+            <td style="text-align:right">
+                Days to tank top @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Value, string.Empty, string.Empty)
             </td>
             <td style="text-align:right">
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 11).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 11).KpiMeasurement, "MMbtu")
