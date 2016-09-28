@@ -13,7 +13,7 @@ namespace DSLNG.PEAR.Services.Interfaces
     {
         GetWavesResponse GetWaves(GetWavesRequest request);
         GetWavesResponse GetWavesForGrid(GetWavesRequest request);
-        BaseResponse SaveWave(SaveWaveRequest request);
+        SaveWaveResponse SaveWave(SaveWaveRequest request);
         GetWaveResponse GetWave(GetWaveRequest request);
     }
 }

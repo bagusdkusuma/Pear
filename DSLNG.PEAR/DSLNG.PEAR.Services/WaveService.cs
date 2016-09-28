@@ -57,13 +57,14 @@ namespace DSLNG.PEAR.Services
             };
         }
 
-        public BaseResponse SaveWave(SaveWaveRequest request)
+        public SaveWaveResponse SaveWave(SaveWaveRequest request)
         {
             try
             {
+                var wave = request.MapTo<Wave>();
                 if (request.Id != 0)
                 {
-                    var wave = DataContext.Waves.First(x => x.Id == request.Id);
+                    wave = DataContext.Waves.First(x => x.Id == request.Id);
                     request.MapPropertiesToInstance<Wave>(wave);
                     
                     if (request.ValueId != 0)
@@ -78,7 +79,7 @@ namespace DSLNG.PEAR.Services
                 }
                 else
                 {
-                    var wave = request.MapTo<Wave>();
+                  
                     if (request.ValueId != 0)
                     {
                         var value = DataContext.SelectOptions.Local.FirstOrDefault(x => x.Id == request.ValueId);
@@ -91,15 +92,16 @@ namespace DSLNG.PEAR.Services
                     DataContext.Waves.Add(wave);
                 }
                 DataContext.SaveChanges();
-                return new BaseResponse
+                return new SaveWaveResponse
                 {
                     IsSuccess = true,
-                    Message = "Wave data has been saved successfully"
+                    Message = "Wave data has been saved successfully",
+                    Id = wave.Id
                 };
             }
             catch (InvalidOperationException e)
             {
-                return new BaseResponse
+                return new SaveWaveResponse
                 {
                     IsSuccess = false,
                     Message = "An error occured while trying to save weather data"

@@ -76,9 +76,10 @@ namespace DSLNG.PEAR.Services
         {
             try
             {
+                var weather = request.MapTo<Weather>();
                 if (request.Id != 0)
                 {
-                    var weather = DataContext.Weathers.First(x => x.Id == request.Id);
+                    weather = DataContext.Weathers.First(x => x.Id == request.Id);
                     request.MapPropertiesToInstance<Weather>(weather);
                     var value = new SelectOption { Id = request.ValueId };
                     DataContext.SelectOptions.Attach(value);
@@ -86,7 +87,7 @@ namespace DSLNG.PEAR.Services
                 }
                 else
                 {
-                    var weather = request.MapTo<Weather>();
+                   
                     var value = new SelectOption { Id = request.ValueId };
                     DataContext.SelectOptions.Attach(value);
                     weather.Value = value;
@@ -96,7 +97,8 @@ namespace DSLNG.PEAR.Services
                 return new SaveWeatherResponse
                 {
                     IsSuccess = true,
-                    Message = "Weather data has been saved successfully"
+                    Message = "Weather data has been saved successfully",
+                    Id = weather.Id
                 };
             }
             catch (InvalidOperationException e)

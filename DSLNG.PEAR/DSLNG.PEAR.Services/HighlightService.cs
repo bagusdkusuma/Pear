@@ -99,9 +99,10 @@ namespace DSLNG.PEAR.Services
                         Message = "You can only save one type of highlight in the same periode of time"
                     };
                 }
+                var highlight = request.MapTo<Highlight>();
                 if (request.Id == 0)
                 {
-                    var highlight = request.MapTo<Highlight>();
+                    
                     var selectOption = DataContext.SelectOptions.Single(x => x.Id == request.TypeId);
                     var highlightType = selectOption;
                     highlight.Type = selectOption.Value;
@@ -111,7 +112,7 @@ namespace DSLNG.PEAR.Services
                 }
                 else
                 {
-                    var highlight = DataContext.Highlights.FirstOrDefault(x => x.Id == request.Id);
+                    highlight = DataContext.Highlights.FirstOrDefault(x => x.Id == request.Id);
                     if (highlight != null)
                     {
                         request.MapPropertiesToInstance<Highlight>(highlight);
@@ -126,7 +127,8 @@ namespace DSLNG.PEAR.Services
                 return new SaveHighlightResponse
                 {
                     IsSuccess = true,
-                    Message = "Highlight has been saved"
+                    Message = "Highlight has been saved",
+                    Id = highlight.Id
                 };
             }
             catch (InvalidOperationException e)

@@ -819,6 +819,7 @@
     <Compile Include="Responses\Vessel\SaveVesselResponse.cs" />
     <Compile Include="Responses\Wave\GetWavesResponse.cs" />
     <Compile Include="Responses\Wave\GetWaveResponse.cs" />
+    <Compile Include="Responses\Wave\SaveWaveResponse.cs" />
     <Compile Include="Responses\Weather\DeleteWeatherResponse.cs" />
     <Compile Include="Responses\Weather\GetWeatherResponse.cs" />
     <Compile Include="Responses\Weather\GetWeathersResponse.cs" />

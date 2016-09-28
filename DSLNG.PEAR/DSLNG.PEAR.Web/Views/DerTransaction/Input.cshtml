@@ -268,6 +268,20 @@
                     var contentUrl = $this.data('content-url');
                     contentUrl = contentUrl.replace('__date__', encodeURIComponent(currentDate));
                     $.get(contentUrl, function (data) {
+                        $(target).on('click', 'select',function () {
+                            console.log('panggil mari');
+                            if ($(this).attr('data-clicks') == 1) {
+                                // Trigger here your function:
+                                console.log('event should be triggered :panggil mari');
+                                $(this).trigger("altChange");
+                                $(this).attr('data-clicks', 0);
+                            } else {
+                                $(this).attr('data-clicks', 1);
+                            }
+                        });
+                        $(target).on('focusout', 'select', function () {
+                            $(this).attr('data-clicks', 0);
+                        });
                         $(target).html(data);
                         $(target).find('input.der-kpi').keyup(function (e) {
                             if (e.keyCode == 13) {
@@ -280,7 +294,7 @@
                             var type = $this.data('type');
                             var tabindex = $this.attr('tabindex');
                             var nextTabindex = parseInt(tabindex) + 1;
-                            var id = $this.data('id');
+                            var id = $this.attr('data-id');
                             var value = $this.val();
                             var valueType = $this.data('value-type');
                             $this.addClass('in-progress');
@@ -300,7 +314,7 @@
                                     $this.removeClass('der-value-empty');
                                 }
                                 $this.addClass('der-value-now');
-                                if (parseInt($this.data('id')) == 0) {
+                                if (parseInt($this.attr('data-id')) == 0) {
                                     $this.attr('data-id', resp.Id);
                                 }
                             })
@@ -332,14 +346,17 @@
                                         var nextTab = parseInt($textarea.attr('tabindex')) + 1;
                                         if (key == 9) {
                                             var highlightTypeId = $textarea.data('highlight-type-id');
-                                            var id = $textarea.data('id');
+                                            var id = $textarea.attr('data-id');
                                             var value = editor.getContent();
-                                            $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function () {
+                                            $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function (resp) {
                                                 var $next = $('[tabindex=' + nextTab + ']');
                                                 if ($next.is("textarea")) {
                                                     tinyMCE.get($next.attr('id')).focus()
                                                 } else {
                                                     $next.focus();
+                                                }
+                                                if (parseInt($textarea.attr('data-id')) == 0) {
+                                                    $textarea.attr('data-id', resp.Id);
                                                 }
                                             });
                                         }
@@ -347,19 +364,21 @@
                                 }
                             });
                         })
-                      
-                        $(target).on('change', 'select.der-highlight', function (e) {
+                        $(target).on('altChange', 'select.der-highlight', function (e) {
                             var $this = $(this);
                             var nextTab = parseInt($this.attr('tabindex')) + 1;
                             var highlightTypeId = $this.data('highlight-type-id');
-                            var id = $this.data('id');
+                            var id = $this.attr('data-id');
                             var value = $this.val();
-                            $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function () {
+                            $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function (resp) {
                                 var $next = $('[tabindex=' + nextTab + ']');
                                 if ($next.is("textarea")) {
                                     tinyMCE.get($next.attr('id')).focus()
                                 } else {
                                     $next.focus();
+                                }
+                                if (parseInt($this.attr('data-id')) == 0) {
+                                    $this.attr('data-id', resp.Id);
                                 }
                             });
                         });
@@ -372,38 +391,44 @@
                                 var $this = $(this);
                                 var nextTab = parseInt($this.attr('tabindex')) + 1;
                                 var highlightTypeId = $this.data('highlight-type-id');
-                                var id = $this.data('id');
+                                var id = $this.attr('data-id');
                                 var value = $this.val();
-                                $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function () {
+                                $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function (resp) {
                                     var $next = $('[tabindex=' + nextTab + ']');
                                     if ($next.is("textarea")) {
                                         tinyMCE.get($next.attr('id')).focus()
                                     } else {
                                         $next.focus();
                                     }
+                                    if (parseInt($this.attr('data-id')) == 0) {
+                                        $this.attr('data-id', resp.Id);
+                                    }
                                 });
                             }
                         });
-                        $(target).on('change', 'select.der-highlight-infragsm', function (e) {
+                        $(target).on('altChange', 'select.der-highlight-infragsm', function (e) {
                             var $this = $(this);
                             var nextTab = parseInt($this.attr('tabindex')) + 1;
                             var highlightTypeId = $this.data('highlight-type-id');
-                            var id = $this.data('id');
+                            var id = $this.attr('data-id');
                             var value = $this.val();
                             var property = $this.data('property');
-                            $.post("/dertransaction/updateinfragsm", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property : property }, function () {
+                            $.post("/dertransaction/updateinfragsm", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property : property }, function (resp) {
                                 var $next = $('[tabindex=' + nextTab + ']');
                                 if ($next.is("textarea")) {
                                     tinyMCE.get($next.attr('id')).focus()
                                 } else {
                                     $next.focus();
                                 }
+                                if (parseInt($this.attr('data-id')) == 0) {
+                                    $this.attr('data-id', resp.Id);
+                                }
                             });
                         });
-                        $(target).on('change', 'select.der-highlight-wave', function (e) {
+                        $(target).on('altChange', 'select.der-highlight-wave', function (e) {
                             var $this = $(this);
                             var nextTab = parseInt($this.attr('tabindex')) + 1;
-                            var id = $this.data('id');
+                            var id = $this.attr('data-id');
                             var value = $this.val();
                             var property = $this.data('property');
                             var data = { DateInDisplay: currentDate, id: id, PeriodeType: "Daily", property : property };
@@ -412,27 +437,33 @@
                             } else {
                                 data.Tide = value;
                             }
-                            $.post("/dertransaction/updatewave", data, function () {
+                            $.post("/dertransaction/updatewave", data, function (resp) {
                                 var $next = $('[tabindex=' + nextTab + ']');
                                 if ($next.is("textarea")) {
                                     tinyMCE.get($next.attr('id')).focus()
                                 } else {
                                     $next.focus();
                                 }
+                                if (parseInt($this.attr('data-id')) == 0) {
+                                    $this.attr('data-id', resp.Id);
+                                }
                             });
                         });
-                        $(target).on('change', 'select.der-highlight-weather', function (e) {
+                        $(target).on('altChange', 'select.der-highlight-weather', function (e) {
                             var $this = $(this);
                             var nextTab = parseInt($this.attr('tabindex')) + 1;
-                            var id = $this.data('id');
+                            var id = $this.attr('data-id');
                             var value = $this.val();
                             var data = { DateInDisplay: currentDate, id: id, PeriodeType: "Daily", ValueId : value};
-                            $.post("/dertransaction/updateweather", data, function () {
+                            $.post("/dertransaction/updateweather", data, function (resp) {
                                 var $next = $('[tabindex=' + nextTab + ']');
                                 if ($next.is("textarea")) {
                                     tinyMCE.get($next.attr('id')).focus()
                                 } else {
                                     $next.focus();
+                                }
+                                if (parseInt($this.attr('data-id')) == 0) {
+                                    $this.attr('data-id', resp.Id);
                                 }
                             });
                         });
@@ -440,7 +471,7 @@
                             if (e.keyCode == 13) {
                                 var $this = $(this);
                                 var nextTab = parseInt($this.attr('tabindex')) + 1;
-                                var id = $this.data('id');
+                                var id = $this.attr('data-id');
                                 var value = $this.val();
                                 var property = $this.data('property');
                                 var data = { DateInDisplay: currentDate, id: id, PeriodeType: "Daily", property: property, Speed : value };
@@ -449,12 +480,15 @@
                                 //} else if{
                                 //    data.Tide = value;
                                 //}
-                                $.post("/dertransaction/updatewave", data, function () {
+                                $.post("/dertransaction/updatewave", data, function (resp) {
                                     var $next = $('[tabindex=' + nextTab + ']');
                                     if ($next.is("textarea")) {
                                         tinyMCE.get($next.attr('id')).focus()
                                     } else {
                                         $next.focus();
+                                    }
+                                    if (parseInt($this.attr('data-id')) == 0) {
+                                        $this.attr('data-id', resp.Id);
                                     }
                                 });
                             }
@@ -464,27 +498,30 @@
                                 var $this = $(this);
                                 var nextTab = parseInt($this.attr('tabindex')) + 1;
                                 var highlightTypeId = $this.data('highlight-type-id');
-                                var id = $this.data('id');
+                                var id = $this.attr('data-id');
                                 var value = $this.val();
                                 var property = $this.data('property');
                                 var valueType = $this.data('type');
-                                $.post("/dertransaction/updatebrenfut", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property: property, valueType: valueType }, function () {
+                                $.post("/dertransaction/updatebrenfut", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property: property, valueType: valueType }, function (resp) {
                                     var $next = $('[tabindex=' + nextTab + ']');
                                     if ($next.is("textarea")) {
                                         tinyMCE.get($next.attr('id')).focus()
                                     } else {
                                         $next.focus();
                                     }
+                                    if (parseInt($this.attr('data-id')) == 0) {
+                                        $this.attr('data-id', resp.Id);
+                                    }
                                 });
                             }
                         });
-                        $(target).on('change', 'select.der-kpi', function (e) {
+                        $(target).on('altChange', 'select.der-kpi', function (e) {
                             var $this = $(this);
                             var kpiId = $this.data('kpi-id');
                             var type = $this.data('type');
                             var tabindex = $this.attr('tabindex');
                             var nextTabindex = parseInt(tabindex) + 1;
-                            var id = $this.data('id');
+                            var id = $this.attr('data-id');
                             var value = $this.val();
                             var valueType = $this.data('value-type');
                             $this.addClass('in-progress');
@@ -504,7 +541,7 @@
                                     $this.removeClass('der-value-empty');
                                 }
                                 $this.addClass('der-value-now');
-                                if (parseInt($this.data('id')) == 0) {
+                                if (parseInt($this.attr('data-id')) == 0) {
                                     $this.attr('data-id', resp.Id);
                                 }
                             })
@@ -514,15 +551,18 @@
                                 var $this = $(this);
                                 var nextTab = parseInt($this.attr('tabindex')) + 1;
                                 var highlightTypeId = $this.data('highlight-type-id');
-                                var id = $this.data('id');
+                                var id = $this.attr('data-id');
                                 var value = $this.val();
                                 var property = $this.data('property');
-                                $.post("/dertransaction/updateweeklyalarm", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property: property}, function () {
+                                $.post("/dertransaction/updateweeklyalarm", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property: property}, function (resp) {
                                     var $next = $('[tabindex=' + nextTab + ']');
                                     if ($next.is("textarea")) {
                                         tinyMCE.get($next.attr('id')).focus()
                                     } else {
                                         $next.focus();
+                                    }
+                                    if (parseInt($this.attr('data-id')) == 0) {
+                                        $this.attr('data-id', resp.Id);
                                     }
                                 });
                             }
