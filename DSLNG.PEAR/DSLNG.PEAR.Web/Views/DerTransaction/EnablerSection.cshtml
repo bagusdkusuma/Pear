@@ -34,9 +34,9 @@
             </tr>
             <tr>
                 <td>
-                    <label for="" style="margin-top: 20px;">Remark</label>
+                    <label for="" style="margin-top: 20px;">Avg backlog-Target</label>
                     <br />
-                   @Html.DisplayKpiInformationInput(Model.KpiInformations, 380, 264, "free text", "prev", "daily-actual", "remark")
+                    @Html.DisplayKpiInformationInput(Model.KpiInformations, 380, 264, "number", "prev", "daily-target")
                 </td>
             </tr>
         </table>
@@ -52,16 +52,16 @@
                 <td>
                     <label for="" style="margin-top: 20px;">Application</label>
                     <br />
-                    @Html.DisplayIctInfraOrGsfmHighlight(Model.Highlights,66,new List<SelectListItem>{
+                    @Html.DisplayIctInfraOrGsfmHighlight(Model.Highlights, 66, new List<SelectListItem>{
                     new SelectListItem { Text = "-1", Value = "-1" },
                         new SelectListItem { Text = "0", Value = "0" },
                          new SelectListItem { Text = "1", Value = "1" },
-               },265,"a")
+               }, 265, "a")
                     @*<select>
-                        <option>Select Option</option>
-                        <option>Option 1</option>
-                        <option>Option 2</option>
-                    </select>*@
+                            <option>Select Option</option>
+                            <option>Option 1</option>
+                            <option>Option 2</option>
+                        </select>*@
                 </td>
             </tr>
             <tr>
@@ -91,12 +91,12 @@
                     <label for="" style="margin-top: 20px;">Remark</label>
                     <br />
                     @*@Html.DisplayHighlightTextarea(Model.Highlights, 21, 268)*@
-                    @Html.DisplayHighlightInput(Model.Highlights,21,268,"free text","prev" )
+                    @Html.DisplayHighlightInput(Model.Highlights, 21, 268, "free text", "prev")
                     @*<input type="text" name="" id="" placeholder="free text" />*@
                     @*@Html.DisplayIctInfraOrGsfmHighlight(Model.Highlights, 66, new List<SelectListItem>{
-                    new SelectListItem { Text = "Option 1", Value = "Option 1" },
-                        new SelectListItem { Text = "Option 2", Value = "Option 2" },
-               }, 269, "remark")*@
+                             new SelectListItem { Text = "Option 1", Value = "Option 1" },
+                                 new SelectListItem { Text = "Option 2", Value = "Option 2" },
+                        }, 269, "remark")*@
                 </td>
             </tr>
         </table>
@@ -150,10 +150,19 @@
             </tr>
             <tr>
                 <td>
-                    <label for="" style="margin-top: 20px;">Remark</label>
+                    @*<label for="" style="margin-top: 20px;">Remark</label>*@
                     <br />
+                    <table border="0">
+                        <tr>
+                            <td><label class="control-label">Remark</label></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayHighlightTextarea(Model.Highlights, 53, 273)
+                            </td>
+                        </tr>
+                    </table>
                     @*@Html.DisplayHighlightTextarea(Model.Highlights, 53, 273)*@
-                    @Html.DisplayHighlightInput(Model.Highlights, 53, 273, "free text", "prev")
                     @*<input type="text" name="" id="" placeholder="free text" />*@
                 </td>
             </tr>
@@ -175,10 +184,10 @@
         </table>
     </div>
     <div class="col-md-6">
-     <h4 style="color: white;">Daily Highlight-K</h4>
+        <h4 style="color: white;">Daily Highlight-K</h4>
         <table border="0">
             <tr>
-                 <td><label class="control-label" style="visibility: hidden;">Remark</label></td>
+                <td><label class="control-label" style="visibility: hidden;">Remark</label></td>
             </tr>
             <tr>
                 <td>
@@ -190,13 +199,13 @@
             </tr>
             <tr>
                 <td>
-                    @Html.DisplayHighlightDropdownList(Model.Highlights,58,new List<SelectListItem> {
+                    @Html.DisplayHighlightDropdownList(Model.Highlights, 58, new List<SelectListItem> {
                    new SelectListItem {Value = "1", Text = "1" },
                    new SelectListItem {Value = "2", Text = "2" },
                    new SelectListItem {Value = "3", Text = "3" },
                    new SelectListItem {Value = "4", Text = "4" },
                    new SelectListItem {Value = "5", Text = "5" }
-               },276,"prev" )
+               }, 276, "prev")
                 </td>
             </tr>
         </table>
