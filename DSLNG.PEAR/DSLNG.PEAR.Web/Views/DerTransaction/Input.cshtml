@@ -10,7 +10,7 @@
 @{
     ViewBag.Title = "Der Custom Input Form";
 }
-<section id="der-transaction" data-date="@DateTime.Now.ToString("MM/dd/yyyy")">
+<section id="der-transaction" data-date="@DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy")">
     <div class="row">
         <div class="title_page" style="border: none!important;">
             <div class="row">
