@@ -34,7 +34,7 @@
             @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "day")
         </td>
         <td>
-            @Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Remark
+            Target &lt; @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "days")
         </td>
     </tr>
     </tbody>

@@ -767,6 +767,8 @@ namespace DSLNG.PEAR.Web.Controllers
                         }*/
 
                         var viewModel = GetGeneralDerKpiInformations(2, layout, date, PeriodeType.Daily);
+                        var target2 = layout.KpiInformations.SingleOrDefault(x => x.Position == 1);
+                        viewModel.KpiInformationViewModels.Add(AddTarget(2, target2, date));
                         var view = RenderPartialViewToString("~/Views/Der/Display/_Procurement.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
