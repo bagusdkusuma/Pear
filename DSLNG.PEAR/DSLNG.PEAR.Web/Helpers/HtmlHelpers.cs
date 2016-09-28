@@ -202,7 +202,7 @@ namespace DSLNG.PEAR.Web.Helpers
                         value = PlantAvailabilityIndicator(kpiInformation.DerItemValue.Value, kpiInformationTarget.DerItemValue.Value);
                         break;
                 }
-                return  RemarkToMvcHtmlString(value.ToString());
+                return RemarkToMvcHtmlString(value.ToString());
             }
             catch (Exception e)
             {
@@ -302,7 +302,7 @@ namespace DSLNG.PEAR.Web.Helpers
             {
                 value = 1;
             }
-            else if (double.Parse(Value) >= double.Parse(TargetVale) && double.Parse(Value) <  2.2)
+            else if (double.Parse(Value) >= double.Parse(TargetVale) && double.Parse(Value) < 2.2)
             {
                 value = 0;
             }
@@ -443,6 +443,49 @@ namespace DSLNG.PEAR.Web.Helpers
             }
             else {
                 return new MvcHtmlString("<span class='indicator absolute'><i class='fa fa-circle'></i></span>");
+            }
+        }
+
+        public static MvcHtmlString DisplayKpiIndicatorType2(this HtmlHelper htmlHelper, string actualValue, string targetValue) {
+            if (string.IsNullOrEmpty(actualValue) || string.IsNullOrEmpty(targetValue))
+            {
+                return new MvcHtmlString(string.Empty);
+            }
+            var actual = double.Parse(actualValue);
+            var target = double.Parse(targetValue);
+            if (actual < target)
+            {
+                //hijau
+                return new MvcHtmlString("<i class='fa fa-circle'></i>");
+            }
+            else if (actual == target)
+            {
+                //kuning
+                return new MvcHtmlString("<i class='fa fa-exclamation-circle'></i>");
+            }
+            else {
+                //merah
+                return new MvcHtmlString("<i class='fa fa-times-circle'></i>");
+            }
+        }
+
+        public static MvcHtmlString DisplayKpiIndicatorType1(this HtmlHelper htmlHelper, string actualValue, string targetValue)
+        {
+            if (string.IsNullOrEmpty(actualValue) || string.IsNullOrEmpty(targetValue))
+            {
+                return new MvcHtmlString(string.Empty);
+            }
+            var actual = double.Parse(actualValue);
+            var target = double.Parse(targetValue);
+            if (actual <= target)
+            {
+                //hijau
+                return new MvcHtmlString("<i class='fa fa-circle'></i>");
+            }
+            else
+            {
+                //merah
+                return new MvcHtmlString("<i class='fa fa-times-circle'></i>");
             }
         }
 

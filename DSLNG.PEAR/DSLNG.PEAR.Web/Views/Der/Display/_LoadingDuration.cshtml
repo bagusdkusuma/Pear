@@ -12,7 +12,7 @@
                         <table style="width:100%">
                             <tr class="loading-duration">
                                 <td style="width:33.33%;padding:2px"><label style="font-size:11px">Loading Duration</label></td>
-                                <td style="width:33.33%;padding:2px">Last Shipping: @Html.DisplayDerValueWithHours(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value) <span class="indicator right-side"><i class="fa @Html.DisplayDerRemark(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Remark)"></i></span></td>
+                                <td style="width:33.33%;padding:2px">Last Shipping: @Html.DisplayDerValueWithHours(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value) <span class="indicator right-side">@Html.DisplayKpiIndicatorType1(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Ytd)</span></td>
                                 <td style="width:33.33%;padding:2px">Avg YTD: @Html.DisplayDerValueWithHours(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value)</td>
                             </tr>
                         </table>
@@ -45,7 +45,7 @@
                         <label>Ttl terminal time (berth-unberth)</label>
                     </td>
                     <td style="width:50%;padding:3px">
-                        Last Shipping:@Html.DisplayDerValueWithHours(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value) <span class="indicator @Html.DisplayDerRemark(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Remark)"><i class="fa @Html.DisplayDerRemark(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Remark)"></i></span> Avg YTD:@Html.DisplayDerValueWithHours(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value)
+                        Last Shipping:@Html.DisplayDerValueWithHours(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value) <span class="indicator right-side">@Html.DisplayKpiIndicatorType2(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Ytd)</span> Avg YTD:@Html.DisplayDerValueWithHours(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value)
                     </td>
                 </tr>
             </table>
