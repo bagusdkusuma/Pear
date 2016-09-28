@@ -59,7 +59,7 @@
             </td>
         </tr>
         <tr>
-            <td>Applied JCC Crude ( @TempData["month"])</td>
+            <td>Applied JCC ( @TempData["month"])</td>
             <td>
                 <span class="comparison left-side"><i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Deviation)"></i></span>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiMeasurement, "USD/bbl")
