@@ -638,7 +638,10 @@ namespace DSLNG.PEAR.Web.Controllers
                     {
 
                         var viewModel = GetGeneralDerKpiInformations(10, layout, date, PeriodeType.Daily);
-
+                        var target7 = layout.KpiInformations.SingleOrDefault(x => x.Position == 7);
+                        var target8 = layout.KpiInformations.SingleOrDefault(x => x.Position == 8);
+                        viewModel.KpiInformationViewModels.Add(AddTarget(10, target7, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(11, target8, date));
                         var view = RenderPartialViewToString("~/Views/Der/Display/_LngAndCdsProduction.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
