@@ -809,16 +809,16 @@ namespace DSLNG.PEAR.Web.Controllers
                     {
                         var viewModel = GetGeneralDerKpiInformations(15, layout, date, PeriodeType.Daily);
 
-                        var jccPrice = layout.KpiInformations.Where(x => x.Position == 3).FirstOrDefault();
-                        if(jccPrice != null)
-                        {
-                            var monhtlyDate = new DateTime(date.Year, date.Month, 1);
-                            var monthly = _kpiAchievementService.GetKpiAchievement(jccPrice.Kpi.Id, monhtlyDate, PeriodeType.Monthly);
-                            if(monthly.Value.HasValue)
-                            {
-                                viewModel.KpiInformationViewModels.First(x => x.Position == 3).DerItemValue.Value = monthly.Value.Value.ToString();
-                            }
-                        }
+                        //var jccPrice = layout.KpiInformations.Where(x => x.Position == 3).FirstOrDefault();
+                        //if(jccPrice != null)
+                        //{
+                        //    var monhtlyDate = new DateTime(date.Year, date.Month, 1);
+                        //    var monthly = _kpiAchievementService.GetKpiAchievement(jccPrice.Kpi.Id, monhtlyDate, PeriodeType.Monthly);
+                        //    if(monthly.Value.HasValue)
+                        //    {
+                        //        viewModel.KpiInformationViewModels.First(x => x.Position == 3).DerItemValue.Value = monthly.Value.Value.ToString();
+                        //    }
+                        //}
                         
                         TempData["month"] = date.ToString("MMM", CultureInfo.InvariantCulture);
                         var view = RenderPartialViewToString("~/Views/Der/Display/_EconomicIndicator.cshtml", viewModel);
@@ -1142,7 +1142,15 @@ namespace DSLNG.PEAR.Web.Controllers
                     //kpiInformationVm.DerItemValue = achievement.MapTo<DerItemValueViewModel>();
                     if (item.ConfigType.Equals(ConfigType.KpiAchievement))
                     {
-                        var achievement = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, periodeType);
+                        var achievement = new Services.Responses.KpiAchievement.GetKpiAchievementResponse();
+                        if (item.Kpi.Id == 62)
+                        {
+                            achievement = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, new DateTime(date.Year, date.Month, 1), PeriodeType.Monthly);
+                        }
+                        else
+                        {
+                            achievement = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, periodeType);
+                        }
                         kpiInformationVm.DerItemValue = achievement.MapTo<DerItemValueViewModel>();
                     }
                     else if (item.ConfigType.Equals(ConfigType.KpiTarget))
