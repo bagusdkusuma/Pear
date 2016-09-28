@@ -740,7 +740,7 @@ Number.prototype.format = function (n, x) {
         var displayName = {
             'LNG/Feed yield': 'LNG',
             'CDS/Feed Yield': 'CDS',
-            'Refrigerant Yield': 'Fuel-Refgr',
+            'Fuel Gas & Ref Yield': 'Fuel-Refgr',
             'Flare Loss' : 'Loss'
         }
         for (var i in data.Pie.SeriesResponses) {

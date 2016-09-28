@@ -29,7 +29,7 @@
         <td style="font-size:11px;font-weight:bold">
             Avg Backlog time
         </td>
-        <td>
+        <td style="position:relative">
             <span class="indicator absolute">@Html.DisplayKpiIndicatorType2(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value)</span>
             @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "day")
         </td>

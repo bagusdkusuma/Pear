@@ -112,18 +112,18 @@
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 6).KpiMeasurement, "ton/d")
 
             </td>
-            <td style="text-align:right">
+            <td style="text-align:right;border-right:none;">
                 LNG HHV : <span class="indicator">@Html.DisplayKpiIndicatorType2(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Value)</span>
             </td>
-            <td>
+            <td style="border-left:none">
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 7).KpiMeasurement, "btu/scf")
 
             </td>
-            <td colspan="2" style="text-align:right">
+            <td colspan="2" style="text-align:right;border-right:none;">
                 CDS Reid Vapor Pressure (RVP) : <span class="indicator">@Html.DisplayKpiIndicatorType2(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 11).DerItemValue.Value)</span>
 
             </td>
-            <td>
+            <td style="border-left:none">
                 <span class="indicator left-side" style="margin-right: 50px;"><i class="fa @Html.DisplayDerRemark(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Remark)"></i></span>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 8).KpiMeasurement, "Psia")
 

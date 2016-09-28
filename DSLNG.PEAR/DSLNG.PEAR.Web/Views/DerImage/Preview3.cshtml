@@ -41,7 +41,7 @@
             border-left:1px solid #444;
         }*/
         .impurities {
-            height: 153px;
+            height: 173px;
         }
 
         .table.security-incident {
@@ -126,8 +126,17 @@
         .table.security-incident tr td:last-child {
             width:59.3% !important;
         }
+        /*.table.hhv tbody tr:first-child td {
+            height:30px !important;
+        }*/
+        .table.total-feed-gas thead tr td:first-child {
+            padding-left:2px;
+            padding-right:2px;
+        }
+        .impurities > label {
+            margin-top: 20px !important;
+        }
     </style>
-    @Styles.Render("~/Content/der-dikdik.css")
 </head>
 <body>
     @Html.Raw(Model.Content)
