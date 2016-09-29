@@ -56,7 +56,7 @@ namespace DSLNG.PEAR.Services
                 Measurement = x.Vessel.Measurement.Name,
                 Capacity = x.Vessel.Capacity
             });
-            response.VesselSchedules = query.Where(x => ids.Contains(x.id)).OrderBy(x => x.ETA).Select(
+            response.VesselSchedules = query.Where(x => ids.Contains(x.id)).OrderByDescending(x => x.ETD).Select(
                     x => new GetDerLoadingSchedulesResponse.VesselScheduleResponse
                     {
                         id = x.id,
