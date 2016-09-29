@@ -145,6 +145,10 @@ namespace DSLNG.PEAR.Web.Controllers
                 {
                     var fileName = Path.GetFileName(file.FileName);
 
+                    if (!Directory.Exists(Path.Combine(Server.MapPath("~/Content/signature/"))))
+                    {
+                        Directory.CreateDirectory(Path.Combine(Server.MapPath("~/Content/signature/")));
+                    }
                     var path = Path.Combine(Server.MapPath("~/Content/signature/"), fileName);
                     var url = "/Content/signature/" + fileName;
 
@@ -226,7 +230,10 @@ namespace DSLNG.PEAR.Web.Controllers
                 if (file != null && file.ContentLength > 0)
                 {
                     var fileName = Path.GetFileName(file.FileName);
-
+                    if (!Directory.Exists(Path.Combine(Server.MapPath("~/Content/signature/"))))
+                    {
+                        Directory.CreateDirectory(Path.Combine(Server.MapPath("~/Content/signature/")));
+                    }
                     var path = Path.Combine(Server.MapPath("~/Content/signature/"), fileName);
                     var url = "/Content/signature/" + fileName;
 
