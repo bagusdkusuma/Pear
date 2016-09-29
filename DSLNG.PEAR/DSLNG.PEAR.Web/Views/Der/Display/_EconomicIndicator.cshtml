@@ -59,7 +59,7 @@
             </td>
         </tr>
         <tr>
-            <td>Applied JCC ( @TempData["month"])</td>
+            <td>Applied JCC (@Model.DateInfo.ToString("MMM"))</td>
             <td>
                 <span class="comparison left-side"><i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Deviation)"></i></span>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiMeasurement, "USD/bbl")
@@ -92,7 +92,7 @@
             </td>
         </tr>
         <tr>
-            <td>ICP-Ind Crude Prc (Mar)</td>
+            <td>ICP-Ind Crude Prc (@Model.DateInfo.AddMonths(-1).ToString("MMM"))</td>
             <td>
                 <span class="comparison left-side"><i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Deviation)"></i></span>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 6).KpiMeasurement, "USD/bbl")

@@ -1010,6 +1010,10 @@ namespace DSLNG.PEAR.Services
                                 kpiAchievement.Deviation = "0";
                             }
                         }
+                        else
+                        {
+                            kpiAchievement.Deviation = "1";
+                        }
                         
                     }
                 }
@@ -1041,6 +1045,10 @@ namespace DSLNG.PEAR.Services
                             {
                                 kpiAchievement.Deviation = "0";
                             }
+                        }
+                        else
+                        {
+                            kpiAchievement.Deviation = "1";
                         }
                         DataContext.KpiAchievements.Add(kpiAchievement);
                     }

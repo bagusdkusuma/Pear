@@ -523,6 +523,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         viewModel.KpiInformationViewModels.Add(AddTarget(20, target7, date));
                         viewModel.KpiInformationViewModels.Add(AddTarget(21, target8, date));
                         viewModel.KpiInformationViewModels.Add(AddTarget(22, target9, date));
+                        viewModel.DateInfo = date;
                         var view = RenderPartialViewToString("~/Views/Der/Display/_LngAndCds.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
@@ -638,6 +639,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     {
 
                         var viewModel = GetGeneralDerKpiInformations(10, layout, date, PeriodeType.Daily);
+                        viewModel.DateInfo = date;
                         var target7 = layout.KpiInformations.SingleOrDefault(x => x.Position == 7);
                         var target8 = layout.KpiInformations.SingleOrDefault(x => x.Position == 8);
                         viewModel.KpiInformationViewModels.Add(AddTarget(10, target7, date));
@@ -808,7 +810,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "economic-indicator":
                     {
                         var viewModel = GetGeneralDerKpiInformations(15, layout, date, PeriodeType.Daily);
-
+                        viewModel.DateInfo = date;
                         //var jccPrice = layout.KpiInformations.Where(x => x.Position == 3).FirstOrDefault();
                         //if(jccPrice != null)
                         //{
@@ -819,7 +821,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         //        viewModel.KpiInformationViewModels.First(x => x.Position == 3).DerItemValue.Value = monthly.Value.Value.ToString();
                         //    }
                         //}
-                        
+
                         TempData["month"] = date.ToString("MMM", CultureInfo.InvariantCulture);
                         var view = RenderPartialViewToString("~/Views/Der/Display/_EconomicIndicator.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
@@ -1146,6 +1148,11 @@ namespace DSLNG.PEAR.Web.Controllers
                         if (item.Kpi.Id == 62)
                         {
                             achievement = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, new DateTime(date.Year, date.Month, 1), PeriodeType.Monthly);
+                        }
+                        else if (item.Kpi.Id == 385)
+                        {
+                            var prevMonth = date.AddMonths(-1);
+                            achievement = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, new DateTime(prevMonth.Year, prevMonth.Month, 1), PeriodeType.Monthly);
                         }
                         else
                         {
