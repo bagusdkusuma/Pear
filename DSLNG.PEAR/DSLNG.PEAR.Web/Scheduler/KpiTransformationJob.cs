@@ -132,6 +132,7 @@ namespace DSLNG.PEAR.Web.Scheduler
                                         {
                                             kpiActualRequest.Itd = (double?)new Expression(itdTransformed).Evaluate();
                                         }
+                                        kpiActualRequest.UpdateDeviation = true;
                                         var resp = kpiAchievementService.UpdateKpiAchievementItem(kpiActualRequest);
                                         if (resp.IsSuccess)
                                         {
