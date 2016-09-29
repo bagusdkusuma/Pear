@@ -121,10 +121,31 @@
                                                 </td>
                                                 <td>@nls.Vessel (@nls.Capacity @nls.Measurement)</td>
                                                 <td>@nls.Buyer</td>
-                                                <td>@nls.ETA.ToString("dd-MM-yyyy")</td>
-                                                <td>@nls.ETD.ToString("dd-MM-yyyy")</td>
+                                                @if (nls.ETA.HasValue)
+                                                {
+                                                    <td>@nls.ETA.Value.ToString("dd-MM-yyyy")</td>
+                                                }
+                                                else {
+                                                    <td></td>
+                                                }
+                                                @if (nls.ETD.HasValue)
+                                                {
+                                                    <td>@nls.ETD.Value.ToString("dd-MM-yyyy")</td>
+                                                }
+                                                else
+                                                {
+                                                    <td></td>
+                                                }
                                                 <td>@nls.Cargo</td>
-                                                <td>@nls.RemarkDate.ToString("dd-MM-yyyy");@nls.Remark | @Html.ActionLink("See All", "InVesselSchedule", "NLS", new { id = nls.Id }, new { @class = "nls-see-all", data_permitted=@Model.IsAuthorizedToManageVesselSchedule, data_toggle = "modal", data_target = "#modalDialog" })</td>
+                                                @if (nls.RemarkDate.HasValue)
+                                                {
+                                                    <td>@nls.RemarkDate.Value.ToString("dd-MM-yyyy");@nls.Remark | @Html.ActionLink("See All", "InVesselSchedule", "NLS", new { id = nls.Id }, new { @class = "nls-see-all", data_permitted = @Model.IsAuthorizedToManageVesselSchedule, data_toggle = "modal", data_target = "#modalDialog" })</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@Html.ActionLink("See All", "InVesselSchedule", "NLS", new { id = nls.Id }, new { @class = "nls-see-all", data_permitted = @Model.IsAuthorizedToManageVesselSchedule, data_toggle = "modal", data_target = "#modalDialog" })</td>
+                                                }
+                                               
                                             </tr>
                                         }
                                     </table>
