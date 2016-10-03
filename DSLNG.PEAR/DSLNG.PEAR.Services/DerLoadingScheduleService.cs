@@ -94,6 +94,7 @@ namespace DSLNG.PEAR.Services
                 else
                 {
                     derLoadingSchedule = new DerLoadingSchedule { Period = date };
+                    DataContext.DerLoadingSchedules.Add(derLoadingSchedule);
                 }
 
                 foreach (var id in ids)
@@ -106,7 +107,8 @@ namespace DSLNG.PEAR.Services
                     }
                     derLoadingSchedule.VesselSchedules.Add(schedule);
                 }
-                DataContext.DerLoadingSchedules.Add(derLoadingSchedule);
+                
+                
                 DataContext.SaveChanges();
                 return new BaseResponse
                 {
