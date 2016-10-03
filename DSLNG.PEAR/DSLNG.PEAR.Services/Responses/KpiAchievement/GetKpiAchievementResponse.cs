@@ -15,6 +15,9 @@ namespace DSLNG.PEAR.Services.Responses.KpiAchievement
         public PeriodeType PeriodeType { get; set; }
         public string Remark { get; set; }
         public string Deviation { get; set; }
+        public string MtdDeviation { get; set; }
+        public string YtdDeviation { get; set; }
+        public string ItdDeviation { get; set; }
         public bool IsActive { get; set; }
 
         public class KpiResponse

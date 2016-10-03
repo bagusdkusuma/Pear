@@ -1,5 +1,4 @@
 ﻿
-
 using DSLNG.PEAR.Data.Enums;
 using System;
 using System.Collections.Generic;
@@ -24,6 +23,7 @@ namespace DSLNG.PEAR.Services.Responses.KpiTransformationSchedule
             public string Name { get; set; }
             public YtdFormula YtdFormula { get; set; }
             public string CustomFormula { get; set; }
+            public int MethodId { get; set; }
         }
     }
 }

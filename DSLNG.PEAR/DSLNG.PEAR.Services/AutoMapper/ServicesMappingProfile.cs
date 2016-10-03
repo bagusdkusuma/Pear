@@ -773,7 +773,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<KpiTransformationSchedule, SaveKpiTransformationScheduleResponse>()
                 .ForMember(x => x.KpiTransformationId, o => o.MapFrom(s => s.KpiTransformation.Id))
                 .ForMember(x => x.PeriodeType, o => o.MapFrom(s => s.KpiTransformation.PeriodeType));
-            Mapper.CreateMap<Kpi, SaveKpiTransformationScheduleResponse.KpiResponse>();
+            Mapper.CreateMap<Kpi, SaveKpiTransformationScheduleResponse.KpiResponse>()
+                .ForMember(x => x.MethodId, o => o.MapFrom(s => s.Method.Id));
             Mapper.CreateMap<KpiTransformationSchedule, GetKpiTransformationSchedulesResponse.KpiTransformationScheduleResponse>()
                 .ForMember(x => x.PeriodeType, o => o.MapFrom(s => s.KpiTransformation.PeriodeType));
             Mapper.CreateMap<KpiTransformationLog, GetKpiTransformationLogsResponse.KpiTransformationLogResponse>()

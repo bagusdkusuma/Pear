@@ -13,5 +13,8 @@ namespace DSLNG.PEAR.Web.ViewModels.Der.Display
         public string Itd { get; set; }
         public string Remark { get; set; }
         public string Deviation { get; set; }
+        public string MtdDeviation { get; set; }
+        public string YtdDeviation { get; set; }
+        public string ItdDeviation { get; set; }
     }
 }

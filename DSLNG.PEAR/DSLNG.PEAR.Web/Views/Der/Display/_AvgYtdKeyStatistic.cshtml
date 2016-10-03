@@ -22,11 +22,11 @@
             <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 4).KpiMeasurement, "ton/d")</td>
         </tr>
         <tr class="comparison">
-            <td><span class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Deviation) fa-lg"></span></td>
-            <td><span class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Deviation) fa-lg"></span></td>
-            <td><span class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Deviation) fa-lg"></span></td>
-            <td><span class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Deviation) fa-lg"></span></td>
-            <td><span class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Deviation) fa-lg"></span></td>
+            <td><span class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.YtdDeviation ) fa-lg"></span></td>
+            <td><span class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.YtdDeviation) fa-lg"></span></td>
+            <td><span class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.YtdDeviation) fa-lg"></span></td>
+            <td><span class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.YtdDeviation) fa-lg"></span></td>
+            <td><span class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.YtdDeviation) fa-lg"></span></td>
         </tr>
     </tbody>
 </table>

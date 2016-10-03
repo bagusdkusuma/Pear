@@ -26,7 +26,7 @@ namespace DSLNG.PEAR.Services
 
         public GetKpiResponse GetBy(GetKpiRequest request)
         {
-            var query = DataContext.Kpis;
+            var query = DataContext.Kpis.Include(x => x.Measurement);
             if (request.Id != 0)
             {
                 query.Where(x => x.Id == request.Id);
