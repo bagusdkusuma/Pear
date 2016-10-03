@@ -1187,7 +1187,7 @@ namespace DSLNG.PEAR.Services
                         default:
                             if (kpiAchievement.Kpi == null)
                             {
-                                var monthly = DataContext.KpiAchievements.FirstOrDefault(x => x.Kpi.Id == request.KpiId && x.Periode.Month == request.Periode.Month && x.PeriodeType == PeriodeType.Monthly);
+                                var monthly = DataContext.KpiAchievements.FirstOrDefault(x => x.Kpi.Id == request.KpiId && x.Periode.Month == request.Periode.Month && x.Periode.Year == request.Periode.Year && x.PeriodeType == PeriodeType.Monthly);
                                 if (monthly != null)
                                 {
                                     monthly.Value -= kpiAchievement.Value;
@@ -1208,7 +1208,7 @@ namespace DSLNG.PEAR.Services
                                 && x.Periode <= request.Periode
                                 && x.Kpi.Id == kpiAchievement.Kpi.Id).Sum(x => x.Value);
                                 kpiAchievement.Mtd = mtdValue;
-                                var monthly = DataContext.KpiAchievements.FirstOrDefault(x => x.Kpi.Id == kpiAchievement.Kpi.Id && x.Periode.Month == request.Periode.Month && x.PeriodeType == PeriodeType.Monthly);
+                                var monthly = DataContext.KpiAchievements.FirstOrDefault(x => x.Kpi.Id == kpiAchievement.Kpi.Id && x.Periode.Month == request.Periode.Month && x.Periode.Year == request.Periode.Year && x.PeriodeType == PeriodeType.Monthly);
                                 if (monthly != null)
                                 {
                                     monthly.Value = mtdValue;
@@ -1273,7 +1273,7 @@ namespace DSLNG.PEAR.Services
                                && x.Periode <= request.Periode
                                && x.Kpi.Id == kpiAchievement.Kpi.Id).Average(x => x.Value);
                                 kpiAchievement.Mtd = mtdValue;
-                                var monthly = DataContext.KpiAchievements.FirstOrDefault(x => x.Kpi.Id == kpiAchievement.Kpi.Id && x.Periode.Month == request.Periode.Month && x.PeriodeType == PeriodeType.Monthly);
+                                var monthly = DataContext.KpiAchievements.FirstOrDefault(x => x.Kpi.Id == kpiAchievement.Kpi.Id && x.Periode.Month == request.Periode.Month  && x.Periode.Year == request.Periode.Year && x.PeriodeType == PeriodeType.Monthly);
                                 if (monthly != null)
                                 {
                                     monthly.Value = mtdValue;
