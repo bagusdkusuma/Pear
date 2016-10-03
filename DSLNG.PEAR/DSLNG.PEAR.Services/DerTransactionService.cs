@@ -105,7 +105,7 @@ namespace DSLNG.PEAR.Services
                         }
                         else
                         {
-                            var todayValue = achievements.FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode == request.Date);
+                            var todayValue = achievements.FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode == request.Date && x.PeriodeType == PeriodeType.Daily);
                             if (todayValue != null)
                             {
                                 kpiInformation.DailyActual = new GetKpiInformationValuesResponse.KpiValue
@@ -138,7 +138,7 @@ namespace DSLNG.PEAR.Services
                 {
                     if (kpiInformation.MonthlyActual == null)
                     {
-                        var isCurrentMonthValue = actual.Periode.Month == request.Date.Month && actual.Periode.Year == request.Date.Year;
+                        var isCurrentMonthValue = actual.Periode.Month == request.Date.Month && actual.Periode.Year == request.Date.Year && actual.PeriodeType == PeriodeType.Monthly;
                         if (isCurrentMonthValue)
                         {
                             kpiInformation.MonthlyActual = new GetKpiInformationValuesResponse.KpiValue
@@ -152,7 +152,7 @@ namespace DSLNG.PEAR.Services
                         }
                         else
                         {
-                            var currentMonthValue = achievements.FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode.Month == request.Date.Month && x.Periode.Year == request.Date.Year);
+                            var currentMonthValue = achievements.FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode.Month == request.Date.Month && x.Periode.Year == request.Date.Year && x.PeriodeType == PeriodeType.Yearly);
                             if (currentMonthValue != null)
                             {
                                 kpiInformation.MonthlyActual = new GetKpiInformationValuesResponse.KpiValue
@@ -185,7 +185,7 @@ namespace DSLNG.PEAR.Services
                 {
                     if (kpiInformation.YearlyActual == null)
                     {
-                        var isCurrentYearValue = actual.Periode.Year == request.Date.Year;
+                        var isCurrentYearValue = actual.Periode.Year == request.Date.Year && actual.PeriodeType == PeriodeType.Yearly;
                         if (isCurrentYearValue)
                         {
                             kpiInformation.YearlyActual = new GetKpiInformationValuesResponse.KpiValue
@@ -199,7 +199,7 @@ namespace DSLNG.PEAR.Services
                         }
                         else
                         {
-                            var currentYearValue = achievements.FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode.Year == request.Date.Year);
+                            var currentYearValue = achievements.FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode.Year == request.Date.Year && x.PeriodeType == PeriodeType.Yearly);
                             if (currentYearValue != null)
                             {
                                 kpiInformation.YearlyActual = new GetKpiInformationValuesResponse.KpiValue
