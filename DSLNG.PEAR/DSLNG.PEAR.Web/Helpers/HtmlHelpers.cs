@@ -647,6 +647,11 @@ namespace DSLNG.PEAR.Web.Helpers
                         valueObject = GetValue(kpiInformation.MonthlyActual, value, defaultValueDefined, valueType, existValue);
                     }
                     break;
+                case "monthly-actual-prev":
+                    {
+                        valueObject = GetValue(kpiInformation.MonthlyActual, value, defaultValueDefined, valueType, existValue);
+                    }
+                    break;
                 case "yearly-actual":
                     {
                         valueObject = GetValue(kpiInformation.YearlyActual, value, defaultValueDefined, valueType, existValue);
