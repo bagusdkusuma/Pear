@@ -224,6 +224,22 @@ namespace DSLNG.PEAR.Web.Controllers
                         var resp = _kpiAchievementService.UpdateOriginalData(request);
                         return Json(resp);
                     }
+                // case gila-gilaan
+                case "monthly-actual-prev":
+                    {
+                        var request = new UpdateKpiAchievementItemRequest
+                        {
+                            Periode = theDate.AddMonths(-1),
+                            PeriodeType = periodeType,
+                            Id = viewModel.Id,
+                            KpiId = viewModel.KpiId,
+                            UserId = UserProfile().UserId,
+                            Value = viewModel.ValueType == "value" ? viewModel.Value : null,
+                            Remark = viewModel.ValueType == "remark" ? viewModel.Value : null
+                        };
+                        var resp = _kpiAchievementService.UpdateOriginalData(request);
+                        return Json(resp);
+                    }
                 default:
                     {
                         var request = new SaveKpiTargetRequest

@@ -22,7 +22,19 @@
             <td>Group Name</td>
             <td>KPI</td>
             @*<td>@Model.Date.AddDays(-1).ToString("d MMMM yyyy")</td>*@
-            <td>@Model.Date.ToString("d MMMM yyyy")</td>
+            @switch (Model.PeriodeType.ToString())
+            {
+                case "Yearly":
+                    <td>@Model.Date.ToString("yyyy")</td>
+                    break;
+                case "Monthly":
+                    <td>@Model.Date.ToString("MMMM yyyy")</td>
+                    break;
+                default:
+                    <td>@Model.Date.ToString("d MMMM yyyy")</td>
+                    break;
+            }
+            @*<td>@Model.Date.ToString("d MMMM yyyy")</td>*@
         </tr>
     </thead>
     <tbody>
@@ -34,7 +46,7 @@
             </tr>
 
             foreach (var kpi in item.InputDataKpiAndOrders.OrderBy(x => x.Order))
-            {
+                {
                 <tr>
                     <td></td>
                     <td style="text-align:left">@kpi.KpiName (@kpi.KpiMeasurement)</td>
@@ -45,7 +57,7 @@
                 </tr>
             }
 
-        }
+            }
     </tbody>
 </table>
 
@@ -55,26 +67,26 @@
 @section Scripts {
     <script type="text/javascript">
         function getQueryVariable(variable) {
-            var query = window.location.search.substring(1);
-            var vars = query.split('&');
-            for (var i = 0; i < vars.length; i++) {
-                var pair = vars[i].split('=');
-                if (decodeURIComponent(pair[0]) == variable) {
-                    return decodeURIComponent(pair[1]);
+                    var query = window.location.search.substring(1);
+                    var vars = query.split('&');
+                    for (var i = 0; i < vars.length; i++) {
+                        var pair = vars[i].split('=');
+                        if (decodeURIComponent(pair[0]) == variable) {
+                            return decodeURIComponent(pair[1]);
+                        }
+                    }
+                    return null;
                 }
-            }
-            return null;
-        }
-        function updateQueryStringParameter(uri, key, value) {
-            var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
-            var separator = uri.indexOf('?') !== -1 ? "&" : "?";
-            if (uri.match(re)) {
-                return uri.replace(re, '$1' + key + "=" + value + '$2');
-            }
-            else {
-                return uri + separator + key + "=" + value;
-            }
-        }
+                function updateQueryStringParameter(uri, key, value) {
+                    var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+                    var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+                    if (uri.match(re)) {
+                        return uri.replace(re, '$1' + key + "=" + value + '$2');
+                    }
+                    else {
+                        return uri + separator + key + "=" + value;
+                    }
+                }
 
         var reloadView = function () {
             window.document.location = updateQueryStringParameter(window.location.href, "date", encodeURIComponent($('.datepicker').val()));
