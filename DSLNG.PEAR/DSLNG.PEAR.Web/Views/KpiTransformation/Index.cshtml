@@ -1,5 +1,9 @@
 ﻿@*@model DSLNG.PEAR.Web.ViewModels.KpiTransformation.KpiTransformationsViewModel*@
-<h2>Kpi Transformations</h2>
+@{
+    ViewBag.Title = "KPI Transformations";
+}
+<h4>KPI Transformations</h4>
+<br />
 @Html.Partial("_MessageResponse")
 <div class="add-button-wrapper">
     @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })

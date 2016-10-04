@@ -11,5 +11,6 @@ namespace DSLNG.PEAR.Services.Requests.VesselSchedule
         public string Term { get; set; }
         public bool allActiveList { get; set; }
         public DateTime? RemarkDate { get; set; }
+        public bool OrderByETDDesc { get; set; }
     }
 }

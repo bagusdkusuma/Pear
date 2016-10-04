@@ -773,7 +773,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<KpiTransformationSchedule, SaveKpiTransformationScheduleResponse>()
                 .ForMember(x => x.KpiTransformationId, o => o.MapFrom(s => s.KpiTransformation.Id))
                 .ForMember(x => x.PeriodeType, o => o.MapFrom(s => s.KpiTransformation.PeriodeType));
-            Mapper.CreateMap<Kpi, SaveKpiTransformationScheduleResponse.KpiResponse>();
+            Mapper.CreateMap<Kpi, SaveKpiTransformationScheduleResponse.KpiResponse>()
+                .ForMember(x => x.MethodId, o => o.MapFrom(s => s.Method.Id));
             Mapper.CreateMap<KpiTransformationSchedule, GetKpiTransformationSchedulesResponse.KpiTransformationScheduleResponse>()
                 .ForMember(x => x.PeriodeType, o => o.MapFrom(s => s.KpiTransformation.PeriodeType));
             Mapper.CreateMap<KpiTransformationLog, GetKpiTransformationLogsResponse.KpiTransformationLogResponse>()
@@ -789,8 +790,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.VesselMeasuremant, o => o.MapFrom(s => s.Vessel.Measurement.Name))
                 .ForMember(x => x.BuyerId, o => o.MapFrom(s => s.Buyer.Id))
                 .ForMember(x => x.BuyerName, o => o.MapFrom(s => s.Buyer.Name))
-                .ForMember(x => x.ETA, o => o.MapFrom(s => s.ETA.ToString("dd-MM-yyyy")))
-                .ForMember(x => x.ETD, o => o.MapFrom(s => s.ETD.ToString("dd-MM-yyyy")));
+                .ForMember(x => x.ETA, o => o.MapFrom(s => s.ETA.HasValue? s.ETA.Value.ToString("dd-MM-yyyy") : "TBD"))
+                .ForMember(x => x.ETD, o => o.MapFrom(s => s.ETD.HasValue? s.ETD.Value.ToString("dd-MM-yyyy") : "TBD"));
             base.Configure();
         }
 

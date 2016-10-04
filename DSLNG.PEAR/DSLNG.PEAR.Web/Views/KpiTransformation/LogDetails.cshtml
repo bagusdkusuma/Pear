@@ -1,5 +1,9 @@
 ﻿@*@model DSLNG.PEAR.Web.ViewModels.KpiTransformation.KpiTransformationsViewModel*@
-<h2>Kpi Transformation Logs <small>TEst</small></h2>
+@{
+    ViewBag.Title = "Detail KPI Transformation Logs";
+}
+<h4>Detail Kpi Transformation Logs <small>@ViewBag.Id</small></h4>
+<br />
 @Html.Partial("_MessageResponse")
 <table id="kpi-transformation-table" class="rgw-tbl-bp rgw-tbl table-transparent table table-responsive" cellspacing="0" width="100%">
     <thead>
@@ -20,7 +24,7 @@
                 "bFilter": true,
                 "bPaginate": true,
                 "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-                "iDisplayLength": -1,
+                "iDisplayLength": 10,
                 "bProcessing": true,
                 "bServerSide": true,
                 "order": [[ 1, "desc" ]],

@@ -89,7 +89,8 @@ namespace DSLNG.PEAR.Services
             }
             DataContext.KpiTransformationSchedules.Add(kpiTransformationSchedule);
             DataContext.SaveChanges();
-            kpiTransformationSchedule = DataContext.KpiTransformationSchedules.Include(x => x.KpiTransformation).Include(x => x.SelectedKpis).First(x => x.Id == kpiTransformationSchedule.Id);
+            kpiTransformationSchedule = DataContext.KpiTransformationSchedules.Include(x => x.KpiTransformation).Include(x => x.SelectedKpis)
+                .Include(x => x.SelectedKpis.Select(y => y.Method)).First(x => x.Id == kpiTransformationSchedule.Id);
             var response =  new SaveKpiTransformationScheduleResponse
             {
                 IsSuccess = true,

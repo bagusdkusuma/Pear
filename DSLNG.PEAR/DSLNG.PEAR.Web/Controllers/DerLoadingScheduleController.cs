@@ -59,9 +59,8 @@ namespace DSLNG.PEAR.Web.Controllers
             var vesselSchedules = _vesselScheduleService.GetVesselSchedules(new GetVesselSchedulesRequest
             {
                 allActiveList = true,
-                Skip = 0,
-                Take = 20,
-                RemarkDate = remarkDate
+                RemarkDate = remarkDate,
+                OrderByETDDesc = true
             });
             var viewModel = new LoadingSchedulesViewModel();
             viewModel.Schedules = vesselSchedules.VesselSchedules.MapTo<LoadingSchedulesViewModel.LoadingScheduleViewModel>();
@@ -266,5 +265,12 @@ namespace DSLNG.PEAR.Web.Controllers
             return Json(_derLoadingScheduleService.SaveSchedules(ids, dateTime));
         }
 
+        [HttpPost]
+        public ActionResult DeleteRemark(int id)
+        {
+            var response = _nlsService.Delete(new DeleteNLSRequest { Id = id });
+            return Json(response);
+
+        }
     }
 }

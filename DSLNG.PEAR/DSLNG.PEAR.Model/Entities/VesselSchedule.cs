@@ -20,8 +20,8 @@ namespace DSLNG.PEAR.Data.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public Vessel Vessel { get; set; }
-        public DateTime ETA { get; set; }
-        public DateTime ETD { get; set; }
+        public DateTime? ETA { get; set; }
+        public DateTime? ETD { get; set; }
         public bool IsActive { get; set; }
         public Buyer Buyer { get; set; }
         public string Location { get; set; }

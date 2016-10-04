@@ -28,6 +28,7 @@ namespace DSLNG.PEAR.Web.Scheduler
                     var kpiAchievementService = new KpiAchievementService(dataContext);
                     var logService = new KpiTransformationLogService(dataContext);
                     var kpiTransformationScheduleService = new KpiTransformationScheduleService(dataContext);
+                    var kpiService = new KpiService(dataContext);
                     for (var date = kpiTransformationSchedule.Start; date <= kpiTransformationSchedule.End; date = Increment(kpiTransformationSchedule, date))
                     {
                         foreach (var kpi in kpiTransformationSchedule.SelectedKpis)
@@ -39,8 +40,21 @@ namespace DSLNG.PEAR.Web.Scheduler
                                 var mtdTransformed = kpi.CustomFormula;
                                 var itdTransformed = kpi.CustomFormula;
                                 var existingKpiActual = kpiAchievementService.GetKpiAchievement(kpi.Id, date, kpiTransformationSchedule.PeriodeType);
-                                if (kpi.CustomFormula != null)
+                                if (kpi.MethodId == 1)
                                 {
+                                    if (string.IsNullOrEmpty(kpi.CustomFormula)) {
+                                        //log here for dependency error
+                                        var logRequest = new SaveKpiTransformationLogRequest
+                                        {
+                                            KpiId = kpi.Id,
+                                            KpiTransformationScheduleId = kpiTransformationSchedule.Id,
+                                            Periode = date,
+                                            Status = KpiTransformationStatus.Error,
+                                            Notes = "Method input is formula but the formula is not defined"
+                                        };
+                                        logService.Save(logRequest);
+                                        continue;
+                                    }
                                     Regex r = new Regex(kpiPattern, RegexOptions.IgnoreCase);
                                     Match m = r.Match(kpi.CustomFormula);
                                     var meetRequirements = true;
@@ -94,13 +108,14 @@ namespace DSLNG.PEAR.Web.Scheduler
                                         }
                                         else
                                         {
+                                            var relatedKpi = kpiService.GetBy(new Services.Requests.Kpi.GetKpiRequest { Id = relatedKpiId });
                                             var logRequest = new SaveKpiTransformationLogRequest
                                             {
                                                 KpiId = kpi.Id,
                                                 KpiTransformationScheduleId = kpiTransformationSchedule.Id,
                                                 Periode = date,
                                                 Status = KpiTransformationStatus.Error,
-                                                Notes = "Kpi <strong>" + relatedKpiActual.Kpi.Name + " (" + relatedKpiActual.Kpi.Measurement + ")</strong> has no value for this periode of time"
+                                                Notes = "Kpi <strong>" + relatedKpi.Name + " (" + relatedKpi.Measurement.Name + ")</strong> has no value for this periode of time"
                                             };
                                             logService.Save(logRequest);
                                             meetRequirements = false;
@@ -108,73 +123,76 @@ namespace DSLNG.PEAR.Web.Scheduler
                                         }
                                         m = m.NextMatch();
                                     }
-                                    if (kpi.YtdFormula == YtdFormula.Custom && meetRequirements)
+                                    if (kpi.YtdFormula == YtdFormula.Custom )
                                     {
-
-                                        var kpiActualRequest = new UpdateKpiAchievementItemRequest
-                                        {
-                                            Id = existingKpiActual.IsSuccess ? existingKpiActual.Id : 0,
-                                            KpiId = kpi.Id,
-                                            Periode = date,
-                                            PeriodeType = kpiTransformationSchedule.PeriodeType,
-                                            Value = new Expression(kpiTransformed).Evaluate().ToString(),
-                                            UserId = kpiTransformationSchedule.UserId
-                                        };
-                                        if (mtdTransformed != kpi.CustomFormula)
-                                        {
-                                            kpiActualRequest.Mtd = (double?)new Expression(mtdTransformed).Evaluate();
-                                        }
-                                        if (ytdTransformed != kpi.CustomFormula)
-                                        {
-                                            kpiActualRequest.Ytd = (double?)new Expression(ytdTransformed).Evaluate();
-                                        }
-                                        if (itdTransformed != kpi.CustomFormula)
-                                        {
-                                            kpiActualRequest.Itd = (double?)new Expression(itdTransformed).Evaluate();
-                                        }
-                                        var resp = kpiAchievementService.UpdateKpiAchievementItem(kpiActualRequest);
-                                        if (resp.IsSuccess)
-                                        {
-                                            switch (kpiTransformationSchedule.PeriodeType)
+                                        if (meetRequirements) {
+                                            var kpiActualRequest = new UpdateKpiAchievementItemRequest
                                             {
-                                                case PeriodeType.Daily:
-                                                    kpiAchievementService.UpdateKpiAchievementItem(kpi.Id, PeriodeType.Monthly, new DateTime(date.Year, date.Month, 1), kpiActualRequest.Mtd, kpiTransformationSchedule.UserId);
-                                                    kpiAchievementService.UpdateKpiAchievementItem(kpi.Id, PeriodeType.Yearly, new DateTime(date.Year, 1, 1), kpiActualRequest.Ytd, kpiTransformationSchedule.UserId);
-                                                    break;
-                                                case PeriodeType.Monthly:
-                                                    kpiAchievementService.UpdateKpiAchievementItem(kpi.Id, PeriodeType.Yearly, new DateTime(date.Year, 1, 1), kpiActualRequest.Ytd, kpiTransformationSchedule.UserId);
-                                                    break;
-                                                default:
-                                                    break;
+                                                Id = existingKpiActual.IsSuccess ? existingKpiActual.Id : 0,
+                                                KpiId = kpi.Id,
+                                                Periode = date,
+                                                PeriodeType = kpiTransformationSchedule.PeriodeType,
+                                                Value = new Expression(kpiTransformed).Evaluate().ToString(),
+                                                UserId = kpiTransformationSchedule.UserId
+                                            };
+                                            if (mtdTransformed != kpi.CustomFormula)
+                                            {
+                                                kpiActualRequest.Mtd = (double?)new Expression(mtdTransformed).Evaluate();
+                                            }
+                                            if (ytdTransformed != kpi.CustomFormula)
+                                            {
+                                                kpiActualRequest.Ytd = (double?)new Expression(ytdTransformed).Evaluate();
+                                            }
+                                            if (itdTransformed != kpi.CustomFormula)
+                                            {
+                                                kpiActualRequest.Itd = (double?)new Expression(itdTransformed).Evaluate();
+                                            }
+                                            kpiActualRequest.UpdateDeviation = true;
+                                            var resp = kpiAchievementService.UpdateKpiAchievementItem(kpiActualRequest);
+                                            if (resp.IsSuccess)
+                                            {
+                                                switch (kpiTransformationSchedule.PeriodeType)
+                                                {
+                                                    case PeriodeType.Daily:
+                                                        kpiAchievementService.UpdateKpiAchievementItem(kpi.Id, PeriodeType.Monthly, new DateTime(date.Year, date.Month, 1), kpiActualRequest.Mtd, kpiTransformationSchedule.UserId);
+                                                        kpiAchievementService.UpdateKpiAchievementItem(kpi.Id, PeriodeType.Yearly, new DateTime(date.Year, 1, 1), kpiActualRequest.Ytd, kpiTransformationSchedule.UserId);
+                                                        break;
+                                                    case PeriodeType.Monthly:
+                                                        kpiAchievementService.UpdateKpiAchievementItem(kpi.Id, PeriodeType.Yearly, new DateTime(date.Year, 1, 1), kpiActualRequest.Ytd, kpiTransformationSchedule.UserId);
+                                                        break;
+                                                    default:
+                                                        break;
+                                                }
+
+                                                var logRequest = new SaveKpiTransformationLogRequest
+                                                {
+                                                    KpiId = kpi.Id,
+                                                    KpiTransformationScheduleId = kpiTransformationSchedule.Id,
+                                                    Periode = date,
+                                                    Status = KpiTransformationStatus.Complete,
+                                                };
+                                                logService.Save(logRequest);
+                                            }
+                                            else
+                                            {
+                                                var logRequest = new SaveKpiTransformationLogRequest
+                                                {
+                                                    KpiId = kpi.Id,
+                                                    KpiTransformationScheduleId = kpiTransformationSchedule.Id,
+                                                    Periode = date,
+                                                    Status = KpiTransformationStatus.Error,
+                                                    Notes = resp.Message
+                                                };
+                                                logService.Save(logRequest);
+                                                complete = false;
                                             }
 
-                                            var logRequest = new SaveKpiTransformationLogRequest
-                                            {
-                                                KpiId = kpi.Id,
-                                                KpiTransformationScheduleId = kpiTransformationSchedule.Id,
-                                                Periode = date,
-                                                Status = KpiTransformationStatus.Complete,
-                                            };
-                                            logService.Save(logRequest);
-                                        }
-                                        else
-                                        {
-                                            var logRequest = new SaveKpiTransformationLogRequest
-                                            {
-                                                KpiId = kpi.Id,
-                                                KpiTransformationScheduleId = kpiTransformationSchedule.Id,
-                                                Periode = date,
-                                                Status = KpiTransformationStatus.Error,
-                                                Notes = resp.Message
-                                            };
-                                            logService.Save(logRequest);
-                                            complete = false;
                                         }
 
                                     }
                                     else
                                     {
-                                        if (kpi.YtdFormula != YtdFormula.Custom && existingKpiActual.IsSuccess && existingKpiActual.Value.HasValue)
+                                        if (meetRequirements)
                                         {
                                             var request = new UpdateKpiAchievementItemRequest
                                             {
@@ -210,20 +228,6 @@ namespace DSLNG.PEAR.Web.Scheduler
                                                 logService.Save(logRequest);
                                                 complete = false;
                                             }
-                                        }
-                                        else
-                                        {
-                                            var logRequest = new SaveKpiTransformationLogRequest
-                                            {
-                                                KpiId = kpi.Id,
-                                                KpiTransformationScheduleId = kpiTransformationSchedule.Id,
-                                                Periode = date,
-                                                Status = KpiTransformationStatus.Error,
-                                                Notes = "Kpi <strong>" + existingKpiActual.Kpi.Name + " (" + existingKpiActual.Kpi.Measurement + ")</strong> has no value for this periode of time"
-                                            };
-                                            logService.Save(logRequest);
-                                            meetRequirements = false;
-                                            complete = false;
                                         }
                                     }
 

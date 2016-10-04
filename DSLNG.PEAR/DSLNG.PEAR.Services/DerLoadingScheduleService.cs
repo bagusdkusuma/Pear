@@ -25,7 +25,7 @@ namespace DSLNG.PEAR.Services
             if (request.StrictDate) {
                 derLoadingScheduleQuery = derLoadingScheduleQuery.Where(x => x.Period == request.Periode);
             } else {
-                derLoadingScheduleQuery = derLoadingScheduleQuery.Where(x => x.Period == request.Periode || x.Period == prevPeriod);
+                derLoadingScheduleQuery = derLoadingScheduleQuery.Where(x => x.Period == request.Periode || x.Period == prevPeriod).OrderByDescending(x => x.Period);
             }
             var derLoadingSchedule = derLoadingScheduleQuery.FirstOrDefault();
             if (derLoadingSchedule == null)
@@ -56,7 +56,7 @@ namespace DSLNG.PEAR.Services
                 Measurement = x.Vessel.Measurement.Name,
                 Capacity = x.Vessel.Capacity
             });
-            response.VesselSchedules = query.Where(x => ids.Contains(x.id)).OrderBy(x => x.ETA).Select(
+            response.VesselSchedules = query.Where(x => ids.Contains(x.id)).OrderByDescending(x => x.Vessel.Type).ThenBy(x => x.Cargo).Select(
                     x => new GetDerLoadingSchedulesResponse.VesselScheduleResponse
                     {
                         id = x.id,
@@ -94,6 +94,7 @@ namespace DSLNG.PEAR.Services
                 else
                 {
                     derLoadingSchedule = new DerLoadingSchedule { Period = date };
+                    DataContext.DerLoadingSchedules.Add(derLoadingSchedule);
                 }
 
                 foreach (var id in ids)
@@ -106,7 +107,8 @@ namespace DSLNG.PEAR.Services
                     }
                     derLoadingSchedule.VesselSchedules.Add(schedule);
                 }
-                DataContext.DerLoadingSchedules.Add(derLoadingSchedule);
+                
+                
                 DataContext.SaveChanges();
                 return new BaseResponse
                 {

@@ -15,7 +15,7 @@
 <div class="col-md-12">
     <p>
         <button class="btn btn-default choose-loading-schedule">Add From Existing</button>
-        <button class="btn btn-default add-new-schedule">Add New</button>
+        <button class="btn btn-default add-new-schedule">Add New NLS</button>
         <button class="btn btn-default add-vessel">Add Vessel</button>
         <button class="btn btn-default add-buyer">Add Buyer</button>
         <button class="btn btn-primary pull-right save-schedules">Save</button>
@@ -85,7 +85,7 @@
                 <td><label class="control-label">Standard (days)</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 375, 173, "days", "34","yearly-target")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 375, 176, "days", "34","yearly-target")
                     </span>
                 </td>
             </tr>
@@ -93,7 +93,7 @@
                 <td><label class="control-label">Last (days)</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 375, 174, "days", "prev" )
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 375, 177, "days", "prev" )
                     </span>
                 </td>
             </tr>
@@ -101,7 +101,7 @@
                 <td><label class="control-label">AVG YTD (days)</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 376, 175, "days", "prev")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 376, 178, "days", "prev")
                     </span>
                 </td>
             </tr>
@@ -114,7 +114,7 @@
                 <td><label class="control-label">Standard (days)</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 377, 176, "days", "34", "yearly-target")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 377, 179, "days", "34", "yearly-target")
                     </span>
                 </td>
             </tr>
@@ -122,7 +122,7 @@
                 <td><label class="control-label">Last (days)</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 377, 177, "days", "prev")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 377, 180, "days", "prev")
                     </span>
                 </td>
             </tr>
@@ -130,7 +130,7 @@
                 <td><label class="control-label">AVG YTD (days)</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 378, 178, "days", "prev")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 378, 181, "days", "prev")
                     </span>
                 </td>
             </tr>
@@ -144,7 +144,7 @@
             <tr>
                 <td>
                     <!--191-->
-                    @Html.DisplayHighlightTextarea(Model.Highlights, 52, 179)
+                    @Html.DisplayHighlightTextarea(Model.Highlights, 52, 182)
                 </td>
             </tr>
         </table>
@@ -292,6 +292,20 @@
                 $modal.find('.modal-body').html(data);
             })
         });
+        $(document).on('click', '.delete-remark', function (e) {
+            e.preventDefault();
+            var $this = $(this)
+            $.post($this.attr('href'), {id : $this.attr('data-id')}, function (data) {
+                if (data.IsSuccess) {
+                    $('.remarks-list .success-message').html(data.Message);
+                    $this.closest('tr').remove();
+                    setTimeout(function () { $('.remarks-list .success-message').html('') }, 1000)
+                } else {
+                    $('.remarks-list .validation-summary').html(data.Message);
+                    setTimeout(function () { $('.remarks-list .validation-summary').html('') }, 1000)
+                }
+            })
+        });
         $(document).on('click', '.save-schedules', function (e) {
             e.preventDefault();
             var $this = $(this);
@@ -311,6 +325,7 @@
                     setTimeout(function () {
                         $('.marine-shipping-message .success-message').html('');
                     }, 1000)
+                    $('input[tabindex=176]').focus();
                 } else {
                     $('.marine-shipping-message .validation-summary').html('<p>' + data.Message + '</p>');
                     setTimeout(function () {

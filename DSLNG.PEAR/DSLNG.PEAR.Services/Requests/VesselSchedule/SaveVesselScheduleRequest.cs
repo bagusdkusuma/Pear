@@ -10,8 +10,8 @@ namespace DSLNG.PEAR.Services.Requests.VesselSchedule
         }
         public int Id { get; set; }
         public int VesselId { get; set; }
-        public DateTime ETA { get; set; }
-        public DateTime ETD { get; set; }
+        public DateTime? ETA { get; set; }
+        public DateTime? ETD { get; set; }
         public bool IsActive { get; set; }
         public int BuyerId { get; set; }
         public string Location { get; set; }

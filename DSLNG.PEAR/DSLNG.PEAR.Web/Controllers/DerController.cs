@@ -782,7 +782,8 @@ namespace DSLNG.PEAR.Web.Controllers
                 #region Indicative Commercial Price
                 case "indicative-commercial-price":
                     {
-                        var viewModel = GetGeneralDerKpiInformations(4, layout, date, PeriodeType.Daily);
+                        var monthlyDate = new DateTime(date.Year, date.Month, 1);
+                        var viewModel = GetGeneralDerKpiInformations(4, layout, monthlyDate, PeriodeType.Monthly);
                         var view = RenderPartialViewToString("~/Views/Der/Display/_IndicativeCommercialPrice.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);

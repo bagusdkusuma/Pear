@@ -16,6 +16,9 @@ namespace DSLNG.PEAR.Data.Entities
         public double? Ytd { get; set; }
         public double? Itd { get; set; }
         public string Deviation { get; set; }
+        public string MtdDeviation { get; set; }
+        public string YtdDeviation { get; set; }
+        public string ItdDeviation { get; set; }
         public DateTime Periode { get; set; }
         public PeriodeType PeriodeType { get; set; }
         public string Remark { get; set; }

@@ -77,9 +77,13 @@ namespace DSLNG.PEAR.Services
                         Capacity = x.Vessel.Capacity
                     });
                 }
+                query = query.Where(x => x.IsActive == true);
+                if (request.OrderByETDDesc) {
+                    query = query.OrderByDescending(x => x.ETD);
+                }
                 return new GetVesselSchedulesResponse
                 {
-                    VesselSchedules = query.Where(x => x.IsActive == true).Select(
+                    VesselSchedules = query.Select(
                         x => new GetVesselSchedulesResponse.VesselScheduleResponse
                         {
                             id = x.id,
