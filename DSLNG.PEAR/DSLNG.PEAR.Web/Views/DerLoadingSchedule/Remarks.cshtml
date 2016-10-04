@@ -1,5 +1,10 @@
 ﻿@model IEnumerable<DSLNG.PEAR.Web.ViewModels.NLS.NLSViewModel>
-
+    <div class="row remarks-list">
+    <div class="col-md-12">
+        <div><ul class="validation-summary" style="color:red"></ul></div>
+        <div><ul class="success-message" style="color:green"></ul></div>
+    </div>
+</div>
     <div class="panel panel-default der-panel">
         <table class="der table-bordered">
             <tr>
@@ -29,7 +34,8 @@
                     @if (ViewBag.IsAllowedToManage)
                     {
                         <td>
-                            @Html.ActionLink("Edit", "ManageRemark", "DerLoadingSchedule", new { nlsId = item.Id }, new { @class = "manage-remark" })
+                            @Html.ActionLink("Edit", "ManageRemark", "DerLoadingSchedule", new { nlsId = item.Id }, new { @class = "manage-remark" }) | 
+                            @Html.ActionLink("Delete", "DeleteRemark", "DerLoadingSchedule", new { @class = "delete-remark", @data_id = item.Id })
                         </td>
                     }
                 </tr>

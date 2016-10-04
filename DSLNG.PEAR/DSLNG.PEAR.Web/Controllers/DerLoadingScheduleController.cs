@@ -265,5 +265,12 @@ namespace DSLNG.PEAR.Web.Controllers
             return Json(_derLoadingScheduleService.SaveSchedules(ids, dateTime));
         }
 
+        [HttpPost]
+        public ActionResult DeleteRemark(int id)
+        {
+            var response = _nlsService.Delete(new DeleteNLSRequest { Id = id });
+            return Json(response);
+
+        }
     }
 }

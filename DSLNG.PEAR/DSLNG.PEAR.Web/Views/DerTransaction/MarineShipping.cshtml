@@ -292,6 +292,20 @@
                 $modal.find('.modal-body').html(data);
             })
         });
+        $(document).on('click', '.delete-remark', function (e) {
+            e.preventDefault();
+            var $this = $(this)
+            $.post($this.attr('href'), {id : $this.attr('data-id')}, function (data) {
+                if (data.IsSuccess) {
+                    $('.remarks-list .success-message').html(data.Message);
+                    $this.closest('tr').remove();
+                    setTimeout(function () { $('.remarks-list .success-message').html('') }, 1000)
+                } else {
+                    $('.remarks-list .validation-summary').html(data.Message);
+                    setTimeout(function () { $('.remarks-list .validation-summary').html('') }, 1000)
+                }
+            })
+        });
         $(document).on('click', '.save-schedules', function (e) {
             e.preventDefault();
             var $this = $(this);
