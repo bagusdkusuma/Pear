@@ -55,9 +55,9 @@ namespace DSLNG.PEAR.Services
             var previousYear = request.Date.AddYears(-1);
             var achievements = DataContext.KpiAchievements.Include(x => x.Kpi)
                 .Where(x => kpiIdsForActual.Contains(x.Kpi.Id) &&
-                (((x.Periode == request.Date || x.Periode <= previousDate) && x.PeriodeType == PeriodeType.Daily) ||
-                (x.PeriodeType == PeriodeType.Yearly && (x.Periode.Year == request.Date.Year || x.Periode.Year <= previousYear.Year)) ||
-                (x.PeriodeType == PeriodeType.Monthly && (x.Periode.Month == request.Date.Month && x.Periode.Year == request.Date.Year || x.Periode.Month <= previousMonth.Month && x.Periode.Year == previousMonth.Year)))).ToList();
+                (((x.Periode == request.Date || x.Periode == previousDate) && x.PeriodeType == PeriodeType.Daily) ||
+                (x.PeriodeType == PeriodeType.Yearly && (x.Periode.Year == request.Date.Year || x.Periode.Year == previousYear.Year)) ||
+                (x.PeriodeType == PeriodeType.Monthly && (x.Periode.Month == request.Date.Month && x.Periode.Year == request.Date.Year || x.Periode.Month == previousMonth.Month && x.Periode.Year == previousMonth.Year)))).ToList();
             var kpiIdsForTarget = request.TargetKpiIds;
             var targets = DataContext.KpiTargets.Include(x => x.Kpi)
                .Where(x => kpiIdsForTarget.Contains(x.Kpi.Id) &&
@@ -89,13 +89,8 @@ namespace DSLNG.PEAR.Services
                 }
                 if (actual.PeriodeType == PeriodeType.Daily)
                 {
-                    if (actual.Kpi.Id == 385)
-                    {
-
-                    }
                     if (kpiInformation.DailyActual == null)
                     {
-
                         var isTodayValue = actual.Periode == request.Date;
                         if (isTodayValue)
                         {
@@ -110,7 +105,7 @@ namespace DSLNG.PEAR.Services
                         }
                         else
                         {
-                            var todayValue = achievements.OrderByDescending(x => x.Periode).FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode <= previousDate && x.PeriodeType == PeriodeType.Daily);
+                            var todayValue = achievements.FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode == request.Date && x.PeriodeType == PeriodeType.Daily);
                             if (todayValue != null)
                             {
                                 kpiInformation.DailyActual = new GetKpiInformationValuesResponse.KpiValue
@@ -119,7 +114,7 @@ namespace DSLNG.PEAR.Services
                                     Value = todayValue.Value.HasValue ? todayValue.Value : null,
                                     Remark = todayValue.Remark,
                                     Id = todayValue.Id,
-                                    Type = "prev"
+                                    Type = "now"
                                 };
 
                             }
@@ -141,10 +136,6 @@ namespace DSLNG.PEAR.Services
                 #region if monthly
                 if (actual.PeriodeType == PeriodeType.Monthly)
                 {
-                    if (actual.Kpi.Id == 385)
-                    {
-
-                    }
                     if (kpiInformation.MonthlyActual == null)
                     {
                         var isCurrentMonthValue = actual.Periode.Month == request.Date.Month && actual.Periode.Year == request.Date.Year && actual.PeriodeType == PeriodeType.Monthly;
@@ -161,20 +152,16 @@ namespace DSLNG.PEAR.Services
                         }
                         else
                         {
-                            var currentMonthValue = achievements.OrderByDescending(x => x.Periode).FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode.Month <= previousMonth.Month && x.Periode.Year == request.Date.Year && x.PeriodeType == PeriodeType.Monthly);
+                            var currentMonthValue = achievements.FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode.Month == request.Date.Month && x.Periode.Year == request.Date.Year && x.PeriodeType == PeriodeType.Yearly);
                             if (currentMonthValue != null)
                             {
-                                if(currentMonthValue.Kpi.Id == 385)
-                                {
-
-                                }
                                 kpiInformation.MonthlyActual = new GetKpiInformationValuesResponse.KpiValue
                                 {
                                     Date = currentMonthValue.Periode,
                                     Value = currentMonthValue.Value.HasValue ? currentMonthValue.Value : null,
                                     Remark = currentMonthValue.Remark,
                                     Id = currentMonthValue.Id,
-                                    Type = "prev"
+                                    Type = "now"
                                 };
                             }
                             else
@@ -212,7 +199,7 @@ namespace DSLNG.PEAR.Services
                         }
                         else
                         {
-                            var currentYearValue = achievements.OrderByDescending(x => x.Periode).FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode.Year <= previousYear.Year && x.PeriodeType == PeriodeType.Yearly);
+                            var currentYearValue = achievements.FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode.Year == request.Date.Year && x.PeriodeType == PeriodeType.Yearly);
                             if (currentYearValue != null)
                             {
                                 kpiInformation.YearlyActual = new GetKpiInformationValuesResponse.KpiValue
@@ -221,7 +208,7 @@ namespace DSLNG.PEAR.Services
                                     Value = currentYearValue.Value.HasValue ? currentYearValue.Value : null,
                                     Remark = currentYearValue.Remark,
                                     Id = currentYearValue.Id,
-                                    Type = "prev"
+                                    Type = "now"
                                 };
                             }
                             else
@@ -252,7 +239,6 @@ namespace DSLNG.PEAR.Services
                 //kpiInformation = new GetKpiInformationValuesResponse.KpiInformation { KpiId = kpiId };
                 //response.KpiInformations.Add(kpiInformation);
             }
-            #region target
             foreach (var target in targets)
             {
                 var kpiInformation = response.KpiInformations.FirstOrDefault(x => x.KpiId == target.Kpi.Id);
@@ -266,7 +252,6 @@ namespace DSLNG.PEAR.Services
                 {
                     continue;
                 }
-                #region daily
                 if (target.PeriodeType == PeriodeType.Daily)
                 {
                     if (kpiInformation.DailyTarget == null)
@@ -285,7 +270,7 @@ namespace DSLNG.PEAR.Services
                         }
                         else
                         {
-                            var todayValue = targets.OrderByDescending(x => x.Periode).FirstOrDefault(x => x.Kpi.Id == target.Kpi.Id && x.Periode <= previousDate.Date && x.PeriodeType == PeriodeType.Daily);
+                            var todayValue = targets.FirstOrDefault(x => x.Kpi.Id == target.Kpi.Id && x.Periode == request.Date);
                             if (todayValue != null)
                             {
                                 kpiInformation.DailyTarget = new GetKpiInformationValuesResponse.KpiValue
@@ -293,7 +278,7 @@ namespace DSLNG.PEAR.Services
                                     Date = todayValue.Periode,
                                     Value = todayValue.Value.HasValue ? todayValue.Value : null,
                                     Remark = todayValue.Remark,
-                                    Type = "prev",
+                                    Type = "now",
                                     Id = todayValue.Id
                                 };
 
@@ -313,107 +298,29 @@ namespace DSLNG.PEAR.Services
                         }
                     }
                 }
-                #endregion
-                #region monthly
                 if (target.PeriodeType == PeriodeType.Monthly)
                 {
-                    if (kpiInformation.MonthlyTarget == null)
+                    kpiInformation.MonthlyTarget = new GetKpiInformationValuesResponse.KpiValue
                     {
-                        var isCurrentMonthValue = target.Periode.Year == request.Date.Year && target.Periode.Month == request.Date.Month;
-                        if (isCurrentMonthValue)
-                        {
-                            kpiInformation.MonthlyTarget = new GetKpiInformationValuesResponse.KpiValue
-                            {
-                                Date = target.Periode,
-                                Value = target.Value.HasValue ? target.Value : null,
-                                Remark = target.Remark,
-                                Type = "now",
-                                Id = target.Id
-                            };
-                        }
-                        else
-                        {
-                            var currentMonthValue = targets.OrderByDescending(x => x.Periode).FirstOrDefault(x => x.Kpi.Id == target.Kpi.Id && x.Periode.Year == request.Date.Year && x.Periode.Month <= previousYear.Date.Month && x.PeriodeType == PeriodeType.Monthly);
-                            if (currentMonthValue != null)
-                            {
-                                kpiInformation.MonthlyTarget = new GetKpiInformationValuesResponse.KpiValue
-                                {
-                                    Date = currentMonthValue.Periode,
-                                    Value = currentMonthValue.Value.HasValue ? currentMonthValue.Value : null,
-                                    Remark = currentMonthValue.Remark,
-                                    Type = "prev",
-                                    Id = currentMonthValue.Id
-                                };
-
-                            }
-                            else
-                            {
-                                //yesterday value selected
-                                kpiInformation.MonthlyTarget = new GetKpiInformationValuesResponse.KpiValue
-                                {
-                                    Date = target.Periode,
-                                    Value = target.Value.HasValue ? target.Value : null,
-                                    Remark = target.Remark,
-                                    Type = "prev",
-                                    Id = target.Id
-                                };
-                            }
-                        }
-
-                    }
+                        Date = target.Periode,
+                        Value = target.Value.HasValue ? target.Value : null,
+                        Remark = target.Remark,
+                        Type = "now",
+                        Id = target.Id
+                    };
                 }
-                #endregion
-                #region yearly
                 if (target.PeriodeType == PeriodeType.Yearly)
                 {
-                    if (kpiInformation.YearlyTarget == null)
+                    kpiInformation.YearlyTarget = new GetKpiInformationValuesResponse.KpiValue
                     {
-                        var isCurrentYearValue = target.Periode.Year == request.Date.Year;
-                        if (isCurrentYearValue)
-                        {
-                            kpiInformation.YearlyTarget = new GetKpiInformationValuesResponse.KpiValue
-                            {
-                                Date = target.Periode,
-                                Value = target.Value.HasValue ? target.Value : null,
-                                Remark = target.Remark,
-                                Type = "now",
-                                Id = target.Id
-                            };
-                        }
-                        else
-                        {
-                            var currentYearValue = targets.OrderByDescending(x => x.Periode).FirstOrDefault(x => x.Kpi.Id == target.Kpi.Id && x.Periode.Year <= previousYear.Date.Year && x.PeriodeType == PeriodeType.Yearly);
-                            if (currentYearValue != null)
-                            {
-                                kpiInformation.YearlyTarget = new GetKpiInformationValuesResponse.KpiValue
-                                {
-                                    Date = currentYearValue.Periode,
-                                    Value = currentYearValue.Value.HasValue ? currentYearValue.Value : null,
-                                    Remark = currentYearValue.Remark,
-                                    Type = "prev",
-                                    Id = currentYearValue.Id
-                                };
-
-                            }
-                            else
-                            {
-                                //yesterday value selected
-                                kpiInformation.YearlyTarget = new GetKpiInformationValuesResponse.KpiValue
-                                {
-                                    Date = target.Periode,
-                                    Value = target.Value.HasValue ? target.Value : null,
-                                    Remark = target.Remark,
-                                    Type = "prev",
-                                    Id = target.Id
-                                };
-                            }
-                        }
-
-                    }
+                        Date = target.Periode,
+                        Value = target.Value.HasValue ? target.Value : null,
+                        Remark = target.Remark,
+                        Type = "now",
+                        Id = target.Id
+                    };
                 }
-                #endregion
             }
-            #endregion target
             return response;
         }
 
