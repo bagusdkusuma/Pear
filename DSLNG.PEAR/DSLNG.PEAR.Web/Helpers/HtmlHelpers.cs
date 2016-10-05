@@ -636,18 +636,15 @@ namespace DSLNG.PEAR.Web.Helpers
             ValueObject valueObject;
             switch (type)
             {
+                case "daily-actual-dafwc":
                 case "daily-actual":
                     {
                         valueObject = GetValue(kpiInformation.DailyActual, value, defaultValueDefined, valueType, existValue);
                      
                     }
                     break;
-                case "monthly-actual":
-                    {
-                        valueObject = GetValue(kpiInformation.MonthlyActual, value, defaultValueDefined, valueType, existValue);
-                    }
-                    break;
                 case "monthly-actual-prev":
+                case "monthly-actual":
                     {
                         valueObject = GetValue(kpiInformation.MonthlyActual, value, defaultValueDefined, valueType, existValue);
                     }
