@@ -240,6 +240,33 @@ namespace DSLNG.PEAR.Web.Controllers
                         var resp = _kpiAchievementService.UpdateOriginalData(request);
                         return Json(resp);
                     }
+                case "daily-actual-dafwc":
+                    {
+                        string value = viewModel.ValueType == "value" ? viewModel.Value : null;
+                        if(viewModel.Value != null && viewModel.ValueType == "remark")
+                        {
+                            DateTime lastDAFWC;
+                            DateTime.TryParse(viewModel.Value, out lastDAFWC);
+
+                            if (lastDAFWC != null)
+                            {
+                                value =  (theDate.AddDays(1) - lastDAFWC).TotalDays.ToString();
+                            }
+
+                        }
+                        var request = new UpdateKpiAchievementItemRequest
+                        {
+                            Periode = theDate,
+                            PeriodeType = periodeType,
+                            Id = viewModel.Id,
+                            KpiId = viewModel.KpiId,
+                            UserId = UserProfile().UserId,
+                            Value = value,
+                            Remark = viewModel.ValueType == "remark" ? viewModel.Value : null
+                        };
+                        var resp = _kpiAchievementService.UpdateOriginalData(request);
+                        return Json(resp);
+                    }
                 default:
                     {
                         var request = new SaveKpiTargetRequest
