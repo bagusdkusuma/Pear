@@ -396,6 +396,7 @@
                             var highlightTypeId = $this.data('highlight-type-id');
                             var id = $this.attr('data-id');
                             var value = $this.val();
+                            $this.addClass('in-progress');
                             $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function (resp) {
                                 openNextTab($this, nextTab);
                                 var $next = $('[tabindex=' + nextTab + ']');
@@ -404,6 +405,14 @@
                                 } else {
                                     $next.focus();
                                 }
+                                $this.removeClass('in-progress');
+                                if ($this.hasClass('der-value-prev')) {
+                                    $this.removeClass('der-value-prev');
+                                }
+                                if ($this.hasClass('der-value-empty')) {
+                                    $this.removeClass('der-value-empty');
+                                }
+                                $this.addClass('der-value-now');
                                 if (parseInt($this.attr('data-id')) == 0) {
                                     $this.attr('data-id', resp.Id);
                                 }
@@ -420,6 +429,7 @@
                                 var highlightTypeId = $this.data('highlight-type-id');
                                 var id = $this.attr('data-id');
                                 var value = $this.val();
+                                $this.addClass('in-progress');
                                 $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function (resp) {
                                     openNextTab($this, nextTab);
                                     var $next = $('[tabindex=' + nextTab + ']');
@@ -428,6 +438,14 @@
                                     } else {
                                         $next.focus();
                                     }
+                                    $this.removeClass('in-progress');
+                                    if ($this.hasClass('der-value-prev')) {
+                                        $this.removeClass('der-value-prev');
+                                    }
+                                    if ($this.hasClass('der-value-empty')) {
+                                        $this.removeClass('der-value-empty');
+                                    }
+                                    $this.addClass('der-value-now');
                                     if (parseInt($this.attr('data-id')) == 0) {
                                         $this.attr('data-id', resp.Id);
                                     }
@@ -441,6 +459,7 @@
                             var id = $this.attr('data-id');
                             var value = $this.val();
                             var property = $this.data('property');
+                            $this.addClass('in-progress');
                             $.post("/dertransaction/updateinfragsm", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property : property }, function (resp) {
                                 openNextTab($this, nextTab);
                                 var $next = $('[tabindex=' + nextTab + ']');
@@ -449,6 +468,14 @@
                                 } else {
                                     $next.focus();
                                 }
+                                $this.removeClass('in-progress');
+                                if ($this.hasClass('der-value-prev')) {
+                                    $this.removeClass('der-value-prev');
+                                }
+                                if ($this.hasClass('der-value-empty')) {
+                                    $this.removeClass('der-value-empty');
+                                }
+                                $this.addClass('der-value-now');
                                 if (parseInt($this.attr('data-id')) == 0) {
                                     $this.attr('data-id', resp.Id);
                                 }
@@ -466,6 +493,7 @@
                             } else {
                                 data.Tide = value;
                             }
+                            $this.addClass('in-progress');
                             $.post("/dertransaction/updatewave", data, function (resp) {
                                 openNextTab($this, nextTab);
                                 var $next = $('[tabindex=' + nextTab + ']');
@@ -474,6 +502,14 @@
                                 } else {
                                     $next.focus();
                                 }
+                                $this.removeClass('in-progress');
+                                if ($this.hasClass('der-value-prev')) {
+                                    $this.removeClass('der-value-prev');
+                                }
+                                if ($this.hasClass('der-value-empty')) {
+                                    $this.removeClass('der-value-empty');
+                                }
+                                $this.addClass('der-value-now');
                                 if (parseInt($this.attr('data-id')) == 0) {
                                     $this.attr('data-id', resp.Id);
                                 }
@@ -484,7 +520,8 @@
                             var nextTab = parseInt($this.attr('tabindex')) + 1;
                             var id = $this.attr('data-id');
                             var value = $this.val();
-                            var data = { DateInDisplay: currentDate, id: id, PeriodeType: "Daily", ValueId : value};
+                            var data = { DateInDisplay: currentDate, id: id, PeriodeType: "Daily", ValueId: value };
+                            $this.addClass('in-progress');
                             $.post("/dertransaction/updateweather", data, function (resp) {
                                 openNextTab($this, nextTab);
                                 var $next = $('[tabindex=' + nextTab + ']');
@@ -493,6 +530,14 @@
                                 } else {
                                     $next.focus();
                                 }
+                                $this.removeClass('in-progress');
+                                if ($this.hasClass('der-value-prev')) {
+                                    $this.removeClass('der-value-prev');
+                                }
+                                if ($this.hasClass('der-value-empty')) {
+                                    $this.removeClass('der-value-empty');
+                                }
+                                $this.addClass('der-value-now');
                                 if (parseInt($this.attr('data-id')) == 0) {
                                     $this.attr('data-id', resp.Id);
                                 }
@@ -511,6 +556,7 @@
                                 //} else if{
                                 //    data.Tide = value;
                                 //}
+                                $this.addClass('in-progress');
                                 $.post("/dertransaction/updatewave", data, function (resp) {
                                     openNextTab($this, nextTab);
                                     var $next = $('[tabindex=' + nextTab + ']');
@@ -519,6 +565,14 @@
                                     } else {
                                         $next.focus();
                                     }
+                                    $this.removeClass('in-progress');
+                                    if ($this.hasClass('der-value-prev')) {
+                                        $this.removeClass('der-value-prev');
+                                    }
+                                    if ($this.hasClass('der-value-empty')) {
+                                        $this.removeClass('der-value-empty');
+                                    }
+                                    $this.addClass('der-value-now');
                                     if (parseInt($this.attr('data-id')) == 0) {
                                         $this.attr('data-id', resp.Id);
                                     }
@@ -534,6 +588,7 @@
                                 var value = $this.val();
                                 var property = $this.data('property');
                                 var valueType = $this.data('type');
+                                $this.addClass('in-progress');
                                 $.post("/dertransaction/updatebrenfut", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property: property, valueType: valueType }, function (resp) {
                                     openNextTab($this, nextTab);
                                     var $next = $('[tabindex=' + nextTab + ']');
@@ -542,6 +597,14 @@
                                     } else {
                                         $next.focus();
                                     }
+                                    $this.removeClass('in-progress');
+                                    if ($this.hasClass('der-value-prev')) {
+                                        $this.removeClass('der-value-prev');
+                                    }
+                                    if ($this.hasClass('der-value-empty')) {
+                                        $this.removeClass('der-value-empty');
+                                    }
+                                    $this.addClass('der-value-now');
                                     if (parseInt($this.attr('data-id')) == 0) {
                                         $this.attr('data-id', resp.Id);
                                     }
@@ -559,7 +622,7 @@
                             var valueType = $this.data('value-type');
                             $this.addClass('in-progress');
                             $.post("/dertransaction/updatekpi", { kpiId: kpiId, type: type, date: currentDate, id: id, value: value, valueType: valueType }, function (resp) {
-                                openNextTab($this, nextTab);
+                                openNextTab($this, nextTabindex);
                                 var $next = $('[tabindex=' + nextTabindex + ']');
                                 if ($next.is("textarea")) {
                                     tinyMCE.get($next.attr('id')).focus()
@@ -588,6 +651,7 @@
                                 var id = $this.attr('data-id');
                                 var value = $this.val();
                                 var property = $this.data('property');
+                                $this.addClass('in-progress');
                                 $.post("/dertransaction/updateweeklyalarm", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property: property}, function (resp) {
                                     openNextTab($this, nextTab);
                                     var $next = $('[tabindex=' + nextTab + ']');
@@ -596,6 +660,14 @@
                                     } else {
                                         $next.focus();
                                     }
+                                    $this.removeClass('in-progress');
+                                    if ($this.hasClass('der-value-prev')) {
+                                        $this.removeClass('der-value-prev');
+                                    }
+                                    if ($this.hasClass('der-value-empty')) {
+                                        $this.removeClass('der-value-empty');
+                                    }
+                                    $this.addClass('der-value-now');
                                     if (parseInt($this.attr('data-id')) == 0) {
                                         $this.attr('data-id', resp.Id);
                                     }
