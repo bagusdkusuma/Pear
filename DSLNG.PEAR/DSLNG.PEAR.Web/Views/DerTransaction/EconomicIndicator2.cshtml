@@ -1,0 +1,65 @@
+﻿@{ 
+    Layout = null;
+}
+@model DSLNG.PEAR.Web.ViewModels.DerTransaction.DerValuesViewModel
+  @*@{ 
+            var layoutItem = Model.DerLayoutItems.First(x => x.Column == 1 && x.Row == 14);
+        }*@
+<table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
+    <tr>
+        <td><label class="control-label lbl-style">USDXDR</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 386, 1, "rate", "prev")</td>
+        <td><label class="control-label lbl-style">Dubai crude (usd/bbl)</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 383, 8, "usd/bbl", "prev")</td>
+        <td><label class="control-label lbl-style">JKSE</label></td>
+        <td> @Html.DisplayKpiInformationInput(Model.KpiInformations, 392, 16,"index","prev")</td>
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">USD/IDR</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 79, 2, "rate", "prev")</td>
+        <td><label class="control-label lbl-style">Brent (usd/bbl)</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 64, 9, "usd/bbl", "prev")</td>
+        <td><label class="control-label lbl-style">DJIA</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 393, 17,"index","prev")</td>
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">JPY/IDR</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 80, 3, "rate", "prev")</td>
+        <td><label class="control-label lbl-style">Henry Hub (usd/bbl)</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 384, 10, "usd/bbl", "prev")</td>
+        <td><label class="control-label lbl-style">Nikkei</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 394, 18,"index","prev")</td>
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">EUR/USD</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 388, 5, "rate", "prev")</td>
+        <td><label class="control-label lbl-style">Naptha (usd/bbl)</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 65, 11, "usd/bbl", "prev")</td>
+        <td><label class="control-label lbl-style">SSEC</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 395, 19,"index","prev")</td>
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">EUR/USD</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 389, 6, "rate", "prev")</td>
+        <td><label class="control-label lbl-style">ICP (usd/bbl)</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 385, 12, "usd/bbl", "prev", "monthly-actual")</td>
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">USD/KRW</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 390, 7, "rate", "prev")</td>
+        <td><label class="control-label lbl-style">Applied JCC (usd/bbl)</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 62, 13, "usd/bbl", "prev", "monthly-actual")</td>       
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td><label class="control-label lbl-style">LNG Spot (usd/mmbtu)</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 63, 14, "usd/mmbtu", "prev")</td>        
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td><label class="control-label lbl-style">Shipping (usd/mmbtu)</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 391, 15, "usd/mmbtu", "prev")</td>
+    </tr>
+</table>

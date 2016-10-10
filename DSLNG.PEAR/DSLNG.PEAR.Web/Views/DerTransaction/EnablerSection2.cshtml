@@ -1,0 +1,166 @@
+﻿@{
+    Layout = null;
+}
+@model DSLNG.PEAR.Web.ViewModels.DerTransaction.DerValuesViewModel
+<table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
+    <tr>
+        <td><label class="control-label lbl-style">Procurement Section-E</label></td>
+        <td><label class="control-label lbl-style">ICT Infrastructure and System Highlight:-F</label></td>
+        <td><label class="control-label lbl-style">GS & FM-G</label></td>
+    </tr>
+     <tr>
+        <td>
+             <label class="control-label lbl-style" style="margin-top: 20px;">#backlog</label>
+             <br />
+             <div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 379, 261, "number", "prev")</div>
+        </td>
+        <td>
+             <label class="control-label lbl-style" style="margin-top: 20px;">Application</label>
+             <br />
+             <div class="lbl-style">
+                @Html.DisplayIctInfraOrGsfmHighlight(Model.Highlights, 66, new List<SelectListItem>{
+                    new SelectListItem { Text = "-1", Value = "-1" },
+                        new SelectListItem { Text = "0", Value = "0" },
+                         new SelectListItem { Text = "1", Value = "1" },
+               }, 265, "a")
+             </div>
+        </td>
+         <td>
+             <label class="control-label lbl-style" style="margin-top: 20px;">POB</label>
+             <br />
+             <div class="lbl-style">
+                @Html.DisplayKpiInformationInput(Model.KpiInformations, 36, 269, "number", "prev")
+             </div>
+        </td>
+     </tr>
+    <tr>
+         <td>
+            <label class="control-label lbl-style" style="margin-top: 20px;">Remark</label>
+            <br />
+            <div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 379, 262, "free text", "prev", "daily-actual", "remark")</div>
+        </td>
+        <td>
+            <label class="control-label lbl-style" style="margin-top: 20px;">Colaboration</label>
+            <br />
+            <div class="lbl-style">
+                @Html.DisplayIctInfraOrGsfmHighlight(Model.Highlights, 66, new List<SelectListItem>{
+                  new SelectListItem { Text = "-1", Value = "-1" },
+                        new SelectListItem { Text = "0", Value = "0" },
+                         new SelectListItem { Text = "1", Value = "1" },
+               }, 266, "b")
+            </div>
+        </td>
+        <td>
+            <label class="control-label lbl-style" style="margin-top: 20px;">F&B</label>
+            <br />
+            <div class="lbl-style">
+                @Html.DisplayIctInfraOrGsfmHighlight(Model.Highlights, 67, new List<SelectListItem>{
+                 new SelectListItem { Text = "-1", Value = "-1" },
+                        new SelectListItem { Text = "0", Value = "0" },
+                         new SelectListItem { Text = "1", Value = "1" },
+               }, 270, "a")
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label class="control-label lbl-style" style="margin-top: 20px;">Avg backlog</label>
+            <br />
+            <div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 380, 263, "number", "prev")</div>
+        </td>
+        <td>
+            <label class="control-label lbl-style" style="margin-top: 20px;">Telco</label>
+            <br />
+            <div class="lbl-style">
+                @Html.DisplayIctInfraOrGsfmHighlight(Model.Highlights, 66, new List<SelectListItem>{
+                  new SelectListItem { Text = "-1", Value = "-1" },
+                        new SelectListItem { Text = "0", Value = "0" },
+                         new SelectListItem { Text = "1", Value = "1" },
+               }, 267, "c")
+            </div>
+        </td>
+        <td>
+            <label class="control-label lbl-style" style="margin-top: 20px;">Camp</label>
+            <br />
+            <div class="lbl-style">
+                @Html.DisplayIctInfraOrGsfmHighlight(Model.Highlights, 67, new List<SelectListItem>{
+                   new SelectListItem { Text = "-1", Value = "-1" },
+                        new SelectListItem { Text = "0", Value = "0" },
+                         new SelectListItem { Text = "1", Value = "1" },
+               }, 271, "b")
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>
+            <label class="control-label lbl-style" style="margin-top: 20px;">Remark</label>
+            <br />
+            <div class="lbl-style"> @Html.DisplayHighlightInput(Model.Highlights, 21, 268, "free text", "prev")</div>
+        </td>
+        <td>
+            <label class="control-label lbl-style" style="margin-top: 20px;">Transp</label>
+            <br />
+            <div class="lbl-style"> 
+                @Html.DisplayIctInfraOrGsfmHighlight(Model.Highlights, 67, new List<SelectListItem>{
+                  new SelectListItem { Text = "-1", Value = "-1" },
+                        new SelectListItem { Text = "0", Value = "0" },
+                         new SelectListItem { Text = "1", Value = "1" },
+               }, 272, "c")
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td>
+            <label class="control-label lbl-style">Remark</label> <br>
+            <div class="lbl-style">
+                @Html.DisplayHighlightTextarea(Model.Highlights, 53, 273)
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td><br></td>
+    </tr>
+</table>
+
+<table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
+    <tr>
+        <td>
+            <label class="control-label lbl-style">Community Relation and Govt Engagement Highlight-H</label>            
+        </td>
+        <td>
+            <label class="control-label lbl-style">Community Relation and Govt Engagement Highlight-H</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label class="control-label lbl-style">Remark</label> <br>
+            <div class="lbl-style">
+                @Html.DisplayHighlightTextarea(Model.Highlights, 14, 274)
+            </div>
+        </td>
+         <td>
+            <label class="control-label lbl-style" style="visibility: hidden;">Remark</label> <br>
+            <div class="lbl-style">
+                @Html.DisplayHighlightTextarea(Model.Highlights, 8, 275)
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>
+            <label class="control-label lbl-style">Daily Indicator</label> <br>
+            <div class="lbl-style">
+                 @Html.DisplayHighlightDropdownList(Model.Highlights, 58, new List<SelectListItem> {
+                   new SelectListItem {Value = "1", Text = "1" },
+                   new SelectListItem {Value = "2", Text = "2" },
+                   new SelectListItem {Value = "3", Text = "3" },
+                   new SelectListItem {Value = "4", Text = "4" },
+                   new SelectListItem {Value = "5", Text = "5" }
+               }, 276, "prev")
+            </div>
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,451 @@
+﻿@{
+    Layout = null;
+}
+@model DSLNG.PEAR.Web.ViewModels.DerTransaction.DerValuesViewModel
+
+<table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
+    <tr>
+        <td colspan="2"><label class="control-label lbl-style">Weekly Maintenance Backlog</label></td>
+        <td colspan="2"><label class="control-label lbl-style">Weekly Critical-Tier 1 PM Compliance/overdue</label></td>
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">as of</label></td>
+        <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 59, 180, "text date", "prev", "daily-actual", "remark", "datepicker")</div></td>
+        <td><label class="control-label lbl-style">as of</label></td>
+        <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 374, 185, "text date", "prev", "daily-actual", "remark", "datepicker")</div></td>
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">PM (hours)</label></td>
+        <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 60, 181, "hours", "prev")</div></td>
+        <td><label class="control-label lbl-style">Rlv Valve</label></td>
+        <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 371, 186, "number", "prev")</div></td>
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">CM (hours)</label></td>
+        <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 61, 182, "hours", "prev")</div></td>
+        <td><label class="control-label lbl-style">SIF</label></td>
+        <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 372, 187, "number", "prev")</div></td>
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">remark-target</label></td>
+        <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 59, 183, "hour", "prev", "daily-target")</div></td>
+        <td><label class="control-label lbl-style">Other</label></td>
+        <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 373, 188, "number", "prev")</div></td>
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">remarks</label></td>
+        <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 59, 184, "text", "nothing to concern", "daily-target", "remark")</div></td>
+        <td><label class="control-label lbl-style">Remark</label></td>
+        <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 374, 189, "text", "target is zero", "daily-target", "remark")</div></td>
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">Indicator</label></td>
+        <td>
+             <div class="lbl-style">@Html.DisplayHighlightDropdownList(Model.Highlights, 60, new List<SelectListItem> {
+                   new SelectListItem {Value = "-1", Text = "-1" },
+                   new SelectListItem {Value = "0", Text = "0" },
+                   new SelectListItem {Value = "1", Text = "1" }
+               }, 184, "prev")</div>
+        </td>
+        <td><label class="control-label lbl-style">Indicator</label></td>
+        <td>
+            <div class="lbl-style">@Html.DisplayHighlightDropdownList(Model.Highlights, 61, new List<SelectListItem> {
+                   new SelectListItem {Value = "-1", Text = "-1" },
+                   new SelectListItem {Value = "0", Text = "0" },
+                   new SelectListItem {Value = "1", Text = "1" }
+               }, 189, "prev")</div>
+        </td>
+    </tr>
+    <tr>
+        <td><br></td>
+    </tr>
+</table>
+
+<table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
+    <tr>
+        <td colspan="2"><label class="control-label lbl-style">Key Equipment Status</label></td>
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">Feed Inlet Syst</label></td>
+        <td>
+            <div class="lbl-style">
+                @Html.DisplayHighlightDropdownList(Model.Highlights, 46, new List<SelectListItem> {
+                        new SelectListItem { Text = "Normal Ops", Value = "Normal Ops" },
+                        new SelectListItem { Text = "Anomaly", Value = "Anomaly" },
+                        new SelectListItem { Text = "Tripped", Value = "Tripped" },
+                        new SelectListItem { Text = "Not Available", Value = "Not Available" },
+                    }, 190)
+            </div>
+        </td>
+        <td><label class="control-label lbl-style">EDG-A</label></td>
+        <td>
+            <div class="lbl-style">
+                 @Html.DisplayHighlightDropdownList(Model.Highlights, 31, new List<SelectListItem> {
+                        new SelectListItem { Text = "Running", Value = "Running" },
+                        new SelectListItem { Text = "Not Running", Value = "Not Running" },
+                        new SelectListItem { Text = "Standby", Value = "Standby" },
+                        new SelectListItem { Text = "Tripped", Value = "Tripped" },
+                        new SelectListItem { Text = "Not Available", Value = "Not Available" },
+                    }, 195)
+            </div>
+        </td>
+        <td><label class="control-label lbl-style">Hot Oil Syst</label></td>
+        <td>
+            <div class="lbl-style">
+                 @Html.DisplayHighlightDropdownList(Model.Highlights, 38, new List<SelectListItem> {
+                        new SelectListItem { Text = "Normal Ops", Value = "Normal Ops" },
+                        new SelectListItem { Text = "Anomaly", Value = "Anomaly" },
+                        new SelectListItem { Text = "Tripped", Value = "Tripped" },
+                        new SelectListItem { Text = "Not Available", Value = "Not Available" }
+                        //,
+                        //new SelectListItem { Value="Calm wave & Accessible",Text="Calm wave & Accessible" },
+                        //new SelectListItem { Value="Slight wave & Accessible",Text="Slight wave & Accessible" },
+                        //new SelectListItem { Value="Moderate wave and Caution",Text="Moderate wave and Caution" },
+                        //new SelectListItem { Value="Rough wave & Closed Acces",Text="Rough wave & Closed Acces" }
+                    }, 201)
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">C3 Compr</label></td>
+        <td>
+            <div class="lbl-style">
+                @Html.DisplayHighlightDropdownList(Model.Highlights, 34, new List<SelectListItem> {
+                        new SelectListItem { Text = "Running", Value = "Running" },
+                        new SelectListItem { Text = "Not Running", Value = "Not Running" },
+                        new SelectListItem { Text = "Standby", Value = "Standby" },
+                        new SelectListItem { Text = "Tripped", Value = "Tripped" },
+                        new SelectListItem { Text = "Not Available", Value = "Not Available" },
+                    }, 191)
+            </div>
+        </td>
+        <td><label class="control-label lbl-style">EDG-B</label></td>
+        <td>
+            <div class="lbl-style">
+                @Html.DisplayHighlightDropdownList(Model.Highlights, 32, new List<SelectListItem> {
+                        new SelectListItem { Text = "Running", Value = "Running" },
+                        new SelectListItem { Text = "Not Running", Value = "Not Running" },
+                        new SelectListItem { Text = "Standby", Value = "Standby" },
+                        new SelectListItem { Text = "Tripped", Value = "Tripped" },
+                        new SelectListItem { Text = "Not Available", Value = "Not Available" },
+                    }, 196)
+            </div>
+        </td>
+        <td><label class="control-label lbl-style">Fuel Gas syst</label></td>
+        <td>
+            <div class="lbl-style lbl-style">
+                 @Html.DisplayHighlightDropdownList(Model.Highlights, 39, new List<SelectListItem> {
+                        new SelectListItem { Text = "Normal Ops", Value = "Normal Ops" },
+                        new SelectListItem { Text = "Anomaly", Value = "Anomaly" },
+                        new SelectListItem { Text = "Tripped", Value = "Tripped" },
+                        new SelectListItem { Text = "Not Available", Value = "Not Available" }
+                        //,
+                        //new SelectListItem { Value="Calm wave & Accessible",Text="Calm wave & Accessible" },
+                        //new SelectListItem { Value="Slight wave & Accessible",Text="Slight wave & Accessible" },
+                        //new SelectListItem { Value="Moderate wave and Caution",Text="Moderate wave and Caution" },
+                        //new SelectListItem { Value="Rough wave & Closed Acces",Text="Rough wave & Closed Acces" }
+                    }, 202)
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">LP-MR Compr</label></td>
+        <td>
+            <div class="lbl-style">
+                 @Html.DisplayHighlightDropdownList(Model.Highlights, 35, new List<SelectListItem> {
+                        new SelectListItem { Text = "Running", Value = "Running" },
+                        new SelectListItem { Text = "Not Running", Value = "Not Running" },
+                        new SelectListItem { Text = "Standby", Value = "Standby" },
+                        new SelectListItem { Text = "Tripped", Value = "Tripped" },
+                        new SelectListItem { Text = "Not Available", Value = "Not Available" },
+                    }, 192)
+            </div>
+        </td>
+        <td><label class="control-label lbl-style">EDG-C</label></td>
+        <td>
+            <div class="lbl-style">
+                @Html.DisplayHighlightDropdownList(Model.Highlights, 33, new List<SelectListItem> {
+                        new SelectListItem { Text = "Running", Value = "Running" },
+                        new SelectListItem { Text = "Not Running", Value = "Not Running" },
+                        new SelectListItem { Text = "Standby", Value = "Standby" },
+                        new SelectListItem { Text = "Tripped", Value = "Tripped" },
+                        new SelectListItem { Text = "Not Available", Value = "Not Available" },
+                    }, 197)
+            </div>
+        </td>
+        <td><label class="control-label lbl-style">Water Syst</label></td>
+        <td>
+            <div class="lbl-style">
+                @Html.DisplayHighlightDropdownList(Model.Highlights, 47, new List<SelectListItem> {
+                        new SelectListItem { Text = "Normal Ops", Value = "Normal Ops" },
+                        new SelectListItem { Text = "Anomaly", Value = "Anomaly" },
+                        new SelectListItem { Text = "Tripped", Value = "Tripped" },
+                        new SelectListItem { Text = "Not Available", Value = "Not Available" }
+                        //,
+                        //new SelectListItem { Value="Calm wave & Accessible",Text="Calm wave & Accessible" },
+                        //new SelectListItem { Value="Slight wave & Accessible",Text="Slight wave & Accessible" },
+                        //new SelectListItem { Value="Moderate wave and Caution",Text="Moderate wave and Caution" },
+                        //new SelectListItem { Value="Rough wave & Closed Acces",Text="Rough wave & Closed Acces" }
+                    }, 203)
+            </div>
+        </td>      
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">HP-MR Compr</label></td>
+        <td>
+            <div class="lbl-style">
+                @Html.DisplayHighlightDropdownList(Model.Highlights, 36, new List<SelectListItem> {
+                        new SelectListItem { Text = "Running", Value = "Running" },
+                        new SelectListItem { Text = "Not Running", Value = "Not Running" },
+                        new SelectListItem { Text = "Standby", Value = "Standby" },
+                        new SelectListItem { Text = "Tripped", Value = "Tripped" },
+                        new SelectListItem { Text = "Not Available", Value = "Not Available" },
+                    }, 193)
+            </div>
+        </td>
+        <td><label class="control-label lbl-style">GTG-A</label></td>
+        <td>
+            <div class="lbl-style">
+                @Html.DisplayHighlightDropdownList(Model.Highlights, 28, new List<SelectListItem> {
+                        new SelectListItem { Text = "Running", Value = "Running" },
+                        new SelectListItem { Text = "Not Running", Value = "Not Running" },
+                        new SelectListItem { Text = "Standby", Value = "Standby" },
+                        new SelectListItem { Text = "Tripped", Value = "Tripped" },
+                        new SelectListItem { Text = "Not Available", Value = "Not Available" },
+                    }, 198)
+            </div>
+        </td>
+        <td><label class="control-label lbl-style">Air Compr A</label></td>
+        <td>
+            <div class="lbl-style">
+                @Html.DisplayHighlightDropdownList(Model.Highlights, 40, new List<SelectListItem> {
+                        new SelectListItem { Text = "Running", Value = "Running" },
+                        new SelectListItem { Text = "Not Running", Value = "Not Running" },
+                        new SelectListItem { Text = "Standby", Value = "Standby" },
+                        new SelectListItem { Text = "Tripped", Value = "Tripped" },
+                        new SelectListItem { Text = "Not Available", Value = "Not Available" }//,
+                    }, 204)
+            </div>
+        </td>        
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">MCHE</label></td>
+        <td>
+            <div class="lbl-style">
+                @Html.DisplayHighlightDropdownList(Model.Highlights, 37, new List<SelectListItem> {
+                        new SelectListItem { Text = "Normal Ops", Value = "Normal Ops" },
+                        new SelectListItem { Text = "Anomaly", Value = "Anomaly" },
+                        new SelectListItem { Text = "Tripped", Value = "Tripped" },
+                        new SelectListItem { Text = "Not Available", Value = "Not Available" }
+                        //,
+                        //new SelectListItem { Value="Calm wave & Accessible",Text="Calm wave & Accessible" },
+                        //new SelectListItem { Value="Slight wave & Accessible",Text="Slight wave & Accessible" },
+                        //new SelectListItem { Value="Moderate wave and Caution",Text="Moderate wave and Caution" },
+                        //new SelectListItem { Value="Rough wave & Closed Acces",Text="Rough wave & Closed Acces" }
+                    }, 194)
+            </div>
+        </td>
+        <td><label class="control-label lbl-style">GTG-B</label></td>
+        <td>
+            <div class="lbl-style">
+                @Html.DisplayHighlightDropdownList(Model.Highlights, 29, new List<SelectListItem> {
+                        new SelectListItem { Text = "Running", Value = "Running" },
+                        new SelectListItem { Text = "Not Running", Value = "Not Running" },
+                        new SelectListItem { Text = "Standby", Value = "Standby" },
+                        new SelectListItem { Text = "Tripped", Value = "Tripped" },
+                        new SelectListItem { Text = "Not Available", Value = "Not Available" },
+                    }, 199)
+            </div>
+        </td>
+        <td><label class="control-label lbl-style">Air Compr B</label></td>
+        <td>
+            <div class="lbl-style">
+                @Html.DisplayHighlightDropdownList(Model.Highlights, 41, new List<SelectListItem> {
+                        new SelectListItem { Text = "Running", Value = "Running" },
+                        new SelectListItem { Text = "Not Running", Value = "Not Running" },
+                        new SelectListItem { Text = "Standby", Value = "Standby" },
+                        new SelectListItem { Text = "Tripped", Value = "Tripped" },
+                        new SelectListItem { Text = "Not Available", Value = "Not Available" }//,
+                    }, 205)
+            </div>
+        </td>        
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td><label class="control-label lbl-style">GTG-C</label></td>
+        <td>
+            <div class="lbl-style">
+                @Html.DisplayHighlightDropdownList(Model.Highlights, 30, new List<SelectListItem> {
+                        new SelectListItem { Text = "Running", Value = "Running" },
+                        new SelectListItem { Text = "Not Running", Value = "Not Running" },
+                        new SelectListItem { Text = "Standby", Value = "Standby" },
+                        new SelectListItem { Text = "Tripped", Value = "Tripped" },
+                        new SelectListItem { Text = "Not Available", Value = "Not Available" },
+                    }, 200)
+            </div>
+        </td>
+        <td><label class="control-label lbl-style">Air Compr C</label></td>
+        <td>
+            <div class="lbl-style">
+                 @Html.DisplayHighlightDropdownList(Model.Highlights, 42, new List<SelectListItem> {
+                        new SelectListItem { Text = "Running", Value = "Running" },
+                        new SelectListItem { Text = "Not Running", Value = "Not Running" },
+                        new SelectListItem { Text = "Standby", Value = "Standby" },
+                        new SelectListItem { Text = "Tripped", Value = "Tripped" },
+                        new SelectListItem { Text = "Not Available", Value = "Not Available" }//,
+                    }, 206)
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td><br></td>
+    </tr>
+</table>
+
+<table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
+    <tr>
+         <td><label class="control-label lbl-style">N2 Syst</label></td>
+         <td>
+             <div class="lbl-style">
+                 @Html.DisplayHighlightDropdownList(Model.Highlights, 43, new List<SelectListItem> {
+                        new SelectListItem { Text = "Normal Ops", Value = "Normal Ops" },
+                        new SelectListItem { Text = "Anomaly", Value = "Anomaly" },
+                        new SelectListItem { Text = "Tripped", Value = "Tripped" },
+                        new SelectListItem { Text = "Not Available", Value = "Not Available" }
+                        //,
+                        //new SelectListItem { Value="Calm wave & Accessible",Text="Calm wave & Accessible" },
+                        //new SelectListItem { Value="Slight wave & Accessible",Text="Slight wave & Accessible" },
+                        //new SelectListItem { Value="Moderate wave and Caution",Text="Moderate wave and Caution" },
+                        //new SelectListItem { Value="Rough wave & Closed Acces",Text="Rough wave & Closed Acces" }
+                    }, 207)
+             </div>
+         </td>
+         <td><label class="control-label lbl-style">CDS tank</label></td>
+         <td>
+             <div class="lbl-style">
+                 @Html.DisplayHighlightDropdownList(Model.Highlights, 78, new List<SelectListItem> {
+                        new SelectListItem { Text = "Normal Ops", Value = "Normal Ops" },
+                        new SelectListItem { Text = "Anomaly", Value = "Anomaly" },
+                        new SelectListItem { Text = "Tripped", Value = "Tripped" },
+                        new SelectListItem { Text = "Not Available", Value = "Not Available" }
+                    }, 213)
+             </div>
+         </td>
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">Fire Syst</label></td>
+        <td>
+            <div class="lbl-style">
+                @Html.DisplayHighlightDropdownList(Model.Highlights, 48, new List<SelectListItem> {
+                        new SelectListItem { Text = "Normal Ops", Value = "Normal Ops" },
+                        new SelectListItem { Text = "Anomaly", Value = "Anomaly" },
+                        new SelectListItem { Text = "Tripped", Value = "Tripped" },
+                        new SelectListItem { Text = "Not Available", Value = "Not Available" }
+                    }, 208)
+            </div>
+        </td>
+        <td><label class="control-label lbl-style">Diesel Oil tank</label></td>
+        <td>
+            <div class="lbl-style">
+                @Html.DisplayHighlightDropdownList(Model.Highlights, 79, new List<SelectListItem> {
+                        new SelectListItem { Text = "Normal Ops", Value = "Normal Ops" },
+                        new SelectListItem { Text = "Anomaly", Value = "Anomaly" },
+                        new SelectListItem { Text = "Tripped", Value = "Tripped" },
+                        new SelectListItem { Text = "Not Available", Value = "Not Available" }
+                    }, 214)
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">LNG Tank</label></td>
+        <td>
+            <div class="lbl-style">
+                 @Html.DisplayHighlightDropdownList(Model.Highlights, 77, new List<SelectListItem> {
+                        new SelectListItem { Text = "Normal Ops", Value = "Normal Ops" },
+                        new SelectListItem { Text = "Anomaly", Value = "Anomaly" },
+                        new SelectListItem { Text = "Tripped", Value = "Tripped" },
+                        new SelectListItem { Text = "Not Available", Value = "Not Available" }//,
+                    }, 209)
+            </div>
+        </td>
+        <td><label class="control-label lbl-style">Flare Syst</label></td>
+        <td>
+            <div class="lbl-style">
+                @Html.DisplayHighlightDropdownList(Model.Highlights, 50, new List<SelectListItem> {
+                        new SelectListItem { Text = "Normal Ops", Value = "Normal Ops" },
+                        new SelectListItem { Text = "Anomaly", Value = "Anomaly" },
+                        new SelectListItem { Text = "Tripped", Value = "Tripped" },
+                        new SelectListItem { Text = "Not Available", Value = "Not Available" }
+                    }, 215)
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">BOG Compr</label></td>
+        <td>
+            <div class="lbl-style">
+                @Html.DisplayHighlightDropdownList(Model.Highlights, 44, new List<SelectListItem> {
+                        new SelectListItem { Text = "Running", Value = "Running" },
+                        new SelectListItem { Text = "Not Running", Value = "Not Running" },
+                        new SelectListItem { Text = "Standby", Value = "Standby" },
+                        new SelectListItem { Text = "Tripped", Value = "Tripped" },
+                        new SelectListItem { Text = "Not Available", Value = "Not Available" }//,
+                    }, 210)
+            </div>
+        </td>
+        <td><label class="control-label lbl-style">Waste Syst</label></td>
+        <td>
+            <div class="lbl-style">
+                @Html.DisplayHighlightDropdownList(Model.Highlights, 51, new List<SelectListItem> {
+                        new SelectListItem { Text = "Normal Ops", Value = "Normal Ops" },
+                        new SelectListItem { Text = "Anomaly", Value = "Anomaly" },
+                        new SelectListItem { Text = "Tripped", Value = "Tripped" },
+                        new SelectListItem { Text = "Not Available", Value = "Not Available" }
+                    }, 216)
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">LNG Jetty</label></td>
+        <td>
+            <div class="lbl-style">
+                @Html.DisplayHighlightDropdownList(Model.Highlights, 45, new List<SelectListItem> {
+                        new SelectListItem { Text = "Normal Ops", Value = "Normal Ops" },
+                        new SelectListItem { Text = "Anomaly", Value = "Anomaly" },
+                        new SelectListItem { Text = "Tripped", Value = "Tripped" },
+                        new SelectListItem { Text = "Not Available", Value = "Not Available" }
+                        //,
+                        //new SelectListItem { Value="Calm wave & Accessible",Text="Calm wave & Accessible" },
+                        //new SelectListItem { Value="Slight wave & Accessible",Text="Slight wave & Accessible" },
+                        //new SelectListItem { Value="Moderate wave and Caution",Text="Moderate wave and Caution" },
+                        //new SelectListItem { Value="Rough wave & Closed Acces",Text="Rough wave & Closed Acces" }
+                    }, 211)
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">C2/C3 strg tank</label></td>
+        <td>
+            <div class="lbl-style">
+                @Html.DisplayHighlightDropdownList(Model.Highlights, 49, new List<SelectListItem> {
+                        new SelectListItem { Text = "Normal Ops", Value = "Normal Ops" },
+                        new SelectListItem { Text = "Anomaly", Value = "Anomaly" },
+                        new SelectListItem { Text = "Tripped", Value = "Tripped" },
+                        new SelectListItem { Text = "Not Available", Value = "Not Available" }
+                    }, 212)
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td><br></td>
+    </tr>
+    <tr>
+        <td colspan="4"><label class="control-label lbl-style">Maintenance Highlight & Immediate Concern:</label></td>       
+    </tr>
+    <tr>
+        <td style="padding-left: 35px;" colspan="3">
+            @Html.DisplayHighlightTextarea(Model.Highlights, 11, 217)
+        </td>
+    </tr>
+</table>
