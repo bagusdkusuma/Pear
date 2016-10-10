@@ -9,7 +9,16 @@
      @Html.ValidationMessageFor(model => model.SpeedometerChart.Series.KpiId)
      </div>
 </div>
-
+@if (Model.Type == "speedometer")
+{
+<div class="form-group row">
+    <label class="control-label col-md-2" for="SpeedometerChart_LabelSeries_KpiId">Kpi For Label (tonnes/day)</label>
+    <div class="col-md-10">
+        @Html.DropDownListFor(model => model.SpeedometerChart.LabelSeries.KpiId, new List<SelectListItem> { new SelectListItem { Value = Model.SpeedometerChart.LabelSeries.KpiId.ToString(), Text = Model.SpeedometerChart.LabelSeries.KpiName } }, new { @class = "kpi-list form-control", style = "width:180px" })
+        @Html.ValidationMessageFor(model => model.SpeedometerChart.LabelSeries.KpiId)
+    </div>
+</div>
+}
 <div class="form-group row">
     <label class="control-label col-md-2">Plot Bands</label>
     <div class="col-md-10">

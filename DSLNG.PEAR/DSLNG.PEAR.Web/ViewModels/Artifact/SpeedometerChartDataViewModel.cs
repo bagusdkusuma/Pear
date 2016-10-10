@@ -13,6 +13,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         public string Subtitle { get; set; }
         public string ValueAxisTitle { get; set; }
         public SeriesViewModel Series { get; set; }
+        public LabelSeriesViewModel LabelSeries { get; set; }
         public IList<PlotBandViewModel> PlotBands { get; set; }
         public class SeriesViewModel
         {
@@ -21,6 +22,10 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
             }
             public string name { get; set; }
             public IList<double> data { get; set; }
+        }
+        public class LabelSeriesViewModel {
+            public string name { get; set; }
+            public double value { get; set; }
         }
         public class PlotBandViewModel
         {

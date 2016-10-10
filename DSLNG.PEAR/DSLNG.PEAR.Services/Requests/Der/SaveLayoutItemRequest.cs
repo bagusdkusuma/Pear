@@ -82,6 +82,7 @@ namespace DSLNG.PEAR.Services.Requests.Der
                 PlotBands = new List<LayoutItemPlotBand>();
             }
             public LayoutItemArtifactSerie Series { get; set; }
+            public LayoutItemArtifactSerie LabelSeries { get; set; }
             public IList<LayoutItemPlotBand> PlotBands { get; set; }
         }
 

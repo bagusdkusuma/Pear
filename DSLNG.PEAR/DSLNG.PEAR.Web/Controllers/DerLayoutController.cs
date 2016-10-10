@@ -196,6 +196,18 @@ namespace DSLNG.PEAR.Web.Controllers
                         {
                             var speedometerChart = new SpeedometerChartViewModel();
                             editViewModel.SpeedometerChart = response.Artifact.MapPropertiesToInstance<SpeedometerChartViewModel>(speedometerChart);
+                            if (response.Artifact.Series.Count > 0)
+                            {
+                                speedometerChart.LabelSeries = new SpeedometerChartViewModel.SeriesViewModel
+                                {
+                                    KpiId = response.Artifact.Series[0].KpiId,
+                                    KpiName = response.Artifact.Series[0].KpiName,
+                                    Label = response.Artifact.Series[0].Label
+                                };
+                            }
+                            else {
+                                speedometerChart.LabelSeries = new SpeedometerChartViewModel.SeriesViewModel();
+                            }
                             var plot = new SpeedometerChartViewModel.PlotBand();
                             editViewModel.SpeedometerChart.PlotBands.Insert(0, plot);
                             break;

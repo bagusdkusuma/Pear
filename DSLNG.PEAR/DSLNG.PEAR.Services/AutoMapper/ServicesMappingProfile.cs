@@ -1010,7 +1010,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             .ForMember(x => x.MeasurementName, y => y.MapFrom(z => z.Measurement.Name));
             Mapper.CreateMap<DerArtifactSerie, GetDerLayoutitemResponse.DerArtifactSerie>()
                 .ForMember(x => x.KpiId, y => y.MapFrom(z => z.Kpi.Id))
-                .ForMember(x => x.KpiName, y => y.MapFrom(z => z.Kpi.Name));
+                .ForMember(x => x.KpiName, y => y.MapFrom(z => z.Kpi.Name + " (" + z.Kpi.Measurement.Name + ")"));
             Mapper.CreateMap<DerArtifactChart, GetDerLayoutitemResponse.DerArtifactChart>()
                   .ForMember(x => x.MeasurementId, y => y.MapFrom(z => z.Measurement.Id));
             Mapper.CreateMap<DerArtifactPlot, GetDerLayoutitemResponse.DerArtifactPlot>();

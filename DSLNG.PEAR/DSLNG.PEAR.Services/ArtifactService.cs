@@ -537,47 +537,7 @@ namespace DSLNG.PEAR.Services
 
             switch (kpi.YtdFormula)
             {
-                case YtdFormula.Sum:
-                    switch (request.ValueAxis)
-                    {
-                        case ValueAxis.KpiTarget:
-                            response.Series = new GetSpeedometerChartDataResponse.SeriesResponse
-                            {
-                                name = request.Series.Label,
-                                data = DataContext.KpiTargets.Where(x => x.PeriodeType == request.PeriodeType &&
-                                x.Periode >= start && x.Periode <= end && x.Kpi.Id == request.Series.KpiId)
-                                .GroupBy(x => x.Kpi.Id)
-                                .Select(x => x.Sum(y => y.Value).Value).FirstOrDefault()
-                            };
-                            break;
-                        case ValueAxis.KpiActual:
-                            response.Series = new GetSpeedometerChartDataResponse.SeriesResponse
-                            {
-                                name = request.Series.Label,
-                                data = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType &&
-                                x.Periode >= start && x.Periode <= end && x.Kpi.Id == request.Series.KpiId)
-                                .GroupBy(x => x.Kpi.Id)
-                                .Select(x => x.Sum(y => y.Value).Value).FirstOrDefault()
-                            };
-                            break;
-                        case ValueAxis.KpiEconomic:
-                            var scenarioId = 0;
-                            var scenario = DataContext.Scenarios.FirstOrDefault(x => x.IsDashboard == true);
-                            if (scenario != null)
-                            {
-                                scenarioId = scenario.Id;
-                            }
-                            response.Series = new GetSpeedometerChartDataResponse.SeriesResponse
-                            {
-                                name = request.Series.Label,
-                                data = DataContext.KeyOperationDatas.Where(x => x.PeriodeType == request.PeriodeType &&
-                                x.Periode >= start && x.Periode <= end && x.Kpi.Id == request.Series.KpiId && x.Scenario.Id == scenarioId)
-                                .GroupBy(x => x.Kpi.Id)
-                                .Select(x => x.Sum(y => y.Value).Value).FirstOrDefault()
-                            };
-                            break;
-                    }
-                    break;
+                
                 case YtdFormula.Average:
                     switch (request.ValueAxis)
                     {
@@ -590,6 +550,16 @@ namespace DSLNG.PEAR.Services
                                 .GroupBy(x => x.Kpi.Id)
                                 .Select(x => x.Average(y => y.Value).Value).FirstOrDefault()
                             };
+                            if (request.LabelSeries != null) {
+                                response.LabelSeries = new GetSpeedometerChartDataResponse.SeriesResponse
+                                {
+                                    name = request.LabelSeries.Label,
+                                    data = DataContext.KpiTargets.Where(x => x.PeriodeType == request.PeriodeType &&
+                                    x.Periode >= start && x.Periode <= end && x.Kpi.Id == request.LabelSeries.KpiId)
+                                .GroupBy(x => x.Kpi.Id)
+                                .Select(x => x.Average(y => y.Value).Value).FirstOrDefault()
+                                };
+                            }
                             break;
                         case ValueAxis.KpiActual:
                             response.Series = new GetSpeedometerChartDataResponse.SeriesResponse
@@ -600,6 +570,17 @@ namespace DSLNG.PEAR.Services
                                 .GroupBy(x => x.Kpi.Id)
                                 .Select(x => x.Average(y => y.Value).Value).FirstOrDefault()
                             };
+                            if (request.LabelSeries != null)
+                            {
+                                response.LabelSeries = new GetSpeedometerChartDataResponse.SeriesResponse
+                                {
+                                    name = request.LabelSeries.Label,
+                                    data = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType &&
+                                    x.Periode >= start && x.Periode <= end && x.Kpi.Id == request.LabelSeries.KpiId)
+                                .GroupBy(x => x.Kpi.Id)
+                                .Select(x => x.Average(y => y.Value).Value).FirstOrDefault()
+                                };
+                            }
                             break;
                         case ValueAxis.KpiEconomic:
                             var scenarioId = 0;
@@ -616,6 +597,89 @@ namespace DSLNG.PEAR.Services
                                 .GroupBy(x => x.Kpi.Id)
                                 .Select(x => x.Average(y => y.Value).Value).FirstOrDefault()
                             };
+                            if (request.LabelSeries != null) {
+                                response.LabelSeries = new GetSpeedometerChartDataResponse.SeriesResponse
+                                {
+                                    name = request.LabelSeries.Label,
+                                    data = DataContext.KeyOperationDatas.Where(x => x.PeriodeType == request.PeriodeType &&
+                                    x.Periode >= start && x.Periode <= end && x.Kpi.Id == request.LabelSeries.KpiId && x.Scenario.Id == scenarioId)
+                                .GroupBy(x => x.Kpi.Id)
+                                .Select(x => x.Average(y => y.Value).Value).FirstOrDefault()
+                                };
+                            }
+                            break;
+                    }
+                    break;
+                case YtdFormula.Sum:
+                default:
+                    switch (request.ValueAxis)
+                    {
+                        case ValueAxis.KpiTarget:
+                            response.Series = new GetSpeedometerChartDataResponse.SeriesResponse
+                            {
+                                name = request.Series.Label,
+                                data = DataContext.KpiTargets.Where(x => x.PeriodeType == request.PeriodeType &&
+                                x.Periode >= start && x.Periode <= end && x.Kpi.Id == request.Series.KpiId)
+                                .GroupBy(x => x.Kpi.Id)
+                                .Select(x => x.Sum(y => y.Value).Value).FirstOrDefault()
+                            };
+                            if (request.LabelSeries != null) {
+                                response.LabelSeries = new GetSpeedometerChartDataResponse.SeriesResponse
+                                {
+                                    name = request.Series.Label,
+                                    data = DataContext.KpiTargets.Where(x => x.PeriodeType == request.PeriodeType &&
+                                    x.Periode >= start && x.Periode <= end && x.Kpi.Id == request.LabelSeries.KpiId)
+                               .GroupBy(x => x.Kpi.Id)
+                               .Select(x => x.Sum(y => y.Value).Value).FirstOrDefault()
+                                };
+                            }
+                            break;
+                        case ValueAxis.KpiActual:
+                            response.Series = new GetSpeedometerChartDataResponse.SeriesResponse
+                            {
+                                name = request.Series.Label,
+                                data = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType &&
+                                x.Periode >= start && x.Periode <= end && x.Kpi.Id == request.Series.KpiId)
+                                .GroupBy(x => x.Kpi.Id)
+                                .Select(x => x.Sum(y => y.Value).Value).FirstOrDefault()
+                            };
+                            if (request.LabelSeries != null)
+                            {
+                                response.LabelSeries = new GetSpeedometerChartDataResponse.SeriesResponse
+                                {
+                                    name = request.Series.Label,
+                                    data = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType &&
+                                    x.Periode >= start && x.Periode <= end && x.Kpi.Id == request.LabelSeries.KpiId)
+                               .GroupBy(x => x.Kpi.Id)
+                               .Select(x => x.Sum(y => y.Value).Value).FirstOrDefault()
+                                };
+                            }
+                            break;
+                        case ValueAxis.KpiEconomic:
+                            var scenarioId = 0;
+                            var scenario = DataContext.Scenarios.FirstOrDefault(x => x.IsDashboard == true);
+                            if (scenario != null)
+                            {
+                                scenarioId = scenario.Id;
+                            }
+                            response.Series = new GetSpeedometerChartDataResponse.SeriesResponse
+                            {
+                                name = request.Series.Label,
+                                data = DataContext.KeyOperationDatas.Where(x => x.PeriodeType == request.PeriodeType &&
+                                x.Periode >= start && x.Periode <= end && x.Kpi.Id == request.Series.KpiId && x.Scenario.Id == scenarioId)
+                                .GroupBy(x => x.Kpi.Id)
+                                .Select(x => x.Sum(y => y.Value).Value).FirstOrDefault()
+                            };
+                            if (request.LabelSeries != null) {
+                                response.LabelSeries = new GetSpeedometerChartDataResponse.SeriesResponse
+                                {
+                                    name = request.LabelSeries.Label,
+                                    data = DataContext.KeyOperationDatas.Where(x => x.PeriodeType == request.PeriodeType &&
+                                    x.Periode >= start && x.Periode <= end && x.Kpi.Id == request.LabelSeries.KpiId && x.Scenario.Id == scenarioId)
+                              .GroupBy(x => x.Kpi.Id)
+                              .Select(x => x.Sum(y => y.Value).Value).FirstOrDefault()
+                                };
+                            }
                             break;
                     }
                     break;
