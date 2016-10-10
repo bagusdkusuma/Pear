@@ -10,14 +10,22 @@ using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.KpiAchievement;
 using DSLNG.PEAR.Services.Responses.KpiAchievement;
 using DSLNG.PEAR.Services.Responses;
+using DSLNG.PEAR.Services.Requests.CustomFormula;
 
 namespace DSLNG.PEAR.Services
 {
     public class KpiAchievementService : BaseService, IKpiAchievementService
     {
+        private readonly ICustomFormulaService _customService;
+
         public KpiAchievementService(IDataContext dataContext)
             : base(dataContext)
         {
+        }
+
+        public KpiAchievementService(IDataContext dataContext, ICustomFormulaService customService) : base(dataContext)
+        {
+            _customService = customService;
         }
 
         public GetKpiAchievementsResponse GetKpiAchievements(GetKpiAchievementsRequest request)
@@ -166,7 +174,8 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-        public UpdateKpiAchievementItemResponse UpdateKpiAchievementItem(int kpiId, PeriodeType periodeType, DateTime periode, double? value, int userId) {
+        public UpdateKpiAchievementItemResponse UpdateKpiAchievementItem(int kpiId, PeriodeType periodeType, DateTime periode, double? value, int userId)
+        {
             var user = DataContext.Users.First(x => x.Id == userId);
             var kpiAchievement = DataContext.KpiAchievements.FirstOrDefault(x => x.PeriodeType == periodeType && x.Periode == periode && x.Kpi.Id == kpiId);
             if (kpiAchievement == null)
@@ -180,7 +189,8 @@ namespace DSLNG.PEAR.Services
                 kpiAchievement.Kpi = kpi;
                 DataContext.KpiAchievements.Add(kpiAchievement);
             }
-            else {
+            else
+            {
                 kpiAchievement.Value = value;
             }
             DataContext.SaveChanges();
@@ -393,7 +403,7 @@ namespace DSLNG.PEAR.Services
                     prevAchievement = DataContext.KpiAchievements.FirstOrDefault(x => x.Periode == prevDate && x.PeriodeType == request.PeriodeType && x.Kpi.Id == request.KpiId);
 
                 }
-               
+
                 if (request.Id > 0)
                 {
                     if (string.IsNullOrEmpty(request.Value) || request.Value == "-" || request.Value.ToLowerInvariant() == "null")
@@ -410,7 +420,8 @@ namespace DSLNG.PEAR.Services
                         request.MapPropertiesToInstance<KpiAchievement>(kpiAchievement);
                         kpiAchievement.UpdatedBy = user;
                         kpiAchievement.Kpi = DataContext.Kpis.Single(x => x.Id == request.KpiId);
-                        if (request.UpdateDeviation) {
+                        if (request.UpdateDeviation)
+                        {
                             if (prevAchievement != null)
                             {
                                 kpiAchievement.Deviation = CompareKpiValue(prevAchievement.Value, kpiAchievement.Value);
@@ -418,7 +429,8 @@ namespace DSLNG.PEAR.Services
                                 kpiAchievement.YtdDeviation = CompareKpiValue(prevAchievement.Ytd, kpiAchievement.Ytd);
                                 kpiAchievement.ItdDeviation = CompareKpiValue(prevAchievement.Itd, kpiAchievement.Itd);
                             }
-                            else {
+                            else
+                            {
                                 kpiAchievement.Deviation = "1";
                                 kpiAchievement.MtdDeviation = "1";
                                 kpiAchievement.YtdDeviation = "1";
@@ -868,7 +880,8 @@ namespace DSLNG.PEAR.Services
                         Message = "There is no actual value at this periode of time"
                     };
                 }
-                else {
+                else
+                {
                     return new GetKpiAchievementResponse
                     {
                         Id = result.Id,
@@ -885,7 +898,7 @@ namespace DSLNG.PEAR.Services
                         IsSuccess = true
                     };
                 }
-               
+
             }
             catch (Exception exception)
             {
@@ -977,7 +990,8 @@ namespace DSLNG.PEAR.Services
                 var user = DataContext.Users.First(x => x.Id == request.UserId);
                 var kpiAchievement = request.MapTo<KpiAchievement>();
                 DateTime prevDate;
-                switch (request.PeriodeType) {
+                switch (request.PeriodeType)
+                {
                     case PeriodeType.Yearly:
                         prevDate = request.Periode.AddYears(-1);
                         break;
@@ -988,7 +1002,7 @@ namespace DSLNG.PEAR.Services
                         prevDate = request.Periode.AddDays(-1);
                         break;
                 }
-                KpiAchievement prevAchievement = DataContext.KpiAchievements.FirstOrDefault(x => x.Periode == prevDate && x.PeriodeType == request.PeriodeType && x.Kpi.Id == request.KpiId);
+                KpiAchievement prevAchievement = DataContext.KpiAchievements.OrderByDescending(x=>x.Periode).FirstOrDefault(x => x.Periode <= prevDate && x.PeriodeType == request.PeriodeType && x.Kpi.Id == request.KpiId);
                 if (request.Id > 0)
                 {
                     if ((string.IsNullOrEmpty(request.Value) && request.Remark == null) || request.Value == "-" || (!string.IsNullOrEmpty(request.Value) && request.Value.Equals("null", StringComparison.InvariantCultureIgnoreCase)))
@@ -1013,14 +1027,15 @@ namespace DSLNG.PEAR.Services
                         //request.MapPropertiesToInstance<KpiAchievement>(kpiAchievement);
                         kpiAchievement.UpdatedBy = user;
                         kpiAchievement.Kpi = DataContext.Kpis.Single(x => x.Id == request.KpiId);
-                        if (prevAchievement != null) {
+                        if (prevAchievement != null)
+                        {
                             kpiAchievement.Deviation = CompareKpiValue(prevAchievement.Value, kpiAchievement.Value);
                         }
                         else
                         {
                             kpiAchievement.Deviation = "1";
                         }
-                        
+
                     }
                 }
                 else if (request.Id == 0)
@@ -1068,13 +1083,15 @@ namespace DSLNG.PEAR.Services
                                   && x.Kpi.Id == kpiAchievement.Kpi.Id).Sum(x => x.Value);
                                 kpiAchievement.Itd = itdValue;
                             }
-                            else if(kpiAchievement.Kpi.YtdFormula == YtdFormula.Average)
+                            else if (kpiAchievement.Kpi.YtdFormula == YtdFormula.Average)
                             {
                                 var itdValue = DataContext.KpiAchievements.Where(x => x.PeriodeType == PeriodeType.Yearly
                                   && x.Periode <= request.Periode
                                   && x.Kpi.Id == kpiAchievement.Kpi.Id).Average(x => x.Value);
                                 kpiAchievement.Itd = itdValue;
-                            }else{
+                            }
+                            else
+                            {
                                 kpiAchievement.Itd = kpiAchievement.Value;
                             }
                             if (prevAchievement != null)
@@ -1168,7 +1185,8 @@ namespace DSLNG.PEAR.Services
                                 kpiAchievement.Ytd = ytdValue;
                                 kpiAchievement.Itd = itdValue;
                             }
-                            else {
+                            else
+                            {
                                 kpiAchievement.Ytd = kpiAchievement.Value;
                                 kpiAchievement.Itd = kpiAchievement.Value;
                             }
@@ -1273,7 +1291,7 @@ namespace DSLNG.PEAR.Services
                                && x.Periode <= request.Periode
                                && x.Kpi.Id == kpiAchievement.Kpi.Id).Average(x => x.Value);
                                 kpiAchievement.Mtd = mtdValue;
-                                var monthly = DataContext.KpiAchievements.FirstOrDefault(x => x.Kpi.Id == kpiAchievement.Kpi.Id && x.Periode.Month == request.Periode.Month  && x.Periode.Year == request.Periode.Year && x.PeriodeType == PeriodeType.Monthly);
+                                var monthly = DataContext.KpiAchievements.FirstOrDefault(x => x.Kpi.Id == kpiAchievement.Kpi.Id && x.Periode.Month == request.Periode.Month && x.Periode.Year == request.Periode.Year && x.PeriodeType == PeriodeType.Monthly);
                                 if (monthly != null)
                                 {
                                     monthly.Value = mtdValue;
@@ -1330,7 +1348,8 @@ namespace DSLNG.PEAR.Services
                                 kpiAchievement.Ytd = ytdValue;
                                 kpiAchievement.Itd = itdValue;
                             }
-                            else {
+                            else
+                            {
                                 kpiAchievement.Mtd = kpiAchievement.Value;
                                 kpiAchievement.Ytd = kpiAchievement.Value;
                                 kpiAchievement.Itd = kpiAchievement.Value;
@@ -1368,14 +1387,15 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-        private string CompareKpiValue(double? prevValue, double? currentValue) {
-            if(!prevValue.HasValue || !currentValue.HasValue)
+        private string CompareKpiValue(double? prevValue, double? currentValue)
+        {
+            if (!prevValue.HasValue || !currentValue.HasValue)
             {
                 return string.Empty;
             }
             if (currentValue.Value > prevValue.Value)
             {
-               return "1";
+                return "1";
             }
             else if (currentValue.Value < prevValue.Value)
             {
@@ -1385,6 +1405,235 @@ namespace DSLNG.PEAR.Services
             {
                 return "0";
             }
+        }
+
+        public UpdateKpiAchievementItemResponse UpdateCustomJccFormula(UpdateKpiAchievementItemRequest request)
+        {
+            var response = new UpdateKpiAchievementItemResponse();
+            try
+            {
+                var user = DataContext.Users.First(x => x.Id == request.UserId);
+                var origin = UpdateOriginalData(request);
+                if (origin.IsSuccess)
+                {
+                    var jccPrice = double.Parse(request.Value);
+                    /*
+                     * Saving Current KPI Achievement for JCC Price
+                     */
+
+                    /*
+                     * Get Feed Gas GSA JOB Value from Custom Formula  using JCC Price
+                     */
+                    var feedGasGSA_JOB = _customService.GetFeedGasGSA_JOB(new GetFeedGasGSARequest { JccPrice = jccPrice });
+                    var FeedGasGSAJOB_Real = DataContext.KpiAchievements.FirstOrDefault(x => x.Kpi.Id == 381 && x.PeriodeType == PeriodeType.Monthly && x.Periode == request.Periode);
+                    var lastFeedGasGSAJOB_Real = DataContext.KpiAchievements.OrderByDescending(x => x.Periode).FirstOrDefault(x => x.Kpi.Id == 381 && x.PeriodeType == PeriodeType.Monthly && x.Periode < request.Periode);
+                    var deviation = "1";
+                    if (feedGasGSA_JOB.IsSuccess && lastFeedGasGSAJOB_Real != null)
+                    {
+                        deviation = CompareKpiValue(lastFeedGasGSAJOB_Real.Value.Value, feedGasGSA_JOB.Value);
+                    }
+                    if (FeedGasGSAJOB_Real != null && feedGasGSA_JOB.IsSuccess)
+                    {
+                        FeedGasGSAJOB_Real.Value = feedGasGSA_JOB.Value;
+                        FeedGasGSAJOB_Real.UpdatedBy = user;
+                        FeedGasGSAJOB_Real.UpdatedDate = DateTime.Now;
+                        FeedGasGSAJOB_Real.Deviation = FeedGasGSAJOB_Real.YtdDeviation = FeedGasGSAJOB_Real.MtdDeviation = FeedGasGSAJOB_Real.ItdDeviation = deviation;
+
+                    }
+                    else if (FeedGasGSAJOB_Real == null && feedGasGSA_JOB.IsSuccess)
+                    {
+                        FeedGasGSAJOB_Real = new KpiAchievement
+                        {
+                            Value = feedGasGSA_JOB.Value,
+                            Periode = request.Periode,
+                            PeriodeType = PeriodeType.Monthly,
+                            Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == 381),
+                            CreatedBy = user,
+                            UpdatedBy = user,
+                            Deviation = deviation,
+                            MtdDeviation = deviation,
+                            YtdDeviation = deviation,
+                            ItdDeviation = deviation
+
+                        };
+                        DataContext.KpiAchievements.Add(FeedGasGSAJOB_Real);
+                    }
+                    /*
+                     * Get Feed Gas GSA MGDP Value from Custom Formula  using JCC Price
+                     */
+                    var feedGasGSA_MGDP = _customService.GetFeedGasGSA_MGDP(new GetFeedGasGSARequest { JccPrice = jccPrice });
+                    var FeedGasGSAMGDP_Real = DataContext.KpiAchievements.FirstOrDefault(x => x.Kpi.Id == 382 && x.PeriodeType == PeriodeType.Monthly && x.Periode == request.Periode);
+                    var lastFeedGasGSAMGDP_Real = DataContext.KpiAchievements.OrderByDescending(x => x.Periode).FirstOrDefault(x => x.Kpi.Id == 382 && x.PeriodeType == PeriodeType.Monthly && x.Periode < request.Periode);
+                    deviation = "1";
+                    if (feedGasGSA_MGDP.IsSuccess && lastFeedGasGSAMGDP_Real != null)
+                    {
+                        deviation = CompareKpiValue(lastFeedGasGSAMGDP_Real.Value.Value, feedGasGSA_MGDP.Value);
+                    }
+                    if (FeedGasGSAMGDP_Real != null && feedGasGSA_MGDP.IsSuccess)
+                    {
+                        FeedGasGSAMGDP_Real.Value = feedGasGSA_MGDP.Value;
+                        FeedGasGSAMGDP_Real.UpdatedBy = user;
+                        FeedGasGSAMGDP_Real.UpdatedDate = DateTime.Now;
+                        FeedGasGSAMGDP_Real.Deviation = FeedGasGSAMGDP_Real.YtdDeviation = FeedGasGSAMGDP_Real.MtdDeviation = FeedGasGSAMGDP_Real.ItdDeviation = deviation;
+                    }
+                    else if (FeedGasGSAMGDP_Real == null && feedGasGSA_MGDP.IsSuccess)
+                    {
+                        var kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == 382);
+                        FeedGasGSAMGDP_Real = new KpiAchievement
+                        {
+                            Value = feedGasGSA_MGDP.Value,
+                            Periode = request.Periode,
+                            PeriodeType = PeriodeType.Monthly,
+                            Kpi = kpi,
+                            CreatedBy = user,
+                            UpdatedBy = user,
+                            Deviation = deviation,
+                            MtdDeviation = deviation,
+                            YtdDeviation = deviation,
+                            ItdDeviation = deviation
+                        };
+                        DataContext.KpiAchievements.Add(FeedGasGSAMGDP_Real);
+                    }
+                    /*
+                     * Get LNG Price SPA FOB Value from Custom Formula using JCC Price
+                     */
+                    var LNGPriceSPA_FOB = _customService.GetLNGPriceSPA_FOB(new GetFeedGasGSARequest { JccPrice = jccPrice });
+                    var LNGPriceSPAFOB_Real = DataContext.KpiAchievements.FirstOrDefault(x => x.Kpi.Id == 186 && x.PeriodeType == PeriodeType.Monthly && x.Periode == request.Periode);
+                    var lastLNGPriceSPAFOB_Real = DataContext.KpiAchievements.OrderByDescending(x => x.Periode).FirstOrDefault(x => x.Kpi.Id == 186 && x.PeriodeType == PeriodeType.Monthly && x.Periode < request.Periode);
+                    deviation = "1";
+                    if (LNGPriceSPA_FOB.IsSuccess && lastLNGPriceSPAFOB_Real != null)
+                    {
+                        deviation = CompareKpiValue(lastLNGPriceSPAFOB_Real.Value.Value, LNGPriceSPA_FOB.Value);
+                    }
+                    if (LNGPriceSPAFOB_Real != null && LNGPriceSPA_FOB.IsSuccess)
+                    {
+                        LNGPriceSPAFOB_Real.Value = LNGPriceSPA_FOB.Value;
+                        LNGPriceSPAFOB_Real.UpdatedBy = user;
+                        LNGPriceSPAFOB_Real.UpdatedDate = DateTime.Now;
+                        LNGPriceSPAFOB_Real.Deviation = LNGPriceSPAFOB_Real.YtdDeviation = LNGPriceSPAFOB_Real.MtdDeviation = LNGPriceSPAFOB_Real.ItdDeviation = deviation;
+                    }
+                    else if (LNGPriceSPAFOB_Real == null && LNGPriceSPA_FOB.IsSuccess)
+                    {
+                        LNGPriceSPAFOB_Real = new KpiAchievement
+                        {
+                            Value = LNGPriceSPA_FOB.Value,
+                            Periode = request.Periode,
+                            PeriodeType = PeriodeType.Monthly,
+                            Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == 186),
+                            CreatedBy = user,
+                            UpdatedBy = user,
+                            Deviation = deviation,
+                            MtdDeviation = deviation,
+                            YtdDeviation = deviation,
+                            ItdDeviation = deviation
+                        };
+                    }
+
+                    DataContext.SaveChanges();
+                    response.IsSuccess = true;
+                    response.Message = "JCC Price Calculation Succeded";
+                }
+            }
+            catch (InvalidOperationException o)
+            {
+                response.IsSuccess = false;
+                response.Message = o.Message;
+            }
+            catch (ArgumentNullException a)
+            {
+                response.IsSuccess = false;
+                response.Message = a.Message;
+            }
+            return response;
+        }
+        /// <summary>
+        /// Calculate LNG Price(SPA) DES from JCC Price and Bunker Price
+        /// </summary>
+        /// <param name="request">UpdateKpiAchievementItemRequest</param>
+        /// <returns>UpdateKpiAchievementItemResponse</returns>
+        public UpdateKpiAchievementItemResponse UpdateCustomBunkerPriceFormula(UpdateKpiAchievementItemRequest request)
+        {
+            var response = new UpdateKpiAchievementItemResponse();
+            try
+            {
+                var user = DataContext.Users.First(x => x.Id == request.UserId);
+                var origin = UpdateOriginalData(request);
+
+                /*
+                 * Try to Update Dependend Object/KPI
+                 */
+                if (origin.IsSuccess)
+                {
+                    // Get Value of Bunker Price from request
+                    var bunkerPrice = double.Parse(request.Value);
+                    // Get JCC Price of Current Periode Request
+                    var jccPrice = DataContext.KpiAchievements.FirstOrDefault(x => x.Kpi.Id == 62 && x.PeriodeType == PeriodeType.Monthly && x.Periode == request.Periode).Value;
+                    if (!jccPrice.HasValue)
+                    {
+                        response.IsSuccess = false;
+                        response.Message = "JCC Price not found, Please Insert JCC Price first";
+                        return response;
+                    }
+                    // Get LNGPriceSPA_DES
+                    var LNGPriceSPA_DES = _customService.GetLNGPriceSPA_DES(new GetLNGPriceSpaRequest { JccPrice = jccPrice.Value, BunkerPrice = bunkerPrice });
+
+                    if (!LNGPriceSPA_DES.IsSuccess)
+                    {
+                        response.IsSuccess = false;
+                        response.Message = "Could Not Calculate LNG Price SPA DESC";
+                        return response;
+                    }
+
+                    // Get Existing LNG Price(SPA) DES value of selected periode
+                    var existingLNG_Price_ADP = DataContext.KpiAchievements.FirstOrDefault(x => x.Kpi.Id == 187 && x.PeriodeType == PeriodeType.Monthly && x.Periode == request.Periode);
+                    var lastLNG_Price_ADP = DataContext.KpiAchievements.OrderByDescending(x=>x.Periode).FirstOrDefault(x => x.Kpi.Id == 187 && x.PeriodeType == PeriodeType.Monthly && x.Periode < request.Periode);
+                    var deviation = "1";
+                    if(lastLNG_Price_ADP != null)
+                    {
+                        deviation = CompareKpiValue(lastLNG_Price_ADP.Value.Value, LNGPriceSPA_DES.Value);
+                    }
+
+                    // KPI Actual already exist
+                    if(existingLNG_Price_ADP != null)
+                    {
+                        existingLNG_Price_ADP.Value = LNGPriceSPA_DES.Value;
+                        existingLNG_Price_ADP.UpdatedBy = user;
+                        existingLNG_Price_ADP.UpdatedDate = DateTime.Now;
+                        existingLNG_Price_ADP.Deviation = existingLNG_Price_ADP.MtdDeviation = existingLNG_Price_ADP.YtdDeviation = existingLNG_Price_ADP.ItdDeviation = deviation;
+                    }
+                    else
+                    {
+                        existingLNG_Price_ADP = new KpiAchievement
+                        {
+                            Value = LNGPriceSPA_DES.Value,
+                            Periode = request.Periode,
+                            PeriodeType = PeriodeType.Monthly,
+                            Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == 187),
+                            CreatedBy = user,
+                            UpdatedBy = user,
+                            Deviation = deviation,
+                            MtdDeviation = deviation,
+                            YtdDeviation = deviation,
+                            ItdDeviation = deviation
+                        };
+                        DataContext.KpiAchievements.Add(existingLNG_Price_ADP);
+                    }
+
+                    DataContext.SaveChanges();
+                }
+
+            }
+            catch (InvalidOperationException o)
+            {
+                response.IsSuccess = false;
+                response.Message = o.Message;
+            }
+            catch (ArgumentNullException a)
+            {
+                response.IsSuccess = false;
+                response.Message = a.Message;
+            }
+            return response;
         }
     }
 }
