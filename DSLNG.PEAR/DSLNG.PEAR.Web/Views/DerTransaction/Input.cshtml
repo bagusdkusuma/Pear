@@ -51,7 +51,7 @@
 
     <div class="row forecasted" style="margin-bottom: 20px;">
         <div class="col-md-12">
-            <a class="btn" role="button" data-toggle="collapse"  href="#" aria-expanded="false" aria-controls="collapseExample">
+            <a class="btn" role="button" data-toggle="collapse"  href="#" aria-expanded="false" aria-controls="collapseExample" tabindex="23">
                 <h4 style="margin-left: -16px;" class="text-title-section">Forecasted Market Indicator-B</h4>
             </a>
             <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
@@ -175,7 +175,7 @@
         <div class="col-md-6" style="margin-top: 15px;">
             <a href="#" class="btn btn-master-rgw btn-primary"><i class="fa fa-check-circle"></i> Save</a>
             <a href="#" class="btn btn-master-rgw btn-primary"><i class="fa fa-search"></i> Check</a>
-            <a href="#" class="btn btn-master-rgw btn-primary"><i class="fa fa-file-archive-o"></i> DER Preview</a>
+            <a href="javascript:void(0)" onclick="callDerPreview()" class="btn btn-master-rgw btn-primary"><i class="fa fa-file-archive-o"></i> DER Preview</a>
         </div>
     </div>
 </section>
@@ -195,6 +195,10 @@
     //    };
     //});
 
+    function callDerPreview() {
+        var url = '@Url.Action("Preview","DER")?date=' + encodeURIComponent($('.datepicker').val());  //  /DER/Preview?date=
+        window.open(url, '_blank');
+    }
     function moveFieldTo(event, fieldId) {
         var inputid = $(event.target).attr("id");
         if (event.keyCode == 13) {
