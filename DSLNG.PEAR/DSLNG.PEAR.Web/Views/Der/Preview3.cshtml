@@ -704,14 +704,30 @@
                                         </td>
                                     </tr>
                                 </table>
-                                @{
-                                    var row6Col2 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 2);
-                                    if (row6Col2 != null)
-                                    {
+                                <table style="width:100%">
+                                    <tr>
+                                        <td style="width:62.5%;padding:0">
+                                            @{
+                                                var row6Col2 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 2);
+                                                if (row6Col2 != null)
+                                                {
 
-                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col2.Id })" class="layout-item"></div>
-                                    }
-                                }
+                                                    <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col2.Id })" class="layout-item"></div>
+                                                }
+                                            }
+                                        </td>
+                                        <td style="width:37.5%;padding:0">
+                                            @{
+                                                var row6Col12 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 12);
+                                                if (row6Col12 != null)
+                                                {
+
+                                                    <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col12.Id })" class="layout-item"></div>
+                                                }
+                                            }
+                                        </td>
+                                    </tr>
+                                </table>
                                 @{
                                     var row7Col1 = Model.Items.FirstOrDefault(x => x.Row == 7 && x.Column == 1);
                                     if (row7Col1 != null)
@@ -1138,7 +1154,7 @@
                             var callback = window.Der.Artifact;
                             callback[data.GraphicType](data, that);
                         } else if (data.type == 'reviewed-by' || data.type == 'prepared-by' || data.type === "highlight" || data.type === "weather" || data.type === 'temperature' ||
-                                data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
+                                data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "flare" || data.type === "safety" ||
                             data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type === "total-feed-gas"
                             || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type === "procurement" || data.type === "indicative-commercial-price" ||
                                 data.type === "plant-availability" || data.type === "economic-indicator" || data.type === "mgdp" || data.type === "hhv" || data.type === "lng-and-cds-production"

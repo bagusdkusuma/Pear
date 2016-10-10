@@ -49,6 +49,9 @@
                 case "avg-ytd-key-statistic":
                     Html.RenderPartial("~/Views/DerLayout/LayoutType/_AvgYtdKeyStatistic.Edit.cshtml", Model);
                     break;
+                case "flare":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_Flare.Edit.cshtml", Model);
+                    break;
                 case "temperature":
                     Html.RenderPartial("~/Views/DerLayout/LayoutType/_Temperature.Edit.cshtml", Model);
                     break;
@@ -347,6 +350,7 @@
             case "dafwc":
             case "loading-duration":
             case "person-on-board":
+            case "flare":
                 {
                     window.Pear.Artifact.Designer._kpiAutoComplete($('.layout-type-area'));
                     break;

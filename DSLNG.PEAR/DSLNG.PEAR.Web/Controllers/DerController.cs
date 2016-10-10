@@ -201,6 +201,14 @@ namespace DSLNG.PEAR.Web.Controllers
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
                 #endregion
+                #region flare
+                case "flare":
+                    {
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_Flare.cshtml", GetGeneralDerKpiInformations(9, layout, date, PeriodeType.Daily));
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+                #endregion
                 #region temperature
                 case "temperature":
                     {

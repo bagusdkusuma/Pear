@@ -461,6 +461,11 @@ namespace DSLNG.PEAR.Web.Controllers
                             break;
 
                         }
+                    case "6-and-12":
+                        {
+                            viewModel.Type = "flare";
+                            break;
+                        }
                     case "7-and-0":
                         {
                             viewModel.Type = "lng-and-cds-production";
@@ -661,6 +666,12 @@ namespace DSLNG.PEAR.Web.Controllers
                         var viewModel = new DerLayoutItemViewModel();
                         viewModel.KpiInformations = GetKpiInformations(5);
                         return PartialView("LayoutType/_AvgYtdKeyStatistic", viewModel);
+                    }
+                case "flare":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(9);
+                        return PartialView("LayoutType/_Flare", viewModel);
                     }
                 case "safety":
                     {
@@ -912,6 +923,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "termometer":
                 case "loading-duration":
                 case "person-on-board":
+                case "flare":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();
