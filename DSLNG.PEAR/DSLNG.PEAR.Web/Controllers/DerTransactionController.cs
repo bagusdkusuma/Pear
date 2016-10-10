@@ -88,7 +88,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 new int[] { 194,176,100,99,38,40,41,39,165,168,169,166,170,173,174,171,398,401,402,399,11,101,102,175,110,
                     103,105,104,78,42,91,92,93,94,95,96,97,251,252,253,254,255,256,257,403,258,259,260,261,262,263,264,265,266,
                     267,268,269,270,271,404,405,406,56,57,58,368,70,369,360,361,362,363,364,87,86,85,370,185,184,43,5,6,
-                    45,46,47,49,50,48,71,72,73,77,74,75,76,82,7,8,82,76,365,433,366,367,369,15,241,239,240,423,430,434, 441,442,443
+                    45,46,47,49,50,48,71,72,73,77,74,75,76,82,7,8,82,76,365,433,366,367,369,15,241,239,240,423,430,434, 441,442,443,108
                 }, //actual KpiIds 
                 new int[] { 10, 9, 53, 12, 169, 174, 166, 171, 15, 241, 239, 240 }, //target KpiIds
                 new int[] { 19, 12, 69 }  //highlightTypeIds
@@ -238,6 +238,36 @@ namespace DSLNG.PEAR.Web.Controllers
                             Remark = viewModel.ValueType == "remark" ? viewModel.Value : null
                         };
                         var resp = _kpiAchievementService.UpdateOriginalData(request);
+                        return Json(resp);
+                    }
+                case "monthly-actual-jcc":
+                    {
+                        var request = new UpdateKpiAchievementItemRequest
+                        {
+                            Periode = theDate,
+                            PeriodeType = periodeType,
+                            Id = viewModel.Id,
+                            KpiId = viewModel.KpiId,
+                            UserId = UserProfile().UserId,
+                            Value = viewModel.ValueType == "value" ? viewModel.Value : null,
+                            Remark = viewModel.ValueType == "remark" ? viewModel.Value : null
+                        };
+                        var resp = _kpiAchievementService.UpdateCustomJccFormula(request);
+                        return Json(resp);
+                    }
+                case "monthly-actual-bunker":
+                    {
+                        var request = new UpdateKpiAchievementItemRequest
+                        {
+                            Periode = theDate,
+                            PeriodeType = periodeType,
+                            Id = viewModel.Id,
+                            KpiId = viewModel.KpiId,
+                            UserId = UserProfile().UserId,
+                            Value = viewModel.ValueType == "value" ? viewModel.Value : null,
+                            Remark = viewModel.ValueType == "remark" ? viewModel.Value : null
+                        };
+                        var resp = _kpiAchievementService.UpdateCustomBunkerPriceFormula(request);
                         return Json(resp);
                     }
                 case "daily-actual-dafwc":

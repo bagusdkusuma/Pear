@@ -644,6 +644,8 @@ namespace DSLNG.PEAR.Web.Helpers
                     }
                     break;
                 case "monthly-actual-prev":
+                case "monthly-actual-jcc":
+                case "monthly-actual-bunker":
                 case "monthly-actual":
                     {
                         valueObject = GetValue(kpiInformation.MonthlyActual, value, defaultValueDefined, valueType, existValue);
