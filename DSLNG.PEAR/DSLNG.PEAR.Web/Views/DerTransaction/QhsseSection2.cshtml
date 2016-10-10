@@ -1,0 +1,192 @@
+﻿@{
+    Layout = null;
+}
+@model DSLNG.PEAR.Web.ViewModels.DerTransaction.DerValuesViewModel
+
+<table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
+    <tr>
+        <td colspan="2"></td>
+        <td colspan="2"></td>
+        <td colspan="2">
+            <label  class="control-label lbl-style">Weekly Alarm Management System</label>
+        </td>
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">Last DAFWC</label></td>
+        <td>
+            @Html.DisplayKpiInformationInput(Model.KpiInformations, 273, 218, "text date", "prev", "daily-actual", "remark", "datepicker")
+        </td>
+        <td><label class="control-label lbl-style">Weather</label></td>
+        <td>
+            @Html.DisplayWeatherList(Model.Weather, 222)
+        </td>  
+        <td><label class="control-label lbl-style">Period</label></td>
+        <td>@Html.DisplayWeeklyAlarmInput(Model.Highlights, 80, 226, "free text", "period")</td>     
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">Last Plant LOPC (Tier-1 &2)</label></td>
+        <td>
+            @Html.DisplayKpiInformationInput(Model.KpiInformations, 274, 219, "text date", "prev", "daily-actual", "remark", "datepicker")
+        </td>
+        <td><label class="control-label lbl-style">Sea Condition and Jetty Status</label></td>
+        <td>
+             @Html.DisplayWaveList(Model.Wave, new List<SelectListItem> {
+                  new SelectListItem { Value="Calm wave & Accessible",Text="Calm wave & Accessible" },
+                   new SelectListItem { Value="Slight wave & Accessible",Text="Slight wave & Accessible" },
+                    new SelectListItem { Value="Moderate wave and Caution",Text="Moderate wave and Caution" },
+                     new SelectListItem { Value="Rough wave & Closed Acces",Text="Rough wave & Closed Acces" }
+              }, "tide", 223)
+        </td>
+        <td><label class="control-label lbl-style">Process Train</label></td>
+        <td>@Html.DisplayWeeklyAlarmInput(Model.Highlights, 80, 227, "number", "processtrain")</td>
+    </tr>    
+    <tr>
+        <td colspan="2"><label class="control-label lbl-style">Safe Man-hours Since last DAFWC</label></td>
+        <td><label class="control-label lbl-style">Wind Direct</label></td>
+        <td>@Html.DisplayWaveList(Model.Wave, Model.Wave.Values, "wind-direction", 224)</td>
+        <td><label class="control-label lbl-style">Utilities-off site</label></td>
+        <td>@Html.DisplayWeeklyAlarmInput(Model.Highlights, 80, 228, "number", "utilities")</td>
+    </tr>    
+    <tr>
+        <td><label class="control-label lbl-style">as of</label></td>
+        <td>
+            @Html.DisplayKpiInformationInput(Model.KpiInformations, 275, 220, "text date", "prev", "daily-actual", "remark", "datepicker")
+        </td>
+        <td><label class="control-label lbl-style">Wind Speed (km/h)</label></td>
+        <td>
+            @Html.DisplayWaveList(Model.Wave, Model.Wave.Values, "speed", 225)
+        </td>
+        <td><label class="control-label lbl-style">Remark</label></td>
+        <td>@Html.DisplayWeeklyAlarmInput(Model.Highlights, 80, 229, "free text", "remark")</td>
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">safe man hours</label></td>
+        <td>
+            @Html.DisplayKpiInformationInput(Model.KpiInformations, 275, 221, "hours", "prev")
+        </td>
+        <td></td>
+        <td></td>
+        <td><label class="control-label lbl-style">Indicator</label></td>
+        <td>
+            @Html.DisplayHighlightDropdownList(Model.Highlights, 59, new List<SelectListItem> {
+                   new SelectListItem {Value = "-1", Text = "-1" },
+                   new SelectListItem {Value = "0", Text = "0" },
+                   new SelectListItem {Value = "1", Text = "1" }
+               }, 229, "prev")
+        </td>
+    </tr>
+    <tr>
+        <td><br></td>
+    </tr>
+</table>
+
+<table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
+    <tr>
+        <td colspan="2"><label class="control-label lbl-style">Personnel Injury Related 24H</label></td>
+        <td colspan="2"><label class="control-label lbl-style">Personnel Injury Related-Annual Target</label></td>
+        <td colspan="2"><label class="control-label lbl-style">Security Incident Type (24H)</label></td>
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">Fatality 24H</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 1, 230, "number")</td>
+        <td><label class="control-label lbl-style">Fatality target</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 1, 241, "number", "empty", "yearly-target")</td>
+        <td><label class="control-label lbl-style">Mass Gathering</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 435, 252, "number")</td>
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">DAFWC 24H</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 177, 231, "number")</td>
+        <td><label class="control-label lbl-style">DAFWC target</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 177, 242, "number", "empty", "yearly-target")</td>
+        <td><label class="control-label lbl-style">Road Blockade</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 356, 253, "number")</td>
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">Env LOPC (&gt;1bbl or &gt;=moderate)</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 421, 232, "number")</td>
+        <td><label class="control-label lbl-style">Env LOPC (&gt;1bbl or &gt;=moderate)</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 421, 243, "number", "empty", "yearly-target")</td>
+        <td><label class="control-label lbl-style">Theft/Criminal</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 436, 254, "number")</td>
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">Env LOPC (&lt;1bbl or minor)</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 422, 233, "number")</td>
+        <td><label class="control-label lbl-style">Env LOPC (&lt;1bbl or minor)</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 422, 244, "number", "empty", "yearly-target")</td>
+        <td><label class="control-label lbl-style">Violence</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 359, 255, "number")</td>
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">RWC 24 H</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 278, 234, "number")</td>
+        <td><label class="control-label lbl-style">RWC target</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 278, 245, "number", "empty", "yearly-target")</td>
+        <td><label class="control-label lbl-style">Prop Dest/Vandalism</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 286, 256, "number")</td>
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">MTC 24 H</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 277, 235, "number")</td>
+        <td><label class="control-label lbl-style">MTC target</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 277, 246, "number", "empty", "yearly-target")</td>
+        <td><label class="control-label lbl-style">Others</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 292, 257, "number")</td>
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">FAC 24H</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 276, 236, "number")</td>
+        <td><label class="control-label lbl-style">FAC target</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 276, 247, "number", "empty", "yearly-target")</td>
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">NM 24H</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 285, 237, "number")</td>
+        <td><label class="control-label lbl-style">NM target</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 285, 248, "number", "empty", "yearly-target")</td>
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">Trafic Incident 24H</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 284, 238, "number")</td>
+        <td><label class="control-label lbl-style">Trafic Incident 24H</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 284, 249, "number", "empty", "yearly-target")</td>
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">Prop Dmg (&gt;$50K or &gt;=moderate)</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 357, 239, "number")</td>
+        <td><label class="control-label lbl-style">Prop Dmg (&gt;$50K or &gt;=moderate)</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 357, 250, "number", "empty", "yearly-target")</td>
+    </tr>
+    <tr>
+        <td><label class="control-label lbl-style">Prop Dmg (&lt;$50k or minor)</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 358, 240, "number")</td>
+        <td><label class="control-label lbl-style">Prop Dmg (&lt;$50k or minor)</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 358, 251, "number", "empty", "yearly-target")</td>
+    </tr>
+    <tr>
+        <td><br></td>
+    </tr>
+    <tr>
+        <td>
+            <label class="control-label lbl-style">Alert Condition</label> <br>
+            <div style="padding-left:35px">@Html.DisplayHighlightDropdownList(Model.Highlights, 7, Model.AlertOptions, 258, "prev")</div>
+        </td>
+    </tr>
+    <tr>
+        <td><br></td>
+    </tr>
+</table>
+
+<table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
+    <tr>
+        <td>
+            <label class="control-label lbl-style">QHSE & PSM Remark</label>
+            <div style="padding-left:35px">@Html.DisplayHighlightTextarea(Model.Highlights, 18, 259)</div>
+        </td>
+        <td>
+            <label class="control-label lbl-style">Security Remark</label>
+            <div style="padding-left:35px">@Html.DisplayHighlightTextarea(Model.Highlights, 13, 260)</div>
+        </td>
+    </tr>
+</table>

@@ -3266,6 +3266,10 @@ input.control-form.assumption-input {
     width: auto;
 }
 
+.lbl-style {
+    margin-left: 35px;
+}
+
 .artifact-designer-btns {
     margin-top: 0;
 }
