@@ -1311,17 +1311,57 @@
 
                     </div>
                     <div class="col-md-3">
-                        @{
-                            var row6Col12 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 12);
-                            if (row6Col12 != null)
-                            {
-                                <a href="@Url.Action("LayoutItem", new { column = 12, row = 6, derLayoutId = Model.DerLayoutId, id = row6Col12.Id })" class="">Manage</a>
-                            }
-                            else
-                            {
-                                <a href="@Url.Action("LayoutItem", new { column = 12, row = 6, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
-                            }
-                        }
+                        <table class="table table-bordered top-bottom-border vertical-space flare">
+                            <thead>
+                                <tr>
+                                    <td colspan="3" style="font-size:12px;border-left:1px solid #0d0d0d;height:50px;background-color: #92CDDC;">Flaring <br /> (ACTUAL-24H)</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="left-header" style="background-color: #DCE6F1;">
+                                        Wet Flare
+                                    </td>
+                                    <td rowspan="4" colspan="2" style="text-align:center;vertical-align:middle">
+                                        @{
+                                            var row6Col12 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 12);
+                                            if (row6Col12 != null)
+                                            {
+                                                <a href="@Url.Action("LayoutItem", new { column = 12, row = 6, derLayoutId = Model.DerLayoutId, id = row6Col12.Id })" class="">Manage</a>
+                                            }
+                                            else
+                                            {
+                                                <a href="@Url.Action("LayoutItem", new { column = 12, row = 6, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
+                                            }
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="left-header" style="background-color: #DCE6F1;">
+                                        Dry Flare
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="left-header" style="background-color: #DCE6F1;">
+                                        Tankage Flare
+                                    </td>
+                                 
+                                </tr>
+                                <tr>
+                                    <td class="left-header" style="background-color: #DCE6F1;">
+                                        <strong>Total</strong>
+                                    </td>
+                                   
+                                </tr>
+                                <tr>
+                                    <td class="left-header" style="background-color: #DCE6F1;" colspan="2">
+                                        <strong>Refrigerant Prod (+)/Consumed (-)</strong>
+                                    </td>
+                                 
+                                </tr>
+                            </tbody>
+                        </table>
+                    
                     </div>
                 </div>
 
