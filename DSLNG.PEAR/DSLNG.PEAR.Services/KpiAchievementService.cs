@@ -1003,6 +1003,14 @@ namespace DSLNG.PEAR.Services
                         break;
                 }
                 KpiAchievement prevAchievement = DataContext.KpiAchievements.OrderByDescending(x=>x.Periode).FirstOrDefault(x => x.Periode <= prevDate && x.PeriodeType == request.PeriodeType && x.Kpi.Id == request.KpiId);
+                if(prevAchievement!= null && kpiAchievement.Value != null)
+                {
+                    kpiAchievement.Deviation = CompareKpiValue(prevAchievement.Value, kpiAchievement.Value);
+                }
+                else
+                {
+                    kpiAchievement.Deviation = "1";
+                }
                 if (request.Id > 0)
                 {
                     if ((string.IsNullOrEmpty(request.Value) && request.Remark == null) || request.Value == "-" || (!string.IsNullOrEmpty(request.Value) && request.Value.Equals("null", StringComparison.InvariantCultureIgnoreCase)))
@@ -1040,28 +1048,56 @@ namespace DSLNG.PEAR.Services
                 }
                 else if (request.Id == 0)
                 {
-                    if (((string.IsNullOrEmpty(request.Value) && request.Remark == null) || request.Value == "-" ||
-                          (!string.IsNullOrEmpty(request.Value) && request.Value.Equals("null", StringComparison.InvariantCultureIgnoreCase))) && request.Id == 0)
+                    //try to search existing data first
+
+                    var exist = DataContext.KpiAchievements.FirstOrDefault(x => x.Kpi.Id == request.KpiId && x.PeriodeType == request.PeriodeType && x.Periode == request.Periode);
+                    if (exist != null)
                     {
-                        response.IsSuccess = false;
-                        response.Message = "You can not update this item because it is not existed";
-                        return response;
+                        if (request.Remark != null || !string.IsNullOrEmpty(request.Remark))
+                        {
+                            exist.Remark = request.Remark;
+                        }
+                        //if (!string.IsNullOrEmpty(request.Value) && request.Value.ToLowerInvariant() == "null" && request.Value != "-")
+                        if(request.RealValue != null)
+                        {
+                            exist.Value = request.RealValue;
+                        }
+                        exist.UpdatedBy = user;
+                        exist.UpdatedDate = DateTime.Now;
+                        exist.Deviation = CompareKpiValue(prevAchievement.Value, kpiAchievement.Value);
+                        kpiAchievement = exist;
                     }
                     else
                     {
                         kpiAchievement.CreatedBy = user;
                         kpiAchievement.UpdatedBy = user;
-                        kpiAchievement.Kpi = DataContext.Kpis.Single(x => x.Id == request.KpiId);
-                        if (prevAchievement != null)
-                        {
-                            kpiAchievement.Deviation = CompareKpiValue(prevAchievement.Value, kpiAchievement.Value);
-                        }
-                        else
-                        {
-                            kpiAchievement.Deviation = "1";
-                        }
+                        kpiAchievement.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == request.KpiId);
                         DataContext.KpiAchievements.Add(kpiAchievement);
                     }
+                    //Masih bikin data double, sebab 2 field dengan arah yang sama dan kpi yang sama bisa jadi memiliki data-id yang beda, karena saat return data-id dari service
+                    //data-id untuk field yang lainnya belum terupdate
+                    //if (((string.IsNullOrEmpty(request.Value) && request.Remark == null) || request.Value == "-" ||
+                    //      (!string.IsNullOrEmpty(request.Value) && request.Value.Equals("null", StringComparison.InvariantCultureIgnoreCase))) && request.Id == 0)
+                    //{
+                    //    response.IsSuccess = false;
+                    //    response.Message = "You can not update this item because it is not existed";
+                    //    return response;
+                    //}
+                    //else
+                    //{
+                    //    kpiAchievement.CreatedBy = user;
+                    //    kpiAchievement.UpdatedBy = user;
+                    //    kpiAchievement.Kpi = DataContext.Kpis.Single(x => x.Id == request.KpiId);
+                    //    if (prevAchievement != null)
+                    //    {
+                    //        kpiAchievement.Deviation = CompareKpiValue(prevAchievement.Value, kpiAchievement.Value);
+                    //    }
+                    //    else
+                    //    {
+                    //        kpiAchievement.Deviation = "1";
+                    //    }
+                    //    DataContext.KpiAchievements.Add(kpiAchievement);
+                    //}
                 }
 
 
@@ -1356,9 +1392,9 @@ namespace DSLNG.PEAR.Services
                             }
                             if (prevAchievement != null)
                             {
-                                kpiAchievement.MtdDeviation = CompareKpiValue(prevAchievement.Mtd, kpiAchievement.Mtd);
-                                kpiAchievement.YtdDeviation = CompareKpiValue(prevAchievement.Ytd, kpiAchievement.Ytd);
-                                kpiAchievement.ItdDeviation = CompareKpiValue(prevAchievement.Itd, kpiAchievement.Itd);
+                                kpiAchievement.MtdDeviation = !string.IsNullOrEmpty(CompareKpiValue(prevAchievement.Mtd, kpiAchievement.Mtd)) ? CompareKpiValue(prevAchievement.Mtd, kpiAchievement.Mtd) : "1";
+                                kpiAchievement.YtdDeviation = !string.IsNullOrEmpty(CompareKpiValue(prevAchievement.Ytd, kpiAchievement.Ytd)) ? CompareKpiValue(prevAchievement.Ytd, kpiAchievement.Ytd) : "1";
+                                kpiAchievement.ItdDeviation = !string.IsNullOrEmpty(CompareKpiValue(prevAchievement.Itd, kpiAchievement.Itd)) ? CompareKpiValue(prevAchievement.Ytd, kpiAchievement.Ytd) : "1";
                             }
                             else
                             {
