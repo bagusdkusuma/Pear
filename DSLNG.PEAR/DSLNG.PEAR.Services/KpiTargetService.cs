@@ -969,6 +969,29 @@ namespace DSLNG.PEAR.Services
                 }
                 else
                 {
+                    var exist = DataContext.KpiTargets.FirstOrDefault(x => x.Kpi.Id == request.KpiId && x.PeriodeType == request.PeriodeType && x.Periode == request.Periode);
+                    if (exist != null) {
+                        if(request.Remark != null || !string.IsNullOrEmpty(request.Remark))
+                        {
+                            exist.Remark = request.Remark;
+                        }
+                        if (!string.IsNullOrEmpty(request.Value) && request.Value.ToLowerInvariant() == "null" && request.Value != "-" )
+                        {
+                            exist.Value = double.Parse(request.Value);
+                        }
+                        exist.UpdatedBy = user;
+                        exist.UpdatedDate = DateTime.Now;
+                        kpiTarget.Id = exist.Id;
+                    }
+                    else
+                    {
+                        kpiTarget.CreatedBy = user;
+                        kpiTarget.UpdatedBy = user;
+                        kpiTarget.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == request.KpiId);
+                        DataContext.KpiTargets.Add(kpiTarget);
+                    }
+
+                    /*
                     if (((string.IsNullOrEmpty(request.Value) && request.Remark == null) || request.Value == "-" ||
                          (!string.IsNullOrEmpty(request.Value) && request.Value.ToLowerInvariant() == "null")) && request.Id == 0)
                     {
@@ -982,6 +1005,7 @@ namespace DSLNG.PEAR.Services
                         kpiTarget.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == request.KpiId);
                         DataContext.KpiTargets.Add(kpiTarget);
                     }
+                    */
                 }
                 DataContext.SaveChanges();
                 response.Id = kpiTarget.Id;
