@@ -507,12 +507,12 @@ namespace DSLNG.PEAR.Web.Helpers
             }
             var actual = double.Parse(actualValue);
             
-            if (actual < 2)
+            if (actual < 48)
             {
                 //hijau
                 return new MvcHtmlString("<i class='fa fa-circle'></i>");
             }
-            else if (actual > 2.2)
+            else if (actual > 48.12)
             {
                 //merah jika 
                 return new MvcHtmlString("<i class='fa fa-circle' style='color:red'></i>");
