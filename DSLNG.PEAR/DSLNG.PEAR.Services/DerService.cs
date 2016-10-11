@@ -302,6 +302,7 @@ namespace DSLNG.PEAR.Services
             rowAndColumns.Add(new RowAndColumns { Row = 6, Column = 9 });
             rowAndColumns.Add(new RowAndColumns { Row = 6, Column = 10 });
             rowAndColumns.Add(new RowAndColumns { Row = 6, Column = 11 });
+            rowAndColumns.Add(new RowAndColumns { Row = 6, Column = 12 });
             rowAndColumns.Add(new RowAndColumns { Row = 7, Column = 0 });
             rowAndColumns.Add(new RowAndColumns { Row = 7, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 7, Column = 2 });
@@ -380,6 +381,7 @@ namespace DSLNG.PEAR.Services
                     .Include(x => x.Artifact.Measurement)
                     .Include(x => x.Artifact.Series)
                     .Include(x => x.Artifact.Series.Select(y => y.Kpi))
+                    .Include(x => x.Artifact.Series.Select(y => y.Kpi.Measurement))
                     /*.Include(x => x.Artifact.Charts)
                     .Include(x => x.Artifact.Charts.Select(y => y.Series))*/
                     .Include(x => x.Artifact.Charts.Select(y => y.Series.Select(z => z.Kpi)))
@@ -564,6 +566,7 @@ namespace DSLNG.PEAR.Services
                 case "termometer":
                 case "loading-duration":
                 case "person-on-board":
+                case "flare":
                     {
                         baseResponse = request.Id > 0 ? UpdateKpiInformations(request) : SaveKpiInformations(request);
                         break;
@@ -949,6 +952,17 @@ namespace DSLNG.PEAR.Services
                 }).ToList();
                 derArtifact.Plots = plots;
                 derArtifact.CustomSerie = DataContext.Kpis.FirstOrDefault(y => y.Id == request.Artifact.Speedometer.Series.KpiId);
+                if (request.Artifact.Speedometer.LabelSeries != null)
+                {
+                    var labelSeries = new DerArtifactSerie
+                    {
+                        Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == request.Artifact.Speedometer.LabelSeries.KpiId),
+                        Label = "ton/d",
+                        Color = "#000"
+                    };
+                    derArtifact.Series = new List<DerArtifactSerie>();
+                    derArtifact.Series.Add(labelSeries);
+                }
                 DataContext.DerArtifacts.Add(derArtifact);
                 derLayoutItem.Artifact = derArtifact;
                 DataContext.DerLayoutItems.Add(derLayoutItem);
@@ -974,6 +988,7 @@ namespace DSLNG.PEAR.Services
                     .Include(x => x.Artifact)
                     .Include(x => x.Artifact.Plots)
                     .Include(x => x.Artifact.CustomSerie)
+                    .Include(x => x.Artifact.Series)
                     .Single(x => x.Id == request.Id);
 
                 //DataContext.DerArtifacts.Remove(derLayoutItem.Artifact);
@@ -995,6 +1010,26 @@ namespace DSLNG.PEAR.Services
 
                 derArtifact.Plots = plots;
                 derArtifact.CustomSerie = DataContext.Kpis.FirstOrDefault(y => y.Id == request.Artifact.Speedometer.Series.KpiId);
+                if (request.Artifact.Speedometer.LabelSeries != null) {
+                    if (derArtifact.Series != null)
+                    {
+                        foreach (var serie in derArtifact.Series.ToList())
+                        {
+                            derArtifact.Series.Remove(serie);
+                        }
+                    }
+                    else {
+                        derArtifact.Series = new List<DerArtifactSerie>();
+                    }
+                    var labelSeries = new DerArtifactSerie
+                    {
+                        Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == request.Artifact.Speedometer.LabelSeries.KpiId),
+                        Label = "tonnes/day",
+                        Color = "#000"
+                    };
+                    derArtifact.Series.Add(labelSeries);
+                }
+                
                 DataContext.DerArtifacts.Add(derArtifact);
                 derLayoutItem.Artifact = derArtifact;
                 //DataContext.DerLayoutItems.Add(derLayoutItem);

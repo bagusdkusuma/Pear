@@ -24,7 +24,7 @@
             <td style="width: 12.5%;font-size:10px;">
                 Plant intake Utilization (Feed/ Max.Cap)
             </td>
-            <td class="second-header" style="font-size:12px;width:12%">
+            @*<td class="second-header" style="font-size:12px;width:12%">
                 Total Flared Gas <span style="display: inline-block"> (Wet-Dry-Tankage)</span>
             </td>
             <td style="width: 12.5%;font-size:11px;" class="refrigerant second-header">
@@ -32,7 +32,7 @@
             </td>
             <td style="width: 12.5%;font-size:12px;" class="refrigerant second-header">
                 Material Balance (Loss)
-            </td>
+            </td>*@
         </tr>
     </thead>
     <tbody>
@@ -60,7 +60,7 @@
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiMeasurement, "%")
 
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 4).KpiMeasurement, "nm3")
 
             </td>
@@ -71,7 +71,7 @@
             <td rowspan="2" class="text-center" style="vertical-align:middle">
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 7).KpiMeasurement, "tonnes")
                 
-            </td>
+            </td>*@
         </tr>
         <tr>
             <td class="left-header">
@@ -95,10 +95,10 @@
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiMeasurement, "%")
 
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayDerRemark(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Remark)
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 4).KpiMeasurement, "MMscf")
-            </td>
+            </td>*@
         </tr>
         <tr>
             <td class="left-header">
@@ -124,9 +124,9 @@
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiMeasurement, "%")
 
             </td>
-            <td colspan="3" class="text-center second-header" style="font-size:11px;font-weight:bold;position:initial">
+            @*<td colspan="3" class="text-center second-header" style="font-size:11px;font-weight:bold;position:initial">
                 Total Fuel Gas (GTG-GTC-LP Fuel)
-            </td>
+            </td>*@
 
         </tr>
         <tr>
@@ -149,7 +149,7 @@
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 14).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 13).KpiMeasurement, "%")
                 
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 8).KpiMeasurement, "MMscf")
                 
             </td>
@@ -160,7 +160,7 @@
             <td>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 10).KpiMeasurement, "MMbtu")
                  
-            </td>
+            </td>*@
         </tr>
     </tbody>
 </table>

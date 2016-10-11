@@ -51,7 +51,7 @@
 
     <div class="row forecasted" style="margin-bottom: 20px;">
         <div class="col-md-12">
-            <a class="btn" role="button" data-toggle="collapse"  href="#" aria-expanded="false" aria-controls="collapseExample">
+            <a class="btn" role="button" data-toggle="collapse"  href="#" aria-expanded="false" aria-controls="collapseExample" tabindex="23">
                 <h4 style="margin-left: -16px;" class="text-title-section">Forecasted Market Indicator-B</h4>
             </a>
             <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
@@ -175,7 +175,7 @@
         <div class="col-md-6" style="margin-top: 15px;">
             <a href="#" class="btn btn-master-rgw btn-primary"><i class="fa fa-check-circle"></i> Save</a>
             <a href="#" class="btn btn-master-rgw btn-primary"><i class="fa fa-search"></i> Check</a>
-            <a href="#" class="btn btn-master-rgw btn-primary"><i class="fa fa-file-archive-o"></i> DER Preview</a>
+            <a href="javascript:void(0)" onclick="callDerPreview()" class="btn btn-master-rgw btn-primary"><i class="fa fa-file-archive-o"></i> DER Preview</a>
         </div>
     </div>
 </section>
@@ -195,6 +195,10 @@
     //    };
     //});
 
+    function callDerPreview() {
+        var url = '@Url.Action("Preview","DER")?date=' + encodeURIComponent($('.datepicker').val());  //  /DER/Preview?date=
+        window.open(url, '_blank');
+    }
     function moveFieldTo(event, fieldId) {
         var inputid = $(event.target).attr("id");
         if (event.keyCode == 13) {
@@ -260,6 +264,30 @@
                 tombol = $("a[href='#" + tombol + "']").text("-");
             });
 
+            var openNextTab = function ($latInput, nextIndex) {
+                var nextIndexs = [23, 39, 50, 176, 183, 223, 267];
+                if (nextIndexs.indexOf(nextIndex) > -1) {
+                    var $collapse = $latInput.closest('.collapse');
+                    var $row = $collapse.closest('.row');
+                    var $nextRow = $row.next();
+                    var $nextWrapper = $nextRow.find('.collapse');
+                    $nextRow.find('.btn-input-slide').click();
+                    window.theInterval = setInterval(function () {
+                        if ($nextRow.find('.collapse').children().length > 0) {
+                            var $next = $('[tabindex=' + nextIndex + ']');
+                            if ($next.is("textarea")) {
+                                tinyMCE.get($next.attr('id')).focus()
+                            } else {
+                                $next.focus();
+                            }
+                            clearInterval(window.theInterval);
+                        }
+                    }, 100);
+                    setTimeout(function () { clearInterval(window.theInterval); }, 10000);
+                   
+                }
+            };
+
             $('.btn-input-slide').click(function (e) {
                 e.preventDefault();
                 var $this = $(this);
@@ -299,6 +327,7 @@
                             var valueType = $this.data('value-type');
                             $this.addClass('in-progress');
                             $.post("/dertransaction/updatekpi", { kpiId: kpiId, type: type, date: currentDate, id: id, value: value, valueType: valueType }, function (resp) {
+                                openNextTab($this, nextTabindex);
                                 var $next = $('[tabindex=' + nextTabindex + ']');
                                 if ($next.is("textarea")) {
                                     tinyMCE.get($next.attr('id')).focus()
@@ -349,6 +378,7 @@
                                             var id = $textarea.attr('data-id');
                                             var value = editor.getContent();
                                             $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function (resp) {
+                                                openNextTab($textarea, nextTab);
                                                 var $next = $('[tabindex=' + nextTab + ']');
                                                 if ($next.is("textarea")) {
                                                     tinyMCE.get($next.attr('id')).focus()
@@ -370,13 +400,23 @@
                             var highlightTypeId = $this.data('highlight-type-id');
                             var id = $this.attr('data-id');
                             var value = $this.val();
+                            $this.addClass('in-progress');
                             $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function (resp) {
+                                openNextTab($this, nextTab);
                                 var $next = $('[tabindex=' + nextTab + ']');
                                 if ($next.is("textarea")) {
                                     tinyMCE.get($next.attr('id')).focus()
                                 } else {
                                     $next.focus();
                                 }
+                                $this.removeClass('in-progress');
+                                if ($this.hasClass('der-value-prev')) {
+                                    $this.removeClass('der-value-prev');
+                                }
+                                if ($this.hasClass('der-value-empty')) {
+                                    $this.removeClass('der-value-empty');
+                                }
+                                $this.addClass('der-value-now');
                                 if (parseInt($this.attr('data-id')) == 0) {
                                     $this.attr('data-id', resp.Id);
                                 }
@@ -393,13 +433,23 @@
                                 var highlightTypeId = $this.data('highlight-type-id');
                                 var id = $this.attr('data-id');
                                 var value = $this.val();
+                                $this.addClass('in-progress');
                                 $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function (resp) {
+                                    openNextTab($this, nextTab);
                                     var $next = $('[tabindex=' + nextTab + ']');
                                     if ($next.is("textarea")) {
                                         tinyMCE.get($next.attr('id')).focus()
                                     } else {
                                         $next.focus();
                                     }
+                                    $this.removeClass('in-progress');
+                                    if ($this.hasClass('der-value-prev')) {
+                                        $this.removeClass('der-value-prev');
+                                    }
+                                    if ($this.hasClass('der-value-empty')) {
+                                        $this.removeClass('der-value-empty');
+                                    }
+                                    $this.addClass('der-value-now');
                                     if (parseInt($this.attr('data-id')) == 0) {
                                         $this.attr('data-id', resp.Id);
                                     }
@@ -413,13 +463,23 @@
                             var id = $this.attr('data-id');
                             var value = $this.val();
                             var property = $this.data('property');
+                            $this.addClass('in-progress');
                             $.post("/dertransaction/updateinfragsm", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property : property }, function (resp) {
+                                openNextTab($this, nextTab);
                                 var $next = $('[tabindex=' + nextTab + ']');
                                 if ($next.is("textarea")) {
                                     tinyMCE.get($next.attr('id')).focus()
                                 } else {
                                     $next.focus();
                                 }
+                                $this.removeClass('in-progress');
+                                if ($this.hasClass('der-value-prev')) {
+                                    $this.removeClass('der-value-prev');
+                                }
+                                if ($this.hasClass('der-value-empty')) {
+                                    $this.removeClass('der-value-empty');
+                                }
+                                $this.addClass('der-value-now');
                                 if (parseInt($this.attr('data-id')) == 0) {
                                     $this.attr('data-id', resp.Id);
                                 }
@@ -437,13 +497,23 @@
                             } else {
                                 data.Tide = value;
                             }
+                            $this.addClass('in-progress');
                             $.post("/dertransaction/updatewave", data, function (resp) {
+                                openNextTab($this, nextTab);
                                 var $next = $('[tabindex=' + nextTab + ']');
                                 if ($next.is("textarea")) {
                                     tinyMCE.get($next.attr('id')).focus()
                                 } else {
                                     $next.focus();
                                 }
+                                $this.removeClass('in-progress');
+                                if ($this.hasClass('der-value-prev')) {
+                                    $this.removeClass('der-value-prev');
+                                }
+                                if ($this.hasClass('der-value-empty')) {
+                                    $this.removeClass('der-value-empty');
+                                }
+                                $this.addClass('der-value-now');
                                 if (parseInt($this.attr('data-id')) == 0) {
                                     $this.attr('data-id', resp.Id);
                                 }
@@ -454,14 +524,24 @@
                             var nextTab = parseInt($this.attr('tabindex')) + 1;
                             var id = $this.attr('data-id');
                             var value = $this.val();
-                            var data = { DateInDisplay: currentDate, id: id, PeriodeType: "Daily", ValueId : value};
+                            var data = { DateInDisplay: currentDate, id: id, PeriodeType: "Daily", ValueId: value };
+                            $this.addClass('in-progress');
                             $.post("/dertransaction/updateweather", data, function (resp) {
+                                openNextTab($this, nextTab);
                                 var $next = $('[tabindex=' + nextTab + ']');
                                 if ($next.is("textarea")) {
                                     tinyMCE.get($next.attr('id')).focus()
                                 } else {
                                     $next.focus();
                                 }
+                                $this.removeClass('in-progress');
+                                if ($this.hasClass('der-value-prev')) {
+                                    $this.removeClass('der-value-prev');
+                                }
+                                if ($this.hasClass('der-value-empty')) {
+                                    $this.removeClass('der-value-empty');
+                                }
+                                $this.addClass('der-value-now');
                                 if (parseInt($this.attr('data-id')) == 0) {
                                     $this.attr('data-id', resp.Id);
                                 }
@@ -480,13 +560,23 @@
                                 //} else if{
                                 //    data.Tide = value;
                                 //}
+                                $this.addClass('in-progress');
                                 $.post("/dertransaction/updatewave", data, function (resp) {
+                                    openNextTab($this, nextTab);
                                     var $next = $('[tabindex=' + nextTab + ']');
                                     if ($next.is("textarea")) {
                                         tinyMCE.get($next.attr('id')).focus()
                                     } else {
                                         $next.focus();
                                     }
+                                    $this.removeClass('in-progress');
+                                    if ($this.hasClass('der-value-prev')) {
+                                        $this.removeClass('der-value-prev');
+                                    }
+                                    if ($this.hasClass('der-value-empty')) {
+                                        $this.removeClass('der-value-empty');
+                                    }
+                                    $this.addClass('der-value-now');
                                     if (parseInt($this.attr('data-id')) == 0) {
                                         $this.attr('data-id', resp.Id);
                                     }
@@ -502,13 +592,23 @@
                                 var value = $this.val();
                                 var property = $this.data('property');
                                 var valueType = $this.data('type');
+                                $this.addClass('in-progress');
                                 $.post("/dertransaction/updatebrenfut", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property: property, valueType: valueType }, function (resp) {
+                                    openNextTab($this, nextTab);
                                     var $next = $('[tabindex=' + nextTab + ']');
                                     if ($next.is("textarea")) {
                                         tinyMCE.get($next.attr('id')).focus()
                                     } else {
                                         $next.focus();
                                     }
+                                    $this.removeClass('in-progress');
+                                    if ($this.hasClass('der-value-prev')) {
+                                        $this.removeClass('der-value-prev');
+                                    }
+                                    if ($this.hasClass('der-value-empty')) {
+                                        $this.removeClass('der-value-empty');
+                                    }
+                                    $this.addClass('der-value-now');
                                     if (parseInt($this.attr('data-id')) == 0) {
                                         $this.attr('data-id', resp.Id);
                                     }
@@ -526,6 +626,7 @@
                             var valueType = $this.data('value-type');
                             $this.addClass('in-progress');
                             $.post("/dertransaction/updatekpi", { kpiId: kpiId, type: type, date: currentDate, id: id, value: value, valueType: valueType }, function (resp) {
+                                openNextTab($this, nextTabindex);
                                 var $next = $('[tabindex=' + nextTabindex + ']');
                                 if ($next.is("textarea")) {
                                     tinyMCE.get($next.attr('id')).focus()
@@ -554,13 +655,23 @@
                                 var id = $this.attr('data-id');
                                 var value = $this.val();
                                 var property = $this.data('property');
+                                $this.addClass('in-progress');
                                 $.post("/dertransaction/updateweeklyalarm", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property: property}, function (resp) {
+                                    openNextTab($this, nextTab);
                                     var $next = $('[tabindex=' + nextTab + ']');
                                     if ($next.is("textarea")) {
                                         tinyMCE.get($next.attr('id')).focus()
                                     } else {
                                         $next.focus();
                                     }
+                                    $this.removeClass('in-progress');
+                                    if ($this.hasClass('der-value-prev')) {
+                                        $this.removeClass('der-value-prev');
+                                    }
+                                    if ($this.hasClass('der-value-empty')) {
+                                        $this.removeClass('der-value-empty');
+                                    }
+                                    $this.addClass('der-value-now');
                                     if (parseInt($this.attr('data-id')) == 0) {
                                         $this.attr('data-id', resp.Id);
                                     }

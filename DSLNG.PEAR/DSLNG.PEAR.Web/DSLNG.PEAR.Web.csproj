@@ -1162,6 +1162,9 @@
     <Content Include="Views\DerLoadingSchedule\Remarks.cshtml" />
     <Content Include="Views\DerLoadingSchedule\ManageRemark.cshtml" />
     <Content Include="Views\Der\Display\_ReviewedBy.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_Flare.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_Flare.Edit.cshtml" />
+    <Content Include="Views\Der\Display\_Flare.cshtml" />
     <None Include="Views\Der\Index.cshtml.old" />
     <Content Include="Views\Der\_ManageItem.cshtml" />
     <Content Include="Views\Der\_DialogManageItem.cshtml" />

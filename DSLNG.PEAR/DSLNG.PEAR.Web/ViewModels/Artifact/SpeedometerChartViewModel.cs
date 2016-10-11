@@ -16,6 +16,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         }
         
         public SeriesViewModel Series { get; set; }
+        public SeriesViewModel LabelSeries { get; set; }
         public IList<PlotBand> PlotBands { get; set; }
         public class SeriesViewModel
         {

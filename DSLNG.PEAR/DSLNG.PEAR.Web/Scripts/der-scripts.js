@@ -450,6 +450,7 @@ Number.prototype.format = function (n, x) {
     };
 
     Der.Artifact.speedometer = function (data, container) {
+        console.log(data.SpeedometerChart);
         var $this = container;
         $this.append('<h5>MCHE Rundown</h5>');
         var $canvas = $('<canvas />');
@@ -567,7 +568,7 @@ Number.prototype.format = function (n, x) {
         //ctx.fillText("100%", canvas.width - 45, canvas.height - 20);
         //ctx.fillText("50%", canvas.width / 2 - 20, 20);
       
-        $this.append('<span class="value"><strong>' + data.SpeedometerChart.Series.data[0].format(2) + '%</strong></span>');
+        $this.append('<span class="value"><strong>' + data.SpeedometerChart.LabelSeries.value.format(2) + ' ' + data.SpeedometerChart.LabelSeries.name +  '</strong></span>');
         var $image = $('<img />');
         $image.attr('src', canvas.toDataURL({
             format: 'png',

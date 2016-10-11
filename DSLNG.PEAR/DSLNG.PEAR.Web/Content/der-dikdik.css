@@ -468,6 +468,7 @@ h6 {
         
         .table.plant-availability {
             border-left: 1px solid #0D0D0D;
+             border-right: 1px solid #0D0D0D;
             margin-bottom: 12px;
         }
         
@@ -1204,4 +1205,17 @@ table.security-incident-wrapper > tbody > tr > td {
 
 .highlight-style-12 {
     font-size:12px;letter-spacing:0.5px;
+}
+table.flare thead tr td {
+height: 50px;
+background-color:#92cddc;
+vertical-align:middle;
+text-align:center;
+}
+table.flare .left-header{
+    background-color: #dce6f1;
+    text-align:left;
+}
+table.flare tbody td {
+    text-align:right;
 }

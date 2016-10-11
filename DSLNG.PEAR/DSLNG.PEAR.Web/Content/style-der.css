@@ -80,3 +80,10 @@
 .solid-gauge .highcharts-container {
     height:140px;
 }
+table.flare thead tr td {
+height: 50px;
+background-color:#92cddc;
+}
+table.flare .left-header{
+    background-color: #dce6f1;
+}

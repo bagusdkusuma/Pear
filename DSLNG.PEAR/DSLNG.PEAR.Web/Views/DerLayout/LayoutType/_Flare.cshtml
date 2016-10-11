@@ -1,0 +1,32 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.DerLayout.DerLayoutItemViewModel
+
+@{
+    string[] label = { "Wet Flare (MMscf)", "Wet Flare (tonnes)", "Dry Flare (MMscf)", "Dry Flare (tonnes)", "Tankage Flare (MMscf)", "Tankage Flare (tonnes)", "Total (MMscf)", "Total (tonnes)","Refrigerant Prod (+)/Consumed (-) (tonnes)" };
+    var a = 0;
+    for (int i = 0; i < 9; i++)
+    {
+
+        var posIndex = Model.KpiInformations.FirstOrDefault(x => x.Position == i);
+        if (posIndex != null)
+        {
+            <div class="form-group row">
+                <label class="control-label col-md-2">@label[i]</label>
+                <div class="col-md-4">
+                    @Html.HiddenFor(model => model.KpiInformations[i].Position)
+                    <input type="hidden" name="KpiInformations.Index" value="@a" />
+                    @Html.DropDownListFor(model => model.KpiInformations[i].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
+                </div>
+                <div class="col-md-6" style="visibility: hidden">
+                    @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes)
+                    @*<span style="color:white">
+                            @Html.EditorFor(model => model.KpiInformations[i].IsOriginalData) Is Original Data
+                        </span>*@
+                </div>
+            </div>
+        }
+        a++;
+    }
+}
+
+
+

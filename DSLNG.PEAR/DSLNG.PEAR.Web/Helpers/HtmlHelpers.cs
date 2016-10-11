@@ -401,9 +401,14 @@ namespace DSLNG.PEAR.Web.Helpers
         {
             if (!string.IsNullOrEmpty(val))
             {
-                double v = double.Parse(val);
-                TimeSpan span = TimeSpan.FromDays(v);
-                return string.Format("{0}:{1}", Math.Floor(span.TotalHours), span.Minutes);
+                var valInArray = val.Split('.');
+                var hour = valInArray[0];
+                var minutes = "00";
+                if(valInArray.Count() == 2)
+                {
+                    minutes = valInArray[1];
+                }
+                return string.Format("{0}:{1}", hour, minutes);
             }
 
             return defaultVal;
@@ -644,6 +649,8 @@ namespace DSLNG.PEAR.Web.Helpers
                     }
                     break;
                 case "monthly-actual-prev":
+                case "monthly-actual-jcc":
+                case "monthly-actual-bunker":
                 case "monthly-actual":
                     {
                         valueObject = GetValue(kpiInformation.MonthlyActual, value, defaultValueDefined, valueType, existValue);

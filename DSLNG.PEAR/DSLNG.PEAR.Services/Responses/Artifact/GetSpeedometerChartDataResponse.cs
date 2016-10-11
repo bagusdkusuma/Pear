@@ -10,6 +10,7 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
             PlotBands = new List<PlotBandResponse>();
         }
         public SeriesResponse Series { get; set; }
+        public SeriesResponse LabelSeries { get; set; }
         public IList<PlotBandResponse> PlotBands { get; set; }
         public string Subtitle { get; set; }
         public class SeriesResponse

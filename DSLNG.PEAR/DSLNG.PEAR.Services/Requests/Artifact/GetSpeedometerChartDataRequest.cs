@@ -13,6 +13,7 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
         public RangeFilter RangeFilter { get; set; }
         public ValueAxis ValueAxis { get; set; }
         public SeriesRequest Series { get; set; }
+        public SeriesRequest LabelSeries { get; set; }
         public IList<PlotBandRequest> PlotBands { get; set; }
         public class SeriesRequest
         {

@@ -326,9 +326,10 @@ namespace DSLNG.PEAR.Services
 
         public GetHighlightValuesResponse GetHighlightValues(GetHighlightValuesRequest request)
         {
+            var prevDate = request.Date.AddDays(-1);
             var derHighlights = request.HighlightTypeIds;
             var highlights = DataContext.Highlights.Include(x => x.HighlightType)
-                .Where(x => derHighlights.Contains(x.HighlightType.Id) && x.PeriodeType == PeriodeType.Daily && x.Date == request.Date).ToList();
+                .Where(x => derHighlights.Contains(x.HighlightType.Id) && x.PeriodeType == PeriodeType.Daily && ( x.Date == request.Date || x.Date == prevDate)).ToList();
             var response = new GetHighlightValuesResponse();
             foreach (var highlight in highlights)
             {

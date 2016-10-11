@@ -1,0 +1,80 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKpiInformationViewModel
+<style>
+    /*.plant-availability {
+        border-collapse: separate;
+    }
+
+        .plant-availability tr td
+        {
+            border-right: none !important;
+            border-bottom: none !important;
+        }*/
+</style>
+<table class="table table-bordered top-bottom-border vertical-space flare">
+    <thead>
+        <tr>
+            <td colspan="3" style="font-size:12px;">Flaring <br/> (ACTUAL-24H)</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="left-header">
+                Wet Flare
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "MMscf")
+                
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "tonnes")
+
+            </td>
+        </tr>
+        <tr>
+            <td class="left-header">
+                Dry Flare
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "MMscf")
+
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiMeasurement, "tonnes")
+
+            </td>
+        </tr>
+        <tr>
+            <td class="left-header">
+                Tankage Flare
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 4).KpiMeasurement, "MMscf")
+
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 5).KpiMeasurement, "tonnes")
+
+            </td>
+        </tr>
+        <tr>
+            <td class="left-header">
+               <strong>Total</strong>
+            </td>
+            <td>
+                <strong>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 6).KpiMeasurement, "MMscf")</strong>
+
+            </td>
+            <td>
+                <strong>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 7).KpiMeasurement, "tonnes")</strong>
+            </td>
+        </tr>
+        <tr>
+            <td class="left-header" colspan="2">
+                <strong>Refrigerant Prod (+)/Consumed (-)</strong>
+            </td>
+            <td>
+               @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 8).KpiMeasurement, "tonnes")
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -201,6 +201,14 @@ namespace DSLNG.PEAR.Web.Controllers
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
                 #endregion
+                #region flare
+                case "flare":
+                    {
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_Flare.cshtml", GetGeneralDerKpiInformations(9, layout, date, PeriodeType.Daily));
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+                #endregion
                 #region temperature
                 case "temperature":
                     {
@@ -366,6 +374,13 @@ namespace DSLNG.PEAR.Web.Controllers
                             KpiId = layout.Artifact.CustomSerie.Id,
                             Label = layout.Artifact.CustomSerie.Name
                         };
+                        if (layout.Artifact.Series.Count > 0) {
+                            request.LabelSeries = new GetSpeedometerChartDataRequest.SeriesRequest
+                            {
+                                KpiId = layout.Artifact.Series[0].KpiId,
+                                Label = layout.Artifact.Series[0].Label
+                            };
+                        }
 
                         var chartData = _artifactService.GetSpeedometerChartData(request);
 
@@ -384,6 +399,15 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.SpeedometerChart.Subtitle = chartData.Subtitle;
                         previewViewModel.SpeedometerChart.ValueAxisTitle = layout.Artifact.MeasurementName;
                         previewViewModel.SpeedometerChart.Series = chartData.Series.MapTo<SpeedometerChartDataViewModel.SeriesViewModel>();
+                        if (layout.Artifact.Series.Count > 0)
+                        {
+                            previewViewModel.SpeedometerChart.LabelSeries = new SpeedometerChartDataViewModel.LabelSeriesViewModel
+                            {
+                                name = chartData.LabelSeries.name,
+                                value = chartData.LabelSeries.data
+                            };
+                        }
+
                         previewViewModel.SpeedometerChart.PlotBands = chartData.PlotBands.MapTo<SpeedometerChartDataViewModel.PlotBandViewModel>();
                         previewViewModel.SpeedometerChart.PlotBands = previewViewModel.SpeedometerChart.PlotBands.OrderBy(x => x.to).ToList();
                         return Json(previewViewModel, JsonRequestBehavior.AllowGet);
