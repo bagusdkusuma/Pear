@@ -276,12 +276,17 @@ namespace DSLNG.PEAR.Web.Controllers
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 6);
                             break;
                         }
+                    case "plant-availability":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 7);
+                            break;
+                        }
                     case "lng-and-cds-production":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 10);
                             break;
                         }
-                    case "plant-availability":
+                    
                     case "safety":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 11);
@@ -760,7 +765,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "plant-availability":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(11);
+                        viewModel.KpiInformations = GetKpiInformations(7);
                         return PartialView("LayoutType/_PlantAvailability", viewModel);
                     }
                 case "economic-indicator":
