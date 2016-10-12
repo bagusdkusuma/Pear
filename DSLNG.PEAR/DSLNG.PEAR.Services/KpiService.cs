@@ -29,7 +29,7 @@ namespace DSLNG.PEAR.Services
             var query = DataContext.Kpis.Include(x => x.Measurement);
             if (request.Id != 0)
             {
-                query.Where(x => x.Id == request.Id);
+                query = query.Where(x => x.Id == request.Id);
             }
             return query.FirstOrDefault().MapTo<GetKpiResponse>();
         }
