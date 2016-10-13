@@ -139,24 +139,24 @@ namespace DSLNG.PEAR.Web.Controllers
             return View(model);
         }
 
-        public ActionResult Edit(RolePrivilegeViewModel model)
-        {
-            ViewBag.RoleGroups = _roleGroupService.GetRoleGroups(new Services.Requests.RoleGroup.GetRoleGroupsRequest
-            {
-                Take = -1,
-                SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
-            }).RoleGroups.Select(x => 
-                new SelectListItem  {
-                                        Text = x.Name,
-                                        Value = x.Id.ToString(),
-                                        Selected = model.RoleGroup_Id == x.Id
-                                    }).ToList();
+        //public ActionResult Edit(RolePrivilegeViewModel model)
+        //{
+        //    ViewBag.RoleGroups = _roleGroupService.GetRoleGroups(new Services.Requests.RoleGroup.GetRoleGroupsRequest
+        //    {
+        //        Take = -1,
+        //        SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+        //    }).RoleGroups.Select(x => 
+        //        new SelectListItem  {
+        //                                Text = x.Name,
+        //                                Value = x.Id.ToString(),
+        //                                Selected = model.RoleGroup_Id == x.Id
+        //                            }).ToList();
 
-            if (ModelState.IsValid)
-            {
-                return RedirectToAction("Index");
-            }
-            return View(model);
-        }
+        //    if (ModelState.IsValid)
+        //    {
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(model);
+        //}
     }
 }

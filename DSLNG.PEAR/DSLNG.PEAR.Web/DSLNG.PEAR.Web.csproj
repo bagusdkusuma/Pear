@@ -1423,6 +1423,7 @@
     <Content Include="Views\KpiTransformation\Process.cshtml" />
     <Content Include="Views\KpiTransformation\Log.cshtml" />
     <Content Include="Views\KpiTransformation\LogDetails.cshtml" />
+    <Content Include="Views\Shared\_MenuRolePrivilege.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

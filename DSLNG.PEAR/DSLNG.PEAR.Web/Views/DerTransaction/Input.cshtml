@@ -312,9 +312,20 @@
                         });
                         $(target).html(data);
                         $(target).find('input.der-kpi').keyup(function (e) {
-                            if (e.keyCode == 13) {
+                            if (e.keyCode == 13 || e.keyCode == 9) {
                                 $(this).trigger("enterKey");
+                            } 
+                        });
+                        $(target).find('input.der-kpi').keypress(function (e) {
+                            if (e.which !== 13 && e.which !== 9) {
+                                if ((e.which > 8 && e.which < 44) || e.which > 57) {
+                                    e.preventDefault();
+                                } 
                             }
+                        });
+                        $(target).find('input.der-kpi').blur(function (e) {
+                            var toConvert = eval($(this).val().replace(/,/g, ''));
+                            $(this).val(toConvert.toLocaleString('en-EN', { maximumSignificantDigits: 21 }));
                         });
                         $(target).find('input.der-kpi').bind('enterKey', function (e) {
                             var $this = $(this);
