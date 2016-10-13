@@ -734,6 +734,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var previewViewModel = new ArtifactPreviewViewModel();
             previewViewModel.FractionScale = artifactResp.FractionScale;
             previewViewModel.MaxFractionScale = artifactResp.MaxFractionScale;
+            previewViewModel.AsNetbackChart = artifactResp.AsNetbackChart;
             switch (artifactResp.GraphicType)
             {
                 case "line":

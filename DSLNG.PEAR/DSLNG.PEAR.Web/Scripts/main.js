@@ -1425,8 +1425,10 @@ Number.prototype.format = function (n, x) {
                                     netbackValue -= this.points[i].y;
                                 }
                             }
-                            if (i == this.points.length - 1) {
-                                tooltip += '<strong>Net back value : ' + netbackValue.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
+                            
+                            if (i == this.points.length - 2) {
+                                //tooltip += '<strong>Net back value : ' + netbackValue.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
+                                tooltip += '<strong>' + this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<strong><br/>';
                             }
                         } else {
                             if (typeof this.points[i].series.stackKey !== 'undefined') {
@@ -1733,8 +1735,11 @@ Number.prototype.format = function (n, x) {
                                     netbackValue -= this.points[i].y;
                                 }
                             }
-                            if (i == this.points.length - 1) {
-                                tooltip += '<strong>Net back value : ' + netbackValue.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
+                            
+                            if (i == this.points.length - 2) {
+                                console.log(this.points[i].series.name);
+                                //tooltip += '<strong>Net back value : ' + netbackValue.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
+                                tooltip += '<strong>' + this.points[i].series.name.trim() + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<strong><br/>';
                             }
                         } else {
                             if (typeof this.points[i].series.stackKey !== 'undefined') {
