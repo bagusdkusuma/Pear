@@ -52,12 +52,13 @@ namespace DSLNG.PEAR.Services
             var kpiIdsForActual = request.ActualKpiIds;
             var previousDate = request.Date.AddDays(-1);
             var previousMonth = request.Date.AddMonths(-1);
+            var previous2Month = request.Date.AddMonths(-2);
             var previousYear = request.Date.AddYears(-1);
             var achievements = DataContext.KpiAchievements.Include(x => x.Kpi)
                 .Where(x => kpiIdsForActual.Contains(x.Kpi.Id) &&
                 (((x.Periode == request.Date || x.Periode == previousDate) && x.PeriodeType == PeriodeType.Daily) ||
                 (x.PeriodeType == PeriodeType.Yearly && (x.Periode.Year == request.Date.Year || x.Periode.Year == previousYear.Year)) ||
-                (x.PeriodeType == PeriodeType.Monthly && (x.Periode.Month == request.Date.Month && x.Periode.Year == request.Date.Year || x.Periode.Month == previousMonth.Month && x.Periode.Year == previousMonth.Year)))).ToList();
+                (x.PeriodeType == PeriodeType.Monthly && (x.Periode.Month == request.Date.Month && x.Periode.Year == request.Date.Year || x.Periode.Month <= previousMonth.Month && x.Periode.Year == previousMonth.Year || x.Periode.Month == previous2Month.Month && x.Periode.Year == previousMonth.Year)))).ToList();
             var kpiIdsForTarget = request.TargetKpiIds;
             var targets = DataContext.KpiTargets.Include(x => x.Kpi)
                .Where(x => kpiIdsForTarget.Contains(x.Kpi.Id) &&
@@ -152,7 +153,7 @@ namespace DSLNG.PEAR.Services
                         }
                         else
                         {
-                            var currentMonthValue = achievements.FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode.Month == request.Date.Month && x.Periode.Year == request.Date.Year && x.PeriodeType == PeriodeType.Monthly);
+                            var currentMonthValue = achievements.OrderByDescending(x => x.Periode).FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode.Month <= request.Date.Month && x.Periode.Year == request.Date.Year && x.PeriodeType == PeriodeType.Monthly);
                             if (currentMonthValue != null)
                             {
                                 kpiInformation.MonthlyActual = new GetKpiInformationValuesResponse.KpiValue
@@ -174,6 +175,7 @@ namespace DSLNG.PEAR.Services
                                     Type = "prev"
                                 };
                             }
+
                         }
                     }
                 }
