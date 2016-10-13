@@ -693,7 +693,7 @@ namespace DSLNG.PEAR.Web.Helpers
         private static ValueObject GetValue(DerValuesViewModel.KpiValueViewModel kpiValue, string value, string defaultValueDefined, string valueType, string existValue) {
             if (valueType == "value")
             {
-                value = kpiValue == null ? value : (defaultValueDefined == "prev" ? kpiValue.Value.ToString("N") : (kpiValue.Type == "now" ? kpiValue.Value.ToString("N") : value));
+                value = kpiValue == null ? value : (defaultValueDefined == "prev" ? kpiValue.Value.ToString("#,#.#########") : (kpiValue.Type == "now" ? kpiValue.Value.ToString("#,#.#########") : value));
                 existValue = kpiValue == null ? existValue : kpiValue.Type;
             }
             else {
