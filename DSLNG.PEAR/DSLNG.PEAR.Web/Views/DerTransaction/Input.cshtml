@@ -175,7 +175,7 @@
         <div class="col-md-6" style="margin-top: 15px;">
             <a href="#" class="btn btn-master-rgw btn-primary"><i class="fa fa-check-circle"></i> Save</a>
             <a href="#" class="btn btn-master-rgw btn-primary"><i class="fa fa-search"></i> Check</a>
-            <a href="javascript:void(0)" onclick="callDerPreview()" class="btn btn-master-rgw btn-primary"><i class="fa fa-file-archive-o"></i> DER Preview</a>
+            <a tabindex="278" href="javascript:void(0)" onclick="callDerPreview()" class="btn btn-master-rgw btn-primary"><i class="fa fa-file-archive-o"></i> DER Preview</a>
         </div>
     </div>
 </section>
@@ -265,7 +265,7 @@
             });
 
             var openNextTab = function ($latInput, nextIndex) {
-                var nextIndexs = [23, 39, 50, 176, 183, 223, 267];
+                var nextIndexs = [23, 35, 56, 171, 178, 218, 262,278];
                 if (nextIndexs.indexOf(nextIndex) > -1) {
                     var $collapse = $latInput.closest('.collapse');
                     var $row = $collapse.closest('.row');
@@ -325,7 +325,10 @@
                         });
                         $(target).find('input.der-kpi').blur(function (e) {
                             var toConvert = eval($(this).val().replace(/,/g, ''));
-                            $(this).val(toConvert.toLocaleString('en-EN', { maximumSignificantDigits: 21 }));
+                            if (!isNaN(toConvert)) {
+                                $(this).val(toConvert.toLocaleString('en-EN', { maximumSignificantDigits: 21 }));
+                            }
+                            
                         });
                         $(target).find('input.der-kpi').bind('enterKey', function (e) {
                             var $this = $(this);

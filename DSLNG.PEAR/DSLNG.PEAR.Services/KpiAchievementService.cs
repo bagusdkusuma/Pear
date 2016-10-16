@@ -1015,8 +1015,14 @@ namespace DSLNG.PEAR.Services
                 {
                     if ((string.IsNullOrEmpty(request.Value) && request.Remark == null) || request.Value == "-" || (!string.IsNullOrEmpty(request.Value) && request.Value.Equals("null", StringComparison.InvariantCultureIgnoreCase)))
                     {
+                        //delete kpi achievement row and should send back the Id to 0
                         kpiAchievement = DataContext.KpiAchievements.Single(x => x.Id == request.Id);
                         DataContext.KpiAchievements.Remove(kpiAchievement);
+                        DataContext.SaveChanges();
+                        response.Id = 0;
+                        response.IsSuccess = true;
+                        response.Message = "KPI with Id =" + request.KpiId.ToString() + " was deleted successfully.";
+                        return response;
                     }
                     else
                     {
