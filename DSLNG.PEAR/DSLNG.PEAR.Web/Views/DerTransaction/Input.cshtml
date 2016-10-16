@@ -196,7 +196,10 @@
     //});
 
     function callDerPreview() {
-        var url = '@Url.Action("Preview","DER")?date=' + encodeURIComponent($('.datepicker').val());  //  /DER/Preview?date=
+        var currentDate = $('.datepicker').val();
+        var previewDate = new Date(currentDate);
+        previewDate.setDate(previewDate.getDate() + 1);
+        var url = '@Url.Action("Preview","DER")?date=' + encodeURIComponent((previewDate.getMonth() + 1) + '/' + previewDate.getDate() + '/' + previewDate.getFullYear());  //  /DER/Preview?date=
         window.open(url, '_blank');
     }
     function moveFieldTo(event, fieldId) {
