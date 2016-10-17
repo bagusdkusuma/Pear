@@ -320,18 +320,21 @@
                             } 
                         });
                         $(target).find('input.der-kpi').keypress(function (e) {
-                            if (e.which !== 13 && e.which !== 9) {
-                                if ((e.which > 8 && e.which < 44) || e.which > 57) {
-                                    e.preventDefault();
-                                } 
+                            if ($(this).attr('data-value-type') == 'value') {
+                                if (e.which !== 13 && e.which !== 9) {
+                                    if ((e.which > 8 && e.which < 44) || e.which > 57) {
+                                        e.preventDefault();
+                                    } 
+                                }
                             }
                         });
                         $(target).find('input.der-kpi').blur(function (e) {
-                            var toConvert = eval($(this).val().replace(/,/g, ''));
-                            if (!isNaN(toConvert)) {
-                                $(this).val(toConvert.toLocaleString('en-EN', { maximumSignificantDigits: 21 }));
+                            if ($(this).attr('data-value-type') == 'value') {
+                                var toConvert = eval($(this).val().replace(/,/g, ''));
+                                if (!isNaN(toConvert)) {
+                                    $(this).val(toConvert.toLocaleString('en-EN', { maximumSignificantDigits: 21 }));
+                                }
                             }
-                            
                         });
                         $(target).find('input.der-kpi').bind('enterKey', function (e) {
                             var $this = $(this);

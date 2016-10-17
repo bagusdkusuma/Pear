@@ -695,7 +695,7 @@ namespace DSLNG.PEAR.Web.Helpers
             {
                 //var valtoString = string.Empty;
                 //if (kpiValue != null) {valtoString= kpiValue.Value == 0 ? kpiValue.Value.ToString() : kpiValue.Value.ToString("#,#.#########"); }
-                value = kpiValue == null ? value : (defaultValueDefined == "prev" ? (kpiValue.Value == 0 ? kpiValue.Value.ToString() : kpiValue.Value.ToString("#,#.#########")) : (kpiValue.Type == "now" ? (kpiValue.Value == 0 ? kpiValue.Value.ToString() : kpiValue.Value.ToString("#,#.#########")) : value));
+                value = kpiValue == null ? value : (defaultValueDefined == "prev" ? (kpiValue.Value == 0 ? kpiValue.Value.ToString() : kpiValue.Value.ToString("#,0.#########")) : (kpiValue.Type == "now" ? (kpiValue.Value == 0 ? kpiValue.Value.ToString() : kpiValue.Value.ToString("#,#.#########")) : value));
                 existValue = kpiValue == null ? existValue : kpiValue.Type;
             }
             else {
