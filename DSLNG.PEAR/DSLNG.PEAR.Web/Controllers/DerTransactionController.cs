@@ -33,6 +33,7 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IWaveService _waveService;
         private readonly IWeatherService _weatherService;
         private readonly IDerLoadingScheduleService _derLoadingScheduleService;
+        private readonly IKpiTransformationService _kpiTransformationService;
 
         public DerTransactionController(IDerService derService, 
             IDerTransactionService derTransactionService, 
@@ -42,7 +43,8 @@ namespace DSLNG.PEAR.Web.Controllers
             ISelectService selectService, 
             IWaveService waveService, 
             IWeatherService weatherService,
-            IDerLoadingScheduleService derLoadingScheduleService)
+            IDerLoadingScheduleService derLoadingScheduleService,
+            IKpiTransformationService kpiTransformationService)
         {
             _derService = derService;
             _derTransactionService = derTransactionService;
@@ -53,6 +55,7 @@ namespace DSLNG.PEAR.Web.Controllers
             _waveService = waveService;
             _weatherService = weatherService;
             _derLoadingScheduleService = derLoadingScheduleService;
+            _kpiTransformationService = kpiTransformationService;
         }
         // GET: DerTransaction
         public ActionResult Index()
@@ -62,6 +65,15 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Input()
         {
+            ViewBag.KpiTransformations = _kpiTransformationService.Get(new Services.Requests.KpiTransformation.GetKpiTransformationsRequest
+            {
+                Skip = 0,
+                Take = -1
+            }).KpiTransformations.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }).ToList();
             return View();
         }
        

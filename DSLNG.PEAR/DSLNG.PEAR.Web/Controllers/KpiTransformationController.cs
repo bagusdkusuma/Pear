@@ -112,6 +112,22 @@ namespace DSLNG.PEAR.Web.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        public ActionResult ProcessDefault(int Id, string date)
+        {
+            var data = _kpiTransformationService.Get(Id).MapTo<KpiTransformationViewModel>();
+            var viewModel = new KpiTransformationScheduleViewModel();
+            viewModel = data.MapTo<KpiTransformationScheduleViewModel>();
+            viewModel.KpiTransformationId = data.Id;
+            viewModel.StartInDisplay = date.ToString();
+            viewModel.EndInDisplay = date.ToString();
+            var request = viewModel.MapTo<SaveKpiTransformationScheduleRequest>();
+            request.UserId = UserProfile().UserId;
+            var response = _kpiTransformationScheduleService.Save(request);
+            _kpiTransformationJob.Process(response);
+            return Json(response.Message, JsonRequestBehavior.AllowGet);
+        }
+
         private ActionResult Save(KpiTransformationViewModel viewModel) {
             var req = viewModel.MapTo<SaveKpiTransformationRequest>();
             var resp = _kpiTransformationService.Save(req);
