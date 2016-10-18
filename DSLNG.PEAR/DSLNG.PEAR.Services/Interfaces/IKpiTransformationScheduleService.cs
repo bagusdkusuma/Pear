@@ -7,6 +7,7 @@ namespace DSLNG.PEAR.Services.Interfaces
     {
         SaveKpiTransformationScheduleResponse Save(SaveKpiTransformationScheduleRequest request);
         GetKpiTransformationSchedulesResponse Get(GetKpiTransformationSchedulesRequest request);
+        GetKpiTransformationSchedulesResponse.KpiTransformationScheduleResponse Get(int Id);
         void UpdateStatus(int id, KpiTransformationStatus status);
     }
 }
