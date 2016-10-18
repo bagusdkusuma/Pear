@@ -1002,8 +1002,8 @@ namespace DSLNG.PEAR.Services
                         prevDate = request.Periode.AddDays(-1);
                         break;
                 }
-                KpiAchievement prevAchievement = DataContext.KpiAchievements.OrderByDescending(x=>x.Periode).FirstOrDefault(x => x.Periode <= prevDate && x.PeriodeType == request.PeriodeType && x.Kpi.Id == request.KpiId);
-                if(prevAchievement!= null && kpiAchievement.Value != null)
+                KpiAchievement prevAchievement = DataContext.KpiAchievements.OrderByDescending(x => x.Periode).FirstOrDefault(x => x.Periode <= prevDate && x.PeriodeType == request.PeriodeType && x.Kpi.Id == request.KpiId);
+                if (prevAchievement != null && kpiAchievement.Value != null)
                 {
                     kpiAchievement.Deviation = CompareKpiValue(prevAchievement.Value, kpiAchievement.Value);
                 }
@@ -1015,8 +1015,14 @@ namespace DSLNG.PEAR.Services
                 {
                     if ((string.IsNullOrEmpty(request.Value) && request.Remark == null) || request.Value == "-" || (!string.IsNullOrEmpty(request.Value) && request.Value.Equals("null", StringComparison.InvariantCultureIgnoreCase)))
                     {
+                        //delete kpi achievement row and should send back the Id to 0
                         kpiAchievement = DataContext.KpiAchievements.Single(x => x.Id == request.Id);
                         DataContext.KpiAchievements.Remove(kpiAchievement);
+                        DataContext.SaveChanges();
+                        response.Id = 0;
+                        response.IsSuccess = true;
+                        response.Message = "KPI with Id =" + request.KpiId.ToString() + " was deleted successfully.";
+                        return response;
                     }
                     else
                     {
@@ -1058,13 +1064,20 @@ namespace DSLNG.PEAR.Services
                             exist.Remark = request.Remark;
                         }
                         //if (!string.IsNullOrEmpty(request.Value) && request.Value.ToLowerInvariant() == "null" && request.Value != "-")
-                        if(request.RealValue != null)
+                        if (request.RealValue != null)
                         {
                             exist.Value = request.RealValue;
                         }
                         exist.UpdatedBy = user;
                         exist.UpdatedDate = DateTime.Now;
-                        exist.Deviation = CompareKpiValue(prevAchievement.Value, kpiAchievement.Value);
+                        if (prevAchievement != null)
+                        {
+                            exist.Deviation = CompareKpiValue(prevAchievement.Value, kpiAchievement.Value);
+                        }
+                        else
+                        {
+                            exist.Deviation = "1";
+                        }
                         kpiAchievement = exist;
                     }
                     else
@@ -1622,15 +1635,15 @@ namespace DSLNG.PEAR.Services
 
                     // Get Existing LNG Price(SPA) DES value of selected periode
                     var existingLNG_Price_ADP = DataContext.KpiAchievements.FirstOrDefault(x => x.Kpi.Id == 187 && x.PeriodeType == PeriodeType.Monthly && x.Periode == request.Periode);
-                    var lastLNG_Price_ADP = DataContext.KpiAchievements.OrderByDescending(x=>x.Periode).FirstOrDefault(x => x.Kpi.Id == 187 && x.PeriodeType == PeriodeType.Monthly && x.Periode < request.Periode);
+                    var lastLNG_Price_ADP = DataContext.KpiAchievements.OrderByDescending(x => x.Periode).FirstOrDefault(x => x.Kpi.Id == 187 && x.PeriodeType == PeriodeType.Monthly && x.Periode < request.Periode);
                     var deviation = "1";
-                    if(lastLNG_Price_ADP != null)
+                    if (lastLNG_Price_ADP != null)
                     {
                         deviation = CompareKpiValue(lastLNG_Price_ADP.Value.Value, LNGPriceSPA_DES.Value);
                     }
 
                     // KPI Actual already exist
-                    if(existingLNG_Price_ADP != null)
+                    if (existingLNG_Price_ADP != null)
                     {
                         existingLNG_Price_ADP.Value = LNGPriceSPA_DES.Value;
                         existingLNG_Price_ADP.UpdatedBy = user;

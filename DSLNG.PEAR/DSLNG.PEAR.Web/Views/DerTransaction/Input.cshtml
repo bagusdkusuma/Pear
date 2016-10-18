@@ -175,7 +175,7 @@
         <div class="col-md-6" style="margin-top: 15px;">
             <a href="#" class="btn btn-master-rgw btn-primary"><i class="fa fa-check-circle"></i> Save</a>
             <a href="#" class="btn btn-master-rgw btn-primary"><i class="fa fa-search"></i> Check</a>
-            <a href="javascript:void(0)" onclick="callDerPreview()" class="btn btn-master-rgw btn-primary"><i class="fa fa-file-archive-o"></i> DER Preview</a>
+            <a tabindex="278" href="javascript:void(0)" onclick="callDerPreview()" class="btn btn-master-rgw btn-primary"><i class="fa fa-file-archive-o"></i> DER Preview</a>
         </div>
     </div>
 </section>
@@ -196,7 +196,10 @@
     //});
 
     function callDerPreview() {
-        var url = '@Url.Action("Preview","DER")?date=' + encodeURIComponent($('.datepicker').val());  //  /DER/Preview?date=
+        var currentDate = $('.datepicker').val();
+        var previewDate = new Date(currentDate);
+        previewDate.setDate(previewDate.getDate() + 1);
+        var url = '@Url.Action("Preview","DER")?date=' + encodeURIComponent((previewDate.getMonth() + 1) + '/' + previewDate.getDate() + '/' + previewDate.getFullYear());  //  /DER/Preview?date=
         window.open(url, '_blank');
     }
     function moveFieldTo(event, fieldId) {
@@ -265,7 +268,7 @@
             });
 
             var openNextTab = function ($latInput, nextIndex) {
-                var nextIndexs = [23, 39, 50, 176, 183, 223, 267];
+                var nextIndexs = [23, 35, 56, 171, 178, 218, 262,278];
                 if (nextIndexs.indexOf(nextIndex) > -1) {
                     var $collapse = $latInput.closest('.collapse');
                     var $row = $collapse.closest('.row');
@@ -312,8 +315,25 @@
                         });
                         $(target).html(data);
                         $(target).find('input.der-kpi').keyup(function (e) {
-                            if (e.keyCode == 13) {
+                            if (e.keyCode == 13 || e.keyCode == 9) {
                                 $(this).trigger("enterKey");
+                            } 
+                        });
+                        $(target).find('input.der-kpi').keypress(function (e) {
+                            if ($(this).attr('data-value-type') == 'value') {
+                                if (e.which !== 13 && e.which !== 9) {
+                                    if ((e.which > 8 && e.which < 44) || e.which > 57) {
+                                        e.preventDefault();
+                                    } 
+                                }
+                            }
+                        });
+                        $(target).find('input.der-kpi').blur(function (e) {
+                            if ($(this).attr('data-value-type') == 'value') {
+                                var toConvert = eval($(this).val().replace(/,/g, ''));
+                                if (!isNaN(toConvert)) {
+                                    $(this).val(toConvert.toLocaleString('en-EN', { maximumSignificantDigits: 21 }));
+                                }
                             }
                         });
                         $(target).find('input.der-kpi').bind('enterKey', function (e) {

@@ -326,6 +326,10 @@ namespace DSLNG.PEAR.Web.Controllers
         [HttpPost]
         public ActionResult UpdateKpi(UpdateKpiOriginalViewModel viewModel)
         {
+            if(viewModel.Id == 0 && viewModel.Value == null)
+            {
+                return null;
+            }
             var sPeriodeType = viewModel.Type.Split('-')[0];
             var periodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), sPeriodeType, true);
             var theDate = DateTime.ParseExact(viewModel.Date, "MM/dd/yyyy", CultureInfo.InvariantCulture);

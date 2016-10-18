@@ -45,58 +45,58 @@
             </tr>
         </table>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 <td><label class="control-label">BRENT Forecast</label></td>
             </tr>
             <tr>
                 <td>
-                    <span>
+                    <span class="col-sm-8">
                         @Html.DisplayBrenfutHighlight(Model.Highlights,63,27,0,"label")
                     </span>
                 </td>
-                <td>
+                @*<td hidden="hidden">
                     <span>
-                        @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 28,0)
+                        @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 2888,0)
                     </span>
-                </td>
+                </td>*@
             </tr>
             <tr>
                 <td>
-                    <span>
-                        @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 29, 1, "label")
+                    <span class="col-sm-8">
+                        @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 28, 1, "label")
                     </span>
                 </td>
-                <td>
+                @*<td hidden="hidden">
                     <span>
-                        @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 30, 1)
+                        @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 3000, 1)
                     </span>
-                </td>
+                </td>*@
             </tr>
             <tr>
                 <td>
-                    <span>
-                        @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 31, 2, "label")
+                    <span class="col-sm-8">
+                        @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 29, 2, "label")
                     </span>
                 </td>
-                <td>
+                @*<td hidden="hidden">
                     <span>
-                        @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 32, 2)
+                        @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 3200, 2)
                     </span>
-                </td>
+                </td>*@
             </tr>
             <tr>
                 <td>
-                    <span>
-                        @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 33, 3, "label")
+                    <span class="col-sm-8">
+                        @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 30, 3, "label")
                     </span>
                 </td>
-                <td>
+                @*<td hidden="hidden">
                     <span>
-                        @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 34, 3)
+                        @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 3400, 3)
                     </span>
-                </td>
+                </td>*@
             </tr>
         </table>
     </div>
@@ -110,7 +110,7 @@
                 <td>
                     <span class="col-sm-8">
                             <!-- 37 -->
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 413,  35, "rate","prev")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 413,  31, "rate","prev")
                     </span>
                 </td>
             </tr>
@@ -118,7 +118,7 @@
                 <td><label class="control-label">3m</label></td>
                 <td>
                     <span class="col-sm-8">
-                       @Html.DisplayKpiInformationInput(Model.KpiInformations, 414  ,36, "rate","prev")
+                       @Html.DisplayKpiInformationInput(Model.KpiInformations, 414  ,32, "rate","prev")
                     </span>
                 </td>
             </tr>
@@ -126,7 +126,7 @@
                 <td><label class="control-label">6m</label></td>
                 <td>
                     <span class="col-sm-8">
-                      @Html.DisplayKpiInformationInput(Model.KpiInformations, 415,  37, "rate","prev")
+                      @Html.DisplayKpiInformationInput(Model.KpiInformations, 415,  33, "rate","prev")
                     </span>
                 </td>
             </tr>
@@ -134,7 +134,7 @@
                 <td><label class="control-label">1yr</label></td>
                 <td>
                     <span class="col-sm-8">
-                       @Html.DisplayKpiInformationInput(Model.KpiInformations, 416,  38, "rate","prev")
+                       @Html.DisplayKpiInformationInput(Model.KpiInformations, 416,  34, "rate","prev")
                     </span>
                 </td>
             </tr>
