@@ -14,6 +14,7 @@ namespace DSLNG.PEAR.Services.Responses.KpiTransformationSchedule
         public class KpiTransformationScheduleResponse
         {
             public int Id { get; set; }
+            public int KpiTransformation_Id { get; set; }
             public string Name { get; set; }
             public PeriodeType PeriodeType { get; set; }
             public DateTime ProcessingDate { get; set; }

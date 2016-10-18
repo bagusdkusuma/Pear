@@ -165,6 +165,8 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult LogDetails(int id)
         {
             ViewBag.Id = id;
+            var log = _kpiTransformationScheduleService.Get(id);
+            ViewBag.LogId = log.KpiTransformation_Id;
             return View();
         }
 
