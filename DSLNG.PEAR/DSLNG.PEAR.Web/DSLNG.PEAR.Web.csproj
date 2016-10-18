@@ -452,6 +452,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\AjaxLogin.js" />
+    <Content Include="Scripts\autonumeric.min.js" />
     <Content Include="Scripts\bignumber.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
@@ -1166,6 +1167,15 @@
     <Content Include="Views\DerLayout\LayoutType\_Flare.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_Flare.Edit.cshtml" />
     <Content Include="Views\Der\Display\_Flare.cshtml" />
+    <Content Include="Views\DerTransaction\Input2.cshtml" />
+    <Content Include="Views\DerTransaction\EconomicIndicator2.cshtml" />
+    <Content Include="Views\DerTransaction\EnablerSection2.cshtml" />
+    <Content Include="Views\DerTransaction\MaintenanceSection2.cshtml" />
+    <Content Include="Views\DerTransaction\MarineShipping2.cshtml" />
+    <Content Include="Views\DerTransaction\OperationSection2.cshtml" />
+    <Content Include="Views\DerTransaction\OperationSection.cshtml.orig" />
+    <Content Include="Views\DerTransaction\QhsseSection2.cshtml" />
+    <Content Include="Views\DerTransaction\ForcastedIndicator2.cshtml" />
     <None Include="Views\Der\Index.cshtml.old" />
     <Content Include="Views\Der\_ManageItem.cshtml" />
     <Content Include="Views\Der\_DialogManageItem.cshtml" />

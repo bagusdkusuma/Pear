@@ -1,213 +1,230 @@
-﻿<style>
-    .nav-tabs > li > a {
-        color: #ffffff;
-    }
-
-    .nav-tabs > li:active > a {
-        color: #000000;
-    }
-</style>
-@{
-    ViewBag.Title = "Der Custom Input Form";
+﻿@{
+    Layout = null;
 }
-<section id="der-transaction" data-date="@DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy")">
-    <div class="row">
-        <div class="title_page" style="border: none!important;">
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Der Custom Input Form</title>
+
+    <link rel="stylesheet" href="@Url.Content("~/Content/bootstrap.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/datepicker/css/datepicker.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/style.css")">    
+
+</head>
+<body>
+
+    <div class="container-fluid">
+        <section id="der-transaction" data-date="@DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy")">
             <div class="row">
-                <h3 class="page-header" style="margin-top: 0 !important">
-                    Der Input
-                </h3>
-            </div>
-        </div>
-        <div class="notification"></div>
-    </div>
-    <div class="row">
-        <div class="col-sm-12">
-            <form class="form-inline">
-                <div class="form-group form-list">
-                    <font color="#FFFFFF">Date : </font>
-                    <input id="currentDate" class="form-control datepicker" type="text">
-                    <span class="field-validation-valid" data-valmsg-for="StartInDisplay" data-valmsg-replace="true"></span>
+                <div class="title_page" style="border: none!important;">
+                    <div class="row">
+                        <h3 class="page-header" style="margin-top: 0 !important">
+                            Der Input 2
+                        </h3>
+                    </div>
                 </div>
-            </form>
-        </div>
-    </div>
-    <hr />
-
-    <div class="row economic-indicators" style="margin-bottom: 20px;">
-        <div class="col-md-12">
-            <a class="btn" role="button" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample">
-                <h4 style="margin-left: -16px;" class="text-title-section">Economic Indicator Section-B</h4>
-            </a>
-            <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
-                <a class="btn btn-input-slide" role="button" data-content-url="@Url.Action("EconomicIndicator",new { date="__date__" })" data-toggle="collapse" href="#collapseEconomic" aria-expanded="false" aria-controls="collapseExample">
-                    +
-                </a>
-            </span>
-            <div class="collapse" id="collapseEconomic" style="margin-top: 15px; margin-bottom: 15px;">
+                <div class="notification"></div>
             </div>
-        </div>
-    </div>
-
-    <div class="row forecasted" style="margin-bottom: 20px;">
-        <div class="col-md-12">
-            <a class="btn" role="button" data-toggle="collapse"  href="#" aria-expanded="false" aria-controls="collapseExample">
-                <h4 style="margin-left: -16px;" class="text-title-section">Forecasted Market Indicator-B</h4>
-            </a>
-            <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
-                <a class="btn btn-input-slide" role="button" data-toggle="collapse" data-content-url="@Url.Action("ForcastedIndicator",new { date="__date__" })" href="#collapseForecasted" aria-expanded="false" aria-controls="collapseExample">
-                    +
-                </a>
-            </span>
-            <div class="collapse" id="collapseForecasted" style="margin-top: 15px; margin-bottom: 15px;">
+            <div class="row">
+                <div class="col-sm-12">
+                    <form class="form-inline">
+                        <div class="form-group form-list">
+                            <font color="#FFFFFF">Date : </font>
+                            <input id="currentDate" class="form-control datepicker" type="text">
+                            <span class="field-validation-valid" data-valmsg-for="StartInDisplay" data-valmsg-replace="true"></span>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
-    </div>
+            <hr />
 
-    <div class="row operation" style="margin-bottom: 20px;">
-        <div class="col-md-12">
-            <a class="btn" role="button" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample">
-                <h4 style="margin-left: -16px;" class="text-title-section">Operation & Engineering Section-J</h4>
-            </a>
-            <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
-                <a class="btn btn-input-slide" role="button" data-toggle="collapse" data-content-url="@Url.Action("OperationSection",new { date="__date__" })" href="#collapseOperation" aria-expanded="false" aria-controls="collapseExample">
-                    +
-                </a>
-            </span>
-            <div class="collapse" id="collapseOperation" style="margin-top: 15px; margin-bottom: 15px;">
+            <div class="row economic-indicators" style="margin-bottom: 20px;">
+                <div class="col-md-12">
+                    <a class="btn" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample">
+                        <h4 style="margin-left: -16px;" class="text-title-section">Economic Indicator Section-B</h4>
+                    </a>
+                    <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
+                        <a class="btn btn-input-slide" role="button" data-content-url="@Url.Action("EconomicIndicator2",new { date="__date__" })" data-toggle="collapse" href="#collapseEconomic" aria-expanded="false" aria-controls="collapseExample">
+                            +
+                        </a>
+                    </span>
+                    <div class="collapse" id="collapseEconomic" style="margin-top: 15px; margin-bottom: 15px;">
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
-    <div class="row marine" style="margin-bottom: 20px;">
-        <div class="col-md-12">
-            <a class="btn" role="button" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample">
-                <h4 style="margin-left: -16px;" class="text-title-section">Marine, Shipping, Cargo Delivery section-C</h4>
-            </a>
-            <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
-                <a class="btn btn-input-slide" role="button" data-toggle="collapse" data-content-url="@Url.Action("MarineShipping",new { date="__date__" })" href="#collapseMarine" aria-expanded="false" aria-controls="collapseExample">
-                    +
-                </a>
-            </span>
-            <div class="collapse" id="collapseMarine" style="margin-top: 15px; margin-bottom: 15px;">
+            <div class="row forecasted" style="margin-bottom: 20px;">
+                <div class="col-md-12">
+                    <a class="btn" role="button" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample">
+                        <h4 style="margin-left: -16px;" class="text-title-section">Forecasted Market Indicator-B</h4>
+                    </a>
+                    <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
+                        <a class="btn btn-input-slide" role="button" data-toggle="collapse" data-content-url="@Url.Action("ForcastedIndicator2",new { date="__date__" })" href="#collapseForecasted" aria-expanded="false" aria-controls="collapseExample">
+                            +
+                        </a>
+                    </span>
+                    <div class="collapse" id="collapseForecasted" style="margin-top: 15px; margin-bottom: 15px;">
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
-    <div class="row maintanance" style="margin-bottom: 20px;">
-        <div class="col-md-12">
-            <a class="btn" role="button" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample">
-                <h4 style="margin-left: -16px;" class="text-title-section">Maintenance section-D</h4>
-            </a>
-            <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
-                <a class="btn btn-input-slide" role="button" data-toggle="collapse" data-content-url="@Url.Action("MaintenanceSection",new { date="__date__" })"  href="#collapseMaintanance" aria-expanded="false" aria-controls="collapseExample">
-                    +
-                </a>
-            </span>
-            <div class="collapse" id="collapseMaintanance" style="margin-top: 15px; margin-bottom: 15px;">
+            <div class="row operation" style="margin-bottom: 20px;">
+                <div class="col-md-12">
+                    <a class="btn" role="button" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample">
+                        <h4 style="margin-left: -16px;" class="text-title-section">Operation & Engineering Section-J</h4>
+                    </a>
+                    <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
+                        <a class="btn btn-input-slide" role="button" data-toggle="collapse" data-content-url="@Url.Action("OperationSection2",new { date="__date__" })" href="#collapseOperation" aria-expanded="false" aria-controls="collapseExample">
+                            +
+                        </a>
+                    </span>
+                    <div class="collapse" id="collapseOperation" style="margin-top: 15px; margin-bottom: 15px;">
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
-    <div class="row qhsse" style="margin-bottom: 20px;">
-        <div class="col-md-12">
-            <a class="btn" role="button" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample">
-                <h4 style="margin-left: -16px;" class="text-title-section">QHSSE Section-I</h4>
-            </a>
-            <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
-                <a class="btn btn-input-slide" role="button" data-toggle="collapse" data-content-url="@Url.Action("QhsseSection",new { date="__date__" })" href="#collapseQhsse" aria-expanded="false" aria-controls="collapseExample">
-                    +
-                </a>
-            </span>
-            <div class="collapse" id="collapseQhsse" style="margin-top: 15px; margin-bottom: 15px;">
+            <div class="row marine" style="margin-bottom: 20px;">
+                <div class="col-md-12">
+                    <a class="btn" role="button" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample">
+                        <h4 style="margin-left: -16px;" class="text-title-section">Marine, Shipping, Cargo Delivery section-C</h4>
+                    </a>
+                    <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
+                        <a class="btn btn-input-slide" role="button" data-toggle="collapse" data-content-url="@Url.Action("MarineShipping2",new { date="__date__" })" href="#collapseMarine" aria-expanded="false" aria-controls="collapseExample">
+                            +
+                        </a>
+                    </span>
+                    <div class="collapse" id="collapseMarine" style="margin-top: 15px; margin-bottom: 15px;">
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
-    <div class="row others">
-        <div class="col-md-12">
-            <a class="btn" role="button" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample">
-                <h4 style="margin-left: -16px;" class="text-title-section">Enabler Section</h4>
-            </a>
-            <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
-                <a class="btn  btn-input-slide" role="button" data-toggle="collapse" data-content-url="@Url.Action("EnablerSection",new { date="__date__" })" href="#collapseOthers" aria-expanded="false" aria-controls="collapseExample">
-                    +
-                </a>
-            </span>
-            <div class="collapse" id="collapseOthers" style="margin-top: 15px; margin-bottom: 15px;">
-            
+            <div class="row maintanance" style="margin-bottom: 20px;">
+                <div class="col-md-12">
+                    <a class="btn" role="button" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample">
+                        <h4 style="margin-left: -16px;" class="text-title-section">Maintenance section-D</h4>
+                    </a>
+                    <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
+                        <a class="btn btn-input-slide" role="button" data-toggle="collapse" data-content-url="@Url.Action("MaintenanceSection2",new { date="__date__" })" href="#collapseMaintanance" aria-expanded="false" aria-controls="collapseExample">
+                            +
+                        </a>
+                    </span>
+                    <div class="collapse" id="collapseMaintanance" style="margin-top: 15px; margin-bottom: 15px;">
+                    </div>
+                </div>
             </div>
-        </div>
+
+            <div class="row qhsse" style="margin-bottom: 20px;">
+                <div class="col-md-12">
+                    <a class="btn" role="button" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample">
+                        <h4 style="margin-left: -16px;" class="text-title-section">QHSSE Section-I</h4>
+                    </a>
+                    <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
+                        <a class="btn btn-input-slide" role="button" data-toggle="collapse" data-content-url="@Url.Action("QhsseSection2",new { date="__date__" })" href="#collapseQhsse" aria-expanded="false" aria-controls="collapseExample">
+                            +
+                        </a>
+                    </span>
+                    <div class="collapse" id="collapseQhsse" style="margin-top: 15px; margin-bottom: 15px;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row others">
+                <div class="col-md-12">
+                    <a class="btn" role="button" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample">
+                        <h4 style="margin-left: -16px;" class="text-title-section">Enabler Section</h4>
+                    </a>
+                    <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
+                        <a class="btn  btn-input-slide" role="button" data-toggle="collapse" data-content-url="@Url.Action("EnablerSection2",new { date="__date__" })" href="#collapseOthers" aria-expanded="false" aria-controls="collapseExample">
+                            +
+                        </a>
+                    </span>
+                    <div class="collapse" id="collapseOthers" style="margin-top: 15px; margin-bottom: 15px;">
+
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+            <div class="col-md-12" style="margin-bottom: 30px;">
+                <div class="col-md-3">
+                    <table width="900" border="0" cellpadding="2" cellspacing="2" hidden="hidden">
+                        <tr>
+                            <td>
+                                <label for="">Prepared By-L</label>
+                                <br />
+                                <select>
+                                    <option>Select Option</option>
+                                    <option>Option 1</option>
+                                    <option>Option 2</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-md-3">
+                    <table width="900" border="0" cellpadding="2" cellspacing="2" hidden="hidden">
+                        <tr>
+                            <td>
+                                <label for="">Reviewed By-M</label>
+                                <br />
+                                <select>
+                                    <option>Select Option</option>
+                                    <option>Option 1</option>
+                                    <option>Option 2</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-md-6" style="margin-top: 15px;">
+                    <a href="#" class="btn btn-master-rgw btn-primary"><i class="fa fa-check-circle"></i> Save</a>
+                    <a href="#" class="btn btn-master-rgw btn-primary"><i class="fa fa-search"></i> Check</a>
+                    <a href="javascript:void(0)" onclick="callDerPreview()" class="btn btn-master-rgw btn-primary"><i class="fa fa-file-archive-o"></i> DER Preview</a>
+                </div>
+            </div>
+        </section>
     </div>
 
-    <hr />
-    <div class="col-md-12" style="margin-bottom: 30px;">
-        <div class="col-md-3">
-            <table width="900" border="0" cellpadding="2" cellspacing="2" hidden="hidden">
-                <tr>
-                    <td>
-                        <label for="">Prepared By-L</label>
-                        <br />
-                        <select>
-                            <option>Select Option</option>
-                            <option>Option 1</option>
-                            <option>Option 2</option>
-                        </select>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="col-md-3">
-            <table width="900" border="0" cellpadding="2" cellspacing="2" hidden="hidden">
-                <tr>
-                    <td>
-                        <label for="">Reviewed By-M</label>
-                        <br />
-                        <select>
-                            <option>Select Option</option>
-                            <option>Option 1</option>
-                            <option>Option 2</option>
-                        </select>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="col-md-6" style="margin-top: 15px;">
-            <a href="#" class="btn btn-master-rgw btn-primary"><i class="fa fa-check-circle"></i> Save</a>
-            <a href="#" class="btn btn-master-rgw btn-primary"><i class="fa fa-search"></i> Check</a>
-            <a href="#" class="btn btn-master-rgw btn-primary"><i class="fa fa-file-archive-o"></i> DER Preview</a>
-        </div>
-    </div>
-</section>
+    <script type="text/javascript" src="~/Scripts/jquery-1.11.3.js"></script>
+    <script type="text/javascript" src="~/Scripts/bootstrap.js"></script>
+    <script type="text/javascript" src="~/Content/datepicker/js/bootstrap-datepicker.js"></script>
 
-<script type="text/javascript" src="~/Content/datepicker/js/bootstrap-datepicker.js"></script>
-<script type="text/javascript">
-    //$(document).ready(function () {
-    //    $('#currentDate').val('02/18/2016');
-    //    if ($('.der-display').length) {
-    //        $('.datepicker').datetimepicker({
-    //            format: "MM/DD/YYYY",
-    //            focusOnShow: false
-    //        }).on('dp.change', function (e) {
-    //            $("#currentDate").blur();
-    //            reloadView();
-    //        });
-    //    };
-    //});
+    <script src="@Url.Content("~/Scripts/tinymce/js/tinymce/tinymce.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/tinymce/js/tinymce/jquery.tinymce.min.js")" type="text/javascript"></script>
+@Scripts.Render("~/bundles/js")
+    <script type="text/javascript">
+        //$(document).ready(function () {
+        //    $('#currentDate').val('02/18/2016');
+        //    if ($('.der-display').length) {
+        //        $('.datepicker').datetimepicker({
+        //            format: "MM/DD/YYYY",
+        //            focusOnShow: false
+        //        }).on('dp.change', function (e) {
+        //            $("#currentDate").blur();
+        //            reloadView();
+        //        });
+        //    };
+        //});
 
-    function moveFieldTo(event, fieldId) {
-        var inputid = $(event.target).attr("id");
-        if (event.keyCode == 13) {
-            $(inputid).removeClass("der-text-yesterday");
-            document.getElementById(inputid).className = "form-control";
-            document.getElementById(fieldId).focus();
-            event.preventDefault();
-            return true;
+        function callDerPreview() {
+            var url = '@Url.Action("Preview","DER")?date=' + encodeURIComponent($('.datepicker').val());  //  /DER/Preview?date=
+            window.open(url, '_blank');
         }
-    }
-</script>
+        function moveFieldTo(event, fieldId) {
+            var inputid = $(event.target).attr("id");
+            if (event.keyCode == 13) {
+                $(inputid).removeClass("der-text-yesterday");
+                document.getElementById(inputid).className = "form-control";
+                document.getElementById(fieldId).focus();
+                event.preventDefault();
+                return true;
+            }
+        }
+    </script>
 
-@section Scripts {
     <script type="text/javascript">
         function getQueryVariable(variable) {
             var query = window.location.search.substring(1);
@@ -260,6 +277,30 @@
                 tombol = $("a[href='#" + tombol + "']").text("-");
             });
 
+            var openNextTab = function ($latInput, nextIndex) {
+                var nextIndexs = [23, 39, 50, 176, 183, 223, 267];
+                if (nextIndexs.indexOf(nextIndex) > -1) {
+                    var $collapse = $latInput.closest('.collapse');
+                    var $row = $collapse.closest('.row');
+                    var $nextRow = $row.next();
+                    var $nextWrapper = $nextRow.find('.collapse');
+                    $nextRow.find('.btn-input-slide').click();
+                    window.theInterval = setInterval(function () {
+                        if ($nextRow.find('.collapse').children().length > 0) {
+                            var $next = $('[tabindex=' + nextIndex + ']');
+                            if ($next.is("textarea")) {
+                                tinyMCE.get($next.attr('id')).focus()
+                            } else {
+                                $next.focus();
+                            }
+                            clearInterval(window.theInterval);
+                        }
+                    }, 100);
+                    setTimeout(function () { clearInterval(window.theInterval); }, 10000);
+
+                }
+            };
+
             $('.btn-input-slide').click(function (e) {
                 e.preventDefault();
                 var $this = $(this);
@@ -268,7 +309,7 @@
                     var contentUrl = $this.data('content-url');
                     contentUrl = contentUrl.replace('__date__', encodeURIComponent(currentDate));
                     $.get(contentUrl, function (data) {
-                        $(target).on('click', 'select',function () {
+                        $(target).on('click', 'select', function () {
                             console.log('panggil mari');
                             if ($(this).attr('data-clicks') == 1) {
                                 // Trigger here your function:
@@ -299,13 +340,14 @@
                             var valueType = $this.data('value-type');
                             $this.addClass('in-progress');
                             $.post("/dertransaction/updatekpi", { kpiId: kpiId, type: type, date: currentDate, id: id, value: value, valueType: valueType }, function (resp) {
+                                openNextTab($this, nextTabindex);
                                 var $next = $('[tabindex=' + nextTabindex + ']');
                                 if ($next.is("textarea")) {
                                     tinyMCE.get($next.attr('id')).focus()
                                 } else {
                                     $next.focus();
                                 }
-                                
+
                                 $this.removeClass('in-progress');
                                 if ($this.hasClass('der-value-prev')) {
                                     $this.removeClass('der-value-prev');
@@ -322,7 +364,7 @@
                         $(target).find('textarea.allow-html').each(function (i, val) {
                             var $this = $(val);
                             tinyMCE.init({
-                                selector: '#'+$this.attr('id'),
+                                selector: '#' + $this.attr('id'),
                                 menubar: false,
                                 plugins: [
                                     "advlist autolink lists link image charmap print preview anchor",
@@ -349,6 +391,7 @@
                                             var id = $textarea.attr('data-id');
                                             var value = editor.getContent();
                                             $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function (resp) {
+                                                openNextTab($textarea, nextTab);
                                                 var $next = $('[tabindex=' + nextTab + ']');
                                                 if ($next.is("textarea")) {
                                                     tinyMCE.get($next.attr('id')).focus()
@@ -370,13 +413,23 @@
                             var highlightTypeId = $this.data('highlight-type-id');
                             var id = $this.attr('data-id');
                             var value = $this.val();
+                            $this.addClass('in-progress');
                             $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function (resp) {
+                                openNextTab($this, nextTab);
                                 var $next = $('[tabindex=' + nextTab + ']');
                                 if ($next.is("textarea")) {
                                     tinyMCE.get($next.attr('id')).focus()
                                 } else {
                                     $next.focus();
                                 }
+                                $this.removeClass('in-progress');
+                                if ($this.hasClass('der-value-prev')) {
+                                    $this.removeClass('der-value-prev');
+                                }
+                                if ($this.hasClass('der-value-empty')) {
+                                    $this.removeClass('der-value-empty');
+                                }
+                                $this.addClass('der-value-now');
                                 if (parseInt($this.attr('data-id')) == 0) {
                                     $this.attr('data-id', resp.Id);
                                 }
@@ -393,13 +446,23 @@
                                 var highlightTypeId = $this.data('highlight-type-id');
                                 var id = $this.attr('data-id');
                                 var value = $this.val();
+                                $this.addClass('in-progress');
                                 $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function (resp) {
+                                    openNextTab($this, nextTab);
                                     var $next = $('[tabindex=' + nextTab + ']');
                                     if ($next.is("textarea")) {
                                         tinyMCE.get($next.attr('id')).focus()
                                     } else {
                                         $next.focus();
                                     }
+                                    $this.removeClass('in-progress');
+                                    if ($this.hasClass('der-value-prev')) {
+                                        $this.removeClass('der-value-prev');
+                                    }
+                                    if ($this.hasClass('der-value-empty')) {
+                                        $this.removeClass('der-value-empty');
+                                    }
+                                    $this.addClass('der-value-now');
                                     if (parseInt($this.attr('data-id')) == 0) {
                                         $this.attr('data-id', resp.Id);
                                     }
@@ -413,13 +476,23 @@
                             var id = $this.attr('data-id');
                             var value = $this.val();
                             var property = $this.data('property');
-                            $.post("/dertransaction/updateinfragsm", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property : property }, function (resp) {
+                            $this.addClass('in-progress');
+                            $.post("/dertransaction/updateinfragsm", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property: property }, function (resp) {
+                                openNextTab($this, nextTab);
                                 var $next = $('[tabindex=' + nextTab + ']');
                                 if ($next.is("textarea")) {
                                     tinyMCE.get($next.attr('id')).focus()
                                 } else {
                                     $next.focus();
                                 }
+                                $this.removeClass('in-progress');
+                                if ($this.hasClass('der-value-prev')) {
+                                    $this.removeClass('der-value-prev');
+                                }
+                                if ($this.hasClass('der-value-empty')) {
+                                    $this.removeClass('der-value-empty');
+                                }
+                                $this.addClass('der-value-now');
                                 if (parseInt($this.attr('data-id')) == 0) {
                                     $this.attr('data-id', resp.Id);
                                 }
@@ -431,19 +504,29 @@
                             var id = $this.attr('data-id');
                             var value = $this.val();
                             var property = $this.data('property');
-                            var data = { DateInDisplay: currentDate, id: id, PeriodeType: "Daily", property : property };
+                            var data = { DateInDisplay: currentDate, id: id, PeriodeType: "Daily", property: property };
                             if (property == 'wind-direction') {
                                 data.ValueId = value;
                             } else {
                                 data.Tide = value;
                             }
+                            $this.addClass('in-progress');
                             $.post("/dertransaction/updatewave", data, function (resp) {
+                                openNextTab($this, nextTab);
                                 var $next = $('[tabindex=' + nextTab + ']');
                                 if ($next.is("textarea")) {
                                     tinyMCE.get($next.attr('id')).focus()
                                 } else {
                                     $next.focus();
                                 }
+                                $this.removeClass('in-progress');
+                                if ($this.hasClass('der-value-prev')) {
+                                    $this.removeClass('der-value-prev');
+                                }
+                                if ($this.hasClass('der-value-empty')) {
+                                    $this.removeClass('der-value-empty');
+                                }
+                                $this.addClass('der-value-now');
                                 if (parseInt($this.attr('data-id')) == 0) {
                                     $this.attr('data-id', resp.Id);
                                 }
@@ -454,14 +537,24 @@
                             var nextTab = parseInt($this.attr('tabindex')) + 1;
                             var id = $this.attr('data-id');
                             var value = $this.val();
-                            var data = { DateInDisplay: currentDate, id: id, PeriodeType: "Daily", ValueId : value};
+                            var data = { DateInDisplay: currentDate, id: id, PeriodeType: "Daily", ValueId: value };
+                            $this.addClass('in-progress');
                             $.post("/dertransaction/updateweather", data, function (resp) {
+                                openNextTab($this, nextTab);
                                 var $next = $('[tabindex=' + nextTab + ']');
                                 if ($next.is("textarea")) {
                                     tinyMCE.get($next.attr('id')).focus()
                                 } else {
                                     $next.focus();
                                 }
+                                $this.removeClass('in-progress');
+                                if ($this.hasClass('der-value-prev')) {
+                                    $this.removeClass('der-value-prev');
+                                }
+                                if ($this.hasClass('der-value-empty')) {
+                                    $this.removeClass('der-value-empty');
+                                }
+                                $this.addClass('der-value-now');
                                 if (parseInt($this.attr('data-id')) == 0) {
                                     $this.attr('data-id', resp.Id);
                                 }
@@ -474,19 +567,29 @@
                                 var id = $this.attr('data-id');
                                 var value = $this.val();
                                 var property = $this.data('property');
-                                var data = { DateInDisplay: currentDate, id: id, PeriodeType: "Daily", property: property, Speed : value };
+                                var data = { DateInDisplay: currentDate, id: id, PeriodeType: "Daily", property: property, Speed: value };
                                 //if (property == 'wind-direction') {
                                 //    data.ValueId = value;
                                 //} else if{
                                 //    data.Tide = value;
                                 //}
+                                $this.addClass('in-progress');
                                 $.post("/dertransaction/updatewave", data, function (resp) {
+                                    openNextTab($this, nextTab);
                                     var $next = $('[tabindex=' + nextTab + ']');
                                     if ($next.is("textarea")) {
                                         tinyMCE.get($next.attr('id')).focus()
                                     } else {
                                         $next.focus();
                                     }
+                                    $this.removeClass('in-progress');
+                                    if ($this.hasClass('der-value-prev')) {
+                                        $this.removeClass('der-value-prev');
+                                    }
+                                    if ($this.hasClass('der-value-empty')) {
+                                        $this.removeClass('der-value-empty');
+                                    }
+                                    $this.addClass('der-value-now');
                                     if (parseInt($this.attr('data-id')) == 0) {
                                         $this.attr('data-id', resp.Id);
                                     }
@@ -502,13 +605,23 @@
                                 var value = $this.val();
                                 var property = $this.data('property');
                                 var valueType = $this.data('type');
+                                $this.addClass('in-progress');
                                 $.post("/dertransaction/updatebrenfut", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property: property, valueType: valueType }, function (resp) {
+                                    openNextTab($this, nextTab);
                                     var $next = $('[tabindex=' + nextTab + ']');
                                     if ($next.is("textarea")) {
                                         tinyMCE.get($next.attr('id')).focus()
                                     } else {
                                         $next.focus();
                                     }
+                                    $this.removeClass('in-progress');
+                                    if ($this.hasClass('der-value-prev')) {
+                                        $this.removeClass('der-value-prev');
+                                    }
+                                    if ($this.hasClass('der-value-empty')) {
+                                        $this.removeClass('der-value-empty');
+                                    }
+                                    $this.addClass('der-value-now');
                                     if (parseInt($this.attr('data-id')) == 0) {
                                         $this.attr('data-id', resp.Id);
                                     }
@@ -526,6 +639,7 @@
                             var valueType = $this.data('value-type');
                             $this.addClass('in-progress');
                             $.post("/dertransaction/updatekpi", { kpiId: kpiId, type: type, date: currentDate, id: id, value: value, valueType: valueType }, function (resp) {
+                                openNextTab($this, nextTabindex);
                                 var $next = $('[tabindex=' + nextTabindex + ']');
                                 if ($next.is("textarea")) {
                                     tinyMCE.get($next.attr('id')).focus()
@@ -554,13 +668,23 @@
                                 var id = $this.attr('data-id');
                                 var value = $this.val();
                                 var property = $this.data('property');
-                                $.post("/dertransaction/updateweeklyalarm", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property: property}, function (resp) {
+                                $this.addClass('in-progress');
+                                $.post("/dertransaction/updateweeklyalarm", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property: property }, function (resp) {
+                                    openNextTab($this, nextTab);
                                     var $next = $('[tabindex=' + nextTab + ']');
                                     if ($next.is("textarea")) {
                                         tinyMCE.get($next.attr('id')).focus()
                                     } else {
                                         $next.focus();
                                     }
+                                    $this.removeClass('in-progress');
+                                    if ($this.hasClass('der-value-prev')) {
+                                        $this.removeClass('der-value-prev');
+                                    }
+                                    if ($this.hasClass('der-value-empty')) {
+                                        $this.removeClass('der-value-empty');
+                                    }
+                                    $this.addClass('der-value-now');
                                     if (parseInt($this.attr('data-id')) == 0) {
                                         $this.attr('data-id', resp.Id);
                                     }
@@ -570,10 +694,11 @@
                     })
                 }
             });
-           
+
 
         });
 
 
     </script>
-}
+</body>
+</html>
