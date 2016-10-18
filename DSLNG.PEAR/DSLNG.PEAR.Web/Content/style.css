@@ -3280,7 +3280,9 @@ input.control-form.assumption-input {
     border-radius: 5px;
     font-size: 14px;
 }
-
+.btn-master-rgw option{
+    background-color:darkslategrey;
+}
 .economic-indicators-wrapper .economic-table > tbody > tr > td {
     border-color: white;
     color: white;

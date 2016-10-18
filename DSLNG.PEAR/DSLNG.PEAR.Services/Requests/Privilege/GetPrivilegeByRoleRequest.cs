@@ -10,4 +10,10 @@ namespace DSLNG.PEAR.Services.Requests.Privilege
     {
         public int RoleId { get; set; }
     }
+
+    public class GetPrivilegeByRolePrivilegeRequest
+    {
+        public int RoleId { get; set; }
+        public int RolePrivilegeId { get; set; }
+    }
 }
