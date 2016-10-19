@@ -3,9 +3,13 @@
 }
 @model DSLNG.PEAR.Web.ViewModels.DerTransaction.DerValuesViewModel
     <style>
-        .choosen-schedules.prev td,
-                .choosen-schedules.prev td a{
-            color: #A2CD5A !important;
+        .choosen-schedules.prev tr:not(.unsaved) td,
+                .choosen-schedules.prev tr:not(.unsaved) td a{
+            color: #ccc !important;
+        }
+        .choosen-schedules.now tr:not(.unsaved) td,
+                .choosen-schedules.now tr:not(.unsaved) td a{
+            color: limegreen !important;
         }
     </style>
 <div class="col-md-12 marine-shipping-message">
@@ -257,12 +261,13 @@
         });
         $(document).on('click', '.choose-schedule', function (e) {
             var choosenRow = $('.nls-schedules').find('tr.choosen').clone(true);
+            choosenRow.addClass('unsaved');
             choosenRow.each(function (i, val) {
                 var $val = $(val);
                 var id = $val.find('.id').val();
                 $val.find('td:first-child').hide();
                 $val.find('.edit-schedule').removeClass('prevent');
-                $val.find(':last-child').append(' | <a href="/DerLoadingSchedule/Remarks/'+id+'" class="see-remarks">See All</a>')
+                $val.find('td:last-child').append(' | <a href="/DerLoadingSchedule/Remarks/'+id+'" class="see-remarks">See All</a>')
                 $val.append('<td><button class="btn btn-default remove-schedule">remove</button></td>');
             })
             $('.choosen-schedules').append(choosenRow);
@@ -325,6 +330,10 @@
                     setTimeout(function () {
                         $('.marine-shipping-message .success-message').html('');
                     }, 1000)
+                    $('.choosen-schedules tr.unsaved').each(function (i, val) {
+                        $(val).removeClass('unsaved');
+                    })
+                    $('.choosen-schedules').addClass('now');
                     $('input[tabindex=176]').focus();
                 } else {
                     $('.marine-shipping-message .validation-summary').html('<p>' + data.Message + '</p>');

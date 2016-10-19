@@ -82,6 +82,7 @@
                     setTimeout(function () {
                         $('#loadingScheduleModal').modal('hide');
                         var $tr = $('<tr/>');
+                        $tr.addClass('unsaved');
                         $tr.append('<td style="display:none"><input type="checkbox" class="check-this" /><input type="hidden" class="id" name="id" value="' + data.Id + '" /></td>');
                         $tr.append('<td><a href="/DerLoadingSchedule/Edit/' + data.Id + '" class="edit-schedule">' + data.VesselType + ' - ' + data.SalesType + ' - ' + data.Type + '</a></td>');
                         $tr.append('<td>' + data.VesselName + ' ' + data.VesselCapacity + ' (' + data.VesselMeasuremant + ')</td>');
