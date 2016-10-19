@@ -14,6 +14,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetPrivilegesResponse GetRolePrivileges(GetPrivilegeByRoleRequest request);
         GetPrivilegesResponse GetRolePrivileges(GetPrivilegesRequest request);
         GetPrivilegeResponse GetRolePrivilege(GetPrivilegeRequest request);
-        BaseResponse SaveRolePrivilege(SaveRolePrivilegeRequest request);
+        GetMenuRolePrivilegeResponse GetMenuRolePrivileges(GetPrivilegeByRolePrivilegeRequest request);
+        SaveRolePrivilegeResponse SaveRolePrivilege(SaveRolePrivilegeRequest request);
     }
 }

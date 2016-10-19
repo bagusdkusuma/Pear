@@ -33,6 +33,7 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IWaveService _waveService;
         private readonly IWeatherService _weatherService;
         private readonly IDerLoadingScheduleService _derLoadingScheduleService;
+        private readonly IKpiTransformationService _kpiTransformationService;
 
         public DerTransactionController(IDerService derService, 
             IDerTransactionService derTransactionService, 
@@ -42,7 +43,8 @@ namespace DSLNG.PEAR.Web.Controllers
             ISelectService selectService, 
             IWaveService waveService, 
             IWeatherService weatherService,
-            IDerLoadingScheduleService derLoadingScheduleService)
+            IDerLoadingScheduleService derLoadingScheduleService,
+            IKpiTransformationService kpiTransformationService)
         {
             _derService = derService;
             _derTransactionService = derTransactionService;
@@ -53,6 +55,7 @@ namespace DSLNG.PEAR.Web.Controllers
             _waveService = waveService;
             _weatherService = weatherService;
             _derLoadingScheduleService = derLoadingScheduleService;
+            _kpiTransformationService = kpiTransformationService;
         }
         // GET: DerTransaction
         public ActionResult Index()
@@ -62,8 +65,18 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Input()
         {
+            ViewBag.KpiTransformations = _kpiTransformationService.Get(new Services.Requests.KpiTransformation.GetKpiTransformationsRequest
+            {
+                Skip = 0,
+                Take = -1
+            }).KpiTransformations.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }).ToList();
             return View();
         }
+       
 
         public ActionResult EconomicIndicator(string date)
         {
@@ -73,6 +86,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 new int[] { 15, 68 }  //highlightTypeIds
                 ));
         }
+
         public ActionResult ForcastedIndicator(string date)
         {
             return View(GetDerValuesPerSection(date,
@@ -182,6 +196,137 @@ namespace DSLNG.PEAR.Web.Controllers
         }
 
         public ActionResult EnablerSection(string date)
+        {
+            return View(GetDerValuesPerSection(date,
+           new int[] { 379, 380, 36 }, //actual KpiIds 
+           new int[] { 380 }, //target KpiIds
+           new int[] { 66, 53, 14, 8, 58, 21, 53, 67 }  //highlightTypeIds
+           ));
+        }
+
+        public ActionResult Input2()
+        {
+            return View();
+        }
+
+        public ActionResult EconomicIndicator2(string date)
+        {
+            return View(GetDerValuesPerSection(date,
+                new int[] { 386, 79, 80, 128, 388, 389, 390, 383, 64, 384, 65, 385, 62, 63, 391, 392, 393, 394, 395, 397 }, //actual KpiIds 
+                new int[] { }, //target KpiIds
+                new int[] { 15, 68 }  //highlightTypeIds
+                ));
+        }
+
+        public ActionResult ForcastedIndicator2(string date)
+        {
+            return View(GetDerValuesPerSection(date,
+                new int[] { 386, 79, 80, 128, 388, 389, 390, 383, 64, 384, 65, 385, 62, 63, 391, 392, 393, 394, 395, 397, 409, 410, 411, 412, 413, 414, 415, 416 }, //actual KpiIds 
+                new int[] { }, //target KpiIds
+                new int[] { 63 }  //highlightTypeIds
+                ));
+        }
+
+        public ActionResult OperationSection2(string date)
+        {
+            return View(GetDerValuesPerSection(date,
+                new int[] { 194,176,100,99,38,40,41,39,165,168,169,166,170,173,174,171,398,401,402,399,11,101,102,175,110,
+                    103,105,104,78,42,91,92,93,94,95,96,97,251,252,253,254,255,256,257,403,258,259,260,261,262,263,264,265,266,
+                    267,268,269,270,271,404,405,406,56,57,58,368,70,369,360,361,362,363,364,87,86,85,370,185,184,43,5,6,
+                    45,46,47,49,50,48,71,72,73,77,74,75,76,82,7,8,82,76,365,433,366,367,369,15,241,239,240,423,430,434, 441,442,443,108
+                }, //actual KpiIds 
+                new int[] { 10, 9, 53, 12, 169, 174, 166, 171, 15, 241, 239, 240 }, //target KpiIds
+                new int[] { 19, 12, 69 }  //highlightTypeIds
+                ));
+        }
+
+        public ActionResult MarineShipping2(string date)
+        {
+            var dateTime = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+            var viewModel = GetDerValuesPerSection(date,
+                new int[] { 375, 376, 377, 378 }, //actual KpiIds 
+                new int[] { 375, 377 }, //target KpiIds
+                new int[] { 52 }  //highlightTypeIds
+                );
+            viewModel.DerLoadingSchedule = _derLoadingScheduleService.Get(new GetDerLoadingSchedulesRequest { Periode = dateTime }).MapTo<DerValuesViewModel.DerLoadingScheduleViewModel>();
+            return View(viewModel);
+        }
+
+        public ActionResult MaintenanceSection2(string date)
+        {
+            return View(GetDerValuesPerSection(date,
+               new int[] { 59, 60, 61, 371, 372, 373, 374 }, //actual KpiIds 
+               new int[] { 59, 374 }, //target KpiIds
+               new int[] { 46, 34, 35, 36, 37, 31, 32, 33, 28, 29, 30, 38, 39, 47, 40, 41, 42, 43, 48, 44, 45, 49, 50, 51, 11, 77, 78, 79,60,61 }  //highlightTypeIds
+               ));
+        }
+
+        public ActionResult QhsseSection2(string date)
+        {
+            var viewModel = GetDerValuesPerSection(date,
+               new int[] { 273, 274, 275, 276, 1, 177, 278, 277, 285, 356, 4, 359, 286, 292, 421, 422, 284, 357, 358, 435, 436 }, //actual KpiIds 
+               new int[] { 1, 177, 278, 277, 276, 285, 421, 422, 284, 357, 358 }, //target KpiIds
+               new int[] { 18, 13, 20, 7, 80 , 59 }  //highlightTypeIds
+               );
+            var theDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+            var wave = _waveService.GetWave(new GetWaveRequest
+            {
+                Date = theDate,
+                ByDate = true
+            });
+            if (wave.Id != 0)
+            {
+                viewModel.Wave = wave.MapTo<WaveViewModel>();
+                viewModel.Wave.DerValueType = "now";
+            }
+            else
+            {
+                wave = _waveService.GetWave(new GetWaveRequest
+                {
+                    Date = theDate.AddDays(-1),
+                    ByDate = true
+                });
+                if (wave.Id != 0)
+                {
+                    viewModel.Wave = wave.MapTo<WaveViewModel>();
+                    viewModel.Wave.DerValueType = "prev";
+                }
+            }
+            if (viewModel.Wave == null) viewModel.Wave = new WaveViewModel();
+            viewModel.Wave.Values = _selectService.GetSelect(new GetSelectRequest { Name = "wave-values" }).Options
+                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Text }).ToList();
+            var weather = _weatherService.GetWeather(new GetWeatherRequest
+            {
+                Date = theDate,
+                ByDate = true
+            });
+            if (weather.Id != 0)
+            {
+                viewModel.Weather = weather.MapTo<WeatherViewModel>();
+                viewModel.Weather.DerValueType = "now";
+            }
+            else
+            {
+                weather = _weatherService.GetWeather(new GetWeatherRequest
+                {
+                    Date = theDate.AddDays(-1),
+                    ByDate = true
+                });
+                if (wave.Id != 0)
+                {
+                    viewModel.Weather = weather.MapTo<WeatherViewModel>();
+                    viewModel.Weather.DerValueType = "prev";
+                }
+            }
+            if (viewModel.Weather == null) viewModel.Weather = new WeatherViewModel();
+            viewModel.Weather.Values = _selectService.GetSelect(new GetSelectRequest { Name = "weather-values" }).Options
+                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Text }).ToList();
+            viewModel.AlertOptions = _selectService.GetSelect(new GetSelectRequest { ParentName = "highlight-types", ParentOptionId = 7 }).Options
+                .Select(x => new SelectListItem { Value = x.Value, Text = x.Text }).ToList();
+            return View(viewModel);
+        }
+
+        public ActionResult EnablerSection2(string date)
         {
             return View(GetDerValuesPerSection(date,
            new int[] { 379, 380, 36 }, //actual KpiIds 

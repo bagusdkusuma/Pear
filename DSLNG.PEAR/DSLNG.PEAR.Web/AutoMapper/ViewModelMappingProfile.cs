@@ -264,6 +264,11 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<RolePrivilegeViewModel, SaveRolePrivilegeRequest>();
             Mapper.CreateMap<GetPrivilegeResponse, RolePrivilegeViewModel>();
             Mapper.CreateMap<GetPrivilegesResponse.RolePrivilege, RolePrivilegeViewModel>();
+            Mapper.CreateMap<GetMenuRolePrivilegeResponse.MenuRolePrivilege, MenuRolePrivilegeViewModel>();
+            Mapper.CreateMap<GetMenuRolePrivilegeResponse.MenuRolePrivilege.MenuPrivilege, MenuRolePrivilegeViewModel.MenuPrivilege>();
+            Mapper.CreateMap<GetMenuRolePrivilegeResponse.MenuRolePrivilege.Privilege, RolePrivilegeViewModel>();
+            Mapper.CreateMap<GetMenuRolePrivilegeResponse.MenuRolePrivilege.Privilege.RoleGroup, RolePrivilegeViewModel.RoleGroup>();
+            Mapper.CreateMap<Data.Entities.Menu, MenuRolePrivilegeViewModel.MenuPrivilege>();
 
             Mapper.CreateMap<ResetPasswordResponseViewModel, ResetPasswordResponse>();
             Mapper.CreateMap<ResetPasswordViewModel, ResetPasswordRequest>();
@@ -768,6 +773,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetHighlightValuesResponse.DerHighlight, DerValuesViewModel.DerHighlightValuesViewModel>();
             Mapper.CreateMap<GetWaveResponse, WaveViewModel>();
             Mapper.CreateMap<GetWeatherResponse, WeatherViewModel>();
+            Mapper.CreateMap<KpiTransformationViewModel, KpiTransformationScheduleViewModel>();
             Mapper.CreateMap<KpiTransformationViewModel, SaveKpiTransformationRequest>();
             Mapper.CreateMap<GetKpiTransformationResponse, KpiTransformationViewModel>()
                .ForMember(x => x.RoleGroupIds, o => o.MapFrom(s => s.RoleGroups.Select(x => x.Id).ToList()))

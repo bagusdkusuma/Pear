@@ -109,9 +109,9 @@ namespace DSLNG.PEAR.Services
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public BaseResponse SaveRolePrivilege(SaveRolePrivilegeRequest request)
+        public SaveRolePrivilegeResponse SaveRolePrivilege(SaveRolePrivilegeRequest request)
         {
-            var response = new BaseResponse();
+            var response = new SaveRolePrivilegeResponse();
             try
             {
                 var privilege = request.MapTo<RolePrivilege>();
@@ -132,6 +132,7 @@ namespace DSLNG.PEAR.Services
                 }
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
+                response.Id = privilege.Id;
                 response.Message = "Privilege Successfully Saved";
             }
             catch (DbUpdateException upd)
@@ -145,6 +146,122 @@ namespace DSLNG.PEAR.Services
                 response.Message = inv.Message;
             }
             
+            return response;
+        }
+
+        /// <summary>
+        /// Get Menu Role Privilege
+        /// </summary>
+        /// <param name="request:{RoleId}"></param>
+        /// <param name="request:{RolePrivilegeId}"></param>
+        /// <returns>List Of Menu Role Privileges with TotalRecords and Query Transaction Status</returns>
+        public GetMenuRolePrivilegeResponse GetMenuRolePrivileges(GetPrivilegeByRolePrivilegeRequest request)
+        {
+            var response = new GetMenuRolePrivilegeResponse();
+            try
+            {
+                if(request.RoleId == 0 && request.RolePrivilegeId == 0)
+                {
+                    response.IsSuccess = false;
+                    response.Message = "No Role & Privilege Defined for this query";
+                    response.TotalRecords = 0;
+                    return response;
+                }
+                else if(request.RoleId == 0 && request.RolePrivilegeId > 0)
+                {
+                    var rolePrivilege = DataContext.RolePrivileges.SingleOrDefault(x => x.Id == request.RolePrivilegeId);
+                    if (rolePrivilege != null)
+                    {
+                        request.RoleId = rolePrivilege.RoleGroup_Id;
+                    }
+                    else
+                    {
+                        response.IsSuccess = false;
+                        response.Message = "Could not found Role for reference";
+                        response.TotalRecords = 0;
+                        return response;
+                    }
+                }
+                var data = new List<MenuRolePrivilege>();
+                #region get role menus
+                var role = DataContext.RoleGroups.Include(x => x.Menus).Include(y => y.RolePrivileges).SingleOrDefault(x => x.Id == request.RoleId);
+                if (role != null)
+                {
+                    //cek menus
+                    if (role.Menus.Count > 0)
+                    {
+                        foreach (var menu in role.Menus)
+                        {
+                            #region jika request.RolePrivilegeId == 0 // create mode
+                            if (request.RolePrivilegeId == 0)
+                            {
+                                var menuRolePrivilege = new MenuRolePrivilege
+                                {
+                                    Menu = menu,
+                                    Menu_Id = menu.Id,
+                                    RolePrivilege = new RolePrivilege
+                                    {
+                                        RoleGroup = role,
+                                        RoleGroup_Id = role.Id
+                                    },
+                                    RolePrivilege_Id = 0,
+                                    AllowApprove = false,
+                                    AllowPublish = false,
+                                    AllowCreate = false,
+                                    AllowDelete = false,
+                                    AllowDownload = false,
+                                    AllowUpdate = false,
+                                    AllowView = false,
+                                    AllowUpload = false
+                                };
+                                data.Add(menuRolePrivilege);
+                            }
+                            #endregion
+                            #region jika request.RolePrivilegeId > 0 // edit mode
+                            if (request.RolePrivilegeId > 0)
+                            {
+                                var menuRolePrivilege = DataContext.MenuRolePrivileges.Include(x => x.RolePrivilege).Include(y => y.Menu).SingleOrDefault(z => z.Menu_Id == menu.Id && z.RolePrivilege_Id == request.RolePrivilegeId);
+                                if (menuRolePrivilege == null)
+                                {
+                                    menuRolePrivilege = new MenuRolePrivilege
+                                    {
+                                        Menu = menu,
+                                        Menu_Id = menu.Id,
+                                        RolePrivilege = DataContext.RolePrivileges.Single(x => x.Id == request.RolePrivilegeId),
+                                        RolePrivilege_Id = request.RolePrivilegeId,
+                                        AllowApprove = false,
+                                        AllowPublish = false,
+                                        AllowCreate = false,
+                                        AllowDelete = false,
+                                        AllowDownload = false,
+                                        AllowUpdate = false,
+                                        AllowView = false,
+                                        AllowUpload = false
+                                    };
+                                }
+                                data.Add(menuRolePrivilege);
+                            }
+                            #endregion
+                        }
+                    }
+
+                }else
+                {
+                    response.Message = "This Privilege Has No Menu Assigned";
+                }
+                #endregion
+                if (data.Count > 0)
+                {
+                    response.MenuRolePrivileges = data.ToList().MapTo<GetMenuRolePrivilegeResponse.MenuRolePrivilege>();
+                    response.IsSuccess = response.MenuRolePrivileges != null;
+                    response.TotalRecords = response.MenuRolePrivileges != null ? response.MenuRolePrivileges.Count() : 0;
+                }
+            }
+            catch (Exception e)
+            {
+                response.IsSuccess = false;
+                response.Message = e.Message;
+            }
             return response;
         }
     }

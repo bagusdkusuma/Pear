@@ -107,5 +107,10 @@ namespace DSLNG.PEAR.Services
             schedule.Status = status;
             DataContext.SaveChanges();
         }
+
+        public GetKpiTransformationSchedulesResponse.KpiTransformationScheduleResponse Get(int Id)
+        {
+            return DataContext.KpiTransformationSchedules.Include(x => x.KpiTransformation).FirstOrDefault(x => x.Id == Id).MapTo<GetKpiTransformationSchedulesResponse.KpiTransformationScheduleResponse>();
+        }
     }
 }
