@@ -3430,13 +3430,16 @@ ul.pop-attachments-list {
     background:blueviolet !important;
 }
 
-input.der-value-prev {
+input.der-value-prev,
+select.der-value-prev {
   color : gray;
 }
-input.der-value-now {
+input.der-value-now,
+select.der-value-now {
   color : green;
 }
-input.in-progress {
+input.in-progress,
+select.in-progress {
     color : yellow !important;
 }
 .picker-switch a,
