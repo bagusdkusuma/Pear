@@ -300,7 +300,7 @@ namespace DSLNG.PEAR.Services
                 var kpi = DataContext.Kpis.Include(x => x.Measurement).First(x => x.Id == series.KpiId);
                 var seriesResponse = new GetPieDataResponse.SeriesResponse();
                 seriesResponse.color = series.Color;
-                seriesResponse.name = kpi.Name;
+                seriesResponse.name = string.IsNullOrEmpty(series.Label) ? kpi.Name : series.Label;
                 seriesResponse.measurement = kpi.Measurement.Name;
                 var start = dateTimePeriodes[0];
                 var end = dateTimePeriodes[dateTimePeriodes.Count - 1];
