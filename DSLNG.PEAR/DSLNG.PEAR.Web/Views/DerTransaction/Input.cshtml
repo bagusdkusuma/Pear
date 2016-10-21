@@ -37,7 +37,7 @@
     <div class="row economic-indicators" style="margin-bottom: 20px;">
         <div class="col-md-12">
             <a class="btn" role="button" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample">
-                <h4 style="margin-left: -16px;" class="text-title-section">Economic Indicator Section-B</h4>
+                <h4 style="margin-left: -16px;" class="text-title-section">Economic Indicator</h4>
             </a>
             <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
                 <a class="btn btn-input-slide" role="button" data-content-url="@Url.Action("EconomicIndicator",new { date="__date__" })" data-toggle="collapse" href="#collapseEconomic" aria-expanded="false" aria-controls="collapseExample">
@@ -52,7 +52,7 @@
     <div class="row forecasted" style="margin-bottom: 20px;">
         <div class="col-md-12">
             <a class="btn" role="button" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample">
-                <h4 style="margin-left: -16px;" class="text-title-section">Forecasted Market Indicator-B</h4>
+                <h4 style="margin-left: -16px;" class="text-title-section">Forecasted Market Indicator</h4>
             </a>
             <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
                 <a class="btn btn-input-slide" role="button" data-toggle="collapse" data-content-url="@Url.Action("ForcastedIndicator",new { date="__date__" })" href="#collapseForecasted" aria-expanded="false" aria-controls="collapseExample">
@@ -67,7 +67,7 @@
     <div class="row operation" style="margin-bottom: 20px;">
         <div class="col-md-12">
             <a class="btn" role="button" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample">
-                <h4 style="margin-left: -16px;" class="text-title-section">Operation & Engineering Section-J</h4>
+                <h4 style="margin-left: -16px;" class="text-title-section">Operation & Engineering</h4>
             </a>
             <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
                 <a class="btn btn-input-slide" role="button" data-toggle="collapse" data-content-url="@Url.Action("OperationSection",new { date="__date__" })" href="#collapseOperation" aria-expanded="false" aria-controls="collapseExample">
@@ -82,7 +82,7 @@
     <div class="row marine" style="margin-bottom: 20px;">
         <div class="col-md-12">
             <a class="btn" role="button" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample">
-                <h4 style="margin-left: -16px;" class="text-title-section">Marine, Shipping, Cargo Delivery section-C</h4>
+                <h4 style="margin-left: -16px;" class="text-title-section">Marine, Shipping, Cargo Delivery</h4>
             </a>
             <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
                 <a class="btn btn-input-slide" role="button" data-toggle="collapse" data-content-url="@Url.Action("MarineShipping",new { date="__date__" })" href="#collapseMarine" aria-expanded="false" aria-controls="collapseExample">
@@ -97,7 +97,7 @@
     <div class="row maintanance" style="margin-bottom: 20px;">
         <div class="col-md-12">
             <a class="btn" role="button" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample">
-                <h4 style="margin-left: -16px;" class="text-title-section">Maintenance section-D</h4>
+                <h4 style="margin-left: -16px;" class="text-title-section">Maintenance</h4>
             </a>
             <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
                 <a class="btn btn-input-slide" role="button" data-toggle="collapse" data-content-url="@Url.Action("MaintenanceSection",new { date="__date__" })" href="#collapseMaintanance" aria-expanded="false" aria-controls="collapseExample">
@@ -112,7 +112,7 @@
     <div class="row qhsse" style="margin-bottom: 20px;">
         <div class="col-md-12">
             <a class="btn" role="button" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample">
-                <h4 style="margin-left: -16px;" class="text-title-section">QHSSE Section-I</h4>
+                <h4 style="margin-left: -16px;" class="text-title-section">QHSSE</h4>
             </a>
             <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
                 <a class="btn btn-input-slide" role="button" data-toggle="collapse" data-content-url="@Url.Action("QhsseSection",new { date="__date__" })" href="#collapseQhsse" aria-expanded="false" aria-controls="collapseExample">
@@ -127,7 +127,7 @@
     <div class="row others">
         <div class="col-md-12">
             <a class="btn" role="button" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample">
-                <h4 style="margin-left: -16px;" class="text-title-section">Enabler Section</h4>
+                <h4 style="margin-left: -16px;" class="text-title-section">Enabler</h4>
             </a>
             <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
                 <a class="btn  btn-input-slide" role="button" data-toggle="collapse" data-content-url="@Url.Action("EnablerSection",new { date="__date__" })" href="#collapseOthers" aria-expanded="false" aria-controls="collapseExample">
@@ -395,6 +395,7 @@
                             tinyMCE.init({
                                 selector: '#' + $this.attr('id'),
                                 menubar: false,
+                                theme_advanced_path : false,
                                 plugins: [
                                     "advlist autolink lists link image charmap print preview anchor",
                                     "searchreplace visualblocks code fullscreen",
