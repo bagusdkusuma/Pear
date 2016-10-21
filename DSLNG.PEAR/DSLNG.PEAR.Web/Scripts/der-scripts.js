@@ -738,12 +738,12 @@ Number.prototype.format = function (n, x) {
 
         var maxSeries;
         var values = [];
-        var displayName = {
-            'LNG/Feed yield': 'LNG',
-            'CDS/Feed Yield': 'CDS',
-            'Fuel Gas & Ref Yield': 'Fuel-Refgr',
-            'Flare Loss' : 'Loss'
-        }
+        //var displayName = {
+        //    'LNG/Feed yield': 'LNG',
+        //    'CDS/Feed Yield': 'CDS',
+        //    'Fuel Gas & Ref Yield': 'Fuel-Refgr',
+        //    'Flare Loss' : 'Loss'
+        //}
         for (var i in data.Pie.SeriesResponses) {
             
             if (parseFloat(data.Pie.SeriesResponses[i].y) < 0) {
@@ -762,7 +762,7 @@ Number.prototype.format = function (n, x) {
             //    //data.Pie.SeriesResponses[i].sliced = true;
             //    data.Pie.SeriesResponses[i].selected = true;
             //}
-            data.Pie.SeriesResponses[i].name = displayName[data.Pie.SeriesResponses[i].name.trim()];
+            //data.Pie.SeriesResponses[i].name = displayName[data.Pie.SeriesResponses[i].name.trim()];
         }
         container.highcharts({
             chart: {

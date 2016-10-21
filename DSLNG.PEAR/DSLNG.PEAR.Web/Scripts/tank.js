@@ -234,7 +234,7 @@
 
         //////////
 
-        var tDay = s.text(rightLineX, marginTop, [daysToTankTop, " ", daysToTankTopUnit]).attr({
+        var tDay = s.text(rightLineX, marginTop, [daysToTankTop.format(2), " ", daysToTankTopUnit]).attr({
             font: "16px Open Sans, sans-serif",
             fill: '#fff',
             fontWeight: "bold",
