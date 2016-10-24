@@ -438,7 +438,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
                             if (lastDAFWC != null)
                             {
-                                value =  (theDate.AddDays(1) - lastDAFWC).TotalDays.ToString();
+                                value =  (theDate - lastDAFWC).TotalDays.ToString();
                             }
 
                         }
