@@ -588,9 +588,9 @@ namespace DSLNG.PEAR.Web.Helpers
                 case "1":
                     return new MvcHtmlString("<span class='indicator absolute'><i class='fa fa-circle'></i></span>");
                 case "-1":
-                    return new MvcHtmlString("<span class='indicator absolute'><i class='fa fa-circle style='color:red'></i></span>");
+                    return new MvcHtmlString("<span class='indicator absolute'><i class='fa fa-circle' style='color:red'></i></span>");
                 case "0":
-                    return new MvcHtmlString("<span class='indicator absolute'><i class='fa fa-circle' style='color: orange'></i></span>");
+                    return new MvcHtmlString("<span class='indicator absolute'><i class='fa fa-circle' style='color:orange'></i></span>");
                 default:
                     return new MvcHtmlString(s);
             }
