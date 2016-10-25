@@ -623,7 +623,7 @@ namespace DSLNG.PEAR.Web.Helpers
             }
         }
 
-        public static MvcHtmlString DisplayKpiInformationInput(this HtmlHelper htmlHelper, IList<DerValuesViewModel.KpiInformationValuesViewModel> kpiInformations, int kpiId, int tabIndex, string placeholder = "rate",string defaultValueDefined = "empty", string type = "daily-actual", string valueType="value", string additionalClass = "")
+        public static MvcHtmlString DisplayKpiInformationInput(this HtmlHelper htmlHelper, IList<DerValuesViewModel.KpiInformationValuesViewModel> kpiInformations, int kpiId, int tabIndex, string placeholder = "rate",string defaultValueDefined = "empty", string type = "daily-actual", string valueType="value", string additionalClass = "", string fieldLength ="100")
         {
             string value;
             switch (defaultValueDefined) { 
@@ -681,7 +681,7 @@ namespace DSLNG.PEAR.Web.Helpers
             value = valueObject.Value;
             id = valueObject.ExistValue == "now" ? valueObject.Id : 0;
             existValue = valueObject.ExistValue;
-            return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control der-kpi {8}\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" data-kpi-id=\"{5}\" data-id=\"{6}\" data-value-type=\"{7}\" />", value, existValue, placeholder, tabIndex, type, kpiId, id, valueType, additionalClass));
+            return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control der-kpi {8}\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" data-kpi-id=\"{5}\" data-id=\"{6}\" data-value-type=\"{7}\" style=\"width: {8}px; text-align: right; \" />", value, existValue, placeholder, tabIndex, type, kpiId, id, valueType, additionalClass, fieldLength));
         }
 
         public class ValueObject {
