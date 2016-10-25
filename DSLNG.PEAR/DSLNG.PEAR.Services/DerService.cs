@@ -1342,6 +1342,7 @@ namespace DSLNG.PEAR.Services
                 var series = request.Artifact.Pie.Series.Select(x => new DerArtifactSerie
                 {
                     Color = x.Color,
+                    Label = x.Label,
                     Kpi = DataContext.Kpis.FirstOrDefault(y => y.Id == x.KpiId),
                     Artifact = derArtifact
                 }).ToList();
@@ -1400,6 +1401,7 @@ namespace DSLNG.PEAR.Services
                 var series = request.Artifact.Pie.Series.Select(x => new DerArtifactSerie
                 {
                     Color = x.Color,
+                    Label = x.Label,
                     Kpi = DataContext.Kpis.FirstOrDefault(y => y.Id == x.KpiId),
                     Artifact = derArtifact
                 }).ToList();

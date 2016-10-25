@@ -3280,7 +3280,9 @@ input.control-form.assumption-input {
     border-radius: 5px;
     font-size: 14px;
 }
-
+.btn-master-rgw option{
+    background-color:darkslategrey;
+}
 .economic-indicators-wrapper .economic-table > tbody > tr > td {
     border-color: white;
     color: white;
@@ -3428,16 +3430,23 @@ ul.pop-attachments-list {
     background:blueviolet !important;
 }
 
-input.der-value-prev {
+input.der-value-prev,
+select.der-value-prev {
   color : gray;
 }
-input.der-value-now {
+input.der-value-now,
+select.der-value-now {
   color : green;
 }
-input.in-progress {
+input.in-progress,
+select.in-progress {
     color : yellow !important;
 }
 .picker-switch a,
 .timepicker-picker a {
   color:#337ab7;
+}
+
+table.choosen-schedules tr td a {
+    text-decoration:underline;
 }

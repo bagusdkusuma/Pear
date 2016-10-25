@@ -37,9 +37,11 @@ namespace DSLNG.PEAR.Web.ViewModels.VesselSchedule
         public IList<SelectListItem> Vessels { get; set; }
         [DataType(DataType.MultilineText)]
         public string Location { get; set; }
-        [Display(Name = "Sales Type")]
+        [Display(Name = "Cargo Type")]
         public string SalesType { get; set; }
+        [Display(Name = "DES/FOB")]
         public string Type { get; set; }
+        [Display(Name = "Cargo #")]
         public string Cargo { get; set; }
         public bool AsNew { get; set; }
         public DateTime? DerTransactionDate { get; set; }

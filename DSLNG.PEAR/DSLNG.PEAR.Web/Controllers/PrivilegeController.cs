@@ -22,10 +22,11 @@ namespace DSLNG.PEAR.Web.Controllers
             _roleService = roleService;
             _roleGroupService = roleGroupService;
         }
-        public ActionResult Index()
+        public ActionResult Index(int? roleId)
         {
+            var RoleId = roleId.HasValue ? roleId.Value : this.UserProfile().RoleId;
             List<RolePrivilegeViewModel> model = new List<RolePrivilegeViewModel>();
-            var data = _roleService.GetRolePrivileges(new GetPrivilegeByRoleRequest { RoleId = this.UserProfile().RoleId });
+            var data = _roleService.GetRolePrivileges(new GetPrivilegeByRoleRequest { RoleId = RoleId });
             if (data.IsSuccess && data.Privileges.Count > 0)
             {
                 model = data.Privileges.MapTo<RolePrivilegeViewModel>();
@@ -40,10 +41,10 @@ namespace DSLNG.PEAR.Web.Controllers
                 {
                     Text = x.Name,
                     Value = x.Id.ToString(),
-                    Selected = this.UserProfile().RoleId == x.Id
+                    Selected = RoleId == x.Id
                 }).ToList();
 
-            ViewBag.RoleId = this.UserProfile().RoleId;
+            ViewBag.RoleId = RoleId;
             return View(model);
         }
 
@@ -73,10 +74,15 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Edit(int Id)
         {
+            int RoleId = this.UserProfile().RoleId;
             var model = _roleService.GetRolePrivilege(new GetPrivilegeRequest
             {
                 Id = Id
             }).MapTo<RolePrivilegeViewModel>();
+            if (model != null)
+            {
+                RoleId = model.RoleGroup_Id > 0 ? model.RoleGroup_Id : this.UserProfile().RoleId;
+            }
             ViewBag.RoleGroups = _roleGroupService.GetRoleGroups(new Services.Requests.RoleGroup.GetRoleGroupsRequest
             {
                 Take = -1,
@@ -86,7 +92,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             {
                                 Text = x.Name,
                                 Value = x.Id.ToString(),
-                                Selected = this.UserProfile().RoleId == x.Id
+                                Selected = RoleId  == x.Id
                             }).ToList();
 
 
@@ -108,6 +114,12 @@ namespace DSLNG.PEAR.Web.Controllers
                                 Selected = RoleId == x.Id
                             }).ToList();
             model.RoleGroup_Id = RoleId;
+            var roles = _roleService.GetMenuRolePrivileges(new GetPrivilegeByRolePrivilegeRequest { RoleId = RoleId });
+            if (roles.IsSuccess)
+            {
+                model.MenuRolePrivileges = roles.MenuRolePrivileges.ToList().MapTo<MenuRolePrivilegeViewModel>();
+            }
+            
             return View(model);
         }
 
@@ -118,11 +130,11 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 var request = model.MapTo<SaveRolePrivilegeRequest>();
                 request.UserId = this.UserProfile().UserId;
-                if(_roleService.SaveRolePrivilege(request).IsSuccess)
+                if (_roleService.SaveRolePrivilege(request).IsSuccess)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", new { roleId = request.RoleGroup_Id });
                 }
-                
+
             }
             ViewBag.RoleGroups = _roleGroupService.GetRoleGroups(new Services.Requests.RoleGroup.GetRoleGroupsRequest
             {
@@ -138,25 +150,32 @@ namespace DSLNG.PEAR.Web.Controllers
 
             return View(model);
         }
+        [HttpPost]
+        public ActionResult Edit(RolePrivilegeViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var request = model.MapTo<SaveRolePrivilegeRequest>();
+                request.UserId = this.UserProfile().UserId;
+                if (_roleService.SaveRolePrivilege(request).IsSuccess)
+                {
+                    return RedirectToAction("Index", new { roleId = request.RoleGroup_Id });
+                }
 
-        //public ActionResult Edit(RolePrivilegeViewModel model)
-        //{
-        //    ViewBag.RoleGroups = _roleGroupService.GetRoleGroups(new Services.Requests.RoleGroup.GetRoleGroupsRequest
-        //    {
-        //        Take = -1,
-        //        SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
-        //    }).RoleGroups.Select(x => 
-        //        new SelectListItem  {
-        //                                Text = x.Name,
-        //                                Value = x.Id.ToString(),
-        //                                Selected = model.RoleGroup_Id == x.Id
-        //                            }).ToList();
+            }
+            ViewBag.RoleGroups = _roleGroupService.GetRoleGroups(new Services.Requests.RoleGroup.GetRoleGroupsRequest
+            {
+                Take = -1,
+                SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+            })
+                            .RoleGroups.Select(x => new SelectListItem
+                            {
+                                Text = x.Name,
+                                Value = x.Id.ToString(),
+                                Selected = model.RoleGroup_Id == x.Id
+                            }).ToList();
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(model);
-        //}
+            return View(model);
+        }
     }
 }
