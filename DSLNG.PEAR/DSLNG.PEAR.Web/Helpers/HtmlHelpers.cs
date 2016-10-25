@@ -623,9 +623,13 @@ namespace DSLNG.PEAR.Web.Helpers
             }
         }
 
-        public static MvcHtmlString DisplayKpiInformationInput(this HtmlHelper htmlHelper, IList<DerValuesViewModel.KpiInformationValuesViewModel> kpiInformations, int kpiId, int tabIndex, string placeholder = "rate",string defaultValueDefined = "empty", string type = "daily-actual", string valueType="value", string additionalClass = "", string fieldLength ="100")
+        public static MvcHtmlString DisplayKpiInformationInput(this HtmlHelper htmlHelper, IList<DerValuesViewModel.KpiInformationValuesViewModel> kpiInformations, int kpiId, int tabIndex, string placeholder = "rate",string defaultValueDefined = "empty", string type = "daily-actual", string valueType="value", string additionalClass = "", string fieldLength ="")
         {
             string value;
+            if (string.IsNullOrEmpty(fieldLength))
+            {
+                fieldLength = "100";
+            }
             switch (defaultValueDefined) { 
                 case "empty" : 
                 case "prev":
