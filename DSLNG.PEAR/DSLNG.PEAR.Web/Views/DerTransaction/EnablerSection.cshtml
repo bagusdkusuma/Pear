@@ -22,7 +22,7 @@
                 <td>
                     <label for="" style="margin-top: 20px;">Remark</label>
                     <br />
-                    @Html.DisplayKpiInformationInput(Model.KpiInformations, 379, 263, "free text", "prev", "daily-actual", "remark")
+                    @Html.DisplayKpiInformationInput(Model.KpiInformations, 379, 263, "free text", "prev", "daily-actual", "remark","","300")
                 </td>
             </tr>
             <tr>
@@ -120,7 +120,7 @@
                 <td>
                     <label for="" style="margin-top: 20px;">POB</label>
                     <br />
-                    @Html.DisplayKpiInformationInput(Model.KpiInformations, 36, 270, "number", "prev","daily-actual","empty","51")
+                    @Html.DisplayKpiInformationInput(Model.KpiInformations, 36, 270, "number", "prev","daily-actual","value","","51")
                 </td>
             </tr>
             <tr>
@@ -182,9 +182,6 @@
         <h5 style="color: white;">Community Relation and Govt Engagement Highlight-H</h5>
         <table border="0">
             <tr>
-                <td><label class="control-label">Remark</label></td>
-            </tr>
-            <tr>
                 <td>
                     @Html.DisplayHighlightTextarea(Model.Highlights, 14, 275)
                 </td>
@@ -194,9 +191,6 @@
     <div class="col-md-6">
         <h5 style="color: white;">Daily Highlight-K</h5>
         <table border="0">
-            <tr>
-                <td><label class="control-label" style="visibility: hidden;">Remark</label></td>
-            </tr>
             <tr>
                 <td>
                     @Html.DisplayHighlightTextarea(Model.Highlights, 8, 276)
