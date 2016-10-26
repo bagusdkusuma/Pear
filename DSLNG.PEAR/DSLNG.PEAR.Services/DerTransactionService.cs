@@ -591,7 +591,7 @@ namespace DSLNG.PEAR.Services
                                     highlightResp.HighlightTitle = prevValue.Title;
                                     highlightResp.Date = prevValue.Date;
                                     highlightResp.Type = "prev";
-                                    highlightResp.Id = prevValue.Id;
+                                    highlightResp.Id = 0;
                                 }
                                 else
                                 {
@@ -602,7 +602,7 @@ namespace DSLNG.PEAR.Services
                                     highlightResp.HighlightTitle = highlight.Title;
                                     highlightResp.Date = highlight.Date;
                                     highlightResp.Type = "prev";
-                                    highlightResp.Id = highlight.Id;
+                                    highlightResp.Id = 0;
                                 }
                             }
                         }
