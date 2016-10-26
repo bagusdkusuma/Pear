@@ -50,7 +50,7 @@ namespace DSLNG.PEAR.Services
                 //var user = DataContext.Users.Include(u => u.Role).First(x => x.Id == request.Id);
                 var response = user.MapTo<GetUserResponse>(); //Mapper.Map<GetUserResponse>(user);
                 //response.RoleName = DataContext.RoleGroups.FirstOrDefault(x => x.Id == user.RoleId).Name.ToString();
-
+                response.IsSuccess = true;
                 return response;
             }
             catch (System.InvalidOperationException x)
