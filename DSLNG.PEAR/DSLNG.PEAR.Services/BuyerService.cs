@@ -58,22 +58,25 @@ namespace DSLNG.PEAR.Services
         {
             try
             {
+                var buyer = request.MapTo<Buyer>();
                 if (request.Id == 0)
                 {
-                    var buyer = request.MapTo<Buyer>();
                     DataContext.Buyers.Add(buyer);
                 }
                 else
                 {
-                    var buyer = DataContext.Buyers.FirstOrDefault(x => x.Id == request.Id);
+                    buyer = DataContext.Buyers.FirstOrDefault(x => x.Id == request.Id);
                     if (buyer != null)
                     {
                         request.MapPropertiesToInstance<Buyer>(buyer);
                     }
                 }
+
                 DataContext.SaveChanges();
+                
                 return new SaveBuyerResponse
                 {
+                    Id = buyer.Id,
                     IsSuccess = true,
                     Message = "Buyer has been saved"
                 };

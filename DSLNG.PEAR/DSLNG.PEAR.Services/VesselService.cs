@@ -51,9 +51,9 @@ namespace DSLNG.PEAR.Services
         {
             try
             {
+                var vessel = request.MapTo<Vessel>();
                 if (request.Id == 0)
                 {
-                    var vessel = request.MapTo<Vessel>();
                     var measurement = new Measurement { Id = request.MeasurementId };
                     DataContext.Measurements.Attach(measurement);
                     vessel.Measurement = measurement;
@@ -61,7 +61,7 @@ namespace DSLNG.PEAR.Services
                 }
                 else
                 {
-                    var vessel = DataContext.Vessels.FirstOrDefault(x => x.Id == request.Id);
+                    vessel = DataContext.Vessels.FirstOrDefault(x => x.Id == request.Id);
                     if (vessel != null)
                     {
                         request.MapPropertiesToInstance<Vessel>(vessel);
@@ -73,6 +73,7 @@ namespace DSLNG.PEAR.Services
                 DataContext.SaveChanges();
                 return new SaveVesselResponse
                 {
+                    Id = vessel.Id,
                     IsSuccess = true,
                     Message = "Vessel has been saved"
                 };
