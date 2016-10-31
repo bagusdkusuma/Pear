@@ -215,6 +215,15 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Input2()
         {
+            ViewBag.KpiTransformations = _kpiTransformationService.Get(new Services.Requests.KpiTransformation.GetKpiTransformationsRequest
+            {
+                Skip = 0,
+                Take = -1
+            }).KpiTransformations.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }).ToList();
             return View();
         }
 

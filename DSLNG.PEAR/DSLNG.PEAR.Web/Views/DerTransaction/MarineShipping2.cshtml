@@ -80,13 +80,14 @@
 
 <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
     <tr>
-        <td colspan="2"><label class="control-label lbl-style">Loading Duration</label></td>
-        <td><label class="control-label lbl-style">Ttl Terminal Time</label></td>
-        <td><label class="control-label lbl-style">Marine, Shipping, Cargo Delivery Highlight</label></td>
+        <td></td>
+        <td><label class="control-label">Loading Duration :</label></td>
+        <td><label class="control-label lbl-style">Ttl Terminal Time :</label></td>
+        <td><label class="control-label lbl-style">Marine, Shipping, Cargo Delivery Highlight :</label></td>
     </tr>
     <tr>
         <td><label class="control-label lbl-style">Standard (days)</label></td>
-        <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 375, 173, "days", "34","yearly-target")</div></td>
+        <td><div>@Html.DisplayKpiInformationInput(Model.KpiInformations, 375, 173, "days", "34","yearly-target")</div></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 377, 176, "days", "34", "yearly-target")</div></td>
         <td rowspan="5" style="padding-left: 35px;">
            @Html.DisplayHighlightTextarea(Model.Highlights, 52, 179)
@@ -94,12 +95,12 @@
     </tr>
     <tr>
         <td><label class="control-label lbl-style">Last (days)</label></td>
-        <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 375, 174, "days", "prev" )</div></td>
+        <td><div>@Html.DisplayKpiInformationInput(Model.KpiInformations, 375, 174, "days", "prev" )</div></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 377, 177, "days", "prev")</div></td>
     </tr>
     <tr>
         <td><label class="control-label lbl-style">AVG YTD (days)</label></td>
-        <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 376, 175, "days", "prev")</div></td>
+        <td><div >@Html.DisplayKpiInformationInput(Model.KpiInformations, 376, 175, "days", "prev")</div></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 378, 178, "days", "prev")</div></td>
     </tr>
 </table>
