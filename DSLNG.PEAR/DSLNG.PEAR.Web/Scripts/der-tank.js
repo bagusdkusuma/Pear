@@ -17,7 +17,7 @@
         var volumeInventory = options.VolumeInventory;
         var volumeInventoryUnit = options.VolumeInventoryUnit;
         var daysToTankTop = options.DaysToTankTop;
-        var tankColor = 'aqua';
+        var tankColor = '#2197eb';
         
         this.append(title);
         // variable Tank Chart

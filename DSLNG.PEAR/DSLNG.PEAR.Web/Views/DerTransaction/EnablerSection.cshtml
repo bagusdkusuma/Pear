@@ -8,7 +8,7 @@
         <table width="400" border="0" cellpadding="2" cellspacing="2" style="margin-top: 15px; margin-bottom: 15px;">
             <tr>
                 <td>
-                    <h4 style="margin-top: 20px;">Procurement Section-E</h4>
+                    <p style="margin-top: 20px;">Procurement Section-E:</p>
                 </td>
             </tr>
             <tr>
@@ -22,7 +22,7 @@
                 <td>
                     <label for="" style="margin-top: 20px;">Remark</label>
                     <br />
-                    @Html.DisplayKpiInformationInput(Model.KpiInformations, 379, 263, "free text", "prev", "daily-actual", "remark")
+                    @Html.DisplayKpiInformationInput(Model.KpiInformations, 379, 263, "free text", "prev", "daily-actual", "remark","","300")
                 </td>
             </tr>
             <tr>
@@ -45,7 +45,7 @@
         <table width="400" border="0" cellpadding="2" cellspacing="2" style="margin-top: 15px; margin-bottom: 15px;">
             <tr>
                 <td>
-                    <h4 for="" style="margin-top: 20px;">ICT Infrastructure and System Highlight:-F</h4>
+                    <p for="" style="margin-top: 20px;">ICT Infrastructure and System Highlight:-F</p>
                 </td>
             </tr>
             <tr>
@@ -113,14 +113,14 @@
         <table width="400" border="0" cellpadding="2" cellspacing="2" style="margin-top: 15px; margin-bottom: 15px;">
             <tr>
                 <td>
-                    <h4 for="" style="margin-top: 20px;">GS & FM-G</h4>
+                    <p for="" style="margin-top: 20px;">GS & FM-G:</p>
                 </td>
             </tr>
             <tr>
                 <td>
                     <label for="" style="margin-top: 20px;">POB</label>
                     <br />
-                    @Html.DisplayKpiInformationInput(Model.KpiInformations, 36, 270, "number", "prev")
+                    @Html.DisplayKpiInformationInput(Model.KpiInformations, 36, 270, "number", "prev","daily-actual","value","","51")
                 </td>
             </tr>
             <tr>
@@ -179,11 +179,8 @@
 </div>
 <div class="col-md-12" style="margin-top: 30px;">
     <div class="col-md-6">
-        <h4 style="color: white;">Community Relation and Govt Engagement Highlight-H</h4>
+        <p style="color: white;">Community Relation and Govt Engagement Highlight-H:</p>
         <table border="0">
-            <tr>
-                <td><label class="control-label">Remark</label></td>
-            </tr>
             <tr>
                 <td>
                     @Html.DisplayHighlightTextarea(Model.Highlights, 14, 275)
@@ -192,18 +189,15 @@
         </table>
     </div>
     <div class="col-md-6">
-        <h4 style="color: white;">Daily Highlight-K</h4>
+        <p style="color: white;">Daily Highlight-K:</p>
         <table border="0">
-            <tr>
-                <td><label class="control-label" style="visibility: hidden;">Remark</label></td>
-            </tr>
             <tr>
                 <td>
                     @Html.DisplayHighlightTextarea(Model.Highlights, 8, 276)
                 </td>
             </tr>
             <tr>
-                <td><br><h4 class="control-label">Traffic Light</h4></td>
+                <td><br><p class="control-label">Traffic Light:</p></td>
             </tr>
             <tr>
                 <td>
