@@ -111,6 +111,26 @@ namespace DSLNG.PEAR.Web.Controllers
             return PartialView(viewModel);
         }
 
+        public ActionResult GetBuyers()
+        {
+            var response = _buyerService.GetBuyers(new GetBuyersRequest
+            {
+                Skip = 0,
+                Take = 100
+            }).Buyers.Select(x => new SelectListItem { Text = x.Name, Value = x.id.ToString() }).ToList();
+            return Json(new { result = response }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetVessels()
+        {
+            var response = _vesselService.GetVessels(new GetVesselsRequest
+            {
+                Skip = 0,
+                Take = 100
+            }).Vessels.Select(x => new SelectListItem { Text = x.Name, Value = x.id.ToString() }).ToList();
+            return Json(new { result = response }, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public ActionResult Create(VesselScheduleViewModel viewModel)
         {
@@ -202,8 +222,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult AddBuyer()
         {
-            var viewModel = new BuyerViewModel();
-            viewModel.IsActive = true;
+            var viewModel = new BuyerViewModel() { IsActive = true };
             return PartialView(viewModel);
         }
 

@@ -8,35 +8,36 @@
         <table width="400" border="0" cellpadding="2" cellspacing="2" style="margin-top: 15px; margin-bottom: 15px;">
             <tr>
                 <td>
-                    <p style="margin-top: 20px;">Procurement Section-E:</p>
+                    <label class="subtitle">Procurement Section-E:</label>
+                    @*<p style="margin-top: 20px;">Procurement Section-E:</p>*@
                 </td>
             </tr>
             <tr>
                 <td>
-                    <label for="" style="margin-top: 20px;">#backlog</label>
+                    <label for="">#backlog</label>
                     <br />
-                    @Html.DisplayKpiInformationInput(Model.KpiInformations, 379, 262, "number", "prev")
+                    @Html.DisplayKpiInformationInput(Model.KpiInformations, 379, 262, "number", "prev","daily-actual","value","","40",3)
                 </td>
             </tr>
             <tr>
                 <td>
-                    <label for="" style="margin-top: 20px;">Remark</label>
+                    <label for="">Remark</label>
                     <br />
                     @Html.DisplayKpiInformationInput(Model.KpiInformations, 379, 263, "free text", "prev", "daily-actual", "remark","","300")
                 </td>
             </tr>
             <tr>
                 <td>
-                    <label for="" style="margin-top: 20px;">Avg backlog</label>
+                    <label for="">Avg backlog</label>
                     <br />
-                    @Html.DisplayKpiInformationInput(Model.KpiInformations, 380, 264, "number", "prev")
+                    @Html.DisplayKpiInformationInput(Model.KpiInformations, 380, 264, "number", "prev", "daily-actual", "value", "", "40",3)
                 </td>
             </tr>
             <tr>
                 <td>
-                    <label for="" style="margin-top: 20px;">Avg backlog-Target</label>
+                    <label for="">Avg backlog-Target</label>
                     <br />
-                    @Html.DisplayKpiInformationInput(Model.KpiInformations, 380, 265, "number", "prev", "daily-target")
+                    @Html.DisplayKpiInformationInput(Model.KpiInformations, 380, 265, "number", "prev", "daily-target", "value", "", "40",3)
                 </td>
             </tr>
         </table>
@@ -45,12 +46,13 @@
         <table width="400" border="0" cellpadding="2" cellspacing="2" style="margin-top: 15px; margin-bottom: 15px;">
             <tr>
                 <td>
-                    <p for="" style="margin-top: 20px;">ICT Infrastructure and System Highlight:-F</p>
+                    <label class="subtitle">ICT Infrastructure and System Highlight:-F</label>
+                    @*<p for="" style="margin-top: 10px; color:#FFFFFF;" class="subtitle">ICT Infrastructure and System Highlight:-F</p>*@
                 </td>
             </tr>
             <tr>
                 <td>
-                    <label for="" style="margin-top: 20px;">Application</label>
+                    <label for="" >Application</label>
                     <br />
                     @Html.DisplayIctInfraOrGsfmHighlight(Model.Highlights, 66, new List<SelectListItem>{
                     new SelectListItem { Text = "-1", Value = "-1" },
@@ -66,7 +68,7 @@
             </tr>
             <tr>
                 <td>
-                    <label for="" style="margin-top: 20px;">Colaboration</label>
+                    <label for="" >Colaboration</label>
                     <br />
                     @Html.DisplayIctInfraOrGsfmHighlight(Model.Highlights, 66, new List<SelectListItem>{
                   new SelectListItem { Text = "-1", Value = "-1" },
@@ -77,7 +79,7 @@
             </tr>
             <tr>
                 <td>
-                    <label for="" style="margin-top: 20px;">Telco</label>
+                    <label for="">Telco</label>
                     <br />
                     @Html.DisplayIctInfraOrGsfmHighlight(Model.Highlights, 66, new List<SelectListItem>{
                   new SelectListItem { Text = "-1", Value = "-1" },
@@ -88,7 +90,7 @@
             </tr>
             <tr>
                 <td>
-                    <label for="" style="margin-top: 20px;">&nbsp;</label>
+                    <label for="" style="margin-top: 10px;">&nbsp;</label>
                     <br />
                     &nbsp;
                     <br />
@@ -96,7 +98,7 @@
             </tr>
             <tr>
                 <td>
-                    <label for="" style="margin-top: 20px;">Remark</label>
+                    <label for="" style="margin-top: 15px;">Remark</label>
                     <br />
                     @Html.DisplayHighlightTextarea(Model.Highlights, 21, 269)
                     @*@Html.DisplayHighlightInput(Model.Highlights, 21, 274, "free text", "prev")*@
@@ -113,19 +115,20 @@
         <table width="400" border="0" cellpadding="2" cellspacing="2" style="margin-top: 15px; margin-bottom: 15px;">
             <tr>
                 <td>
-                    <p for="" style="margin-top: 20px;">GS & FM-G:</p>
+                    <label class="subtitle">GS & FM-G:</label>
+                    @*<p for="" style="margin-top: 20px;">GS & FM-G:</p>*@
                 </td>
             </tr>
             <tr>
                 <td>
-                    <label for="" style="margin-top: 20px;">POB</label>
+                    <label for="" >POB</label>
                     <br />
-                    @Html.DisplayKpiInformationInput(Model.KpiInformations, 36, 270, "number", "prev","daily-actual","value","","51")
+                    @Html.DisplayKpiInformationInput(Model.KpiInformations, 36, 270, "number", "prev","daily-actual","value","","49",3)
                 </td>
             </tr>
             <tr>
                 <td>
-                    <label for="" style="margin-top: 20px;">F&B</label>
+                    <label for="">F&B</label>
                     <br />
                     @Html.DisplayIctInfraOrGsfmHighlight(Model.Highlights, 67, new List<SelectListItem>{
                  new SelectListItem { Text = "-1", Value = "-1" },
@@ -136,7 +139,7 @@
             </tr>
             <tr>
                 <td>
-                    <label for="" style="margin-top: 20px;">Camp</label>
+                    <label for="">Camp</label>
                     <br />
                     @Html.DisplayIctInfraOrGsfmHighlight(Model.Highlights, 67, new List<SelectListItem>{
                    new SelectListItem { Text = "-1", Value = "-1" },
@@ -147,7 +150,7 @@
             </tr>
             <tr>
                 <td>
-                    <label for="" style="margin-top: 20px;">Transp</label>
+                    <label for="">Transp</label>
                     <br />
                     @Html.DisplayIctInfraOrGsfmHighlight(Model.Highlights, 67, new List<SelectListItem>{
                   new SelectListItem { Text = "-1", Value = "-1" },
@@ -179,7 +182,7 @@
 </div>
 <div class="col-md-12" style="margin-top: 30px;">
     <div class="col-md-6">
-        <p style="color: white;">Community Relation and Govt Engagement Highlight-H:</p>
+        <p style="color: white;" class="subtitle">Community Relation and Govt Engagement Highlight-H:</p>
         <table border="0">
             <tr>
                 <td>
@@ -189,7 +192,7 @@
         </table>
     </div>
     <div class="col-md-6">
-        <p style="color: white;">Daily Highlight-K:</p>
+        <p style="color: white;" class="subtitle">Daily Highlight-K:</p>
         <table border="0">
             <tr>
                 <td>
@@ -197,7 +200,7 @@
                 </td>
             </tr>
             <tr>
-                <td><br><p class="control-label">Traffic Light:</p></td>
+                <td><br><label class="control-label subtitle">Traffic Light:</label></td>
             </tr>
             <tr>
                 <td>

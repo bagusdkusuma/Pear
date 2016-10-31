@@ -623,7 +623,7 @@ namespace DSLNG.PEAR.Web.Helpers
             }
         }
 
-        public static MvcHtmlString DisplayKpiInformationInput(this HtmlHelper htmlHelper, IList<DerValuesViewModel.KpiInformationValuesViewModel> kpiInformations, int kpiId, int tabIndex, string placeholder = "rate",string defaultValueDefined = "empty", string type = "daily-actual", string valueType="value", string additionalClass = "", string fieldLength ="")
+        public static MvcHtmlString DisplayKpiInformationInput(this HtmlHelper htmlHelper, IList<DerValuesViewModel.KpiInformationValuesViewModel> kpiInformations, int kpiId, int tabIndex, string placeholder = "rate",string defaultValueDefined = "empty", string type = "daily-actual", string valueType="value", string additionalClass = "", string fieldLength ="", int maxlength=0)
         {
             string value;
             string align = "right";
@@ -642,6 +642,11 @@ namespace DSLNG.PEAR.Web.Helpers
             if (!string.IsNullOrEmpty(additionalClass) && additionalClass.Equals("datepicker"))
             {
                 fieldLength = "100";
+            }
+            string maxlengthProperty = string.Empty;
+            if (maxlength > 0)
+            {
+                maxlengthProperty = string.Format("maxlength=\"{0}\"", maxlength.ToString());
             }
             switch (defaultValueDefined) { 
                 case "empty" : 
@@ -699,7 +704,7 @@ namespace DSLNG.PEAR.Web.Helpers
             id = valueObject.ExistValue == "now" ? valueObject.Id : 0;
             existValue = valueObject.ExistValue;
             
-            return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control der-kpi {8}\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" data-kpi-id=\"{5}\" data-id=\"{6}\" data-value-type=\"{7}\" style=\"width: {9}px; text-align: {10}; \" />", value, existValue, placeholder, tabIndex, type, kpiId, id, valueType, additionalClass, fieldLength, align));
+            return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control der-kpi {8}\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" data-kpi-id=\"{5}\" data-id=\"{6}\" data-value-type=\"{7}\" style=\"width: {9}px; text-align: {10};\" {11}/>", value, existValue, placeholder, tabIndex, type, kpiId, id, valueType, additionalClass, fieldLength, align, maxlengthProperty));
         }
 
         public class ValueObject {

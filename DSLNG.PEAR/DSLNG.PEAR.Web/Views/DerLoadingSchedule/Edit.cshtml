@@ -11,44 +11,105 @@
                 @Html.Hidden("DerTransactionDateInput", "", new { id = "DerTransactionDateInput" })
                 @Html.HiddenFor(x => x.Id)
             </div>
+            <div id="vessel-container"></div>
+            <div id="buyer-container"></div>
+            <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
+                <tr>
+                    <td style="width: 100px;">@Html.LabelFor(model => model.VesselId)</td>
+                    <td style="width: 160px;">
+                        @Html.DropDownListFor(model => model.VesselId, Model.Vessels, new { @class = "form-control",@style="width:160px;" })
+                    </td>
+                    <td>
+                        <button data-url='@Url.Action("AddVessel", "DerLoadingSchedule")' class="btn btn-master-rgw btn-primary add-new-vessel"><span class="fa fa-plus-square"></span> Add</button>
+                    </td>
+                    <td>@Html.ValidationMessageFor(model => model.VesselId)</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(model => model.ETA)</td>
+                    <td>@Html.TextBoxFor(model => model.ETA, new { @class = "form-control datepicker", @style = "width:160px;" })</td>
+                    <td colspan="2">@Html.ValidationMessageFor(model => model.ETA)</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(model => model.ETD)</td>
+                    <td>@Html.TextBoxFor(model => model.ETD, new { @class = "form-control datepicker", @style = "width:160px;" })</td>
+                    <td colspan="2">@Html.ValidationMessageFor(model => model.ETD)</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(model => model.BuyerId)</td>
+                    <td>@Html.DropDownListFor(model => model.BuyerId, Model.Buyers, new { @class = "form-control", @style = "width:160px;" })</td>
+                    <td><button data-url='@Url.Action("AddBuyer", "DerLoadingSchedule")' class="btn btn-master-rgw btn-primary add-new-buyer"><span class="fa fa-plus-square"></span> Add</button></td>
+                    <td>@Html.ValidationMessageFor(model => model.BuyerId)</td>
+                </tr>
+                <tr>
+                    
+                    <td>@Html.LabelFor(model => model.Location)</td>
+                    <td colspan="2">@Html.TextAreaFor(model => model.Location, 5, 50, new { @class = "form-control", @style = "width:360px;" })</td>
+                    <td>@Html.ValidationMessageFor(model => model.Location)</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(model => model.SalesType)</td>
+                    <td>@Html.DropDownListFor(model => model.SalesType, Model.SalesTypes, new { @class = "form-control", @style = "width:160px;" })</td>
+                    <td colspan="2">@Html.ValidationMessageFor(model => model.SalesType)</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(model => model.Type)</td>
+                    <td>@Html.DropDownListFor(model => model.Type, Model.Types, new { @class = "form-control", @style="width:160px;" })</td>
+                    <td colspan="2">@Html.ValidationMessageFor(model => model.Type)</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(model => model.Cargo)</td>
+                    <td>@Html.TextBoxFor(model => model.Cargo, new { @class = "form-control", @style="width:160px;" })</td>
+                    <td colspan="2">@Html.ValidationMessageFor(model => model.Cargo)</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(model => model.IsActive)</td>
+                    <td>@Html.CheckBoxFor(model => model.IsActive, new { @class = "form-control" })</td>
+                    <td colspan="2">@Html.ValidationMessageFor(model => model.IsActive)</td>
+                </tr>
+            </table>
             <div class="col-md-12">
                 <div class="form-inline whitebox">
-                    <div class="form-group form-list">
+
+                    @*<div class="form-control label">
                         @Html.LabelFor(model => model.VesselId)
-                        @Html.DropDownListFor(model => model.VesselId, Model.Vessels, new { @class = "form-control"})
+                        @Html.DropDownListFor(model => model.VesselId, Model.Vessels, new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.VesselId)
-                    </div>
+                        <button data-url='@Url.Action("AddVessel", "DerLoadingSchedule")' class="btn btn-master-rgw btn-primary add-new-vessel"><span class="fa fa-plus-square"></span>Add</button>
+                    </div>*@
+                    @*<div id="vessel_form"></div>
                     <div class="form-group form-list">
                         @Html.LabelFor(model => model.ETA)
                         @Html.TextBoxFor(model => model.ETA, new { @class = "form-control datepicker" })
                         @Html.ValidationMessageFor(model => model.ETA)
-                    </div>
-                    <div class="form-group form-list">
+                    </div>*@
+                    @*<div class="form-group form-list">
                         @Html.LabelFor(model => model.ETD)
                         @Html.TextBoxFor(model => model.ETD, new { @class = "form-control datepicker" })
                         @Html.ValidationMessageFor(model => model.ETD)
-                    </div>
-                    <div class="form-group form-list">
+                    </div>*@
+                    @*<div class="form-group form-list">
                         @Html.LabelFor(model => model.BuyerId)
-                        @Html.DropDownListFor(model => model.BuyerId, Model.Buyers, new { @class = "form-control"})
+                        @Html.DropDownListFor(model => model.BuyerId, Model.Buyers, new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.BuyerId)
+                        <button data-url='@Url.Action("AddBuyer", "DerLoadingSchedule")' class="btn btn-master-rgw btn-primary add-new-buyer"><span class="fa fa-plus-square"></span>Add</button>
                     </div>
-                    <div class="form-group form-list">
+                    <div id="buyer-container"></div>*@
+                    @*<div class="form-group form-list">
                         @Html.LabelFor(model => model.Location)
                         @Html.TextAreaFor(model => model.Location, 5, 50, new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.Location)
-                    </div>
-                    <div class="form-group form-list">
+                    </div>*@
+                    @*<div class="form-group form-list">
                         @Html.LabelFor(model => model.SalesType)
                         @Html.DropDownListFor(model => model.SalesType, Model.SalesTypes, new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.SalesType)
-                    </div>
-                    <div class="form-group form-list">
+                    </div>*@
+                    @*<div class="form-group form-list">
                         @Html.LabelFor(model => model.Type)
                         @Html.DropDownListFor(model => model.Type, Model.Types, new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.Type)
-                    </div>
-                    <div class="form-group form-list">
+                    </div>*@
+                    @*<div class="form-group form-list">
                         @Html.LabelFor(model => model.Cargo)
                         @Html.TextBoxFor(model => model.Cargo, new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.Cargo)
@@ -57,7 +118,7 @@
                         @Html.LabelFor(model => model.IsActive)
                         @Html.CheckBoxFor(model => model.IsActive, new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.IsActive)
-                    </div>
+                    </div>*@
                 </div>
             </div>
             <div class="col-md-12 artifact-designer-btns">
@@ -73,6 +134,29 @@
         $('.datepicker').datetimepicker({
             format: "MM/DD/YYYY"
         });
+
+        $('.add-new-vessel').click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var container = $('#vessel-container');
+            container.append('<div id="vessel_form"></div>')
+            var $vessel_form = $('#vessel_form'), url = $(this).data('url');
+            $.get(url, function (data) {
+                $vessel_form.html(data);
+            });
+        });
+
+        $('.add-new-buyer').click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var container = $('#buyer-container');
+            container.append('<div id="buyer_form"></div>')
+            var $buyer_form = $('#buyer_form'), url = $(this).data('url');
+            $.get(url, function (data) {
+                $buyer_form.html(data);
+            });
+        });
+
         $('.save').click(function (e) {
             e.preventDefault();
             $form = $(this).closest('form');
@@ -110,6 +194,13 @@
                 }
             })
         })
+
+        $('.close-vesel').click(function (e) {
+            $('#vessel-container').empty();
+        });
+        $('.close-buyer').click(function (e) {
+            $('#buyer-container').empty();
+        });
     });
 </script>
 

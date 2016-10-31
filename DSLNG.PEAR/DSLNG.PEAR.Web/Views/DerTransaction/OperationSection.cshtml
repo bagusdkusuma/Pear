@@ -6,7 +6,7 @@
 <div class="col-md-12">
     <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
         <tr>
-            <td><label class="control-label">Plant Performance Corp KPI Target-Annual :</label></td>
+            <td><label class="control-label subtitle">Plant Performance Corp KPI Target-Annual :</label></td>
         </tr>
     </table>
 </div>
@@ -120,7 +120,7 @@
     <table border="0">
         <tr>
             <!--47-->
-            <td><label class="control-label">Process Anomaly Highlight</label></td>
+            <td><label class="control-label subtitle">Process Anomaly Highlight</label></td>
         </tr>
         <tr>
             <td>
@@ -131,7 +131,7 @@
 </div>
 <div class="col-md-12" style="margin-top: 30px;">
     <div class="col-md-3">
-        <label class="control-label">Feed Gas USM :</label>
+        <label class="control-label subtitle">Feed Gas USM :</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 <td><label class="control-label">24H (mmsfcd)</label></td>
@@ -167,11 +167,11 @@
             </tr>
         </table>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
         @*@{
                 var pmtsLayout = Model.DerLayoutItems.First(x => x.Row == 5 && x.Column == 0);
             }*@
-        <label class="control-label">Feed Gas JOB PMTS-CPP :</label>
+        <label class="control-label subtitle">JOB PMTS-CPP :</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 @* <td><label class="control-label">24H (mmscfd)</label></td> *@
@@ -207,16 +207,16 @@
             </tr>
         </table>
     </div>
-    <div class="col-md-3" style="padding-left: 38px;">
+    <div class="col-md-2" style="padding-left: 14px;">
         @*@{
                 var mgdpLayout = Model.DerLayoutItems.First(x => x.Row == 5 && x.Column == 1);
             }*@
-        <label class="control-label lbl">Feed Gas MGDP-Donggi CPP :</label>
+        <label class="control-label subtitle">MGDP-Donggi CPP :</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 @* <td><label class="control-label">24H (mmscfd)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 170, 54, "mmscfd")
                     </span>
                 </td>
@@ -224,7 +224,7 @@
             <tr>
                 @* <td><label class="control-label">24H (tonnes)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 173, 55, "tonnes")
                     </span>
                 </td>
@@ -232,7 +232,7 @@
             <tr>
                 @* <td><label class="control-label">24H (btu/scf)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 174, 56, "btu/scf")
                     </span>
                 </td>
@@ -240,7 +240,7 @@
             <tr>
                 @* <td><label class="control-label">24H (mmbtud)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 171, 57, "mmbtud")
                     </span>
                 </td>
@@ -248,13 +248,13 @@
 
         </table>
     </div>
-    <div class="col-md-3">
-        <label class="control-label lbl">Feed Gas MGDP-Matindok CPP :</label>
+    <div class="col-md-2">
+        <label class="control-label subtitle">MGDP-Matindok CPP :</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 @* <td><label class="control-label">24H (mmscfd)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 398, 58, "mmscfd")
                     </span>
                 </td>
@@ -262,7 +262,7 @@
             <tr>
                 @* <td><label class="control-label">24H (tonnes)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 401, 59, "tonnes")
                     </span>
                 </td>
@@ -270,7 +270,7 @@
             <tr>
                 @* <td><label class="control-label">24H (btu/scf)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 402, 60, "btu/scf")
                     </span>
                 </td>
@@ -278,7 +278,7 @@
             <tr>
                 @* <td><label class="control-label">24H (mmbutd)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 399, 61, "mmbtud")
                     </span>
                 </td>
@@ -287,8 +287,8 @@
     </div>
 </div>
 <div class="col-md-12" style="margin-top: 30px;">
-    <div class="col-md-4">
-        <label class="control-label">Commitments JOB PMTS :</label>
+    <div class="col-md-3">
+        <label class="control-label subtitle">Commitments JOB PMTS :</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 <td><label class="control-label">DCQ (mmbtu)</label></td>
@@ -316,8 +316,8 @@
             </tr>
         </table>
     </div>
-    <div class="col-md-3">
-        <label class="control-label">Commitments MGDP :</label>
+    <div class="col-md-2">
+        <label class="control-label subtitle">Commitments MGDP :</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 @* <td><label class="control-label">DCQ (mmbtu)</label></td> *@
@@ -346,7 +346,7 @@
         </table>
     </div>
     <div class="col-md-4">
-        <label class="control-label">Plant Utilization daily code</label>
+        <label class="control-label subtitle">Plant Utilization daily code</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 <td>
@@ -374,8 +374,8 @@
     </div>
 </div>
 <div class="col-md-12" style="margin-top: 30px;">
-    <div class="col-md-4">
-        <label class="control-label">Feed Gas Impurities :</label>
+    <div class="col-md-3">
+        <label class="control-label subtitle">Feed Gas Impurities :</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 <td><label class="control-label">H2S (ppm)</label></td>
@@ -439,7 +439,7 @@
         @*@{
                 var productionLayout = Model.DerLayoutItems.First(x => x.Row == 7 && x.Column == 0);
             }*@
-        <label class="control-label">Product Quality :</label>
+        <label class="control-label subtitle">Product Quality :</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 <td><label class="control-label">CDS-RVP (psia)</label></td>
@@ -525,8 +525,9 @@
     </div>
 </div>
 <div class="col-md-12" style="margin-top: 30px;">
+    <div class="col-md-12"><label class="subtitle">Enviro Quality</label></div>
     <div class="col-md-3">
-        <label class="control-label">Enviro Quality-C3 Compr :</label>
+        <label class="control-label subtitle">C3 Compr :</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 <td><label class="control-label">NO2 (mg/Nm3)</label></td>
@@ -536,7 +537,6 @@
                     </span>
                 </td>
             </tr>
-            <tr></tr>
             <tr>
                 <td><label class="control-label">SO2 (mg/Nm3)</label></td>
                 <td>
@@ -562,7 +562,7 @@
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">O2 <br> (mol%)</label></td>
+                <td><label class="control-label">O2 (mol%)</label></td>
                 <td>
                     <span class="col-sm-8">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 255, 91, "mol%")
@@ -587,22 +587,21 @@
             </tr>
         </table>
     </div>
-    <div class="col-md-3" style="padding-left: 55px;">
-        <label class="control-label lbl">Enviro Quality-LP MR Compr :</label>
+    <div class="col-md-2" style="padding-left: 38px;">
+        <label class="control-label subtitle">LP MR Compr :</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 @* <td><label class="control-label">NO2 (mg/Nm3)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 258, 94, "mg/Nm3")
                     </span>
                 </td>
             </tr>
-            <tr></tr>
             <tr>
                 @* <td><label class="control-label">SO2 (mg/Nm3)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 259, 95, "mg/Nm3")
                     </span>
                 </td>
@@ -610,7 +609,7 @@
             <tr>
                 @* <td><label class="control-label">CO (mg/Nm3)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 260, 96, "mg/Nm3")
                     </span>
                 </td>
@@ -618,7 +617,7 @@
             <tr>
                 @* <td><label class="control-label">CO2 (mol%)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 261, 97, "mol%")
                     </span>
                 </td>
@@ -626,7 +625,7 @@
             <tr>
                 @* <td><label class="control-label">O2 (mol%)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 262, 98, "mol%")
                     </span>
                 </td>
@@ -634,7 +633,7 @@
             <tr>
                 @* <td><label class="control-label">Opacity (%)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 263, 99, "%")
                     </span>
                 </td>
@@ -642,29 +641,28 @@
             <tr>
                 @* <td><label class="control-label">Particulate (mg/Nm3)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 264, 100, "mg/Nm3")
                     </span>
                 </td>
             </tr>
         </table>
     </div>
-    <div class="col-md-3">
-        <label class="control-label lbl">Enviro Quality-HP MR Compr :</label>
+    <div class="col-md-2">
+        <label class="control-label subtitle">HP MR Compr :</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 @* <td><label class="control-label">NO2 (mg/Nm3)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 265, 101, "mg/Nm3")
                     </span>
                 </td>
             </tr>
-            <tr></tr>
             <tr>
                 @* <td><label class="control-label">SO2 (mg/Nm3)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 266, 102, "mg/Nm3")
                     </span>
                 </td>
@@ -672,7 +670,7 @@
             <tr>
                 @* <td><label class="control-label">CO (mg/Nm3)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 267, 103, "mg/Nm3")
                     </span>
                 </td>
@@ -680,7 +678,7 @@
             <tr>
                 @* <td><label class="control-label">CO2 (mol%)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 268, 104, "mol%")
                     </span>
                 </td>
@@ -688,7 +686,7 @@
             <tr>
                 @* <td><label class="control-label">O2 (mol%)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 269, 105, "mol%")
                     </span>
                 </td>
@@ -696,7 +694,7 @@
             <tr>
                 @* <td><label class="control-label">Opacity (%)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 270, 106, "%")
                     </span>
                 </td>
@@ -704,15 +702,15 @@
             <tr>
                 @* <td><label class="control-label">Particulate (mg/Nm3)</label></td> *@
                 <td>
-                    <span class="col-sm-8">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 271, 107, "mg/Nm3")
                     </span>
                 </td>
             </tr>
         </table>
     </div>
-    <div class="col-md-3">
-        <p><label class="control-label">Enviro Quality-Flaring :</label></p>
+    <div class="col-md-4">
+        <p><label class="control-label subtitle">Flaring :</label></p>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 <td><label class="control-label">Wet Flare (Nm3/h)</label></td>
@@ -738,8 +736,6 @@
                     </span>
                 </td>
             </tr>
-        </table>
-        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 <td><label class="control-label">Wet Flare (tonnes)</label></td>
                 <td>
@@ -764,7 +760,11 @@
                     </span>
                 </td>
             </tr>
+            <tr></tr>
         </table>
+        @*<table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
+            
+        </table>*@
     </div>
 
 </div>
@@ -785,7 +785,7 @@
 </div>
 <div class="col-md-12" style="margin-top: 30px;">
     <div class="col-md-4">
-        <label class="control-label">Inventory-LNG Tank :</label>
+        <label class="control-label subtitle">Inventory-LNG Tank :</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 <td><label class="control-label">Level (%)</label></td>
@@ -829,8 +829,8 @@
             </tr>
         </table>
     </div>
-    <div class="col-md-3" style="padding-left: 55px">
-        <label class="control-label">Inventory-CDS Loading Tank :</label>
+    <div class="col-md-3" style="padding-left: 14px">
+        <label class="control-label subtitle">Inventory-CDS Loading Tank :</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 @* <td><label class="control-label">Level (%)</label></td> *@
@@ -867,15 +867,15 @@
             <tr>
                 @* <td><label class="control-label">Days To Tank Top (Days)</label></td> *@
                 <td>
-                    <span class="col-sm-8 input-sty input-no-lbl">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 369, 124, "Days")
                     </span>
                 </td>
             </tr>
         </table>
     </div>
-    <div class="col-md-4">
-        <label class="control-label">Inventory-CDS Buffer Tank :</label>
+    <div class="col-md-3">
+        <label class="control-label subtitle">Inventory-CDS Buffer Tank :</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 @* <td><label class="control-label">Level (%)</label></td> *@
@@ -912,7 +912,7 @@
             <tr>
                 @* <td><label class="control-label">Days To Tank Top (Days)</label></td> *@
                 <td>
-                    <span class="col-sm-8 input-sty input-no-lbl">
+                    <span class="col-sm-8 input-no-lbl">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 364, 129, "Days")
                     </span>
                 </td>
@@ -922,10 +922,10 @@
 </div>
 <div class="col-md-12" style="margin-top: 30px;">
     <div class="col-md-4">
-        <label class="control-label">Inventory-CDS Day Tank :</label>
+        <label class="control-label subtitle">Inventory-CDS Day Tank :</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
-                <td><label class="control-label">Level (%)</label></td>
+                <td style="width: 144px;"><label class="control-label">Level (%)</label></td>
                 <td>
                     <span class="col-sm-8">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 87, 130, "%")
@@ -959,7 +959,7 @@
         </table>
     </div>
     <div class="col-md-4">
-        <label class="control-label">Ambient Temp :</label>
+        <label class="control-label subtitle">Ambient Temp :</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 <td><label class="control-label">Hi (&#8451;)</label></td>
@@ -990,7 +990,7 @@
 </div>
 <div class="col-md-12" style="margin-top: 30px;">
     <div class="col-md-4">
-        <label class="control-label">LNG Production :</label>
+        <label class="control-label subtitle">LNG Production :</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 <td><label class="control-label">24H (m3)</label></td>
@@ -1019,7 +1019,7 @@
         </table>
     </div>
     <div class="col-md-4">
-        <label class="control-label">CDS Production :</label>
+        <label class="control-label subtitle">CDS Production :</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 <td><label class="control-label">24H (m3)</label></td>
@@ -1048,7 +1048,7 @@
         </table>
     </div>
     <div class="col-md-4">
-        <label class="control-label">Fuel Gas :</label>
+        <label class="control-label subtitle">Fuel Gas :</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 <td><label class="control-label">24H (m3)</label></td>
@@ -1082,7 +1082,7 @@
         @*@{
                 var lngLoadedLayout = Model.DerLayoutItems.First(x => x.Row == 7 && x.Column == 1);
             }*@
-        <label class="control-label" >LNG Loaded :</label>
+        <label class="control-label subtitle" >LNG Loaded :</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 <td><label class="control-label">24H (m3)</label></td>
@@ -1113,7 +1113,7 @@
     <div class="col-md-7">
         <div class="row">
             <div class="col-md-4">
-                <label class="control-label">Actual Daily Shipped :</label>
+                <label class="control-label subtitle">Actual Daily Shipped :</label>
                 <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
                     <tr>
                         <td><label class="control-label">Spot</label></td>
@@ -1150,7 +1150,7 @@
                 </table>
             </div>
             <div class="col-md-4">
-                <label class="control-label lbl">Monthly Target :</label>
+                <label class="control-label subtitle">Monthly Target :</label>
                 <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
                     <tr>
                         @* <td><label class="control-label">Spot Cargo</label></td> *@
@@ -1187,7 +1187,7 @@
                 </table>
             </div>
             <div class="col-md-4">
-                <label class="control-label lbl">Yearly Target :</label>
+                <label class="control-label subtitle">Yearly Target :</label>
                 <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
                     <tr>
                         @* <td><label class="control-label">Spot Cargo</label></td> *@
@@ -1227,7 +1227,7 @@
 
     </div>
     <div class="col-md-2">
-        <label class="control-label " style="margin-bottom: 12px;">LNG Loaded Remark</label>
+        <label class="control-label  subtitle" style="margin-bottom: 12px;">LNG Loaded Remark:</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 <td>
@@ -1256,7 +1256,7 @@
 </div>
 <div class="col-md-12" style="margin-top: 30px;">
     <div class="col-md-4">
-        <label class="control-label">CDS Loaded :</label>
+        <label class="control-label subtitle">CDS Loaded :</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 <td><label class="control-label">24H (m3)</label></td>
@@ -1298,10 +1298,10 @@
         </table>
     </div>
     <div class="col-md-4">
-        <label class="control-label">CDS Loaded-Note :</label>
+        <label class="control-label subtitle">CDS Loaded-Note :</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
-                <td><label class="control-label">CDS Loaded-Note</label></td>
+                <td><label class="control-label">Note</label></td>
                 <td>
                     <span class="col-sm-8">
                         <!-- remark -->
@@ -1311,7 +1311,7 @@
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">CDS Loaded-Remark</label></td>
+                <td><label class="control-label">Remark</label></td>
                 <td>
                     <span class="col-sm-8">
                         <!-- remark -->

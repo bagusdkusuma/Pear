@@ -7,7 +7,7 @@
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 <!--192-->
-                <td><label class="control-label">Weekly Maintenance Backlog :</label></td>
+                <td colspan="2"><label class="control-label subtitle">Weekly Maintenance Backlog :</label></td>
             </tr>
             <tr>
                 <td><label class="control-label">as of</label></td>
@@ -66,7 +66,7 @@
     <div class="col-md-6">
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
-                <td><label class="control-label">Weekly Critical-Tier 1 PM Compliance/overdue :</label></td>
+                <td colspan="2"><label class="control-label subtitle">Weekly Critical-Tier 1 PM Compliance/overdue :</label></td>
             </tr>
             <tr>
                 <td><label class="control-label">as of</label></td>
@@ -77,7 +77,7 @@
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">Rlv Valve</label></td>
+                <td><label class="control-label">Relieve Valve</label></td>
                 <td>
                     <span class="col-sm-8">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 371, 185, "number", "prev")
@@ -124,11 +124,11 @@
     </div>
 </div>
 <div style="margin-top: 30px;" class="col-md-12">
-    <p style="color: white;">Key Equipment Status :</p>
+    <p style="color: white;" class="subtitle">Key Equipment Status :</p>
     <div class="col-md-4">
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
-                <td><label class="control-label">Feed Inlet Syst</label></td>
+                <td style="width: 100px;"><label class="control-label">Feed Inlet Syst</label></td>
                 <td>
                     @Html.DisplayHighlightDropdownList(Model.Highlights, 46, new List<SelectListItem> {
                         new SelectListItem { Text = "Normal Ops", Value = "Normal Ops" },
@@ -195,7 +195,7 @@
     <div class="col-md-4">
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
-                <td><label class="control-label">EDG-A</label></td>
+                <td style="width: 100px;"><label class="control-label">EDG-A</label></td>
                 <td>
                     @Html.DisplayHighlightDropdownList(Model.Highlights, 31, new List<SelectListItem> {
                         new SelectListItem { Text = "Running", Value = "Running" },
@@ -361,7 +361,7 @@
     <div class="col-md-4">
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
-                <td><label class="control-label">N2 Syst</label></td>
+                <td style="width: 100px;"><label class="control-label">N2 Syst</label></td>
                 <td>
                     @Html.DisplayHighlightDropdownList(Model.Highlights, 43, new List<SelectListItem> {
                         new SelectListItem { Text = "Normal Ops", Value = "Normal Ops" },
@@ -442,7 +442,7 @@
     <div class="col-md-4">
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
-                <td><label class="control-label">CDS tank</label></td>
+                <td style="width: 100px;"><label class="control-label">CDS tank</label></td>
                 <td>
                     @Html.DisplayHighlightDropdownList(Model.Highlights, 78, new List<SelectListItem> {
                         new SelectListItem { Text = "Normal Ops", Value = "Normal Ops" },
@@ -492,7 +492,7 @@
     <div class="col-md-6">
         <table border="0">
             <tr>
-                <td><label class="control-label">Maintenance Highlight & Immediate Concern:</label></td>
+                <td><label class="control-label subtitle">Maintenance Highlight & Immediate Concern:</label></td>
             </tr>
             <tr>
                 <!--229-->

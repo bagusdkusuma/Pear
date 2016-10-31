@@ -1,7 +1,9 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.VesselSchedule.VesselScheduleViewModel
 
 <style>
-    .vessel-schedule-save label{width:100px}
+    .vessel-schedule-save label {
+        width: 100px;
+    }
 </style>
 <div class="vessel-schedule-save">
     <div class="row">
@@ -18,6 +20,12 @@
                         @Html.LabelFor(model => model.VesselId)
                         @Html.DropDownListFor(model => model.VesselId, Model.Vessels, "Select Vessel", new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.VesselId)
+                        @*<a href="javascript:;" class="btn btn-primary" id="add_vessel_from_modal" onclick="test()"><span class="fa fa-plus-square"></span>Add New Vessel</a>*@
+                        <button data-url='@Url.Action("AddVessel", "DerLoadingSchedule")' class="btn btn-master-rgw btn-primary add-new-vessel"><span class="fa fa-plus-square"></span> Add</button>
+                    </div>
+                    @*<div hidden="hidden" id="vessel_form"></div>*@
+                    <div id="vessel-container">
+                        @*<div id="vessel_form"></div>*@
                     </div>
                     <div class="form-group form-list">
                         @Html.LabelFor(model => model.ETA)
@@ -31,8 +39,11 @@
                     </div>
                     <div class="form-group form-list">
                         @Html.LabelFor(model => model.BuyerId)
-                        @Html.DropDownListFor(model => model.BuyerId, Model.Buyers, "Select Buyer", new { @class = "form-control"})
+                        @Html.DropDownListFor(model => model.BuyerId, Model.Buyers, "Select Buyer", new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.BuyerId)
+                        <button data-url='@Url.Action("AddBuyer", "DerLoadingSchedule")' class="btn btn-master-rgw btn-primary add-new-buyer"><span class="fa fa-plus-square"></span> Add</button>
+                    </div>
+                    <div id="buyer-container">
                     </div>
                     <div class="form-group form-list">
                         @Html.LabelFor(model => model.Location)
@@ -41,12 +52,12 @@
                     </div>
                     <div class="form-group form-list">
                         @Html.LabelFor(model => model.SalesType)
-                        @Html.DropDownListFor(model => model.SalesType, Model.SalesTypes, "Select Sales Type", new { @class = "form-control" })
+                        @Html.DropDownListFor(model => model.SalesType, Model.SalesTypes, "Select Cargo Type", new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.SalesType)
                     </div>
                     <div class="form-group form-list">
                         @Html.LabelFor(model => model.Type)
-                        @Html.DropDownListFor(model => model.Type, Model.Types, "Select Type", new { @class = "form-control" })
+                        @Html.DropDownListFor(model => model.Type, Model.Types, "Select DES/FOB", new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.Type)
                     </div>
                     <div class="form-group form-list">
@@ -69,10 +80,44 @@
     </div>
 </div>
 <script>
+
+    @*function test() {
+        $.get('@Url.Action("AddNewVessel", "DerLoadingSchedule")', function (response) {
+            console.log('called');
+            if (response != null) {
+                console.log('ada isinya');
+                console.log(response.Message);
+            }
+        });
+    }*@
+
     $(document).ready(function () {
         $('.datepicker').datetimepicker({
             format: "MM/DD/YYYY"
         });
+
+        $('.add-new-vessel').click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var container = $('#vessel-container');
+            container.append('<div id="vessel_form"></div>')
+            var $vessel_form = $('#vessel_form'), url = $(this).data('url');
+            $.get(url, function (data) {
+                $vessel_form.html(data);
+            });
+        });
+
+        $('.add-new-buyer').click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var container = $('#buyer-container');
+            container.append('<div id="buyer_form"></div>')
+            var $buyer_form = $('#buyer_form'), url = $(this).data('url');
+            $.get(url, function (data) {
+                $buyer_form.html(data);
+            });
+        });
+
         $('.save').click(function (e) {
             e.preventDefault();
             $form = $(this).closest('form');
@@ -95,11 +140,11 @@
                         } else {
                             $tr.append('<td>' + data.RemarkDate + ';' + data.Remark + '  | <a href="/DerLoadingSchedule/Remarks/' + data.Id + '" class="see-remarks">See All</a></td>');
                         }
-                        
+
                         $tr.append('<td><button class="btn btn-default remove-schedule">remove</button></td>');
                         $('.choosen-schedules').append($tr);
                     }, 1000);
-                    
+
                 } else {
                     if (data.Message.length > 0) {
                         $valSummary = $('.vessel-schedule-save .validation-summary');
@@ -111,5 +156,15 @@
                 }
             })
         })
+        $('.close-vesel').click(function (e) {
+            $('#vessel-container').empty();
+            //$('#vessel-container').append('<div id="vessel_form"></div>');
+            //console.log('containernya vessel');
+        });
+        $('.close-buyer').click(function (e) {
+            $('#buyer-container').empty();
+            //$('#buyer-container').append('<div id="buyer_form"></div>');
+            //console.log('containernya buyer');
+        });
     });
 </script>
