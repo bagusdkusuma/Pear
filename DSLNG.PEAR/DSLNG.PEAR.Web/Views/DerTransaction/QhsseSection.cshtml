@@ -33,7 +33,7 @@
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">safe man hours</label></td>
+                <td><label class="control-label">Safe man-hours</label></td>
                 <td>
                     <span class="col-sm-8">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 275, 221, "hours", "prev")
@@ -69,7 +69,7 @@
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">Wind Speed (km/h)</label></td>
+                <td><label class="control-label">Wind Speed (Km/h)</label></td>
                 <td>
                     <span class="col-sm-17">
                         @Html.DisplayWaveList(Model.Wave, Model.Wave.Values, "speed", 225)
@@ -345,7 +345,7 @@
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">Violence</label></td>
+                <td><label class="control-label">Fighting/Violence</label></td>
                 <td>
                     <span class="col-sm-8">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 359, 256, "number")
@@ -368,10 +368,18 @@
                     </span>
                 </td>
             </tr>
+            <tr>
+                <td><label class="control-label">Security Alert Condition </label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayHighlightDropdownList(Model.Highlights, 7, Model.AlertOptions, 259, "prev")
+                    </span>
+                </td>
+            </tr>
         </table>
     </div>
 </div>
-<div class="col-md-12" style="margin-top: 30px;">
+@*<div class="col-md-12" style="margin-top: 30px;">
     <div class="col-md-6">
         <table border="0">
             <tr>
@@ -379,13 +387,13 @@
             </tr>
             <tr>
                 <td>
-                    <!--260-->
+                    260
                     @Html.DisplayHighlightDropdownList(Model.Highlights, 7, Model.AlertOptions, 259, "prev")
                 </td>
             </tr>
         </table>
     </div>
-</div>
+</div>*@
 <div class="col-md-12" style="margin-top: 30px;">
     <div class="col-md-6">
         <table border="0">

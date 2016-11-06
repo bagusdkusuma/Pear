@@ -36,7 +36,9 @@ namespace DSLNG.PEAR.Services
                 }
                 else
                 {
+                    response.IsSuccess = true;
                     response = data.MapTo<GetPrivilegeResponse>();
+                    response.Department = data.RoleGroup.MapTo<GetPrivilegeResponse.RoleGroup>();
                 }
             }
             catch (InvalidOperationException e)
@@ -131,6 +133,34 @@ namespace DSLNG.PEAR.Services
                     DataContext.RolePrivileges.Add(privilege);
                 }
                 DataContext.SaveChanges();
+                //try to batch update
+                if (request.MenuRolePrivileges.Count > 0)
+                {
+                    foreach (var menuRole in request.MenuRolePrivileges)
+                    {
+                        menuRole.RolePrivilege_Id = privilege.Id;
+                        
+                        var existing = DataContext.MenuRolePrivileges.FirstOrDefault(x => x.Menu_Id == menuRole.Menu_Id && x.RolePrivilege_Id == privilege.Id);
+                        if (existing != null)
+                        {
+                            existing.AllowApprove = menuRole.AllowApprove;
+                            existing.AllowCreate = menuRole.AllowCreate;
+                            existing.AllowDelete = menuRole.AllowDelete;
+                            existing.AllowDownload = menuRole.AllowDownload;
+                            existing.AllowPublish = menuRole.AllowPublish;
+                            existing.AllowUpdate = menuRole.AllowUpdate;
+                            existing.AllowUpload = menuRole.AllowUpload;
+                            existing.AllowView = menuRole.AllowView;
+                            DataContext.Entry(existing).State = EntityState.Modified;
+                        }
+                        else
+                        {
+                            var menuPrivilege = menuRole.MapTo<MenuRolePrivilege>();
+                            DataContext.MenuRolePrivileges.Add(menuPrivilege);
+                        }
+                    }
+                    DataContext.SaveChanges();
+                }
                 response.IsSuccess = true;
                 response.Id = privilege.Id;
                 response.Message = "Privilege Successfully Saved";

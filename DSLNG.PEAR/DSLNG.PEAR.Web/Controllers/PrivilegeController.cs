@@ -75,14 +75,26 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Edit(int Id)
         {
             int RoleId = this.UserProfile().RoleId;
-            var model = _roleService.GetRolePrivilege(new GetPrivilegeRequest
+            var result = _roleService.GetRolePrivilege(new GetPrivilegeRequest
             {
                 Id = Id
-            }).MapTo<RolePrivilegeViewModel>();
+            });
+            var model = new RolePrivilegeViewModel();
+            model = result.MapTo<RolePrivilegeViewModel>();
+            
             if (model != null)
             {
                 RoleId = model.RoleGroup_Id > 0 ? model.RoleGroup_Id : this.UserProfile().RoleId;
             }
+
+            var privilege = _roleService.GetMenuRolePrivileges(new GetPrivilegeByRolePrivilegeRequest
+            {
+                RoleId = RoleId,
+                RolePrivilegeId = Id
+            });
+
+            model.MenuRolePrivileges = privilege.MenuRolePrivileges.ToList().MapTo<RolePrivilegeViewModel.MenuRolePrivilege>();
+
             ViewBag.RoleGroups = _roleGroupService.GetRoleGroups(new Services.Requests.RoleGroup.GetRoleGroupsRequest
             {
                 Take = -1,
@@ -117,7 +129,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var roles = _roleService.GetMenuRolePrivileges(new GetPrivilegeByRolePrivilegeRequest { RoleId = RoleId });
             if (roles.IsSuccess)
             {
-                model.MenuRolePrivileges = roles.MenuRolePrivileges.ToList().MapTo<MenuRolePrivilegeViewModel>();
+                model.MenuRolePrivileges = roles.MenuRolePrivileges.ToList().MapTo<RolePrivilegeViewModel.MenuRolePrivilege>();
             }
             
             return View(model);
@@ -157,7 +169,9 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 var request = model.MapTo<SaveRolePrivilegeRequest>();
                 request.UserId = this.UserProfile().UserId;
-                if (_roleService.SaveRolePrivilege(request).IsSuccess)
+                var response = _roleService.SaveRolePrivilege(request);
+                
+                if (response.IsSuccess)
                 {
                     return RedirectToAction("Index", new { roleId = request.RoleGroup_Id });
                 }

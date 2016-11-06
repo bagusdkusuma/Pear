@@ -20,7 +20,7 @@
                         @Html.DropDownListFor(model => model.VesselId, Model.Vessels, new { @class = "form-control",@style="width:160px;" })
                     </td>
                     <td>
-                        <button data-url='@Url.Action("AddVessel", "DerLoadingSchedule")' class="btn btn-master-rgw btn-primary add-new-vessel"><span class="fa fa-plus-square"></span> Add</button>
+                        <button data-url='@Url.Action("AddVessel", "DerLoadingSchedule")' class="btn btn-master-rgw btn-primary add-new-vessel"><span class="fa fa-plus-square"></span> Add New</button>
                     </td>
                     <td>@Html.ValidationMessageFor(model => model.VesselId)</td>
                 </tr>
@@ -37,7 +37,7 @@
                 <tr>
                     <td>@Html.LabelFor(model => model.BuyerId)</td>
                     <td>@Html.DropDownListFor(model => model.BuyerId, Model.Buyers, new { @class = "form-control", @style = "width:160px;" })</td>
-                    <td><button data-url='@Url.Action("AddBuyer", "DerLoadingSchedule")' class="btn btn-master-rgw btn-primary add-new-buyer"><span class="fa fa-plus-square"></span> Add</button></td>
+                    <td><button data-url='@Url.Action("AddBuyer", "DerLoadingSchedule")' class="btn btn-master-rgw btn-primary add-new-buyer"><span class="fa fa-plus-square"></span> Add New</button></td>
                     <td>@Html.ValidationMessageFor(model => model.BuyerId)</td>
                 </tr>
                 <tr>

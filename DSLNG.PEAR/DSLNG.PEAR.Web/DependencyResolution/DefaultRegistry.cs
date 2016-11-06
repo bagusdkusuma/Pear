@@ -21,10 +21,11 @@ using DSLNG.PEAR.Services.Interfaces;
 using StructureMap.Web.Pipeline;
 
 namespace DSLNG.PEAR.Web.DependencyResolution {
+    using Areas.HelpPage.Controllers;
     using DSLNG.PEAR.Web.Controllers;
     using StructureMap.Configuration.DSL;
     using StructureMap.Graph;
-	
+
     public class DefaultRegistry : Registry {
         #region Constructors and Destructors
 
@@ -99,6 +100,7 @@ namespace DSLNG.PEAR.Web.DependencyResolution {
             For<IKpiTransformationLogService>().Use<KpiTransformationLogService>();
             For<IDerLoadingScheduleService>().Use<DerLoadingScheduleService>();
             For<ICustomFormulaService>().Use<CustomFormulaService>();
+            For<HelpController>().Use(ctx => new HelpController());
         }
 
         #endregion
