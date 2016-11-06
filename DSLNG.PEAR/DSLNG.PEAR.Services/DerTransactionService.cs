@@ -121,19 +121,19 @@ namespace DSLNG.PEAR.Services
             var previousMonth = request.Date.AddMonths(-1);
             var previous2Month = request.Date.AddMonths(-2);
             var previousYear = request.Date.AddYears(-1);
-            var achievements = GetAchievements(kpiIdsForActual, request.Date);
-            //var achievements = DataContext.KpiAchievements.Include(x => x.Kpi)
-            //    .Where(x => kpiIdsForActual.Contains(x.Kpi.Id) &&
-            //    (((x.Periode == request.Date || x.Periode == previousDate) && x.PeriodeType == PeriodeType.Daily) ||
-            //    (x.PeriodeType == PeriodeType.Yearly && (x.Periode.Year == request.Date.Year || x.Periode.Year == previousYear.Year)) ||
-            //    (x.PeriodeType == PeriodeType.Monthly && (x.Periode.Month == request.Date.Month && x.Periode.Year == request.Date.Year || x.Periode.Month == previousMonth.Month && x.Periode.Year == previousMonth.Year || x.Periode.Month == previous2Month.Month && x.Periode.Year == previousMonth.Year)))).ToList();
+            //var achievements = GetAchievements(kpiIdsForActual, request.Date);
+            var achievements = DataContext.KpiAchievements.Include(x => x.Kpi)
+                .Where(x => kpiIdsForActual.Contains(x.Kpi.Id) &&
+                (((x.Periode == request.Date || x.Periode == previousDate) && x.PeriodeType == PeriodeType.Daily) ||
+                (x.PeriodeType == PeriodeType.Yearly && (x.Periode.Year == request.Date.Year || x.Periode.Year == previousYear.Year)) ||
+                (x.PeriodeType == PeriodeType.Monthly && (x.Periode.Month == request.Date.Month && x.Periode.Year == request.Date.Year || x.Periode.Month == previousMonth.Month && x.Periode.Year == previousMonth.Year || x.Periode.Month == previous2Month.Month && x.Periode.Year == previousMonth.Year)))).ToList();
             var kpiIdsForTarget = request.TargetKpiIds;
-            var targets = GetTargets(kpiIdsForTarget, request.Date);
-            //var targets = DataContext.KpiTargets.Include(x => x.Kpi)
-            //   .Where(x => kpiIdsForTarget.Contains(x.Kpi.Id) &&
-            //   (((x.Periode == request.Date || x.Periode == previousDate) && x.PeriodeType == PeriodeType.Daily) ||
-            //   (x.PeriodeType == PeriodeType.Yearly && x.Periode.Year == request.Date.Year) ||
-            //   (x.PeriodeType == PeriodeType.Monthly && x.Periode.Month == request.Date.Month && x.Periode.Year == request.Date.Year))).ToList();
+            //var targets = GetTargets(kpiIdsForTarget, request.Date);
+            var targets = DataContext.KpiTargets.Include(x => x.Kpi)
+               .Where(x => kpiIdsForTarget.Contains(x.Kpi.Id) &&
+               (((x.Periode == request.Date || x.Periode == previousDate) && x.PeriodeType == PeriodeType.Daily) ||
+               (x.PeriodeType == PeriodeType.Yearly && x.Periode.Year == request.Date.Year) ||
+               (x.PeriodeType == PeriodeType.Monthly && x.Periode.Month == request.Date.Month && x.Periode.Year == request.Date.Year))).ToList();
 
             var response = new GetKpiInformationValuesResponse();
             foreach (var kpiId in kpiIdsForActual)
@@ -179,13 +179,14 @@ namespace DSLNG.PEAR.Services
                             }
                             else
                             {
-                                var todayValue = achievements.OrderByDescending(x => x.Periode).FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode == request.Date && x.PeriodeType == PeriodeType.Daily);
+                                //var todayValue = achievements.OrderByDescending(x => x.Periode).FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode == request.Date && x.PeriodeType == PeriodeType.Daily);
+                                var todayValue = achievements.FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode == request.Date && x.PeriodeType == PeriodeType.Daily);
                                 if (todayValue != null)
                                 {
                                     kpiInformation.DailyActual = new GetKpiInformationValuesResponse.KpiValue
                                     {
                                         Date = todayValue.Periode,
-                                        Value = todayValue.Value.HasValue ? todayValue.Value : null,
+                                        Value = todayValue.Value ?? null,
                                         Remark = todayValue.Remark,
                                         Id = todayValue.Id,
                                         Type = "now"
@@ -198,7 +199,7 @@ namespace DSLNG.PEAR.Services
                                     kpiInformation.DailyActual = new GetKpiInformationValuesResponse.KpiValue
                                     {
                                         Date = actual.Periode,
-                                        Value = actual.Value.HasValue ? actual.Value : null,
+                                        Value = actual.Value ?? null,
                                         Remark = actual.Remark,
                                         Type = "prev"
                                     };
@@ -260,7 +261,7 @@ namespace DSLNG.PEAR.Services
                             }
                             else
                             {
-                                var currentMonthValue = achievements.OrderByDescending(x => x.Periode).FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode.Month == request.Date.Month && x.Periode.Year == request.Date.Year && x.PeriodeType == PeriodeType.Monthly);
+                                var currentMonthValue = achievements.FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode.Month == request.Date.Month && x.Periode.Year == request.Date.Year && x.PeriodeType == PeriodeType.Monthly);
                                 if (currentMonthValue != null)
                                 {
                                     kpiInformation.MonthlyActual = new GetKpiInformationValuesResponse.KpiValue

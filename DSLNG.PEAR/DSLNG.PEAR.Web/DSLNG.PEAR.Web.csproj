@@ -256,6 +256,10 @@
       <HintPath>..\packages\WebActivatorEx.2.0.5\lib\net40\WebActivatorEx.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="WebApiTestClient, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\matthewcv.WebApiTestClient.1.2.0\lib\net45\WebApiTestClient.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
       <Private>True</Private>
@@ -448,10 +452,12 @@
     <Content Include="Content\style-der.css" />
     <Content Include="Content\style-regawa.css" />
     <Content Include="Content\style.css" />
+    <Content Include="Content\WebApiTestClient.styles.css" />
+    <Content Include="Content\WebApiTestClient.views.html" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Scripts\AjaxLogin.js" />    
+    <Content Include="Scripts\AjaxLogin.js" />
     <Content Include="Scripts\bignumber.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
@@ -818,6 +824,7 @@
     <Content Include="Scripts\tinymce\tinymce.js" />
     <Content Include="Scripts\tinymce\tinymce.min.js" />
     <Content Include="Scripts\trafficlight.js" />
+    <Content Include="Scripts\WebApiTestClient.js" />
     <Content Include="Third Party\Svg.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

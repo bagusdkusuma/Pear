@@ -2,6 +2,35 @@
 @{
     ViewBag.Title = "Create Privilege";
 }
+<style>
+    #role-privilege {
+        border-collapse: collapse;
+        word-break: break-all;
+    }
+
+    #role-privilege thead, #role-privilege tbody {
+        display: block;
+    }
+
+    #role-privilege thead tr {
+        text-align: center;
+        display: block;
+    }
+
+    #role-privilege table, td, th {
+        border: 1px solid white;
+    }
+
+    #role-privilege td, th {
+        padding: 5px;
+    }
+
+    #role-privilege tbody {
+        height: 400px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+</style>
 
 <section>
     <div class="row">
@@ -40,22 +69,78 @@
                         @Html.TextAreaFor(model => model.Descriptions, new { @class = "form-control allow-html" })
                         @Html.ValidationMessageFor(model => model.Descriptions)
                     </div>
-
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-inline whitebox">
+                    <table style="margin-left:auto; margin-right:auto; border-color:white;" border="1" cellpadding="1" cellspacing="1" id="role-privilege">
+                        <thead>
+                            <tr>
+                                <th style="width: 240px;">Menu</th>
+                                <th style="width:99px; text-align: center; vertical-align: middle;">View</th>
+                                <th style="width:98px; text-align: center; vertical-align: middle;">Create</th>
+                                <th style="width:98px; text-align: center; vertical-align: middle;">Update</th>
+                                <th style="width:99px; text-align: center; vertical-align: middle;">Delete</th>
+                                <th style="width:98px; text-align: center; vertical-align: middle;">Download</th>
+                                <th style="width:99px; text-align: center; vertical-align: middle;">Upload</th>
+                                <th style="width:98px; text-align: center; vertical-align: middle;">Publish</th>
+                                <th style="width:99px; text-align: center; vertical-align: middle;">Approve</th>
+                            </tr>
+                        </thead>
+                        <tbody style="border-color:white;">
+                            @{
+                                for (int menuroleId = 0; menuroleId < Model.MenuRolePrivileges.Count; menuroleId++)
+                                {
+                                    <tr>
+                                        @Html.HiddenFor(m => m.MenuRolePrivileges[menuroleId].Menu_Id)
+                                        @Html.HiddenFor(m => m.MenuRolePrivileges[menuroleId].Menu.Id)
+                                        @Html.HiddenFor(m => m.MenuRolePrivileges[menuroleId].Menu.Name)
+                                        @Html.HiddenFor(m => m.MenuRolePrivileges[menuroleId].RolePrivilege_Id)
+                                        <td style="width: 245px;">@Html.Label(Model.MenuRolePrivileges[menuroleId].Menu.Name)</td>
+                                        <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowView)</td>
+                                        <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowCreate)</td>
+                                        <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowUpdate)</td>
+                                        <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowDelete)</td>
+                                        <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowDownload)</td>
+                                        <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowUpload)</td>
+                                        <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowPublish)</td>
+                                        <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowApprove)</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <div class="col-md-12 artifact-designer-btns">
                 <button type="submit" class="btn btn-primary btn-lg btn-submit"><span class="fa fa-floppy-o"></span>Save</button>
                 <a href="/Privilege" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
             </div>
-        }
+                                }
     </div>
 </section>
 @section Scripts {
     <script type="text/javascript">
+        function updateQueryStringParameter(uri, key, value) {
+            var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+            var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+            if (uri.match(re)) {
+                return uri.replace(re, '$1' + key + "=" + value + '$2');
+            }
+            else {
+                return uri + separator + key + "=" + value;
+            }
+        }
+
+        var reloadView = function (e) {
+            window.document.location = updateQueryStringParameter(window.location.href, "RoleId", e);
+        };
+
         $(document).ready(function () {
 
-
-
+            $('#RoleGroup_Id').on('change', function () {
+                reloadView($('#RoleGroup_Id').val());
+            });
             tinyMCE.init({
                 selector: ".allow-html",
                 menubar: false,

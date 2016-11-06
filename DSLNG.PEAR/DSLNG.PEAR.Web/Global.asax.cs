@@ -27,6 +27,7 @@ namespace DSLNG.PEAR.Web
     {
         protected void Application_Start()
         {
+            WebApiTestClient.WebApiTestClientHttpMessageHandler.RegisterRouteForTestClient(GlobalConfiguration.Configuration);
             AutoMapperConfiguration.Configure();
             //Database.SetInitializer<DataContext>(new DataInitializer());
             Database.SetInitializer<DataContext>(null);

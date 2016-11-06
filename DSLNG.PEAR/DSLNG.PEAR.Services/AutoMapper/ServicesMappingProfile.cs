@@ -191,7 +191,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
              * Privilege
              */
             Mapper.CreateMap<Data.Entities.RolePrivilege, GetPrivilegeResponse>();
+            Mapper.CreateMap<Data.Entities.RoleGroup, GetPrivilegeResponse.RoleGroup>();
             Mapper.CreateMap<SaveRolePrivilegeRequest, Data.Entities.RolePrivilege>();
+            Mapper.CreateMap<SaveRolePrivilegeRequest.MenuRolePrivilege, Data.Entities.MenuRolePrivilege>();
             /*Level*/
 
             Mapper.CreateMap<Data.Entities.Level, GetLevelsResponse.Level>();

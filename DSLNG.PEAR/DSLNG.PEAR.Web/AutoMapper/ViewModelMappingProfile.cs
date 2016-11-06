@@ -262,13 +262,19 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<ChangePasswordViewModel, ChangePasswordRequest>();
 
             Mapper.CreateMap<RolePrivilegeViewModel, SaveRolePrivilegeRequest>();
+            Mapper.CreateMap<RolePrivilegeViewModel.MenuRolePrivilege, SaveRolePrivilegeRequest.MenuRolePrivilege>();
             Mapper.CreateMap<GetPrivilegeResponse, RolePrivilegeViewModel>();
+            Mapper.CreateMap<GetPrivilegeResponse.RoleGroup, RolePrivilegeViewModel.RoleGroup>();
             Mapper.CreateMap<GetPrivilegesResponse.RolePrivilege, RolePrivilegeViewModel>();
             Mapper.CreateMap<GetMenuRolePrivilegeResponse.MenuRolePrivilege, MenuRolePrivilegeViewModel>();
             Mapper.CreateMap<GetMenuRolePrivilegeResponse.MenuRolePrivilege.MenuPrivilege, MenuRolePrivilegeViewModel.MenuPrivilege>();
             Mapper.CreateMap<GetMenuRolePrivilegeResponse.MenuRolePrivilege.Privilege, RolePrivilegeViewModel>();
             Mapper.CreateMap<GetMenuRolePrivilegeResponse.MenuRolePrivilege.Privilege.RoleGroup, RolePrivilegeViewModel.RoleGroup>();
+            Mapper.CreateMap<GetMenuRolePrivilegeResponse.MenuRolePrivilege, RolePrivilegeViewModel.MenuRolePrivilege>();
+            Mapper.CreateMap<GetMenuRolePrivilegeResponse.MenuRolePrivilege.MenuPrivilege, RolePrivilegeViewModel.MenuRolePrivilege.MenuPrivilege>();
             Mapper.CreateMap<Data.Entities.Menu, MenuRolePrivilegeViewModel.MenuPrivilege>();
+            Mapper.CreateMap<RolePrivilegeViewModel.MenuRolePrivilege, BatchUpdateMenuRolePrivilegeRequest>();
+            Mapper.CreateMap<RolePrivilegeViewModel.MenuRolePrivilege, UpdateMenuRolePrivilegeRequest>();
 
             Mapper.CreateMap<ResetPasswordResponseViewModel, ResetPasswordResponse>();
             Mapper.CreateMap<ResetPasswordViewModel, ResetPasswordRequest>();

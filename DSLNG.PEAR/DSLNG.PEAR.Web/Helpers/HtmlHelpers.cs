@@ -85,9 +85,9 @@ namespace DSLNG.PEAR.Web.Helpers
             bool isRounded = true)
         {
             if (
-                (!string.IsNullOrEmpty(measurement) && measurement.ToLowerInvariant() == "mmbtu") ||
+                (!string.IsNullOrEmpty(measurement) && measurement.ToLowerInvariant() == "MMbtu") ||
                 (!string.IsNullOrEmpty(measurement) && measurement.ToLowerInvariant() == "bbtu") ||
-                (!string.IsNullOrEmpty(defaultMeasurement) && defaultMeasurement.ToLowerInvariant() == "mmbtu") ||
+                (!string.IsNullOrEmpty(defaultMeasurement) && defaultMeasurement.ToLowerInvariant() == "MMbtu") ||
                 (!string.IsNullOrEmpty(defaultMeasurement) && defaultMeasurement.ToLowerInvariant() == "bbtu")
                 )
             {
@@ -114,7 +114,7 @@ namespace DSLNG.PEAR.Web.Helpers
             }
             else
             {
-                return string.Format("{0} {1}", RoundIt(true, val, 0), "mmbtu");
+                return string.Format("{0} {1}", RoundIt(true, val, 0), "MMbtu");
             }
         }
 
@@ -841,7 +841,7 @@ namespace DSLNG.PEAR.Web.Helpers
 
 
         }
-        public static MvcHtmlString DisplayHighlightDropdownList(this HtmlHelper htmlHelper, IList<DerValuesViewModel.DerHighlightValuesViewModel> highlights, int highlightTypeId, IList<SelectListItem> options, int tabIndex, string defaultValueDefined = "empty")
+        public static MvcHtmlString DisplayHighlightDropdownList(this HtmlHelper htmlHelper, IList<DerValuesViewModel.DerHighlightValuesViewModel> highlights, int highlightTypeId, IList<SelectListItem> options, int tabIndex, string defaultValueDefined = "empty", int length=100)
         {
             string value;
             switch (defaultValueDefined)
@@ -854,13 +854,18 @@ namespace DSLNG.PEAR.Web.Helpers
                     value = defaultValueDefined;
                     break;
             }
+            var len = string.Empty;
+            if (length != 100)
+            {
+                len = string.Format("style=\"width: {0}px;\"",length.ToString());
+            }
             var existValue = "empty";
             var highlight = highlights.FirstOrDefault(x => x.HighlightTypeId == highlightTypeId);
             value = highlight == null ? value : (defaultValueDefined == "prev" ? highlight.HighlightMessage : (highlight.Type == "now" ? highlight.HighlightMessage : value));
             existValue = highlight == null ? existValue : highlight.Type;
             var highlightId = highlight == null ? 0 : highlight.Id;
             var title = highlight == null ? null : (string.IsNullOrEmpty(highlight.HighlightTitle) ? highlight.HighlightTypeValue : highlight.HighlightTitle);
-            var selectInput = string.Format("<select class=\"der-value-{0} form-control der-highlight\" tabindex=\"{1}\"  data-highlight-type-id=\"{2}\" data-id=\"{3}\" id=\"highlight_{4}\" data-title=\"{5}\" >", existValue, tabIndex,highlightTypeId,highlightId,tabIndex,title);
+            var selectInput = string.Format("<select class=\"der-value-{0} form-control dropdown der-highlight\" tabindex=\"{1}\"  data-highlight-type-id=\"{2}\" data-id=\"{3}\" id=\"highlight_{4}\" data-title=\"{5}\" {6}>", existValue, tabIndex,highlightTypeId,highlightId,tabIndex,title,len);
             foreach (var option in options)
             {
                 var selected = string.Equals(option.Value, value, StringComparison.InvariantCultureIgnoreCase) ? "selected=\"selected\"" : "";
@@ -908,7 +913,7 @@ namespace DSLNG.PEAR.Web.Helpers
                 return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control der-highlight-brenfut\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" data-property=\"{5}\" data-highlight-type-id=\"{6}\" data-id=\"{7}\" data-title=\"{8}\" />", value, existValue, "text period", tabIndex, type, properties[position],highlightTypeId,highlightId,title));
             }
             else {
-                return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control der-highlight-brenfut\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" data-property=\"{5}\" data-highlight-type-id=\"{6}\" data-id=\"{7}\" data-title=\"{8}\" />", value, existValue, "usd/bbl", tabIndex, type, properties[position], highlightTypeId, highlightId, title));
+                return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control der-highlight-brenfut\"   placeholder=\"{2}\" tabindex=\"{3}\" data-type=\"{4}\" data-property=\"{5}\" data-highlight-type-id=\"{6}\" data-id=\"{7}\" data-title=\"{8}\" />", value, existValue, "USD/bbl", tabIndex, type, properties[position], highlightTypeId, highlightId, title));
             }
 
         }
@@ -985,6 +990,9 @@ namespace DSLNG.PEAR.Web.Helpers
             //    }
 
             //}
+            if (property == "remark") {
+                return new MvcHtmlString(string.Format("<textarea type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control der-highlight-weekly-alarm\"   placeholder=\"{2}\" tabindex=\"{3}\" data-property=\"{4}\" data-highlight-type-id=\"{5}\" data-id=\"{6}\" data-title=\"{7}\"></textarea>", value, existValue, label, tabIndex, property, highlightTypeId, highlightId, title));
+            }
             return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control der-highlight-weekly-alarm\"   placeholder=\"{2}\" tabindex=\"{3}\" data-property=\"{4}\" data-highlight-type-id=\"{5}\" data-id=\"{6}\" data-title=\"{7}\" />", value, existValue, label, tabIndex, property, highlightTypeId, highlightId, title));
         }
         public static MvcHtmlString DisplayHighlightInput(this HtmlHelper helper, IList<DerValuesViewModel.DerHighlightValuesViewModel> highlights, int highlightTypeId, int tabIndex, string placeHolder, string defaultValueDefined="empty") {
@@ -1028,7 +1036,7 @@ namespace DSLNG.PEAR.Web.Helpers
                 derValueType = viewModel.DerValueType;
             }
             if (property == "speed") {
-                return new MvcHtmlString(string.Format("<input value=\"{4}\" class=\"der-value-{0} form-control der-highlight-wave\" tabindex=\"{1}\" data-property=\"{2}\" data-id=\"{3}\" placeholder=\"km/h\"  />", derValueType, tabIndex, property, id,value));
+                return new MvcHtmlString(string.Format("<input value=\"{4}\" class=\"der-value-{0} form-control der-highlight-wave\" tabindex=\"{1}\" data-property=\"{2}\" data-id=\"{3}\" placeholder=\"Km/h\"  />", derValueType, tabIndex, property, id,value));
             }
             var selectInput = string.Format("<select class=\"der-value-{0} form-control der-highlight-wave\" tabindex=\"{1}\" data-property=\"{2}\" data-id=\"{3}\" >", derValueType, tabIndex, property, id);
             foreach (var option in options)
