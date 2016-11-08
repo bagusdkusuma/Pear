@@ -1,32 +1,248 @@
-﻿@model DSLNG.PEAR.Web.ViewModels.RolePrivilege.AddRolePrivilegeViewModel
+﻿@*@model DSLNG.PEAR.Web.ViewModels.RolePrivilege.AddRolePrivilegeViewModel
+    @{
+        ViewBag.Title = "Add Role Privilege";
+    }
+
+    <h2>Add Privilege</h2>
+    @Html.Partial("_MessageResponse")
+    <div class="row">
+        <div class="col-md-4">
+            <form action="@Url.Action("Create")" method="POST">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.RoleGroup_Id, new { @class = "control-label" })
+                    @Html.DropDownListFor(model => model.RoleGroup_Id, Model.RoleGroupList,  new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RoleGroup_Id)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Name, new { @class = "control-label" })
+                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Descriptions, new { @class = "control-label" })
+                    @Html.TextAreaFor(model => model.Descriptions, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Descriptions)
+                </div>
+
+                <button type="submit" class="btn btn-default">Submit</button>
+                <a href="@Url.Action("Index")" class="btn btn-default">Cancel</a>
+
+            </form>
+        </div>
+    </div>*@
+
+
+@model DSLNG.PEAR.Web.ViewModels.RolePrivilege.RolePrivilegeViewModel
 @{
-    ViewBag.Title = "Add Role Privilege";
+    ViewBag.Title = "Create Privilege";
+    Layout = null;
 }
+<style>
+    #role-privilege {
+        border-collapse: collapse;
+        word-break: break-all;
+    }
 
-<h2>Add Privilege</h2>
-@Html.Partial("_MessageResponse")
-<div class="row">
-    <div class="col-md-4">
-        <form action="@Url.Action("Create")" method="POST">
-            <div class="form-group">
-                @Html.LabelFor(model => model.RoleGroup_Id, new { @class = "control-label" })
-                @Html.DropDownListFor(model => model.RoleGroup_Id, Model.RoleGroupList,  new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.RoleGroup_Id)
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Name, new { @class = "control-label" })
-                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Name)
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Descriptions, new { @class = "control-label" })
-                @Html.TextAreaFor(model => model.Descriptions, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Descriptions)
-            </div>
-            
-            <button type="submit" class="btn btn-default">Submit</button>
-            <a href="@Url.Action("Index")" class="btn btn-default">Cancel</a>
+        #role-privilege thead, #role-privilege tbody {
+            display: block;
+        }
 
-        </form>
+            #role-privilege thead tr {
+                text-align: center;
+                display: block;
+            }
+
+        #role-privilege table, td, th {
+            border: 1px solid white;
+        }
+
+        #role-privilege td, th {
+            padding: 5px;
+        }
+
+        #role-privilege tbody {
+            height: 300px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+</style>
+
+<section>
+    <div class="row">
+        <div class="title_page" style="border: none!important;">
+            <div class="row">
+                @*<div class="title">Privilege Management Create</div>*@
+            </div>
+        </div>
+        <div class="notification"></div>
     </div>
-</div>
+    <div>
+        @using (Html.BeginForm("AddPrivilege", "User", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="col-md-12">
+                @*<div class="title">Management Information Report Entry</div>*@
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div><ul class="validation-summary" style="color:red"></ul></div>
+                <div><ul class="success-message" style="color:green"></ul></div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-inline whitebox">
+                    @Html.HiddenFor(model => model.Id)
+                    <div class="form-group form-list">
+                        @Html.Label("Department")
+                        @Html.DropDownListFor(model => model.RoleGroup_Id, (IEnumerable<SelectListItem>)ViewBag.RoleGroups, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.RoleGroup_Id)
+                    </div>
+
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.Name)
+                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control", id = "PrivilegeName" })
+                        @Html.ValidationMessageFor(model => model.Name)
+                    </div>
+
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.Descriptions)
+                        @Html.TextAreaFor(model => model.Descriptions, new { @class = "form-control allow-html" })
+                        @Html.ValidationMessageFor(model => model.Descriptions)
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-inline whitebox">
+                    <table style="margin-left:auto; margin-right:auto; border-color:white;" border="1" cellpadding="1" cellspacing="1" id="role-privilege">
+                        <thead>
+                            <tr>
+                                <th style="width: 240px;">Menu</th>
+                                <th style="width:99px; text-align: center; vertical-align: middle;">View</th>
+                                <th style="width:100px; text-align: center; vertical-align: middle;">Create</th>
+                                <th style="width:100px; text-align: center; vertical-align: middle;">Update</th>
+                                <th style="width:100px; text-align: center; vertical-align: middle;">Delete</th>
+                                <th style="width:100px; text-align: center; vertical-align: middle;">Download</th>
+                                <th style="width:100px; text-align: center; vertical-align: middle;">Upload</th>
+                                <th style="width:100px; text-align: center; vertical-align: middle;">Publish</th>
+                                <th style="width:100px; text-align: center; vertical-align: middle;">Approve</th>
+                            </tr>
+                        </thead>
+                        <tbody style="border-color:white;">
+                            @{
+                                if (Model.MenuRolePrivileges.Count > 0)
+                                {
+                                    for (int menuroleId = 0; menuroleId < Model.MenuRolePrivileges.Count; menuroleId++)
+                                    {
+                                        <tr>
+                                            @Html.HiddenFor(m => m.MenuRolePrivileges[menuroleId].Menu_Id)
+                                            @Html.HiddenFor(m => m.MenuRolePrivileges[menuroleId].Menu.Id)
+                                            @Html.HiddenFor(m => m.MenuRolePrivileges[menuroleId].Menu.Name)
+                                            @Html.HiddenFor(m => m.MenuRolePrivileges[menuroleId].RolePrivilege_Id)
+                                            <td style="width: 245px;">@Html.Label(Model.MenuRolePrivileges[menuroleId].Menu.Name)</td>
+                                            <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowView)</td>
+                                            <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowCreate)</td>
+                                            <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowUpdate)</td>
+                                            <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowDelete)</td>
+                                            <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowDownload)</td>
+                                            <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowUpload)</td>
+                                            <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowPublish)</td>
+                                            <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowApprove)</td>
+                                        </tr>
+                                    }
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-12 artifact-designer-btns">
+                <button type="submit" class="btn btn-primary btn-lg save-privilege"><span class="fa fa-floppy-o"></span>Save</button>
+                <a href="javascript:;" class="btn btn-primary btn-lg close-privilege"><span class="fa fa-times"></span>Cancel</a>
+            </div>
+                                }
+    </div>
+</section>
+<script type="text/javascript">
+
+
+
+
+    $(document).ready(function () {
+
+        $('#RoleGroup_Id').on('change', function () {
+            reloadView($('#RoleGroup_Id').val());
+        });
+        tinyMCE.init({
+            selector: ".allow-html",
+            menubar: false,
+            plugins: [
+                "advlist autolink lists link image charmap print preview anchor",
+                "searchreplace visualblocks code fullscreen",
+                "insertdatetime media table contextmenu paste"
+            ],
+            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+        });
+    });
+
+    var reloadView = function (e) {
+        var $this = $(this);
+        var $modal = $('#modalPrivilege');
+        var roleId = $('Select#RoleGroup_Id').val();
+        $modal.find('.modal-dialog').width(1024);
+        //$modal.find('.modal-dialog').height(600);
+        $modal.find('.modal-title').html('Add New Privilege');
+        $('#modalPrivilege').modal('show');
+        $.get('@Url.Action("AddPrivilege")', { RoleId: roleId }, function (data) {
+            $modal.find('.modal-body').html(data);
+        });
+        //window.document.location = updateQueryStringParameter(window.location.href, "RoleId", e);
+        rescale();
+    };
+    function rescale() {
+        var size = { width: $(window).width(), height: $(window).height() }
+        /*CALCULATE SIZE*/
+        var offset = 10;
+        var offsetBody = 20;
+        $('#modalPrivilege').css('height', size.height - offset);
+        $('.modal-body').css('height', size.height - (offset + offsetBody));
+        $('#modalPrivilege').css('top', 0);
+    }
+    $(window).bind("resize", rescale);
+
+    var userReload = function (e) {
+        window.document.location = '/User/Update/' + e;
+    };
+
+    $('.save-privilege').click(function (e) {
+        e.preventDefault();
+        $form = $(this).closest('form');
+        $.post($form.attr('action'), $form.serialize(), function (data) {
+            console.log('test insert');
+            console.log(data);
+            //userReload($('Select#RoleGroup_Id').val())
+            if (data.IsSuccess) {
+                $('.success-message').html('<p>You haven been successfully saved new privilege</p>');
+                setTimeout(function () {
+                    //userReload($('Select#RoleGroup_Id').val());
+                    var selection = $(document).find('#RolePrivilegeIds');
+                    selection.append("<option value=\'" + data.Id + "\' selected=\'selected\'>" + $('#PrivilegeName').val() + "</option>")
+                    $('#RoleId').trigger("change");
+                    $('#modalPrivilege').modal('hide');
+                }, 1000);
+
+            } else {
+                if (data.Message.length) {
+                    $valSummary = $('.validation-summary');
+                    $valSummary.html('');
+                    for (var i in data.message) {
+                        $valSummary.append('<li>' + data.message[i] + '</li>');
+                    }
+                }
+            }
+            //setTimeout(function () {
+            //    $('.add-new-schedule').trigger("click");
+            //}, 10);
+        })
+    });
+    $('.close-privilege').click(function (e) {
+        $('#modalPrivilege').modal('hide');
+    });
+
+</script>

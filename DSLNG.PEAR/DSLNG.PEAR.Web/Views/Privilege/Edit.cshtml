@@ -91,15 +91,17 @@
                         </thead>
                         <tbody style="border-color:white;">
                             @{
-                                for (int menuroleId = 0; menuroleId < Model.MenuRolePrivileges.Count; menuroleId++)
+                                if (Model.MenuRolePrivileges.Count > 0)
                                 {
+                                    for (int menuroleId = 0; menuroleId < Model.MenuRolePrivileges.Count; menuroleId++)
+                                    {
                                     <tr>
-                                        @Html.HiddenFor(m=>m.MenuRolePrivileges[menuroleId].Menu_Id)
+                                        @Html.HiddenFor(m => m.MenuRolePrivileges[menuroleId].Menu_Id)
                                         @Html.HiddenFor(m => m.MenuRolePrivileges[menuroleId].Menu.Id)
                                         @Html.HiddenFor(m => m.MenuRolePrivileges[menuroleId].Menu.Name)
-                                        @Html.HiddenFor(m=>m.MenuRolePrivileges[menuroleId].RolePrivilege_Id)
+                                        @Html.HiddenFor(m => m.MenuRolePrivileges[menuroleId].RolePrivilege_Id)
                                         <td style="width: 245px;">@Html.Label(Model.MenuRolePrivileges[menuroleId].Menu.Name)</td>
-                                        <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m=>m.MenuRolePrivileges[menuroleId].AllowView)</td>
+                                        <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowView)</td>
                                         <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowCreate)</td>
                                         <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowUpdate)</td>
                                         <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowDelete)</td>
@@ -108,6 +110,7 @@
                                         <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowPublish)</td>
                                         <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowApprove)</td>
                                     </tr>
+                                    }
                                 }
                                 @*foreach (var item in Model.MenuRolePrivileges)
                                 {
