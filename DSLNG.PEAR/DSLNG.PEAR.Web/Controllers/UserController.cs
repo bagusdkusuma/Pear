@@ -12,6 +12,7 @@ using System.Data.SqlClient;
 using System.IO;
 using DSLNG.PEAR.Web.ViewModels.RolePrivilege;
 using System;
+using DSLNG.PEAR.Services.Requests.Privilege;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -122,7 +123,11 @@ namespace DSLNG.PEAR.Web.Controllers
                     Selected = viewModel.RoleId == x.Id ? true : false
                 }).ToList();
             viewModel.IsActive = true;
-
+            viewModel.RolePrivilegeOption = _rolePrivilegeService.GetRolePrivileges(new Services.Requests.Privilege.GetPrivilegeByRoleRequest { RoleId = viewModel.RoleId }).Privileges.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }).ToList();
             return viewModel;
         }
 
@@ -283,17 +288,60 @@ namespace DSLNG.PEAR.Web.Controllers
 
         }
 
-        public ActionResult AddPrivilege(int? RoleId)
+        public ActionResult AddPrivilege(int RoleId)
         {
-            var model = new AddRolePrivilegeViewModel();
-            if (RoleId.HasValue)
+            var model = new RolePrivilegeViewModel();
+            ViewBag.RoleGroups = _roleGroupService.GetRoleGroups(new Services.Requests.RoleGroup.GetRoleGroupsRequest
             {
-                model.RoleGroup_Id = RoleId.Value;
+                Take = -1,
+                SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+            })
+                            .RoleGroups.Select(x => new SelectListItem
+                            {
+                                Text = x.Name,
+                                Value = x.Id.ToString(),
+                                Selected = RoleId == x.Id
+                            }).ToList();
+            model.RoleGroup_Id = RoleId;
+            var roles = _rolePrivilegeService.GetMenuRolePrivileges(new GetPrivilegeByRolePrivilegeRequest { RoleId = RoleId });
+            if (roles.IsSuccess)
+            {
+                model.MenuRolePrivileges = roles.MenuRolePrivileges.ToList().MapTo<RolePrivilegeViewModel.MenuRolePrivilege>();
             }
-            model.RoleGroupList = GetRoleGroupOptionList(RoleId);
+
             return View(model);
         }
 
+        [HttpPost]
+        public ActionResult AddPrivilege(RolePrivilegeViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var request = model.MapTo<SaveRolePrivilegeRequest>();
+                request.UserId = this.UserProfile().UserId;
+                var result = _rolePrivilegeService.SaveRolePrivilege(request);
+                return Json(result);
+            }
+            else
+            {
+                var errorList = (from item in ModelState
+                                 where item.Value.Errors.Any()
+                                 select item.Value.Errors[0].ErrorMessage).ToList();
+                return Json(new { IsSuccess = false, Message = errorList });
+            }
+            //ViewBag.RoleGroups = _roleGroupService.GetRoleGroups(new Services.Requests.RoleGroup.GetRoleGroupsRequest
+            //{
+            //    Take = -1,
+            //    SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+            //})
+            //                .RoleGroups.Select(x => new SelectListItem
+            //                {
+            //                    Text = x.Name,
+            //                    Value = x.Id.ToString(),
+            //                    Selected = model.RoleGroup_Id == x.Id
+            //                }).ToList();
+            //return View(model);
+        }
         private List<SelectListItem> GetRoleGroupOptionList(int? roleId)
         {
             List<SelectListItem> roles = _roleGroupService.GetRoleGroups(new Services.Requests.RoleGroup.GetRoleGroupsRequest
