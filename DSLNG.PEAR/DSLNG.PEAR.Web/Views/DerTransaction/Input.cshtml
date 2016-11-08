@@ -349,7 +349,7 @@
                     window.theInterval = setInterval(function () {
                         if ($nextRow.find('.collapse').children().length > 0) {
                             var $next = $('[tabindex=' + nextIndex + ']');
-                            if ($next.is("textarea")) {
+                            if ($next.is("textarea") && $next.css('display') == 'none') {
                                 tinyMCE.get($next.attr('id')).focus()
                             } else {
                                 $next.focus();
@@ -425,7 +425,7 @@
                             $.post("/dertransaction/updatekpi", { kpiId: kpiId, type: type, date: currentDate, id: id, value: value, valueType: valueType }, function (resp) {
                                 openNextTab($this, nextTabindex);
                                 var $next = $('[tabindex=' + nextTabindex + ']');
-                                if ($next.is("textarea")) {
+                                if ($next.is("textarea") && $next.css('display') == 'none') {
                                     tinyMCE.get($next.attr('id')).focus()
                                 } else {
                                     $next.focus();
@@ -477,7 +477,7 @@
                                             $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function (resp) {
                                                 openNextTab($textarea, nextTab);
                                                 var $next = $('[tabindex=' + nextTab + ']');
-                                                if ($next.is("textarea")) {
+                                                if ($next.is("textarea") && $next.css('display') == 'none') {
                                                     tinyMCE.get($next.attr('id')).focus()
                                                 } else {
                                                     $next.focus();
@@ -501,7 +501,7 @@
                             $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function (resp) {
                                 openNextTab($this, nextTab);
                                 var $next = $('[tabindex=' + nextTab + ']');
-                                if ($next.is("textarea")) {
+                                if ($next.is("textarea") && $next.css('display') == 'none') {
                                     tinyMCE.get($next.attr('id')).focus()
                                 } else {
                                     $next.focus();
@@ -534,7 +534,7 @@
                                 $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function (resp) {
                                     openNextTab($this, nextTab);
                                     var $next = $('[tabindex=' + nextTab + ']');
-                                    if ($next.is("textarea")) {
+                                    if ($next.is("textarea") && $next.css('display') == 'none') {
                                         tinyMCE.get($next.attr('id')).focus()
                                     } else {
                                         $next.focus();
@@ -564,7 +564,7 @@
                             $.post("/dertransaction/updateinfragsm", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property: property }, function (resp) {
                                 openNextTab($this, nextTab);
                                 var $next = $('[tabindex=' + nextTab + ']');
-                                if ($next.is("textarea")) {
+                                if ($next.is("textarea") && $next.css('display') == 'none') {
                                     tinyMCE.get($next.attr('id')).focus()
                                 } else {
                                     $next.focus();
@@ -598,7 +598,7 @@
                             $.post("/dertransaction/updatewave", data, function (resp) {
                                 openNextTab($this, nextTab);
                                 var $next = $('[tabindex=' + nextTab + ']');
-                                if ($next.is("textarea")) {
+                                if ($next.is("textarea") && $next.css('display') == 'none') {
                                     tinyMCE.get($next.attr('id')).focus()
                                 } else {
                                     $next.focus();
@@ -626,7 +626,7 @@
                             $.post("/dertransaction/updateweather", data, function (resp) {
                                 openNextTab($this, nextTab);
                                 var $next = $('[tabindex=' + nextTab + ']');
-                                if ($next.is("textarea")) {
+                                if ($next.is("textarea") && $next.css('display') == 'none') {
                                     tinyMCE.get($next.attr('id')).focus()
                                 } else {
                                     $next.focus();
@@ -661,7 +661,7 @@
                                 $.post("/dertransaction/updatewave", data, function (resp) {
                                     openNextTab($this, nextTab);
                                     var $next = $('[tabindex=' + nextTab + ']');
-                                    if ($next.is("textarea")) {
+                                    if ($next.is("textarea") && $next.css('display') == 'none') {
                                         tinyMCE.get($next.attr('id')).focus()
                                     } else {
                                         $next.focus();
@@ -693,7 +693,7 @@
                                 $.post("/dertransaction/updatebrenfut", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property: property, valueType: valueType }, function (resp) {
                                     openNextTab($this, nextTab);
                                     var $next = $('[tabindex=' + nextTab + ']');
-                                    if ($next.is("textarea")) {
+                                    if ($next.is("textarea") && $next.css('display') == 'none') {
                                         tinyMCE.get($next.attr('id')).focus()
                                     } else {
                                         $next.focus();
@@ -725,7 +725,7 @@
                             $.post("/dertransaction/updatekpi", { kpiId: kpiId, type: type, date: currentDate, id: id, value: value, valueType: valueType }, function (resp) {
                                 openNextTab($this, nextTabindex);
                                 var $next = $('[tabindex=' + nextTabindex + ']');
-                                if ($next.is("textarea")) {
+                                if ($next.is("textarea") && $next.css('display') == 'none') {
                                     tinyMCE.get($next.attr('id')).focus()
                                 } else {
                                     $next.focus();
@@ -756,7 +756,7 @@
                                 $.post("/dertransaction/updateweeklyalarm", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property: property }, function (resp) {
                                     openNextTab($this, nextTab);
                                     var $next = $('[tabindex=' + nextTab + ']');
-                                    if ($next.is("textarea")) {
+                                    if ($next.is("textarea") && $next.css('display') == 'none') {
                                         tinyMCE.get($next.attr('id')).focus()
                                     } else {
                                         $next.focus();
