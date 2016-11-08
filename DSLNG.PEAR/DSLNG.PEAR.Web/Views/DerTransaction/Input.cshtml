@@ -746,10 +746,7 @@
                         });
                         $(target).on('keydown', 'input.der-highlight-weekly-alarm, textarea.der-highlight-weekly-alarm', function (e) {
                             var $this = $(this);
-                            console.log($this.is('textarea'));
-                            console.log(e.keyCode);
                             if (($this.is('input') && e.keyCode == 13) || ($this.is('textarea') && e.keyCode == 9)) {
-                                console.log('masuk sini');
                                 var nextTab = parseInt($this.attr('tabindex')) + 1;
                                 var highlightTypeId = $this.data('highlight-type-id');
                                 var id = $this.attr('data-id');
