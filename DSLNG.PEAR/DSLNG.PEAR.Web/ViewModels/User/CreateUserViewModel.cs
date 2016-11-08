@@ -13,6 +13,7 @@ namespace DSLNG.PEAR.Web.ViewModels.User
         public CreateUserViewModel()
         {
             RoleGroupList = new List<SelectListItem>();
+            RolePrivilegeOption = new List<SelectListItem>();
         }
 
         [MaxLength(100)]
@@ -23,6 +24,7 @@ namespace DSLNG.PEAR.Web.ViewModels.User
         [MaxLength(100)]
         [Index(IsUnique = true)]
         public string Email { get; set; }
+        [Display(Name = "Default Landing Page")]
         public string ChangeModel { get; set; }
         public bool IsActive { get; set; }
         [Display(Name="Role")]
@@ -36,5 +38,8 @@ namespace DSLNG.PEAR.Web.ViewModels.User
         [MaxLength(150)]
         public string Position { get; set; }
         public List<SelectListItem> RoleGroupList { get; set; }
+        [Display(Name ="Privileges")]
+        public List<int> RolePrivilegeIds { get; set; }
+        public List<SelectListItem> RolePrivilegeOption { get; set; }
     }
 }

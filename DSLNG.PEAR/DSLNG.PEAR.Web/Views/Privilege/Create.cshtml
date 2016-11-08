@@ -8,28 +8,28 @@
         word-break: break-all;
     }
 
-    #role-privilege thead, #role-privilege tbody {
-        display: block;
-    }
+        #role-privilege thead, #role-privilege tbody {
+            display: block;
+        }
 
-    #role-privilege thead tr {
-        text-align: center;
-        display: block;
-    }
+            #role-privilege thead tr {
+                text-align: center;
+                display: block;
+            }
 
-    #role-privilege table, td, th {
-        border: 1px solid white;
-    }
+        #role-privilege table, td, th {
+            border: 1px solid white;
+        }
 
-    #role-privilege td, th {
-        padding: 5px;
-    }
+        #role-privilege td, th {
+            padding: 5px;
+        }
 
-    #role-privilege tbody {
-        height: 400px;
-        overflow-y: auto;
-        overflow-x: hidden;
-    }
+        #role-privilege tbody {
+            height: 400px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
 </style>
 
 <section>
@@ -89,23 +89,26 @@
                         </thead>
                         <tbody style="border-color:white;">
                             @{
-                                for (int menuroleId = 0; menuroleId < Model.MenuRolePrivileges.Count; menuroleId++)
+                                if (Model.MenuRolePrivileges.Count > 0)
                                 {
-                                    <tr>
-                                        @Html.HiddenFor(m => m.MenuRolePrivileges[menuroleId].Menu_Id)
-                                        @Html.HiddenFor(m => m.MenuRolePrivileges[menuroleId].Menu.Id)
-                                        @Html.HiddenFor(m => m.MenuRolePrivileges[menuroleId].Menu.Name)
-                                        @Html.HiddenFor(m => m.MenuRolePrivileges[menuroleId].RolePrivilege_Id)
-                                        <td style="width: 245px;">@Html.Label(Model.MenuRolePrivileges[menuroleId].Menu.Name)</td>
-                                        <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowView)</td>
-                                        <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowCreate)</td>
-                                        <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowUpdate)</td>
-                                        <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowDelete)</td>
-                                        <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowDownload)</td>
-                                        <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowUpload)</td>
-                                        <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowPublish)</td>
-                                        <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowApprove)</td>
-                                    </tr>
+                                    for (int menuroleId = 0; menuroleId < Model.MenuRolePrivileges.Count; menuroleId++)
+                                    {
+                                        <tr>
+                                            @Html.HiddenFor(m => m.MenuRolePrivileges[menuroleId].Menu_Id)
+                                            @Html.HiddenFor(m => m.MenuRolePrivileges[menuroleId].Menu.Id)
+                                            @Html.HiddenFor(m => m.MenuRolePrivileges[menuroleId].Menu.Name)
+                                            @Html.HiddenFor(m => m.MenuRolePrivileges[menuroleId].RolePrivilege_Id)
+                                            <td style="width: 245px;">@Html.Label(Model.MenuRolePrivileges[menuroleId].Menu.Name)</td>
+                                            <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowView)</td>
+                                            <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowCreate)</td>
+                                            <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowUpdate)</td>
+                                            <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowDelete)</td>
+                                            <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowDownload)</td>
+                                            <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowUpload)</td>
+                                            <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowPublish)</td>
+                                            <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowApprove)</td>
+                                        </tr>
+                                    }
                                 }
                             }
                         </tbody>

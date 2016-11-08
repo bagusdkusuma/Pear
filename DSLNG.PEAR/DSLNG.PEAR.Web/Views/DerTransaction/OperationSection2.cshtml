@@ -5,7 +5,7 @@
 
 <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
     <tr>
-        <td colspan="2"><label class="control-label lbl-style">Plant Performance Corp KPI Target-Annual</label></td>
+        <td colspan="2"><label class="control-label lbl-style">Plant Performance Corp KPI Target-Annual :</label></td>
     </tr>
     <tr>
         <td><label class="control-label lbl-style">PAV (%)</label></td>
@@ -37,15 +37,12 @@
     <tr>
         <td><label class="control-label lbl-style">USM Feed Gas Temp (&#8451;)</label></td>
         <td> @Html.DisplayKpiInformationInput(Model.KpiInformations, 99, 43, "oC")</td>
-    </tr>
-    <tr>
-        <td><br></td>
-    </tr>
-    <tr>
         <td><label class="control-label lbl-style">min HHV JOB PMTS (btu/scf)</label></td>
         <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 169, 48, "btu/scf", "1111", "yearly-target")</td>
     </tr>
     <tr>
+        <td></td>
+        <td></td>
         <td><label class="control-label lbl-style">min HHV MGDP (btu/scf)</label></td>
         <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 174, 49, "btu/scf", "1050", "yearly-target")</td>
     </tr>
@@ -69,10 +66,11 @@
 
 <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
     <tr>
-        <td colspan="2"><label class="control-label lbl-style">Feed Gas USM</label></td>
-        <td><label class="control-label lbl-style">Feed Gas JOB PMTS-CPP</label></td>
-        <td><label class="control-label lbl-style">Feed Gas MGDP-Donggi CPP</label></td>
-        <td><label class="control-label lbl-style">Feed Gas MGDP-Matindok CPP</label></td>
+        <td></td>
+        <td><label class="control-label">Feed Gas USM :</label></td>
+        <td><label class="control-label lbl-style">Feed Gas JOB PMTS-CPP :</label></td>
+        <td><label class="control-label lbl-style">Feed Gas MGDP-Donggi CPP :</label></td>
+        <td><label class="control-label lbl-style">Feed Gas MGDP-Matindok CPP :</label></td>
     </tr>
     <tr>
         <td><label class="control-label lbl-style">24H (mmsfcd)</label></td>
@@ -141,16 +139,17 @@
 
 <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
     <tr>
-        <td colspan="2"><label class="control-label lbl-style">Commitments JOB PMTS</label></td>
-        <td><label class="control-label lbl-style">Commitments MGDP</label></td>
-        <td><label class="control-label lbl-style">Plant Utilization daily code</label></td>
+        <td></td>
+        <td ><label class="control-label ">Commitments JOB PMTS :</label></td>
+        <td><label class="control-label lbl-style">Commitments MGDP :</label></td>
+        <td><label class="control-label">Plant Utilization daily code :</label></td>
     </tr>
     <tr>
         <td><label class="control-label lbl-style">DCQ (mmbtu)</label></td>
-        <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 166, 67, "mmbtu", "prev", "daily-target")</div></td>
+        <td><div>@Html.DisplayKpiInformationInput(Model.KpiInformations, 166, 67, "mmbtu", "prev", "daily-target")</div></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 171, 70, "mmbtu", "prev", "daily-target")</div></td>
         <td>
-            <div class="lbl-style">@Html.DisplayKpiInformationList(Model.KpiInformations, 11, 73, new List<SelectListItem>() {
+            <div >@Html.DisplayKpiInformationList(Model.KpiInformations, 11, 73, new List<SelectListItem>() {
                 new SelectListItem { Value = "Normal/Other", Text="Normal/Other" },
                 new SelectListItem { Value = "Unplanned",  Text="Unplanned"},
                 new SelectListItem {Value = "Planned SD", Text="Planned SD" }
@@ -159,18 +158,16 @@
     </tr>
     <tr>
         <td><label class="control-label lbl-style">MGN (bbtu)</label></td>
-        <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 166, 68, "bbtu", "prev", "monthly-target")</div></td>
+        <td><div>@Html.DisplayKpiInformationInput(Model.KpiInformations, 166, 68, "bbtu", "prev", "monthly-target")</div></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 171, 71, "bbtu", "prev", "monthly-target")</div></td>
-        <td rowspan="3">
-            <label class="control-label lbl-style">Plant Availability (24H) (hours)</label> <br>
-            <div class="lbl-style">
-                @Html.DisplayKpiInformationInput(Model.KpiInformations, 11, 74, "hours")
-            </div>
+        <td rowspan="2" style="padding-top: 10px;">
+            <label class="control-label">Plant Availability (24H) (hours)</label> <br>
+            @Html.DisplayKpiInformationInput(Model.KpiInformations, 11, 74, "hours")
         </td>
     </tr>
     <tr>
         <td><label class="control-label lbl-style">ADP (Tbtu)</label></td>
-        <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 166, 69, "Tbtu", "prev", "yearly-target")</div></td>
+        <td><div>@Html.DisplayKpiInformationInput(Model.KpiInformations, 166, 69, "Tbtu", "prev", "yearly-target")</div></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 171, 72, "Tbtu", "prev", "yearly-target")</div></td>
     </tr>
     <tr>
@@ -180,8 +177,9 @@
 
 <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
     <tr>
-        <td colspan="2"><label class="control-label lbl-style">Feed Gas Impurities</label></td>
-        <td colspan="2"><label class="control-label lbl-style">Product Quality</label></td>
+        <td></td>
+        <td ><label class="control-label">Feed Gas Impurities :</label></td>
+        <td colspan="2"><label class="control-label lbl-style">Product Quality :</label></td>
     </tr>   
     <tr>
         <td><label class="control-label lbl-style">H2S (ppm)</label></td>
@@ -244,45 +242,60 @@
 
 <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
     <tr>
-        <td colspan="2"><label class="control-label lbl-style">Enviro Quality-C3 Compr</label></td>
-        <td><label class="control-label lbl-style">Enviro Quality-LP MR Compr</label></td>
-        <td><label class="control-label lbl-style">Enviro Quality-HP MR Compr</label></td>
+        <td></td>
+        <td><label class="control-label lbl-style">Enviro Quality-C3 Compr :</label></td>
+        <td><label class="control-label lbl-style">Enviro Quality-LP MR Compr :</label></td>
+        <td><label class="control-label lbl-style">Enviro Quality-HP MR Compr :</label></td>
+        <td></td>
+        <td><label class="control-label ">Enviro Quality-Flaring :</label></td>
     </tr>
     <tr>
         <td><label class="control-label lbl-style">NO2 (mg/Nm3)</label></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 251, 91, "mg/Nm3")</div></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 258, 98, "mg/Nm3")</div></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 265, 105, "mg/Nm3")</div></td>
+        <td><label class="control-label lbl-style">Wet Flare (Nm3/h)</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 404, 112, "Nm3/h")</td>
     </tr>
     <tr>
         <td><label class="control-label lbl-style">SO2 (mg/Nm3)</label></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 252, 92, "mg/Nm3")</div></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 259, 99, "mg/Nm3")</div></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 266, 106, "mg/Nm3")</div></td>
+        <td><label class="control-label lbl-style">Dry Flare (Nm3/h)</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 405, 113, "Nm3/h")</td>
     </tr>
     <tr>
         <td><label class="control-label lbl-style">CO (mg/Nm3)</label></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 253, 93, "mg/Nm3")</div></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 260, 100, "mg/Nm3")</div></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 267, 107, "mg/Nm3")</div></td>
+        <td><label class="control-label lbl-style">Tankage Flare (Nm3/h)</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 406, 114, "Nm3/h")</td>
     </tr>
     <tr>
         <td><label class="control-label lbl-style">CO2 (mol%)</label></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 254, 94, "mol%")</div></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 261, 101, "mol%")</div></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 268, 108, "mol%")</div></td>
+        <td><label class="control-label lbl-style">Wet Flare (tonnes)</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 441, 115, "tonnes")</td>
     </tr>
     <tr>
         <td><label class="control-label lbl-style">O2 (mol%)</label></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 255, 95, "mol%")</div></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 262, 102, "mol%")</div></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 269, 109, "mol%")</div></td>
+        <td><label class="control-label lbl-style">Dry Flare (tonnes)</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 442, 116, "tonnes")</td>
     </tr>
     <tr>
         <td><label class="control-label lbl-style">Opacity (%)</label></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 256, 96, "%")</div></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 263, 103, "%")</div></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 270, 110, "%")</div></td>
+        <td><label class="control-label lbl-style">Tankage Flare (tonnes)</label></td>
+        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 406, 117, "tonnes")</td>
     </tr>
     <tr>
         <td><label class="control-label lbl-style">Particulate (mg/Nm3)</label></td>
@@ -297,30 +310,6 @@
 
 <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
     <tr>
-        <td colspan="2"><label class="control-label lbl-style">Enviro Quality-Flaring</label></td>
-    </tr>
-    <tr>
-        <td><label class="control-label lbl-style">Wet Flare (Nm3/h)</label></td>
-        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 404, 112, "Nm3/h")</td>
-        <td><label class="control-label lbl-style">Wet Flare (tonnes)</label></td>
-        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 441, 115, "tonnes")</td>
-    </tr>
-    <tr>
-        <td><label class="control-label lbl-style">Dry Flare (Nm3/h)</label></td>
-        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 405, 113, "Nm3/h")</td>
-        <td><label class="control-label lbl-style">Dry Flare (tonnes)</label></td>
-        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 442, 116, "tonnes")</td>
-    </tr>
-    <tr>
-        <td><label class="control-label lbl-style">Tankage Flare (Nm3/h)</label></td>
-        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 406, 114, "Nm3/h")</td>
-        <td><label class="control-label lbl-style">Tankage Flare (tonnes)</label></td>
-        <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 406, 117, "tonnes")</td>
-    </tr>
-    <tr>
-        <td><br></td>
-    </tr>
-    <tr>        
         <td><label class="control-label lbl-style">Corrugated Plate Interceptor (m3/h)</label></td>
         <td>@Html.DisplayKpiInformationInput(Model.KpiInformations, 403, 118, "m3/h")</td>
     </tr>
@@ -331,37 +320,38 @@
 
 <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
     <tr>
-        <td colspan="2"><label class="control-label lbl-style">Inventory-LNG Tank</label></td>
-        <td><label class="control-label lbl-style">Inventory-CDS Loading Tank</label></td>
-        <td><label class="control-label lbl-style">Inventory-CDS Buffer Tank</label></td>
+        <td></td>
+        <td><label class="control-label">Inventory-LNG Tank :</label></td>
+        <td><label class="control-label lbl-style">Inventory-CDS Loading Tank :</label></td>
+        <td><label class="control-label lbl-style">Inventory-CDS Buffer Tank :</label></td>
     </tr>
     <tr>
         <td><label class="control-label lbl-style">Level (%)</label></td>
-        <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 58, 119, "%")</div></td>
+        <td><div>@Html.DisplayKpiInformationInput(Model.KpiInformations, 58, 119, "%")</div></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 365, 124, "%")</div></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 360, 129, "%")</div></td>
     </tr>
     <tr>
         <td><label class="control-label lbl-style">Vol (m3)</label></td>
-        <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 57, 120, "m3")</div></td>
+        <td><div>@Html.DisplayKpiInformationInput(Model.KpiInformations, 57, 120, "m3")</div></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 433, 125, "m3")</div></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 434, 130, "m3")</div></td>
     </tr>
     <tr>
         <td><label class="control-label lbl-style">Vol (tonnes)</label></td>
-        <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 56, 121, "tonnes")</div></td>
+        <td><div>@Html.DisplayKpiInformationInput(Model.KpiInformations, 56, 121, "tonnes")</div></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 366, 126, "tonnes")</div></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 362, 131, "tonnes")</div></td>
     </tr>
     <tr>
         <td><label class="control-label lbl-style">Vol (mmbtu)</label></td>
-        <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 368, 122, "mmbtu")</div></td>
+        <td><div>@Html.DisplayKpiInformationInput(Model.KpiInformations, 368, 122, "mmbtu")</div></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 367, 127, "mmbtu")</div></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 363, 132, "mmbtu")</div></td>
     </tr>
     <tr>
         <td><label class="control-label lbl-style">Days To Tank Top (Days)</label></td>
-        <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 70, 123, "Days")</div></td>
+        <td><div>@Html.DisplayKpiInformationInput(Model.KpiInformations, 70, 123, "Days")</div></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 369, 128, "Days")</div></td>
         <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 364, 133, "Days")</div></td>
     </tr>
@@ -372,11 +362,13 @@
 
 <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
     <tr>
-        <td colspan="2"><label class="control-label lbl-style">LNG Loaded</label></td>
-        <td colspan="2"><label class="control-label lbl-style">LNG Planned Cargo</label> </td>
-        <td><label class="control-label">LNG Planned Cargo Monthly <br>Target</label></td>
-        <td><label class="control-label">LNG Planned Cargo Yearly <br>Target</label></td>
-        <td><label class="control-label">LNG Loaded Remark</label></td>
+        <td></td>
+        <td><label class="control-label">LNG Loaded :</label></td>
+        <td></td>
+        <td ><label class="control-label">LNG Planned Cargo :</label> </td>
+        <td><label class="control-label">LNG Planned Cargo Monthly <br>Target :</label></td>
+        <td><label class="control-label">LNG Planned Cargo Yearly <br>Target :</label></td>
+        <td><label class="control-label">LNG Loaded Remark :</label></td>
     </tr>
     <tr>
         <td><label class="control-label lbl-style">24H (m3)</label></td>
@@ -435,29 +427,32 @@
 
 <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
     <tr>
-        <td colspan="2"><label class="control-label lbl-style">CDS Loaded</label></td>
-        <td colspan="2"><label class="control-label lbl-style">CDS Cargo shipped</label></td>
-        <td colspan="2"><label class="control-label lbl-style">CDS Loaded-Note</label></td>
+        <td></td>
+        <td><label class="control-label">CDS Loaded :</label></td>
+        <td></td>
+        <td><label class="control-label">CDS Cargo shipped :</label></td>
+        <td></td>
+        <td ><label class="control-label ">CDS Loaded-Note :</label></td>
     </tr>
     <tr>
         <td><label class="control-label lbl-style">24H (m3)</label></td>
-        <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 74, 166, "m3")</div></td>
+        <td><div>@Html.DisplayKpiInformationInput(Model.KpiInformations, 74, 166, "m3")</div></td>
         <td><label class="control-label lbl-style">Cargo shipped (cargo)</label></td>
-        <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 82, 169, "cargo")</div></td>
+        <td><div>@Html.DisplayKpiInformationInput(Model.KpiInformations, 82, 169, "cargo")</div></td>
         <td><label class="control-label lbl-style">CDS Loaded-Note (cargo)</label></td>
-        <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 82, 170, "free text", "prev", "daily-actual", "remark")</div></td>
+        <td><div>@Html.DisplayKpiInformationInput(Model.KpiInformations, 82, 170, "free text", "prev", "daily-actual", "remark")</div></td>
     </tr>
     <tr>
         <td><label class="control-label lbl-style">24H (tonnes)</label></td>
-        <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 75, 167, "tonnes")</div></td>
+        <td><div >@Html.DisplayKpiInformationInput(Model.KpiInformations, 75, 167, "tonnes")</div></td>
         <td></td>
         <td></td>
         <td><label class="control-label lbl-style">CDS Loaded-Remark (bbl)</label></td>
-        <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 76, 171, "free text", "prev", "daily-actual", "remark")</div></td>
+        <td><div >@Html.DisplayKpiInformationInput(Model.KpiInformations, 76, 171, "free text", "prev", "daily-actual", "remark")</div></td>
     </tr>
     <tr>
         <td><label class="control-label lbl-style">24H (mbtu)</label></td>
-        <td><div class="lbl-style">@Html.DisplayKpiInformationInput(Model.KpiInformations, 76, 168, "mbtu")</td></div>     
+        <td><div >@Html.DisplayKpiInformationInput(Model.KpiInformations, 76, 168, "mbtu")</div></td>   
     </tr>
     <tr>
         <td><br></td>
@@ -466,7 +461,8 @@
 
 <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
     <tr>
-        <td><label class="control-label lbl-style">Flared Gas</label></td>
+        <td></td>
+        <td><label class="control-label ">Flared Gas :</label></td>
     </tr>
     <tr>
         <td><label class="control-label lbl-style">24H (Nm3)</label></td>

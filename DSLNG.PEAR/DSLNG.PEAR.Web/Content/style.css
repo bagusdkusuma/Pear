@@ -3270,6 +3270,10 @@ input.control-form.assumption-input {
     margin-left: 35px;
 }
 
+.pob input {
+    width: 45px !important;
+}
+
 .artifact-designer-btns {
     margin-top: 0;
 }
