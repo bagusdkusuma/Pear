@@ -102,8 +102,8 @@ h6 {
 
 aside.right-content {
     padding: 20px 20px 20px 0;
-    padding-bottom: 500em;
-    margin-bottom: -500em;
+       padding-bottom: 1000em;
+    margin-bottom: -1000em;
     float: left;
     width: 100%;
 }
@@ -116,8 +116,8 @@ aside.left-content {
     float: left;
     background: transparent;
     position: relative;
-    padding-bottom: 500em;
-    margin-bottom: -500em;
+        padding-bottom: 1000em;
+    margin-bottom: -1000em;
     border-right: 1px solid #78a0ba;
 }
 
