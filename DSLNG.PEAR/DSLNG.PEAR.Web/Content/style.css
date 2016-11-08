@@ -3435,6 +3435,7 @@ select.der-value-prev {
   color : gray;
 }
 input.der-value-now,
+textarea.der-value-now,
 select.der-value-now {
   color : green;
 }
