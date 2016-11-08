@@ -991,7 +991,7 @@ namespace DSLNG.PEAR.Web.Helpers
 
             //}
             if (property == "remark") {
-                return new MvcHtmlString(string.Format("<textarea type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control der-highlight-weekly-alarm\"   placeholder=\"{2}\" tabindex=\"{3}\" data-property=\"{4}\" data-highlight-type-id=\"{5}\" data-id=\"{6}\" data-title=\"{7}\"></textarea>", value, existValue, label, tabIndex, property, highlightTypeId, highlightId, title));
+                return new MvcHtmlString(string.Format("<textarea type=\"text\" class=\"der-value-{1} form-control der-highlight-weekly-alarm\"   placeholder=\"{2}\" tabindex=\"{3}\" data-property=\"{4}\" data-highlight-type-id=\"{5}\" data-id=\"{6}\" data-title=\"{7}\">{0}</textarea>", value, existValue, label, tabIndex, property, highlightTypeId, highlightId, title));
             }
             return new MvcHtmlString(string.Format("<input type=\"text\" value=\"{0}\" class=\"der-value-{1} form-control der-highlight-weekly-alarm\"   placeholder=\"{2}\" tabindex=\"{3}\" data-property=\"{4}\" data-highlight-type-id=\"{5}\" data-id=\"{6}\" data-title=\"{7}\" />", value, existValue, label, tabIndex, property, highlightTypeId, highlightId, title));
         }
