@@ -475,6 +475,7 @@
     <Content Include="Scripts\der-scripts.js" />
     <Content Include="Scripts\fabricjs.js" />
     <Content Include="Content\bootstrap-multiselect\bootstrap-multiselect.less" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Scripts\jquery-1.10.0-vsdoc.js" />
     <Content Include="Scripts\jquery-1.10.0.js" />
     <Content Include="Scripts\jquery-1.10.0.min.js" />
