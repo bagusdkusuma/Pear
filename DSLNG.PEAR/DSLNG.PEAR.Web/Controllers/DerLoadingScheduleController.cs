@@ -101,12 +101,12 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 Skip = 0,
                 Take = 100
-            }).Buyers.Select(x => new SelectListItem { Text = x.Name, Value = x.id.ToString() }).ToList();
+            }).Buyers.OrderBy(x=>x.Name).Select(x => new SelectListItem { Text = x.Name, Value = x.id.ToString() }).ToList();
             viewModel.Vessels = _vesselService.GetVessels(new GetVesselsRequest
             {
                 Skip = 0,
                 Take = 100
-            }).Vessels.Select(x => new SelectListItem { Text = x.Name, Value = x.id.ToString() }).ToList();
+            }).Vessels.OrderBy(x=>x.Name).Select(x => new SelectListItem { Text = x.Name, Value = x.id.ToString() }).ToList();
             viewModel.IsActive = true;
             return PartialView(viewModel);
         }
@@ -127,7 +127,7 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 Skip = 0,
                 Take = 100
-            }).Vessels.Select(x => new SelectListItem { Text = x.Name, Value = x.id.ToString() }).ToList();
+            }).Vessels.OrderBy(x=>x.Name).Select(x => new SelectListItem { Text = x.Name, Value = x.id.ToString() }).ToList();
             return Json(new { result = response }, JsonRequestBehavior.AllowGet);
         }
 
