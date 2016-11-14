@@ -1284,7 +1284,12 @@
                                 that.html(data.view);
                             }
 
-
+                            $("p").each(function () {
+                                var $this = $(this);
+                                if ($this.html() === "&nbsp;") {
+                                    $this.remove();
+                                }
+                            });
 
                         }
 
