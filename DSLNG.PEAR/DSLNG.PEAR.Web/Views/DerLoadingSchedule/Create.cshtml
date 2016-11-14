@@ -21,7 +21,7 @@
                         @Html.DropDownListFor(model => model.VesselId, Model.Vessels, "Select Vessel", new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.VesselId)
                         @*<a href="javascript:;" class="btn btn-primary" id="add_vessel_from_modal" onclick="test()"><span class="fa fa-plus-square"></span>Add New Vessel</a>*@
-                        <button data-url='@Url.Action("AddVessel", "DerLoadingSchedule")' class="btn btn-master-rgw btn-primary add-new-vessel"><span class="fa fa-plus-square"></span> Add New</button>
+                        <button data-url='@Url.Action("AddVessel", "DerLoadingSchedule")' class="btn btn-master-rgw btn-primary add-new-vessel" tabindex="-1"><span class="fa fa-plus-square"></span> Add New</button>
                     </div>
                     @*<div hidden="hidden" id="vessel_form"></div>*@
                     <div id="vessel-container">
@@ -41,7 +41,7 @@
                         @Html.LabelFor(model => model.BuyerId)
                         @Html.DropDownListFor(model => model.BuyerId, Model.Buyers, "Select Buyer", new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.BuyerId)
-                        <button data-url='@Url.Action("AddBuyer", "DerLoadingSchedule")' class="btn btn-master-rgw btn-primary add-new-buyer"><span class="fa fa-plus-square"></span> Add New</button>
+                        <button data-url='@Url.Action("AddBuyer", "DerLoadingSchedule")' class="btn btn-master-rgw btn-primary add-new-buyer" tabindex="-1"><span class="fa fa-plus-square"></span> Add New</button>
                     </div>
                     <div id="buyer-container">
                     </div>
@@ -91,10 +91,54 @@
         });
     }*@
 
+    jQuery.extend(jQuery.expr[':'], {
+        focusable: function (el, index, selector) {
+            return $(el).is('a, button, :input, [tabindex]');
+        }
+    });
+
+    //function canFocus(e) {
+    //    if (!e.is(":hidden") && !e.is(":disabled")) {
+    //        return false;
+    //    }
+
+    //    var tabIndex = +e.attr("tabindex");
+    //    tabIndex = isNaN(tabIndex) ? -1 : tabIndex;
+    //    return e.is(":input, a[href], area[href], iframe") || tabIndex > -1;
+    //}
+
     $(document).ready(function () {
+        $(document).find('#VesselId').focus();
+
         $('.datepicker').datetimepicker({
             format: "MM/DD/YYYY"
         });
+
+        //$(document).on('keypress', 'input,select', function (e) {
+        //    console.log(e.which.toString());
+        //    if (e.which == 13) {
+        //        console.log('called');
+        //        e.preventDefault();
+        //        // Get all focusable elements on the page
+        //        var $canfocus = $(':focusable');
+        //        var index = $canfocus.index(this) + 1;
+        //        console.log(index);
+        //        if (index >= $canfocus.length) index = 0;
+        //        var $el = $canfocus.eq(index);
+        //        var tabIndex = $el.attr("tabindex");
+        //        tabIndex = isNaN(tabIndex) ? -1 : tabIndex;
+
+        //        if (tabIndex > -1) {
+        //            console.log('tabbable');
+        //            $canfocus.eq(index).focus();
+        //        } else {
+        //            console.log(' not tabbable');
+        //            index = $canfocus.index($el) + 1;
+        //            $canfocus.eq(index).focus();
+        //        }
+                
+        //    }
+        //});
 
         $('.add-new-vessel').click(function (e) {
             e.preventDefault();

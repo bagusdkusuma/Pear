@@ -41,6 +41,22 @@
     }
 </div>
 <script>
+    
+    
+    $(document).ready(function () {
+        $(document).find('#VesselName').focus();
+        
+        $(document).on('keypress', 'input,select', function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+                // Get all focusable elements on the page
+                var $canfocus = $(':focusable');
+                var index = $canfocus.index(this) + 1;
+                if (index >= $canfocus.length) index = 0;
+                $canfocus.eq(index).focus();
+            }
+        });
+    });
     $('.save-vessel').click(function (e) {
         e.preventDefault();
         $form = $(this).closest('form');
@@ -53,6 +69,9 @@
                 setTimeout(function () {
                     $('#vessel_form').empty();
                     //$('#loadingScheduleModal').modal('hide');
+                    $(document).find('#VesselId').html($("#VesselId option").sort(function (a, b) {
+                        return a.text == b.text ? 0 : a.text < b.text ? -1 : 1
+                    }));
                 }, 1000);
 
             } else {
