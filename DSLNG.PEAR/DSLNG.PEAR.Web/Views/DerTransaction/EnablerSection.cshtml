@@ -8,7 +8,7 @@
         <table width="400" border="0" cellpadding="2" cellspacing="2" style="margin-top: 15px; margin-bottom: 15px;">
             <tr>
                 <td>
-                    <label class="subtitle">Procurement Section-E:</label>
+                    <label class="subtitle">Procurement:</label>
                     @*<p style="margin-top: 20px;">Procurement Section-E:</p>*@
                 </td>
             </tr>
@@ -46,7 +46,7 @@
         <table width="400" border="0" cellpadding="2" cellspacing="2" style="margin-top: 15px; margin-bottom: 15px;">
             <tr>
                 <td>
-                    <label class="subtitle">ICT Infrastructure and System Highlight:-F</label>
+                    <label class="subtitle">ICT Infrastructure and System</label>
                     @*<p for="" style="margin-top: 10px; color:#FFFFFF;" class="subtitle">ICT Infrastructure and System Highlight:-F</p>*@
                 </td>
             </tr>
@@ -100,7 +100,7 @@
                 <td>
                     <label for="" style="margin-top: 15px;">Remark</label>
                     <br />
-                    @Html.DisplayHighlightTextarea(Model.Highlights, 21, 269)
+                    @Html.DisplayHighlightTextarea(Model.Highlights, 21, 269, "Normal Ops")
                     @*@Html.DisplayHighlightInput(Model.Highlights, 21, 274, "free text", "prev")*@
                     @*<input type="text" name="" id="" placeholder="free text" />*@
                     @*@Html.DisplayIctInfraOrGsfmHighlight(Model.Highlights, 66, new List<SelectListItem>{
@@ -115,7 +115,7 @@
         <table width="400" border="0" cellpadding="2" cellspacing="2" style="margin-top: 15px; margin-bottom: 15px;">
             <tr>
                 <td>
-                    <label class="subtitle">GS & FM-G:</label>
+                    <label class="subtitle">GS & FM:</label>
                     @*<p for="" style="margin-top: 20px;">GS & FM-G:</p>*@
                 </td>
             </tr>
@@ -169,7 +169,7 @@
                         </tr>
                         <tr>
                             <td>
-                                @Html.DisplayHighlightTextarea(Model.Highlights, 53, 274)
+                                @Html.DisplayHighlightTextarea(Model.Highlights, 53, 274, "Normal Ops")
                             </td>
                         </tr>
                     </table>
@@ -192,11 +192,11 @@
         </table>
     </div>
     <div class="col-md-6">
-        <p style="color: white;" class="subtitle">Daily Highlight-K:</p>
+        <p style="color: white;" class="subtitle">Daily Highlight:</p>
         <table border="0">
             <tr>
                 <td>
-                    @Html.DisplayHighlightTextarea(Model.Highlights, 8, 276)
+                    @Html.DisplayHighlightTextarea(Model.Highlights, 8, 276, "Normal Ops")
                 </td>
             </tr>
             <tr>

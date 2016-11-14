@@ -84,7 +84,7 @@ namespace DSLNG.PEAR.Services
             var response = new List<Data.Entities.KpiTarget>();
             foreach (var kpi in kpis)
             {
-                var daily = DataContext.KpiTargets.OrderByDescending(x => x.Periode).Include(x => x.Kpi).Where(x => x.Kpi.Id == kpi && x.Periode <= periode && x.PeriodeType == PeriodeType.Daily).FirstOrDefault();
+                var daily = DataContext.KpiTargets.Include(x => x.Kpi).Where(x => x.Kpi.Id == kpi && x.Periode == periode && x.PeriodeType == PeriodeType.Daily).FirstOrDefault();
                 if (daily != null)
                 {
                     response.Add(daily);
@@ -97,14 +97,14 @@ namespace DSLNG.PEAR.Services
                 }
                 else
                 {
-                    monthly = DataContext.KpiTargets.OrderByDescending(x => x.Periode).Include(x => x.Kpi).Where(x => x.Kpi.Id == kpi && x.Periode <= periode && x.PeriodeType == PeriodeType.Monthly).FirstOrDefault();
+                    monthly = DataContext.KpiTargets.Include(x => x.Kpi).Where(x => x.Kpi.Id == kpi && x.Periode.Month == periode.Month && x.PeriodeType == PeriodeType.Monthly).FirstOrDefault();
                 }
                 if (monthly != null)
                 {
                     response.Add(monthly);
                 }
 
-                var yearly = DataContext.KpiTargets.OrderByDescending(x => x.Periode).Include(x => x.Kpi).Where(x => x.Kpi.Id == kpi && x.Periode <= periode && x.PeriodeType == PeriodeType.Yearly).FirstOrDefault();
+                var yearly = DataContext.KpiTargets.Include(x => x.Kpi).Where(x => x.Kpi.Id == kpi && x.Periode.Year == periode.Year && x.PeriodeType == PeriodeType.Yearly).FirstOrDefault();
                 if (yearly != null)
                 {
                     response.Add(yearly);
@@ -122,7 +122,7 @@ namespace DSLNG.PEAR.Services
             var previous2Month = request.Date.AddMonths(-2);
             var previousYear = request.Date.AddYears(-1);
             //var achievements = GetAchievements(kpiIdsForActual, request.Date);
-            var achievements = DataContext.KpiAchievements.Include(x => x.Kpi)
+            var achievements = DataContext.KpiAchievements.OrderByDescending(x=>x.Periode).Include(x => x.Kpi)
                 .Where(x => kpiIdsForActual.Contains(x.Kpi.Id) &&
                 (((x.Periode == request.Date || x.Periode == previousDate) && x.PeriodeType == PeriodeType.Daily) ||
                 (x.PeriodeType == PeriodeType.Yearly && (x.Periode.Year == request.Date.Year || x.Periode.Year == previousYear.Year)) ||
@@ -442,13 +442,23 @@ namespace DSLNG.PEAR.Services
                     {
                         if (kpiInformation.MonthlyTarget == null)
                         {
-                            var currentMonthTarget = target.Periode == request.Date && target.Periode.Month == request.Date.Month && target.PeriodeType == PeriodeType.Monthly;
+                            bool currentMonthTarget = false;
+                            if (target.Kpi.Id == 385)
+                            {
+                                DateTime prevMonth = request.Date.AddMonths(-1);
+                                currentMonthTarget = target.Periode.Year == prevMonth.Year && target.Periode.Month == prevMonth.Month && target.PeriodeType == PeriodeType.Monthly;
+                            }
+                            else {
+                                currentMonthTarget = target.Periode.Year == request.Date.Year && target.Periode.Month == request.Date.Month && target.PeriodeType == PeriodeType.Monthly;
+                            }
+
+                            //var currentMonthTarget = target.Periode.Year  == request.Date.Year && target.Periode.Month == request.Date.Month && target.PeriodeType == PeriodeType.Monthly;
                             if (currentMonthTarget)
                             {
                                 kpiInformation.MonthlyTarget = new GetKpiInformationValuesResponse.KpiValue
                                 {
                                     Date = target.Periode,
-                                    Value = target.Value.HasValue ? target.Value : null,
+                                    Value = target.Value ?? null,
                                     Remark = target.Remark,
                                     Type = "now",
                                     Id = target.Id
@@ -459,7 +469,7 @@ namespace DSLNG.PEAR.Services
                                 kpiInformation.MonthlyTarget = new GetKpiInformationValuesResponse.KpiValue
                                 {
                                     Date = target.Periode,
-                                    Value = target.Value.HasValue ? target.Value : null,
+                                    Value = target.Value ?? null,
                                     Remark = target.Remark,
                                     Type = "prev",
                                     Id = target.Id
@@ -479,7 +489,7 @@ namespace DSLNG.PEAR.Services
                                 kpiInformation.YearlyTarget = new GetKpiInformationValuesResponse.KpiValue
                                 {
                                     Date = target.Periode,
-                                    Value = target.Value.HasValue ? target.Value : null,
+                                    Value = target.Value ?? null,
                                     Remark = target.Remark,
                                     Type = "now",
                                     Id = target.Id
@@ -490,7 +500,7 @@ namespace DSLNG.PEAR.Services
                                 kpiInformation.YearlyTarget = new GetKpiInformationValuesResponse.KpiValue
                                 {
                                     Date = target.Periode,
-                                    Value = target.Value.HasValue ? target.Value : null,
+                                    Value = target.Value ?? null,
                                     Remark = target.Remark,
                                     Type = "prev",
                                     Id = target.Id
@@ -535,10 +545,10 @@ namespace DSLNG.PEAR.Services
         {
             var prevDate = request.Date.AddDays(-1);
             var derHighlights = request.HighlightTypeIds;
-            //var highlights = DataContext.Highlights.Include(x => x.HighlightType)
-            //    .Where(x => derHighlights.Contains(x.HighlightType.Id) && x.PeriodeType == PeriodeType.Daily && (x.Date == request.Date || x.Date == prevDate)).ToList();
+            var highlights = DataContext.Highlights.Include(x => x.HighlightType)
+                .Where(x => derHighlights.Contains(x.HighlightType.Id) && x.PeriodeType == PeriodeType.Daily && (x.Date == request.Date || x.Date == prevDate)).ToList();
 
-            var highlights = GetHighligts(derHighlights, request.Date);
+            //var highlights = GetHighligts(derHighlights, request.Date);
             var response = new GetHighlightValuesResponse();
             if (highlights != null)
             {

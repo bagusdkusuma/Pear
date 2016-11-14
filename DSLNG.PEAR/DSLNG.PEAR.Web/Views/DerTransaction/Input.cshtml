@@ -303,8 +303,13 @@
     });
     function callDerPreview() {
         var currentDate = $('.datepicker').val();
+        if (currentDate == null || currentDate == undefined || currentDate == "") {
+            alert('Could not find selected date, please refresh your browser (F5)');
+            return;
+        }
         var previewDate = new Date(currentDate);
         previewDate.setDate(previewDate.getDate() + 1);
+
         var url = '@Url.Action("Preview","DER")?date=' + encodeURIComponent((previewDate.getMonth() + 1) + '/' + previewDate.getDate() + '/' + previewDate.getFullYear());  //  /DER/Preview?date=
         window.open(url, '_blank');
     }
