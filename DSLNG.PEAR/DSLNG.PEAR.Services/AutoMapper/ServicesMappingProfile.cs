@@ -775,7 +775,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<DSLNG.PEAR.Data.Entities.RoleGroup, GetKpiTransformationsResponse.RoleGroupResponse>();
             Mapper.CreateMap<KpiTransformation, GetKpiTransformationResponse>();
             Mapper.CreateMap<DSLNG.PEAR.Data.Entities.RoleGroup, GetKpiTransformationResponse.RoleGroupResponse>();
-            Mapper.CreateMap<Kpi, GetKpiTransformationResponse.KpiResponse>();
+            Mapper.CreateMap<Kpi, GetKpiTransformationResponse.KpiResponse>()
+                .ForMember(x => x.Name, o => o.MapFrom(s => s.Name + " (" + s.Measurement.Name + ")"));
             Mapper.CreateMap<SaveKpiTransformationScheduleRequest, KpiTransformationSchedule>();
             Mapper.CreateMap<KpiTransformationSchedule, SaveKpiTransformationScheduleResponse>()
                 .ForMember(x => x.KpiTransformationId, o => o.MapFrom(s => s.KpiTransformation.Id))

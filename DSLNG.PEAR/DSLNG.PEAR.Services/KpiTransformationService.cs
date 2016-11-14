@@ -145,6 +145,7 @@ namespace DSLNG.PEAR.Services
         {
             return DataContext.KpiTransformations
                 .Include(x => x.Kpis)
+                .Include(x => x.Kpis.Select(y => y.Measurement))
                 .Include(x => x.RoleGroups)
                 .Single(x => x.Id == id).MapTo<GetKpiTransformationResponse>();
         }

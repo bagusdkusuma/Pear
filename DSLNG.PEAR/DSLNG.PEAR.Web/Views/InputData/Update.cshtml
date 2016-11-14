@@ -67,7 +67,7 @@
                                         <tr>
                                             <th>@(kpiNumber)</th>
                                             <th>
-                                                @Html.DropDownListFor(model => model.GroupInputDatas[i].InputDataKpiAndOrders[j].KpiId, new List<SelectListItem> { new SelectListItem { Value = Model.GroupInputDatas[i].InputDataKpiAndOrders[j].KpiId.ToString(), Text = Model.GroupInputDatas[i].InputDataKpiAndOrders[j].KpiName } }, new { @class = "kpi-list form-control", style = "width:280px;margin:0 auto" })
+                                                @Html.DropDownListFor(model => model.GroupInputDatas[i].InputDataKpiAndOrders[j].KpiId, new List<SelectListItem> { new SelectListItem { Value = Model.GroupInputDatas[i].InputDataKpiAndOrders[j].KpiId.ToString(), Text = Model.GroupInputDatas[i].InputDataKpiAndOrders[j].KpiName + " (" + Model.GroupInputDatas[i].InputDataKpiAndOrders[j].KpiMeasurement + ")" } }, new { @class = "kpi-list form-control", style = "width:280px;margin:0 auto" })
                                             </th>
                                             <th>
                                                 <input type="hidden" name="GroupInputDatas[@i].InputDataKpiAndOrders.Index" value="@j" class="kpi-index" />

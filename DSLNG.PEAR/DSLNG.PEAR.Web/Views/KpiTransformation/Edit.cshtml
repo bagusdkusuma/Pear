@@ -55,7 +55,7 @@
                 <div class="kpi-container">
                     @Html.DropDownList("KpiIds[]", new List<SelectListItem>(), new { @class = "kpi-list  form-control", style = "width:180px"}) <button class="btn btn-default btn-remove-kpi">Remove</button><button class="btn btn-default btn-add-kpi">Add</button>
                 </div>
-                    @foreach (var kpi in Model.Kpis)
+                    @foreach (var kpi in Model.Kpis.OrderBy(x => x.Name).ToList() )
                     {
                         <div class="kpi-container">
                             @Html.DropDownList("KpiIds[]", new List<SelectListItem> { new SelectListItem { Value = kpi.Id.ToString(), Text = kpi.Name } }, new { @class = "kpi-list  form-control", style = "width:180px"}) <button class="btn btn-default btn-remove-kpi">Remove</button><button class="btn btn-default btn-add-kpi">Add</button>

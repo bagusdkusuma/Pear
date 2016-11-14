@@ -790,6 +790,9 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetDerLoadingSchedulesResponse, DerValuesViewModel.DerLoadingScheduleViewModel>();
             Mapper.CreateMap<GetDerLoadingSchedulesResponse.VesselScheduleResponse, DerValuesViewModel.DerLoadingScheduleViewModel.VesselScheduleViewModel>();
             Mapper.CreateMap<GetDerLoadingSchedulesResponse.VesselScheduleResponse, DailyExecutionReportViewModel.NLSViewModel>();
+
+            Mapper.CreateMap<DSLNG.PEAR.Services.Responses.Kpi.GetKpisResponse.Kpi, CreateInputDataViewModel.Kpi>()
+                .ForMember(x => x.Measurement, o => o.MapFrom(s => s.Measurement.Name));
             base.Configure();
         }
 

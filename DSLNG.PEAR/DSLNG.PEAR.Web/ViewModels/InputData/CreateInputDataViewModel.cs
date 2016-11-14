@@ -45,6 +45,7 @@ namespace DSLNG.PEAR.Web.ViewModels.InputData
             public int Id { get; set; }
             public int KpiId { get; set; }
             public string KpiName { get; set; }
+            public string KpiMeasurement { get; set; }
             public int Order { get; set; }
         }
 
@@ -52,6 +53,7 @@ namespace DSLNG.PEAR.Web.ViewModels.InputData
         {
             public int Id { get; set; }
             public string Name { get; set; }
+            public string Measurement { get; set; }
         }
 
 

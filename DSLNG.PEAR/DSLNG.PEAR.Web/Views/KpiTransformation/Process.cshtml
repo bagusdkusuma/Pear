@@ -58,7 +58,7 @@
                     <button class="btn btn-primary pull-right" style="padding:10px 30px" data-toggle="modal" data-target="#scheduleProcess">Process</button>
                 </div>
                 <ul id="selected-kpis" class="connectedSortable">
-                    @foreach (var kpi in Model.Kpis)
+                    @foreach (var kpi in Model.Kpis.OrderBy(x => x.Name).ToList())
                     {
                         <li class="ui-state-default" data-kpi-id="@kpi.Id"><input type="checkbox" /> @kpi.Name</li>
                     }
