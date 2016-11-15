@@ -8,7 +8,7 @@
         </td>
         <td>
             @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value,
-           Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "days") 
+           Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "days", "N/A", true, 0) 
         </td>
         <td>
             since :
@@ -23,7 +23,7 @@
         </td>
         <td>
             @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value,
-           Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "days")
+           Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "days","N/A",true,0)
         </td>
         <td>
             since :
@@ -37,7 +37,7 @@
             <label> Safe Man-hours since Last DAFWC (as of @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Remark)) : </label>
 </td>
         <td class="text-right">
-            @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "hours") 
+            @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "hours", "N/A", true, 0) 
         </td>
     </tr>
     </tbody>

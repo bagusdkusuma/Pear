@@ -33,7 +33,7 @@
                     <td style="font-size:11px">
                         @nls.VesselType - @nls.SalesType - @nls.Type
                     </td>
-                    <td>@nls.Vessel (@nls.Capacity @nls.Measurement)</td>
+                    <td>@nls.Vessel (@nls.Capacity.ToString("N0") @nls.Measurement)</td>
                     @if (nls.ETA.HasValue)
                     {
                         <td>@nls.ETA.Value.ToString("dd-MMM-yyyy")</td>

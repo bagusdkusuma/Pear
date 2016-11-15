@@ -29,7 +29,7 @@
                 <span class="comparison left-side">
                     <i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Deviation)"></i>
                 </span>
-                @Html.DisplayDerValueWithLabelAtFront("1 Month:", Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Value, "1 Month:")
+                @Html.DisplayDerValueWithLabelAtFront("1 Month:", Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Value, "1 Month:", "N/A", true, 0)
             </td>
         </tr>
         <tr>
@@ -48,7 +48,7 @@
                 <span class="comparison left-side">
                     <i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Deviation)"></i>
                 </span>
-                @Html.DisplayDerValueWithLabelAtFront("3 Month:", Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Value, "3 Month:")
+                @Html.DisplayDerValueWithLabelAtFront("3 Month:", Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Value, "3 Month:", "N/A", true, 0)
             </td>
         </tr>
         <tr>
@@ -67,7 +67,7 @@
                 <span class="comparison left-side">
                     <i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 11).DerItemValue.Deviation)"></i>
                 </span>
-                @Html.DisplayDerValueWithLabelAtFront("6 Month:", Model.KpiInformationViewModels.Single(x => x.Position == 11).DerItemValue.Value, "6 Month:")
+                @Html.DisplayDerValueWithLabelAtFront("6 Month:", Model.KpiInformationViewModels.Single(x => x.Position == 11).DerItemValue.Value, "6 Month:","N/A",true,0)
             </td>
         </tr>
         <tr>
@@ -80,14 +80,14 @@
                 <span class="comparison absolute">
                     <i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Deviation)"></i>
                 </span>
-                @Html.DisplayDerValueWithLabelAtFront("1Yr:", Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Value, "1Yr:")
+                @Html.DisplayDerValueWithLabelAtFront("1Yr:", Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Value, "1Yr:", "N/A", true, 2)
             </td>
             <td class="brentfut-col brenfut-fourth" style="border-bottom:none;">
             <td>
                 <span class="comparison left-side">
                     <i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 12).DerItemValue.Deviation)"></i>
                 </span>
-                @Html.DisplayDerValueWithLabelAtFront("1 Year:", Model.KpiInformationViewModels.Single(x => x.Position == 12).DerItemValue.Value, "1 Year:")
+                @Html.DisplayDerValueWithLabelAtFront("1 Year:", Model.KpiInformationViewModels.Single(x => x.Position == 12).DerItemValue.Value, "1 Year:", "N/A", true, 0)
             </td>
         </tr>
     </tbody>
