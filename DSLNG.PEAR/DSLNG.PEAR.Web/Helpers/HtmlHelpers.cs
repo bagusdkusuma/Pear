@@ -13,6 +13,8 @@ using Newtonsoft.Json.Linq;
 using DSLNG.PEAR.Web.ViewModels.Wave;
 using DSLNG.PEAR.Web.ViewModels.Weather;
 using DSLNG.PEAR.Web.ViewModels.Der.Display;
+using System.Text;
+using System.Linq.Expressions;
 
 namespace DSLNG.PEAR.Web.Helpers
 {
@@ -75,15 +77,21 @@ namespace DSLNG.PEAR.Web.Helpers
             return ParseToNumber(val);
         }
 
-        public static string DisplayDerValue(this HtmlHelper htmlHelper, string val, string defaultVal = "N/A", bool isRounded = true)
+        public static string DisplayDerValue(this HtmlHelper htmlHelper, string val, string defaultVal = "N/A", bool isRounded = true, int trailingDecimal=0)
         {
 
-            return !string.IsNullOrEmpty(val) ? RoundIt(isRounded, val) : defaultVal;
+            return !string.IsNullOrEmpty(val) ? RoundIt(isRounded, val,trailingDecimal) : defaultVal;
         }
 
-        public static string DisplayCompleteDerValue(this HtmlHelper htmlHelper, string val, string measurement, string defaultMeasurement, string defaultVal = "N/A",
+         public static string DisplayCompleteDerValue(this HtmlHelper htmlHelper, string val, string measurement, string defaultMeasurement, string defaultVal = "N/A",
             bool isRounded = true, int trailingDecimal = 2)
         {
+            if(!string.IsNullOrEmpty(val) && (!string.IsNullOrEmpty(defaultMeasurement) && defaultMeasurement == "day")){
+                if (double.Parse(RoundIt(true, val, 2)) > 0)
+                {
+                    defaultMeasurement = string.Format("{0}s", defaultMeasurement);
+                }
+            }
             if (
                 (!string.IsNullOrEmpty(measurement) && measurement.ToLowerInvariant() == "MMbtu") ||
                 (!string.IsNullOrEmpty(measurement) && measurement.ToLowerInvariant() == "bbtu") ||
@@ -91,6 +99,7 @@ namespace DSLNG.PEAR.Web.Helpers
                 (!string.IsNullOrEmpty(defaultMeasurement) && defaultMeasurement.ToLowerInvariant() == "bbtu")
                 )
             {
+                
                 if (string.IsNullOrEmpty(val))
                 {
                     return defaultVal;
@@ -100,9 +109,9 @@ namespace DSLNG.PEAR.Web.Helpers
                     return string.Format("{0} {1}", RoundIt(isRounded, val, trailingDecimal), string.IsNullOrEmpty(measurement) ? defaultMeasurement : measurement);
                 }
             }
-
+            
             return !string.IsNullOrEmpty(val) ?
-                string.Format("{0} {1}", RoundIt(isRounded, val), string.IsNullOrEmpty(measurement) ? defaultMeasurement : measurement) : defaultVal;
+                string.Format("{0} {1}", RoundIt(isRounded, val, trailingDecimal), string.IsNullOrEmpty(measurement) ? defaultMeasurement : measurement) : defaultVal;
         }
 
 
@@ -386,10 +395,10 @@ namespace DSLNG.PEAR.Web.Helpers
             }
         }
 
-        public static string DisplayDerValueWithLabelAtFront(this HtmlHelper htmlHelper, string measurement, string val, string defaultMeasurement, string defaultVal = "N/A", bool isRounded = true)
+        public static string DisplayDerValueWithLabelAtFront(this HtmlHelper htmlHelper, string measurement, string val, string defaultMeasurement, string defaultVal = "N/A", bool isRounded = true, int trailingDecimals=2)
         {
             return !string.IsNullOrEmpty(val) ?
-                string.Format("{1} {0}", RoundIt(isRounded, val), string.IsNullOrEmpty(measurement) ? defaultMeasurement : measurement) : defaultVal;
+                string.Format("{1} {0}", RoundIt(isRounded, val, trailingDecimals), string.IsNullOrEmpty(measurement) ? defaultMeasurement : measurement) : defaultVal;
         }
 
         public static string Divide(this HtmlHelper htmlHelper, string val, int number)
@@ -408,7 +417,7 @@ namespace DSLNG.PEAR.Web.Helpers
                 var minutes = "00";
                 if (valInArray.Count() == 2)
                 {
-                    minutes = valInArray[1];
+                    minutes =  valInArray[1].ToString().PadLeft(2,'0');
                 }
                 return string.Format("{0}:{1}", hour, minutes);
             }
@@ -560,15 +569,16 @@ namespace DSLNG.PEAR.Web.Helpers
 
             //return isValidDouble ? Str x.ToString("0:0.###") : val;
             //return isValidDouble ? string.Format("{0:0,000.###}", x) : val;
-            if (number == 0)
-            {
-                return isValidDouble ? Math.Round(x).ToString("#,#", CultureInfo.InvariantCulture) : val;
-            }
-            else if (number == 1)
-            {
-                return isValidDouble ? Math.Round(x, 1).ToString("#,#.#", CultureInfo.InvariantCulture) : val;
-            }
-            return isValidDouble ? string.Format("{0:#,##0.##}", x) : val;
+            //if (number == 0)
+            //{
+            //    return isValidDouble ? Math.Round(x).ToString("N0", CultureInfo.InvariantCulture) : val;
+            //}
+            //else if (number == 1)
+            //{
+            //    return isValidDouble ? Math.Round(x, 1).ToString("N1", CultureInfo.InvariantCulture) : val;
+            //}
+            var format = string.Format("N{0}", number);
+            return isValidDouble ? Math.Round(x, number).ToString(format, CultureInfo.InvariantCulture) : val; //string.Format("{0:#,##0.0##}", x) : val;
         }
 
         private static string RemarkToIcon(string s)

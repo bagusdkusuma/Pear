@@ -19,7 +19,7 @@
             # Backlog
         </td>
         <td style="width:32%">
-            @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, string.Empty, string.Empty)
+            @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, string.Empty, string.Empty, "N/A", true, 0)
         </td>
         <td>
            @Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Remark
@@ -31,7 +31,7 @@
         </td>
         <td style="position:relative">
             <span class="indicator absolute">@Html.DisplayKpiIndicatorType2(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value)</span>
-            @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "day")
+            @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "day","-",true,0)
         </td>
         <td>
             Target &lt; @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "days")
