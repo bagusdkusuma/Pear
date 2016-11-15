@@ -73,7 +73,7 @@
             <td>LNG Spot DES JKM&nbsp;</td>
             <td>
                 <span class="comparison left-side"><i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Deviation)"></i></span>
-                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 4).KpiMeasurement, "USD/MMbtu")
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 4).KpiMeasurement, "USD/MMbtu","N/A",false,3)
             </td>
             <td>
                 <span class="comparison left-side"><i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 11).DerItemValue.Deviation)"></i></span>
