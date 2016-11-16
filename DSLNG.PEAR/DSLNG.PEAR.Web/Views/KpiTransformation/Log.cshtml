@@ -41,7 +41,7 @@
                      },
                        {
                            "orderable": true,
-                           "mDataProp": "ProcessingDate", "name": "ProcessingDate",
+                           "mDataProp": "ProcessingDate", "name": "ProcessingDate", "className": "dt-body-left",
                            render: function (data, type, row) {
                                if (data == null) return "";
                                return moment(new Date(data.match(/\d+/)[0] * 1)).format('DD MMM YYYY HH:mm');
