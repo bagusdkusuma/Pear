@@ -309,8 +309,13 @@
         }
         var previewDate = new Date(currentDate);
         previewDate.setDate(previewDate.getDate() + 1);
+        var month = (previewDate.getMonth()) + 1;
+        month = padLeft(month.toString(), 2);
+        var day = previewDate.getDate().toString();
+        day = padLeft(day, 2);
+        var year = padLeft(previewDate.getFullYear().toString(), 4);
 
-        var url = '@Url.Action("Preview","DER")?date=' + encodeURIComponent((previewDate.getMonth() + 1) + '/' + previewDate.getDate() + '/' + previewDate.getFullYear());  //  /DER/Preview?date=
+        var url = '@Url.Action("Preview","DER")?date=' + encodeURIComponent(month + '/' + day + '/' + year);  //  /DER/Preview?date=
         window.open(url, '_blank');
     }
     function moveFieldTo(event, fieldId) {
@@ -322,6 +327,9 @@
             event.preventDefault();
             return true;
         }
+    }
+    function padLeft(nr, n, str) {
+        return Array(n - String(nr).length + 1).join(str || '0') + nr;
     }
 </script>
 
