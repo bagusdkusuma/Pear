@@ -71,6 +71,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
             }).RoleGroups, "Id", "Name");
               SetPeriodeTypes(viewModel.PeriodeTypes);
+            ViewBag.Title = "Create Transformation Schedule";
             return View(viewModel);
         }
 
@@ -87,6 +88,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
             }).RoleGroups, "Id", "Name", viewModel.RoleGroupIds);
             SetPeriodeTypes(viewModel.PeriodeTypes);
+            ViewBag.Title = "Edit Transformation Schedule: " + viewModel.Name;
             return View(viewModel);
         }
 
