@@ -200,18 +200,19 @@ namespace DSLNG.PEAR.Web.Helpers
             try
             {
                 int value;
-                switch (section)
-                {
-                    case "ytd":
-                        value = PlantAvailabilityIndicator(kpiInformation.DerItemValue.Ytd, kpiInformationTarget.DerItemValue.Ytd);
-                        break;
-                    case "mtd":
-                        value = PlantAvailabilityIndicator(kpiInformation.DerItemValue.Mtd, kpiInformationTarget.DerItemValue.Mtd);
-                        break;
-                    default:
-                        value = PlantAvailabilityIndicator(kpiInformation.DerItemValue.Value, kpiInformationTarget.DerItemValue.Value);
-                        break;
-                }
+                //switch (section)
+                //{
+                //    case "ytd":
+                //        value = PlantAvailabilityIndicator(kpiInformation.DerItemValue.Ytd, kpiInformationTarget.DerItemValue.Ytd);
+                //        break;
+                //    case "mtd":
+                //        value = PlantAvailabilityIndicator(kpiInformation.DerItemValue.Mtd, kpiInformationTarget.DerItemValue.Mtd);
+                //        break;
+                //    default:
+                //        value = PlantAvailabilityIndicator(kpiInformation.DerItemValue.Value, kpiInformationTarget.DerItemValue.Value);
+                //        break;
+                //}
+                value = PlantAvailabilityIndicator(kpiInformation.DerItemValue.Ytd, kpiInformationTarget.DerItemValue.Ytd);
                 return RemarkToMvcHtmlString(value.ToString());
             }
             catch (Exception e)
