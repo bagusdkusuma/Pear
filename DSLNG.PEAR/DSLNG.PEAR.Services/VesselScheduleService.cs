@@ -133,7 +133,7 @@ namespace DSLNG.PEAR.Services
                     //DataContext.Buyers.Attach(buyer);
                     var vessel = DataContext.Vessels.First(x => x.Id == request.VesselId);// new Vessel { Id = request.VesselId };
                     //DataContext.Vessels.Attach(vessel);
-                    vesselSchedule.Name = vessel.Name + "-" + buyer.Name + "-" + vessel.Type + "-" + vesselSchedule.Cargo;
+                    vesselSchedule.Name = string.Format("{0}-{1}-{2}-{3}", vessel.Name, buyer.Name, vessel.Type, vesselSchedule.Cargo);
                     vesselSchedule.Buyer = buyer;
                     vesselSchedule.Vessel = vessel;
                     DataContext.VesselSchedules.Add(vesselSchedule);
@@ -148,7 +148,7 @@ namespace DSLNG.PEAR.Services
                         //DataContext.Buyers.Attach(buyer);
                         var vessel = DataContext.Vessels.First(x => x.Id == request.VesselId);// new Vessel { Id = request.VesselId };
                         //DataContext.Vessels.Attach(vessel);
-                        vesselSchedule.Name = vessel.Name + "-" + buyer.Name + "-" + vessel.Type + "-" + vesselSchedule.Cargo;
+                        vesselSchedule.Name = string.Format("{0}-{1}-{2}-{3}", vessel.Name, buyer.Name, vessel.Type, vesselSchedule.Cargo);
                         vesselSchedule.Buyer = buyer;
                         vesselSchedule.Vessel = vessel;
                     }
