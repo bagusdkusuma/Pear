@@ -418,7 +418,7 @@
                 var $this = $(this);
                 //var target = $this.attr('href');
                 var target = $this.data('target');
-                expands(target,$this);
+                expands(target, $this);
                 //if (!$(target).children().length) {
                 //    var contentUrl = $this.data('content-url');
                 //    contentUrl = contentUrl.replace('__date__', encodeURIComponent(currentDate));
@@ -1311,7 +1311,7 @@
                             $(this).select();
                         });
                         $(target).find('input.der-kpi').bind('enterKey', function (e) {
-                            
+
                             var $this = $(this);
                             var kpiId = $this.data('kpi-id');
                             var type = $this.data('type');
@@ -1319,29 +1319,33 @@
                             var nextTabindex = parseInt(tabindex) + 1;
                             var id = $this.attr('data-id');
                             var value = $this.val() == '' ? $(this).attr('placeholder') : $this.val();
-                            $(this).val(value);
-                            var valueType = $this.data('value-type');
-                            $this.addClass('in-progress');
-                            $.post("/dertransaction/updatekpi", { kpiId: kpiId, type: type, date: currentDate, id: id, value: value, valueType: valueType }, function (resp) {
-                                openNextTab($this, nextTabindex);
-                                var $next = $('[tabindex=' + nextTabindex + ']');
-                                if ($next.is("textarea") && $next.css('display') == 'none') {
-                                    tinyMCE.get($next.attr('id')).focus()
-                                } else {
-                                    $next.focus();
-                                }
-                                $this.removeClass('in-progress');
-                                if ($this.hasClass('der-value-prev')) {
-                                    $this.removeClass('der-value-prev');
-                                }
-                                if ($this.hasClass('der-value-empty')) {
-                                    $this.removeClass('der-value-empty');
-                                }
-                                $this.addClass('der-value-now');
-                                if (parseInt($this.attr('data-id')) == 0) {
-                                    $this.attr('data-id', resp.Id);
-                                }
-                            })
+                            if (!isNaN(value)) {
+
+                                $(this).val(value);
+                                var valueType = $this.data('value-type');
+                                $this.addClass('in-progress');
+                                $.post("/dertransaction/updatekpi", { kpiId: kpiId, type: type, date: currentDate, id: id, value: value, valueType: valueType }, function (resp) {
+
+                                    $this.removeClass('in-progress');
+                                    if ($this.hasClass('der-value-prev')) {
+                                        $this.removeClass('der-value-prev');
+                                    }
+                                    if ($this.hasClass('der-value-empty')) {
+                                        $this.removeClass('der-value-empty');
+                                    }
+                                    $this.addClass('der-value-now');
+                                    if (parseInt($this.attr('data-id')) == 0) {
+                                        $this.attr('data-id', resp.Id);
+                                    }
+                                });
+                            }
+                            openNextTab($this, nextTabindex);
+                            var $next = $('[tabindex=' + nextTabindex + ']');
+                            if ($next.is("textarea") && $next.css('display') == 'none') {
+                                tinyMCE.get($next.attr('id')).focus()
+                            } else {
+                                $next.focus();
+                            }
                         })
                         $(target).find('textarea.allow-html').each(function (i, val) {
                             var $this = $(val);
