@@ -168,6 +168,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 {
                     viewModel.Wave = wave.MapTo<WaveViewModel>();
                     viewModel.Wave.DerValueType = "prev";
+                    viewModel.Wave.Id = 0;
                 }
             }
             if (viewModel.Wave == null) viewModel.Wave = new WaveViewModel();
@@ -194,6 +195,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 {
                     viewModel.Weather = weather.MapTo<WeatherViewModel>();
                     viewModel.Weather.DerValueType = "prev";
+                    viewModel.Weather.Id = 0;
                 }
             }
             if (viewModel.Weather == null) viewModel.Weather = new WeatherViewModel();
