@@ -1548,7 +1548,7 @@ namespace DSLNG.PEAR.Services
                      */
                     var LNGPriceSPA_FOB = _customService.GetLNGPriceSPA_FOB(new GetFeedGasGSARequest { JccPrice = jccPrice });
                     var LNGPriceSPAFOB_Real = DataContext.KpiAchievements.FirstOrDefault(x => x.Kpi.Id == 186 && x.PeriodeType == PeriodeType.Monthly && x.Periode == request.Periode);
-                    var lastLNGPriceSPAFOB_Real = DataContext.KpiAchievements.OrderByDescending(x => x.Periode).FirstOrDefault(x => x.Kpi.Id == 186 && x.PeriodeType == PeriodeType.Monthly && x.Periode < request.Periode);
+                    var lastLNGPriceSPAFOB_Real = DataContext.KpiAchievements.OrderByDescending(x => x.Periode).FirstOrDefault(x => x.Kpi.Id == 186 && x.PeriodeType == PeriodeType.Monthly && (x.Periode.Month <= request.Periode.Month && x.Periode.Year <= request.Periode.Year));
                     deviation = "1";
                     if (LNGPriceSPA_FOB.IsSuccess && lastLNGPriceSPAFOB_Real != null)
                     {
@@ -1576,6 +1576,7 @@ namespace DSLNG.PEAR.Services
                             YtdDeviation = deviation,
                             ItdDeviation = deviation
                         };
+                        DataContext.KpiAchievements.Add(LNGPriceSPAFOB_Real);
                     }
 
                     DataContext.SaveChanges();

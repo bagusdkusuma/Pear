@@ -1319,7 +1319,7 @@
                             var nextTabindex = parseInt(tabindex) + 1;
                             var id = $this.attr('data-id');
                             var value = $this.val() == '' ? $(this).attr('placeholder') : $this.val();
-                            if (!isNaN(value)) {
+                            if (!isNaN(value) || $this.attr('data-value-type')=='remark') {
 
                                 $(this).val(value);
                                 var valueType = $this.data('value-type');
