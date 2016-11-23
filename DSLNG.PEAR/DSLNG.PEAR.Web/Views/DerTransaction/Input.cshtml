@@ -1319,13 +1319,16 @@
                             var nextTabindex = parseInt(tabindex) + 1;
                             var id = $this.attr('data-id');
                             var value = $this.val() == '' ? $(this).attr('placeholder') : $this.val();
-                            if (!isNaN(value) || $this.attr('data-value-type')=='remark') {
+                            var numeric = false;
+                            if ($this.attr('data-value-type') == 'value') {
+                                numeric = !isNaN(parseFloat(value));
+                            }
+                            if (numeric || $this.attr('data-value-type') == 'remark') {
 
                                 $(this).val(value);
                                 var valueType = $this.data('value-type');
                                 $this.addClass('in-progress');
                                 $.post("/dertransaction/updatekpi", { kpiId: kpiId, type: type, date: currentDate, id: id, value: value, valueType: valueType }, function (resp) {
-
                                     $this.removeClass('in-progress');
                                     if ($this.hasClass('der-value-prev')) {
                                         $this.removeClass('der-value-prev');
