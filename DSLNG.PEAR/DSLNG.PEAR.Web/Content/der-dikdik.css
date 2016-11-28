@@ -652,6 +652,9 @@ h6 {
         .table.table.key-equipment td.not-running {
             background-color: #00B0F0;
         }
+        .table.table.key-equipment td.not-available {
+            background-color: red;
+        }
         
         .loading-duration {
             background-color: #B8CCE4;

@@ -88,6 +88,12 @@
     :focus {
         border: 1px dashed red !important;
     }
+    .succeed {
+        border: 2px solid green !important;
+    }
+    .processing{
+        border: 2px solid yellow !important;
+    }
 </style>
 @{
     ViewBag.Title = "Der Input Form";
@@ -287,7 +293,7 @@
         e.preventDefault();
         var currentDate = $('.datepicker').val();
         var batch_id = $('#Batch_Id').val();
-        console.log(batch_id);
+        var name = $('#Batch_Id option:selected').text();
         var dto = {
             Id: batch_id,
             date: currentDate
@@ -298,7 +304,7 @@
             type: 'POST',
             url: '@Url.Action("ProcessDefault", "KpiTransformation")'
         }).done(function (data) {
-            $('#processResult').html(data);
+            $('#processResult').html(data +': <b>' + name +'</b>');
         });
     });
     function callDerPreview() {
@@ -1379,6 +1385,8 @@
                                         if (key == 9) {
                                             var highlightTypeId = $textarea.data('highlight-type-id');
                                             var id = $textarea.attr('data-id');
+                                            var row = $textarea.closest('tr');
+                                            row.addClass('processing');
                                             var value = editor.getContent();
                                             $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function (resp) {
                                                 openNextTab($textarea, nextTab);
@@ -1390,6 +1398,13 @@
                                                 }
                                                 if (parseInt($textarea.attr('data-id')) == 0) {
                                                     $textarea.attr('data-id', resp.Id);
+                                                    
+                                                }
+                                                if (resp.Id > 0) {
+                                                    if (row.hasClass('processing')) {
+                                                        row.removeClass('processing');
+                                                    }
+                                                    row.addClass('succeed');
                                                 }
                                             });
                                         }
