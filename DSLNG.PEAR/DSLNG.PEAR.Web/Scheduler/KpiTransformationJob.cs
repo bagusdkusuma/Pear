@@ -29,6 +29,7 @@ namespace DSLNG.PEAR.Web.Scheduler
                     var logService = new KpiTransformationLogService(dataContext);
                     var kpiTransformationScheduleService = new KpiTransformationScheduleService(dataContext);
                     var kpiService = new KpiService(dataContext);
+                    #region loop date
                     for (var date = kpiTransformationSchedule.Start; date <= kpiTransformationSchedule.End; date = Increment(kpiTransformationSchedule, date))
                     {
                         foreach (var kpi in kpiTransformationSchedule.SelectedKpis)
@@ -40,9 +41,16 @@ namespace DSLNG.PEAR.Web.Scheduler
                                 var mtdTransformed = kpi.CustomFormula;
                                 var itdTransformed = kpi.CustomFormula;
                                 var existingKpiActual = kpiAchievementService.GetKpiAchievement(kpi.Id, date, kpiTransformationSchedule.PeriodeType);
+                                // exception. could not be run because data dependency not found before Sept 30, 2016
+                                if ((kpi.Id == 37 || kpi.Id == 8) && date < new DateTime(2016, 09, 30))
+                                {
+                                    continue;
+                                }
+                                // pilih yang methodnya formula
                                 if (kpi.MethodId == 1)
                                 {
-                                    if (string.IsNullOrEmpty(kpi.CustomFormula)) {
+                                    if (string.IsNullOrEmpty(kpi.CustomFormula))
+                                    {
                                         //log here for dependency error
                                         var logRequest = new SaveKpiTransformationLogRequest
                                         {
@@ -68,7 +76,9 @@ namespace DSLNG.PEAR.Web.Scheduler
                                             kpiTransformed = Regex.Replace(kpiTransformed, "k" + g.Value, relatedKpiActual.Value.ToString(), RegexOptions.IgnoreCase);
                                             if (kpi.YtdFormula == YtdFormula.Custom)
                                             {
-                                                if (relatedKpiActual.Mtd.HasValue && relatedKpiActual.Ytd.HasValue && relatedKpiActual.Itd.HasValue)
+                                                if ((relatedKpiActual.Mtd.HasValue && relatedKpiActual.Ytd.HasValue && relatedKpiActual.Itd.HasValue && kpiTransformationSchedule.PeriodeType == PeriodeType.Daily)
+                                                || (relatedKpiActual.Ytd.HasValue && relatedKpiActual.Itd.HasValue && kpiTransformationSchedule.PeriodeType == PeriodeType.Monthly)
+                                                || (relatedKpiActual.Itd.HasValue && kpiTransformationSchedule.PeriodeType == PeriodeType.Yearly))
                                                 {
                                                     switch (kpiTransformationSchedule.PeriodeType)
                                                     {
@@ -123,9 +133,10 @@ namespace DSLNG.PEAR.Web.Scheduler
                                         }
                                         m = m.NextMatch();
                                     }
-                                    if (kpi.YtdFormula == YtdFormula.Custom )
+                                    if (kpi.YtdFormula == YtdFormula.Custom)
                                     {
-                                        if (meetRequirements) {
+                                        if (meetRequirements)
+                                        {
                                             var kpiActualRequest = new UpdateKpiAchievementItemRequest
                                             {
                                                 Id = existingKpiActual.IsSuccess ? existingKpiActual.Id : 0,
@@ -151,14 +162,43 @@ namespace DSLNG.PEAR.Web.Scheduler
                                             var resp = kpiAchievementService.UpdateKpiAchievementItem(kpiActualRequest);
                                             if (resp.IsSuccess)
                                             {
+                                                var thatYear = new DateTime(date.Year, 1, 1);
+                                                var existingYearKpiActual = kpiAchievementService.GetKpiAchievement(kpi.Id, thatYear, PeriodeType.Yearly);
+                                                var kpiactualYearlyRequest = new UpdateKpiAchievementItemRequest
+                                                {
+                                                    Id = existingYearKpiActual.IsSuccess ? existingYearKpiActual.Id : 0,
+                                                    KpiId = kpi.Id,
+                                                    Periode = thatYear,
+                                                    PeriodeType = PeriodeType.Yearly,
+                                                    Value = kpiActualRequest.Ytd.ToString(),
+                                                    UserId = kpiTransformationSchedule.UserId,
+                                                    Itd = kpiActualRequest.Itd
+                                                };
                                                 switch (kpiTransformationSchedule.PeriodeType)
                                                 {
                                                     case PeriodeType.Daily:
-                                                        kpiAchievementService.UpdateKpiAchievementItem(kpi.Id, PeriodeType.Monthly, new DateTime(date.Year, date.Month, 1), kpiActualRequest.Mtd, kpiTransformationSchedule.UserId);
-                                                        kpiAchievementService.UpdateKpiAchievementItem(kpi.Id, PeriodeType.Yearly, new DateTime(date.Year, 1, 1), kpiActualRequest.Ytd, kpiTransformationSchedule.UserId);
+                                                        var theDate = new DateTime(date.Year, date.Month, 1);
+                                                        var existingMonthlyKpiActual = kpiAchievementService.GetKpiAchievement(kpi.Id, theDate, PeriodeType.Monthly);
+                                                        
+                                                        var kpiActualMonthlyRequest = new UpdateKpiAchievementItemRequest
+                                                        {
+                                                            Id = existingMonthlyKpiActual.IsSuccess ? existingMonthlyKpiActual.Id : 0,
+                                                            KpiId = kpi.Id,
+                                                            Periode = theDate,
+                                                            PeriodeType = PeriodeType.Monthly,
+                                                            Value = kpiActualRequest.Mtd.ToString(),
+                                                            UserId = kpiTransformationSchedule.UserId,
+                                                            Ytd = kpiActualRequest.Ytd,
+                                                            Itd = kpiActualRequest.Itd
+                                                        };
+                                                        kpiAchievementService.UpdateKpiAchievementItem(kpiActualMonthlyRequest);
+                                                        //kpiAchievementService.UpdateKpiAchievementItem(kpi.Id, PeriodeType.Monthly, new DateTime(date.Year, date.Month, 1), kpiActualRequest.Mtd, kpiTransformationSchedule.UserId);
+                                                        //kpiAchievementService.UpdateKpiAchievementItem(kpi.Id, PeriodeType.Yearly, new DateTime(date.Year, 1, 1), kpiActualRequest.Ytd, kpiTransformationSchedule.UserId);
+                                                        kpiAchievementService.UpdateKpiAchievementItem(kpiactualYearlyRequest);
                                                         break;
                                                     case PeriodeType.Monthly:
-                                                        kpiAchievementService.UpdateKpiAchievementItem(kpi.Id, PeriodeType.Yearly, new DateTime(date.Year, 1, 1), kpiActualRequest.Ytd, kpiTransformationSchedule.UserId);
+                                                        kpiAchievementService.UpdateKpiAchievementItem(kpiactualYearlyRequest);
+                                                        //kpiAchievementService.UpdateKpiAchievementItem(kpi.Id, PeriodeType.Yearly, new DateTime(date.Year, 1, 1), kpiActualRequest.Ytd, kpiTransformationSchedule.UserId);
                                                         break;
                                                     default:
                                                         break;
@@ -206,6 +246,21 @@ namespace DSLNG.PEAR.Web.Scheduler
                                             var resp = kpiAchievementService.UpdateOriginalData(request);
                                             if (resp.IsSuccess)
                                             {
+                                                //if(kpi.YtdFormula == YtdFormula.NaN)
+                                                //{
+                                                //    switch (kpiTransformationSchedule.PeriodeType)
+                                                //    {
+                                                //        case PeriodeType.Daily:
+                                                //            kpiAchievementService.UpdateKpiAchievementItem(kpi.Id, PeriodeType.Monthly, new DateTime(date.Year, date.Month, 1), double.Parse(request.Value), kpiTransformationSchedule.UserId);
+                                                //            kpiAchievementService.UpdateKpiAchievementItem(kpi.Id, PeriodeType.Yearly, new DateTime(date.Year, 1, 1), double.Parse(request.Value), kpiTransformationSchedule.UserId);
+                                                //            break;
+                                                //        case PeriodeType.Monthly:
+                                                //            kpiAchievementService.UpdateKpiAchievementItem(kpi.Id, PeriodeType.Yearly, new DateTime(date.Year, 1, 1), double.Parse(request.Value), kpiTransformationSchedule.UserId);
+                                                //            break;
+                                                //        default:
+                                                //            break;
+                                                //    }
+                                                //}
                                                 var logRequest = new SaveKpiTransformationLogRequest
                                                 {
                                                     KpiId = kpi.Id,
@@ -230,7 +285,6 @@ namespace DSLNG.PEAR.Web.Scheduler
                                             }
                                         }
                                     }
-
                                 }
                                 else
                                 {
@@ -247,6 +301,10 @@ namespace DSLNG.PEAR.Web.Scheduler
                                     var resp = kpiAchievementService.UpdateOriginalData(request);
                                     if (resp.IsSuccess)
                                     {
+                                        if(date == kpiTransformationSchedule.End)
+                                        {
+
+                                        }
                                         var logRequest = new SaveKpiTransformationLogRequest
                                         {
                                             KpiId = kpi.Id,
@@ -295,8 +353,11 @@ namespace DSLNG.PEAR.Web.Scheduler
                             kpiTransformationScheduleService.UpdateStatus(kpiTransformationSchedule.Id, KpiTransformationStatus.Error);
                         }
                     }
+
+                    #endregion
                 }
 
+                
             }, (s) => s.ToRunNow());
         }
         private DateTime Increment(SaveKpiTransformationScheduleResponse kpiTransformationSchedule, DateTime periode)

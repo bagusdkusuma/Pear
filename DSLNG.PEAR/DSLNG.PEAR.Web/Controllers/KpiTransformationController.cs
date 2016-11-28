@@ -24,11 +24,12 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IKpiTransformationJob _kpiTransformationJob;
         private readonly IKpiTransformationLogService _kpiTransformationLogService;
 
-        public KpiTransformationController(IRoleGroupService roleService, 
-            IKpiTransformationService kpiTransformationService, 
+        public KpiTransformationController(IRoleGroupService roleService,
+            IKpiTransformationService kpiTransformationService,
             IKpiTransformationScheduleService kpiTransformationScheduleService,
             IKpiTransformationJob kpiTransformationJob,
-            IKpiTransformationLogService kpiTransformationLogService) {
+            IKpiTransformationLogService kpiTransformationLogService)
+        {
             _roleService = roleService;
             _kpiTransformationService = kpiTransformationService;
             _kpiTransformationScheduleService = kpiTransformationScheduleService;
@@ -64,23 +65,27 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Create()
         {
-            var viewModel = new KpiTransformationViewModel();
-            viewModel.RoleGroupOptions = new MultiSelectList(_roleService.GetRoleGroups(new Services.Requests.RoleGroup.GetRoleGroupsRequest
+            var viewModel = new KpiTransformationViewModel()
             {
-                Take = -1,
-                SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
-            }).RoleGroups, "Id", "Name");
-              SetPeriodeTypes(viewModel.PeriodeTypes);
+                RoleGroupOptions = new MultiSelectList(_roleService.GetRoleGroups(new Services.Requests.RoleGroup.GetRoleGroupsRequest
+                {
+                    Take = -1,
+                    SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+                }).RoleGroups, "Id", "Name")
+            };
+            SetPeriodeTypes(viewModel.PeriodeTypes);
             ViewBag.Title = "Create Transformation Schedule";
             return View(viewModel);
         }
 
         [HttpPost]
-        public ActionResult Create(KpiTransformationViewModel viewModel) {
+        public ActionResult Create(KpiTransformationViewModel viewModel)
+        {
             return Save(viewModel);
         }
 
-        public ActionResult Edit(int id) {
+        public ActionResult Edit(int id)
+        {
             var viewModel = _kpiTransformationService.Get(id).MapTo<KpiTransformationViewModel>();
             viewModel.RoleGroupOptions = new MultiSelectList(_roleService.GetRoleGroups(new Services.Requests.RoleGroup.GetRoleGroupsRequest
             {
@@ -98,7 +103,8 @@ namespace DSLNG.PEAR.Web.Controllers
             return Save(viewModel);
         }
 
-        public ActionResult Process(int id) {
+        public ActionResult Process(int id)
+        {
             var viewModel = _kpiTransformationService.Get(id).MapTo<KpiTransformationViewModel>();
             SetPeriodeTypes(viewModel.PeriodeTypes);
             SetProcessingTypes(viewModel.ProcessingTypes);
@@ -106,7 +112,8 @@ namespace DSLNG.PEAR.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Process(KpiTransformationScheduleViewModel viewModel) {
+        public ActionResult Process(KpiTransformationScheduleViewModel viewModel)
+        {
             var request = viewModel.MapTo<SaveKpiTransformationScheduleRequest>();
             request.UserId = UserProfile().UserId;
             var response = _kpiTransformationScheduleService.Save(request);
@@ -130,7 +137,8 @@ namespace DSLNG.PEAR.Web.Controllers
             return Json(response.Message, JsonRequestBehavior.AllowGet);
         }
 
-        private ActionResult Save(KpiTransformationViewModel viewModel) {
+        private ActionResult Save(KpiTransformationViewModel viewModel)
+        {
             var req = viewModel.MapTo<SaveKpiTransformationRequest>();
             var resp = _kpiTransformationService.Save(req);
             TempData["IsSuccess"] = resp.IsSuccess;
@@ -138,7 +146,8 @@ namespace DSLNG.PEAR.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Log(int id) {
+        public ActionResult Log(int id)
+        {
             ViewBag.Id = id;
             return View();
         }
@@ -199,7 +208,7 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 if (!name.Equals("Hourly") && !name.Equals("Weekly") && !name.Equals("Itd"))
                 {
-                    periodeTypes.Add(new SelectListItem { Text = name, Value = ((int)(PeriodeType)Enum.Parse(typeof (PeriodeType),name)).ToString() });
+                    periodeTypes.Add(new SelectListItem { Text = name, Value = ((int)(PeriodeType)Enum.Parse(typeof(PeriodeType), name)).ToString() });
                 }
             }
         }

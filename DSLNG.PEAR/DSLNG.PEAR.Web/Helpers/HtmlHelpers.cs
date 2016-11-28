@@ -77,16 +77,17 @@ namespace DSLNG.PEAR.Web.Helpers
             return ParseToNumber(val);
         }
 
-        public static string DisplayDerValue(this HtmlHelper htmlHelper, string val, string defaultVal = "N/A", bool isRounded = true, int trailingDecimal=0)
+        public static string DisplayDerValue(this HtmlHelper htmlHelper, string val, string defaultVal = "N/A", bool isRounded = true, int trailingDecimal = 0)
         {
 
-            return !string.IsNullOrEmpty(val) ? RoundIt(isRounded, val,trailingDecimal) : defaultVal;
+            return !string.IsNullOrEmpty(val) ? RoundIt(isRounded, val, trailingDecimal) : defaultVal;
         }
 
-         public static string DisplayCompleteDerValue(this HtmlHelper htmlHelper, string val, string measurement, string defaultMeasurement, string defaultVal = "N/A",
-            bool isRounded = true, int trailingDecimal = 2)
+        public static string DisplayCompleteDerValue(this HtmlHelper htmlHelper, string val, string measurement, string defaultMeasurement, string defaultVal = "N/A",
+           bool isRounded = true, int trailingDecimal = 2)
         {
-            if(!string.IsNullOrEmpty(val) && (!string.IsNullOrEmpty(defaultMeasurement) && defaultMeasurement == "day")){
+            if (!string.IsNullOrEmpty(val) && (!string.IsNullOrEmpty(defaultMeasurement) && defaultMeasurement == "day"))
+            {
                 if (double.Parse(RoundIt(true, val, 2)) > 0)
                 {
                     defaultMeasurement = string.Format("{0}s", defaultMeasurement);
@@ -99,7 +100,7 @@ namespace DSLNG.PEAR.Web.Helpers
                 (!string.IsNullOrEmpty(defaultMeasurement) && defaultMeasurement.ToLowerInvariant() == "bbtu")
                 )
             {
-                
+
                 if (string.IsNullOrEmpty(val))
                 {
                     return defaultVal;
@@ -109,7 +110,7 @@ namespace DSLNG.PEAR.Web.Helpers
                     return string.Format("{0} {1}", RoundIt(isRounded, val, trailingDecimal), string.IsNullOrEmpty(measurement) ? defaultMeasurement : measurement);
                 }
             }
-            
+
             return !string.IsNullOrEmpty(val) ?
                 string.Format("{0} {1}", RoundIt(isRounded, val, trailingDecimal), string.IsNullOrEmpty(measurement) ? defaultMeasurement : measurement) : defaultVal;
         }
@@ -396,7 +397,7 @@ namespace DSLNG.PEAR.Web.Helpers
             }
         }
 
-        public static string DisplayDerValueWithLabelAtFront(this HtmlHelper htmlHelper, string measurement, string val, string defaultMeasurement, string defaultVal = "N/A", bool isRounded = true, int trailingDecimals=2)
+        public static string DisplayDerValueWithLabelAtFront(this HtmlHelper htmlHelper, string measurement, string val, string defaultMeasurement, string defaultVal = "N/A", bool isRounded = true, int trailingDecimals = 2)
         {
             return !string.IsNullOrEmpty(val) ?
                 string.Format("{1} {0}", RoundIt(isRounded, val, trailingDecimals), string.IsNullOrEmpty(measurement) ? defaultMeasurement : measurement) : defaultVal;
@@ -418,7 +419,7 @@ namespace DSLNG.PEAR.Web.Helpers
                 var minutes = "00";
                 if (valInArray.Count() == 2)
                 {
-                    minutes =  valInArray[1].ToString().PadLeft(2,'0');
+                    minutes = valInArray[1].ToString().PadRight(2, '0');
                 }
                 return string.Format("{0}:{1}", hour, minutes);
             }
@@ -524,12 +525,12 @@ namespace DSLNG.PEAR.Web.Helpers
             }
             var actual = double.Parse(actualValue);
 
-            if (actual < 48)
+            if (actual < 48) // 2 * 24
             {
                 //hijau
                 return new MvcHtmlString("<i class='fa fa-circle'></i>");
             }
-            else if (actual > 48.12)
+            else if (actual > 52.8) // 2.2 * 24
             {
                 //merah jika 
                 return new MvcHtmlString("<i class='fa fa-circle' style='color:red'></i>");
@@ -554,10 +555,14 @@ namespace DSLNG.PEAR.Web.Helpers
                 //hijau
                 return new MvcHtmlString("<i class='fa fa-circle'></i>");
             }
-            else
+            else if (actual >= target)
             {
                 //merah
                 return new MvcHtmlString("<i class='fa fa-circle' style='color: red' ></i>");
+            }
+            else
+            {
+                return new MvcHtmlString(string.Empty);
             }
         }
 

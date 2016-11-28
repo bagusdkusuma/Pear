@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using DSLNG.PEAR.Common.Extensions;
 using System.Data.Entity;
+using DSLNG.PEAR.Services.Responses;
+using System.Data.Entity.Infrastructure;
 
 namespace DSLNG.PEAR.Services
 {
@@ -148,6 +150,38 @@ namespace DSLNG.PEAR.Services
                 .Include(x => x.Kpis.Select(y => y.Measurement))
                 .Include(x => x.RoleGroups)
                 .Single(x => x.Id == id).MapTo<GetKpiTransformationResponse>();
+        }
+
+        public BaseResponse Delete(int id)
+        {
+            try
+            {
+                var item = new KpiTransformation { Id = id };
+                DataContext.KpiTransformations.Attach(item);
+                DataContext.KpiTransformations.Remove(item);
+                DataContext.SaveChanges();
+                return new BaseResponse
+                {
+                    IsSuccess = true,
+                    Message = string.Format("{0} deleted Successfully", item.Name)
+                };
+            }
+            catch (DbUpdateException e)
+            {
+                if (e.InnerException.InnerException.Message.Contains("dbo.KpiTransformations"))
+                {
+                    return new BaseResponse
+                    {
+                        IsSuccess = false,
+                        Message = "This Item still Used by KpiTransformationService"
+                    };
+                }
+                return new BaseResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured while trying to delete this item"
+                };
+            }
         }
     }
 }
