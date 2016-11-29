@@ -1,4 +1,5 @@
 ﻿using DSLNG.PEAR.Services.Requests.InputData;
+using DSLNG.PEAR.Services.Responses;
 using DSLNG.PEAR.Services.Responses.InputData;
 using System;
 using System.Collections.Generic;
@@ -14,5 +15,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetInputDataResponse GetInputData(int Id);
         SaveOrUpdateInputDataResponse SaveOrUpdateInputData(SaveOrUpdateInputDataRequest request);
         GetInputDatasResponse GetInputDatas();
+        BaseResponse Delete(int id);
     }
 }

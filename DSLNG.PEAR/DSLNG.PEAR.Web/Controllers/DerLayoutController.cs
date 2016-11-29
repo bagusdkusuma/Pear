@@ -121,21 +121,20 @@ namespace DSLNG.PEAR.Web.Controllers
                 editViewModel.Type = response.Type;
                 switch (response.Type.ToLowerInvariant())
                 {
-                    case "line":
-                        {
-                            var lineChart = new LineChartViewModel();
-                            editViewModel.LineChart = response.Artifact.MapPropertiesToInstance<LineChartViewModel>(lineChart);
-                            var series = new LineChartViewModel.SeriesViewModel();
-                            editViewModel.LineChart.Series.Insert(0, series);
-                            editViewModel.Artifact.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
-                            {
-                                Take = -1,
-                                SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
-                            }).Measurements
-                            .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
-                            break;
-                        }
-
+                    //case "line":
+                    //    {
+                    //        var lineChart = new LineChartViewModel();
+                    //        editViewModel.LineChart = response.Artifact.MapPropertiesToInstance<LineChartViewModel>(lineChart);
+                    //        var series = new LineChartViewModel.SeriesViewModel();
+                    //        editViewModel.LineChart.Series.Insert(0, series);
+                    //        editViewModel.Artifact.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
+                    //        {
+                    //            Take = -1,
+                    //            SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+                    //        }).Measurements
+                    //        .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+                    //        break;
+                    //    }
                     case "pie":
                         {
                             var pie = new PieViewModel();
@@ -157,7 +156,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             editViewModel.Tank = response.Artifact.Tank.MapPropertiesToInstance<TankViewModel>(tank);
                             break;
                         }
-
+                    case "line":
                     case "multiaxis":
                         {
                             var multiaxisChart = new MultiaxisChartViewModel();
@@ -352,7 +351,8 @@ namespace DSLNG.PEAR.Web.Controllers
                     case "1-and-2":
                     case "1-and-3":
                         {
-                            viewModel.Type = "line";
+                            //viewModel.Type = "line";
+                            viewModel.Type = "multiaxis";
                             break;
                         }
                     case "2-and-0":
@@ -564,21 +564,21 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             switch (type.ToLowerInvariant())
             {
-                case "line":
-                    {
-                        var viewModel = new DerLayoutItemViewModel();
-                        viewModel.Artifact = new DerLayoutItemViewModel.DerLayoutItemArtifactViewModel();
-                        viewModel.Artifact.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
-                        {
-                            Take = -1,
-                            SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
-                        }).Measurements
-                    .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
-                        viewModel.LineChart = new LineChartViewModel();
-                        var series = new LineChartViewModel.SeriesViewModel();
-                        viewModel.LineChart.Series.Add(series);
-                        return PartialView("LayoutType/_Line", viewModel);
-                    }
+                //case "line":
+                //    {
+                //        var viewModel = new DerLayoutItemViewModel();
+                //        viewModel.Artifact = new DerLayoutItemViewModel.DerLayoutItemArtifactViewModel();
+                //        viewModel.Artifact.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
+                //        {
+                //            Take = -1,
+                //            SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
+                //        }).Measurements
+                //    .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+                //        viewModel.LineChart = new LineChartViewModel();
+                //        var series = new LineChartViewModel.SeriesViewModel();
+                //        viewModel.LineChart.Series.Add(series);
+                //        return PartialView("LayoutType/_Line", viewModel);
+                //    }
                 case "barmeter":
                 case "speedometer":
                     {
@@ -595,7 +595,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         viewModel.SpeedometerChart.PlotBands.Add(plot);
                         return PartialView("LayoutType/_Speedometer", viewModel);
                     }
-
+                case "line":
                 case "multiaxis":
                     {
                         var viewModel = new DerLayoutItemViewModel();
@@ -844,14 +844,15 @@ namespace DSLNG.PEAR.Web.Controllers
             switch (layoutItemViewModel.Type.ToLowerInvariant())
             {
                 case "line":
-                    {
-                        request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
-                        request.Artifact = layoutItemViewModel.Artifact.MapTo<SaveLayoutItemRequest.LayoutItemArtifact>();
-                        request.Artifact.LineChart = layoutItemViewModel.LineChart.MapTo<SaveLayoutItemRequest.LayoutItemArtifactLine>();
-                        response = _derService.SaveLayoutItem(request);
+                    //{
+                    //    request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
+                    //    request.Artifact = layoutItemViewModel.Artifact.MapTo<SaveLayoutItemRequest.LayoutItemArtifact>();
+                    //    //request.Artifact.LineChart = layoutItemViewModel.LineChart.MapTo<SaveLayoutItemRequest.LayoutItemArtifactLine>();
+                    //    request.Artifact.MultiAxis = layoutItemViewModel.MultiaxisChart.MapTo<SaveLayoutItemRequest.LayoutItemArtifactMultiAxis>();
+                    //    response = _derService.SaveLayoutItem(request);
 
-                        break;
-                    }
+                    //    break;
+                    //}
 
                 case "multiaxis":
                     {
