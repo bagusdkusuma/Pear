@@ -13,6 +13,8 @@ using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Services.Requests.KpiTransformationSchedule;
 using DSLNG.PEAR.Web.Scheduler;
 using DSLNG.PEAR.Services.Requests.KpiTransformationLog;
+using DSLNG.PEAR.Web.Attributes;
+using DSLNG.PEAR.Services.Responses;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -84,6 +86,16 @@ namespace DSLNG.PEAR.Web.Controllers
             return Save(viewModel);
         }
 
+        [HttpPost]
+        [AuthorizeUser(AccessLevel = "AllowDelete")]
+        public ActionResult Delete(int id)
+        {
+            var response = new BaseResponse();
+            response = _kpiTransformationService.Delete(id);
+            @TempData["IsSuccess"] = response.IsSuccess;
+            @TempData["Message"] = response.Message;
+            return RedirectToAction("Index");
+        }
         public ActionResult Edit(int id)
         {
             var viewModel = _kpiTransformationService.Get(id).MapTo<KpiTransformationViewModel>();

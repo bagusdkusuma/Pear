@@ -24,9 +24,9 @@
         @{
             switch (Model.Type.ToLowerInvariant())
             {
-                case "line":
-                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_Line.Edit.cshtml", Model);
-                    break;
+                //case "line":
+                //    Html.RenderPartial("~/Views/DerLayout/LayoutType/_Line.Edit.cshtml", Model);
+                //    break;
                 case "dafwc":
                     Html.RenderPartial("~/Views/DerLayout/LayoutType/_Dafwc.Edit.cshtml", Model);
                     break;
@@ -36,6 +36,7 @@
                 case "tank":
                     Html.RenderPartial("~/Views/DerLayout/LayoutType/_Tank.Edit.cshtml", Model);
                     break;
+                case "line":
                 case "multiaxis":
                     Html.RenderPartial("~/Views/DerLayout/LayoutType/_Multiaxis.Edit.cshtml", Model);
                     break;

@@ -88,11 +88,14 @@
     :focus {
         border: 1px dashed red !important;
     }
-    .succeed {
+    tr.der-value-now, .succeed {
         border: 2px solid green !important;
     }
     .processing{
         border: 2px solid yellow !important;
+    }
+    tr.der-value-prev, tr.der-value-empty {
+        border: 2px solid grey !important;
     }
 </style>
 @{
@@ -1358,6 +1361,11 @@
                         })
                         $(target).find('textarea.allow-html').each(function (i, val) {
                             var $this = $(val);
+                            var textarea = $this.closest('textarea');
+                            var row = textarea.closest('tr');
+                            var currentClass = textarea.attr('class').split(' ')[0];
+                            row.addClass(currentClass);
+                            console.log(row);
                             tinyMCE.init({
                                 selector: '#' + $this.attr('id'),
                                 menubar: false,

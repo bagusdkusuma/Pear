@@ -47,7 +47,8 @@
                     </td>
                     <td>
                         <a href="@Url.Action("FormInputData", new { id = item.Id })">Input</a> |
-                        <a href="@Url.Action("Update", new { id = item.Id })">Configure</a>
+                        <a href="@Url.Action("Update", new { id = item.Id })">Configure</a> |
+                        <a href="javascript:void(0)" class="delete" data-id="@item.Id" data-value="@item.Name">Delete</a>
                     </td>
                 </tr>
             }
@@ -57,5 +58,24 @@
 </table>
 
 @section Scripts{
-    
+    <script type="text/javascript">
+        $(document).ready(function () {
+            
+            $('#input-data-table').on('click', '.delete', function () {
+                var id = $(this).attr('data-id');
+                var name = $(this).attr('data-value');
+                if (confirm('Are you sure want to delete this item ' + name + ' ?')) {
+                    var url = '@Url.Action("Delete", "InputData")';
+                    var form = $('<form />');
+                    form.attr('action', url);
+                    form.attr('method', 'POST');
+                    form.html('<input type="hidden" name="id" value="' + id + '" />');
+                    $('body').append(form);
+                    form.submit();
+                }
+            });
+
+
+        });
+</script>
 }

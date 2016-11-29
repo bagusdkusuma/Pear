@@ -82,6 +82,14 @@ namespace DSLNG.PEAR.Web.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+             var response = _inputDataService.Delete(id);
+            @TempData["IsSuccess"] = response.IsSuccess;
+            @TempData["Message"] = response.Message;
+            return Redirect("Index");
+        }
         public ActionResult Update(int Id)
         {
             var response = _inputDataService.GetInputData(Id);

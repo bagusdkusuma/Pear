@@ -3434,12 +3434,13 @@ ul.pop-attachments-list {
     background:blueviolet !important;
 }
 
-input.der-value-prev,
+tr.der-value-prev, input.der-value-prev,
 select.der-value-prev {
   color : gray;
 }
 input.der-value-now,
 textarea.der-value-now,
+tr.der-value-now, 
 select.der-value-now {
   color : green;
 }

@@ -219,46 +219,46 @@ namespace DSLNG.PEAR.Web.Controllers
                 #endregion
                 #region line
                 case "line":
-                    {
+                    //{
 
-                        var request = new GetCartesianChartDataRequest();
-                        request.Start = date.AddDays(-6);
-                        request.End = date;
-                        request.HeaderTitle = layout.Artifact.HeaderTitle;
-                        request.MeasurementId = layout.Artifact.MeasurementId;
-                        request.PeriodeType = PeriodeType.Daily;
-                        request.RangeFilter = RangeFilter.Interval;
-                        request.ValueAxis = ValueAxis.KpiActual;
+                    //    var request = new GetCartesianChartDataRequest();
+                    //    request.Start = date.AddDays(-6);
+                    //    request.End = date;
+                    //    request.HeaderTitle = layout.Artifact.HeaderTitle;
+                    //    request.MeasurementId = layout.Artifact.MeasurementId;
+                    //    request.PeriodeType = PeriodeType.Daily;
+                    //    request.RangeFilter = RangeFilter.Interval;
+                    //    request.ValueAxis = ValueAxis.KpiActual;
 
-                        var series = layout.Artifact.Series.Select(x => new GetCartesianChartDataRequest.SeriesRequest
-                        {
-                            Color = x.Color,
-                            KpiId = x.KpiId,
-                            Label = x.Label
-                        }).ToList();
-                        request.Series = series;
-                        var chartData = _artifactService.GetChartData(request);
+                    //    var series = layout.Artifact.Series.Select(x => new GetCartesianChartDataRequest.SeriesRequest
+                    //    {
+                    //        Color = x.Color,
+                    //        KpiId = x.KpiId,
+                    //        Label = x.Label
+                    //    }).ToList();
+                    //    request.Series = series;
+                    //    var chartData = _artifactService.GetChartData(request);
 
-                        var previewViewModel = new ArtifactPreviewViewModel();
-                        previewViewModel.PeriodeType = "Daily";
-                        previewViewModel.Highlights = new List<ArtifactPreviewViewModel.HighlightViewModel>();
-                        for (DateTime counter = request.Start.Value;
-                             counter <= request.End.Value;
-                             counter = counter.AddDays(1))
-                        {
-                            previewViewModel.Highlights.Add(null);
-                        }
-                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
-                        previewViewModel.GraphicType = layout.Type;
-                        previewViewModel.LineChart = new LineChartDataViewModel();
-                        previewViewModel.LineChart.Title = layout.Artifact.HeaderTitle;
-                        previewViewModel.LineChart.Subtitle = chartData.Subtitle;
-                        previewViewModel.LineChart.ValueAxisTitle = layout.Artifact.MeasurementName;
-                        previewViewModel.LineChart.Series =
-                            chartData.Series.MapTo<LineChartDataViewModel.SeriesViewModel>();
-                        previewViewModel.LineChart.Periodes = chartData.Periodes;
-                        return Json(previewViewModel, JsonRequestBehavior.AllowGet);
-                    }
+                    //    var previewViewModel = new ArtifactPreviewViewModel();
+                    //    previewViewModel.PeriodeType = "Daily";
+                    //    previewViewModel.Highlights = new List<ArtifactPreviewViewModel.HighlightViewModel>();
+                    //    for (DateTime counter = request.Start.Value;
+                    //         counter <= request.End.Value;
+                    //         counter = counter.AddDays(1))
+                    //    {
+                    //        previewViewModel.Highlights.Add(null);
+                    //    }
+                    //    previewViewModel.TimePeriodes = chartData.TimePeriodes;
+                    //    previewViewModel.GraphicType = layout.Type;
+                    //    previewViewModel.LineChart = new LineChartDataViewModel();
+                    //    previewViewModel.LineChart.Title = layout.Artifact.HeaderTitle;
+                    //    previewViewModel.LineChart.Subtitle = chartData.Subtitle;
+                    //    previewViewModel.LineChart.ValueAxisTitle = layout.Artifact.MeasurementName;
+                    //    previewViewModel.LineChart.Series =
+                    //        chartData.Series.MapTo<LineChartDataViewModel.SeriesViewModel>();
+                    //    previewViewModel.LineChart.Periodes = chartData.Periodes;
+                    //    return Json(previewViewModel, JsonRequestBehavior.AllowGet);
+                    //}
                 #endregion
                 #region multiaxis
                 case "multiaxis":

@@ -12,6 +12,8 @@ using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Common.Extensions;
 using System.Data.Entity;
 using DSLNG.PEAR.Data.Enums;
+using DSLNG.PEAR.Services.Responses;
+using System.Data.Entity.Infrastructure;
 
 namespace DSLNG.PEAR.Services
 {
@@ -20,6 +22,45 @@ namespace DSLNG.PEAR.Services
         public InputDataService(IDataContext dataContext)
             : base(dataContext)
         {
+        }
+
+        public BaseResponse Delete(int id)
+        {
+            var response = new BaseResponse();
+            try
+            {
+                var input = DataContext.InputData
+                    .Include(x=>x.GroupInputDatas)
+                    .Include(x=>x.GroupInputDatas.Select(y=>y.InputDataKpiAndOrders))
+                    .First(x => x.Id == id);
+                if (input.GroupInputDatas.Count > 0)
+                {
+                    foreach (var item in input.GroupInputDatas.ToList())
+                    {
+                        if (item.InputDataKpiAndOrders.Count > 0)
+                        {
+                            foreach (var kpi in item.InputDataKpiAndOrders.ToList())
+                            {
+                                DataContext.InputDataKpiAndOrder.Remove(kpi);
+                            }
+                            DataContext.SaveChanges();
+                        }
+                        DataContext.GroupInputData.Remove(item);
+                        DataContext.SaveChanges();
+                    }
+                }
+                //DataContext.InputData.Attach(input);
+                DataContext.InputData.Remove(input);
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = string.Format("Input Data item {0} deleted Successfully!", input.Name);
+            }
+            catch (DbUpdateException e)
+            {
+                response.IsSuccess = false;
+                response.Message = e.Message;
+            }
+            return response;
         }
 
         public GetInputDataResponse GetInputData(int id)
