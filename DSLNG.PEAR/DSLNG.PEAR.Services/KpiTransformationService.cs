@@ -156,8 +156,11 @@ namespace DSLNG.PEAR.Services
         {
             try
             {
-                var item = new KpiTransformation { Id = id };
-                DataContext.KpiTransformations.Attach(item);
+                var item = DataContext.KpiTransformations
+                    .Include(x => x.Kpis)
+                    .Include(x => x.Schedules)
+                    .Include(x => x.Schedules.Select(y => y.Logs))
+                    .First(x => x.Id == id);
                 DataContext.KpiTransformations.Remove(item);
                 DataContext.SaveChanges();
                 return new BaseResponse

@@ -136,7 +136,7 @@ namespace DSLNG.PEAR.Web.Helpers
             }
             else
             {
-                return string.Format("{0} {1}", RoundIt(true, val, 1), "%");
+                return string.Format("{0} {1}", RoundIt(true, val, 2), "%");
             }
         }
 

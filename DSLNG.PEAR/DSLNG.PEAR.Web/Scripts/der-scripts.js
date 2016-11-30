@@ -155,6 +155,12 @@ Number.prototype.format = function (n, x) {
 
 (function window(window, $, undefined) {
     
+    Highcharts.setOptions({
+        lang: {
+            decimalPoint: '.',
+            thousandsSep: ','
+        }
+    });
     var Der = {};
     Der.Artifact = {};
     Der.Artifact.line = function (data, container) {
@@ -285,7 +291,24 @@ Number.prototype.format = function (n, x) {
         //}, 1000);
        
     }
-    Der.Artifact.multiaxis =  function (data, container) {
+    Der.Artifact.multiaxis = function (data, container) {
+        var symbol = i % 2 == 0 ? 'triangle' : 'square';
+        var fillColor = i % 2 == 0 ? '#31587f' : '#fff000';
+        var converted = false;
+        var decimal = 0;
+        if (data.MultiaxisChart.Title.toLowerCase().indexOf('cds') > -1) {
+            symbol = 'triangle';
+            converted = true;
+        } else if (data.MultiaxisChart.Title.toLowerCase().indexOf('thermal') > -1) {
+            symbol = 'square';
+            converted = true;
+            decimal = 1;
+        } else if (data.MultiaxisChart.Title.toLowerCase().indexOf('loss') > -1) {
+            fillColor = '#403152';
+            converted = true;
+            decimal = 2;
+        }
+
         var yAxes = [];
         var seriesNames = [];
         var chartTypeMap = {
@@ -302,10 +325,6 @@ Number.prototype.format = function (n, x) {
         };
         var series = [];
         for (var i in data.MultiaxisChart.Charts) {
-            
-            var symbol = i % 2 == 0 ? 'triangle' : 'square';
-            var fillColor = i % 2 == 0 ? '#31587f' : '#fff000';
-            
             yAxes.push({
                 title: {
                     text: data.MultiaxisChart.Charts[i].Measurement,
@@ -328,14 +347,21 @@ Number.prototype.format = function (n, x) {
                     },
                     formatter: function () {
                         var x = this.value;
-                        return x.format();
+                        if (decimal > 0) {
+                            return x.format(decimal, '{point.y}');
+                        } else {
+                            return x.format();
+                        }
+                        
+                        //var x = this.value
+                        //return x.format();
                     }
                 },
                 min: container.data('min') != '' && container.data('min') != null ? container.data('min') : null,
                 lineWidth: 1
             });
-            if (chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType] == 'line') {                
-                var symbol = i % 2 == 0 ? 'triangle' : 'square';
+            if (chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType] === 'line') {                
+                //var symbol = i % 2 == 0 ? 'triangle' : 'square';
                 plotOptions[chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType]] = {
                     marker: {
                         enabled: true,
@@ -350,7 +376,7 @@ Number.prototype.format = function (n, x) {
                         }
                     }
                 };
-            } else if (chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType] == 'area' && data.MultiaxisChart.Charts[i].SeriesType == 'multi-stack') {
+            } else if (chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType] === 'area' && data.MultiaxisChart.Charts[i].SeriesType === 'multi-stack') {
 
                 plotOptions[chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType]] = {
                     stacking: 'normal',
@@ -378,7 +404,12 @@ Number.prototype.format = function (n, x) {
                 
 
                 if (seriesNames.indexOf(data.MultiaxisChart.Charts[i].Series[j].name) < 0) {
-                    seriesNames.push(data.MultiaxisChart.Charts[i].Series[j].name);
+                    if (converted === false) {
+                        seriesNames.push(data.MultiaxisChart.Charts[i].Series[j].name);
+                    } else {
+                        data.MultiaxisChart.Charts[i].Series[j].showInLegend = false;
+                    }
+                    
                 } else {
                     data.MultiaxisChart.Charts[i].Series[j].showInLegend = false;
                 }
@@ -394,6 +425,7 @@ Number.prototype.format = function (n, x) {
                 }
                 data.MultiaxisChart.Charts[i].Series[j].yAxis = parseInt(i);// + 1;
                 data.MultiaxisChart.Charts[i].Series[j].tooltip = {
+                    valueDecimals: decimal,
                     valueSuffix: ' ' + data.MultiaxisChart.Charts[i].Measurement
                 }
                 series.push(data.MultiaxisChart.Charts[i].Series[j]);
