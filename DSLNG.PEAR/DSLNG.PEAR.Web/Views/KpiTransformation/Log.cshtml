@@ -90,11 +90,40 @@
                            "defaultContent": '',
                            "mRender": function (data, type, row) {
                                var processLink = '@Html.ActionLink("Details", "LogDetails", new { id = "_id_" })'.replace('_id_', data.Id);
-                               return processLink;
+                               var deleteLink = '<a href="" class="delete" data-id="_id_" data-value="_name_" data-periode="_periode_" >Delete</a>'.replace('_id_', data.Id).replace('_name_', data.ProcessingDate).replace('_periode_', data.PeriodeType);
+                               return processLink + ' | ' + deleteLink;
                            }
                        }
                 ]
             });
+
+            $('#kpi-transformation-table').on('click', 'a.delete', function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var id = $this.attr('data-id');
+                var data = $this.attr('data-value');
+                var periode = $this.attr('data-periode');
+                var name = '';
+                switch (parseInt(periode)) {
+                    case 4:
+                        name = moment(new Date(data.match(/\d+/)[0] * 1)).format('YYYY');
+                    case 3:
+                        name = moment(new Date(data.match(/\d+/)[0] * 1)).format('MMM YYYY');
+                    default:
+                        name = moment(new Date(data.match(/\d+/)[0] * 1)).format('MMM DD YYYY');
+                }
+                console.log(id);
+                if (confirm('Are you sure want to delete this log processing date : ' + name + ' ?')) {
+                    var url = '@Url.Action("DeleteSchedule", "KpiTransformation")';
+                    var form = $('<form />');
+                    form.attr('action', url);
+                    form.attr('method', 'POST');
+                    form.html('<input type="hidden" name="id" value="' + id + '" />');
+                    $('body').append(form);
+                    form.submit();
+                }
+            });
         })
+
     </script>
 }

@@ -1,5 +1,6 @@
 ﻿using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Services.Requests.KpiTransformationSchedule;
+using DSLNG.PEAR.Services.Responses;
 using DSLNG.PEAR.Services.Responses.KpiTransformationSchedule;
 namespace DSLNG.PEAR.Services.Interfaces
 {
@@ -9,5 +10,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetKpiTransformationSchedulesResponse Get(GetKpiTransformationSchedulesRequest request);
         GetKpiTransformationSchedulesResponse.KpiTransformationScheduleResponse Get(int Id);
         void UpdateStatus(int id, KpiTransformationStatus status);
+        BaseResponse Delete(int id);
+        BaseResponse BatchDelete(int[] ids);
     }
 }
