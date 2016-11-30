@@ -163,7 +163,19 @@ namespace DSLNG.PEAR.Web.Controllers
             ViewBag.Id = id;
             return View();
         }
+        [HttpPost]
+        public ActionResult DeleteSchedule(int id)
+        {
+            int logId = 0;
+            var log = _kpiTransformationScheduleService.Get(id);
+            logId = log.KpiTransformation_Id;
 
+            var result = _kpiTransformationScheduleService.Delete(id);
+
+            @TempData["IsSuccess"] = result.IsSuccess;
+            @TempData["Message"] = result.Message;
+            return RedirectToAction("Log", new { id = logId });
+        }
         public ActionResult LogGrid(int id, GridParams gridParams)
         {
             var templates = _kpiTransformationScheduleService.Get(new GetKpiTransformationSchedulesRequest

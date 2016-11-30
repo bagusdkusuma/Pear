@@ -13,10 +13,12 @@ using DSLNG.PEAR.Data.Entities;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using DSLNG.PEAR.Data.Enums;
+using DSLNG.PEAR.Services.Responses;
+using System.Data.Entity.Infrastructure;
 
 namespace DSLNG.PEAR.Services
 {
-    public class KpiTransformationScheduleService : BaseService,IKpiTransformationScheduleService
+    public class KpiTransformationScheduleService : BaseService, IKpiTransformationScheduleService
     {
         public KpiTransformationScheduleService(IDataContext dataContext) : base(dataContext) { }
 
@@ -76,14 +78,15 @@ namespace DSLNG.PEAR.Services
             var kpiTransformationSchedule = request.MapTo<KpiTransformationSchedule>();
             var kpiTransformation = DataContext.KpiTransformations.Single(x => x.Id == request.KpiTransformationId);
             kpiTransformationSchedule.KpiTransformation = kpiTransformation;
-            if(request.ProcessingType == ProcessingType.Instant)
+            if (request.ProcessingType == ProcessingType.Instant)
             {
                 kpiTransformationSchedule.ProcessingDate = DateTime.Now;
                 kpiTransformationSchedule.Status = KpiTransformationStatus.InProgress;
                 kpiTransformation.LastProcessing = kpiTransformationSchedule.ProcessingDate;
             }
             DataContext.Kpis.Where(x => request.KpiIds.Contains(x.Id)).ToList();
-            foreach (var kpiIdReq in request.KpiIds) {
+            foreach (var kpiIdReq in request.KpiIds)
+            {
                 var kpi = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == kpiIdReq);
                 kpiTransformationSchedule.SelectedKpis.Add(kpi);
             }
@@ -91,7 +94,7 @@ namespace DSLNG.PEAR.Services
             DataContext.SaveChanges();
             kpiTransformationSchedule = DataContext.KpiTransformationSchedules.Include(x => x.KpiTransformation).Include(x => x.SelectedKpis)
                 .Include(x => x.SelectedKpis.Select(y => y.Method)).First(x => x.Id == kpiTransformationSchedule.Id);
-            var response =  new SaveKpiTransformationScheduleResponse
+            var response = new SaveKpiTransformationScheduleResponse
             {
                 IsSuccess = true,
                 Message = "You have been successfully saved kpi transformation schedule"
@@ -111,6 +114,77 @@ namespace DSLNG.PEAR.Services
         public GetKpiTransformationSchedulesResponse.KpiTransformationScheduleResponse Get(int Id)
         {
             return DataContext.KpiTransformationSchedules.Include(x => x.KpiTransformation).FirstOrDefault(x => x.Id == Id).MapTo<GetKpiTransformationSchedulesResponse.KpiTransformationScheduleResponse>();
+        }
+
+        public BaseResponse Delete(int id)
+        {
+            var response = new BaseResponse();
+            try
+            {
+                var schedule = DataContext.KpiTransformationSchedules
+                    .Include(x => x.Logs)
+                    .FirstOrDefault(x => x.Id == id);
+                if (schedule != null)
+                {
+                    if (schedule.Logs.Count > 0)
+                    {
+                        foreach (var log in schedule.Logs.ToList())
+                        {
+                            DataContext.KpiTransformationLogs.Remove(log);
+                        }
+                        DataContext.SaveChanges();
+                    }
+                    DataContext.KpiTransformationSchedules.Remove(schedule);
+                    DataContext.SaveChanges();
+                }
+                response.IsSuccess = true;
+                response.Message = string.Format("Schedule for {0:MMM dd yyyy H:mm:ss} deleted Successfully", schedule.ProcessingDate);
+            }
+            catch (DbUpdateException e)
+            {
+                response.IsSuccess = false;
+                response.Message = e.Message;
+            }
+            return response;
+        }
+
+        public BaseResponse BatchDelete(int[] ids)
+        {
+            var response = new BaseResponse();
+            if (ids.Count() > 0)
+            {
+                int succeed = 0;
+                int failed = 0;
+                List<string> failedSchedule = new List<string>();
+                for (int i = 0; i < ids.Count(); i++)
+                {
+                    var result = Delete(ids[i]);
+                    if (result.IsSuccess)
+                    {
+                        succeed++;
+                    }
+                    else
+                    {
+                        failed++;
+                        failedSchedule.Add(ids[i].ToString());
+                    }
+                }
+                response.IsSuccess = succeed > failed ? true : false;
+                var failedDeleted = string.Empty;
+                if (failed > 0)
+                {
+                    failedDeleted = string.Format(" This item are failed to deleted : ({0}) ", string.Join(",", failedSchedule));
+                }
+                if (response.IsSuccess)
+                {
+                    response.Message = string.Format("Batch Delete Not Success, only {0} schedule deleted, and {1} failed to delete. {2}", succeed, failed, failedDeleted);
+                }
+                else {
+                    response.Message = string.Format("Successfully Delete {0} schedule, and {1} failed to delete. {2}", succeed, failed, failedDeleted);
+                }
+                
+            }
+            return response;
         }
     }
 }
