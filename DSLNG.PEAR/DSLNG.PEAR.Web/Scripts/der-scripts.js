@@ -164,7 +164,7 @@ Number.prototype.format = function (n, x) {
     var Der = {};
     Der.Artifact = {};
     Der.Artifact.line = function (data, container) {
-        console.log(data);
+        //console.log(data);
         var symbol = 'circle';
         var fillColor = 'red';
         if (data.LineChart.Title.toLowerCase().indexOf('cds') > -1) {
@@ -482,7 +482,7 @@ Number.prototype.format = function (n, x) {
     };
 
     Der.Artifact.speedometer = function (data, container) {
-        console.log(data.SpeedometerChart);
+        //console.log(data.SpeedometerChart);
         var $this = container;
         $this.append('<h5>MCHE Rundown</h5>');
         var $canvas = $('<canvas />');
@@ -555,7 +555,9 @@ Number.prototype.format = function (n, x) {
                 start += partLength;
             }
 
-            var point = Math.PI + (data.SpeedometerChart.Series.data[0] * Math.PI / plotBands[plotBands.length - 1].from);
+            //var point = Math.PI + (data.SpeedometerChart.Series.data[0] * Math.PI / plotBands[plotBands.length - 1].from);
+            var jarum = data.SpeedometerChart.Series.data[0] > 100 ? 99.99 : data.SpeedometerChart.Series.data[0];
+            var point = Math.PI + (jarum * Math.PI / plotBands[plotBands.length - 1].from);
             var relateiveR = r - thickness / 2;
             var relativeR2 = r + thickness / 2;
             var xPoint = centerPoint.x + Math.cos(point) * (relateiveR);
@@ -659,6 +661,7 @@ Number.prototype.format = function (n, x) {
 
             var point = Math.PI + (data.SpeedometerChart.Series.data[0] * Math.PI / plotBands[plotBands.length - 1].to);
 
+            //console.log(xc + Math.cos(point) * (r - thickness / 2), yc + Math.sin(point) * (r - thickness / 2));
             // the triangle
             ctx.beginPath();
             ctx.moveTo(xc + Math.cos(point) * (r - thickness / 2), yc + Math.sin(point) * (r - thickness/2));
@@ -719,11 +722,19 @@ Number.prototype.format = function (n, x) {
             console.log(config.PlotBands);
             console.log(last);*/
             var point = config.Series.data[0] / config.PlotBands[last].from * (canvas.width - 6) + 3;
-            ctx.fillRect(point-3, 0, 6, canvas.height - 30);
+            var basePoint = 6;
+            var maxPoint = config.PlotBands[last].from * (canvas.width - 6) + 3
+            if (point - 3 < 0) {
+                point = basePoint;
+            } else if (point > maxPoint ) {
+                point = maxPoint;
+            }
+            ctx.fillRect(point - 3, 0, 6, canvas.height - 30);
+
 
             // the triangle
             ctx.beginPath();
-            ctx.moveTo(point-3, canvas.height - 30);
+            ctx.moveTo(point - 3, canvas.height - 30);
             ctx.lineTo(point, canvas.height);
             ctx.lineTo(point + 3, canvas.height - 30);
             ctx.closePath();

@@ -304,6 +304,7 @@
     <Content Include="Content\images\clip_image008.png" />
     <Content Include="Content\images\clip_image010.png" />
     <Content Include="Content\images\clip_image012.png" />
+    <Content Include="Content\images\cloudy.png" />
     <Content Include="Content\images\der\header-logo.png" />
     <Content Include="Content\images\der\icon-food.png" />
     <Content Include="Content\images\der\icon-operation.png" />
@@ -343,6 +344,11 @@
     <Content Include="Content\img\ajax-loader.gif" />
     <Content Include="Content\img\ajax-loader1.gif" />
     <Content Include="Content\img\ajax-loader2.gif" />
+    <Content Include="Content\img\ajax-loader3.gif" />
+    <Content Include="Content\img\ajax-loader4.gif" />
+    <Content Include="Content\img\ajax-loader5.gif" />
+    <Content Include="Content\img\ajax-loader6.gif" />
+    <Content Include="Content\img\ajax-loader7.GIF" />
     <Content Include="Content\img\assess-bg.jpg" />
     <Content Include="Content\img\assess.png" />
     <Content Include="Content\img\bg.jpg" />
@@ -359,6 +365,7 @@
     <Content Include="Content\img\graphic6.PNG" />
     <Content Include="Content\img\graphic7.PNG" />
     <Content Include="Content\img\icons.png" />
+    <Content Include="Content\img\kpi\business plan.png" />
     <Content Include="Content\img\kpi\dafwc.png" />
     <Content Include="Content\img\kpi\default.png" />
     <Content Include="Content\img\kpi\fatality.png" />
