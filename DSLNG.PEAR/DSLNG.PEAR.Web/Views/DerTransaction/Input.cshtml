@@ -1393,7 +1393,9 @@
                                         if (key == 9) {
                                             var highlightTypeId = $textarea.data('highlight-type-id');
                                             var id = $textarea.attr('data-id');
-                                            var row = $textarea.closest('tr');
+                                            //row = $textarea.closest('tr');
+                                            //currentClass = textarea.attr('class')[0];
+                                            //console.log(currentClass);
                                             row.addClass('processing');
                                             var value = editor.getContent();
                                             $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function (resp) {
@@ -1412,6 +1414,7 @@
                                                     if (row.hasClass('processing')) {
                                                         row.removeClass('processing');
                                                     }
+                                                    row.removeClass(currentClass);
                                                     row.addClass('succeed');
                                                 }
                                             });

@@ -1033,8 +1033,8 @@
                         } else if (data.type === "highlight" && that.hasClass('highlight-json-ict-infra')) {
                             var pattern = /[^{}]*(?=\})/g;
                             var parsed = "{" + (data.view.match(pattern)[0]) + "}";
-                            console.log('ict infra');
-                            console.log(parsed);
+                            //console.log('ict infra');
+                            //console.log(parsed);
                             var js = JSON.parse(parsed);
                             var transform = [];
                             transform['a'] = getIcon(js.a);
@@ -1049,8 +1049,8 @@
                         else if (data.type === "highlight" && that.hasClass('highlight-json-gs-fm')) {
                             var pattern = /[^{}]*(?=\})/g;
                             var parsed = "{" + (data.view.match(pattern)[0]) + "}";
-                            console.log('gs fm');
-                            console.log(parsed);
+                            //console.log('gs fm');
+                            //console.log(parsed);
                             var js = JSON.parse(parsed);
                             var transform = [];
                             transform['a'] = getIcon(js.a);
