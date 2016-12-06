@@ -4,14 +4,19 @@
     <thead>
     <tr>
         <td colspan="3" style="font-size:12px;padding:10px; ">
-            DSLNG Indicative Commercial Price (JCC based)-USD/MMbtu
+            <div style="height:23px;">
+                DSLNG Indicative Commercial Price (JCC based)-USD/MMbtu
+            </div>
+            
         </td>
     </tr>
     </thead>
     <tbody>
     <tr>
         <td style="width: 34%">
-            Feed Gas (GSA)
+            <div style="height:11px;">
+                Feed Gas (GSA)
+            </div>
         </td>
         <td>
             JOB @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, string.Empty, string.Empty)
@@ -22,7 +27,9 @@
     </tr>
     <tr>
         <td>
-            LNG Price (SPA)
+            <div style="height:11px;">
+                LNG Price (SPA)
+            </div>
         </td>
         <td>
             FOB @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, string.Empty, string.Empty)

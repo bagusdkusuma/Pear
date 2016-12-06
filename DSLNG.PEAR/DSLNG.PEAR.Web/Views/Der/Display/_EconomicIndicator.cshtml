@@ -1,5 +1,5 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKpiInformationViewModel
-    @*@{ 
+@*@{
         var dateTime = new DateTime();
         string month = dateTime.Now
         if(Request.Params["currentDate"] != null)
@@ -8,8 +8,16 @@
         }
     }*@
 <style>
-    .commodities tbody > tr >td:first-child {
+    .commodities tbody > tr > td:first-child {
         text-align: right;
+    }
+
+    .first-row {
+        height: 20px;
+    }
+
+    .next-row {
+        height: 11px;
     }
 </style>
 <table class="table table-bordered commodities">
@@ -27,17 +35,20 @@
                 Dubai Crude<br> (DME OQD FUT)
             </td>
             <td>
-                <span class="comparison left-side"><i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Deviation)"></i></span>
-                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "USD/bbl")
-
+                <div class="first-row">
+                    <span class="comparison left-side"><i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Deviation)"></i></span>
+                    @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "USD/bbl")
+                </div>
             </td>
             <td style="width: 30%">
+
                 <span class="comparison left-side"><i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Deviation)"></i></span>
                 USD/SDR @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Value, string.Empty, string.Empty,"N/A",true,4)
             </td>
         </tr>
         <tr>
-            <td>BRENT FUT&nbsp;</td>
+
+            <td><div class="next-row">BRENT FUT&nbsp;</div></td>
             <td>
                 <span class="comparison left-side"><i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Deviation)"></i></span>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "USD/bbl", "N/A", true, 2)
@@ -48,7 +59,7 @@
             </td>
         </tr>
         <tr>
-            <td>Naphta FOB Sing&nbsp;</td>
+            <td><div class="next-row">Naphta FOB Sing&nbsp;</div></td>
             <td>
                 <span class="comparison left-side"><i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Deviation)"></i></span>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "USD/bbl")
@@ -59,7 +70,7 @@
             </td>
         </tr>
         <tr>
-            <td>Applied JCC (@Model.DateInfo.ToString("MMM"))</td>
+            <td><div class="next-row">Applied JCC (@Model.DateInfo.ToString("MMM"))</div></td>
             <td>
                 <span class="comparison left-side"><i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Deviation)"></i></span>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiMeasurement, "USD/bbl")
@@ -70,7 +81,7 @@
             </td>
         </tr>
         <tr>
-            <td>LNG Spot DES JKM&nbsp;</td>
+            <td><div class="next-row">LNG Spot DES JKM&nbsp;</div></td>
             <td>
                 <span class="comparison left-side"><i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Deviation)"></i></span>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 4).KpiMeasurement, "USD/MMbtu","N/A",true,3)
@@ -81,7 +92,7 @@
             </td>
         </tr>
         <tr>
-            <td>Nat Gas Henry Hub</td>
+            <td><div class="next-row">Nat Gas Henry Hub</div></td>
             <td>
                 <span class="comparison left-side"><i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Deviation)"></i></span>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 5).KpiMeasurement, "USD/MMbtu")
@@ -92,7 +103,7 @@
             </td>
         </tr>
         <tr>
-            <td>ICP-Ind Crude Prc (@Model.DateInfo.AddMonths(-1).ToString("MMM"))</td>
+            <td><div class="next-row">ICP-Ind Crude Prc (@Model.DateInfo.AddMonths(-1).ToString("MMM"))</div></td>
             <td>
                 <span class="comparison left-side"><i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Deviation)"></i></span>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 6).KpiMeasurement, "USD/bbl")
@@ -102,7 +113,7 @@
                 USD/KRW @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 13).DerItemValue.Value, string.Empty, string.Empty, "N/A", true, 2)
             </td>
         </tr>
-        <tr style="height: 24px;">
+        <tr style="height: 23px;">
             <td colspan="2" style="text-align: center">
                 LNG Shipping Cost benchmark (Jap-Kor-Aus)
             </td>

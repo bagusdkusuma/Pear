@@ -1,93 +1,102 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKpiInformationViewModel
+<style>
+    .first-row {
+        height: 20px;
+    }
+
+    .next-row {
+        height: 11px;
+    }
+</style>
 <table class="table table-bordered procurement">
     <thead>
-    <tr style="font-size:11px;">
-        <td style="width: 29%;padding:11px">
-            PROCUREMENT
-        </td>
-        <td>
-            PO / SO (Plant Related)
-        </td>
-        <td style="width: 41%">
-            Remarks
-        </td>
-    </tr>
+        <tr style="font-size:11px;">
+            <td style="width: 29%;padding:11px">
+                PROCUREMENT
+            </td>
+            <td>
+                PO / SO (Plant Related)
+            </td>
+            <td style="width: 41%">
+                Remarks
+            </td>
+        </tr>
     </thead>
     <tbody>
-    <tr>
-        <td style="font-size:11px;font-weight:bold;width:34%">
-            # Backlog
-        </td>
-        <td style="width:32%">
-            @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, string.Empty, string.Empty, "N/A", true, 0)
-        </td>
-        <td>
-           @Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Remark
-        </td>
-    </tr>
-    <tr>
-        <td style="font-size:11px;font-weight:bold">
-            Avg Backlog time
-        </td>
-        <td style="position:relative">
-            <span class="indicator absolute">@Html.DisplayKpiIndicatorType2(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value)</span>
-            @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "day","-",true,0)
-        </td>
-        <td>
-            Target &lt; @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "day","-",true,0)
-        </td>
-    </tr>
+        <tr>
+            <td style="font-size:11px;font-weight:bold;width:34%">
+                <div class="first-row"># Backlog</div>
+            </td>
+            <td style="width:32%">
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, string.Empty, string.Empty, "N/A", true, 0)
+            </td>
+            <td>
+                @Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Remark
+            </td>
+        </tr>
+        <tr>
+            <td style="font-size:11px;font-weight:bold">
+                <div class="next-row">Avg Backlog time</div>
+            </td>
+            <td style="position:relative">
+                <span class="indicator absolute">@Html.DisplayKpiIndicatorType2(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value)</span>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "day","-",true,0)
+            </td>
+            <td>
+                Target &lt; @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "day","-",true,0)
+            </td>
+        </tr>
     </tbody>
 </table>
 
 
 @*
-@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayProcurementViewModel
+    @model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayProcurementViewModel
 
-@{
-    var pos0 = Model.ProcurementViewModels.Single(x => x.Position == 0);
-    var pos1 = Model.ProcurementViewModels.Single(x => x.Position == 1);
-    var pos2 = Model.ProcurementViewModels.Single(x => x.Position == 2);
-    var pos3 = Model.ProcurementViewModels.Single(x => x.Position == 3);
+    @{
+        var pos0 = Model.ProcurementViewModels.Single(x => x.Position == 0);
+        var pos1 = Model.ProcurementViewModels.Single(x => x.Position == 1);
+        var pos2 = Model.ProcurementViewModels.Single(x => x.Position == 2);
+        var pos3 = Model.ProcurementViewModels.Single(x => x.Position == 3);
 
-}
-<table class="der-table all-border">
-    <thead>
-        <tr>
-            <th>
-                PROCUREMENT
-            </th>
-            <th>
-                PO / SO (Plant Related)
-            </th>
-            <th>
-                Remarks
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                # Backlog
-            </td>
-            <td>
-                @pos0.Daily @pos0.Measurement
-            </td>
-            <td>
-                @pos1.Remarks
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Avg Backlog time
-            </td>
-            <td>
-               @pos2.Daily @pos2.Measurement
-            </td>
-            <td>
-                incl partial PO
-            </td>
-        </tr>
-    </tbody>
-</table>
+    }
+    <table class="der-table all-border">
+        <thead>
+            <tr>
+                <th>
+                    PROCUREMENT
+                </th>
+                <th>
+                    PO / SO (Plant Related)
+                </th>
+                <th>
+                    Remarks
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    # Backlog
+                </td>
+                <td>
+                    @pos0.Daily @pos0.Measurement
+                </td>
+                <td>
+                    @pos1.Remarks
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Avg Backlog time
+                </td>
+                <td>
+                   @pos2.Daily @pos2.Measurement
+                </td>
+                <td>
+                    incl partial PO
+                </td>
+            </tr>
+        </tbody>
+    </table>
 *@
