@@ -349,17 +349,17 @@ h6 {
             height: 42px;
             font-weight: bold;
         }
-            .table.alert-condition tbody tr td.the-alert.low {
-                background-color: #00FF00;
+            .the-alert.low {
+                background-color: #00FF00 !important;
             }
-             .table.alert-condition tbody tr td.the-alert.eleveted {
-                background-color: yellow;
+            .the-alert.elevated {
+                background-color: yellow !important;
             }
-              .table.alert-condition tbody tr td.the-alert.high {
-                background-color: orange;
+            .the-alert.high {
+                background-color: orange !important;
             }
-               .table.alert-condition tbody tr td.the-alert.severe {
-                background-color: red;
+            .the-alert.severe {
+                background-color: red !important;
             }
         
         .commercial-operation {
