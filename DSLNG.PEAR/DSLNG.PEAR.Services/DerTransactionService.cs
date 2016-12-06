@@ -136,7 +136,8 @@ namespace DSLNG.PEAR.Services
                (((x.Periode == request.Date || x.Periode == previousDate) && x.PeriodeType == PeriodeType.Daily) ||
                (x.PeriodeType == PeriodeType.Yearly && x.Periode.Year == request.Date.Year) ||
                (x.PeriodeType == PeriodeType.Monthly && x.Periode.Month == request.Date.Month && x.Periode.Year == request.Date.Year
-               || x.Periode.Month == previousMonth.Month && x.Periode.Year == previousMonth.Year || x.Periode.Month == previous2Month.Month && x.Periode.Year == previousMonth.Year))).ToList();
+               || x.Periode.Month == previousMonth.Month && x.Periode.Year == previousMonth.Year || x.Periode.Month == previous2Month.Month && x.Periode.Year == previousMonth.Year)))
+               .OrderByDescending(x=>x.Periode).ToList();
 
             var response = new GetKpiInformationValuesResponse();
             foreach (var kpiId in kpiIdsForActual)
@@ -475,7 +476,7 @@ namespace DSLNG.PEAR.Services
                                     Value = target.Value ?? null,
                                     Remark = target.Remark,
                                     Type = "prev",
-                                    Id = target.Id
+                                    Id = 0
                                 };
                             }
                         }
