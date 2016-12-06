@@ -26,7 +26,7 @@
 {
 if (!string.IsNullOrEmpty(Model.Message))
 {
-        <text>@Model.Message.Replace(".jpg", "")</text>
+        <text>@Model.Message.Trim().Replace(".jpg", "")</text>
 
 }
 }
@@ -36,19 +36,19 @@ if (!string.IsNullOrEmpty(Model.Message))
 {
     if (!string.IsNullOrEmpty(Model.Message))
     {
-        if (Model.Message.ToUpperInvariant().Contains("LOW"))
+        if (Model.Message.Trim().ToUpperInvariant().Contains("LOW"))
         {
             <text>low</text>
         }
-        else if (Model.Message.ToUpperInvariant().Contains("ELEVATED"))
+        else if (Model.Message.Trim().ToUpperInvariant().Contains("ELEVATED"))
         {
             <text>elevated</text>
         }
-        else if (Model.Message.ToUpperInvariant().Contains("HIGH"))
+        else if (Model.Message.Trim().ToUpperInvariant().Contains("HIGH"))
         {
             <text>high</text>
         }
-        if (Model.Message.ToUpperInvariant().Contains("SEVERE"))
+        if (Model.Message.Trim().ToUpperInvariant().Contains("SEVERE"))
         {
             <text>severe</text>
         }
