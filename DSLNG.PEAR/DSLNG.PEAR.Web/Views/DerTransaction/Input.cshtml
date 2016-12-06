@@ -88,14 +88,27 @@
     :focus {
         border: 1px dashed red !important;
     }
+
     tr.der-value-now, .succeed {
         border: 2px solid green !important;
     }
-    .processing{
+
+    .processing {
         border: 2px solid yellow !important;
     }
+
     tr.der-value-prev, tr.der-value-empty {
         border: 2px solid grey !important;
+    }
+
+    .mce-content-body p {
+        padding: 0 !important;
+        margin: 2px 0 !important;
+    }
+
+    #tinymce p {
+        padding: 0 !important;
+        margin: 2px 0 !important;
     }
 </style>
 @{
@@ -307,7 +320,7 @@
             type: 'POST',
             url: '@Url.Action("ProcessDefault", "KpiTransformation")'
         }).done(function (data) {
-            $('#processResult').html(data +': <b>' + name +'</b>');
+            $('#processResult').html(data + ': <b>' + name + '</b>');
         });
     });
     function callDerPreview() {
@@ -1375,6 +1388,13 @@
                                     "searchreplace visualblocks code fullscreen",
                                     "insertdatetime media table contextmenu paste"
                                 ],
+                                style_formats: [
+                                        { title: 'Line height 20px', selector: 'p,div,h1,h2,h3,h4,h5,h6', styles: { lineHeight: '20px' } },
+                                        { title: 'Line height 30px', selector: 'p,div,h1,h2,h3,h4,h5,h6', styles: { lineHeight: '30px' } }
+                                ],
+                                force_br_newlines: true,
+                                force_p_newlines: false,
+                                forced_root_block: '',
                                 toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
                                 setup: function (editor) {
                                     editor.on('keydown', function (e) {
@@ -1408,7 +1428,7 @@
                                                 }
                                                 if (parseInt($textarea.attr('data-id')) == 0) {
                                                     $textarea.attr('data-id', resp.Id);
-                                                    
+
                                                 }
                                                 if (resp.Id > 0) {
                                                     if (row.hasClass('processing')) {
