@@ -4313,6 +4313,13 @@ Number.prototype.format = function (n, x) {
                                 "searchreplace visualblocks code fullscreen",
                                 "insertdatetime media table contextmenu paste"
                             ],
+                            style_formats : [
+                                    {title : 'Line height 20px', selector : 'p,div,h1,h2,h3,h4,h5,h6', styles: {lineHeight: '20px'}},
+                                    {title : 'Line height 30px', selector : 'p,div,h1,h2,h3,h4,h5,h6', styles: {lineHeight: '30px'}}
+                            ],
+                            force_br_newlines : true,
+                            force_p_newlines : false,
+                            forced_root_block : '',
                             toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
                         });
                     }

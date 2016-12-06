@@ -66,54 +66,54 @@
     <div class="pop-dashboard-save">
         @using (Html.BeginForm("Create", "MIR", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
-        @Html.AntiForgeryToken()
-        <div class="col-md-12">
-            @*<div class="title">Management Information Report Entry</div>*@
-            <div>@Html.ValidationSummary(true)</div>
-        </div>
-        <div class="col-md-12">
-            <div class="form-inline whitebox">
-                <div class="form-group form-list">
-                    @Html.LabelFor(model => model.Year)
-                    @Html.DropDownListFor(model => model.Year, Model.Years, new { htmlAttributes = new { @class = "form-control" } })
-                    @*@Html.EditorFor(model => model.Year, new { htmlAttributes = new { @class = "form-control" } })*@
-                    @Html.ValidationMessageFor(model => model.Year)
-                </div>
+            @Html.AntiForgeryToken()
+            <div class="col-md-12">
+                @*<div class="title">Management Information Report Entry</div>*@
+                <div>@Html.ValidationSummary(true)</div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-inline whitebox">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.Year)
+                        @Html.DropDownListFor(model => model.Year, Model.Years, new { htmlAttributes = new { @class = "form-control" } })
+                        @*@Html.EditorFor(model => model.Year, new { htmlAttributes = new { @class = "form-control" } })*@
+                        @Html.ValidationMessageFor(model => model.Year)
+                    </div>
 
-                <div class="form-group form-list">
-                    @Html.LabelFor(model => model.Month)
-                    @Html.DropDownListFor(model => model.Month, Model.Months, new { @class = "form-control" })
-                    @*@Html.EditorFor(model => model.Month, new { htmlAttributes = new { @class = "form-control" } })*@
-                    @Html.ValidationMessageFor(model => model.Month)
-                </div>
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.Month)
+                        @Html.DropDownListFor(model => model.Month, Model.Months, new { @class = "form-control" })
+                        @*@Html.EditorFor(model => model.Month, new { htmlAttributes = new { @class = "form-control" } })*@
+                        @Html.ValidationMessageFor(model => model.Month)
+                    </div>
 
-                <div class="form-group form-list">
-                    @Html.LabelFor(model => model.ExSumDefaultPage)
-                    @Html.TextBoxFor(model => model.ExSumDefaultPage, new { @class = "form-control", @placeholder = "number" })
-                    @Html.ValidationMessageFor(model => model.ExSumDefaultPage)
-                </div>
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.ExSumDefaultPage)
+                        @Html.TextBoxFor(model => model.ExSumDefaultPage, new { @class = "form-control", @placeholder = "number" })
+                        @Html.ValidationMessageFor(model => model.ExSumDefaultPage)
+                    </div>
 
-                @*<div class="form-group form-list">
-                        @Html.LabelFor(model => model.Summary)
-                        @Html.TextAreaFor(model => model.Summary, new { @class = "form-control allow-html" })
-                        @Html.ValidationMessageFor(model => model.Summary)
-                    </div>*@
-                <div class="form-group form-list">
-                    @Html.Label("Attachment")
-                    @Html.Partial("_MirUpload")
-                </div>
-                <div class="form-group form-list">
-                    @Html.LabelFor(model=>model.Filename)
-                    @Html.TextBoxFor(model=>model.Filename, new { style="Display:none;" })
-                    <div id="file-notification"></div>
+                    @*<div class="form-group form-list">
+                            @Html.LabelFor(model => model.Summary)
+                            @Html.TextAreaFor(model => model.Summary, new { @class = "form-control allow-html" })
+                            @Html.ValidationMessageFor(model => model.Summary)
+                        </div>*@
+                    <div class="form-group form-list">
+                        @Html.Label("Attachment")
+                        @Html.Partial("_MirUpload")
+                    </div>
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.Filename)
+                        @Html.TextBoxFor(model => model.Filename, new { style = "Display:none;" })
+                        <div id="file-notification"></div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-12 artifact-designer-btns">
-            <button type="submit" class="btn btn-primary btn-lg btn-submit"><span class="fa fa-floppy-o"></span>Save</button>
-            <a href="@Request.Url.ToString()" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>
-            <a href="/MIR" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
-        </div>
+            <div class="col-md-12 artifact-designer-btns">
+                <button type="submit" class="btn btn-primary btn-lg btn-submit"><span class="fa fa-floppy-o"></span>Save</button>
+                <a href="@Request.Url.ToString()" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>
+                <a href="/MIR" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+            </div>
         }
     </div>
 
@@ -128,6 +128,13 @@
             tinyMCE.init({
                 selector: ".allow-html",
                 menubar: false,
+                style_formats: [
+                    { title: 'Line height 20px', selector: 'p,div,h1,h2,h3,h4,h5,h6', styles: { lineHeight: '20px' } },
+                    { title: 'Line height 30px', selector: 'p,div,h1,h2,h3,h4,h5,h6', styles: { lineHeight: '30px' } }
+                ],
+                force_br_newlines: true,
+                force_p_newlines: false,
+                forced_root_block: '',
                 plugins: [
                     "advlist autolink lists link image charmap print preview anchor",
                     "searchreplace visualblocks code fullscreen",
