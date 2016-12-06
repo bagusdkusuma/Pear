@@ -1,5 +1,13 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKpiInformationViewModel
+<style>
+    .first-row {
+        height: 20px;
+    }
 
+    .next-row {
+        height: 11px;
+    }
+</style>
 <table class="table table-bordered global-stock">
     <thead>
         <tr>
@@ -15,8 +23,10 @@
     <tbody>
         <tr>
             <td>
-                <span class="comparison absolute"><i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Deviation)"></i></span>
-                @Html.DisplayDerValueWithLabelAtFront("JKSE", Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, "JSKE")
+                <div class="next-row">
+                    <span class="comparison absolute"><i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Deviation)"></i></span>
+                    @Html.DisplayDerValueWithLabelAtFront("JKSE", Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, "JSKE")
+                </div>
             </td>
             <td>
                 <span class="comparison absolute">
@@ -34,8 +44,10 @@
         </tr>
         <tr>
             <td>
-                <span class="comparison absolute"><i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Deviation)"></i></span>
-                @Html.DisplayDerValueWithLabelAtFront("DJIA", Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, "DJIA")
+                <div class="next-row">
+                    <span class="comparison absolute"><i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Deviation)"></i></span>
+                    @Html.DisplayDerValueWithLabelAtFront("DJIA", Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, "DJIA")
+                </div>
             </td>
             <td>
                 <span class="comparison absolute">
@@ -67,7 +79,7 @@
                 <span class="comparison left-side">
                     <i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 11).DerItemValue.Deviation)"></i>
                 </span>
-                @Html.DisplayDerValueWithLabelAtFront("6 Month:", Model.KpiInformationViewModels.Single(x => x.Position == 11).DerItemValue.Value, "6 Month:","N/A",true,0)
+                @Html.DisplayDerValueWithLabelAtFront("6 Month:", Model.KpiInformationViewModels.Single(x => x.Position == 11).DerItemValue.Value, "6 Month:", "N/A", true, 0)
             </td>
         </tr>
         <tr>
@@ -96,7 +108,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-        var brenfut = @Html.Raw(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Value);        
+        var brenfut = @Html.Raw(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Value);
         //$('.brenfut-first').append(brenfut.a.label + ':' + brenfut.a.value);
         //$('.brenfut-second').append(brenfut.b.label + ':' + brenfut.b.value);
         //$('.brenfut-third').append(brenfut.c.label + ':' + brenfut.c.value);
