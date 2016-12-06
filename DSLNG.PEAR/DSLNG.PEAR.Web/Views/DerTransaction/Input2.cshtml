@@ -398,6 +398,13 @@
                             tinyMCE.init({
                                 selector: '#' + $this.attr('id'),
                                 menubar: false,
+                                style_formats: [
+                                    { title: 'Line height 20px', selector: 'p,div,h1,h2,h3,h4,h5,h6', styles: { lineHeight: '20px' } },
+                                    { title: 'Line height 30px', selector: 'p,div,h1,h2,h3,h4,h5,h6', styles: { lineHeight: '30px' } }
+                                ],
+                                force_br_newlines: true,
+                                force_p_newlines: false,
+                                forced_root_block: '',
                                 plugins: [
                                     "advlist autolink lists charmap print preview anchor",
                                     "searchreplace visualblocks code fullscreen",
