@@ -484,6 +484,9 @@
     <Content Include="Content\bootstrap-multiselect\bootstrap-multiselect.less" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Scripts\jquery-1.10.0-vsdoc.js" />
+    <Content Include="Scripts\fusioncharts.gantt.js" />
+    <Content Include="Scripts\fusioncharts.js" />
+    <Content Include="Scripts\fusioncharts.widgets.js" />
     <Content Include="Scripts\jquery-1.10.0.js" />
     <Content Include="Scripts\jquery-1.10.0.min.js" />
     <Content Include="Scripts\jquery-1.11.3.js" />

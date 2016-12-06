@@ -551,7 +551,7 @@
                                                     var row8Col0 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 0);
                                                     if (row8Col0 != null)
                                                     {
-                                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row8Col0.Id })" class="layout-item tank-wrapper" style="width:100px;height:100px"></div>
+                                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row8Col0.Id })" class="layout-item tank-wrapper" style="width:100px;height:100px" id="lngTank"></div>
                                                     }
                                                 }
                                             </td>
@@ -560,7 +560,7 @@
                                                     var row8Col1 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 1);
                                                     if (row8Col1 != null)
                                                     {
-                                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row8Col1.Id })" class="layout-item tank-wrapper" style="width:100px;height:70px"></div>
+                                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row8Col1.Id })" class="layout-item tank-wrapper" style="width:100px;height:70px" id="cdsStorageTank"></div>
                                                     }
                                                 }
                                             </td>
@@ -569,7 +569,7 @@
                                                     var row8Col2 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 2);
                                                     if (row8Col2 != null)
                                                     {
-                                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row8Col2.Id })" class="layout-item tank-wrapper" style="width:75px;height:70px"></div>
+                                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row8Col2.Id })" class="layout-item tank-wrapper" style="width:75px;height:70px" id="cdsBufferTank"></div>
                                                     }
                                                 }
                                             </td>
@@ -956,350 +956,358 @@
                                         <tr>
                                             <td class="signature">
                                                 @{
-                                                var row16Col2 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 2);
-                                                if (row16Col2 != null)
-                                                {
+                                                    var row16Col2 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 2);
+                                                    if (row16Col2 != null)
+                                                    {
 
-                                                    <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row16Col2.Id })" class="layout-item"></div>
+                                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row16Col2.Id })" class="layout-item"></div>
+                                                    }
+
+                                                }
+                                            </td>
+                                            <td class="signature">
+                                                @{
+                                                    var row16Col3 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 3);
+                                                    if (row16Col3 != null)
+                                                    {
+
+                                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row16Col3.Id })" class="layout-item"></div>
+                                                    }
+
                                                 }
 
-                                            }
-                                        </td>
-                                        <td class="signature">
-                                            @{
-                                                var row16Col3 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 3);
-                                                if (row16Col3 != null)
-                                                {
+                                            </td>
+                                            <td>
 
-                                                    <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row16Col3.Id })" class="layout-item"></div>
-                                                }
+                                                <img src="@Url.Content("~/content/images/strictly-sign.png")">
+                                                <span style="display:block">Not for custody/commercial (information purpose only)</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/rgb-color.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/StackBlur.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/canvg.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/fusioncharts.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/fusioncharts.widgets.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/fusioncharts.gantt.js")"></script>
+    @Scripts.Render("~/bundles/der_preview_js")
 
-                                            }
-
-                                        </td>
-                                        <td>
-
-                                            <img src="@Url.Content("~/content/images/strictly-sign.png")">
-                                            <span style="display:block">Not for custody/commercial (information purpose only)</span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
-</div>
-<script type="text/javascript" src="@Url.Content("~/Scripts/rgb-color.min.js")"></script>
-<script type="text/javascript" src="@Url.Content("~/Scripts/StackBlur.min.js")"></script>
-<script type="text/javascript" src="@Url.Content("~/Scripts/canvg.min.js")"></script>
-@Scripts.Render("~/bundles/der_preview_js")
-
-<script type="text/javascript">
-    function getQueryVariable(variable) {
-        var query = window.location.search.substring(1);
-        var vars = query.split('&');
-        for (var i = 0; i < vars.length; i++) {
-            var pair = vars[i].split('=');
-            if (decodeURIComponent(pair[0]) == variable) {
-                return decodeURIComponent(pair[1]);
+    <script type="text/javascript">
+        function getQueryVariable(variable) {
+            var query = window.location.search.substring(1);
+            var vars = query.split('&');
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split('=');
+                if (decodeURIComponent(pair[0]) == variable) {
+                    return decodeURIComponent(pair[1]);
+                }
             }
+            return null;
         }
-        return null;
-    }
-    function updateQueryStringParameter(uri, key, value) {
-        var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
-        var separator = uri.indexOf('?') !== -1 ? "&" : "?";
-        if (uri.match(re)) {
-            return uri.replace(re, '$1' + key + "=" + value + '$2');
-        }
-        else {
-            return uri + separator + key + "=" + value;
-        }
-    }
-
-    var reloadView = function () {
-        window.document.location = updateQueryStringParameter(window.location.href, "date", encodeURIComponent($('.datepicker').val()));
-    };
-    $(document).ready(function () {
-        var date = getQueryVariable('date');
-        if (date == null) {
-            $('.datepicker').val($('body').data('date'));
-        } else {
-            $('.datepicker').val(decodeURIComponent(date));
-        }
-        $('.datepicker').datetimepicker({
-            format: "MM/DD/YYYY",
-            focusOnShow: false
-        }).on('dp.change', function (e) {
-            $(".datepicker").blur();
-            reloadView();
-        });
-        var currentDate = $('.datepicker').val();
-        currentDate = moment(currentDate, "MM/DD/YYYY");
-        currentDate = currentDate.subtract(1, 'day').format("MM/DD/YYYY");
-
-        $('.generate').click(function (e) {
-            e.preventDefault();
-            var $input = $('<input />');
-            $input.attr('name', 'date');
-            $input.css('display', 'none');
-            $input.val(currentDate);
-            var $form = $(this).closest('form');
-            var $textarea = $('<textarea />');
-            $textarea.attr('name', 'content');
-            $textarea.css('display', 'none');
-            $textarea.val($('.a3-ratio.preview').html());
-            $form.prepend($textarea);
-            $form.prepend($input);
-            $form.submit();
-        });
-
-        var getIcon = function (str) {
-            switch (str) {
-                case 0:
-                case "0":
-                    return '<span class="indicator left-side"><i class="fa fa-check" style="color:#fee17e"></i></span>';
-                case 1:
-                case "1":
-                    return '<span class="indicator left-side"><i class="fa fa-check-circle" style="color:#6eab75"></i></span>';
-                case -1:
-                case "-1":
-                    return '<span class="indicator left-side"><i class="fa fa-remove" style="color:#e25b5b"></i></span>';
-                default:
-                    return '';
+        function updateQueryStringParameter(uri, key, value) {
+            var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+            var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+            if (uri.match(re)) {
+                return uri.replace(re, '$1' + key + "=" + value + '$2');
             }
-
-        }
-
-        var getIconForIctInfraFirstColumn = function (str) {
-            switch (str) {
-                case 0:
-                case "0":
-                    return '<span class="indicator left-side"><i class="fa fa-exclamation" style="color:#fee17e"></i></span>';
-                case 1:
-                case "1":
-                    return '<span class="indicator left-side"><i class="fa fa-check-circle" style="color:#6eab75"></i></span>';
-                case -1:
-                case "-1":
-                    return '<span class="indicator left-side"><i class="fa fa-times-circle" style="color:#e25b5b"></i></span>';
-                default:
-                    return '';
-            }
-
-        }
-
-
-        var getIconForIctInfraSecondColumn = function (str) {
-            switch (str) {
-                case 0:
-                case "0":
-                    return '<span class="indicator left-side"><i class="fa fa-circle" style="color:#fee17e"></i></span>';
-                case 1:
-                case "1":
-                    return '<span class="indicator left-side"><i class="fa fa-check-circle" style="color:#6eab75"></i></span>';
-                case -1:
-                case "-1":
-                    return '<span class="indicator left-side"><i class="fa fa-times-circle" style="color:#e25b5b"></i></span>';
-                default:
-                    return '';
-            }
-
-        }
-
-        var getIconForIctInfraThirdColumn = function (str) {
-            switch (str) {
-                case 0:
-                case "0":
-                    return '<span class="indicator left-side"><i class="fa fa-signal" style="color:#396694"></i></span>';
-                case 1:
-                case "1":
-                    return '<span class="indicator left-side"><i class="fa fa-check-circle" style="color:#6eab75"></i></span>';
-                case -1:
-                case "-1":
-                    return '<span class="indicator left-side"><i class="fa fa-times-circle" style="color:#e25b5b"></i></span>';
-                default:
-                    return '';
+            else {
+                return uri + separator + key + "=" + value;
             }
         }
 
-        var getIconForGsFm = function (str) {
-            switch (str) {
-                case 0:
-                case "0":
-                    return '<span class="indicator left-side"><i class="fa fa-exclamation-circle" style="color:#fee17e"></i></span>';
-                case 1:
-                case "1":
-                    return '<span class="indicator left-side"><i class="fa fa-check-circle" style="color:#6eab75"></i></span>';
-                case -1:
-                case "-1":
-                    return '<span class="indicator left-side"><i class="fa fa-times-circle" style="color:#e25b5b"></i></span>';
-                default:
-                    return '';
+        var reloadView = function () {
+            window.document.location = updateQueryStringParameter(window.location.href, "date", encodeURIComponent($('.datepicker').val()));
+        };
+        $(document).ready(function () {
+            var date = getQueryVariable('date');
+            if (date == null) {
+                $('.datepicker').val($('body').data('date'));
+            } else {
+                $('.datepicker').val(decodeURIComponent(date));
             }
-        }
+            $('.datepicker').datetimepicker({
+                format: "MM/DD/YYYY",
+                focusOnShow: false
+            }).on('dp.change', function (e) {
+                $(".datepicker").blur();
+                reloadView();
+            });
+            var currentDate = $('.datepicker').val();
+            currentDate = moment(currentDate, "MM/DD/YYYY");
+            currentDate = currentDate.subtract(1, 'day').format("MM/DD/YYYY");
 
-        var getNum = function (str) {
-            var numb = str.match(/\d/g);
-            numb = numb.join("");
-            return parseInt(numb);
-        }
-        $('.layout-item').each(function () {
-            var that = $(this);
-            $.ajax({
-                url: that.attr('data-url'),
-                data: { currentDate: currentDate },
-                success: function (data) {
+            $('.generate').click(function (e) {
+                e.preventDefault();
+                var $input = $('<input />');
+                $input.attr('name', 'date');
+                $input.css('display', 'none');
+                $input.val(currentDate);
+                var $form = $(this).closest('form');
+                var $textarea = $('<textarea />');
+                $textarea.attr('name', 'content');
+                $textarea.css('display', 'none');
+                Der.Helper.DrawInlineSVG($('.a3-ratio.preview').find('#chart-lngTank'), $('.a3-ratio.preview').find('#chart-lngTank').children('svg')[0].outerHTML);
+                Der.Helper.DrawInlineSVG($('.a3-ratio.preview').find('#chart-cdsStorageTank'), $('.a3-ratio.preview').find('#chart-cdsStorageTank').children('svg')[0].outerHTML);
+                Der.Helper.DrawInlineSVG($('.a3-ratio.preview').find('#chart-cdsBufferTank'), $('.a3-ratio.preview').find('#chart-cdsBufferTank').children('svg')[0].outerHTML);
+                
+                $textarea.val($('.a3-ratio.preview').html());
+                $form.prepend($textarea);
+                $form.prepend($input);
+                $form.submit();
+            });
 
-                    if (data.GraphicType !== undefined) {
-                        var callback = window.Der.Artifact;
-                        callback[data.GraphicType](data, that);
-                    } else if (data.type == 'reviewed-by' || data.type == 'prepared-by' || data.type === "highlight" || data.type === "weather" || data.type === 'temperature' ||
-                            data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "flare" || data.type === "safety" ||
-                        data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type === "total-feed-gas"
-                        || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type === "procurement" || data.type === "indicative-commercial-price" ||
-                            data.type === "plant-availability" || data.type === "economic-indicator" || data.type === "mgdp" || data.type === "hhv" || data.type === "lng-and-cds-production"
-                            || data.type === "nls" || data.type === "key-equipment-status" || data.type === "wave" || data.type === "table-tank" || data.type === "global-stock-market" || data.type === "loading-duration" || data.type === 'person-on-board') {
+            var getIcon = function (str) {
+                switch (str) {
+                    case 0:
+                    case "0":
+                        return '<span class="indicator left-side"><i class="fa fa-check" style="color:#fee17e"></i></span>';
+                    case 1:
+                    case "1":
+                        return '<span class="indicator left-side"><i class="fa fa-check-circle" style="color:#6eab75"></i></span>';
+                    case -1:
+                    case "-1":
+                        return '<span class="indicator left-side"><i class="fa fa-remove" style="color:#e25b5b"></i></span>';
+                    default:
+                        return '';
+                }
 
-                        if (data.type === "highlight" && that.hasClass('daily-highlight')) {
-                            var type = "absolute";
-                            if (that.hasClass('in-left')) {
-                                type = 'left-side';
-                            } else if (that.hasClass('in-right')) {
-                                type = 'right-side';
-                            }
-                            if (parseInt(data.view) < 2) {
-                                that.replaceWith('<span class="indicator ' + type + '"><i class="fa fa-circle"  style="color:#808080" ></i></span>');
-                            } else if (parseInt(data.view) == 2) {
-                                that.replaceWith('<span class="indicator ' + type + '"><i class="fa fa-circle" style="color:#F0F0F0"></i></span>');
-                            } else if (parseInt(data.view) == 3) {
-                                that.replaceWith('<span class="indicator ' + type + '"><i class="fa fa-circle" style="color:#FF0000"></i></span>');
-                            } else if (parseInt(data.view) == 4) {
-                                that.replaceWith('<span class="indicator ' + type + ' orange"><i class="fa fa-circle" style="color:orange"></i></span>');
-                            } else if (parseInt(data.view) > 4) {
-                                that.replaceWith('<span class="indicator ' + type + ' green"><i class="fa fa-circle" style="color:green"></i></span>');
-                            }
-                        }
-                        else if (data.type === "highlight" && that.hasClass('highlight-json')) {
-                            var type = "absolute";
-                            if (that.hasClass('in-left')) {
-                                type = 'left-side';
-                            } else if (that.hasClass('in-right')) {
-                                type = 'right-side';
-                            }
-                            if (data.view.toLowerCase().indexOf('-1') > -1) {
-                                that.replaceWith('<span class="indicator ' + type + '"><i class="fa fa-times-circle"></i></span>');
-                            }
-                            else if (data.view.toLowerCase().indexOf('1') > -1) {
-                                that.replaceWith('<span class="indicator ' + type + '"><i class="fa fa-circle"></i></span>');
-                            } else if (data.view.toLowerCase().indexOf('0') > -1) {
-                                that.replaceWith('<span class="indicator ' + type + '"><i class="fa fa-exclamation-circle"></i></span>');
-                            } else {
-                                that.replaceWith('&nbsp;');
-                            }
+            }
 
-                        }
-                        else if (data.type === "highlight" && that.hasClass('highlight-json-plant-mode')) {
+            var getIconForIctInfraFirstColumn = function (str) {
+                switch (str) {
+                    case 0:
+                    case "0":
+                        return '<span class="indicator left-side"><i class="fa fa-exclamation" style="color:#fee17e"></i></span>';
+                    case 1:
+                    case "1":
+                        return '<span class="indicator left-side"><i class="fa fa-check-circle" style="color:#6eab75"></i></span>';
+                    case -1:
+                    case "-1":
+                        return '<span class="indicator left-side"><i class="fa fa-times-circle" style="color:#e25b5b"></i></span>';
+                    default:
+                        return '';
+                }
 
-                            if (data.view.toLowerCase().indexOf('holding') > -1) {
-                                that.replaceWith("<span style='color:green'>Holding</span>");
-                            } else if (data.view.toLowerCase().indexOf('loading') > -1) {
-                                that.replaceWith("<span style='color:blue'>Loading</span>");
-                            } else if (data.view.toLowerCase().indexOf('shutdown') > -1) {
-                                that.replaceWith("<span style='color:red'>Shutdown</span>");
-                            } else {
-                                that.replaceWith('&nbsp;');
+            }
+
+
+            var getIconForIctInfraSecondColumn = function (str) {
+                switch (str) {
+                    case 0:
+                    case "0":
+                        return '<span class="indicator left-side"><i class="fa fa-circle" style="color:#fee17e"></i></span>';
+                    case 1:
+                    case "1":
+                        return '<span class="indicator left-side"><i class="fa fa-check-circle" style="color:#6eab75"></i></span>';
+                    case -1:
+                    case "-1":
+                        return '<span class="indicator left-side"><i class="fa fa-times-circle" style="color:#e25b5b"></i></span>';
+                    default:
+                        return '';
+                }
+
+            }
+
+            var getIconForIctInfraThirdColumn = function (str) {
+                switch (str) {
+                    case 0:
+                    case "0":
+                        return '<span class="indicator left-side"><i class="fa fa-signal" style="color:#396694"></i></span>';
+                    case 1:
+                    case "1":
+                        return '<span class="indicator left-side"><i class="fa fa-check-circle" style="color:#6eab75"></i></span>';
+                    case -1:
+                    case "-1":
+                        return '<span class="indicator left-side"><i class="fa fa-times-circle" style="color:#e25b5b"></i></span>';
+                    default:
+                        return '';
+                }
+            }
+
+            var getIconForGsFm = function (str) {
+                switch (str) {
+                    case 0:
+                    case "0":
+                        return '<span class="indicator left-side"><i class="fa fa-exclamation-circle" style="color:#fee17e"></i></span>';
+                    case 1:
+                    case "1":
+                        return '<span class="indicator left-side"><i class="fa fa-check-circle" style="color:#6eab75"></i></span>';
+                    case -1:
+                    case "-1":
+                        return '<span class="indicator left-side"><i class="fa fa-times-circle" style="color:#e25b5b"></i></span>';
+                    default:
+                        return '';
+                }
+            }
+
+            var getNum = function (str) {
+                var numb = str.match(/\d/g);
+                numb = numb.join("");
+                return parseInt(numb);
+            }
+            $('.layout-item').each(function () {
+                var that = $(this);
+                $.ajax({
+                    url: that.attr('data-url'),
+                    data: { currentDate: currentDate },
+                    success: function (data) {
+
+                        if (data.GraphicType !== undefined) {
+                            console.log(data.GraphicType);
+                            var callback = window.Der.Artifact;
+                            callback[data.GraphicType](data, that);
+                        } else if (data.type == 'reviewed-by' || data.type == 'prepared-by' || data.type === "highlight" || data.type === "weather" || data.type === 'temperature' ||
+                                data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "flare" || data.type === "safety" ||
+                            data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type === "total-feed-gas"
+                            || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type === "procurement" || data.type === "indicative-commercial-price" ||
+                                data.type === "plant-availability" || data.type === "economic-indicator" || data.type === "mgdp" || data.type === "hhv" || data.type === "lng-and-cds-production"
+                                || data.type === "nls" || data.type === "key-equipment-status" || data.type === "wave" || data.type === "table-tank" || data.type === "global-stock-market" || data.type === "loading-duration" || data.type === 'person-on-board') {
+
+                            if (data.type === "highlight" && that.hasClass('daily-highlight')) {
+                                var type = "absolute";
+                                if (that.hasClass('in-left')) {
+                                    type = 'left-side';
+                                } else if (that.hasClass('in-right')) {
+                                    type = 'right-side';
+                                }
+                                if (parseInt(data.view) < 2) {
+                                    that.replaceWith('<span class="indicator ' + type + '"><i class="fa fa-circle"  style="color:#808080" ></i></span>');
+                                } else if (parseInt(data.view) == 2) {
+                                    that.replaceWith('<span class="indicator ' + type + '"><i class="fa fa-circle" style="color:#F0F0F0"></i></span>');
+                                } else if (parseInt(data.view) == 3) {
+                                    that.replaceWith('<span class="indicator ' + type + '"><i class="fa fa-circle" style="color:#FF0000"></i></span>');
+                                } else if (parseInt(data.view) == 4) {
+                                    that.replaceWith('<span class="indicator ' + type + ' orange"><i class="fa fa-circle" style="color:orange"></i></span>');
+                                } else if (parseInt(data.view) > 4) {
+                                    that.replaceWith('<span class="indicator ' + type + ' green"><i class="fa fa-circle" style="color:green"></i></span>');
+                                }
                             }
-
-                        }
-                        else if (data.type === "highlight" && that.hasClass('highlight-json-market-tone')) {
-                            switch (data.view.trim()) {
-                                case '1':
-                                case 'Bullish':
-                                    that.replaceWith("<span class='comparison'><i class='fa fa-arrow-up' style='color:green'></i></span>");
-                                    break;
-                                case '0':
-                                case 'Mixed':
-                                    that.replaceWith("<span class='comparison'><i class='fa fa-minus' style='color:orange'></i></span>");
-                                    break;
-                                case '-1':
-                                case 'Bearish':
-                                    that.replaceWith("<span class='comparison'><i class='fa fa-arrow-down' style='color:red'></i></span>");
-                                    break;
-                                default:
+                            else if (data.type === "highlight" && that.hasClass('highlight-json')) {
+                                var type = "absolute";
+                                if (that.hasClass('in-left')) {
+                                    type = 'left-side';
+                                } else if (that.hasClass('in-right')) {
+                                    type = 'right-side';
+                                }
+                                if (data.view.toLowerCase().indexOf('-1') > -1) {
+                                    that.replaceWith('<span class="indicator ' + type + '"><i class="fa fa-times-circle"></i></span>');
+                                }
+                                else if (data.view.toLowerCase().indexOf('1') > -1) {
+                                    that.replaceWith('<span class="indicator ' + type + '"><i class="fa fa-circle"></i></span>');
+                                } else if (data.view.toLowerCase().indexOf('0') > -1) {
+                                    that.replaceWith('<span class="indicator ' + type + '"><i class="fa fa-exclamation-circle"></i></span>');
+                                } else {
                                     that.replaceWith('&nbsp;');
-                                    break;
+                                }
+
                             }
-                        }
-                        else if (data.type === "highlight" && that.hasClass('highlight-json-ict-infra')) {
+                            else if (data.type === "highlight" && that.hasClass('highlight-json-plant-mode')) {
 
-                            var js = JSON.parse(data.view);
-                            var transform = [];
-                            transform['a'] = getIconForIctInfraFirstColumn(js.a);
-                            transform['b'] = getIconForIctInfraSecondColumn(js.b);
-                            transform['c'] = getIconForIctInfraThirdColumn(js.c);
-                            var html = '<table class="table borderless ict-infra"><tbody>';
-                            html +=
-                                '<td style="width:10px">' + transform['a'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image002.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['b'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image004.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['c'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image006.png")" alt="" width="52" height="25"></td>';
-                            html += '</tbody></table>';
-                            that.replaceWith(html);
-                        }
-                        else if (data.type === "highlight" && that.hasClass('highlight-json-gs-fm')) {
-                            var js = JSON.parse(data.view);
-                            var transform = [];
-                            transform['a'] = getIconForGsFm(js.a);
-                            transform['b'] = getIconForGsFm(js.b);
-                            transform['c'] = getIconForGsFm(js.c);
-                            var html = '<table class="table borderless gs-fm"><tbody>';
-                            html +=
-                                '<td style="width:10px">' + transform['a'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image008.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['b'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image010.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['c'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image012.png")" alt="" width="52" height="25"></td>';
-                            html += '</tbody></table>';
-                            that.replaceWith(html);
-                        } else if (data.type === "highlight" && that.hasClass('highlight-json-weekly-alarm')) {
-                            var parsed = JSON.parse(data.view);
-                            $('.weekly-alarm-processtrain').html(parsed.processtrain);
-                            $('.weekly-alarm-period').html(parsed.period);
-                            $('.weekly-alarm-note').html(parsed.remark);
-                            $('.weekly-alarm-utilities').html(parsed.utilities);
+                                if (data.view.toLowerCase().indexOf('holding') > -1) {
+                                    that.replaceWith("<span style='color:green'>Holding</span>");
+                                } else if (data.view.toLowerCase().indexOf('loading') > -1) {
+                                    that.replaceWith("<span style='color:blue'>Loading</span>");
+                                } else if (data.view.toLowerCase().indexOf('shutdown') > -1) {
+                                    that.replaceWith("<span style='color:red'>Shutdown</span>");
+                                } else {
+                                    that.replaceWith('&nbsp;');
+                                }
 
-                        }
-                        else if (data.type == 'weather' || data.type == 'temperature') {
-                            that.replaceWith(data.view);
-                        }
-                            //else if (data.type === 'security') {
-                            //    var html = data.view;
-                            //    $(html).find('li').map(function () {
-                            //        var $this = $(this);
-                            //        var nilai = $this.attr('value');
-                            //        if (nilai == '0' || nilai == undefined) {
-                            //            $this.find('span').css('color', 'red')
-                            //        } else {
-                            //            $this.find('span').css('color', 'black')
-                            //        }
-                            //        console.log($this.find('span'));
-                            //    });
-                            //    console.log(html);
-                            //    that.replaceWith(html);
-                            //}
-                        else {
-                            that.html(data.view);
-                        }
-
-                        $("p").each(function () {
-                            var $this = $(this);
-                            if ($this.html() === "&nbsp;") {
-                                $this.remove();
                             }
-                        });
+                            else if (data.type === "highlight" && that.hasClass('highlight-json-market-tone')) {
+                                switch (data.view.trim()) {
+                                    case '1':
+                                    case 'Bullish':
+                                        that.replaceWith("<span class='comparison'><i class='fa fa-arrow-up' style='color:green'></i></span>");
+                                        break;
+                                    case '0':
+                                    case 'Mixed':
+                                        that.replaceWith("<span class='comparison'><i class='fa fa-minus' style='color:orange'></i></span>");
+                                        break;
+                                    case '-1':
+                                    case 'Bearish':
+                                        that.replaceWith("<span class='comparison'><i class='fa fa-arrow-down' style='color:red'></i></span>");
+                                        break;
+                                    default:
+                                        that.replaceWith('&nbsp;');
+                                        break;
+                                }
+                            }
+                            else if (data.type === "highlight" && that.hasClass('highlight-json-ict-infra')) {
+
+                                var js = JSON.parse(data.view);
+                                var transform = [];
+                                transform['a'] = getIconForIctInfraFirstColumn(js.a);
+                                transform['b'] = getIconForIctInfraSecondColumn(js.b);
+                                transform['c'] = getIconForIctInfraThirdColumn(js.c);
+                                var html = '<table class="table borderless ict-infra"><tbody>';
+                                html +=
+                                    '<td style="width:10px">' + transform['a'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image002.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['b'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image004.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['c'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image006.png")" alt="" width="52" height="25"></td>';
+                                html += '</tbody></table>';
+                                that.replaceWith(html);
+                            }
+                            else if (data.type === "highlight" && that.hasClass('highlight-json-gs-fm')) {
+                                var js = JSON.parse(data.view);
+                                var transform = [];
+                                transform['a'] = getIconForGsFm(js.a);
+                                transform['b'] = getIconForGsFm(js.b);
+                                transform['c'] = getIconForGsFm(js.c);
+                                var html = '<table class="table borderless gs-fm"><tbody>';
+                                html +=
+                                    '<td style="width:10px">' + transform['a'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image008.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['b'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image010.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['c'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image012.png")" alt="" width="52" height="25"></td>';
+                                html += '</tbody></table>';
+                                that.replaceWith(html);
+                            } else if (data.type === "highlight" && that.hasClass('highlight-json-weekly-alarm')) {
+                                var parsed = JSON.parse(data.view);
+                                $('.weekly-alarm-processtrain').html(parsed.processtrain);
+                                $('.weekly-alarm-period').html(parsed.period);
+                                $('.weekly-alarm-note').html(parsed.remark);
+                                $('.weekly-alarm-utilities').html(parsed.utilities);
+
+                            }
+                            else if (data.type == 'weather' || data.type == 'temperature') {
+                                that.replaceWith(data.view);
+                            }
+                                //else if (data.type === 'security') {
+                                //    var html = data.view;
+                                //    $(html).find('li').map(function () {
+                                //        var $this = $(this);
+                                //        var nilai = $this.attr('value');
+                                //        if (nilai == '0' || nilai == undefined) {
+                                //            $this.find('span').css('color', 'red')
+                                //        } else {
+                                //            $this.find('span').css('color', 'black')
+                                //        }
+                                //        console.log($this.find('span'));
+                                //    });
+                                //    console.log(html);
+                                //    that.replaceWith(html);
+                                //}
+                            else {
+                                that.html(data.view);
+                            }
+
+                            $("p").each(function () {
+                                var $this = $(this);
+                                if ($this.html() === "&nbsp;") {
+                                    $this.remove();
+                                }
+                            });
+
+                        }
 
                     }
-
-                }
+                });
             });
-        });
-    })
-</script>
+        })
+    </script>
 </body>
 </html>

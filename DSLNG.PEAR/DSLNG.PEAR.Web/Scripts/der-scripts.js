@@ -154,7 +154,7 @@ Number.prototype.format = function (n, x) {
 };
 
 (function window(window, $, undefined) {
-    
+
     Highcharts.setOptions({
         lang: {
             decimalPoint: '.',
@@ -163,15 +163,16 @@ Number.prototype.format = function (n, x) {
     });
     var Der = {};
     Der.Artifact = {};
+    Der.Helper = {};
     Der.Artifact.line = function (data, container) {
         //console.log(data);
         var symbol = 'circle';
         var fillColor = 'red';
         if (data.LineChart.Title.toLowerCase().indexOf('cds') > -1) {
-            symbol = 'triangle';            
+            symbol = 'triangle';
         } else if (data.LineChart.Title.toLowerCase().indexOf('thermal') > -1) {
             symbol = 'square';
-        } else if (data.LineChart.Title.toLowerCase().indexOf('loss') > -1) {            
+        } else if (data.LineChart.Title.toLowerCase().indexOf('loss') > -1) {
             fillColor = '#403152';
         }
         container.highcharts({
@@ -186,16 +187,16 @@ Number.prototype.format = function (n, x) {
             },
             title: {
                 text: data.LineChart.Title,
-                style:{
+                style: {
                     fontSize: '11px',
-                    fontWeight:'bold'
+                    fontWeight: 'bold'
                 }
             },
             subtitle: {
                 text: data.LineChart.Subtitle,
                 style: {
                     fontSize: '10px',
-                    display:'none'
+                    display: 'none'
                 }
             },
 
@@ -245,7 +246,7 @@ Number.prototype.format = function (n, x) {
                 }],
                 tickInterval: parseFloat(container.data('fraction')),
                 max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale,
-                min : container.data('min'),
+                min: container.data('min'),
                 labels: {
                     style: {
                         fontSize: '7px'
@@ -266,7 +267,7 @@ Number.prototype.format = function (n, x) {
                 enabled: false
             },
             legend: {
-                enabled:false,
+                enabled: false,
                 itemHoverStyle: {
                     color: '#FF0000'
                 }
@@ -274,22 +275,22 @@ Number.prototype.format = function (n, x) {
             series: data.LineChart.Series
         });
         //setTimeout(function () {
-            //var svg = container.find('.highcharts-container').html();
-            ////console.log(svg);   
-            //var $canvas = $('<canvas />');
-            //$canvas.width(container.width());
-            //$canvas.height(container.height());
-            //container.hide();
-            //container.parent().append($canvas);
-            //console.log(container.parent().find('canvas')[0]);
-            //canvg(container.parent().find('canvas')[0], svg);
-            //var canvas = container.parent().find('canvas')[0];
-            //var $img = $('<img />');
-            //$img.attr('src', canvas.toDataURL());
-            //container.parent().find('canvas').replaceWith($img);
-            //container.remove();
+        //var svg = container.find('.highcharts-container').html();
+        ////console.log(svg);   
+        //var $canvas = $('<canvas />');
+        //$canvas.width(container.width());
+        //$canvas.height(container.height());
+        //container.hide();
+        //container.parent().append($canvas);
+        //console.log(container.parent().find('canvas')[0]);
+        //canvg(container.parent().find('canvas')[0], svg);
+        //var canvas = container.parent().find('canvas')[0];
+        //var $img = $('<img />');
+        //$img.attr('src', canvas.toDataURL());
+        //container.parent().find('canvas').replaceWith($img);
+        //container.remove();
         //}, 1000);
-       
+
     }
     Der.Artifact.multiaxis = function (data, container) {
         var symbol = i % 2 == 0 ? 'triangle' : 'square';
@@ -352,7 +353,7 @@ Number.prototype.format = function (n, x) {
                         } else {
                             return x.format();
                         }
-                        
+
                         //var x = this.value
                         //return x.format();
                     }
@@ -360,7 +361,7 @@ Number.prototype.format = function (n, x) {
                 min: container.data('min') != '' && container.data('min') != null ? container.data('min') : null,
                 lineWidth: 1
             });
-            if (chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType] === 'line') {                
+            if (chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType] === 'line') {
                 //var symbol = i % 2 == 0 ? 'triangle' : 'square';
                 plotOptions[chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType]] = {
                     marker: {
@@ -401,7 +402,7 @@ Number.prototype.format = function (n, x) {
                 plotOptions[chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType]] = { stacking: 'normal' };
             }
             for (var j in data.MultiaxisChart.Charts[i].Series) {
-                
+
 
                 if (seriesNames.indexOf(data.MultiaxisChart.Charts[i].Series[j].name) < 0) {
                     if (converted === false) {
@@ -409,7 +410,7 @@ Number.prototype.format = function (n, x) {
                     } else {
                         data.MultiaxisChart.Charts[i].Series[j].showInLegend = false;
                     }
-                    
+
                 } else {
                     data.MultiaxisChart.Charts[i].Series[j].showInLegend = false;
                 }
@@ -473,7 +474,7 @@ Number.prototype.format = function (n, x) {
             yAxis: yAxes,
             legend: {
                 itemStyle: {
-                    fontSize : '7px'
+                    fontSize: '7px'
                 },
 
             },
@@ -508,7 +509,7 @@ Number.prototype.format = function (n, x) {
             for (var i = 0; i < plotBands.length - 1; i++) {
                 startColor = plotBands[i].color;
                 endColor = plotBands[(i + 1)].color;
-                var partLength = (plotBands[i+1].from - plotBands[i].from) / plotBands[plotBands.length - 1].from * Math.PI;
+                var partLength = (plotBands[i + 1].from - plotBands[i].from) / plotBands[plotBands.length - 1].from * Math.PI;
                 // x start / end of the next arc to draw
                 var xStart = Math.cos(start) * r;
                 var xEnd = Math.cos(start + partLength) * r;
@@ -525,7 +526,7 @@ Number.prototype.format = function (n, x) {
                     endAngle: start + partLength,
                     stroke: plotBands[i].color,
                     strokeWidth: thickness,
-                    fill:''
+                    fill: ''
                 });
                 circle.setGradient('stroke', {
                     type: 'linear',
@@ -601,8 +602,8 @@ Number.prototype.format = function (n, x) {
         //ctx.fillText("0%", 0, canvas.height - 20);
         //ctx.fillText("100%", canvas.width - 45, canvas.height - 20);
         //ctx.fillText("50%", canvas.width / 2 - 20, 20);
-      
-        $this.append('<span class="value"><strong>' + data.SpeedometerChart.LabelSeries.value.format(2) + ' ' + data.SpeedometerChart.LabelSeries.name +  '</strong></span>');
+
+        $this.append('<span class="value"><strong>' + data.SpeedometerChart.LabelSeries.value.format(2) + ' ' + data.SpeedometerChart.LabelSeries.name + '</strong></span>');
         var $image = $('<img />');
         $image.attr('src', canvas.toDataURL({
             format: 'png',
@@ -620,7 +621,7 @@ Number.prototype.format = function (n, x) {
         var $canvas = $('<canvas />');
         $canvas.css({
             width: '100px',
-            height : '40px'
+            height: '40px'
         });
         $this.append($canvas);
         var canvas = $this.find("canvas")[0];
@@ -632,7 +633,7 @@ Number.prototype.format = function (n, x) {
             var gradient = null;
             var startColor = null,
                 endColor = null;
-           
+
             for (var i = 0; i < plotBands.length - 1; i++) {
                 startColor = plotBands[i].color;
                 endColor = plotBands[(i + 1)].color;
@@ -664,9 +665,9 @@ Number.prototype.format = function (n, x) {
             //console.log(xc + Math.cos(point) * (r - thickness / 2), yc + Math.sin(point) * (r - thickness / 2));
             // the triangle
             ctx.beginPath();
-            ctx.moveTo(xc + Math.cos(point) * (r - thickness / 2), yc + Math.sin(point) * (r - thickness/2));
-            ctx.lineTo(xc + Math.cos(point * 0.97) * (r + thickness / 2), yc + Math.sin(point * 0.97) * (r + thickness/2));
-            ctx.lineTo(xc + Math.cos(point * 1.03) * (r + thickness / 2), yc + Math.sin(point * 1.03) * (r + thickness/2));
+            ctx.moveTo(xc + Math.cos(point) * (r - thickness / 2), yc + Math.sin(point) * (r - thickness / 2));
+            ctx.lineTo(xc + Math.cos(point * 0.97) * (r + thickness / 2), yc + Math.sin(point * 0.97) * (r + thickness / 2));
+            ctx.lineTo(xc + Math.cos(point * 1.03) * (r + thickness / 2), yc + Math.sin(point * 1.03) * (r + thickness / 2));
             ctx.closePath();
 
             // the fill color
@@ -675,8 +676,8 @@ Number.prototype.format = function (n, x) {
         }
         drawMultiRadiantCircle(canvas.width / 2, canvas.height - 10, canvas.height - 40 - thickness / 2, data.SpeedometerChart.PlotBands);
         ctx.font = "30px serif";
-        ctx.fillText("0%", 0, canvas.height-20);
-        ctx.fillText("100%", canvas.width-45, canvas.height-20);
+        ctx.fillText("0%", 0, canvas.height - 20);
+        ctx.fillText("100%", canvas.width - 45, canvas.height - 20);
         ctx.fillText("50%", canvas.width / 2 - 20, 20);
 
     };
@@ -702,21 +703,21 @@ Number.prototype.format = function (n, x) {
             width: $this.width() + 'px',
             height: $this.height() + 'px'
         });
-       
+
         $this.append($wrapper.append($canvas))
 
         var canvas = $this.find('canvas')[0];
         if (canvas.getContext) {
             var ctx = canvas.getContext("2d");
             gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
-            var last = config.PlotBands.length -1;
+            var last = config.PlotBands.length - 1;
             for (var i in config.PlotBands) {
                 gradient.addColorStop(config.PlotBands[i].from / config.PlotBands[last].from, config.PlotBands[i].color);
             }
             ctx.fillStyle = gradient;
-            ctx.fillRect(3, 0, canvas.width-3, canvas.height);
+            ctx.fillRect(3, 0, canvas.width - 3, canvas.height);
             ctx.fillStyle = "rgb(0,0,0)";
-            
+
             /*console.log(container[0]);
             console.log($label.html());
             console.log(config.PlotBands);
@@ -726,7 +727,7 @@ Number.prototype.format = function (n, x) {
             var maxPoint = config.PlotBands[last].from * (canvas.width - 6) + 3
             if (point - 3 < 0) {
                 point = basePoint;
-            } else if (point > maxPoint ) {
+            } else if (point > maxPoint) {
                 point = maxPoint;
             }
             ctx.fillRect(point - 3, 0, 6, canvas.height - 30);
@@ -749,7 +750,7 @@ Number.prototype.format = function (n, x) {
     }
     Der.Artifact.termometer = function (data, container) {
         var $this = container;
-        $this.append('<span style="top:'+ (100-data.Value + 5) + '%' +'" class="termo-label">' + data.Value + '%' + '</span>');
+        $this.append('<span style="top:' + (100 - data.Value + 5) + '%' + '" class="termo-label">' + data.Value + '%' + '</span>');
         var $canvas = $('<canvas/>');
         $canvas.css({
             width: '100%',
@@ -766,7 +767,7 @@ Number.prototype.format = function (n, x) {
             gradient.addColorStop("1.0", "#8EB4E3");
             ctx.fillStyle = gradient;
             ctx.fillRect(0, start, canvas.width, data.Value * canvas.height / 100);
-            
+
         }
         var $image = $('<img />');
         $image.attr('src', $this.find('canvas')[0].toDataURL());
@@ -788,7 +789,7 @@ Number.prototype.format = function (n, x) {
         //    'Flare Loss' : 'Loss'
         //}
         for (var i in data.Pie.SeriesResponses) {
-            
+
             if (parseFloat(data.Pie.SeriesResponses[i].y) < 0) {
                 continue;
             }
@@ -821,14 +822,14 @@ Number.prototype.format = function (n, x) {
                 spacingBottom: 0,
                 spacingLeft: 0,
                 spacingRight: 0,
-                height:250
+                height: 250
             },
             title: {
                 text: data.Pie.Title,
                 style: {
                     fontSize: '11px',
                     fontWeight: 'bold',
-                    display:'none'
+                    display: 'none'
                 },
             },
             subtitle: {
@@ -865,11 +866,11 @@ Number.prototype.format = function (n, x) {
                     size: '75%',
                     shadow: false,
                     depth: 45,
-                    animation:false
+                    animation: false
                 }
             },
             legend: {
-                enabled:false,
+                enabled: false,
                 itemStyle: {
                     fontSize: '7px'
                 },
@@ -888,11 +889,110 @@ Number.prototype.format = function (n, x) {
         });
         container.append($title);
     };
-    Der.Artifact.tank = function (data, container) {
-        container.tank(data.Tank, {
-            height: container.height(),
-            width: container.width()
-        });
+    Der.Helper.DrawInlineSVG = function (container, rawSVG) {
+        var id = container.attr('id');
+        var width = container.width();
+        var height = container.height();
+        var newCanvas = $('<canvas/>', { 'id': id })
+            .width(width)
+            .height(height);
+        container.replaceWith(newCanvas);
+        canvg(document.getElementById(id), rawSVG, {
+            renderCallback: function () {
+                var $image = $('<img />');
+                $image.attr('src', document.getElementById(id).toDataURL());
+                $image.width(width);
+                $image.height(height);
+                $('#'+id).replaceWith($image);
+            }
+        })
+
+        //var ctx = document.getElementById(id).getContext("2d");
+        ////console.log(rawSVG);
+        //var svg = new Blob([rawSVG], { type: "image/svg+xml;charset=utf-8" }),
+        //    domURL = self.URL || self.webkitURL || self,
+        //    url = domURL.createObjectURL(svg),
+        //    img = new Image;
+
+        //img.onload = function () {
+        //    ctx.drawImage(this, 0, 0);
+        //    domURL.revokeObjectURL(url);
+        //    callback(this);
+        //};
+        ////console.log(url);
+        //img.src = url;
     };
+    Der.Artifact.tank = function (data, container) {
+        if (container.data('type') == 'custom') {
+            container.tank(data.Tank, {
+                height: container.height(),
+                width: container.width()
+            });
+        } else {
+            FusionCharts.ready(function () {
+                var fusioncharts = new FusionCharts({
+                    type: 'cylinder',
+                    dataFormat: 'json',
+                    id: 'chart-' + container.attr('id'),
+                    renderAt: container.attr('id'),
+                    width: container.width(),
+                    height: container.height(),
+                    dataSource: {
+                        "chart": {
+                            "manageresize": "1",
+                            "bgcolor": "dbeef4",
+                            "bgalpha": "100",
+                            "showborder": "0",
+                            "lowerlimit": "0",
+                            "upperlimit": "100",
+                            "showtickmarks": "0",
+                            "showtickvalues": "0",
+                            "showlimits": "0",
+                            "numbersuffix": "%",
+                            "decmials": "0",
+                            "cylfillcolor": data.Tank.Color.replace('#',''),
+                            "basefontcolor": data.Tank.Color.replace('#', ''),
+                            "chartleftmargin": "2",
+                            "chartrightmargin": "2",
+                            "charttopmargin": "2"
+                        },
+                        "value": data.Tank.VolumeInventory,
+                        //"annotations": {
+                        //    "groups": [
+                        //        {
+                        //            "showbelow": "1",
+                        //            "items": [
+                        //                {
+                        //                    "type": "rectangle",
+                        //                    "x": "$chartStartX+1",
+                        //                    "y": "$chartStartY+1",
+                        //                    "tox": "$chartEndX-1",
+                        //                    "toy": "$chartEndY-1",
+                        //                    "color": "dbeef4",
+                        //                    "alpha": "100",
+                        //                    "showborder": "0",
+                        //                    "bordercolor": "dbeef4",
+                        //                    "borderthickness": "0",
+                        //                    "radius": "0"
+                        //                }
+                        //            ]
+                        //        }
+                        //    ]
+                        //}
+
+                    }
+                }
+            );
+                fusioncharts.render();
+            });
+        }
+        console.log(data);
+    };
+    //Der.Artifact.tank = function (data, container) {
+    //    container.tank(data.Tank, {
+    //        height: container.height(),
+    //        width: container.width()
+    //    });
+    //};
     window.Der = Der;
-}(window,jQuery));
+}(window, jQuery));
