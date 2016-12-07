@@ -13,7 +13,11 @@
 
     <!-- Latest compiled and minified CSS -->
     @Styles.Render("~/Content/der_preview")
-
+    <style>
+        .creditgroup{
+            display:none !important;
+        }
+    </style>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -1299,6 +1303,14 @@
                                 var $this = $(this);
                                 if ($this.html() === "&nbsp;") {
                                     $this.remove();
+                                }
+                            });
+
+                            $("g").each(function () {
+                                var $this = $(this);
+                                var cd = $('[class$="creditgroup"]');
+                                if (cd.length > 0) {
+                                    cd.closest('g').remove();
                                 }
                             });
 
