@@ -74,7 +74,7 @@
             percentFill = Math.round((daysToTankTop / maxCapacity) * 100);
             var $volume = $('<div />');
             $volume.addClass('volume');
-            $volume.html(volumeInventory.format(2) + ' ' + volumeInventoryUnit);
+            $volume.html(Math.round(volumeInventory.format(2)) + ' ' + volumeInventoryUnit);
             $(this).append($volume);
             ellipseRX = 14;
             ellipseRY = svgHeight / 2;
