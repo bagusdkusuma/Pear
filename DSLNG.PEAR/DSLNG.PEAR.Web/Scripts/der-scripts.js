@@ -923,6 +923,7 @@ Number.prototype.format = function (n, x) {
         //img.src = url;
     };
     Der.Artifact.tank = function (data, container) {
+        //console.log(data);
         if (container.data('type') == 'custom') {
             container.tank(data.Tank, {
                 height: container.height(),
@@ -939,6 +940,7 @@ Number.prototype.format = function (n, x) {
                     height: container.height(),
                     dataSource: {
                         "chart": {
+                            //"caption" : "Test",
                             "manageresize": "1",
                             "bgcolor": "dbeef4",
                             "bgalpha": "100",
@@ -951,12 +953,12 @@ Number.prototype.format = function (n, x) {
                             "numbersuffix": "%",
                             "decmials": "0",
                             "cylfillcolor": data.Tank.Color.replace('#',''),
-                            "basefontcolor": data.Tank.Color.replace('#', ''),
+                            "basefontcolor": "000",
                             "chartleftmargin": "2",
                             "chartrightmargin": "2",
                             "charttopmargin": "2"
                         },
-                        "value": data.Tank.VolumeInventory,
+                        "value": Math.round(data.Tank.VolumeInventory),
                         //"annotations": {
                         //    "groups": [
                         //        {
@@ -986,7 +988,7 @@ Number.prototype.format = function (n, x) {
                 fusioncharts.render();
             });
         }
-        console.log(data);
+        //console.log(data);
     };
     //Der.Artifact.tank = function (data, container) {
     //    container.tank(data.Tank, {
