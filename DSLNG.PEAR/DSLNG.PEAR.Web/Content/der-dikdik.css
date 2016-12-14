@@ -1222,3 +1222,6 @@ table.flare .left-header{
 table.flare tbody td {
     text-align:right;
 }
+.tank-wrapper {
+    display:inline-block;
+}
