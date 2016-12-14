@@ -954,9 +954,10 @@ Number.prototype.format = function (n, x) {
                             "decmials": "0",
                             "cylfillcolor": data.Tank.Color.replace('#',''),
                             "basefontcolor": "000",
-                            "chartleftmargin": "2",
-                            "chartrightmargin": "2",
-                            "charttopmargin": "2"
+                            "chartLeftMargin": "0",
+                            "chartTopMargin": "0",
+                            "chartRightMargin": "0",
+                            "chartBottomMargin": "0",
                         },
                         "value": Math.round(data.Tank.VolumeInventory),
                         //"annotations": {
