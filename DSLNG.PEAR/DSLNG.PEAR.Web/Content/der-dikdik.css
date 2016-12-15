@@ -789,7 +789,7 @@ h6 {
             text-align: right;
         }
         .table.ict-infra {
-            border-bottom: 1px solid #0D0D0D;
+            /*border-bottom: 1px solid #0D0D0D;*/
             /*margin-top:26px;*/
         }
         
@@ -839,7 +839,7 @@ h6 {
         
         .co-macro-eco {
             padding: 5px;
-            height: 245px;
+            height: 270.5px;
             border-bottom: 1px solid #0D0D0D;
         }
         
@@ -850,6 +850,7 @@ h6 {
         .table.signature > tbody > tr > td {
             height: 84px;
             text-align: center;
+            margin-top:7px;
         }
         
         .table.signature td img {
@@ -863,6 +864,7 @@ h6 {
         .table.signature td.signature img {
             height: 30px;
             width: auto;
+            margin-top:7px;
         }
         
         .table.table.signature label,

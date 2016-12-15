@@ -1,10 +1,20 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKpiInformationViewModel
+<style>
+    .first-row {
+        height: 20pt;
+    }
 
+    .next-row {
+        height: 11pt;
+    }
+  
+    
+</style>
 <table class="table table-bordered indicative">
     <thead>
     <tr>
-        <td colspan="3" style="font-size:12px;padding:10px; ">
-            <div style="height:23px;">
+        <td colspan="3" class="indicative-titlehead">
+            <div class="indicative-titlediv">
                 DSLNG Indicative Commercial Price (JCC based)-USD/MMbtu
             </div>
             
@@ -13,21 +23,21 @@
     </thead>
     <tbody>
     <tr>
-        <td style="width: 34%">
-            <div style="height:11px;">
+        <td style="width: 34%" class="next-row">
+            <div class="next-row">
                 Feed Gas (GSA)
             </div>
         </td>
         <td>
             JOB @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, string.Empty, string.Empty)
         </td>
-        <td style="width: 34%;">
+        <td style="width: 34%;" class="next-row">
             MGDP @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, string.Empty, string.Empty)
         </td>
     </tr>
     <tr>
         <td>
-            <div style="height:11px;">
+            <div class="next-row">
                 LNG Price (SPA)
             </div>
         </td>

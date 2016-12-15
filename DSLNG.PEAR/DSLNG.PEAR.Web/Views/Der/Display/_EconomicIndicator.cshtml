@@ -12,13 +12,13 @@
         text-align: right;
     }
 
-    .first-row {
+    /*.first-row {
         height: 20px;
     }
 
     .next-row {
         height: 11px;
-    }
+    }*/
 </style>
 <table class="table table-bordered commodities">
     <thead>
@@ -113,8 +113,8 @@
                 USD/KRW @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 13).DerItemValue.Value, string.Empty, string.Empty, "N/A", true, 2)
             </td>
         </tr>
-        <tr style="height: 23px;">
-            <td colspan="2" style="text-align: center">
+        <tr>
+            <td colspan="2" style="text-align: center" class="next-row">
                 LNG Shipping Cost benchmark (Jap-Kor-Aus)
             </td>
             <td>

@@ -14,8 +14,27 @@
     <!-- Latest compiled and minified CSS -->
     @Styles.Render("~/Content/der_preview")
     <style>
-        .creditgroup{
-            display:none !important;
+        .creditgroup {
+            display: none !important;
+        }
+
+        .first-row {
+            height: 20pt;
+        }
+
+        .next-row {
+            height: 11pt;
+        }
+        .indicative-titlehead {
+            font-size: 8.5pt;
+            padding: 4.5pt;
+            height: 29pt;
+        }
+
+        .indicative-titlediv {
+            display: table-cell;
+            height: 30pt;
+            vertical-align: middle;
         }
     </style>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -813,26 +832,29 @@
                                                     <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row15Col0.Id })" class="layout-item"></div>
                                                 }
                                             }
-                                            <div style="padding:5px">
-                                                <h5 style="text-decoration: underline;margin-top:2px">ICT Infrastructure and System Highlight </h5>
+                                            <div style="height:94px; border-bottom:solid 1px;">
+                                                <div style="padding:5px">
+                                                    <h5 style="text-decoration: underline;margin-top:2px">ICT Infrastructure and System Highlight </h5>
+                                                    @{
+                                                        var row16Col6 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 6);
+                                                        if (row16Col6 != null)
+                                                        {
+
+                                                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row16Col6.Id })" class="layout-item" style="height: 12px;"></div>
+
+                                                        }
+                                                    }
+                                                </div>
                                                 @{
-                                                    var row16Col6 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 6);
-                                                    if (row16Col6 != null)
+                                                    var row16Col4 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 4);
+                                                    if (row16Col4 != null)
                                                     {
 
-                                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row16Col6.Id })" class="layout-item" style="height: 12px;"></div>
-
+                                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row16Col4.Id })" class="layout-item highlight-json-ict-infra"></div>
                                                     }
                                                 }
                                             </div>
-                                            @{
-                                                var row16Col4 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 4);
-                                                if (row16Col4 != null)
-                                                {
 
-                                                    <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row16Col4.Id })" class="layout-item highlight-json-ict-infra"></div>
-                                                }
-                                            }
                                             <table style="width:100%">
                                                 <tr>
                                                     <td style="width:40%">
@@ -1061,7 +1083,7 @@
                 Der.Helper.DrawInlineSVG($('.a3-ratio.preview').find('#chart-lngTank'), $('.a3-ratio.preview').find('#chart-lngTank').children('svg')[0].outerHTML);
                 Der.Helper.DrawInlineSVG($('.a3-ratio.preview').find('#chart-cdsStorageTank'), $('.a3-ratio.preview').find('#chart-cdsStorageTank').children('svg')[0].outerHTML);
                 Der.Helper.DrawInlineSVG($('.a3-ratio.preview').find('#chart-cdsBufferTank'), $('.a3-ratio.preview').find('#chart-cdsBufferTank').children('svg')[0].outerHTML);
-                
+
                 $textarea.val($('.a3-ratio.preview').html());
                 $form.prepend($textarea);
                 $form.prepend($input);
