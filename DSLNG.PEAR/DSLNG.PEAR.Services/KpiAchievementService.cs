@@ -1248,6 +1248,28 @@ namespace DSLNG.PEAR.Services
                             {
                                 kpiAchievement.Ytd = kpiAchievement.Value;
                                 kpiAchievement.Itd = kpiAchievement.Value;
+                                var yearly = DataContext.KpiAchievements.FirstOrDefault(x => x.Kpi.Id == kpiAchievement.Kpi.Id && x.Periode.Year == request.Periode.Year && x.PeriodeType == PeriodeType.Yearly);
+                                if (yearly != null)
+                                {
+                                    yearly.Value = kpiAchievement.Value;
+                                    yearly.Itd = kpiAchievement.Value;
+                                    yearly.UpdatedBy = user;
+                                    yearly.UpdatedDate = DateTime.Now;
+                                }
+                                else
+                                {
+                                    yearly = new KpiAchievement
+                                    {
+                                        Value = kpiAchievement.Value,
+                                        Periode = new DateTime(request.Periode.Year, 1, 1),
+                                        PeriodeType = PeriodeType.Yearly,
+                                        Kpi = kpiAchievement.Kpi,
+                                        CreatedBy = user,
+                                        UpdatedBy = user,
+                                        Itd = kpiAchievement.Value
+                                    };
+                                    DataContext.KpiAchievements.Add(yearly);
+                                }
                             }
                             if (prevAchievement != null)
                             {
