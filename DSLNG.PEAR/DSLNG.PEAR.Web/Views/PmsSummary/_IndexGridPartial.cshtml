@@ -9,21 +9,26 @@
                 <td rowspan="2" style="border-bottom: 1px solid #ffffff;">&nbsp;</td>
                 <td rowspan="2" style="border-bottom: 1px solid #ffffff;">Performance Indicator</td>
                 <td style="border-right: 1px solid #ffffff; border-left: 1px solid #ffffff" colspan="2">Actual / Target</td>
-                <td rowspan="2" style="border-bottom: 1px solid #ffffff;">Score / Weight</td>
+                @*<td rowspan="2" style="border-bottom: 1px solid #ffffff;">Score / Weight</td>*@
+                <td style="border-bottom: 1px solid #ffffff;">Score / Weight</td>
             </tr>
             <tr>
-                <td style="border-bottom: 1px solid #ffffff; border-right: 1px solid #ffffff; border-left: 1px solid #ffffff">Monthly</td>
-                <td style="border-bottom: 1px solid #ffffff; border-right: 1px solid #ffffff; border-left: 1px solid #ffffff">Annualy</td>
-                @*<td style="border-bottom: 1px solid #ffffff; border-right: 1px solid #ffffff; border-left: 1px solid #ffffff">Year To Date</td>*@
+                <td style="border-bottom: 1px solid #ffffff; border-right: 1px solid #ffffff; border-left: 1px solid #ffffff">Month To Date</td>
+                <td style="border-bottom: 1px solid #ffffff; border-right: 1px solid #ffffff; border-left: 1px solid #ffffff" hidden="hidden">Annually</td>
+                <td style="border-bottom: 1px solid #ffffff; border-right: 1px solid #ffffff; border-left: 1px solid #ffffff">Year To Date</td>
+                <td style="border-bottom: 1px solid #ffffff; border-right: 1px solid #ffffff; border-left: 1px solid #ffffff" hidden="hidden">Annually</td>
+                <td style="border-bottom: 1px solid #ffffff; border-right: 1px solid #ffffff; border-left: 1px solid #ffffff">Year To Date</td>
             </tr>
             @{
                 List<string> existedPillars = new List<string>();
                 int pillarLength = 0;
                 int counterKpi = 0;
                 decimal pillarScore = 0;
+                decimal ytdPillarScore = 0;
                 int count = 1;
                 double totalPillarWeight = 0;
                 decimal totalPillarScore = 0;
+                decimal totalPillarYtdScore = 0;
 
                 foreach (var item in Model.PmsSummaries)
                 {
@@ -35,13 +40,14 @@
                         totalPillarWeight += item.PillarWeight;
                         counterKpi = 1;
                         pillarScore = 0;
+                        ytdPillarScore = 0;
                         pillarLength = Model.PmsSummaries.Count(x => x.Pillar == item.Pillar);
                         existedPillars.Add(item.Pillar);
                         if (!string.IsNullOrEmpty(item.PillarIcon))
                         {
                 <tr class="tr-pillar" style="background-color: @item.PmsConfigColor">
                     <td>&nbsp;</td>
-                    <td colspan="5" class="text-left">
+                    <td colspan="4" class="text-left">
                         <div class="roundlight popover-pillar" data-toggle="popover" style="background-color: @item.PillarColor" data-poload="@scoreIndicatorPmsConfigUrl"></div>@item.Pillar (@item.PillarWeight)
                                     <img src="@Url.Content(PathConstant.PillarPath)/@item.PillarIcon" onerror="this.onerror = null; this.src = '@Url.Content(PathConstant.PillarPath)/default.png'" />
                     </td>
@@ -52,7 +58,7 @@
                         {
                 <tr class="tr-pillar" style="background-color: @item.PmsConfigColor">
                     <td>&nbsp;</td>
-                    <td colspan="3" class="text-left">
+                    <td colspan="4" class="text-left">
                         <div class="roundlight popover-pillar" data-toggle="popover" style="background-color: @item.PillarColor" data-poload="@scoreIndicatorPmsConfigUrl"></div>@item.Pillar (@item.PillarWeight)
                     </td>
                 </tr>
@@ -60,6 +66,7 @@
 
                     }
                     pillarScore += Convert.ToDecimal(item.Score);
+                    ytdPillarScore += Convert.ToDecimal(item.YtdScore);
                 <tr class="kpi-row" onclick="OnCellClick('5', @item.PmsConfigDetailId, '@item.KpiColor');">
                     <td>&nbsp;</td>
                     @if (!string.IsNullOrEmpty(item.KpiIcon))
@@ -78,11 +85,12 @@
                     }
 
                     <td class="text-right">@NumberHelper.DoubleToDecimalFormat(item.ActualMonthly) / @NumberHelper.DoubleToDecimalFormat(item.TargetMonthly)</td>
-                    <td class="text-right">@NumberHelper.DoubleToDecimalFormat(item.ActualYearly) / @NumberHelper.DoubleToDecimalFormat(item.TargetYearly)</td>
-                    @*<td class="text-right">@NumberHelper.DoubleToDecimalFormat(item.ActualYtd) / @NumberHelper.DoubleToDecimalFormat(item.TargetYtd)</td>*@
-                    <td class="text-right">@NumberHelper.DoubleToDecimalFormat(item.Score) / @item.Weight</td>
+                    <td class="text-right" hidden="hidden">@NumberHelper.DoubleToDecimalFormat(item.ActualYearly) / @NumberHelper.DoubleToDecimalFormat(item.TargetYearly)</td>
+                    <td class="text-right">@NumberHelper.DoubleToDecimalFormat(item.ActualYtd) / @NumberHelper.DoubleToDecimalFormat(item.TargetYearly)</td>
+                    <td class="text-right" hidden="hidden">@NumberHelper.DoubleToDecimalFormat(item.Score) / @item.Weight</td>
+                    <td class="text-right">@NumberHelper.DoubleToDecimalFormat(item.YtdScore) / @item.Weight</td>
                 </tr>
-            
+
                     if (counterKpi < pillarLength)
                     {
                         counterKpi++;
@@ -91,13 +99,18 @@
                     {
                         decimal pScore = pillarScore / 100 * Convert.ToDecimal(item.PillarWeight);
                         totalPillarScore += pScore;
+
+                        decimal pYtdScore = ytdPillarScore / 100 * Convert.ToDecimal(item.PillarWeight);
+                        totalPillarYtdScore += pYtdScore;
+
                 <tr class="pillar-score" style="font-weight: bold">
                     <td>&nbsp;</td>
                     <td colspan="3" class="text-left">
-                        <span class="pillar-score-text">Score KPI In This Pillar (@pillarScore.ToString(FormatNumber.DecimalFormat))</span>
+                        <span class="pillar-score-text">Score KPI In This Pillar (@ytdPillarScore.ToString(FormatNumber.DecimalFormat))</span>
                     </td>
 
-                    <td class="text-right">@( (pScore).ToString(FormatNumber.DecimalFormat)) / @item.PillarWeight</td>
+                    <td class="text-right" hidden="hidden">@( (pScore).ToString(FormatNumber.DecimalFormat)) / @item.PillarWeight</td>
+                    <td class="text-right">@( (pYtdScore).ToString(FormatNumber.DecimalFormat)) / @item.PillarWeight</td>
                 </tr>
                     }
                     if (count == Model.PmsSummaries.Count())
@@ -108,7 +121,7 @@
                         <div id="totalScore" class="roundlight" data-total-score-color="@item.TotalScoreColor" style="background-color:@item.TotalScoreColor" data-poload="@scoreIndicatorPmsSummaryUrl"></div>
                         Total Score
                     </td>
-                    <td class="text-right">@totalPillarScore.ToString(FormatNumber.DecimalFormat) / @totalPillarWeight</td>
+                    <td class="text-right">@totalPillarYtdScore.ToString(FormatNumber.DecimalFormat) / @totalPillarWeight</td>
                 </tr>
                     }
                     count++;
