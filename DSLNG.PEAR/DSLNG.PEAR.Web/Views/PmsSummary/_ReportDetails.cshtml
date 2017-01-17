@@ -56,16 +56,16 @@
                                 <th colspan="2">Actual</th>
                             </tr>
                             <tr style="border-bottom: 1px solid #ffffff">
-                                <th class="index">Yearly</th>
-                                <th class="index">Monthly</th>
+                                <th class="index">Yearly To Date</th>
+                                <th class="index">Month To Date</th>
                             </tr>
 
                             @foreach (var item in Model.Groups)
                             {
                                 <tr data-toggle="modal" data-target="#ModalFatality">
                                     <td style="text-align: left;padding-left: 15px;">@item.PerformanceIndicator (@item.Unit)</td>
-                                    <td style="text-align: right;padding-right: 15px;">@(item.ActualYearly.HasValue ? item.ActualYearly.Value.ToString(FormatNumber.DecimalFormat) : "") </td>
-                                    <td style="text-align: right;padding-right: 15px;">@(item.ActualMonthly.HasValue ? item.ActualMonthly.Value.ToString(FormatNumber.DecimalFormat) : "") </td>
+                                    <td style="text-align: right;padding-right: 15px;">@(item.ActualYtd.HasValue ? NumberHelper.DoubleToDecimalFormat(item.ActualYtd.Value) : "-") </td>
+                                    <td style="text-align: right;padding-right: 15px;">@(item.ActualMtd.HasValue ? NumberHelper.DoubleToDecimalFormat(item.ActualMtd.Value) : "-") </td>
                                 </tr>
                             }
 

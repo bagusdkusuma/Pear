@@ -36,6 +36,9 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
             public string Periode { get; set; }
             public double? ActualYearly { get; set; }
             public double? ActualMonthly { get; set; }
+            public double? ActualYtd { get; set; }
+            public double? ActualMtd { get; set; }
+            public double? ActualItd { get; set; }
         }
 
         public class KpiAchievment
@@ -52,6 +55,9 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
             public string Method { get; set; }
             public double? ActualYearly { get; set; }
             public double? ActualMonthly { get; set; }
+            public double? ActualYtd { get; set; }
+            public double? ActualMtd { get; set; }
+            public double? ActualItd { get; set; }
         }
     }
 }
