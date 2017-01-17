@@ -120,7 +120,7 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
             }
 
             public double? Score { get; set; }
-
+            public double? YtdScore { get; set; }
             public int PillarOrder { get; set; }
 
             public string PillarColor { get; set; }

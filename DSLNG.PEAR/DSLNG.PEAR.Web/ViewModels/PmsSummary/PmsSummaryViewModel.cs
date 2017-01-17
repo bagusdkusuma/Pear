@@ -32,7 +32,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
         public double? IndexYtd { get; set; }
 
         public double? Score { get; set; }
-
+        public double? YtdScore { get; set; }
         public string TargetActualYearly
         {
             get

@@ -46,7 +46,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
             var request = new GetPmsSummaryReportRequest
                 {
-                    Month = month.HasValue ? month.Value : DateTime.Now.Month,
+                    Month = month.HasValue ? month.Value : DateTime.Now.AddMonths(-1).Month,
                     Year = year.HasValue ? year.Value : yearActive
                 };
 
