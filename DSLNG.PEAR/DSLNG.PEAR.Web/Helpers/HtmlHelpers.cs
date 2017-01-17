@@ -229,7 +229,7 @@ namespace DSLNG.PEAR.Web.Helpers
             {
                 value = 1;
             }
-            else if (double.Parse(Value) < 85)
+            else if (double.Parse(Value) < (0.9 * double.Parse(TargetVale)))
             {
                 value = -1;
             }
@@ -272,7 +272,7 @@ namespace DSLNG.PEAR.Web.Helpers
             {
                 value = 1;
             }
-            else if (double.Parse(Value) < 80)
+            else if (double.Parse(Value) < (0.95 * double.Parse(TargetVale)))
             {
                 value = -1;
             }
@@ -315,14 +315,21 @@ namespace DSLNG.PEAR.Web.Helpers
             {
                 value = 1;
             }
-            else if (double.Parse(Value) >= double.Parse(TargetVale) && double.Parse(Value) < 2.2)
-            {
-                value = 0;
-            }
-            else
+            else if (double.Parse(Value) > (1.05 * double.Parse(TargetVale)))
             {
                 value = -1;
             }
+            else {
+                value = 0;
+            }
+            //else if ( >= double.Parse(TargetVale) && double.Parse(Value) < 2.2)
+            //{
+            //    value = 0;
+            //}
+            //else
+            //{
+            //    value = -1;
+            //}
             return value;
         }
 
