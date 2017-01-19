@@ -192,7 +192,7 @@ namespace DSLNG.PEAR.Services
 
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
-                response.Message = "DER Layout has been added successfully";
+                response.Message = "DER Layout has been Saved successfully";
             }
             catch (Exception exception)
             {
@@ -1970,7 +1970,7 @@ namespace DSLNG.PEAR.Services
                     DataContext.Ders.Remove(existingDer);
                     DataContext.SaveChanges();
                     response.IsSuccess = true;
-                    response.Message = "File Attachment has been added successfully";
+                    response.Message = "File Attachment has been Deleted successfully";
                     return response;
                 }
                 var lastFile = filenames.Last();

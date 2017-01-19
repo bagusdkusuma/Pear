@@ -694,7 +694,7 @@ namespace DSLNG.PEAR.Services
                      (request.Start.Value == request.End.Value))
                 {
                     var actual = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType &&
-                  x.Periode <= end && x.Kpi.Id == request.Series.KpiId && (x.Value != null && x.Value.Value != 0))
+                  x.Periode == end && x.Kpi.Id == request.Series.KpiId && (x.Value != null && x.Value.Value != 0))
                   .OrderByDescending(x => x.Periode).FirstOrDefault();
                     if (actual != null)
                     {
