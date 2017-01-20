@@ -132,6 +132,7 @@ namespace DSLNG.PEAR.Web.Controllers
             }
             
             viewModel.KpiInformationValues = GetKpisValue(theDate, kpiIds.ToArray(), new int[] { });
+            ViewBag.Title = inputData.Name;
             return View(viewModel);
         }
 
