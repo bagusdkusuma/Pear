@@ -1,10 +1,11 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.InputData.FormInputDataViewModel
 @using DSLNG.PEAR.Web.ViewModels.DerTransaction;
-@{
+@*@{
     ViewBag.Title = "FormInputData";
-}
+}*@
 
-<h2>Form Input Data</h2>
+<h3>@ViewBag.Title</h3>
+&nbsp;
 <div class="row">
     <div class="col-sm-12">
         <form class="form-inline">
@@ -38,6 +39,9 @@
         </tr>
     </thead>
     <tbody>
+        @{ 
+            var tabIndex = 0;
+        }
         @foreach (var item in Model.GroupInputDatas.OrderBy(x => x.Order))
         {
             <tr style="border-bottom:none; border-right:1px solid #fff">
@@ -47,11 +51,12 @@
 
             foreach (var kpi in item.InputDataKpiAndOrders.OrderBy(x => x.Order))
                 {
+                tabIndex++;
                 <tr>
                     <td></td>
                     <td style="text-align:left">@kpi.KpiName (@kpi.KpiMeasurement)</td>
                     <td style="border-right:1px solid #fff">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformationValues, kpi.KpiId, 1, kpi.KpiMeasurement, "prev", string.Format(@"{0}-actual", Model.PeriodeType.ToLowerInvariant()))
+                        @Html.DisplayKpiInformationInput(Model.KpiInformationValues, kpi.KpiId, tabIndex, kpi.KpiMeasurement, "prev", string.Format(@"{0}-actual", Model.PeriodeType.ToLowerInvariant()))
                     </td>
                     @*<td><input type="text" /></td>*@
                 </tr>
