@@ -106,11 +106,11 @@
                 <tr class="pillar-score" style="font-weight: bold">
                     <td>&nbsp;</td>
                     <td colspan="3" class="text-left">
-                        <span class="pillar-score-text">Score KPI In This Pillar (@pYtdScore.ToString(FormatNumber.DecimalFormat))</span>
+                        <span class="pillar-score-text">Score KPI In This Pillar (@ytdPillarScore.ToString(FormatNumber.DecimalFormat))</span>
                     </td>
 
                     <td class="text-right" hidden="hidden">@( (pScore).ToString(FormatNumber.DecimalFormat)) / @item.PillarWeight</td>
-                    <td class="text-right">@( (pYtdScore).ToString(FormatNumber.DecimalFormat)) / @item.PillarWeight</td>
+                    <td class="text-right">@( (ytdPillarScore).ToString(FormatNumber.DecimalFormat)) / @item.PillarWeight</td>
                 </tr>
                     }
                     if (count == Model.PmsSummaries.Count())
