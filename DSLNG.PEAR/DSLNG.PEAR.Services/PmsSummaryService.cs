@@ -123,33 +123,33 @@ namespace DSLNG.PEAR.Services
                                     x => x.PeriodeType == PeriodeType.Monthly && x.Periode.Month == request.Month && x.Periode.Year == request.Year);
                             if (kpiTargetMonthly != null && kpiTargetMonthly.Value.HasValue)
                                 kpiData.TargetMonthly = kpiTargetMonthly.Value.Value;
+                            kpiData.TargetYtd = kpiData.TargetYearly;
 
-
-                            var kpiTargetYtd = pmsConfigDetails.Kpi.KpiTargets.Where(
-                                x =>
-                                x.PeriodeType == PeriodeType.Monthly && x.Value.HasValue &&
-                                (x.Periode.Month >= 1 && x.Periode.Month <= request.Month && x.Periode.Year == request.Year)).ToList();
-                            if (kpiTargetYtd.Count > 0) kpiData.TargetYtd = 0;
-                            foreach (var targetYtd in kpiTargetYtd)
-                            {
-                                if (targetYtd.Value.HasValue)
-                                {
-                                    kpiData.TargetYtd += targetYtd.Value;
-                                }
-                            }
+                            //var kpiTargetYtd = pmsConfigDetails.Kpi.KpiTargets.Where(
+                            //    x =>
+                            //    x.PeriodeType == PeriodeType.Monthly && x.Value.HasValue &&
+                            //    (x.Periode.Month >= 1 && x.Periode.Month <= request.Month && x.Periode.Year == request.Year)).ToList();
+                            //if (kpiTargetYtd.Count > 0) kpiData.TargetYtd = 0;
+                            //foreach (var targetYtd in kpiTargetYtd)
+                            //{
+                            //    if (targetYtd.Value.HasValue)
+                            //    {
+                            //        kpiData.TargetYtd += targetYtd.Value;
+                            //    }
+                            //}
                             
-                            if (kpiData.YtdFormula == YtdFormula.Average)
-                            {
-                                if (kpiData.TargetYtd.HasValue)
-                                {
-                                    kpiData.TargetYtd = kpiData.TargetYtd / kpiTargetYtd.Count;
-                                }
-                            }
+                            //if (kpiData.YtdFormula == YtdFormula.Average)
+                            //{
+                            //    if (kpiData.TargetYtd.HasValue)
+                            //    {
+                            //        kpiData.TargetYtd = kpiData.TargetYtd / kpiTargetYtd.Count;
+                            //    }
+                            //}
 
-                            if (kpiData.YtdFormula != YtdFormula.Sum && kpiData.YtdFormula != YtdFormula.Average)
-                            {
-                                kpiData.TargetYtd = kpiData.TargetYearly;
-                            }
+                            //if (kpiData.YtdFormula != YtdFormula.Sum && kpiData.YtdFormula != YtdFormula.Average)
+                            //{
+                            //    kpiData.TargetYtd = kpiData.TargetYearly;
+                            //}
                             #endregion
 
                             #region Score

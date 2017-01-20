@@ -108,11 +108,11 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
 
                         if (ScoringType == ScoringType.Negative)
                         {
-                            double? indexYtd = ActualYtd.Value.Equals(TargetYtd.Value) ? 1 : ActualYtd/TargetYtd;
+                            double? indexYtd = /*ActualYtd.Value.Equals(TargetYtd.Value) ? 1 :*/ ActualYtd/TargetYtd;
                             return indexYtd < PmsSummaryConstant.NegativeValue ? PmsSummaryConstant.NegativeValue : indexYtd;
                         }
 
-                        return ActualYtd.Value.Equals(TargetYtd.Value) ? 1 : ActualYtd/TargetYtd;
+                        return /*ActualYtd.Value.Equals(TargetYtd.Value) ? 1 : */ActualYtd/TargetYtd;
                     }
 
                     return null;
