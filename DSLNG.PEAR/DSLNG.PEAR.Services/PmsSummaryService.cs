@@ -79,8 +79,15 @@ namespace DSLNG.PEAR.Services
                                 pmsConfigDetails.Kpi.KpiAchievements.FirstOrDefault(
                                     x => x.PeriodeType == PeriodeType.Monthly && x.Periode.Month == request.Month && x.Periode.Year == request.Year);
                             if (kpiAchievementMonthly != null && kpiAchievementMonthly.Value.HasValue)
+                            {
                                 kpiData.ActualMonthly = kpiAchievementMonthly.Value.Value;
 
+                            }
+
+                            if (kpiAchievementMonthly != null && kpiAchievementMonthly.Ytd.HasValue)
+                            {
+                                kpiData.ActualYtd = kpiAchievementMonthly.Ytd.Value;
+                            }
 
                             //var kpiAchievementYtd = pmsConfigDetails.Kpi.KpiAchievements.Where(
                             //    x =>
@@ -106,7 +113,7 @@ namespace DSLNG.PEAR.Services
                             #region KPI Target
 
                             var kpiTargetYearly =
-                                pmsConfigDetails.Kpi.KpiTargets.FirstOrDefault(x => x.PeriodeType == PeriodeType.Yearly && x.Periode.Year == request.Year);
+                            pmsConfigDetails.Kpi.KpiTargets.FirstOrDefault(x => x.PeriodeType == PeriodeType.Yearly && x.Periode.Year == request.Year);
                             if (kpiTargetYearly != null && kpiTargetYearly.Value != null)
                                 kpiData.TargetYearly = kpiTargetYearly.Value.Value;
 
@@ -130,7 +137,7 @@ namespace DSLNG.PEAR.Services
                                     kpiData.TargetYtd += targetYtd.Value;
                                 }
                             }
-
+                            
                             if (kpiData.YtdFormula == YtdFormula.Average)
                             {
                                 if (kpiData.TargetYtd.HasValue)
@@ -139,6 +146,10 @@ namespace DSLNG.PEAR.Services
                                 }
                             }
 
+                            if (kpiData.YtdFormula != YtdFormula.Sum && kpiData.YtdFormula != YtdFormula.Average)
+                            {
+                                kpiData.TargetYtd = kpiData.TargetYearly;
+                            }
                             #endregion
 
                             #region Score
@@ -151,6 +162,10 @@ namespace DSLNG.PEAR.Services
                                         var maxScore = pmsConfigDetails.Weight * 1.05;
                                         if (kpiData.Score >= maxScore)
                                             kpiData.Score = maxScore;
+
+                                        kpiData.YtdScore = pmsConfigDetails.Weight * kpiData.IndexYtd;
+                                        if (kpiData.YtdScore >= maxScore)
+                                            kpiData.YtdScore = maxScore;
                                         break;
                                     }
 
@@ -188,7 +203,7 @@ namespace DSLNG.PEAR.Services
 
                                 case ScoringType.Boolean:
                                     kpiData.Score = 0;
-                                    if (kpiAchievementYearly.Value.HasValue && !string.IsNullOrEmpty(pmsConfigDetails.Target) && pmsConfigDetails.Target.Contains("x"))
+                                    if (kpiAchievementYearly != null && kpiAchievementYearly.Value.HasValue && !string.IsNullOrEmpty(pmsConfigDetails.Target) && pmsConfigDetails.Target.Contains("x"))
                                     {
                                         Expression e = new Expression(pmsConfigDetails.Target.Replace("x", kpiAchievementYearly.Value.Value.ToString("f2", CultureInfo.InvariantCulture)));
                                         bool isPassed = (bool)e.Evaluate();
@@ -198,7 +213,7 @@ namespace DSLNG.PEAR.Services
                                         }
                                     }
                                     kpiData.YtdScore = 0;
-                                    if (kpiAchievementMonthly.Ytd.HasValue && !string.IsNullOrEmpty(pmsConfigDetails.Target) && pmsConfigDetails.Target.Contains("x"))
+                                    if (kpiAchievementMonthly != null && kpiAchievementMonthly.Ytd.HasValue && !string.IsNullOrEmpty(pmsConfigDetails.Target) && pmsConfigDetails.Target.Contains("x"))
                                     {
                                         Expression ex = new Expression(pmsConfigDetails.Target.Replace("x", kpiAchievementMonthly.Ytd.Value.ToString("F2", CultureInfo.InvariantCulture)));
                                         bool isPassed = (bool)ex.Evaluate();
