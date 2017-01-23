@@ -1983,7 +1983,7 @@ namespace DSLNG.PEAR.Services
 
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
-                response.Message = "File Attachment has been added successfully";
+                response.Message = "File Attachment has been Deleted successfully";
             }
             catch (Exception exception)
             {
