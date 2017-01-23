@@ -942,7 +942,8 @@ namespace DSLNG.PEAR.Services
                     //}
                     if (item.YtdScore.HasValue)
                     {
-                        totalScore += item.YtdScore.Value / 100 * item.PillarWeight;
+                        //totalScore += item.YtdScore.Value / 100 * item.PillarWeight;
+                        totalScore += item.YtdScore.Value;
                     }
                 }
             }
