@@ -27,9 +27,9 @@
             <td style="font-size:11px;font-weight:bold;width:34%">
                 <div class="first-row"># Backlog</div>
             </td>
-            <td style="width:32%">
+            <td style="width:32%;padding-top:13px;">
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, string.Empty, string.Empty, "N/A", true, 0)
-            </td>
+            </td="first-row">
             <td>
                 @Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Remark
             </td>

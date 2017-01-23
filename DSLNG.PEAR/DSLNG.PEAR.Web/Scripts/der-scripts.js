@@ -690,13 +690,13 @@ Number.prototype.format = function (n, x) {
         if ($label.length) {
             $this.find('label').css('display', 'none');
             if ($this.data('break')) {
-                $label.append('<div style="margin-left:15px">' + data['SpeedometerChart'].Series.data[0] + '</div>');
+                $label.append('<div style="margin-left:15px; text-align:right;">' + data['SpeedometerChart'].Series.data[0].format(2) + '</div>');
             } else {
-                $label.append('<span style="margin-left:15px">' + data['SpeedometerChart'].Series.data[0] + '</span>');
+                $label.append('<span style="margin-left:15px; text-align:right;">' + data['SpeedometerChart'].Series.data[0].format(2) + '</span>');
             }
             $wrapper.append($label);
         } else {
-            $wrapper.append('<label>' + data['SpeedometerChart'].Series.data[0] + '</label>');
+            $wrapper.append('<label>' + data['SpeedometerChart'].Series.data[0].format(2) + '</label>');
         }
         var config = data['SpeedometerChart'];
         $canvas.css({
