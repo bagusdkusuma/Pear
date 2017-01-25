@@ -561,7 +561,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 var batch = new BatchUpdateKpiAchievementRequest();
                 foreach (var datum in data)
                 {
-                    var prepare = new UpdateKpiAchievementItemRequest() { Id = datum.Id, KpiId = datum.KpiId, Periode = datum.Periode, Value = datum.Value, PeriodeType = datum.PeriodeType, Remark = datum.Remark };// data.MapTo<UpdateKpiAchievementItemRequest>();
+                    var prepare = new UpdateKpiAchievementItemRequest() { Id = datum.Id, KpiId = datum.KpiId, Periode = datum.Periode, Value = datum.Value, PeriodeType = datum.PeriodeType, Remark = datum.Remark, UpdateFrom= "KPIAchievementForm" };// data.MapTo<UpdateKpiAchievementItemRequest>();
                     batch.BatchUpdateKpiAchievementItemRequest.Add(prepare);
                 }
                 response = _kpiAchievementService.BatchUpdateKpiAchievements(batch);

@@ -137,26 +137,99 @@ namespace DSLNG.PEAR.Web.Scheduler
                                     {
                                         if (meetRequirements)
                                         {
+                                            
                                             var kpiActualRequest = new UpdateKpiAchievementItemRequest
                                             {
                                                 Id = existingKpiActual.IsSuccess ? existingKpiActual.Id : 0,
                                                 KpiId = kpi.Id,
                                                 Periode = date,
                                                 PeriodeType = kpiTransformationSchedule.PeriodeType,
-                                                Value = new Expression(kpiTransformed).Evaluate().ToString(),
+                                                Value = null,
                                                 UserId = kpiTransformationSchedule.UserId
                                             };
+
+                                            if (kpiTransformed != kpi.CustomFormula)
+                                            {
+                                                if (!Double.IsInfinity((double)new Expression(kpiTransformed).Evaluate()) && !Double.IsNaN((double)new Expression(kpiTransformed).Evaluate()))
+                                                {
+                                                    kpiActualRequest.Value = new Expression(kpiTransformed).Evaluate().ToString(); //new Expression(kpiTransformed).Evaluate().ToString();
+                                                }else
+                                                {
+                                                    var logRequest = new SaveKpiTransformationLogRequest
+                                                    {
+                                                        KpiId = kpi.Id,
+                                                        KpiTransformationScheduleId = kpiTransformationSchedule.Id,
+                                                        Periode = date,
+                                                        Status = KpiTransformationStatus.Error,
+                                                        Notes = "Infinite Result"
+                                                    };
+                                                    logService.Save(logRequest);
+                                                    complete = false;
+                                                    continue;
+                                                }
+                                            }
                                             if (mtdTransformed != kpi.CustomFormula)
                                             {
-                                                kpiActualRequest.Mtd = (double?)new Expression(mtdTransformed).Evaluate();
+                                                if(!Double.IsInfinity((double)new Expression(mtdTransformed).Evaluate()) && !Double.IsNaN((double)new Expression(mtdTransformed).Evaluate()))
+                                                {
+                                                    kpiActualRequest.Mtd = (double?)new Expression(mtdTransformed).Evaluate();
+                                                }
+                                                else
+                                                {
+                                                    var logRequest = new SaveKpiTransformationLogRequest
+                                                    {
+                                                        KpiId = kpi.Id,
+                                                        KpiTransformationScheduleId = kpiTransformationSchedule.Id,
+                                                        Periode = date,
+                                                        Status = KpiTransformationStatus.Error,
+                                                        Notes = "Infinite Result"
+                                                    };
+                                                    logService.Save(logRequest);
+                                                    complete = false;
+                                                    continue;
+                                                }
                                             }
                                             if (ytdTransformed != kpi.CustomFormula)
                                             {
-                                                kpiActualRequest.Ytd = (double?)new Expression(ytdTransformed).Evaluate();
+                                                if(!Double.IsInfinity((double)new Expression(ytdTransformed).Evaluate()) && !Double.IsNaN((double)new Expression(ytdTransformed).Evaluate()))
+                                                {
+                                                    kpiActualRequest.Ytd = (double?)new Expression(ytdTransformed).Evaluate();
+                                                }
+                                                else
+                                                {
+                                                    var logRequest = new SaveKpiTransformationLogRequest
+                                                    {
+                                                        KpiId = kpi.Id,
+                                                        KpiTransformationScheduleId = kpiTransformationSchedule.Id,
+                                                        Periode = date,
+                                                        Status = KpiTransformationStatus.Error,
+                                                        Notes = "Infinite Result"
+                                                    };
+                                                    logService.Save(logRequest);
+                                                    complete = false;
+                                                    continue;
+                                                }
                                             }
                                             if (itdTransformed != kpi.CustomFormula)
                                             {
-                                                kpiActualRequest.Itd = (double?)new Expression(itdTransformed).Evaluate();
+                                                if(!Double.IsInfinity((double)new Expression(itdTransformed).Evaluate()) && !Double.IsNaN((double)new Expression(itdTransformed).Evaluate()))
+                                                {
+                                                    kpiActualRequest.Itd = (double?)new Expression(itdTransformed).Evaluate();
+                                                }
+                                                else
+                                                {
+                                                    var logRequest = new SaveKpiTransformationLogRequest
+                                                    {
+                                                        KpiId = kpi.Id,
+                                                        KpiTransformationScheduleId = kpiTransformationSchedule.Id,
+                                                        Periode = date,
+                                                        Status = KpiTransformationStatus.Error,
+                                                        Notes = "Infinite Result"
+                                                    };
+                                                    logService.Save(logRequest);
+                                                    complete = false;
+                                                    continue;
+                                                }
                                             }
                                             kpiActualRequest.UpdateDeviation = true;
                                             var resp = kpiAchievementService.UpdateKpiAchievementItem(kpiActualRequest);
@@ -179,7 +252,7 @@ namespace DSLNG.PEAR.Web.Scheduler
                                                     case PeriodeType.Daily:
                                                         var theDate = new DateTime(date.Year, date.Month, 1);
                                                         var existingMonthlyKpiActual = kpiAchievementService.GetKpiAchievement(kpi.Id, theDate, PeriodeType.Monthly);
-                                                        
+
                                                         var kpiActualMonthlyRequest = new UpdateKpiAchievementItemRequest
                                                         {
                                                             Id = existingMonthlyKpiActual.IsSuccess ? existingMonthlyKpiActual.Id : 0,
@@ -301,7 +374,7 @@ namespace DSLNG.PEAR.Web.Scheduler
                                     var resp = kpiAchievementService.UpdateOriginalData(request);
                                     if (resp.IsSuccess)
                                     {
-                                        if(date == kpiTransformationSchedule.End)
+                                        if (date == kpiTransformationSchedule.End)
                                         {
 
                                         }
@@ -337,7 +410,7 @@ namespace DSLNG.PEAR.Web.Scheduler
                                     KpiTransformationScheduleId = kpiTransformationSchedule.Id,
                                     Periode = date,
                                     Status = KpiTransformationStatus.Error,
-                                    Notes = "Excception Message :" + e.Message + "<br/>Inner Exception Message : " + (e.InnerException != null ? e.InnerException.Message : "")
+                                    Notes = string.Format("Excception Message :{0}<br/>Inner Exception Message : {1}", e.Message, e.InnerException != null ? e.InnerException.Message : "")
                                 };
                                 logService.Save(logRequest);
                                 complete = false;
@@ -357,7 +430,7 @@ namespace DSLNG.PEAR.Web.Scheduler
                     #endregion
                 }
 
-                
+
             }, (s) => s.ToRunNow());
         }
         private DateTime Increment(SaveKpiTransformationScheduleResponse kpiTransformationSchedule, DateTime periode)
