@@ -24,6 +24,6 @@ namespace DSLNG.PEAR.Data.Entities
         public string Remark { get; set; }
 
         public bool IsActive { get; set; }
-        
+        public string UpdateFrom { get; set; }
     }
 }
