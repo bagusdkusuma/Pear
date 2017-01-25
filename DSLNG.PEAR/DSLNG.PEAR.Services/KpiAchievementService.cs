@@ -415,8 +415,15 @@ namespace DSLNG.PEAR.Services
                                                 .Include(x => x.UpdatedBy)
                                                 .Single(x => x.Id == request.Id);
                         //request.MapPropertiesToInstance<KpiAchievement>(kpiAchievement);
-                        kpiAchievement.Value = request.RealValue;
-                        kpiAchievement.Remark = request.Remark;
+                        if (request.UpdateFrom != null && request.UpdateFrom.Equals("KPIAchievementForm"))
+                        {
+                            kpiAchievement.Value = request.RealValue;
+                            kpiAchievement.Remark = request.Remark;
+                        }
+                        else
+                        {
+                            request.MapPropertiesToInstance<KpiAchievement>(kpiAchievement);
+                        }
                         kpiAchievement.UpdatedBy = user;
                         kpiAchievement.UpdatedDate = DateTime.Now;
                         kpiAchievement.Kpi = DataContext.Kpis.Single(x => x.Id == request.KpiId);

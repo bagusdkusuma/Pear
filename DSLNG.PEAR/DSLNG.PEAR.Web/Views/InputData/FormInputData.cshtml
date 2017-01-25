@@ -168,7 +168,11 @@
 
                 }
             });
-
+            $('input.der-kpi').focus(function (e) {
+                if ($(this).hasClass('der-value-prev')) {
+                    $(this).select();
+                }
+            });
         });
     </script>
 }
