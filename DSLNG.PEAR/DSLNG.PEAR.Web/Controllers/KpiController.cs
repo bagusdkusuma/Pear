@@ -212,6 +212,10 @@ namespace DSLNG.PEAR.Web.Controllers
             //{
             //    viewModel.CustomFormula = null;
             //}
+            if (viewModel.MethodId == 3)
+            {
+                viewModel.CustomFormula = null;
+            }
             var request = viewModel.MapTo<UpdateKpiRequest>();
 
             if (!ModelState.IsValid)
