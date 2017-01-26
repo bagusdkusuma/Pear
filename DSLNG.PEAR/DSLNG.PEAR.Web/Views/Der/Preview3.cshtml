@@ -37,6 +37,10 @@
         .creditgroup {
             display: none !important;
         }
+        .textoverflow-clip {
+            text-overflow:ellipsis;
+            overflow:hidden;
+        }
     </style>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -834,7 +838,7 @@
                                                 }
                                             }
                                             <div style="height:94px; border-bottom:solid 1px;">
-                                                <div style="padding-top:5px;padding-bottom:2px; margin-bottom:1px;">
+                                                <div style="padding-left:5px; padding-top:5px;padding-bottom:2px; margin-bottom:1px;">
                                                     <h5 style="text-decoration: underline;margin-top:2px">ICT Infrastructure and System Highlight </h5>
                                                     @{
                                                         var row16Col6 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 6);
@@ -881,7 +885,7 @@
                                                             if (row16Col7 != null)
                                                             {
 
-                                                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row16Col7.Id })" class="layout-item" style="max-height:3em;line-height:1em;"></div>
+                                                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row16Col7.Id })" class="layout-item textoverflow-clip" style="max-height:3em;line-height:1em;"></div>
 
                                                             }
                                                         }
