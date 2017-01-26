@@ -478,8 +478,8 @@ namespace DSLNG.PEAR.Web.Controllers
             var request = kpiAchievement.MapTo<UpdateKpiAchievementItemRequest>();
             request.UserId = this.UserProfile().UserId;
             request.UpdateFrom = "KPIAchievementForm";
-            //var response = _kpiAchievementService.UpdateKpiAchievementItem(request);
-            var response = _kpiAchievementService.UpdateOriginalData(request);
+            var response = _kpiAchievementService.UpdateKpiAchievementItem(request);
+            //var response = _kpiAchievementService.UpdateOriginalData(request);
             return Json(new { Id = response.Id, Message = response.Message, isSuccess = response.IsSuccess });
         }
 
