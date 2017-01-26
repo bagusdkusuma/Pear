@@ -42,10 +42,11 @@ namespace DSLNG.PEAR.Web.Scheduler
                                 var itdTransformed = kpi.CustomFormula;
                                 var existingKpiActual = kpiAchievementService.GetKpiAchievement(kpi.Id, date, kpiTransformationSchedule.PeriodeType);
                                 // exception. could not be run because data dependency not found before Sept 30, 2016
-                                if ((kpi.Id == 37 || kpi.Id == 8) && date < new DateTime(2016, 09, 30))
-                                {
-                                    continue;
-                                }
+                                // di remark kembali karena permintaan tanggal 25 Januari 2017, see Telegram 
+                                //if ((kpi.Id == 37 || kpi.Id == 8) && date < new DateTime(2016, 09, 30))
+                                //{
+                                //    continue;
+                                //}
                                 // pilih yang methodnya formula
                                 if (kpi.MethodId == 1)
                                 {

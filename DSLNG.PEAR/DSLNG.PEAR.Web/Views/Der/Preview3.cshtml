@@ -834,14 +834,14 @@
                                                 }
                                             }
                                             <div style="height:94px; border-bottom:solid 1px;">
-                                                <div style="padding:5px">
+                                                <div style="padding-top:5px;padding-bottom:2px; margin-bottom:1px;">
                                                     <h5 style="text-decoration: underline;margin-top:2px">ICT Infrastructure and System Highlight </h5>
                                                     @{
                                                         var row16Col6 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 6);
                                                         if (row16Col6 != null)
                                                         {
 
-                                                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row16Col6.Id })" class="layout-item" style="height: 12px;"></div>
+                                                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row16Col6.Id })" class="layout-item" style="height: 12px; padding-bottom:0px;margin-bottom:0px;max-height:3em;line-height:1em;"></div>
 
                                                         }
                                                     }
@@ -857,18 +857,10 @@
                                             </div>
 
                                             <table style="width:100%">
-                                                <tr>
+                                                <tr style="padding-top:5px;padding-bottom:2px; margin-bottom:1px;">
                                                     <td style="width:40%">
-                                                        <h5 style="text-decoration: underline;margin-top:2px">GS &amp; FM </h5>
-                                                        @{
-                                                            var row16Col7 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 7);
-                                                            if (row16Col7 != null)
-                                                            {
-
-                                                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row16Col7.Id })" class="layout-item"></div>
-
-                                                            }
-                                                        }
+                                                        <h5 style="text-decoration: underline;margin-top:1px">GS &amp; FM </h5>
+                                                        
                                                     </td>
                                                     <td style="width:60%">
                                                         <u>Person-on-Board</u>:
@@ -878,6 +870,19 @@
                                                             {
 
                                                                 <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row15Col3.Id })" class="layout-item" style="display: inline"></div>
+                                                            }
+                                                        }
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" style="padding-top:0px; margin-top:0px;">
+                                                        @{
+                                                            var row16Col7 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 7);
+                                                            if (row16Col7 != null)
+                                                            {
+
+                                                                <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row16Col7.Id })" class="layout-item" style="max-height:3em;line-height:1em;"></div>
+
                                                             }
                                                         }
                                                     </td>
