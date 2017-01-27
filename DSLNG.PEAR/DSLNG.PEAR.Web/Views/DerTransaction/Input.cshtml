@@ -412,8 +412,9 @@
             });
 
             var openNextTab = function ($latInput, nextIndex) {
-                var nextIndexs = [23, 35, 56, 171, 178, 218, 262, 278];
+                var nextIndexs = [23, 35, 171, 178, 218, 262, 278];
                 if (nextIndexs.indexOf(nextIndex) > -1) {
+                    console.log('next tab called');
                     var $collapse = $latInput.closest('.collapse');
                     var $row = $collapse.closest('.row');
                     var $nextRow = $row.next();
@@ -1288,10 +1289,8 @@
                     contentUrl = contentUrl.replace('__date__', encodeURIComponent(currentDate));
                     $.get(contentUrl, function (data) {
                         $(target).on('click', 'select', function () {
-                            console.log('panggil mari');
                             if ($(this).attr('data-clicks') == 1) {
                                 // Trigger here your function:
-                                console.log('event should be triggered :panggil mari');
                                 $(this).trigger("altChange");
                                 $(this).attr('data-clicks', 0);
                             } else {
@@ -1303,8 +1302,11 @@
                         });
                         $(target).html(data);
                         $(target).find('input.der-kpi').keyup(function (e) {
-                            if (e.keyCode == 13 || e.keyCode == 9) {
+                            if (e.keyCode == 13) {
                                 $(this).trigger("enterKey");
+                            }
+                            else {
+                                return;
                             }
                         });
                         $(target).find('input.der-kpi').keypress(function (e) {
@@ -1333,7 +1335,6 @@
                             $(this).select();
                         });
                         $(target).find('input.der-kpi').bind('enterKey', function (e) {
-
                             var $this = $(this);
                             var kpiId = $this.data('kpi-id');
                             var type = $this.data('type');
@@ -1418,6 +1419,10 @@
                                             //console.log(currentClass);
                                             row.addClass('processing');
                                             var value = editor.getContent();
+                                            if ((highlightTypeId==53 || highlightTypeId==21) && value.length > 210) {
+                                                alert('your content exceed max 200 char');
+                                                return false;
+                                            }
                                             $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function (resp) {
                                                 openNextTab($textarea, nextTab);
                                                 var $next = $('[tabindex=' + nextTab + ']');
@@ -1698,7 +1703,7 @@
                         });
                         $(target).on('keydown', 'input.der-highlight-weekly-alarm, textarea.der-highlight-weekly-alarm', function (e) {
                             var $this = $(this);
-                            if (($this.is('input') && e.keyCode == 13) || ($this.is('textarea') && e.keyCode == 9)) {
+                            if (($this.is('input') && e.keyCode == 13) || ($this.is('textarea') && (!e.shiftKey && e.keyCode == 9))) {
                                 var nextTab = parseInt($this.attr('tabindex')) + 1;
                                 var highlightTypeId = $this.data('highlight-type-id');
                                 var id = $this.attr('data-id');
