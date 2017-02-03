@@ -53,7 +53,7 @@
                     @Html.HiddenFor(model => model.Id)
                     <div class="form-group form-list">
                         @Html.Label("Department")
-                        @Html.HiddenFor(model=>model.Department.Id)
+                        @Html.HiddenFor(model=>model.RoleGroup_Id)
                         @Html.TextBoxFor(model=>model.Department.Name, new { disabled = "disabled" })
                         @*@Html.DropDownListFor(model => model.RoleGroup_Id, (IEnumerable<SelectListItem>)ViewBag.RoleGroups, new { htmlAttributes = new { @class = "form-control" } })*@
                         @Html.ValidationMessageFor(model => model.RoleGroup_Id)
