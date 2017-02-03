@@ -18,6 +18,7 @@ namespace DSLNG.PEAR.Services.Requests.User
         public string FullName { get; set; }
         public string SignatureImage { get; set; }
         public string Position { get; set; }
+        public List<int> RolePrivilegeIds { get; set; }
     }
 
 }
