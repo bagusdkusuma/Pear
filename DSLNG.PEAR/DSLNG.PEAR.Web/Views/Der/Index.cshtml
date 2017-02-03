@@ -103,6 +103,15 @@ display: none;
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
+            @{
+                bool AllowDelete = false;
+                var privileges = Session["DER"] as List<string>;
+                if (privileges.Contains("AllowDelete"))
+                {
+                    AllowDelete = true;
+                }
+            }
+            AllowDelete = '@{ @AllowDelete}';
             var table = $('#der-table').DataTable({
                 "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
                 "iDisplayLength": -1,
@@ -135,11 +144,11 @@ display: none;
                         "mRender": function (data, type, row) {
                             var files = row.Filename.split(';');
                             if (files.length) {
-                                return '<a href="' + files[files.length -1].replace('~/', window.location.protocol + "//" + window.location.host + "/") + '">View File Attachment</a> |' + 
+                                return '<a href="' + files[files.length -1].replace('~/', window.location.protocol + "//" + window.location.host + "/") + '">View File Attachment</a> |' +
                                     '<a download href="' + files[files.length - 1].replace('~/', window.location.protocol + "//" + window.location.host + "/") + '">Download</a>';
                             }
                             return '';
-                            
+
                         }
                     }
                 ],
@@ -171,7 +180,7 @@ display: none;
                 format: "MM",
                 focusOnShow: false
             });
-            
+
 
             //$('#upload-der').click(function () {
             //    alert('asasas');
@@ -198,7 +207,9 @@ display: none;
                     $tr.append('<td>' + view + '</td>');
                     var arrFilenames = files[i].split('/');
                     var filename = arrFilenames[arrFilenames.length - 1];
-                    $tr.append('<td><a href="#" class="delete" data-filename="'+filename+'">Delete</a></td>');
+                    if (AllowDelete == 'True' || AllowDelete == 'true' || AllowDelete == true) {
+                        $tr.append('<td><a href="#" class="delete" data-filename="' + filename + '">Delete</a></td>');
+                    }
                     $tableBody.append($tr);
                 }
                 $('#der-versions-modal .modal-body').html($table);

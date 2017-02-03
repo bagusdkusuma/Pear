@@ -20,12 +20,12 @@ namespace DSLNG.PEAR.Services
     {
         //private PasswordHasher _pass = new PasswordHasher();
         private PBKDF2 crypto = new PBKDF2();
-        
+
 
         public UserService(IDataContext dataContext)
             : base(dataContext)
         {
-            
+
         }
 
         public GetUsersResponse GetUsers(GetUsersRequest request)
@@ -75,9 +75,23 @@ namespace DSLNG.PEAR.Services
                 user.Role = DataContext.RoleGroups.First(x => x.Id == request.RoleId);
                 user.PasswordSalt = crypto.GenerateSalt(crypto.HashIterations, crypto.SaltSize);
                 user.Password = crypto.Compute(request.Password, user.PasswordSalt);
+                                
                 //user.Password = _pass.HashPassword(request.Password);
                 DataContext.Users.Add(user);
                 DataContext.SaveChanges();
+
+
+                if (request.RolePrivilegeIds.Count > 0)
+                {
+                    user = DataContext.Users.Include(u => u.Role).Include(r => r.RolePrivileges).First(x => x.Id == user.Id).MapTo<User>();
+                    user.RolePrivileges.Clear();
+                    foreach (var role in request.RolePrivilegeIds)
+                    {
+                        var rolePrivilege = DataContext.RolePrivileges.Find(role).MapTo<RolePrivilege>();
+                        user.RolePrivileges.Add(rolePrivilege);
+                    }
+                    DataContext.SaveChanges();
+                }
                 response.IsSuccess = true;
                 response.Message = "User item has been added successfully";
             }
@@ -97,7 +111,7 @@ namespace DSLNG.PEAR.Services
             try
             {
                 //var user = request.MapTo<User>();
-                var user = DataContext.Users.Include(u => u.Role).Include(r=>r.RolePrivileges).First(x => x.Id == request.Id).MapTo<User>();
+                var user = DataContext.Users.Include(u => u.Role).Include(r => r.RolePrivileges).First(x => x.Id == request.Id).MapTo<User>();
                 user.Role = DataContext.RoleGroups.First(x => x.Id == request.RoleId);
                 user.FullName = request.FullName;
                 user.RolePrivileges.Clear();
@@ -164,7 +178,7 @@ namespace DSLNG.PEAR.Services
                 if (user != null && user.Password == crypto.Compute(request.Password, user.PasswordSalt))
                 {
                     //Add For Update Password
-                    int HashIteration = int.Parse(user.PasswordSalt.Substring(0, user.PasswordSalt.IndexOf('.')),System.Globalization.NumberStyles.Number);
+                    int HashIteration = int.Parse(user.PasswordSalt.Substring(0, user.PasswordSalt.IndexOf('.')), System.Globalization.NumberStyles.Number);
                     if (HashIteration > 10)
                     {
                         ChangePassword(new ChangePasswordRequest
@@ -227,7 +241,7 @@ namespace DSLNG.PEAR.Services
             var user = DataContext.Users.First(x => x.Id == request.Id).MapTo<User>();
             if (user != null)
             {
-                
+
                 if (user.Password != crypto.Compute(request.Old_Password, user.PasswordSalt))
                 {
                     response.Message = "Current Password isn't correct!";
