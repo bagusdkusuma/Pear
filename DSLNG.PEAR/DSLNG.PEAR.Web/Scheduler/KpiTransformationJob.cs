@@ -151,9 +151,10 @@ namespace DSLNG.PEAR.Web.Scheduler
 
                                             if (kpiTransformed != kpi.CustomFormula)
                                             {
-                                                if (!Double.IsInfinity((double)new Expression(kpiTransformed).Evaluate()) && !Double.IsNaN((double)new Expression(kpiTransformed).Evaluate()))
+                                                var val = new Expression(kpiTransformed).Evaluate().ToString();
+                                                if (!Double.IsInfinity(double.Parse(val)) && !Double.IsNaN(double.Parse(val)))
                                                 {
-                                                    kpiActualRequest.Value = new Expression(kpiTransformed).Evaluate().ToString(); //new Expression(kpiTransformed).Evaluate().ToString();
+                                                    kpiActualRequest.Value = val; //new Expression(kpiTransformed).Evaluate().ToString();
                                                 }else
                                                 {
                                                     var logRequest = new SaveKpiTransformationLogRequest
@@ -171,9 +172,10 @@ namespace DSLNG.PEAR.Web.Scheduler
                                             }
                                             if (mtdTransformed != kpi.CustomFormula)
                                             {
-                                                if(!Double.IsInfinity((double)new Expression(mtdTransformed).Evaluate()) && !Double.IsNaN((double)new Expression(mtdTransformed).Evaluate()))
+                                                var val = double.Parse(new Expression(mtdTransformed).Evaluate().ToString());
+                                                if(!Double.IsInfinity(val) && !Double.IsNaN(val))
                                                 {
-                                                    kpiActualRequest.Mtd = (double?)new Expression(mtdTransformed).Evaluate();
+                                                    kpiActualRequest.Mtd = val;
                                                 }
                                                 else
                                                 {
@@ -192,9 +194,10 @@ namespace DSLNG.PEAR.Web.Scheduler
                                             }
                                             if (ytdTransformed != kpi.CustomFormula)
                                             {
-                                                if(!Double.IsInfinity((double)new Expression(ytdTransformed).Evaluate()) && !Double.IsNaN((double)new Expression(ytdTransformed).Evaluate()))
+                                                var ytd = double.Parse(new Expression(ytdTransformed).Evaluate().ToString());
+                                                if (!Double.IsInfinity(ytd) && !Double.IsNaN(ytd))
                                                 {
-                                                    kpiActualRequest.Ytd = (double?)new Expression(ytdTransformed).Evaluate();
+                                                    kpiActualRequest.Ytd = ytd;
                                                 }
                                                 else
                                                 {
@@ -213,9 +216,10 @@ namespace DSLNG.PEAR.Web.Scheduler
                                             }
                                             if (itdTransformed != kpi.CustomFormula)
                                             {
-                                                if(!Double.IsInfinity((double)new Expression(itdTransformed).Evaluate()) && !Double.IsNaN((double)new Expression(itdTransformed).Evaluate()))
+                                                var itd = double.Parse(new Expression(itdTransformed).Evaluate().ToString());
+                                                if(!Double.IsInfinity(itd) && !Double.IsNaN(itd))
                                                 {
-                                                    kpiActualRequest.Itd = (double?)new Expression(itdTransformed).Evaluate();
+                                                    kpiActualRequest.Itd = itd;
                                                 }
                                                 else
                                                 {
