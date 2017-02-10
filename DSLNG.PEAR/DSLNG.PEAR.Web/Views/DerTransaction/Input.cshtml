@@ -1346,8 +1346,11 @@
                             if ($this.attr('data-value-type') == 'value') {
                                 numeric = !isNaN(parseFloat(value));
                             }
-                            if (numeric || $this.attr('data-value-type') == 'remark') {
+                            if (numeric || $this.attr('data-value-type') == 'remark' || $this.val() == '') {
 
+                                if (!numeric) {
+                                    value = $this.val();
+                                }
                                 $(this).val(value);
                                 var valueType = $this.data('value-type');
                                 $this.addClass('in-progress');

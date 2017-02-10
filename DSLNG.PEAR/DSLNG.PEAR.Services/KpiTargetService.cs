@@ -975,13 +975,13 @@ namespace DSLNG.PEAR.Services
                         {
                             exist.Remark = request.Remark;
                         }
-                        if (!string.IsNullOrEmpty(request.Value) && request.Value.ToLowerInvariant() == "null" && request.Value != "-" )
+                        if (!string.IsNullOrEmpty(request.Value) && request.Value.ToLowerInvariant() != "null" && request.Value != "-" )
                         {
                             exist.Value = double.Parse(request.Value);
                         }
                         exist.UpdatedBy = user;
                         exist.UpdatedDate = DateTime.Now;
-                        kpiTarget.Id = exist.Id;
+                        kpiTarget = exist;
                     }
                     else
                     {
