@@ -10,6 +10,7 @@ using DSLNG.PEAR.Data.Entities;
 using DSLNG.PEAR.Data.Entities.Der;
 using DSLNG.PEAR.Services.Requests.DerLoadingSchedule;
 using DSLNG.PEAR.Services.Responses.DerLoadingSchedule;
+using System.Text.RegularExpressions;
 
 namespace DSLNG.PEAR.Services
 {
@@ -75,7 +76,7 @@ namespace DSLNG.PEAR.Services
                         Measurement = x.Measurement,
                         Capacity = x.Capacity
                     }
-                ).ToList();
+                ).ToList().OrderByDescending(x => x.VesselType).ThenBy(x => int.Parse(Regex.Match(x.Cargo, @"\d+").Value)).ToList();
             return response;
         }
 
