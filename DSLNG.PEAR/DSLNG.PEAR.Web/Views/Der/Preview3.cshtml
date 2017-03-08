@@ -671,14 +671,7 @@
                                     <tr>
                                         <td style="width:80%">
                                             <h5 style="text-decoration: underline;">Operation Highlight &amp; Immediate Concern :</h5>
-                                            @{
-                                                var row12Col0 = Model.Items.FirstOrDefault(x => x.Row == 12 && x.Column == 0);
-                                                if (row12Col0 != null)
-                                                {
-
-                                                    <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row12Col0.Id })" class="layout-item highlight-style-12"></div>
-                                                }
-                                            }
+                                            
                                         </td>
 
                                         <td style="width:82%">
@@ -689,6 +682,18 @@
                                                 {
 
                                                     <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row12Col2.Id })" class="layout-item highlight-json-plant-mode "></div>
+                                                }
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            @{
+                                                var row12Col0 = Model.Items.FirstOrDefault(x => x.Row == 12 && x.Column == 0);
+                                                if (row12Col0 != null)
+                                                {
+
+                                                    <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row12Col0.Id })" class="layout-item highlight-style-12"></div>
                                                 }
                                             }
                                         </td>
