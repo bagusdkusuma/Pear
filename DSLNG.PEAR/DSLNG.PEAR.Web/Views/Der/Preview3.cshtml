@@ -16,13 +16,14 @@
     <style>
         .first-row {
             height: 20pt;
-            vertical-align:middle;
-            padding-top:8px;
+            vertical-align: middle;
+            padding-top: 8px;
         }
 
         .next-row {
             height: 11pt;
         }
+
         .indicative-titlehead {
             font-size: 8.5pt;
             padding: 4.5pt;
@@ -34,16 +35,26 @@
             height: 30pt;
             vertical-align: middle;
         }
+
         .creditgroup {
             display: none !important;
         }
+
         .textoverflow-clip {
-            text-overflow:ellipsis;
-            overflow:hidden;
+            text-overflow: ellipsis;
+            overflow: hidden;
         }
+
         .psig {
             height: 23px;
             padding-left: 5px;
+        }
+
+        .tr-ophighlight {
+            padding-top: 0px;
+            padding-bottom: 0px;
+            margin-top: 0px;
+            margin-bottom: 0px;
         }
     </style>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -668,10 +679,10 @@
                                 }
 
                                 <table style="width:100%;height:80px;">
-                                    <tr>
-                                        <td style="width:80%">
+                                    <tr style="height:11px; margin-bottom:0px; padding-bottom:0px !important;">
+                                        <td style="width:80%; padding-bottom: 0px;margin-bottom: 0px;">
                                             <h5 style="text-decoration: underline;">Operation Highlight &amp; Immediate Concern :</h5>
-                                            
+
                                         </td>
 
                                         <td style="width:82%">
@@ -681,13 +692,13 @@
                                                 if (row12Col2 != null)
                                                 {
 
-                                                    <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row12Col2.Id })" class="layout-item highlight-json-plant-mode "></div>
+                                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row12Col2.Id })" class="layout-item highlight-json-plant-mode "></div>
                                                 }
                                             }
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2">
+                                        <td colspan="2" valign="top" style="padding-top: 0px;padding-bottom: 0px;margin-top: 0px;margin-bottom: 0px;">
                                             @{
                                                 var row12Col0 = Model.Items.FirstOrDefault(x => x.Row == 12 && x.Column == 0);
                                                 if (row12Col0 != null)
@@ -873,7 +884,7 @@
                                                 <tr style="padding-top:5px;padding-bottom:2px; margin-bottom:1px;">
                                                     <td style="width:40%">
                                                         <h5 style="text-decoration: underline;margin-top:1px">GS &amp; FM </h5>
-                                                        
+
                                                     </td>
                                                     <td style="width:60%">
                                                         <u>Person-on-Board</u>:
