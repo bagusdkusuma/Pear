@@ -973,24 +973,33 @@ h6 {
             margin-left:0;
         }
         .impurities .thermometer{
-            height: 100px;
+            height: 101px;
+            /*height:110px;*/
             width:50px;
             background: url(/content/images/thermometer.png);
             background-size: 100% 100%;
             margin-top: 2px;
-            margin-left: 5px;
+            margin-left: 6px;
             position:relative;
             zoom: 1.1;
         }
+            .impurities .thermometer.preview {
+                height:110px;
+            }
+             
         .impurities .thermometer .bar-thermo{
             width: 27px;
-            height: 80px;
+            height: 81px;
+            /*height:90px;*/
             /*top: 17px;
             left: 22px;*/
             top: 15px;
             left: 17px;
             position: absolute;
         }
+            .impurities .thermometer.preview .bar-thermo {
+                height:90px;
+            }
         .bar-thermo img.drop{
             width: 10px;
             position: absolute;

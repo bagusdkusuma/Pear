@@ -774,6 +774,9 @@ Number.prototype.format = function (n, x) {
         $image.width($this.find('canvas').width());
         $image.height($this.find('canvas').height());
         $this.find('canvas').replaceWith($image);
+        if (!$this.parent().hasClass('preview')) {
+            $this.parent().css({ 'display': 'none' })
+        }
     }
     Der.Artifact.pie = function (data, container) {
         var $title = $('<div />');

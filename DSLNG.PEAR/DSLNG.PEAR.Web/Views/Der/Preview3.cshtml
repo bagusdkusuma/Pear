@@ -542,6 +542,16 @@
                                                                     }
                                                                 }
                                                             </div>
+                                                            <div class="thermometer preview">
+                                                                @{
+                                                                    if (row6Col5 != null)
+                                                                    {
+                                                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col5.Id })" class="layout-item bar-thermo">
+                                                                            <img class="drop" src="@Url.Content("~/Content/images/water-drop.png")" />
+                                                                        </div>
+                                                                    }
+                                                                }
+                                                            </div>
                                                         </td>
                                                         <td style="width:40%">
                                                             @{
