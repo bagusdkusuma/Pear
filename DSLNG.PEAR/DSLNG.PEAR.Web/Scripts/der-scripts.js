@@ -308,6 +308,10 @@ Number.prototype.format = function (n, x) {
             fillColor = '#403152';
             converted = true;
             decimal = 2;
+        } else if (data.MultiaxisChart.Title.toLowerCase().indexOf('brent last') > -1) {
+            symbol = 'triangle';
+        } else if (data.MultiaxisChart.Title.toLowerCase().indexOf('jcc monthly trend') > -1) {
+            symbol = 'triangle';
         }
 
         var yAxes = [];

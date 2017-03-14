@@ -5,13 +5,12 @@
 }
 <style>
     .dataTables_filter {
-display: none; 
-}
+        display: none;
+    }
 </style>
 <h2>DER (Daily Executive Report)</h2>
 @Html.Partial("_MessageResponse")
 <div class="add-button-wrapper pull-left">
-    
     @if (Session["DER"] != null)
     {
         var privilege = Session["DER"] as List<string>;
@@ -24,8 +23,6 @@ display: none;
             <a class="btn-master-rgw btn btn-primary" id="upload-der" data-toggle="modal" data-target="#der-upload-modal">Upload</a>
         }
     }
-
-    @*@Html.ActionLink("Input", "Input", null, new { @class = "btn-master-rgw btn btn-primary" })*@
 </div>
 <div class="pull-right">
     <form class="form-inline">
@@ -40,11 +37,16 @@ display: none;
         </div>
     </form>
 </div>
-<table id="der-table" class="rgw-tbl-bp rgw-tbl table-transparent table table-responsive" cellspacing="0" width="100%">
+<table id="der-table" class="rgw-tbl-bp rgw-tbl table-transparent table table-responsive" cellspacing="0" style="width: 100%">
     <thead>
         <tr>
             <th>Publish Date</th>
             <th>Version</th>
+            <th>Daily Highlight Traffic Light</th>
+            <th>Daily Highlight</th>
+            <th>Marin Cargo Delivery</th>
+            <th>QHSE</th>
+            <th>Security</th>
             <th>File Attachment</th>
         </tr>
     </thead>
@@ -70,12 +72,12 @@ display: none;
                         <input name="date" class="form-control datepicker" />
                     </div>
                 </div>
-                
-                    <div class="modal-footer">
-                        <input type="submit" class="btn btn-primary" value="Upload"></input>
-                        <button type="button" class="btn btn-darkblue" data-dismiss="modal">Close</button>
-                    </div>
+
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" value="Upload" />
+                    <button type="button" class="btn btn-darkblue" data-dismiss="modal">Close</button>
                 </div>
+            </div>
         </form>
     </div>
 </div>
@@ -100,6 +102,24 @@ display: none;
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="derModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Details</h4>
+            </div>
+            <div class="modal-body" style="color:#fff">
+                    
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
@@ -111,7 +131,18 @@ display: none;
                     AllowDelete = true;
                 }
             }
+            $('#derModal').on('show.bs.modal', function (e) {
+                $('#derModal .modal-body').html($(e.relatedTarget).data('text'));
+            })
             AllowDelete = '@{ @AllowDelete}';
+            function shortenText(data) {
+                var textDisplay = data;
+                if (data.length > 50) {
+                    textDisplay = data.substring(0, 50);
+                    textDisplay += ' | <a href="#" data-toggle="modal" data-target="#derModal" data-text="' + data + '">Read More</button>';
+                }
+                return textDisplay;
+            }
             var table = $('#der-table').DataTable({
                 "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
                 "iDisplayLength": -1,
@@ -128,29 +159,72 @@ display: none;
                         "mDataProp": "Date", "name": "Date", "className": "dt-body-left",
                         "mRender": function (data, type, row) {
                             return moment(new Date(data.match(/\d+/)[0] * 1)).format('DD MMM YYYY');
-                     }
+                        }
 
                     },
                     {
                         "mDataProp": "Revision", "name": "Revision", "className": "dt-body-left",
                         "mRender": function (data, type, row, pos) {
-                            return '<a href="#"  id="der-versions" data-toggle="modal" data-target="#der-versions-modal" data-pos="'+pos.row+'">' + data + '</a>';
+                            return '<a href="#"  id="der-versions" data-toggle="modal" data-target="#der-versions-modal" data-pos="' + pos.row + '">' + data + '</a>';
                         }
                     },
-                      {
-                        "orderable": false,
-                        "data": null,
-                        "defaultContent": '',
-                        "mRender": function (data, type, row) {
-                            var files = row.Filename.split(';');
-                            if (files.length) {
-                                return '<a href="' + files[files.length -1].replace('~/', window.location.protocol + "//" + window.location.host + "/") + '">View File Attachment</a> |' +
-                                    '<a download href="' + files[files.length - 1].replace('~/', window.location.protocol + "//" + window.location.host + "/") + '">Download</a>';
+                    {
+                        "mDataProp": "DailyIndicator", "name": "DailyIndicator", "className": "dt-body-left",
+                        "mRender": function (data, type, row, pos) {
+                            var str = '';
+                            if (parseInt(data) < 2) {
+                                str = '<span class="indicator"><i class="fa fa-circle"  style="color:#808080" ></i></span>';
+                            } else if (parseInt(data) == 2) {
+                                str = '<span class="indicator"><i class="fa fa-circle" style="color:#F0F0F0"></i></span>';
+                            } else if (parseInt(data) == 3) {
+                                str = '<span class="indicator"><i class="fa fa-circle" style="color:#FF0000"></i></span>';
+                            } else if (parseInt(data) == 4) {
+                                str = '<span class="indicator orange"><i class="fa fa-circle" style="color:orange"></i></span>';
+                            } else if (parseInt(data) > 4) {
+                                str = '<span class="indicator green"><i class="fa fa-circle" style="color:green"></i></span>';
                             }
-                            return '';
-
+                            return str;
                         }
-                    }
+                    },
+                    {
+                        "mDataProp": "OverallPerformance", "name": "OverallPerformance", "className": "dt-body-left", "orderable": false,
+                        "mRender": function (data, type, row, pos) {
+                            return shortenText(data);;
+                        }
+                    },
+                    {
+                        "mDataProp": "MarineCargoDelivery", "name": "MarineCargoDelivery", "className": "dt-body-left", "orderable": false,
+                        "mRender": function (data, type, row, pos) {
+                            return shortenText(data);                            
+                        }
+                    },
+                    {
+                        "mDataProp": "Qhse", "name": "Qhse", "className": "dt-body-left", "orderable": false,
+                        "mRender": function (data, type, row, pos) {
+                            return data;
+                        }
+                    },
+                    {
+                        "mDataProp": "Security", "name": "Security", "className": "dt-body-left", "orderable": false,
+                        "mRender": function (data, type, row, pos) {
+                            return data;
+                        }
+                    },
+                    
+                      {
+                          "orderable": false,
+                          "data": null,
+                          "defaultContent": '',
+                          "mRender": function (data, type, row) {
+                              var files = row.Filename.split(';');
+                              if (files.length) {
+                                  return '<a href="' + files[files.length - 1].replace('~/', window.location.protocol + "//" + window.location.host + "/") + '">View</a> | ' +
+                                      '<a download href="' + files[files.length - 1].replace('~/', window.location.protocol + "//" + window.location.host + "/") + '">Download</a>';
+                              }
+                              return '';
+
+                          }
+                      }
                 ],
                 rowCallback: function (row, data) {
                     // Set the checked state of the checkbox in the table
@@ -213,7 +287,7 @@ display: none;
                     $tableBody.append($tr);
                 }
                 $('#der-versions-modal .modal-body').html($table);
-                $('#der-versions-modal .modal-title').html("DER " + moment(new Date(rowData.Date.match(/\d+/)[0] * 1)).format('DD MMM YYYY') +  " Versions");
+                $('#der-versions-modal .modal-title').html("DER " + moment(new Date(rowData.Date.match(/\d+/)[0] * 1)).format('DD MMM YYYY') + " Versions");
             });
 
             function getQueryVariable(variable) {

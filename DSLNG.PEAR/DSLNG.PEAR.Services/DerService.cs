@@ -40,17 +40,20 @@ namespace DSLNG.PEAR.Services
             {
                 data = data.Skip(request.Skip).Take(request.Take);
             }
-            var respData =  data.ToList();
+            var derList = data.ToList();
+            var respData = GetCustomHighlights(request, derList);
             return new GetDersResponse
             {
                 TotalRecords = totalRecords,
-                Ders = respData.MapTo<GetDersResponse.Der>()
+                Ders = respData.Ders.MapTo<GetDersResponse.Der>()
             };
         }
 
         public IEnumerable<Der> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
         {
             var data = DataContext.Ders.AsQueryable();
+            //data = data.Join(DataContext.Highlights, ders => ders.Date, highlight => highlight.Date, (ders, highlight) => ders);
+            //data = data.Join()
             data = data.Include(x => x.GenerateBy)
                 .Include(x => x.RevisionBy);
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
@@ -58,7 +61,14 @@ namespace DSLNG.PEAR.Services
                 var dates = search.Split('-');
                 var year = int.Parse(dates[1].Trim());
                 var month = int.Parse(dates[0].Trim());
-                data = data.Where(x => x.Date.Year == year && x.Date.Month == month);
+                if (month == 0)
+                {
+                    data = data.Where(x => x.Date.Year == year);
+                }
+                else
+                {
+                    data = data.Where(x => x.Date.Year == year && x.Date.Month == month);
+                }
             }
 
             foreach (var sortOrder in sortingDictionary)
@@ -81,7 +91,6 @@ namespace DSLNG.PEAR.Services
             TotalRecords = data.Count();
             return data;
         }
-
 
         public CreateOrUpdateResponse CreateOrUpdate(CreateOrUpdateDerRequest request)
         {
@@ -332,6 +341,8 @@ namespace DSLNG.PEAR.Services
             rowAndColumns.Add(new RowAndColumns { Row = 15, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 15, Column = 2 });
             rowAndColumns.Add(new RowAndColumns { Row = 15, Column = 3 });
+            rowAndColumns.Add(new RowAndColumns { Row = 15, Column = 4 });
+            rowAndColumns.Add(new RowAndColumns { Row = 15, Column = 5 });
             rowAndColumns.Add(new RowAndColumns { Row = 16, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 16, Column = 2 });
             rowAndColumns.Add(new RowAndColumns { Row = 16, Column = 3 });
@@ -573,7 +584,7 @@ namespace DSLNG.PEAR.Services
                     }
                 case "prepared-by":
                 case "reviewed-by":
-                {
+                    {
                         baseResponse = request.Id > 0 ? UpdateUser(request) : SaveUser(request);
                         break;
 
@@ -928,7 +939,6 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-
         private BaseResponse SaveSpeedometer(SaveLayoutItemRequest request)
         {
             var response = new BaseResponse();
@@ -978,7 +988,6 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-
         private BaseResponse UpdateSpeedometer(SaveLayoutItemRequest request)
         {
             var response = new BaseResponse();
@@ -1010,7 +1019,8 @@ namespace DSLNG.PEAR.Services
 
                 derArtifact.Plots = plots;
                 derArtifact.CustomSerie = DataContext.Kpis.FirstOrDefault(y => y.Id == request.Artifact.Speedometer.Series.KpiId);
-                if (request.Artifact.Speedometer.LabelSeries != null) {
+                if (request.Artifact.Speedometer.LabelSeries != null)
+                {
                     if (derArtifact.Series != null)
                     {
                         foreach (var serie in derArtifact.Series.ToList())
@@ -1018,7 +1028,8 @@ namespace DSLNG.PEAR.Services
                             derArtifact.Series.Remove(serie);
                         }
                     }
-                    else {
+                    else
+                    {
                         derArtifact.Series = new List<DerArtifactSerie>();
                     }
                     var labelSeries = new DerArtifactSerie
@@ -1029,7 +1040,7 @@ namespace DSLNG.PEAR.Services
                     };
                     derArtifact.Series.Add(labelSeries);
                 }
-                
+
                 DataContext.DerArtifacts.Add(derArtifact);
                 derLayoutItem.Artifact = derArtifact;
                 //DataContext.DerLayoutItems.Add(derLayoutItem);
@@ -1043,8 +1054,8 @@ namespace DSLNG.PEAR.Services
                 {
                     oldArtifact = DataContext.DerArtifacts.Local.FirstOrDefault(x => x.Id == oldArtifact.Id);
                 }
-                
-                foreach(var plot in oldArtifact.Plots.ToList())
+
+                foreach (var plot in oldArtifact.Plots.ToList())
                 {
                     DataContext.DerArtifactPlots.Remove(plot);
                 }
@@ -1545,7 +1556,7 @@ namespace DSLNG.PEAR.Services
                     oldArtifact = DataContext.DerArtifacts.Local.FirstOrDefault(x => x.Id == oldArtifact.Id);
                 }
 
-                if(oldArtifact.Tank != null) DataContext.DerArtifactTanks.Remove(oldArtifact.Tank);
+                if (oldArtifact.Tank != null) DataContext.DerArtifactTanks.Remove(oldArtifact.Tank);
                 DataContext.DerArtifacts.Remove(oldArtifact);
 
                 DataContext.SaveChanges();
@@ -1938,7 +1949,6 @@ namespace DSLNG.PEAR.Services
                  return response;
              }*/
 
-
         public GetDerResponse GetDerById(int id)
         {
             var der = DataContext.Ders.Single(x => x.Id == id);
@@ -1953,7 +1963,7 @@ namespace DSLNG.PEAR.Services
         {
             bool isExisted = false;
             var der = DataContext.Ders.FirstOrDefault(x => x.Date.Year == date.Year && x.Date.Month == date.Month && x.Date.Day == date.Day);
-            revision = der!=null ?  der.Revision : 0;
+            revision = der != null ? der.Revision : 0;
             return isExisted = der != null;
         }
 
@@ -1966,7 +1976,8 @@ namespace DSLNG.PEAR.Services
                 var filenames = existingDer.Filename.Split(';').ToList();
                 var fileToRemove = filenames.FirstOrDefault(x => x.Contains(filename));
                 filenames.Remove(fileToRemove);
-                if (filenames.Count == 0) {
+                if (filenames.Count == 0)
+                {
                     DataContext.Ders.Remove(existingDer);
                     DataContext.SaveChanges();
                     response.IsSuccess = true;
@@ -1989,6 +2000,58 @@ namespace DSLNG.PEAR.Services
             {
                 response.IsSuccess = false;
                 response.Message = exception.Message;
+            }
+
+            return response;
+        }
+
+        private GetDersResponse GetCustomHighlights(GetDersRequest request, IList<Der> data)
+        {
+            var response = new GetDersResponse();
+            var highlights = DataContext.Highlights.Include(x => x.HighlightType).AsQueryable();
+            if (!string.IsNullOrEmpty(request.Search) && !string.IsNullOrWhiteSpace(request.Search))
+            {
+                var dates = request.Search.Split('-');
+                var year = int.Parse(dates[1].Trim());
+                var month = int.Parse(dates[0].Trim());
+                if (month == 0)
+                {
+                    highlights = highlights.Where(x => x.Date.Year == year);
+                }
+                else
+                {
+                    highlights = highlights.Where(x => x.Date.Year == year && x.Date.Month == month);
+                }
+            }
+            int overallPerformanceId = 8;
+            int dailyIndicatorId = 58;
+            int marineCargoDeliveryId = 52;
+            int qhseRemarkId = 18;
+            int securityRemarkId = 13;
+            var listHighlight = highlights.Where(x => x.HighlightType.Id == overallPerformanceId || x.HighlightType.Id == marineCargoDeliveryId
+            || x.HighlightType.Id == qhseRemarkId || x.HighlightType.Id == securityRemarkId || x.HighlightType.Id == dailyIndicatorId).ToList();
+            var der = new GetDersResponse.Der();
+            foreach (var item in data)
+            {
+                der = item.MapTo<GetDersResponse.Der>();
+                der.OverallPerformance = listHighlight.Where(x => x.Date == der.Date && x.HighlightType != null && x.HighlightType.Id == overallPerformanceId).DefaultIfEmpty(new Highlight { Message = string.Empty }).First().Message;
+                der.MarineCargoDelivery = listHighlight.Where(x => x.Date == der.Date && x.HighlightType != null && x.HighlightType.Id == marineCargoDeliveryId).DefaultIfEmpty(new Highlight { Message = string.Empty }).First().Message;
+                der.Qhse = listHighlight.Where(x => x.Date == der.Date && x.HighlightType != null && x.HighlightType.Id == qhseRemarkId).DefaultIfEmpty(new Highlight { Message = string.Empty }).First().Message;
+                der.Security = listHighlight.Where(x => x.Date == der.Date && x.HighlightType != null && x.HighlightType.Id == securityRemarkId).DefaultIfEmpty(new Highlight { Message = string.Empty }).First().Message;
+                der.DailyIndicator = listHighlight.Where(x => x.Date == der.Date && x.HighlightType != null && x.HighlightType.Id == dailyIndicatorId).DefaultIfEmpty(new Highlight { Message = string.Empty }).First().Message;
+                response.Ders.Add(der);
+            }
+
+            foreach (var sortOrder in request.SortingDictionary)
+            {
+                switch (sortOrder.Key)
+                {
+                    case "DailyIndicator":
+                        response.Ders = sortOrder.Value == SortOrder.Ascending
+                            ? response.Ders.OrderBy(x => x.DailyIndicator).ToList()
+                            : response.Ders.OrderByDescending(x => x.DailyIndicator).ToList();
+                        break;
+                }
             }
 
             return response;

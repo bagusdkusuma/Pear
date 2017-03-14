@@ -24,7 +24,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Der
         {
             get
             {
-                return DateTimeFormatInfo
+                var list = DateTimeFormatInfo
                    .InvariantInfo
                    .MonthNames
                    .Where(m => !String.IsNullOrEmpty(m))
@@ -32,7 +32,9 @@ namespace DSLNG.PEAR.Web.ViewModels.Der
                    {
                        Value = (index + 1).ToString(),
                        Text = monthName
-                   });
+                   }).ToList();
+                list.Insert(0, new SelectListItem { Value = "0", Text = "All Year" });
+                return list;
             }
         }
         public IList<SelectListItem> YearList { get; set; }
