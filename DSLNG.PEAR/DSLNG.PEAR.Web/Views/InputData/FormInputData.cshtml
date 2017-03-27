@@ -17,7 +17,7 @@
         </form>
     </div>
 </div>
-<table class="table table-hover table-transparent table-bordered table-form-input-data">
+<table class="table table-transparent table-bordered table-form-input-data">
     <thead>
         <tr style="border-bottom:1px solid #fff">
             <td>Group Name</td>
@@ -126,6 +126,13 @@
             });
             var currentDate = $('.datepicker').val();
 
+            $('input.der-kpi').blur(function (e) {
+                var toConvert = eval($(this).val().replace(/,/g, ''));
+                if (!isNaN(toConvert)) {
+                    $(this).val(toConvert.toLocaleString('en-EN', { maximumSignificantDigits: 21 }));
+                }
+            });
+
             $('input.der-kpi').keyup(function (e) {
                 var $this = $(this);
                 if (e.keyCode == 13) {
@@ -143,6 +150,7 @@
                     var nextTabindex = parseInt(tabindex) + 1;
                     var id = $this.attr('data-id');
                     var value = $this.val();
+                    var toConvert = eval($(this).val().replace(/,/g, ''));
                     var valueType = $this.data('value-type');
                     $this.addClass('in-progress');
                     $.post("/dertransaction/updatekpi", { kpiId: kpiId, type: type, date: currentDate, id: id, value: value, valueType: valueType }, function (resp) {
@@ -161,6 +169,8 @@
                             $this.removeClass('der-value-empty');
                         }
                         $this.addClass('der-value-now');
+                        $this.val(toConvert.toLocaleString('en-EN', { maximumSignificantDigits: 21 }));
+                        console.log('gue kepanggil gak sih?');
                         if (parseInt($this.data('id')) == 0) {
                             $this.attr('data-id', resp.Id);
                         }
