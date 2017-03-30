@@ -38,6 +38,7 @@
                     break;
                 case "line":
                 case "multiaxis":
+                case "jcc-monthly-trend":
                     Html.RenderPartial("~/Views/DerLayout/LayoutType/_Multiaxis.Edit.cshtml", Model);
                     break;
                 case "speedometer":
@@ -154,6 +155,7 @@
             var type = that.val().toLowerCase();
             switch (type) {
                 case 'multiaxis':
+                case 'jcc-monthly-trend':
                     $.ajax({
                         url: '@Url.Action("LayoutSetting", "DerLayout", new { type = "_type_" })'.replace('_type_', that.val()),
                         success: function (data) {
@@ -284,6 +286,7 @@
                     break;
                 }
             case "multiaxis":
+            case "jcc-monthly-trend":
                 {
                     var $hiddenFields = $('#hidden-fields');
                     var chartTemplate = $hiddenFields.find('.chart-template.original');

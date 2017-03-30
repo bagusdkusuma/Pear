@@ -158,6 +158,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         }
                     case "line":
                     case "multiaxis":
+                    case "jcc-monthly-trend":
                         {
                             var multiaxisChart = new MultiaxisChartViewModel();
                             editViewModel.MultiaxisChart = response.Artifact.MapPropertiesToInstance<MultiaxisChartViewModel>(multiaxisChart);
@@ -346,8 +347,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     case "1-and-1":
                     case "1-and-2":
                     case "1-and-3":
-                    case "15-and-4":
-                    case "15-and-5":
+                    case "15-and-4":                   
                         {
                             viewModel.Type = "multiaxis";
                             break;
@@ -551,6 +551,11 @@ namespace DSLNG.PEAR.Web.Controllers
                             viewModel.Type = "person-on-board";
                             break;
                         }
+                    case "15-and-5":
+                        {
+                            viewModel.Type = "jcc-monthly-trend";
+                            break;
+                        }
                 }
                 return View("LayoutItem", viewModel);
                 #endregion
@@ -579,6 +584,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     }
                 case "line":
                 case "multiaxis":
+                case "jcc-monthly-trend":
                     {
                         var viewModel = new DerLayoutItemViewModel();
                         viewModel.Artifact = new DerLayoutItemViewModel.DerLayoutItemArtifactViewModel();
@@ -826,6 +832,7 @@ namespace DSLNG.PEAR.Web.Controllers
             switch (layoutItemViewModel.Type.ToLowerInvariant())
             {
                 case "multiaxis":
+                case "jcc-monthly-trend":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.Artifact = layoutItemViewModel.Artifact.MapTo<SaveLayoutItemRequest.LayoutItemArtifact>();

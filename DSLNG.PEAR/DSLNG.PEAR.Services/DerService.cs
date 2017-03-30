@@ -492,6 +492,33 @@ namespace DSLNG.PEAR.Services
                         }
                         break;
                     }
+                case "multiaxis":
+                    {
+                        try
+                        {
+                            var derLayoutItem = DataContext.DerLayoutItems
+                                .Include(x => x.Artifact)
+                                .Include(x => x.DerLayout)
+                                .Include(x => x.Artifact.Charts)
+                                .Include(x => x.Artifact.CustomSerie)
+                                .Single(x => x.Id == id);
+                            //var kpiInformations = new DerKpiInformation();
+                            //foreach (var item in derLayoutItem.KpiInformations.ToList())
+                            //{
+                            //    var kpiInformation = DataContext.DerKpiInformations.Single(x => x.Id == item.Id);
+                            //    DataContext.DerKpiInformations.Remove(kpiInformation);
+                            //}
+                            response.DerLayoutId = derLayoutItem.DerLayout.Id;
+                            DataContext.DerLayoutItems.Remove(derLayoutItem);
+                            DataContext.SaveChanges();
+                            response.IsSuccess = true;
+                        }
+                        catch (Exception exception)
+                        {
+                            response.Message = exception.Message;
+                        }
+                        break;
+                    }
             }
 
             return response;
@@ -521,6 +548,7 @@ namespace DSLNG.PEAR.Services
                         break;
                     }
                 case "multiaxis":
+                case "jcc-monthly-trend":
                     {
                         baseResponse = request.Id > 0 ? UpdateMultiAxis(request) : SaveMultiAxis(request);
                         break;

@@ -2100,7 +2100,6 @@ namespace DSLNG.PEAR.Services
             return seriesResponse;
         }
 
-
         private IList<GetCartesianChartDataResponse.SeriesResponse> _getKpiActualSeries(IList<GetCartesianChartDataRequest.SeriesRequest> configSeries, PeriodeType periodeType, IList<DateTime> dateTimePeriodes, string seriesType, RangeFilter rangeFilter, string graphicType, out string newTimeInformation, out IList<DateTime> newDatetimePeriodes, bool comparison = false, bool asNetbackChart = false)
         {
             var seriesResponse = new List<GetCartesianChartDataResponse.SeriesResponse>();
@@ -2766,7 +2765,6 @@ namespace DSLNG.PEAR.Services
             return seriesResponse;
         }
 
-
         public CreateArtifactResponse Create(CreateArtifactRequest request)
         {
             var artifact = request.MapTo<Artifact>();
@@ -3146,7 +3144,6 @@ namespace DSLNG.PEAR.Services
             return new UpdateArtifactResponse();
         }
 
-
         public GetArtifactsResponse GetArtifacts(GetArtifactsRequest request)
         {
             int totalRecords;
@@ -3246,7 +3243,6 @@ namespace DSLNG.PEAR.Services
                 .MapTo<GetArtifactsToSelectResponse.ArtifactResponse>()
             };
         }
-
 
         public DeleteArtifactResponse Delete(DeleteArtifactRequest request)
         {

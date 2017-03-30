@@ -297,6 +297,7 @@ Number.prototype.format = function (n, x) {
         var fillColor = i % 2 == 0 ? '#31587f' : '#fff000';
         var converted = false;
         var decimal = 0;
+        var showLegends = false;
         if (data.MultiaxisChart.Title.toLowerCase().indexOf('cds') > -1) {
             symbol = 'triangle';
             converted = true;
@@ -310,6 +311,7 @@ Number.prototype.format = function (n, x) {
             decimal = 2;
         } else if (data.MultiaxisChart.Title.toLowerCase().indexOf('brent last') > -1) {
             symbol = 'triangle';
+            showLegends = true;
         } else if (data.MultiaxisChart.Title.toLowerCase().indexOf('jcc monthly trend') > -1) {
             symbol = 'triangle';
         }
@@ -382,7 +384,6 @@ Number.prototype.format = function (n, x) {
                     }
                 };
             } else if (chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType] === 'area' && data.MultiaxisChart.Charts[i].SeriesType === 'multi-stack') {
-
                 plotOptions[chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType]] = {
                     stacking: 'normal',
                     lineColor: '#666666',
@@ -406,8 +407,6 @@ Number.prototype.format = function (n, x) {
                 plotOptions[chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType]] = { stacking: 'normal' };
             }
             for (var j in data.MultiaxisChart.Charts[i].Series) {
-
-
                 if (seriesNames.indexOf(data.MultiaxisChart.Charts[i].Series[j].name) < 0) {
                     if (converted === false) {
                         seriesNames.push(data.MultiaxisChart.Charts[i].Series[j].name);
@@ -433,6 +432,7 @@ Number.prototype.format = function (n, x) {
                     valueDecimals: decimal,
                     valueSuffix: ' ' + data.MultiaxisChart.Charts[i].Measurement
                 }
+                data.MultiaxisChart.Charts[i].Series[j].dataLabels = { enabled: showLegends, style: { "fontSize": "9px", "fontWeight": "normal" }, verticalAlign: "bottom" };
                 series.push(data.MultiaxisChart.Charts[i].Series[j]);
             }
         }
@@ -485,7 +485,10 @@ Number.prototype.format = function (n, x) {
             series: series
         });
     };
-
+    Der.Artifact.jccMonthlyTrend = function (data, container) {
+        console.log(data);
+        return Der.Artifact.multiaxis(data, container);
+    };
     Der.Artifact.speedometer = function (data, container) {
         //console.log(data.SpeedometerChart);
         var $this = container;
@@ -618,7 +621,6 @@ Number.prototype.format = function (n, x) {
         $this.find('.canvas-container').append('<span class="half-val">50%</span>');
         $this.find('.canvas-container').append('<span class="full-val">100%</span>');
     };
-
     Der.Artifact.altspeedometer = function (data, container) {
         var $this = container;
         $this.append('<h5>MCHE Rundown</h5>');
