@@ -46,8 +46,15 @@
         }
 
         .psig {
-            height: 23px;
+            height: 19px;
             padding-left: 5px;
+        }
+
+        .tr-ophighlight {
+            padding-top: 0px;
+            padding-bottom: 0px;
+            margin-top: 0px;
+            margin-bottom: 0px;
         }
     </style>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -535,6 +542,16 @@
                                                                     }
                                                                 }
                                                             </div>
+                                                            <div class="thermometer preview">
+                                                                @{
+                                                                    if (row6Col5 != null)
+                                                                    {
+                                                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row6Col5.Id })" class="layout-item bar-thermo">
+                                                                            <img class="drop" src="@Url.Content("~/Content/images/water-drop.png")" />
+                                                                        </div>
+                                                                    }
+                                                                }
+                                                            </div>
                                                         </td>
                                                         <td style="width:40%">
                                                             @{
@@ -672,8 +689,8 @@
                                 }
 
                                 <table style="width:100%;height:80px;">
-                                    <tr>
-                                        <td style="width:80%">
+                                    <tr style="height:11px; margin-bottom:0px; padding-bottom:0px !important;">
+                                        <td style="width:80%; padding-bottom: 0px;margin-bottom: 0px;">
                                             <h5 style="text-decoration: underline;">Operation Highlight &amp; Immediate Concern :</h5>
 
                                         </td>
@@ -685,13 +702,13 @@
                                                 if (row12Col2 != null)
                                                 {
 
-                                                    <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row12Col2.Id })" class="layout-item highlight-json-plant-mode "></div>
+                                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row12Col2.Id })" class="layout-item highlight-json-plant-mode "></div>
                                                 }
                                             }
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2">
+                                        <td colspan="2" valign="top" style="padding-top: 0px;padding-bottom: 0px;margin-top: 0px;margin-bottom: 0px;">
                                             @{
                                                 var row12Col0 = Model.Items.FirstOrDefault(x => x.Row == 12 && x.Column == 0);
                                                 if (row12Col0 != null)

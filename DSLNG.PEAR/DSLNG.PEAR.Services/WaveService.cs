@@ -69,7 +69,7 @@ namespace DSLNG.PEAR.Services
                     
                     if (request.ValueId != 0)
                     {
-                        var value = DataContext.SelectOptions.Local.FirstOrDefault(x => x.Id == request.ValueId);
+                        var value = DataContext.SelectOptions.FirstOrDefault(x => x.Id == request.ValueId);
                         if (value == null) {
                             value = new SelectOption { Id = request.ValueId };
                             DataContext.SelectOptions.Attach(value);
@@ -82,12 +82,13 @@ namespace DSLNG.PEAR.Services
                   
                     if (request.ValueId != 0)
                     {
-                        var value = DataContext.SelectOptions.Local.FirstOrDefault(x => x.Id == request.ValueId);
+                        var value = DataContext.SelectOptions.FirstOrDefault(x => x.Id == request.ValueId);
                         if (value == null)
                         {
                             value = new SelectOption { Id = request.ValueId };
                             DataContext.SelectOptions.Attach(value);
                         }
+                        wave.Value = value;
                     }
                     DataContext.Waves.Add(wave);
                 }

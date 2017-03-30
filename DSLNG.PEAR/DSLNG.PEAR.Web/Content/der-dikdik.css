@@ -1041,20 +1041,26 @@ span.indicator.absolute {
     margin-left: 0;
 }
 
+
 .impurities .thermometer {
-    height: 100px;
+    height: 101px;
     width: 50px;
     background: url(/content/images/thermometer.png);
     background-size: 100% 100%;
     margin-top: 2px;
-    margin-left: 5px;
+    margin-left: 6px;
     position: relative;
     zoom: 1.1;
 }
 
+    .impurities .thermometer.preview {
+        height: 110px;
+    }
+
     .impurities .thermometer .bar-thermo {
         width: 27px;
-        height: 80px;
+        height: 81px;
+        /*height:90px;*/
         /*top: 17px;
             left: 22px;*/
         top: 15px;
