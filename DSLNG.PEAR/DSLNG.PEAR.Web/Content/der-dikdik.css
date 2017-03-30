@@ -999,81 +999,77 @@ span.indicator.absolute {
     margin-bottom: 5px;
 }
 
-.psig, .hhv-bar {
-    position: relative;
-    height: 19px;
-    border-bottom: 1px solid #0d0d0d;
-    border-right: 1px solid #0d0d0d;
-    width: 100.3%;
-    padding-top: 4px;
-    padding-left: 5px;
-}
-
-    .psig .barmeter,
-    .hhv-bar .barmeter {
-        height: 14px;
-        width: 241px;
-        position: absolute;
-        top: 2px;
-        right: 20px;
-    }
-
-.barmeter-wrapper {
-    position: relative;
-    height: 100%;
-    width: 100%;
-    text-align: center;
-}
-
-    .barmeter-wrapper label {
-        position: absolute;
-        color: #000;
-        top: 16%;
-        left: 9px;
-        text-align: left;
-        z-index: 2;
-    }
-
-.impurities .barmeter {
-    height: 25px;
-    width: 110px;
-    margin-top: 11px;
-    margin-left: 0;
-}
-
-
-.impurities .thermometer {
-    height: 101px;
-    width: 50px;
-    background: url(/content/images/thermometer.png);
-    background-size: 100% 100%;
-    margin-top: 2px;
-    margin-left: 6px;
-    position: relative;
-    zoom: 1.1;
-}
-
-    .impurities .thermometer.preview {
-        height: 110px;
-    }
-
-    .impurities .thermometer .bar-thermo {
-        width: 27px;
-        height: 81px;
-        /*height:90px;*/
-        /*top: 17px;
+.psig,.hhv-bar {
+                position: relative;
+            height: 19px;
+            border-bottom: 1px solid #0d0d0d;
+            border-right: 1px solid #0d0d0d;
+            width: 100.3%;
+           padding-top: 4px;
+           padding-left:5px;
+        }
+        .psig .barmeter,
+        .hhv-bar .barmeter{
+              height: 14px;
+                width: 241px;
+                position: absolute;
+                top: 2px;
+                right: 20px;
+        }
+        .barmeter-wrapper{
+            position: relative;
+            height: 100%;
+            width:100%;
+            text-align: center;
+        }
+        .barmeter-wrapper label{
+            position: absolute;
+            color:#000;
+            top:16%;
+            left: 9px;
+            text-align:left;
+            z-index:2;
+        }
+        .impurities .barmeter{
+            height: 25px;
+            width:110px;
+            margin-top:11px;
+            margin-left:0;
+        }
+        .impurities .thermometer{
+            height: 101px;
+            /*height:110px;*/
+            width:50px;
+            background: url(/content/images/thermometer.png);
+            background-size: 100% 100%;
+            margin-top: 2px;
+            margin-left: 6px;
+            position:relative;
+            zoom: 1.1;
+        }
+            .impurities .thermometer.preview {
+                height:110px;
+            }
+             
+        .impurities .thermometer .bar-thermo{
+            width: 27px;
+            height: 81px;
+            /*height:90px;*/
+            /*top: 17px;
             left: 22px;*/
-        top: 15px;
-        left: 17px;
-        position: absolute;
-    }
-
-.bar-thermo img.drop {
-    width: 10px;
-    position: absolute;
-    top: 5px;
-    left: 9px;
-}
+            top: 15px;
+            left: 17px;
+            position: absolute;
+        }
+            .impurities .thermometer.preview .bar-thermo {
+                height:90px;
+            }
+        .bar-thermo img.drop{
+            width: 10px;
+            position: absolute;
+            top: 5px;
+            left: 9px;
+        }
 
 .pie-wrapper {
     position: relative;
