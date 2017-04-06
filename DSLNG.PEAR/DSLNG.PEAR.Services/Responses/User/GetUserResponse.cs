@@ -21,6 +21,7 @@ namespace DSLNG.PEAR.Services.Responses.User
         public string FullName { get; set; }
         public string SignatureImage { get; set; }
         public string Position { get; set; }
+        public string ChangeModel { get; set; }
         public IList<RolePrivilege> RolePrivileges { get; set; }
         public class RoleGroup
         {
