@@ -151,6 +151,7 @@ namespace DSLNG.PEAR.Services
                             existing.AllowUpdate = menuRole.AllowUpdate;
                             existing.AllowUpload = menuRole.AllowUpload;
                             existing.AllowView = menuRole.AllowView;
+                            existing.AllowInput = menuRole.AllowInput;
                             DataContext.Entry(existing).State = EntityState.Modified;
                         }
                         else
@@ -242,7 +243,8 @@ namespace DSLNG.PEAR.Services
                                     AllowDownload = false,
                                     AllowUpdate = false,
                                     AllowView = false,
-                                    AllowUpload = false
+                                    AllowUpload = false,
+                                    AllowInput = false
                                 };
                                 data.Add(menuRolePrivilege);
                             }
@@ -266,7 +268,8 @@ namespace DSLNG.PEAR.Services
                                         AllowDownload = false,
                                         AllowUpdate = false,
                                         AllowView = false,
-                                        AllowUpload = false
+                                        AllowUpload = false,
+                                        AllowInput = false
                                     };
                                 }
                                 data.Add(menuRolePrivilege);

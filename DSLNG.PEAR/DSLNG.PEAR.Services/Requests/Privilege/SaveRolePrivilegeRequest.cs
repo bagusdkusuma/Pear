@@ -30,6 +30,7 @@ namespace DSLNG.PEAR.Services.Requests.Privilege
             public bool AllowUpload { get; set; }
             public bool AllowPublish { get; set; }
             public bool AllowApprove { get; set; }
+            public bool AllowInput { get; set; }
         }
     }
 

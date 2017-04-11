@@ -17,6 +17,7 @@ namespace DSLNG.PEAR.Data.Enums
         Download,
         Print,
         Approve,
-        Reject
+        Reject,
+        Input
     }
 }
