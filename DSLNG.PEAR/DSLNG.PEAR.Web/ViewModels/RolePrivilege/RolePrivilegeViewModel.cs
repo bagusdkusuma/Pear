@@ -41,6 +41,7 @@ namespace DSLNG.PEAR.Web.ViewModels.RolePrivilege
             public bool AllowUpload { get; set; }
             public bool AllowPublish { get; set; }
             public bool AllowApprove { get; set; }
+            public bool AllowInput { get; set; }
             public MenuPrivilege Menu { get; set; }
             public class MenuPrivilege
             {
@@ -64,6 +65,7 @@ namespace DSLNG.PEAR.Web.ViewModels.RolePrivilege
         public bool AllowUpload { get; set; }
         public bool AllowPublish { get; set; }
         public bool AllowApprove { get; set; }
+        public bool AllowInput { get; set; }
         public MenuPrivilege Menu { get; set; }
         public class MenuPrivilege
         {

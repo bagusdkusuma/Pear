@@ -48,7 +48,7 @@ namespace DSLNG.PEAR.Web.Attributes
         private void GetAllRights(string controller)
         {
             List<string> userRights = (List<string>)HttpContext.Current.Session[controller] != null ? (List<string>)HttpContext.Current.Session[controller] : new List<string> { 
-                "AllowApprove","AllowView","AllowCreate","AllowDelete","AllowDownload","AllowUpload","AllowPublish","AllowUpdate"
+                "AllowApprove","AllowView","AllowCreate","AllowDelete","AllowDownload","AllowUpload","AllowPublish","AllowUpdate","AllowInput"
             };
             HttpContext.Current.Session[controller] = userRights;
         }
@@ -102,7 +102,11 @@ namespace DSLNG.PEAR.Web.Attributes
                     if (!userRights.Contains("AllowUpload"))
                         userRights.Add("AllowUpload");
                 }
-                
+                if (privilege.AllowInput)
+                {
+                    if (!userRights.Contains("AllowInput"))
+                        userRights.Add("AllowInput");
+                }
             }
             HttpContext.Current.Session[menu_name] = userRights;
             return userRights.AsEnumerable<string>();

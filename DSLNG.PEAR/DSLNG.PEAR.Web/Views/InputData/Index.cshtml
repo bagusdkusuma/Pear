@@ -1,13 +1,45 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.InputData.IndexInputDataViewModel
 @{
     ViewBag.Title = "Input Data";
-    Layout = "~/Views/Shared/_Layout.cshtml";    
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@if (Session["inputdata"] != null)
+{
+    var privilege = Session["inputdata"] as List<string>;
+    bool AllowCreate = false;
+    if (privilege.Contains("AllowCreate"))
+    {
+        AllowCreate = true;
+
+    }
+
+    bool AllowInput = false;
+    if (privilege.Contains("AllowInput"))
+    {
+        AllowInput = true;
+    }
+
+    bool AllowConfigure = false;
+    if (privilege.Contains("AllowUpdate"))
+    {
+        AllowConfigure = true;
+    }
+}
 <h2>Input Data</h2>
 @Html.Partial("_MessageResponse")
 <div class="add-button-wrapper">
-    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+    @if (Session["inputdata"] != null)
+    {
+        var privilege = Session["inputdata"] as List<string>;
+        if (privilege.Contains("AllowCreate"))
+        {
+            @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+
+        }
+    }
+
+    @*@Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })*@
 </div>
 
 <table id="input-data-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
@@ -21,61 +53,104 @@
         </tr>
     </thead>
     <tbody>
-        <tr style="border-bottom:none">
-            <td style="text-align:left">Input Data DER</td>
-            <td>Daily</td>
-            <td>CPD</td>
-            <td></td>
-            <td><a href="@Url.Action("Input" ,"DerTransaction", null)">Input</a></td>
-        </tr>
-        @foreach (var item in Model.InputDatas)
-        {
-            if (ViewBag.IsSuperAdmin || item.Accountability == ViewBag.Role)
+        @{
+            if (ViewBag.Role == "Planning Directorate")
             {
-                <tr>
-                    <td style="text-align:left">
-                        @item.Name
-                    </td>
-                    <td>
-                        @item.PeriodeType
-                    </td>
-                    <td>
-                        @item.Accountability
-                    </td>
-                    <td>
-                        @item.LastInput.ToString()
-                    </td>
-                    <td>
-                        <a href="@Url.Action("FormInputData", new { id = item.Id })">Input</a> |
-                        <a href="@Url.Action("Update", new { id = item.Id })">Configure</a> |
-                        <a href="javascript:void(0)" class="delete" data-id="@item.Id" data-value="@item.Name">Delete</a>
-                    </td>
+                <tr style="border-bottom:none">
+                    <td style="text-align:left">Input Data DER</td>
+                    <td>Daily</td>
+                    <td>Planning Directorate</td>
+                    <td></td>
+                    <td><a href="@Url.Action("Input" ,"DerTransaction", null)">Input</a></td>
                 </tr>
             }
-
         }
-    </tbody>
-</table>
-
-@section Scripts{
-    <script type="text/javascript">
-        $(document).ready(function () {
-            
-            $('#input-data-table').on('click', '.delete', function () {
-                var id = $(this).attr('data-id');
-                var name = $(this).attr('data-value');
-                if (confirm('Are you sure want to delete this item ' + name + ' ?')) {
-                    var url = '@Url.Action("Delete", "InputData")';
-                    var form = $('<form />');
-                    form.attr('action', url);
-                    form.attr('method', 'POST');
-                    form.html('<input type="hidden" name="id" value="' + id + '" />');
-                    $('body').append(form);
-                    form.submit();
+        
+        @foreach (var item in Model.InputDatas)
+            {
+                if (ViewBag.IsSuperAdmin || item.Accountability == ViewBag.Role)
+                {
+                    <tr>
+                        <td style="text-align:left">
+                            @item.Name
+                        </td>
+                        <td>
+                            @item.PeriodeType
+                        </td>
+                        <td>
+                            @item.Accountability
+                        </td>
+                        <td>
+                            @item.LastInput.ToString()
+                        </td>
+                        <td>
+                            @if (Session["inputdata"] != null)
+                            {
+                                var privilege = Session["inputdata"] as List<string>;
+                                if (privilege.Contains("AllowInput"))
+                                {
+                                    <a href="@Url.Action("FormInputData", new { id = item.Id })">Input</a> 
+                                }
+                                if (privilege.Contains("AllowUpdate"))
+                                {
+                                    <a href="@Url.Action("Update", new { id = item.Id })"> | Configure</a>;
+                                }
+                                if (privilege.Contains("AllowDelete"))
+                                {
+                                    <a href="javascript:void(0)" class="delete" data-id="@item.Id" data-value="@item.Name"> | Delete</a>
+                                }
+                            }
+                            @*<a href="@Url.Action("FormInputData", new { id = item.Id })">Input</a> |
+                            <a href="@Url.Action("Update", new { id = item.Id })">Configure</a> |
+                            <a href="javascript:void(0)" class="delete" data-id="@item.Id" data-value="@item.Name">Delete</a>*@
+                        </td>
+                    </tr>
                 }
+
+            }
+        </tbody>
+    </table>
+
+    @section Scripts{
+        <script type="text/javascript">
+            $(document).ready(function () {
+
+                @{
+                bool AllowDelete = false;
+                bool AllowInput = false;
+                bool AllowConfigure = false;
+                var privileges = Session["inputdata"] as List<string>;
+                if (privileges != null && privileges.Contains("AllowDelete"))
+                {
+                    AllowDelete = true;
+                }
+                if (privileges != null && privileges.Contains("AllowInput"))
+                {
+                    AllowInput = true;
+                }
+                if (privileges != null && privileges.Contains("AllowUpdate"))
+                {
+                    AllowConfigure = true;
+                }
+            }
+                AllowDelete = '@{ @AllowDelete}';
+                AllowInput = '@{ @AllowInput}';
+                AllowConfigure = '@{ @AllowConfigure}';
+                $('#input-data-table').on('click', '.delete', function () {
+                    var id = $(this).attr('data-id');
+                    var name = $(this).attr('data-value');
+                    if (confirm('Are you sure want to delete this item ' + name + ' ?')) {
+                        var url = '@Url.Action("Delete", "InputData")';
+                        var form = $('<form />');
+                        form.attr('action', url);
+                        form.attr('method', 'POST');
+                        form.html('<input type="hidden" name="id" value="' + id + '" />');
+                        $('body').append(form);
+                        form.submit();
+                    }
+                });
+
+
             });
-
-
-        });
-</script>
-}
+        </script>
+    }

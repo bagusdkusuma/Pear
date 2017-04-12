@@ -26,6 +26,7 @@ namespace DSLNG.PEAR.Data.Entities
         public bool AllowUpload { get; set; }
         public bool AllowPublish { get; set; }
         public bool AllowApprove { get; set; }
+        public bool AllowInput { get; set; }
         public Menu Menu { get; set; }
         public RolePrivilege RolePrivilege { get; set; }
     }
