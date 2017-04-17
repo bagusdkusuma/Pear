@@ -13,7 +13,7 @@ namespace DSLNG.PEAR.Web.Helpers
         {
             if (string.IsNullOrEmpty(date))
             {
-                return DateTime.Now;
+                return DateTime.Now.Date;
             }
 
             if (periodeType == PeriodeType.Monthly.ToString())
