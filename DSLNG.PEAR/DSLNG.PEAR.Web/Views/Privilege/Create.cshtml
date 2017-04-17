@@ -85,6 +85,7 @@
                                 <th style="width:99px; text-align: center; vertical-align: middle;">Upload</th>
                                 <th style="width:98px; text-align: center; vertical-align: middle;">Publish</th>
                                 <th style="width:99px; text-align: center; vertical-align: middle;">Approve</th>
+                                <th style="width:99px; text-align: center; vertical-align: middle;">Input</th>
                             </tr>
                         </thead>
                         <tbody style="border-color:white;">
@@ -107,6 +108,7 @@
                                             <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowUpload)</td>
                                             <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowPublish)</td>
                                             <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowApprove)</td>
+                                            <td style="width:100px; text-align: center; vertical-align: middle;">@Html.CheckBoxFor(m => m.MenuRolePrivileges[menuroleId].AllowInput)</td>
                                         </tr>
                                     }
                                 }

@@ -392,6 +392,7 @@ namespace DSLNG.PEAR.Web.Controllers
             //throw new NotImplementedException();
         }
 
+       [HttpPost]
         public ActionResult EditESCategory(GetESCategoryViewModel viewModel)
         {
             var request = viewModel.MapTo<SaveESCategoryRequest>();
