@@ -498,10 +498,9 @@ namespace DSLNG.PEAR.Web.Controllers
                 })
             };
 
-            return Json(data, JsonRequestBehavior.AllowGet);
-        }
-
-
-       
+            var jsonResult = Json(data, JsonRequestBehavior.AllowGet);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
+        }       
     }
 }

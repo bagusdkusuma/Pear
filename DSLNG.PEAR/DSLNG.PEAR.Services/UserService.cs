@@ -128,6 +128,7 @@ namespace DSLNG.PEAR.Services
                 user.Username = request.Username;
                 user.IsActive = request.IsActive;
                 user.ChangeModel = request.ChangeModel;
+                user.Email = request.Email;
                 if (request.ChangePassword && request.Password != null)
                 {
                     user.PasswordSalt = crypto.GenerateSalt(crypto.HashIterations, crypto.SaltSize);

@@ -3,6 +3,7 @@ using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.DerTransaction;
 using DSLNG.PEAR.Services.Requests.InputData;
 using DSLNG.PEAR.Services.Responses.InputData;
+using DSLNG.PEAR.Web.Attributes;
 using DSLNG.PEAR.Web.Grid;
 using DSLNG.PEAR.Web.Helpers;
 using DSLNG.PEAR.Web.ViewModels.DerTransaction;
@@ -31,7 +32,7 @@ namespace DSLNG.PEAR.Web.Controllers
             _kpiService = kpiService;
             _derTransactionService = derTransactionService;
         }
-
+        [AuthorizeUser(AccessLevel = "AllowView")]
         public ActionResult Index()
         {   
             var viewModel = new IndexInputDataViewModel();            
