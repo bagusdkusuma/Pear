@@ -1058,7 +1058,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var secretPath = Path.Combine(Server.MapPath(PathConstant.DerPath), secretNumber + ".txt");
             System.IO.File.WriteAllText(secretPath, viewModel.Content);
             var displayUrl = Url.Action("Preview", "DerImage", new { secretNumber = secretNumber }, this.Request.Url.Scheme);
-            htmlToPdf.Margins.Top = 14;
+            htmlToPdf.Margins.Top = 10;
             htmlToPdf.Margins.Bottom = 10;
             htmlToPdf.Margins.Left = 20;
             htmlToPdf.Margins.Right = 20;
