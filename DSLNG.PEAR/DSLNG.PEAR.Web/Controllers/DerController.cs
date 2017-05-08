@@ -35,6 +35,7 @@ using DSLNG.PEAR.Services.Requests.DerLoadingSchedule;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
+    [Authorize]
     public class DerController : BaseController
     {
         private readonly IDerService _derService;
@@ -74,7 +75,7 @@ namespace DSLNG.PEAR.Web.Controllers
             _derLoadingScheduleService = derLoadingScheduleService;
             _userService = userService;
         }
-
+        
         [AuthorizeUser(AccessLevel = "AllowView")]
         public ActionResult Index()
         {
@@ -263,30 +264,14 @@ namespace DSLNG.PEAR.Web.Controllers
                 #region multiaxis
                 case "multiaxis":
                     {
-                        var request = new GetMultiaxisChartDataRequest();
-                        request.PeriodeType = PeriodeType.Daily;
-                        request.RangeFilter = RangeFilter.Interval;
-                        request.Start = date.AddDays(-6);
-                        request.End = date;
-
-                        var previewViewModel = new ArtifactPreviewViewModel();
-
-                        request.Charts = layout.Artifact.Charts.MapTo<GetMultiaxisChartDataRequest.ChartRequest>();
-                        var chartData = _artifactService.GetMultiaxisChartData(request);
-                        previewViewModel.PeriodeType = "Daily";
-                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
-                        previewViewModel.Highlights = new List<ArtifactPreviewViewModel.HighlightViewModel>();
-                        for (DateTime counter = request.Start.Value;
-                             counter <= request.End.Value;
-                             counter = counter.AddDays(1))
-                        {
-                            previewViewModel.Highlights.Add(null);
-                        }
-                        previewViewModel.GraphicType = layout.Type;
-                        previewViewModel.MultiaxisChart = new MultiaxisChartDataViewModel();
-                        chartData.MapPropertiesToInstance<MultiaxisChartDataViewModel>(previewViewModel.MultiaxisChart);
-                        previewViewModel.MultiaxisChart.Title = layout.Artifact.HeaderTitle;
-                        return Json(previewViewModel, JsonRequestBehavior.AllowGet);
+                        return Json(GetMultiaxisChats(PeriodeType.Daily, date, layout), JsonRequestBehavior.AllowGet);
+                    }
+                #endregion
+                #region jcc monthly trend
+                case "jcc-monthly-trend":
+                    {
+                        var data = GetMultiaxisChats(PeriodeType.Monthly, date, layout);
+                        return Json(ChangePeriodes(data, date), JsonRequestBehavior.AllowGet);
                     }
                 #endregion
                 #region pie
@@ -1074,8 +1059,8 @@ namespace DSLNG.PEAR.Web.Controllers
             var secretPath = Path.Combine(Server.MapPath(PathConstant.DerPath), secretNumber + ".txt");
             System.IO.File.WriteAllText(secretPath, viewModel.Content);
             var displayUrl = Url.Action("Preview", "DerImage", new { secretNumber = secretNumber }, this.Request.Url.Scheme);
-            htmlToPdf.Margins.Top = 20;
-            htmlToPdf.Margins.Bottom = 20;
+            htmlToPdf.Margins.Top = 10;
+            htmlToPdf.Margins.Bottom = 10;
             htmlToPdf.Margins.Left = 20;
             htmlToPdf.Margins.Right = 20;
             htmlToPdf.GeneratePdfFromFile(displayUrl, null, pdfPath);
@@ -1245,6 +1230,53 @@ namespace DSLNG.PEAR.Web.Controllers
             }
 
             return kpiInformationVm;
+        }
+
+        private ArtifactPreviewViewModel GetMultiaxisChats(PeriodeType periodeType, DateTime date, GetDerLayoutitemResponse layout)
+        {
+            var request = new GetMultiaxisChartDataRequest();
+            request.PeriodeType = periodeType;
+            request.RangeFilter = RangeFilter.Interval;
+            if (periodeType == PeriodeType.Monthly)
+            {
+                var monthlyDate = new DateTime(date.Year, date.Month, 1);
+                request.Start = monthlyDate.AddMonths(-11);
+                request.End = monthlyDate;
+            }
+            else
+            {
+                request.Start = date.AddDays(-6);
+                request.End = date;
+            }
+
+            var previewViewModel = new ArtifactPreviewViewModel();
+
+            request.Charts = layout.Artifact.Charts.MapTo<GetMultiaxisChartDataRequest.ChartRequest>();
+            var chartData = _artifactService.GetMultiaxisChartData(request);
+            previewViewModel.PeriodeType = periodeType.ToString();
+            previewViewModel.TimePeriodes = chartData.TimePeriodes;
+            previewViewModel.Highlights = new List<ArtifactPreviewViewModel.HighlightViewModel>();
+            for (DateTime counter = request.Start.Value;
+                 counter <= request.End.Value;
+                 counter = periodeType == PeriodeType.Monthly ? counter.AddMonths(1) : counter.AddDays(1))
+            {
+                previewViewModel.Highlights.Add(null);
+            }
+            previewViewModel.GraphicType = layout.Type;
+            previewViewModel.MultiaxisChart = new MultiaxisChartDataViewModel();
+            chartData.MapPropertiesToInstance<MultiaxisChartDataViewModel>(previewViewModel.MultiaxisChart);
+            previewViewModel.MultiaxisChart.Title = layout.Artifact.HeaderTitle;
+            return previewViewModel;
+        }
+
+        private ArtifactPreviewViewModel ChangePeriodes(ArtifactPreviewViewModel data, DateTime date)
+        {
+            int month = 0 - data.MultiaxisChart.Periodes.Count();
+            for(int i = 1; i <= data.MultiaxisChart.Periodes.Count(); i++)
+            {
+                data.MultiaxisChart.Periodes[i - 1] = date.AddMonths(month + i).ToString("MMM yy");
+            }
+            return data;
         }
     }
 }

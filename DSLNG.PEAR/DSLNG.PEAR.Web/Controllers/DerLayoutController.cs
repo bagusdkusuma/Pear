@@ -158,6 +158,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         }
                     case "line":
                     case "multiaxis":
+                    case "jcc-monthly-trend":
                         {
                             var multiaxisChart = new MultiaxisChartViewModel();
                             editViewModel.MultiaxisChart = response.Artifact.MapPropertiesToInstance<MultiaxisChartViewModel>(multiaxisChart);
@@ -342,16 +343,12 @@ namespace DSLNG.PEAR.Web.Controllers
                             viewModel.Type = "speedometer";
                             break;
                         }
-                    case "1-and-0":
-                        {
-                            viewModel.Type = "multiaxis";
-                            break;
-                        }
+                    case "1-and-0":                        
                     case "1-and-1":
                     case "1-and-2":
                     case "1-and-3":
+                    case "15-and-4":                   
                         {
-                            //viewModel.Type = "line";
                             viewModel.Type = "multiaxis";
                             break;
                         }
@@ -554,6 +551,11 @@ namespace DSLNG.PEAR.Web.Controllers
                             viewModel.Type = "person-on-board";
                             break;
                         }
+                    case "15-and-5":
+                        {
+                            viewModel.Type = "jcc-monthly-trend";
+                            break;
+                        }
                 }
                 return View("LayoutItem", viewModel);
                 #endregion
@@ -564,21 +566,6 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             switch (type.ToLowerInvariant())
             {
-                //case "line":
-                //    {
-                //        var viewModel = new DerLayoutItemViewModel();
-                //        viewModel.Artifact = new DerLayoutItemViewModel.DerLayoutItemArtifactViewModel();
-                //        viewModel.Artifact.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
-                //        {
-                //            Take = -1,
-                //            SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
-                //        }).Measurements
-                //    .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
-                //        viewModel.LineChart = new LineChartViewModel();
-                //        var series = new LineChartViewModel.SeriesViewModel();
-                //        viewModel.LineChart.Series.Add(series);
-                //        return PartialView("LayoutType/_Line", viewModel);
-                //    }
                 case "barmeter":
                 case "speedometer":
                     {
@@ -597,6 +584,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     }
                 case "line":
                 case "multiaxis":
+                case "jcc-monthly-trend":
                     {
                         var viewModel = new DerLayoutItemViewModel();
                         viewModel.Artifact = new DerLayoutItemViewModel.DerLayoutItemArtifactViewModel();
@@ -843,18 +831,8 @@ namespace DSLNG.PEAR.Web.Controllers
             var response = new SaveLayoutItemResponse();
             switch (layoutItemViewModel.Type.ToLowerInvariant())
             {
-                case "line":
-                    //{
-                    //    request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
-                    //    request.Artifact = layoutItemViewModel.Artifact.MapTo<SaveLayoutItemRequest.LayoutItemArtifact>();
-                    //    //request.Artifact.LineChart = layoutItemViewModel.LineChart.MapTo<SaveLayoutItemRequest.LayoutItemArtifactLine>();
-                    //    request.Artifact.MultiAxis = layoutItemViewModel.MultiaxisChart.MapTo<SaveLayoutItemRequest.LayoutItemArtifactMultiAxis>();
-                    //    response = _derService.SaveLayoutItem(request);
-
-                    //    break;
-                    //}
-
                 case "multiaxis":
+                case "jcc-monthly-trend":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.Artifact = layoutItemViewModel.Artifact.MapTo<SaveLayoutItemRequest.LayoutItemArtifact>();

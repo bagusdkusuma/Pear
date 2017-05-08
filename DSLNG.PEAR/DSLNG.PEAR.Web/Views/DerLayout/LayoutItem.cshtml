@@ -35,6 +35,7 @@
             var that = $('.der-layout-type');
             switch ($('.der-layout-type').val().toLowerCase()) {
                 case 'multiaxis':
+                case 'jcc-monthly-trend':
                     $.ajax({
                         url: '@Url.Action("LayoutSetting", "DerLayout", new { type = "_type_" })'.replace('_type_', that.val()),
                         success: function (data) {

@@ -21,6 +21,7 @@ using System.Data.SqlClient;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
+    [Authorize]
     public class MenuController : BaseController
     {
 
