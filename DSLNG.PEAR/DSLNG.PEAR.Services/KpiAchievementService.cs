@@ -495,6 +495,10 @@ namespace DSLNG.PEAR.Services
             {
                 response.Message = argumentNullException.Message;
             }
+            catch (Exception exception)
+            {
+                response.Message = exception.Message;
+            }
 
             return response;
         }
@@ -1524,6 +1528,14 @@ namespace DSLNG.PEAR.Services
             catch (ArgumentNullException argumentNullException)
             {
                 response.Message = argumentNullException.Message;
+            }
+            catch (System.Data.Entity.Infrastructure.DbUpdateConcurrencyException ex)
+            {
+                response.Message = ex.Message;
+            }
+            catch (Exception exception)
+            {
+                response.Message = exception.Message;
             }
 
             return response;
