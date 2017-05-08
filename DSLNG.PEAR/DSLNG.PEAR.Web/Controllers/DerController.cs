@@ -971,7 +971,8 @@ namespace DSLNG.PEAR.Web.Controllers
         [HttpGet]
         public ActionResult Input()
         {
-            return View();
+            return RedirectToAction("Input", "DerTransaction");
+            //return View();
         }
 
         [HttpGet]
