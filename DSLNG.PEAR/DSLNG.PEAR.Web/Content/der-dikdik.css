@@ -435,8 +435,7 @@ label {
 
 .table.hhv {
     text-align: center;
-    border-left: 1px solid #0D0D0D;
-    border-bottom: 1px solid #0D0D0D;
+    border: 1px solid #0D0D0D;
 }
 
     .table.hhv thead tr td {
@@ -444,12 +443,17 @@ label {
     }
 
     .table.hhv tbody tr:first-child td {
-        height: 42px;
+        
     }
 
     .table.hhv .special-height {
         height: 23px;
     }
+
+.table.total-commitment,
+.table.total-commitment tr td:last-child {
+    border: 1px solid #0D0D0D;
+}
 
 .vertical-space {
     margin-bottom: 10px;
@@ -1189,7 +1193,8 @@ td.percentage-wrapper {
 .feed-gas,
 .job-pmts thead tr:first-child,
 .mgdp thead tr:first-child,
-.hhv thead tr:first-child {
+.hhv thead tr:first-child,
+.total-commitment thead  {
     font-size: 13px;
 }
 
@@ -1226,7 +1231,8 @@ td.percentage-wrapper {
 .hhv thead tr:last-child,
 .psig,
 .hhv-bar,
-.production tbody tr:last-child td:nth-child(1) {
+.production tbody tr:last-child td:nth-child(1),
+.total-commitment tbody {
     font-size: 11px;
 }
 
@@ -1239,6 +1245,10 @@ td.percentage-wrapper {
 .production tbody tr:last-child td:nth-child(5),
 .commodities tbody tr td:first-child {
     font-weight: bold;
+}
+
+.total-commitment tbody tr td:nth-child(2) {
+    text-align: right;
 }
 
 .main-table tr td {

@@ -1153,6 +1153,21 @@ namespace DSLNG.PEAR.Web.Helpers
                 return false;
             }
         }
+
+        public static string GetPercentage(this HtmlHelper htmlHelper, string achievement, string target, int digit, bool isAskedForWidth = false)
+        {
+            if (string.IsNullOrEmpty(achievement) || string.IsNullOrEmpty(target))
+            {
+                return !isAskedForWidth ? "N/A" : "0";
+            }
+            else
+            {
+                var achievementToDouble = double.Parse(achievement);
+                var targetToDouble = double.Parse(target);
+                var percentage = Math.Round((achievementToDouble / targetToDouble) * 100, digit);
+                return htmlHelper.DisplayCompleteDerValue(percentage.ToString(CultureInfo.InvariantCulture), "%", "%", "N/A", false, digit);
+            }
+        }
     }
 
     public class JsonRemark

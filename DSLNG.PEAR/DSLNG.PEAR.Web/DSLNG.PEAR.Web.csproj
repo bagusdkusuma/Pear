@@ -1197,6 +1197,9 @@
     <Content Include="Views\DerTransaction\QhsseSection2.cshtml" />
     <Content Include="Views\DerTransaction\ForcastedIndicator2.cshtml" />
     <Content Include="Views\DerLayout\Config.V1.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_TotalCommitment.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_TotalCommitment.Edit.cshtml" />
+    <Content Include="Views\Der\Display\_TotalCommitment.cshtml" />
     <None Include="Views\Der\Index.cshtml.old" />
     <Content Include="Views\Der\_ManageItem.cshtml" />
     <Content Include="Views\Der\_DialogManageItem.cshtml" />

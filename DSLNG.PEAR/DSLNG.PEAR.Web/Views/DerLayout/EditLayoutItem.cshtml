@@ -121,6 +121,9 @@
                 case "person-on-board":
                     Html.RenderPartial("~/Views/DerLayout/LayoutType/_PersonOnBoard.Edit.cshtml", Model);
                     break;
+                case "total-commitment":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_TotalCommitment.Edit.cshtml", Model);
+                    break;
             }
         }
     </div>
@@ -355,6 +358,7 @@
             case "loading-duration":
             case "person-on-board":
             case "flare":
+            case "total-commitment":
                 {
                     window.Pear.Artifact.Designer._kpiAutoComplete($('.layout-type-area'));
                     break;

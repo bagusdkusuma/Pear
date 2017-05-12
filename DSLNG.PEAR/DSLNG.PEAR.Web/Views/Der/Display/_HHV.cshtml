@@ -1,17 +1,20 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKpiInformationViewModel
-<table class="table table-bordered hhv vertical-space">
+<table class="table table-bordered hhv vertical-space" style="margin:0">
     <thead>
         <tr>
-            <td colspan="2">
-                HHV
+            <td colspan="3">
+                HHV (Avg 24H)
             </td>
         </tr>
         <tr>
-            <td>
-                JOB PMTS
+            <td style="width:23%">
+                JOB-SNO
             </td>
-            <td>
-                MGDP
+            <td style="width:26%">
+                MGDP-DNG
+            </td>
+            <td style="width:33%">
+                MGDP-MTD
             </td>
         </tr>
     </thead>
@@ -23,54 +26,20 @@
             <td style="vertical-align:middle">
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "btu/scf")
             </td>
+            <td style="vertical-align:middle">
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "btu/scf")
+            </td>
         </tr>
         <tr>
-            <td class="special-height" style="background-color:#c4d79b">
-                 @Html.DisplayDerValueWithLabelAtFront("min", Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Ytd, string.Empty, "N/A", true, 0)
+            <td style="background-color:#c4d79b">
+                 @Html.DisplayDerValueWithLabelAtFront("min", Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Ytd, string.Empty, "N/A", true, 0)
             </td>
             <td style="background-color:#c4d79b">
-                @Html.DisplayDerValueWithLabelAtFront("min", Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Ytd, string.Empty, "N/A", true, 0)
+                @Html.DisplayDerValueWithLabelAtFront("min", Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Ytd, string.Empty, "N/A", true, 0)
+            </td>
+            <td style="background-color:#c4d79b">
+                @Html.DisplayDerValueWithLabelAtFront("min", Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Ytd, string.Empty, "N/A", true, 0)
             </td>
         </tr>
     </tbody>
 </table>
-
-@*-
-@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayHHVViewModel
-
-<table class="der-table all-border">
-    <thead>
-        <tr>
-            <th colspan="2" class="der-bg-green-3">HHV</th>
-        </tr>
-        <tr>
-            <th class="der-bg-green-3">JOB PMTS</th>
-            <th class="der-bg-green-3">MGDP</th>
-        </tr>
-    </thead>
-    @{
-        var pos0 = Model.HHVViewModels.Single(x => x.Position == 0);
-        var pos1 = Model.HHVViewModels.Single(x => x.Position == 1);
-        var pos2 = Model.HHVViewModels.Single(x => x.Position == 2);
-        var pos3 = Model.HHVViewModels.Single(x => x.Position == 3);
-        if(pos1.Daily != "n/a")
-        {
-            pos1.Daily = "min" + pos1.Daily;
-        }
-        if (pos3.Daily != "n/a")
-        {
-            pos3.Daily = "min" + pos3.Daily;
-        }
-        <tbody>
-            <tr>
-                <td class="der-bg-yellow">@pos0.Daily @pos0.Measurement</td>
-                <td class="der-bg-gray-1">@pos2.Daily @pos2.Measurement</td>
-            </tr>
-            <tr>
-                <td class="der-bg-green-3">@pos1.Daily @pos1.Measurement</td>
-                <td class="der-bg-green-3">@pos3.Daily @pos3.Measurement</td>
-            </tr>
-        </tbody>
-    }
-</table>
-*@

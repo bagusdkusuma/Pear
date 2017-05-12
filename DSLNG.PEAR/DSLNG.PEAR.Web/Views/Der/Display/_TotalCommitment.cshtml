@@ -1,0 +1,38 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKpiInformationViewModel
+<table class="table table-bordered vertical-space total-commitment">
+    <thead>
+        <tr>
+            <td style="background-color: #92cddc;text-align:center;vertical-align:middle;width:44%">Total Commitment</td>
+            <td style="background-color: #dce6f1;text-align:center;vertical-align:middle;width:30%">Total</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Daily Contract Quantity (DCQ)</td>
+            <td class="percentage-wrapper" colspan="2">
+                <div class="bar-percentage">
+                    <div style="max-width:@Html.GetPercentage(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value,0, true).Replace(" ","")">&nbsp;</div>
+                </div>
+                @Html.GetPercentage(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, 0) of @Html.DisplayCompleteDerValue(Html.Divide(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, 1), string.Empty, "mmbtu", "N/A", true, 0) 
+            </td>
+        </tr>
+        <tr>
+            <td>Monthly Gas Nomination (MGN)</td>
+            <td class="percentage-wrapper" colspan="2">
+                <div class="bar-percentage">
+                    <div style="max-width:@Html.GetPercentage(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value,0, true).Replace(" ","")">&nbsp;</div>
+                </div>
+                @Html.GetPercentage(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value, 0) of @Html.DisplayCompleteDerValue(Html.Divide(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value, 1), string.Empty, "mmbtu", "N/A", true, 0)
+            </td>
+        </tr>
+        <tr>
+            <td>Annual Delivery Plan (ADP)</td>
+            <td class="percentage-wrapper" colspan="2">
+                <div class="bar-percentage">
+                    <div style="max-width:@Html.GetPercentage(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Value,0, true).Replace(" ","")">&nbsp;</div>
+                </div>
+                @Html.GetPercentage(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Value, 0) of @Html.DisplayCompleteDerValue(Html.Divide(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Value, 1), string.Empty, "mmbtu", "N/A", true, 0)
+            </td>
+        </tr>
+    </tbody>
+</table>

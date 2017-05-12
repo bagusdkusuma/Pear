@@ -238,16 +238,17 @@ namespace DSLNG.PEAR.Web.Controllers
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 1);
                             break;
-                        }
-                    case "hhv":
+                        }                    
                     case "procurement":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 2);
                             break;
                         }
+                    case "hhv":
                     case "mgdp":                    
                     case "dafwc":
                     case "job-pmts":
+                    case "total-commitment":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 3);
                             break;
@@ -347,7 +348,10 @@ namespace DSLNG.PEAR.Web.Controllers
                     case "1-and-1":
                     case "1-and-2":
                     case "1-and-3":
-                    case "15-and-4":                   
+                    case "15-and-4":                 
+                    case "5-and-2":
+                    case "5-and-3":
+                    case "5-and-4":
                         {
                             viewModel.Type = "multiaxis";
                             break;
@@ -422,19 +426,14 @@ namespace DSLNG.PEAR.Web.Controllers
                         }
                     case "5-and-0":
                         {
-                            viewModel.Type = "job-pmts";
+                            viewModel.Type = "hhv";
                             break;
                         }
                     case "5-and-1":
                         {
-                            viewModel.Type = "mgdp";
+                            viewModel.Type = "total-commitment";
                             break;
-                        }
-                    case "5-and-2":
-                        {
-                            viewModel.Type = "hhv";
-                            break;
-                        }
+                        }                    
                     case "6-and-0":
                         {
                             viewModel.Type = "total-feed-gas";
@@ -717,7 +716,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "hhv":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(2);
+                        viewModel.KpiInformations = GetKpiInformations(3);
                         return PartialView("LayoutType/_HHV", viewModel);
                     }
                 case "lng-and-cds-production":
@@ -800,15 +799,21 @@ namespace DSLNG.PEAR.Web.Controllers
                         var viewModel = new DerLayoutItemViewModel();
                         viewModel.KpiInformations = GetKpiInformations(4);
                         return PartialView("LayoutType/_LoadingDuration", viewModel);
-
                     }
                 case "person-on-board":
                     {
                         var viewModel = new DerLayoutItemViewModel();
                         viewModel.KpiInformations = GetKpiInformations(1);
                         return PartialView("LayoutType/_PersonOnBoard", viewModel);
+                    }
+                case "total-commitment":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(3);
+                        return PartialView("LayoutType/_TotalCommitment", viewModel);
 
                     }
+
             }
 
             return Content("Error");
@@ -908,6 +913,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "loading-duration":
                 case "person-on-board":
                 case "flare":
+                case "total-commitment":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();

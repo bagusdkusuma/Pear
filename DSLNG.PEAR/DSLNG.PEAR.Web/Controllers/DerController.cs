@@ -633,11 +633,13 @@ namespace DSLNG.PEAR.Web.Controllers
                 #region HHV
                 case "hhv":
                     {
-                        var viewModel = GetGeneralDerKpiInformations(2, layout, date, PeriodeType.Daily);
+                        var viewModel = GetGeneralDerKpiInformations(3, layout, date, PeriodeType.Daily);
                         var target0 = layout.KpiInformations.SingleOrDefault(x => x.Position == 0);
                         var target1 = layout.KpiInformations.SingleOrDefault(x => x.Position == 1);
-                        viewModel.KpiInformationViewModels.Add(AddTarget(2, target0, date));
-                        viewModel.KpiInformationViewModels.Add(AddTarget(3, target1, date));
+                        var target2 = layout.KpiInformations.SingleOrDefault(x => x.Position == 2);
+                        viewModel.KpiInformationViewModels.Add(AddTarget(3, target0, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(4, target1, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(5, target2, date));
                         var view = RenderPartialViewToString("~/Views/Der/Display/_HHV.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
@@ -939,6 +941,21 @@ namespace DSLNG.PEAR.Web.Controllers
                         var view = RenderPartialViewToString("~/Views/Der/Display/_ReviewedBy.cshtml", viewModel);
                         return Json(new { type = layout.Type.ToLowerInvariant(), view = view }, JsonRequestBehavior.AllowGet);
                     }
+                #endregion
+                #region Total Commitment
+                case "total-commitment":
+                    {
+                        var viewModel = GetGeneralDerKpiInformations(3, layout, date, PeriodeType.Daily);
+                        var target0 = layout.KpiInformations.SingleOrDefault(x => x.Position == 0);
+                        var target1 = layout.KpiInformations.SingleOrDefault(x => x.Position == 1);
+                        var target2 = layout.KpiInformations.SingleOrDefault(x => x.Position == 2);
+                        viewModel.KpiInformationViewModels.Add(AddTarget(3, target0, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(4, target1, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(5, target2, date));
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_TotalCommitment.cshtml", viewModel);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
                     #endregion
             }
             return Content("Switch case does not matching");
@@ -1060,7 +1077,7 @@ namespace DSLNG.PEAR.Web.Controllers
             System.IO.File.WriteAllText(secretPath, viewModel.Content);
             var displayUrl = Url.Action("Preview", "DerImage", new { secretNumber = secretNumber }, this.Request.Url.Scheme);
             htmlToPdf.Margins.Top = 10;
-            htmlToPdf.Margins.Bottom = 10;
+            htmlToPdf.Margins.Bottom = 0;
             htmlToPdf.Margins.Left = 20;
             htmlToPdf.Margins.Right = 20;
             htmlToPdf.GeneratePdfFromFile(displayUrl, null, pdfPath);

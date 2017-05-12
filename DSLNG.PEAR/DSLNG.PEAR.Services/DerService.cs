@@ -299,6 +299,8 @@ namespace DSLNG.PEAR.Services
             rowAndColumns.Add(new RowAndColumns { Row = 5, Column = 0 });
             rowAndColumns.Add(new RowAndColumns { Row = 5, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 5, Column = 2 });
+            rowAndColumns.Add(new RowAndColumns { Row = 5, Column = 3 });
+            rowAndColumns.Add(new RowAndColumns { Row = 5, Column = 4 });
             rowAndColumns.Add(new RowAndColumns { Row = 6, Column = 0 });
             rowAndColumns.Add(new RowAndColumns { Row = 6, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 6, Column = 2 });
@@ -606,6 +608,7 @@ namespace DSLNG.PEAR.Services
                 case "loading-duration":
                 case "person-on-board":
                 case "flare":
+                case "total-commitment":
                     {
                         baseResponse = request.Id > 0 ? UpdateKpiInformations(request) : SaveKpiInformations(request);
                         break;
