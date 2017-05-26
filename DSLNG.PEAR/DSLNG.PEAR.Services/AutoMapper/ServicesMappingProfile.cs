@@ -824,6 +824,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<ProcessBlueprint, GetProcessBlueprintPrivilegesResponse.FileManagerRolePrivilege.BlueprintFile>();
             Mapper.CreateMap<UpdateFilePrivilegeRequest, FileManagerRolePrivilege>();
             Mapper.CreateMap<FilePrivilegeRequest, FileManagerRolePrivilege>();
+
+            Mapper.CreateMap<DerInputFile, GetDerInputFilesResponse.DerInputFile>()
+                .ForMember(x => x.CreatedBy, y => y.MapFrom(z => z.CreatedBy.Username));
         }
 
         private void ConfigureEconomicSummary()

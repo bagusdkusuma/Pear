@@ -10,6 +10,11 @@ using DSLNG.PEAR.Data.Entities.Der;
 using DSLNG.PEAR.Data.Enums;
 using System.Data.Entity;
 using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Services.Responses;
+using DSLNG.PEAR.Data.Entities;
+using DSLNG.PEAR.Services.Requests.Der;
+using System.Data.SqlClient;
+using System.Data.Entity.Infrastructure;
 
 namespace DSLNG.PEAR.Services
 {
@@ -112,6 +117,7 @@ namespace DSLNG.PEAR.Services
             }
             return response;
         }
+
         public GetKpiInformationValuesResponse GetKpiInformationValues(GetKpiInformationValuesRequest request)
         {
             //var kpiIds = 
@@ -545,6 +551,7 @@ namespace DSLNG.PEAR.Services
             }
             return response;
         }
+
         public GetHighlightValuesResponse GetHighlightValues(GetHighlightValuesRequest request)
         {
             var prevDate = request.Date.AddDays(-1);
@@ -747,6 +754,95 @@ namespace DSLNG.PEAR.Services
                     #endregion
                 }
             }
+            return response;
+        }
+
+        public BaseResponse CreateDerInputFile(CreateDerInputFileRequest request)
+        {            
+            var response = new BaseResponse();
+            try
+            {
+                var derInputFile = new DerInputFile();
+                derInputFile.Date = request.Date;
+                derInputFile.FileName = request.FileName;
+                derInputFile.Title = request.Title;
+                var user = new User { Id = request.CreatedBy };
+                DataContext.Users.Attach(user);
+                derInputFile.CreatedBy = user;
+                DataContext.DerInputFiles.Add(derInputFile);
+
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = "Der Input File has been added successfully";
+            }
+            catch (Exception exception)
+            {
+                response.IsSuccess = false;
+                response.Message = exception.Message;
+            }
+
+            return response;
+        }
+
+        public GetDerInputFilesResponse GetDerInputFiles(GetDerInputFilesRequest request)
+        {
+            int totalRecords;
+            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            if (request.Take != -1)
+            {
+                data = data.Skip(request.Skip).Take(request.Take);
+            }
+            var derInputFiles = data.ToList();
+            var response = new GetDerInputFilesResponse();
+            response.TotalRecords = totalRecords;
+            //response.DerInputFiles = derInputFiles.Select(x => new GetDerInputFilesResponse.DerInputFile { Date = x.Key }).ToList();
+            response.DerInputFiles = derInputFiles.MapTo<GetDerInputFilesResponse.DerInputFile>();
+            return response;
+        }
+
+        public IEnumerable<DerInputFile> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        {
+            var data = DataContext.DerInputFiles.AsQueryable();
+            data = data.Include(x => x.CreatedBy)
+                .Include(x => x.UpdatedBy);
+
+            foreach (var sortOrder in sortingDictionary)
+            {
+                switch (sortOrder.Key)
+                {                    
+                    case "Date":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.Date)
+                            : data.OrderByDescending(x => x.Date);
+                        break;
+                }
+            }
+            
+            TotalRecords = data.Count();
+            return data;
+        }
+
+        public BaseResponse DeleteDerInputFile(int id)
+        {
+            var response = new BaseResponse();
+            try
+            {
+                var derInputFile = new DerInputFile { Id = id };
+                DataContext.DerInputFiles.Attach(derInputFile);
+                DataContext.Entry(derInputFile).State = EntityState.Deleted;
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = "DER input file attachment has been deleted successfully";
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
+            catch (Exception exception)
+            {
+                response.Message = exception.Message;
+            }
+
             return response;
         }
     }

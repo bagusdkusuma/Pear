@@ -125,7 +125,9 @@
     <Compile Include="ProcessBlueprintService.cs" />
     <Compile Include="Requests\CustomFormula\GetCustomFormulaRequest.cs" />
     <Compile Include="Requests\DerLoadingSchedule\GetDerLoadingSchedulesRequest.cs" />
+    <Compile Include="Requests\DerTransaction\CreateDerInputFileRequest.cs" />
     <Compile Include="Requests\DerTransaction\GetDerLayoutItemsRequest.cs" />
+    <Compile Include="Requests\DerTransaction\GetDerInputFilesRequest.cs" />
     <Compile Include="Requests\DerTransaction\GetHighlightValuesRequest.cs" />
     <Compile Include="Requests\DerTransaction\GetKpiInformationValuesRequest.cs" />
     <Compile Include="Requests\Der\GetDersRequest.cs" />
@@ -168,6 +170,7 @@
     <Compile Include="Requests\Wave\SaveWaveRequest.cs" />
     <Compile Include="Responses\CustomFormula\GetCustomFormulaResponse.cs" />
     <Compile Include="Responses\DerLoadingSchedule\GetDerLoadingSchedulesResponse.cs" />
+    <Compile Include="Responses\DerTransaction\GetDerInputFilesResponse.cs" />
     <Compile Include="Responses\DerTransaction\GetDerLayoutItemsResponse.cs" />
     <Compile Include="Responses\DerTransaction\GetHighlightValuesResponse.cs" />
     <Compile Include="Responses\DerTransaction\GetKpiInformationValuesResponse.cs" />
