@@ -1457,6 +1457,7 @@
                             var highlightTypeId = $this.data('highlight-type-id');
                             var id = $this.attr('data-id');
                             var value = $this.val() == '' ? $(this).attr('placeholder') : $this.val();
+                            $this.prop('disabled', 'disabled');
                             $this.addClass('in-progress');
                             $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function (resp) {
                                 openNextTab($this, nextTab);
@@ -1477,6 +1478,7 @@
                                 if (parseInt($this.attr('data-id')) == 0) {
                                     $this.attr('data-id', resp.Id);
                                 }
+                                $this.prop('disabled', false);
                             });
                         });
                         $('.datepicker', target).datetimepicker({
