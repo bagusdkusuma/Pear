@@ -1478,7 +1478,10 @@
                                 if (parseInt($this.attr('data-id')) == 0) {
                                     $this.attr('data-id', resp.Id);
                                 }
-                                $this.prop('disabled', false);
+                                setTimeout(function () {
+                                    $this.prop('disabled', false);
+                                }, 100)
+                                
                             });
                         });
                         $('.datepicker', target).datetimepicker({
