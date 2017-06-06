@@ -11,6 +11,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using DSLNG.PEAR.Common.Extensions;
+using System.Web.Script.Serialization;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -35,6 +36,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
         [HttpPost]
         [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public ActionResult Login(UserLoginViewModel user)
         {
             if (ModelState.IsValid)
@@ -85,18 +87,46 @@ namespace DSLNG.PEAR.Web.Controllers
                 }
                 var profileData = new UserProfileSessionData { UserId = user.Id, Email = user.Email, Name = user.Username, RoleId = user.RoleId, RoleName = user.RoleName, RedirectUrl = user.ChangeModel, IsSuperAdmin = user.IsSuperAdmin, RolePrivilegeName = roleName };
                 this.Session["LoginUser"] = profileData;
-                //var authTicket = new FormsAuthenticationTicket(
-                //    version:1,
-                //    name : user.Username,
-                //    issueDate : DateTime.Now,
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                UserViewModel serializedModel = new UserViewModel
+                {
+                    Id = user.Id,
+                    Username = user.Username,
+                    Email = user.Email,
+                    RoleId = user.RoleId,
+                    RoleName = user.RoleName,
+                    IsActive = user.IsActive,
+                    IsSuperAdmin = user.IsSuperAdmin
+                };
+                
+                string userData = serializer.Serialize(serializedModel);
+                //FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(
+                //    version: 1,
+                //    name: user.Username,
+                //    issueDate: DateTime.Now,
                 //    expiration: DateTime.Now.AddMinutes(30),
-                //    isPersistent : false,
-                //    userData : string.Join("|",roles)
+                //    isPersistent: false,
+                //    userData: userData
                 //    );
-                //string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
-                //HttpCookie authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
-                //System.Web.HttpContext.Current.Response.Cookies.Add(authCookie);
-                FormsAuthentication.SetAuthCookie(user.Username, false);
+
+                CustomPrincipal cp = new CustomPrincipal(serializedModel.Email);
+                cp.Id = serializedModel.Id;
+                cp.Username = serializedModel.Username;
+                cp.RoleName = serializedModel.RoleName;
+                cp.IsSuperAdmin = serializedModel.IsSuperAdmin;
+                cp.Email = serializedModel.Email;
+                HttpContext.User = cp;
+                FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(
+                    1,
+                    serializedModel.Email,
+                    DateTime.Now,
+                    DateTime.Now.AddMinutes(30),
+                    false,
+                    userData);
+                string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
+                HttpCookie authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
+                System.Web.HttpContext.Current.Response.Cookies.Add(authCookie);
+                //FormsAuthentication.SetAuthCookie(user.Username, false);
                 return user.IsSuccess;
             }
             return false;
@@ -126,7 +156,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult LogOff()
         {
             FormsAuthentication.SignOut();
-            Session.Abandon();            
+            Session.Abandon();
             return RedirectToAction("Login", "Account");
         }
         [Authorize]
