@@ -109,11 +109,18 @@ namespace DSLNG.PEAR.Web.Controllers
                 //    userData: userData
                 //    );
 
+                CustomPrincipal cp = new CustomPrincipal(serializedModel.Email);
+                cp.Id = serializedModel.Id;
+                cp.Username = serializedModel.Username;
+                cp.RoleName = serializedModel.RoleName;
+                cp.IsSuperAdmin = serializedModel.IsSuperAdmin;
+                cp.Email = serializedModel.Email;
+                HttpContext.User = cp;
                 FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(
                     1,
                     serializedModel.Email,
                     DateTime.Now,
-                    DateTime.Now.AddMinutes(30),
+                    DateTime.Now.AddMinutes(1),
                     false,
                     userData);
                 string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
