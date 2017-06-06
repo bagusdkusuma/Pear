@@ -292,28 +292,63 @@ Number.prototype.format = function (n, x) {
         //}, 1000);
 
     }
-    Der.Artifact.multiaxis = function (data, container) {
+    Der.Artifact.multiaxis = function (data, container, opt) {
         var symbol = i % 2 == 0 ? 'triangle' : 'square';
         var fillColor = i % 2 == 0 ? '#31587f' : '#fff000';
         var converted = false;
         var decimal = 0;
-        var showLegends = false;
-        if (data.MultiaxisChart.Title.toLowerCase().indexOf('cds') > -1) {
+        var options = {
+            legend: {
+                enabled: false,
+                itemStyle: { "fontSize": "9px", "fontWeight": "normal" },
+                verticalAlign: "bottom" 
+            },
+            gridLineColor: '#e6e6e6'
+        };
+        if (opt !== undefined) {
+            if (opt.hasOwnProperty('legend')) {
+                Object.assign(options.legend, opt.legend);
+            }
+        }
+
+        var title = data.MultiaxisChart.Title.toLowerCase();
+        
+
+        if (title.indexOf('feed gas and lng prod') > -1) {
+            if (options.legend.hasOwnProperty('enabled')) {
+                options.legend.enabled = true;
+            }
+        }
+        else if (title.indexOf('job sno-cpp') > -1) {
+            options.gridLineColor = 'transparent';
+        }
+        else if (title.indexOf('dng cpp') > -1) {
+            options.gridLineColor = 'transparent';
+        }
+        else if (title.indexOf('mtd cpp') > -1) {
+            options.gridLineColor = 'transparent';
+        }
+        else if (data.MultiaxisChart.Title.toLowerCase().indexOf('cds') > -1) {
             symbol = 'triangle';
             converted = true;
-        } else if (data.MultiaxisChart.Title.toLowerCase().indexOf('thermal') > -1) {
+        }
+        else if (data.MultiaxisChart.Title.toLowerCase().indexOf('thermal') > -1) {
             symbol = 'square';
             converted = true;
             decimal = 1;
-        } else if (data.MultiaxisChart.Title.toLowerCase().indexOf('loss') > -1) {
+        }
+        else if (data.MultiaxisChart.Title.toLowerCase().indexOf('loss') > -1) {
             fillColor = '#403152';
             converted = true;
             decimal = 2;
-        } else if (data.MultiaxisChart.Title.toLowerCase().indexOf('brent last') > -1) {
+        }
+        else if (title.indexOf('brent') > -1) {
             symbol = 'triangle';
-            showLegends = true;
-        } else if (data.MultiaxisChart.Title.toLowerCase().indexOf('jcc monthly trend') > -1) {
+            options.gridLineColor = 'transparent';
+        }
+        else if (title.indexOf('jcc monthly trend') > -1) {
             symbol = 'triangle';
+            options.gridLineColor = 'transparent';
         }
 
         var yAxes = [];
@@ -365,7 +400,8 @@ Number.prototype.format = function (n, x) {
                     }
                 },
                 min: container.data('min') != '' && container.data('min') != null ? container.data('min') : null,
-                lineWidth: 1
+                lineWidth: 1,
+                gridLineColor: options.gridLineColor,
             });
             if (chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType] === 'line') {
                 //var symbol = i % 2 == 0 ? 'triangle' : 'square';
@@ -432,7 +468,7 @@ Number.prototype.format = function (n, x) {
                     valueDecimals: decimal,
                     valueSuffix: ' ' + data.MultiaxisChart.Charts[i].Measurement
                 }
-                data.MultiaxisChart.Charts[i].Series[j].dataLabels = { enabled: showLegends, style: { "fontSize": "9px", "fontWeight": "normal" }, verticalAlign: "bottom" };
+                //data.MultiaxisChart.Charts[i].Series[j].dataLabels = { enabled: showLegends, style: { "fontSize": "9px", "fontWeight": "normal" }, verticalAlign: "bottom" };
                 series.push(data.MultiaxisChart.Charts[i].Series[j]);
             }
         }
@@ -482,12 +518,22 @@ Number.prototype.format = function (n, x) {
                 },
 
             },
+            legend: options.legend,
             series: series
         });
     };
     Der.Artifact.jccMonthlyTrend = function (data, container) {
-        console.log(data);
-        return Der.Artifact.multiaxis(data, container);
+        var options = {}
+        options.legend = {
+            layout: 'horizontal',
+            align: 'left',
+            x: 70,
+            verticalAlign: 'bottom',
+            y: -30,
+            floating: true,
+            enabled: true,
+        };
+        return Der.Artifact.multiaxis(data, container, options);
     };
     Der.Artifact.speedometer = function (data, container) {
         //console.log(data.SpeedometerChart);
