@@ -1720,6 +1720,7 @@
     <Compile Include="ViewModels\UserProfileSessionData.cs" />
     <Compile Include="ViewModels\User\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\User\CreateUserViewModel.cs" />
+    <Compile Include="ViewModels\User\CustomPrincipal.cs" />
     <Compile Include="ViewModels\User\ResetPasswordChangeModel.cs" />
     <Compile Include="ViewModels\User\ResetPasswordResponseViewModel.cs" />
     <Compile Include="ViewModels\User\ResetPasswordViewModel.cs" />
