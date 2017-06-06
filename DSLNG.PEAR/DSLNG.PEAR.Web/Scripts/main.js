@@ -1707,7 +1707,7 @@ Number.prototype.format = function (n, x) {
             },
             tooltip: {
                 formatter: function () {
-                    console.log(data);
+                    //console.log(data);
                     var tooltip = '';
                     if (data.BarChart.Periodes.length == 1) {
                         tooltip += '<b>' + data.BarChart.Subtitle + '</b><br/>';
@@ -1737,7 +1737,7 @@ Number.prototype.format = function (n, x) {
                             }
                             
                             if (i == this.points.length - 2) {
-                                console.log(this.points[i].series.name);
+                                //console.log(this.points[i].series.name);
                                 //tooltip += '<strong>Net back value : ' + netbackValue.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
                                 tooltip += '<strong>' + this.points[i].series.name.trim() + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<strong><br/>';
                             }
@@ -3442,7 +3442,7 @@ Number.prototype.format = function (n, x) {
             tooltip: {
                 formatter: function () {
                     var tooltip = '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
-                    console.log(this.points);
+                    //console.log(this.points);
                     var totalInProcess = 0;
                     for (var i in this.points) {
                         tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + this.points[i].series.options.tooltip.valueSuffix + '<br/>';
@@ -4851,6 +4851,15 @@ Number.prototype.format = function (n, x) {
         if ($('.operation-config-save').length) {
             Pear.OperationConfig.FormSetup();
         }
+
+        
     });
     window.Pear = Pear;
+    $('.artifact-holder').on('click', '.highcharts-subtitle', function () {
+        console.log($(this).html());
+        console.log($(".artifact-holder").highcharts());
+        //var holder = $(this).closest('.artifact-holder');
+        //console.log(holder.html());
+        //alert('asas');
+    })
 }(window, jQuery, undefined));

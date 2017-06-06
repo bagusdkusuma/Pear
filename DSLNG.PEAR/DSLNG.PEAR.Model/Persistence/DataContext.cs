@@ -132,6 +132,7 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<KpiTransformationLog> KpiTransformationLogs { get; set; }
         public IDbSet<DerLoadingSchedule> DerLoadingSchedules { get; set; }
         public IDbSet<DerArtifactPlot> DerArtifactPlots { get;set; }
+        public IDbSet<DerInputFile> DerInputFiles { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

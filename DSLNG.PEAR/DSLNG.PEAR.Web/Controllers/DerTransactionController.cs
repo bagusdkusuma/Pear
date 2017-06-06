@@ -1,4 +1,5 @@
-﻿using DSLNG.PEAR.Common.Extensions;
+﻿using DSLNG.PEAR.Common.Contants;
+using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.DerLoadingSchedule;
@@ -9,6 +10,8 @@ using DSLNG.PEAR.Services.Requests.KpiTarget;
 using DSLNG.PEAR.Services.Requests.Select;
 using DSLNG.PEAR.Services.Requests.Wave;
 using DSLNG.PEAR.Services.Requests.Weather;
+using DSLNG.PEAR.Web.Attributes;
+using DSLNG.PEAR.Web.Grid;
 using DSLNG.PEAR.Web.ViewModels.DerTransaction;
 using DSLNG.PEAR.Web.ViewModels.Highlight;
 using DSLNG.PEAR.Web.ViewModels.Wave;
@@ -17,7 +20,9 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace DSLNG.PEAR.Web.Controllers
@@ -84,8 +89,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 Value = x.Id.ToString()
             }).ToList();
             return View();
-        }
-       
+        }       
 
         public ActionResult EconomicIndicator(string date)
         {
@@ -518,6 +522,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var resp = _highlightService.SaveHighlight(req);
             return Json(resp);
         }
+
         public ActionResult UpdateBrenfut(HighlightViewModel viewModel)
         {
             var existingHighlight = _highlightService.GetHighlightByPeriode(new GetHighlightRequest
@@ -544,6 +549,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var resp = _highlightService.SaveHighlight(req);
             return Json(resp);
         }
+
         public ActionResult UpdateWave(WaveViewModel viewModel)
         {
             var wave = _waveService.GetWave(new GetWaveRequest
@@ -568,6 +574,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 return Json(resp);
             }
         }
+
         public ActionResult UpdateWeeklyAlarm(HighlightViewModel viewModel)
         {
             var existingHighlight = _highlightService.GetHighlightByPeriode(new GetHighlightRequest
@@ -594,6 +601,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var resp = _highlightService.SaveHighlight(req);
             return Json(resp);
         }
+
         public ActionResult UpdateWeather(WeatherViewModel viewModel)
         {
             var weather = _weatherService.GetWeather(new GetWeatherRequest
@@ -617,6 +625,78 @@ namespace DSLNG.PEAR.Web.Controllers
                 return Json(resp);
             }
         }
+
+        public ActionResult Activity()
+        {
+            var viewModel = new ActivityViewModel();
+            return View(viewModel);
+        }
+
+        public ActionResult DerInputFileGrid(GridParams gridParams)
+        {
+            var derInputFiles = _derTransactionService.GetDerInputFiles(new Services.Requests.Der.GetDerInputFilesRequest
+            {
+                Skip = gridParams.DisplayStart,
+                Take = gridParams.DisplayLength,
+                SortingDictionary = gridParams.SortingDictionary,
+                Search = gridParams.Search
+            });
+
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = derInputFiles.TotalRecords,
+                iTotalRecords = derInputFiles.DerInputFiles.Count,
+                aaData = derInputFiles.DerInputFiles
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult CreateActivity()
+        {
+            var viewModel = new CreateActivityViewModel();
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        //[AuthorizeUser(AccessLevel = "AllowUpload")]
+        public ActionResult UploadActivity(HttpPostedFileBase file, string date)
+        {
+            var theDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+            var ext = file.FileName.Split('.');
+            var title = Path.GetFileNameWithoutExtension(file.FileName) + "_" + theDate.ToString("dd-MMM-yyyy") + "_" + new Random().Next(1, 100) + Path.GetExtension(file.FileName);
+            string filename = title.Replace('/', '-');
+
+            if (!Directory.Exists(Server.MapPath(PathConstant.DerInputFile)))
+            {
+                Directory.CreateDirectory(Server.MapPath(PathConstant.DerInputFile));
+            }
+
+            if (file.ContentLength > 0)
+            {
+                var path = Path.Combine(Server.MapPath(PathConstant.DerInputFile), filename);
+                file.SaveAs(path);
+
+                var response = _derTransactionService.CreateDerInputFile(new CreateDerInputFileRequest
+                {
+                    FileName = PathConstant.DerInputFile + "/" + filename,                    
+                    Date = theDate,
+                    Title = file.FileName,
+                    CreatedBy = UserProfile().UserId
+                });
+            }
+            return RedirectToAction("Activity");
+        }
+
+        [HttpPost]
+        public ActionResult DeleteActivity(int id)
+        {
+            var response = _derTransactionService.DeleteDerInputFile(id);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            return RedirectToAction("Activity");
+        }
+
         private DerValuesViewModel GetDerValuesPerSection(string date, int[] actualKpiIds, int[] targetKpiIds, int[] highlightTypeIds)
         {
             var theDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);

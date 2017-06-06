@@ -105,6 +105,7 @@
     <Compile Include="Entities\Der\DerArtifactPlot.cs" />
     <Compile Include="Entities\Der\DerArtifactSerie.cs" />
     <Compile Include="Entities\Der\DerArtifactTank.cs" />
+    <Compile Include="Entities\Der\DerInputFile.cs" />
     <Compile Include="Entities\Der\DerLoadingSchedule.cs" />
     <Compile Include="Entities\Der\DerOriginalData.cs" />
     <Compile Include="Entities\Der\DerStaticHighlight.cs" />
