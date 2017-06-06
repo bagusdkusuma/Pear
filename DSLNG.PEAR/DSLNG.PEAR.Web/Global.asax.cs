@@ -62,29 +62,29 @@ namespace DSLNG.PEAR.Web
             Exception exception = System.Web.HttpContext.Current.Server.GetLastError();
             //TODO: Handle Exception
         }
-        protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
-        {
-            HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+        //protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
+        //{
+        //    HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
 
-            if (authCookie != null)
-            {
-                FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+        //    if (authCookie != null)
+        //    {
+        //        FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
 
-                if (authTicket.UserData != null)
-                {
-                    JavaScriptSerializer serializer = new JavaScriptSerializer();
-                    UserViewModel serializeModel = serializer.Deserialize<UserViewModel>(authTicket.UserData);
-                    CustomPrincipal newUser = new CustomPrincipal(authTicket.Name);
-                    newUser.Id = serializeModel.Id;
-                    newUser.Username = serializeModel.Username;
-                    newUser.RoleName = serializeModel.RoleName;
-                    newUser.IsSuperAdmin = serializeModel.IsSuperAdmin;
-                    newUser.Email = serializeModel.Email;
-                    HttpContext.Current.User = newUser;
-                }
+        //        if (authTicket.UserData != null)
+        //        {
+        //            JavaScriptSerializer serializer = new JavaScriptSerializer();
+        //            UserViewModel serializeModel = serializer.Deserialize<UserViewModel>(authTicket.UserData);
+        //            CustomPrincipal newUser = new CustomPrincipal(authTicket.Name);
+        //            newUser.Id = serializeModel.Id;
+        //            newUser.Username = serializeModel.Username;
+        //            newUser.RoleName = serializeModel.RoleName;
+        //            newUser.IsSuperAdmin = serializeModel.IsSuperAdmin;
+        //            newUser.Email = serializeModel.Email;
+        //            HttpContext.Current.User = newUser;
+        //        }
                 
 
-            }
-        }
+        //    }
+        //}
     }
 }
