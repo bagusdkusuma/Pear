@@ -120,7 +120,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     1,
                     serializedModel.Email,
                     DateTime.Now,
-                    DateTime.Now.AddMinutes(1),
+                    DateTime.Now.AddMinutes(30),
                     false,
                     userData);
                 string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
