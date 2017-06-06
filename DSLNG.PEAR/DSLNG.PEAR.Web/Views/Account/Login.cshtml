@@ -8,6 +8,7 @@
     @Html.ValidationSummary(true, "Login Failed, Please check your credentials", new { @class = "alert alert-danger", style="text-align:center" })
     <div class="login-form-new">
         <form action="@Url.Action("Login")" method="POST" autocomplete="off" id="formLogin" onsubmit="return validateForm();">
+            @Html.AntiForgeryToken()
             <div class="form-group has-success has-feedback">
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
                 <input type="text" name="Email" id="Email" class="form-control" placeholder="Email" onkeypress="moveFieldTo(event, 'Password');">
