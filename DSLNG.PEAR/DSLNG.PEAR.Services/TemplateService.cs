@@ -35,6 +35,8 @@ namespace DSLNG.PEAR.Services
                     var LayoutColumn = new LayoutColumn();
                     LayoutColumn.Index = colIndex;
                     LayoutColumn.Width = col.Width;
+                    LayoutColumn.HighlightPeriodeType = col.HighlightPeriodeType;
+                    LayoutColumn.ColumnType = col.ColumnType;
                     if (col.ArtifactId != 0)
                     {
                         if (DataContext.Artifacts.Local.Where(x => x.Id == col.ArtifactId).FirstOrDefault() == null)
@@ -47,6 +49,17 @@ namespace DSLNG.PEAR.Services
                         else
                         {
                             LayoutColumn.Artifact = DataContext.Artifacts.Local.Where(x => x.Id == col.ArtifactId).FirstOrDefault();
+                        }
+                    }
+                    if (col.HighlightTypeId != 0) {
+                        if (DataContext.SelectOptions.Local.Where(x => x.Id == col.HighlightTypeId).FirstOrDefault() == null)
+                        {
+                            var highlightType = new SelectOption { Id = col.HighlightTypeId };
+                            DataContext.SelectOptions.Attach(highlightType);
+                            LayoutColumn.HighlightType = highlightType;
+                        }
+                        else {
+                            LayoutColumn.HighlightType = DataContext.SelectOptions.Local.Where(x => x.Id == col.HighlightTypeId).FirstOrDefault();
                         }
                     }
                     layoutRow.LayoutColumns.Add(LayoutColumn);

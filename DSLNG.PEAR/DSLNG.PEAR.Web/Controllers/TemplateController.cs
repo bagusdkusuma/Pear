@@ -8,6 +8,10 @@ using DSLNG.PEAR.Web.ViewModels.Template;
 using DSLNG.PEAR.Common.Extensions;
 using System.Web.Mvc;
 using DevExpress.Web.Mvc;
+using System;
+using DSLNG.PEAR.Data.Enums;
+using DSLNG.PEAR.Services.Requests.Select;
+using System.Linq;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -15,10 +19,12 @@ namespace DSLNG.PEAR.Web.Controllers
     {
         private readonly IArtifactService _artifactService;
         private readonly ITemplateService _templateService;
+        private readonly ISelectService _selectService;
 
-        public TemplateController(IArtifactService artifactService, ITemplateService templateService) {
+        public TemplateController(IArtifactService artifactService, ITemplateService templateService, ISelectService selectService) {
             _artifactService = artifactService;
             _templateService = templateService;
+            _selectService = selectService;
         }
 
         public ActionResult ArtifactList(string term)
@@ -42,7 +48,21 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            var viewModel = new TemplateViewModel();
+            foreach (var name in Enum.GetNames(typeof(PeriodeType)))
+            {
+                if (!name.Equals("Hourly") && !name.Equals("Weekly") && !name.Equals("Itd"))
+                {
+                    viewModel.PeriodeTypes.Add(new SelectListItem { Text = name, Value = name });
+                }
+            }
+            viewModel.HighlightTypes = _selectService.GetSelect(new GetSelectRequest { Name = "highlight-types" }).Options
+                .Select(x => new SelectListItem { Text = x.Text, Value = x.Id.ToString() }).ToList();
+            foreach (var name in Enum.GetNames(typeof(TemplateColumnType)))
+            {
+                viewModel.ColumnTypes.Add(new SelectListItem { Text = name, Value = name });
+            }
+            return View(viewModel);
         }
 
         [HttpPost]

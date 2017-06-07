@@ -3959,7 +3959,7 @@ Number.prototype.format = function (n, x) {
             $('.add-column').click(function () {
                 var $this = $(this);
                 var $row = $(this).parent().find('.layout-row');
-                //console.log($row);
+                console.log('anjing');
                 var currentCols = $row.children('.layout-column').length;
                 var newWidth = 100 / (currentCols + 1);
                 $row.children('.layout-column').each(function (i, val) {
@@ -3976,7 +3976,10 @@ Number.prototype.format = function (n, x) {
                     value: columnCount
                 }).prependTo(newColumn);
                 newColumn.find('.column-width').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].Width');
+                newColumn.find('.column-type').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].ColumnType');
                 newColumn.find('.artifact-list').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].ArtifactId');
+                newColumn.find('.periode-type').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].HighlightPeriodeType');
+                newColumn.find('.highlight-type').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].HighlightTypeId');
                 $row.append(newColumn);
                 columnCount++;
             });
@@ -4007,7 +4010,10 @@ Number.prototype.format = function (n, x) {
                 }).prependTo(row.find('.layout-column'));
 
                 row.find('.column-width').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].Width');
+                row.find('.column-type').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].ColumnType');
                 row.find('.artifact-list').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].ArtifactId');
+                row.find('.periode-type').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].HighlightPeriodeType');
+                row.find('.highlight-type').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].HighlightTypeId');
                 $('#rows-holder').append(row);
                 rowCount++;
             });
@@ -4041,6 +4047,18 @@ Number.prototype.format = function (n, x) {
                     $('#graphic-preview').modal('show');
                 }
             });
+        });
+        $('.column-type').change(function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var $parent = $this.closest('.column-properties');
+            if ($this.val() == "Artifact") {
+                $parent.find('.column-as-artifact').show();
+                $parent.find('.column-as-highlight').hide();
+            } else {
+                $parent.find('.column-as-artifact').hide();
+                $parent.find('.column-as-highlight').show();
+            }
         });
         $('#graphic-preview').on('show.bs.modal', function () {
             $('#container').css('visibility', 'hidden');
