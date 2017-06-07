@@ -4118,6 +4118,9 @@ Number.prototype.format = function (n, x) {
 
                 row.find('.column-width').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].Width').val(100);
                 row.find('.artifact-list').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].ArtifactId');
+                row.find('.column-type').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].ColumnType');
+                row.find('.periode-type').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].HighlightPeriodeType');
+                row.find('.highlight-type').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].HighlightTypeId');
                 $('#rows-holder').append(row);
                 rowCount++;
             });
@@ -4158,6 +4161,9 @@ Number.prototype.format = function (n, x) {
                 }).prependTo(newColumn);
                 newColumn.find('.column-width').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].Width').val(newWidth);
                 newColumn.find('.artifact-list').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].ArtifactId');
+                newColumn.find('.column-type').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].ColumnType');
+                newColumn.find('.periode-type').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].HighlightPeriodeType');
+                newColumn.find('.highlight-type').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].HighlightTypeId');
                 $row.append(newColumn);
                 columnCount++;
             });
@@ -4217,7 +4223,18 @@ Number.prototype.format = function (n, x) {
             }
             $(this).parents('.layout-column').css('width', $(this).val() + '%');
         });
-
+        $('.column-type').change(function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var $parent = $this.closest('.column-properties');
+            if ($this.val() == "Artifact") {
+                $parent.find('.column-as-artifact').show();
+                $parent.find('.column-as-highlight').hide();
+            } else {
+                $parent.find('.column-as-artifact').hide();
+                $parent.find('.column-as-highlight').show();
+            }
+        });
         addRow();
         addColumn();
         templateEditor._artifactSelectField($('.template-edit'));

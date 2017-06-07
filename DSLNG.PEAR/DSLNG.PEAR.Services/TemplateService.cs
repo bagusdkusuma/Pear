@@ -107,6 +107,7 @@ namespace DSLNG.PEAR.Services
             return DataContext.DashboardTemplates.Include(x => x.LayoutRows)
                 .Include(x => x.LayoutRows.Select(y => y.LayoutColumns))
                 .Include(x => x.LayoutRows.Select(y => y.LayoutColumns.Select(z => z.Artifact)))
+                .Include(x => x.LayoutRows.Select(y => y.LayoutColumns.Select(z => z.HighlightType)))
                 .FirstOrDefault(x => x.Id == request.Id).MapTo<GetTemplateResponse>();
         }
 
@@ -140,6 +141,8 @@ namespace DSLNG.PEAR.Services
                     var layoutColumn = new LayoutColumn();
                     layoutColumn.Index = colIndex;
                     layoutColumn.Width = col.Width;
+                    layoutColumn.HighlightPeriodeType = col.HighlightPeriodeType;
+                    layoutColumn.ColumnType = col.ColumnType;
                     if (col.ArtifactId != 0)
                     {
                         if (DataContext.Artifacts.Local.FirstOrDefault(x => x.Id == col.ArtifactId) == null)
@@ -152,6 +155,19 @@ namespace DSLNG.PEAR.Services
                         else
                         {
                             layoutColumn.Artifact = DataContext.Artifacts.Local.FirstOrDefault(x => x.Id == col.ArtifactId);
+                        }
+                    }
+                    if (col.HighlightTypeId != 0)
+                    {
+                        if (DataContext.SelectOptions.Local.Where(x => x.Id == col.HighlightTypeId).FirstOrDefault() == null)
+                        {
+                            var highlightType = new SelectOption { Id = col.HighlightTypeId };
+                            DataContext.SelectOptions.Attach(highlightType);
+                            layoutColumn.HighlightType = highlightType;
+                        }
+                        else
+                        {
+                            layoutColumn.HighlightType = DataContext.SelectOptions.Local.Where(x => x.Id == col.HighlightTypeId).FirstOrDefault();
                         }
                     }
                     layoutRow.LayoutColumns.Add(layoutColumn);

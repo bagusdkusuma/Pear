@@ -76,6 +76,19 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             var template = _templateService.GetTemplate(new GetTemplateRequest {Id = id});
             var viewModel = template.MapTo<TemplateViewModel>();
+            foreach (var name in Enum.GetNames(typeof(PeriodeType)))
+            {
+                if (!name.Equals("Hourly") && !name.Equals("Weekly") && !name.Equals("Itd"))
+                {
+                    viewModel.PeriodeTypes.Add(new SelectListItem { Text = name, Value = name });
+                }
+            }
+            viewModel.HighlightTypes = _selectService.GetSelect(new GetSelectRequest { Name = "highlight-types" }).Options
+                .Select(x => new SelectListItem { Text = x.Text, Value = x.Id.ToString() }).ToList();
+            foreach (var name in Enum.GetNames(typeof(TemplateColumnType)))
+            {
+                viewModel.ColumnTypes.Add(new SelectListItem { Text = name, Value = name });
+            }
             return View(viewModel);
         }
 
