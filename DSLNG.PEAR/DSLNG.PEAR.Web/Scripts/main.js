@@ -420,14 +420,6 @@ Number.prototype.format = function (n, x) {
             }
             $('#PeriodeType').change();
         });
-        //$(document).on('change', '#bar-value-axis', function (e) {
-        //    if ($('#graphic-type').val() === 'bar' && $(this).val() === 'KpiEconomic') {
-        //        $('.netback-chart-opt').show();
-        //    } else {
-        //        $('.netback-chart-opt').hide();
-        //    }
-        //});
-
 
         var initialGraphicType = $('#graphic-type');
         if (initialGraphicType.val() == 'bar') {
@@ -2503,7 +2495,7 @@ Number.prototype.format = function (n, x) {
         var rangeControl = function () {
             $('#SpeedometerChart_RangeFilter').change(function (e) {
                 e.preventDefault();
-                var $this = $(this);
+                var $this = $(this);                
                 $('#range-holder').prop('class', $this.val().toLowerCase().trim());
             });
             var original = $('#SpeedometerChart_RangeFilter').clone(true);
@@ -4855,11 +4847,170 @@ Number.prototype.format = function (n, x) {
         
     });
     window.Pear = Pear;
+
+    var _artifactHolder;
     $('.artifact-holder').on('click', '.highcharts-subtitle', function () {
-        console.log($(this).html());
-        console.log($(".artifact-holder").highcharts());
-        //var holder = $(this).closest('.artifact-holder');
-        //console.log(holder.html());
-        //alert('asas');
+        var artifactHolder = $(this).closest('.artifact-holder');
+        _artifactHolder = artifactHolder;
+        var artifactId = artifactHolder.attr('data-artifact-id');
+        var chart = artifactHolder.highcharts();
+
+        $.ajax({
+            url: '/Artifact/GraphicSetting/' + artifactId,
+            method: 'GET',
+            success: function (data) {         
+                $('.graphic-setting-content').hide();
+                $('.graphic-setting-content').html(data);
+                
+                $('.scale').hide();
+                $('.main-value-axis').hide();                 
+                $('.graphic-setting-content').append('<input type="hidden" value="' + artifactId + '" name="Id" />');
+
+                $('.graphic-setting-content').show();
+                $('#graphic-setting').modal('show');
+                
+                var rangeDatePicker = function () {
+                    var format = $('#datetime-attr').attr('data-datepickerformat');
+                    //alert(format);
+                    $('.datepicker').datetimepicker({
+                        format: format,
+                    });
+                    $('.datepicker').change(function (e) {
+                        //console.log(this);
+                    });
+                    $('#PeriodeType').change(function (e) {
+                        e.preventDefault();
+                        var $this = $(this);
+                        var clearValue = $('.datepicker').each(function (i, val) {
+                            $(val).val('');
+                            if ($(val).data("DateTimePicker") !== undefined) {
+                                $(val).data("DateTimePicker").destroy();
+                            }
+                        });
+                        switch ($this.val().toLowerCase().trim()) {
+                            case 'hourly':
+                                $('.datepicker').datetimepicker({
+                                    format: "MM/DD/YYYY hh:00 A"
+                                });
+                                break;
+                            case 'daily':
+                                $('.datepicker').datetimepicker({
+                                    format: "MM/DD/YYYY"
+                                });
+                                break;
+                            case 'weekly':
+                                $('.datepicker').datetimepicker({
+                                    format: "MM/DD/YYYY",
+                                    daysOfWeekDisabled: [0, 2, 3, 4, 5, 6]
+                                });
+                                break;
+                            case 'monthly':
+                                $('.datepicker').datetimepicker({
+                                    format: "MM/YYYY"
+                                });
+                                break;
+                            case 'yearly':
+                                $('.datepicker').datetimepicker({
+                                    format: "YYYY"
+                                });
+                                break;
+                            default:
+
+                        }
+                    });
+                };
+                var rangeControl = function () {
+                    $('#general-graphic-settings').on('change', '#RangeFilter', function (e) {
+                        
+                        e.preventDefault();
+                        var $this = $(this);
+                        $('#range-holder').prop('class', $this.val().toLowerCase().trim());
+                    });
+                    var original = $('#RangeFilter').clone(true);
+                    var rangeFilterSetup = function (periodeType) {
+                        var graphicType = $('#graphic-type').val();
+                        var toRemove = {};
+                        switch (graphicType) {
+                            case "tabular":
+                            case "tank":
+                            case "speedometer":
+                            case "traffic":
+                            case "pie":
+                                toRemove.hourly = ['AllExistingYears'];
+                                toRemove.daily = ['CurrentHour', 'CurrentWeek', 'CurrentYear', 'DTD', 'MTD', 'YTD', 'CurrentMonth', 'YTD', 'Interval', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.weekly = ['AllExistingYears'];
+                                toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'CurrentYear', 'YTD', 'Interval', 'SpecificDay', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'Interval', 'SpecificDay', 'SpecificMonth', 'AllExistingYears'];
+                                break;
+                            default:
+                                toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.daily = ['CurrentHour', 'CurrentYear', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
+                                break;
+                        }
+                        var originalClone = original.clone(true);
+                        originalClone.find('option').each(function (i, val) {
+                            if (toRemove[periodeType].indexOf(originalClone.find(val).val()) > -1) {
+                                originalClone.find(val).remove();
+                            }
+                        });
+                        $('#RangeFilter').replaceWith(originalClone);
+                    };
+                    
+                    rangeFilterSetup($('#PeriodeType').val().toLowerCase().trim());
+                    $('#PeriodeType').change(function (e) {
+                        e.preventDefault();
+                        var $this = $(this);
+                        rangeFilterSetup($this.val().toLowerCase().trim());
+                        $('#range-holder').removeAttr('class');
+                    });
+
+                };
+                var specificDate = function () {
+                    $(".datepicker").on("dp.change", function (e) {
+                        if ($('#RangeFilter').val().toLowerCase().indexOf('specific') > -1 && e.target.id === 'StartInDisplay') {
+                            $('#EndInDisplay').val($('#StartInDisplay').val());
+                        }
+                    });
+                };
+                $('#graphic-type').change(function (e) {
+                    e.preventDefault();
+                    var $this = $(this);
+                    loadGraph($this.data('graph-url'), $this.val());
+                    if ($this.val() === 'bar') {
+                        $('.netback-chart-opt').show();
+                    } else {
+                        $('.netback-chart-opt').hide();
+                    }
+                    $('#PeriodeType').change();
+                });
+
+                var initialGraphicType = $('#graphic-type');
+                if (initialGraphicType.val() == 'bar') {
+                    $('.netback-chart-opt').show();
+                }
+                rangeControl();
+                rangeDatePicker();
+                specificDate();
+            }
+        });
+    });
+
+    $('#graphic-setting').on('submit', '#graphic-setting-form', function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: $('#graphic-setting-form').attr('action'),
+            data: $('#graphic-setting-form').serialize(),
+            method: 'POST',
+            success: function (data2) {
+                var callback = Pear.Artifact.Designer._previewCallbacks;
+                callback[data2.GraphicType](data2, _artifactHolder);
+                $('#graphic-setting').modal('hide');
+            }
+        })
     })
+
+    
 }(window, jQuery, undefined));
