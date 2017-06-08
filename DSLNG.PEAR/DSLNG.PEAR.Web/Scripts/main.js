@@ -4092,6 +4092,27 @@ Number.prototype.format = function (n, x) {
                 }
             });
         });
+        $('.highlight-holder').each(function (i, val) {
+            var $holder = $(val);
+            if (wHeight > 667) {
+                $holder.css('height', height + 'px');
+            }
+            Pear.Loading.Show($(val));
+            var url = $holder.data('artifact-url');
+            $.ajax({
+                url: url,
+                method: 'GET',
+                success: function (data) {
+                    var $title = $('<h4/>').html(data.Title == null || data.Title == "" ? data.Type : data.Title);
+                    var $message = $('<div />').append(data.Message);
+                    $message.addClass('dashboard-highlight-message');
+                    $title.addClass('dashboard-highlight-title');
+                    $holder.css('background', 'none');
+                    $holder.append($title);
+                    $holder.append($message);
+                }
+            });
+        });
     };
     templateEditor.EditSetup = function () {
         var addRow = function () {

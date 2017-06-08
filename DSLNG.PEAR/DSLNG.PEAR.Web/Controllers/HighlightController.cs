@@ -501,6 +501,28 @@ namespace DSLNG.PEAR.Web.Controllers
             var jsonResult = Json(data, JsonRequestBehavior.AllowGet);
             jsonResult.MaxJsonLength = int.MaxValue;
             return jsonResult;
+        }
+
+        public ActionResult View(int typeId, string periodeType) {
+            var periodeTypeEnum = (PeriodeType)Enum.Parse(typeof(PeriodeType), periodeType);
+            var date = DateTime.Now.Date;
+            switch (periodeTypeEnum) {
+                case PeriodeType.Monthly:
+                    date = new DateTime(date.Year, date.Month, 1);
+                    break;
+                case PeriodeType.Yearly:
+                    date = new DateTime(date.Year, 1, 1);
+                    break;
+            }
+            var highlight = _highlightService.GetHighlightByPeriode(new GetHighlightRequest {
+                Date = date,
+                HighlightTypeId = typeId,
+                PeriodeType = periodeTypeEnum
+            });
+
+            var jsonResult = Json(highlight, JsonRequestBehavior.AllowGet);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
         }       
     }
 }

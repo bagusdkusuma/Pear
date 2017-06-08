@@ -804,6 +804,15 @@ h2 {
     border: none;
 }
 
+.template-view .highlight-holder {
+    color:#fff;
+}
+.template-view .dashboard-highlight-title {
+    margin-bottom:38px;
+}
+.template-view .dashboard-highlight-message {
+    text-align:justify;
+}
 .column-properties {
     width: 225px;
     display: inline-block;
