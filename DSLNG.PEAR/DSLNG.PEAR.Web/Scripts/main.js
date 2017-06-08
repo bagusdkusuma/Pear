@@ -3951,7 +3951,7 @@ Number.prototype.format = function (n, x) {
             $('.add-column').click(function () {
                 var $this = $(this);
                 var $row = $(this).parent().find('.layout-row');
-                //console.log($row);
+                console.log('anjing');
                 var currentCols = $row.children('.layout-column').length;
                 var newWidth = 100 / (currentCols + 1);
                 $row.children('.layout-column').each(function (i, val) {
@@ -3968,7 +3968,10 @@ Number.prototype.format = function (n, x) {
                     value: columnCount
                 }).prependTo(newColumn);
                 newColumn.find('.column-width').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].Width');
+                newColumn.find('.column-type').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].ColumnType');
                 newColumn.find('.artifact-list').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].ArtifactId');
+                newColumn.find('.periode-type').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].HighlightPeriodeType');
+                newColumn.find('.highlight-type').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].HighlightTypeId');
                 $row.append(newColumn);
                 columnCount++;
             });
@@ -3999,7 +4002,10 @@ Number.prototype.format = function (n, x) {
                 }).prependTo(row.find('.layout-column'));
 
                 row.find('.column-width').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].Width');
+                row.find('.column-type').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].ColumnType');
                 row.find('.artifact-list').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].ArtifactId');
+                row.find('.periode-type').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].HighlightPeriodeType');
+                row.find('.highlight-type').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].HighlightTypeId');
                 $('#rows-holder').append(row);
                 rowCount++;
             });
@@ -4034,6 +4040,18 @@ Number.prototype.format = function (n, x) {
                 }
             });
         });
+        $('.column-type').change(function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var $parent = $this.closest('.column-properties');
+            if ($this.val() == "Artifact") {
+                $parent.find('.column-as-artifact').show();
+                $parent.find('.column-as-highlight').hide();
+            } else {
+                $parent.find('.column-as-artifact').hide();
+                $parent.find('.column-as-highlight').show();
+            }
+        });
         $('#graphic-preview').on('show.bs.modal', function () {
             $('#container').css('visibility', 'hidden');
         });
@@ -4066,6 +4084,27 @@ Number.prototype.format = function (n, x) {
                 }
             });
         });
+        $('.highlight-holder').each(function (i, val) {
+            var $holder = $(val);
+            if (wHeight > 667) {
+                $holder.css('height', height + 'px');
+            }
+            Pear.Loading.Show($(val));
+            var url = $holder.data('artifact-url');
+            $.ajax({
+                url: url,
+                method: 'GET',
+                success: function (data) {
+                    var $title = $('<h4/>').html(data.Title == null || data.Title == "" ? data.Type : data.Title);
+                    var $message = $('<div />').append(data.Message);
+                    $message.addClass('dashboard-highlight-message');
+                    $title.addClass('dashboard-highlight-title');
+                    $holder.css('background', 'none');
+                    $holder.append($title);
+                    $holder.append($message);
+                }
+            });
+        });
     };
     templateEditor.EditSetup = function () {
         var addRow = function () {
@@ -4092,6 +4131,9 @@ Number.prototype.format = function (n, x) {
 
                 row.find('.column-width').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].Width').val(100);
                 row.find('.artifact-list').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].ArtifactId');
+                row.find('.column-type').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].ColumnType');
+                row.find('.periode-type').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].HighlightPeriodeType');
+                row.find('.highlight-type').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].HighlightTypeId');
                 $('#rows-holder').append(row);
                 rowCount++;
             });
@@ -4132,6 +4174,9 @@ Number.prototype.format = function (n, x) {
                 }).prependTo(newColumn);
                 newColumn.find('.column-width').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].Width').val(newWidth);
                 newColumn.find('.artifact-list').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].ArtifactId');
+                newColumn.find('.column-type').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].ColumnType');
+                newColumn.find('.periode-type').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].HighlightPeriodeType');
+                newColumn.find('.highlight-type').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].HighlightTypeId');
                 $row.append(newColumn);
                 columnCount++;
             });
@@ -4191,7 +4236,18 @@ Number.prototype.format = function (n, x) {
             }
             $(this).parents('.layout-column').css('width', $(this).val() + '%');
         });
-
+        $('.column-type').change(function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var $parent = $this.closest('.column-properties');
+            if ($this.val() == "Artifact") {
+                $parent.find('.column-as-artifact').show();
+                $parent.find('.column-as-highlight').hide();
+            } else {
+                $parent.find('.column-as-artifact').hide();
+                $parent.find('.column-as-highlight').show();
+            }
+        });
         addRow();
         addColumn();
         templateEditor._artifactSelectField($('.template-edit'));

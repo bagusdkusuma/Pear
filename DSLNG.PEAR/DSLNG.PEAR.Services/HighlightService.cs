@@ -61,9 +61,10 @@ namespace DSLNG.PEAR.Services
 
         public GetHighlightResponse GetHighlightByPeriode(GetHighlightRequest request)
         {
+            
             var data = DataContext.Highlights
                                   .Include(x => x.HighlightType)
-                                  .Where(x => x.PeriodeType == PeriodeType.Daily)
+                                  .Where(x => x.PeriodeType == (request.PeriodeType.HasValue? request.PeriodeType : PeriodeType.Daily))
                                   .Where(x => x.Date == request.Date)
                                   .AsQueryable();
 

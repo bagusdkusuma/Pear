@@ -208,6 +208,7 @@
     <Compile Include="Enums\TargetType.cs" />
     <Compile Include="Entities\Type.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Enums\TemplateColumnType.cs" />
     <Compile Include="Enums\ValueAxis.cs" />
     <Compile Include="Enums\YtdFormula.cs" />
     <Compile Include="Enums\KpiMethod.cs" />
