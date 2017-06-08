@@ -1,0 +1,117 @@
+﻿@using DSLNG.PEAR.Data.Enums
+@model DSLNG.PEAR.Web.ViewModels.Artifact.ArtifactDesignerViewModel
+<div class="form-inline whitebox">    
+    <div class="form-inline whitebox">
+        <h2>Graphic Settings</h2>
+        <div id="general-graphic-settings">
+            <div class="form-group form-list">
+                @Html.LabelFor(model => model.PeriodeType)
+                @Html.DropDownListFor(model => model.PeriodeType, Model.PeriodeTypes, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PeriodeType)
+            </div>
+
+            <div id="range-filter-holder">
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.RangeFilter)
+                    @Html.DropDownListFor(model => model.RangeFilter, Model.RangeFilters, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RangeFilter)
+                </div>
+            </div>
+
+            <div id="range-holder" class="@(string.IsNullOrEmpty(Model.RangeFilter) ? string.Empty : Model.RangeFilter.ToLowerInvariant())">
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.StartInDisplay)
+                    @Html.TextBoxFor(model => model.StartInDisplay, new { data_provide = "datepicker", @class = "datepicker form-control" })
+                    @Html.ValidationMessageFor(model => model.StartInDisplay)
+                </div>
+
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.EndInDisplay)
+                    @Html.TextBoxFor(model => model.EndInDisplay, new { data_provide = "datepicker", @class = "datepicker form-control" })
+                    @Html.ValidationMessageFor(model => model.EndInDisplay)
+                </div>
+            </div>
+            <div class="scale">
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.FractionScale)
+                    @Html.TextBoxFor(model => model.FractionScale, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.FractionScale)
+                </div>
+
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.MaxFractionScale)
+                    @Html.TextBoxFor(model => model.MaxFractionScale, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.MaxFractionScale)
+                </div>
+            </div>
+            <div class="form-group form-list main-value-axis">
+                @Html.LabelFor(model => model.ValueAxis)
+                @Html.DropDownListFor(model => model.ValueAxis, Model.ValueAxes, new { id = "bar-value-axis", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ValueAxis)
+            </div>
+            <div class="form-group form-list netback-chart-opt">
+                @Html.LabelFor(model => model.AsNetbackChart)
+                @Html.CheckBoxFor(model => model.AsNetbackChart, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AsNetbackChart)
+            </div>
+        </div>
+        @*<div id="graphic-settings">
+            @switch (Model.GraphicType)
+            {
+                case "speedometer":
+                    Html.RenderPartial("~/Views/SpeedometerChart/_Edit.cshtml", Model);
+                    break;
+                case "trafficlight":
+                    Html.RenderPartial("~/Views/TrafficLightChart/_Edit.cshtml", Model);
+                    break;
+                case "line":
+                    Html.RenderPartial("~/Views/LineChart/_Edit.cshtml", Model);
+                    break;
+                case "area":
+                    Html.RenderPartial("~/Views/AreaChart/_Edit.cshtml", Model);
+                    break;
+                case "multiaxis":
+                    Html.RenderPartial("~/Views/MultiaxisChart/_Edit.cshtml", Model);
+                    break;
+                case "combo":
+                    Html.RenderPartial("~/Views/ComboChart/_Edit.cshtml", Model);
+                    break;
+                case "tank":
+                    Html.RenderPartial("~/Views/Tank/_Edit.cshtml", Model);
+                    break;
+                case "tabular":
+                    Html.RenderPartial("~/Views/Tabular/_Edit.cshtml", Model);
+                    break;
+                case "pie":
+                    Html.RenderPartial("~/Views/Pie/_Edit.cshtml", Model);
+                    break;
+                default:
+                    Html.RenderPartial("~/Views/BarChart/_Edit.cshtml", Model);
+                    break;
+            }
+        </div>*@
+        @{
+            if (Model.PeriodeType == PeriodeType.Yearly.ToString())
+            {
+                <span id="datetime-attr" data-datepickerformat="YYYY"></span>
+            }
+            else if (Model.PeriodeType == PeriodeType.Monthly.ToString())
+            {
+                <span id="datetime-attr" data-datepickerformat="MM/YYYY"></span>
+            }
+            else if (Model.PeriodeType == PeriodeType.Weekly.ToString())
+            {
+                <span id="datetime-attr" data-datepickerformat="MM/DD/YYYY"></span>
+            }
+            else if (Model.PeriodeType == PeriodeType.Daily.ToString())
+            {
+                <span id="datetime-attr" data-datepickerformat="MM/DD/YYYY"></span>
+            }
+            else if (Model.PeriodeType == PeriodeType.Hourly.ToString())
+            {
+                <span id="datetime-attr" data-datepickerformat="MM/DD/YYYY hh:00 A"></span>
+            }
+        }
+    </div>
+
+</div>

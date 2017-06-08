@@ -12,6 +12,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using WebMatrix.WebData;
 using DSLNG.PEAR.Web.ViewModels.Menu;
+using DSLNG.PEAR.Web.ViewModels.User;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -22,11 +23,18 @@ namespace DSLNG.PEAR.Web.Controllers
         public const string TemplateDirectory = "~/Content/TemplateFiles/";
         //private UserProfileSessionData _userinfo;
         private readonly IMenuService _menuService = ObjectFactory.Container.GetInstance<IMenuService>();
+        public virtual new CustomPrincipal User
+        {
+            get
+            {
+                return HttpContext.User as CustomPrincipal;
+            }
+        }
         public ContentResult ErrorPage(string message)
         {
             return Content(message);
         }
-        
+
         public UserProfileSessionData UserProfile()
         {
             return (UserProfileSessionData)this.Session["LoginUser"];
@@ -172,10 +180,10 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 //filterContext.Result = Json("Session Timeout", "text/html", JsonRequestBehavior.AllowGet);
                 filterContext.Result = new RedirectToRouteResult(
-                new RouteValueDictionary 
-                { 
-                    { "controller", "Account" }, 
-                    { "action", "Login" } 
+                new RouteValueDictionary
+                {
+                    { "controller", "Account" },
+                    { "action", "Login" }
                 });
             }
 

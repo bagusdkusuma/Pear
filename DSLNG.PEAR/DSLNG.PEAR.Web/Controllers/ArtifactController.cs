@@ -17,6 +17,7 @@ using PeriodeType = DSLNG.PEAR.Data.Enums.PeriodeType;
 using DSLNG.PEAR.Services.Requests.Highlight;
 using System.Data.SqlClient;
 using NReco.ImageGenerator;
+using DSLNG.PEAR.Services.Responses.Artifact;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -90,7 +91,6 @@ namespace DSLNG.PEAR.Web.Controllers
                 Take = e.DataRowCount
             }).Artifacts;
         }
-
 
         public ActionResult KpiList(SearchKpiViewModel viewModel)
         {
@@ -735,169 +735,7 @@ namespace DSLNG.PEAR.Web.Controllers
             previewViewModel.FractionScale = artifactResp.FractionScale;
             previewViewModel.MaxFractionScale = artifactResp.MaxFractionScale;
             previewViewModel.AsNetbackChart = artifactResp.AsNetbackChart;
-            switch (artifactResp.GraphicType)
-            {
-                case "line":
-                    {
-                        var chartData = _artifactServie.GetChartData(artifactResp.MapTo<GetCartesianChartDataRequest>());
-                        var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest { 
-                            TimePeriodes = chartData.TimePeriodes,
-                            Type = "Overall",
-                            PeriodeType = artifactResp.PeriodeType
-                        });
-                        previewViewModel.PeriodeType = artifactResp.PeriodeType.ToString();
-                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
-                        previewViewModel.GraphicType = artifactResp.GraphicType;
-                        previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
-                        previewViewModel.LineChart = new LineChartDataViewModel();
-                        previewViewModel.LineChart.Title = artifactResp.HeaderTitle;
-                        previewViewModel.LineChart.Subtitle = chartData.Subtitle;
-                        previewViewModel.LineChart.ValueAxisTitle = artifactResp.Measurement;
-                        previewViewModel.LineChart.Series = chartData.Series.MapTo<LineChartDataViewModel.SeriesViewModel>();
-                        previewViewModel.LineChart.Periodes = chartData.Periodes;
-                    }
-                    break;
-                case "area":
-                    {
-                        var chartData = _artifactServie.GetChartData(artifactResp.MapTo<GetCartesianChartDataRequest>());
-                        var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
-                        {
-                            TimePeriodes = chartData.TimePeriodes,
-                            Type = "Overall",
-                            PeriodeType = artifactResp.PeriodeType
-                        });
-                        previewViewModel.PeriodeType = artifactResp.PeriodeType.ToString();
-                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
-                        previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
-                        previewViewModel.GraphicType = artifactResp.GraphicType;
-                        previewViewModel.AreaChart = new AreaChartDataViewModel();
-                        previewViewModel.AreaChart.Title = artifactResp.HeaderTitle;
-                        previewViewModel.AreaChart.Subtitle = chartData.Subtitle;
-                        previewViewModel.AreaChart.ValueAxisTitle = artifactResp.Measurement;
-                        previewViewModel.AreaChart.Series = chartData.Series.MapTo<AreaChartDataViewModel.SeriesViewModel>();
-                        previewViewModel.AreaChart.Periodes = chartData.Periodes;
-                    }
-                    break;
-                case "multiaxis":
-                    {
-                        var chartData = _artifactServie.GetMultiaxisChartData(artifactResp.MapTo<GetMultiaxisChartDataRequest>());
-                        var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
-                        {
-                            TimePeriodes = chartData.TimePeriodes,
-                            Type = "Overall",
-                            PeriodeType = artifactResp.PeriodeType
-                        });
-                        previewViewModel.PeriodeType = artifactResp.PeriodeType.ToString();
-                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
-                        previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
-                        previewViewModel.GraphicType = artifactResp.GraphicType;
-                        previewViewModel.MultiaxisChart = chartData.MapTo<MultiaxisChartDataViewModel>();
-                        previewViewModel.MultiaxisChart.Title = artifactResp.HeaderTitle;
-                    }
-                    break;
-                case "combo":
-                    {
-                        var chartData = _artifactServie.GetComboChartData(artifactResp.MapTo<GetComboChartDataRequest>());
-                        var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
-                        {
-                            TimePeriodes = chartData.TimePeriodes,
-                            Type = "Overall",
-                            PeriodeType = artifactResp.PeriodeType
-                        });
-                        previewViewModel.PeriodeType = artifactResp.PeriodeType.ToString();
-                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
-                        previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
-                        previewViewModel.GraphicType = artifactResp.GraphicType;
-                        previewViewModel.ComboChart = chartData.MapTo<ComboChartDataViewModel>();
-                        previewViewModel.ComboChart.Title = artifactResp.HeaderTitle;
-                    }
-                    break;
-                case "speedometer":
-                    {
-                        var chartData = _artifactServie.GetSpeedometerChartData(artifactResp.MapTo<GetSpeedometerChartDataRequest>());
-                        previewViewModel.GraphicType = artifactResp.GraphicType;
-                        previewViewModel.SpeedometerChart = new SpeedometerChartDataViewModel();
-                        previewViewModel.SpeedometerChart.Title = artifactResp.HeaderTitle;
-                        previewViewModel.SpeedometerChart.Subtitle = chartData.Subtitle;
-                        previewViewModel.SpeedometerChart.ValueAxisTitle = artifactResp.Measurement;
-                        previewViewModel.SpeedometerChart.Series = chartData.Series.MapTo<SpeedometerChartDataViewModel.SeriesViewModel>();
-                        previewViewModel.SpeedometerChart.PlotBands = chartData.PlotBands.MapTo<SpeedometerChartDataViewModel.PlotBandViewModel>();
-                    }
-                    break;
-                case "trafficlight":
-                    {
-                        var chartData = _artifactServie.GetTrafficLightChartData(artifactResp.MapTo<GetTrafficLightChartDataRequest>());
-                        previewViewModel.GraphicType = artifactResp.GraphicType;
-                        previewViewModel.TrafficLightChart = new TrafficLightChartDataViewModel();
-                        previewViewModel.TrafficLightChart.Title = artifactResp.HeaderTitle;
-                        previewViewModel.TrafficLightChart.Subtitle = chartData.Subtitle;
-                        previewViewModel.TrafficLightChart.ValueAxisTitle = artifactResp.Measurement;
-                        previewViewModel.TrafficLightChart.Series = chartData.Series.MapTo<TrafficLightChartDataViewModel.SeriesViewModel>();
-                        previewViewModel.TrafficLightChart.PlotBands = chartData.PlotBands.MapTo<TrafficLightChartDataViewModel.PlotBandViewModel>();
-                    }
-                    break;
-                case "tabular":
-                    {
-                        var chartData = _artifactServie.GetTabularData(artifactResp.MapTo<GetTabularDataRequest>());
-                        previewViewModel.GraphicType = artifactResp.GraphicType;
-                        previewViewModel.Tabular = new TabularDataViewModel();
-                        chartData.MapPropertiesToInstance<TabularDataViewModel>(previewViewModel.Tabular);
-                        previewViewModel.Tabular.Title = artifactResp.HeaderTitle;
-                        //previewViewModel.SpeedometerChart.Series = chartData.Series.MapTo<SpeedometerChartDataViewModel.SeriesViewModel>();
-                        //previewViewModel.SpeedometerChart.PlotBands = chartData.PlotBands.MapTo<SpeedometerChartDataViewModel.PlotBandViewModel>();
-                    }
-                    break;
-                case "tank":
-                    {
-                        var chartData = _artifactServie.GetTankData(artifactResp.MapTo<GetTankDataRequest>());
-                        previewViewModel.GraphicType = artifactResp.GraphicType;
-                        previewViewModel.Tank = new TankDataViewModel();
-                        chartData.MapPropertiesToInstance<TankDataViewModel>(previewViewModel.Tank);
-                        previewViewModel.Tank.Title = artifactResp.HeaderTitle;
-                        previewViewModel.Tank.Subtitle = chartData.Subtitle;
-                        previewViewModel.Tank.Id = artifactResp.Tank.Id;
-                        //previewViewModel.SpeedometerChart.Series = chartData.Series.MapTo<SpeedometerChartDataViewModel.SeriesViewModel>();
-                        //previewViewModel.SpeedometerChart.PlotBands = chartData.PlotBands.MapTo<SpeedometerChartDataViewModel.PlotBandViewModel>();
-                    }
-                    break;
-                case "pie":
-                    {
-                        var chartData = _artifactServie.GetPieData(artifactResp.MapTo<GetPieDataRequest>());
-                        previewViewModel.GraphicType = artifactResp.GraphicType;
-                        previewViewModel.Pie = chartData.MapTo<PieDataViewModel>();
-                        previewViewModel.Pie.Title = artifactResp.HeaderTitle;
-                        previewViewModel.Pie.Subtitle = chartData.Subtitle;
-                        previewViewModel.Pie.Is3D = artifactResp.Is3D;
-                        previewViewModel.Pie.ShowLegend = artifactResp.ShowLegend;
-                    }
-                    break;
-                default:
-                    {
-                        var chartData = _artifactServie.GetChartData(artifactResp.MapTo<GetCartesianChartDataRequest>());
-                        if (!artifactResp.AsNetbackChart)
-                        {
-                            var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
-                            {
-                                TimePeriodes = chartData.TimePeriodes,
-                                Type = "Overall",
-                                PeriodeType = artifactResp.PeriodeType
-                            });
-                            previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
-                        }
-                        previewViewModel.PeriodeType = artifactResp.PeriodeType.ToString();
-                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
-                        previewViewModel.GraphicType = artifactResp.GraphicType;
-                        previewViewModel.BarChart = new BarChartDataViewModel();
-                        previewViewModel.BarChart.Title = artifactResp.HeaderTitle;
-                        previewViewModel.BarChart.Subtitle = chartData.Subtitle;
-                        previewViewModel.BarChart.ValueAxisTitle = artifactResp.Measurement; //.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId }).Name;
-                        previewViewModel.BarChart.Series = chartData.Series.MapTo<BarChartDataViewModel.SeriesViewModel>();
-                        previewViewModel.BarChart.Periodes = chartData.Periodes;
-                        previewViewModel.BarChart.SeriesType = chartData.SeriesType;
-                    }
-                    break;
-            }
-            return Json(previewViewModel, JsonRequestBehavior.AllowGet);
+            return GetView(previewViewModel, artifactResp);
         }
 
         [HttpPost]
@@ -1294,6 +1132,54 @@ namespace DSLNG.PEAR.Web.Controllers
 
         }
 
+        public ActionResult Delete(int id) {
+            var resp = _artifactServie.Delete(new DeleteArtifactRequest { Id = id });
+            TempData["IsSuccess"] = resp.IsSuccess;
+            TempData["Message"] = resp.Message;
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Print(int id) { 
+            var secretNumber = Guid.NewGuid().ToString();
+            ArtifactCloneController.SecretNumber = secretNumber;
+            var displayUrl = Url.Action("Display", "ArtifactClone", new { id = id, secretNumber = secretNumber },this.Request.Url.Scheme);
+            var htmlToImageConverter = new HtmlToImageConverter();
+            htmlToImageConverter.Height = 350;
+            htmlToImageConverter.Width = 500;
+            return File(htmlToImageConverter.GenerateImageFromFile(displayUrl, ImageFormat.Png), "image/png","TheGraph.png");
+        }
+
+        public ActionResult GraphicSetting(int id)
+        {
+            var artifact = _artifactServie.GetArtifact(new GetArtifactRequest { Id = id });
+            var viewModel = new ArtifactDesignerViewModel();
+            SetPeriodeTypes(viewModel.PeriodeTypes);
+            SetRangeFilters(viewModel.RangeFilters);
+            SetValueAxes(viewModel.ValueAxes);
+            artifact.MapPropertiesToInstance<ArtifactDesignerViewModel>(viewModel);
+
+            viewModel.StartInDisplay = ParseDateToString(artifact.PeriodeType, artifact.Start);
+            viewModel.EndInDisplay = ParseDateToString(artifact.PeriodeType, artifact.End);
+            return PartialView("_GraphicSetting", viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult GraphicSetting(ArtifactDesignerViewModel viewModel)
+        {
+            var artifactResp = _artifactServie.GetArtifact(new GetArtifactRequest { Id = viewModel.Id });
+            var previewViewModel = new ArtifactPreviewViewModel();
+            previewViewModel.FractionScale = artifactResp.FractionScale;
+            previewViewModel.MaxFractionScale = artifactResp.MaxFractionScale;
+            previewViewModel.AsNetbackChart = artifactResp.AsNetbackChart;
+
+            artifactResp.PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType); 
+            artifactResp.RangeFilter = (RangeFilter)Enum.Parse(typeof(RangeFilter), viewModel.RangeFilter);
+            artifactResp.Start = viewModel.StartAfterParsed;
+            artifactResp.End = viewModel.EndAfterParsed;
+
+            return GetView(previewViewModel, artifactResp);
+        }
+
         private string ParseDateToString(PeriodeType periodeType, DateTime? date)
         {
             switch (periodeType)
@@ -1312,21 +1198,173 @@ namespace DSLNG.PEAR.Web.Controllers
                     return string.Empty;
             }
         }
-        public ActionResult Delete(int id) {
-            var resp = _artifactServie.Delete(new DeleteArtifactRequest { Id = id });
-            TempData["IsSuccess"] = resp.IsSuccess;
-            TempData["Message"] = resp.Message;
-            return RedirectToAction("Index");
-        }
 
-        public ActionResult Print(int id) { 
-            var secretNumber = Guid.NewGuid().ToString();
-            ArtifactCloneController.SecretNumber = secretNumber;
-            var displayUrl = Url.Action("Display", "ArtifactClone", new { id = id, secretNumber = secretNumber },this.Request.Url.Scheme);
-            var htmlToImageConverter = new HtmlToImageConverter();
-            htmlToImageConverter.Height = 350;
-            htmlToImageConverter.Width = 500;
-            return File(htmlToImageConverter.GenerateImageFromFile(displayUrl, ImageFormat.Png), "image/png","TheGraph.png");
+        private ActionResult GetView(ArtifactPreviewViewModel previewViewModel, GetArtifactResponse artifactResp)
+        {
+            switch (artifactResp.GraphicType)
+            {
+                case "line":
+                    {
+                        var chartData = _artifactServie.GetChartData(artifactResp.MapTo<GetCartesianChartDataRequest>());
+                        var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
+                        {
+                            TimePeriodes = chartData.TimePeriodes,
+                            Type = "Overall",
+                            PeriodeType = artifactResp.PeriodeType
+                        });
+                        previewViewModel.PeriodeType = artifactResp.PeriodeType.ToString();
+                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
+                        previewViewModel.GraphicType = artifactResp.GraphicType;
+                        previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
+                        previewViewModel.LineChart = new LineChartDataViewModel();
+                        previewViewModel.LineChart.Title = artifactResp.HeaderTitle;
+                        previewViewModel.LineChart.Subtitle = chartData.Subtitle;
+                        previewViewModel.LineChart.ValueAxisTitle = artifactResp.Measurement;
+                        previewViewModel.LineChart.Series = chartData.Series.MapTo<LineChartDataViewModel.SeriesViewModel>();
+                        previewViewModel.LineChart.Periodes = chartData.Periodes;
+                    }
+                    break;
+                case "area":
+                    {
+                        var chartData = _artifactServie.GetChartData(artifactResp.MapTo<GetCartesianChartDataRequest>());
+                        var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
+                        {
+                            TimePeriodes = chartData.TimePeriodes,
+                            Type = "Overall",
+                            PeriodeType = artifactResp.PeriodeType
+                        });
+                        previewViewModel.PeriodeType = artifactResp.PeriodeType.ToString();
+                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
+                        previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
+                        previewViewModel.GraphicType = artifactResp.GraphicType;
+                        previewViewModel.AreaChart = new AreaChartDataViewModel();
+                        previewViewModel.AreaChart.Title = artifactResp.HeaderTitle;
+                        previewViewModel.AreaChart.Subtitle = chartData.Subtitle;
+                        previewViewModel.AreaChart.ValueAxisTitle = artifactResp.Measurement;
+                        previewViewModel.AreaChart.Series = chartData.Series.MapTo<AreaChartDataViewModel.SeriesViewModel>();
+                        previewViewModel.AreaChart.Periodes = chartData.Periodes;
+                    }
+                    break;
+                case "multiaxis":
+                    {
+                        var chartData = _artifactServie.GetMultiaxisChartData(artifactResp.MapTo<GetMultiaxisChartDataRequest>());
+                        var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
+                        {
+                            TimePeriodes = chartData.TimePeriodes,
+                            Type = "Overall",
+                            PeriodeType = artifactResp.PeriodeType
+                        });
+                        previewViewModel.PeriodeType = artifactResp.PeriodeType.ToString();
+                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
+                        previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
+                        previewViewModel.GraphicType = artifactResp.GraphicType;
+                        previewViewModel.MultiaxisChart = chartData.MapTo<MultiaxisChartDataViewModel>();
+                        previewViewModel.MultiaxisChart.Title = artifactResp.HeaderTitle;
+                    }
+                    break;
+                case "combo":
+                    {
+                        var chartData = _artifactServie.GetComboChartData(artifactResp.MapTo<GetComboChartDataRequest>());
+                        var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
+                        {
+                            TimePeriodes = chartData.TimePeriodes,
+                            Type = "Overall",
+                            PeriodeType = artifactResp.PeriodeType
+                        });
+                        previewViewModel.PeriodeType = artifactResp.PeriodeType.ToString();
+                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
+                        previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
+                        previewViewModel.GraphicType = artifactResp.GraphicType;
+                        previewViewModel.ComboChart = chartData.MapTo<ComboChartDataViewModel>();
+                        previewViewModel.ComboChart.Title = artifactResp.HeaderTitle;
+                    }
+                    break;
+                case "speedometer":
+                    {
+                        var chartData = _artifactServie.GetSpeedometerChartData(artifactResp.MapTo<GetSpeedometerChartDataRequest>());
+                        previewViewModel.GraphicType = artifactResp.GraphicType;
+                        previewViewModel.SpeedometerChart = new SpeedometerChartDataViewModel();
+                        previewViewModel.SpeedometerChart.Title = artifactResp.HeaderTitle;
+                        previewViewModel.SpeedometerChart.Subtitle = chartData.Subtitle;
+                        previewViewModel.SpeedometerChart.ValueAxisTitle = artifactResp.Measurement;
+                        previewViewModel.SpeedometerChart.Series = chartData.Series.MapTo<SpeedometerChartDataViewModel.SeriesViewModel>();
+                        previewViewModel.SpeedometerChart.PlotBands = chartData.PlotBands.MapTo<SpeedometerChartDataViewModel.PlotBandViewModel>();
+                    }
+                    break;
+                case "trafficlight":
+                    {
+                        var chartData = _artifactServie.GetTrafficLightChartData(artifactResp.MapTo<GetTrafficLightChartDataRequest>());
+                        previewViewModel.GraphicType = artifactResp.GraphicType;
+                        previewViewModel.TrafficLightChart = new TrafficLightChartDataViewModel();
+                        previewViewModel.TrafficLightChart.Title = artifactResp.HeaderTitle;
+                        previewViewModel.TrafficLightChart.Subtitle = chartData.Subtitle;
+                        previewViewModel.TrafficLightChart.ValueAxisTitle = artifactResp.Measurement;
+                        previewViewModel.TrafficLightChart.Series = chartData.Series.MapTo<TrafficLightChartDataViewModel.SeriesViewModel>();
+                        previewViewModel.TrafficLightChart.PlotBands = chartData.PlotBands.MapTo<TrafficLightChartDataViewModel.PlotBandViewModel>();
+                    }
+                    break;
+                case "tabular":
+                    {
+                        var chartData = _artifactServie.GetTabularData(artifactResp.MapTo<GetTabularDataRequest>());
+                        previewViewModel.GraphicType = artifactResp.GraphicType;
+                        previewViewModel.Tabular = new TabularDataViewModel();
+                        chartData.MapPropertiesToInstance<TabularDataViewModel>(previewViewModel.Tabular);
+                        previewViewModel.Tabular.Title = artifactResp.HeaderTitle;
+                        //previewViewModel.SpeedometerChart.Series = chartData.Series.MapTo<SpeedometerChartDataViewModel.SeriesViewModel>();
+                        //previewViewModel.SpeedometerChart.PlotBands = chartData.PlotBands.MapTo<SpeedometerChartDataViewModel.PlotBandViewModel>();
+                    }
+                    break;
+                case "tank":
+                    {
+                        var chartData = _artifactServie.GetTankData(artifactResp.MapTo<GetTankDataRequest>());
+                        previewViewModel.GraphicType = artifactResp.GraphicType;
+                        previewViewModel.Tank = new TankDataViewModel();
+                        chartData.MapPropertiesToInstance<TankDataViewModel>(previewViewModel.Tank);
+                        previewViewModel.Tank.Title = artifactResp.HeaderTitle;
+                        previewViewModel.Tank.Subtitle = chartData.Subtitle;
+                        previewViewModel.Tank.Id = artifactResp.Tank.Id;
+                        //previewViewModel.SpeedometerChart.Series = chartData.Series.MapTo<SpeedometerChartDataViewModel.SeriesViewModel>();
+                        //previewViewModel.SpeedometerChart.PlotBands = chartData.PlotBands.MapTo<SpeedometerChartDataViewModel.PlotBandViewModel>();
+                    }
+                    break;
+                case "pie":
+                    {
+                        var chartData = _artifactServie.GetPieData(artifactResp.MapTo<GetPieDataRequest>());
+                        previewViewModel.GraphicType = artifactResp.GraphicType;
+                        previewViewModel.Pie = chartData.MapTo<PieDataViewModel>();
+                        previewViewModel.Pie.Title = artifactResp.HeaderTitle;
+                        previewViewModel.Pie.Subtitle = chartData.Subtitle;
+                        previewViewModel.Pie.Is3D = artifactResp.Is3D;
+                        previewViewModel.Pie.ShowLegend = artifactResp.ShowLegend;
+                    }
+                    break;
+                default:
+                    {
+                        var chartData = _artifactServie.GetChartData(artifactResp.MapTo<GetCartesianChartDataRequest>());
+                        if (!artifactResp.AsNetbackChart)
+                        {
+                            var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
+                            {
+                                TimePeriodes = chartData.TimePeriodes,
+                                Type = "Overall",
+                                PeriodeType = artifactResp.PeriodeType
+                            });
+                            previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
+                        }
+                        previewViewModel.PeriodeType = artifactResp.PeriodeType.ToString();
+                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
+                        previewViewModel.GraphicType = artifactResp.GraphicType;
+                        previewViewModel.BarChart = new BarChartDataViewModel();
+                        previewViewModel.BarChart.Title = artifactResp.HeaderTitle;
+                        previewViewModel.BarChart.Subtitle = chartData.Subtitle;
+                        previewViewModel.BarChart.ValueAxisTitle = artifactResp.Measurement; //.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId }).Name;
+                        previewViewModel.BarChart.Series = chartData.Series.MapTo<BarChartDataViewModel.SeriesViewModel>();
+                        previewViewModel.BarChart.Periodes = chartData.Periodes;
+                        previewViewModel.BarChart.SeriesType = chartData.SeriesType;
+                    }
+                    break;
+            }
+            return Json(previewViewModel, JsonRequestBehavior.AllowGet);
         }
     }
 }
