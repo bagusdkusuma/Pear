@@ -1,25 +1,18 @@
 //using DSLNG.PEAR.Data.Installer;
 
-using DSLNG.PEAR.Data.Installer;
 using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Web.App_Start;
 using DSLNG.PEAR.Web.AutoMapper;
 using DSLNG.PEAR.Web.DependencyResolution;
 using DSLNG.PEAR.Web.Scheduler;
-using DSLNG.PEAR.Web.ViewModels.User;
 using FluentScheduler;
 using StructureMap;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using System.Web.Script.Serialization;
-using System.Web.Security;
 
 namespace DSLNG.PEAR.Web
 {
