@@ -91,7 +91,7 @@ namespace DSLNG.PEAR.Services
         {
             try
             {
-                var todayHighlight = DataContext.Highlights.FirstOrDefault(x => x.Date == request.Date && x.HighlightType.Id == request.TypeId);
+                var todayHighlight = DataContext.Highlights.FirstOrDefault(x =>x.PeriodeType == request.PeriodeType && x.Date == request.Date && x.HighlightType.Id == request.TypeId);
                 if (todayHighlight != null && todayHighlight.Id != request.Id)
                 {
                     return new SaveHighlightResponse
