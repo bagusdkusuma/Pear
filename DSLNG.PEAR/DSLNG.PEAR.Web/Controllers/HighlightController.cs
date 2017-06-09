@@ -351,7 +351,7 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 return RedirectToAction("Display");
             }
-            return RedirectToAction("Manage", new { HighlightId = viewModel.Id });
+            return Redirect(Request.UrlReferrer.ToString());
         }
 
 
