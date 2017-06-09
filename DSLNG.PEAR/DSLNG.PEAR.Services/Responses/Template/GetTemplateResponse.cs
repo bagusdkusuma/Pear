@@ -1,5 +1,6 @@
 ﻿
 
+using DSLNG.PEAR.Data.Enums;
 using System.Collections.Generic;
 namespace DSLNG.PEAR.Services.Responses.Template
 {
@@ -31,6 +32,9 @@ namespace DSLNG.PEAR.Services.Responses.Template
             public double Width { get; set; }
             public string ArtifactName { get; set; }
             public int ArtifactId { get; set; }
+            public TemplateColumnType ColumnType { get; set; }
+            public PeriodeType HighlightPeriodeType { get; set; }
+            public int HighlightTypeId { get; set; }
         }
     }
 }

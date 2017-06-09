@@ -74,11 +74,52 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    @{ 
+                                        var columnTypes = new List<SelectListItem>();
+                                        foreach (var columnType in Model.ColumnTypes) {
+                                            columnTypes.Add(new SelectListItem { Text = columnType.Text, Value = columnType.Value, Selected = columnType.Value == Model.LayoutRows[i].LayoutColumns[j].ColumnType });
+                                        }
+                                    }
+                                    @Html.DropDownListFor(model => model.LayoutRows[i].LayoutColumns[j].ColumnType, columnTypes, "Select Column Type", new { @class = "form-control column-type" })
+                                </div>
+                                @{ 
+                                    var shownArtifact = "style=display:block";
+                                    var shownHighlight = "style=display:block";
+                                    if (Model.LayoutRows[i].LayoutColumns[j].ColumnType == "Artifact")
+                                    {
+                                        shownHighlight = "style=display:none";
+                                    }
+                                    else {
+                                        shownArtifact = "style=display:none";
+                                    }
+                                }
+                                <div class="form-group column-as-artifact" @shownArtifact>
                                     @Html.DropDownListFor(model => model.LayoutRows[i].LayoutColumns[j].ArtifactId, new List<SelectListItem> { new SelectListItem { Value = Model.LayoutRows[i].LayoutColumns[j].ArtifactId.ToString(), Text = Model.LayoutRows[i].LayoutColumns[j].ArtifactName } }, new { @class = "artifact-list form-control", style = "width:170px" })
                                     @Html.ActionLink("Edit", "Edit", "Artifact", new { id = Model.LayoutRows[i].LayoutColumns[j].ArtifactId }, new { @class="btn btn-default", target = "_blank" })
                                     <input type="hidden" id="foo" name="LayoutRows[@i].LayoutColumns[@j].Id" value="@column.Id">
                                 </div>
-
+                                <div class="column-as-highlight" @shownHighlight>
+                                    @{
+                                        var periodeTypes = new List<SelectListItem>();
+                                        foreach (var periodeType in Model.PeriodeTypes)
+                                        {
+                                            periodeTypes.Add(new SelectListItem { Text = periodeType.Text, Value = periodeType.Value, Selected = periodeType.Value == Model.LayoutRows[i].LayoutColumns[j].HighlightPeriodeType });
+                                        }
+                                    }
+                                    <div class="form-group">
+                                        @Html.DropDownListFor(model => model.LayoutRows[i].LayoutColumns[j].HighlightPeriodeType, periodeTypes, "Select Periode Type", new { @class = "form-control periode-type" })
+                                    </div>
+                                    @{
+                                        var highlightTypes = new List<SelectListItem>();
+                                        foreach (var highlightType in Model.HighlightTypes)
+                                        {
+                                            highlightTypes.Add(new SelectListItem { Text = highlightType.Text, Value = highlightType.Value, Selected = highlightType.Value == Model.LayoutRows[i].LayoutColumns[j].HighlightTypeId.ToString() });
+                                        }
+                                    }
+                                    <div class="form-group">
+                                        @Html.DropDownListFor(model => model.LayoutRows[i].LayoutColumns[j].HighlightTypeId, highlightTypes, "Select Highlight Type", new { @class = "form-control highlight-type" })
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <input type="button" value="Remove Column" class="remove-column" />
                                 </div>
@@ -136,10 +177,21 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            @Html.DropDownList("LayoutRows[0].LayoutColumns[0].ColumnType", Model.ColumnTypes, "Select Column Type", new { @class = "form-control column-type" })
+                        </div>
+                        <div class="form-group column-as-artifact">
                             <select name="LayoutRows[0].LayoutColumns[0].ArtifactId" class="form-control artifact-list" style="width: 170px">
                                 <option>Select Artifact</option>
                             </select>
                             @Html.ActionLink("Edit", "Edit", "Artifact", new { id = "_Id_" }, new { style = "color: #000000;visibility:hidden", target = "_blank" })
+                        </div>
+                        <div class="column-as-highlight" style="display:none">
+                            <div class="form-group">
+                                @Html.DropDownList("LayoutRows[0].LayoutColumns[0].HighlightPeriodeType", Model.PeriodeTypes, "Select Periode Type", new { @class = "form-control periode-type" })
+                            </div>
+                            <div class="form-group">
+                                @Html.DropDownList("LayoutRows[0].LayoutColumns[0].HighlightTypeId", Model.HighlightTypes, "Select Highlight Type", new { @class = "form-control highlight-type" })
+                            </div>
                         </div>
                         <div class="form-group">
                             <input type="button" value="Remove Column" class="remove-column" />

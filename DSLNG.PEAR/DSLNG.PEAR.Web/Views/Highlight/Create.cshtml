@@ -43,11 +43,11 @@
                         @Html.TextAreaFor(model => model.Message, 5, 100, new { @class = "form-control highlight-message"})
                         @Html.ValidationMessageFor(model => model.Message)
                     </div>
-                  @*  <div class="form-group form-list alert-condition-options">
+                    <div class="form-group form-list alert-condition-options">
                          @Html.LabelFor(model => model.Message)
                         @Html.DropDownListFor(model => model.Message, Model.AlertConditions ,new { @class = "form-control"})
                         @Html.ValidationMessageFor(model => model.Message)
-                    </div>*@
+                    </div>
                 </div>
                 <div class="form-group form-list" style="display:none" >
                     @Html.LabelFor(model => model.IsActive)
