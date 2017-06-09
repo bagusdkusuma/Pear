@@ -1,6 +1,7 @@
 ﻿@using DSLNG.PEAR.Data.Enums
 @model DSLNG.PEAR.Web.ViewModels.Artifact.ArtifactDesignerViewModel
 <div class="form-inline whitebox">    
+    @Html.HiddenFor(model => model.GraphicType, new { @class = "form-control", id="graphic-type" })
     <div class="form-inline whitebox">
         <h2>Graphic Settings</h2>
         <div id="general-graphic-settings">
@@ -31,7 +32,7 @@
                     @Html.ValidationMessageFor(model => model.EndInDisplay)
                 </div>
             </div>
-            <div class="scale">
+            @*<div class="scale">
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.FractionScale)
                     @Html.TextBoxFor(model => model.FractionScale, new { @class = "form-control" })
@@ -53,7 +54,7 @@
                 @Html.LabelFor(model => model.AsNetbackChart)
                 @Html.CheckBoxFor(model => model.AsNetbackChart, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.AsNetbackChart)
-            </div>
+            </div>*@
         </div>
         @*<div id="graphic-settings">
             @switch (Model.GraphicType)
