@@ -310,43 +310,43 @@ Number.prototype.format = function (n, x) {
                 Object.assign(options.legend, opt.legend);
             }
         }
-
+        
         var title = data.MultiaxisChart.Title.toLowerCase();
         
 
-        if (title.indexOf('feed gas and lng prod') > -1) {
+        if (container.hasClass('row1col2')) {
             if (options.legend.hasOwnProperty('enabled')) {
                 options.legend.enabled = true;
             }
         }
-        else if (title.indexOf('job sno-cpp') > -1) {
-            options.gridLineColor = 'transparent';
-        }
-        else if (title.indexOf('dng cpp') > -1) {
-            options.gridLineColor = 'transparent';
-        }
-        else if (title.indexOf('mtd cpp') > -1) {
-            options.gridLineColor = 'transparent';
-        }
-        else if (data.MultiaxisChart.Title.toLowerCase().indexOf('cds') > -1) {
+        else if (container.hasClass('row1col3')) {
             symbol = 'triangle';
             converted = true;
         }
-        else if (data.MultiaxisChart.Title.toLowerCase().indexOf('thermal') > -1) {
+        else if (container.hasClass('row1col4')) {
             symbol = 'square';
             converted = true;
             decimal = 1;
         }
-        else if (data.MultiaxisChart.Title.toLowerCase().indexOf('loss') > -1) {
+        else if (container.hasClass('row1col5')) {
             fillColor = '#403152';
             converted = true;
             decimal = 2;
         }
-        else if (title.indexOf('brent') > -1) {
+        else if (container.hasClass('row5col2')) {
+            options.gridLineColor = 'transparent';
+        }
+        else if (container.hasClass('row5col3')) {
+            options.gridLineColor = 'transparent';
+        }
+        else if (container.hasClass('row5col4')) {
+            options.gridLineColor = 'transparent';
+        }
+        else if (container.hasClass('row15col4')) {
             symbol = 'triangle';
             options.gridLineColor = 'transparent';
         }
-        else if (title.indexOf('jcc monthly trend') > -1) {
+        else if (container.hasClass('row15col5')) {
             symbol = 'triangle';
             options.gridLineColor = 'transparent';
         }

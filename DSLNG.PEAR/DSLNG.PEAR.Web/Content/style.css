@@ -3465,3 +3465,8 @@ select.in-progress {
 table.choosen-schedules tr td a {
     text-decoration:underline;
 }
+
+.artifact-holder .tank-subtitle,
+.artifact-holder .highcharts-subtitle {
+    cursor: pointer;
+}

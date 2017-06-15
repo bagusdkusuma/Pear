@@ -3,7 +3,7 @@
         //console.log(options);
         var id = "tank_" + options.Id + Date.now();
         
-        this.html('<svg class="svg" id="' + id + '" style="margin:auto;display:block"></svg>');
+        this.html('<svg class="svg highcharts-container" id="' + id + '" style="margin:auto;display:block"></svg>');
 
         var s = Snap('#' + id).attr({
             width: dimension.width - 40,
