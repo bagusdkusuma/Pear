@@ -19,7 +19,8 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
         public IList<SeriesResponse> Series { get; set; }
         public class SeriesResponse
         {
-            public SeriesResponse() {
+            public SeriesResponse()
+            {
                 Data = new List<double?>();
                 BorderColor = "#ffffff";
                 ShowInLegend = true;
@@ -31,6 +32,8 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
             public string Color { get; set; }
             public string BorderColor { get; set; }
             public bool ShowInLegend { get; set; }
+            public string MarkerColor { get; set; }
+            public string LineType { get; set; }
         }
     }
 }

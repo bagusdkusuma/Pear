@@ -389,7 +389,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest, GetCartesianChartDataRequest.SeriesRequest>();
             Mapper.CreateMap<GetMultiaxisChartDataRequest.ChartRequest.StackRequest, GetCartesianChartDataRequest.StackRequest>();
             Mapper.CreateMap<GetCartesianChartDataResponse, GetMultiaxisChartDataResponse.ChartResponse>();
-            Mapper.CreateMap<GetCartesianChartDataResponse.SeriesResponse, GetMultiaxisChartDataResponse.ChartResponse.SeriesViewModel>();
+            Mapper.CreateMap<GetCartesianChartDataResponse.SeriesResponse, GetMultiaxisChartDataResponse.ChartResponse.SeriesViewModel>()
+                .ForMember(x => x.marker, y => y.MapFrom(z => new GetMultiaxisChartDataResponse.ChartResponse.SeriesViewModel.MarkerViewModel { fillColor = z.MarkerColor, lineColor = z.MarkerColor }))
+                .ForMember(x => x.dashStyle, y => y.MapFrom(z => z.LineType)); ;
             Mapper.CreateMap<GetArtifactResponse, GetMultiaxisChartDataRequest>();
             Mapper.CreateMap<GetArtifactResponse.ChartResponse, GetMultiaxisChartDataRequest.ChartRequest>();
             Mapper.CreateMap<GetArtifactResponse.SeriesResponse, GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>();
@@ -400,7 +402,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<GetComboChartDataRequest.ChartRequest.SeriesRequest, GetCartesianChartDataRequest.SeriesRequest>();
             Mapper.CreateMap<GetComboChartDataRequest.ChartRequest.StackRequest, GetCartesianChartDataRequest.StackRequest>();
             Mapper.CreateMap<GetCartesianChartDataResponse, GetComboChartDataResponse.ChartResponse>();
-            Mapper.CreateMap<GetCartesianChartDataResponse.SeriesResponse, GetComboChartDataResponse.ChartResponse.SeriesViewModel>();
+            Mapper.CreateMap<GetCartesianChartDataResponse.SeriesResponse, GetComboChartDataResponse.ChartResponse.SeriesViewModel>()
+                .ForMember(x => x.marker, y => y.MapFrom(z => new GetComboChartDataResponse.ChartResponse.SeriesViewModel.MarkerViewModel { fillColor = z.MarkerColor, lineColor = z.MarkerColor }))
+                .ForMember(x => x.dashStyle, y => y.MapFrom(z => z.LineType));
             Mapper.CreateMap<GetArtifactResponse, GetComboChartDataRequest>();
             Mapper.CreateMap<GetArtifactResponse.ChartResponse, GetComboChartDataRequest.ChartRequest>();
             Mapper.CreateMap<GetArtifactResponse.SeriesResponse, GetComboChartDataRequest.ChartRequest.SeriesRequest>();

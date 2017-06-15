@@ -373,7 +373,9 @@ namespace DSLNG.PEAR.Web.AutoMapper
             //line chart mapping
             Mapper.CreateMap<LineChartViewModel, GetCartesianChartDataRequest>();
             Mapper.CreateMap<LineChartViewModel.SeriesViewModel, GetCartesianChartDataRequest.SeriesRequest>();
-            Mapper.CreateMap<GetCartesianChartDataResponse.SeriesResponse, LineChartDataViewModel.SeriesViewModel>();
+            Mapper.CreateMap<GetCartesianChartDataResponse.SeriesResponse, LineChartDataViewModel.SeriesViewModel>()
+                .ForMember(x => x.marker, y => y.MapFrom(z => new LineChartDataViewModel.SeriesViewModel.MarkerViewModel { fillColor = z.MarkerColor, lineColor = z.MarkerColor}))                
+                .ForMember(x => x.dashStyle, y => y.MapFrom(z => z.LineType));
             Mapper.CreateMap<LineChartViewModel, CreateArtifactRequest>()
                .ForMember(x => x.Series, o => o.MapFrom(s => s.Series.MapTo<CreateArtifactRequest.SeriesRequest>()));
             Mapper.CreateMap<LineChartViewModel.SeriesViewModel, CreateArtifactRequest.SeriesRequest>();
@@ -453,6 +455,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<MultiaxisChartViewModel, UpdateArtifactRequest>();
             Mapper.CreateMap<MultiaxisChartViewModel.ChartViewModel, UpdateArtifactRequest.ChartRequest>()
                 .ForMember(x => x.Series, o => o.ResolveUsing<MultiaxisSeriesUpdateResolver>());
+            Mapper.CreateMap<GetMultiaxisChartDataResponse.ChartResponse.SeriesViewModel.MarkerViewModel, MultiaxisChartDataViewModel.ChartViewModel.SeriesViewModel.MarkerViewModel>();
 
             //combo mapping
             Mapper.CreateMap<ComboChartViewModel, GetComboChartDataRequest>();
@@ -472,6 +475,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<AreaChartViewModel.StackViewModel, GetComboChartDataRequest.ChartRequest.StackRequest>();
             Mapper.CreateMap<BarChartViewModel.SeriesViewModel, GetComboChartDataRequest.ChartRequest.SeriesRequest>();
             Mapper.CreateMap<BarChartViewModel.StackViewModel, GetComboChartDataRequest.ChartRequest.StackRequest>();
+            Mapper.CreateMap<GetComboChartDataResponse.ChartResponse.SeriesViewModel.MarkerViewModel, ComboChartDataViewModel.ChartViewModel.SeriesViewModel.MarkerViewModel>();
 
             //pie mapping
             Mapper.CreateMap<ArtifactDesignerViewModel, GetPieDataRequest>()

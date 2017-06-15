@@ -39,7 +39,7 @@ namespace DSLNG.PEAR.Services
             var end = dateTimePeriodes[dateTimePeriodes.Count - 1];
             switch (volumeInventory.YtdFormula)
             {
-                
+
                 case YtdFormula.Sum:
                 default:
                     {
@@ -478,8 +478,10 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-        private double? SumSeries(ArtifactValueInformation valueInformation, PeriodeType periodEType, DateTime start, DateTime end, int kpiId) {
-            switch (valueInformation) {
+        private double? SumSeries(ArtifactValueInformation valueInformation, PeriodeType periodEType, DateTime start, DateTime end, int kpiId)
+        {
+            switch (valueInformation)
+            {
                 case ArtifactValueInformation.Ytd:
                     return
                         DataContext.KpiAchievements.Where(x => x.PeriodeType == periodEType
@@ -537,7 +539,7 @@ namespace DSLNG.PEAR.Services
 
             switch (kpi.YtdFormula)
             {
-                
+
                 case YtdFormula.Average:
                     switch (request.ValueAxis)
                     {
@@ -550,7 +552,8 @@ namespace DSLNG.PEAR.Services
                                 .GroupBy(x => x.Kpi.Id)
                                 .Select(x => x.Average(y => y.Value).Value).FirstOrDefault()
                             };
-                            if (request.LabelSeries != null) {
+                            if (request.LabelSeries != null)
+                            {
                                 response.LabelSeries = new GetSpeedometerChartDataResponse.SeriesResponse
                                 {
                                     name = request.LabelSeries.Label,
@@ -597,7 +600,8 @@ namespace DSLNG.PEAR.Services
                                 .GroupBy(x => x.Kpi.Id)
                                 .Select(x => x.Average(y => y.Value).Value).FirstOrDefault()
                             };
-                            if (request.LabelSeries != null) {
+                            if (request.LabelSeries != null)
+                            {
                                 response.LabelSeries = new GetSpeedometerChartDataResponse.SeriesResponse
                                 {
                                     name = request.LabelSeries.Label,
@@ -623,7 +627,8 @@ namespace DSLNG.PEAR.Services
                                 .GroupBy(x => x.Kpi.Id)
                                 .Select(x => x.Sum(y => y.Value).Value).FirstOrDefault()
                             };
-                            if (request.LabelSeries != null) {
+                            if (request.LabelSeries != null)
+                            {
                                 response.LabelSeries = new GetSpeedometerChartDataResponse.SeriesResponse
                                 {
                                     name = request.Series.Label,
@@ -670,7 +675,8 @@ namespace DSLNG.PEAR.Services
                                 .GroupBy(x => x.Kpi.Id)
                                 .Select(x => x.Sum(y => y.Value).Value).FirstOrDefault()
                             };
-                            if (request.LabelSeries != null) {
+                            if (request.LabelSeries != null)
+                            {
                                 response.LabelSeries = new GetSpeedometerChartDataResponse.SeriesResponse
                                 {
                                     name = request.LabelSeries.Label,
@@ -1059,7 +1065,8 @@ namespace DSLNG.PEAR.Services
             }
 
             //workaround for bar multiaxis bug : multiple stacks
-            if (multiaxisAsOrigin = true && request.GraphicType == "bar" && seriesType == "multi-stack") {
+            if (multiaxisAsOrigin = true && request.GraphicType == "bar" && seriesType == "multi-stack")
+            {
                 seriesType = "multi-stacks-grouped";
             }
 
@@ -1071,14 +1078,15 @@ namespace DSLNG.PEAR.Services
                     seriesResponse = this._getKpiTargetSeries(request.Series, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes, false, request.AsNetbackChart);
                     break;
                 case ValueAxis.KpiActual:
-                    seriesResponse = this._getKpiActualSeries(request.Series, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes,false, request.AsNetbackChart);
+                    seriesResponse = this._getKpiActualSeries(request.Series, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes, false, request.AsNetbackChart);
                     break;
                 case ValueAxis.KpiEconomic:
                     seriesResponse = this._getKpiEconomicSeries(request.Series, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, out newTimeInformation, out newDateTimePeriodes, false, request.AsNetbackChart);
                     break;
                 default:
                     var i = 0;
-                    foreach (var series in request.Series) {
+                    foreach (var series in request.Series)
+                    {
                         series.Order = i++;
                     }
                     var actualSeries = request.Series.Where(x => x.ValueAxis == ValueAxis.KpiActual).ToList();
@@ -1348,7 +1356,7 @@ namespace DSLNG.PEAR.Services
         private IList<GetCartesianChartDataResponse.SeriesResponse> _getKpiTargetSeries(IList<GetCartesianChartDataRequest.SeriesRequest> configSeries, PeriodeType periodeType, IList<DateTime> dateTimePeriodes, string seriesType, RangeFilter rangeFilter, string graphicType, out string newTimeInformation, out IList<DateTime> newDatetimePeriodes, bool comparison = false, bool asNetbackChart = false)
         {
             var seriesResponse = new List<GetCartesianChartDataResponse.SeriesResponse>();
-             var start = rangeFilter == RangeFilter.AllExistingYears ? DateTime.MinValue : dateTimePeriodes[0];
+            var start = rangeFilter == RangeFilter.AllExistingYears ? DateTime.MinValue : dateTimePeriodes[0];
             var end = rangeFilter == RangeFilter.AllExistingYears ? DateTime.MaxValue : dateTimePeriodes[dateTimePeriodes.Count - 1];
             newTimeInformation = null;
             newDatetimePeriodes = new List<DateTime>();
@@ -1400,9 +1408,11 @@ namespace DSLNG.PEAR.Services
                             Name = series.Label,
                             Stack = series.Label,
                             Color = series.Color,
-                            Order = series.Order
+                            Order = series.Order,
+                            MarkerColor = series.MarkerColor,
+                            LineType = series.LineType
                         };
-                           if (asNetbackChart)
+                        if (asNetbackChart)
                         {
                             var sumValue = kpiTargets.Where(x => x.Value.HasValue).Average(x => x.Value);
                             aSeries.BorderColor = "transparent";
@@ -1436,8 +1446,9 @@ namespace DSLNG.PEAR.Services
                                 }
                             }
 
-                        }else
-                        if (rangeFilter == RangeFilter.YTD || rangeFilter == RangeFilter.DTD || rangeFilter == RangeFilter.MTD)
+                        }
+                        else
+                     if (rangeFilter == RangeFilter.YTD || rangeFilter == RangeFilter.DTD || rangeFilter == RangeFilter.MTD)
                         {
 
                             foreach (var periode in dateTimePeriodes)
@@ -1492,7 +1503,7 @@ namespace DSLNG.PEAR.Services
                             seriesResponse.Add(previousSeries);
                         }
                         seriesResponse.Add(aSeries);
-                          if (asNetbackChart && seriesResponse.Count > 1)
+                        if (asNetbackChart && seriesResponse.Count > 1)
                         {
                             var invicibleSeries = new GetCartesianChartDataResponse.SeriesResponse
                             {
@@ -1512,7 +1523,9 @@ namespace DSLNG.PEAR.Services
                         {
                             Name = series.Label,
                             Color = series.Color,
-                            Order = series.Order
+                            Order = series.Order,
+                            MarkerColor = series.MarkerColor,
+                            LineType = series.LineType
                         };
                         if (comparison)
                         {
@@ -1625,7 +1638,9 @@ namespace DSLNG.PEAR.Services
                                 Name = stack.Label,
                                 Stack = series.Label,
                                 Color = stack.Color,
-                                Order = series.Order
+                                Order = series.Order,
+                                MarkerColor = series.MarkerColor,
+                                LineType = series.LineType
                             };
                             if (rangeFilter == RangeFilter.YTD || rangeFilter == RangeFilter.DTD || rangeFilter == RangeFilter.MTD)
                             {
@@ -1668,7 +1683,9 @@ namespace DSLNG.PEAR.Services
                             {
                                 Name = stack.Label,
                                 Color = stack.Color,
-                                Order = series.Order
+                                Order = series.Order,
+                                MarkerColor = series.MarkerColor,
+                                LineType = series.LineType
                             };
                             if (comparison)
                             {
@@ -1785,7 +1802,9 @@ namespace DSLNG.PEAR.Services
                             Name = series.Label,
                             Stack = series.Label,
                             Color = series.Color,
-                            Order = series.Order
+                            Order = series.Order,
+                            MarkerColor = series.MarkerColor,
+                            LineType = series.LineType
                         };
                         if (asNetbackChart)
                         {
@@ -1898,7 +1917,9 @@ namespace DSLNG.PEAR.Services
                         {
                             Name = series.Label,
                             Color = series.Color,
-                            Order = series.Order
+                            Order = series.Order,
+                            MarkerColor = series.MarkerColor,
+                            LineType = series.LineType
                         };
                         if (comparison)
                         {
@@ -2011,7 +2032,9 @@ namespace DSLNG.PEAR.Services
                                 Name = stack.Label,
                                 Stack = series.Label,
                                 Color = stack.Color,
-                                Order = series.Order
+                                Order = series.Order,
+                                MarkerColor = series.MarkerColor,
+                                LineType = series.LineType
                             };
                             if (rangeFilter == RangeFilter.YTD || rangeFilter == RangeFilter.DTD || rangeFilter == RangeFilter.MTD)
                             {
@@ -2054,7 +2077,9 @@ namespace DSLNG.PEAR.Services
                             {
                                 Name = stack.Label,
                                 Color = stack.Color,
-                                Order = series.Order
+                                Order = series.Order,
+                                MarkerColor = series.MarkerColor,
+                                LineType = series.LineType
                             };
                             if (comparison)
                             {
@@ -2445,7 +2470,9 @@ namespace DSLNG.PEAR.Services
                             Name = series.Label,
                             Stack = series.Label,
                             Color = series.Color,
-                            Order = series.Order
+                            Order = series.Order,
+                            MarkerColor = series.MarkerColor,
+                            LineType = series.LineType
                         };
                         if (asNetbackChart)
                         {
@@ -2561,7 +2588,9 @@ namespace DSLNG.PEAR.Services
                         {
                             Name = series.Label,
                             Color = series.Color,
-                            Order = series.Order
+                            Order = series.Order,
+                            MarkerColor = series.MarkerColor,
+                            LineType = series.LineType
                         };
                         if (comparison)
                         {
@@ -2672,7 +2701,9 @@ namespace DSLNG.PEAR.Services
                                 Name = stack.Label,
                                 Stack = series.Label,
                                 Color = stack.Color,
-                                Order = series.Order
+                                Order = series.Order,
+                                LineType = series.LineType,
+                                MarkerColor = series.MarkerColor
                             };
                             if (comparison)
                             {
@@ -2719,7 +2750,9 @@ namespace DSLNG.PEAR.Services
                             {
                                 Name = stack.Label,
                                 Color = stack.Color,
-                                Order = series.Order
+                                Order = series.Order,
+                                LineType = series.LineType,
+                                MarkerColor = series.MarkerColor
                             };
                             if (comparison)
                             {
@@ -3307,7 +3340,7 @@ namespace DSLNG.PEAR.Services
                 end = new DateTime(start.Value.Year, start.Value.Month, start.Value.Day);
             }
 
-            return new DateTimeValue {Start = start, End = end, RangeFilter = rangeFilter};
+            return new DateTimeValue { Start = start, End = end, RangeFilter = rangeFilter };
         }
 
         private string ChangeTimeInformationFromSpecificToInterval(DateTime? start, DateTime? end, RangeFilter rangeFilter)

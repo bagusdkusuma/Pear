@@ -25,6 +25,14 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
                 public IList<double?> data { get; set; }
                 public string stack { get; set; }
                 public string color { get; set; }
+                public string dashStyle { get; set; }
+                public MarkerViewModel marker { get; set; }
+
+                public class MarkerViewModel
+                {
+                    public string fillColor { get; set; }
+                    public string lineColor { get; set; }
+                }
             }
         }
     }

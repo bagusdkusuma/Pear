@@ -40,6 +40,23 @@
                     @Html.ValidationMessageFor(model => model.ComboChart.Charts[0].LineChart.Series[0].ValueAxis)
                 </div>
             </div>
+            <div class="col-sm-6">
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.ComboChart.Charts[0].LineChart.Series[0].LineType)
+                    @Html.DropDownListFor(model => model.ComboChart.Charts[0].LineChart.Series[0].LineType, Model.ComboChart.Charts[0].LineChart.LineTypes, new { @class = " form-control", style = "width:180px" })
+                    @Html.ValidationMessageFor(model => model.ComboChart.Charts[0].LineChart.Series[0].KpiId)
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.ComboChart.Charts[0].LineChart.Series[0].MarkerColor)
+                    <div class="input-group colorpicker">
+                        @Html.TextBoxFor(model => model.ComboChart.Charts[0].LineChart.Series[0].MarkerColor, new { @class = "form-control" })
+                        <span class="input-group-addon"><i></i></span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.ComboChart.Charts[0].LineChart.Series[0].MarkerColor)
+                </div>
+            </div>
         </div>
         <input type="button" value="Remove" class="remove" />
     </div>

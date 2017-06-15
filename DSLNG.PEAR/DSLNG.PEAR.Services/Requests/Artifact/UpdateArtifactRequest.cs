@@ -54,6 +54,8 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
             public string Color { get; set; }
             public int KpiId { get; set; }
             public ValueAxis ValueAxis { get; set; }
+            public string MarkerColor { get; set; }
+            public string LineType { get; set; }
         }
 
         public class PlotRequest

@@ -11,7 +11,7 @@ namespace DSLNG.PEAR.Web.App_Start
         // For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkId=254725
         public static void RegisterBundles(BundleCollection bundles)
         {
-            BundleTable.EnableOptimizations = true;
+            BundleTable.EnableOptimizations = false;
             bundles.Add(new ScriptBundle("~/bundles/js").Include(
                 "~/Scripts/jquery-ui.js",
                          "~/Scripts/moment.js",

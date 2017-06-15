@@ -1833,7 +1833,7 @@ Number.prototype.format = function (n, x) {
                 seriesTemplate.removeClass('original');
                 seriesTemplate.attr('data-series-pos', seriesCount);
                 if (seriesCount !== 0) {
-                    var fields = ['Label', 'KpiId', 'ValueAxis', 'Color'];
+                    var fields = ['Label', 'KpiId', 'ValueAxis', 'Color', 'MarkerColor', 'LineType'];
                     for (var i in fields) {
                         var field = fields[i];
                         seriesTemplate.find('#LineChart_Series_0__' + field).attr('name', 'LineChart.Series[' + seriesCount + '].' + field);
@@ -3101,7 +3101,7 @@ Number.prototype.format = function (n, x) {
                 seriesTemplate.removeClass('original');
                 seriesTemplate.attr('data-series-pos', seriesCount);
                 if (seriesCount !== 0) {
-                    var fields = ['Label', 'KpiId', 'ValueAxis', 'Color'];
+                    var fields = ['Label', 'KpiId', 'ValueAxis', 'Color', 'MarkerColor', 'LineType'];
                     for (var i in fields) {
                         var field = fields[i];
                         seriesTemplate.find('[id$=LineChart_Series_0__' + field + ']').attr('name', prefix + '.Charts[' + chartPost + '].LineChart.Series[' + seriesCount + '].' + field);
@@ -4899,6 +4899,7 @@ Number.prototype.format = function (n, x) {
     window.Pear = Pear;
 
     var _artifactHolder;
+    var _highchartsContainer;
     var _latestDateTimeFormat;
     var _configs = [];
     var searchArtifactConfig = function (configs, artifactId) {
@@ -4934,11 +4935,13 @@ Number.prototype.format = function (n, x) {
     }
     var getGraphicSetting = function (el) {        
         var artifactHolder = el.closest('.artifact-holder');
-        Pear.Loading.Show(artifactHolder);
         _artifactHolder = artifactHolder;
+        _highchartsContainter = el.closest('.highcharts-container');
+
+        Pear.Loading.Show(artifactHolder);       
         var artifactId = artifactHolder.attr('data-artifact-id');
         var chart = artifactHolder.highcharts();
-       
+        _highchartsContainter.hide();
         
         $.ajax({
             url: '/Artifact/GraphicSetting/' + artifactId,
@@ -5111,6 +5114,7 @@ Number.prototype.format = function (n, x) {
     })
 
     $('#graphic-setting').on('hidden.bs.modal', function () {
+        _highchartsContainter.show();
         Pear.Loading.Stop(_artifactHolder);
     });
 
