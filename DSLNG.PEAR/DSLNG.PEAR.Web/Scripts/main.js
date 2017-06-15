@@ -1215,6 +1215,7 @@ Number.prototype.format = function (n, x) {
                 data: $this.closest('form').serialize(),
                 method: 'POST',
                 success: function (data) {
+                    console.log(data.GraphicType);
                     if (callback.hasOwnProperty(data.GraphicType)) {
                         Pear.Loading.Stop($('#container'));
                         callback[data.GraphicType](data, $('#container'));
@@ -1803,6 +1804,489 @@ Number.prototype.format = function (n, x) {
     };
     artifactDesigner._previewCallbacks.barachievement = function (data, container) {
         Pear.Artifact.Designer._previewCallbacks.bar(data, container);
+    };
+    artifactDesigner._setupCallbacks.barhorizontal = function () {
+        artifactDesigner._setupCallbacks.bar();
+    }
+    artifactDesigner._previewCallbacks.barhorizontal = function (data, container) {
+        //console.log(data.BarChart.SeriesType);
+        if (data.BarChart.SeriesType == "single-stack") {
+            Pear.Artifact.Designer._displayBasicBarhorizontalChart(data, container);
+        } else if (data.BarChart.SeriesType == "multi-stack") {
+            Pear.Artifact.Designer._displayMultistacksBarhorizontalChart(data, container);
+        } else {
+            Pear.Artifact.Designer._displayMultistacksGroupedBarhorizontalChart(data, container);
+        }
+    };
+    artifactDesigner._displayBasicBarhorizontalChart = function (data, container) {
+        container.highcharts({
+            chart: {
+                type: 'bar',
+                zoomType: 'xy',
+                backgroundColor: 'transparent'
+            },
+            title: {
+                text: data.BarChart.Title,
+                style: {
+                    color: '#fff'
+                }
+            },
+            subtitle: {
+                text: data.BarChart.Subtitle,
+                style: {
+                    color: '#fff'
+                }
+            },
+            xAxis: {
+                categories: data.BarChart.Periodes,
+                crosshair: true,
+                labels: {
+                    style: {
+                        color: '#fff'
+                    }
+                },
+                gridLineColor: '#fff',
+                reversed: false
+            },
+            yAxis: {
+                //min: 0,
+                title: {
+                    text: data.BarChart.ValueAxisTitle,
+                    style: {
+                        color: '#fff'
+                    }
+                },
+                tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
+                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale,
+                labels: {
+                    style: {
+                        color: '#fff'
+                    }
+                }
+            },
+            legend: {
+                itemStyle: {
+                    "color": '#fff'
+                },
+                itemHoverStyle: {
+                    color: '#FF0000'
+                }
+            },
+            navigation: {
+                buttonOptions: {
+                    symbolStroke: '#fff',
+                    symbolFill: '#fff',
+                    theme: {
+                        'stroke-width': 0,
+                        stroke: 'silver',
+                        fill: 'transparent',
+                        r: 0,
+                        states: {
+                            hover: {
+                                fill: 'transparent'
+                            },
+                            select: {
+                                fill: 'transparent'
+                            }
+                        }
+                    }
+                }
+            },
+            tooltip: {
+                formatter: function () {
+                    var tooltip = '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
+                    var totalInProcess = 0;
+                    var netbackValue = 0;
+                    for (var i in this.points) {
+                        if (this.points[i].series.name.trim().indexOf('invisible')) {
+                            tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>';
+                        }
+                        var prev = (parseInt(i) - 1);
+                        var next = (parseInt(i) + 1);
+                        var nextExist = typeof this.points[next] !== 'undefined';
+                        var prevExist = typeof this.points[prev] !== 'undefined';
+                        if (data.AsNetbackChart) {
+                            if (i == 0) {
+                                netbackValue += this.points[i].y;
+                            } else {
+                                if (this.points[i].series.name.trim().indexOf('invisible')) {
+                                    netbackValue -= this.points[i].y;
+                                }
+                            }
+
+                            if (i == this.points.length - 2) {
+                                //tooltip += '<strong>Net back value : ' + netbackValue.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
+                                tooltip += '<strong>' + this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<strong><br/>';
+                            }
+                        } else {
+                            if (typeof this.points[i].series.stackKey !== 'undefined') {
+                                //total in process
+                                //if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                totalInProcess += this.points[i].y;
+                                //}
+
+                                if ((nextExist && prevExist && this.points[next].series.stackKey != this.points[i].series.stackKey && this.points[prev].series.stackKey == this.points[i].series.stackKey) ||
+                                    (!nextExist && prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                    tooltip += '<strong>Total: ' + totalInProcess.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
+                                    //totalInProcess = 0;
+                                }
+                                if (nextExist && this.points[next].series.stackKey != this.points[i].series.stackKey) {
+                                    totalInProcess = 0;
+                                }
+                            }
+
+                        }
+
+
+                        //if (typeof this.points[i].total !== 'undefined') {
+                        //    if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
+                        //        (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
+                        //        tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br>';
+                        //    }
+                        //}
+                        if (data.Highlights != null && data.Highlights != undefined) {
+                            if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
+                                tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
+                                tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                            }
+                        }
+                    }
+                    return tooltip;
+                },
+                shared: true
+            },
+            exporting: {
+                url: '/Chart/Export',
+                filename: 'MyChart',
+                width: 1200
+            },
+            credits: {
+                enabled: false
+            },
+            //tooltip: {
+            //    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            //    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            //        '<td style="padding:0"><b>{point.y:.1f} ' + data.BarChart.ValueAxisTitle + '</b></td></tr>',
+            //    footerFormat: '</table>',
+            //    shared: true,
+            //    useHTML: true
+            //},
+            plotOptions: {
+                bar: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: data.BarChart.Series
+        });
+    };
+    artifactDesigner._displayMultistacksBarhorizontalChart = function (data, container) {
+        container.highcharts({
+            chart: {
+                type: 'bar',
+                zoomType: 'xy',
+                backgroundColor: 'transparent',
+            },
+            title: {
+                text: data.BarChart.Title,
+                style: {
+                    "color": '#fff'
+                }
+            },
+            subtitle: {
+                text: data.BarChart.Subtitle,
+                style: {
+                    "color": '#fff'
+                }
+            },
+            xAxis: {
+                categories: data.BarChart.Periodes,
+                crosshair: true,
+                gridLineColor: '#fff',
+                labels: {
+                    style: {
+                        "color": '#fff'
+                    }
+                },
+                reverse: false
+            },
+            yAxis: {
+                title: {
+                    text: data.BarChart.ValueAxisTitle,
+                    style: {
+                        "color": '#fff'
+                    }
+                },
+                tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
+                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale,
+                labels: {
+                    style: {
+                        "color": '#fff'
+                    }
+                }
+            },
+            legend: {
+                itemStyle: {
+                    "color": '#fff'
+                },
+                itemHoverStyle: {
+                    color: '#FF0000'
+                }
+            },
+            navigation: {
+                buttonOptions: {
+                    symbolStroke: '#fff',
+                    symbolFill: '#fff',
+                    theme: {
+                        'stroke-width': 0,
+                        stroke: 'silver',
+                        fill: 'transparent',
+                        r: 0,
+                        states: {
+                            hover: {
+                                fill: 'transparent'
+                            },
+                            select: {
+                                fill: 'transparent'
+                            }
+                        }
+                    }
+                }
+            },
+            tooltip: {
+                formatter: function () {
+                    var tooltip = '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
+                    var totalInProcess = 0;
+                    for (var i in this.points) {
+                        tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>';
+
+                        var prev = (parseInt(i) - 1);
+                        var next = (parseInt(i) + 1);
+                        var nextExist = typeof this.points[next] !== 'undefined';
+                        var prevExist = typeof this.points[prev] !== 'undefined';
+
+                        if (typeof this.points[i].series.stackKey !== 'undefined') {
+                            //total in process
+                            //if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                            totalInProcess += this.points[i].y;
+                            //}
+
+                            if ((nextExist && prevExist && this.points[next].series.stackKey != this.points[i].series.stackKey && this.points[prev].series.stackKey == this.points[i].series.stackKey) ||
+                                (!nextExist && prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                tooltip += '<strong>Total: ' + totalInProcess.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
+                                //totalInProcess = 0;
+                            }
+                            if (nextExist && this.points[next].series.stackKey != this.points[i].series.stackKey) {
+                                totalInProcess = 0;
+                            }
+                        }
+
+                        //if (typeof this.points[i].total !== 'undefined') {
+                        //    if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
+                        //        (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
+                        //        tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br>';
+                        //    }
+                        //}
+                        if (data.Highlights != null && data.Highlights != undefined) {
+                            if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
+                                tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
+                                tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                            }
+                        }
+                    }
+                    return tooltip;
+                },
+                shared: true
+            },
+            //tooltip: {
+            //    formatter: function () {
+            //        return '<b>' + this.x + '</b><br/>' +
+            //            this.series.name + ': ' + this.y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>' +
+            //            'Total: ' + this.point.stackTotal.format(2) + ' ' + data.BarChart.ValueAxisTitle;
+            //    }
+            //},
+            exporting: {
+                url: '/Chart/Export',
+                filename: 'MyChart',
+                width: 1200
+            },
+            credits: {
+                enabled: false
+            },
+            plotOptions: {
+                bar: {
+                    stacking: 'normal'
+                }
+            },
+            series: data.BarChart.Series
+        });
+    };
+    artifactDesigner._displayMultistacksGroupedBarhorizontalChart = function (data, container) {
+        container.highcharts({
+            chart: {
+                type: 'bar',
+                zoomType: 'xy',
+                backgroundColor: 'transparent',
+            },
+            title: {
+                text: data.BarChart.Title,
+                style: {
+                    "color": '#fff'
+                }
+            },
+            subtitle: {
+                text: data.BarChart.Subtitle,
+                style: {
+                    "color": '#fff'
+                }
+            },
+            xAxis: {
+                categories: data.BarChart.Periodes,
+                crosshair: true,
+                gridLineColor: '#fff',
+                labels: {
+                    style: {
+                        "color": '#fff'
+                    }
+                },
+                reversed:false
+            },
+            yAxis: {
+                //min: 0,
+                title: {
+                    text: data.BarChart.ValueAxisTitle,
+                    style: {
+                        "color": '#fff'
+                    }
+                },
+                tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
+                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale,
+                labels: {
+                    style: {
+                        "color": '#fff'
+                    }
+                }
+            },
+            legend: {
+                itemStyle: {
+                    "color": '#fff'
+                },
+                itemHoverStyle: {
+                    color: '#FF0000'
+                }
+            },
+            navigation: {
+                buttonOptions: {
+                    symbolStroke: '#fff',
+                    symbolFill: '#fff',
+                    theme: {
+                        'stroke-width': 0,
+                        stroke: 'silver',
+                        fill: 'transparent',
+                        r: 0,
+                        states: {
+                            hover: {
+                                fill: 'transparent'
+                            },
+                            select: {
+                                fill: 'transparent'
+                            }
+                        }
+                    }
+                }
+            },
+            tooltip: {
+                formatter: function () {
+                    //console.log(data);
+                    var tooltip = '';
+                    if (data.BarChart.Periodes.length == 1) {
+                        tooltip += '<b>' + data.BarChart.Subtitle + '</b><br/>';
+                    } else if (data.TimePeriodes.length) {
+                        tooltip += '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
+                    } else {
+
+                        tooltip += '<b>' + data.BarChart.Subtitle + '</b><br/>';
+                    }
+                    var totalInProcess = 0;
+                    var netbackValue = 0;
+                    for (var i in this.points) {
+                        if (this.points[i].series.name.trim().indexOf('invisible')) {
+                            tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>';
+                        }
+                        var prev = (parseInt(i) - 1);
+                        var next = (parseInt(i) + 1);
+                        var nextExist = typeof this.points[next] !== 'undefined';
+                        var prevExist = typeof this.points[prev] !== 'undefined';
+                        if (data.AsNetbackChart) {
+                            if (i == 0) {
+                                netbackValue += this.points[i].y;
+                            } else {
+                                if (this.points[i].series.name.trim().indexOf('invisible')) {
+                                    netbackValue -= this.points[i].y;
+                                }
+                            }
+
+                            if (i == this.points.length - 2) {
+                                //console.log(this.points[i].series.name);
+                                //tooltip += '<strong>Net back value : ' + netbackValue.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
+                                tooltip += '<strong>' + this.points[i].series.name.trim() + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<strong><br/>';
+                            }
+                        } else {
+                            if (typeof this.points[i].series.stackKey !== 'undefined') {
+                                //total in process
+                                //if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                totalInProcess += this.points[i].y;
+                                //}
+
+                                if ((nextExist && prevExist && this.points[next].series.stackKey != this.points[i].series.stackKey && this.points[prev].series.stackKey == this.points[i].series.stackKey) ||
+                                    (!nextExist && prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                    tooltip += '<strong>Total: ' + totalInProcess.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
+                                    //totalInProcess = 0;
+                                }
+                                if (nextExist && this.points[next].series.stackKey != this.points[i].series.stackKey) {
+                                    totalInProcess = 0;
+                                }
+                            }
+                        }
+                        //if (typeof this.points[i].total !== 'undefined') {
+                        //    if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
+                        //        (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
+                        //        tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br>';
+                        //    }
+                        //}
+                        if (data.Highlights != null && data.Highlights != undefined) {
+                            if (!nextExist && data.Highlights !== null && data.Highlights[this.points[i].point.index] != null) {
+                                tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
+                                tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                            }
+                        }
+                    }
+                    return tooltip;
+                },
+                shared: true
+            },
+            //tooltip: {
+            //    formatter: function () {
+            //        return '<b>' + this.x + '</b><br/>' +
+            //            this.series.name + ': ' + this.y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>' +
+            //            'Total: ' + this.point.stackTotal.format(2) + ' ' + data.BarChart.ValueAxisTitle;
+            //    }
+            //},
+            exporting: {
+                url: '/Chart/Export',
+                filename: 'MyChart',
+                width: 1200
+            },
+            credits: {
+                enabled: false
+            },
+            plotOptions: {
+                bar: {
+                    stacking: 'normal'
+                }
+            },
+            series: data.BarChart.Series
+        });
     };
 
     //line chart
