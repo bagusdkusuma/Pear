@@ -102,6 +102,7 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             var viewModel = new ArtifactDesignerViewModel();
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "bar", Text = "Bar" });
+            viewModel.GraphicTypes.Add(new SelectListItem { Value = "barhorizontal", Text = "Bar Horizontal" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "baraccumulative", Text = "Bar Accumulative" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "barachievement", Text = "Bar Achievement" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "line", Text = "Line" });
@@ -133,6 +134,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
             var viewModel = new ArtifactDesignerViewModel();
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "bar", Text = "Bar" });
+            viewModel.GraphicTypes.Add(new SelectListItem { Value = "barhorizontal", Text = "Bar" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "baraccumulative", Text = "Bar Accumulative" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "barachievement", Text = "Bar Achievement" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "line", Text = "Line" });
@@ -402,6 +404,7 @@ namespace DSLNG.PEAR.Web.Controllers
             switch (Request.QueryString["type"])
             {
                 case "bar":
+                case "barhorizontal":
                     {
                         var viewModel = new BarChartViewModel();
                         viewModel.SeriesTypes.Add(new SelectListItem { Value = SeriesType.SingleStack.ToString(), Text = "Single Stack" });
