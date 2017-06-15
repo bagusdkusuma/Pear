@@ -4857,13 +4857,7 @@ Number.prototype.format = function (n, x) {
                     }
                 }
             });
-            //if ($this.val().toLowerCase() === 'alert') {
-            //    $messageHolder.html($messageHolderClone.find('.alert-condition-options').html());
-            //} else {
-            //    if (!$messageHolder.find('.message-text-area').length) {
-            //        $messageHolder.html($messageHolderClone.find('.message-text-area').html());
-            //    }
-            //}
+            
         });
         $('#TypeId').change();
     };
@@ -5389,34 +5383,67 @@ Number.prototype.format = function (n, x) {
     window.Pear = Pear;
 
     var _artifactHolder;
-    $('.artifact-holder').on('click', '.highcharts-subtitle', function () {
-        var artifactHolder = $(this).closest('.artifact-holder');
+    var _latestDateTimeFormat;
+    var _configs = [];
+    var searchArtifactConfig = function (configs, artifactId) {
+        var result = { isExisted: false, config: {}, index: -1 };
+        if (configs.length > 0) {
+            for (var i = 0; i < configs.length; i++) {
+                if (configs[i].Id == artifactId) {
+                    result.isExisted = true;
+                    result.config = configs[i];
+                    result.index = i;
+                    result.dateformat = configs[i].dateformat;
+                    return result;
+                }
+            }
+        }
+
+        return result;                
+    }
+    var getDateFormat = function (periodeType) {
+        if (periodeType == undefined) return;
+        switch (periodeType.toLowerCase()) {
+            case "yearly":
+                return 'YYYY';
+            case "monthly":
+                return 'MM/YYYY';
+            case "weekly":
+                return 'MM/DD/YYYY';
+            case "daily":
+                return 'MM/DD/YYYY';
+            case "hourly":
+                return 'MM/DD/YYYY hh:00 A';
+        }
+    }
+    var getGraphicSetting = function (el) {        
+        var artifactHolder = el.closest('.artifact-holder');
+        Pear.Loading.Show(artifactHolder);
         _artifactHolder = artifactHolder;
         var artifactId = artifactHolder.attr('data-artifact-id');
         var chart = artifactHolder.highcharts();
-
+       
+        
         $.ajax({
             url: '/Artifact/GraphicSetting/' + artifactId,
             method: 'GET',
-            success: function (data) {         
+            success: function (data) {
                 $('.graphic-setting-content').hide();
-                $('.graphic-setting-content').html(data);
-                
-                $('.scale').hide();
-                $('.main-value-axis').hide();                 
+                $('.graphic-setting-content').html(data);                
                 $('.graphic-setting-content').append('<input type="hidden" value="' + artifactId + '" name="Id" />');
+               
+
+                
 
                 $('.graphic-setting-content').show();
                 $('#graphic-setting').modal('show');
-                
+
                 var rangeDatePicker = function () {
                     var format = $('#datetime-attr').attr('data-datepickerformat');
-                    //alert(format);
                     $('.datepicker').datetimepicker({
                         format: format,
                     });
                     $('.datepicker').change(function (e) {
-                        //console.log(this);
                     });
                     $('#PeriodeType').change(function (e) {
                         e.preventDefault();
@@ -5461,7 +5488,6 @@ Number.prototype.format = function (n, x) {
                 };
                 var rangeControl = function () {
                     $('#general-graphic-settings').on('change', '#RangeFilter', function (e) {
-                        
                         e.preventDefault();
                         var $this = $(this);
                         $('#range-holder').prop('class', $this.val().toLowerCase().trim());
@@ -5498,9 +5524,9 @@ Number.prototype.format = function (n, x) {
                         });
                         $('#RangeFilter').replaceWith(originalClone);
                     };
-                    
+
                     rangeFilterSetup($('#PeriodeType').val().toLowerCase().trim());
-                    $('#PeriodeType').change(function (e) {
+                    $('#general-graphic-settings').on('change', '#PeriodeType', function (e) {
                         e.preventDefault();
                         var $this = $(this);
                         rangeFilterSetup($this.val().toLowerCase().trim());
@@ -5515,27 +5541,36 @@ Number.prototype.format = function (n, x) {
                         }
                     });
                 };
-                $('#graphic-type').change(function (e) {
-                    e.preventDefault();
-                    var $this = $(this);
-                    loadGraph($this.data('graph-url'), $this.val());
-                    if ($this.val() === 'bar') {
-                        $('.netback-chart-opt').show();
-                    } else {
-                        $('.netback-chart-opt').hide();
-                    }
-                    $('#PeriodeType').change();
-                });
 
-                var initialGraphicType = $('#graphic-type');
-                if (initialGraphicType.val() == 'bar') {
-                    $('.netback-chart-opt').show();
-                }
                 rangeControl();
                 rangeDatePicker();
                 specificDate();
+
+                var search = searchArtifactConfig(_configs, artifactId);
+                if (search.isExisted == true) {
+                    console.log(search);
+                    $('.graphic-setting-content #StartInDisplay').val(search.config.StartInDisplay);
+                    $('.graphic-setting-content #EndInDisplay').val(search.config.EndInDisplay);
+                    $('.graphic-setting-content #PeriodeType').val(search.config.PeriodeType);
+                    //$('.graphic-setting-content #PeriodeType[value="' + search.config.PeriodeType + '"]').attr("selected", true);
+                    $('.graphic-setting-content #RangeFilter').val(search.config.RangeFilter);     
+                    //$('.graphic-setting-content #RangeFilter[value="' + search.config.RangeFilter + '"]').attr("selected", true);
+                    $('.datepicker').datetimepicker({
+                        format: search.dateformat,
+                    });
+                    $('#range-holder').removeClass();
+                    $('#range-holder').addClass(search.config.RangeFilter.toLowerCase());
+                }
             }
         });
+    }
+    
+    $('.artifact-holder').on('click', '.highcharts-subtitle', function () {           
+        getGraphicSetting($(this));
+    });
+
+    $('.artifact-holder').on('click', '.tank-subtitle', function () {
+        getGraphicSetting($(this));
     });
 
     $('#graphic-setting').on('submit', '#graphic-setting-form', function (e) {
@@ -5546,11 +5581,22 @@ Number.prototype.format = function (n, x) {
             method: 'POST',
             success: function (data2) {
                 var callback = Pear.Artifact.Designer._previewCallbacks;
+                var result = {};                
+                $.each($('#graphic-setting-form').serializeArray(), function (key, value) {
+                    result[this.name] = this.value;
+                });
+                result['dateformat'] = getDateFormat(result["PeriodeType"]);
+                var search = searchArtifactConfig(_configs, result["Id"]);
+                (search.isExisted) ? _configs[search.index] = result : _configs.push(result);                
                 callback[data2.GraphicType](data2, _artifactHolder);
                 $('#graphic-setting').modal('hide');
             }
         })
     })
+
+    $('#graphic-setting').on('hidden.bs.modal', function () {
+        Pear.Loading.Stop(_artifactHolder);
+    });
 
     
 }(window, jQuery, undefined));

@@ -257,6 +257,7 @@
             font: "14px Open Sans, sans-serif",
             fill: "#fff",
             textAnchor: "middle",
+            class: "tank-subtitle"
         });
         
         return this;
