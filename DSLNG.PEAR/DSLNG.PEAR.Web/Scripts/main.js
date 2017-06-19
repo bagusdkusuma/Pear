@@ -1006,6 +1006,7 @@ Number.prototype.format = function (n, x) {
                 Pear.Artifact.Designer._setupCallbacks.line();
                 break;
             case 'bar':
+            case 'barhorizontal':
                 var $hiddenFields = $('#hidden-fields');
                 $hiddenFields.find('.series-template:not(.original)').each(function (i, val) {
                     $this = $(val);
