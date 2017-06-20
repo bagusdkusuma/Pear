@@ -11,7 +11,7 @@ namespace DSLNG.PEAR.Web.App_Start
         // For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkId=254725
         public static void RegisterBundles(BundleCollection bundles)
         {
-            BundleTable.EnableOptimizations = false;
+            BundleTable.EnableOptimizations = true;
             bundles.Add(new ScriptBundle("~/bundles/js").Include(
                 "~/Scripts/jquery-ui.js",
                          "~/Scripts/moment.js",
@@ -76,6 +76,7 @@ namespace DSLNG.PEAR.Web.App_Start
             bundles.Add(new StyleBundle("~/Content/der_preview").Include("~/Content/bootstrap/css/bootstrap.css",
                    "~/Content/font-awesome/css/font-awesome.css",
                    "~/Content/bootstrap/css/bootstrap.css",
+                   "~/Content/bootstrap-datetimepicker.css",
                    "~/Content/der-dikdik.css"));
 
 

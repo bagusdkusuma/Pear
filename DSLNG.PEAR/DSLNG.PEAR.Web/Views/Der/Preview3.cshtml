@@ -56,6 +56,24 @@
             margin-top: 0px;
             margin-bottom: 0px;
         }
+
+        .der-yesterday {
+            display: inline;
+            left: 0;
+            position: absolute;
+            font-size: 25px;
+            top: 3px;
+            color: #fff;
+        }
+
+        .der-tomorrow {
+            display: inline;
+            right: 0;
+            position: absolute;
+            font-size: 25px;
+            top: 3px;
+            color: #fff;
+        }
     </style>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -64,13 +82,23 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
+@helper DerDate(string date, int addDays)
+{
+    var d = DateTime.ParseExact(Request.QueryString["date"], "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture).AddDays(addDays).ToString("MM/dd/yyyy");
+    @Url.Action("Preview", "Der", new { date = d });
+}
 <body data-date="@DateTime.Now.ToString("MM/dd/yyyy")">
     <div class="control">
+
         <div style="position:absolute;left:20px;top:20px">
-            <div style="position:relative">
-                <input name="date" class="form-control datepicker" />
+            <div style="position:relative;">
+                <a class="der-yesterday"  href="@DerDate(Request.QueryString["date"], -1)">
+                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></a>
+                <input name="date" class="form-control datepicker" style="width:60%;margin-left:43px"/>
+                <a class="der-tomorrow" href="@DerDate(Request.QueryString["date"], 1)"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
             </div>
         </div>
+        <a class="btn btn-default" onclick="location.reload(true)">Refresh</a>
         <a class="btn btn-default" href="@Url.Action("Index","DER")">Back To List</a>
 
         <form action="@Url.Action("Generate","DER")" method="post">
@@ -488,7 +516,7 @@
                                                     <div data-url="@Url.Action("LayoutItem", "Der", new { id = row5Col1.Id })" class="layout-item row5col1"></div>
                                                 }
                                             }
-                                            
+
                                         </td>
                                     </tr>
                                 </table>
@@ -1168,6 +1196,7 @@
             } else {
                 $('.datepicker').val(decodeURIComponent(date));
             }
+            var currentDate = $('.datepicker').val();
             $('.datepicker').datetimepicker({
                 format: "MM/DD/YYYY",
                 focusOnShow: false
@@ -1175,7 +1204,7 @@
                 $(".datepicker").blur();
                 reloadView();
             });
-            var currentDate = $('.datepicker').val();
+
             currentDate = moment(currentDate, "MM/DD/YYYY");
             currentDate = currentDate.subtract(1, 'day').format("MM/DD/YYYY");
 
