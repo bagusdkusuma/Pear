@@ -422,14 +422,16 @@ namespace DSLNG.PEAR.Web.Scheduler
                             }
 
                         }
-                        if (complete)
-                        {
-                            kpiTransformationScheduleService.UpdateStatus(kpiTransformationSchedule.Id, KpiTransformationStatus.Complete);
-                        }
-                        else
-                        {
-                            kpiTransformationScheduleService.UpdateStatus(kpiTransformationSchedule.Id, KpiTransformationStatus.Error);
-                        }
+                        
+                    }
+
+                    if (complete)
+                    {
+                        kpiTransformationScheduleService.UpdateStatus(kpiTransformationSchedule.Id, KpiTransformationStatus.Complete);
+                    }
+                    else
+                    {
+                        kpiTransformationScheduleService.UpdateStatus(kpiTransformationSchedule.Id, KpiTransformationStatus.Error);
                     }
 
                     #endregion
