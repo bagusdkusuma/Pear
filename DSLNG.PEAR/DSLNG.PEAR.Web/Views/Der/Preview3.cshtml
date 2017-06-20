@@ -82,9 +82,14 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-@helper DerDate(string date, int addDays)
+@helper DerDate(int addDays)
 {
-    var d = DateTime.ParseExact(Request.QueryString["date"], "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture).AddDays(addDays).ToString("MM/dd/yyyy");
+    var date = DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy");
+    if (Request.QueryString["date"] != null)
+    {
+        date = Request.QueryString["date"];
+    }
+    var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture).AddDays(addDays).ToString("MM/dd/yyyy");
     @Url.Action("Preview", "Der", new { date = d });
 }
 <body data-date="@DateTime.Now.ToString("MM/dd/yyyy")">
@@ -92,10 +97,10 @@
 
         <div style="position:absolute;left:20px;top:20px">
             <div style="position:relative;">
-                <a class="der-yesterday"  href="@DerDate(Request.QueryString["date"], -1)">
+                <a class="der-yesterday"  href="@DerDate(-1)">
                     <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></a>
                 <input name="date" class="form-control datepicker" style="width:60%;margin-left:43px"/>
-                <a class="der-tomorrow" href="@DerDate(Request.QueryString["date"], 1)"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
+                <a class="der-tomorrow" href="@DerDate(1)"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
             </div>
         </div>
         <a class="btn btn-default" onclick="location.reload(true)">Refresh</a>

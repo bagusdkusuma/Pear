@@ -110,10 +110,38 @@
         padding: 0 !important;
         margin: 2px 0 !important;
     }
+
+    .der-yesterday {
+        width: 28px;
+        font-size: 18px;
+        display: inline-block;
+        margin-left: 10px;
+        color: #fff;
+    }
+
+    .der-tomorrow {
+        width: 28px;
+        font-size: 18px;
+        display: inline-block;
+        margin-left: 10px;
+        color: #fff;
+    }
 </style>
 @{
     ViewBag.Title = "Der Input Form";
 }
+
+@helper DerDate(int addDays)
+{
+    var date = DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy");
+    if (Request.QueryString["date"] != null)
+    {
+        date = Request.QueryString["date"];
+    }
+    var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture).AddDays(addDays).ToString("MM/dd/yyyy");
+    @Url.Action("Input", "DerTransaction", new { date = d });
+}
+
 <section id="der-transaction" data-date="@DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy")">
     <div class="row upper">
         <div class="row">
@@ -132,9 +160,15 @@
                     <div class="form-group form-list">
                         @*<label>Activity Date : </label>*@
                         <font color="#FFFFFF" style="font-weight:bold; font-size:14px;">Activity Date : </font>
+                        <a class="der-yesterday" href="@DerDate(-1)">
+                            <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                        </a>
                         <input id="currentDate" class="form-control datepicker" type="text">
                         <span class="field-validation-valid" data-valmsg-for="StartInDisplay" data-valmsg-replace="true"></span>
+                        
+                        <a class="der-tomorrow" href="@DerDate(1)"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
                     </div>
+
                 </form>
             </div>
         </div>
