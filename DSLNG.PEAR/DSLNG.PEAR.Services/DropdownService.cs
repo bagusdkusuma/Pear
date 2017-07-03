@@ -287,7 +287,6 @@ namespace DSLNG.PEAR.Services
             var dropdowns =  new List<Dropdown>()
                 {
                     new Dropdown {Text = "Highlight", Value = "highlight"},
-                    new Dropdown {Text = "Line", Value = "line"},
                     new Dropdown {Text = "Multi Axis", Value = "multiaxis"},
                     new Dropdown {Text = "Speedometer", Value = "speedometer"},
                     new Dropdown {Text = "Barmeter", Value = "barmeter"},
