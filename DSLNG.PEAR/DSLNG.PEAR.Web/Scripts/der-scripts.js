@@ -305,6 +305,7 @@ Number.prototype.format = function (n, x) {
             },
             gridLineColor: '#e6e6e6'
         };
+        var plotOpt = {};
         if (opt !== undefined) {
             if (opt.hasOwnProperty('legend')) {
                 Object.assign(options.legend, opt.legend);
@@ -335,16 +336,59 @@ Number.prototype.format = function (n, x) {
         }
         else if (container.hasClass('row5col2')) {
             options.gridLineColor = 'transparent';
+            decimal = 0;
+            plotOpt['line'] = {
+                dataLabels: {
+                    enabled: true,
+                    format: '{y:.0f}',
+                    style: {
+                        fontWeight: 'normal',
+                        fontSize: '10px'
+                    }
+                }
+            }
         }
         else if (container.hasClass('row5col3')) {
             options.gridLineColor = 'transparent';
+            decimal = 0;
+            plotOpt['line'] = {
+                dataLabels: {
+                    enabled: true,
+                    format: '{y:.0f}',
+                    style: {
+                        fontWeight: 'normal',
+                        fontSize: '10px'
+                    }
+                }
+            }
         }
         else if (container.hasClass('row5col4')) {
-            options.gridLineColor = 'transparent';
+            options.gridLineColor = 'transparent';      
+            decimal = 0;
+            plotOpt['line'] = {
+                dataLabels: {
+                    enabled: true,
+                    format: '{y:.0f}',
+                    style: {
+                        fontWeight: 'normal',
+                        fontSize: '10px'
+                    }
+                }
+            }
         }
         else if (container.hasClass('row15col4')) {
             symbol = 'triangle';
             options.gridLineColor = 'transparent';
+            plotOpt['line'] = {
+                dataLabels: {
+                    enabled: true,
+                    format: '{y:.2f}',
+                    style: {
+                        fontWeight: 'normal',
+                        fontSize: '10px'
+                    }
+                }
+            }
         }
         else if (container.hasClass('row15col5')) {
             symbol = 'triangle';
@@ -419,6 +463,7 @@ Number.prototype.format = function (n, x) {
                         }
                     }
                 };
+                Object.assign(plotOptions[chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType]], plotOpt[chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType]]);
             } else if (chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType] === 'area' && data.MultiaxisChart.Charts[i].SeriesType === 'multi-stack') {
                 plotOptions[chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType]] = {
                     stacking: 'normal',
@@ -501,7 +546,7 @@ Number.prototype.format = function (n, x) {
             credits: {
                 enabled: false
             },
-            //plotOptions: plotOptions,
+            plotOptions: plotOptions,
             xAxis: [{
                 categories: data.MultiaxisChart.Periodes,
                 crosshair: true,
@@ -519,7 +564,8 @@ Number.prototype.format = function (n, x) {
 
             },
             legend: options.legend,
-            series: series
+            series: series,
+            
         });
     };
     Der.Artifact.jccMonthlyTrend = function (data, container) {

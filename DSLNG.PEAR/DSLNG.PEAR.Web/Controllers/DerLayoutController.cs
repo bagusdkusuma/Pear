@@ -235,6 +235,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         break;
                     case "termometer":
                     case "person-on-board":
+                    case "total-commitment":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 1);
                             break;
@@ -247,8 +248,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     case "hhv":
                     case "mgdp":                    
                     case "dafwc":
-                    case "job-pmts":
-                    case "total-commitment":
+                    case "job-pmts":                    
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 3);
                             break;
@@ -809,7 +809,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "total-commitment":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(3);
+                        viewModel.KpiInformations = GetKpiInformations(1);
                         return PartialView("LayoutType/_TotalCommitment", viewModel);
 
                     }
