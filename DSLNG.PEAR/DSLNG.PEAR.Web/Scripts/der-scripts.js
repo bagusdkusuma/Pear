@@ -292,11 +292,12 @@ Number.prototype.format = function (n, x) {
         //}, 1000);
 
     }
-    Der.Artifact.multiaxis = function (data, container, opt) {
+    Der.Artifact.multiaxis = function (data, container, opt, type) {
         var symbol = i % 2 == 0 ? 'triangle' : 'square';
         var fillColor = i % 2 == 0 ? '#31587f' : '#fff000';
         var converted = false;
         var decimal = 0;
+        var title = data.MultiaxisChart.Title.toLowerCase();
         var options = {
             legend: {
                 enabled: false,
@@ -312,10 +313,7 @@ Number.prototype.format = function (n, x) {
             }
         }
         
-        var title = data.MultiaxisChart.Title.toLowerCase();
-        
-
-        if (container.hasClass('row1col2')) {
+        if (container.hasClass('row1col0')) {
             if (options.legend.hasOwnProperty('enabled')) {
                 options.legend.enabled = true;
             }
@@ -377,7 +375,6 @@ Number.prototype.format = function (n, x) {
             }
         }
         else if (container.hasClass('row15col4')) {
-            symbol = 'triangle';
             options.gridLineColor = 'transparent';
             plotOpt['line'] = {
                 dataLabels: {
@@ -391,7 +388,6 @@ Number.prototype.format = function (n, x) {
             }
         }
         else if (container.hasClass('row15col5')) {
-            symbol = 'triangle';
             options.gridLineColor = 'transparent';
         }
 
@@ -409,10 +405,97 @@ Number.prototype.format = function (n, x) {
                 animation: false
             }
         };
+        var getMarkerConfig = function (j) {            
+            var marker = {
+                symbol: 'square',
+                fillColor: '#ffc000',
+                enabled: true,
+                radius: 3
+            };
+            if (container.hasClass('row1col0')) {
+                marker = {
+                    enabled: true,
+                    radius: 3,
+                    symbol: j == 0 ? 'triangle' : 'square',
+                    fillColor: j == 0 ? '#0d0d0d' : '#fbf405'
+                };
+            }
+            else if (container.hasClass('row1col1')) {
+                marker = {
+                    enabled: true,
+                    radius: 3,
+                    symbol: 'triangle',
+                    fillColor: '#ff0000'
+                };
+            }
+            else if (container.hasClass('row1col2')) {
+                marker = {
+                    enabled: true,
+                    radius: 3,
+                    symbol: 'square',
+                    fillColor: '#ff0000'
+                };
+            }
+            else if (container.hasClass('row1col3')) {
+                marker = {
+                    enabled: true,
+                    radius: 3,
+                    symbol: 'circle',
+                    fillColor: '#401352'
+                };
+            }
+            else if (container.hasClass('row5col2')) {
+                marker = {
+                    enabled: true,
+                    radius: 3,
+                    symbol: 'triangle',
+                    fillColor: '#7e131b'
+                };
+            }
+            else if (container.hasClass('row5col3')) {
+                marker = {
+                    enabled: true,
+                    radius: 3,
+                    symbol: 'square',
+                    fillColor: '#ffc000'
+                };
+            }
+            else if (container.hasClass('row5col4')) {
+                marker = {
+                    enabled: true,
+                    radius: 3,
+                    symbol: 'circle',
+                    fillColor: '#048304'
+                };
+            }
+            else if (container.hasClass('row15col4')) {
+                marker = {
+                    enabled: true,
+                    radius: 3,
+                    symbol: 'triangle',
+                    fillColor: '#ffc000'
+                };
+            }
+            else if (container.hasClass('row15col5')) {
+                marker = {
+                    enabled: true,
+                    radius: 3,
+                    symbol: j == 0 ? 'triangle' : 'diamond',
+                    fillColor: j == 0 ? '#f90406' : '#002060'
+                };
+            }
+
+            return marker;
+        }
         var series = [];
         for (var i in data.MultiaxisChart.Charts) {
             yAxes.push({
+                gridLineWidth: container.hasClass('row15col4') ? 0 : 1,
+                minorGridLineWidth: container.hasClass('row15col4') ? 0 : 1,
+                minorGridLineWidth: container.hasClass('row15col4') ? 0 : 1,
+                lineColor: container.hasClass('row15col4') ? 'transparent' : '#ccd6eb',
                 title: {
+                    enabled: container.hasClass('row15col4') ? false : true,       
                     text: data.MultiaxisChart.Charts[i].Measurement,
                     align: 'high',
                     rotation: 0,
@@ -428,6 +511,7 @@ Number.prototype.format = function (n, x) {
                 tickInterval: data.MultiaxisChart.Charts[i].FractionScale == 0 ? container.data('fraction') : data.MultiaxisChart.Charts[i].FractionScale,
                 max: data.MultiaxisChart.Charts[i].MaxFractionScale == 0 ? null : data.MultiaxisChart.Charts[i].MaxFractionScale,
                 labels: {
+                    enabled: container.hasClass('row15col4') ? false : true,                    
                     style: {
                         fontSize: '7px'
                     },
@@ -488,6 +572,7 @@ Number.prototype.format = function (n, x) {
                 plotOptions[chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType]] = { stacking: 'normal' };
             }
             for (var j in data.MultiaxisChart.Charts[i].Series) {
+                
                 if (seriesNames.indexOf(data.MultiaxisChart.Charts[i].Series[j].name) < 0) {
                     if (converted === false) {
                         seriesNames.push(data.MultiaxisChart.Charts[i].Series[j].name);
@@ -499,12 +584,13 @@ Number.prototype.format = function (n, x) {
                     data.MultiaxisChart.Charts[i].Series[j].showInLegend = false;
                 }
                 data.MultiaxisChart.Charts[i].Series[j].type = chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType];
-                data.MultiaxisChart.Charts[i].Series[j].marker = {
-                    enabled: true,
-                    radius: 3,
-                    symbol: symbol,
-                    fillColor: fillColor
-                };
+                //data.MultiaxisChart.Charts[i].Series[j].marker = {
+                //    enabled: true,
+                //    radius: 3,
+                //    symbol: getSymbol(container, j),
+                //    fillColor: fillColor
+                //};
+                data.MultiaxisChart.Charts[i].Series[j].marker = getMarkerConfig(i);
                 if (data.MultiaxisChart.Charts[i].Series[j].type != 'spline' && data.MultiaxisChart.Charts[i].SeriesType == 'single-stack') {
                     data.MultiaxisChart.Charts[i].Series[j].stack = data.MultiaxisChart.Charts[i].Series[j].name;
                 }
@@ -579,7 +665,18 @@ Number.prototype.format = function (n, x) {
             floating: true,
             enabled: true,
         };
-        return Der.Artifact.multiaxis(data, container, options);
+        Der.Artifact.multiaxis(data, container, options, 'jcc-monthly-trend');
+        var chart = $('.row15col5').highcharts();
+        if (chart.yAxis.length > 1) {
+            chart.yAxis[1].update({
+                labels: {
+                    enabled: false
+                },
+                title: {
+                    text: null
+                }
+            });
+        }        
     };
     Der.Artifact.speedometer = function (data, container) {
         //console.log(data.SpeedometerChart);
