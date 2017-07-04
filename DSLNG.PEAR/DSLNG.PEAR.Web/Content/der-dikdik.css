@@ -443,7 +443,7 @@ label {
     }
 
     .table.hhv tbody tr:first-child td {
-        
+        /*height: 42px;*/
     }
 
     .table.hhv .special-height {
@@ -1338,4 +1338,8 @@ table.flare tbody td {
 
 .tank-wrapper {
     display: inline-block;
+}
+
+.commodities tbody > tr > td:first-child {
+    text-align: right;
 }
