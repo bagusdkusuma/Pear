@@ -168,9 +168,9 @@
                         
                         <a class="der-tomorrow" href="@DerDate(1)"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
                     </div>
-
-                </form>
+                </form>                
             </div>
+            
         </div>
         @*<hr />*@
     </div>
@@ -316,9 +316,10 @@
         @*<a href="#" class="btn btn-master-rgw btn-primary"><i class="fa fa-check-circle"></i> Save</a>
             <a href="#" class="btn btn-master-rgw btn-primary"><i class="fa fa-search"></i> Check</a>*@
         <a tabindex="278" href="javascript:void(0)" onclick="callDerPreview()" class="btn btn-master-rgw btn-primary"><i class="fa fa-file-archive-o"></i> DER Preview</a>
+        <a class="btn btn-master-rgw btn-primary" href="@Url.Action("Activity", "DerTransaction")">DER Input Files</a>
         <label class="labletop">Batch :</label>
         @Html.DropDownList("Batch_Id", (IEnumerable<SelectListItem>)ViewBag.KpiTransformations, new { @class = "btn btn-master-rgw btn-primary" })
-        <button type="submit" class="btn btn-master-rgw btn-primary submit-process"><i class="fa fa-cogs"></i> Process</button>
+        <button type="submit" class="btn btn-master-rgw btn-primary submit-process"><i class="fa fa-cogs"></i> Process</button>        
         <div id="processResult"></div>
     </div>
 </section>
