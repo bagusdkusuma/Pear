@@ -281,40 +281,7 @@
             </div>
         </div>
     </div>
-    @*<hr />*@
-    <div class="col-md-12" style="margin-bottom: 30px;">
-        @*<div class="col-md-3">
-                <table width="900" border="0" cellpadding="2" cellspacing="2" hidden="hidden">
-                    <tr>
-                        <td>
-                            <label for="">Prepared By-L</label>
-                            <br />
-                            <select>
-                                <option>Select Option</option>
-                                <option>Option 1</option>
-                                <option>Option 2</option>
-                            </select>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="col-md-3">
-                <table width="900" border="0" cellpadding="2" cellspacing="2" hidden="hidden">
-                    <tr>
-                        <td>
-                            <label for="">Reviewed By-M</label>
-                            <br />
-                            <select>
-                                <option>Select Option</option>
-                                <option>Option 1</option>
-                                <option>Option 2</option>
-                            </select>
-                        </td>
-                    </tr>
-                </table>
-            </div>*@
-        @*<a href="#" class="btn btn-master-rgw btn-primary"><i class="fa fa-check-circle"></i> Save</a>
-            <a href="#" class="btn btn-master-rgw btn-primary"><i class="fa fa-search"></i> Check</a>*@
+    <div class="col-md-12" style="margin-bottom: 30px;">       
         <a tabindex="278" href="javascript:void(0)" onclick="callDerPreview()" class="btn btn-master-rgw btn-primary"><i class="fa fa-file-archive-o"></i> DER Preview</a>
         <a class="btn btn-master-rgw btn-primary" href="@Url.Action("Activity", "DerTransaction")">DER Input Files</a>
         <label class="labletop">Batch :</label>
@@ -326,20 +293,6 @@
 
 <script type="text/javascript" src="~/Content/datepicker/js/bootstrap-datepicker.js"></script>
 <script type="text/javascript">
-    //$(document).ready(function () {
-    //    $('#currentDate').val('02/18/2016');
-    //    if ($('.der-display').length) {
-    //        $('.datepicker').datetimepicker({
-    //            format: "MM/DD/YYYY",
-    //            focusOnShow: false
-    //        }).on('dp.change', function (e) {
-    //            $("#currentDate").blur();
-    //            reloadView();
-    //        });
-    //    };
-    //});
-
-
     $(document).on('click', '.submit-process', function (e) {
         e.preventDefault();
         var currentDate = $('.datepicker').val();
@@ -418,8 +371,6 @@
             window.document.location = updateQueryStringParameter(window.location.href, "date", encodeURIComponent($('.datepicker').val()));
         };
 
-
-
         $(document).ready(function () {
             var date = getQueryVariable('date');
             if (date == null) {
@@ -449,7 +400,6 @@
             var openNextTab = function ($latInput, nextIndex) {
                 var nextIndexs = [23, 35, 171, 178, 218, 262, 278];
                 if (nextIndexs.indexOf(nextIndex) > -1) {
-                    console.log('next tab called');
                     var $collapse = $latInput.closest('.collapse');
                     var $row = $collapse.closest('.row');
                     var $nextRow = $row.next();
@@ -467,856 +417,30 @@
                         }
                     }, 100);
                     setTimeout(function () { clearInterval(window.theInterval); }, 10000);
-
                 }
             };
 
             $('.btn-trigger').click(function (e) {
                 e.preventDefault();
                 var $this = $(this);
-                //var target = $this.attr('href');
                 var target = $this.data('target');
-                expands(target, $this);
-                //if (!$(target).children().length) {
-                //    var contentUrl = $this.data('content-url');
-                //    contentUrl = contentUrl.replace('__date__', encodeURIComponent(currentDate));
-                //    $.get(contentUrl, function (data) {
-                //        $(target).on('click', 'select', function () {
-                //            console.log('panggil mari');
-                //            if ($(this).attr('data-clicks') == 1) {
-                //                // Trigger here your function:
-                //                console.log('event should be triggered :panggil mari');
-                //                $(this).trigger("altChange");
-                //                $(this).attr('data-clicks', 0);
-                //            } else {
-                //                $(this).attr('data-clicks', 1);
-                //            }
-                //        });
-                //        $(target).on('focusout', 'select', function () {
-                //            $(this).attr('data-clicks', 0);
-                //        });
-                //        $(target).html(data);
-                //        $(target).find('input.der-kpi').keyup(function (e) {
-                //            if (e.keyCode == 13 || e.keyCode == 9) {
-                //                console.log($(this));
-                //                $(this).trigger("enterKey");
-                //            }
-                //        });
-                //        $(target).find('input.der-kpi').keypress(function (e) {
-                //            console.log($(this));
-                //            if ($(this).attr('data-value-type') == 'value') {
-                //                var maxLen = $(this).attr('maxLength')
-                //                if (maxLen == undefined) {
-                //                    $(this).attr('maxLength', 10);
-                //                }
-                //                //$(this).attr('maxlength', 10);
-                //                if (e.which !== 13 && e.which !== 9) {
-                //                    if ((e.which > 8 && e.which < 44) || e.which > 57) {
-                //                        e.preventDefault();
-                //                    }
-                //                }
-                //            }
-                //        });
-                //        $(target).find('input.der-kpi').blur(function (e) {
-                //            console.log($(this));
-                //            if ($(this).attr('data-value-type') == 'value') {
-                //                var toConvert = eval($(this).val().replace(/,/g, ''));
-                //                if (!isNaN(toConvert)) {
-                //                    $(this).val(toConvert.toLocaleString('en-EN', { maximumSignificantDigits: 21 }));
-                //                }
-                //            }
-                //        });
-                //        $(target).find('input.der-kpi').focus(function (e) {
-                //            $(this).select();
-                //        });
-                //        $(target).find('input.der-kpi').bind('enterKey', function (e) {
-                //            var $this = $(this);
-                //            var kpiId = $this.data('kpi-id');
-                //            var type = $this.data('type');
-                //            var tabindex = $this.attr('tabindex');
-                //            var nextTabindex = parseInt(tabindex) + 1;
-                //            var id = $this.attr('data-id');
-                //            var value = $this.val();
-                //            var valueType = $this.data('value-type');
-                //            $this.addClass('in-progress');
-                //            $.post("/dertransaction/updatekpi", { kpiId: kpiId, type: type, date: currentDate, id: id, value: value, valueType: valueType }, function (resp) {
-                //                openNextTab($this, nextTabindex);
-                //                var $next = $('[tabindex=' + nextTabindex + ']');
-                //                if ($next.is("textarea") && $next.css('display') == 'none') {
-                //                    tinyMCE.get($next.attr('id')).focus()
-                //                } else {
-                //                    $next.focus();
-                //                }
-
-                //                $this.removeClass('in-progress');
-                //                if ($this.hasClass('der-value-prev')) {
-                //                    $this.removeClass('der-value-prev');
-                //                }
-                //                if ($this.hasClass('der-value-empty')) {
-                //                    $this.removeClass('der-value-empty');
-                //                }
-                //                $this.addClass('der-value-now');
-                //                if (parseInt($this.attr('data-id')) == 0) {
-                //                    $this.attr('data-id', resp.Id);
-                //                }
-                //            })
-                //        })
-                //        $(target).find('textarea.allow-html').each(function (i, val) {
-                //            var $this = $(val);
-                //            tinyMCE.init({
-                //                selector: '#' + $this.attr('id'),
-                //                menubar: false,
-                //                theme_advanced_path: false,
-                //                plugins: [
-                //                    "advlist autolink lists charmap print preview anchor",
-                //                    "searchreplace visualblocks code fullscreen",
-                //                    "insertdatetime media table contextmenu paste"
-                //                ],
-                //                toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
-                //                setup: function (editor) {
-                //                    editor.on('keydown', function (e) {
-                //                        var key = e.keyCode || e.which;
-
-                //                        // on tab key
-                //                        if (key == 9) {
-                //                            e.preventDefault();
-                //                            return;
-                //                        }
-
-                //                    }).on('keyup', function (e) {
-                //                        var key = e.keyCode || e.which;
-                //                        var $textarea = $('#' + editor.id);
-                //                        var nextTab = parseInt($textarea.attr('tabindex')) + 1;
-                //                        if (key == 9) {
-                //                            var highlightTypeId = $textarea.data('highlight-type-id');
-                //                            var id = $textarea.attr('data-id');
-                //                            var value = editor.getContent();
-                //                            $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function (resp) {
-                //                                openNextTab($textarea, nextTab);
-                //                                var $next = $('[tabindex=' + nextTab + ']');
-                //                                if ($next.is("textarea") && $next.css('display') == 'none') {
-                //                                    tinyMCE.get($next.attr('id')).focus()
-                //                                } else {
-                //                                    $next.focus();
-                //                                }
-                //                                if (parseInt($textarea.attr('data-id')) == 0) {
-                //                                    $textarea.attr('data-id', resp.Id);
-                //                                }
-                //                            });
-                //                        }
-                //                    });
-                //                }
-                //            });
-                //        })
-                //        $(target).on('altChange', 'select.der-highlight', function (e) {
-                //            var $this = $(this);
-                //            var nextTab = parseInt($this.attr('tabindex')) + 1;
-                //            var highlightTypeId = $this.data('highlight-type-id');
-                //            var id = $this.attr('data-id');
-                //            var value = $this.val();
-                //            $this.addClass('in-progress');
-                //            $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function (resp) {
-                //                openNextTab($this, nextTab);
-                //                var $next = $('[tabindex=' + nextTab + ']');
-                //                if ($next.is("textarea") && $next.css('display') == 'none') {
-                //                    tinyMCE.get($next.attr('id')).focus()
-                //                } else {
-                //                    $next.focus();
-                //                }
-                //                $this.removeClass('in-progress');
-                //                if ($this.hasClass('der-value-prev')) {
-                //                    $this.removeClass('der-value-prev');
-                //                }
-                //                if ($this.hasClass('der-value-empty')) {
-                //                    $this.removeClass('der-value-empty');
-                //                }
-                //                $this.addClass('der-value-now');
-                //                if (parseInt($this.attr('data-id')) == 0) {
-                //                    $this.attr('data-id', resp.Id);
-                //                }
-                //            });
-                //        });
-                //        $('.datepicker', target).datetimepicker({
-                //            format: "DD MMM YYYY",
-                //            focusOnShow: false
-                //        });
-                //        $(target).on('keyup', 'input.der-highlight-input', function (e) {
-                //            if (e.keyCode == 13) {
-                //                var $this = $(this);
-                //                var nextTab = parseInt($this.attr('tabindex')) + 1;
-                //                var highlightTypeId = $this.data('highlight-type-id');
-                //                var id = $this.attr('data-id');
-                //                var value = $this.val();
-                //                $this.addClass('in-progress');
-                //                $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function (resp) {
-                //                    openNextTab($this, nextTab);
-                //                    var $next = $('[tabindex=' + nextTab + ']');
-                //                    if ($next.is("textarea") && $next.css('display') == 'none') {
-                //                        tinyMCE.get($next.attr('id')).focus()
-                //                    } else {
-                //                        $next.focus();
-                //                    }
-                //                    $this.removeClass('in-progress');
-                //                    if ($this.hasClass('der-value-prev')) {
-                //                        $this.removeClass('der-value-prev');
-                //                    }
-                //                    if ($this.hasClass('der-value-empty')) {
-                //                        $this.removeClass('der-value-empty');
-                //                    }
-                //                    $this.addClass('der-value-now');
-                //                    if (parseInt($this.attr('data-id')) == 0) {
-                //                        $this.attr('data-id', resp.Id);
-                //                    }
-                //                });
-                //            }
-                //        });
-                //        $(target).on('altChange', 'select.der-highlight-infragsm', function (e) {
-                //            var $this = $(this);
-                //            var nextTab = parseInt($this.attr('tabindex')) + 1;
-                //            var highlightTypeId = $this.data('highlight-type-id');
-                //            var id = $this.attr('data-id');
-                //            var value = $this.val();
-                //            var property = $this.data('property');
-                //            $this.addClass('in-progress');
-                //            $.post("/dertransaction/updateinfragsm", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property: property }, function (resp) {
-                //                openNextTab($this, nextTab);
-                //                var $next = $('[tabindex=' + nextTab + ']');
-                //                if ($next.is("textarea") && $next.css('display') == 'none') {
-                //                    tinyMCE.get($next.attr('id')).focus()
-                //                } else {
-                //                    $next.focus();
-                //                }
-                //                $this.removeClass('in-progress');
-                //                if ($this.hasClass('der-value-prev')) {
-                //                    $this.removeClass('der-value-prev');
-                //                }
-                //                if ($this.hasClass('der-value-empty')) {
-                //                    $this.removeClass('der-value-empty');
-                //                }
-                //                $this.addClass('der-value-now');
-                //                if (parseInt($this.attr('data-id')) == 0) {
-                //                    $this.attr('data-id', resp.Id);
-                //                }
-                //            });
-                //        });
-                //        $(target).on('altChange', 'select.der-highlight-wave', function (e) {
-                //            var $this = $(this);
-                //            var nextTab = parseInt($this.attr('tabindex')) + 1;
-                //            var id = $this.attr('data-id');
-                //            var value = $this.val();
-                //            var property = $this.data('property');
-                //            var data = { DateInDisplay: currentDate, id: id, PeriodeType: "Daily", property: property };
-                //            if (property == 'wind-direction') {
-                //                data.ValueId = value;
-                //            } else {
-                //                data.Tide = value;
-                //            }
-                //            $this.addClass('in-progress');
-                //            $.post("/dertransaction/updatewave", data, function (resp) {
-                //                openNextTab($this, nextTab);
-                //                var $next = $('[tabindex=' + nextTab + ']');
-                //                if ($next.is("textarea") && $next.css('display') == 'none') {
-                //                    tinyMCE.get($next.attr('id')).focus()
-                //                } else {
-                //                    $next.focus();
-                //                }
-                //                $this.removeClass('in-progress');
-                //                if ($this.hasClass('der-value-prev')) {
-                //                    $this.removeClass('der-value-prev');
-                //                }
-                //                if ($this.hasClass('der-value-empty')) {
-                //                    $this.removeClass('der-value-empty');
-                //                }
-                //                $this.addClass('der-value-now');
-                //                if (parseInt($this.attr('data-id')) == 0) {
-                //                    $this.attr('data-id', resp.Id);
-                //                }
-                //            });
-                //        });
-                //        $(target).on('altChange', 'select.der-highlight-weather', function (e) {
-                //            var $this = $(this);
-                //            var nextTab = parseInt($this.attr('tabindex')) + 1;
-                //            var id = $this.attr('data-id');
-                //            var value = $this.val();
-                //            var data = { DateInDisplay: currentDate, id: id, PeriodeType: "Daily", ValueId: value };
-                //            $this.addClass('in-progress');
-                //            $.post("/dertransaction/updateweather", data, function (resp) {
-                //                openNextTab($this, nextTab);
-                //                var $next = $('[tabindex=' + nextTab + ']');
-                //                if ($next.is("textarea") && $next.css('display') == 'none') {
-                //                    tinyMCE.get($next.attr('id')).focus()
-                //                } else {
-                //                    $next.focus();
-                //                }
-                //                $this.removeClass('in-progress');
-                //                if ($this.hasClass('der-value-prev')) {
-                //                    $this.removeClass('der-value-prev');
-                //                }
-                //                if ($this.hasClass('der-value-empty')) {
-                //                    $this.removeClass('der-value-empty');
-                //                }
-                //                $this.addClass('der-value-now');
-                //                if (parseInt($this.attr('data-id')) == 0) {
-                //                    $this.attr('data-id', resp.Id);
-                //                }
-                //            });
-                //        });
-                //        $(target).on('keyup', 'input.der-highlight-wave', function (e) {
-                //            if (e.keyCode == 13) {
-                //                var $this = $(this);
-                //                var nextTab = parseInt($this.attr('tabindex')) + 1;
-                //                var id = $this.attr('data-id');
-                //                var value = $this.val();
-                //                var property = $this.data('property');
-                //                var data = { DateInDisplay: currentDate, id: id, PeriodeType: "Daily", property: property, Speed: value };
-                //                //if (property == 'wind-direction') {
-                //                //    data.ValueId = value;
-                //                //} else if{
-                //                //    data.Tide = value;
-                //                //}
-                //                $this.addClass('in-progress');
-                //                $.post("/dertransaction/updatewave", data, function (resp) {
-                //                    openNextTab($this, nextTab);
-                //                    var $next = $('[tabindex=' + nextTab + ']');
-                //                    if ($next.is("textarea") && $next.css('display') == 'none') {
-                //                        tinyMCE.get($next.attr('id')).focus()
-                //                    } else {
-                //                        $next.focus();
-                //                    }
-                //                    $this.removeClass('in-progress');
-                //                    if ($this.hasClass('der-value-prev')) {
-                //                        $this.removeClass('der-value-prev');
-                //                    }
-                //                    if ($this.hasClass('der-value-empty')) {
-                //                        $this.removeClass('der-value-empty');
-                //                    }
-                //                    $this.addClass('der-value-now');
-                //                    if (parseInt($this.attr('data-id')) == 0) {
-                //                        $this.attr('data-id', resp.Id);
-                //                    }
-                //                });
-                //            }
-                //        });
-                //        $(target).on('keyup', 'input.der-highlight-brenfut', function (e) {
-                //            if (e.keyCode == 13) {
-                //                var $this = $(this);
-                //                var nextTab = parseInt($this.attr('tabindex')) + 1;
-                //                var highlightTypeId = $this.data('highlight-type-id');
-                //                var id = $this.attr('data-id');
-                //                var value = $this.val();
-                //                var property = $this.data('property');
-                //                var valueType = $this.data('type');
-                //                $this.addClass('in-progress');
-                //                $.post("/dertransaction/updatebrenfut", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property: property, valueType: valueType }, function (resp) {
-                //                    openNextTab($this, nextTab);
-                //                    var $next = $('[tabindex=' + nextTab + ']');
-                //                    if ($next.is("textarea") && $next.css('display') == 'none') {
-                //                        tinyMCE.get($next.attr('id')).focus()
-                //                    } else {
-                //                        $next.focus();
-                //                    }
-                //                    $this.removeClass('in-progress');
-                //                    if ($this.hasClass('der-value-prev')) {
-                //                        $this.removeClass('der-value-prev');
-                //                    }
-                //                    if ($this.hasClass('der-value-empty')) {
-                //                        $this.removeClass('der-value-empty');
-                //                    }
-                //                    $this.addClass('der-value-now');
-                //                    if (parseInt($this.attr('data-id')) == 0) {
-                //                        $this.attr('data-id', resp.Id);
-                //                    }
-                //                });
-                //            }
-                //        });
-                //        $(target).on('altChange', 'select.der-kpi', function (e) {
-                //            var $this = $(this);
-                //            var kpiId = $this.data('kpi-id');
-                //            var type = $this.data('type');
-                //            var tabindex = $this.attr('tabindex');
-                //            var nextTabindex = parseInt(tabindex) + 1;
-                //            var id = $this.attr('data-id');
-                //            var value = $this.val();
-                //            var valueType = $this.data('value-type');
-                //            $this.addClass('in-progress');
-                //            $.post("/dertransaction/updatekpi", { kpiId: kpiId, type: type, date: currentDate, id: id, value: value, valueType: valueType }, function (resp) {
-                //                openNextTab($this, nextTabindex);
-                //                var $next = $('[tabindex=' + nextTabindex + ']');
-                //                if ($next.is("textarea") && $next.css('display') == 'none') {
-                //                    tinyMCE.get($next.attr('id')).focus()
-                //                } else {
-                //                    $next.focus();
-                //                }
-
-                //                $this.removeClass('in-progress');
-                //                if ($this.hasClass('der-value-prev')) {
-                //                    $this.removeClass('der-value-prev');
-                //                }
-                //                if ($this.hasClass('der-value-empty')) {
-                //                    $this.removeClass('der-value-empty');
-                //                }
-                //                $this.addClass('der-value-now');
-                //                if (parseInt($this.attr('data-id')) == 0) {
-                //                    $this.attr('data-id', resp.Id);
-                //                }
-                //            })
-                //        });
-                //        $(target).on('keydown', 'input.der-highlight-weekly-alarm, textarea.der-highlight-weekly-alarm', function (e) {
-                //            var $this = $(this);
-                //            if (($this.is('input') && e.keyCode == 13) || ($this.is('textarea') && e.keyCode == 9)) {
-                //                var nextTab = parseInt($this.attr('tabindex')) + 1;
-                //                var highlightTypeId = $this.data('highlight-type-id');
-                //                var id = $this.attr('data-id');
-                //                var value = $this.val();
-                //                var property = $this.data('property');
-                //                $this.addClass('in-progress');
-                //                $.post("/dertransaction/updateweeklyalarm", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property: property }, function (resp) {
-                //                    openNextTab($this, nextTab);
-                //                    var $next = $('[tabindex=' + nextTab + ']');
-                //                    if ($next.is("textarea") && $next.css('display') == 'none') {
-                //                        tinyMCE.get($next.attr('id')).focus()
-                //                    } else {
-                //                        $next.focus();
-                //                    }
-                //                    $this.removeClass('in-progress');
-                //                    if ($this.hasClass('der-value-prev')) {
-                //                        $this.removeClass('der-value-prev');
-                //                    }
-                //                    if ($this.hasClass('der-value-empty')) {
-                //                        $this.removeClass('der-value-empty');
-                //                    }
-                //                    $this.addClass('der-value-now');
-                //                    if (parseInt($this.attr('data-id')) == 0) {
-                //                        $this.attr('data-id', resp.Id);
-                //                    }
-                //                });
-                //            }
-                //        });
-                //    })
-                //}
+                expands(target, $this);                
             });
 
             $('.btn-input-slide').click(function (e) {
                 e.preventDefault();
                 var $this = $(this);
-                //var target = $this.attr('href');
                 var target = $this.data('target');
-                expands(target, $this);
-                //if (!$(target).children().length) {
-                //    var contentUrl = $this.data('content-url');
-                //    contentUrl = contentUrl.replace('__date__', encodeURIComponent(currentDate));
-                //    $.get(contentUrl, function (data) {
-                //        $(target).on('click', 'select', function () {
-                //            console.log('panggil mari');
-                //            if ($(this).attr('data-clicks') == 1) {
-                //                // Trigger here your function:
-                //                console.log('event should be triggered :panggil mari');
-                //                $(this).trigger("altChange");
-                //                $(this).attr('data-clicks', 0);
-                //            } else {
-                //                $(this).attr('data-clicks', 1);
-                //            }
-                //        });
-                //        $(target).on('focusout', 'select', function () {
-                //            $(this).attr('data-clicks', 0);
-                //        });
-                //        $(target).html(data);
-                //        $(target).find('input.der-kpi').keyup(function (e) {
-                //            if (e.keyCode == 13 || e.keyCode == 9) {
-                //                $(this).trigger("enterKey");
-                //            }
-                //        });
-                //        $(target).find('input.der-kpi').keypress(function (e) {
-                //            if ($(this).attr('data-value-type') == 'value') {
-                //                var maxLen = $(this).attr('maxLength')
-                //                if (maxLen == undefined) {
-                //                    $(this).attr('maxLength', 10);
-                //                }
-                //                //$(this).attr('maxlength', 10);
-                //                if (e.which !== 13 && e.which !== 9) {
-                //                    if ((e.which > 8 && e.which < 44) || e.which > 57) {
-                //                        e.preventDefault();
-                //                    }
-                //                }
-                //            }
-                //        });
-                //        $(target).find('input.der-kpi').blur(function (e) {
-                //            if ($(this).attr('data-value-type') == 'value') {
-                //                var toConvert = eval($(this).val().replace(/,/g, ''));
-                //                if (!isNaN(toConvert)) {
-                //                    $(this).val(toConvert.toLocaleString('en-EN', { maximumSignificantDigits: 21 }));
-                //                }
-                //            }
-                //        });
-                //        $(target).find('input.der-kpi').focus(function (e) {
-                //            $(this).select();
-                //        });
-                //        $(target).find('input.der-kpi').bind('enterKey', function (e) {
-                //            var $this = $(this);
-                //            var kpiId = $this.data('kpi-id');
-                //            var type = $this.data('type');
-                //            var tabindex = $this.attr('tabindex');
-                //            var nextTabindex = parseInt(tabindex) + 1;
-                //            var id = $this.attr('data-id');
-                //            var value = $this.val();
-                //            var valueType = $this.data('value-type');
-                //            $this.addClass('in-progress');
-                //            $.post("/dertransaction/updatekpi", { kpiId: kpiId, type: type, date: currentDate, id: id, value: value, valueType: valueType }, function (resp) {
-                //                openNextTab($this, nextTabindex);
-                //                var $next = $('[tabindex=' + nextTabindex + ']');
-                //                if ($next.is("textarea") && $next.css('display') == 'none') {
-                //                    tinyMCE.get($next.attr('id')).focus()
-                //                } else {
-                //                    $next.focus();
-                //                }
-
-                //                $this.removeClass('in-progress');
-                //                if ($this.hasClass('der-value-prev')) {
-                //                    $this.removeClass('der-value-prev');
-                //                }
-                //                if ($this.hasClass('der-value-empty')) {
-                //                    $this.removeClass('der-value-empty');
-                //                }
-                //                $this.addClass('der-value-now');
-                //                if (parseInt($this.attr('data-id')) == 0) {
-                //                    $this.attr('data-id', resp.Id);
-                //                }
-                //            })
-                //        })
-                //        $(target).find('textarea.allow-html').each(function (i, val) {
-                //            var $this = $(val);
-                //            tinyMCE.init({
-                //                selector: '#' + $this.attr('id'),
-                //                menubar: false,
-                //                theme_advanced_path: false,
-                //                plugins: [
-                //                    "advlist autolink lists charmap print preview anchor",
-                //                    "searchreplace visualblocks code fullscreen",
-                //                    "insertdatetime media table contextmenu paste"
-                //                ],
-                //                toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
-                //                setup: function (editor) {
-                //                    editor.on('keydown', function (e) {
-                //                        var key = e.keyCode || e.which;
-
-                //                        // on tab key
-                //                        if (key == 9) {
-                //                            e.preventDefault();
-                //                            return;
-                //                        }
-
-                //                    }).on('keyup', function (e) {
-                //                        var key = e.keyCode || e.which;
-                //                        var $textarea = $('#' + editor.id);
-                //                        var nextTab = parseInt($textarea.attr('tabindex')) + 1;
-                //                        if (key == 9) {
-                //                            var highlightTypeId = $textarea.data('highlight-type-id');
-                //                            var id = $textarea.attr('data-id');
-                //                            var value = editor.getContent();
-                //                            $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function (resp) {
-                //                                openNextTab($textarea, nextTab);
-                //                                var $next = $('[tabindex=' + nextTab + ']');
-                //                                if ($next.is("textarea") && $next.css('display') == 'none') {
-                //                                    tinyMCE.get($next.attr('id')).focus()
-                //                                } else {
-                //                                    $next.focus();
-                //                                }
-                //                                if (parseInt($textarea.attr('data-id')) == 0) {
-                //                                    $textarea.attr('data-id', resp.Id);
-                //                                }
-                //                            });
-                //                        }
-                //                    });
-                //                }
-                //            });
-                //        })
-                //        $(target).on('altChange', 'select.der-highlight', function (e) {
-                //            var $this = $(this);
-                //            var nextTab = parseInt($this.attr('tabindex')) + 1;
-                //            var highlightTypeId = $this.data('highlight-type-id');
-                //            var id = $this.attr('data-id');
-                //            var value = $this.val();
-                //            $this.addClass('in-progress');
-                //            $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function (resp) {
-                //                openNextTab($this, nextTab);
-                //                var $next = $('[tabindex=' + nextTab + ']');
-                //                if ($next.is("textarea") && $next.css('display') == 'none') {
-                //                    tinyMCE.get($next.attr('id')).focus()
-                //                } else {
-                //                    $next.focus();
-                //                }
-                //                $this.removeClass('in-progress');
-                //                if ($this.hasClass('der-value-prev')) {
-                //                    $this.removeClass('der-value-prev');
-                //                }
-                //                if ($this.hasClass('der-value-empty')) {
-                //                    $this.removeClass('der-value-empty');
-                //                }
-                //                $this.addClass('der-value-now');
-                //                if (parseInt($this.attr('data-id')) == 0) {
-                //                    $this.attr('data-id', resp.Id);
-                //                }
-                //            });
-                //        });
-                //        $('.datepicker', target).datetimepicker({
-                //            format: "DD MMM YYYY",
-                //            focusOnShow: false
-                //        });
-                //        $(target).on('keyup', 'input.der-highlight-input', function (e) {
-                //            if (e.keyCode == 13) {
-                //                var $this = $(this);
-                //                var nextTab = parseInt($this.attr('tabindex')) + 1;
-                //                var highlightTypeId = $this.data('highlight-type-id');
-                //                var id = $this.attr('data-id');
-                //                var value = $this.val();
-                //                $this.addClass('in-progress');
-                //                $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function (resp) {
-                //                    openNextTab($this, nextTab);
-                //                    var $next = $('[tabindex=' + nextTab + ']');
-                //                    if ($next.is("textarea") && $next.css('display') == 'none') {
-                //                        tinyMCE.get($next.attr('id')).focus()
-                //                    } else {
-                //                        $next.focus();
-                //                    }
-                //                    $this.removeClass('in-progress');
-                //                    if ($this.hasClass('der-value-prev')) {
-                //                        $this.removeClass('der-value-prev');
-                //                    }
-                //                    if ($this.hasClass('der-value-empty')) {
-                //                        $this.removeClass('der-value-empty');
-                //                    }
-                //                    $this.addClass('der-value-now');
-                //                    if (parseInt($this.attr('data-id')) == 0) {
-                //                        $this.attr('data-id', resp.Id);
-                //                    }
-                //                });
-                //            }
-                //        });
-                //        $(target).on('altChange', 'select.der-highlight-infragsm', function (e) {
-                //            var $this = $(this);
-                //            var nextTab = parseInt($this.attr('tabindex')) + 1;
-                //            var highlightTypeId = $this.data('highlight-type-id');
-                //            var id = $this.attr('data-id');
-                //            var value = $this.val();
-                //            var property = $this.data('property');
-                //            $this.addClass('in-progress');
-                //            $.post("/dertransaction/updateinfragsm", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property: property }, function (resp) {
-                //                openNextTab($this, nextTab);
-                //                var $next = $('[tabindex=' + nextTab + ']');
-                //                if ($next.is("textarea") && $next.css('display') == 'none') {
-                //                    tinyMCE.get($next.attr('id')).focus()
-                //                } else {
-                //                    $next.focus();
-                //                }
-                //                $this.removeClass('in-progress');
-                //                if ($this.hasClass('der-value-prev')) {
-                //                    $this.removeClass('der-value-prev');
-                //                }
-                //                if ($this.hasClass('der-value-empty')) {
-                //                    $this.removeClass('der-value-empty');
-                //                }
-                //                $this.addClass('der-value-now');
-                //                if (parseInt($this.attr('data-id')) == 0) {
-                //                    $this.attr('data-id', resp.Id);
-                //                }
-                //            });
-                //        });
-                //        $(target).on('altChange', 'select.der-highlight-wave', function (e) {
-                //            var $this = $(this);
-                //            var nextTab = parseInt($this.attr('tabindex')) + 1;
-                //            var id = $this.attr('data-id');
-                //            var value = $this.val();
-                //            var property = $this.data('property');
-                //            var data = { DateInDisplay: currentDate, id: id, PeriodeType: "Daily", property: property };
-                //            if (property == 'wind-direction') {
-                //                data.ValueId = value;
-                //            } else {
-                //                data.Tide = value;
-                //            }
-                //            $this.addClass('in-progress');
-                //            $.post("/dertransaction/updatewave", data, function (resp) {
-                //                openNextTab($this, nextTab);
-                //                var $next = $('[tabindex=' + nextTab + ']');
-                //                if ($next.is("textarea") && $next.css('display') == 'none') {
-                //                    tinyMCE.get($next.attr('id')).focus()
-                //                } else {
-                //                    $next.focus();
-                //                }
-                //                $this.removeClass('in-progress');
-                //                if ($this.hasClass('der-value-prev')) {
-                //                    $this.removeClass('der-value-prev');
-                //                }
-                //                if ($this.hasClass('der-value-empty')) {
-                //                    $this.removeClass('der-value-empty');
-                //                }
-                //                $this.addClass('der-value-now');
-                //                if (parseInt($this.attr('data-id')) == 0) {
-                //                    $this.attr('data-id', resp.Id);
-                //                }
-                //            });
-                //        });
-                //        $(target).on('altChange', 'select.der-highlight-weather', function (e) {
-                //            var $this = $(this);
-                //            var nextTab = parseInt($this.attr('tabindex')) + 1;
-                //            var id = $this.attr('data-id');
-                //            var value = $this.val();
-                //            var data = { DateInDisplay: currentDate, id: id, PeriodeType: "Daily", ValueId: value };
-                //            $this.addClass('in-progress');
-                //            $.post("/dertransaction/updateweather", data, function (resp) {
-                //                openNextTab($this, nextTab);
-                //                var $next = $('[tabindex=' + nextTab + ']');
-                //                if ($next.is("textarea") && $next.css('display') == 'none') {
-                //                    tinyMCE.get($next.attr('id')).focus()
-                //                } else {
-                //                    $next.focus();
-                //                }
-                //                $this.removeClass('in-progress');
-                //                if ($this.hasClass('der-value-prev')) {
-                //                    $this.removeClass('der-value-prev');
-                //                }
-                //                if ($this.hasClass('der-value-empty')) {
-                //                    $this.removeClass('der-value-empty');
-                //                }
-                //                $this.addClass('der-value-now');
-                //                if (parseInt($this.attr('data-id')) == 0) {
-                //                    $this.attr('data-id', resp.Id);
-                //                }
-                //            });
-                //        });
-                //        $(target).on('keyup', 'input.der-highlight-wave', function (e) {
-                //            if (e.keyCode == 13) {
-                //                var $this = $(this);
-                //                var nextTab = parseInt($this.attr('tabindex')) + 1;
-                //                var id = $this.attr('data-id');
-                //                var value = $this.val();
-                //                var property = $this.data('property');
-                //                var data = { DateInDisplay: currentDate, id: id, PeriodeType: "Daily", property: property, Speed: value };
-                //                //if (property == 'wind-direction') {
-                //                //    data.ValueId = value;
-                //                //} else if{
-                //                //    data.Tide = value;
-                //                //}
-                //                $this.addClass('in-progress');
-                //                $.post("/dertransaction/updatewave", data, function (resp) {
-                //                    openNextTab($this, nextTab);
-                //                    var $next = $('[tabindex=' + nextTab + ']');
-                //                    if ($next.is("textarea") && $next.css('display') == 'none') {
-                //                        tinyMCE.get($next.attr('id')).focus()
-                //                    } else {
-                //                        $next.focus();
-                //                    }
-                //                    $this.removeClass('in-progress');
-                //                    if ($this.hasClass('der-value-prev')) {
-                //                        $this.removeClass('der-value-prev');
-                //                    }
-                //                    if ($this.hasClass('der-value-empty')) {
-                //                        $this.removeClass('der-value-empty');
-                //                    }
-                //                    $this.addClass('der-value-now');
-                //                    if (parseInt($this.attr('data-id')) == 0) {
-                //                        $this.attr('data-id', resp.Id);
-                //                    }
-                //                });
-                //            }
-                //        });
-                //        $(target).on('keyup', 'input.der-highlight-brenfut', function (e) {
-                //            if (e.keyCode == 13) {
-                //                var $this = $(this);
-                //                var nextTab = parseInt($this.attr('tabindex')) + 1;
-                //                var highlightTypeId = $this.data('highlight-type-id');
-                //                var id = $this.attr('data-id');
-                //                var value = $this.val();
-                //                var property = $this.data('property');
-                //                var valueType = $this.data('type');
-                //                $this.addClass('in-progress');
-                //                $.post("/dertransaction/updatebrenfut", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property: property, valueType: valueType }, function (resp) {
-                //                    openNextTab($this, nextTab);
-                //                    var $next = $('[tabindex=' + nextTab + ']');
-                //                    if ($next.is("textarea") && $next.css('display') == 'none') {
-                //                        tinyMCE.get($next.attr('id')).focus()
-                //                    } else {
-                //                        $next.focus();
-                //                    }
-                //                    $this.removeClass('in-progress');
-                //                    if ($this.hasClass('der-value-prev')) {
-                //                        $this.removeClass('der-value-prev');
-                //                    }
-                //                    if ($this.hasClass('der-value-empty')) {
-                //                        $this.removeClass('der-value-empty');
-                //                    }
-                //                    $this.addClass('der-value-now');
-                //                    if (parseInt($this.attr('data-id')) == 0) {
-                //                        $this.attr('data-id', resp.Id);
-                //                    }
-                //                });
-                //            }
-                //        });
-                //        $(target).on('altChange', 'select.der-kpi', function (e) {
-                //            var $this = $(this);
-                //            var kpiId = $this.data('kpi-id');
-                //            var type = $this.data('type');
-                //            var tabindex = $this.attr('tabindex');
-                //            var nextTabindex = parseInt(tabindex) + 1;
-                //            var id = $this.attr('data-id');
-                //            var value = $this.val();
-                //            var valueType = $this.data('value-type');
-                //            $this.addClass('in-progress');
-                //            $.post("/dertransaction/updatekpi", { kpiId: kpiId, type: type, date: currentDate, id: id, value: value, valueType: valueType }, function (resp) {
-                //                openNextTab($this, nextTabindex);
-                //                var $next = $('[tabindex=' + nextTabindex + ']');
-                //                if ($next.is("textarea") && $next.css('display') == 'none') {
-                //                    tinyMCE.get($next.attr('id')).focus()
-                //                } else {
-                //                    $next.focus();
-                //                }
-
-                //                $this.removeClass('in-progress');
-                //                if ($this.hasClass('der-value-prev')) {
-                //                    $this.removeClass('der-value-prev');
-                //                }
-                //                if ($this.hasClass('der-value-empty')) {
-                //                    $this.removeClass('der-value-empty');
-                //                }
-                //                $this.addClass('der-value-now');
-                //                if (parseInt($this.attr('data-id')) == 0) {
-                //                    $this.attr('data-id', resp.Id);
-                //                }
-                //            })
-                //        });
-                //        $(target).on('keydown', 'input.der-highlight-weekly-alarm, textarea.der-highlight-weekly-alarm', function (e) {
-                //            var $this = $(this);
-                //            if (($this.is('input') && e.keyCode == 13) || ($this.is('textarea') && e.keyCode == 9)) {
-                //                var nextTab = parseInt($this.attr('tabindex')) + 1;
-                //                var highlightTypeId = $this.data('highlight-type-id');
-                //                var id = $this.attr('data-id');
-                //                var value = $this.val();
-                //                var property = $this.data('property');
-                //                $this.addClass('in-progress');
-                //                $.post("/dertransaction/updateweeklyalarm", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property: property }, function (resp) {
-                //                    openNextTab($this, nextTab);
-                //                    var $next = $('[tabindex=' + nextTab + ']');
-                //                    if ($next.is("textarea") && $next.css('display') == 'none') {
-                //                        tinyMCE.get($next.attr('id')).focus()
-                //                    } else {
-                //                        $next.focus();
-                //                    }
-                //                    $this.removeClass('in-progress');
-                //                    if ($this.hasClass('der-value-prev')) {
-                //                        $this.removeClass('der-value-prev');
-                //                    }
-                //                    if ($this.hasClass('der-value-empty')) {
-                //                        $this.removeClass('der-value-empty');
-                //                    }
-                //                    $this.addClass('der-value-now');
-                //                    if (parseInt($this.attr('data-id')) == 0) {
-                //                        $this.attr('data-id', resp.Id);
-                //                    }
-                //                });
-                //            }
-                //        });
-                //    })
-                //}
+                expands(target, $this);                
             });
+
+            var updateCallback = function (resp, f) {
+                if (resp.IsSuccess) {
+                    f();
+                } else {
+                    alert("Update failed. Error message : " + resp.Message);
+                }
+            };
 
             function expands(target, $this) {
                 if (!$(target).children().length) {
@@ -1390,17 +514,19 @@
                                 var valueType = $this.data('value-type');
                                 $this.addClass('in-progress');
                                 $.post("/dertransaction/updatekpi", { kpiId: kpiId, type: type, date: currentDate, id: id, value: value, valueType: valueType }, function (resp) {
-                                    $this.removeClass('in-progress');
-                                    if ($this.hasClass('der-value-prev')) {
-                                        $this.removeClass('der-value-prev');
-                                    }
-                                    if ($this.hasClass('der-value-empty')) {
-                                        $this.removeClass('der-value-empty');
-                                    }
-                                    $this.addClass('der-value-now');
-                                    if (parseInt($this.attr('data-id')) == 0) {
-                                        $this.attr('data-id', resp.Id);
-                                    }
+                                    updateCallback(resp, function () {
+                                        $this.removeClass('in-progress');
+                                        if ($this.hasClass('der-value-prev')) {
+                                            $this.removeClass('der-value-prev');
+                                        }
+                                        if ($this.hasClass('der-value-empty')) {
+                                            $this.removeClass('der-value-empty');
+                                        }
+                                        $this.addClass('der-value-now');
+                                        if (parseInt($this.attr('data-id')) == 0) {
+                                            $this.attr('data-id', resp.Id);
+                                        }
+                                    });                                    
                                 });
                             }
                             openNextTab($this, nextTabindex);
@@ -1417,7 +543,6 @@
                             var row = textarea.closest('tr');
                             var currentClass = textarea.attr('class').split(' ')[0];
                             row.addClass(currentClass);
-                            console.log(row);
                             tinyMCE.init({
                                 selector: '#' + $this.attr('id'),
                                 menubar: false,
@@ -1451,10 +576,7 @@
                                         var nextTab = parseInt($textarea.attr('tabindex')) + 1;
                                         if (key == 9) {
                                             var highlightTypeId = $textarea.data('highlight-type-id');
-                                            var id = $textarea.attr('data-id');
-                                            //row = $textarea.closest('tr');
-                                            //currentClass = textarea.attr('class')[0];
-                                            //console.log(currentClass);
+                                            var id = $textarea.attr('data-id');                                            
                                             row.addClass('processing');
                                             var value = editor.getContent();
                                             if ((highlightTypeId==53 || highlightTypeId==21) && value.length > 210) {
@@ -1462,24 +584,26 @@
                                                 return false;
                                             }
                                             $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function (resp) {
-                                                openNextTab($textarea, nextTab);
-                                                var $next = $('[tabindex=' + nextTab + ']');
-                                                if ($next.is("textarea") && $next.css('display') == 'none') {
-                                                    tinyMCE.get($next.attr('id')).focus()
-                                                } else {
-                                                    $next.focus();
-                                                }
-                                                if (parseInt($textarea.attr('data-id')) == 0) {
-                                                    $textarea.attr('data-id', resp.Id);
-
-                                                }
-                                                if (resp.Id > 0) {
-                                                    if (row.hasClass('processing')) {
-                                                        row.removeClass('processing');
+                                                updateCallback(resp, function () {
+                                                    openNextTab($textarea, nextTab);
+                                                    var $next = $('[tabindex=' + nextTab + ']');
+                                                    if ($next.is("textarea") && $next.css('display') == 'none') {
+                                                        tinyMCE.get($next.attr('id')).focus()
+                                                    } else {
+                                                        $next.focus();
                                                     }
-                                                    row.removeClass(currentClass);
-                                                    row.addClass('succeed');
-                                                }
+                                                    if (parseInt($textarea.attr('data-id')) == 0) {
+                                                        $textarea.attr('data-id', resp.Id);
+
+                                                    }
+                                                    if (resp.Id > 0) {
+                                                        if (row.hasClass('processing')) {
+                                                            row.removeClass('processing');
+                                                        }
+                                                        row.removeClass(currentClass);
+                                                        row.addClass('succeed');
+                                                    }
+                                                });                                                
                                             });
                                         }
                                     });
@@ -1494,39 +618,7 @@
                             var value = $this.val() == '' ? $(this).attr('placeholder') : $this.val();
                             $this.addClass('in-progress');
                             $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function (resp) {
-                                openNextTab($this, nextTab);
-                                var $next = $('[tabindex=' + nextTab + ']');
-                                if ($next.is("textarea") && $next.css('display') == 'none') {
-                                    tinyMCE.get($next.attr('id')).focus()
-                                } else {
-                                    $next.focus();
-                                }
-                                $this.removeClass('in-progress');
-                                if ($this.hasClass('der-value-prev')) {
-                                    $this.removeClass('der-value-prev');
-                                }
-                                if ($this.hasClass('der-value-empty')) {
-                                    $this.removeClass('der-value-empty');
-                                }
-                                $this.addClass('der-value-now');
-                                if (parseInt($this.attr('data-id')) == 0) {
-                                    $this.attr('data-id', resp.Id);
-                                }
-                            });
-                        });
-                        $('.datepicker', target).datetimepicker({
-                            format: "DD MMM YYYY",
-                            focusOnShow: false
-                        });
-                        $(target).on('keyup', 'input.der-highlight-input', function (e) {
-                            if (e.keyCode == 13) {
-                                var $this = $(this);
-                                var nextTab = parseInt($this.attr('tabindex')) + 1;
-                                var highlightTypeId = $this.data('highlight-type-id');
-                                var id = $this.attr('data-id');
-                                var value = $this.val();
-                                $this.addClass('in-progress');
-                                $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function (resp) {
+                                updateCallback(resp, function () {
                                     openNextTab($this, nextTab);
                                     var $next = $('[tabindex=' + nextTab + ']');
                                     if ($next.is("textarea") && $next.css('display') == 'none') {
@@ -1546,6 +638,42 @@
                                         $this.attr('data-id', resp.Id);
                                     }
                                 });
+                            });
+                        });
+                        $('.datepicker', target).datetimepicker({
+                            format: "DD MMM YYYY",
+                            focusOnShow: false
+                        });
+                        $(target).on('keyup', 'input.der-highlight-input', function (e) {
+                            if (e.keyCode == 13) {
+                                var $this = $(this);
+                                var nextTab = parseInt($this.attr('tabindex')) + 1;
+                                var highlightTypeId = $this.data('highlight-type-id');
+                                var id = $this.attr('data-id');
+                                var value = $this.val();
+                                $this.addClass('in-progress');
+                                $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function (resp) {
+                                    updateCallback(resp, function () {
+                                        openNextTab($this, nextTab);
+                                        var $next = $('[tabindex=' + nextTab + ']');
+                                        if ($next.is("textarea") && $next.css('display') == 'none') {
+                                            tinyMCE.get($next.attr('id')).focus()
+                                        } else {
+                                            $next.focus();
+                                        }
+                                        $this.removeClass('in-progress');
+                                        if ($this.hasClass('der-value-prev')) {
+                                            $this.removeClass('der-value-prev');
+                                        }
+                                        if ($this.hasClass('der-value-empty')) {
+                                            $this.removeClass('der-value-empty');
+                                        }
+                                        $this.addClass('der-value-now');
+                                        if (parseInt($this.attr('data-id')) == 0) {
+                                            $this.attr('data-id', resp.Id);
+                                        }
+                                    });
+                                });
                             }
                         });
                         $(target).on('altChange', 'select.der-highlight-infragsm', function (e) {
@@ -1557,24 +685,26 @@
                             var property = $this.data('property');
                             $this.addClass('in-progress');
                             $.post("/dertransaction/updateinfragsm", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property: property }, function (resp) {
-                                openNextTab($this, nextTab);
-                                var $next = $('[tabindex=' + nextTab + ']');
-                                if ($next.is("textarea") && $next.css('display') == 'none') {
-                                    tinyMCE.get($next.attr('id')).focus()
-                                } else {
-                                    $next.focus();
-                                }
-                                $this.removeClass('in-progress');
-                                if ($this.hasClass('der-value-prev')) {
-                                    $this.removeClass('der-value-prev');
-                                }
-                                if ($this.hasClass('der-value-empty')) {
-                                    $this.removeClass('der-value-empty');
-                                }
-                                $this.addClass('der-value-now');
-                                if (parseInt($this.attr('data-id')) == 0) {
-                                    $this.attr('data-id', resp.Id);
-                                }
+                                updateCallback(resp, function () {
+                                    openNextTab($this, nextTab);
+                                    var $next = $('[tabindex=' + nextTab + ']');
+                                    if ($next.is("textarea") && $next.css('display') == 'none') {
+                                        tinyMCE.get($next.attr('id')).focus()
+                                    } else {
+                                        $next.focus();
+                                    }
+                                    $this.removeClass('in-progress');
+                                    if ($this.hasClass('der-value-prev')) {
+                                        $this.removeClass('der-value-prev');
+                                    }
+                                    if ($this.hasClass('der-value-empty')) {
+                                        $this.removeClass('der-value-empty');
+                                    }
+                                    $this.addClass('der-value-now');
+                                    if (parseInt($this.attr('data-id')) == 0) {
+                                        $this.attr('data-id', resp.Id);
+                                    }
+                                });
                             });
                         });
                         $(target).on('altChange', 'select.der-highlight-wave', function (e) {
@@ -1591,69 +721,7 @@
                             }
                             $this.addClass('in-progress');
                             $.post("/dertransaction/updatewave", data, function (resp) {
-                                openNextTab($this, nextTab);
-                                var $next = $('[tabindex=' + nextTab + ']');
-                                if ($next.is("textarea") && $next.css('display') == 'none') {
-                                    tinyMCE.get($next.attr('id')).focus()
-                                } else {
-                                    $next.focus();
-                                }
-                                $this.removeClass('in-progress');
-                                if ($this.hasClass('der-value-prev')) {
-                                    $this.removeClass('der-value-prev');
-                                }
-                                if ($this.hasClass('der-value-empty')) {
-                                    $this.removeClass('der-value-empty');
-                                }
-                                $this.addClass('der-value-now');
-                                if (parseInt($this.attr('data-id')) == 0) {
-                                    $this.attr('data-id', resp.Id);
-                                }
-                            });
-                        });
-                        $(target).on('altChange', 'select.der-highlight-weather', function (e) {
-                            var $this = $(this);
-                            var nextTab = parseInt($this.attr('tabindex')) + 1;
-                            var id = $this.attr('data-id');
-                            var value = $this.val();
-                            var data = { DateInDisplay: currentDate, id: id, PeriodeType: "Daily", ValueId: value };
-                            $this.addClass('in-progress');
-                            $.post("/dertransaction/updateweather", data, function (resp) {
-                                openNextTab($this, nextTab);
-                                var $next = $('[tabindex=' + nextTab + ']');
-                                if ($next.is("textarea") && $next.css('display') == 'none') {
-                                    tinyMCE.get($next.attr('id')).focus()
-                                } else {
-                                    $next.focus();
-                                }
-                                $this.removeClass('in-progress');
-                                if ($this.hasClass('der-value-prev')) {
-                                    $this.removeClass('der-value-prev');
-                                }
-                                if ($this.hasClass('der-value-empty')) {
-                                    $this.removeClass('der-value-empty');
-                                }
-                                $this.addClass('der-value-now');
-                                if (parseInt($this.attr('data-id')) == 0) {
-                                    $this.attr('data-id', resp.Id);
-                                }
-                            });
-                        });
-                        $(target).on('keyup', 'input.der-highlight-wave', function (e) {
-                            if (e.keyCode == 13) {
-                                var $this = $(this);
-                                var nextTab = parseInt($this.attr('tabindex')) + 1;
-                                var id = $this.attr('data-id');
-                                var value = $this.val();
-                                var property = $this.data('property');
-                                var data = { DateInDisplay: currentDate, id: id, PeriodeType: "Daily", property: property, Speed: value };
-                                //if (property == 'wind-direction') {
-                                //    data.ValueId = value;
-                                //} else if{
-                                //    data.Tide = value;
-                                //}
-                                $this.addClass('in-progress');
-                                $.post("/dertransaction/updatewave", data, function (resp) {
+                                updateCallback(resp, function () {
                                     openNextTab($this, nextTab);
                                     var $next = $('[tabindex=' + nextTab + ']');
                                     if ($next.is("textarea") && $next.css('display') == 'none') {
@@ -1672,6 +740,69 @@
                                     if (parseInt($this.attr('data-id')) == 0) {
                                         $this.attr('data-id', resp.Id);
                                     }
+                                });
+                            });
+                        });
+                        $(target).on('altChange', 'select.der-highlight-weather', function (e) {
+                            var $this = $(this);
+                            var nextTab = parseInt($this.attr('tabindex')) + 1;
+                            var id = $this.attr('data-id');
+                            var value = $this.val();
+                            var data = { DateInDisplay: currentDate, id: id, PeriodeType: "Daily", ValueId: value };
+                            $this.addClass('in-progress');
+                            $.post("/dertransaction/updateweather", data, function (resp) {
+                                updateCallback(resp, function () {
+                                    openNextTab($this, nextTab);
+                                    var $next = $('[tabindex=' + nextTab + ']');
+                                    if ($next.is("textarea") && $next.css('display') == 'none') {
+                                        tinyMCE.get($next.attr('id')).focus()
+                                    } else {
+                                        $next.focus();
+                                    }
+                                    $this.removeClass('in-progress');
+                                    if ($this.hasClass('der-value-prev')) {
+                                        $this.removeClass('der-value-prev');
+                                    }
+                                    if ($this.hasClass('der-value-empty')) {
+                                        $this.removeClass('der-value-empty');
+                                    }
+                                    $this.addClass('der-value-now');
+                                    if (parseInt($this.attr('data-id')) == 0) {
+                                        $this.attr('data-id', resp.Id);
+                                    }
+                                });
+                            });
+                        });
+                        $(target).on('keyup', 'input.der-highlight-wave', function (e) {
+                            if (e.keyCode == 13) {
+                                var $this = $(this);
+                                var nextTab = parseInt($this.attr('tabindex')) + 1;
+                                var id = $this.attr('data-id');
+                                var value = $this.val();
+                                var property = $this.data('property');
+                                var data = { DateInDisplay: currentDate, id: id, PeriodeType: "Daily", property: property, Speed: value };
+                                $this.addClass('in-progress');
+                                $.post("/dertransaction/updatewave", data, function (resp) {
+                                    updateCallback(resp, function () {
+                                        openNextTab($this, nextTab);
+                                        var $next = $('[tabindex=' + nextTab + ']');
+                                        if ($next.is("textarea") && $next.css('display') == 'none') {
+                                            tinyMCE.get($next.attr('id')).focus()
+                                        } else {
+                                            $next.focus();
+                                        }
+                                        $this.removeClass('in-progress');
+                                        if ($this.hasClass('der-value-prev')) {
+                                            $this.removeClass('der-value-prev');
+                                        }
+                                        if ($this.hasClass('der-value-empty')) {
+                                            $this.removeClass('der-value-empty');
+                                        }
+                                        $this.addClass('der-value-now');
+                                        if (parseInt($this.attr('data-id')) == 0) {
+                                            $this.attr('data-id', resp.Id);
+                                        }
+                                    });
                                 });
                             }
                         });
@@ -1686,24 +817,26 @@
                                 var valueType = $this.data('type');
                                 $this.addClass('in-progress');
                                 $.post("/dertransaction/updatebrenfut", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property: property, valueType: valueType }, function (resp) {
-                                    openNextTab($this, nextTab);
-                                    var $next = $('[tabindex=' + nextTab + ']');
-                                    if ($next.is("textarea") && $next.css('display') == 'none') {
-                                        tinyMCE.get($next.attr('id')).focus()
-                                    } else {
-                                        $next.focus();
-                                    }
-                                    $this.removeClass('in-progress');
-                                    if ($this.hasClass('der-value-prev')) {
-                                        $this.removeClass('der-value-prev');
-                                    }
-                                    if ($this.hasClass('der-value-empty')) {
-                                        $this.removeClass('der-value-empty');
-                                    }
-                                    $this.addClass('der-value-now');
-                                    if (parseInt($this.attr('data-id')) == 0) {
-                                        $this.attr('data-id', resp.Id);
-                                    }
+                                    updateCallback(resp, function () {
+                                        openNextTab($this, nextTab);
+                                        var $next = $('[tabindex=' + nextTab + ']');
+                                        if ($next.is("textarea") && $next.css('display') == 'none') {
+                                            tinyMCE.get($next.attr('id')).focus()
+                                        } else {
+                                            $next.focus();
+                                        }
+                                        $this.removeClass('in-progress');
+                                        if ($this.hasClass('der-value-prev')) {
+                                            $this.removeClass('der-value-prev');
+                                        }
+                                        if ($this.hasClass('der-value-empty')) {
+                                            $this.removeClass('der-value-empty');
+                                        }
+                                        $this.addClass('der-value-now');
+                                        if (parseInt($this.attr('data-id')) == 0) {
+                                            $this.attr('data-id', resp.Id);
+                                        }
+                                    });
                                 });
                             }
                         });
@@ -1718,44 +851,15 @@
                             var valueType = $this.data('value-type');
                             $this.addClass('in-progress');
                             $.post("/dertransaction/updatekpi", { kpiId: kpiId, type: type, date: currentDate, id: id, value: value, valueType: valueType }, function (resp) {
-                                openNextTab($this, nextTabindex);
-                                var $next = $('[tabindex=' + nextTabindex + ']');
-                                if ($next.is("textarea") && $next.css('display') == 'none') {
-                                    tinyMCE.get($next.attr('id')).focus()
-                                } else {
-                                    $next.focus();
-                                }
-
-                                $this.removeClass('in-progress');
-                                if ($this.hasClass('der-value-prev')) {
-                                    $this.removeClass('der-value-prev');
-                                }
-                                if ($this.hasClass('der-value-empty')) {
-                                    $this.removeClass('der-value-empty');
-                                }
-                                $this.addClass('der-value-now');
-                                if (parseInt($this.attr('data-id')) == 0) {
-                                    $this.attr('data-id', resp.Id);
-                                }
-                            })
-                        });
-                        $(target).on('keydown', 'input.der-highlight-weekly-alarm, textarea.der-highlight-weekly-alarm', function (e) {
-                            var $this = $(this);
-                            if (($this.is('input') && e.keyCode == 13) || ($this.is('textarea') && (!e.shiftKey && e.keyCode == 9))) {
-                                var nextTab = parseInt($this.attr('tabindex')) + 1;
-                                var highlightTypeId = $this.data('highlight-type-id');
-                                var id = $this.attr('data-id');
-                                var value = $this.val();
-                                var property = $this.data('property');
-                                $this.addClass('in-progress');
-                                $.post("/dertransaction/updateweeklyalarm", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property: property }, function (resp) {
-                                    openNextTab($this, nextTab);
-                                    var $next = $('[tabindex=' + nextTab + ']');
+                                updateCallback(resp, function () {
+                                    openNextTab($this, nextTabindex);
+                                    var $next = $('[tabindex=' + nextTabindex + ']');
                                     if ($next.is("textarea") && $next.css('display') == 'none') {
                                         tinyMCE.get($next.attr('id')).focus()
                                     } else {
                                         $next.focus();
                                     }
+
                                     $this.removeClass('in-progress');
                                     if ($this.hasClass('der-value-prev')) {
                                         $this.removeClass('der-value-prev');
@@ -1768,13 +872,45 @@
                                         $this.attr('data-id', resp.Id);
                                     }
                                 });
+                            })
+                        });
+                        $(target).on('keydown', 'input.der-highlight-weekly-alarm, textarea.der-highlight-weekly-alarm', function (e) {
+                            var $this = $(this);
+                            if (($this.is('input') && e.keyCode == 13) || ($this.is('textarea') && (!e.shiftKey && e.keyCode == 9))) {
+                                var nextTab = parseInt($this.attr('tabindex')) + 1;
+                                var highlightTypeId = $this.data('highlight-type-id');
+                                var id = $this.attr('data-id');
+                                var value = $this.val();
+                                var property = $this.data('property');
+                                $this.addClass('in-progress');
+                                $.post("/dertransaction/updateweeklyalarm", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property: property }, function (resp) {
+                                    updateCallback(resp, function () {
+                                        openNextTab($this, nextTab);
+                                        var $next = $('[tabindex=' + nextTab + ']');
+                                        if ($next.is("textarea") && $next.css('display') == 'none') {
+                                            tinyMCE.get($next.attr('id')).focus()
+                                        } else {
+                                            $next.focus();
+                                        }
+                                        $this.removeClass('in-progress');
+                                        if ($this.hasClass('der-value-prev')) {
+                                            $this.removeClass('der-value-prev');
+                                        }
+                                        if ($this.hasClass('der-value-empty')) {
+                                            $this.removeClass('der-value-empty');
+                                        }
+                                        $this.addClass('der-value-now');
+                                        if (parseInt($this.attr('data-id')) == 0) {
+                                            $this.attr('data-id', resp.Id);
+                                        }
+                                    });
+                                });
                             }
                         });
                     })
                 }
             }
         });
-
 
     </script>
 }

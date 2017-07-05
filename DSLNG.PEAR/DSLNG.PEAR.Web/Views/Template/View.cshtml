@@ -1,5 +1,5 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Template.TemplateViewModel
-
+@using DSLNG.PEAR.Web.ViewModels
 <div class="template-view">
     <div class="row">
         <div class="col-md-12">
@@ -14,13 +14,23 @@
             @foreach (var col in row.LayoutColumns)
             { 
                 <div class="layout-column" style="width:@col.Width%;">
+                    @{ UserProfileSessionData user = (UserProfileSessionData)HttpContext.Current.Session["LoginUser"]; }
+                    
                     @if (col.ColumnType == "Artifact")
                     {
+                        if (user.IsSuperAdmin)
+                        {
+                            <a href="@Url.Action("Edit", "Artifact", new { id = col.ArtifactId })">Edit</a>
+                        }
                         <div class="whitebox artifact-holder" style="height:350px;" data-artifact-url="@Url.Action("View", "Artifact", new { id = col.ArtifactId })" data-artifact-id="@col.ArtifactId">
                         </div>
                     }
                     else
                     {
+                        if (user.IsSuperAdmin)
+                        {
+                            <a href="@Url.Action("View", "Highlight", new { id = col.HighlightTypeId })">Edit</a>
+                        }
                         <div class="whitebox highlight-holder" style="height:350px;" data-artifact-url="@Url.Action("View", "Highlight", new { typeId=col.HighlightTypeId, periodeType = col.HighlightPeriodeType })">
                         </div>
                     }

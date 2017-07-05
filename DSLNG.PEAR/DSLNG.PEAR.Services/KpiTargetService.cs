@@ -1016,6 +1016,10 @@ namespace DSLNG.PEAR.Services
             {
                 response.Message = dbUpdateException.Message;
             }
+            catch (Exception exception)
+            {
+                response.Message = exception.Message;
+            }
             return response;
         }
     }

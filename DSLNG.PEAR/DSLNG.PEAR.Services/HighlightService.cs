@@ -140,6 +140,14 @@ namespace DSLNG.PEAR.Services
                     Message = e.Message
                 };
             }
+            catch (Exception e)
+            {
+                return new SaveHighlightResponse
+                {
+                    IsSuccess = false,
+                    Message = e.Message
+                };
+            }
 
         }
         public GetReportHighlightsResponse GetReportHighlights(GetReportHighlightsRequest request)

@@ -105,7 +105,15 @@ namespace DSLNG.PEAR.Services
                 return new SaveWaveResponse
                 {
                     IsSuccess = false,
-                    Message = "An error occured while trying to save weather data"
+                    Message = "An error occured while trying to save wave data, Error message = " + e.Message
+                };
+            }
+            catch (Exception e)
+            {
+                return new SaveWaveResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured while trying to save wave data, Error message = " + e.Message
                 };
             }
         }
