@@ -136,7 +136,15 @@ namespace DSLNG.PEAR.Services
                 return new SaveHighlightResponse
                 {
                     IsSuccess = false,
-                    Message = e.Message
+                    Message = "An error occured while trying to save highlight data, Error message = " + e.Message + " and ID = " + request.Id
+                };
+            }
+            catch (Exception e)
+            {
+                return new SaveHighlightResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured while trying to save highlight data, Error message = " + e.Message + " and ID = " + request.Id
                 };
             }
 

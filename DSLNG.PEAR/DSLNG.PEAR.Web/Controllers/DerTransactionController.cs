@@ -1,4 +1,5 @@
-﻿using DSLNG.PEAR.Common.Extensions;
+﻿using DSLNG.PEAR.Common.Contants;
+using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.DerLoadingSchedule;
@@ -9,6 +10,8 @@ using DSLNG.PEAR.Services.Requests.KpiTarget;
 using DSLNG.PEAR.Services.Requests.Select;
 using DSLNG.PEAR.Services.Requests.Wave;
 using DSLNG.PEAR.Services.Requests.Weather;
+using DSLNG.PEAR.Web.Attributes;
+using DSLNG.PEAR.Web.Grid;
 using DSLNG.PEAR.Web.ViewModels.DerTransaction;
 using DSLNG.PEAR.Web.ViewModels.Highlight;
 using DSLNG.PEAR.Web.ViewModels.Wave;
@@ -17,7 +20,9 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace DSLNG.PEAR.Web.Controllers
@@ -35,13 +40,13 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IDerLoadingScheduleService _derLoadingScheduleService;
         private readonly IKpiTransformationService _kpiTransformationService;
 
-        public DerTransactionController(IDerService derService, 
-            IDerTransactionService derTransactionService, 
-            IKpiAchievementService kpiAchievementService, 
-            IKpiTargetService kpiTargetService, 
-            IHighlightService highlightService, 
-            ISelectService selectService, 
-            IWaveService waveService, 
+        public DerTransactionController(IDerService derService,
+            IDerTransactionService derTransactionService,
+            IKpiAchievementService kpiAchievementService,
+            IKpiTargetService kpiTargetService,
+            IHighlightService highlightService,
+            ISelectService selectService,
+            IWaveService waveService,
             IWeatherService weatherService,
             IDerLoadingScheduleService derLoadingScheduleService,
             IKpiTransformationService kpiTransformationService)
@@ -83,9 +88,8 @@ namespace DSLNG.PEAR.Web.Controllers
                 Text = x.Name,
                 Value = x.Id.ToString()
             }).ToList();
-            return View();
+            return View("Input");
         }
-       
 
         public ActionResult EconomicIndicator(string date)
         {
@@ -135,7 +139,7 @@ namespace DSLNG.PEAR.Web.Controllers
             return View(GetDerValuesPerSection(date,
                new int[] { 59, 60, 61, 371, 372, 373, 374 }, //actual KpiIds 
                new int[] { 59, 374 }, //target KpiIds
-               new int[] { 46, 34, 35, 36, 37, 31, 32, 33, 28, 29, 30, 38, 39, 47, 40, 41, 42, 43, 48, 44, 45, 49, 50, 51, 11, 77, 78, 79,60,61 }  //highlightTypeIds
+               new int[] { 46, 34, 35, 36, 37, 31, 32, 33, 28, 29, 30, 38, 39, 47, 40, 41, 42, 43, 48, 44, 45, 49, 50, 51, 11, 77, 78, 79, 60, 61 }  //highlightTypeIds
                ));
         }
 
@@ -144,7 +148,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var viewModel = GetDerValuesPerSection(date,
                new int[] { 273, 274, 275, 276, 1, 177, 278, 277, 285, 356, 4, 359, 286, 292, 421, 422, 284, 357, 358, 435, 436 }, //actual KpiIds 
                new int[] { 1, 177, 278, 277, 276, 285, 421, 422, 284, 357, 358 }, //target KpiIds
-               new int[] { 18, 13, 20, 7, 80 , 59 }  //highlightTypeIds
+               new int[] { 18, 13, 20, 7, 80, 59 }  //highlightTypeIds
                );
             var theDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
             var wave = _waveService.GetWave(new GetWaveRequest
@@ -277,7 +281,7 @@ namespace DSLNG.PEAR.Web.Controllers
             return View(GetDerValuesPerSection(date,
                new int[] { 59, 60, 61, 371, 372, 373, 374 }, //actual KpiIds 
                new int[] { 59, 374 }, //target KpiIds
-               new int[] { 46, 34, 35, 36, 37, 31, 32, 33, 28, 29, 30, 38, 39, 47, 40, 41, 42, 43, 48, 44, 45, 49, 50, 51, 11, 77, 78, 79,60,61 }  //highlightTypeIds
+               new int[] { 46, 34, 35, 36, 37, 31, 32, 33, 28, 29, 30, 38, 39, 47, 40, 41, 42, 43, 48, 44, 45, 49, 50, 51, 11, 77, 78, 79, 60, 61 }  //highlightTypeIds
                ));
         }
 
@@ -286,7 +290,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var viewModel = GetDerValuesPerSection(date,
                new int[] { 273, 274, 275, 276, 1, 177, 278, 277, 285, 356, 4, 359, 286, 292, 421, 422, 284, 357, 358, 435, 436 }, //actual KpiIds 
                new int[] { 1, 177, 278, 277, 276, 285, 421, 422, 284, 357, 358 }, //target KpiIds
-               new int[] { 18, 13, 20, 7, 80 , 59 }  //highlightTypeIds
+               new int[] { 18, 13, 20, 7, 80, 59 }  //highlightTypeIds
                );
             var theDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
             var wave = _waveService.GetWave(new GetWaveRequest
@@ -358,7 +362,7 @@ namespace DSLNG.PEAR.Web.Controllers
         [HttpPost]
         public ActionResult UpdateKpi(UpdateKpiOriginalViewModel viewModel)
         {
-            if(viewModel.Id == 0 && viewModel.Value == null)
+            if (viewModel.Id == 0 && viewModel.Value == null)
             {
                 return null;
             }
@@ -442,14 +446,14 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "daily-actual-dafwc":
                     {
                         string value = viewModel.ValueType == "value" ? viewModel.Value : null;
-                        if(viewModel.Value != null && viewModel.ValueType == "remark")
+                        if (viewModel.Value != null && viewModel.ValueType == "remark")
                         {
                             DateTime lastDAFWC;
                             DateTime.TryParse(viewModel.Value, out lastDAFWC);
 
                             if (lastDAFWC != null)
                             {
-                                value =  (theDate - lastDAFWC).TotalDays.ToString();
+                                value = (theDate - lastDAFWC).TotalDays.ToString();
                             }
 
                         }
@@ -518,6 +522,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var resp = _highlightService.SaveHighlight(req);
             return Json(resp);
         }
+
         public ActionResult UpdateBrenfut(HighlightViewModel viewModel)
         {
             var existingHighlight = _highlightService.GetHighlightByPeriode(new GetHighlightRequest
@@ -544,6 +549,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var resp = _highlightService.SaveHighlight(req);
             return Json(resp);
         }
+
         public ActionResult UpdateWave(WaveViewModel viewModel)
         {
             var wave = _waveService.GetWave(new GetWaveRequest
@@ -568,6 +574,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 return Json(resp);
             }
         }
+
         public ActionResult UpdateWeeklyAlarm(HighlightViewModel viewModel)
         {
             var existingHighlight = _highlightService.GetHighlightByPeriode(new GetHighlightRequest
@@ -594,6 +601,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var resp = _highlightService.SaveHighlight(req);
             return Json(resp);
         }
+
         public ActionResult UpdateWeather(WeatherViewModel viewModel)
         {
             var weather = _weatherService.GetWeather(new GetWeatherRequest
@@ -617,6 +625,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 return Json(resp);
             }
         }
+
         private DerValuesViewModel GetDerValuesPerSection(string date, int[] actualKpiIds, int[] targetKpiIds, int[] highlightTypeIds)
         {
             var theDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);

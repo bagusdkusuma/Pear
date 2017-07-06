@@ -76,6 +76,7 @@ namespace DSLNG.PEAR.Web.App_Start
             bundles.Add(new StyleBundle("~/Content/der_preview").Include("~/Content/bootstrap/css/bootstrap.css",
                    "~/Content/font-awesome/css/font-awesome.css",
                    "~/Content/bootstrap/css/bootstrap.css",
+                   "~/Content/bootstrap-datetimepicker.css",
                    "~/Content/der-dikdik.css"));
 
 

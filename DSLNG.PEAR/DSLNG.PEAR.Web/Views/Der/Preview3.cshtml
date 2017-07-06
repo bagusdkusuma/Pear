@@ -56,6 +56,24 @@
             margin-top: 0px;
             margin-bottom: 0px;
         }
+
+        .der-yesterday {
+            display: inline;
+            left: 0;
+            position: absolute;
+            font-size: 25px;
+            top: 3px;
+            color: #fff;
+        }
+
+        .der-tomorrow {
+            display: inline;
+            right: 0;
+            position: absolute;
+            font-size: 25px;
+            top: 3px;
+            color: #fff;
+        }
     </style>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -64,13 +82,28 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
+@helper DerDate(int addDays)
+{
+var date = DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy");
+if (Request.QueryString["date"] != null)
+{
+    date = Request.QueryString["date"];
+}
+var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture).AddDays(addDays).ToString("MM/dd/yyyy");
+    @Url.Action("Preview", "Der", new { date = d });
+}
 <body data-date="@DateTime.Now.ToString("MM/dd/yyyy")">
     <div class="control">
         <div style="position:absolute;left:20px;top:20px">
-            <div style="position:relative">
-                <input name="date" class="form-control datepicker" />
+            <div style="position:relative;">
+                <a class="der-yesterday" href="@DerDate(-1)">
+                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                </a>
+                <input name="date" class="form-control datepicker" style="width:60%;margin-left:43px" />
+                <a class="der-tomorrow" href="@DerDate(1)"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
             </div>
         </div>
+        <a class="btn btn-default" onclick="location.reload(true)">Refresh</a>
         <a class="btn btn-default" href="@Url.Action("Index","DER")">Back To List</a>
 
         <form action="@Url.Action("Generate","DER")" method="post">

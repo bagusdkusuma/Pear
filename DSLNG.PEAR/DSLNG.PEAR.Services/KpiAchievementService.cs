@@ -1689,15 +1689,20 @@ namespace DSLNG.PEAR.Services
                     response.Message = "JCC Price Calculation Succeded";
                 }
             }
-            catch (InvalidOperationException o)
+            catch (InvalidOperationException exception)
             {
                 response.IsSuccess = false;
-                response.Message = o.Message;
+                response.Message = exception.Message;
             }
-            catch (ArgumentNullException a)
+            catch (ArgumentNullException exception)
             {
                 response.IsSuccess = false;
-                response.Message = a.Message;
+                response.Message = exception.Message;
+            }
+            catch (Exception exception)
+            {
+                response.IsSuccess = false;
+                response.Message = exception.Message;
             }
             return response;
         }
@@ -1784,6 +1789,11 @@ namespace DSLNG.PEAR.Services
                 response.Message = o.Message;
             }
             catch (ArgumentNullException a)
+            {
+                response.IsSuccess = false;
+                response.Message = a.Message;
+            }
+            catch (Exception a)
             {
                 response.IsSuccess = false;
                 response.Message = a.Message;
