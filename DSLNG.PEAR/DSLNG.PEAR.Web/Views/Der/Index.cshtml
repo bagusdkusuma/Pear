@@ -27,6 +27,10 @@
 <div class="pull-right">
     <form class="form-inline">
         <div class="form-group" style="margin-top: 5px; margin-left: 25px; padding-right: 30px; border-right: solid 1px #3f454f;">
+            <label class="labletop">Traffic Light :</label>
+            @Html.DropDownListFor(x => x.TrafficLight, Model.TrafficLights, new { @class = "form-control", id = "traffic-light" })
+        </div>
+        <div class="form-group" style="margin-top: 5px; margin-left: 25px; padding-right: 30px; border-right: solid 1px #3f454f;">
             <label class="labletop">Year :</label>
             @Html.DropDownListFor(x => x.Year, Model.YearList, new { @class = "form-control", id = "year" })
         </div>
@@ -41,8 +45,6 @@
     <thead>
         <tr>
             <th>Publish Date</th>
-            <th>Version</th>
-            <th>Daily Highlight Traffic Light</th>
             <th>Daily Highlight</th>
             <th>Marin Cargo Delivery</th>
             <th>QHSE</th>
@@ -111,7 +113,7 @@
                 <h4 class="modal-title" id="myModalLabel">Details</h4>
             </div>
             <div class="modal-body" style="color:#fff">
-                    
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -138,7 +140,7 @@
             function shortenText(data) {
                 var textDisplay = data;
                 if (data.length > 50) {
-                    textDisplay = data.substring(0, 50);
+                    textDisplay = data.substring(0, 50).replace(/<\/?[^>]+(>|$)/g, "");
                     textDisplay += ' | <a href="#" data-toggle="modal" data-target="#derModal" data-text="' + data + '">Read More</button>';
                 }
                 return textDisplay;
@@ -152,21 +154,15 @@
                 "sAjaxSource": '@Url.Action("Grid", "Der")',
                 "order": [[0, "desc"]],
                 "oSearch": {
-                    "sSearch": $('#month').val() + '-' + $('#year').val()
+                    "sSearch": $('#month').val() + '-' + $('#year').val() + '-' + $('#traffic-light').val()
                 },
                 "aoColumns": [
                     {
                         "mDataProp": "Date", "name": "Date", "className": "dt-body-left",
-                        "mRender": function (data, type, row) {
-                            return moment(new Date(data.match(/\d+/)[0] * 1)).format('DD MMM YYYY');
+                        "mRender": function (data, type, row, pos) {
+                            return '<a href="#"  id="der-versions" data-toggle="modal" data-target="#der-versions-modal" data-pos="' + pos.row + '">' + moment(new Date(data.match(/\d+/)[0] * 1)).format('DD MMM YYYY') + " version " + row["Revision"] + '</a>';
                         }
 
-                    },
-                    {
-                        "mDataProp": "Revision", "name": "Revision", "className": "dt-body-left",
-                        "mRender": function (data, type, row, pos) {
-                            return '<a href="#"  id="der-versions" data-toggle="modal" data-target="#der-versions-modal" data-pos="' + pos.row + '">' + data + '</a>';
-                        }
                     },
                     {
                         "mDataProp": "DailyIndicator", "name": "DailyIndicator", "className": "dt-body-left",
@@ -183,34 +179,28 @@
                             } else if (parseInt(data) > 4) {
                                 str = '<span class="indicator green"><i class="fa fa-circle" style="color:green"></i></span>';
                             }
-                            return str;
-                        }
-                    },
-                    {
-                        "mDataProp": "OverallPerformance", "name": "OverallPerformance", "className": "dt-body-left", "orderable": false,
-                        "mRender": function (data, type, row, pos) {
-                            return shortenText(data);;
+                            return str + "<span style='padding-left: 10px;'>" + shortenText(row["OverallPerformance"]) + "</span>";
                         }
                     },
                     {
                         "mDataProp": "MarineCargoDelivery", "name": "MarineCargoDelivery", "className": "dt-body-left", "orderable": false,
                         "mRender": function (data, type, row, pos) {
-                            return shortenText(data);                            
+                            return shortenText(data);
                         }
                     },
                     {
                         "mDataProp": "Qhse", "name": "Qhse", "className": "dt-body-left", "orderable": false,
                         "mRender": function (data, type, row, pos) {
-                            return data;
+                            return shortenText(data);
                         }
                     },
                     {
                         "mDataProp": "Security", "name": "Security", "className": "dt-body-left", "orderable": false,
                         "mRender": function (data, type, row, pos) {
-                            return data;
+                            return shortenText(data);
                         }
                     },
-                    
+
                       {
                           "orderable": false,
                           "data": null,
@@ -313,11 +303,12 @@
             }
 
             var reloadView = function () {
-                var location = updateQueryStringParameter(window.location.href, "year", encodeURIComponent($('#year').val()));
-                window.document.location = updateQueryStringParameter(location, "month", encodeURIComponent($('#month').val()));
+                var location1 = updateQueryStringParameter(window.location.href, "year", encodeURIComponent($('#year').val()));
+                var location2 = updateQueryStringParameter(location1, "month", encodeURIComponent($('#month').val()));
+                window.document.location = updateQueryStringParameter(location2, "traffic-light", encodeURIComponent($('#traffic-light').val()));
             };
 
-            $('#month,#year').change(function (e) {
+            $('#month,#year,#traffic-light').change(function (e) {
                 e.preventDefault();
                 reloadView();
             });

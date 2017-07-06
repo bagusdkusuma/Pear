@@ -2040,11 +2040,13 @@ namespace DSLNG.PEAR.Services
         {
             var response = new GetDersResponse();
             var highlights = DataContext.Highlights.Include(x => x.HighlightType).AsQueryable();
+            string trafficLight = string.Empty;
             if (!string.IsNullOrEmpty(request.Search) && !string.IsNullOrWhiteSpace(request.Search))
             {
-                var dates = request.Search.Split('-');
-                var year = int.Parse(dates[1].Trim());
-                var month = int.Parse(dates[0].Trim());
+                var srch = request.Search.Split('-');
+                var month = int.Parse(srch[0].Trim());
+                var year = int.Parse(srch[1].Trim());
+                trafficLight = srch.Length > 2 ? srch[2].Trim() : string.Empty;
                 if (month == 0)
                 {
                     highlights = highlights.Where(x => x.Date.Year == year);
@@ -2072,6 +2074,11 @@ namespace DSLNG.PEAR.Services
                 der.DailyIndicator = listHighlight.Where(x => x.Date == der.Date && x.HighlightType != null && x.HighlightType.Id == dailyIndicatorId).DefaultIfEmpty(new Highlight { Message = string.Empty }).First().Message;
                 response.Ders.Add(der);
             }
+
+            if(!string.IsNullOrEmpty(trafficLight))
+            {
+                response.Ders = response.Ders.Where(x => x.DailyIndicator.Trim() == trafficLight).ToList();
+            }            
 
             foreach (var sortOrder in request.SortingDictionary)
             {

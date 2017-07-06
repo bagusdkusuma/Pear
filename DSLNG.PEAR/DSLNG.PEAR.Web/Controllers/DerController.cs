@@ -96,6 +96,14 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 viewModel.Year = int.Parse(Request.QueryString["year"]);
             }
+            if (Request.QueryString["traffic-light"] == null || string.IsNullOrEmpty(Request.QueryString["traffic-light"]))
+            {
+                viewModel.TrafficLight = string.Empty;
+            }
+            else
+            {
+                viewModel.TrafficLight = Request.QueryString["traffic-light"];
+            }
             for (var i = 2011; i < 2030; i++)
             {
                 viewModel.YearList.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
