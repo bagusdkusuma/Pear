@@ -139,8 +139,9 @@
             AllowDelete = '@{ @AllowDelete}';
             function shortenText(data) {
                 var textDisplay = data;
-                if (data.length > 50) {
-                    textDisplay = data.substring(0, 50).replace(/<\/?[^>]+(>|$)/g, "");
+                var length = 150;
+                if (data.length > length) {
+                    textDisplay = data.substring(0, length).replace(/<\/?[^>]+(>|$)/g, "");
                     textDisplay += ' | <a href="#" data-toggle="modal" data-target="#derModal" data-text="' + data + '">Read More</button>';
                 }
                 return textDisplay;
