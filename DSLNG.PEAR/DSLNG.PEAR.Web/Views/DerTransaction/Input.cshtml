@@ -434,7 +434,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
             });
 
             var updateCallback = function (resp, f) {
-                if (resp.IsSuccess) {
+                if (resp.IsSuccess || typeof resp == 'string' || resp == null) {
                     f();
                 } else {
                     alert("Update failed. Error message : " + resp.Message);
@@ -515,6 +515,10 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                 $.post("/dertransaction/updatekpi", { kpiId: kpiId, type: type, date: currentDate, id: id, value: value, valueType: valueType }, function (resp) {
                                     updateCallback(resp, function () {
                                         $this.removeClass('in-progress');
+                                        if (resp == null || typeof resp == 'string') {
+                                            return;
+                                        }
+                                        
                                         if ($this.hasClass('der-value-prev')) {
                                             $this.removeClass('der-value-prev');
                                         }
