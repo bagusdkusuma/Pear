@@ -126,6 +126,11 @@
         margin-left: 10px;
         color: #fff;
     }
+
+    .der-transaction-error,
+    tr.der-transaction-error {
+        border: 2px solid red !important;
+    }
 </style>
 @{
     ViewBag.Title = "Der Input Form";
@@ -282,7 +287,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
         </div>
     </div>
     <div class="col-md-12" style="margin-bottom: 30px;">
-        <a tabindex="278" href="javascript:void(0)" onclick="callDerPreview()" class="btn btn-master-rgw btn-primary"><i class="fa fa-file-archive-o"></i> DER Preview</a>        
+        <a tabindex="278" href="javascript:void(0)" onclick="callDerPreview()" class="btn btn-master-rgw btn-primary"><i class="fa fa-file-archive-o"></i> DER Preview</a>
         <label class="labletop">Batch :</label>
         @Html.DropDownList("Batch_Id", (IEnumerable<SelectListItem>)ViewBag.KpiTransformations, new { @class = "btn btn-master-rgw btn-primary" })
         <button type="submit" class="btn btn-master-rgw btn-primary submit-process"><i class="fa fa-cogs"></i> Process</button>
@@ -433,10 +438,29 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                 expands(target, $this);
             });
 
-            var updateCallback = function (resp, f) {
+            var updateCallback = function (resp, f, $obj, type) {
+                if ($obj.hasClass('der-transaction-error')) {
+                    $obj.removeClass('der-transaction-error');
+                }
                 if (resp.IsSuccess || typeof resp == 'string' || resp == null) {
                     f();
                 } else {
+                    switch (type) {
+                        case 'input-kpi':
+                        case 'select-kpi':
+                        case 'input-highlight':
+                        case 'select-highlight':
+                            if ($obj.hasClass('in-progress')) {
+                                $obj.removeClass('in-progress');
+                            }
+                            break;
+                        default:
+                            if ($obj.hasClass('processing')) {
+                                $obj.removeClass('processing');
+                            }
+                            break;
+                    }
+                    $obj.addClass('der-transaction-error');
                     alert("Update failed. Error message : " + resp.Message);
                 }
             };
@@ -518,7 +542,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                         if (resp == null || typeof resp == 'string') {
                                             return;
                                         }
-                                        
+
                                         if ($this.hasClass('der-value-prev')) {
                                             $this.removeClass('der-value-prev');
                                         }
@@ -529,7 +553,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                         if (parseInt($this.attr('data-id')) == 0) {
                                             $this.attr('data-id', resp.Id);
                                         }
-                                    });
+                                    }, $this, 'input-kpi');
                                 });
                             }
                             openNextTab($this, nextTabindex);
@@ -599,6 +623,14 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                                         $textarea.attr('data-id', resp.Id);
 
                                                     }
+                                                    if (resp == null || typeof resp == 'string') {
+                                                        if (row.hasClass('processing')) {
+                                                            row.removeClass('processing');
+                                                        }
+                                                        row.removeClass(currentClass);
+                                                        row.addClass('succeed');
+                                                        return;
+                                                    }
                                                     if (resp.Id > 0) {
                                                         if (row.hasClass('processing')) {
                                                             row.removeClass('processing');
@@ -606,7 +638,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                                         row.removeClass(currentClass);
                                                         row.addClass('succeed');
                                                     }
-                                                });
+                                                }, row, 'textarea-highlight');
                                             });
                                         }
                                     });
@@ -630,6 +662,10 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                         $next.focus();
                                     }
                                     $this.removeClass('in-progress');
+                                    if (resp == null || typeof resp == 'string') {
+                                        return;
+                                    }
+
                                     if ($this.hasClass('der-value-prev')) {
                                         $this.removeClass('der-value-prev');
                                     }
@@ -640,7 +676,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                     if (parseInt($this.attr('data-id')) == 0) {
                                         $this.attr('data-id', resp.Id);
                                     }
-                                });
+                                }, $this, 'select-highlight');
                             });
                         });
                         $('.datepicker', target).datetimepicker({
@@ -675,7 +711,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                         if (parseInt($this.attr('data-id')) == 0) {
                                             $this.attr('data-id', resp.Id);
                                         }
-                                    });
+                                    }, $this, 'input-highlight');
                                 });
                             }
                         });
@@ -697,6 +733,10 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                         $next.focus();
                                     }
                                     $this.removeClass('in-progress');
+                                    if (resp == null || typeof resp == 'string') {
+                                        return;
+                                    }
+
                                     if ($this.hasClass('der-value-prev')) {
                                         $this.removeClass('der-value-prev');
                                     }
@@ -707,7 +747,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                     if (parseInt($this.attr('data-id')) == 0) {
                                         $this.attr('data-id', resp.Id);
                                     }
-                                });
+                                }, $this, 'select-highlight');
                             });
                         });
                         $(target).on('altChange', 'select.der-highlight-wave', function (e) {
@@ -733,6 +773,10 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                         $next.focus();
                                     }
                                     $this.removeClass('in-progress');
+                                    if (resp == null || typeof resp == 'string') {
+                                        return;
+                                    }
+
                                     if ($this.hasClass('der-value-prev')) {
                                         $this.removeClass('der-value-prev');
                                     }
@@ -743,7 +787,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                     if (parseInt($this.attr('data-id')) == 0) {
                                         $this.attr('data-id', resp.Id);
                                     }
-                                });
+                                }, $this, 'select-highlight');
                             });
                         });
                         $(target).on('altChange', 'select.der-highlight-weather', function (e) {
@@ -763,6 +807,10 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                         $next.focus();
                                     }
                                     $this.removeClass('in-progress');
+                                    if (resp == null || typeof resp == 'string') {
+                                        return;
+                                    }
+
                                     if ($this.hasClass('der-value-prev')) {
                                         $this.removeClass('der-value-prev');
                                     }
@@ -773,7 +821,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                     if (parseInt($this.attr('data-id')) == 0) {
                                         $this.attr('data-id', resp.Id);
                                     }
-                                });
+                                }, $this, 'select-highlight');
                             });
                         });
                         $(target).on('keyup', 'input.der-highlight-wave', function (e) {
@@ -795,6 +843,10 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                             $next.focus();
                                         }
                                         $this.removeClass('in-progress');
+                                        if (resp == null || typeof resp == 'string') {
+                                            return;
+                                        }
+
                                         if ($this.hasClass('der-value-prev')) {
                                             $this.removeClass('der-value-prev');
                                         }
@@ -805,7 +857,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                         if (parseInt($this.attr('data-id')) == 0) {
                                             $this.attr('data-id', resp.Id);
                                         }
-                                    });
+                                    }, $this, 'input-highlight');
                                 });
                             }
                         });
@@ -829,6 +881,10 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                             $next.focus();
                                         }
                                         $this.removeClass('in-progress');
+                                        if (resp == null || typeof resp == 'string') {
+                                            return;
+                                        }
+
                                         if ($this.hasClass('der-value-prev')) {
                                             $this.removeClass('der-value-prev');
                                         }
@@ -839,7 +895,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                         if (parseInt($this.attr('data-id')) == 0) {
                                             $this.attr('data-id', resp.Id);
                                         }
-                                    });
+                                    }, $this, 'input-highlight');
                                 });
                             }
                         });
@@ -864,6 +920,10 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                     }
 
                                     $this.removeClass('in-progress');
+                                    if (resp == null || typeof resp == 'string') {
+                                        return;
+                                    }
+
                                     if ($this.hasClass('der-value-prev')) {
                                         $this.removeClass('der-value-prev');
                                     }
@@ -874,7 +934,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                     if (parseInt($this.attr('data-id')) == 0) {
                                         $this.attr('data-id', resp.Id);
                                     }
-                                });
+                                }, $this, 'select-kpi');
                             })
                         });
                         $(target).on('keydown', 'input.der-highlight-weekly-alarm, textarea.der-highlight-weekly-alarm', function (e) {
@@ -896,6 +956,10 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                             $next.focus();
                                         }
                                         $this.removeClass('in-progress');
+                                        if (resp == null || typeof resp == 'string') {
+                                            return;
+                                        }
+
                                         if ($this.hasClass('der-value-prev')) {
                                             $this.removeClass('der-value-prev');
                                         }
@@ -906,7 +970,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                         if (parseInt($this.attr('data-id')) == 0) {
                                             $this.attr('data-id', resp.Id);
                                         }
-                                    });
+                                    }, $this, 'input-highlight');
                                 });
                             }
                         });
