@@ -1780,6 +1780,8 @@ namespace DSLNG.PEAR.Services
                     }
 
                     DataContext.SaveChanges();
+                    response.IsSuccess = true;
+                    response.Message = "Bunker Price Calculation Succeded";
                 }
 
             }
