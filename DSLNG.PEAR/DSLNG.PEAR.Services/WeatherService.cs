@@ -87,7 +87,7 @@ namespace DSLNG.PEAR.Services
                 }
                 else
                 {
-                   
+
                     var value = new SelectOption { Id = request.ValueId };
                     DataContext.SelectOptions.Attach(value);
                     weather.Value = value;
@@ -106,7 +106,7 @@ namespace DSLNG.PEAR.Services
                 return new SaveWeatherResponse
                 {
                     IsSuccess = false,
-                    Message = "An error occured while trying to save weather data, Error message = " + e.Message 
+                    Message = "An error occured while trying to save weather data"
                 };
             }
             catch (Exception e)

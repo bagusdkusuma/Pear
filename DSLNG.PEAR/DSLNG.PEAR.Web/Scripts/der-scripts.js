@@ -947,7 +947,7 @@ Number.prototype.format = function (n, x) {
     }
     Der.Artifact.termometer = function (data, container) {
         var $this = container;
-        $this.append('<span style="top:' + (100 - data.Value + 5) + '%' + '" class="termo-label">' + data.Value + '</span>');
+        $this.append('<span style="top:' + (100 - data.Value + 5) + '%' + '" class="termo-label">' + data.Value  + '</span>');
         var $canvas = $('<canvas/>');
         $canvas.css({
             width: '100%',

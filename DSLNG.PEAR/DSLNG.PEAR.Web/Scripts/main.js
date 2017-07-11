@@ -4852,7 +4852,7 @@ Number.prototype.format = function (n, x) {
                             ],
                             force_br_newlines : true,
                             force_p_newlines : false,
-                            forced_root_block : '',
+                            //forced_root_block : '',
                             toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
                         });
                     }

@@ -126,6 +126,11 @@
         margin-left: 10px;
         color: #fff;
     }
+
+    .der-transaction-error,
+    tr.der-transaction-error {
+        border: 2px solid red !important;
+    }
 </style>
 @{
     ViewBag.Title = "Der Input Form";
@@ -281,7 +286,40 @@
             </div>
         </div>
     </div>
+    @*<hr />*@
     <div class="col-md-12" style="margin-bottom: 30px;">       
+        @*<div class="col-md-3">
+                <table width="900" border="0" cellpadding="2" cellspacing="2" hidden="hidden">
+                    <tr>
+                        <td>
+                            <label for="">Prepared By-L</label>
+                            <br />
+                            <select>
+                                <option>Select Option</option>
+                                <option>Option 1</option>
+                                <option>Option 2</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-3">
+                <table width="900" border="0" cellpadding="2" cellspacing="2" hidden="hidden">
+                    <tr>
+                        <td>
+                            <label for="">Reviewed By-M</label>
+                            <br />
+                            <select>
+                                <option>Select Option</option>
+                                <option>Option 1</option>
+                                <option>Option 2</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>*@
+        @*<a href="#" class="btn btn-master-rgw btn-primary"><i class="fa fa-check-circle"></i> Save</a>
+            <a href="#" class="btn btn-master-rgw btn-primary"><i class="fa fa-search"></i> Check</a>*@
         <a tabindex="278" href="javascript:void(0)" onclick="callDerPreview()" class="btn btn-master-rgw btn-primary"><i class="fa fa-file-archive-o"></i> DER Preview</a>
         <a class="btn btn-master-rgw btn-primary" href="@Url.Action("Activity", "DerTransaction")">DER Input Files</a>
         <label class="labletop">Batch :</label>
@@ -434,10 +472,29 @@
                 expands(target, $this);                
             });
 
-            var updateCallback = function (resp, f) {
-                if (resp.IsSuccess) {
+            var updateCallback = function (resp, f, $obj, type) {
+                if ($obj.hasClass('der-transaction-error')) {
+                    $obj.removeClass('der-transaction-error');
+                }
+                if (resp.IsSuccess || typeof resp == 'string' || resp == null) {
                     f();
                 } else {
+                    switch (type) {
+                        case 'input-kpi':
+                        case 'select-kpi':
+                        case 'input-highlight':
+                        case 'select-highlight':
+                            if ($obj.hasClass('in-progress')) {
+                                $obj.removeClass('in-progress');
+                            }
+                            break;
+                        default:
+                            if ($obj.hasClass('processing')) {
+                                $obj.removeClass('processing');
+                            }
+                            break;
+                    }
+                    $obj.addClass('der-transaction-error');
                     alert("Update failed. Error message : " + resp.Message);
                 }
             };
@@ -516,6 +573,10 @@
                                 $.post("/dertransaction/updatekpi", { kpiId: kpiId, type: type, date: currentDate, id: id, value: value, valueType: valueType }, function (resp) {
                                     updateCallback(resp, function () {
                                         $this.removeClass('in-progress');
+                                        if (resp == null || typeof resp == 'string') {
+                                            return;
+                                        }
+
                                         if ($this.hasClass('der-value-prev')) {
                                             $this.removeClass('der-value-prev');
                                         }
@@ -526,6 +587,7 @@
                                         if (parseInt($this.attr('data-id')) == 0) {
                                             $this.attr('data-id', resp.Id);
                                         }
+                                    }, $this, 'input-kpi');
                                     });                                    
                                 });
                             }
@@ -553,12 +615,12 @@
                                     "insertdatetime media table contextmenu paste"
                                 ],
                                 style_formats: [
-                                        { title: 'Line height 20px', selector: 'p,div,h1,h2,h3,h4,h5,h6', styles: { lineHeight: '20px' } },
-                                        { title: 'Line height 30px', selector: 'p,div,h1,h2,h3,h4,h5,h6', styles: { lineHeight: '30px' } }
+                                    { title: 'Line height 20px', selector: 'p,div,h1,h2,h3,h4,h5,h6', styles: { lineHeight: '20px' } },
+                                    { title: 'Line height 30px', selector: 'p,div,h1,h2,h3,h4,h5,h6', styles: { lineHeight: '30px' } }
                                 ],
                                 force_br_newlines: true,
                                 force_p_newlines: false,
-                                forced_root_block: '',
+                                //forced_root_block: '',
                                 toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
                                 setup: function (editor) {
                                     editor.on('keydown', function (e) {
@@ -579,7 +641,7 @@
                                             var id = $textarea.attr('data-id');                                            
                                             row.addClass('processing');
                                             var value = editor.getContent();
-                                            if ((highlightTypeId==53 || highlightTypeId==21) && value.length > 210) {
+                                            if ((highlightTypeId == 53 || highlightTypeId == 21) && value.length > 210) {
                                                 alert('your content exceed max 200 char');
                                                 return false;
                                             }
@@ -596,6 +658,14 @@
                                                         $textarea.attr('data-id', resp.Id);
 
                                                     }
+                                                    if (resp == null || typeof resp == 'string') {
+                                                        if (row.hasClass('processing')) {
+                                                            row.removeClass('processing');
+                                                        }
+                                                        row.removeClass(currentClass);
+                                                        row.addClass('succeed');
+                                                        return;
+                                                    }
                                                     if (resp.Id > 0) {
                                                         if (row.hasClass('processing')) {
                                                             row.removeClass('processing');
@@ -603,6 +673,7 @@
                                                         row.removeClass(currentClass);
                                                         row.addClass('succeed');
                                                     }
+                                                }, row, 'textarea-highlight');
                                                 });                                                
                                             });
                                         }
@@ -627,6 +698,10 @@
                                         $next.focus();
                                     }
                                     $this.removeClass('in-progress');
+                                    if (resp == null || typeof resp == 'string') {
+                                        return;
+                                    }
+
                                     if ($this.hasClass('der-value-prev')) {
                                         $this.removeClass('der-value-prev');
                                     }
@@ -637,6 +712,7 @@
                                     if (parseInt($this.attr('data-id')) == 0) {
                                         $this.attr('data-id', resp.Id);
                                     }
+                                }, $this, 'select-highlight');
                                 });
                             });
                         });
@@ -672,6 +748,7 @@
                                         if (parseInt($this.attr('data-id')) == 0) {
                                             $this.attr('data-id', resp.Id);
                                         }
+                                    }, $this, 'input-highlight');
                                     });
                                 });
                             }
@@ -694,6 +771,10 @@
                                         $next.focus();
                                     }
                                     $this.removeClass('in-progress');
+                                    if (resp == null || typeof resp == 'string') {
+                                        return;
+                                    }
+
                                     if ($this.hasClass('der-value-prev')) {
                                         $this.removeClass('der-value-prev');
                                     }
@@ -704,6 +785,7 @@
                                     if (parseInt($this.attr('data-id')) == 0) {
                                         $this.attr('data-id', resp.Id);
                                     }
+                                }, $this, 'select-highlight');
                                 });
                             });
                         });
@@ -730,6 +812,10 @@
                                         $next.focus();
                                     }
                                     $this.removeClass('in-progress');
+                                    if (resp == null || typeof resp == 'string') {
+                                        return;
+                                    }
+
                                     if ($this.hasClass('der-value-prev')) {
                                         $this.removeClass('der-value-prev');
                                     }
@@ -740,6 +826,7 @@
                                     if (parseInt($this.attr('data-id')) == 0) {
                                         $this.attr('data-id', resp.Id);
                                     }
+                                }, $this, 'select-highlight');
                                 });
                             });
                         });
@@ -760,6 +847,10 @@
                                         $next.focus();
                                     }
                                     $this.removeClass('in-progress');
+                                    if (resp == null || typeof resp == 'string') {
+                                        return;
+                                    }
+
                                     if ($this.hasClass('der-value-prev')) {
                                         $this.removeClass('der-value-prev');
                                     }
@@ -770,6 +861,7 @@
                                     if (parseInt($this.attr('data-id')) == 0) {
                                         $this.attr('data-id', resp.Id);
                                     }
+                                }, $this, 'select-highlight');
                                 });
                             });
                         });
@@ -792,6 +884,10 @@
                                             $next.focus();
                                         }
                                         $this.removeClass('in-progress');
+                                        if (resp == null || typeof resp == 'string') {
+                                            return;
+                                        }
+
                                         if ($this.hasClass('der-value-prev')) {
                                             $this.removeClass('der-value-prev');
                                         }
@@ -802,6 +898,7 @@
                                         if (parseInt($this.attr('data-id')) == 0) {
                                             $this.attr('data-id', resp.Id);
                                         }
+                                    }, $this, 'input-highlight');
                                     });
                                 });
                             }
@@ -826,6 +923,10 @@
                                             $next.focus();
                                         }
                                         $this.removeClass('in-progress');
+                                        if (resp == null || typeof resp == 'string') {
+                                            return;
+                                        }
+
                                         if ($this.hasClass('der-value-prev')) {
                                             $this.removeClass('der-value-prev');
                                         }
@@ -836,6 +937,7 @@
                                         if (parseInt($this.attr('data-id')) == 0) {
                                             $this.attr('data-id', resp.Id);
                                         }
+                                    }, $this, 'input-highlight');
                                     });
                                 });
                             }
@@ -861,6 +963,10 @@
                                     }
 
                                     $this.removeClass('in-progress');
+                                    if (resp == null || typeof resp == 'string') {
+                                        return;
+                                    }
+
                                     if ($this.hasClass('der-value-prev')) {
                                         $this.removeClass('der-value-prev');
                                     }
@@ -871,7 +977,7 @@
                                     if (parseInt($this.attr('data-id')) == 0) {
                                         $this.attr('data-id', resp.Id);
                                     }
-                                });
+                                }, $this, 'select-kpi');
                             })
                         });
                         $(target).on('keydown', 'input.der-highlight-weekly-alarm, textarea.der-highlight-weekly-alarm', function (e) {
@@ -893,6 +999,10 @@
                                             $next.focus();
                                         }
                                         $this.removeClass('in-progress');
+                                        if (resp == null || typeof resp == 'string') {
+                                            return;
+                                        }
+
                                         if ($this.hasClass('der-value-prev')) {
                                             $this.removeClass('der-value-prev');
                                         }
@@ -903,6 +1013,7 @@
                                         if (parseInt($this.attr('data-id')) == 0) {
                                             $this.attr('data-id', resp.Id);
                                         }
+                                    }, $this, 'input-highlight');
                                     });
                                 });
                             }

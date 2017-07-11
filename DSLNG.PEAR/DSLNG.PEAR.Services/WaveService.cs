@@ -66,11 +66,12 @@ namespace DSLNG.PEAR.Services
                 {
                     wave = DataContext.Waves.First(x => x.Id == request.Id);
                     request.MapPropertiesToInstance<Wave>(wave);
-                    
+
                     if (request.ValueId != 0)
                     {
                         var value = DataContext.SelectOptions.FirstOrDefault(x => x.Id == request.ValueId);
-                        if (value == null) {
+                        if (value == null)
+                        {
                             value = new SelectOption { Id = request.ValueId };
                             DataContext.SelectOptions.Attach(value);
                         }
@@ -79,7 +80,7 @@ namespace DSLNG.PEAR.Services
                 }
                 else
                 {
-                  
+
                     if (request.ValueId != 0)
                     {
                         var value = DataContext.SelectOptions.FirstOrDefault(x => x.Id == request.ValueId);

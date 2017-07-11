@@ -137,7 +137,7 @@ namespace DSLNG.PEAR.Services
                 return new SaveHighlightResponse
                 {
                     IsSuccess = false,
-                    Message = e.Message
+                    Message = "An error occured while trying to save highlight data, Error message = " + e.Message + " and ID = " + request.Id
                 };
             }
             catch (Exception e)
@@ -145,10 +145,9 @@ namespace DSLNG.PEAR.Services
                 return new SaveHighlightResponse
                 {
                     IsSuccess = false,
-                    Message = e.Message
+                    Message = "An error occured while trying to save highlight data, Error message = " + e.Message + " and ID = " + request.Id
                 };
             }
-
         }
         public GetReportHighlightsResponse GetReportHighlights(GetReportHighlightsRequest request)
         {

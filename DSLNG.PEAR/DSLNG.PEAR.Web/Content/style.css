@@ -3457,6 +3457,12 @@ input.in-progress,
 select.in-progress {
     color : yellow !important;
 }
+    input.in-progress.der-transaction-error select.in-progress.der-transaction-error {
+        border: 1px solid #ccc !important;
+    }
+tr.processing.der-transaction-error {
+    border: 2px solid yellow !important;
+}
 .picker-switch a,
 .timepicker-picker a {
   color:#337ab7;
@@ -3465,6 +3471,12 @@ select.in-progress {
 table.choosen-schedules tr td a {
     text-decoration:underline;
 }
+
+.der-transaction-error,
+tr.der-transaction-error {
+    border: 2px solid red !important;
+}
+
 
 .artifact-holder .tank-subtitle,
 .artifact-holder .highcharts-subtitle {

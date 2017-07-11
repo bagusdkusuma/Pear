@@ -162,12 +162,12 @@ namespace DSLNG.PEAR.Services
                         }
 
                         var kpi = new GetKpiTargetResponse.Kpi
-                            {
-                                Id = val.Kpi.Id,
-                                Measurement = val.Kpi.Measurement.Name,
-                                Name = val.Kpi.Name,
-                                KpiTargets = targets
-                            };
+                        {
+                            Id = val.Kpi.Id,
+                            Measurement = val.Kpi.Measurement.Name,
+                            Name = val.Kpi.Name,
+                            KpiTargets = targets
+                        };
 
                         pillar.Kpis.Add(kpi);
                     }
@@ -377,7 +377,7 @@ namespace DSLNG.PEAR.Services
                             var kpiDto = kpi.MapTo<GetKpiTargetsConfigurationResponse.Kpi>();
                             foreach (var number in YearlyNumbers)
                             {
-                                var achievement = kpiTargetsYearly.SingleOrDefault(x => x.Kpi !=null && x.Kpi.Id == kpi.Id && x.Periode.Year == number);
+                                var achievement = kpiTargetsYearly.SingleOrDefault(x => x.Kpi != null && x.Kpi.Id == kpi.Id && x.Periode.Year == number);
                                 if (achievement != null)
                                 {
                                     var targetDto =
@@ -657,7 +657,7 @@ namespace DSLNG.PEAR.Services
                                 x =>
                                 x.Kpi.Id == item.KpiId && x.PeriodeType == item.PeriodeType && x.Periode == item.Periode);
 
-                        
+
                         if (existedKpiTarget != null)
                         {
                             if (item.Value.Equals("-") || item.Value.ToLowerInvariant().Equals("null"))
@@ -675,7 +675,7 @@ namespace DSLNG.PEAR.Services
                                 {
                                     existedKpiTarget.Value = item.RealValue;
                                     DataContext.Entry(existedKpiTarget).State = EntityState.Modified;
-                                    updatedCounter++;    
+                                    updatedCounter++;
                                 }
                             }
                         }
@@ -904,7 +904,7 @@ namespace DSLNG.PEAR.Services
                                             .Include(x => x.RoleGroup)
                                             .AsEnumerable()
                                             .OrderBy(x => x.Order)
-                                            .Where(x=>x.RoleGroup.Id == request.RoleGroupId)
+                                            .Where(x => x.RoleGroup.Id == request.RoleGroupId)
                                             .GroupBy(x => x.RoleGroup).ToDictionary(x => x.Key);
                 foreach (var item in kpiTargets)
                 {
@@ -948,7 +948,8 @@ namespace DSLNG.PEAR.Services
                         kpiTarget = DataContext.KpiTargets.Single(x => x.Id == request.Id);
                         DataContext.KpiTargets.Remove(kpiTarget);
                     }
-                    else {
+                    else
+                    {
                         kpiTarget = DataContext.KpiTargets
                                           .Include(x => x.Kpi)
                                           .Include(x => x.UpdatedBy)
@@ -965,17 +966,18 @@ namespace DSLNG.PEAR.Services
                         kpiTarget.UpdatedBy = user;
                         kpiTarget.Kpi = DataContext.Kpis.Single(x => x.Id == request.KpiId);
                     }
-                 
+
                 }
                 else
                 {
                     var exist = DataContext.KpiTargets.FirstOrDefault(x => x.Kpi.Id == request.KpiId && x.PeriodeType == request.PeriodeType && x.Periode == request.Periode);
-                    if (exist != null) {
-                        if(request.Remark != null || !string.IsNullOrEmpty(request.Remark))
+                    if (exist != null)
+                    {
+                        if (request.Remark != null || !string.IsNullOrEmpty(request.Remark))
                         {
                             exist.Remark = request.Remark;
                         }
-                        if (!string.IsNullOrEmpty(request.Value) && request.Value.ToLowerInvariant() != "null" && request.Value != "-" )
+                        if (!string.IsNullOrEmpty(request.Value) && request.Value.ToLowerInvariant() != "null" && request.Value != "-")
                         {
                             exist.Value = double.Parse(request.Value);
                         }
