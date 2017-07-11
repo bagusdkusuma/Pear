@@ -185,7 +185,7 @@
             })
             AllowDelete = '@{ @AllowDelete}';
             function shortenText(data) {
-                var textDisplay = data;
+                var textDisplay = data.replace('<p>', '').replace('</p>', '');
                 var length = 150;
                 if (data.length > length) {
                     textDisplay = data.substring(0, length).replace(/<\/?[^>]+(>|$)/g, "");
