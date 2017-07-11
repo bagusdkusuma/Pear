@@ -334,11 +334,11 @@ Number.prototype.format = function (n, x) {
         }
         else if (container.hasClass('row5col2')) {
             options.gridLineColor = 'transparent';
-            decimal = 0;
+            decimal = 2;
             plotOpt['line'] = {
                 dataLabels: {
                     enabled: true,
-                    format: '{y:.0f}',
+                    format: '{y:.2f}',
                     style: {
                         fontWeight: 'normal',
                         fontSize: '10px'
@@ -348,11 +348,11 @@ Number.prototype.format = function (n, x) {
         }
         else if (container.hasClass('row5col3')) {
             options.gridLineColor = 'transparent';
-            decimal = 0;
+            decimal = 2;
             plotOpt['line'] = {
                 dataLabels: {
                     enabled: true,
-                    format: '{y:.0f}',
+                    format: '{y:.2f}',
                     style: {
                         fontWeight: 'normal',
                         fontSize: '10px'
@@ -362,11 +362,11 @@ Number.prototype.format = function (n, x) {
         }
         else if (container.hasClass('row5col4')) {
             options.gridLineColor = 'transparent';      
-            decimal = 0;
+            decimal = 2;
             plotOpt['line'] = {
                 dataLabels: {
                     enabled: true,
-                    format: '{y:.0f}',
+                    format: '{y:.2f}',
                     style: {
                         fontWeight: 'normal',
                         fontSize: '10px'
@@ -494,9 +494,10 @@ Number.prototype.format = function (n, x) {
                 minorGridLineWidth: container.hasClass('row15col4') ? 0 : 1,
                 minorGridLineWidth: container.hasClass('row15col4') ? 0 : 1,
                 lineColor: container.hasClass('row15col4') ? 'transparent' : '#ccd6eb',
+                visble:false,
                 title: {
-                    enabled: container.hasClass('row15col4') ? false : true,       
-                    text: data.MultiaxisChart.Charts[i].Measurement,
+                    enabled: container.is('.row15col4') ? false : true,       
+                    text: null,//data.MultiaxisChart.Charts[i].Measurement,
                     align: 'high',
                     rotation: 0,
                     y: -10,
@@ -511,9 +512,10 @@ Number.prototype.format = function (n, x) {
                 tickInterval: data.MultiaxisChart.Charts[i].FractionScale == 0 ? container.data('fraction') : data.MultiaxisChart.Charts[i].FractionScale,
                 max: data.MultiaxisChart.Charts[i].MaxFractionScale == 0 ? null : data.MultiaxisChart.Charts[i].MaxFractionScale,
                 labels: {
-                    enabled: container.hasClass('row15col4') ? false : true,                    
+                    enabled: container.is('.row15col4') ? false : true,                    
                     style: {
-                        fontSize: '7px'
+                        fontSize: '7px',
+                        color: container.is('.row5col3, .row5col4, .row5col2') ? '#fff' : '#666666'
                     },
                     formatter: function () {
                         var x = this.value;
@@ -945,7 +947,7 @@ Number.prototype.format = function (n, x) {
     }
     Der.Artifact.termometer = function (data, container) {
         var $this = container;
-        $this.append('<span style="top:' + (100 - data.Value + 5) + '%' + '" class="termo-label">' + data.Value + '%' + '</span>');
+        $this.append('<span style="top:' + (100 - data.Value + 5) + '%' + '" class="termo-label">' + data.Value + '</span>');
         var $canvas = $('<canvas/>');
         $canvas.css({
             width: '100%',

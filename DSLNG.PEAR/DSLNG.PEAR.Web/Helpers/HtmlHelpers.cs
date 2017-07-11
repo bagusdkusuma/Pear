@@ -1168,6 +1168,36 @@ namespace DSLNG.PEAR.Web.Helpers
                 return htmlHelper.DisplayCompleteDerValue(percentage.ToString(CultureInfo.InvariantCulture), "%", "%", "N/A", false, digit);
             }
         }
+
+        public static string ToEngV(this HtmlHelper htmlHelper, string number, int digits, bool round)
+        {
+            var d = Double.Parse(number);
+            var length = Math.Truncate(d).ToString().Length;
+            int decimals = 0;            
+
+            if (length < digits)
+            {
+                decimals = digits - length;
+                if(Math.Truncate(d) == d)
+                {
+                    decimals = 0;
+                }
+            }
+
+            
+            
+            var format = string.Format("N{0}", decimals);
+
+            if (round)
+            {
+                return Math.Round(d, decimals).ToString(format, CultureInfo.InvariantCulture);
+            }
+            else
+            {
+                int pow = (int)Math.Pow(10, decimals);
+                return (Math.Truncate(d * pow) / pow).ToString(format, CultureInfo.InvariantCulture);
+            }
+        }
     }
 
     public class JsonRemark
